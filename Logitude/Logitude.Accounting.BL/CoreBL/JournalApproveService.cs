@@ -1658,6 +1658,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             public void WorkUntilQEmptyQueueDB(TimeSpan? timeSpan = null, string selectedQueue = null)
             {
+                               
                 selectedQueue = selectedQueue ?? JournalApproveService.K_AccountingJournalApproveWR;
                 Stopwatch stopwatch = null;
                 if (timeSpan != null)
@@ -1693,6 +1694,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         break;
                     }
+                    CheckCreateIntegrity();
 
                     if (response.MessageValues.ContainsKey("communicationLogId"))
                     {
@@ -1709,43 +1711,19 @@ namespace Logitude.Accounting.BL.CoreBL
                             LogDoneItemInMemoryAction?.Invoke(1);
 
                         }
-                        
+
                     }
                     Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                 }
 
-                if (selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR)
+                if (DateTime.UtcNow.Date > _NextDueDoneAt.Date)
                 {
+                    Logger.LogDebug("JornalApprove beforeAddBatchTask selected queue: {0}, workerRoleName: {1}  , time:{2} ",
+                        selectedQueue, LogitudeSettings.WorkerRoleName, DateTime.Now );
 
-
-                    try
-                    {
-                        string workerRoleName = "";
-                        if(!string.IsNullOrEmpty(LogitudeSettings.WorkerRoleName))
-                        {
-                            workerRoleName = LogitudeSettings.WorkerRoleName;
-                        }
-                        if (DateTime.UtcNow.Date > _NextDueDoneAt.Date && workerRoleName != "staging")// _NextDueDoneAt DateTime.UtcNow.TimeOfDay < TimeSpan.FromHours(6) ) 
-                        {
-                            if (DateTime.Now < new DateTime(2050, 06, 01))
-                            {
-                                CreateBatchAccountingIntegrityCheck();
-                            }
-                            _NextDueDoneAt = DateTime.UtcNow.Date;
-                            var myDueLocalBalanceService = new DueLocalBalanceService();
-                            myDueLocalBalanceService.RunAllTenants();
-
-                            var dailyRebuildAgingService = new DailyRebuildAgingService();
-                            dailyRebuildAgingService.RunAllAgingTenants();
-
-                        }
-                    }
-                    catch (Exception)
-                    {
-
-                        throw;
-                    }
                 }
+
+
 
             }
 
@@ -1817,6 +1795,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             throw;
                         }
                     }
+                    CheckCreateIntegrity();
 
 
                     if (response.MessageValues.ContainsKey("communicationLogId"))
@@ -1838,10 +1817,53 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                         SetTenantIdle(response.Tenant);
                     }
+
                     Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                 }
             }
+            public void CheckCreateIntegrity()
+            {
 
+
+
+                Logger.LogDebug("in selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR);");
+
+                try
+                {
+                    string workerRoleName = "";
+                    if (!string.IsNullOrEmpty(LogitudeSettings.WorkerRoleName))
+                    {
+                        workerRoleName = LogitudeSettings.WorkerRoleName;
+                    }
+                    Logger.LogDebug(" if (DateTime.UtcNow.Date > _NextDueDoneAt.Date && workerRoleName != \"staging\")" + workerRoleName);
+                    Logger.LogDebug(" _NextDueDoneAt.Date" + _NextDueDoneAt.Date);
+
+                    if (DateTime.UtcNow.Date > _NextDueDoneAt.Date && workerRoleName != "staging")
+                    {
+
+                        Logger.LogDebug(" _NextDueDoneAt.Date 2" + _NextDueDoneAt.Date);
+
+                        if (DateTime.Now < new DateTime(2050, 06, 01))
+                        {
+                            Logger.LogDebug("CreateBatchAccountingIntegrityCheck");
+                            CreateBatchAccountingIntegrityCheck();
+                        }
+                        _NextDueDoneAt = DateTime.UtcNow.Date;
+                        var myDueLocalBalanceService = new DueLocalBalanceService();
+                        myDueLocalBalanceService.RunAllTenants();
+
+                        var dailyRebuildAgingService = new DailyRebuildAgingService();
+                        dailyRebuildAgingService.RunAllAgingTenants();
+
+                    }
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+
+            }
             public void CreateBatchAccountingIntegrityCheck()
             {
                 try

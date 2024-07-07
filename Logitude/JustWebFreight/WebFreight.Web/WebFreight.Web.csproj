@@ -540,9 +540,14 @@
     <Reference Include="NetCommonHelper, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NetCommonHelper.1.0.7\lib\net472\NetCommonHelper.dll</HintPath>
     </Reference>
-    <Reference Include="NewRelic.Api.Agent, Version=10.0.0.0, Culture=neutral, PublicKeyToken=06552fced0b33d87, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NewRelicWindowsAzure.10.25.0\lib\NewRelic.Api.Agent.dll</HintPath>
+   
+    <Reference Include="NetCommonHelper, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NetCommonHelper.1.0.6\lib\net46\NetCommonHelper.dll</HintPath>
     </Reference>
+    
+ <Reference Include="NewRelic.Api.Agent, Version=10.0.0.0, Culture=neutral, PublicKeyToken=06552fced0b33d87, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NewRelicWindowsAzure.10.25.0\lib\NewRelic.Api.Agent.dll</HintPath>    
+</Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -1115,7 +1120,10 @@
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ConfirmationNumberDefaultViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ConfirmationNumberStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\ConfirmationNumberDefaultController.Generated.cs" />
+
+
     <Compile Include="Controllers\Monitoring\MonitoringController.cs" />
+    <Compile Include="Controllers\SendGridNotifications\SendGridNotificationsController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ContainersController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AWBAdditionalHandlingInfoViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ShipmentReferanceViewsController.Generated.cs" />
@@ -4724,49 +4732,10 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\WarehouseLibUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\WorkflowUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\ObjectFields\MetaDataUpdateClass.InvoiceModel.cs" />
-    <Content Include="Monitoring\AdvancedGenericInterfaceMonitoringStatus.aspx" />
-    <Content Include="Monitoring\AgentSharedDocumentAnalyzeMonitoring.aspx" />
-    <Content Include="Monitoring\AgentSharedDocumentMonitoring.aspx" />
-    <Content Include="Monitoring\AgentSharedManifestMonitoring.aspx" />
-    <Content Include="Monitoring\AnalyzeQueue.aspx" />
-    <Content Include="Monitoring\AutomationMonitoring.aspx" />
-    <Content Include="Monitoring\AutoSignUpMonitoring.aspx" />
-    <Content Include="Monitoring\AzureDevOpsQueue.aspx" />
-    <Content Include="Monitoring\BIReportsExecutionLogMonitoring.aspx" />
-    <Content Include="Monitoring\CheckFailedJournals.aspx" />
-    <Content Include="Monitoring\CargoBuild.aspx" />
-    <Content Include="Monitoring\CargoShipmentsWaiting.aspx" />
-    <Content Include="Monitoring\CheckJournalsWithoutTransactions.aspx" />
-    <Content Include="Monitoring\CustomerTenantAccessMonitoring.aspx" />
-    <Content Include="Monitoring\CustomerTenantAccessRequestMonitoring.aspx" />
-    <Content Include="Monitoring\DeclarationApprovalRequestMonitoring.aspx" />
-    <Content Include="Monitoring\DocumentApprovalQueueMonitoring.aspx" />
-    <Content Include="Monitoring\DocumentFilingBackupBatchMonitoring.aspx" />
-    <Content Include="Monitoring\DocumentsExecutionLogProgressStatus.aspx" />
-    <Content Include="Monitoring\DocumentsExecutionLogWaitingStatus.aspx" />
-    <Content Include="Monitoring\EmailSendingFailedStatus.aspx" />
-    <Content Include="Monitoring\FailedLoginLog.aspx" />
-    <Content Include="Monitoring\FailedTokenLog.aspx" />
-    <Content Include="Monitoring\ForwarderShipmentDocumentQueue.aspx" />
-    <Content Include="Monitoring\ForwarderShipmentQueue.aspx" />
-    <Content Include="Monitoring\FTPCommunicationMonitoring.aspx" />
-    <Content Include="Monitoring\CloudThreshold.aspx" />
-    <Content Include="Monitoring\LogBoxApprovePaymentQueue.aspx" />
-    <Content Include="Monitoring\LogBoxDocumentsQueue.aspx" />
-    <Content Include="Monitoring\CToolQueue.aspx" />
-    <Content Include="Monitoring\LogBoxImporterApprovalReceivedQueue.aspx" />
-    <Content Include="Monitoring\LogBoxShipmentQueue.aspx" />
-    <Content Include="Monitoring\LogBoxQueue.aspx" />
-    <Content Include="Monitoring\DropBoxCommunicationLogs.aspx" />
-    <Content Include="Monitoring\MobileSMSMonitoring.aspx" />
-    <Content Include="Monitoring\MonitorIncrementalDWHService.aspx" />
-    <Content Include="Monitoring\OceanInsightStatus.aspx" />
-    <Content Include="Monitoring\ChampWaitingStatus.aspx" />
-    <Content Include="Monitoring\CommunicationFailedStatus.aspx" />
-    <Content Include="Monitoring\CommunicationWaitingStatus.aspx" />
-    <Content Include="Monitoring\ContactUnseenMobile.aspx" />
-    <Content Include="Monitoring\CustomerActualData.aspx" />
-    <Content Include="Monitoring\EmailWaiting.aspx" />
+    
+   
+   
+   
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARInvoiceLineAction.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.SATPaymentMethod.cs" />
     <Compile Include="CommonDataModel\DomainServices\PartnersDomainService.WarehouseType.cs" />
@@ -4859,26 +4828,6 @@
     <None Include="Properties\PublishProfiles\testR4.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />
     <None Include="Resources\Stimulsoft Reports.Ultimate 2013.1 Trial A252_020150909133627201254900033002.mrt.txt" />
-    <Content Include="Monitoring\HybridsTenantThreshold.aspx" />
-    <Content Include="Monitoring\MobileNotificationLog.aspx" />
-    <Content Include="Monitoring\MobileNotificationLogQueue.aspx" />
-    <Content Include="Monitoring\MonitorServiceLastUpdate.aspx" />
-    <Content Include="Monitoring\MonitorTechnicalFNA.aspx" />
-    <Content Include="Monitoring\PODImageConverterMonitoring.aspx" />
-    <Content Include="Monitoring\PrivateLabelDenialMonitoring.aspx" />
-    <Content Include="Monitoring\ProfactMonitoring.aspx" />
-    <Content Include="Monitoring\INTTRAMonitoring.aspx" />
-    <Content Include="Monitoring\QuickbooksOnlineQueue.aspx" />
-    <Content Include="Monitoring\ReportExecutionLogWaitingStatus.aspx" />
-    <Content Include="Monitoring\ReportExecutionRunTimeMonitoring.aspx" />
-    <Content Include="Monitoring\SATCommunicationWaitingStatus.aspx" />
-    <Content Include="Monitoring\SchedularMonitoring.aspx" />
-    <Content Include="Monitoring\ShipmentInterfaceMonitoringStatus.aspx" />
-    <Content Include="Monitoring\SignupLeadMonitoringPage.aspx" />
-    <Content Include="Monitoring\SignUpMonitoring.aspx" />
-    <Content Include="Monitoring\SocialMonitoring.aspx" />
-    <Content Include="Monitoring\StorageBackup.aspx" />
-    <Content Include="Monitoring\WebHookCommunicationMonitoring.aspx" />
     <Content Include="QuickbooksOnlineAuth2.aspx" />
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\webfreight.web.dll.licenses" />
@@ -4886,9 +4835,6 @@
     <None Include="Properties\PublishProfiles\sendgrid.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />
     <None Include="Resources\Stimulsoft Reports.Ultimate 2013.1 Trial A252_020150909133627201254900033002.mrt.txt" />
-    <Content Include="Monitoring\HybridsTenantThreshold.aspx" />
-    <Content Include="Monitoring\MonitorServiceLastUpdate.aspx" />
-    <Content Include="Monitoring\MonitorTechnicalFNA.aspx" />
     <Content Include="ReportsWebServices\APInvoiceWebService.asmx" />
     <Content Include="ReportsWebServices\OpportunitySummaryWebService.asmx" />
     <Content Include="Resources\SATFiles\cadenaoriginal_3_2.xslt" />
@@ -5372,13 +5318,6 @@
     <Content Include="SharedLogistic\ShipmentMobileViewModel.js" />
     <Content Include="SharedLogistic\ShipmentPageViewModel.js" />
     <Content Include="ShipmentPackageModel\RegisterShipmentPackageWebService.asmx" />
-    <Content Include="Monitoring\ChampStatus.aspx" />
-    <Content Include="Monitoring\DbBackup.aspx" />
-    <Content Include="Monitoring\DbSize.aspx" />
-    <Content Include="Monitoring\DbUp.aspx" />
-    <Content Include="Monitoring\EmailFailure.aspx" />
-    <Content Include="Monitoring\StorageUp.aspx" />
-    <Content Include="Monitoring\WebUp.aspx" />
     <Content Include="PasswordChangePage.aspx" />
     <Content Include="PasswordResetRequestPage.aspx" />
     <Content Include="ReportsWebServices\APPaymentWebService.asmx" />
@@ -6838,424 +6777,9 @@
     <Compile Include="MetaDataUpdate\MetaDataUpdateClass.Screens.cs" />
     <Compile Include="MetaDataUpdate\MetaDataUpdateClass.TableCounters.cs" />
     <Compile Include="MetaDataUpdate\ObjectFields\MetaDataUpdateClass.QuoteModel.cs" />
-    <Compile Include="MetaDataUpdate\ObjectFields\MetaDataUpdateClass.ShipmentModel.cs" />
-    <Compile Include="MetaDataUpdate\ObjectTablesKeys.cs" />
-    <Compile Include="MetaDataUpdate\PerformanceTimerLogger.cs" />
-    <Compile Include="MetaDataUpdate\SendBox\DocumentTypeUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\UpdateClasses\AccountingUpdate.cs" />
-    <Compile Include="MetaDataUpdate\UpdateClasses\BookingUpdate.cs" />
-    <Compile Include="MetaDataUpdate\UpdateClasses\CRMUpdate.cs" />
-    <Compile Include="MetaDataUpdate\UpdateClasses\QuoteOPMUpdate.cs" />
-    <Compile Include="MetaDataUpdate\UpdateClasses\SocialUpdate.cs" />
-    <Compile Include="MetaDataUpdate\UpdateClasses\TariffModuleUpdate.cs" />
-    <Compile Include="MetaDataUpdate\UpdateClasses\TimeManagementUpdate.cs" />
-    <Compile Include="MetaDataUpdate\UpdateClasses\WarehouseUpdate.cs" />
-    <Compile Include="Monitoring\AdvancedGenericInterfaceMonitoringStatus.aspx.cs">
-      <DependentUpon>AdvancedGenericInterfaceMonitoringStatus.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\AdvancedGenericInterfaceMonitoringStatus.aspx.designer.cs">
-      <DependentUpon>AdvancedGenericInterfaceMonitoringStatus.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\AgentSharedDocumentAnalyzeMonitoring.aspx.cs">
-      <DependentUpon>AgentSharedDocumentAnalyzeMonitoring.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\AgentSharedDocumentAnalyzeMonitoring.aspx.designer.cs">
-      <DependentUpon>AgentSharedDocumentAnalyzeMonitoring.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\AgentSharedDocumentMonitoring.aspx.cs">
-      <DependentUpon>AgentSharedDocumentMonitoring.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\AgentSharedDocumentMonitoring.aspx.designer.cs">
-      <DependentUpon>AgentSharedDocumentMonitoring.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\AgentSharedManifestMonitoring.aspx.cs">
-      <DependentUpon>AgentSharedManifestMonitoring.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\AgentSharedManifestMonitoring.aspx.designer.cs">
-      <DependentUpon>AgentSharedManifestMonitoring.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\AnalyzeQueue.aspx.cs">
-      <DependentUpon>AnalyzeQueue.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\AnalyzeQueue.aspx.designer.cs">
-      <DependentUpon>AnalyzeQueue.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\AutomationMonitoring.aspx.cs">
-      <DependentUpon>AutomationMonitoring.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\AutomationMonitoring.aspx.designer.cs">
-      <DependentUpon>AutomationMonitoring.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\AutoSignUpMonitoring.aspx.cs">
-      <DependentUpon>AutoSignUpMonitoring.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\AutoSignUpMonitoring.aspx.designer.cs">
-      <DependentUpon>AutoSignUpMonitoring.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\AzureDevOpsQueue.aspx.cs">
-      <DependentUpon>AzureDevOpsQueue.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\AzureDevOpsQueue.aspx.designer.cs">
-      <DependentUpon>AzureDevOpsQueue.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\BIReportsExecutionLogMonitoring.aspx.cs">
-      <DependentUpon>BIReportsExecutionLogMonitoring.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\BIReportsExecutionLogMonitoring.aspx.designer.cs">
-      <DependentUpon>BIReportsExecutionLogMonitoring.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\CheckFailedJournals.aspx.cs">
-      <DependentUpon>CheckFailedJournals.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\CheckFailedJournals.aspx.designer.cs">
-      <DependentUpon>CheckFailedJournals.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\CargoBuild.aspx.cs">
-      <DependentUpon>CargoBuild.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\CargoBuild.aspx.designer.cs">
-      <DependentUpon>CargoBuild.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\CargoShipmentsWaiting.aspx.cs">
-      <DependentUpon>CargoShipmentsWaiting.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\CargoShipmentsWaiting.aspx.designer.cs">
-      <DependentUpon>CargoShipmentsWaiting.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\CheckJournalsWithoutTransactions.aspx.cs">
-      <DependentUpon>CheckJournalsWithoutTransactions.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\CheckJournalsWithoutTransactions.aspx.designer.cs">
-      <DependentUpon>CheckJournalsWithoutTransactions.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\CustomerTenantAccessMonitoring.aspx.cs">
-      <DependentUpon>CustomerTenantAccessMonitoring.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\CustomerTenantAccessMonitoring.aspx.designer.cs">
-      <DependentUpon>CustomerTenantAccessMonitoring.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\CustomerTenantAccessRequestMonitoring.aspx.cs">
-      <DependentUpon>CustomerTenantAccessRequestMonitoring.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\CustomerTenantAccessRequestMonitoring.aspx.designer.cs">
-      <DependentUpon>CustomerTenantAccessRequestMonitoring.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\DeclarationApprovalRequestMonitoring.aspx.cs">
-      <DependentUpon>DeclarationApprovalRequestMonitoring.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\DeclarationApprovalRequestMonitoring.aspx.designer.cs">
-      <DependentUpon>DeclarationApprovalRequestMonitoring.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\DocumentApprovalQueueMonitoring.aspx.cs">
-      <DependentUpon>DocumentApprovalQueueMonitoring.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\DocumentApprovalQueueMonitoring.aspx.designer.cs">
-      <DependentUpon>DocumentApprovalQueueMonitoring.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\DocumentFilingBackupBatchMonitoring.aspx.cs">
-      <DependentUpon>DocumentFilingBackupBatchMonitoring.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\DocumentFilingBackupBatchMonitoring.aspx.designer.cs">
-      <DependentUpon>DocumentFilingBackupBatchMonitoring.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\DocumentsExecutionLogProgressStatus.aspx.cs">
-      <DependentUpon>DocumentsExecutionLogProgressStatus.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\DocumentsExecutionLogProgressStatus.aspx.designer.cs">
-      <DependentUpon>DocumentsExecutionLogProgressStatus.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\DocumentsExecutionLogWaitingStatus.aspx.cs">
-      <DependentUpon>DocumentsExecutionLogWaitingStatus.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\DocumentsExecutionLogWaitingStatus.aspx.designer.cs">
-      <DependentUpon>DocumentsExecutionLogWaitingStatus.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\EmailSendingFailedStatus.aspx.cs">
-      <DependentUpon>EmailSendingFailedStatus.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\EmailSendingFailedStatus.aspx.designer.cs">
-      <DependentUpon>EmailSendingFailedStatus.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\FailedLoginLog.aspx.cs">
-      <DependentUpon>FailedLoginLog.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\FailedLoginLog.aspx.designer.cs">
-      <DependentUpon>FailedLoginLog.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\FailedTokenLog.aspx.cs">
-      <DependentUpon>FailedTokenLog.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\FailedTokenLog.aspx.designer.cs">
-      <DependentUpon>FailedTokenLog.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\ForwarderShipmentDocumentQueue.aspx.cs">
-      <DependentUpon>ForwarderShipmentDocumentQueue.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\ForwarderShipmentDocumentQueue.aspx.designer.cs">
-      <DependentUpon>ForwarderShipmentDocumentQueue.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\ForwarderShipmentQueue.aspx.cs">
-      <DependentUpon>ForwarderShipmentQueue.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\ForwarderShipmentQueue.aspx.designer.cs">
-      <DependentUpon>ForwarderShipmentQueue.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\FTPCommunicationMonitoring.aspx.cs">
-      <DependentUpon>FTPCommunicationMonitoring.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\FTPCommunicationMonitoring.aspx.designer.cs">
-      <DependentUpon>FTPCommunicationMonitoring.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\CloudThreshold.aspx.cs">
-      <DependentUpon>CloudThreshold.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\CloudThreshold.aspx.designer.cs">
-      <DependentUpon>CloudThreshold.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\LogBoxApprovePaymentQueue.aspx.cs">
-      <DependentUpon>LogBoxApprovePaymentQueue.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\LogBoxApprovePaymentQueue.aspx.designer.cs">
-      <DependentUpon>LogBoxApprovePaymentQueue.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\LogBoxDocumentsQueue.aspx.cs">
-      <DependentUpon>LogBoxDocumentsQueue.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\LogBoxDocumentsQueue.aspx.designer.cs">
-      <DependentUpon>LogBoxDocumentsQueue.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\CToolQueue.aspx.cs">
-      <DependentUpon>CToolQueue.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\CToolQueue.aspx.designer.cs">
-      <DependentUpon>CToolQueue.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\LogBoxImporterApprovalReceivedQueue.aspx.cs">
-      <DependentUpon>LogBoxImporterApprovalReceivedQueue.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\LogBoxImporterApprovalReceivedQueue.aspx.designer.cs">
-      <DependentUpon>LogBoxImporterApprovalReceivedQueue.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\LogBoxShipmentQueue.aspx.cs">
-      <DependentUpon>LogBoxShipmentQueue.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\LogBoxShipmentQueue.aspx.designer.cs">
-      <DependentUpon>LogBoxShipmentQueue.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\LogBoxQueue.aspx.cs">
-      <DependentUpon>LogBoxQueue.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\LogBoxQueue.aspx.designer.cs">
-      <DependentUpon>LogBoxQueue.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\DropBoxCommunicationLogs.aspx.cs">
-      <DependentUpon>DropBoxCommunicationLogs.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\DropBoxCommunicationLogs.aspx.designer.cs">
-      <DependentUpon>DropBoxCommunicationLogs.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\MobileSMSMonitoring.aspx.cs">
-      <DependentUpon>MobileSMSMonitoring.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\MobileSMSMonitoring.aspx.designer.cs">
-      <DependentUpon>MobileSMSMonitoring.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\MonitorIncrementalDWHService.aspx.cs">
-      <DependentUpon>MonitorIncrementalDWHService.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\MonitorIncrementalDWHService.aspx.designer.cs">
-      <DependentUpon>MonitorIncrementalDWHService.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\OceanInsightStatus.aspx.cs">
-      <DependentUpon>OceanInsightStatus.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\OceanInsightStatus.aspx.designer.cs">
-      <DependentUpon>OceanInsightStatus.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\ChampWaitingStatus.aspx.cs">
-      <DependentUpon>ChampWaitingStatus.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\ChampWaitingStatus.aspx.designer.cs">
-      <DependentUpon>ChampWaitingStatus.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\CommunicationFailedStatus.aspx.cs">
-      <DependentUpon>CommunicationFailedStatus.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\CommunicationFailedStatus.aspx.designer.cs">
-      <DependentUpon>CommunicationFailedStatus.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\CommunicationWaitingStatus.aspx.cs">
-      <DependentUpon>CommunicationWaitingStatus.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\CommunicationWaitingStatus.aspx.designer.cs">
-      <DependentUpon>CommunicationWaitingStatus.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\ContactUnseenMobile.aspx.cs">
-      <DependentUpon>ContactUnseenMobile.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\ContactUnseenMobile.aspx.designer.cs">
-      <DependentUpon>ContactUnseenMobile.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\CustomerActualData.aspx.cs">
-      <DependentUpon>CustomerActualData.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\CustomerActualData.aspx.designer.cs">
-      <DependentUpon>CustomerActualData.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\EmailWaiting.aspx.cs">
-      <DependentUpon>EmailWaiting.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\EmailWaiting.aspx.designer.cs">
-      <DependentUpon>EmailWaiting.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\PODImageConverterMonitoring.aspx.cs">
-      <DependentUpon>PODImageConverterMonitoring.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\PODImageConverterMonitoring.aspx.designer.cs">
-      <DependentUpon>PODImageConverterMonitoring.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\PrivateLabelDenialMonitoring.aspx.cs">
-      <DependentUpon>PrivateLabelDenialMonitoring.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\PrivateLabelDenialMonitoring.aspx.designer.cs">
-      <DependentUpon>PrivateLabelDenialMonitoring.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\ProfactMonitoring.aspx.cs">
-      <DependentUpon>ProfactMonitoring.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\ProfactMonitoring.aspx.designer.cs">
-      <DependentUpon>ProfactMonitoring.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\INTTRAMonitoring.aspx.cs">
-      <DependentUpon>INTTRAMonitoring.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\INTTRAMonitoring.aspx.designer.cs">
-      <DependentUpon>INTTRAMonitoring.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\QuickbooksOnlineQueue.aspx.cs">
-      <DependentUpon>QuickbooksOnlineQueue.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\QuickbooksOnlineQueue.aspx.designer.cs">
-      <DependentUpon>QuickbooksOnlineQueue.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\ReportExecutionLogWaitingStatus.aspx.cs">
-      <DependentUpon>ReportExecutionLogWaitingStatus.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\ReportExecutionLogWaitingStatus.aspx.designer.cs">
-      <DependentUpon>ReportExecutionLogWaitingStatus.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\ReportExecutionRunTimeMonitoring.aspx.cs">
-      <DependentUpon>ReportExecutionRunTimeMonitoring.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\ReportExecutionRunTimeMonitoring.aspx.designer.cs">
-      <DependentUpon>ReportExecutionRunTimeMonitoring.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\SATCommunicationWaitingStatus.aspx.cs">
-      <DependentUpon>SATCommunicationWaitingStatus.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\SATCommunicationWaitingStatus.aspx.designer.cs">
-      <DependentUpon>SATCommunicationWaitingStatus.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\SchedularMonitoring.aspx.cs">
-      <DependentUpon>SchedularMonitoring.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\SchedularMonitoring.aspx.designer.cs">
-      <DependentUpon>SchedularMonitoring.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\ShipmentInterfaceMonitoringStatus.aspx.cs">
-      <DependentUpon>ShipmentInterfaceMonitoringStatus.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\ShipmentInterfaceMonitoringStatus.aspx.designer.cs">
-      <DependentUpon>ShipmentInterfaceMonitoringStatus.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\SignupLeadMonitoringPage.aspx.cs">
-      <DependentUpon>SignupLeadMonitoringPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\SignupLeadMonitoringPage.aspx.designer.cs">
-      <DependentUpon>SignupLeadMonitoringPage.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\SignUpMonitoring.aspx.cs">
-      <DependentUpon>SignUpMonitoring.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\SignUpMonitoring.aspx.designer.cs">
-      <DependentUpon>SignUpMonitoring.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\SocialMonitoring.aspx.cs">
-      <DependentUpon>SocialMonitoring.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\SocialMonitoring.aspx.designer.cs">
-      <DependentUpon>SocialMonitoring.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\StorageBackup.aspx.cs">
-      <DependentUpon>StorageBackup.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\StorageBackup.aspx.designer.cs">
-      <DependentUpon>StorageBackup.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\WebHookCommunicationMonitoring.aspx.cs">
-      <DependentUpon>WebHookCommunicationMonitoring.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\WebHookCommunicationMonitoring.aspx.designer.cs">
-      <DependentUpon>WebHookCommunicationMonitoring.aspx</DependentUpon>
-    </Compile>
+  
+    
+   
     <Compile Include="Params\EmailBodyArgs.cs" />
     <Compile Include="Params\EmailBodyParams.cs" />
     <Compile Include="Params\EmailBodyResults.cs" />
@@ -7266,41 +6790,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\HybridsTenantThreshold.aspx.cs">
-      <DependentUpon>HybridsTenantThreshold.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\HybridsTenantThreshold.aspx.designer.cs">
-      <DependentUpon>HybridsTenantThreshold.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\MobileNotificationLog.aspx.cs">
-      <DependentUpon>MobileNotificationLog.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\MobileNotificationLog.aspx.designer.cs">
-      <DependentUpon>MobileNotificationLog.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\MobileNotificationLogQueue.aspx.cs">
-      <DependentUpon>MobileNotificationLogQueue.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\MobileNotificationLogQueue.aspx.designer.cs">
-      <DependentUpon>MobileNotificationLogQueue.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\MonitorServiceLastUpdate.aspx.cs">
-      <DependentUpon>MonitorServiceLastUpdate.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\MonitorServiceLastUpdate.aspx.designer.cs">
-      <DependentUpon>MonitorServiceLastUpdate.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\MonitorTechnicalFNA.aspx.cs">
-      <DependentUpon>MonitorTechnicalFNA.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\MonitorTechnicalFNA.aspx.designer.cs">
-      <DependentUpon>MonitorTechnicalFNA.aspx</DependentUpon>
     </Compile>
     <Compile Include="QuickbooksOnlineAuth2.aspx.cs">
       <DependentUpon>QuickbooksOnlineAuth2.aspx</DependentUpon>
@@ -7548,13 +7037,6 @@
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.AWBOCI.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.XSD.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.SpecialServicesType.cs" />
-    <Compile Include="Monitoring\ChampStatus.aspx.cs">
-      <DependentUpon>ChampStatus.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\ChampStatus.aspx.designer.cs">
-      <DependentUpon>ChampStatus.aspx</DependentUpon>
-    </Compile>
     <Compile Include="ShipmentStatuses.aspx.cs">
       <DependentUpon>ShipmentStatuses.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -7859,48 +7341,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="MetaDataUpdate\UpdateClasses\ObjectTablesUpdate.cs" />
-    <Compile Include="Monitoring\DbBackup.aspx.cs">
-      <DependentUpon>DbBackup.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\DbBackup.aspx.designer.cs">
-      <DependentUpon>DbBackup.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\DbSize.aspx.cs">
-      <DependentUpon>DbSize.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\DbSize.aspx.designer.cs">
-      <DependentUpon>DbSize.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\DbUp.aspx.cs">
-      <DependentUpon>DbUp.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\DbUp.aspx.designer.cs">
-      <DependentUpon>DbUp.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\EmailFailure.aspx.cs">
-      <DependentUpon>EmailFailure.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\EmailFailure.aspx.designer.cs">
-      <DependentUpon>EmailFailure.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\StorageUp.aspx.cs">
-      <DependentUpon>StorageUp.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\StorageUp.aspx.designer.cs">
-      <DependentUpon>StorageUp.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring\WebUp.aspx.cs">
-      <DependentUpon>WebUp.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitoring\WebUp.aspx.designer.cs">
-      <DependentUpon>WebUp.aspx</DependentUpon>
-    </Compile>
     <Compile Include="PasswordChangePage.aspx.cs">
       <DependentUpon>PasswordChangePage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

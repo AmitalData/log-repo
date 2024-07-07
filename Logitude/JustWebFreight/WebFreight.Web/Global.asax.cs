@@ -61,6 +61,7 @@ namespace WebFreight.Web
         System.Timers.Timer aTimer = new System.Timers.Timer();
         protected void Application_Start(object sender, EventArgs e)
         {
+            NetCommonHelper.Logger.DevLog.Instance.SetProcessName("website", true); //Set process name and is webApp
             LogitudeAppSettings.StartDateTime = DateTime.Now;
             //if ((DateTime.Now - LogitudeAppSettings.EndDateTime).TotalMinutes <= 5)
             //{

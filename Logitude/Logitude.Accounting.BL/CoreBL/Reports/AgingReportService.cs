@@ -322,9 +322,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                       join card in _AccountingContext.GLAccountCardsDatas.Where(r => r.Tenant == _Param.Tenant)
                        on acc.CardsDataId equals card.Id into cardJoinT
-                      from card in cardJoinT.DefaultIfEmpty()
+                      from card in cardJoinT.DefaultIfEmpty() 
 
-                      let glaPeriod = _AccountingContext.GLAccountInterestPeriods.Where(r => r.Tenant == _Param.Tenant && r.GLAccountId == acc.Id && r.PeriodStartDate <= currentDate)
+                      let glaPeriod = _AccountingContext.GLAccountInterestPeriods.Where(r => r.Tenant == _Param.Tenant && r.GLAccountId == acc.Id && r.PeriodStartDate <= currentDate && acc.ActiveForInterest)
                       .OrderByDescending(d => d.PeriodStartDate).FirstOrDefault()
                       let basePeriod = _AccountingContext.InterestBasesPeriods.Where(d => d.InterestBaseTypeId == glaPeriod.StandardInterestRateBaseId)
                       .OrderByDescending(d => d.InterestBaseStartDate).FirstOrDefault()

@@ -17,7 +17,6 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.CloseTables;
 using Simplog.Server.Infrastructure.Helpers;
-//using System.Data.Entity;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -94,6 +93,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return res;
         }
+
         public List<TaxReportLinePM> GetSpecificReportLines(string taxReportId, int tenant)
         {
             IQueryable<TaxReportLine> query = (from a in context.TaxReportLines
@@ -107,7 +107,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 Line = d.Line,
                 VatNumber = d.VatNumber,
                 Reference = d.Reference,
-                StatusCode = d.StatusCode,
             }).ToList();
             return listQuery;
         }
@@ -168,16 +167,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return reports.Where(d => d.IsCancelled == false).ToList();
         }
-
-        public List<TaxReport> GetFutureActiveReportsByTaxReportMonth(DateTime dateTime, int tenant) // not cancelled
-        {
-            TaxReportRepository reportsRepo = new TaxReportRepository(context);
-
-            IQueryable<TaxReport> reports = reportsRepo.GetFutureReportsByTaxReportMonth(dateTime, tenant);
-
-            return reports.Where(d => d.IsCancelled == false).ToList();
-        }
-
         public List<TaxReportPM> GetTransmittedTaxReports(int tenant)
         {
             TaxReportRepository reportsRepo = new TaxReportRepository(context);
@@ -299,9 +288,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 where a.TaxReportNumber == reportNunber
                 select a).FirstOrDefault();        
     }
-    
-    //
 
+    public class TaxReportLineForErrors
+    {
+        public int Line { get; set; }
+        public string JournalNumber { get; set; }
+    }
 
     public class DuplicateRows
     {
@@ -313,13 +305,4 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public string AccountingEntityCode { get; set; }
         public int Line { get; set; }
     }
-
-
-    public class TaxReportLineForErrors
-    {
-        public int Line { get; set; }
-        public string JournalNumber { get; set; }
-    }
-
-
 }

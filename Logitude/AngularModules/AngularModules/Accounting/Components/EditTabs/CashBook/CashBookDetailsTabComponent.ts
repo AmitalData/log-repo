@@ -193,7 +193,7 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
         pageSize: 50,
         rowCount: null,
         sortingCol: "DueDate",
-        sortingDir: "Descending",
+        sortingDir: "Ascending",
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
             var tempo = this.GetRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
             return tempo;

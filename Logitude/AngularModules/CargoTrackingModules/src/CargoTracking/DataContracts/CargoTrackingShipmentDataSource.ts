@@ -1,17 +1,18 @@
-import {CollectionViewer, DataSource} from '@angular/cdk/collections';
-import {ChangeDetectorRef} from '@angular/core';
+import { CollectionViewer, DataSource } from '@angular/cdk/collections';
+import { ChangeDetectorRef } from '@angular/core';
 import { Console } from 'console';
-import {BehaviorSubject, Observable, Subscription} from 'rxjs';
-import {CargoTrackingSearchService} from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
-import {ShipmentsListComponent} from '../Components/UserDashboard/ShipmentsPage/ShipmentsList/ShipmentsListComponent';
-import {CargoTrackingShipmentSearchInput} from './CargoTrackingShipmentFilters';
+import { BehaviorSubject, Observable, Subscription,Subject } from 'rxjs';
+import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
+import { ShipmentsListComponent } from '../Components/UserDashboard/ShipmentsPage/ShipmentsList/ShipmentsListComponent';
+import { CargoTrackingShipmentSearchInput } from './CargoTrackingShipmentFilters';
 import { SessionInfo } from 'src/Infrastructure/Utilities/SessionInfo';
 
 export class ShipmentDataSource extends DataSource<any | undefined> {
     private pageSize = 50;
-    public cachedShipments = Array.from<any>({length: this.ShipmentsCount});
-    public cachedCustomers = Array.from<Customer>({length: this.ShipmentsCount});
-
+    public cachedShipments = Array.from<any>({ length: this.ShipmentsCount });
+    public cachedCustomers = Array.from<Customer>({ length: this.ShipmentsCount });
+    private fetchData:Subject<boolean>=new Subject();
+    public  readonly $fetchData:Observable<boolean>=this.fetchData.asObservable();
     private fetchedPages = new Set<number>();
     private dataStream = new BehaviorSubject<(any | undefined)[]>(this.cachedShipments);
     private subscription = new Subscription();
@@ -32,7 +33,7 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
     private InitComponent() {
         this.parent.ShipmentsCount = 0;
         this.parent.noResult = false;
-        this.cachedShipments = Array.from<any>({length: this.ShipmentsCount || 1});
+        this.cachedShipments = Array.from<any>({ length: this.ShipmentsCount || 1 });
         this.fetchedPages = new Set<number>();
         this.FetchPage(0);
 
@@ -42,8 +43,8 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
 
     getShipments() {
         return this.cachedShipments;
-    }
 
+    }
     ReloadData(filters) {
         this.ShipmentsFilters = filters;
         this.InitComponent();
@@ -85,30 +86,30 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
     private FetchPage(pageNumber: number) {
         if (!this.fetchedPages.has(pageNumber)) {
             this.fetchedPages.add(pageNumber);
-            this.GetShipmentsPage(pageNumber);
+             this.GetShipmentsPage(pageNumber);
         }
     }
 
-    GetShipmentsCustomers(tenant: number){
-    
+    GetShipmentsCustomers(tenant: number) {
+
         this.ShipmentSearchService.GetUserShipmentsCustomers(tenant)
             .subscribe((Response: any) => {
-                
-                 this.parent.InvitedCustomers = Response
-                .map(d => (
-                 {
-                      IsSelected: false,
-                      CardId : d.Id,
-                      Name: d.Name,
-                    }
-                ));
-                 let StartwithSpeicalCharCustomers = this.parent.InvitedCustomers.filter(a => this.CheckSpeicalChar(a.Name.replace(/ /g, ""))); 
-                let StartwithoutSpeicalCharCustomers = this.parent.InvitedCustomers.filter(a => !this.CheckSpeicalChar(a.Name.replace(/ /g, "")));   
-                 StartwithSpeicalCharCustomers=StartwithSpeicalCharCustomers.sort((a, b) => a["Name"].toUpperCase().replace(/ /g, "") > b["Name"].toUpperCase().replace(/ /g, "") ? 1 : a["Name"].toUpperCase().replace(/ /g, "") === b["Name"].toUpperCase().replace(/ /g, "") ? 0 : -1);
-                StartwithoutSpeicalCharCustomers=StartwithoutSpeicalCharCustomers.sort((a, b) => a["Name"].toUpperCase().replace(/ /g, "") > b["Name"].toUpperCase().replace(/ /g, "") ? 1 : a["Name"].toUpperCase().replace(/ /g, "") === b["Name"].toUpperCase().replace(/ /g, "") ? 0 : -1);  
-                this.parent.InvitedCustomers=StartwithSpeicalCharCustomers.concat(StartwithoutSpeicalCharCustomers);
+
+                this.parent.InvitedCustomers = Response
+                    .map(d => (
+                        {
+                            IsSelected: false,
+                            CardId: d.Id,
+                            Name: d.Name,
+                        }
+                    ));
+                let StartwithSpeicalCharCustomers = this.parent.InvitedCustomers.filter(a => this.CheckSpeicalChar(a.Name.replace(/ /g, "")));
+                let StartwithoutSpeicalCharCustomers = this.parent.InvitedCustomers.filter(a => !this.CheckSpeicalChar(a.Name.replace(/ /g, "")));
+                StartwithSpeicalCharCustomers = StartwithSpeicalCharCustomers.sort((a, b) => a["Name"].toUpperCase().replace(/ /g, "") > b["Name"].toUpperCase().replace(/ /g, "") ? 1 : a["Name"].toUpperCase().replace(/ /g, "") === b["Name"].toUpperCase().replace(/ /g, "") ? 0 : -1);
+                StartwithoutSpeicalCharCustomers = StartwithoutSpeicalCharCustomers.sort((a, b) => a["Name"].toUpperCase().replace(/ /g, "") > b["Name"].toUpperCase().replace(/ /g, "") ? 1 : a["Name"].toUpperCase().replace(/ /g, "") === b["Name"].toUpperCase().replace(/ /g, "") ? 0 : -1);
+                this.parent.InvitedCustomers = StartwithSpeicalCharCustomers.concat(StartwithoutSpeicalCharCustomers);
                 this.parent.FillInvitedCustomersDictionary(this.parent.InvitedCustomers);
-                if(!SessionInfo.IsAdmin){
+                if (!SessionInfo.IsAdmin) {
 
                     this.parent.GetInvitedCustomers();
                 }
@@ -120,35 +121,40 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
 
             });
     }
-    private CheckSpeicalChar(s : string){  
+    private CheckSpeicalChar(s: string) {
         var format = /^[A-Za-z0-9]/;
-        if (format.test(s)) {    
-              return true;    
-               }   
-              return false;
+        if (format.test(s)) {
+            return true;
+        }
+        return false;
     }
 
     private GetShipmentsPage(page: number) {
         this.ShipmentsFilters.PageIndex = page;
         this.ShipmentsFilters.PageSize = this.pageSize;
         this.ShipmentsFilters.CustomersIds = this.ShipmentsFilters.CustomersIds;
-
+        this.fetchData.next(true)
         this.ShipmentSearchService.GetUserShipments(this.ShipmentsFilters)
             .subscribe((shipmentsResponse: any) => {
-                if(shipmentsResponse=="NoFound"){
-                    this.parent.noResult=true; 
+                this.fetchData.next(false)
+                if (shipmentsResponse == "NoFound") {
+                    this.parent.noResult = true;
                     this.ChangeDetector.detectChanges();
-                 }
-                 else{
-                this.parent.ShipmentsLoadingError = '';
-                this.HandleShipmentsResponse(page, shipmentsResponse);
-                 }
+                }
+                else {
+                    this.parent.ShipmentsLoadingError = '';
+                    this.HandleShipmentsResponse(page, shipmentsResponse);
+                }
+
             }, error => {
+                this.fetchData.next(false)
                 this.parent.ShipmentsLoadingError = error.statusText;
                 console.error(error);
                 this.ChangeDetector.detectChanges();
 
             });
+
+
     }
 
     private HandleShipmentsResponse(page: number, shipmentsResponse: any) {
@@ -175,7 +181,7 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
     }
 
     private ResetCachedShipmentsArray(count: number) {
-        this.cachedShipments = Array.from<any>({length: count});
+        this.cachedShipments = Array.from<any>({ length: count });
     }
 
     private SetShipmentsCount(count: any) {
