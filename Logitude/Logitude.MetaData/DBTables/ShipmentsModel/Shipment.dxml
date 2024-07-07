@@ -3753,6 +3753,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IskaNumber"
+    Type="varchar"
+    Size="16">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"

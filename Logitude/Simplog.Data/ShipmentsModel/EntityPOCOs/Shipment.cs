@@ -563,6 +563,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? ENSDate { get; set; }
         public string ReferantUserId { get; set; }
         public virtual User UserId { get; set; }
+        public string IskaNumber { get; set; }
 
         #region WarehouseLeg
         public string WarehouseLegWarehouseId { get; set; }

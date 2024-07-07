@@ -1015,7 +1015,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                         this.FiltersMenu = $event.Filters;
                                         this.MenuHeaderchangeevent.emit({ Filters: $event.Filters, RemoveFilter: $event.RemoveFilter });
                                     });
-                                    cmpRef.instance.CustomGetTotalCount.subscribe(($event: number) => {
+                                    cmpRef.instance?.CustomGetTotalCount?.subscribe(($event: number) => {
                                         this.CustomGetTotalCount = $event;
                                     });
                                 });
@@ -2965,6 +2965,9 @@ export class ListComponent implements OnInit, AfterViewInit {
             else if (this.ObjectTableName == "Customs.LogisticActionRequest") {
                 this.NewEntityButtonLabel = TextCodeTranslator.Translate('Customs.General.O.OpenLogisticActionRequest')
             }
+            else if (this.SelectedQuery.NameTextCodeCode == "Shipment.Q.CustomsShipments") {
+                this.NewEntityButtonLabel = TextCodeTranslator.Translate('Shipment.O.OpenNewCustomShipment');
+            }
             else if (this.ObjectTableName == "Currency") {
                 this.NewEntityButtonLabel = TextCodeTranslator.Translate("General.B.Add");
             }
@@ -3549,6 +3552,14 @@ export class ListComponent implements OnInit, AfterViewInit {
 
             if (this.ObjectTableName == "DefaultAndConfiguration") {
                 str = 'Add Default And Configuration'
+            }
+
+            if (this.ObjectTableName == "Shipment"){
+                var args = new NewEntityArgs();
+                args.QueryNameTextCode = AppTool.IsNullOrEmpty(this.SelectedQuery) ? null : this.SelectedQuery.NameTextCodeCode;
+                logWindow.WindowArgs = args;
+
+                str = TextCodeTranslator.Translate('Shipment.O.NewShipment');
             }
 
             if (!AppTool.IsNullOrEmpty(this.NewButtonLable)) {

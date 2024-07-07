@@ -218,7 +218,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.initializer.ShipmentUnassignedFieldChangeSet = shipmentUnassignedFieldChangeSet;
         }
 
-        public void Create()
+        public void Create(bool isCustomShipment = false, string declarationOfficeCode = null)
         {
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
@@ -238,13 +238,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.calculatePayables = false;
                 this.calculateReceivables = false;
 
-                this.initializer.HandleBehaviours();
+                if (!isCustomShipment)
+                {
+                    this.initializer.HandleBehaviours();
+                }
 
                 this.entityMasterData = this.initializer.EntityMasterData;
 
                 this.InitializeComponent();
 
-                if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
+                if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive && !isCustomShipment)
                 {
                     this.initializer.HandleValidators();
 
@@ -252,6 +255,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     ShipmentValidating.ValidateFutureRoutingDates(entityPM, entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries);
                 }
 
+                if (isCustomShipment)
+                {
+                    // todo: validate
+                    // ShipmentValidating.ValidateFutureRoutingDates(entityPM, entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries);
+
+                    this.entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "SHIP", entityPM.DirectionId, entityPM.TransportModeId);
+
+                    // todo: get default values
+                    this.entityPM.SalesmanUserId = "123";
+                    this.entityPM.ReferantUserId = "456";
+                }
 
                 foreach (ShipmentPackagePM itemPM in entityPM.ShipmentPackages)
                 {
@@ -329,7 +343,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 entityPM.CalculatePayables = calculatePayables;
                 entityPM.CalculateReceivables = calculateReceivables;
 
-                if (!entityPM.IsHybrid && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
+                if (!entityPM.IsHybrid && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive && !isCustomShipment)
                 {
                     shipmentTracing.BeginTracing();
                 }

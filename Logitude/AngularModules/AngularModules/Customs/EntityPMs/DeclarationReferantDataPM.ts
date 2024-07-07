@@ -279,11 +279,6 @@ export class DeclarationReferantDataPM {
     public set MawbDate(newValue: Date) { if (this.mawbDate != newValue) { this.mawbDate = newValue; this.MarkAsDirty("MawbDate"); } }
        
 	 
-    private iskaNumber: string;
-    public get IskaNumber() { return this.iskaNumber; }
-    public set IskaNumber(newValue: string) { if (this.iskaNumber != newValue) { this.iskaNumber = newValue; this.MarkAsDirty("IskaNumber"); } }
-       
-	 
     private vessel: string;
     public get Vessel() { return this.vessel; }
     public set Vessel(newValue: string) { if (this.vessel != newValue) { this.vessel = newValue; this.MarkAsDirty("Vessel"); } }
