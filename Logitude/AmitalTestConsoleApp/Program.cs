@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Logitude.BL.Helpers;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
