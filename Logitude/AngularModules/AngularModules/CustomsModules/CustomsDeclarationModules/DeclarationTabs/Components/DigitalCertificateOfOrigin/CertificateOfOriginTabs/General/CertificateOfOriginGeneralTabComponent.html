@@ -80,11 +80,11 @@
                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsMultiline]="true" [EnableKeyDown]="true" [Direction]="'LTR'">></LogTextBox>
                         </td>
                         <td style="width: 30px;"></td>
-                        <td style="width:130px">
+                        <td style="width:130px" class="boxBorderRightTop">
                             <LogLabel [ObjectFieldName]="'OriginCountry'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td style="width:180px">
+                        <td style="width:180px" class="boxBorderLeftTop">
                             <LogLov [ObjectFieldName]="'OriginCountry'" [ObjectTableName]="ObjectTableName"
                                 [SelectedValue]="OriginCountry" [DataContext]="DataContext"
                                 [LookUpTableName]="'Customs.CustomsCountry'" [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
@@ -113,11 +113,11 @@
                                 [DataContext]="DataContext" [Direction]="'LTR'"></LogTextBox>
                         </td>
                         <td style="width: 30px;"></td>
-                        <td style="width:130px" rowspan="1">
+                        <td style="width:130px" rowspan="1" class="boxBorderRightBottom">
                             <LogLabel [ObjectFieldName]="'OriginGroupOfCountry'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td style="width:180px" rowspan="1">
+                        <td style="width:180px" rowspan="1" class="boxBorderLeftBottom">
                             <LogLov [ObjectFieldName]="'OriginGroupOfCountry'" [ObjectTableName]="ObjectTableName"
                                 [SelectedValue]="OriginGroupOfCountry" [DataContext]="DataContext"
                                 [LookUpTableName]="'Customs.CountryGroup'" [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
@@ -126,11 +126,11 @@
                     <!-- Third Row B -->
                     <tr class="FieldRow">
                         <td style="width: 30px;"></td>
-                        <td style="width:130px" rowspan="1">
+                        <td style="width:130px" rowspan="1" class="boxBorderRightTop">
                             <LogLabel [ObjectFieldName]="'DestinationCountry'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td style="width:180px" rowspan="1">
+                        <td style="width:180px" rowspan="1" class="boxBorderLeftTop">
                             <LogLov [ObjectFieldName]="'DestinationCountry'" [ObjectTableName]="ObjectTableName"
                                 [SelectedValue]="DestinationCountry" [DataContext]="DataContext"
                                 [LookUpTableName]="'Customs.CustomsCountry'" [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
@@ -158,11 +158,11 @@
                                 [LookUpTableName]="'Customs.CustomsCountry'" [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
                         </td>
                         <td style="width: 30px;"></td>
-                        <td style="width:130px">
+                        <td style="width:130px" class="boxBorderRightBottom">
                             <LogLabel [ObjectFieldName]="'DestinationGroupOfCountries'"
                                 [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td style="width:180px">
+                        <td style="width:180px" class="boxBorderLeftBottom">
                             <LogLov [ObjectFieldName]="'DestinationGroupOfCountries'"
                                 [ObjectTableName]="ObjectTableName" [SelectedValue]="DestinationGroupOfCountries"
                                 [DataContext]="DataContext" [LookUpTableName]="'Customs.CountryGroup'"
@@ -208,11 +208,11 @@
                         <td></td>
                         <td></td>
                         <td style="width: 30px;"></td>
-                        <td style="width:130px">
+                        <td style="width:130px" class="boxBorderRightTop">
                             <LogLabel [ObjectFieldName]="'TradeAgreementCountry2'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td style="width:180px">
+                        <td style="width:180px" class="boxBorderLeftTop">
                             <LogLov [ObjectFieldName]="'TradeAgreementCountry2'" [ObjectTableName]="ObjectTableName"
                                 [SelectedValue]="TradeAgreementCountry2" [DataContext]="DataContext"
                                 [LookUpTableName]="'Customs.CustomsCountry'" [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
@@ -238,11 +238,11 @@
                             </div>
                         </td>
                         <td style="width: 30px;"></td>
-                        <td>
+                        <td class="boxBorderRightBottom">
                             <LogLabel [ObjectFieldName]="'TradeAgreementGroupOfCountries'"
                                 [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td>
+                        <td class="boxBorderLeftBottom">
                             <LogLov [ObjectFieldName]="'TradeAgreementGroupOfCountries'"
                                 [ObjectTableName]="ObjectTableName" [SelectedValue]="TradeAgreementGroupOfCountries"
                                 [DataContext]="DataContext" [LookUpTableName]="'Customs.CountryGroup'"

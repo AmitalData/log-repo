@@ -10,6 +10,23 @@
 //     height: 50px !important;
 // }
 
+.boxBorderRightTop {
+    border-top: 1px solid #3BB3E2;
+    border-right: 1px solid #3BB3E2;
+}
+.boxBorderRightBottom {
+    border-bottom: 1px solid #3BB3E2;
+    border-right: 1px solid #3BB3E2;
+}
+.boxBorderLeftTop {
+    border-top: 1px solid #3BB3E2;
+    border-left: 1px solid #3BB3E2;
+}
+.boxBorderLeftBottom {
+    border-bottom: 1px solid #3BB3E2;
+    border-left: 1px solid #3BB3E2;
+}
+
 ::ng-deep .AddressBox .InputDiv {
     height: 55px !important;
 }

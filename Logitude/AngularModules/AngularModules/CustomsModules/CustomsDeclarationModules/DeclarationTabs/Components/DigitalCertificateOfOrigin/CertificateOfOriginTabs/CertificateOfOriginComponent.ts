@@ -250,13 +250,11 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
             this.EntityPM.CertificateOriginItemItems.forEach(item => {
                 if(AppTool.IsNullOrEmpty(item.MarksAndNumbers)){
                     // chenge to textcode
-                    // this.ValidationErrors.push( "שורה " + counterLine +"- "+ TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.MarkIsReq"));
-                    this.ValidationErrors.push( "שורה " + counterLine+"- "+ "שדה סימונים ומספרים חובה למילוי");
+                    this.ValidationErrors.push( "שורה " + counterLine +"- "+ TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.MarkIsReq"));
                 }
                 if(item.PackingTypeName == "CONTAINER" || item.PackageType == "D5" ){
                     // chenge to textcode
-                    // this.ValidationErrors.push( "שורה " + counterLine +"- "+ TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.ContainerTypeReq"));
-                    this.ValidationErrors.push( "שורה " + counterLine +"- "+ "חובה סוג מכולה");
+                    this.ValidationErrors.push( "שורה " + counterLine +"- "+ TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.ContainerTypeReq"));
                 }
                 counterLine++;
             });
