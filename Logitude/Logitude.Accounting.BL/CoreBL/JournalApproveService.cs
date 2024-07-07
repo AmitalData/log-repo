@@ -1718,8 +1718,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (DateTime.UtcNow.Date > _NextDueDoneAt.Date)
                 {
-                    Logger.LogDebug("JornalApprove beforeAddBatchTask selected queue: {0}, workerRoleName: {1}  , time:{2} ",
-                        selectedQueue, LogitudeSettings.WorkerRoleName, DateTime.Now );
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("JornalApprove beforeAddBatchTask selected queue: {0}, workerRoleName: {1}  , time:{2} ",
+                        null,selectedQueue, LogitudeSettings.WorkerRoleName, DateTime.Now );
 
                 }
 
@@ -1826,7 +1826,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-                Logger.LogDebug("in selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR);");
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("in selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR);");
 
                 try
                 {
@@ -1835,17 +1835,17 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         workerRoleName = LogitudeSettings.WorkerRoleName;
                     }
-                    Logger.LogDebug(" if (DateTime.UtcNow.Date > _NextDueDoneAt.Date && workerRoleName != \"staging\")" + workerRoleName);
-                    Logger.LogDebug(" _NextDueDoneAt.Date" + _NextDueDoneAt.Date);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(" if (DateTime.UtcNow.Date > _NextDueDoneAt.Date && workerRoleName != \"staging\")" + workerRoleName);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(" _NextDueDoneAt.Date" + _NextDueDoneAt.Date);
 
                     if (DateTime.UtcNow.Date > _NextDueDoneAt.Date && workerRoleName != "staging")
                     {
 
-                        Logger.LogDebug(" _NextDueDoneAt.Date 2" + _NextDueDoneAt.Date);
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug(" _NextDueDoneAt.Date 2" + _NextDueDoneAt.Date);
 
                         if (DateTime.Now < new DateTime(2050, 06, 01))
                         {
-                            Logger.LogDebug("CreateBatchAccountingIntegrityCheck");
+                            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CreateBatchAccountingIntegrityCheck");
                             CreateBatchAccountingIntegrityCheck();
                         }
                         _NextDueDoneAt = DateTime.UtcNow.Date;

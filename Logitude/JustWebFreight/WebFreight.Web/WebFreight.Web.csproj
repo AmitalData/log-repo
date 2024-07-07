@@ -540,14 +540,12 @@
     <Reference Include="NetCommonHelper, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NetCommonHelper.1.0.7\lib\net472\NetCommonHelper.dll</HintPath>
     </Reference>
-   
     <Reference Include="NetCommonHelper, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NetCommonHelper.1.0.6\lib\net46\NetCommonHelper.dll</HintPath>
     </Reference>
-    
- <Reference Include="NewRelic.Api.Agent, Version=10.0.0.0, Culture=neutral, PublicKeyToken=06552fced0b33d87, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NewRelicWindowsAzure.10.25.0\lib\NewRelic.Api.Agent.dll</HintPath>    
-</Reference>
+    <Reference Include="NewRelic.Api.Agent, Version=10.0.0.0, Culture=neutral, PublicKeyToken=06552fced0b33d87, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NewRelicWindowsAzure.10.25.0\lib\NewRelic.Api.Agent.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -1120,8 +1118,6 @@
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ConfirmationNumberDefaultViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ConfirmationNumberStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\ConfirmationNumberDefaultController.Generated.cs" />
-
-
     <Compile Include="Controllers\Monitoring\MonitoringController.cs" />
     <Compile Include="Controllers\SendGridNotifications\SendGridNotificationsController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ContainersController.cs" />
@@ -4732,10 +4728,6 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\WarehouseLibUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\WorkflowUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\ObjectFields\MetaDataUpdateClass.InvoiceModel.cs" />
-    
-   
-   
-   
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARInvoiceLineAction.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.SATPaymentMethod.cs" />
     <Compile Include="CommonDataModel\DomainServices\PartnersDomainService.WarehouseType.cs" />
@@ -6777,9 +6769,16 @@
     <Compile Include="MetaDataUpdate\MetaDataUpdateClass.Screens.cs" />
     <Compile Include="MetaDataUpdate\MetaDataUpdateClass.TableCounters.cs" />
     <Compile Include="MetaDataUpdate\ObjectFields\MetaDataUpdateClass.QuoteModel.cs" />
-  
-    
-   
+    <Compile Include="MetaDataUpdate\PerformanceTimerLogger.cs" />
+    <Compile Include="MetaDataUpdate\UpdateClasses\AccountingUpdate.cs" />
+    <Compile Include="MetaDataUpdate\UpdateClasses\BookingUpdate.cs" />
+    <Compile Include="MetaDataUpdate\UpdateClasses\CRMUpdate.cs" />
+    <Compile Include="MetaDataUpdate\UpdateClasses\ObjectTablesKeys.cs" />
+    <Compile Include="MetaDataUpdate\UpdateClasses\QuoteOPMUpdate.cs" />
+    <Compile Include="MetaDataUpdate\UpdateClasses\SocialUpdate.cs" />
+    <Compile Include="MetaDataUpdate\UpdateClasses\TariffModuleUpdate.cs" />
+    <Compile Include="MetaDataUpdate\UpdateClasses\TimeManagementUpdate.cs" />
+    <Compile Include="MetaDataUpdate\UpdateClasses\WarehouseUpdate.cs" />
     <Compile Include="Params\EmailBodyArgs.cs" />
     <Compile Include="Params\EmailBodyParams.cs" />
     <Compile Include="Params\EmailBodyResults.cs" />
