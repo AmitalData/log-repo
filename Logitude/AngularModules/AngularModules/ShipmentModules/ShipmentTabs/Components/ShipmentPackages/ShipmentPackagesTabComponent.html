@@ -1,7 +1,108 @@
 <table>
     <tr>
-        <td>
-            container file component
+        <td class="title-container">
+            <div class="TabTitleRow" style="width:150px">  {{'Customs.Declaration.TH.ExporterInvoices'| TextCodeTranslationPipe}} </div>
+            </td> 
+        <td style="height: 20px;padding-bottom: 0px;top:2px; left:5px;width:30px">
+
+            <IconButton [IsEnabled]="!IsReadOnly" [Name]="'Add'" [IsSmall]="true" (click)="Add()" style="top:18px; ">
+            </IconButton>
         </td>
     </tr>
-</table>
+    <tr>
+        <td>
+            <div class="CellContent" style="bottom: 5px;padding:5px">
+                <logitude-edit-grid GridWidth="100%" GridHeight="100%" (RowEnded)="OnRowEnded($event)"
+                    (Ondblclick)="OnFocus()" [IsReadOnly]="IsReadOnly" [UseVirtuallization]="true"
+                    [SelectedRow]="SelectedRow" [ItemSource]="ItemsSource"
+                    (SelectedItemChanged)="OnSelectedItemChanged($event)" [ChangeScrollPosition]="ChangeScrollPosition">
+
+                    <log-column [header]="'#' | TextCodeTranslationPipe" [binding]="'getCounter(index)'" [width]="'30'"
+                        [Alignment]="'center'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate [RIndex]="item.rowIndex" [TabIndex]="-1">
+                                <div style="text-align:center" class="TextTrimming">
+                                    <span>{{ item.index }}</span>
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+                    <log-column [header]="'ShipmentPackage.F.ContainerNumber' | TextCodeTranslationPipe"
+                    [binding]="'ContainerNumber'" [width]="'150'" [Alignment]="'right'" [Editable]="true">
+                    <ng-template let-item>
+                        <log-cell-template (CellClicked)="onCellSelected($event,item)" #logcelltemplate
+                            [RIndex]="item.rowIndex">
+                            <div class="TextTrimming" style="text-align:right"
+                                *ngIf="logcelltemplate.IsDisplayMode">
+                                <span>{{item.ContainerNumber}}</span>
+                            </div>
+                            <div (click)="OnSelectedItemChanged(item)" *ngIf="logcelltemplate.IsEditMode">
+                                <LogTextBox [ObjectFieldName]="'ContainerNumber'" [DataContext]="item"
+                                    [InputType]="'text'" [FocusOnMe]="true" [Text]="item.ContainerNumber"
+                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                            </div>
+                        </log-cell-template>
+                    </ng-template>
+                </log-column>
+                    <log-column [header]="'ShipmentPackage.F.PackageTypeId' | TextCodeTranslationPipe"
+                        [binding]="'PackageTypeId'" [width]="'150'" [Alignment]="'right'" [Editable]="true">
+                        <ng-template let-item>
+                            <log-cell-template (CellClicked)="onCellSelected($event,item)" #logcelltemplate
+                                [RIndex]="item.rowIndex">
+                                <div class="TextTrimming" style="text-align:right"
+                                    *ngIf="logcelltemplate.IsDisplayMode">
+                                    <span>{{item.PackageTypeId}}</span>
+                                </div>
+                                <div *ngIf="logcelltemplate.IsEditMode">
+                                    <LogLov [ObjectFieldName]="'PackageTypeId'"
+                                                                                                [SelectedValue]="'PackageTypeId'"
+                                                                                                [ObjectTableName]="ObjectTableName"
+                                                                                                [DataContext]="item"
+                                                                                                [LookUpTableName]="'PackageType'"
+                                                                                                [DependencyFilter2Value]="true">
+                                                                                        </LogLov>
+
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+                    <log-column [header]="'ShipmentPackage.F.ShipperSeal' | TextCodeTranslationPipe"
+                    [binding]="'ShipperSeal'" [width]="'150'" [Alignment]="'right'" [Editable]="true">
+                    <ng-template let-item>
+                        <log-cell-template (CellClicked)="onCellSelected($event,item)" #logcelltemplate
+                            [RIndex]="item.rowIndex">
+                            <div class="TextTrimming" style="text-align:right"
+                                *ngIf="logcelltemplate.IsDisplayMode">
+                                <span>{{item.ShipperSeal}}</span>
+                            </div>
+                            <div (click)="OnSelectedItemChanged(item)" *ngIf="logcelltemplate.IsEditMode">
+                                <LogTextBox [ObjectFieldName]="'ShipperSeal'" [DataContext]="item"
+                                    [InputType]="'text'" [FocusOnMe]="true" [Text]="item.ShipperSeal"
+                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                            </div>
+                        </log-cell-template>
+                    </ng-template>
+                </log-column>
+                <log-column [header]="'ShipmentPackage.F.Weight' | TextCodeTranslationPipe"
+                [binding]="'Weight'" [width]="'150'" [Alignment]="'right'" [Editable]="true">
+                <ng-template let-item>
+                    <log-cell-template (CellClicked)="onCellSelected($event,item)" #logcelltemplate
+                        [RIndex]="item.rowIndex">
+                        <div class="TextTrimming" style="text-align:right"
+                            *ngIf="logcelltemplate.IsDisplayMode">
+                            <span>{{item.Weight}}</span>
+                        </div>
+                        <div (click)="OnSelectedItemChanged(item)" *ngIf="logcelltemplate.IsEditMode">
+                            <LogTextBox [ObjectFieldName]="'Weight'" [DataContext]="item"
+                                [InputType]="'text'" [FocusOnMe]="true" [Text]="item.Weight"
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </div>
+                    </log-cell-template>
+                </ng-template>
+            </log-column>
+                </logitude-edit-grid>
+
+            </div>
+        </td>
+    </tr>
+</table>F
