@@ -292,7 +292,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 }
                 
                 this.certificateOfOriginMandatoryFieldsList = myResponse?.Result;
-                console.log(this.certificateOfOriginMandatoryFieldsList);
+                
                 this.formSectionsCouples = new FormSectionsCouples(this.certificateOfOriginMandatoryFieldsList);
                 
                 if (this.certificateOfOriginMandatoryFieldsList.length > 0) {
@@ -327,7 +327,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             if (group.isMandatoryCouple && isMandatory == FieldRequirement.Condition) {
                 this.UIProperties.SetWarning(group.fields[0], this.ObjectTableName, enabled);
                 this.UIProperties.SetWarning(group.fields[1], this.ObjectTableName, enabled);
-                // debugger
             }             
             this.checkWarningsCouples()
         });
@@ -495,14 +494,12 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
 
     public CheckMandatoryCustomsFields(ValidationErrors = []) {
-        let tempListValidationErrors = [];
         this.tempCertificateOfOriginMandatoryFieldsList.forEach(item => {
             if(item){           
                 let field = this.entityPM[item.MappedCertificateFieldsName];
                 if (!field){
                     var fieldName = TextCodeTranslator.Translate('Customs.CertificateOfOrigin.F.' + item.MappedCertificateFieldsName); 
                     if(fieldName != ""){
-                        debugger
                         ValidationErrors.push(fieldName); 
                     } 
                     
@@ -510,7 +507,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             }
         });
       
-        // tempListValidationErrors = ValidationErrors;
         this.formSectionsCouples.groupOfCountriesList.forEach(group => {
             let field1 = this.entityPM[group.fields[0]];
             let field2 = this.entityPM[group.fields[1]];
@@ -529,13 +525,9 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             else if (field1 && !field2){
                 var fieldName= TextCodeTranslator.Translate('Customs.CertificateOfOrigin.F.' + group.fields[1]);                
                 ValidationErrors = ValidationErrors.filter(i=> i !=  fieldName);
-                console.log(ValidationErrors);
-                debugger
             }            
         }); 
-        console.log(ValidationErrors);
-        
-        debugger
+        return ValidationErrors;
     }
 
     

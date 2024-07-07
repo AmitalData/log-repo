@@ -249,12 +249,10 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         if (this.EntityPM.RequestReasonCode != "10" && this.EntityPM.RequestReasonCode != "13"  && this.EntityPM.RequestReasonCode != "14") {
             this.EntityPM.CertificateOriginItemItems.forEach(item => {
                 if(AppTool.IsNullOrEmpty(item.MarksAndNumbers)){
-                    // chenge to textcode
-                    this.ValidationErrors.push( "שורה " + counterLine +"- "+ TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.MarkIsReq"));
+                    this.ValidationErrors.push( `${TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.number")} ${counterLine}- ${ TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.MarkIsReq")}`);
                 }
                 if(item.PackingTypeName == "CONTAINER" || item.PackageType == "D5" ){
-                    // chenge to textcode
-                    this.ValidationErrors.push( "שורה " + counterLine +"- "+ TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.ContainerTypeReq"));
+                    this.ValidationErrors.push(`${TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.number")} ${counterLine}- ${ TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.ContainerTypeReq")}`);
                 }
                 counterLine++;
             });
@@ -364,7 +362,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         this.checkRequestReasonCode();
         
         if (this.SelectedTabCode == "GENERAL"){
-            this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);
+            this.GeneralValidationErrors = this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);            
         }
         else if(this.SelectedTabCode == "MOREDATA"){
             this.MOREDATA.CheckMandatoryCustomsFields(this.MoreDataValidationErrors);
