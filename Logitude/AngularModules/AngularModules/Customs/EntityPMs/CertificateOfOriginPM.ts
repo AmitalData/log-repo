@@ -498,6 +498,11 @@ export class CertificateOfOriginPM {
     public set IsChange(newValue: boolean) { if (this.isChange != newValue) { this.isChange = newValue; this.MarkAsDirty("IsChange"); } }
        
 	 
+    private openDate: Date;
+    public get OpenDate() { return this.openDate; }
+    public set OpenDate(newValue: Date) { if (this.openDate != newValue) { this.openDate = newValue; this.MarkAsDirty("OpenDate"); } }
+       
+	 
 
     public OldEntityPM: CertificateOfOriginPM;
 		

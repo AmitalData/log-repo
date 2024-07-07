@@ -64,17 +64,20 @@
                             <LogLabel [ObjectFieldName]="'ExporterName'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td style="width:180px">
-                            <LogTextBox [ObjectFieldName]="'ExporterName'" [DataContext]="DataContext"
-                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        <td style="width:180px" class="nameBox">
+                            
+
+                                <LogTextBox [ObjectFieldName]="'ExporterName'" [DataContext]="DataContext"
+                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsMultiline]="true" [EnableKeyDown]="true" [Direction]="'LTR'"></LogTextBox>
+                             
                         </td>
                         <td style="width:130px; padding-right: 10px">
                             <LogLabel [ObjectFieldName]="'ConsigneeName'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td style="width:180px">
+                        <td style="width:180px"  class="nameBox">
                             <LogTextBox [ObjectFieldName]="'ConsigneeName'" [DataContext]="DataContext"
-                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsMultiline]="true" [EnableKeyDown]="true" [Direction]="'LTR'">></LogTextBox>
                         </td>
                         <td style="width: 30px;"></td>
                         <td style="width:130px">

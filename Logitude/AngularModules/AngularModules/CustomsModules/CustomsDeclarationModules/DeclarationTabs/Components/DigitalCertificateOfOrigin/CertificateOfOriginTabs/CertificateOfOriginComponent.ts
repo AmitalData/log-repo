@@ -243,6 +243,25 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         }
     }
 
+    
+    checkRequestReasonCode() {
+        let counterLine = 1;
+        if (this.EntityPM.RequestReasonCode != "10" && this.EntityPM.RequestReasonCode != "13"  && this.EntityPM.RequestReasonCode != "14") {
+            this.EntityPM.CertificateOriginItemItems.forEach(item => {
+                if(AppTool.IsNullOrEmpty(item.MarksAndNumbers)){
+                    // chenge to textcode
+                    // this.ValidationErrors.push( "שורה " + counterLine +"- "+ TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.MarkIsReq"));
+                    this.ValidationErrors.push( "שורה " + counterLine+"- "+ "שדה סימונים ומספרים חובה למילוי");
+                }
+                if(item.PackingTypeName == "CONTAINER" || item.PackageType == "D5" ){
+                    // chenge to textcode
+                    // this.ValidationErrors.push( "שורה " + counterLine +"- "+ TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.ContainerTypeReq"));
+                    this.ValidationErrors.push( "שורה " + counterLine +"- "+ "חובה סוג מכולה");
+                }
+                counterLine++;
+            });
+        }
+    }
 
     // Init data from MOREDATA page:
     InitMoreDataScreenValues() {
@@ -272,8 +291,11 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         this.EntityPM.IsUnitedInvoices ? this.EntityPM.IsUnitedInvoices : this.EntityPM.IsUnitedInvoices = false;
 
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-
+               
         if (this.IsNewOrEdit == StatusCertificateOfOrigin.IsNew) {
+            // init open date:
+            this.EntityPM.OpenDate = new Date();
+            
             this.certificateOfOriginPMService.insert(this.EntityPM).subscribe((response: any) => {
                 if (!response.HasError) {
                     var result = response.Result;
@@ -335,10 +357,13 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     MoreDataValidationErrors = [];
 
     async SendButtonClicked(customSendOptionsArgs: any) {
+        
         // init lists:
         this.ValidationErrors = [];
         this.GeneralValidationErrors = [];
         this.MoreDataValidationErrors = [];
+
+        this.checkRequestReasonCode();
         
         if (this.SelectedTabCode == "GENERAL"){
             this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);
