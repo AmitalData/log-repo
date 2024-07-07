@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
+using System.Linq;
 
 namespace Logitude.BL.Helpers
 {
@@ -42,40 +43,55 @@ namespace Logitude.BL.Helpers
 
         private object Convert(string value, string typeString)
         {
-            Console.WriteLine("deserializing value: " + value + ", type: " + typeString);
             try
             {
                 if (string.IsNullOrWhiteSpace(value) || string.IsNullOrWhiteSpace(typeString))
-                {
-                    Console.WriteLine("SetValueType or Value is null or empty.");
                     return null;
-                }
-
-                Type type = Type.GetType(typeString);
+                
+                Type type = Type.GetType(typeString) ?? AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.GetType(typeString) != null)?.GetType(typeString);
+                if(type == null)
+                    throw new Exception("Type not found: " + typeString);
 
                 if (type == typeof(string))
                     return value;
+                if (type == typeof(int))
+                    return int.Parse(value);
+                if (type == typeof(long))
+                    return long.Parse(value);
+                if (type == typeof(double))
+                    return double.Parse(value);
+                if (type == typeof(bool))
+                    return bool.Parse(value);
+                if (type == typeof(DateTime))
+                    return DateTime.Parse(value);
+                if (type == typeof(DateTimeOffset))
+                    return DateTimeOffset.Parse(value);
+                if (type == typeof(string))
+                    return value;
+                if (type == typeof(string[]))
+                    return value.Split(',');
+                if (type == typeof(int[]))
+                    return Array.ConvertAll(value.Split(','), int.Parse);
+                if (type == typeof(long[]))
+                    return Array.ConvertAll(value.Split(','), long.Parse);
+                if (type == typeof(double[]))
+                    return Array.ConvertAll(value.Split(','), double.Parse);
+                if (type == typeof(bool[]))
+                    return Array.ConvertAll(value.Split(','), bool.Parse);
+                if (type == typeof(DateTime[]))
+                    return Array.ConvertAll(value.Split(','), DateTime.Parse);
+                if (type == typeof(Guid[]))
+                    return Array.ConvertAll(value.Split(','), Guid.Parse);
+                if (type == typeof(DateTimeOffset[]))
+                    return Array.ConvertAll(value.Split(','), DateTimeOffset.Parse);
 
-                //if (type == typeof(int) || type == typeof(double) || type == typeof(bool) || type == typeof(DateTime))
-                //    return type.GetMethod("Parse").Invoke(null, new object[] { value });
+                object deserializedObject = JsonConvert.DeserializeObject(value, type);
 
-                var deserializedObject = JsonConvert.DeserializeObject(value, type);
-
-                
-                if (deserializedObject is Array array)
-                {
-                    foreach (var item in array)
-                        Console.WriteLine(item);
-
-                    return array;
-                }
-                else
-                    return deserializedObject;
-
+                return deserializedObject is Array array ? array : deserializedObject;
             }
             catch (Exception e)
-            {
-                Console.WriteLine($"An error occurred while deserializing value: " + value + ", type: " + typeString + ", error: " + e);
+            {                
+                //Logger($"An error occurred while deserializing value: " + value + ", type: " + typeString + ", error: " + e);
                 return null;
             }
         }
