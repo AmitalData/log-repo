@@ -9,22 +9,23 @@
 //     max-height: 50px !important;
 //     height: 50px !important;
 // }
+$border-color: #3BB3E2;
 
 .boxBorderRightTop {
-    border-top: 1px solid #3BB3E2;
-    border-right: 1px solid #3BB3E2;
+    border-top: 1px solid $border-color;
+    border-right: 1px solid $border-color;
 }
 .boxBorderRightBottom {
-    border-bottom: 1px solid #3BB3E2;
-    border-right: 1px solid #3BB3E2;
+    border-bottom: 1px solid $border-color;
+    border-right: 1px solid $border-color;
 }
 .boxBorderLeftTop {
-    border-top: 1px solid #3BB3E2;
-    border-left: 1px solid #3BB3E2;
+    border-top: 1px solid $border-color;
+    border-left: 1px solid $border-color;
 }
 .boxBorderLeftBottom {
-    border-bottom: 1px solid #3BB3E2;
-    border-left: 1px solid #3BB3E2;
+    border-bottom: 1px solid $border-color;
+    border-left: 1px solid $border-color;
 }
 
 ::ng-deep .AddressBox .InputDiv {
