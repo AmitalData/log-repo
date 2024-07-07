@@ -22,7 +22,7 @@ using Logitude.CargoTracking.Data.EntityPOCOs;
 using Logitude.CargoTracking.Data; 
 using Logitude.CargoTracking.Data.EntityMapping;
 using System.Data.Entity.Infrastructure.Interception;
-
+using  Devart.Data.Oracle.Entity.Configuration;
 namespace Logitude.CargoTracking.Data
 {
     public  partial  class CargoTrackingContext: DbContextBase, ICargoTrackingContext
@@ -59,7 +59,7 @@ namespace Logitude.CargoTracking.Data
 
 		    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-                var config = Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance;
+                var config = OracleEntityProviderConfig.Instance;
                 config.Workarounds.DisableQuoting = true;
                 config.Workarounds.IgnoreSchemaName = true;
                 

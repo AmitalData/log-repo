@@ -100,7 +100,7 @@ LastError:{4}",
                         _LastGetServiceBusStateAt = DateTime.Now;
                         _AllQ = CustomsWorkerRole.Utils.ServiceBusUtil.ShowAll();
                         _AllQ = "Retrieve ServiceBus at " + DateTime.Now.ToString() + " :" + _AllQ;
-                        Debug.WriteLine(_AllQ);
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug(_AllQ);
                     }
 
 
@@ -108,7 +108,7 @@ LastError:{4}",
                 catch (Exception eee)
                 {
                     _AllQ = "CustomsWorkerRole.Utils.ServiceBusUtil.ShowAll failed :" + eee.ToString();
-                    Debug.WriteLine(_AllQ);
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(_AllQ);
                 }
 
                 //SendReqSheetStatistic();
@@ -178,7 +178,7 @@ LastError:{4}",
                                 };
                     //parameters.To += ";itzik@amital.co.il;YaronC@AMITAL.CO.IL";
                     //parameters.Tenant = 92;
-                    Debug.WriteLine(parameters.To);
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(parameters.To);
                                 CommunicationWorkerRole.EmailingHelper.SendEmail(parameters);
                             });
         }
@@ -203,26 +203,27 @@ LastError:{4}",
         {
             try
             {
-                string Source = SandBoxDir();
-                DirectoryInfo DirectoryInfo1 = new DirectoryInfo(Source);
-                if (!DirectoryInfo1.Exists)
-                    DirectoryInfo1.Create();
-                else
-                {
-                    DirectoryInfo1.Delete(true);
-                    DirectoryInfo1.Create();
-                }
+                //todo:elisheva check
+                //string Source = SandBoxDir();
+                //DirectoryInfo DirectoryInfo1 = new DirectoryInfo(Source);
+                //if (!DirectoryInfo1.Exists)
+                //    DirectoryInfo1.Create();
+                //else
+                //{
+                //    DirectoryInfo1.Delete(true);
+                //    DirectoryInfo1.Create();
+                //}
             }
             catch (Exception e)
             {
-                Logger.LogMe(e.ToString(), true);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
             }
         }
 
-        internal static string SandBoxDir()
-        {
-            return Logger.WorkingDir + @"..\SandBox\";
-        }
+        //internal static string SandBoxDir()
+        //{
+        //    return Logger.WorkingDir + @"..\SandBox\";
+        //}
 
 
 

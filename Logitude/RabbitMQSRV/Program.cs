@@ -53,7 +53,7 @@ namespace RabbitMQSRV
             {
                 var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
                 prodInfo = assemblyUtil.GetProductInfo(typeof(Program).Assembly);
-                Logger.LogMe(prodInfo, false);
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(prodInfo);
 
                 Action<bool, bool,bool> BuildObjectTablesZipFilesDataAction = WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
                 /*CustomsWorkerRole.*/CustomsWorkerEntryPoint.StartStatic(false, BuildObjectTablesZipFilesDataAction, prodInfo, SecurityUtility.CheckContactFeature);
@@ -86,12 +86,9 @@ namespace RabbitMQSRV
             catch (Exception e)
             {
 
-                Logger.LogMe(e.ToString(), true);
-                if (Environment.UserInteractive)
-                {
-                    Debug.Fail("StartStatic");
-                }
-                Logger.LogMe(e.ToString(), true);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
+               
+               
                 _ThreadStartStaticLoaded = false;
             }
         }
@@ -331,7 +328,11 @@ namespace RabbitMQSRV
                 LogitudeSettings.HandleLogMe = new Action<string, bool, string, DateTime>((mess, err, suffix, stopLogAt) =>
                 {
                     if (DateTime.Now > stopLogAt) return;
-                    Logger.LogMe(mess, err, suffix);
+                    if (err)
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError(mess);
+                    else
+                        NetCommonHelper.Logger.DevLog.Instance.WriteInfo(mess);
+                    
                 });
 
                 LogitudeSettings.RunWorkerRoleAutomaticBreakPoint = false;

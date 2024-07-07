@@ -51,6 +51,7 @@ namespace CargoTrackingWinService.Helper
                 }
                 catch (Exception ex)
                 {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteFatal( ex);
                     Thread.Sleep(ApplicationInfo.UpdateCargoTrackingSleepTime);
                 }
             }

@@ -7,7 +7,7 @@ namespace Unifreight.Data.AmitalModel
 {
     public class SyncRecordCache
     {
-        public static void ClearCacheLasySync(string fileNo, int tenant)
+        public static void ClearCacheLastSync(string fileNo, int tenant)
         {
             TryCatch(() =>
             {
@@ -16,8 +16,9 @@ namespace Unifreight.Data.AmitalModel
             });
         }
 
-        public static void ClearCacheLasySyncByPrimaryNum(string primaryNum, int? tenant)
+        public static void ClearCacheLastSyncByPrimaryNum(string primaryNum, int? tenant)
         {
+            return;
             TryCatch(() =>
             {
                 if (tenant == null || !tenant.HasValue || primaryNum == null || !long.TryParse(primaryNum, out long lCUSTOMFILENO))
@@ -27,7 +28,7 @@ namespace Unifreight.Data.AmitalModel
                 if (fileNo == null)
                     return;
 
-                ClearCacheLasySync(fileNo.Value.ToString(), tenant.Value);
+                ClearCacheLastSync(fileNo.Value.ToString(), tenant.Value);
             });
         }
 
@@ -39,7 +40,7 @@ namespace Unifreight.Data.AmitalModel
             }
             catch (Exception e)
             {
-                Logger.LogMe("Error in ClearCacheLastSync error: " + e, true);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e,"Error in ClearCacheLastSync error" );
             }
         }
     }

@@ -41,7 +41,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         TradeAgreementID, 
 	         CustomsItemID, 
 	         Title, 
-	         CB_ID,
+	         CB_ID, 
+	         TradeAgreementName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

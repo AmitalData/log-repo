@@ -6,8 +6,9 @@ import { AddCommentComponent } from '../add-comment/add-comment.component';
 import { NgFor, NgForOf, NgIf } from '@angular/common';
 import { trigger, style, animate, transition } from '@angular/animations';
 //@ts-ignore
-
 import { mockData } from '../../../../../mock_data';
+import { API_MainService, Filters } from '../../../core/API_MainService';
+import { filter } from 'rxjs';
 
 @Component({
 	selector: 'app-main-display',
@@ -35,16 +36,41 @@ export class MainDisplayComponent {
 	showAddComment: boolean = false;
 	showCommentSidebar: boolean = false;
 	childrenToDesplay: string[] = [];
+	private _filters;
 
-	data: any | never | undefined = {};
+  //data: any | never | undefined = {};
+	data: CB_CustomsItemComputedDataList[] = [];
 
 	KeyValue = Object.keys;
 	Object: ObjectConstructor = Object;
 
+	constructor(private API_MainService: API_MainService) { }
+
 	ngOnInit() {
 		// this.data = this.itemsData;
-		this.data = mockData;
-		console.log(this.data);
+
+		// CHECK MOKE DATA:
+		//this.data = this.orderedData(mockData);
+		// this.item = this.data[0];
+
+		let filters: Filters = {
+			CustomsBookType: '1',
+			Tenant: 0,
+			SearchFields: ''
+		};
+
+		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
+			this.data = this.orderedData(data);
+		});
+
+		// CHECK DATA:
+		this.API_MainService.GetCustomsBookAgreementLevelData(23066,6).subscribe((data: CB_TariffList[]) => {
+			console.log(data);
+		});
+		this.API_MainService.GetCustomsBookRegularityRequirementData(17514).subscribe((data: CBRequirementComputedDataListComponent[]) => {
+			console.log(data);
+		});
+	
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
@@ -53,7 +79,7 @@ export class MainDisplayComponent {
 		}
 		if (changes['itemsData']) {
 			this.itemsData = changes['itemsData'].currentValue;
-		}
+		}		
 	}
 
 	showChildern(id: string): boolean {
@@ -61,4 +87,120 @@ export class MainDisplayComponent {
 		isShown === -1 ? this.childrenToDesplay.push(id) : this.childrenToDesplay.splice(isShown);
 		return Boolean(isShown >= 0);
 	}
+
+	public orderedData = (data) => {
+		const getChildren = (parentItem) => {
+			const children = data.filter((item) => item?.CI_Parent_CustomsItemIDNum === parentItem?.CustomsItemID);
+			// CHECK MOKE DATA:
+			//const children = data.filter((item) => item?.Parent_CustomsItemID === parentItem?.ID);
+			
+			children.forEach((child) => {
+				// @ts-ignore
+				child.children = getChildren(child);
+			});
+			return children;
+		};
+		const rootItems = data.filter((item) => !item?.CI_Parent_CustomsItemIDNum);
+
+		// CHECK MOKE DATA:
+		//const rootItems = data.filter((item) => !item?.Parent_CustomsItemID);
+
+		const orderedData = rootItems.map((rootItem) => {
+			// debugger
+			const children = getChildren(rootItem);
+			return { ...rootItem, children };
+		});
+		
+		return orderedData;
+	};
+	
 }
+
+
+// export class Filters {
+// 	CustomsBookType: string = "1";
+// 	Tenant: number = 0;
+// 	SearchFields: string | null = null;
+// 	CustomsItemHierarchic: string | null = null;
+// 	Reamarks: boolean = false;
+// 	Rules: boolean = false;
+// }
+
+export class CB_CustomsItemComputedDataList {
+	CB_ID: string;
+	ID: number;
+	CustomsItemID: number;
+	FullClassification: string;
+	IsLeaf: boolean;
+	CustomsItemDetailsHistoryID: number;
+	PropertiesDetailsHistoryID: number;
+	PH_MeasurementUnitID?: number;
+	IsHistoryExists: boolean;
+	IsRulesExists: boolean;
+	StartDate: Date;
+	EndDate: Date;
+	CI_Parent_CustomsItemIDNum?: number;
+	CI_BaseFullClassification: string;
+	CI_ComputedCheckDigit: string;
+	CI_CustomsBookTypeIDNum: string;
+	CI_CustomsItemCategoryIDNum: string;
+	ItemHierarchicLocationID: string;
+	CIH_Title: string;
+	CIH_GoodsDescription: string;
+	CustomsItemEntityStatusIDNum: number;
+	PH_IsCarItem?: boolean;
+	FullGoodsDescription: string;
+	Agreements?: number;
+	CustomsRate: string;
+	PurchaseTax: string;
+	OptionalTaxAddition?: number;
+	MeasurementUnitName: string;
+	Remarks: string;
+  	SearchByTextResult: string;
+	children: CB_CustomsItemComputedDataList[];
+}
+
+export class CBRequirementComputedDataListComponent {
+	CB_ID: string;
+	ID: number;
+	RegularityRequirementID: number;
+	CountryID?: number;
+	CustomsItemID?: number;
+	StartDate: Date;
+	EndDate: Date;
+	RegularitySourceCodeID: string;
+	CreateDate?: Date;
+	InceptionCodeID: string;
+	RegularityPublicationCodeID: string;
+	AutonomyCustomsItemID?: number;
+	IsAllCustomsItems: boolean;
+	RequirementValidOrigin: string;
+	RequirementGoodsDescription: string;
+	Authority: string;
+	ConfirmationType: string;
+	InterConditionsRelationship: string;
+	TextualCondition: string;
+	IsPersonalImportIncluded?: boolean;
+	IsCarnetIncluded?: boolean;
+	FromEpisodeDetail: string;
+	AutonomyRegion: string;
+  }
+
+  export class CB_TariffList {
+	ID: number;
+	CreateDate: Date;
+	UpdateDate?: Date;
+	TradeAgreementID?: number;
+	CustomsItemID: number;
+	Title: string;
+	CB_ID: string;
+	Country: string;
+	CustomsRate: string;
+	CustomsRateWithinQuota: string;
+	QuotaID?: number;
+	MeasurementUnitName: string;
+	OptionalTaxAddition?: number;
+	StartDate?: Date;
+	EndDate?: Date;
+	TradeAgreementName: string;
+  }

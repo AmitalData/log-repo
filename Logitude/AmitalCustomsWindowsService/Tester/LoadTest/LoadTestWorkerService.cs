@@ -41,7 +41,7 @@ namespace AmitalCustomsWindowsService.Tester.LoadTest
             catch (Exception e)
             {
 
-                Logger.LogMe(e.ToString(), true, "StopThreads");
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e, "StopThreads");
             }
 
         }
@@ -106,13 +106,13 @@ namespace AmitalCustomsWindowsService.Tester.LoadTest
             {
                 _Threads[iWorker].Join();
             }
-            Logger.LogMe($"Async:{LoadTestWR.Async} TotalRetrieve:{sTotalRetrieve} ThreadCount{sThreadCount} took:{sw.Elapsed} ", false, "TOT." + (LoadTestWR.Async ? "Async" : "Sync"));
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"Async:{LoadTestWR.Async} TotalRetrieve:{sTotalRetrieve} ThreadCount{sThreadCount} took:{sw.Elapsed} "+":"+ "TOT." + (LoadTestWR.Async ? "Async" : "Sync"));
 
         }
         private void StopThread(int iWorker)
         {
             _Workers[iWorker].ServiceStarted = false;//== dispose !!!
-            Logger.LogMe(GetThreadName(iWorker), false, "StopThread");
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(GetThreadName(iWorker));
         }
         private string GetThreadName(int iWorker)
         {
@@ -128,7 +128,7 @@ namespace AmitalCustomsWindowsService.Tester.LoadTest
             //_Threads.Add(t);
             _Threads[iWorker] = currThread;
             _Threads[iWorker].Start();
-            Logger.LogMe(GetThreadName(iWorker), false, "StartThread");
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(GetThreadName(iWorker));
         }
     }
     public class LoadTestParam
@@ -160,7 +160,7 @@ namespace AmitalCustomsWindowsService.Tester.LoadTest
         public override void WorkOnce()
         {
             //throw new NotImplementedException();
-            Debug.WriteLine("LoadTestWR");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("LoadTestWR");
 
             var myLoadTestParam =this.DebugObject as LoadTestParam;
 
@@ -189,7 +189,8 @@ namespace AmitalCustomsWindowsService.Tester.LoadTest
                     var res = q.ToList();
                 }
             }
-            Logger.LogMe($"Async:{Async} _ThreadHandeleCount:{myLoadTestParam.currentThread} countDone{myLoadTestParam.totalEachThread} took:{sw.Elapsed}  UserInteractive:{Environment.UserInteractive} ", false);
+
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"Async:{Async} _ThreadHandeleCount:{myLoadTestParam.currentThread} countDone{myLoadTestParam.totalEachThread} took:{sw.Elapsed}  UserInteractive:{Environment.UserInteractive} ");
 
         }
         public override void StartMe()

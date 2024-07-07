@@ -1,6 +1,7 @@
 ﻿using AmitalCustomsWindowsService.BL;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Utils;
+using Newtonsoft.Json;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -36,8 +37,7 @@ namespace AmitalCustomsWindowsService
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var err = e.ExceptionObject.ToString();
-            Logger.LogMe("CurrentDomain_UnhandledException!!!" + e.IsTerminating.ToString() + err, true);
-            Logger.LogMe("CurrentDomain_UnhandledException!!!" + e.ToString(), true);
+            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(new Exception("CurrentDomain_UnhandledException"),JsonConvert.SerializeObject(e));
             //System.Diagnostics.Debugger.Launch();
             var featureCheckMaxPoolSizeWasReachedThenRetart = ConfigurationManager.AppSettings["20180219.CheckMaxPoolSizeWasReachedThenRetart"] == "1";
             if (featureCheckMaxPoolSizeWasReachedThenRetart) { }
@@ -62,7 +62,7 @@ namespace AmitalCustomsWindowsService
             catch (Exception e)
             {
 
-                Logger.LogMe("startMe:" + e.ToString(), true);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
             }
             finally
             {
@@ -97,7 +97,7 @@ namespace AmitalCustomsWindowsService
 
                 if (threadsMaxPoolSizeWasReachedWhileSave)
                 {
-                    Logger.LogMe("DbContextBaseUtil.MaxPoolSizeWasReachedWhileSave=" + DbContextBaseUtil.MaxPoolSizeWasReachedWhileSave.GetValueOrDefault().ToString() , false, "ThreadsMaxPoolRestart");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo("DbContextBaseUtil.MaxPoolSizeWasReachedWhileSave=" + DbContextBaseUtil.MaxPoolSizeWasReachedWhileSave.GetValueOrDefault().ToString());
                     _DBWorkerService.StopThreads();
                     Thread.Sleep(TimeSpan.FromMinutes(1));
                     DbContextBaseUtil.MaxPoolSizeWasReachedWhileSave = null;
@@ -114,7 +114,7 @@ namespace AmitalCustomsWindowsService
                         if (DateTime.Now.Subtract(_LastRestartAt) > TimeSpan.FromMinutes(restartEveryInMin.Value))
                         {
                             restart = true;
-                            Logger.LogMe("restart now ", false, "restartEveryInMin");
+                            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("restart now ");
                         }
                     }
                     _DBWorkerService.EnshureThreadWorking(restart);
@@ -133,7 +133,7 @@ namespace AmitalCustomsWindowsService
             }
             catch (Exception ex)
             {
-                Logger.LogMe("timer1_Tick:" + ex.ToString(), true);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
             }
             finally
             {
@@ -199,8 +199,8 @@ namespace AmitalCustomsWindowsService
             try
             {
 
-                if (Logger.WorkingDir == "") return;
-                Logger.DeleteAllLogState();
+                //if (Logger.WorkingDir == "") return;
+                //Logger.DeleteAllLogState();
                 if (!ServiceState.CurrentDate.Equals(DateTime.Now.Date))
                 {
                     ServiceState.RaiseAnotherDay();
@@ -223,11 +223,11 @@ namespace AmitalCustomsWindowsService
                     CustomsWorkerRole.Utils.LogUtil.LogMe("AmitalCustomsWindowsServiceState",
                     "M", DateTime.Now, "AmitalCustomsWindowsService", state, 0, Environment.UserName, Environment.MachineName, "");
                 }
-                Logger.LogState(state, "");
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(state);
             }
             catch (Exception ex)
             {
-                Logger.LogMe("SaveState:" + ex.ToString(), true);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
             }
         }
 
@@ -245,7 +245,7 @@ namespace AmitalCustomsWindowsService
         protected override void OnStop()
         {
             // TODO: Add code here to perform any tear-down necessary to stop your service.
-            Logger.LogMe("OnStop()", false);
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("OnStop()");
             WorkerRoleServiceLocator.PleaseShutDown = true;
             _DBWorkerService.StopThreads();
         }

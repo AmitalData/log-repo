@@ -44,6 +44,7 @@ using System.Data.Entity.Validation;
 using Logitude.CRM.Data.EntityKeys;
 using Logitude.BL.Helpers;
 using WebFreight.Web.Helpers.APIHelpers;
+using System.Configuration;
 
 namespace TestTenantConfiguration
 {
@@ -942,7 +943,7 @@ namespace TestTenantConfiguration
             SetControlPropertyValue(Timerlbl, "Text", "Preparing Tenant Data ...");
             SetControlPropertyValue(Timerlbl, "ForeColor", Color.DodgerBlue);
 
-            string LogitudeURL = System.Configuration.ConfigurationSettings.AppSettings.Get("LogitudeURL");
+            string LogitudeURL = ConfigurationManager.AppSettings.Get("LogitudeURL");
             Logitude.Base.Hooks.BeforeTestRun.PrepareTheData(this.TenantEmail, this.NewPassword, LogitudeURL);
             Logitude.ShipmentTests.Hooks.BeforeTestRun.SetupShipmentPreparationVariables();
 

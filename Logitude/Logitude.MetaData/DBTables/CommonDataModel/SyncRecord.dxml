@@ -1,13 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
   Name="SyncRecord"
-  Schema="Customs"
+  Schema="dbo"
   DBType="Main"
   Module="Common">
   <Column
     Name="Id"
     Type="nvarchar"
-    Size="36">
+    Size="36"
+    DefaultValue="newid()">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -64,4 +65,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Index
+    Columns="CreateDate" />
+  <Index
+    Columns="Tenant" />
+  <Index
+    Columns="IsSync" />
+  <Index
+    Columns="FileNo" />
 </Table>

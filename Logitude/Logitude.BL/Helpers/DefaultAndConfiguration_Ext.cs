@@ -91,7 +91,7 @@ namespace Logitude.BL.Helpers
             }
             catch (Exception e)
             {                
-                //Logger($"An error occurred while deserializing value: " + value + ", type: " + typeString + ", error: " + e);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e, "An error occurred while deserializing value: " + value + ", type: " + typeString);
                 return null;
             }
         }

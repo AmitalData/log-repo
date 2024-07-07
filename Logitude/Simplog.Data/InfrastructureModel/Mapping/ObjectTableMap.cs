@@ -22,6 +22,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             this.Property(t => t.SortingByObjectField).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.DBTableName).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.DBTableShortName).HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.DescriptionTextCodeId).HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
             this.Property(t => t.MainTipCode).HasMaxLength(4).IsUnicode(false);
@@ -82,6 +83,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.IsAutoComplete).HasColumnName("IsAutoComplete");
             this.Property(t => t.SortingByObjectField).HasColumnName("SortingByObjectField");
             this.Property(t => t.DBTableName).HasColumnName("DBTableName");
+            this.Property(t => t.DBTableShortName).HasColumnName("DBTableShortName");
             this.Property(t => t.HasCustomFields).HasColumnName("HasCustomFields");
             this.Property(t => t.CustomFieldsCount).HasColumnName("CustomFieldsCount");
             this.Property(t => t.InActive).HasColumnName("InActive");

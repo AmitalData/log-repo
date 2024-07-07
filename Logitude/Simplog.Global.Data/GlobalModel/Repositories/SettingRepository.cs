@@ -5,6 +5,7 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Server.Infrastructure;
 using System;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Simplog.Global.Data.GlobalModel.Repositories
 {
@@ -25,23 +26,75 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
         public bool GetCheckIfReportsRunUsingWR(string id)
         {
-            return (from a in context.Settings
-                    where a.Id == id
-                    select a.ReportsRunUsingWR).FirstOrDefault();
+            string entityName = "Setting" + id;
+         
+            Setting entity = (from a in context.Settings
+                              where a.Id == id
+                              select a).FirstOrDefault();
+
+            if (CacheManager.CacheWrapper != null)
+            { 
+                if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
+                {     
+                    CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                }
+                else
+                {
+                    entity = (Setting)CacheManager.CacheWrapper.Get(entityName);
+                }
+
+            }
+            return entity.ReportsRunUsingWR;
+
+            //return (from a in context.Settings
+            //        where a.Id == id
+            //        select a.ReportsRunUsingWR).FirstOrDefault();
         }
 
         public Setting GetSingleSetting(string id)
         {
+            string entityName = "Setting" + id;
+            Setting entity = (from a in context.Settings
+                              where a.Id == id
+                              select a).FirstOrDefault();
 
-            return (from a in context.Settings
-                    where a.Id == id
-                    select a).FirstOrDefault();
+            if (CacheManager.CacheWrapper != null)
+            {
+                if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
+                {
+                    CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                }
+                else
+                {
+                    entity = (Setting)CacheManager.CacheWrapper.Get(entityName);
+                }
+            }
+            return entity;
+
+            //return (from a in context.Settings
+            //        where a.Id == id
+            //        select a).FirstOrDefault();
         }
 
         public IQueryable<Setting> GetAllSettings()
         {
-            return from a in context.Settings
-                   select a;
+            string entityName = "Settings";
+            IQueryable<Setting> Settings = from a in context.Settings
+                                              select a;
+            if (CacheManager.CacheWrapper != null)
+            {
+                if (CacheManager.CacheWrapper.Get(entityName) == null && Settings != null)
+                {
+                    CacheManager.CacheWrapper.Insert(entityName, Settings, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                }
+            }
+            else
+            {
+                Settings = (IQueryable<Setting>)CacheManager.CacheWrapper.Get(entityName);
+            }
+            return Settings;
+            //return from a in context.Settings
+            //       select a;
         }
 
         public void Add(Setting entity)

@@ -22,7 +22,7 @@ namespace Logitude.Customs.Data
                 
                 using (var cn = (context.GetConnection() as OracleConnection))  //new OracleConnection(strConnString))
                 {
-                    Debug.WriteLine($"CommandExecuteNonQuery({cmd})");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"CommandExecuteNonQuery({cmd})");
 
 
                     var command = new OracleCommand(cmd, cn);
@@ -40,7 +40,7 @@ namespace Logitude.Customs.Data
             {
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
-                    Debug.WriteLine($"CommandExecuteNonQuery({cmd})");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"CommandExecuteNonQuery({cmd})");
 
                     SqlCommand sqlCommand = new SqlCommand(cmd, cn);
 

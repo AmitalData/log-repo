@@ -41,6 +41,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectField.DisplayOnly = objectFieldPM.DisplayOnly;
             objectField.FullNameTextCodeId = objectFieldPM.FullNameTextCodeId;
             objectField.FieldName = objectFieldPM.FieldName;
+            objectField.ShortName = objectFieldPM.ShortName;
             objectField.ShortNameTextCodeId = objectFieldPM.ShortNameTextCodeId;
             objectField.HelpTextCodeId = objectFieldPM.HelpTextCodeId;
             objectField.AgentPermissionTypeCode = objectFieldPM.AgentPermissionTypeCode;

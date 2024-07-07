@@ -78,7 +78,7 @@ namespace AmitalCustomsWindowsService.BL
                     catch (Exception e)
                     {
                         //_TWorker.
-                        Logger.LogMe(this.GetType().FullName + ":" + e.ToString(), true);
+                        NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
                         Thread.Sleep(TimeSpan.FromMinutes(1));
                     }
 
@@ -88,20 +88,20 @@ namespace AmitalCustomsWindowsService.BL
                 }
                 if (_TWorker.DebugMode && (Environment.UserInteractive || this.MyType == "LoadTestWR"))
                 {
-                    Logger.LogMe("_TWorker.DebugMode && Environment.UserInteractive", false);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo("_TWorker.DebugMode && Environment.UserInteractive");
                     return;
                 }
                 if (DateTime.Now.Subtract(_LastReprtAt) > TimeSpan.FromHours(1))
                 {
                     _LastReprtAt = DateTime.Now;
-                    Logger.LogMe(typeof(TWorker).FullName + ":Still Alive", false);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo(typeof(TWorker).FullName + ":Still Alive");
                 }
                 Thread.Sleep(TimeSpan.FromSeconds(_intervalInSec));
 
             }
 
-            Logger.LogMe(typeof(TWorker).FullName + ":ServiceStarted=" + ServiceStarted.ToString() , false);
-            Logger.LogMe(typeof(TWorker).FullName + ":ExecuteTask:OUtOUtOUtOUtOUtOUtOUtOUt !!OUt !!", false);
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(typeof(TWorker).FullName + ":ServiceStarted=" + ServiceStarted.ToString() );
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(typeof(TWorker).FullName + ":ExecuteTask:OUtOUtOUtOUtOUtOUtOUtOUt !!OUt !!");
             WhileServiceStarted_IsOut = true;
             if (_TWorker.DebugMode)
             {

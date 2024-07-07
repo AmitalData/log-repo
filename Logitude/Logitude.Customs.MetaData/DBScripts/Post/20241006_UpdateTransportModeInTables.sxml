@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs">
+	<Sql Version="1">
+
+		<![CDATA[
+			-- Update Containerizations
+UPDATE Customs.Containerizations
+SET TransportModeId = 'I'
+WHERE TransportModeId = 'L';
+
+-- Update CustomsDocumentsDefinitions
+UPDATE Customs.CustomsDocumentsDefinitions
+SET TransportationTypeCode = 'I'
+WHERE TransportationTypeCode = 'L';
+
+-- Update CustomsHouseTypeAdditionals
+UPDATE Customs.CustomsHouseTypeAdditionals
+SET TransportModeId = 'I'
+WHERE TransportModeId = 'L';
+
+-- Update Declarations
+UPDATE Customs.Declarations
+SET TransportModeId = 'I'
+WHERE TransportModeId = 'L';
+
+delete from TRANSPORTMODES where ID = 'L';
+
+        ]]>
+	</Sql>
+
+	<Oracle Version="1">
+		<![CDATA[
+BEGIN
+  EXECUTE IMMEDIATE 'UPDATE Containerizations SET TransportModeId = ''I'' WHERE TransportModeId = ''L''';
+  EXECUTE IMMEDIATE 'UPDATE CustomsDocumentsDefinitions SET TransportationTypeCode = ''I'' WHERE TransportationTypeCode = ''L''';
+  EXECUTE IMMEDIATE 'UPDATE CustomsHouseTypeAdditionals SET TransportModeId = ''I'' WHERE TransportModeId = ''L''';
+  EXECUTE IMMEDIATE 'UPDATE Declarations SET TransportModeId = ''I'' WHERE TransportModeId = ''L''';
+  EXECUTE IMMEDIATE 'UPDATE Declarations SET TransportModeId = ''I'' WHERE TransportModeId = ''L''';
+  EXECUTE IMMEDIATE 'delete from TRANSPORTMODES where ID = ''L'' ';
+
+  EXECUTE IMMEDIATE 'COMMIT';
+END;
+  ]]>
+	</Oracle>
+</Script>

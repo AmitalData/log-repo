@@ -52,7 +52,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 CardIndexs.Add(myLedgerTransactionBalanceService.Response);
 
             }
-            Debug.WriteLine($"CardIndexReportService count:{_allIdAccounts.Count} took {sw.Elapsed}");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"CardIndexReportService count:{_allIdAccounts.Count} took {sw.Elapsed}");
         }
 
         private void GetGLAccountPopulation()

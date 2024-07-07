@@ -39,7 +39,7 @@ namespace Logitude.Server.Tools.ExternalServices
             {
                 throw new Exception("Object already created");
             }
-            Logger.LogInfo("ServerURI:" + ServerURI);
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("ServerURI:" + ServerURI);
             _Instance = new SignatureHubClient(ServerURI, message4U);
             try
             {
@@ -177,7 +177,7 @@ namespace Logitude.Server.Tools.ExternalServices
                 }
                 if (HubProxy != null && MyConnection != null && MyConnection.State == ConnectionState.Connected)
                 {
-                    
+
                     HubProxy.Invoke("Send", requestMessageType.ToString(), requestMessageData);
                 }
                 _LastCrashAt = null;
@@ -192,7 +192,7 @@ namespace Logitude.Server.Tools.ExternalServices
             }
         }
 
-        public static void SafeSend(string LogitudeURL, string WorkEnvironment,SignQueueByType requestMessageType, string requestMessageData)
+        public static void SafeSend(string LogitudeURL, string WorkEnvironment, SignQueueByType requestMessageType, string requestMessageData)
         {
             if (!IsSafe(LogitudeURL, WorkEnvironment)) return;
             Instance.Send(requestMessageType, requestMessageData);
@@ -209,7 +209,7 @@ namespace Logitude.Server.Tools.ExternalServices
             Instance.WakeUp();
         }
 
-        public static string GetHost(string LogitudeURL )
+        public static string GetHost(string LogitudeURL)
         {
 
             if (!LogitudeSettings.IsCostomsDeploy)
@@ -217,7 +217,7 @@ namespace Logitude.Server.Tools.ExternalServices
                 return "";
             }
             var host = "";
-            
+
             var itzikhost = "";
             //string SuppresSignatureHubClient = System.Configuration.ConfigurationManager.AppSettings.Get("SuppresSignatureHubClient");
             //if (!string.IsNullOrWhiteSpace(SuppresSignatureHubClient))

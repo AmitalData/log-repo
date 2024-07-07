@@ -239,7 +239,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         resultingCheques = new List<ARPaymentChequePM>();
                         string foreignAmountStr = foreignAmount.ToString(); 
                         string logtext = string.Format("Cheque {0} cannot be redeemed by amount {1}", transactionReference, foreignAmountStr);
-                        Logger.LogMe(logtext, true, "CQH_AMT");
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError(logtext+":"+"CQH_AMT");
                     }
                 }
 

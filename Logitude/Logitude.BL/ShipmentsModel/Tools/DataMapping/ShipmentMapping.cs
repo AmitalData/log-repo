@@ -89,6 +89,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
                 FieldChange.Add(entityPoco.OriginShipmentId, entityPM.OriginShipmentId, nameof(entityPM.OriginShipmentId), fieldChanges);
                 entityPoco.OriginShipmentId = entityPM.OriginShipmentId;
+
+                FieldChange.Add(entityPoco.IskaNumber, entityPM.IskaNumber, nameof(entityPM.IskaNumber), fieldChanges);
+                entityPoco.IskaNumber = entityPM.IskaNumber;
+
+                FieldChange.Add(entityPoco.ReferantUserId, entityPM.ReferantUserId, nameof(entityPM.ReferantUserId), fieldChanges);
+                entityPoco.ReferantUserId = entityPM.ReferantUserId;
             }
             else
             {
@@ -246,8 +252,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             else
             {
-                entityPM.FromPortId = entityMasterData.MainCarriageFromPortId;
-                entityPM.ToPortId = entityMasterData.MainCarriageFinalDestinationPortId;
+                entityPM.FromPortId = entityMasterData?.MainCarriageFromPortId;
+                entityPM.ToPortId = entityMasterData?.MainCarriageFinalDestinationPortId;
 
                 FieldChange.Add(entityPoco.FromPortId, entityPM.FromPortId, nameof(entityPM.FromPortId), fieldChanges);
                 entityPoco.FromPortId = entityPM.FromPortId;
@@ -1210,7 +1216,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.HSCode = entityPM.HSCode;
 
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
-            if (!LBcurrentTenant.IsDocumentsArchive)
+            if (!LBcurrentTenant.IsDocumentsArchive && entityMasterData != null)
             {
                 BuildRoutingField(entityPM, entityPoco, entityMasterData, objectContext);
             }

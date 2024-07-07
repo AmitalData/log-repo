@@ -269,7 +269,7 @@ namespace WebFreight.Web
                         {
                             if (dbcontact.Password != loginParameters.Password)
                             {
-                                Debug.WriteLine(@"ihab(@Itzik):SSO:the Hash Password from token irrelevant Allow Login even though HashPass  not match");
+                               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(@"ihab(@Itzik):SSO:the Hash Password from token irrelevant Allow Login even though HashPass  not match");
                                 loginParameters.Password = dbcontact.Password;
                             }
                         }

@@ -76,7 +76,7 @@ namespace Logitude.Server.Tools.ExternalServices
             }
             else
             {
-                Debug.WriteLine(res.ServerFilePath);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(res.ServerFilePath);
             }
         }
 

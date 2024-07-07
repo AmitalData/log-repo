@@ -31,6 +31,13 @@ export class CB_CustomsItemComputedDataList {
 	CustomsItemEntityStatusIDNum: number;
 	PH_IsCarItem: boolean;
 	FullGoodsDescription: string;
+	Agreements: number;
+	CustomsRate: string;
+	PurchaseTax: string;
+	OptionalTaxAddition: number;
+	MeasurementUnitName: string;
+	Remarks: string;
+	SearchByTextResult: string;
 	
 }
  

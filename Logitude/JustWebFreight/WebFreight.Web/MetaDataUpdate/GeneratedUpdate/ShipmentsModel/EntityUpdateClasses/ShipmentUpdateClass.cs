@@ -81,11 +81,14 @@ using Logitude.DashboardModule.Data.Repositories;
 using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.BL;
 
+
+
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpdateClasses
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "e63a1ba4947e11afb7b61f339193136a";
+		public const string HashString = "9e8fc4d1563ccfcf8aa2f2cb3b711a1a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -8055,9 +8058,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DepartmentId",
-					  						DefaultText =  "Department",
-					  						ListFieldLable =  "DepartmentIdListLable",
-					  						ListLableDefaultText =  "Department",
+											DefaultText =  "Department",
+											FullLocalDefaultText = "חוליה",
+											ListFieldLable =  "DepartmentIdListLable",
+											ListLableDefaultText =  "Department",
+											ListLocalDefaultText = "חוליה",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Department",
 					  						NavigationPropertyName =  "Department",
@@ -8267,7 +8272,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerId",
 					  						DefaultText =  "Customer",
-					  						HelpTextCode =  "CustomerId",
+											FullLocalDefaultText = "קוד לקוח",
+											HelpTextCode =  "CustomerId",
 					  						HelpTextDefaultText =  "Indicates who the customer is, so that Logitude knows to refer to the relevant partner for statistics, billing and shared logistics. For Export, the Shipper is selected automatically. For Import, the Consignee is selected automatically.",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Card",
@@ -11254,9 +11260,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransportModeId",
 					  						DefaultText =  "Main Carriage Transport Mode",
-					  						ListFieldLable =  "TransportModeIdListLable",
-					  						ListLableDefaultText =  "Transport Mode",
-					  						ShortFieldLable =  "TransportModeId",
+											FullLocalDefaultText = "סוג הובלה",
+                                            ListFieldLable =  "TransportModeIdListLable",
+						                    ListLableDefaultText =  "Transport Mode",
+										    ListLocalDefaultText = "סוג הובלה",
+										    ShortFieldLable =  "TransportModeId",
 					  						ShortFieldLableDefaultText =  "Transport",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "TransportMode",
@@ -89922,6 +89930,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "WarehouseLegWarehouseName",
 					  						ListPropertyPath =  "WarehouseLegWarehouseName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -89959,9 +89968,141 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
-	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ReferantUserId",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "User",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ReferantUserId",
+					  						ListPropertyPath =  "ReferantUserId",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Shipment",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ReferantUserId",
+					  						DefaultText =  "Referant User Id",
+					  						FullLocalDefaultText =  "רפרנט",
+					  						ListFieldLable =  "ReferantUserIdListLable",
+					  						ListLableDefaultText =  "Referant User Id",
+					  						ListLocalDefaultText =  "רפרנט",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "User",
+					  						NavigationPropertyName =  "UserId",
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+
+				AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+				{
+
+					FieldName = "IskaNumber",
+					ObjectTableName = "Shipment",
+					FieldsDataType = "Text",
+					MinLength = 0,
+					MaxLength = 16,
+					IsRequired = false,
+					CopyToDW = false,
+					DisplayOnLookUp = false,
+					DisplayOnLookUpLocal = false,
+					CanFilter = true,
+					DisplayOnly = false,
+					SystemRequired = false,
+					SystemMaxLength = 16,
+					DisplayInList = true,
+					IsCustomFilter = false,
+					IsListFilter = false,
+					Operator = "Equals",
+					MultiLine = false,
+					IsTimeFrameFilter = false,
+					DisplayInSearchWindowList = false,
+					PMPropertyPath = "IskaNumber",
+					ListPropertyPath = "IskaNumber",
+					DisplayInLookUpIndex = 0,
+					AutomaticField = false,
+					UniqueField = false,
+					DisplayInSearchWindowListIndex = 0,
+					IsMulti = false,
+					DependencyFilter1IsList = false,
+					DependencyFilter2IsList = false,
+					DependencyFilter3IsList = false,
+					ValidForQuerySection1 = "Shipment",
+					IsRestrictable = false,
+					DisplayInEntityVariables = false,
+					AllowedInCustomerFieldsSettings = false,
+					DisplayInSearchWindowFilters = false,
+					DisplayInSearchWindowFiltersIndex = 0,
+					DisplayInDocumentReferences = false,
+					InActive = false,
+					DisplayLongName = false,
+					FullFieldLable = "IskaNumber",
+					DefaultText = "Iska Number",
+					FullLocalDefaultText = "מזהה עיסקה",
+					ListFieldLable = "IskaNumberListLable",
+					ListLableDefaultText = "Iska Number",
+					ListLocalDefaultText = "מזהה עיסקה",
+					IsForeignKey = false,
+					IsMaxLength = false,
+					NoMetaDataField = false,
+					IsFixedLength = false,
+					EnableAutoFill = false,
+					IncludeInSearchField = false,
+					AllowedinAutomationConditions = false,
+					AutomationEmailRecipient = false,
+					CanAutomateSetValue = false,
+					DisplayInAutomationAsEnitity = false,
+					HasTemplate = false,
+					IsCustom = false,
+					EnableFullscreenTextBox = false,
+
+				}, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes, objectTables, addedFields, addedTextCodes);
+
+
+        }
+
+        public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
@@ -90070,6 +90211,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			   TextCode ShipmentTextCode_21 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.LogboxShipments", DefaultText = @"Logbox Shipments",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ShipmentFeature_21 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Q.LogboxShipments", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentFeatures.LogboxShipments", NameTextCodeDefaultText = "LogboxShipments", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ShipmentObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode ShipmentTextCode_22 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.CustomsShipments", DefaultText = @"Customs Shipments",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ShipmentFeature_22 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Q.CustomsShipments", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentFeatures.CustomsShipments", NameTextCodeDefaultText = "CustomsShipments", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ShipmentObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -90766,6 +90911,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			 QueryColumn LogboxShipmentsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LogboxShipmentsQuery.Id,QueryCode = LogboxShipmentsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Shipment.ShipperReference1" , ColumnWidth = 40 }, addedQueryColumns);
 
 			 QueryColumn LogboxShipmentsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LogboxShipmentsQuery.Id,QueryCode = LogboxShipmentsQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Shipment.PrivateLabelAgentName" , ColumnWidth = 150 }, addedQueryColumns);
+  
+	      
+
+			  Query CustomsShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_22.Id, NameTextCodeCode = ShipmentTextCode_22.Code, ObjectTableName = "Shipment", Code = "CustomsShipments",  QueryGroupCode = "SHIP", IndexOrder = 22, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "CustomsShipments", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_22.Id,FeatureUniqeCode= ShipmentFeature_22.FeatureUniqeCode, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+	
+			 QueryColumn CustomsShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsShipmentsQuery.Id,QueryCode = CustomsShipmentsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Shipment.TransportModeId" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CustomsShipmentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsShipmentsQuery.Id,QueryCode = CustomsShipmentsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Shipment.CreateDateTime" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CustomsShipmentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsShipmentsQuery.Id,QueryCode = CustomsShipmentsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Shipment.ShipmentNumber" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CustomsShipmentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsShipmentsQuery.Id,QueryCode = CustomsShipmentsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Shipment.ShipmentType" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CustomsShipmentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsShipmentsQuery.Id,QueryCode = CustomsShipmentsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Shipment.CustomerName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CustomsShipmentsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsShipmentsQuery.Id,QueryCode = CustomsShipmentsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Shipment.StatusName" , ColumnWidth = 100 }, addedQueryColumns);
+
+             AdvancedQueryFilter CustomsShipmentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.DirectionId", PredefinedValue = "C",PredefinedValue2 = null, CustomPredefined = false, QueryId = CustomsShipmentsQuery.Id,QueryCode = CustomsShipmentsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -91008,6 +91172,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
                  
 			   TextCode ShipmentCustomsFileTextCode_TH20 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.CustomsFile", DefaultText = "Customs File",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature ShipmentCustomsFileFeature_TH20 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSFILE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.CustomsFile", NameTextCodeDefaultText = "Customs File", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
+ 
+                 
+			   TextCode ShipmentShipmentPackagesTextCode_TH21 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.ShipmentPackages", DefaultText = "ShipmentPackages",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ShipmentShipmentPackagesFeature_TH21 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Tab.ShipmentPackages", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentFeatures.SHSP", NameTextCodeDefaultText = "ShipmentPackages", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -91015,45 +91183,47 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHOV",HtmlComponentName = "OverviewTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Overview/OverviewTabComponent", FeatureId = ShipmentOverviewFeature_TH0.Id,FeatureUniqeCode = ShipmentOverviewFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.ShipmentOverview.ShipmentOverviewControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentOverviewTextCode_TH0.Id, TabNameTextCodeCode = ShipmentOverviewTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MHGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShipmentGeneralFeature_TH1.Id,FeatureUniqeCode = ShipmentGeneralFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentGeneralTextCode_TH1.Id, TabNameTextCodeCode = ShipmentGeneralTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MHGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShipmentGeneralFeature_TH1.Id,FeatureUniqeCode = ShipmentGeneralFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentGeneralTextCode_TH1.Id, TabNameTextCodeCode = ShipmentGeneralTextCode_TH1.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShipmentGeneralFeature_TH1.Id,FeatureUniqeCode = ShipmentGeneralFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentGeneralTextCode_TH1.Id, TabNameTextCodeCode = ShipmentGeneralTextCode_TH1.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShipmentGeneralFeature_TH1.Id,FeatureUniqeCode = ShipmentGeneralFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentGeneralTextCode_TH1.Id, TabNameTextCodeCode = ShipmentGeneralTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCT",HtmlComponentName = "CustomsTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Customs/CustomsTabComponent", FeatureId = ShipmentCustomsFeature_TH3.Id,FeatureUniqeCode = ShipmentCustomsFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Customs.CustomsTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentCustomsTextCode_TH3.Id, TabNameTextCodeCode = ShipmentCustomsTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCT",HtmlComponentName = "CustomsTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Customs/CustomsTabComponent", FeatureId = ShipmentCustomsFeature_TH3.Id,FeatureUniqeCode = ShipmentCustomsFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Customs.CustomsTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentCustomsTextCode_TH3.Id, TabNameTextCodeCode = ShipmentCustomsTextCode_TH3.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHOR",HtmlComponentName = "OrdersTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Orders/OrdersTabComponent", FeatureId = ShipmentOrdersFeature_TH4.Id,FeatureUniqeCode = ShipmentOrdersFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Orders.OrdersUserControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentOrdersTextCode_TH4.Id, TabNameTextCodeCode = ShipmentOrdersTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHOR",HtmlComponentName = "OrdersTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Orders/OrdersTabComponent", FeatureId = ShipmentOrdersFeature_TH4.Id,FeatureUniqeCode = ShipmentOrdersFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Orders.OrdersUserControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentOrdersTextCode_TH4.Id, TabNameTextCodeCode = ShipmentOrdersTextCode_TH4.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHPA",HtmlComponentName = "PartnersTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Partners/PartnersTabComponent", FeatureId = ShipmentPartnersFeature_TH5.Id,FeatureUniqeCode = ShipmentPartnersFeature_TH5.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Partners.PartnersControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentPartnersTextCode_TH5.Id, TabNameTextCodeCode = ShipmentPartnersTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHPA",HtmlComponentName = "PartnersTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Partners/PartnersTabComponent", FeatureId = ShipmentPartnersFeature_TH5.Id,FeatureUniqeCode = ShipmentPartnersFeature_TH5.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Partners.PartnersControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentPartnersTextCode_TH5.Id, TabNameTextCodeCode = ShipmentPartnersTextCode_TH5.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCO",HtmlComponentName = "ShipmentsTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Shipments/ShipmentsTabComponent", FeatureId = ShipmentShipmentsFeature_TH6.Id,FeatureUniqeCode = ShipmentShipmentsFeature_TH6.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.Consolidation.ConsolidationControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentShipmentsTextCode_TH6.Id, TabNameTextCodeCode = ShipmentShipmentsTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCO",HtmlComponentName = "ShipmentsTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Shipments/ShipmentsTabComponent", FeatureId = ShipmentShipmentsFeature_TH6.Id,FeatureUniqeCode = ShipmentShipmentsFeature_TH6.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.Consolidation.ConsolidationControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentShipmentsTextCode_TH6.Id, TabNameTextCodeCode = ShipmentShipmentsTextCode_TH6.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHPI",HtmlComponentName = "ProductItemsTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/ProductItems/ProductItemsTabComponent", FeatureId = ShipmentProductItemsFeature_TH7.Id,FeatureUniqeCode = ShipmentProductItemsFeature_TH7.FeatureUniqeCode, ControlPath = "ProductItemsTabComponent", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentProductItemsTextCode_TH7.Id, TabNameTextCodeCode = ShipmentProductItemsTextCode_TH7.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHPI",HtmlComponentName = "ProductItemsTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/ProductItems/ProductItemsTabComponent", FeatureId = ShipmentProductItemsFeature_TH7.Id,FeatureUniqeCode = ShipmentProductItemsFeature_TH7.FeatureUniqeCode, ControlPath = "ProductItemsTabComponent", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentProductItemsTextCode_TH7.Id, TabNameTextCodeCode = ShipmentProductItemsTextCode_TH7.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHPK",HtmlComponentName = "PackagesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentPackages/Components/Packages/PackagesTabComponent", FeatureId = ShipmentPackagesFeature_TH8.Id,FeatureUniqeCode = ShipmentPackagesFeature_TH8.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Packages.PackagesUserControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentPackagesTextCode_TH8.Id, TabNameTextCodeCode = ShipmentPackagesTextCode_TH8.Code, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHPK",HtmlComponentName = "PackagesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentPackages/Components/Packages/PackagesTabComponent", FeatureId = ShipmentPackagesFeature_TH8.Id,FeatureUniqeCode = ShipmentPackagesFeature_TH8.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Packages.PackagesUserControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentPackagesTextCode_TH8.Id, TabNameTextCodeCode = ShipmentPackagesTextCode_TH8.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHRT",HtmlComponentName = "RoutingsTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentRouting/Components/Routings/RoutingsTabComponent", FeatureId = ShipmentRoutingsFeature_TH9.Id,FeatureUniqeCode = ShipmentRoutingsFeature_TH9.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Routings.RoutingsControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentRoutingsTextCode_TH9.Id, TabNameTextCodeCode = ShipmentRoutingsTextCode_TH9.Code, Tenant = 0, IndexOrder = 9 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHRT",HtmlComponentName = "RoutingsTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentRouting/Components/Routings/RoutingsTabComponent", FeatureId = ShipmentRoutingsFeature_TH9.Id,FeatureUniqeCode = ShipmentRoutingsFeature_TH9.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Routings.RoutingsControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentRoutingsTextCode_TH9.Id, TabNameTextCodeCode = ShipmentRoutingsTextCode_TH9.Code, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHPY",HtmlComponentName = "PayablesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Payables/PayablesTabComponent", FeatureId = ShipmentPayablesFeature_TH10.Id,FeatureUniqeCode = ShipmentPayablesFeature_TH10.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Payables.PayablesUserControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentPayablesTextCode_TH10.Id, TabNameTextCodeCode = ShipmentPayablesTextCode_TH10.Code, Tenant = 0, IndexOrder = 10 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHPY",HtmlComponentName = "PayablesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Payables/PayablesTabComponent", FeatureId = ShipmentPayablesFeature_TH10.Id,FeatureUniqeCode = ShipmentPayablesFeature_TH10.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Payables.PayablesUserControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentPayablesTextCode_TH10.Id, TabNameTextCodeCode = ShipmentPayablesTextCode_TH10.Code, Tenant = 0, IndexOrder = 9 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHRE",HtmlComponentName = "ReceivablesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Receivables/ReceivablesTabComponent", FeatureId = ShipmentReceivablesFeature_TH11.Id,FeatureUniqeCode = ShipmentReceivablesFeature_TH11.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Receivables.ReceivablesUserControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentReceivablesTextCode_TH11.Id, TabNameTextCodeCode = ShipmentReceivablesTextCode_TH11.Code, Tenant = 0, IndexOrder = 11 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHRE",HtmlComponentName = "ReceivablesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Receivables/ReceivablesTabComponent", FeatureId = ShipmentReceivablesFeature_TH11.Id,FeatureUniqeCode = ShipmentReceivablesFeature_TH11.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Receivables.ReceivablesUserControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentReceivablesTextCode_TH11.Id, TabNameTextCodeCode = ShipmentReceivablesTextCode_TH11.Code, Tenant = 0, IndexOrder = 10 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHDO",HtmlComponentName = "ShipmentDocsOutTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/DocsOut/ShipmentDocsOutTabComponent", FeatureId = ShipmentDocsOutFeature_TH12.Id,FeatureUniqeCode = ShipmentDocsOutFeature_TH12.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Documents.ShipmentDocOutControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentDocsOutTextCode_TH12.Id, TabNameTextCodeCode = ShipmentDocsOutTextCode_TH12.Code, Tenant = 0, IndexOrder = 12 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHDO",HtmlComponentName = "ShipmentDocsOutTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/DocsOut/ShipmentDocsOutTabComponent", FeatureId = ShipmentDocsOutFeature_TH12.Id,FeatureUniqeCode = ShipmentDocsOutFeature_TH12.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Documents.ShipmentDocOutControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentDocsOutTextCode_TH12.Id, TabNameTextCodeCode = ShipmentDocsOutTextCode_TH12.Code, Tenant = 0, IndexOrder = 11 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHDI",HtmlComponentName = "ShipmentDocsInTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/DocsIn/ShipmentDocsInTabComponent", FeatureId = ShipmentDocsInFeature_TH13.Id,FeatureUniqeCode = ShipmentDocsInFeature_TH13.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Documents.ShipmentDocInControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentDocsInTextCode_TH13.Id, TabNameTextCodeCode = ShipmentDocsInTextCode_TH13.Code, Tenant = 0, IndexOrder = 13 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHDI",HtmlComponentName = "ShipmentDocsInTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/DocsIn/ShipmentDocsInTabComponent", FeatureId = ShipmentDocsInFeature_TH13.Id,FeatureUniqeCode = ShipmentDocsInFeature_TH13.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Documents.ShipmentDocInControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentDocsInTextCode_TH13.Id, TabNameTextCodeCode = ShipmentDocsInTextCode_TH13.Code, Tenant = 0, IndexOrder = 12 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCN",HtmlComponentName = "ConnectionsTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Connections/ConnectionsTabComponent", FeatureId = ShipmentConnectedEntitiesFeature_TH14.Id,FeatureUniqeCode = ShipmentConnectedEntitiesFeature_TH14.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.ShipmentConnections.ShipmentConnectionsControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentConnectedEntitiesTextCode_TH14.Id, TabNameTextCodeCode = ShipmentConnectedEntitiesTextCode_TH14.Code, Tenant = 0, IndexOrder = 14 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCN",HtmlComponentName = "ConnectionsTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Connections/ConnectionsTabComponent", FeatureId = ShipmentConnectedEntitiesFeature_TH14.Id,FeatureUniqeCode = ShipmentConnectedEntitiesFeature_TH14.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.ShipmentConnections.ShipmentConnectionsControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentConnectedEntitiesTextCode_TH14.Id, TabNameTextCodeCode = ShipmentConnectedEntitiesTextCode_TH14.Code, Tenant = 0, IndexOrder = 13 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShipmentCommunicationFeature_TH15.Id,FeatureUniqeCode = ShipmentCommunicationFeature_TH15.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentCommunicationTextCode_TH15.Id, TabNameTextCodeCode = ShipmentCommunicationTextCode_TH15.Code, Tenant = 0, IndexOrder = 15 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShipmentCommunicationFeature_TH15.Id,FeatureUniqeCode = ShipmentCommunicationFeature_TH15.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentCommunicationTextCode_TH15.Id, TabNameTextCodeCode = ShipmentCommunicationTextCode_TH15.Code, Tenant = 0, IndexOrder = 14 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHAU",HtmlComponentName = "ShipmentAuditTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Audit/ShipmentAuditTabComponent", FeatureId = ShipmentAuditFeature_TH16.Id,FeatureUniqeCode = ShipmentAuditFeature_TH16.FeatureUniqeCode, ControlPath = "./ShipmentModules/ShipmentTabs/Components/Audit/ShipmentAuditTabComponent", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentAuditTextCode_TH16.Id, TabNameTextCodeCode = ShipmentAuditTextCode_TH16.Code, Tenant = 0, IndexOrder = 16 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHAU",HtmlComponentName = "ShipmentAuditTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Audit/ShipmentAuditTabComponent", FeatureId = ShipmentAuditFeature_TH16.Id,FeatureUniqeCode = ShipmentAuditFeature_TH16.FeatureUniqeCode, ControlPath = "./ShipmentModules/ShipmentTabs/Components/Audit/ShipmentAuditTabComponent", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentAuditTextCode_TH16.Id, TabNameTextCodeCode = ShipmentAuditTextCode_TH16.Code, Tenant = 0, IndexOrder = 15 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHMS",HtmlComponentName = "MasterTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Master/MasterTabComponent", FeatureId = ShipmentMasterFeature_TH17.Id,FeatureUniqeCode = ShipmentMasterFeature_TH17.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.MasterTab.MasterTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentMasterTextCode_TH17.Id, TabNameTextCodeCode = ShipmentMasterTextCode_TH17.Code, Tenant = 0, IndexOrder = 17 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHMS",HtmlComponentName = "MasterTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Master/MasterTabComponent", FeatureId = ShipmentMasterFeature_TH17.Id,FeatureUniqeCode = ShipmentMasterFeature_TH17.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.MasterTab.MasterTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentMasterTextCode_TH17.Id, TabNameTextCodeCode = ShipmentMasterTextCode_TH17.Code, Tenant = 0, IndexOrder = 16 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShipmentEventsFeature_TH18.Id,FeatureUniqeCode = ShipmentEventsFeature_TH18.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentEventsTextCode_TH18.Id, TabNameTextCodeCode = ShipmentEventsTextCode_TH18.Code, Tenant = 0, IndexOrder = 18 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShipmentEventsFeature_TH18.Id,FeatureUniqeCode = ShipmentEventsFeature_TH18.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentEventsTextCode_TH18.Id, TabNameTextCodeCode = ShipmentEventsTextCode_TH18.Code, Tenant = 0, IndexOrder = 17 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHFF",HtmlComponentName = "FreightFilesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/FreightFiles/FreightFilesTabComponent", FeatureId = ShipmentFreightFilesFeature_TH19.Id,FeatureUniqeCode = ShipmentFreightFilesFeature_TH19.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.CustomsLib.FreightFilesTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentFreightFilesTextCode_TH19.Id, TabNameTextCodeCode = ShipmentFreightFilesTextCode_TH19.Code, Tenant = 0, IndexOrder = 19 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHFF",HtmlComponentName = "FreightFilesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/FreightFiles/FreightFilesTabComponent", FeatureId = ShipmentFreightFilesFeature_TH19.Id,FeatureUniqeCode = ShipmentFreightFilesFeature_TH19.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.CustomsLib.FreightFilesTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentFreightFilesTextCode_TH19.Id, TabNameTextCodeCode = ShipmentFreightFilesTextCode_TH19.Code, Tenant = 0, IndexOrder = 18 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCF",HtmlComponentName = "CustomsFileTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/CustomsFile/CustomsFileTabComponent", FeatureId = ShipmentCustomsFileFeature_TH20.Id,FeatureUniqeCode = ShipmentCustomsFileFeature_TH20.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.CustomsLib.CustomsFileTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentCustomsFileTextCode_TH20.Id, TabNameTextCodeCode = ShipmentCustomsFileTextCode_TH20.Code, Tenant = 0, IndexOrder = 20 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCF",HtmlComponentName = "CustomsFileTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/CustomsFile/CustomsFileTabComponent", FeatureId = ShipmentCustomsFileFeature_TH20.Id,FeatureUniqeCode = ShipmentCustomsFileFeature_TH20.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.CustomsLib.CustomsFileTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentCustomsFileTextCode_TH20.Id, TabNameTextCodeCode = ShipmentCustomsFileTextCode_TH20.Code, Tenant = 0, IndexOrder = 19 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHSP",HtmlComponentName = "ShipmentPackagesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/ShipmentPackages/ShipmentPackagesTabComponent", FeatureId = ShipmentShipmentPackagesFeature_TH21.Id,FeatureUniqeCode = ShipmentShipmentPackagesFeature_TH21.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.ShipmentPackagesLib.ShipmentPackagesTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentShipmentPackagesTextCode_TH21.Id, TabNameTextCodeCode = ShipmentShipmentPackagesTextCode_TH21.Code, Tenant = 0, IndexOrder = 20 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -95764,13 +95934,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   TextCode ShipmentTextCode_ShipmentGContainersLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.ContainersLines", DefaultText = "Containers lines",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-   
-	    
-}
+           TextCode ShipmentTextCode_NewShipment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.NewShipment", DefaultText = "New Shipment", LocalDefaultText = "משלוח חדש", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-    
+           TextCode ShipmentTextCode_OpenNewCustomShipment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.OpenNewCustomShipment", DefaultText = "Open New Shipment", LocalDefaultText = "פתיחת תיק עמילות", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-   }
+
+
+        }
+
+
+
+    }
     
 }
 	 

@@ -74,7 +74,7 @@ namespace Logitude.Customs.BL.BL
                         // if commission found:
                         // 1- update Field VendorCommisionPercentage.SupplierInvoice
                         supplierInvoicePM.VendorComissionPercentage = commission.CommisionPercentage;
-                        Debug.WriteLine("[!] invoice commission changed to:", supplierInvoicePM.VendorComissionPercentage);
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("[!] invoice commission changed to:{0}", supplierInvoicePM.VendorComissionPercentage));
 
                         // 2- In case there’s mod record , update it
                         var modType = supplierInvoicePM.SupplierInvoiceModifications
@@ -87,8 +87,8 @@ namespace Logitude.Customs.BL.BL
                             //    and it's with different currency OR value ask user
                             if (modType.Amount != newAmount || modType.CurrencyTypeCode != newCurrency)
                             {
-                                Debug.WriteLine("somthing changed, amount or currency ,ask user to change it ???");
-                                Debug.WriteLine("No !?!?");
+                               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("somthing changed, amount or currency ,ask user to change it ???");
+                               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("No !?!?");
                             }
                             else
                             {

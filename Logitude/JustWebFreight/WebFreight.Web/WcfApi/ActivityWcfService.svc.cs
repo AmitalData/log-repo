@@ -643,18 +643,18 @@ namespace WebFreight.Web.WcfApi
             return response;
         }
 
-        public Response UploadDocumentFileDataFromStorage(int tenant, string blobname, string DocumentId = "")
+        public Response UploadDocumentFileDataFromStorage(int tenant, string blobname, string DocumentId = null)
         {
             Response response = new Response();
             if (string.IsNullOrEmpty(blobname))
                 return UpdateResponseException(response, new ArgumentException("blobname is null or empty"));
 
-            Logger.LogDebug("UploadDocumentFileDataFromStorage start", "tenant: " + tenant + " blobname: " + blobname + " DocumentId: " + DocumentId);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("UploadDocumentFileDataFromStorage start:" + "tenant: " + tenant + " blobname: " + blobname + " DocumentId: " + DocumentId);
 
             SecurityUtility.AuthenticationOnTenant(tenant);
             response = DocumentFileUploadHelper.AddDocumentAndSendToInternalStorage(tenant, blobname, DocumentId);
-            
-            Logger.LogDebug("UploadDocumentFileDataFromStorage finish", "tenant: " + tenant + " blobname: " + blobname + " DocumentId: " + DocumentId + " response: " + response.HasError + ", error message: " + response.ErrorMessage);
+
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("UploadDocumentFileDataFromStorage finish:"+ "tenant: " + tenant + " blobname: " + blobname + " DocumentId: " + DocumentId + " response: " + response.HasError + ", error message: " + response.ErrorMessage);
             
             return response;
         }

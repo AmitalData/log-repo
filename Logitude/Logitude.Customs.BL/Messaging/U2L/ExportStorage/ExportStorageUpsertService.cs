@@ -100,7 +100,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ExportStorage
                 var formatedException = ExceptionFormatUtil.GetFormated(ex);
 
                 InsertLogLine(0, "ProccessRequest():Exception " + formatedException.ToString() + Environment.NewLine + "---------------------------------------------");
-                Debug.WriteLine("ProccessRequest():Exception " + formatedException.ToString(), true);
+               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex,  "ProccessRequest():Exception " );
                 MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                 MyGenericResponseObj.Message = "Error while ExportStorageUpdateService.Update " + formatedException.Message;
                 MyGenericResponseObj.ErrorDescription = formatedException.ToString();

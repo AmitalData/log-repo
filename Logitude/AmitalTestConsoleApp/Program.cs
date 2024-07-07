@@ -1,5 +1,4 @@
-﻿using Logitude.BL.Helpers;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -64,7 +63,7 @@ namespace AmitalTestConsoleApp
             }
         }
 
-        private static void DisplaySetting(DefaultAndConfiguration_Ext setting)
+        private static void DisplaySetting(Logitude.BL.Helpers.DefaultAndConfiguration_Ext setting)
         {
             var objVal1 = setting.ObjVal1;
             var objVal2 = setting.ObjVal2;

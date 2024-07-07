@@ -3746,6 +3746,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ReferantUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IskaNumber"
+    Type="varchar"
+    Size="16">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"
@@ -4494,6 +4508,11 @@
   <Relation
     ForeignKeyColumn="TruckerContactId"
     ReferencedTable="Contacts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ReferantUserId"
+    ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

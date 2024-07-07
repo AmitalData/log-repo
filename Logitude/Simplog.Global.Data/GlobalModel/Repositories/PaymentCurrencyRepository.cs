@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Simplog.Global.Data.GlobalModel.Repositories
 {
@@ -32,12 +33,39 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
             PaymentCurrency instance = (from i in context.PaymentCurrencies
                                  where i.Code == code                                 
                                  select i).FirstOrDefault();
+
+            string entityName = "WebhookKey" + code;
+            if (CacheManager.CacheWrapper != null)
+            {
+                if (CacheManager.CacheWrapper.Get(entityName) == null && instance != null)
+                {
+                    CacheManager.CacheWrapper.Insert(entityName, instance, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                }
+                else
+                {
+                    instance = (PaymentCurrency)CacheManager.CacheWrapper.Get(entityName);
+                }
+            }
             return instance;
         }
 
         public IQueryable<PaymentCurrency> GetPaymentCurrencies()
         {
-            return context.PaymentCurrencies;
+            IQueryable<PaymentCurrency> items = context.PaymentCurrencies;
+            string entityName = "AllPaymentCurrencies";
+            if (CacheManager.CacheWrapper != null)
+            {
+                if (CacheManager.CacheWrapper.Get(entityName) == null && items != null)
+                {
+                    CacheManager.CacheWrapper.Insert(entityName, items, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                }
+                else
+                {
+                    items = (IQueryable<PaymentCurrency>)CacheManager.CacheWrapper.Get(entityName);
+                }
+            }
+            return items;
+
         }
 
         public IQueryable<PaymentCurrency> GetAll()

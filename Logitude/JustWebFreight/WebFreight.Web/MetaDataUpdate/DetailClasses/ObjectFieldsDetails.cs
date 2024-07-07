@@ -12,6 +12,7 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public int MaxLength { get; set; }
         public string LookUpTableId { get; set; }
         public string FieldName { get; set; }
+        public string ShortName { get; set; }
         public string FullFieldLable { get; set; }
         public string HelpTextCode { get; set; }
         public string HelpTextDefaultText { get; set; }

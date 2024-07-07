@@ -10,7 +10,7 @@ Feature: Vendor Create, Search, activate and Edit from Maintenance
             | Phone       | 9999999999              |
             | Vat No      | 9999999999              |
             | Address1    | 15 Vendor Street        |
-            | City        | NEW BABILON             |
+            | City        | Anchorage               |
             | Country     | United States           |
             | State       | Alaska                  |  
         When create vendor

@@ -1814,6 +1814,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             #endregion
 
+            shipmentPM.ReferantUserId = shipment.ReferantUserId;
+            // shipmentPM.ReferantUserId = shipment.UserId.Id;
+            shipmentPM.IskaNumber = shipment.IskaNumber;
+
             // Warehouse Leg 
             shipmentPM.WarehouseLegWarehouseName = shipment.WarehouseLegCard?.EnglishName;
 			shipmentPM.WarehouseLegWarehouseId = shipment.WarehouseLegWarehouseId;

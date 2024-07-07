@@ -1567,7 +1567,7 @@ namespace Logitude.Customs.Data.Repsitories
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
 
             IQueryable<ExportDeclarationForReport> declarations = (from a in context.Declarations
-                                                                   .Include(a=> a.CustomsTransportMode)
+                                                                   .Include(a=> a.TransportMode)
                                                                    .Include(a=> a.DeclarationType)
                                                                    .Include(a=> a.GovernmentProcedureCurrent)
                                                                    .Include(a=> a.CustomsCountry)
@@ -1596,7 +1596,7 @@ namespace Logitude.Customs.Data.Repsitories
                                                                        CreateDateTime = a.CreateDateTime,
                                                                        TaxationDateTime = a.TaxationDateTime,
                                                                        ExportFile = a.ExportFile,
-                                                                       TransportModeName = a.CustomsTransportMode != null ? a.CustomsTransportMode.LocalName : null,
+                                                                       TransportModeName = a.TransportMode != null ? a.TransportMode.LocalName : null,
                                                                        CustomFileNo = a.CustomFileNo,
                                                                        DeclarationNumber = a.DeclarationNumber,
                                                                        DeclarationTypeName = a.DeclarationType != null ? a.DeclarationType.LocalName : null,

@@ -83,7 +83,7 @@ namespace Logitude.Customs.BL.TraceEvents
 
             var mySerilazeObject = XmlGenericUtil<TransmissionBodyType>.SerializeObject(this._TransmissionBodyModel, true);
 
-            Debug.WriteLine(mySerilazeObject);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(mySerilazeObject);
 
 
 

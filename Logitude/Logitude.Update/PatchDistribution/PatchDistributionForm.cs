@@ -38,8 +38,6 @@ namespace Logitude.Update.PatchDistribution
         {
             InitializeComponent();
             //DbContextBaseUtil.ToLog = checkBox1.Checked = true;
-            TraceListener debugListener = new MyTraceListener(this.textBoxLogger);
-            Debug.Listeners.Add(debugListener);
             ApproveEnabled =UpdateDBEnabled = false;
         }
 
@@ -72,14 +70,14 @@ namespace Logitude.Update.PatchDistribution
             var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
             var prodInfo = assemblyUtil.GetProductInfo(typeof(JustWebFreight.WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses.MyEntityUpdateClass).Assembly);
             var assemblyVersion = assemblyUtil.GetVersion(prodInfo);
-            Logger.LogMe($"assemblyVersion ={assemblyVersion}", false);
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"assemblyVersion ={assemblyVersion}");
 
 
             var patchDistributionMatch = new PatchDistributionMatch();
             _PatchDistributionMatchModel =patchDistributionMatch.GetPatchDistributionMatchModel(assemblyVersion);
-            Logger.LogMe(_PatchDistributionMatchModel.Message,false);
-            Logger.LogMe($"DB MajorVersion={_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion}", false);
-            Logger.LogMe($"DB MinorVersion Last Closed !!!={_PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion}", false);
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(_PatchDistributionMatchModel.Message);
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"DB MajorVersion={_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion}");
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"DB MinorVersion Last Closed !!!={_PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion}");
             //Logger.LogMe($"DB MinorLine={_PatchDistributionMatchModel.Last_DBMigrationLine.CounterKey}", false);
 
 
@@ -119,7 +117,7 @@ namespace Logitude.Update.PatchDistribution
                             );
                         return;
                     }
-                    Debug.WriteLine("Menu >> Start >  Doit !!!");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Menu >> Start >  Doit !!!");
                     _PatchDistributionList = patchDistributionList;
 
                     UpdateDBEnabled = true;
@@ -149,7 +147,7 @@ namespace Logitude.Update.PatchDistribution
                 }
                     );
                 UpdateDBEnabled = false;
-                Logger.LogMe($"End!!!!!!!!!!!!!!!!!", false);
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"End!!!!!!!!!!!!!!!!!");
                 MessageBox.Show("Please don't forget to recycle the IIS");
             }
             catch (PatchDistributionException myPatchDistributionException)
@@ -186,7 +184,7 @@ namespace Logitude.Update.PatchDistribution
             catch (Exception ee)
             {
                 ApproveEnabled = false;
-                Debug.WriteLine(ee.ToString());
+               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ee);
                 MessageBox.Show(ee.ToString());
                 return;
             }
@@ -197,11 +195,11 @@ namespace Logitude.Update.PatchDistribution
         }
     }
 
-    public class MyTraceListener : TraceListener
+    public class TODELETE_MyTraceListener : TraceListener
     {
         private TextBoxBase output;
 
-        public MyTraceListener(TextBoxBase output)
+        public TODELETE_MyTraceListener(TextBoxBase output)
         {
             this.Name = "Trace";
             this.output = output;

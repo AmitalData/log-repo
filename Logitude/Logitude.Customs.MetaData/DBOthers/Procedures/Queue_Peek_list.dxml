@@ -1,4 +1,7 @@
-<Procedure DBType="Main" Name="QueueEnqueue_succeedRequestsheets" Schema="dbo" Module="Customs">
+<Procedure DBType="Main" Name="Queue_Peek_list" Schema="dbo" Module="Customs">
+
+	<SqlScript>
+	</SqlScript>
 
 	<OracleScript>
 		<![CDATA[

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Logitude.Accounting.BL.Utils
 {
-    public static class AccountingLogger
+    public static class TODELETE_AccountingLogger
     {
 
         delegate DialogResult Show(string text, string caption);
@@ -24,7 +24,7 @@ namespace Logitude.Accounting.BL.Utils
         {
             suffix = ValidFileName(suffix);
             LogMeDelegate logMe;
-            Debug.WriteLine(mess);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(mess);
             if (Error)
             {
                 logMe = new LogMeDelegate(LogError);
@@ -72,7 +72,7 @@ namespace Logitude.Accounting.BL.Utils
                 {
                     try
                     {
-                        //WorkingDir = System.Configuration.ConfigurationSettings.AppSettings["WorkingDir"].ToString();
+                        //WorkingDir = ConfigurationManager.AppSettings["WorkingDir"].ToString();
                         //WorkingDir = Path.GetDirectoryName(Application.ExecutablePath);
 
 
@@ -135,7 +135,7 @@ namespace Logitude.Accounting.BL.Utils
             }
             string suffixFile = "Error.Log";
             if (suffix != "") suffixFile = "Error." + suffix + ".Log";
-            lock (typeof(AccountingLogger))
+            lock (typeof(TODELETE_AccountingLogger))
             {
                 InitWorkingDir();
                 using (StreamWriter sw = File.AppendText(WorkingDir + ValidFileName(Application.ProductName) + "." + DateTime.Today.Year + "." + DateTime.Today.Month + "." + DateTime.Today.Day + "." + suffixFile))
@@ -172,7 +172,7 @@ namespace Logitude.Accounting.BL.Utils
             }
 
 
-            lock (typeof(AccountingLogger))
+            lock (typeof(TODELETE_AccountingLogger))
             {
                 InitWorkingDir();
                 string fn = GetLogMessageFileName(suffix);
@@ -196,7 +196,7 @@ namespace Logitude.Accounting.BL.Utils
         {
             try
             {
-                lock (typeof(AccountingLogger))
+                lock (typeof(TODELETE_AccountingLogger))
                 {
                     InitWorkingDir();
                     string[] files = Directory.GetFiles(WorkingDir, ValidFileName(Application.ProductName) + ".*.State.txt", SearchOption.TopDirectoryOnly);
@@ -236,7 +236,7 @@ namespace Logitude.Accounting.BL.Utils
             string suffixFile = ValidFileName(Suffix) + ".State.txt";
             try
             {
-                lock (typeof(AccountingLogger))
+                lock (typeof(TODELETE_AccountingLogger))
                 {
                     InitWorkingDir();
                     using (StreamWriter sw = File.CreateText(WorkingDir + ValidFileName(Application.ProductName) + "." + suffixFile))

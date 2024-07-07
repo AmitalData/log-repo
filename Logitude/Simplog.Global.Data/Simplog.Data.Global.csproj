@@ -1,0 +1,666 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6D7FFAD2-35B6-4133-8700-CF73E58D0C85}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Simplog.Global.Data</RootNamespace>
+    <AssemblyName>Simplog.Data.Global</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Library\Bin\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;ORACLE_DB</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Library\Bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\Library\Bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
+    <OutputPath>..\Library\Bin\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Devart.Data.Oracle.Entity.EF6, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\EF6\Devart.Data.Oracle.Entity.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceModel.DomainServices.Tools, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceModel.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.Tools.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Win32.Registry, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Win32.Registry.5.0.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.Composition.Registration" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Diagnostics.PerformanceCounter, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.PerformanceCounter.8.0.0\lib\net462\System.Diagnostics.PerformanceCounter.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.TypeExtensions, Version=4.1.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reflection.TypeExtensions.4.7.0\lib\net461\System.Reflection.TypeExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.AccessControl, Version=6.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.AccessControl.6.0.1\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\RIAServices.Server.4.2.0\lib\Net40\System.ServiceModel.DomainServices.Hosting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\RIAServices.Server.4.2.0\lib\Net40\System.ServiceModel.DomainServices.Server.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encoding.CodePages, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encoding.CodePages.8.0.0\lib\net462\System.Text.Encoding.CodePages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GlobalModel\AnalyzeQueuePM.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\AgentSharedLogisticsKey.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\AnalyzeQueue.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\AnalyzeQueueStatus.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\ApiCredintials.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\AutoSignupEmail.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\AWBMessagesCCSType.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\BatchServicesDefinition.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\BluesnapTransaction.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\BluesnapContract.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\BluesnapContractType.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\WebhookKeys.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\CaptchaKey.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\ChangePasswordLog.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\ContactMobileDevice.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\ContactPassword.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\ConvertProgramInfo.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\BatchServicesDefinitionMods.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\InvalidEmailResetPassword.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\SessionPolicy.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\TenantManagmentPrivateLabels.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\GlobalContact.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\GlobalDB.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\GlobalTenant.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\GlobalTenantCounter.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\HelpResource.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\LogitudeLead.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\MobileNotificationLog.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\MonitorServiceLastUpdate.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\OneTimePassword.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\PasswordResetRequest.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\PaymentChannel.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\PaymentCurrency.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\PaymentMethod.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\PerformanceLog.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\RecurringPeriod.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\Setting.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\SystemMetadataLastUpdate.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\TenantAddOn.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\TenantManagement.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\TenantManagementLicense.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\TenantType.cs" />
+    <Compile Include="GlobalModel\GlobalContext.cs" />
+    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
+      <Link>DependencyValidation1.layerdiagram</Link>
+      <Visible>False</Visible>
+    </AdditionalFiles>
+    <None Include="GlobalModel\GlobalContext.Views.cs" />
+    <Compile Include="GlobalModel\Helpers\GlobalDbHelper.cs" />
+    <Compile Include="GlobalModel\IGlobalContext.cs" />
+    <Compile Include="GlobalModel\Mapping\AgentSharedLogisticsKeyMap.cs" />
+    <Compile Include="GlobalModel\Mapping\AnalyzeQueueMap.cs" />
+    <Compile Include="GlobalModel\Mapping\AnalyzeQueueStatuMap.cs" />
+    <Compile Include="GlobalModel\Mapping\AutoSignupEmailMap.cs" />
+    <Compile Include="GlobalModel\Mapping\AWBMessagesCCSTypeMap.cs" />
+    <Compile Include="GlobalModel\Mapping\BatchServicesDefinitionMap.cs" />
+    <Compile Include="GlobalModel\Mapping\BluesnapTransactionMap.cs" />
+    <Compile Include="GlobalModel\Mapping\BluesnapContractMap.cs" />
+    <Compile Include="GlobalModel\Mapping\BluesnapContractTypeMap.cs" />
+    <Compile Include="GlobalModel\Mapping\WebhookKeysMap.cs" />
+    <Compile Include="GlobalModel\Mapping\CaptchaKeyMap.cs" />
+    <Compile Include="GlobalModel\Mapping\ChangePasswordLogMap.cs" />
+    <Compile Include="GlobalModel\Mapping\ContactMobileDeviceMap.cs" />
+    <Compile Include="GlobalModel\Mapping\ContactPasswordMap.cs" />
+    <Compile Include="GlobalModel\Mapping\ConvertProgramInfoMap.cs" />
+    <Compile Include="GlobalModel\Mapping\ApiCredintialsMap.cs" />
+    <Compile Include="GlobalModel\Mapping\BatchServicesDefinitionModsMap.cs" />
+    <Compile Include="GlobalModel\Mapping\InvalidEmailResetPasswordMap.cs" />
+    <Compile Include="GlobalModel\Mapping\SessionPolicyMap.cs" />
+    <Compile Include="GlobalModel\Mapping\TenantManagmentPrivateLabelsMap.cs" />
+    <Compile Include="GlobalModel\Mapping\GlobalContactMap.cs" />
+    <Compile Include="GlobalModel\Mapping\GlobalDBMap.cs" />
+    <Compile Include="GlobalModel\Mapping\GlobalTenantCounterMap.cs" />
+    <Compile Include="GlobalModel\Mapping\GlobalTenantMap.cs" />
+    <Compile Include="GlobalModel\Mapping\HelpResourceMap.cs" />
+    <Compile Include="GlobalModel\Mapping\LogitudeLeadsMap.cs" />
+    <Compile Include="GlobalModel\Mapping\MobileNotificationLogMap.cs" />
+    <Compile Include="GlobalModel\Mapping\MonitorServiceLastUpdateMap.cs" />
+    <Compile Include="GlobalModel\Mapping\OneTimePasswordMap.cs" />
+    <Compile Include="GlobalModel\Mapping\PasswordResetRequestMap.cs" />
+    <Compile Include="GlobalModel\Mapping\PaymentChannelMap.cs" />
+    <Compile Include="GlobalModel\Mapping\PaymentCurrencyMap.cs" />
+    <Compile Include="GlobalModel\Mapping\PaymentMethodMap.cs" />
+    <Compile Include="GlobalModel\Mapping\PerformanceLogMap.cs" />
+    <Compile Include="GlobalModel\Mapping\RecurringPeriodMap.cs" />
+    <Compile Include="GlobalModel\Mapping\SettingMap.cs" />
+    <Compile Include="GlobalModel\Mapping\SystemMetadataLastUpdateMap.cs" />
+    <Compile Include="GlobalModel\Mapping\TenantAddOnMap.cs" />
+    <Compile Include="GlobalModel\Mapping\TenantManagementMap.cs" />
+    <Compile Include="GlobalModel\Mapping\TenantManagementLicenseMap.cs" />
+    <Compile Include="GlobalModel\Mapping\TenantTypeMap.cs" />
+    <Compile Include="GlobalModel\Mocks\MockGlobalContext.cs" />
+    <Compile Include="GlobalModel\Repositories\AgentSharedLogisticsKeyRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\AnalyzeQueueRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\AutoSignupEmailRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\AWBMessagesCCSTypeRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\BatchServicesDefinitionRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\BluesnapTransactionRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\BluesnapContractRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\BluesnapContractTypeRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\WebhookKeysRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\CaptchaKeyRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\ChangePasswordLogRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\ContactMobileDeviceRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\ContactPasswordRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\ConvertProgramInfoRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\ApiCredintialsRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\BatchServicesDefinitionModsRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\InvalidEmailResetPasswordRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\SessionPolicyRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\TenantManagmentPrivateLabelsRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\GlobalContactRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\GlobalDBRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\GlobalTenantRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\HelpResourceRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\LogitudeLeadRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\MobileNotificationLogRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\MonitorServiceLastUpdateRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\OneTimePasswordRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\PasswordResetRequestRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\PaymentChannelRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\PaymentCurrencyRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\PaymentMethodRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\PerformanceLogRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\RecurringPeriodRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\SettingRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\SystemMetadataLastUpdateRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\TenantAddOnRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\TenantManagementRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\TenantManagementLicenseRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\TenantTypeRepository.cs" />
+    <Compile Include="Migrations\201810141032377_newSnapShot.cs" />
+    <Compile Include="Migrations\201810141032377_newSnapShot.Designer.cs">
+      <DependentUpon>201810141032377_newSnapShot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810150526331_AbedAddNewTableSessionPolicy.cs" />
+    <Compile Include="Migrations\201810150526331_AbedAddNewTableSessionPolicy.Designer.cs">
+      <DependentUpon>201810150526331_AbedAddNewTableSessionPolicy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810150949517_IncreaseTenantNotesFieldLength_Samar.cs" />
+    <Compile Include="Migrations\201810150949517_IncreaseTenantNotesFieldLength_Samar.Designer.cs">
+      <DependentUpon>201810150949517_IncreaseTenantNotesFieldLength_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810240810162_AbedAddNewTableCaptchaKey.cs" />
+    <Compile Include="Migrations\201810240810162_AbedAddNewTableCaptchaKey.Designer.cs">
+      <DependentUpon>201810240810162_AbedAddNewTableCaptchaKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810250926264_AbedAddNewFieldEmailSendingQuotaToSettingTable.cs" />
+    <Compile Include="Migrations\201810250926264_AbedAddNewFieldEmailSendingQuotaToSettingTable.Designer.cs">
+      <DependentUpon>201810250926264_AbedAddNewFieldEmailSendingQuotaToSettingTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810280818131_AbedAddTableInvalidEmailResetPassword.cs" />
+    <Compile Include="Migrations\201810280818131_AbedAddTableInvalidEmailResetPassword.Designer.cs">
+      <DependentUpon>201810280818131_AbedAddTableInvalidEmailResetPassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810280913468_AbedAddNewFieldIPToChangePasswordLog.cs" />
+    <Compile Include="Migrations\201810280913468_AbedAddNewFieldIPToChangePasswordLog.Designer.cs">
+      <DependentUpon>201810280913468_AbedAddNewFieldIPToChangePasswordLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810281007451_AbedAddNewFieldActivityToCaptchaKey.cs" />
+    <Compile Include="Migrations\201810281007451_AbedAddNewFieldActivityToCaptchaKey.Designer.cs">
+      <DependentUpon>201810281007451_AbedAddNewFieldActivityToCaptchaKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810300620134_AbedAddDWNextRunTimeToTableSetting.cs" />
+    <Compile Include="Migrations\201810300620134_AbedAddDWNextRunTimeToTableSetting.Designer.cs">
+      <DependentUpon>201810300620134_AbedAddDWNextRunTimeToTableSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811010618518_ChangeFieldNameInTableSessionPolicies.cs" />
+    <Compile Include="Migrations\201811010618518_ChangeFieldNameInTableSessionPolicies.Designer.cs">
+      <DependentUpon>201811010618518_ChangeFieldNameInTableSessionPolicies.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811131811377_AbedAddFieldIsUsedOnTableCaptchaKey.cs" />
+    <Compile Include="Migrations\201811131811377_AbedAddFieldIsUsedOnTableCaptchaKey.Designer.cs">
+      <DependentUpon>201811131811377_AbedAddFieldIsUsedOnTableCaptchaKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811131835452_AbedAddCaptchaKeyToContactPassword.cs" />
+    <Compile Include="Migrations\201811131835452_AbedAddCaptchaKeyToContactPassword.Designer.cs">
+      <DependentUpon>201811131835452_AbedAddCaptchaKeyToContactPassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812120651103_AddWebHookKeysTable_Rabaia.cs" />
+    <Compile Include="Migrations\201812120651103_AddWebHookKeysTable_Rabaia.Designer.cs">
+      <DependentUpon>201812120651103_AddWebHookKeysTable_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812130302503_AddPackageCodeSearchFieldInTenantManagement_Maheera.cs" />
+    <Compile Include="Migrations\201812130302503_AddPackageCodeSearchFieldInTenantManagement_Maheera.Designer.cs">
+      <DependentUpon>201812130302503_AddPackageCodeSearchFieldInTenantManagement_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812161311487_AddIsINTTRAStockPrepaid.cs" />
+    <Compile Include="Migrations\201812161311487_AddIsINTTRAStockPrepaid.Designer.cs">
+      <DependentUpon>201812161311487_AddIsINTTRAStockPrepaid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812231027196_AddIsINTTRAOnlyDemo.cs" />
+    <Compile Include="Migrations\201812231027196_AddIsINTTRAOnlyDemo.Designer.cs">
+      <DependentUpon>201812231027196_AddIsINTTRAOnlyDemo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812260848362_ChangeWebHookIdToString_Rabaia.cs" />
+    <Compile Include="Migrations\201812260848362_ChangeWebHookIdToString_Rabaia.Designer.cs">
+      <DependentUpon>201812260848362_ChangeWebHookIdToString_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901080726292_ApiCredintials_removing_ComputingPartnerId.cs" />
+    <Compile Include="Migrations\201901080726292_ApiCredintials_removing_ComputingPartnerId.Designer.cs">
+      <DependentUpon>201901080726292_ApiCredintials_removing_ComputingPartnerId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902031153014_Bluesnapcontract_Id_Add.cs" />
+    <Compile Include="Migrations\201902031153014_Bluesnapcontract_Id_Add.Designer.cs">
+      <DependentUpon>201902031153014_Bluesnapcontract_Id_Add.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902031221475_Remove_ForeginKey_BluesnapcontractId.cs" />
+    <Compile Include="Migrations\201902031221475_Remove_ForeginKey_BluesnapcontractId.Designer.cs">
+      <DependentUpon>201902031221475_Remove_ForeginKey_BluesnapcontractId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902031259001_BluesnapcontractId_Key_TenantManagement_RemoveForeignKey.cs" />
+    <Compile Include="Migrations\201902031259001_BluesnapcontractId_Key_TenantManagement_RemoveForeignKey.Designer.cs">
+      <DependentUpon>201902031259001_BluesnapcontractId_Key_TenantManagement_RemoveForeignKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902050745428_add_BluesnapContractType_Table_Khalid.cs" />
+    <Compile Include="Migrations\201902050745428_add_BluesnapContractType_Table_Khalid.Designer.cs">
+      <DependentUpon>201902050745428_add_BluesnapContractType_Table_Khalid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902050840538_add_BluesnapContractTypeField_On_BluesnapContracts_Khalid.cs" />
+    <Compile Include="Migrations\201902050840538_add_BluesnapContractTypeField_On_BluesnapContracts_Khalid.Designer.cs">
+      <DependentUpon>201902050840538_add_BluesnapContractTypeField_On_BluesnapContracts_Khalid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902061226264_TenantManagement_9NewFields_Khalid.cs" />
+    <Compile Include="Migrations\201902061226264_TenantManagement_9NewFields_Khalid.Designer.cs">
+      <DependentUpon>201902061226264_TenantManagement_9NewFields_Khalid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902201017459_allownullinQTYTenantManagement_Khalid.cs" />
+    <Compile Include="Migrations\201902201017459_allownullinQTYTenantManagement_Khalid.Designer.cs">
+      <DependentUpon>201902201017459_allownullinQTYTenantManagement_Khalid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902261831076_TenantManagement_BluesnapOnetimeContract_Field_Change.cs" />
+    <Compile Include="Migrations\201902261831076_TenantManagement_BluesnapOnetimeContract_Field_Change.Designer.cs">
+      <DependentUpon>201902261831076_TenantManagement_BluesnapOnetimeContract_Field_Change.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903200950423_AddReleaseNotesURLToSettings_Samar.cs" />
+    <Compile Include="Migrations\201903200950423_AddReleaseNotesURLToSettings_Samar.Designer.cs">
+      <DependentUpon>201903200950423_AddReleaseNotesURLToSettings_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904151200342_add_Field_BluesnapIntraContractIdAndQTY_Khalid.cs" />
+    <Compile Include="Migrations\201904151200342_add_Field_BluesnapIntraContractIdAndQTY_Khalid.Designer.cs">
+      <DependentUpon>201904151200342_add_Field_BluesnapIntraContractIdAndQTY_Khalid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904171930337_AbedAddSecondaryAzureDBConnectionOnGlobalDBs.cs" />
+    <Compile Include="Migrations\201904171930337_AbedAddSecondaryAzureDBConnectionOnGlobalDBs.Designer.cs">
+      <DependentUpon>201904171930337_AbedAddSecondaryAzureDBConnectionOnGlobalDBs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904210904056_add_Log_AnalyzeQueue_Khalid.cs" />
+    <Compile Include="Migrations\201904210904056_add_Log_AnalyzeQueue_Khalid.Designer.cs">
+      <DependentUpon>201904210904056_add_Log_AnalyzeQueue_Khalid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904240914504_AddIsBlockingLoginFlag.cs" />
+    <Compile Include="Migrations\201904240914504_AddIsBlockingLoginFlag.Designer.cs">
+      <DependentUpon>201904240914504_AddIsBlockingLoginFlag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904241107384_AddIsBlockingLogin.cs" />
+    <Compile Include="Migrations\201904241107384_AddIsBlockingLogin.Designer.cs">
+      <DependentUpon>201904241107384_AddIsBlockingLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906120916074_AbedAddNewFieldCPUIntensiveWebServicesURLToSetting.cs" />
+    <Compile Include="Migrations\201906120916074_AbedAddNewFieldCPUIntensiveWebServicesURLToSetting.Designer.cs">
+      <DependentUpon>201906120916074_AbedAddNewFieldCPUIntensiveWebServicesURLToSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906130619553_NewField_DebitAmount_ReconcileExternalPageLines.cs" />
+    <Compile Include="Migrations\201906130619553_NewField_DebitAmount_ReconcileExternalPageLines.Designer.cs">
+      <DependentUpon>201906130619553_NewField_DebitAmount_ReconcileExternalPageLines.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906231629362_MakeTariffVersionDatesNullable.cs" />
+    <Compile Include="Migrations\201906231629362_MakeTariffVersionDatesNullable.Designer.cs">
+      <DependentUpon>201906231629362_MakeTariffVersionDatesNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906291619247_AddChampFields_Maheera.cs" />
+    <Compile Include="Migrations\201906291619247_AddChampFields_Maheera.Designer.cs">
+      <DependentUpon>201906291619247_AddChampFields_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907110451108_AddMainAdditionalPackageApplied.cs" />
+    <Compile Include="Migrations\201907110451108_AddMainAdditionalPackageApplied.Designer.cs">
+      <DependentUpon>201907110451108_AddMainAdditionalPackageApplied.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907311629351_AddNewTenantManagementFields.cs" />
+    <Compile Include="Migrations\201907311629351_AddNewTenantManagementFields.Designer.cs">
+      <DependentUpon>201907311629351_AddNewTenantManagementFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909080743100_AddingQueueDefCOdeToBatchService_Rabaia.cs" />
+    <Compile Include="Migrations\201909080743100_AddingQueueDefCOdeToBatchService_Rabaia.Designer.cs">
+      <DependentUpon>201909080743100_AddingQueueDefCOdeToBatchService_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909151127227_AbedAddLastIncrementalDWUpdateDateToSettings.cs" />
+    <Compile Include="Migrations\201909151127227_AbedAddLastIncrementalDWUpdateDateToSettings.Designer.cs">
+      <DependentUpon>201909151127227_AbedAddLastIncrementalDWUpdateDateToSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909291254383_AbeddeleteDWFieldsFromSetting.cs" />
+    <Compile Include="Migrations\201909291254383_AbeddeleteDWFieldsFromSetting.Designer.cs">
+      <DependentUpon>201909291254383_AbeddeleteDWFieldsFromSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910301311300_BluesnapTransaction_table_khalid.cs" />
+    <Compile Include="Migrations\201910301311300_BluesnapTransaction_table_khalid.Designer.cs">
+      <DependentUpon>201910301311300_BluesnapTransaction_table_khalid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911100712389_Settings_QBO_Fields_Khalid.cs" />
+    <Compile Include="Migrations\201911100712389_Settings_QBO_Fields_Khalid.Designer.cs">
+      <DependentUpon>201911100712389_Settings_QBO_Fields_Khalid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912230848314_AddSupportDomainToTenantManagement_Samar.cs" />
+    <Compile Include="Migrations\201912230848314_AddSupportDomainToTenantManagement_Samar.Designer.cs">
+      <DependentUpon>201912230848314_AddSupportDomainToTenantManagement_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912240715063_ModifyLengthOfSupportDomainFieldInTenantManagement_Maheera.cs" />
+    <Compile Include="Migrations\201912240715063_ModifyLengthOfSupportDomainFieldInTenantManagement_Maheera.Designer.cs">
+      <DependentUpon>201912240715063_ModifyLengthOfSupportDomainFieldInTenantManagement_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002081630280_AddFieldsToTenantManagementTable_Maheera.cs" />
+    <Compile Include="Migrations\202002081630280_AddFieldsToTenantManagementTable_Maheera.Designer.cs">
+      <DependentUpon>202002081630280_AddFieldsToTenantManagementTable_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002250701051_WesamAddSearchFieldsToWebHookKeysTable.cs" />
+    <Compile Include="Migrations\202002250701051_WesamAddSearchFieldsToWebHookKeysTable.Designer.cs">
+      <DependentUpon>202002250701051_WesamAddSearchFieldsToWebHookKeysTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003031004593_WesamGlobalDBMigrationFixes.cs" />
+    <Compile Include="Migrations\202003031004593_WesamGlobalDBMigrationFixes.Designer.cs">
+      <DependentUpon>202003031004593_WesamGlobalDBMigrationFixes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003260849424_missinnnnnnnng.cs" />
+    <Compile Include="Migrations\202003260849424_missinnnnnnnng.Designer.cs">
+      <DependentUpon>202003260849424_missinnnnnnnng.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003301335202_missingGlobal.cs" />
+    <Compile Include="Migrations\202003301335202_missingGlobal.Designer.cs">
+      <DependentUpon>202003301335202_missingGlobal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003051034035_Abed_AddBatchServicesDefinitionMapToGlobalContext.cs" />
+    <Compile Include="Migrations\202003051034035_Abed_AddBatchServicesDefinitionMapToGlobalContext.Designer.cs">
+      <DependentUpon>202003051034035_Abed_AddBatchServicesDefinitionMapToGlobalContext.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003080908423_AddTMPersonalAccessTokenFieldToSettings_Maheera.cs" />
+    <Compile Include="Migrations\202003080908423_AddTMPersonalAccessTokenFieldToSettings_Maheera.Designer.cs">
+      <DependentUpon>202003080908423_AddTMPersonalAccessTokenFieldToSettings_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003041403389_AddARInvoiceRegionalTax.cs" />
+    <Compile Include="Migrations\202003041403389_AddARInvoiceRegionalTax.Designer.cs">
+      <DependentUpon>202003041403389_AddARInvoiceRegionalTax.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004301840322_Abed_FixCustomerCareIPColumnInTableSettings.cs" />
+    <Compile Include="Migrations\202004301840322_Abed_FixCustomerCareIPColumnInTableSettings.Designer.cs">
+      <DependentUpon>202004301840322_Abed_FixCustomerCareIPColumnInTableSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EDMX\GlobalEmxFile.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201810141032377_newSnapShot.resx">
+      <DependentUpon>201810141032377_newSnapShot.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810150949517_IncreaseTenantNotesFieldLength_Samar.resx">
+      <DependentUpon>201810150949517_IncreaseTenantNotesFieldLength_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810150526331_AbedAddNewTableSessionPolicy.resx">
+      <DependentUpon>201810150526331_AbedAddNewTableSessionPolicy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810240810162_AbedAddNewTableCaptchaKey.resx">
+      <DependentUpon>201810240810162_AbedAddNewTableCaptchaKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810250926264_AbedAddNewFieldEmailSendingQuotaToSettingTable.resx">
+      <DependentUpon>201810250926264_AbedAddNewFieldEmailSendingQuotaToSettingTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810280818131_AbedAddTableInvalidEmailResetPassword.resx">
+      <DependentUpon>201810280818131_AbedAddTableInvalidEmailResetPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810280913468_AbedAddNewFieldIPToChangePasswordLog.resx">
+      <DependentUpon>201810280913468_AbedAddNewFieldIPToChangePasswordLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810281007451_AbedAddNewFieldActivityToCaptchaKey.resx">
+      <DependentUpon>201810281007451_AbedAddNewFieldActivityToCaptchaKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810300620134_AbedAddDWNextRunTimeToTableSetting.resx">
+      <DependentUpon>201810300620134_AbedAddDWNextRunTimeToTableSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811010618518_ChangeFieldNameInTableSessionPolicies.resx">
+      <DependentUpon>201811010618518_ChangeFieldNameInTableSessionPolicies.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811131811377_AbedAddFieldIsUsedOnTableCaptchaKey.resx">
+      <DependentUpon>201811131811377_AbedAddFieldIsUsedOnTableCaptchaKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811131835452_AbedAddCaptchaKeyToContactPassword.resx">
+      <DependentUpon>201811131835452_AbedAddCaptchaKeyToContactPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812120651103_AddWebHookKeysTable_Rabaia.resx">
+      <DependentUpon>201812120651103_AddWebHookKeysTable_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812161311487_AddIsINTTRAStockPrepaid.resx">
+      <DependentUpon>201812161311487_AddIsINTTRAStockPrepaid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812130302503_AddPackageCodeSearchFieldInTenantManagement_Maheera.resx">
+      <DependentUpon>201812130302503_AddPackageCodeSearchFieldInTenantManagement_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812231027196_AddIsINTTRAOnlyDemo.resx">
+      <DependentUpon>201812231027196_AddIsINTTRAOnlyDemo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812260848362_ChangeWebHookIdToString_Rabaia.resx">
+      <DependentUpon>201812260848362_ChangeWebHookIdToString_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901080726292_ApiCredintials_removing_ComputingPartnerId.resx">
+      <DependentUpon>201901080726292_ApiCredintials_removing_ComputingPartnerId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902031153014_Bluesnapcontract_Id_Add.resx">
+      <DependentUpon>201902031153014_Bluesnapcontract_Id_Add.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902031221475_Remove_ForeginKey_BluesnapcontractId.resx">
+      <DependentUpon>201902031221475_Remove_ForeginKey_BluesnapcontractId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902031259001_BluesnapcontractId_Key_TenantManagement_RemoveForeignKey.resx">
+      <DependentUpon>201902031259001_BluesnapcontractId_Key_TenantManagement_RemoveForeignKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902050745428_add_BluesnapContractType_Table_Khalid.resx">
+      <DependentUpon>201902050745428_add_BluesnapContractType_Table_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902050840538_add_BluesnapContractTypeField_On_BluesnapContracts_Khalid.resx">
+      <DependentUpon>201902050840538_add_BluesnapContractTypeField_On_BluesnapContracts_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902061226264_TenantManagement_9NewFields_Khalid.resx">
+      <DependentUpon>201902061226264_TenantManagement_9NewFields_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902201017459_allownullinQTYTenantManagement_Khalid.resx">
+      <DependentUpon>201902201017459_allownullinQTYTenantManagement_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902261831076_TenantManagement_BluesnapOnetimeContract_Field_Change.resx">
+      <DependentUpon>201902261831076_TenantManagement_BluesnapOnetimeContract_Field_Change.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903200950423_AddReleaseNotesURLToSettings_Samar.resx">
+      <DependentUpon>201903200950423_AddReleaseNotesURLToSettings_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904151200342_add_Field_BluesnapIntraContractIdAndQTY_Khalid.resx">
+      <DependentUpon>201904151200342_add_Field_BluesnapIntraContractIdAndQTY_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904171930337_AbedAddSecondaryAzureDBConnectionOnGlobalDBs.resx">
+      <DependentUpon>201904171930337_AbedAddSecondaryAzureDBConnectionOnGlobalDBs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904210904056_add_Log_AnalyzeQueue_Khalid.resx">
+      <DependentUpon>201904210904056_add_Log_AnalyzeQueue_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904240914504_AddIsBlockingLoginFlag.resx">
+      <DependentUpon>201904240914504_AddIsBlockingLoginFlag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904241107384_AddIsBlockingLogin.resx">
+      <DependentUpon>201904241107384_AddIsBlockingLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906120916074_AbedAddNewFieldCPUIntensiveWebServicesURLToSetting.resx">
+      <DependentUpon>201906120916074_AbedAddNewFieldCPUIntensiveWebServicesURLToSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906130619553_NewField_DebitAmount_ReconcileExternalPageLines.resx">
+      <DependentUpon>201906130619553_NewField_DebitAmount_ReconcileExternalPageLines.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906231629362_MakeTariffVersionDatesNullable.resx">
+      <DependentUpon>201906231629362_MakeTariffVersionDatesNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906291619247_AddChampFields_Maheera.resx">
+      <DependentUpon>201906291619247_AddChampFields_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907110451108_AddMainAdditionalPackageApplied.resx">
+      <DependentUpon>201907110451108_AddMainAdditionalPackageApplied.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907311629351_AddNewTenantManagementFields.resx">
+      <DependentUpon>201907311629351_AddNewTenantManagementFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909080743100_AddingQueueDefCOdeToBatchService_Rabaia.resx">
+      <DependentUpon>201909080743100_AddingQueueDefCOdeToBatchService_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909151127227_AbedAddLastIncrementalDWUpdateDateToSettings.resx">
+      <DependentUpon>201909151127227_AbedAddLastIncrementalDWUpdateDateToSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909291254383_AbeddeleteDWFieldsFromSetting.resx">
+      <DependentUpon>201909291254383_AbeddeleteDWFieldsFromSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910301311300_BluesnapTransaction_table_khalid.resx">
+      <DependentUpon>201910301311300_BluesnapTransaction_table_khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911100712389_Settings_QBO_Fields_Khalid.resx">
+      <DependentUpon>201911100712389_Settings_QBO_Fields_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912230848314_AddSupportDomainToTenantManagement_Samar.resx">
+      <DependentUpon>201912230848314_AddSupportDomainToTenantManagement_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912240715063_ModifyLengthOfSupportDomainFieldInTenantManagement_Maheera.resx">
+      <DependentUpon>201912240715063_ModifyLengthOfSupportDomainFieldInTenantManagement_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002081630280_AddFieldsToTenantManagementTable_Maheera.resx">
+      <DependentUpon>202002081630280_AddFieldsToTenantManagementTable_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002250701051_WesamAddSearchFieldsToWebHookKeysTable.resx">
+      <DependentUpon>202002250701051_WesamAddSearchFieldsToWebHookKeysTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003031004593_WesamGlobalDBMigrationFixes.resx">
+      <DependentUpon>202003031004593_WesamGlobalDBMigrationFixes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003260849424_missinnnnnnnng.resx">
+      <DependentUpon>202003260849424_missinnnnnnnng.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003301335202_missingGlobal.resx">
+      <DependentUpon>202003301335202_missingGlobal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003051034035_Abed_AddBatchServicesDefinitionMapToGlobalContext.resx">
+      <DependentUpon>202003051034035_Abed_AddBatchServicesDefinitionMapToGlobalContext.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003080908423_AddTMPersonalAccessTokenFieldToSettings_Maheera.resx">
+      <DependentUpon>202003080908423_AddTMPersonalAccessTokenFieldToSettings_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003041403389_AddARInvoiceRegionalTax.resx">
+      <DependentUpon>202003041403389_AddARInvoiceRegionalTax.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004301840322_Abed_FixCustomerCareIPColumnInTableSettings.resx">
+      <DependentUpon>202004301840322_Abed_FixCustomerCareIPColumnInTableSettings.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

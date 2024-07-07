@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{f1be47fa-7fbd-47e2-ad21-fb6e359432bf}</ProjectGuid>
+    <ArchitectureToolsVersion>2.0.0.0</ArchitectureToolsVersion>
+    <Name>AmitalDependencyDiagram</Name>
+    <RootNamespace>AmitalDependencyDiagram</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Validate Include="DependencyValidation1.layerdiagram">
+      <SubType>Content</SubType>
+    </Validate>
+    <Validate Include="DependencyValidation1.layerdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>DependencyValidation1.layerdiagram</DependentUpon>
+    </Validate>
+    <Validate Include="DependencyValidation1.layerdiagram.suppressions">
+      <SubType>Content</SubType>
+      <DependentUpon>DependencyValidation1.layerdiagram</DependentUpon>
+    </Validate>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JustWebFreight\WebFreight.Web\WebFreight.Web.csproj">
+      <Name>WebFreight.Web</Name>
+      <Project>{8408e4e5-b4b7-46bc-8300-1ae163b36e2d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Accounting.BL\Logitude.Accounting.BL.csproj">
+      <Name>Logitude.Accounting.BL</Name>
+      <Project>{00e5d96d-dd45-47e8-aaa3-fdbfd8add61a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
+      <Name>Logitude.Accounting.Data</Name>
+      <Project>{a3799525-14a2-42fc-a2de-69ed3fd1c5d1}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Accounting.Def\Logitude.Accounting.Def.csproj">
+      <Name>Logitude.Accounting.Def</Name>
+      <Project>{91564685-7ee1-466d-afcd-183a1bf62259}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Accounting.MetaData\Logitude.Accounting.MetaData.csproj">
+      <Name>Logitude.Accounting.MetaData</Name>
+      <Project>{69ffe000-958e-4b93-b743-67c433024d88}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Unifreight.Data\Unifreight.Data.csproj">
+      <Name>Unifreight.Data</Name>
+      <Project>{40f07800-11e8-4fba-9fc2-fd6c8d11e3ef}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
+</Project>

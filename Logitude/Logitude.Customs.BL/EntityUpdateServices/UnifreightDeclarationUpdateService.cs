@@ -2884,6 +2884,13 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
         {
             SupplierInvoiceItem103PM supplierInvoiceItem103PM = new SupplierInvoiceItem103PM();
             supplierInvoiceItem103PM.ChangeSetOp = ChangeSetOperation.Insert;
+
+            var setting = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPM.Tenant);
+            if (!setting.IsConnectedToUniFreight)
+            {
+                supplierInvoiceItem103PM.Tenant = decSupplierInvoice.Tenant;
+
+            }
             if (_IsSupplerInvUpdateCCUFILEM) // moran 14.6.16 - Task 21737
             {
                 supplierInvoiceItem103PM.ChangeSetOp = ChangeSetOperation.None;
@@ -3291,6 +3298,12 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
             if (!_IsSupplerInvChanged)
             {
                 supplierInvoiceItem105PM.ChangeSetOp = ChangeSetOperation.None;
+            }
+
+            var setting = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPM.Tenant);
+            if (!setting.IsConnectedToUniFreight)
+            {
+                supplierInvoiceItem105PM.Tenant=decSupplierInvoice.Tenant;
             }
             //Yuval Chalup 03.04.2016 TASK-20599 + TASK-20834 --->
 

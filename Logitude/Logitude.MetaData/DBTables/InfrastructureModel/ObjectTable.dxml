@@ -500,6 +500,14 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="DBTableShortName"
+    OldNames="DBTableShortName1"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="AvailableInDocumentTypes"
     Type="bit">
     <Constraints
@@ -533,16 +541,14 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo"
     Ignore="true" />
-
-  <Index
-    Columns="CacheOnClient,IsClosed" />
-
   <Relation
     ForeignKeyColumn="FullNameTextCodeId"
     ReferencedTable="TextCodes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo"
     Ignore="true" />
+  <Index
+    Columns="CacheOnClient,IsClosed" />
   <UniqueConstraint
     Columns="Name,Tenant" />
 </Table>

@@ -50,7 +50,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             : base("OracleMainMigration")
         //:this( GetConn())
         {
-            Debug.WriteLine(this.Database.Connection.ConnectionString);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(this.Database.Connection.ConnectionString);
             Database.SetInitializer<LogitudeMigrationContext>(new MigrateDatabaseToLatestVersion<LogitudeMigrationContext, Configuration>());
 
         }
