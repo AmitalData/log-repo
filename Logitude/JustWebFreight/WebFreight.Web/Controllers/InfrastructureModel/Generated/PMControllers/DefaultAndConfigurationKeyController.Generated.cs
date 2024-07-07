@@ -49,7 +49,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
     {
 	  
        
-        public HttpResponseMessage GetSingle(int tenant, string settype, string setkey)
+        public HttpResponseMessage GetSingle(int tenant, string setkey)
         {
 		  try
             {
@@ -58,7 +58,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 DefaultAndConfigurationKeyQuery defaultAndConfigurationKeyQuery = new DefaultAndConfigurationKeyQuery(authToken.Tenant);
-                DefaultAndConfigurationKeyPM defaultAndConfigurationKeyPM = defaultAndConfigurationKeyQuery.GetSinglePM(tenant, settype, setkey, authToken.Tenant);
+                DefaultAndConfigurationKeyPM defaultAndConfigurationKeyPM = defaultAndConfigurationKeyQuery.GetSinglePM(tenant, setkey, authToken.Tenant);
                 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 

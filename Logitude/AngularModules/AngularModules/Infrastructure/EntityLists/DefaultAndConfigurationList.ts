@@ -9,8 +9,7 @@
 export class DefaultAndConfigurationList {
    		Id: string;
 		Tenant: number;
-		QueueDefinitionCode: string;
-		CreateDateTime: string;
+		CreateDate: Date;
 		SearchFields: string;
 		Is_Active: boolean;
 		StoreInCache: boolean;

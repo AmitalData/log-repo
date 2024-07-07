@@ -7,12 +7,12 @@
 //------------------------------------------------------------------------------
 
 export class DefaultAndConfigurationKeyList {
-   		Id: string;
-		Tenant: number;
-		CreateDateTime: Date;
-		SetType: string;
+   		Tenant: number;
+		CreateDate: Date;
+		SetType1: string;
 		SetKey: string;
 		ShortDescription: string;
 		FullDesctiption: string;
+		SetType2: string;
 	
 }
