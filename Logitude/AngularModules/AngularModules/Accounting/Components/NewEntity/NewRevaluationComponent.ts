@@ -123,8 +123,9 @@ export class NewRevaluationComponent extends BaseComponent {
             this.DefaultGLAccount = false;
             this.GLAccount = false;
             this.UIProperties.SetEnabled("DefaultGLAccountId", this.ObjectTableName, false);
-
+            this.DefaultGLAccountId=null;
             this.UIProperties.SetEnabled("GLAccountId", this.ObjectTableName, false);
+            this.GLAccountId=null;
             this.UIProperties.SetEnabled("ChartOfAccountsId", this.ObjectTableName, true);
             this.EntityPM.RevaluationEnabled = false;
         }
@@ -143,8 +144,9 @@ export class NewRevaluationComponent extends BaseComponent {
             this.GLAccount = false;
             this.UIProperties.SetEnabled("DefaultGLAccountId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("GLAccountId", this.ObjectTableName, false);
+            this.GLAccountId=null;
             this.UIProperties.SetEnabled("ChartOfAccountsId", this.ObjectTableName, false);
-          
+            this.ChartOfAccountsId=null;
             this.EntityPM.RevaluationEnabled = true;
            
         }
@@ -161,9 +163,10 @@ export class NewRevaluationComponent extends BaseComponent {
             this.DefaultGLAccount = false;
             this.ChartOfAccount = false;
             this.UIProperties.SetEnabled("DefaultGLAccountId", this.ObjectTableName, false);
-
+             this.DefaultGLAccountId=null;
             this.UIProperties.SetEnabled("GLAccountId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("ChartOfAccountsId", this.ObjectTableName, false);
+        this.ChartOfAccountsId=null;
             this.EntityPM.RevaluationEnabled = false;
         }
         //    this.SetGLAccount(value);
