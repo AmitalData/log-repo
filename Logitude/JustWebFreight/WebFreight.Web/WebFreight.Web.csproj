@@ -893,6 +893,7 @@
     <Compile Include="Controllers\AccountingModel\APInvoiceStatusUpdateController.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountMultiToCurrencyController.cs" />
     <Compile Include="Controllers\InfrastructureModel\QueueMessagesViewsController.cs" />
+    <Compile Include="Controllers\AccountingModel\Redempt_a_ChequeController.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\CardAPiHelper.cs" />
     <!-- <Compile Include="ContainerTracking\ContainerTrackingHelper.cs" /> -->
     <Compile Include="Controllers\AccountingModel\CopyFromTenant0ExtendedController.cs" />
@@ -959,8 +960,6 @@
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ConfirmationNumberDefaultViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ConfirmationNumberStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\ConfirmationNumberDefaultController.Generated.cs" />
-
-
     <Compile Include="Controllers\Monitoring\MonitoringController.cs" />
 
     <Compile Include="Controllers\SendGridNotifications\SendGridNotificationsController.cs" />

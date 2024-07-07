@@ -910,6 +910,7 @@
     <Compile Include="Utils\ReconciliationAfterConversionBatch.cs" />
     <Compile Include="Utils\ReconciliationStageBBatch.cs" />
     <Compile Include="Utils\ReconciliationStageCBatch.cs" />
+    <Compile Include="Utils\Redempt_a_ChequeBatch.cs" />
     <Compile Include="Validators\UserDefinedReportValidator.cs" />
     <Compile Include="Validators\InterestReportValidator.cs" />
     <Compile Include="Validators\AccountingPeriodValidator.cs" />
