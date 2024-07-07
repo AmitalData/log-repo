@@ -1335,7 +1335,7 @@ namespace WebFreight.Web.Helpers
                                 {
                                     if (value == "") value = "0";
                                     cell.SetCellValue(bool.Parse(value));
-                                    }
+                                    
                                 }
                                 else
                                     SetCellValueWithMaxLength(cell, value.ToString());
@@ -1405,6 +1405,9 @@ namespace WebFreight.Web.Helpers
                     {
                         return CellType.String;
                     }
+            }
+        }
+
         private void LogTime(string msg, bool isXslx, int tenant = 0)
         {
 
