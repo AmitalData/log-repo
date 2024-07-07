@@ -9,11 +9,11 @@ namespace Unifreight.Data.AmitalModel
     {
         public static void ClearCacheLastSync(string fileNo, int tenant)
         {
-            if (tenant == null || IsConnectedToUniFreight(tenant))
-                return;
-
             TryCatch(() =>
             {
+                if (tenant == null || IsConnectedToUniFreight(tenant))
+                    return;
+
                 string cacheKey = $"SyncRecordQuery.GetLastSyncDate." + fileNo + ";" + tenant;
                 CacheHelper.ClearCache(cacheKey);
             });
@@ -49,8 +49,7 @@ namespace Unifreight.Data.AmitalModel
         private static bool IsConnectedToUniFreight(int tenant)
         {
             LogitudeCustomsSettingsM customsSettings = LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenant);
-            bool isNotConnected = tenant == null || customsSettings.Id == null || !customsSettings.IsConnectedToUniFreight;
-            return !isNotConnected;
+            return customsSettings.Id == null || customsSettings.IsConnectedToUniFreight;            
         }
     }
 }
