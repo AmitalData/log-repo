@@ -171,18 +171,26 @@ namespace Logitude.Server.Tools.StorageService
 
         public Uri CreateServiceSASContainer(BlobContainerSasPermissions permissions)
         {
-            BlobSasBuilder sasBuilder = new BlobSasBuilder()
+            // well ... have bug in azure when sas create with + in the signature...  reference: https://stackoverflow.com/questions/78400881/azure-blob-storage-sas-url-generation-issue-with-managed-identity
+
+            for (int i = 0; i < 1000; i++)
             {
-                BlobContainerName = containerClient.Name,
-                Resource = "c",
-                ExpiresOn = DateTimeOffset.UtcNow.AddDays(1)
-            };
+                BlobSasBuilder sasBuilder = new BlobSasBuilder()
+                {
+                    BlobContainerName = containerClient.Name,
+                    Resource = "c",
+                    ExpiresOn = DateTimeOffset.UtcNow.AddDays(1).AddSeconds(i),
+                };
 
-            sasBuilder.SetPermissions(permissions);
+                sasBuilder.SetPermissions(permissions);
 
-            Uri sasURI = containerClient.GenerateSasUri(sasBuilder);
+                Uri sasURI = containerClient.GenerateSasUri(sasBuilder);
 
-            return sasURI;
+                if (sasURI.ToString().IndexOf("+") == -1)
+                    return sasURI;
+            }
+
+            throw new Exception("Can't create SAS URI");
         }
     }
 }

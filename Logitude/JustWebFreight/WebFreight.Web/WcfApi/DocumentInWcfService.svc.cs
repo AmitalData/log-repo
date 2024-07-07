@@ -1,5 +1,4 @@
 ﻿using Logitude.Server.Tools.Counters;
-using Microsoft.WindowsAzure.Storage.Blob;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -34,7 +33,7 @@ using System.ServiceModel.Description;
 using System.Web;
 using Logitude.SystemLogs;
 using Simplog.Server.Infrastructure;
-using System.Diagnostics;
+using Logitude.Server.Tools.Utils;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -621,8 +620,12 @@ namespace WebFreight.Web.WcfApi
             if(string.IsNullOrEmpty(blobname))
                 return UpdateResponseException(response, new ArgumentException("blobname or DocumentId is null or empty"));
 
+            Logger.LogDebug("UploadDocumentFileDataFromStorage start", "tenant: " + tenant + " blobname: " + blobname + " DocumentId: " + DocumentId);
+
             SecurityUtility.AuthenticationOnTenant(tenant);
             response = DocumentFileUploadHelper.AddDocumentAndSendToInternalStorage(tenant, blobname, DocumentId);
+
+            Logger.LogDebug("UploadDocumentFileDataFromStorage finish", "tenant: " + tenant + " blobname: " + blobname + " DocumentId: " + DocumentId + " response: " + response.HasError + ", error message: " + response.ErrorMessage);
 
             return response;
         }
