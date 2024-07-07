@@ -346,7 +346,7 @@ export class ExportDeclarationReportFilterComponent extends BaseComponent {
 
         //-----------------------------------------------------------------------------6
         if(!AppTool.IsNullOrEmpty(this.DestinationCountryCode)) {
-            this.queryFilterItems.push(this.GetNewQueryFilterItem("DestinationCountryCode", this.DestinationCountryCode, this.destinationCountryCode, "string"));
+            this.queryFilterItems.push(this.GetNewQueryFilterItem("DestinationCountryCode", this.DestinationCountryCode, this.destinationCountryName, "string"));
         }
 
         //-----------------------------------------------------------------------------7
