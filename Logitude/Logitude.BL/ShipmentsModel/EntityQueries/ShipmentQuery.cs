@@ -1576,7 +1576,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 str = shipment.ShipmentType.Name;
             }
 
-            str = string.IsNullOrEmpty(str) ? shipmentLevel.Name : str + " " + shipmentLevel.Name;
+            str = string.IsNullOrEmpty(str) ? shipmentLevel?.Name : str + " " + shipmentLevel?.Name;
             shipmentPM.ShipmentType = str;
             shipmentPM.Tenant = shipment.Tenant;
             shipmentPM.ShipmentPMId = shipment.Id;
@@ -2258,7 +2258,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #endregion
 
                 #region Shipment ARInvoices
-                if (shipmentPM.ShipmentARInvoices != null)
+                if (shipmentPM.ShipmentARInvoices != null && shipmentPM.ShipmentARInvoices.Count > 0)
                 {
                     ARInvoiceStatusRepository statusRepository = new ARInvoiceStatusRepository(tenant);
                     List<ARInvoiceStatus> allStatuses = statusRepository.GetARInvoiceStatus().ToList();
@@ -2329,7 +2329,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #endregion
 
                 #region Shipment APInvoices
-                if (shipmentPM.ShipmentAPInvoices != null)
+                if (shipmentPM.ShipmentAPInvoices != null && shipmentPM.ShipmentAPInvoices.Count > 0)
                 {
                     APInvoiceStatusRepository statusRepository = new APInvoiceStatusRepository(tenant);
                     List<APInvoiceStatus> allStatuses = statusRepository.GetAPInvoiceStatus().ToList();

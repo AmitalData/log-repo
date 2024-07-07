@@ -238,10 +238,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.calculatePayables = false;
                 this.calculateReceivables = false;
 
-                if (!isCustomShipment)
-                {
-                    this.initializer.HandleBehaviours();
-                }
+                this.initializer.HandleBehaviours();
 
                 this.entityMasterData = this.initializer.EntityMasterData;
 
@@ -262,9 +259,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     this.entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "SHIP", entityPM.DirectionId, entityPM.TransportModeId);
 
+                    // todo: execute UpdateINTTRASIStatuses
+                    entityPM.INTTRASIStatusCode = null;
+
+                    // todo: add AIR to AddShipmentTypes and execute it
+                    entityPM.ShipmentTypeId = null;
+
                     // todo: get default values
-                    this.entityPM.SalesmanUserId = "123";
-                    this.entityPM.ReferantUserId = "456";
+                    this.entityPM.SalesmanUserId = "1-1";
+                    this.entityPM.ReferantUserId = "1-1";
+
+                    this.entityPM.CreatedByUserId = loggedContact.Id;
+                    this.entityPM.UpdatedByUserId = loggedContact.Id;
                 }
 
                 foreach (ShipmentPackagePM itemPM in entityPM.ShipmentPackages)
@@ -343,7 +349,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 entityPM.CalculatePayables = calculatePayables;
                 entityPM.CalculateReceivables = calculateReceivables;
 
-                if (!entityPM.IsHybrid && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive && !isCustomShipment)
+                if (!entityPM.IsHybrid && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                 {
                     shipmentTracing.BeginTracing();
                 }
@@ -2935,6 +2941,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             }
 
                         case "I":
+                        case "C":
                             {
                                 prepaidCollectId = loggedTenant.ImportFreightPrepaidCollectId;
                                 otherPrepaidCollectId = loggedTenant.ImportOtherPrepaidCollectId;

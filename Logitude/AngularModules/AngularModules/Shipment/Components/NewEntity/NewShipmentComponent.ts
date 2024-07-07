@@ -262,6 +262,8 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.IsCustomShipment = args?.QueryNameTextCode == "Shipment.Q.CustomsShipments";
         if (this.IsCustomShipment) {
             this.EntityPM.DepartmentId = null;
+            this.DirectionId = "C";
+            this.ShowShipmentLevels = false;
             this.SetCustomerRequired();
         }
 
@@ -346,14 +348,6 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.DirectionId = "E";
             this.TransportModeId = "A";
             this.OnFiltersChanged();
-        }
-        else if (this.IsCustomShipment) {
-            this.DirectionId = "C";
-            this.ShowShipmentLevels = false;
-
-            this.TransportModesList.push(transport_A);
-            this.TransportModesList.push(transport_O);
-            this.TransportModesList.push(transport_I);
         }
 
         else {
