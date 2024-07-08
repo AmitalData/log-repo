@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="Main"
+  Name="usp_CancelReportAndUpdateQueueMessage"
+  Schema="dbo"
+  Module="Common">
+  <SqlScript>
+    <![CDATA[
+create PROCEDURE [dbo].[CancelReportAndUpdateQueueMessage] 
+    @ReportId NVARCHAR(255) = NULL, -- Optional: Specific report ID or NULL for all reports with a given status
+    @CancelByUser NVARCHAR(255), -- User ID performing the operation
+    @TenantId INT ,
+    @QueueDefinitionCode NVARCHAR(255) ,
+    @NewStatus INT = 22 -- New status for the queue message
+AS
+BEGIN
+
+    SET NOCOUNT ON;
+	DECLARE @ReportIds TABLE (Id NVARCHAR(255));
+	
+	IF @ReportId IS  NULL
+	BEGIN
+	   INSERT INTO @ReportIds (Id)
+	   select id from ReportExecutionLogs
+	   WHERE Tenant = @TenantId AND (StatusCode = 'P' or StatusCode='W')
+	END
+    if @ReportId IS not NULL
+	BEGIN
+	   INSERT INTO @ReportIds (Id)
+	   VALUES (@ReportId)
+    END
+    IF  @ReportId IS NOT NULL
+    BEGIN
+        
+        UPDATE ReportExecutionLogs
+        SET StatusCode = 'F',
+            ExceptionMessage = 'Stopped manually by ' + @CancelByUser,
+            DoneDate = GETDATE()
+        WHERE Id = @ReportId AND (StatusCode = 'P' or StatusCode='W')
+          AND Tenant = @TenantId;
+    END
+    ELSE 
+    BEGIN
+        -- Update all ReportExecutionLogs with a specific status
+        UPDATE ReportExecutionLogs
+        SET StatusCode = 'F',
+            ExceptionMessage = 'Stopped manually by ' + @CancelByUser,
+            DoneDate = GETDATE()
+        WHERE Tenant = @TenantId AND (StatusCode = 'P' or StatusCode='W')
+          ;
+    END
+
+    -- Retrieve and update the message ID(s) for the given report(s)
+    DECLARE @MessageIds TABLE (Id BIGINT);
+    INSERT INTO @MessageIds (Id)
+    SELECT q.Id
+    FROM QueueMessages q
+	JOIN @ReportIds ri ON q.MessageBody LIKE '%' + CAST(ri.Id AS NVARCHAR(255)) + '%'
+         WHERE q.Tenant = @TenantId
+         AND 
+         QueueDefinitionCode = @QueueDefinitionCode 
+         ;
+
+    -- If message(s) exist, update their status using the existing stored procedure
+    DECLARE @CurrentMessageId BIGINT;
+    DECLARE message_cursor CURSOR FOR SELECT Id FROM @MessageIds;
+    OPEN message_cursor;
+    FETCH NEXT FROM message_cursor INTO @CurrentMessageId;
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+        EXEC [dbo].[Queue_SetStatus] @CurrentMessageId, @NewStatus;
+        FETCH NEXT FROM message_cursor INTO @CurrentMessageId;
+    END
+    CLOSE message_cursor;
+    DEALLOCATE message_cursor;
+END
+
+]]>
+  </SqlScript>
+  <OracleScript>
+  </OracleScript>
+</Procedure>
