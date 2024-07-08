@@ -23,6 +23,7 @@ using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Runtime.InteropServices;
 using Logitude.Server.Tools;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -700,6 +701,9 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
         public IQueryable<LedgerTransaction> GetYearTransferLedgerTransaction(string gLAccountId, int year, int tenant)
         {
 
+            FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
+            FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
+
             var qYearTransferJournals =
                 (from j in context.Journals
                  where j.Tenant == tenant
@@ -760,8 +764,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             var qYeartransferLedgerTransaction =
                 (from record in qYeartransferLedgerTransactionAll
 
-
-            join acc in context.GLAccounts.Where(glac => glac.ChartOfAccountsTypeCode == "1" || glac.ChartOfAccountsTypeCode == "2") // Revenues or Expenses
+            join acc in context.GLAccounts.Where(glac => glac.ChartOfAccountsTypeCode == "1" || glac.ChartOfAccountsTypeCode == "2" || glac.Id == setting.RevenueExpenseGLAccountId) // Revenues or Expenses
                         on record.AccountId equals acc.Id
 
                 select record);
