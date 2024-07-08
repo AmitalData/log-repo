@@ -70,6 +70,7 @@ import { ReportExecutionLogListActionBarComponent } from './Components/ListActio
     [
         CustomerHelperComponent,
         CustomerShortTitleComponent,
+        TariffsTabComponent,
         AssignComponent,
         NewStackComponent,
         StackSelectionComponent,
