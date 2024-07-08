@@ -107735,11 +107735,11 @@
     HasGeneralFeature="false" />
   <Tab
     TabName="&quot;ShipmentPackages&quot;"
-    TabLocalName="&quot;מכולות&quot;"
+    TabLocalName="&quot;&quot;"
     ObjectTableName="&quot;Shipment&quot;"
     Code="&quot;SHSP&quot;"
     ControlPath="&quot;Simplog.ShipmentLib.Views.ShipmentPackagesLib.ShipmentPackagesTabControl&quot;"
-    TextCode="&quot;Shipment.TH.ShipmentPackages&quot;"
+    TextCode="&quot;Shipment.O.ShipmentPackages&quot;"
     IsPackagable="true"
     IndexOrder="20"
     HtmlComponentURL="&quot;./ShipmentModules/ShipmentTabs/Components/ShipmentPackages/ShipmentPackagesTabComponent&quot;"
@@ -119420,6 +119420,18 @@
       Code="&quot;Shipment.G.ContainersLines&quot;"
       DefaultText="&quot;Containers lines&quot;"
       TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.O.ShipmentPackages&quot;"
+      DefaultText="&quot;ShipmentPackages&quot;"
+      LocalDefaultText="&quot;מכולות &quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.O.ShipmentPackages.General&quot;"
+      DefaultText="&quot;ShipmentPackages&quot;"
+      LocalDefaultText="&quot;מסך מכולות &quot;"
+      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
