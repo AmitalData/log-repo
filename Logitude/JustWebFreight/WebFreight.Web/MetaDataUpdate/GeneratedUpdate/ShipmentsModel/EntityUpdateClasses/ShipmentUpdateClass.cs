@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "9e8fc4d1563ccfcf8aa2f2cb3b711a1a";
+		public const string HashString = "9e8fc4d1563ccfcf8aa2f2cb3b711a1b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -91176,7 +91176,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
                  
 			   TextCode ShipmentShipmentPackagesTextCode_TH21 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.ShipmentPackages", DefaultText = "ShipmentPackages",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature ShipmentShipmentPackagesFeature_TH21 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Tab.ShipmentPackages", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentFeatures.SHSP", NameTextCodeDefaultText = "ShipmentPackages", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
-			 TextCodeRepository.SubmitChanges();
+
+               TextCode ShipmentShipmentDataTextCode_TH22 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.ShipmentData", DefaultText = "Shipment Data", LocalDefaultText = "נתוני תיק", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+               Feature ShipmentShipmentDataFeature_TH22 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Tab.ShipmentData", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentFeatures.SHDA", NameTextCodeDefaultText = "Shipment Data", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes, ShipmentObjectTable);
+
+             TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
@@ -91224,10 +91228,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCF",HtmlComponentName = "CustomsFileTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/CustomsFile/CustomsFileTabComponent", FeatureId = ShipmentCustomsFileFeature_TH20.Id,FeatureUniqeCode = ShipmentCustomsFileFeature_TH20.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.CustomsLib.CustomsFileTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentCustomsFileTextCode_TH20.Id, TabNameTextCodeCode = ShipmentCustomsFileTextCode_TH20.Code, Tenant = 0, IndexOrder = 19 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHSP",HtmlComponentName = "ShipmentPackagesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/ShipmentPackages/ShipmentPackagesTabComponent", FeatureId = ShipmentShipmentPackagesFeature_TH21.Id,FeatureUniqeCode = ShipmentShipmentPackagesFeature_TH21.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.ShipmentPackagesLib.ShipmentPackagesTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentShipmentPackagesTextCode_TH21.Id, TabNameTextCodeCode = ShipmentShipmentPackagesTextCode_TH21.Code, Tenant = 0, IndexOrder = 20 }, objectTableTabsRepository, TenantObjectTableTabs);
-   
-	    } 
-	
-	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHDA", HtmlComponentName = "ShipmentDataTabComponent", HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/ShipmentData/ShipmentDataTabComponent", FeatureId = ShipmentShipmentDataFeature_TH22.Id, FeatureUniqeCode = ShipmentShipmentDataFeature_TH22.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.ShipmentData.ShipmentDataControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentShipmentDataTextCode_TH22.Id, TabNameTextCodeCode = ShipmentShipmentDataTextCode_TH22.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+
+        }
+
+        public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable ShipmentObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Shipment" && d.Tenant == 0).FirstOrDefault(); 
 

@@ -107960,6 +107960,19 @@
     HtmlComponentName="&quot;ShipmentPackagesTabComponent&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Shipment Data&quot;"
+    TabLocalName="&quot;נתוני תיק&quot;"
+    ObjectTableName="&quot;Shipment&quot;"
+    Code="&quot;SHDA&quot;"
+    ControlPath="&quot;Simplog.ShipmentLib.Views.ShipmentData.ShipmentDataControl&quot;"
+    TextCode="&quot;Shipment.TH.ShipmentData&quot;"
+    IsPackagable="true"
+    IndexOrder="0"
+    HtmlComponentURL="&quot;./ShipmentModules/ShipmentTabs/Components/ShipmentData/ShipmentDataTabComponent&quot;"
+    HtmlComponentName="&quot;ShipmentDataTabComponent&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;CUTO&quot;"
