@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "9e8fc4d1563ccfcf8aa2f2cb3b711a1b";
+		public const string HashString = "9e8fc4d1563ccfcf8aa2f2cb3b711a1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -91174,7 +91174,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   Feature ShipmentCustomsFileFeature_TH20 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSFILE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.CustomsFile", NameTextCodeDefaultText = "Customs File", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
  
                  
-			   TextCode ShipmentShipmentPackagesTextCode_TH21 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.ShipmentPackages", DefaultText = "ShipmentPackages",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode ShipmentShipmentPackagesTextCode_TH21 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.ShipmentPackages", DefaultText = "ShipmentPackages",LocalDefaultText = "", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature ShipmentShipmentPackagesFeature_TH21 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Tab.ShipmentPackages", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentFeatures.SHSP", NameTextCodeDefaultText = "ShipmentPackages", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
 
                TextCode ShipmentShipmentDataTextCode_TH22 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.ShipmentData", DefaultText = "Shipment Data", LocalDefaultText = "נתוני תיק", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
@@ -95943,6 +95943,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
            TextCode ShipmentTextCode_NewShipment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.NewShipment", DefaultText = "New Shipment", LocalDefaultText = "משלוח חדש", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
            TextCode ShipmentTextCode_OpenNewCustomShipment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.OpenNewCustomShipment", DefaultText = "Open New Shipment", LocalDefaultText = "פתיחת תיק עמילות", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOShipmentPackages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.ShipmentPackages", DefaultText = "ShipmentPackages",LocalDefaultText = @"מכולות ", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOShipmentPackagesGeneral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.ShipmentPackages.General", DefaultText = "ShipmentPackages",LocalDefaultText = @"מסך מכולות ", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
 
 
