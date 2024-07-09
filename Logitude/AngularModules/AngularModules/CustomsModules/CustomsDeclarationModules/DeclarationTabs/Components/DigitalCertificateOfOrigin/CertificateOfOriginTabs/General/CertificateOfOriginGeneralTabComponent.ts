@@ -280,6 +280,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             this.tempCertificateOfOriginMandatoryFieldsList.forEach(i=>{
                 this.UIProperties.SetWarning(i.MappedCertificateFieldsName, this.ObjectTableName, false);
             });
+            
+            this.formSectionsCouples = new FormSectionsCouples( this.tempCertificateOfOriginMandatoryFieldsList);
             this.tempCertificateOfOriginMandatoryFieldsList = [];
             return;
         }
