@@ -207,7 +207,7 @@
                         <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
                     </td>
                     <td style="width: 67px;vertical-align: bottom; padding-right: 10px;">
-                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' |TextCodeTranslationPipe}}</button>
+                        <button [disabled]="StaticSelectedInvoiceItems.Length == 0" class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' |TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

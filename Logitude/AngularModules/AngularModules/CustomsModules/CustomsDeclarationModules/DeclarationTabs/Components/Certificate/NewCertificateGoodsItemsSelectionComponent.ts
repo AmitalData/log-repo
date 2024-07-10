@@ -176,7 +176,7 @@ export class NewCertificateGoodsItemsSelectionComponent {
                 let messageWindow = new MessageWindow();
                 messageWindow.RTL = true;
                 let message = response.Result;
-                messageWindow.Show(message);
+                messageWindow.Show(message.Message);
             }
             this.Dispose();
             this.CurrentSession.CloseCurrentWindowEmit("ok");
