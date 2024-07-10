@@ -22,6 +22,7 @@ import { CustDocMetaDataValuesWebService } from '../../../../../Customs/Services
 import { CustomsSettingListService } from '../../../../../Customs/Services/StandardLists/CustomsSettingListService';
 import { CustomsDocumentsDataProvider } from 'CustomsModules/CustomsDocuments/Components/CustomsDocumentsDataProvider';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
+import { DownloadManager } from 'Infrastructure/Utilities/DownloadManager';
 
 @Component({
 
@@ -124,12 +125,12 @@ export class DocumentsPanelComponent {
 
                 var token = ServiceHelper.GetLDocumentDownloadToken();
                 let uri = ServiceHelper.GetLogitudeURL() + "WebPages/Downloadpage.aspx?id=" + documentName + "&tempId=" + token;
-                if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
-                    AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseOpenNewBrowser(uri);
-                    return;
-                }
-                var win = window.open(uri);
-
+                // if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+                //     AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseOpenNewBrowser(uri);
+                //     return;
+                // }
+                // var win = window.open(uri);
+                DownloadManager.DownloadPage(documentName);
             });
         });
 
