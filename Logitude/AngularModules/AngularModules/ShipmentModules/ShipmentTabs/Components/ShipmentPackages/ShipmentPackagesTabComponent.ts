@@ -2,6 +2,7 @@ import {  Component, EventEmitter, OnDestroy, OnInit } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { EntityArgs } from "Infrastructure/DataContracts/EntityArgs";
 import { ObservableCollection } from "Infrastructure/Utilities/ObservableCollection";
+import { Validator } from "Infrastructure/Validators/Validator";
 import { ShipmentPackagePM } from "Shipment/EntityPMs/ShipmentPackagePM";
 
 @Component({    
@@ -42,6 +43,12 @@ export class ShipmentPackagesTabComponent extends BaseComponent implements OnIni
     Add(){
         if (this.IsDisplayOnly)
             return;
+
+        var itemPM=new ShipmentPackagePM(this.EntityPM);
+        itemPM.Tenant = this.EntityPM.Tenant;
+        itemPM.ShipmentId = this.EntityPM.ShipmentId;
+        this.EntityPM.ShipmentPackages.push(itemPM);
+        this.ItemsSource.Insert(new ShipmentPackageItemLine(itemPM, this, this.ItemsSource.Length + 1));
     }
     OnSelectedItemChanged(selectedRow: ShipmentPackageItemLine) {
         this.SelectedRow = selectedRow;
@@ -90,11 +97,14 @@ export class ShipmentPackageItemLine extends BaseComponent {
         this.entityPM = EntityPM;
         this.Parent = parent;
         this.index = index; 
+        
     }
 
 
     public get ContainerNumber() { return this.entityPM.ContainerNumber; }
-    public set ContainerNumber(value:string) { this.entityPM.ContainerNumber = value; }
+    public set ContainerNumber(value:string) {
+        this.entityPM.ContainerNumber = value; 
+    }
 
     public get PackageTypeId() { return this.entityPM.PackageTypeId; }
     public set PackageTypeId(value:string) { this.entityPM.PackageTypeId = value; }

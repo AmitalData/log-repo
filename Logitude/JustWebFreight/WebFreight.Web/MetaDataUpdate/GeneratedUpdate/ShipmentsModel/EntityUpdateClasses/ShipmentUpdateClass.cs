@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "e8d8516fc9664015f3739aebf068654c";
+		public const string HashString = "77dcac528b075e16dd1d30c68dc87508";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -91014,7 +91014,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   Feature ShipmentCustomsFileFeature_TH20 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSFILE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.CustomsFile", NameTextCodeDefaultText = "Customs File", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
  
                  
-			   TextCode ShipmentShipmentPackagesTextCode_TH21 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.ShipmentPackages", DefaultText = "ShipmentPackages",LocalDefaultText = "", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode ShipmentShipmentPackagesTextCode_TH21 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.ShipmentPackages", DefaultText = "ShipmentPackages",LocalDefaultText = "מכולות ", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature ShipmentShipmentPackagesFeature_TH21 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Tab.ShipmentPackages", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentFeatures.SHSP", NameTextCodeDefaultText = "ShipmentPackages", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
