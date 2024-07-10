@@ -70,6 +70,19 @@ export class MainDisplayComponent {
 		this.API_MainService.GetCustomsBookRegularityRequirementData(17514).subscribe((data: CBRequirementComputedDataListComponent[]) => {
 			console.log(data);
 		});
+
+
+
+		// check:
+		let remarksClassificationPM: RemarksClassificationPM = {
+			// id: '17514',
+			tenant: 0,
+			customsItemsID: 17514,
+			remarkDescription: 'test'
+		};
+		this.API_MainService.RemarksClassification(remarksClassificationPM).subscribe((data: CBRequirementComputedDataListComponent[]) => {
+			console.log(data);
+		});
 	
 	}
 
@@ -184,9 +197,9 @@ export class CBRequirementComputedDataListComponent {
 	IsCarnetIncluded?: boolean;
 	FromEpisodeDetail: string;
 	AutonomyRegion: string;
-  }
+}
 
-  export class CB_TariffList {
+export class CB_TariffList {
 	ID: number;
 	CreateDate: Date;
 	UpdateDate?: Date;
@@ -203,4 +216,10 @@ export class CBRequirementComputedDataListComponent {
 	StartDate?: Date;
 	EndDate?: Date;
 	TradeAgreementName: string;
-  }
+}
+export interface RemarksClassificationPM {
+	id?: string;
+	tenant: number;
+	customsItemsID: number;
+	remarkDescription: string;
+}

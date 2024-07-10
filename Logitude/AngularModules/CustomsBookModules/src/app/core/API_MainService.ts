@@ -27,6 +27,14 @@ export class API_MainService extends BaseService {
 		// this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain';
 		// this.ApiURL = this.BaseURL + 'api/ShipmentDomain';
 	}
+	
+	RemarksClassification( data) {
+		// const url = `${this._apiUrl}RemarksClassifications/Post`;
+		const url = `${this._apiUrl}CB_CustomsItemExtended/AddNEWRemarksClassification`;
+
+		return this.Post(url, data);
+	}
+	
 	// GetCustomsBookMainView(filters: Filters) {
 	GetCustomsBookMainView(filters: Filters) {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomsBookMainView?customsBookType=${filters.CustomsBookType}&Tenant=${filters.Tenant ? filters.Tenant : 0}`;
