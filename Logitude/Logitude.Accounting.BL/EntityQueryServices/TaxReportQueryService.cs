@@ -300,7 +300,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 select a).FirstOrDefault();        
     }
     
-    //
 
 
     public class DuplicateRows
