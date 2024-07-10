@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentPackageUpdateClass
    {  		
-		public const string HashString = "05feaf0cf82820f77700ecd35874c68a";
+		public const string HashString = "d497852a863eb88a18e663e321394cb9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -131,7 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment Package",
-			      				    Code =  "c95a",
+			      				    Code =  "25b5",
 			      				    Name =  "ShipmentPackage",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
@@ -8494,6 +8494,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  		   TextCode ShipmentPackageTextCode_ShipmentPackageOExpectedEmptyReturn = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.O.ExpectedEmptyReturn", DefaultText = "Expected Empty Return",LocalDefaultText = null, ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentPackageTextCode_ShipmentPackageOActualEmptyReturn = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.O.ActualEmptyReturn", DefaultText = "Actual Empty Return",LocalDefaultText = null, ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentPackageTextCode_ShipmentPackageONotValidContainerNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.O.NotValidContainerNumber", DefaultText = "Container number should be 4 letters and 7 digits",LocalDefaultText = @"מס מכולה צריך להיות 4 אותיות ו-7 ספרות", ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

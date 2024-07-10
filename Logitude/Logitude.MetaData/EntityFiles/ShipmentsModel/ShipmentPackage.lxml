@@ -40,7 +40,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment Package&quot;"
-  Code="&quot;c95a&quot;"
+  Code="&quot;25b5&quot;"
   Name="&quot;ShipmentPackage&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -10796,6 +10796,12 @@
     <TextCode
       Code="&quot;ShipmentPackage.O.ActualEmptyReturn&quot;"
       DefaultText="&quot;Actual Empty Return&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ShipmentPackage.O.NotValidContainerNumber&quot;"
+      DefaultText="&quot;Container number should be 4 letters and 7 digits&quot;"
+      LocalDefaultText="&quot;מס מכולה צריך להיות 4 אותיות ו-7 ספרות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
