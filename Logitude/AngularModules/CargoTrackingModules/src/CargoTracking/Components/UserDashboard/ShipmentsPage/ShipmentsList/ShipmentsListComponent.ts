@@ -846,9 +846,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     private WaitShipment() {
         this.ShipmentsDataSource.$fetchData.subscribe(isReload => {
             if (isReload) {
-                RootContext.StartBusyIndicatorDynamic("בתהליך םיתור נתונים");
-            }
-            else {
+                RootContext.StartBusyIndicatorDynamic("Searching for data...");
+            } else {
                 RootContext.StopBusyIndicator();
             }
         })
