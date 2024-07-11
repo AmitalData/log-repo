@@ -57,10 +57,6 @@ using System.Data;
 using WebFreight.Web.CustomersHTML;
 using System.Web.UI.WebControls;
 using System.Configuration;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using iTextSharp.text;
-using Simplog.Server.Infrastructure.DataContracts;
 
 namespace WebFreight.Web
 {
