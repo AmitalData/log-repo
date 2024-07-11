@@ -1199,7 +1199,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (featureExportDiamonds != null)
             {
                 string declarationStatus = "0";
-                string declarationStatusLabel = "";
+                string declarationStatusLabel = "שגיאה עסקית";
                 if (!string.IsNullOrEmpty(customResponse.Response?.Status[0]?.NameCode?.Value))
                 {
                     declarationStatus = customResponse.Response.Status[0].NameCode.Value;
@@ -1207,17 +1207,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     // get the declaration status label
                     DeclarationStatusTypeQueryService declarationStatusTypeQueryService = new DeclarationStatusTypeQueryService(_MyDeclarationPM.Tenant);
                     DeclarationStatusTypePM declarationStatusType = declarationStatusTypeQueryService.GetSingle(customResponse.Response.Status[0].NameCode.Value, false, true);
-                    declarationStatusLabel = declarationStatusType?.LocalName ?? "";
+                    declarationStatusLabel = declarationStatusType?.LocalName ?? "לא ידוע";
                 }
-                string statusSoyRemarks = $"CODE-{declarationStatus}-{declarationStatusLabel}";
+                string statusSoyRemarks = $"CODE-{declarationStatus}-{declarationStatusLabel}-";
 
                 if (!string.IsNullOrEmpty(this._MyDeclarationPM.DeclarationNumber))
                 {
-                    statusSoyRemarks += $"-{this._MyDeclarationPM.DeclarationNumber}";
+                    statusSoyRemarks += this._MyDeclarationPM.DeclarationNumber;
                 }
                 else if (!string.IsNullOrEmpty(customResponse.Response?.Declaration?.ID?.Value))
                 {
-                    statusSoyRemarks += $"-{customResponse.Response.Declaration.ID.Value}";
+                    statusSoyRemarks += customResponse.Response.Declaration.ID.Value;
                 }
 
                 if (!string.IsNullOrEmpty(additionalComment))

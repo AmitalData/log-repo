@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;e25b&quot;"
+  Code="&quot;0a91&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -6003,6 +6003,12 @@
       DefaultText="&quot;Customs Shipments&quot;"
       LocalDefaultText="&quot;עמילות מכס&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.General.B.CancelReport&quot;"
+      DefaultText="&quot;Canceling stuck reports&quot;"
+      LocalDefaultText="&quot;ביטול דוחות תקועים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>

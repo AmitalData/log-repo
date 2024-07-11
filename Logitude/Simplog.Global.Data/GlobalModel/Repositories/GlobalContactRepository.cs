@@ -4,11 +4,10 @@ using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
-using System;
 
 namespace Simplog.Global.Data.GlobalModel.Repositories
 {
-    public class GlobalContactRepository:IRepository<GlobalContact>
+    public class GlobalContactRepository : IRepository<GlobalContact>
     {
         IGlobalContext globalContext;
 
@@ -24,26 +23,13 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
         public GlobalContact GetGlobalContactByEmailAndTenant(string email, int tenant)
         {
             GlobalContact globalContact = (from a in context.GlobalContacts.Include("GlobalTenant")
-                    where a.Email == email && a.GlobalTenantId == 0 && a.InActive==false
-                    select a).FirstOrDefault();
+                                           where a.Email == email && a.GlobalTenantId == 0 && a.InActive == false
+                                           select a).FirstOrDefault();
             if (globalContact == null)
             {
                 globalContact = (from a in context.GlobalContacts.Include("GlobalTenant")
                                  where a.Email == email && a.GlobalTenantId == tenant
                                  select a).FirstOrDefault();
-            }
-
-            string entityName = "GlobalContact" + email + tenant;
-            if (CacheManager.CacheWrapper != null)
-            {
-                if (CacheManager.CacheWrapper.Get(entityName) == null && globalContact != null)
-                {
-                    CacheManager.CacheWrapper.Insert(entityName, globalContact, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                }
-                else
-                {
-                    globalContact = (GlobalContact)CacheManager.CacheWrapper.Get(entityName);
-                }
             }
             return globalContact;
         }
@@ -52,19 +38,6 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
             IQueryable<GlobalContact> contacts = from a in context.GlobalContacts.Include("GlobalTenant")
                                                  where a.GlobalTenantId == tenant
                                                  select a;
-
-            string entityName = "GlobalContacts" + tenant;
-            if (CacheManager.CacheWrapper != null)
-            {
-                if (CacheManager.CacheWrapper.Get(entityName) == null && contacts != null)
-                {
-                    CacheManager.CacheWrapper.Insert(entityName, contacts, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                }
-                else
-                {
-                    contacts = (IQueryable<GlobalContact>)CacheManager.CacheWrapper.Get(entityName);
-                }
-            }
             return contacts;
         }
 
@@ -73,41 +46,14 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
             IQueryable<GlobalContact> contacts = from a in context.GlobalContacts.Include("GlobalTenant")
                                                  where a.Email == email && a.InActive == false
                                                  select a;
-
-            string entityName = "GlobalContacts" + email;
-            if (CacheManager.CacheWrapper != null)
-            {
-                if (CacheManager.CacheWrapper.Get(entityName) == null && contacts != null)
-                {
-                    CacheManager.CacheWrapper.Insert(entityName, contacts, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                }
-                else
-                {
-                    contacts = (IQueryable<GlobalContact>)CacheManager.CacheWrapper.Get(entityName);
-                }
-            }
             return contacts;
         }
 
         public GlobalContact GetSingleGlobalContact(string id)
         {
-            GlobalContact globalContact = (from a in context.GlobalContacts.Include("GlobalTenant")
-                   where a.Id == id
-                   select a).FirstOrDefault();
-
-            string entityName = "GlobalContactById" + id;
-            if (CacheManager.CacheWrapper != null)
-            {
-                if (CacheManager.CacheWrapper.Get(entityName) == null && globalContact != null)
-                {
-                    CacheManager.CacheWrapper.Insert(entityName, globalContact, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                }
-                else
-                {
-                    globalContact = (GlobalContact)CacheManager.CacheWrapper.Get(entityName);
-                }
-            }
-            return globalContact;
+            return (from a in context.GlobalContacts.Include("GlobalTenant")
+                    where a.Id == id
+                    select a).FirstOrDefault();
         }
 
 
@@ -116,18 +62,6 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
             IQueryable<GlobalContact> contacts = from a in context.GlobalContacts.Include("GlobalTenant")
                                                  where a.Email.StartsWith("system@tenant")
                                                  select a;
-            string entityName = "GlobalContactsList";
-            if (CacheManager.CacheWrapper != null)
-            {
-                if (CacheManager.CacheWrapper.Get(entityName) == null && contacts != null)
-                {
-                    CacheManager.CacheWrapper.Insert(entityName, contacts, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                }
-                else
-                {
-                    contacts = (IQueryable<GlobalContact>)CacheManager.CacheWrapper.Get(entityName);
-                }
-            }
             return contacts.ToList();
         }
 
@@ -156,7 +90,7 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
         public IGlobalContext context
         {
-            get {return globalContext; }
+            get { return globalContext; }
         }
 
         public void SubmitChanges()

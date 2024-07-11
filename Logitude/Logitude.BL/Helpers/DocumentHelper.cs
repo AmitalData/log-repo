@@ -314,10 +314,13 @@ namespace Logitude.BL.Helpers
                 DocumentRepository documentRepository = new DocumentRepository(commoncontext);
                 DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(commoncontext);
                 DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
-                TenantRepository tenantRepository = new TenantRepository(tenant);
+                DocumentOutCopyQuery DocumentOutCopyQuery = new DocumentOutCopyQuery(tenant);
 
+
+               TenantRepository tenantRepository = new TenantRepository(tenant);
                 DocumentsFilingPM myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(invocie.Id, tenant).FirstOrDefault();
-                Document document = documentRepository.GetSingleDocument(tenant, myDocumentFilings?.DocumentId);
+                DocumentOutCopyPM documentOutCopyPM = DocumentOutCopyQuery.GetDocumentOutCopiesForDocumentOutAndType(myDocumentFilings.Id, tenant, "999G");
+                Document document = documentRepository.GetSingleDocument(tenant, documentOutCopyPM?.DocumentId);
                 ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
                   var vatNumber = tenantRepository.GetSingleByTenant(tenant).VatNumber;
 

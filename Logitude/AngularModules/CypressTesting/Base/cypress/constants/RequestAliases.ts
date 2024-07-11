@@ -330,4 +330,12 @@ export class RequestAliases {
     public static readonly GetMockSingleInstanceVariables = 'GetMockSingleInstanceVariables';
 
     public static readonly GetQueryToExcelData = 'GetQueryToExcelData';
+
+
+   //Courier 
+
+   public static readonly LinksGatewayPREQ = 'LinksGatewayPREQ';
+   public static readonly LinksGatewayUID = 'LinksGatewayUID';
+
+
 }

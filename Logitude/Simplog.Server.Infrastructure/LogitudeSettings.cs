@@ -172,6 +172,7 @@ namespace Simplog.Server.Infrastructure
 
         public string OnPremiseFillingService { get; set; }
         public bool IsConnectedToUniFreight { get; set; }
+        public string Id { get; set; }
         
     }
 

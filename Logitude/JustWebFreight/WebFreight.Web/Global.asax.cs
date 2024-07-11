@@ -61,6 +61,7 @@ namespace WebFreight.Web
         System.Timers.Timer aTimer = new System.Timers.Timer();
         protected void Application_Start(object sender, EventArgs e)
         {
+            NetCommonHelper.Logger.DevLog.Instance.SetProcessName("website", true); //Set process name and is webApp
             LogitudeAppSettings.StartDateTime = DateTime.Now;
             //if ((DateTime.Now - LogitudeAppSettings.EndDateTime).TotalMinutes <= 5)
             //{
@@ -289,11 +290,11 @@ namespace WebFreight.Web
                     {
                         subscribtionName += ("_" + commandLineArgs[2]);
                     }
-                    SubscriptionDescription myAgentSubscription;
+                    /*SubscriptionDescription myAgentSubscription;
                     if (!StorageAcountDetails.NameSpaceManager.SubscriptionExists(dataCacheTopic.Path, subscribtionName))
                     {
                         myAgentSubscription = StorageAcountDetails.NameSpaceManager.CreateSubscription(dataCacheTopic.Path, subscribtionName);
-                    }
+                    }*/
 
                     CacheMessageHandler cacheMessageHandler = new CacheMessageHandler();
                     Thread cacheThread = new Thread(cacheMessageHandler.HandleTopicMessages);
@@ -602,13 +603,13 @@ namespace WebFreight.Web
             //{
             //    return;
             //}
-            SubscriptionDescription myAgentSubscription;
+            /*SubscriptionDescription myAgentSubscription;
             //string[] roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
             string subscribtionName = Environment.MachineName; //roleId[roleId.Length - 1];
             if (!StorageAcountDetails.NameSpaceManager.SubscriptionExists(signalRTopic.Path, subscribtionName))
             {
                 myAgentSubscription = StorageAcountDetails.NameSpaceManager.CreateSubscription(signalRTopic.Path, subscribtionName);
-            }
+            }*/
 
             //SignalRHubMessageHandler signalRMessageHandler = new SignalRHubMessageHandler();
             //Thread signalRThread = new Thread(signalRMessageHandler.HandleTopicMessages);
