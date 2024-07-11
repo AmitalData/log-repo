@@ -78,7 +78,6 @@ namespace WebFreight.Web
 
         }
         private static readonly string SimplogGuid = Guid.NewGuid().ToString("N");
-        private static readonly HttpClient _httpClient = new HttpClient();
 
         public UserData PostLoginUsingAuthenticaionToken(LoginTokenParameter logintokenparam, string dummy)
         {
