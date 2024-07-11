@@ -684,7 +684,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 case "DeclarationsStatusRequest":
                     {
                         this.DeclarationsStatusRequestMethod();
-                        //SaveDeclarationMethod("DeclarationsStatusRequest");
+                        //SaveDeclarationMethod("Dec larationsStatusRequest");
                         break;
                     }
 
@@ -1147,6 +1147,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         }
     }
     private GetAnyRequestBeforeResetDeclaration(interfaceTypeCode: string, message: string) {
+        debugger;
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         var canResetDeclaration: boolean = this.EntityPM.Direction == 'E' ? true : this.EntityPM.PaymentDate == null;
         if (canResetDeclaration) {
@@ -1165,7 +1166,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                                 canResetDeclaration = false;
                             } else {
                                 for (let request of requestSheets) {
-                                    if (request.RequestStatusCode != analyzed) {
+                                    if (request.RequestStatusCode == analyzed) {
                                         canResetDeclaration = false;
                                         break;
                                     }
