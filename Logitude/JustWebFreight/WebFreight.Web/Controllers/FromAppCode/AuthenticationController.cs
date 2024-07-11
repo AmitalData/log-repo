@@ -1265,30 +1265,36 @@ namespace WebFreight.Web
 
         [HttpPost]
         [ActionName("PostWarm")]
-        public async Task<IHttpActionResult> PostWarm([FromBody] WarmRequest request)
+        public HttpResponseMessage PostWarm([FromBody] WarmRequest request)
         {
             List<int> tenants = new List<int>();
-            if (request.Tenant == null)
+            try
             {
-                string tenantsFromConfig = ConfigurationManager.AppSettings["tenants"];
-                tenants = tenantsFromConfig.Split(',')
-                                               .Select(int.Parse)
-                                               .ToList();
+                if (request.Tenant == null)
+                {
+                    string tenantsFromConfig = ConfigurationManager.AppSettings["tenants"];
+                    tenants = tenantsFromConfig.Split(',')
+                                                   .Select(int.Parse)
+                                                   .ToList();
+                }
+                else
+                {
+                    tenants.Add(request.Tenant.Value);
+                }
+                HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(
+                    request.Email), new string[0]);
+                foreach (int t in tenants)
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService start for tenant {0}", null, t);
+                    WarmService.MakeWarmCalls(t);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService completed for tenant {0}", null, t);
+                }
+                return Request.CreateResponse(HttpStatusCode.OK);
             }
-            else
+            catch (Exception ex)
             {
-                tenants.Add(request.Tenant.Value);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-            HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(
-                request.Email), new string[0]);
-            foreach (int t in tenants)
-            {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService start for tenant {0}", null, t);
-                WarmService.MakeWarmCalls(t);
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService completed for tenant {0}", null, t);
-            }
-
-            return Ok("Warm completed. Check logs for details.");
         }
 
         private void MapHasLogboxAccessPrivateLabelTenants(List<CompanyLogin> loginsList, List<string> logboxAccessiblePrivateLabelTenantsIds)
