@@ -70,11 +70,10 @@ namespace WebFreight.Web
     /// </summary>
 
 #endif
-    public class WarmModel
+    public class WarmRequest
     {
-        public string Url { get; set; }
-        public object Model { get; set; }
-        public string Method { get; set; }
+        public string Email { get; set; }
+        public int? Tenant { get; set; }
     }
     public partial class AuthenticationController : ApiController
     {
@@ -1271,177 +1270,32 @@ namespace WebFreight.Web
 
         [HttpPost]
         [ActionName("PostWarm")]
-        public async Task<IHttpActionResult> PostWarm(LoginParameters loginParameters)
+        public async Task<IHttpActionResult> PostWarm([FromBody] WarmRequest request)
         {
-            var baseUrl = $"{Request.RequestUri.Scheme}://{Request.RequestUri.Host}:{Request.RequestUri.Port}";
-            var firstReq = new WarmModel
+            List<int> tenants = new List<int>();
+            if (request.Tenant == null)
             {
-                Method = "post",
-                Model = loginParameters,
-                Url = $"{baseUrl}/api/Authentication?tenant=78"
-            };
-            var json = JsonConvert.SerializeObject(firstReq.Model);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PostAsync(firstReq.Url, content);
-            response.EnsureSuccessStatusCode();
-            var responseString = await response.Content.ReadAsStringAsync();
-            var responseObject = JsonConvert.DeserializeObject<UserData>(responseString); // Adjust the type as needed
+                string tenantsFromConfig = ConfigurationManager.AppSettings["tenants"];
+                tenants = tenantsFromConfig.Split(',')
+                                               .Select(int.Parse)
+                                               .ToList();
+            }
+            else
+            {
+                tenants.Add(request.Tenant.Value);
+            }
+            HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(
+                request.Email), new string[0]);
+            foreach (int t in tenants)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService start for tenant {0}", null, t);
+                WarmService.MakeWarmCalls(t);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService completed for tenant {0}", null, t);
+            }
 
-            var requests = new WarmModel[]
-                {
-                    new WarmModel{
-                    Method="get",
-                    Model=new ApiQueryFilters
-                    {
-                        GetAll=false,
-                        Filter1Name="SearchFields",
-                        Filter1Operator="Contains",
-                        GetCount=true,
-                        PageIndex=0,
-                        PageSize=23,
-                        Filter1Value=loginParameters.Email
-                    },
-                    Url= $"{baseUrl}/api/userviews/getbyfilters"
-                },
-               new WarmModel{
-                    Method="get",
-                    Model=new ApiQueryFilters
-                    {
-                        Filter1Name="Code",
-                        Filter1Operator="Contains",
-                        Filter1Value="EUR",
-                        PageSize=23
-                    },
-                    Url= $"{baseUrl}/api/currencyviews/getbyfilters"
-                },
-               new WarmModel{
-                    Method="get",
-                    Model=new ApiQueryFilters
-                    {
-                        Tenant=0,
-                        PageSize=50,
-                        Filter1Name="Code",
-                        Filter1Operator="Contains",
-                        Filter1Value="EUR"
-                    },
-                    Url= $"{baseUrl}/api/currencyviews/getbyfilters"
-               },
-               new WarmModel{
-                   Method="get",
-                   Model = new
-                   {
-                       CurrencyId="todoeurcurrencyidfromten0",
-                       CurrencyRate=4,
-                       RateDate=new DateTime(2019,6,24,15,2,53)
-                   },
-                   Url = $"{baseUrl}/api/CommonDomain/GetCopyCurrencyToTenant"
-                },
-               new WarmModel{
-                   Method="get",
-                   Model = new ApiQueryFilters
-                   {
-                       Filter1Name="Code",
-                       Filter1Operator="equals",
-                       Filter1Value="CIF",
-                       PageSize=22
-                   },
-                   Url = $"{baseUrl}/api/incotermviews/getbyfilters"
-                },
-               new WarmModel{
-                   Method="get",
-                   Model = new ApiQueryFilters
-                   {
-                       Filter1Name="Code",
-                       Filter1Operator="equals",
-                       Filter1Value="LDE",
-                       PageSize=22
-                   },
-                   Url = $"{baseUrl}/api/incotermviews/getbyfilters"
-                },
-               new WarmModel{
-                    Method="post",
-                    Model=new IncotermPM
-                    {
-                      Tenant= 78,
-                      IsSecured= false,
-                      Code= "LDE",
-                      Name= "LDE Incoterm",
-                      LocalName= null,
-                      Freight= "P",
-                      OtherCharges= "C",
-                      AddedManually= true,
-                      InActive= false,
-                      Notes= null,
-                      ComputedLocalName= null,
-                      SearchFields= null,
-                      IsHybrid= false
-                    },
-                    Url= $"{baseUrl}/api/incoterms"
-               },
-               new WarmModel{
-                    Method="get",
-                    Model=new ApiQueryFilters
-                    {
-                      Filter1Name="Code",
-                      Filter1Operator="equals",
-                      Filter1Value="GRWT",
-                      PageSize=22
-                    },
-                    Url= $"{baseUrl}/api/measurementviews/getbyfilters"
-               },
-               new WarmModel{
-                    Method="get",
-                    Model=new ApiQueryFilters
-                    {
-                      Filter1Name="Code",
-                      Filter1Operator="equals",
-                      Filter1Value="AFT",
-                      PageSize=22
-                    },
-                    Url= $"{baseUrl}/api/chargestypeviews/getbyfilters"
-               },
-               new WarmModel{
-                    Method="get",
-                    Model=new ApiQueryFilters
-                    {
-                        Filter1Name="Code",
-                        Filter1Operator="equals",
-                        Filter1Value="LHR",
-                        PageSize=22
-                    },
-                    Url= $"{baseUrl}/api/PortViews/getbyfilters"
-               },
-               new WarmModel{
-                    Method="get",
-                    Model=new ApiQueryFilters
-                    {
-                        Filter1Name="Code",
-                        Filter1Operator="equals",
-                        Filter1Value="LHR",
-                        PageSize=13                    
-                    },
-                    Url= $"{baseUrl}/api/PortViews/getTenantImportByFilters"
-               },
-               new WarmModel{
-                    Method="get",
-                    Model=new 
-                    {
-                        entityId="{{PortIdLHR}}"
-                    },
-                    Url= $"{baseUrl}/api/CommonDomain/GetPortCopyToCurrentTenant"
-               },
-               new WarmModel{
-                    Method="get",
-                    Model=new
-                    {
-                        entityId="{{PortIdLHR}}"
-                    },
-                    Url= $"{baseUrl}/api/CommonDomain/GetPortCopyToCurrentTenant"
-               }
-            };
-            await WarmService.MakeParallelRequestsAsync(requests, responseObject.Token);
-            return Ok("Requests completed. Check logs for details.");
+            return Ok("Warm completed. Check logs for details.");
         }
+
         private void MapHasLogboxAccessPrivateLabelTenants(List<CompanyLogin> loginsList, List<string> logboxAccessiblePrivateLabelTenantsIds)
         {
             foreach (CompanyLogin companyLogin in loginsList)
