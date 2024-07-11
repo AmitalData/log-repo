@@ -62,6 +62,7 @@ export class ShipmentValidator implements IShipmentValidator {
             this.ValidateDeliveries();
             this.ValidatePayables();
             this.ValidateReceivables();
+            
             //this.ValidateProductItems();
             RoutingHelper.ValidateRoutingsActualDates(entityPM, this.Errors);
             RoutingHelper.ValidateRoutingsSeriesDates(entityPM, this.Errors);
@@ -214,8 +215,23 @@ export class ShipmentValidator implements IShipmentValidator {
                     this.Errors.push("Gross Weight is required");
                 }
             }
+            if(this.entityPM.ShipmentTypeId == "FCLD" && this.entityPM.DirectionId == "C"){
+                this.Errors.push(this.ValidateContainerNumber(item.ContainerNumber));
+            }
+            
         });
     }
+
+    ValidateContainerNumber(containerNumber: string): string {
+        const pattern = /^[A-Za-z]{4}\d{7}$/;
+    
+        if (!pattern.test(containerNumber)) {
+            return TextCodeTranslator.Translate("ShipmentPackage.O.NotValidContainerNumber");
+        }
+    
+        return null;
+    }
+
     private ValidatePickups() {
 
         var validator = new ShipmentPickupValidator();
@@ -240,6 +256,7 @@ export class ShipmentValidator implements IShipmentValidator {
         });
 
     }
+
     private ValidatePayables() {
 
         var vatTypesIds: string[] = [];

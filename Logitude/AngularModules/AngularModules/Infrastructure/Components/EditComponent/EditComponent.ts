@@ -971,9 +971,6 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         for (var i = 0; i < allTabs.length; i++) {
             
             var tab: ObjectTableTabPM = allTabs[i]; 
-            if(tab.Code == "SHSP"){
-                debugger;
-            }
             if (tab.ControlPath != null) {
                 if (tab.ControlPath.indexOf("ExternalDocumentsControl") != -1) {
                     if (!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "DOCSIN")) {
@@ -1168,7 +1165,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                             allTabs.splice(indexOfTab, 1);
                         }
                     }
-                    if(this.EntityPM.ShipmentTypeId != "FCLD"){
+                    if (this.EntityPM.ShipmentTypeId != "FCLD" && this.EntityPM.DirectionId == "C") {
                         var indexOfTab = allTabs.findIndex(t => t.Code == "SHSP");
                         if (indexOfTab > -1) {
                             allTabs.splice(indexOfTab, 1);

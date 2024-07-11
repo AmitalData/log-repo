@@ -109215,7 +109215,7 @@
     HasGeneralFeature="false" />
   <Tab
     TabName="&quot;ShipmentPackages&quot;"
-    TabLocalName="&quot;&quot;"
+    TabLocalName="&quot;מכולות &quot;"
     ObjectTableName="&quot;Shipment&quot;"
     Code="&quot;SHSP&quot;"
     ControlPath="&quot;Simplog.ShipmentLib.Views.ShipmentPackagesLib.ShipmentPackagesTabControl&quot;"
