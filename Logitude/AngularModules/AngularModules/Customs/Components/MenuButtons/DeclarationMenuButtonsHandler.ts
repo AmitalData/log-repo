@@ -1147,7 +1147,6 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         }
     }
     private GetAnyRequestBeforeResetDeclaration(interfaceTypeCode: string, message: string) {
-        debugger;
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         var canResetDeclaration: boolean = this.EntityPM.Direction == 'E' ? true : this.EntityPM.PaymentDate == null;
         if (canResetDeclaration) {
