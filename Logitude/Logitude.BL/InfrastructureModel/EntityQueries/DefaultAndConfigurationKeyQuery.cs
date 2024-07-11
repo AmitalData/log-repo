@@ -26,7 +26,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             repository = DefaultAndConfigurationKeyRepository;
         }
 
-        public DefaultAndConfigurationKeyPM GetSinglePM(int tenant1, string setkey, int tenant)
+        public DefaultAndConfigurationKeyPM GetSinglePM(string setkey, int tenant)
         {        
             DefaultAndConfigurationKeyPM result =
             (from a in repository.context.DefaultAndConfigurationKey

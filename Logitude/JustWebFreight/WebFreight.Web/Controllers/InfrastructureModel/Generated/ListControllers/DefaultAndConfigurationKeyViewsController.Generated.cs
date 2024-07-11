@@ -51,7 +51,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
     {
 	  
        
-        public HttpResponseMessage GetSingle(int tenant, string setkey)
+        public HttpResponseMessage GetSingle(string setkey)
         {
 		  try
             {
@@ -63,7 +63,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 		    	IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
 				DefaultAndConfigurationKeyRepository  defaultAndConfigurationKeyRepository = new DefaultAndConfigurationKeyRepository(MyContext);
 				DefaultAndConfigurationKeyList entityList = null;
-				DefaultAndConfigurationKey entityPoco = defaultAndConfigurationKeyRepository.GetSingleDefaultAndConfigurationKey(tenant, setkey , authToken.Tenant);
+				DefaultAndConfigurationKey entityPoco = defaultAndConfigurationKeyRepository.GetSingleDefaultAndConfigurationKey(setkey , authToken.Tenant);
                 
                 if (entityPoco != null)
 				{
@@ -104,7 +104,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
 				DefaultAndConfigurationKeyQuery defaultAndConfigurationKeyQuery = new DefaultAndConfigurationKeyQuery(defaultAndConfigurationKeyRepository);
 			    IQueryable<DefaultAndConfigurationKeyList> entityLists = defaultAndConfigurationKeyQuery.GetIQueryableEntityList(entityPocos);
-				entityLists = entityLists.OrderBy(d => d.Tenant);
+				entityLists = entityLists.OrderBy(d => d.SetKey);
 				List<DefaultAndConfigurationKeyList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 										
@@ -301,7 +301,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                             }
                         default:
                             {
-                                entityLists = entityLists.OrderBy(d => d.Tenant);
+                                entityLists = entityLists.OrderBy(d => d.SetKey);
                                 break;
                             }
                     }
@@ -310,7 +310,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
             }					  						
 	       else
             {
-                entityLists = entityLists.OrderBy(d => d.Tenant);
+                entityLists = entityLists.OrderBy(d => d.SetKey);
             } 
 
 			ServiceResponse response = new ServiceResponse();

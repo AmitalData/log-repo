@@ -43,7 +43,7 @@ export class FieldByTypeComponent {
     }
 
     public get value(): any {
-        return this.isArray ? this.fields.toArray() : this.fields.first.Value;
+        return this.isArray ? this.fields.toArray().map(x => x.Value) : this.fields.first.Value;
     }
 
     public get valid(): boolean {

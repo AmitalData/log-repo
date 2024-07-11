@@ -43,6 +43,8 @@ import { CloseSaveButtonsComponent } from './AmitalAPI/components/CloseSaveButto
 import { LogTexBoxFormComponent } from './AmitalAPI/components/LogTexBoxFormComponent';
 import { LogitudeGridSimpleComponent } from './AmitalAPI/components/LogitudeGridSimpleComponent';
 import { WrapperLogFieldComponent } from './AmitalAPI/components/WrapperLogFieldComponent';
+import { DefaultAndConfigurationValueTabComponent } from './Components/DefaultAndConfiguration/DefaultAndConfigurationValueTabComponent';
+import { DefaultAndConfigurationDetailsTabComponent } from './Components/DefaultAndConfiguration/DefaultAndConfigurationDetailsTabComponent';
 
 
 export const Components =
@@ -80,6 +82,8 @@ export const Components =
         TermsofUseComponent,
         CustomsCloudComponent,
         DefaultAndConfigurationComponent,
+        DefaultAndConfigurationDetailsTabComponent,
+        DefaultAndConfigurationValueTabComponent,
         FieldByTypeComponent,
         WrapperLogFieldComponent,
         LogTexBoxFormComponent,
@@ -133,6 +137,8 @@ export class ModuleDeclarations {
             case "TermsofUseComponent": { myResult = TermsofUseComponent; break; }
             case "CustomsCloudComponent": { myResult = CustomsCloudComponent; break; }
             case "DefaultAndConfigurationComponent": { myResult = DefaultAndConfigurationComponent; break; }
+            case "DefaultAndConfigurationDetailsTabComponent": { myResult = DefaultAndConfigurationDetailsTabComponent; break; }
+            case "DefaultAndConfigurationValueTabComponent": { myResult = DefaultAndConfigurationValueTabComponent; break; }
             case "FieldByTypeComponent": { myResult = FieldByTypeComponent; break; }
             case "WrapperLogFieldComponent": { myResult = WrapperLogFieldComponent; break; }
             case "LogTexBoxFormComponent": { myResult = LogTexBoxFormComponent; break; }
