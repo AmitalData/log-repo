@@ -25,6 +25,7 @@ using Logitude.Server.Tools;
 using System.Linq;
 using Newtonsoft.Json;
 using System.Text;
+using System.Data;
 
 
 namespace Logitude.CargoTracking.Data.EntityListQueryServices
@@ -944,12 +945,22 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         {
             if (shipmentSearchInput.CustomersIds.Count > 0)
             {
+                
 
                 Logger.LogDebug("FilterByCustomers count:{0}", shipmentSearchInput.CustomersIds.Count);
+                // Assume shipmentSearchInput.CustomersIds is a List<string> or an array of customer IDs
 
-                shipments = shipments.Where(d =>
-                            shipmentSearchInput.CustomersIds.Contains(d.CustomerId)
-                        );
+                // Create a variable to hold the customer IDs as a string
+                string customerIdsString = string.Join(", ", shipmentSearchInput.CustomersIds.Select(id => $"'{id}'"));
+
+                // Modify the Where clause to use the dynamically generated customer IDs string
+                shipments = shipments.Where(d => customerIdsString.Contains(d.CustomerId));
+
+                //shipments = shipments.Where(d =>
+                //            shipmentSearchInput.CustomersIds.Contains(d.CustomerId)
+                //        );
+
+
             }
             return shipments;
         }

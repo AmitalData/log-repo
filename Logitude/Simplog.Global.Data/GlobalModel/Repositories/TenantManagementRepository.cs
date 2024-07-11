@@ -45,15 +45,47 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
         public TenantManagement GetSingleTenantManagement(int id)
         {
-            return (from a in context.TenantManagements.Include("GlobalTenant") where a.Id == id select a).FirstOrDefault();
+            string entityName = "TenantManagement" + id;
+            TenantManagement entity = (from a in context.TenantManagements.Include("GlobalTenant") where a.Id == id select a).FirstOrDefault(); ;
+
+            if (CacheManager.CacheWrapper != null)
+            {
+                if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
+                {
+                    CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                }
+                else
+                {
+                    entity = (TenantManagement)CacheManager.CacheWrapper.Get(entityName);
+                }
+            }
+            return entity;
+
+            // return (from a in context.TenantManagements.Include("GlobalTenant") where a.Id == id select a).FirstOrDefault();
         }
 
         public TenantManagement GetSingleTenantManagementByBluesnapAccountId(string bluesnapaccountId)
         {
+            string entityName = "TenantManagement" + bluesnapaccountId;
+            IQueryable<TenantManagement> allTenantManagements = (from a in context.TenantManagements.Include("GlobalTenant")
+                                                                 where a.BluesnapAccount == bluesnapaccountId
+                                                                 select a);
+            if (CacheManager.CacheWrapper != null)
+            {
+                if (CacheManager.CacheWrapper.Get(entityName) == null && allTenantManagements != null)
+                {
+                    CacheManager.CacheWrapper.Insert(entityName, allTenantManagements, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);                
+                }
+                else
+                {
+                    allTenantManagements = (IQueryable<TenantManagement>)CacheManager.CacheWrapper.Get(entityName);
+                }
+            }
+
             TenantManagement tenantManagement = null;
-            var allTenantManagements = (from a in context.TenantManagements.Include("GlobalTenant")
-                                        where a.BluesnapAccount == bluesnapaccountId
-                                        select a);
+            //IQueryable<TenantManagement> allTenantManagements = (from a in context.TenantManagements.Include("GlobalTenant")
+            //                            where a.BluesnapAccount == bluesnapaccountId
+            //                            select a);
             var parentTenant = allTenantManagements.Where(a => a.IsParentTenant && a.NoPaymentForChildTenants).FirstOrDefault();
 
             if (parentTenant != null)
@@ -78,16 +110,50 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
         public List<TenantManagement> GetTenantManagementsForPackage(string packageCode)
         {
-            return (from a in context.TenantManagements
-                    where a.PackageCode == packageCode
-                    select a).ToList();
+            string entityName = "TenantManagement" + packageCode;
+            List<TenantManagement> entity = (from a in context.TenantManagements
+                                            where a.PackageCode == packageCode
+                                            select a).ToList();
+            if (CacheManager.CacheWrapper != null)
+            {
+                if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
+                {
+                    CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                }
+                else
+                {
+                    entity = (List<TenantManagement>)CacheManager.CacheWrapper.Get(entityName);
+                }
+            }
+            
+            return entity;
+            //return (from a in context.TenantManagements
+            //        where a.PackageCode == packageCode
+            //        select a).ToList();
         }
 
         public List<string> GetTenantManagementsIdsForPackage(string packageCode)
         {
-            return  (from a in context.TenantManagements
-                    where a.PackageCode == packageCode
-                    select a.Id.ToString()).ToList();
+            string entityName = "TenantManagement" + packageCode;
+            List<string> entity = (from a in context.TenantManagements
+                                   where a.PackageCode == packageCode
+                                   select a.Id.ToString()).ToList(); 
+
+            if (CacheManager.CacheWrapper != null)
+            {
+                if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
+                {
+                    CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                }
+                else
+                {
+                    entity = (List<string>)CacheManager.CacheWrapper.Get(entityName);
+                }
+            }
+            return entity;
+            //return  (from a in context.TenantManagements
+            //        where a.PackageCode == packageCode
+            //        select a.Id.ToString()).ToList();
         }
 
 

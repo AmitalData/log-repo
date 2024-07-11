@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="Main"
+  Name="DeletePerformanceLogs"
+  Schema="dbo"
+  Module="Common">
+  <SqlScript>
+    <![CDATA[
+
+
+    CREATE OR ALTER PROCEDURE [dbo].[DeletePerformanceLogs]
+    AS
+    BEGIN
+        DECLARE @a INT = 1;
+
+        WHILE @a > 0
+        BEGIN
+            -- Delete up to 250,000 rows where createdatetime is older than 7 days
+            DELETE TOP (250000)
+            FROM PerformanceLogs  
+            WHERE LogDateTimeLocal <  DATEADD(month, -3, GETDATE()) or LogDateTimeGMT <  DATEADD(month, -3, GETDATE());
+
+            ---- Check if there are more rows to delete
+            SELECT @a = COUNT(*)
+		        FROM PerformanceLogs  
+            WHERE LogDateTimeLocal <  DATEADD(month, -3, GETDATE()) or LogDateTimeGMT <  DATEADD(month, -3, GETDATE());
+
+        END
+      END;
+
+
+]]>
+  </SqlScript>
+  <OracleScript>
+  </OracleScript>
+</Procedure>
