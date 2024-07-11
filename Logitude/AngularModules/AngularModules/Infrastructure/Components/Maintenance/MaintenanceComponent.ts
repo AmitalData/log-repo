@@ -41,7 +41,7 @@ export class MaintenanceComponent {
     LayoutDirection: string = 'ltr';
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
-     private readonly invoiceConfirmationNumber = "InvoiceConfirmationNumber";
+     private readonly invoiceConfirmationNumber = "SHAAM";
 
      private textCodeTranslationPipe: TextCodeTranslationPipe;
  
