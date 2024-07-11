@@ -2279,6 +2279,24 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ReferantUserId { get; set; }
         public string IskaNumber { get; set; }
+        public string DeclarationOfficeCode { get; set; }
+        public DateTime? HatraDate { get; set; }
+        public string CarrierCodeMawb { get; set; }
+        public string Hawb { get; set; }
+        public string ProcedureCurrentCode { get; set; }
+        public string ExternalDeclarationNumber { get; set; }
+        public string Status { get; set; }
+        public string DeclarationStatusTypeCode { get; set; }
+        public string CarrierCode { get; set; }
+        public string Mawb { get; set; }
+        public DateTime? MawbDate { get; set; }
+        public DateTime? ArrivalDate { get; set; }
+        public DateTime? EstimatedArrivalDate { get; set; }
+        public string PackageTypeCode { get; set; }
+        public string Vessel { get; set; }
+        public string FlightVoyageNumber { get; set; }
+        public string Commodity { get; set; }
+
 
         #region WarehouseLeg
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

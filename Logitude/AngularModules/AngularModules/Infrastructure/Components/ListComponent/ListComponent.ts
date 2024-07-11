@@ -2965,7 +2965,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             else if (this.ObjectTableName == "Customs.LogisticActionRequest") {
                 this.NewEntityButtonLabel = TextCodeTranslator.Translate('Customs.General.O.OpenLogisticActionRequest')
             }
-            else if (this.SelectedQuery.NameTextCodeCode == "Shipment.Q.CustomsShipments") {
+            else if (this.SelectedQuery?.NameTextCodeCode == "Shipment.Q.CustomsShipments") {
                 this.NewEntityButtonLabel = TextCodeTranslator.Translate('Shipment.O.OpenNewCustomShipment');
             }
             else if (this.ObjectTableName == "Currency") {

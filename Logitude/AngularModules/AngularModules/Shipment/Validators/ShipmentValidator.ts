@@ -15,6 +15,7 @@ export class ShipmentValidator implements IShipmentValidator {
     private Errors: string[] = [];
     private entityPM: ShipmentPM;
     private IsInlandDomestic: boolean = false;
+    private IsCustomShipment: boolean = false;
     private IsStandAloneShipment: boolean = false;
     private IsLCLEntity: boolean = false;
     private IsFCLEntity: boolean = false;
@@ -30,6 +31,7 @@ export class ShipmentValidator implements IShipmentValidator {
 
         if (entityPM && !SessionLocator.TenantPM.IsDocumentsArchive) {
             this.IsInlandDomestic = this.entityPM.TransportModeId == "I" && this.entityPM.DirectionId == "D" ? true : false;
+            this.IsCustomShipment = this.entityPM.DirectionId == "C";
             this.IsStandAloneShipment = this.entityPM.IsStandalonePickupDelivery;
             this.IsLCLEntity = AppTool.IsLCLEntity(this.entityPM.TransportModeId, this.entityPM.ShipmentTypeId);
             this.IsFCLEntity = AppTool.IsFCLEntity(this.entityPM.TransportModeId, this.entityPM.ShipmentTypeId);
@@ -120,7 +122,7 @@ export class ShipmentValidator implements IShipmentValidator {
                 this.Errors.push(this.message.replace("%FieldName", TextCodeTranslator.Translate(textCode)));
             }
 
-            if (AppTool.IsNullOrEmpty(this.entityPM.MainCarriageToPortId)) {
+            if (AppTool.IsNullOrEmpty(this.entityPM.MainCarriageToPortId) && !this.IsCustomShipment) {
                 var textCode = ShipmentTool.GetToPortTextCode(this.entityPM.TransportModeId, this.entityPM.ShipmentLevelCode);
                 this.Errors.push(this.message.replace("%FieldName", TextCodeTranslator.Translate(textCode)));
             }

@@ -751,7 +751,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
 
                     this.RefreshFollowUpDate();
-                    this.UpdateExtendedTasksDueDate();
+
+                    // for custom shipments, do not update the activity (because table is created in crm project)
+                    if (this.entityPM.DirectionId != "C")
+                    {
+                        this.UpdateExtendedTasksDueDate();
+                    }
 
                     if (this.entityPM != null && !this.entityPM.FromCTool)
                     {

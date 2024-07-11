@@ -356,8 +356,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         private static void ValidateToPort(ShipmentPM entityPM, Tenant loggedTenant)
         {
             bool isInlandDomestic = (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I");
+            bool isCustomShipment = (entityPM.DirectionId == "C");
 
-            if (!isInlandDomestic)
+            if (!isInlandDomestic && !isCustomShipment)
             {
                 if (string.IsNullOrEmpty(entityPM.MainCarriageToPortId))
                 {

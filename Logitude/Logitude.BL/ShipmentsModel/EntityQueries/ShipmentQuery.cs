@@ -38,6 +38,7 @@ using System.Web;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.Tools.DataMapping;
 using Logitude.BL.ShipmentsModel.Tools.ExternalService;
+using Logitude.Customs.Def.EntityPMs;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -1817,6 +1818,53 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ReferantUserId = shipment.ReferantUserId;
             // shipmentPM.ReferantUserId = shipment.UserId.Id;
             shipmentPM.IskaNumber = shipment.IskaNumber;
+            // todo: maping
+            shipmentPM.Status = "aa"; //  shipment?.Status;
+
+            if (shipment.DirectionId == "C")
+            {
+                // todo: get declaration
+                DeclarationPM declaration = new DeclarationPM() {
+                    DeclarationNumber = "1",
+                    DeclarationOfficeCode = "2",
+                    HatraDate = DateTime.Now,
+                    ProcedureCurrentCode = "3",
+                    ExternalDeclarationNumber = "4",
+                    DeclarationStatusTypeCode = "5",
+                };
+
+                shipmentPM.DeclarationNumber = declaration?.DeclarationNumber;
+                shipmentPM.DeclarationOfficeCode = declaration?.DeclarationOfficeCode;
+                shipmentPM.HatraDate = declaration?.HatraDate;
+                shipmentPM.ProcedureCurrentCode = declaration?.ProcedureCurrentCode;
+                shipmentPM.ExternalDeclarationNumber = declaration?.ExternalDeclarationNumber;
+                shipmentPM.DeclarationStatusTypeCode = declaration?.DeclarationStatusTypeCode;
+
+                // todo: get declaration referent data
+                DeclarationReferantDataPM declarationReferantData = new DeclarationReferantDataPM()
+                {
+                    CarrierCode = "6",
+                    Mawb = "7",
+                    Hawb = "8",
+                    ArrivalDate = DateTime.Now,
+                    EstimatedArrivalDate = DateTime.Now,
+                    PackageTypeCode = "9",
+                    Vessel = "10",
+                    FlightVoyageNumber = "11",
+                    Commodity = "12",
+                };
+                shipmentPM.CarrierCodeMawb = declarationReferantData?.CarrierCode + "-" + declarationReferantData?.Mawb;
+                shipmentPM.CarrierCode = declarationReferantData?.CarrierCode;
+                shipmentPM.Mawb = declarationReferantData?.Mawb;
+                shipmentPM.MawbDate = declarationReferantData?.MawbDate;
+                shipmentPM.Hawb = declarationReferantData?.Hawb;
+                shipmentPM.ArrivalDate = declarationReferantData?.ArrivalDate;
+                shipmentPM.EstimatedArrivalDate = declarationReferantData?.EstimatedArrivalDate;
+                shipmentPM.PackageTypeCode = declarationReferantData?.PackageTypeCode;
+                shipmentPM.Vessel = declarationReferantData?.Vessel;
+                shipmentPM.FlightVoyageNumber = declarationReferantData?.FlightVoyageNumber;
+                shipmentPM.Commodity = declarationReferantData?.Commodity;
+            }
 
             // Warehouse Leg 
             shipmentPM.WarehouseLegWarehouseName = shipment.WarehouseLegCard?.EnglishName;
