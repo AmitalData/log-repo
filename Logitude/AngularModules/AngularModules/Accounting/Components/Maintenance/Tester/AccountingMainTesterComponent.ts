@@ -13,6 +13,8 @@ import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelpe
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { JournalExtendedPMService } from '../../../Services/ExtendedPMs/JournalExtendedPMService';
 import { TaxReportExtendedPMService } from 'Accounting/Services/ExtendedPMs/TaxReportExtendedPMService';
+import { getDate } from 'date-fns';
+import { JournalOpService } from 'Accounting/Services/Others/JournalOpService';
 declare var attachmentUploader, ResultAsArray: any;
 
 @Component({
@@ -40,6 +42,7 @@ export class AccountingMainTesterComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     _AccountingOpService: AccountingOpService;
     _JournalPMService: JournalPMService = new JournalPMService();
+    _JournalOpService:JournalOpService = new JournalOpService();
     _LastState: string;
     
     public JsonList: any[];
@@ -152,6 +155,25 @@ export class AccountingMainTesterComponent extends BaseComponent {
         //            this.CurrentSession.StopBusyIndicator();
         //        }
         //    );
+
+    }
+
+
+    CreateInterestTransactions_Click() {
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            
+            this._TextBoxParam = new Date().toISOString().slice(0, 10);
+            this.ErrorMess = "Set Date";
+            return;
+        }
+        this.CurrentSession.StartBusyIndicatorCreating();
+
+        this._JournalOpService.CreateInterestTransactions(this._TextBoxParam).subscribe(
+            r => { this._LabelLog = JSON.stringify(r); },
+            e => { this._LabelLog = JSON.stringify(e); },
+            () => { this.CurrentSession.StopBusyIndicator();}
+            
+        );
 
     }
     XXX_Click() {
