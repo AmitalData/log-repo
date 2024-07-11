@@ -44,7 +44,12 @@ export class MainDisplayComponent {
 	KeyValue = Object.keys;
 	Object: ObjectConstructor = Object;
 
-	constructor(private API_MainService: API_MainService) { }
+  constructor(private API_MainService: API_MainService) {
+    this.MainEntity = new MainEntity([], [], []);
+  }
+	MainEntity: MainEntity
+	cbTariffList: CB_TariffList[];
+	cbRequirementComputedDataList: CB_RequirementComputedDataList[];
 
 	ngOnInit() {
 		// this.data = this.itemsData;
@@ -52,7 +57,9 @@ export class MainDisplayComponent {
 		// CHECK MOKE DATA:
 		//this.data = this.orderedData(mockData);
 		// this.item = this.data[0];
-
+		this.InitData();
+	}
+	InitData(){
 		let filters: Filters = {
 			CustomsBookType: '1',
 			Tenant: 0,
@@ -61,14 +68,8 @@ export class MainDisplayComponent {
 
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
 			this.data = this.orderedData(data);
-		});
-
-		// CHECK DATA:
-		this.API_MainService.GetCustomsBookAgreementLevelData(23066,6).subscribe((data: CB_TariffList[]) => {
-			console.log(data);
-		});
-		this.API_MainService.GetCustomsBookRegularityRequirementData(17514).subscribe((data: CBRequirementComputedDataListComponent[]) => {
-			console.log(data);
+			this.MainEntity.CB_CustomsItemComputedDataList = this.data;
+			console.log(this.MainEntity.CB_CustomsItemComputedDataList);
 		});
 
 
@@ -80,8 +81,22 @@ export class MainDisplayComponent {
 			customsItemsID: 17514,
 			remarkDescription: 'test'
 		};
-		this.API_MainService.RemarksClassification(remarksClassificationPM).subscribe((data: CBRequirementComputedDataListComponent[]) => {
+		this.API_MainService.RemarksClassification(remarksClassificationPM).subscribe((data: RemarksClassificationPM[]) => {
 			console.log(data);
+		});
+	
+		
+		
+		
+		// TODO: change to sen real data customItemID and measurementUnitID are exist in CB_CustomsItemComputedDataList:
+		this.API_MainService.GetCustomsBookAgreementLevelData(23066,6).subscribe((data: CB_TariffList[]) => {
+			this.MainEntity.CB_TariffList = data;
+			console.log(this.MainEntity);
+
+		});
+		this.API_MainService.GetCustomsBookRegularityRequirementData(17514).subscribe((data: CB_RequirementComputedDataList[]) => {
+			this.MainEntity.CB_RequirementComputedDataList = data;
+			console.log(this.MainEntity);
 		});
 	
 	}
@@ -139,7 +154,20 @@ export class MainDisplayComponent {
 // 	Rules: boolean = false;
 // }
 
-export class CB_CustomsItemComputedDataList {
+export class MainEntity {
+	CB_CustomsItemComputedDataList: CB_CustomsItemComputedDataList[];
+	CB_TariffList: CB_TariffList[];
+	CB_RequirementComputedDataList: CB_RequirementComputedDataList[];
+
+	constructor(CB_CustomsItemComputedDataList: CB_CustomsItemComputedDataList[], CB_TariffList: CB_TariffList[], CB_RequirementComputedDataList: CB_RequirementComputedDataList[]) {
+		this.CB_CustomsItemComputedDataList = CB_CustomsItemComputedDataList;
+		this.CB_TariffList = CB_TariffList;
+		this.CB_RequirementComputedDataList = CB_RequirementComputedDataList;
+	}
+}	
+
+
+export interface CB_CustomsItemComputedDataList {
 	CB_ID: string;
 	ID: number;
 	CustomsItemID: number;
@@ -173,7 +201,7 @@ export class CB_CustomsItemComputedDataList {
 	children: CB_CustomsItemComputedDataList[];
 }
 
-export class CBRequirementComputedDataListComponent {
+export interface CB_RequirementComputedDataList {
 	CB_ID: string;
 	ID: number;
 	RegularityRequirementID: number;
@@ -199,7 +227,7 @@ export class CBRequirementComputedDataListComponent {
 	AutonomyRegion: string;
 }
 
-export class CB_TariffList {
+  export interface CB_TariffList {
 	ID: number;
 	CreateDate: Date;
 	UpdateDate?: Date;
