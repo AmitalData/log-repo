@@ -38,15 +38,15 @@ export class MainDisplayComponent {
 	childrenToDesplay: string[] = [];
 	private _filters;
 
-  //data: any | never | undefined = {};
+	//data: any | never | undefined = {};
 	data: CB_CustomsItemComputedDataList[] = [];
 
 	KeyValue = Object.keys;
 	Object: ObjectConstructor = Object;
 
-  constructor(private API_MainService: API_MainService) {
-    this.MainEntity = new MainEntity([], [], []);
-  }
+	constructor(private API_MainService: API_MainService) {
+		this.MainEntity = new MainEntity([], [], []);
+	}
 	MainEntity: MainEntity
 	cbTariffList: CB_TariffList[];
 	cbRequirementComputedDataList: CB_RequirementComputedDataList[];
@@ -59,7 +59,7 @@ export class MainDisplayComponent {
 		// this.item = this.data[0];
 		this.InitData();
 	}
-	InitData(){
+	InitData() {
 		let filters: Filters = {
 			CustomsBookType: '1',
 			Tenant: 0,
@@ -81,24 +81,12 @@ export class MainDisplayComponent {
 			customsItemsID: 17514,
 			remarkDescription: 'test'
 		};
-		this.API_MainService.RemarksClassification(remarksClassificationPM).subscribe((data: RemarksClassificationPM[]) => {
-			console.log(data);
-		});
-	
-		
-		
-		
-		// TODO: change to sen real data customItemID and measurementUnitID are exist in CB_CustomsItemComputedDataList:
-		this.API_MainService.GetCustomsBookAgreementLevelData(23066,6).subscribe((data: CB_TariffList[]) => {
-			this.MainEntity.CB_TariffList = data;
-			console.log(this.MainEntity);
+		// this.API_MainService.RemarksClassification(remarksClassificationPM).subscribe((data: RemarksClassificationPM[]) => {
+		// 	console.log(data);
+		// });
 
-		});
-		this.API_MainService.GetCustomsBookRegularityRequirementData(17514).subscribe((data: CB_RequirementComputedDataList[]) => {
-			this.MainEntity.CB_RequirementComputedDataList = data;
-			console.log(this.MainEntity);
-		});
-	
+
+
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
@@ -107,7 +95,7 @@ export class MainDisplayComponent {
 		}
 		if (changes['itemsData']) {
 			this.itemsData = changes['itemsData'].currentValue;
-		}		
+		}
 	}
 
 	showChildern(id: string): boolean {
@@ -121,7 +109,7 @@ export class MainDisplayComponent {
 			const children = data.filter((item) => item?.CI_Parent_CustomsItemIDNum === parentItem?.CustomsItemID);
 			// CHECK MOKE DATA:
 			//const children = data.filter((item) => item?.Parent_CustomsItemID === parentItem?.ID);
-			
+
 			children.forEach((child) => {
 				// @ts-ignore
 				child.children = getChildren(child);
@@ -138,10 +126,10 @@ export class MainDisplayComponent {
 			const children = getChildren(rootItem);
 			return { ...rootItem, children };
 		});
-		
+
 		return orderedData;
 	};
-	
+
 }
 
 
@@ -164,7 +152,7 @@ export class MainEntity {
 		this.CB_TariffList = CB_TariffList;
 		this.CB_RequirementComputedDataList = CB_RequirementComputedDataList;
 	}
-}	
+}
 
 
 export interface CB_CustomsItemComputedDataList {
@@ -197,7 +185,7 @@ export interface CB_CustomsItemComputedDataList {
 	OptionalTaxAddition?: number;
 	MeasurementUnitName: string;
 	Remarks: string;
-  	SearchByTextResult: string;
+	SearchByTextResult: string;
 	children: CB_CustomsItemComputedDataList[];
 }
 
@@ -227,7 +215,7 @@ export interface CB_RequirementComputedDataList {
 	AutonomyRegion: string;
 }
 
-  export interface CB_TariffList {
+export interface CB_TariffList {
 	ID: number;
 	CreateDate: Date;
 	UpdateDate?: Date;
