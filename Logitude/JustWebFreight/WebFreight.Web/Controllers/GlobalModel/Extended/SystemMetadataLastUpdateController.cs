@@ -29,32 +29,10 @@ namespace WebFreight.Web.Controllers.GlobalModel
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);   
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
-                string entityName = "SystemMetadataLastUpdates_" + tenant;
-                MetaDataLastUpdateDates metadatalastUpdates = null;
-                if (CacheManager.CacheWrapper != null)
-                {
-                    if (CacheManager.CacheWrapper.Get(entityName) == null)
-                    {
-                        metadatalastUpdates = GetSystemMetadataLastUpdateFromDB(tenant);
 
-                        if (CacheManager.CacheWrapper.Get(entityName) == null && metadatalastUpdates != null)
-                        {
-                            CacheManager.CacheWrapper.Insert(entityName, metadatalastUpdates, null, DateTime.UtcNow.AddMinutes(1), TimeSpan.Zero);
-                        }
-
-                    }
-                    else
-                    {
-                        metadatalastUpdates = (MetaDataLastUpdateDates)CacheManager.CacheWrapper.Get(entityName);
-                    }
-                }
-                else
-                {
-                    metadatalastUpdates = GetSystemMetadataLastUpdateFromDB(tenant);
-                }
-
+                var metadatalastUpdates = GetSystemMetadataLastUpdatesCacheHandle(tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, metadatalastUpdates);
             }
             catch (Exception ex)
@@ -63,6 +41,34 @@ namespace WebFreight.Web.Controllers.GlobalModel
             }
 
 
+        }
+
+        public MetaDataLastUpdateDates GetSystemMetadataLastUpdatesCacheHandle(int tenant)
+        {
+            string entityName = "SystemMetadataLastUpdates_" + tenant;
+            MetaDataLastUpdateDates metadatalastUpdates = null;
+            if (CacheManager.CacheWrapper != null)
+            {
+                if (CacheManager.CacheWrapper.Get(entityName) == null)
+                {
+                    metadatalastUpdates = GetSystemMetadataLastUpdateFromDB(tenant);
+
+                    if (CacheManager.CacheWrapper.Get(entityName) == null && metadatalastUpdates != null)
+                    {
+                        CacheManager.CacheWrapper.Insert(entityName, metadatalastUpdates, null, DateTime.UtcNow.AddMinutes(1), TimeSpan.Zero);
+                    }
+
+                }
+                else
+                {
+                    metadatalastUpdates = (MetaDataLastUpdateDates)CacheManager.CacheWrapper.Get(entityName);
+                }
+            }
+            else
+            {
+                metadatalastUpdates = GetSystemMetadataLastUpdateFromDB(tenant);
+            }
+            return metadatalastUpdates;
         }
 
         private MetaDataLastUpdateDates GetSystemMetadataLastUpdateFromDB(int tenant)
