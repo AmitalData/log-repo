@@ -43,6 +43,7 @@ using WebFreight.Web.AccountingModel.Reports.Journal;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using Logitude.Accounting.BL.CoreBL.Batch;
 using WebFreight.Web.DataContracts;
+using WebFreight.Web.Helpers.ExternalAPIHelpers;
 
 namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsController.cs
 {
@@ -296,6 +297,43 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [HttpPut]
+        public HttpResponseMessage PutCreateInterestTransactions(string date)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        int tenant = authToken.Tenant;
+                        SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                        SecurityUtility.AuthenticateAccessibleAPI("Journal", authToken.Tenant);
+                        JournalApproveService journalApproveService = new JournalApproveService(tenant, null, null, null);
+                        journalApproveService.CreateInterestTransactionsByDate(DateTime.Parse(date));
+
+
+                        scope.Complete();
+
+                        return Request.CreateResponse(HttpStatusCode.OK, "Done");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+                    return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+                }
+            }
+            else
+            {
+                var apiExceptionResult = ApiExceptionHandler.HandleModelException(ModelState);
+                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
     }

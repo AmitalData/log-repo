@@ -16,7 +16,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
     public class RegularJournalInterestTransactionMapping
     {
         const string CustomerGLAccountType = "2";
-        public void CreatelInterestTransactions(JournalPM regularJournal)
+        public void CreatelInterestTransactions(JournalPM regularJournal , bool isTester = false)
         {
             if (regularJournal.TypeCode != JournalTypeValues.Regular)//0	Regular	רגיל	0,רגיל,False,Regular,	0
             {
@@ -35,7 +35,9 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
                     regularJournal.Id,
                     regularJournal.Tenant
                     );
-                if (AlreadyExist)
+                if (AlreadyExist && isTester)
+                    return;
+                if (AlreadyExist )
                 {
                     throw new Exception($"AlreadyExist InterestTransaction 4 regularJournal {regularJournal.Id}  - journal repushed ?!?!");
                 }
