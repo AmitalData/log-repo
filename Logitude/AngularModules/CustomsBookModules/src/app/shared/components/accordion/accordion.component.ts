@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faChevronLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { GenericTableComponent, TableData } from '../generic-table/generic-table.component';
-import { CB_RequirementComputedDataList, CB_TariffList, MainEntity } from '../main-display/main-display.component';
+import { CB_RequirementComputedDataList, CB_TariffList, ItemData, MainEntity } from '../main-display/main-display.component';
 import { API_MainService, Filters } from '../../../core/API_MainService';
 import { CommonModule } from '@angular/common';
 import { NgFor, NgForOf } from '@angular/common';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-accordion',
@@ -15,7 +16,9 @@ import { NgFor, NgForOf } from '@angular/common';
   styleUrl: './accordion.component.css',
 })
 export class AccordionComponent implements OnInit {
-
+  // add input type customs:
+  @Input() itemData: BehaviorSubject<ItemData> = new BehaviorSubject<ItemData>(null);
+  customsItemId: number;
   tableData1: TableData;
   tableData2: TableData;
   tableData3: TableData;
@@ -31,7 +34,14 @@ export class AccordionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.InitData();
+    this.listenToChanges();
+  }
+
+  listenToChanges() {
+    this.itemData.subscribe((data: ItemData) => {
+      this.customsItemId = data.customsItemId;
+      this.InitData();
+    });
   }
 
   InitData() {
@@ -39,7 +49,7 @@ export class AccordionComponent implements OnInit {
     this.tableData1 = {
       columns: [
         { key: 'Logo', displayName: '', dataType: 'img', visible: true },
-        { key: 'TradeAgreementName', displayName: 'שם ההסכם', dataType: 'string', visible: true, notEqual: `'מס קנייה'`},
+        { key: 'TradeAgreementName', displayName: 'שם ההסכם', dataType: 'string', visible: true, notEqual: `'מס קנייה'` },
         { key: 'CustomsRate', displayName: 'שיעור מכס', dataType: 'number', visible: true },
         { key: 'CustomsRateWithinQuota', displayName: 'שיעור מכס במסגרת מכסה', dataType: 'number', visible: true },
         { key: 'QuotaID', displayName: 'מס\' מכסה', dataType: 'number', visible: true },
@@ -72,7 +82,7 @@ export class AccordionComponent implements OnInit {
       columns: [
         // { key: 'CustomsItemID', displayName: 'מזהה פריט מכס', dataType: 'string', visible: false },
         // { key: 'ID', displayName: 'מזהה', dataType: 'number', visible: false },
-        { key: 'RequirementValidOrigin', displayName: 'המקור החוקי לדרישה', dataType: 'string', visible: true, width: '120px'},
+        { key: 'RequirementValidOrigin', displayName: 'המקור החוקי לדרישה', dataType: 'string', visible: true, width: '120px' },
         { key: '', displayName: 'נובע מפרק/ פרט', dataType: 'string', visible: false },
         { key: 'RequirementGoodsDescription', displayName: 'תיאור טובין בדרישה/תיאור הזהרות', dataType: 'string', visible: true },
         { key: 'Authority', displayName: 'גורם מאשר (הפניה לאיש קשר)', dataType: 'string', visible: true },
@@ -86,17 +96,37 @@ export class AccordionComponent implements OnInit {
       data: []
     };
 
-
+    // split to other functions:
     // TODO: change to sen real data customItemID and measurementUnitID are exist in CB_CustomsItemComputedDataList:
-    this.API_MainService.GetCustomsBookAgreementLevelData(23066, 6).subscribe((data: CB_TariffList[]) => {
+    //GetCustomsBookAgreementLevelData
+    // this.API_MainService.GetCustomsBookAgreementLevelData(23066, 6).subscribe((data: CB_TariffList[]) => {
+    //   this.MainEntity.CB_TariffList = data;
+
+    //   console.log(this.MainEntity.CB_TariffList);
+    //   this.tableData1.data = this.MainEntity.CB_TariffList.filter(x => x.TradeAgreementName != 'מס קניה');
+
+    //   this.tableData2.data = this.MainEntity.CB_TariffList.filter(x => x.TradeAgreementName == 'מס קניה');
+    // });
+
+    // // GetCustomsBookRegularityRequirementData
+    // this.API_MainService.GetCustomsBookRegularityRequirementData(17514).subscribe((data: CB_RequirementComputedDataList[]) => {
+    //   this.MainEntity.CB_RequirementComputedDataList = data;
+    //   console.log(this.MainEntity.CB_RequirementComputedDataList);
+    //   this.tableData3.data = this.MainEntity.CB_RequirementComputedDataList
+    // });
+
+    // שיעורי מס
+    this.API_MainService.GetCustomsBookAgreementLevelData(this.customsItemId, 0).subscribe((data: CB_TariffList[]) => {
       this.MainEntity.CB_TariffList = data;
-      
+
       console.log(this.MainEntity.CB_TariffList);
       this.tableData1.data = this.MainEntity.CB_TariffList.filter(x => x.TradeAgreementName != 'מס קניה');
-      
+
       this.tableData2.data = this.MainEntity.CB_TariffList.filter(x => x.TradeAgreementName == 'מס קניה');
     });
-    this.API_MainService.GetCustomsBookRegularityRequirementData(17514).subscribe((data: CB_RequirementComputedDataList[]) => {
+
+    // דרישות חוקיות
+    this.API_MainService.GetCustomsBookRegularityRequirementData(this.customsItemId).subscribe((data: CB_RequirementComputedDataList[]) => {
       this.MainEntity.CB_RequirementComputedDataList = data;
       console.log(this.MainEntity.CB_RequirementComputedDataList);
       this.tableData3.data = this.MainEntity.CB_RequirementComputedDataList

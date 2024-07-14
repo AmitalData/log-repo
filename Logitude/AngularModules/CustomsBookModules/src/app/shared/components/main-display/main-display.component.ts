@@ -8,7 +8,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
 //@ts-ignore
 import { mockData } from '../../../../../mock_data';
 import { API_MainService, Filters } from '../../../core/API_MainService';
-import { filter } from 'rxjs';
+import { BehaviorSubject, filter } from 'rxjs';
 
 @Component({
 	selector: 'app-main-display',
@@ -45,9 +45,7 @@ export class MainDisplayComponent {
 	Object: ObjectConstructor = Object;
 
 	constructor(private API_MainService: API_MainService) {
-		this.MainEntity = new MainEntity([], [], []);
 	}
-	MainEntity: MainEntity
 	cbTariffList: CB_TariffList[];
 	cbRequirementComputedDataList: CB_RequirementComputedDataList[];
 
@@ -67,9 +65,7 @@ export class MainDisplayComponent {
 		};
 
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
-			this.data = this.orderedData(data);
-			this.MainEntity.CB_CustomsItemComputedDataList = this.data;
-			console.log(this.MainEntity.CB_CustomsItemComputedDataList);
+			this.data = this.orderedData(data);				
 		});
 
 
@@ -88,10 +84,25 @@ export class MainDisplayComponent {
 
 
 	}
+	
+	currentItem:CB_CustomsItemComputedDataList;
+	itemDataBehaviorSubject: BehaviorSubject<ItemData>= new BehaviorSubject<ItemData>({customsItemId: 0, measurementUnitMalamId: 0});
+	itemData:ItemData = {customsItemId: 0, measurementUnitMalamId: 0};
+	showDetailsClick(CustomsItemID:number, item: CB_CustomsItemComputedDataList) {
+		if(this.itemData.customsItemId == CustomsItemID) return;
 
+		console.log(CustomsItemID);
+		console.log(item);
+		console.log(item.FullClassification);
+		this.itemData.customsItemId = CustomsItemID;
+		this.itemData.measurementUnitMalamId = 0; // change it
+		this.itemDataBehaviorSubject.next(this.itemData);
+		this.currentItem = item;
+		return this.showDetails;	
+	}
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes['showDetails']) {
-			this.showDetails = changes['showDetails'].currentValue;
+			this.showDetails = changes['showDetails'].currentValue;			
 		}
 		if (changes['itemsData']) {
 			this.itemsData = changes['itemsData'].currentValue;
@@ -142,6 +153,10 @@ export class MainDisplayComponent {
 // 	Rules: boolean = false;
 // }
 
+export interface ItemData{
+	customsItemId: number;
+	measurementUnitMalamId: number;
+}
 export class MainEntity {
 	CB_CustomsItemComputedDataList: CB_CustomsItemComputedDataList[];
 	CB_TariffList: CB_TariffList[];

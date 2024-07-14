@@ -158,6 +158,8 @@ a.searchResults_filterPop_clear {
 
 .mainTable_list .data_row_container {
 	width: 100%;
+	/* max-height: 75vh;
+	overflow-y: auto; */
 	display: flex;
 	flex-direction: column;
 	row-gap: 10px;
@@ -165,6 +167,14 @@ a.searchResults_filterPop_clear {
 
 	&.active {
 		margin-left: 0;
+	}
+}
+
+.mainTable_list .data_row_container {
+	width: 31.5%;
+	
+	&.active {
+		width:100%;
 	}
 }
 
