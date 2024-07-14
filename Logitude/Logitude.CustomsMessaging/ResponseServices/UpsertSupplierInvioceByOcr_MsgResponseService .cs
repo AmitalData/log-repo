@@ -424,6 +424,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 mySupplierInvoice.AccountTypeCode = myInvoiceDefaults.AccountTypeCode;
                 mySupplierInvoice.PartyRelationshipCode = myInvoiceDefaults.PartyRelationshipCode;
                 mySupplierInvoice.BuyerRoleCode = myInvoiceDefaults.BuyerRoleCode;
+
+                if(isNewInvoice && myInvoiceDefaults.TransactionNatureCode == "2")
+                {
+                    var mySupplierInvoicePayment = new SupplierInvoicePaymentPM()
+                    {
+                        Tenant = tenant,
+                        PaymentTypeCode = "2",
+                        PaymentAmount = mySupplierInvoice.InvoiceAmount ?? 0,
+                        SequenceNumeric = 1,
+                        ChangeSetOp = ChangeSetOperation.Insert
+                    };
+                    mySupplierInvoice.SupplierInvoicePayments.Add(mySupplierInvoicePayment);
+                }
             }
 
 
