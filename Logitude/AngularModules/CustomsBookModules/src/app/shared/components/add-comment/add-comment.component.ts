@@ -1,6 +1,6 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { AddCommentService } from './service/add-comment.service';
-import { RemarksClassificationPM } from '../main-display/main-display.component';
+import { CB_CustomsItemComputedDataList, RemarksClassificationPM } from '../main-display/main-display.component';
 import { API_MainService, Filters } from '../../../core/API_MainService';
 
 @Component({
@@ -15,7 +15,7 @@ export class AddCommentComponent {
   remarksClassificationPM: RemarksClassificationPM;
   showAddComment: boolean = false;
   commentText: string = '';
-  @Input() customsItemsID: number;
+  @Input() currentItem: CB_CustomsItemComputedDataList;
 
   updateCommentText(event: any) {
     this.commentText = event.target.value;
@@ -39,11 +39,12 @@ export class AddCommentComponent {
 
   // send comment to server:
   sendComment() {
+    console.log(this.currentItem);
     console.log(this.commentText);
     
     let remarksClassificationPM: RemarksClassificationPM = {
       tenant: 0,
-      customsItemsID: this.customsItemsID,
+      customsItemsID: this.currentItem?.CustomsItemID,
       remarkDescription: this.commentText != null && this.commentText != '' ? this.commentText : '',
     };
     if (remarksClassificationPM.remarkDescription == '' || !remarksClassificationPM.customsItemsID) return; 
