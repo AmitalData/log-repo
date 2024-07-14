@@ -56,15 +56,6 @@ export class AccordionComponent implements OnInit {
         { key: 'MeasurementUnitName', displayName: 'יח\' מידה סטטיסטית', dataType: 'string', visible: true },
         { key: 'StartDate', displayName: 'בתוקף מ', dataType: 'date', visible: true },
         { key: 'EndDate', displayName: 'בתוקף עד', dataType: 'date', visible: true },
-        // { key: 'ID', displayName: 'ID', dataType: 'number', visible: false },
-        // { key: 'CreateDate', displayName: 'Create Date', dataType: 'date', visible: false },
-        // { key: 'UpdateDate', displayName: 'Update Date', dataType: 'date', visible: false },
-        // { key: 'TradeAgreementID', displayName: 'Trade Agreement ID', dataType: 'number', visible: false },
-        // { key: 'CustomsItemID', displayName: 'Customs Item ID', dataType: 'number', visible: false },
-        // { key: 'Title', displayName: 'Title', dataType: 'string', visible: false },
-        // { key: 'CB_ID', displayName: 'CB ID', dataType: 'number', visible: false },
-        // { key: 'Country', displayName: 'Country', dataType: 'string', visible: false },
-        // { key: 'OptionalTaxAddition', displayName: 'Optional Tax Addition', dataType: 'number', visible: false },
       ],
       data: []
     };
@@ -80,8 +71,6 @@ export class AccordionComponent implements OnInit {
     };
     this.tableData3 = {
       columns: [
-        // { key: 'CustomsItemID', displayName: 'מזהה פריט מכס', dataType: 'string', visible: false },
-        // { key: 'ID', displayName: 'מזהה', dataType: 'number', visible: false },
         { key: 'RequirementValidOrigin', displayName: 'המקור החוקי לדרישה', dataType: 'string', visible: true, width: '120px' },
         { key: '', displayName: 'נובע מפרק/ פרט', dataType: 'string', visible: false },
         { key: 'RequirementGoodsDescription', displayName: 'תיאור טובין בדרישה/תיאור הזהרות', dataType: 'string', visible: true },

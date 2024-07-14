@@ -77,12 +77,7 @@ export class MainDisplayComponent {
 			customsItemsID: 17514,
 			remarkDescription: 'test'
 		};
-		// this.API_MainService.RemarksClassification(remarksClassificationPM).subscribe((data: RemarksClassificationPM[]) => {
-		// 	console.log(data);
-		// });
-
-
-
+		
 	}
 	
 	currentItem:CB_CustomsItemComputedDataList;

@@ -5,6 +5,8 @@
 th, td {
     word-wrap: break-word; 
     white-space: normal;
+    text-align: right;
+
 }
 
 .detailsSlide_table {
