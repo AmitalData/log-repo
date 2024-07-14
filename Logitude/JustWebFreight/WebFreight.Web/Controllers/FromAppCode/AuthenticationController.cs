@@ -57,6 +57,8 @@ using System.Data;
 using WebFreight.Web.CustomersHTML;
 using System.Web.UI.WebControls;
 using System.Configuration;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
 
 namespace WebFreight.Web
 {
@@ -66,11 +68,6 @@ namespace WebFreight.Web
     /// </summary>
 
 #endif
-    public class WarmRequest
-    {
-        public string Email { get; set; }
-        public int? Tenant { get; set; }
-    }
     public partial class AuthenticationController : ApiController
     {
         public AuthenticationController()
@@ -1262,37 +1259,74 @@ namespace WebFreight.Web
                 return data;
             }
         }
-
-        [HttpPost]
-        [ActionName("PostWarm")]
-        public HttpResponseMessage PostWarm([FromBody] WarmRequest request)
+        private const string Secret = "amitalmain2024warmprocess"; // The secret key used to sign the token
+        private bool validateWarnToken(string token)
         {
-            List<int> tenants = new List<int>();
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Secret));
+            var tokenHandler = new JwtSecurityTokenHandler();
+
             try
             {
-                if (request.Tenant == null)
+                tokenHandler.ValidateToken(token, new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = false, // Since iat claim is present, we are not validating the lifetime
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = securityKey
+                }, out SecurityToken validatedToken);
+
+                // If we reach here, it means the token is valid
+                return true;
+            }
+            catch
+            {
+                // Token validation failed
+                return false;
+            }
+        }
+        [HttpGet]
+        [ActionName("StartWarm")]
+        public HttpResponseMessage StartWarm(string t, int? tenant=null)
+        {
+            try
+            {
+                List<int> tenants = new List<int>();
+                bool isTokenValid = validateWarnToken(t);
+                if (!isTokenValid)
+                {
+                    throw new Exception("Invalid Token");
+                }
+                if (tenant == null)
                 {
                     string tenantsFromConfig = ConfigurationManager.AppSettings["tenants"];
-                    tenants = tenantsFromConfig.Split(',')
-                                                   .Select(int.Parse)
-                                                   .ToList();
+                    if (string.IsNullOrEmpty(tenantsFromConfig))
+                    {
+                        throw new Exception("No tenants specified in configuration file nor in the request");
+                    }
+                    tenants = tenantsFromConfig.Split(',').Select(int.Parse).ToList();
                 }
                 else
                 {
-                    tenants.Add(request.Tenant.Value);
+                    tenants.Add(tenant.Value);
                 }
-                HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(
-                    request.Email), new string[0]);
-                foreach (int t in tenants)
+
+                Stopwatch stopwatch = new Stopwatch();
+                foreach (int tenantToWarm in tenants)
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService start for tenant {0}", null, t);
-                    WarmService.MakeWarmCalls(t);
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService completed for tenant {0}", null, t);
+                    HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(
+                    "system@tenant" + tenantToWarm + ".com"), new string[0]);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService start for tenant {0}", null, tenantToWarm);
+                    stopwatch.Restart();
+                    WarmService.MakeWarmCalls(tenantToWarm);
+                    stopwatch.Stop();
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService completed for tenant {0}, time took in ms {1}", null, tenantToWarm, stopwatch.ElapsedMilliseconds);
                 }
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, ex.Message);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }

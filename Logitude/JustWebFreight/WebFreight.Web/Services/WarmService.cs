@@ -49,7 +49,6 @@ public class WarmService
             ()=>RunWithExceptionHandling("ObjectTableRuleQuery.GetObjectTableRulePMsByTenant",() => {
                 var result = objectTableRuleQuery.GetObjectTableRulePMsByTenant(tenant);
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result Length: {1}",null,"ObjectTableRuleQuery.GetObjectTableRulePMsByTenant",result.Count);
-
             }),
             ()=>RunWithExceptionHandling("TenantManagementQuery.GetSinglePM", () => {
                 var result = tenantManagementQuery.GetSinglePM(tenant);
@@ -70,83 +69,76 @@ public class WarmService
             ()=>RunWithExceptionHandling("ObjectTabelRepository.GetObjectTableByName(\"GLAccount\", 0, true)", () => {
                 var result = objectTabelRepository.GetObjectTableByName("GLAccount", 0, true);
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result Id: {1}", null, "ObjectTabelRepository.GetObjectTableByName(\"GLAccount\", 0, true)", result.Id);
-            }),
-            ()=>RunWithExceptionHandling("GlobalTenantRepository.GetGlobalTenants", () => {
-                var result = GlobalTenantRepository.GetGlobalTenants();
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result Length: {1}", null, "GlobalTenantRepository.GetGlobalTenants", result.Count);
-            }),
-            ()=>RunWithExceptionHandling("GlobalDBRepository.GetGlobalDBByTenant", () => {
-                var result = GlobalDBRepository.GetGlobalDBByTenant(tenant);
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result Id: {1}", null, "GlobalDBRepository.GetGlobalDBByTenant", result.Id);
-            }),
-            ()=>RunWithExceptionHandling("GlobalDbHelper.GetGlobalDB", () => {
-                var result = GlobalDbHelper.GetGlobalDB(tenant);
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result Id: {1}", null, "GlobalDbHelper.GetGlobalDB", result.Id);
-            }),
-            ()=>RunWithExceptionHandling("GetTranslations", () =>
-            {
-                var result1 = translationRepository.GetLastTranslationsByTenant(tenant);
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result Id: {1}", null, "GlobalDbHelper.GetLastTranslationsByTenant", result1.Id);
-                var result2 = translationRepository.GetTranslationsByTenant(tenant);
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result Length: {1}", null, "GlobalDbHelper.GetTranslationsByTenant", result2.Count());
-            }),
-            ()=>RunWithExceptionHandling("GetTenantTextCodesWithTenantZero", () => {
-                var result = TextCodeRepository.GetTenantTextCodesWithTenantZero(tenant);
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result Length: {1}", null, "GetTenantTextCodesWithTenantZero", result.Count);
-            }),
-            ()=>RunWithExceptionHandling("GetObjectRuleConditionFieldsByTenant", () => {
-                var result = RuleConditionFieldRepository.GetObjectRuleConditionFieldsByTenant(tenant);
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result Length: {1}", null, "GetObjectRuleConditionFieldsByTenant", result.Count);
-            }),
-            ()=>RunWithExceptionHandling("GetObjectTableRulesByTenant", () => {
-                var result= ObjectTableRuleRepository.GetObjectTableRulesByTenant(tenant);
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result Length: {1}", null, "GetObjectTableRulesByTenant", result.Count);
-            }),
-            ()=>RunWithExceptionHandling("GetObjectTablesWithTenantZero", () => {
-                var result = ObjectTableRepository.GetObjectTablesWithTenantZero(tenant);
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result Length: {1}", null, "GetObjectTablesWithTenantZero", result.Count);
-            }),
-            ()=>RunWithExceptionHandling("GetTenantRuleFields", () => {
-                var result = ObjectTableRuleFieldRepository.GetTenantRuleFields(tenant);
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result length: {1}", null, "GetTenantRuleFields", result.Count);
-
-            }),
-            ()=>RunWithExceptionHandling("GetCustomPickListsCashe", () =>
-            {
-                var result = customPickListRepository.GetCustomPickListsCashe(tenant);
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result length: {1}", null, "GetCustomPickListsCashe", result.Count);
-            }),
-            ()=>RunWithExceptionHandling("GetSingleTenant", () => {
-                var result = TenantRepository.GetSingleTenant(tenant, true);
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result id: {1}", null, "GetSingleTenant", result.Id);
-            }),
-            ()=>RunWithExceptionHandling("GetSingleTenantByIdAndTenant", () =>
-            {
-                var result = tenantRepository.GetSingleTenantByIdAndTenant(tenant, true);
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result id: {1}", null, "GetSingleTenantByIdAndTenant", result.Id);
-            }),
-            ()=> RunWithExceptionHandling("GetSingleTenantPM", () => {
-                var result = TenantQuery.GetSingleTenantPM(tenant, true);
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result id: {1}", null, "GetSingleTenantPM", result.Id);
-            }),
-            ()=>RunWithExceptionHandling("FullAccountingSettingQueryService.Get", () => {
-                var result = FullAccountingSettingQueryService.Get(tenant);
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result id: {1}", null, "FullAccountingSettingQueryService.Get", result.Id);
-            }),
-            ()=>RunWithExceptionHandling("CustomsSettingQueryService.GetSettingByTenant", () => {
-                var result = CustomsSettingQueryService.GetSettingByTenant(tenant);
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result id: {1}", null, "CustomsSettingQueryService.GetSettingByTenant", result.Id);
-            }),
-            ()=>RunWithExceptionHandling("GetSettingByTenantN", () =>
-            {
-                var result = customsSettingQueryService.GetSettingByTenantN(tenant);
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result id: {1}", null, "GetSettingByTenantN", result.Id);
             })};
+
+
+        //extra calls to set cache
+        //() => RunWithExceptionHandling("GlobalTenantRepository.GetGlobalTenants", () => {
+        //    var result = GlobalTenantRepository.GetGlobalTenants();
+        //    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result Length: {1}", null, "GlobalTenantRepository.GetGlobalTenants", result.Count);
+        //}),
+        //    () => RunWithExceptionHandling("GlobalDBRepository.GetGlobalDBByTenant", () => {
+        //        var result = GlobalDBRepository.GetGlobalDBByTenant(tenant);
+        //        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result Id: {1}", null, "GlobalDBRepository.GetGlobalDBByTenant", result.Id);
+        //    }),
+        //    () => RunWithExceptionHandling("GlobalDbHelper.GetGlobalDB", () => {
+        //        var result = GlobalDbHelper.GetGlobalDB(tenant);
+        //        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result Id: {1}", null, "GlobalDbHelper.GetGlobalDB", result.Id);
+        //    }),
+        //    () => RunWithExceptionHandling("GetTranslations", () =>
+        //    {
+        //        var result1 = translationRepository.GetLastTranslationsByTenant(tenant);
+        //        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result Id: {1}", null, "GlobalDbHelper.GetLastTranslationsByTenant", result1.Id);
+        //        var result2 = translationRepository.GetTranslationsByTenant(tenant);
+        //        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result Length: {1}", null, "GlobalDbHelper.GetTranslationsByTenant", result2.Count());
+        //    }),
+        //    () => RunWithExceptionHandling("GetTenantTextCodesWithTenantZero", () => {
+        //        var result = TextCodeRepository.GetTenantTextCodesWithTenantZero(tenant);
+        //        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result Length: {1}", null, "GetTenantTextCodesWithTenantZero", result.Count);
+        //    }),
+        //    () => RunWithExceptionHandling("GetObjectRuleConditionFieldsByTenant", () => {
+        //        var result = RuleConditionFieldRepository.GetObjectRuleConditionFieldsByTenant(tenant);
+        //        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result Length: {1}", null, "GetObjectRuleConditionFieldsByTenant", result.Count);
+        //    }),
+        //    () => RunWithExceptionHandling("GetObjectTableRulesByTenant", () => {
+        //        var result = ObjectTableRuleRepository.GetObjectTableRulesByTenant(tenant);
+        //        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result Length: {1}", null, "GetObjectTableRulesByTenant", result.Count);
+        //    }),
+        //    () => RunWithExceptionHandling("GetObjectTablesWithTenantZero", () => {
+        //        var result = ObjectTableRepository.GetObjectTablesWithTenantZero(tenant);
+        //        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result Length: {1}", null, "GetObjectTablesWithTenantZero", result.Count);
+        //    }),
+        //    () => RunWithExceptionHandling("GetTenantRuleFields", () => {
+        //        var result = ObjectTableRuleFieldRepository.GetTenantRuleFields(tenant);
+        //        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result length: {1}", null, "GetTenantRuleFields", result.Count);
+
+        //    }),
+        //    () => RunWithExceptionHandling("GetCustomPickListsCashe", () =>
+        //    {
+        //        var result = customPickListRepository.GetCustomPickListsCashe(tenant);
+        //        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result length: {1}", null, "GetCustomPickListsCashe", result.Count);
+        //    }),
+        //    () => RunWithExceptionHandling("GetSingleTenant", () => {
+        //        var result = TenantRepository.GetSingleTenant(tenant, true);
+        //        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result id: {1}", null, "GetSingleTenant", result.Id);
+        //    }),
+        //    () => RunWithExceptionHandling("GetSingleTenantByIdAndTenant", () =>
+        //    {
+        //        var result = tenantRepository.GetSingleTenantByIdAndTenant(tenant, true);
+        //        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result id: {1}", null, "GetSingleTenantByIdAndTenant", result.Id);
+        //    }),
+        //    () => RunWithExceptionHandling("GetSingleTenantPM", () => {
+        //        var result = TenantQuery.GetSingleTenantPM(tenant, true);
+        //        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result id: {1}", null, "GetSingleTenantPM", result.Id);
+        //    }),
+        //    () => RunWithExceptionHandling("FullAccountingSettingQueryService.Get", () => {
+        //        var result = FullAccountingSettingQueryService.Get(tenant);
+        //        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result id: {1}", null, "FullAccountingSettingQueryService.Get", result.Id);
+        //    })
+
         foreach (var task in tasks)
         {
             task.Invoke();
         }
     }
-
-
 }
