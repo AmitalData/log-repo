@@ -44,8 +44,8 @@ export class MainDisplayComponent {
 	KeyValue = Object.keys;
 	Object: ObjectConstructor = Object;
 
-	constructor(private API_MainService: API_MainService) {
-	}
+	constructor(private API_MainService: API_MainService) { } 
+	
 	cbTariffList: CB_TariffList[];
 	cbRequirementComputedDataList: CB_RequirementComputedDataList[];
 
@@ -67,17 +67,6 @@ export class MainDisplayComponent {
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
 			this.data = this.orderedData(data);				
 		});
-
-
-
-		// check:
-		let remarksClassificationPM: RemarksClassificationPM = {
-			// id: '17514',
-			tenant: 0,
-			customsItemsID: 17514,
-			remarkDescription: 'test'
-		};
-		
 	}
 	
 	currentItem:CB_CustomsItemComputedDataList;
@@ -85,7 +74,7 @@ export class MainDisplayComponent {
 	itemData:ItemData = {customsItemId: 0, measurementUnitMalamId: 0};
 	showDetailsClick(CustomsItemID:number, item: CB_CustomsItemComputedDataList) {
 		if(this.itemData.customsItemId == CustomsItemID) return;
-
+		
 		console.log(CustomsItemID);
 		console.log(item);
 		console.log(item.FullClassification);

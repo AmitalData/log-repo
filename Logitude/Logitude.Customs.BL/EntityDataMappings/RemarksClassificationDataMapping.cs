@@ -19,7 +19,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(RemarksClassificationPM entityPM, RemarksClassification entityPOCO)
         {
-            //throw new NotImplementedException();
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Id))
+            {
+                entityPOCO.Id = entityPM.Id;
+            }
         }
 
         public void CustomPOCOToPM(RemarksClassificationPM entityPM, RemarksClassification entityPOCO)
