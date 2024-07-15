@@ -867,7 +867,8 @@ namespace CommunicationWorkerRole
                         foreach (string id in docIds)
                         {
                             DocumentsFilingPM myDoc = DocumentsFilings.Where(a => a.Id == id).FirstOrDefault();
-                            string uri = LogitudeSettings.LogitudeURL + "/WebPages/CorrespondenceDownloadpage.aspx?id=" + myDoc.SecurityId + "~" + item.Tenant;
+                       //   string uri = LogitudeSettings.LogitudeURL + "/WebPages/CorrespondenceDownloadpage.aspx?id=" + myDoc.SecurityId + "~" + item.Tenant;
+                            string uri = LogitudeSettings.LogitudeURL + "api/CorrespondenceDownload/ValidateAndDownloadDocument?id=" + myDoc.SecurityId + "~" + item.Tenant;
                             myResult += @"<a href=" + uri + "><span style=';font-family:Lucida Sans Unicode;font-size:12px;'>" + myDoc.FileName + "</span></a> |";
                         }
 
@@ -1006,7 +1007,8 @@ namespace CommunicationWorkerRole
                         foreach (string id in docIds)
                         {
                             DocumentsFilingPM myDoc = DocumentsFilings.Where(a => a.Id == id).FirstOrDefault();
-                            string uri = LogitudeSettings.LogitudeURL + "/WebPages/CorrespondenceDownloadpage.aspx?id=" + myDoc.SecurityId + "~" + item.Tenant;
+                       //   string uri = LogitudeSettings.LogitudeURL + "/WebPages/CorrespondenceDownloadpage.aspx?id=" + myDoc.SecurityId + "~" + item.Tenant;
+                            string uri = LogitudeSettings.LogitudeURL + "api/CorrespondenceDownload/ValidateAndDownloadDocument?id=" + myDoc.SecurityId + "~" + item.Tenant;
                             myResult += @"<a href=" + uri + "><span style=';font-family:Lucida Sans Unicode;font-size:12px;'>" + myDoc.FileName + "</span></a> |";
                         }
 
@@ -1104,7 +1106,8 @@ namespace CommunicationWorkerRole
                             foreach (string id in docIds)
                             {
                                 DocumentsFilingPM myDoc = DocumentsFilings.Where(a => a.Id == id).FirstOrDefault();
-                                string uri = LogitudeSettings.LogitudeURL + "/WebPages/CorrespondenceDownloadpage.aspx?id=" + myDoc.SecurityId + "~" + item.Tenant;
+                           //   string uri = LogitudeSettings.LogitudeURL + "/WebPages/CorrespondenceDownloadpage.aspx?id=" + myDoc.SecurityId + "~" + item.Tenant;
+                                string uri = LogitudeSettings.LogitudeURL + "api/CorrespondenceDownload/ValidateAndDownloadDocument?id=" + myDoc.SecurityId + "~" + item.Tenant;
                                 myResult += @"<a href=" + uri + "><span style=';font-family:Lucida Sans Unicode;font-size:12px;'>" + myDoc.FileName + "</span></a> |";
                             }
 
@@ -1256,7 +1259,8 @@ namespace CommunicationWorkerRole
                     foreach (string id in docIds)
                     {
                         DocumentsFilingPM myDoc = DocumentsFilings.Where(a => a.Id == id).FirstOrDefault();
-                        string uri = LogitudeSettings.LogitudeURL + "/WebPages/CorrespondenceDownloadpage.aspx?id=" + myDoc.SecurityId + "~" + item.Tenant;
+                    //  string uri = LogitudeSettings.LogitudeURL + "/WebPages/CorrespondenceDownloadpage.aspx?id=" + myDoc.SecurityId + "~" + item.Tenant;
+                        string uri = LogitudeSettings.LogitudeURL + "api/CorrespondenceDownload/ValidateAndDownloadDocument?id=" + myDoc.SecurityId + "~" + item.Tenant;
                         myResult += @"<a href=" + uri + "><span style=';font-family:Lucida Sans Unicode;font-size:12px;'>" + myDoc.FileName + "</span></a> |";
                     }
 

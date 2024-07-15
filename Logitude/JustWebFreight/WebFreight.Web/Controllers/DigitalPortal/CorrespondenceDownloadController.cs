@@ -25,6 +25,7 @@ using System.Xml;
 using System.Xml.Xsl;
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
+using System.Linq.Expressions;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -34,8 +35,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         HttpResponseMessage _response = null;
 
         [HttpGet]
-        [Route("DigitalDocuments/ValidateAndDownloadDocument")]
-        public HttpResponseMessage ValidateAndDownloadDocument(string da, string securitykey, string id, bool limitedDateRange = true)
+        [Route("CorrespondenceDownload/DownloadDocument")]
+        public HttpResponseMessage DownloadDocument(string da = "", string securitykey = "" , string id = "", bool limitedDateRange = true)
         {
             
             byte[] _DatainByte;
@@ -101,10 +102,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     {
                         myDoc = up.GetFileExtensionBySecurityId(securityId, tenant);
                     }
-                    DateTime dateTime = new DateTime(2022, 01, 01);
-                    if (myDoc?.CreateDate != null && myDoc?.CreateDate.Value.Date < dateTime.Date)
+                    if (limitedDateRange)
                     {
-                        throw new Exception("The document is not allowed.");
+                        DateTime dateTime = new DateTime(2022, 01, 01);
+                        if (myDoc?.CreateDate != null && myDoc?.CreateDate.Value.Date < dateTime.Date)
+                        {
+                            throw new Exception("The document is not allowed.");
+                        }
                     }
                     documentExtension = myDoc.Extension;
                     filename = myDoc.FileName;
@@ -336,51 +340,34 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         }
 
         [HttpGet]
-        [Route("DigitalDocuments/DownloadDocument")]
-        public HttpResponseMessage ValidateAndDownloadDocumentWLogIn(string DA, string securitykey, string id)
+        [Route("CorrespondenceDownload/ValidateAndDownloadDocument")]
+        public HttpResponseMessage ValidateAndDownloadDocument(string da = "", string securitykey = "", string id = "")
         {
-            int tenant = 0;
-            string email = "";
             try
             {
-                var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
-                var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, entityId, true, true);
-                entityId = shipmentIdAndTenant.Item1;
-                tenant = shipmentIdAndTenant.Item2;
-                email = shipmentIdAndTenant.Item3;
 
-                List<SharedLogisticDocumentPM> output = new List<SharedLogisticDocumentPM>();
-                ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-                Shipment shipment = shipmentRepository.GetSingleShipment(entityId, tenant);
 
-                DigitalPortalDocumentHelper digitalPortalDocumentHelper = new DigitalPortalDocumentHelper();
-
-                if (shipment != null)
+                if (!HttpContext.Current.Request.IsAuthenticated)
                 {
-                    var args = new
-                    {
-                        Id = shipment.Id,
-                        ShipmentLevelCode = shipment.ShipmentLevelCode,
-                        CustomerId = shipment.CustomerId,
-                        Tenant = tenant,
-                        PartnerType = partnerType,
-                        IsExternal = isExternal
-                    };
+                    HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Redirect);
+                    response.Headers.Location = new Uri("../login.aspx");
+                    return response;
 
-                    output = digitalPortalDocumentHelper.GetShipmentSharedDocuments(args).OrderBy(o => o.Name).ToList();
                 }
+                else
+                {
+                    return DownloadDocument(da, securitykey, id, false);
+                }
+            }
+            catch (Exception errorInfo)
+            {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Redirect);
+                response.Headers.Location = new Uri("../login.aspx");
+                return response;
+            }  
 
-                return Request.CreateResponse(HttpStatusCode.OK, output);
-            }
-            catch (AutenticationException ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.Unauthorized, ApiExceptionBuilder.BuildException(ex));
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
+
+
         }
 
 
