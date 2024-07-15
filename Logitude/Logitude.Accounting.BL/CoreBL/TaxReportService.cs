@@ -19,6 +19,7 @@ using Logitude.CustomsMessaging.Common.Gen;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.Data;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
@@ -242,14 +243,16 @@ namespace Logitude.Accounting.BL.CoreBL
                 GLAccountPM account = GetAccountByLedgerTransaction(transaction);
                 card = GetGLAccountCard(account);
                 string aPInvoiceVatNumber = "";
-				if (transaction.Tenant == 30 && transaction.AccountingEntity == AccountingEntityValues.APInvoice)
+                string aPInvoiceVatNumberNormalized = "";
+                if (FeatureToggleHelper.HasFeatureToggle("VPI", transaction.Tenant)  && transaction.AccountingEntity == AccountingEntityValues.APInvoice)
 				{
 					var aPInvoice = allAPInvoices.Where(d => d.Id == transaction.AccountingEntityId).FirstOrDefault();
 
 					if (aPInvoice != null && !String.IsNullOrWhiteSpace(aPInvoice.VATNumber))
 					{
                         aPInvoiceVatNumber = aPInvoice.VATNumber;
-                        if (aPInvoice.VATNumber != "999999999" && aPInvoice.VATNumber != "999999998" && aPInvoice.VATNumber == CheckVATValidation(aPInvoice.VATNumber)) 
+                        aPInvoiceVatNumberNormalized = CheckVATValidation(aPInvoice.VATNumber);
+                        if (aPInvoice.VATNumber != "999999999" && aPInvoice.VATNumber != "999999998" && aPInvoice.VATNumber == aPInvoiceVatNumberNormalized) 
                             VatNumber = aPInvoice.VATNumber;
 					}
 					
@@ -264,7 +267,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
                 if (String.IsNullOrWhiteSpace(VatNumber) && !String.IsNullOrWhiteSpace(aPInvoiceVatNumber) 
-                                                         && aPInvoiceVatNumber != "999999999") // matter of precedence   
+                                                         && aPInvoiceVatNumber != "999999999" 
+                                                         && aPInvoiceVatNumber != "999999998" 
+                                                         && aPInvoiceVatNumber == aPInvoiceVatNumberNormalized) // matter of precedence   
                     VatNumber = aPInvoiceVatNumber;
 
                 VatNumber = VatNumber == null ? "000000000" : VatNumber;
