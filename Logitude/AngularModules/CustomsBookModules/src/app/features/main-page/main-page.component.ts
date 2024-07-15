@@ -26,9 +26,7 @@ export class MainPageComponent {
 	selectSearchBy: string;
 
 	constructor(private API_MainService: API_MainService, private headerService: HeaderService) {
-		this._filters = this.filterService.getFilters();
-		console.log(this._filters);
-		
+		this._filters = this.filterService.getFilters();		
 	}
 
 	SearchByText(searchBy: any) {

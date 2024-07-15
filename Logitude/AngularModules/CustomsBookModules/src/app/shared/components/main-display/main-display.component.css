@@ -170,11 +170,21 @@ a.searchResults_filterPop_clear {
 	}
 }
 
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; 
+}
 .mainTable_list .data_row_container {
-	width: 31.5%;
-	
-	&.active {
+  width: 31.5%;
+  min-height: 100vh;
+  max-height: 110vh;
+  overflow: auto;
+  &.active {
 		width:100%;
+		height: 100vh;
+		min-height: 100vh;
+		max-height: 110vh;
+		overflow: hidden;
 	}
 }
 
