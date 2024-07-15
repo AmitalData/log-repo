@@ -1,6 +1,8 @@
-/* .tableBox {
-    overflow: auto;
-} */
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; 
+}
 
 th, td {
     word-wrap: break-word; 
@@ -12,8 +14,8 @@ th, td {
 .detailsSlide_table {
     border-radius: 10px;
     border: 1px solid var(--greyRO);
-    overflow: hidden;
-    /* overflow: auto; */
+    /* overflow: hidden; */
+    overflow: auto;
     max-height: 450px;
 }
 
