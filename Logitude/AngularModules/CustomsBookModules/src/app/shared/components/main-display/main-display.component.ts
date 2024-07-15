@@ -31,7 +31,7 @@ import { BehaviorSubject, filter } from 'rxjs';
 })
 export class MainDisplayComponent {
 	@Input() showChiledren: boolean = false;
-	@Input() itemsData;
+	@Input() itemsData: BehaviorSubject<CB_CustomsItemComputedDataList[]>;
 	showDetails: boolean = false;
 	showAddComment: boolean = false;
 	showCommentSidebar: boolean = false;
@@ -44,19 +44,16 @@ export class MainDisplayComponent {
 	KeyValue = Object.keys;
 	Object: ObjectConstructor = Object;
 
-	constructor(private API_MainService: API_MainService) { } 
-	
+	constructor(private API_MainService: API_MainService) { }
+
 	cbTariffList: CB_TariffList[];
 	cbRequirementComputedDataList: CB_RequirementComputedDataList[];
 
 	ngOnInit() {
-		// this.data = this.itemsData;
-
-		// CHECK MOKE DATA:
-		//this.data = this.orderedData(mockData);
-		// this.item = this.data[0];
 		this.InitData();
+		this.ListenToItemsSearched();
 	}
+
 	InitData() {
 		let filters: Filters = {
 			CustomsBookType: '1',
@@ -65,28 +62,41 @@ export class MainDisplayComponent {
 		};
 
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
-			this.data = this.orderedData(data);				
+			this.data = this.orderedData(data);
 		});
 	}
-	
-	currentItem:CB_CustomsItemComputedDataList;
-	itemDataBehaviorSubject: BehaviorSubject<ItemData>= new BehaviorSubject<ItemData>({customsItemId: 0, measurementUnitMalamId: 0});
-	itemData:ItemData = {customsItemId: 0, measurementUnitMalamId: 0};
-	showDetailsClick(CustomsItemID:number, item: CB_CustomsItemComputedDataList) {
-		if(this.itemData.customsItemId == CustomsItemID) return;
-		
+
+
+	// listen to itemsData when change:
+	ListenToItemsSearched() {
+		this.itemsData.subscribe((data: CB_CustomsItemComputedDataList[] = []) => {
+			if(data.length == 0) {
+				this.InitData();
+				return;
+			} 
+			this.data = this.orderedData(data);
+		});
+	}
+
+	currentItem: CB_CustomsItemComputedDataList;
+	itemDataBehaviorSubject: BehaviorSubject<ItemData> = new BehaviorSubject<ItemData>({ customsItemId: 0, measurementUnitMalamId: 0 });
+	itemData: ItemData = { customsItemId: 0, measurementUnitMalamId: 0 };
+	showDetailsClick(CustomsItemID: number, item: CB_CustomsItemComputedDataList) {
+		if (this.itemData.customsItemId == CustomsItemID) return;
+
 		console.log(CustomsItemID);
-		console.log(item);
-		console.log(item.FullClassification);
+		// console.log(item);
+		// console.log(item.FullClassification);
 		this.itemData.customsItemId = CustomsItemID;
 		this.itemData.measurementUnitMalamId = 0; // change it
 		this.itemDataBehaviorSubject.next(this.itemData);
 		this.currentItem = item;
-		return this.showDetails;	
+		return this.showDetails;
 	}
+
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes['showDetails']) {
-			this.showDetails = changes['showDetails'].currentValue;			
+			this.showDetails = changes['showDetails'].currentValue;
 		}
 		if (changes['itemsData']) {
 			this.itemsData = changes['itemsData'].currentValue;
@@ -137,7 +147,7 @@ export class MainDisplayComponent {
 // 	Rules: boolean = false;
 // }
 
-export interface ItemData{
+export interface ItemData {
 	customsItemId: number;
 	measurementUnitMalamId: number;
 }

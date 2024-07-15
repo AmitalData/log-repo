@@ -53,7 +53,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetCustomsBookMainViewSearchByClassification(Filters filters)
+
+        [HttpPost]
+        public HttpResponseMessage GetCustomsBookMainViewSearchByClassification([FromBody] Filters filters)
         {
             try
             {
@@ -69,15 +71,14 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
-
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-
-        public HttpResponseMessage GetCustomsBookMainViewSearchByText(Filters filters)
+        
+        [HttpPost]
+        public HttpResponseMessage GetCustomsBookMainViewSearchByText([FromBody] Filters filters)
         {
             try
             {
@@ -93,7 +94,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
-
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
