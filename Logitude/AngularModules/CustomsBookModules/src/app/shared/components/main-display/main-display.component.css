@@ -175,7 +175,7 @@ a.searchResults_filterPop_clear {
     background: transparent; 
 }
 .mainTable_list .data_row_container {
-  width: 31.5%;
+  width: 39.5%;
   min-height: 100vh;
   max-height: 110vh;
   overflow: auto;
@@ -253,4 +253,13 @@ a.searchResults_filterPop_clear {
 .wtree li span:hover + ul li:before,
 .wtree li span:focus + ul li:before {
 	border-color: #aaa;
+}
+.wtree {
+	margin: 0;
+	margin: 0;
+	margin-top: 5px;
+}
+
+.app-table-top {
+	margin-bottom: 20px;
 }
