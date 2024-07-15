@@ -948,7 +948,15 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "RE2, Reports Execution WR Version 2", 
                 Description = "Reports Execution WR Version 2", 
 			});
-			 
+
+            all.Add(new ToggleDetails()
+            {
+                Code = "VPI",
+                Name = "Get Tax Report VAT from A/P Invoice",
+                SearchFields = "VPI, Get Tax Report VAT from A/P Invoice",
+                Description = "Get Tax Report VAT from A/P Invoice",
+            });
+
             all.Add(new ToggleDetails()
             {    
                 Code = "JAM", 
