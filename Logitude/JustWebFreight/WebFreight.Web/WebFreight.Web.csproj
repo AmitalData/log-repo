@@ -1077,6 +1077,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AddressTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\PortGroupViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\PortGroupController.Generated.cs" />
+    <Compile Include="Controllers\DigitalPortal\CorrespondenceDownloadController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalActivityController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalCustomizationController.cs" />
     <Compile Include="Controllers\DigitalPortal\Helpers\UpdateLanguageRequest.cs" />
