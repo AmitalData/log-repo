@@ -66,7 +66,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
             if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
             {
-                ValidateFromPort(entityPM, loggedTenant);
+                ValidateFromPort(entityPM, loggedTenant, isNewEntity);
                 ValidateToPort(entityPM, loggedTenant);
                 ValidateCarrierPrefix(entityPM);
                 ValidateAirlineRestriction(entityPM);
@@ -298,11 +298,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
         }
-        private static void ValidateFromPort(ShipmentPM entityPM, Tenant loggedTenant)
+        private static void ValidateFromPort(ShipmentPM entityPM, Tenant loggedTenant, bool IsNewEntity)
         {
             bool isInlandDomestic = (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I");
 
-            if (!isInlandDomestic)
+            if (!isInlandDomestic && (entityPM.IsCustomShipment && !IsNewEntity))
             {
                 if (string.IsNullOrEmpty(entityPM.MainCarriageFromPortId))
                 {
@@ -356,9 +356,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         private static void ValidateToPort(ShipmentPM entityPM, Tenant loggedTenant)
         {
             bool isInlandDomestic = (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I");
-            bool isCustomShipment = (entityPM.DirectionId == "C");
 
-            if (!isInlandDomestic && !isCustomShipment)
+            if (!isInlandDomestic && !entityPM.IsCustomShipment)
             {
                 if (string.IsNullOrEmpty(entityPM.MainCarriageToPortId))
                 {
@@ -1466,6 +1465,42 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
         }
+
+        public static void ValidateCustomShipment(ShipmentPM entityPM, bool isNewEntity)
+        {
+            // todo: create translations
+            if (string.IsNullOrEmpty(entityPM.DepartmentId))
+            {
+                throw new ApplicationException("DepartmentId is mandatory");
+            }
+            if (string.IsNullOrEmpty(entityPM.CustomerId))
+            {
+                throw new ApplicationException("CustomerId is mandatory");
+            }
+            if (string.IsNullOrEmpty(entityPM.DeclarationOfficeCode) && isNewEntity)
+            {
+                throw new ApplicationException("DeclarationOfficeCode is mandatory");
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.IskaNumber) && !entityPM.IskaNumber.ToUpper().StartsWith("I"))
+            {
+                throw new ApplicationException("IskaNumber must start with 'I'");
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.FlightVoyageNumber))
+            {
+                if (entityPM.TransportModeId == "A" && entityPM.FlightVoyageNumber.Any(char.IsDigit) && entityPM.FlightVoyageNumber.Count(char.IsDigit) == 4) 
+                {
+                    // throw new ApplicationException(TranslateTextsClass.Translate("Shipment.O.Routings.MainCarriage", entityPM.Tenant));
+                    throw new ApplicationException("FlightVoyageNumber must be 4 digits");
+                }
+                if (entityPM.TransportModeId == "O" && entityPM.FlightVoyageNumber.Any(char.IsDigit) && entityPM.FlightVoyageNumber.Count(char.IsDigit) == 3 && entityPM.FlightVoyageNumber.Any(char.IsLetter) && entityPM.FlightVoyageNumber.Count(char.IsLetter) == 1)
+                {
+                    throw new ApplicationException("FlightVoyageNumber must be 4 digits or 1 letter + 3 digits");
+                }
+            }
+        }
+
         public static void ValidateContainerNumbers(ShipmentPM entityPM)
         {
             if (entityPM.ShipmentTypeId == "FCL" || entityPM.ShipmentTypeId == "FCLD")

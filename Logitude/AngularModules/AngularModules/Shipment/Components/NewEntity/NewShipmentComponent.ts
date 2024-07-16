@@ -257,10 +257,9 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     public ShowShipmentLevels: boolean = true;
     public IsStandalone: boolean = false;
     public IsNewStandAlonePickupDelivery: boolean = false; 
-    public IsCustomShipment: boolean = false; 
     SetWindowArgs(args: any) {
-        this.IsCustomShipment = args?.QueryNameTextCode == "Shipment.Q.CustomsShipments";
-        if (this.IsCustomShipment) {
+        this.EntityPM.IsCustomShipment = args?.QueryNameTextCode == "Shipment.Q.CustomsShipments";
+        if (this.EntityPM.IsCustomShipment) {
             this.EntityPM.DepartmentId = null;
             this.DirectionId = "C";
             this.ShowShipmentLevels = false;
@@ -463,7 +462,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             }
 
         }
-        else if (this.IsCustomShipment) {
+        else if (this.EntityPM.IsCustomShipment) {
             isScreenEnabled = true;
         }
 
@@ -485,7 +484,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.UIProperties.SetEnabled("ConsigneeReference2", this.ObjectTableName, isScreenEnabled);
 
         //Customer
-        this.UIProperties.SetEnabled("CustomerId", this.ObjectTableName, isScreenEnabled || this.IsCustomShipment);
+        this.UIProperties.SetEnabled("CustomerId", this.ObjectTableName, isScreenEnabled || this.EntityPM.IsCustomShipment);
         this.UIProperties.SetEnabled("ShipmentCustomerTypeCode", this.ObjectTableName, isScreenEnabled);
 
         // Pickup
@@ -591,7 +590,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         }
 
         else {
-            if (!this.IsShipmentLevelFixed && !this.IsCustomShipment) {
+            if (!this.IsShipmentLevelFixed && !this.EntityPM.IsCustomShipment) {
                 this.ShowShipmentLevels = true;
             }
         }
@@ -649,6 +648,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
 
     IsCustomShipmentValid: boolean;
     ValidateCustomShipment() {
+        // todo: in ShipmentValidator
         this.IsCustomShipmentValid = !AppTool.IsNullOrEmpty(this.DepartmentId) && !AppTool.IsNullOrEmpty(this.TransportModeId) && !AppTool.IsNullOrEmpty(this.CustomerId) && !AppTool.IsNullOrEmpty(this.DeclarationOfficeCode);
     }
 
@@ -668,11 +668,10 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         }
     }
 
-    private declarationOfficeCode: string;
-    get DeclarationOfficeCode() { return this.declarationOfficeCode; }
+    get DeclarationOfficeCode() { return this.EntityPM.DeclarationOfficeCode; }
     set DeclarationOfficeCode(value: string) {
-        if (this.declarationOfficeCode != value) {
-            this.declarationOfficeCode = value;
+        if (this.EntityPM.DeclarationOfficeCode != value) {
+            this.EntityPM.DeclarationOfficeCode = value;
 
             this.ValidateCustomShipment();
         }
@@ -719,7 +718,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.LoadAllowedAirline();
             this.ValidateMasterField();
 
-            if (this.IsCustomShipment) {
+            if (this.EntityPM.IsCustomShipment) {
                 this.ValidateCustomShipment();
             }
         }
@@ -1766,7 +1765,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                     }
                 });
             }
-            if (this.IsCustomShipment) {
+            if (this.EntityPM.IsCustomShipment) {
                 this.ValidateCustomShipment();
             }
         }
@@ -1904,7 +1903,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     private SetCustomerRequired() {
         var isRequired: boolean = false
 
-        if (AppTool.IsNullOrEmpty(this.CustomerId) || AppTool.IsNullOrEmpty(this.ShipmentCustomerTypeCode) || this.IsCustomShipment) {
+        if (AppTool.IsNullOrEmpty(this.CustomerId) || AppTool.IsNullOrEmpty(this.ShipmentCustomerTypeCode) || this.EntityPM.IsCustomShipment) {
             isRequired = true;
         }
 
@@ -4311,7 +4310,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.SetInlandDomesticOnFinish();
 
         var validator = new ShipmentValidator();
-        if (this.IsCustomShipment) {
+        if (this.EntityPM.IsCustomShipment) {
            this.ValidationErrorsList = [];
         } else {
             this.ValidationErrorsList = validator.Validate(this.EntityPM);
@@ -4685,16 +4684,8 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.CurrentSession.StartBusyIndicator("Creating...");
 
         this.SetDataOnFinish();
-
-        var shipmentObserve;
-        if (this.IsCustomShipment) {
-            shipmentObserve = this.myShipmentPMService.insertCustomShipment(this.EntityPM, this.DeclarationOfficeCode);
-        }
-        else {
-            shipmentObserve = this.myShipmentPMService.insert(this.EntityPM);
-        }
         
-        shipmentObserve.subscribe((myResponse: ServiceResponse) => {
+        this.myShipmentPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
             this.CurrentSession.StopBusyIndicator();
 

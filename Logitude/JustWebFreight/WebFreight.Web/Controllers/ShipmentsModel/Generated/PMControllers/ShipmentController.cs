@@ -119,7 +119,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
         public HttpResponseMessage Post(ShipmentPM entityPM)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid || entityPM.IsCustomShipment)
             {
                 try
                 {
@@ -135,12 +135,27 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
                         IShipmentsContext objectContext = ShipmentsContext.GetContext(entityPM.Tenant);
                         ShipmentService service = new ShipmentService(objectContext, entityPM, SecurityUtility.GetAuthenticatedUser());
-                        service.Create();
+
+                        bool isCustomShipment = false;
+                        if (entityPM.IsCustomShipment)
+                        {
+                            service.CreateCustomShipment();
+                            isCustomShipment = true;
+                        }
+                        else
+                        {
+                            service.Create();
+                        }
 
                         IShipmentsContext updatedEntityContext = ShipmentsContext.GetContext(tenant);
                         ShipmentRepository updatedEntityRepository = new ShipmentRepository(updatedEntityContext);
                         ShipmentQuery updatedShipmentQuery = new ShipmentQuery(updatedEntityRepository);
                         entityPM = updatedShipmentQuery.GetSinglePM(entityPM.Id, entityPM.Tenant);
+
+                        if (isCustomShipment)
+                        {
+                            entityPM.IsCustomShipment = true;
+                        }
 
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);
@@ -157,50 +172,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
-        }
-
-        public HttpResponseMessage PostCustoms([FromBody] ICustomInputData customInputData)
-        {
-            try
-            {
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
-                {
-
-                    ShipmentPM entityPM = customInputData.EntityPM;
-
-
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    int tenant = authToken.Tenant;
-
-                    SecurityUtility.AuthenticationOnTenant(tenant);
-                    SecurityUtility.CheckContactFeature("Shipment", "NEW", tenant);
-                    SecurityUtility.AuthenticationOnEntityTenant("Shipment", entityPM.Tenant, authToken.Tenant);
-
-                    IShipmentsContext objectContext = ShipmentsContext.GetContext(entityPM.Tenant);
-                    ShipmentService service = new ShipmentService(objectContext, entityPM, SecurityUtility.GetAuthenticatedUser());
-                    service.Create(true, customInputData.DeclarationOfficeCode);
-
-                    IShipmentsContext updatedEntityContext = ShipmentsContext.GetContext(tenant);
-                    ShipmentRepository updatedEntityRepository = new ShipmentRepository(updatedEntityContext);
-                    ShipmentQuery updatedShipmentQuery = new ShipmentQuery(updatedEntityRepository);
-                    entityPM = updatedShipmentQuery.GetSinglePM(entityPM.Id, entityPM.Tenant);
-
-                    scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK, entityPM);
-                }
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public class ICustomInputData : GenericRequestParams
-        {
-            public ShipmentPM EntityPM { get; set; }
-            public string DeclarationOfficeCode { get; set; }
         }
 
         public HttpResponseMessage Put(ShipmentPM entityPM)
@@ -221,12 +192,27 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
                         IShipmentsContext objectContext = ShipmentsContext.GetContext(entityPM.Tenant);
                         ShipmentService service = new ShipmentService(objectContext, entityPM, SecurityUtility.GetAuthenticatedUser());
-                        service.Update(true);
+
+                        bool isCustomShipment = false;
+                        if (entityPM.IsCustomShipment)
+                        {
+                            service.UpdateCustomShipment();
+                            isCustomShipment = true;
+                        }
+                        else
+                        {
+                            service.Update(true);
+                        }
 
                         IShipmentsContext updatedEntityContext = ShipmentsContext.GetContext(tenant);
                         ShipmentRepository updatedEntityRepository = new ShipmentRepository(updatedEntityContext);
                         ShipmentQuery updatedShipmentQuery = new ShipmentQuery(updatedEntityRepository);
                         entityPM = updatedShipmentQuery.GetSinglePM(entityPM.Id, entityPM.Tenant);
+
+                        if (isCustomShipment)
+                        {
+                            entityPM.IsCustomShipment = true;
+                        }
 
                         if (service.DummyIdGuidPackages != null)
                         {

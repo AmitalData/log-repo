@@ -126,8 +126,37 @@
                                 </td>
                             </tr>
 
-                            <!-- michlakh -->
-                            <tr class="FormFieldRow">todo: michlakh</tr>
+                            <!-- FreightForwarderId / ShipmentNumber -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [NoObjectField]="true" [Text]="'Shipment.O.FreightForwarderIdShipmentNumber' | TextCodeTranslationPipe" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <table>
+                                    <tr>
+                                        <!-- FreightForwarderId -->
+                                        <td>
+                                            <LogLov 
+                                                [ObjectFieldName]="'FreightForwarderId'" 
+                                                [SelectedValue]="FreightForwarderId"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Card'">
+                                            </LogLov>
+                                        </td>
+
+                                        <!-- ShipmentNumber -->
+                                        <td>
+                                            <LogTextBox 
+                                                [ObjectFieldName]="'ShipmentNumber'" 
+                                                [Text]="FreightForwarderReferenceShipmentNumber"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext">
+                                            </LogTextBox>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </tr>
 
                             <!-- EstimatedArrivalDate -->
                             <tr class="FormFieldRow">
@@ -157,8 +186,12 @@
                                 </table>
                             </tr>
 
-                            <!-- eretz motsa -->
-                            <tr class="FormFieldRow">todo: eretz motsa</tr>
+                            <!-- eretz motsa / todo -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [NoObjectField]="true" [Text]="'ארץ מוצא'" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                            </tr>
                             
                             <!-- PackageTypeCode -->
                             <tr class="FormFieldRow">
@@ -172,7 +205,7 @@
                                         [SelectedValue]="PackageTypeCode"
                                         [ObjectTableName]="ObjectTableName"
                                         [DataContext]="DataContext" 
-                                        [LookUpTableName]="'PackingType'">
+                                        [LookUpTableName]="'Customs.PackingType'">
                                     </LogLov>
                                 </td>
                             </tr>
@@ -248,7 +281,7 @@
                                     <LogLabel [ObjectFieldName]="'DescriptionOfGoods'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
-                                <td>
+                                <td style="padding-bottom: 12px;">
                                     <LogTextBox 
                                         [ObjectFieldName]="'DescriptionOfGoods'" 
                                         [Text]="DescriptionOfGoods"
@@ -283,42 +316,37 @@
                         <table>
 
                             <!-- hazmanat lakoah -->
-                            <tr class="FormFieldRow">todo: hazmanat lakoah
-                            <!-- ReferenceType -->
-                            <!-- <tr>
+                            <tr class="FormFieldRow">
                                 <td style="width: 180px;">
-                                    <LogLabel [ObjectFieldName]="'ReferenceType'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    <LogLabel [NoObjectField]="true" [Text]="'Shipment.O.ReferenceTypeValue' | TextCodeTranslationPipe" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
-                                <td>
-                                    <LogLov 
-                                        [ObjectFieldName]="'ReferenceType'" 
-                                        [SelectedValue]="IncotermId"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [DataContext]="DataContext"
-                                        [LookUpTableName]="'Incoterm'">
-                                    </LogLov>
-                                </td>
-                            </tr> -->
+                                <table>
+                                    <tr>
+                                        <!-- ReferenceType -->
+                                        <td>
+                                            <LogLov 
+                                                [ObjectFieldName]="'ReferenceType'" 
+                                                [SelectedValue]="ReferenceType"
+                                                [ObjectTableName]="ShipmentReferance"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'ReferenceType'">
+                                            </LogLov>
+                                        </td>
 
-                            <!-- ReferenceValue -->
-                            <!-- <tr">
-                                <td style="width: 180px;">
-                                    <LogLabel [ObjectFieldName]="'IncotermId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
-
-                                <td>
-                                    <LogLov 
-                                        [ObjectFieldName]="'IncotermId'" 
-                                        [SelectedValue]="IncotermId"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [DataContext]="DataContext"
-                                        [LookUpTableName]="'Incoterm'">
-                                    </LogLov>
-                                </td>
-                            </tr> -->
+                                        <!-- ReferenceValue -->
+                                        <td>
+                                            <LogTextBox 
+                                                [ObjectFieldName]="'ReferenceValue'" 
+                                                [Text]="ReferenceValue"
+                                                [ObjectTableName]="ShipmentReferance"
+                                                [DataContext]="DataContext">
+                                            </LogTextBox>
+                                        </td>
+                                    </tr>
+                                </table>
                             </tr>
-                            
+
                             <!-- TransportModeId -->
                             <tr class="FormFieldRow">
                                 <td style="width: 180px;">
@@ -356,13 +384,13 @@
                             <!-- HawbDate -->
                             <tr class="FormFieldRow">
                                 <td style="width: 180px;">
-                                    <LogLabel [ObjectFieldName]="'HawbDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'HAWBDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
                                 <table>
                                     <tr>
                                         <td>
-                                            <LogDatePicker [ObjectFieldName]="'HawbDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="HawbDate" [DataContext]="DataContext"
+                                            <LogDatePicker [ObjectFieldName]="'HAWBDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="HawbDate" [DataContext]="DataContext"
                                                         [HideColumns]="true"
                                                         [HideLastColumn]="HideLastColumn">
                                             </LogDatePicker>
@@ -371,7 +399,7 @@
                                             <div></div>
                                         </td>
                                         <td>
-                                            <LogDatePicker [ObjectFieldName]="'HawbDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="HawbDate" [DataContext]="DataContext" [InputType]="'time'" [TimeMode]="12"
+                                            <LogDatePicker [ObjectFieldName]="'HAWBDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="HawbDate" [DataContext]="DataContext" [InputType]="'time'" [TimeMode]="12"
                                                         [HideColumns]="HideColumns"
                                                         [HideLastColumn]="HideLastColumn">
 
@@ -480,17 +508,30 @@
                             <!-- Volume -->
                             <tr class="FormFieldRow">
                                 <td style="width: 180px;">
-                                    <LogLabel [ObjectFieldName]="'Volume'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    <LogLabel [NoObjectField]="true" [Text]="'Shipment.O.VolumeKgCbm' | TextCodeTranslationPipe" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
-                                <td>
-                                    <LogTextBox 
-                                        [ObjectFieldName]="'Volume'" 
-                                        [Text]="Volume"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [DataContext]="DataContext">
-                                    </LogTextBox>
-                                </td>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <LogTextBox 
+                                                [ObjectFieldName]="'VolumetricWeight'" 
+                                                [Text]="VolumetricWeight"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext">
+                                            </LogTextBox>
+                                        </td>
+
+                                        <td>
+                                            <LogTextBox 
+                                                [ObjectFieldName]="'Volume'" 
+                                                [Text]="Volume"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext">
+                                            </LogTextBox>
+                                        </td>
+                                    </tr>
+                                </table>
                             </tr>
 
                             <!-- Commodity -->

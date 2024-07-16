@@ -1754,6 +1754,24 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
             }
         }
 
+        private List<ShipmentReferancePM> shipmentReferances;
+        [Include]
+        [Composition]
+        [Association("ShipmentReferancePMShipment", "Id", "ShipmentId")]
+        public List<ShipmentReferancePM> ShipmentReferances
+        {
+            get
+            {
+                if (shipmentReferances == null) { shipmentReferances = new List<ShipmentReferancePM>(); }
+                return shipmentReferances;
+            }
+
+            set
+            {
+                if (value != null) { shipmentReferances = value; }
+            }
+        }
+
         private List<ShipmentAPInvoicePM> shipmentApInvoices;
         [Include]
         [Composition]
@@ -2296,6 +2314,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string Vessel { get; set; }
         public string FlightVoyageNumber { get; set; }
         public string Commodity { get; set; }
+        public bool IsCustomShipment { get; set; }
 
 
         #region WarehouseLeg

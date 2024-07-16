@@ -5520,6 +5520,18 @@ export class ShipmentPM {
     public get ReferantUserId() { return this.referantUserId; }
     public set ReferantUserId(newValue: string) { if (this.referantUserId != newValue) { this.referantUserId = newValue; this.MarkAsDirty("ReferantUserId"); } }
 
+    private declarationOfficeCode: string;
+    public get DeclarationOfficeCode() { return this.declarationOfficeCode; }
+    public set DeclarationOfficeCode(newValue: string) { if (this.declarationOfficeCode != newValue) { this.declarationOfficeCode = newValue; this.MarkAsDirty("DeclarationOfficeCode"); } }
+
+    private isCustomShipment: boolean;
+    public get IsCustomShipment() { return this.isCustomShipment; }
+    public set IsCustomShipment(newValue: boolean) { if (this.isCustomShipment != newValue) { this.isCustomShipment = newValue; this.MarkAsDirty("IsCustomShipment"); } }
+
+    private shipmentReferances: []; // ShipmentReferance[];
+    public get ShipmentReferances() { return this.shipmentReferances; }
+    public set ShipmentReferances(newValue: []) { if (this.shipmentReferances != newValue) { this.shipmentReferances = newValue; this.MarkAsDirty("ShipmentReferances"); } }
+
     private carrierCode: string;
     public get CarrierCode() { return this.carrierCode; }
     public set CarrierCode(newValue: string) { if (this.carrierCode != newValue) { this.carrierCode = newValue; this.MarkAsDirty("CarrierCode"); } }

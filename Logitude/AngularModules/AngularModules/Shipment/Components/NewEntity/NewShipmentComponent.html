@@ -105,7 +105,7 @@
                                 <tr style="height: 1px">
                                     <td>
                                         <!-- Directions -->
-                                        <div *ngIf="!IsCustomShipment" style="margin: 10px;">
+                                        <div *ngIf="!EntityPM.IsCustomShipment" style="margin: 10px;">
                                             <div style="font-size: 13px; color: #6E7172;">{{'Shipment.F.DirectionId' | TextCodeTranslationPipe}}:</div>
                                             <div style="margin-top: -2px;">
                                                 <div class="RadioButton" *ngFor="let item of DirectionsList" [attr.id]="'DirectionRadio_Div_' + SessionIndex + item.Code">
@@ -120,7 +120,7 @@
 
                                         <!-- Transport Modes -->
                                         <div style="margin: 10px;">
-                                            <div style="font-size: 13px; color: #6E7172">{{(IsCustomShipment? 'Shipment.F.TransportModeId': 'Shipment.F.TransportModeId.Short') | TextCodeTranslationPipe}}</div>
+                                            <div style="font-size: 13px; color: #6E7172">{{(EntityPM.IsCustomShipment? 'Shipment.F.TransportModeId': 'Shipment.F.TransportModeId.Short') | TextCodeTranslationPipe}}</div>
                                             <div style="margin-top: -2px;">
                                                 <div class="RadioButton" *ngFor="let item of TransportModesList" [attr.id]="'TransportModeRadio_Div_' + SessionIndex + item.Code">
                                                     <img class="LeftCenter" style="margin-left: 20px;" [attr.src]="'./Images/Icons/' + item.Code + '.png'" />
@@ -134,7 +134,7 @@
                                         </div>
 
                                         <!-- Shipment Types -->
-                                        <div *ngIf="!IsCustomShipment && DirectionId && (TransportModeId == 'O' || TransportModeId == 'I')" style="margin: 10px;">
+                                        <div *ngIf="!EntityPM.IsCustomShipment && DirectionId && (TransportModeId == 'O' || TransportModeId == 'I')" style="margin: 10px;">
                                             <div style="font-size: 13px; color: #6E7172;">{{'Shipment.F.ShipmentTypeId' | TextCodeTranslationPipe}}:</div>
                                             <div style="margin-top: -2px;">
                                                 <div class="RadioButton" *ngFor="let item of ShipmentTypesList" [attr.id]="'ShipmentTypeRadio_Div_' + SessionIndex + item.Code">
@@ -301,7 +301,7 @@
                                             <div class="ScrollContent" [ngStyle]="{opacity: ScreenOpacity}">
 
                                                 <!-- Shipper -->
-                                                <div *ngIf="!IsCustomShipment">
+                                                <div *ngIf="!EntityPM.IsCustomShipment">
                                                     <div class="SectionTitle">
                                                         <table>
                                                             <tr>
@@ -452,7 +452,7 @@
                                                 </div>
 
                                                 <!-- Consignee -->
-                                                <div *ngIf="!IsCustomShipment">
+                                                <div *ngIf="!EntityPM.IsCustomShipment">
                                                     <div class="SectionTitle">
                                                         <table>
                                                             <tr>
@@ -608,7 +608,7 @@
                                                     <div class="SectionTitle" style="height:40px; line-height:40px;">
                                                         <table>
                                                             <tr>
-                                                                <td style="width:105px;">{{(IsCustomShipment? 'Shipment.F.CustomerId': 'Shipment.S.NewShipment.MyCustomer') | TextCodeTranslationPipe}}</td>
+                                                                <td style="width:105px;">{{(EntityPM.IsCustomShipment? 'Shipment.F.CustomerId': 'Shipment.S.NewShipment.MyCustomer') | TextCodeTranslationPipe}}</td>
 
                                                                 <td style="width:10px; vertical-align: middle;">
                                                                     <div style="width: 10px;">
@@ -616,7 +616,7 @@
                                                                     </div>
                                                                 </td>
 
-                                                                <td *ngIf="!IsCustomShipment" [style.width.px]="ControlColumnWidth">
+                                                                <td *ngIf="!EntityPM.IsCustomShipment" [style.width.px]="ControlColumnWidth">
                                                                     <LogLov [ObjectFieldName]="'ShipmentCustomerTypeCode'"
                                                                             [SelectedValue]="ShipmentCustomerTypeCode"
                                                                             [ObjectTableName]="ObjectTableName"
@@ -645,7 +645,7 @@
                                                                 <td>
                                                                     <div class="MediaFill">
                                                                         <div class="LeftCenter" style="width: 12px; height: 12px;">
-                                                                            <div *ngIf="!IsStandalone || IsNewStandAlonePickupDelivery" class="GreenAddButton" [class.GreenAddButtonDisabled]="!IsScreenEnabled && !IsCustomShipment" (mousedown)="AddPartnerClicked('T')"></div>
+                                                                            <div *ngIf="!IsStandalone || IsNewStandAlonePickupDelivery" class="GreenAddButton" [class.GreenAddButtonDisabled]="!IsScreenEnabled && !EntityPM.IsCustomShipment" (mousedown)="AddPartnerClicked('T')"></div>
                                                                         </div>
                                                                     </div>
                                                                 </td>
@@ -657,7 +657,7 @@
                                                 </div>
 
                                                 <!-- DeclarationOfficeCode -->
-                                                <div *ngIf="IsCustomShipment">
+                                                <div *ngIf="EntityPM.IsCustomShipment">
                                                     <div class="SectionTitle" style="margin-top: 15px; margin-bottom: 15px;">
                                                         <table>
                                                             <tr>
@@ -692,7 +692,7 @@
                                                 </div>
 
                                                 <!-- DepartmentId -->
-                                                <div *ngIf="IsCustomShipment">
+                                                <div *ngIf="EntityPM.IsCustomShipment">
                                                     <div class="SectionTitle" style="margin-top: 15px; margin-bottom: 15px;">
                                                         <table>
                                                             <tr>
@@ -729,7 +729,7 @@
                                                 </div>
                                                 
                                                 <!-- Pickup -->
-                                                <div *ngIf="!IsInlandDomestic && !IsCustomShipment">
+                                                <div *ngIf="!IsInlandDomestic && !EntityPM.IsCustomShipment">
                                                     <div class="SectionTitle">Pickup</div>
 
                                                     <table class="FixedTable">
@@ -862,7 +862,7 @@
                                                 </div>
 
                                                 <!-- Main Carriage -->
-                                                <div *ngIf="!IsInlandDomestic && !IsCustomShipment">
+                                                <div *ngIf="!IsInlandDomestic && !EntityPM.IsCustomShipment">
                                                     <div class="SectionTitle">Main Carriage</div>
 
                                                     <table class="FixedTable">
@@ -979,7 +979,7 @@
                                                 </div>
 
                                                 <!-- Delivery -->
-                                                <div *ngIf="!IsInlandDomestic && !IsCustomShipment">
+                                                <div *ngIf="!IsInlandDomestic && !EntityPM.IsCustomShipment">
                                                     <div class="SectionTitle">Delivery</div>
 
                                                     <table class="FixedTable">
@@ -1112,7 +1112,7 @@
                                                 </div>
 
                                                 <!-- Inland Domestic Main Carriage -->
-                                                <div *ngIf="IsInlandDomestic && !IsCustomShipment">
+                                                <div *ngIf="IsInlandDomestic && !EntityPM.IsCustomShipment">
                                                     <div class="SectionTitle">Main Carriage</div>
 
                                                     <table class="FixedTable">
@@ -1482,7 +1482,7 @@
                                                 </div>
 
                                                 <!-- General -->
-                                                <div *ngIf="!IsCustomShipment">
+                                                <div *ngIf="!EntityPM.IsCustomShipment">
                                                     <div class="SectionTitle">{{'Shipment.S.NewShipment.General' | TextCodeTranslationPipe}}</div>
 
                                                     <table class="FixedTable">
@@ -1621,7 +1621,7 @@
                                                 </div>
 
                                                 <!-- Expected Order Details -->
-                                                <div *ngIf="!IsCustomShipment">
+                                                <div *ngIf="!EntityPM.IsCustomShipment">
                                                     <div class="SectionTitle">{{'Shipment.S.NewShipment.ExpectedOrderDetails' | TextCodeTranslationPipe}}</div>
 
                                                     <table style="height: 20px;">
@@ -1867,7 +1867,7 @@
                                                 </div>
 
                                                 <!-- Additional Fields -->
-                                                <div *ngIf="!IsCustomShipment">
+                                                <div *ngIf="!EntityPM.IsCustomShipment">
                                                     <div class="SectionTitle">{{'Shipment.S.NewShipment.AdditionalFields' | TextCodeTranslationPipe}}</div>
 
                                                     <table>
@@ -1910,7 +1910,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" id="{{'ShipmentCreatebtn' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsScreenEnabled || (IsCustomShipment && !IsCustomShipmentValid)" >{{OkButtonLabel}}</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" id="{{'ShipmentCreatebtn' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsScreenEnabled || (EntityPM.IsCustomShipment && !IsCustomShipmentValid)" >{{OkButtonLabel}}</button>
                     </td>
                 </tr>
             </table>

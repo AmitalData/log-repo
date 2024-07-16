@@ -67,6 +67,7 @@ using Logitude.BL.Security;
 using Logitude.BL.AnalyticTableServices;
 using System.Data.SqlClient;
 using Logitude.BL.Workflow;
+using Logitude.Customs.Def.EntityPMs;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -110,6 +111,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private Tenant loggedTenant;
         private ContactPM loggedContact;
         private ShipmentAssemblyRepository shipmentAssemblyRepository;
+        private ShipmentReferanceRepository shipmentReferanceRepository;
         private ShipmentStoragePricingRepository shipmentStoragePricingRepository;
         private ShipmentProductItemRepository shipmentProductItemRepository;
         private ShipmentUnassignedFieldRepository shipmentUnassignedFieldRepository;
@@ -183,6 +185,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.shipmentProductItemRepository = new ShipmentProductItemRepository(objectContext);
             this.shipmentUnassignedFieldRepository = new ShipmentUnassignedFieldRepository(objectContext);
             this.payableProratedAmountRepository = new PayableProratedAmountRepository(objectContext);
+            this.shipmentReferanceRepository = new ShipmentReferanceRepository(objectContext);
 
             this.computingPartnerRepository = new ComputingPartnerRepository(myCommonContext);
             this.computingPartnerTableRepository = new ComputingPartnerTableRepository(myCommonContext);
@@ -218,7 +221,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.initializer.ShipmentUnassignedFieldChangeSet = shipmentUnassignedFieldChangeSet;
         }
 
-        public void Create(bool isCustomShipment = false, string declarationOfficeCode = null)
+        public void Create()
         {
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
@@ -244,33 +247,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 this.InitializeComponent();
 
-                if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive && !isCustomShipment)
+                if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                 {
                     this.initializer.HandleValidators();
 
                     ShipmentValidating.Validate(entityPM, entityPoco, isNewEntity, myCommonContext, loggedTenant);
                     ShipmentValidating.ValidateFutureRoutingDates(entityPM, entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries);
-                }
-
-                if (isCustomShipment)
-                {
-                    // todo: validate
-                    // ShipmentValidating.ValidateFutureRoutingDates(entityPM, entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries);
-
-                    this.entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "SHIP", entityPM.DirectionId, entityPM.TransportModeId);
-
-                    // todo: execute UpdateINTTRASIStatuses
-                    entityPM.INTTRASIStatusCode = null;
-
-                    // todo: add AIR to AddShipmentTypes and execute it
-                    entityPM.ShipmentTypeId = null;
-
-                    // todo: get default values
-                    this.entityPM.SalesmanUserId = "1-1";
-                    this.entityPM.ReferantUserId = "1-1";
-
-                    this.entityPM.CreatedByUserId = loggedContact.Id;
-                    this.entityPM.UpdatedByUserId = loggedContact.Id;
                 }
 
                 foreach (ShipmentPackagePM itemPM in entityPM.ShipmentPackages)
@@ -453,6 +435,73 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 scope.Complete();
 
+            }
+        }
+
+        public void CreateCustomShipment()
+        {
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            {
+                this.isNewEntity = true;
+
+                this.InitializeComponent();
+
+                ShipmentValidating.ValidateCustomShipment(entityPM, true);
+
+                // generate shipment number
+                this.entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "SHIP", entityPM.DirectionId, entityPM.TransportModeId);
+
+                // todo: execute UpdateINTTRASIStatuses
+                entityPM.INTTRASIStatusCode = null;
+
+                // todo: add AIR to AddShipmentTypes and execute it
+                entityPM.ShipmentTypeId = null;
+
+                // todo: get default values
+                this.entityPM.SalesmanUserId = "1-1";
+                this.entityPM.ReferantUserId = "1-1";
+
+                this.entityPM.CreatedByUserId = loggedContact.Id;
+                this.entityPM.UpdatedByUserId = loggedContact.Id;
+
+                ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, entityPM.ShipmentPackages, objectContext, FieldChanges);
+
+                entityRepository.Add(entityPoco);
+                entityRepository.SubmitChanges();
+
+                entityPM.IsConnectToMasterShipment = entityMasterData != null ? true : false;
+                shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
+                shipmentBehaviourFacade.Handle(FieldChanges);
+                shipmentBehaviourFacade.HandleShipmentDigitalFields(shipmentDigitalFields);
+                shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
+                
+                AuditLog auditLog = null;
+                if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant))
+                {
+                    auditLog = AddShipmentAuditLogChanges(entityPoco);
+                    AuditLogRepository.Add(auditLog);
+                    AuditLogRepository.SubmitChanges();
+                }
+
+                new WorkflowEntityQueueMessage()
+                {
+                    Entity = WorkflowEntities.Shipment,
+                    EntityId = entityPM.Id,
+                    AuditLogId = auditLog?.Id,
+                    Tenant = entityPM.Tenant,
+                    Type = QueueMessagesTypes.Create,
+                    IsCustom = false
+                }.Produce();
+
+                new TaskDoneQueueMessage()
+                {
+                    Entity = WorkflowEntities.Shipment,
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    Type = QueueMessagesTypes.Create
+                }.Produce();
+
+                scope.Complete();
             }
         }
 
@@ -752,11 +801,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     this.RefreshFollowUpDate();
 
-                    // for custom shipments, do not update the activity (because table is created in crm project)
-                    if (this.entityPM.DirectionId != "C")
-                    {
                         this.UpdateExtendedTasksDueDate();
-                    }
 
                     if (this.entityPM != null && !this.entityPM.FromCTool)
                     {
@@ -813,6 +858,116 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
 
         }
+        public void UpdateCustomShipment()
+        {
+            InsertInShipmnetUpdateLog(0);
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    if (entityPM.CustomerId != entityPoco.CustomerId)
+                    {
+                        // myOldCustomerId = entityPoco.CustomerId;
+
+                        // todo: get default values (if value from client is not changed?)
+                        this.entityPM.DepartmentId = "1-1";
+                        this.entityPM.SalesmanUserId = "1-1";
+                        this.entityPM.ReferantUserId = "1-1";
+                    }
+
+                    ShipmentValidating.ValidateCustomShipment(entityPM, false);
+
+                    // todo: GrossWeight.Shipment + volume
+                    // יש לחשב את הגדול בין נפח בק"ג למשקל בק"ג ולעדכן את שדה משקל לחיוב
+                    // ChargeableWeight = max(Volume in kilo, GrossWeight in kilo)
+
+                    ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, new List<ShipmentPackagePM> { }, objectContext, FieldChanges);
+
+                    entityRepository.Update(entityPoco);
+                    ////
+                    entityRepository.SubmitChanges();
+
+                    // todo: update a list of shipment references
+                    /*
+                    ShipmentReferanceQuery shipmentReferanceQuery = new ShipmentReferanceQuery(tenant);
+                    ShipmentReferancePM shipmentReferancePM = shipmentReferanceQuery.GetSinglePM(this.entityPM.Id, tenant);
+
+                    if (entityPM.ReferenceType != shipmentReferancePM?.ReferenceType || entityPM.ReferenceValue != shipmentReferancePM?.ReferenceValue)
+                    {
+                        if (shipmentReferancePM == null)
+                        {
+                            shipmentReferancePM = new ShipmentReferancePM();
+                            this.CreateShipmentReferance(shipmentReferancePM);
+                        }
+
+                        shipmentReferancePM.ReferenceType = this.entityPM.ReferenceType;
+                        shipmentReferancePM.ReferenceValue = this.entityPM.ReferenceValue;
+                        this.UpdateShipmentReferance(shipmentReferancePM);
+                    }*/
+
+                    ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                    DeclarationReferantDataPM declarationReferantDataPM = shipmentQuery.GetDeclarationReferantData();
+                    declarationReferantDataPM.CarrierCode = this.entityPM.CarrierCode;
+                    declarationReferantDataPM.MawbDate = this.entityPM.MawbDate;
+                    declarationReferantDataPM.EstimatedArrivalDate = this.entityPM.EstimatedArrivalDate;
+                    declarationReferantDataPM.PackageTypeCode = this.entityPM.PackageTypeCode;
+
+                    declarationReferantDataPM.Vessel = this.entityPM.Vessel;
+                    declarationReferantDataPM.FlightVoyageNumber = this.entityPM.FlightVoyageNumber;
+                    declarationReferantDataPM.ArrivalDate = this.entityPM.ArrivalDate;
+                    declarationReferantDataPM.Commodity = this.entityPM.Commodity;
+
+                    shipmentQuery.UpdateDeclarationReferantData(declarationReferantDataPM);
+
+                    AuditLog auditLog = null;
+                    if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant))
+                    {
+                        auditLog = AddShipmentAuditLogChanges(entityPoco);
+                        AuditLogRepository.Add(auditLog);
+                        AuditLogRepository.SubmitChanges();
+                    }
+
+                    new WorkflowEntityQueueMessage()
+                    {
+                        Entity = WorkflowEntities.Shipment,
+                        EntityId = entityPM.Id,
+                        AuditLogId = auditLog?.Id,
+                        Tenant = entityPM.Tenant,
+                        Type = QueueMessagesTypes.Update,
+                        IsCustom = false
+                    }.Produce();
+
+                    new TaskDoneQueueMessage()
+                    {
+                        Entity = WorkflowEntities.Shipment,
+                        EntityId = entityPM.Id,
+                        Tenant = entityPM.Tenant,
+                        Type = QueueMessagesTypes.Update
+                    }.Produce();
+
+                    scope.Complete();
+                }
+                InsertInShipmnetUpdateLog(1);
+            }
+            catch (Exception ex)
+            {
+
+                string errorMessage = ex.Message + Environment.NewLine;
+
+                if (ex.InnerException != null)
+                {
+
+                    errorMessage = errorMessage + " (" + (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) + ")" + Environment.NewLine;
+
+                }
+
+                errorMessage = errorMessage + ex.StackTrace + Environment.NewLine;
+                InsertInShipmnetUpdateLog(-1, errorMessage);
+                throw ex;
+            }
+
+        }
+
 
         private AuditLog AddShipmentAuditLogChanges(Shipment entityPoco)
         {
@@ -6739,6 +6894,37 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (itemPoco != null)
             {
                 shipmentStoragePricingRepository.Remove(itemPoco);
+            }
+        }
+
+        private void CreateShipmentReferance(ShipmentReferancePM itemPM)
+        {
+            itemPM.ShipmentId = entityPM.Id;
+            itemPM.Tenant = tenant;
+
+            ShipmentReferance itemPoco = new ShipmentReferance()
+            {
+                ShipmentId = itemPM.ShipmentId,
+            };
+
+            ShipmentMapping.MapShipmentReferance(itemPM, itemPoco, true);
+            shipmentReferanceRepository.Add(itemPoco);
+        }
+        private void UpdateShipmentReferance(ShipmentReferancePM itemPM)
+        {
+            ShipmentReferance itemPoco = shipmentReferanceRepository.GetSingleShipmentReferance(itemPM.ShipmentId, itemPM.Tenant);
+            if (itemPoco != null)
+            {
+                ShipmentMapping.MapShipmentReferance(itemPM, itemPoco, false);
+                shipmentReferanceRepository.Update(itemPoco);
+            }
+        }
+        private void DeleteShipmentReferance(ShipmentReferancePM itemPM)
+        {
+            ShipmentReferance itemPoco = shipmentReferanceRepository.GetSingleShipmentReferance(itemPM.ShipmentId, itemPM.Tenant);
+            if (itemPoco != null)
+            {
+                shipmentReferanceRepository.Remove(itemPoco);
             }
         }
 

@@ -1815,55 +1815,28 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             #endregion
 
-            shipmentPM.ReferantUserId = shipment.ReferantUserId;
-            // shipmentPM.ReferantUserId = shipment.UserId.Id;
-            shipmentPM.IskaNumber = shipment.IskaNumber;
-            // todo: maping
-            shipmentPM.Status = "aa"; //  shipment?.Status;
-
             if (shipment.DirectionId == "C")
             {
-                // todo: get declaration
-                DeclarationPM declaration = new DeclarationPM() {
-                    DeclarationNumber = "1",
-                    DeclarationOfficeCode = "2",
-                    HatraDate = DateTime.Now,
-                    ProcedureCurrentCode = "3",
-                    ExternalDeclarationNumber = "4",
-                    DeclarationStatusTypeCode = "5",
-                };
-
-                shipmentPM.DeclarationNumber = declaration?.DeclarationNumber;
-                shipmentPM.DeclarationOfficeCode = declaration?.DeclarationOfficeCode;
-                shipmentPM.HatraDate = declaration?.HatraDate;
-                shipmentPM.ProcedureCurrentCode = declaration?.ProcedureCurrentCode;
-                shipmentPM.ExternalDeclarationNumber = declaration?.ExternalDeclarationNumber;
-                shipmentPM.DeclarationStatusTypeCode = declaration?.DeclarationStatusTypeCode;
+                shipmentPM.ReferantUserId = shipment.ReferantUserId;
+                // shipmentPM.ReferantUserId = shipment.UserId.Id;
+                shipmentPM.IskaNumber = shipment.IskaNumber;
+                shipmentPM.Status = "aa"; // todo: mapping
 
                 // todo: get declaration referent data
-                DeclarationReferantDataPM declarationReferantData = new DeclarationReferantDataPM()
+                DeclarationReferantDataPM declarationReferantData = GetDeclarationReferantData();
+                if (declarationReferantData != null)
                 {
-                    CarrierCode = "6",
-                    Mawb = "7",
-                    Hawb = "8",
-                    ArrivalDate = DateTime.Now,
-                    EstimatedArrivalDate = DateTime.Now,
-                    PackageTypeCode = "9",
-                    Vessel = "10",
-                    FlightVoyageNumber = "11",
-                    Commodity = "12",
-                };
-                shipmentPM.CarrierCodeMawb = declarationReferantData?.CarrierCode + "-" + declarationReferantData?.Mawb;
-                shipmentPM.CarrierCode = declarationReferantData?.CarrierCode;
-                shipmentPM.Mawb = declarationReferantData?.Mawb;
-                shipmentPM.MawbDate = declarationReferantData?.MawbDate;
-                shipmentPM.Hawb = declarationReferantData?.Hawb;
-                shipmentPM.ArrivalDate = declarationReferantData?.ArrivalDate;
-                shipmentPM.EstimatedArrivalDate = declarationReferantData?.EstimatedArrivalDate;
-                shipmentPM.PackageTypeCode = declarationReferantData?.PackageTypeCode;
-                shipmentPM.Vessel = declarationReferantData?.Vessel;
-                shipmentPM.FlightVoyageNumber = declarationReferantData?.FlightVoyageNumber;
-                shipmentPM.Commodity = declarationReferantData?.Commodity;
+                    shipmentPM.CarrierCode = declarationReferantData?.CarrierCode;
+                    shipmentPM.MawbDate = declarationReferantData?.MawbDate;
+                    shipmentPM.Hawb = declarationReferantData?.Hawb;
+                    shipmentPM.ArrivalDate = declarationReferantData?.ArrivalDate;
+                    shipmentPM.EstimatedArrivalDate = declarationReferantData?.EstimatedArrivalDate;
+                    shipmentPM.PackageTypeCode = declarationReferantData?.PackageTypeCode;
+                    shipmentPM.Vessel = declarationReferantData?.Vessel;
+                    shipmentPM.FlightVoyageNumber = declarationReferantData?.FlightVoyageNumber;
+                    shipmentPM.Commodity = declarationReferantData?.Commodity;
+                }
+
             }
 
             // Warehouse Leg 
@@ -2748,6 +2721,28 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return shipmentPM;
         }
+
+        public DeclarationReferantDataPM GetDeclarationReferantData()
+        {
+            DeclarationReferantDataPM declarationReferantData = new DeclarationReferantDataPM()
+            {
+                CarrierCode = "6",
+                Mawb = "7",
+                Hawb = "8",
+                ArrivalDate = DateTime.Now,
+                EstimatedArrivalDate = DateTime.Now,
+                PackageTypeCode = "9",
+                Vessel = "10",
+                FlightVoyageNumber = "11",
+                Commodity = "12",
+            };
+            return declarationReferantData;
+        }
+        public void UpdateDeclarationReferantData(DeclarationReferantDataPM declarationReferantDataPM)
+        {
+
+        }
+
 
         private void SetInlandDomesticCountryFields(ShipmentPM shipmentPM, PortRepository portsRep)
         {

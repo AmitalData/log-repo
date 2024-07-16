@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "98a3cf8a711a6129927bf72fc33816bd";
+		public const string HashString = "98a3cf8a711a6129927bf72fc33816bt";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -9452,7 +9452,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FreightForwarderId",
 					  						DefaultText =  "Freight Forwarder",
-					  						IsForeignKey =  true,
+										    IsForeignKey =  true,
 					  						ForeignEntity =  "Card",
 					  						NavigationPropertyName =  "FreightForwarderCard",
 					  						IsMaxLength =  false,
@@ -91154,10 +91154,71 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
+
+               AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+			   {
+											FieldName = "IsCustomShipment",
+											ObjectTableName = "Shipment",
+											FieldsDataType = "Boolean",
+											MinLength = 0,
+											MaxLength = 15,
+											IsRequired = false,
+											CopyToDW = false,
+											DisplayOnLookUp = false,
+											DisplayOnLookUpLocal = false,
+											CanFilter = false,
+											DisplayOnly = false,
+											SystemRequired = false,
+											SystemMaxLength = 0,
+											DisplayInList = false,
+											IsCustomFilter = false,
+											IsListFilter = false,
+											Operator = "Equals",
+											MultiLine = false,
+											IsTimeFrameFilter = false,
+											DisplayInSearchWindowList = false,
+											PMPropertyPath = "IsCustomShipment",
+											ListPropertyPath = "IsCustomShipment",
+											DisplayInLookUpIndex = 0,
+											AutomaticField = false,
+											UniqueField = false,
+											DisplayInSearchWindowListIndex = 0,
+											IsMulti = false,
+											DependencyFilter1IsList = false,
+											DependencyFilter2IsList = false,
+											DependencyFilter3IsList = false,
+											IsRestrictable = false,
+											DisplayInEntityVariables = false,
+											AllowedInCustomerFieldsSettings = false,
+											DisplayInSearchWindowFilters = false,
+											DisplayInSearchWindowFiltersIndex = 0,
+											DisplayInDocumentReferences = false,
+											NumberOfDigits = 0,
+											DigitsAfterPoint = 0,
+											InActive = false,
+											DisplayLongName = false,
+											FullFieldLable = "IsCustomShipment",
+											DefaultText = "Is Custom Shipment",
+											IsForeignKey = false,
+											IsMaxLength = false,
+											NoMetaDataField = false,
+											IsFixedLength = false,
+											EnableAutoFill = false,
+											IncludeInSearchField = false,
+											AllowedinAutomationConditions = false,
+											AutomationEmailRecipient = false,
+											CanAutomateSetValue = false,
+											DisplayInAutomationAsEnitity = false,
+											HasTemplate = false,
+											IsCustom = false,
+											EnableFullscreenTextBox = false,
+
+			   }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes, objectTables, addedFields, addedTextCodes);
+
+        }
+
+        public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
@@ -97033,9 +97094,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   TextCode ShipmentTextCode_ShipmentOShipmentPackagesGeneral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.ShipmentPackages.General", DefaultText = "ShipmentPackages",LocalDefaultText = @"מסך מכולות ", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-   
-	    
-}
+           TextCode ShipmentTextCode_ShipmentOVolumeKgCbm = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.VolumeKgCbm", DefaultText = "Volume (KG/CBM)", LocalDefaultText = @"נפח (KG/CBM)", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+           TextCode ShipmentTextCode_ShipmentOReferenceTypeValue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.ReferenceTypeValue", DefaultText = "Reference Type Value", LocalDefaultText = @"מס' הזמנת לקוח", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+           TextCode ShipmentTextCode_ShipmentOFreightForwarderIdShipmentNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.FreightForwarderIdShipmentNumber", DefaultText = "FreightForwarderId ShipmentNumber", LocalDefaultText = @"משלח/אסמכתא משלח", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+        }
 
     
 
