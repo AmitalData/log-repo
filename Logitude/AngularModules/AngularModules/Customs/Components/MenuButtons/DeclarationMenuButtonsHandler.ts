@@ -684,7 +684,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 case "DeclarationsStatusRequest":
                     {
                         this.DeclarationsStatusRequestMethod();
-                        //SaveDeclarationMethod("Dec larationsStatusRequest");
+                        //SaveDeclarationMethod("DeclarationsStatusRequest");
                         break;
                     }
 
@@ -1165,7 +1165,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                                 canResetDeclaration = false;
                             } else {
                                 for (let request of requestSheets) {
-                                    if (request.RequestStatusCode == analyzed) {
+                                    if (request.RequestStatusCode != analyzed) {
                                         canResetDeclaration = false;
                                         break;
                                     }
