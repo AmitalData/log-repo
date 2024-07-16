@@ -19,19 +19,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="SourceTenant"
-    Type="int">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="SourceTenantName"
-    Type="varchar"
-    Size="100">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="ShipmentId"
     Type="varchar"
     Size="15">
@@ -39,16 +26,69 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ShipmentLevelCode"
+    Name="BookingId"
     Type="varchar"
-    Size="1">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="BookingId"
+    Name="IsCancelled"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AirlinePrefix"
     Type="varchar"
-    Size="15">
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ProductName"
+    Type="nvarchar"
+    Size="120">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Sender"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Direct"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="MessagingStatus"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SourceTenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SourceTenantName"
+    Type="nvarchar"
+    Size="200">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShipmentLevelCode"
+    Type="varchar"
+    Size="1">
     <Constraints
       Nullable="true" />
   </Column>
@@ -106,8 +146,8 @@
   </Column>
   <Column
     Name="EntityCreatedByUserName"
-    Type="varchar"
-    Size="60">
+    Type="nvarchar"
+    Size="120">
     <Constraints
       Nullable="false" />
   </Column>
@@ -198,22 +238,22 @@
   </Column>
   <Column
     Name="DescriptionOfGoods"
-    Type="varchar"
-    Size="512">
+    Type="nvarchar"
+    Size="1024">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="ShipperName"
-    Type="varchar"
-    Size="70">
+    Type="nvarchar"
+    Size="140">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="ConsigneeName"
-    Type="varchar"
-    Size="70">
+    Type="nvarchar"
+    Size="140">
     <Constraints
       Nullable="true" />
   </Column>
@@ -293,46 +333,6 @@
     Name="SearchFields"
     Type="nvarchar"
     Size="1000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="IsCancelled"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="AirlinePrefix"
-    Type="varchar"
-    Size="4">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ProductName"
-    Type="varchar"
-    Size="60">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Sender"
-    Type="varchar"
-    Size="60">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Direct"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="MessagingStatus"
-    Type="varchar"
-    Size="60">
     <Constraints
       Nullable="true" />
   </Column>
