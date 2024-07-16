@@ -336,7 +336,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    ( (CardsDatas.InsuredcreditLimit ?? 0) / CardsDatas.CreditLimit * 100 ),
                                                    ContactId = a.ContactId,
                                                    ContactName = a.ContactId != null ? (a.Contact.LocalName ?? a.Contact.EnglishName) : null,
-
+                                                   ContactPhone = a.Contact != null ? a.Contact.BusinessPhone : null,
+                                                   ContactEmail = a.Contact != null ? a.Contact.Email : null,
+                                                   SalesmanName = a.SalesmanUserId != null ? (a.SalesmanUser.Contact != null ? (a.SalesmanUser.Contact.LocalName == null ? a.SalesmanUser.Contact.EnglishName : a.SalesmanUser.Contact.LocalName) : null) : null,
+                                                   CollectorName = a.CollectorId != null ? (a.CollectorUser.Contact != null ? (a.CollectorUser.Contact.LocalName == null ? a.CollectorUser.Contact.EnglishName : a.CollectorUser.Contact.LocalName) : null) : null,
+                                                   SalesmanUserId = a.SalesmanUserId,
 
                                                }); ;
 
@@ -659,6 +663,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                            InsuredCreditPercentage = glaccount.InsuredCreditPercentage,
                            ContactId = glaccount.ContactId,
                            ContactName = glaccount.ContactName,
+                           ContactPhone = glaccount.ContactPhone,
+                           ContactEmail = glaccount.ContactEmail,
+                           SalesmanName = glaccount.SalesmanName,
+                           CollectorName = glaccount.CollectorName,
+                           SalesmanUserId = glaccount.SalesmanUserId,
                        };
 
 
@@ -995,6 +1004,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                               ContactPhone = a.Contact != null ? a.Contact.BusinessPhone : null,
                                                               ContactEmail  = a.Contact != null ? a.Contact.Email : null,
                                                               ContactName = a.ContactId != null ? (a.Contact.LocalName ?? a.Contact.EnglishName) : null,
+                                                              ActiveForInterest = a.ActiveForInterest,
                                                           });
             //var xxx = accountListQuery.ToList();
 
