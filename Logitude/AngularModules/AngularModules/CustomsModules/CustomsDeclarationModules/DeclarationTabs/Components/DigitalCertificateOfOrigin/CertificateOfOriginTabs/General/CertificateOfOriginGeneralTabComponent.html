@@ -12,14 +12,14 @@
         </td>
         <td *ngIf="entityPM.IsChange && entityPM.COONumber != null || ErrorsList?.length > 0">
             <div *ngIf="ErrorsList?.length > 0">
-                <ValidationSummary  class="StyleMess" [ItemsSource]="ErrorsList" [SingleLine]="true"></ValidationSummary>
+                <ValidationSummary class="StyleMess" [ItemsSource]="ErrorsList" [SingleLine]="true"></ValidationSummary>
             </div>
-            <div *ngIf="entityPM.IsChange && entityPM.COONumber != null"  style="width:90%;text-align:center">
+            <div *ngIf="entityPM.IsChange && entityPM.COONumber != null" style="width:90%;text-align:center">
                 <div class="DisbleBox">
                     {{'Customs.CertificateOfOrigin.O.IsChange'| TextCodeTranslationPipe}}
                 </div>
             </div>
-        </td> 
+        </td>
     </tr>
     <tr style="height:300px">
         <td style="vertical-align:top">
@@ -45,7 +45,8 @@
                         <td style="width:180px">
                             <LogLov [ObjectFieldName]="'RequestReasonCode'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext" [LookUpTableName]="'Customs.RequestReasonCodeEnum'"
-                                [SelectedValue]="RequestReasonCode" [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
+                                [SelectedValue]="RequestReasonCode" [HideColumns]="true" [CustomizedWidth]="180">
+                            </LogLov>
                         </td>
                         <td style="width: 30px;"></td>
                         <td style="width:130px">
@@ -65,29 +66,41 @@
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:180px" class="nameBox">
-                            
 
-                                <LogTextBox [ObjectFieldName]="'ExporterName'" [DataContext]="DataContext"
-                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsMultiline]="true" [EnableKeyDown]="true" [Direction]="'LTR'"></LogTextBox>
-                             
+
+                            <LogTextBox [ObjectFieldName]="'ExporterName'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsMultiline]="true"
+                                [EnableKeyDown]="true" [Direction]="'LTR'"></LogTextBox>
+
                         </td>
                         <td style="width:130px; padding-right: 10px">
                             <LogLabel [ObjectFieldName]="'ConsigneeName'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td style="width:180px"  class="nameBox">
+                        <td style="width:180px" class="nameBox">
                             <LogTextBox [ObjectFieldName]="'ConsigneeName'" [DataContext]="DataContext"
-                                [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsMultiline]="true" [EnableKeyDown]="true" [Direction]="'LTR'">></LogTextBox>
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsMultiline]="true"
+                                [EnableKeyDown]="true" [Direction]="'LTR'">></LogTextBox>
                         </td>
                         <td style="width: 30px;"></td>
-                        <td style="width:130px" class="boxBorderRightTop">
-                            <LogLabel [ObjectFieldName]="'OriginCountry'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
+                        <td style="width:130px">
+                            <div class="boxBorderRightTop">
+                                <LogLabel [ObjectFieldName]="'OriginCountry'" [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"></LogLabel>
+                            </div>
                         </td>
-                        <td style="width:180px" class="boxBorderLeftTop">
-                            <LogLov [ObjectFieldName]="'OriginCountry'" [ObjectTableName]="ObjectTableName"
-                                [SelectedValue]="OriginCountry" [DataContext]="DataContext"
-                                [LookUpTableName]="'Customs.CustomsCountry'" [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
+                        <td style="width:180px">
+                            <div class="boxBorderLeftTop">
+                                <div>
+                                    <div style="height: 9px;"></div>
+                                    <LogLov [ObjectFieldName]="'OriginCountry'" [ObjectTableName]="ObjectTableName"
+                                        [SelectedValue]="OriginCountry" [DataContext]="DataContext"
+                                        [LookUpTableName]="'Customs.CustomsCountry'" [HideColumns]="true"
+                                        [CustomizedWidth]="180"></LogLov>
+                                </div>
+                                <div style="height: 5px; "></div>
+
+                            </div>
                         </td>
                     </tr>
 
@@ -100,40 +113,62 @@
                         <td style="width:180px;" rowspan="2" class="AddressBox">
                             <LogTextBox style="width:240px;max-height: 50px;" [IsMultiline]="true"
                                 [ObjectFieldName]="'ExporterAddress'" [HideColumns]="true"
-                                [ObjectTableName]="ObjectTableName" [InputType]="'nText'" [DataContext]="DataContext" [Direction]="'LTR'">
+                                [ObjectTableName]="ObjectTableName" [InputType]="'nText'" [DataContext]="DataContext"
+                                [Direction]="'LTR'">
                             </LogTextBox>
                         </td>
                         <td style="width:130px; padding-right: 10px" rowspan="2">
                             <LogLabel [ObjectFieldName]="'ConsigneeAddress'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td style="width:180px" rowspan="2"  class="AddressBox">
+                        <td style="width:180px" rowspan="2" class="AddressBox">
                             <LogTextBox style="width:240px;" [IsMultiline]="true" [ObjectFieldName]="'ConsigneeAddress'"
                                 [HideColumns]="true" [ObjectTableName]="ObjectTableName" [InputType]="'nText'"
                                 [DataContext]="DataContext" [Direction]="'LTR'"></LogTextBox>
                         </td>
                         <td style="width: 30px;"></td>
-                        <td style="width:130px" rowspan="1" class="boxBorderRightBottom">
-                            <LogLabel [ObjectFieldName]="'OriginGroupOfCountry'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
+                        <td style="width:130px">
+                            <div class="boxBorderRightBottom">
+                                <div>
+                                    <LogLabel [ObjectFieldName]="'OriginGroupOfCountry'"
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </div>
+                                <div style="height: 5px;"></div>
+                            </div>
                         </td>
-                        <td style="width:180px" rowspan="1" class="boxBorderLeftBottom">
-                            <LogLov [ObjectFieldName]="'OriginGroupOfCountry'" [ObjectTableName]="ObjectTableName"
-                                [SelectedValue]="OriginGroupOfCountry" [DataContext]="DataContext"
-                                [LookUpTableName]="'Customs.CountryGroup'" [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
+                        <td style="width:180px">
+                            <div class="boxBorderLeftBottom">
+                                <div>
+                                    <div style="height: 9px;"></div>
+                                    <LogLov [ObjectFieldName]="'OriginGroupOfCountry'"
+                                        [ObjectTableName]="ObjectTableName" [SelectedValue]="OriginGroupOfCountry"
+                                        [DataContext]="DataContext" [LookUpTableName]="'Customs.CountryGroup'"
+                                        [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
+                                </div>
+                                <div style="height: 5px;"></div>
+                            </div>
                         </td>
-                    </tr>
-                    <!-- Third Row B -->
+                        <!-- Third Row B -->
                     <tr class="FieldRow">
                         <td style="width: 30px;"></td>
-                        <td style="width:130px" rowspan="1" class="boxBorderRightTop">
-                            <LogLabel [ObjectFieldName]="'DestinationCountry'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
+                        <td style="width:130px" rowspan="1">
+                            <div class="boxBorderRightTop">
+                                <LogLabel [ObjectFieldName]="'DestinationCountry'" [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"></LogLabel>
+                            </div>
                         </td>
-                        <td style="width:180px" rowspan="1" class="boxBorderLeftTop">
-                            <LogLov [ObjectFieldName]="'DestinationCountry'" [ObjectTableName]="ObjectTableName"
-                                [SelectedValue]="DestinationCountry" [DataContext]="DataContext"
-                                [LookUpTableName]="'Customs.CustomsCountry'" [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
+                        <td style="width:180px" rowspan="1">
+                            <div class="boxBorderLeftTop">
+                                <div>
+                                    <div style="height: 9px;"></div>
+
+                                    <LogLov [ObjectFieldName]="'DestinationCountry'" [ObjectTableName]="ObjectTableName"
+                                        [SelectedValue]="DestinationCountry" [DataContext]="DataContext"
+                                        [LookUpTableName]="'Customs.CustomsCountry'" [HideColumns]="true"
+                                        [CustomizedWidth]="180"></LogLov>
+                                </div>
+                                <div style="height: 5px; "></div>
+                            </div>
                         </td>
                     </tr>
 
@@ -146,7 +181,8 @@
                         <td style="width:180px">
                             <LogLov [ObjectFieldName]="'ExporterCountry'" [ObjectTableName]="ObjectTableName"
                                 [SelectedValue]="ExporterCountry" [DataContext]="DataContext"
-                                [LookUpTableName]="'Customs.CustomsCountry'" [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
+                                [LookUpTableName]="'Customs.CustomsCountry'" [HideColumns]="true"
+                                [CustomizedWidth]="180"></LogLov>
                         </td>
                         <td style="width:130px; padding-right: 10px">
                             <LogLabel [ObjectFieldName]="'ConsigneeCountry'" [ObjectTableName]="ObjectTableName"
@@ -155,22 +191,35 @@
                         <td style="width:180px">
                             <LogLov [ObjectFieldName]="'ConsigneeCountry'" [ObjectTableName]="ObjectTableName"
                                 [SelectedValue]="ConsigneeCountry" [DataContext]="DataContext"
-                                [LookUpTableName]="'Customs.CustomsCountry'" [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
+                                [LookUpTableName]="'Customs.CustomsCountry'" [HideColumns]="true"
+                                [CustomizedWidth]="180"></LogLov>
                         </td>
                         <td style="width: 30px;"></td>
-                        <td style="width:130px" class="boxBorderRightBottom">
-                            <LogLabel [ObjectFieldName]="'DestinationGroupOfCountries'"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        <td style="width:130px">
+                            <div class="boxBorderRightBottom">
+                                <div>
+                                    <LogLabel [ObjectFieldName]="'DestinationGroupOfCountries'"
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </div>
+                                <div style="height: 5px;"></div>
+                            </div>
                         </td>
-                        <td style="width:180px" class="boxBorderLeftBottom">
-                            <LogLov [ObjectFieldName]="'DestinationGroupOfCountries'"
-                                [ObjectTableName]="ObjectTableName" [SelectedValue]="DestinationGroupOfCountries"
-                                [DataContext]="DataContext" [LookUpTableName]="'Customs.CountryGroup'"
-                                [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
+                        <td style="width:180px">
+                            <div class="boxBorderLeftBottom">
+                                <div>
+                                    <div style="height: 9px;"></div>
+                                    <LogLov [ObjectFieldName]="'DestinationGroupOfCountries'"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [SelectedValue]="DestinationGroupOfCountries" [DataContext]="DataContext"
+                                        [LookUpTableName]="'Customs.CountryGroup'" [HideColumns]="true"
+                                        [CustomizedWidth]="180"></LogLov>
+                                </div>
+                                <div style="height: 5px;"></div>
+                            </div>
                         </td>
-                    </tr>
 
-                    <!-- Fifth Row -->
+
+                        <!-- Fifth Row -->
                     <tr class="FieldRow">
                         <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'PlaceOfManufacture'" [ObjectTableName]="ObjectTableName"
@@ -179,7 +228,8 @@
                         <td style="width:180px">
                             <LogLov [ObjectFieldName]="'PlaceOfManufacture'" [ObjectTableName]="ObjectTableName"
                                 [SelectedValue]="PlaceOfManufacture" [DataContext]="DataContext"
-                                [LookUpTableName]="'Customs.City'" [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
+                                [LookUpTableName]="'Customs.City'" [HideColumns]="true" [CustomizedWidth]="180">
+                            </LogLov>
                         </td>
                         <td style="width:130px; padding-right: 10px">
                             <LogLabel [ObjectFieldName]="'ZipCodeOfManufacture'" [ObjectTableName]="ObjectTableName"
@@ -197,7 +247,8 @@
                         <td style="width:180px">
                             <LogLov [ObjectFieldName]="'TradeAgreementCountry1'" [ObjectTableName]="ObjectTableName"
                                 [SelectedValue]="TradeAgreementCountry1" [DataContext]="DataContext"
-                                [LookUpTableName]="'Customs.CustomsCountry'" [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
+                                [LookUpTableName]="'Customs.CustomsCountry'" [HideColumns]="true"
+                                [CustomizedWidth]="180"></LogLov>
                         </td>
                     </tr>
 
@@ -208,14 +259,25 @@
                         <td></td>
                         <td></td>
                         <td style="width: 30px;"></td>
-                        <td style="width:130px" class="boxBorderRightTop">
-                            <LogLabel [ObjectFieldName]="'TradeAgreementCountry2'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
+                        <td style="width:130px">
+                            <div class="boxBorderRightTop">
+
+                                <LogLabel [ObjectFieldName]="'TradeAgreementCountry2'"
+                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </div>
                         </td>
-                        <td style="width:180px" class="boxBorderLeftTop">
-                            <LogLov [ObjectFieldName]="'TradeAgreementCountry2'" [ObjectTableName]="ObjectTableName"
-                                [SelectedValue]="TradeAgreementCountry2" [DataContext]="DataContext"
-                                [LookUpTableName]="'Customs.CustomsCountry'" [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
+                        <td style="width:180px">
+                            <div class="boxBorderLeftTop">
+                                <div>
+                                    <div style="height: 9px;"></div>
+                                    <LogLov [ObjectFieldName]="'TradeAgreementCountry2'"
+                                        [ObjectTableName]="ObjectTableName" [SelectedValue]="TradeAgreementCountry2"
+                                        [DataContext]="DataContext" [LookUpTableName]="'Customs.CustomsCountry'"
+                                        [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
+                                </div>
+                                <div style="height: 5px; "></div>
+
+                            </div>
                         </td>
                     </tr>
 
@@ -238,15 +300,27 @@
                             </div>
                         </td>
                         <td style="width: 30px;"></td>
-                        <td class="boxBorderRightBottom">
-                            <LogLabel [ObjectFieldName]="'TradeAgreementGroupOfCountries'"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        <td>
+                            <div class="boxBorderRightBottom">
+                                <div>
+                                    <LogLabel [ObjectFieldName]="'TradeAgreementGroupOfCountries'"
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </div>
+                                <div style="height: 5px;"></div>
+                            </div>
                         </td>
-                        <td class="boxBorderLeftBottom">
-                            <LogLov [ObjectFieldName]="'TradeAgreementGroupOfCountries'"
-                                [ObjectTableName]="ObjectTableName" [SelectedValue]="TradeAgreementGroupOfCountries"
-                                [DataContext]="DataContext" [LookUpTableName]="'Customs.CountryGroup'"
-                                [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
+                        <td>
+                            <div class="boxBorderLeftBottom">
+                                <div>
+                                    <div style="height: 9px;"></div>
+                                    <LogLov [ObjectFieldName]="'TradeAgreementGroupOfCountries'"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [SelectedValue]="TradeAgreementGroupOfCountries" [DataContext]="DataContext"
+                                        [LookUpTableName]="'Customs.CountryGroup'" [HideColumns]="true"
+                                        [CustomizedWidth]="180"></LogLov>
+                                </div>
+                                <div style="height: 5px;"></div>
+                            </div>
                         </td>
                     </tr>
 
@@ -331,12 +405,13 @@
                                                 <span>{{item.DescriptionOfInvoice}}</span>
                                             </div>
                                             <div style="width: 164.5px;" class="DescriptionBox" *ngIf="!IsDisplayOnly">
-                                                <LogTextBox #DescriptionOfInvoiceTextBox 
+                                                <LogTextBox #DescriptionOfInvoiceTextBox
                                                     [ObjectFieldName]="'DescriptionOfInvoice'" [DataContext]="item"
                                                     [FocusOnMe]="true" [InputType]="'nText'" [IsAccumulative]="true"
                                                     [Text]="item.DescriptionOfInvoice"
                                                     [ObjectTableName]="'Customs.CertificateOriginInvoice'"
-                                                    [HideColumns]="true" [IsMultiline]="true" [EnableKeyDown]="true" [Direction]="'LTR'">
+                                                    [HideColumns]="true" [IsMultiline]="true" [EnableKeyDown]="true"
+                                                    [Direction]="'LTR'">
                                                 </LogTextBox>
                                             </div>
                                         </log-cell-template>
@@ -400,17 +475,17 @@
                                                 <span>{{item.MarksAndNumbers}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode"> -->
-                                            <div class="TextTrimming" style="text-align:right"
-                                                *ngIf="IsDisplayOnly">
+                                            <div class="TextTrimming" style="text-align:right" *ngIf="IsDisplayOnly">
                                                 <span>{{item.MarksAndNumbers}}</span>
                                             </div>
                                             <div class="Tbl1Col1 DescriptionBox" *ngIf="!IsDisplayOnly">
                                                 <LogTextBox #MarksAndNumbersTextBox
                                                     [ObjectFieldName]="'MarksAndNumbers'" [DataContext]="item"
-                                                     [InputType]="'nText'" [IsAccumulative]="true"
+                                                    [InputType]="'nText'" [IsAccumulative]="true"
                                                     [Text]="item.MarksAndNumbers"
                                                     [ObjectTableName]="'Customs.CertificateOfOriginItem'"
-                                                    [HideColumns]="true" [IsMultiline]="true" [EnableKeyDown]="true" [Direction]="'LTR'">
+                                                    [HideColumns]="true" [IsMultiline]="true" [EnableKeyDown]="true"
+                                                    [Direction]="'LTR'">
                                                 </LogTextBox>
                                             </div>
                                         </log-cell-template>
@@ -433,13 +508,15 @@
                                             <div class="TextTrimming" style="text-align:right" *ngIf="IsDisplayOnly">
                                                 <span>{{item.ItemDescription}}</span>
                                             </div>
-                                            <div class="Tbl1Col1 DescriptionBox" style="width: 125;" *ngIf="!IsDisplayOnly">
+                                            <div class="Tbl1Col1 DescriptionBox" style="width: 125;"
+                                                *ngIf="!IsDisplayOnly">
                                                 <LogTextBox #ItemDescriptionTextBox
                                                     [ObjectFieldName]="'ItemDescription'" [DataContext]="item"
-                                                      [InputType]="'nText'" [IsAccumulative]="true"
+                                                    [InputType]="'nText'" [IsAccumulative]="true"
                                                     [Text]="item.ItemDescription"
                                                     [ObjectTableName]="'Customs.CertificateOriginInvoice'"
-                                                    [HideColumns]="true" [IsMultiline]="true" [EnableKeyDown]="true" [Direction]="'LTR'">
+                                                    [HideColumns]="true" [IsMultiline]="true" [EnableKeyDown]="true"
+                                                    [Direction]="'LTR'">
                                                 </LogTextBox>
                                             </div>
                                         </log-cell-template>
@@ -453,7 +530,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate
                                             (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                            [RIndex]="item.ItemSerial"  [IsEnabled]="!IsDisplayOnly">
+                                            [RIndex]="item.ItemSerial" [IsEnabled]="!IsDisplayOnly">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.PackageQuantity}}</span>
@@ -477,7 +554,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate
                                             (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                            [RIndex]="item.ItemSerial"  [IsEnabled]="!IsDisplayOnly">
+                                            [RIndex]="item.ItemSerial" [IsEnabled]="!IsDisplayOnly">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.PackingTypeName}}</span>
@@ -500,15 +577,15 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate
                                             (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                            [RIndex]="item.ItemSerial"  [IsEnabled]="!IsDisplayOnly">
+                                            [RIndex]="item.ItemSerial" [IsEnabled]="!IsDisplayOnly">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.Weight}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox #WeightTextBox [ObjectFieldName]="'Weight'"
-                                                    [DataContext]="item"   [InputType]="'number'"
-                                                    [IsAccumulative]="true" [Text]="item.Weight"
+                                                    [DataContext]="item" [InputType]="'number'" [IsAccumulative]="true"
+                                                    [Text]="item.Weight"
                                                     [ObjectTableName]="'Customs.CertificateOfOriginItem'"
                                                     [HideColumns]="true"></LogTextBox>
                                             </div>
@@ -522,18 +599,17 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate
                                             (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                            [RIndex]="item.ItemSerial"  [IsEnabled]="!IsDisplayOnly">
+                                            [RIndex]="item.ItemSerial" [IsEnabled]="!IsDisplayOnly">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.MeasureTypeName}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogLov #MeasureTypeTextBox [ObjectFieldName]="'MeasureType'"
-                                                    [ObjectTableName]="'Customs.CertificateOfOriginItem'" [DataContext]="item"
-                                                    [LookUpTableName]="'Customs.MeasurmentUnit'"
+                                                    [ObjectTableName]="'Customs.CertificateOfOriginItem'"
+                                                    [DataContext]="item" [LookUpTableName]="'Customs.MeasurmentUnit'"
                                                     (SelectedItemChanged)="item.SetLocalName($event, 'MeasureTypeName',item,CertificateOriginItemItems)"
-                                                   [HideColumns]="true"  
-                                                   [CustomizedWidth]="180">
+                                                    [HideColumns]="true" [CustomizedWidth]="180">
                                                 </LogLov>
                                             </div>
                                         </log-cell-template>
@@ -547,7 +623,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate
                                             (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                            [RIndex]="item.ItemSerial"  [IsEnabled]="!IsDisplayOnly">
+                                            [RIndex]="item.ItemSerial" [IsEnabled]="!IsDisplayOnly">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.ContainerIsoCode}}</span>
@@ -555,7 +631,7 @@
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox #ContainerIsoCodeTextBox
                                                     [ObjectFieldName]="'ContainerIsoCode'" [DataContext]="item"
-                                                   [InputType]="'nText'" [IsAccumulative]="true"
+                                                    [InputType]="'nText'" [IsAccumulative]="true"
                                                     [Text]="item.ContainerIsoCode"
                                                     [ObjectTableName]="'Customs.CertificateOfOriginItem'"
                                                     [HideColumns]="true">
@@ -565,21 +641,20 @@
                                     </ng-template>
                                 </log-column>
 
-                                <log-column
-                                    [header]="'Customs.CertificateOfOrigin.O.ItemId' | TextCodeTranslationPipe"
+                                <log-column [header]="'Customs.CertificateOfOrigin.O.ItemId' | TextCodeTranslationPipe"
                                     [binding]="'ItemId'" [width]="'80'" [Alignment]="'right'" [Editable]="true">
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate
                                             (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                            [RIndex]="item.ItemSerial"  [IsEnabled]="!IsDisplayOnly">
+                                            [RIndex]="item.ItemSerial" [IsEnabled]="!IsDisplayOnly">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.ItemId}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox #ItemIdTextBox [ObjectFieldName]="'ItemId'"
-                                                    [DataContext]="item"   [InputType]="'nText'"
-                                                    [IsAccumulative]="true" [Text]="item.ItemId"
+                                                    [DataContext]="item" [InputType]="'nText'" [IsAccumulative]="true"
+                                                    [Text]="item.ItemId"
                                                     [ObjectTableName]="'Customs.CertificateOfOriginItem'"
                                                     [HideColumns]="true">
                                                 </LogTextBox>
@@ -594,19 +669,20 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate
                                             (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                            [RIndex]="item.ItemSerial"  [IsEnabled]="!IsDisplayOnly">
+                                            [RIndex]="item.ItemSerial" [IsEnabled]="!IsDisplayOnly">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.OriginCriterionCodeName}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogLov #OriginCriterionCodeTextBox [ObjectFieldName]="'OriginCriterionCode'"
-                                                    [ObjectTableName]="'Customs.CertificateOfOriginItem'" [DataContext]="item"
-                                                    [LookUpTableName]="'Customs.OriginCriterion'"
+                                                <LogLov #OriginCriterionCodeTextBox
+                                                    [ObjectFieldName]="'OriginCriterionCode'"
+                                                    [ObjectTableName]="'Customs.CertificateOfOriginItem'"
+                                                    [DataContext]="item" [LookUpTableName]="'Customs.OriginCriterion'"
                                                     [DisplayMemberPath]="'OriginCriterionCode'"
                                                     (SelectedItemChanged)="item.SetLocalName($event, 'OriginCriterionCodeName', item ,CertificateOriginItemItems)"
-                                                    [CustomizedWidth]="180" [QueryFilterItems]="CriterionTypesFilterItems"
-                                                    [HideColumns]="true"  >
+                                                    [CustomizedWidth]="180"
+                                                    [QueryFilterItems]="CriterionTypesFilterItems" [HideColumns]="true">
                                                 </LogLov>
                                             </div>
                                         </log-cell-template>
@@ -625,7 +701,8 @@
                                                 <div
                                                     style=" float: right;width: 22px; height:20px; padding-top: 2px; display:block">
                                                     <IconButton [Name]="'Edit'" [IsSmall]="true"
-                                                        [IsEnabled]="!IsDisplayOnly" (click)="ShowSelectionComponent(currentDeclaration, false, false, item)">
+                                                        [IsEnabled]="!IsDisplayOnly"
+                                                        (click)="ShowSelectionComponent(currentDeclaration, false, false, item)">
                                                     </IconButton>
                                                 </div>
                                             </div>

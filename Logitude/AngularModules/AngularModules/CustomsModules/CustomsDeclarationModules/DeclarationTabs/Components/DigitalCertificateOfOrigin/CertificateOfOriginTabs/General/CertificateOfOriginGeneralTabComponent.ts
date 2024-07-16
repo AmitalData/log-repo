@@ -56,13 +56,13 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     controlEnabled: boolean;
     IsDisplayOnly: boolean = false;
     public ErrorsList: string[];
-    public StatusCode:string = "4";
+    public StatusCode: string = "4";
 
     constructor() {
         super();
     }
 
-    cargoDescription:string = "";
+    cargoDescription: string = "";
     supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
     InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin, IsDisplayOnly: boolean) {
         this.entityPM = EntityPM;
@@ -107,7 +107,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.InitializeRelatedDeclarationData();
         this.InitilizeNewCertificateWithSupplierInvoicesAndConsignments(EntityPM);
     }
- 
+
     InitilizeNewCertificateWithSupplierInvoicesAndConsignments(EntityPM: CertificateOfOriginPM) {
         // SupplierInvoices for CertificateOriginInvoiceItems:
         this.CertificateOriginInvoiceItems.Clear();
@@ -121,7 +121,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             mappedInvoice.InvoiceSum = supplierInvoice.InvoiceAmount?.toString();
             mappedInvoice.CurrencyTypeCode = supplierInvoice.InvoiceCurrencyTypeCode;
 
-            mappedInvoice.DescriptionOfInvoice = !AppTool.IsNullOrEmpty(this.cargoDescription ) ? this.cargoDescription  : "";
+            mappedInvoice.DescriptionOfInvoice = !AppTool.IsNullOrEmpty(this.cargoDescription) ? this.cargoDescription : "";
             mappedInvoice.IsInvoicesForPrint = true;
 
             // add to collection
@@ -130,7 +130,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         });
 
-        
+
         // Consignments for CertificateOriginItemItems:
         this.CertificateOriginItemItems.Clear();
         this.entityPM.CertificateOriginItemItems = [];
@@ -276,46 +276,46 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     //certificateOfOriginMandatoryCouples = [];
     SetWarningByCooTypeCode(CooTypeCode) {
 
-        if(!CooTypeCode) {
-            this.tempCertificateOfOriginMandatoryFieldsList.forEach(i=>{
+        if (!CooTypeCode) {
+            this.tempCertificateOfOriginMandatoryFieldsList.forEach(i => {
                 this.UIProperties.SetWarning(i.MappedCertificateFieldsName, this.ObjectTableName, false);
             });
-            
-            this.formSectionsCouples = new FormSectionsCouples( this.tempCertificateOfOriginMandatoryFieldsList);
+
+            this.formSectionsCouples = new FormSectionsCouples(this.tempCertificateOfOriginMandatoryFieldsList);
             this.tempCertificateOfOriginMandatoryFieldsList = [];
             return;
         }
         this.certificateOfOriginWebService.GetMandatoryFieldsByCooTypeCode(CooTypeCode, this.entityPM.Tenant).subscribe((myResponse: any) => {
             if (!myResponse.HasError) {
-                if(this.tempCertificateOfOriginMandatoryFieldsList.length > 0) {
-                    this.tempCertificateOfOriginMandatoryFieldsList.forEach(i=>{
+                if (this.tempCertificateOfOriginMandatoryFieldsList.length > 0) {
+                    this.tempCertificateOfOriginMandatoryFieldsList.forEach(i => {
                         this.UIProperties.SetWarning(i.MappedCertificateFieldsName, this.ObjectTableName, false);
                     });
                 }
-                
-                this.certificateOfOriginMandatoryFieldsList = myResponse?.Result;
-                
-                this.formSectionsCouples = new FormSectionsCouples(this.certificateOfOriginMandatoryFieldsList);
-                
-                if (this.certificateOfOriginMandatoryFieldsList.length > 0) {
-                    
-                    this.certificateOfOriginMandatoryFieldsList.forEach(item => {                        
-                        if (item.IsMandatory == FieldRequirement.Mandatory || item.IsMandatory == FieldRequirement.Condition) {
-                           
 
-                            if(!AppTool.IsNullOrEmpty(item.MappedCertificateFieldsName)) {
+                this.certificateOfOriginMandatoryFieldsList = myResponse?.Result;
+
+                this.formSectionsCouples = new FormSectionsCouples(this.certificateOfOriginMandatoryFieldsList);
+
+                if (this.certificateOfOriginMandatoryFieldsList.length > 0) {
+
+                    this.certificateOfOriginMandatoryFieldsList.forEach(item => {
+                        if (item.IsMandatory == FieldRequirement.Mandatory || item.IsMandatory == FieldRequirement.Condition) {
+
+
+                            if (!AppTool.IsNullOrEmpty(item.MappedCertificateFieldsName)) {
                                 this.UIProperties.SetWarning(item.MappedCertificateFieldsName, this.ObjectTableName, true);
                             }
-                            
+
                             this.setCouplesWarning(item.IsMandatory, true);
-                            
+
                         }
                     });
                     this.tempCertificateOfOriginMandatoryFieldsList = this.certificateOfOriginMandatoryFieldsList;
                 }
-                else{        
-                               
-                    this.tempCertificateOfOriginMandatoryFieldsList.forEach(i=>{
+                else {
+
+                    this.tempCertificateOfOriginMandatoryFieldsList.forEach(i => {
                         this.UIProperties.SetWarning(i.MappedCertificateFieldsName, this.ObjectTableName, false);
                     });
                     this.tempCertificateOfOriginMandatoryFieldsList = [];
@@ -329,36 +329,50 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             if (group.isMandatoryCouple && isMandatory == FieldRequirement.Condition) {
                 this.UIProperties.SetWarning(group.fields[0], this.ObjectTableName, enabled);
                 this.UIProperties.SetWarning(group.fields[1], this.ObjectTableName, enabled);
-            }             
+            }
             this.checkWarningsCouples()
         });
     }
-    
+
     private checkWarningsCouples() {
-        if(this.entityPM.OriginGroupOfCountry || this.entityPM.OriginCountry) {
-            this.UIProperties.SetWarning(this.formSectionsCouples.upperLeft.fields[0], this.ObjectTableName, false);
-            this.UIProperties.SetWarning(this.formSectionsCouples.upperLeft.fields[1], this.ObjectTableName, false);
+        if (this.entityPM.RequestReasonCode != "10" && this.entityPM.RequestReasonCode != "13" && this.entityPM.RequestReasonCode != "14") {
+            if (this.entityPM.OriginGroupOfCountry || this.entityPM.OriginCountry) {
+                this.UIProperties.SetWarning(this.formSectionsCouples.upperLeft.fields[0], this.ObjectTableName, false);
+                this.UIProperties.SetWarning(this.formSectionsCouples.upperLeft.fields[1], this.ObjectTableName, false);
+            }
+            else {
+                this.UIProperties.SetWarning(this.formSectionsCouples.upperLeft.fields[0], this.ObjectTableName, true);
+                this.UIProperties.SetWarning(this.formSectionsCouples.upperLeft.fields[1], this.ObjectTableName, true);
+            }
+            if (this.entityPM.DestinationGroupOfCountries || this.entityPM.DestinationCountry) {
+                this.UIProperties.SetWarning(this.formSectionsCouples.upperMiddle.fields[0], this.ObjectTableName, false);
+                this.UIProperties.SetWarning(this.formSectionsCouples.upperMiddle.fields[1], this.ObjectTableName, false);
+            }
+            else {
+                this.UIProperties.SetWarning(this.formSectionsCouples.upperMiddle.fields[0], this.ObjectTableName, true);
+                this.UIProperties.SetWarning(this.formSectionsCouples.upperMiddle.fields[1], this.ObjectTableName, true);
+            }
+            if (this.entityPM.TradeAgreementCountry2 || this.entityPM.TradeAgreementGroupOfCountries) {
+                this.UIProperties.SetWarning(this.formSectionsCouples.middleBottom.fields[0], this.ObjectTableName, false);
+                this.UIProperties.SetWarning(this.formSectionsCouples.middleBottom.fields[1], this.ObjectTableName, false);
+            }
+            else {
+                this.UIProperties.SetWarning(this.formSectionsCouples.middleBottom.fields[0], this.ObjectTableName, true);
+                this.UIProperties.SetWarning(this.formSectionsCouples.middleBottom.fields[1], this.ObjectTableName, true);
+            }
         }
         else{
-            this.UIProperties.SetWarning(this.formSectionsCouples.upperLeft.fields[0], this.ObjectTableName, true);
-            this.UIProperties.SetWarning(this.formSectionsCouples.upperLeft.fields[1], this.ObjectTableName, true);
+            this.setWarningFalseForCouples()
         }
-        if(this.entityPM.DestinationGroupOfCountries || this.entityPM.DestinationCountry) {
-            this.UIProperties.SetWarning(this.formSectionsCouples.upperMiddle.fields[0], this.ObjectTableName, false);
-            this.UIProperties.SetWarning(this.formSectionsCouples.upperMiddle.fields[1], this.ObjectTableName, false);
-        }
-        else{
-            this.UIProperties.SetWarning(this.formSectionsCouples.upperMiddle.fields[0], this.ObjectTableName, true);
-            this.UIProperties.SetWarning(this.formSectionsCouples.upperMiddle.fields[1], this.ObjectTableName, true);
-        }
-        if(this.entityPM.TradeAgreementCountry2 || this.entityPM.TradeAgreementGroupOfCountries) {
-            this.UIProperties.SetWarning(this.formSectionsCouples.middleBottom.fields[0], this.ObjectTableName, false);
-            this.UIProperties.SetWarning(this.formSectionsCouples.middleBottom.fields[1], this.ObjectTableName, false);
-        }
-        else{
-            this.UIProperties.SetWarning(this.formSectionsCouples.middleBottom.fields[0], this.ObjectTableName, true);
-            this.UIProperties.SetWarning(this.formSectionsCouples.middleBottom.fields[1], this.ObjectTableName, true);
-        }
+    }
+
+    private setWarningFalseForCouples(){
+        this.UIProperties.SetWarning(this.formSectionsCouples.upperLeft.fields[0], this.ObjectTableName, false);
+        this.UIProperties.SetWarning(this.formSectionsCouples.upperLeft.fields[1], this.ObjectTableName, false);
+        this.UIProperties.SetWarning(this.formSectionsCouples.upperMiddle.fields[0], this.ObjectTableName, false);
+        this.UIProperties.SetWarning(this.formSectionsCouples.upperMiddle.fields[1], this.ObjectTableName, false);
+        this.UIProperties.SetWarning(this.formSectionsCouples.middleBottom.fields[0], this.ObjectTableName, false);
+        this.UIProperties.SetWarning(this.formSectionsCouples.middleBottom.fields[1], this.ObjectTableName, false);
     }
 
     private getCardById(id: string) {
@@ -394,7 +408,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         if (this.currentDeclaration.SupplierInvoices.length > 0) {
             let supplierInvoices = this.currentDeclaration.SupplierInvoices[0];
-        
+
             if (supplierInvoices.SupplierInvoiceItems.length > 0) {
                 var fieldVal = supplierInvoices?.SupplierInvoiceItems[0]?.OriginCountryCode; // the first invoice from list
                 if (fieldVal) {
@@ -493,46 +507,56 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         else {
             this.ErrorsList = [];
         }
+
+        if (!(this.entityPM.RequestReasonCode != "10" && this.entityPM.RequestReasonCode != "13" && this.entityPM.RequestReasonCode != "14")) {
+            this.setWarningFalseForCouples();
+        }else{
+            this.checkWarningsCouples();
+        }
+
+
     }
 
     public CheckMandatoryCustomsFields(ValidationErrors = []) {
-        this.tempCertificateOfOriginMandatoryFieldsList.forEach(item => {
-            if(item){           
-                let field = this.entityPM[item.MappedCertificateFieldsName];
-                if (!field){
-                    var fieldName = TextCodeTranslator.Translate('Customs.CertificateOfOrigin.F.' + item.MappedCertificateFieldsName); 
-                    if(fieldName != ""){
-                        ValidationErrors.push(fieldName); 
-                    } 
-                    
+            this.tempCertificateOfOriginMandatoryFieldsList.forEach(item => {
+                if (item) {
+                    let field = this.entityPM[item.MappedCertificateFieldsName];
+                    if (!field) {
+                        var fieldName = TextCodeTranslator.Translate('Customs.CertificateOfOrigin.F.' + item.MappedCertificateFieldsName);
+                        if (fieldName != "") {
+                            ValidationErrors.push(fieldName);
+                        }
+
+                    }
                 }
-            }
-        });
-      
-        this.formSectionsCouples.groupOfCountriesList.forEach(group => {
-            let field1 = this.entityPM[group.fields[0]];
-            let field2 = this.entityPM[group.fields[1]];
-            if (!field1 && !field2) {
-                var fieldName1 = TextCodeTranslator.Translate('Customs.CertificateOfOrigin.F.' + field1);  
-                var fieldName2 = TextCodeTranslator.Translate('Customs.CertificateOfOrigin.F.' + field2);  
-                ValidationErrors.push(fieldName1);
-                ValidationErrors.push(fieldName2);
-            }
-            
-            // find the field1 in the ValidationErrors:
-            if (!field1 && field2){
-                var fieldName= TextCodeTranslator.Translate('Customs.CertificateOfOrigin.F.' + group.fields[0]);                
-                ValidationErrors = ValidationErrors.filter(i=> i !=  fieldName);
-            }
-            else if (field1 && !field2){
-                var fieldName= TextCodeTranslator.Translate('Customs.CertificateOfOrigin.F.' + group.fields[1]);                
-                ValidationErrors = ValidationErrors.filter(i=> i !=  fieldName);
-            }            
-        }); 
+            });
+
+
+            this.formSectionsCouples.groupOfCountriesList.forEach(group => {
+                let field1 = this.entityPM[group.fields[0]];
+                let field2 = this.entityPM[group.fields[1]];
+                if (!field1 && !field2) {
+                    var fieldName1 = TextCodeTranslator.Translate('Customs.CertificateOfOrigin.F.' + field1);
+                    var fieldName2 = TextCodeTranslator.Translate('Customs.CertificateOfOrigin.F.' + field2);
+                    ValidationErrors.push(fieldName1);
+                    ValidationErrors.push(fieldName2);
+                }
+
+                // find the field1 in the ValidationErrors:
+                if (!field1 && field2) {
+                    var fieldName = TextCodeTranslator.Translate('Customs.CertificateOfOrigin.F.' + group.fields[0]);
+                    ValidationErrors = ValidationErrors.filter(i => i != fieldName);
+                }
+                else if (field1 && !field2) {
+                    var fieldName = TextCodeTranslator.Translate('Customs.CertificateOfOrigin.F.' + group.fields[1]);
+                    ValidationErrors = ValidationErrors.filter(i => i != fieldName);
+                }
+            });      
+
         return ValidationErrors;
     }
 
-    
+
     //#region  CertificateOfOrigin properties
     public get Id(): string {
         return this.entityPM.Id;
@@ -687,7 +711,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     public set TradeAgreementGroupOfCountries(newValue: string) {
         this.entityPM.TradeAgreementGroupOfCountries = newValue;
         this.entityPM.IsDirty = true;
-        
+
         this.checkWarningsCouples();
     }
 
@@ -1232,14 +1256,14 @@ export class CertificateOfOriginItemLine extends BaseComponent {
         this.Parent = parent;
     }
 
-    SetLocalName(entity, fieldName, item , CertificateOriginItemItems) {
+    SetLocalName(entity, fieldName, item, CertificateOriginItemItems) {
         if (!AppTool.IsNullOrEmpty(entity)) {
             if (fieldName == "OriginCriterionCodeName") {
                 CertificateOriginItemItems.Collection.filter(x => x.ItemSerial == item.ItemSerial)[0][fieldName] = entity.OriginCriterionCode;
                 return;
             }
             CertificateOriginItemItems.Collection.filter(x => x.ItemSerial == item.ItemSerial)[0][fieldName] = entity.LocalName;
-        } 
+        }
         else {
             this[fieldName] = null;
         }
@@ -1352,7 +1376,7 @@ export class CertificateOfOriginItemLine extends BaseComponent {
         this.updateIsDirty();
     }
 
-    updateIsDirty(){
+    updateIsDirty() {
         this.entityPM.IsDirty = true;
         this.Parent.entityPM.IsDirty = true;
     }
@@ -1381,17 +1405,17 @@ class FormSectionsCouples {
     upperLeft: GroupOfCountries = {
         groupName: CouplesMandatoryFields.OriginCountryCouple,
         fields: ["OriginCountry", "OriginGroupOfCountry"],
-        isMandatoryCouple:false
+        isMandatoryCouple: false
     };
     upperMiddle: GroupOfCountries = {
         groupName: CouplesMandatoryFields.DestinationCountryCouple,
         fields: ["DestinationCountry", "DestinationGroupOfCountries"],
-        isMandatoryCouple:false
+        isMandatoryCouple: false
     };
     middleBottom: GroupOfCountries = {
         groupName: CouplesMandatoryFields.TradeAgreementCountryCouple,
         fields: ["TradeAgreementCountry2", "TradeAgreementGroupOfCountries"],
-        isMandatoryCouple:false
+        isMandatoryCouple: false
     };
 
     certificateOfOriginMandatoryCouples = [];
@@ -1402,16 +1426,16 @@ class FormSectionsCouples {
     }
 
     groupOfCountriesList = [this.upperLeft, this.upperMiddle, this.middleBottom];
-    
+
     filterListCouples() {
         let isMandatoryFieldExist = [];
         this.groupOfCountriesList.forEach(group => {
             group.fields.forEach(field => {
-                if(group.isMandatoryCouple) return;
+                if (group.isMandatoryCouple) return;
                 isMandatoryFieldExist = this.certificateOfOriginMandatoryCouples.filter(item => !AppTool.IsNullOrEmpty(item.MappedCertificateFieldsName) && item.MappedCertificateFieldsName.toLocaleLowerCase() == field.toLocaleLowerCase() && item.IsMandatory == FieldRequirement.Condition);
-                group.isMandatoryCouple = isMandatoryFieldExist.length > 0 ? true : false;                
-            });            
-        });  
+                group.isMandatoryCouple = isMandatoryFieldExist.length > 0 ? true : false;
+            });
+        });
     }
 }
 
