@@ -32,7 +32,7 @@ export class FieldByTypeComponent {
         this.arr = Array(1);
         this.isArray = t.endsWith('[]');
         const type = this.isArray ? t.replace('[]', '') : t;
-        this._type = this.convertType(type);
+        this._type = this.convertType(type);    
     }
     _DataContext: any = { UIProperties: new UIProperties() };
     @Input() set DataContext(d: any) {
@@ -43,7 +43,7 @@ export class FieldByTypeComponent {
     }
 
     public get value(): any {
-        return this.isArray ? this.fields.toArray().map(x => x.Value) : this.fields.first.Value;
+        return this.isArray ? this.fields.toArray().map(x => x.Value).join(';') : this.fields.first.Value;
     }
 
     public get valid(): boolean {
