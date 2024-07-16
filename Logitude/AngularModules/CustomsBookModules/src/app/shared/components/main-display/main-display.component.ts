@@ -78,43 +78,14 @@ export class MainDisplayComponent {
 			// remove duplicates customsItemID:
 			data = data.filter((v, i, a) => a.findIndex(t => (t.CustomsItemID === v.CustomsItemID)) === i);
 
-			this.data = this.orderedData(data);
+			this.data = this.orderedDataForSearch(data);
 
 			this.extendAll(this.data);
-			// this.data = this.orderedData(data);
-
-			// const getChildren = (parentItem) => {
-			// 	const children = data.filter((item) => item?.CI_Parent_CustomsItemIDNum === parentItem?.CustomsItemID);
-			// 	// CHECK MOKE DATA:
-			// 	//const children = data.filter((item) => item?.Parent_CustomsItemID === parentItem?.ID);
-
-			// 	children.forEach((child) => {
-			// 		child.children = getChildren(child);
-			// 	});
-			// 	return children;
-			// };
-			// // let rootItems = data;
-			// // CHECK MOKE DATA:
-			// //const rootItems = data.filter((item) => !item?.Parent_CustomsItemID);
-			// const rootItems = data.filter((item) => !item?.IsLeaf);
-			// if(rootItems.length == 0) return ;
-
-			// const orderedData = rootItems.map((rootItem) => {
-
-			// 	const children = getChildren(rootItem);
-			// 	return { ...rootItem, children };
-			// });
-			// console.log(orderedData);
-			// debugger
-			// this.data = orderedData;
-
-
-
 		});
 	}
 	extendAll(data: CB_CustomsItemComputedDataList[]) {
 		data.forEach((item) => {
-			this.showChildern(item.CIH_GoodsDescription, "open");
+			this.showChildern(item.CIH_GoodsDescription);
 			if (item.children && item.children.length > 0) this.extendAll(item.children);
 		});
 	}
@@ -145,16 +116,52 @@ export class MainDisplayComponent {
 		}
 	}
 
-	showChildern(id: string, isCloseOrOpenAll?: string): boolean {
-		
-		if (isCloseOrOpenAll == "close") return false;
-		if (isCloseOrOpenAll == "open") return true;
+	showChildern(id: string): boolean {
 
 		const isShown = this.childrenToDesplay.indexOf(id);
 		isShown === -1 ? this.childrenToDesplay.push(id) : this.childrenToDesplay.splice(isShown);
 		return Boolean(isShown >= 0);
 	}
 
+
+	public orderedDataForSearch = (data) => {
+		const getChildren = (parentItem) => {
+			const children = data.filter((item) => item?.CI_Parent_CustomsItemIDNum === parentItem?.CustomsItemID);
+			children.forEach((child) => {
+				child.children = getChildren(child);
+			});
+			return children;
+		};
+	
+		let rootItems = data.filter((item) => !item?.CI_Parent_CustomsItemIDNum);
+		if (rootItems.length === 0) {
+			rootItems = data;
+		}
+	
+		const orderedData = rootItems.map((rootItem) => {
+			const children = getChildren(rootItem);
+			return { ...rootItem, children };
+		});
+	
+		// Remove root items that are found as children of other items
+		const removeRootItemsAsChildren = (items) => {
+			return items.filter((item) => {
+				const foundAsChild = items.some((otherItem) => {
+					if (otherItem.children) {
+						return otherItem.children.some((child) => child.CustomsItemID === item.CustomsItemID);
+					}
+					return false;
+				});
+				return !foundAsChild;
+			});
+		};
+	
+		// Filter out root items that are found as children
+		const filteredOrderedData = removeRootItemsAsChildren(orderedData);
+	
+		return filteredOrderedData;
+	};
+	
 	public orderedData = (data) => {
 		const getChildren = (parentItem) => {
 			const children = data.filter((item) => item?.CI_Parent_CustomsItemIDNum === parentItem?.CustomsItemID);

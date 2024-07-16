@@ -36,7 +36,7 @@ export class DataRowComponent {
 	ngOnInit() { }
 
 
-	checkThirdCharacter(item, value): string {
+	ClassificationNoDisplay(item, value): string {
 		if (item.IsLeaf) return value;
 
 		const regex = /^(\d*[^0])\d*$/;

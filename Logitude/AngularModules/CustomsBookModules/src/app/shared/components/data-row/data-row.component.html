@@ -9,17 +9,18 @@
 	<div class="mainTable_itemName" (click)="showDetails.emit()">
 		<a href="#" role="button"> 
 			<span class="full_classification"  *ngIf="data?.CI_Parent_CustomsItemIDNum">
-				{{ checkThirdCharacter(data,data?.FullClassification) }} | 
+				{{ ClassificationNoDisplay(data,data?.FullClassification) }} | 
 			</span>
 			<span class="full_classification">
 				{{ data.CIH_GoodsDescription }}
 			</span>
-			<span *ngIf="data?.CI_Parent_CustomsItemIDNum && checkThirdCharacter(data,data?.FullClassification).length > 2 && state === 'search'" class="item_details">
-				<a> {{ data?.MeasurementUnit }} </a>
-				<a> {{ data?.MeasurementUnit }} </a>
-				<a> {{ data?.MeasurementUnit }}</a>
-				<a> {{ data?.MeasurementUnit }} </a>
-				<a> {{ data?.MeasurementUnit }}</a>
+			<span *ngIf="data?.CI_Parent_CustomsItemIDNum && ClassificationNoDisplay(data,data?.FullClassification).length > 2 && state === 'search'" class="item_details">
+				<!-- change to real fields -->
+				<a> {{ data?.FullClassification }} </a>
+				<a> {{ data?.FullClassification }} </a>
+				<a> {{ data?.FullClassification }}</a>
+				<a> {{ data?.FullClassification }} </a>
+				<a> {{ data?.FullClassification }}</a>
 			</span>
 		</a>
 	</div>
