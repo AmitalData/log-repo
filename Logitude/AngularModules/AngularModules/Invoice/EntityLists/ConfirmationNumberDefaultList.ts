@@ -7,9 +7,9 @@
 //------------------------------------------------------------------------------
 
 export class ConfirmationNumberDefaultList {
-   		Id: string;
-		Tenant: number;
-		FromDate: Date;
-		AmountForConfirmationNumber: number;
-	
-}
+	Id: string;
+	Tenant: number;
+	FromDate: Date;
+	AmountForConfirmationNumber: number;
+	InActive: boolean;
+}

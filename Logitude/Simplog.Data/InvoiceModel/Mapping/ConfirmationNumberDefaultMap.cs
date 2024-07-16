@@ -26,10 +26,13 @@ namespace Simplog.Data.InvoiceModel.Mapping
 
             this.Property(t => t.AmountForConfirmationNumber)
            .IsRequired();
+            this.Property(t => t.InActive);
+         
 
             // Table & Column Mappings
             this.ToTable("ConfirmationNumberDefaults");
             this.Property(t => t.AmountForConfirmationNumber).HasColumnName("AmountForConfirmationNumber");
+            this.Property(t => t.InActive).HasColumnName("InActive");
             this.Property(t => t.FromDate).HasColumnName("FromDate");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.Id).HasColumnName("Id");

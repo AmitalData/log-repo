@@ -450,7 +450,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void SetConfirmationNumberStatus()
         {
             var confirmationNumberDefault = (from a in objectContext.ConfirmationNumberDefaults
-                                             where a.Tenant == entityPM.Tenant && a.FromDate <= entityPM.InvoiceDate
+                                             where a.Tenant == entityPM.Tenant && a.FromDate <= entityPM.InvoiceDate && a.InActive == false
                                              orderby a.FromDate descending
                                              select a
                                            ).FirstOrDefault();
