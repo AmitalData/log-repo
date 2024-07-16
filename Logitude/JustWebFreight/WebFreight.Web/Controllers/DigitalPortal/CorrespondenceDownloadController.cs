@@ -76,9 +76,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
 
                     if (!string.IsNullOrEmpty(securityId) && !string.IsNullOrEmpty(EntityId))
-                        return DownloadAll(securityId, EntityId, tenant, partnertype, forwardingShipmentEntityId, domainName);
+                        return DownloadAll(securityId, EntityId, tenant, partnertype, forwardingShipmentEntityId, domainName, limitedDateRange);
                     else if (!string.IsNullOrEmpty(securityId) && string.IsNullOrEmpty(EntityId))
-                        return DownloadAllBySecurityKey(securityId, tenant, partnertype, forwardingShipmentEntityId, domainName);
+                        return DownloadAllBySecurityKey(securityId, tenant, partnertype, forwardingShipmentEntityId, domainName, limitedDateRange);
 
                 }
                 else
@@ -104,7 +104,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     }
                     if (limitedDateRange)
                     {
-                        DateTime dateTime = new DateTime(2022, 01, 01);
+                        DateTime dateTime = DateTime.Now.AddDays(-183); // half a year //was: new DateTime(2022, 01, 01);
                         if (myDoc?.CreateDate != null && myDoc?.CreateDate.Value.Date < dateTime.Date)
                         {
                             throw new Exception("The document is not allowed.");
@@ -405,7 +405,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         }
 
 
-        private HttpResponseMessage DownloadAll(string SecurityKey, string EntityId, int tenant, string partnerType, string forwardingShipmentEntityId, string domainName)
+        private HttpResponseMessage DownloadAll(string SecurityKey, string EntityId, int tenant, string partnerType, string forwardingShipmentEntityId, string domainName, bool limitedDateRange)
         {
             HttpResponseMessage response = null;
             try
@@ -440,8 +440,12 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     {
                         documents = documents.Where(d => d.IsCustomerView).ToList();
                     }
-                    DateTime dateTime = new DateTime(2022, 01, 01);
-                    documents = documents.Where(d => d.CreateDate.Date >= dateTime.Date).ToList();
+
+                    if (limitedDateRange)
+                    {
+                        DateTime dateTime = DateTime.Now.AddDays(-183); // half a year //was: new DateTime(2022, 01, 01);
+                        documents = documents.Where(d => d.CreateDate.Date >= dateTime.Date).ToList();
+                    }
 
                     var CompressedArray = new Dictionary<string, byte[]>();
                     bool DocumentsExistance = false;
@@ -527,11 +531,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 return Request.CreateResponse(HttpStatusCode.Unauthorized, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        private HttpResponseMessage DownloadAllBySecurityKey(string SecurityKey, int tenant, string partnerType, string forwardingShipmentEntityId, string domainName)
+        private HttpResponseMessage DownloadAllBySecurityKey(string SecurityKey, int tenant, string partnerType, string forwardingShipmentEntityId, string domainName, bool limitedDateRange)
         {
             Shipment shipment = GetShipmentBySecurityKey(SecurityKey, tenant);
 
-            return DownloadAll(SecurityKey, shipment?.Id, tenant, partnerType, forwardingShipmentEntityId, domainName);
+            return DownloadAll(SecurityKey, shipment?.Id, tenant, partnerType, forwardingShipmentEntityId, domainName, limitedDateRange);
         }
 
         private static Shipment GetShipmentBySecurityKey(string SecurityKey, int tenant)
