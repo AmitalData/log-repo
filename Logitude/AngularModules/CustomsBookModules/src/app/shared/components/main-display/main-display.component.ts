@@ -70,13 +70,55 @@ export class MainDisplayComponent {
 	// listen to itemsData when change:
 	ListenToItemsSearched() {
 		this.itemsData.subscribe((data: CB_CustomsItemComputedDataList[] = []) => {
-			if(data.length == 0) {
+			if (data.length == 0) {
 				this.InitData();
 				return;
 			} 
+			console.log(data);
+			// remove duplicates customsItemID:
+			data = data.filter((v, i, a) => a.findIndex(t => (t.CustomsItemID === v.CustomsItemID)) === i);
+
 			this.data = this.orderedData(data);
+
+			this.extendAll(this.data);
+			// this.data = this.orderedData(data);
+
+			// const getChildren = (parentItem) => {
+			// 	const children = data.filter((item) => item?.CI_Parent_CustomsItemIDNum === parentItem?.CustomsItemID);
+			// 	// CHECK MOKE DATA:
+			// 	//const children = data.filter((item) => item?.Parent_CustomsItemID === parentItem?.ID);
+
+			// 	children.forEach((child) => {
+			// 		child.children = getChildren(child);
+			// 	});
+			// 	return children;
+			// };
+			// // let rootItems = data;
+			// // CHECK MOKE DATA:
+			// //const rootItems = data.filter((item) => !item?.Parent_CustomsItemID);
+			// const rootItems = data.filter((item) => !item?.IsLeaf);
+			// if(rootItems.length == 0) return ;
+
+			// const orderedData = rootItems.map((rootItem) => {
+
+			// 	const children = getChildren(rootItem);
+			// 	return { ...rootItem, children };
+			// });
+			// console.log(orderedData);
+			// debugger
+			// this.data = orderedData;
+
+
+
 		});
 	}
+	extendAll(data: CB_CustomsItemComputedDataList[]) {
+		data.forEach((item) => {
+			this.showChildern(item.CIH_GoodsDescription, "open");
+			if (item.children && item.children.length > 0) this.extendAll(item.children);
+		});
+	}
+
 
 	currentItem: CB_CustomsItemComputedDataList;
 	itemDataBehaviorSubject: BehaviorSubject<ItemData> = new BehaviorSubject<ItemData>({ customsItemId: 0, measurementUnitMalamId: 0 });
@@ -103,7 +145,11 @@ export class MainDisplayComponent {
 		}
 	}
 
-	showChildern(id: string): boolean {
+	showChildern(id: string, isCloseOrOpenAll?: string): boolean {
+		
+		if (isCloseOrOpenAll == "close") return false;
+		if (isCloseOrOpenAll == "open") return true;
+
 		const isShown = this.childrenToDesplay.indexOf(id);
 		isShown === -1 ? this.childrenToDesplay.push(id) : this.childrenToDesplay.splice(isShown);
 		return Boolean(isShown >= 0);
@@ -116,18 +162,16 @@ export class MainDisplayComponent {
 			//const children = data.filter((item) => item?.Parent_CustomsItemID === parentItem?.ID);
 
 			children.forEach((child) => {
-				// @ts-ignore
 				child.children = getChildren(child);
 			});
 			return children;
 		};
-		const rootItems = data.filter((item) => !item?.CI_Parent_CustomsItemIDNum);
-
+		let rootItems = data.filter((item) => !item?.CI_Parent_CustomsItemIDNum);
 		// CHECK MOKE DATA:
 		//const rootItems = data.filter((item) => !item?.Parent_CustomsItemID);
+		if (rootItems.length == 0) return;
 
 		const orderedData = rootItems.map((rootItem) => {
-			// debugger
 			const children = getChildren(rootItem);
 			return { ...rootItem, children };
 		});
@@ -137,15 +181,6 @@ export class MainDisplayComponent {
 
 }
 
-
-// export class Filters {
-// 	CustomsBookType: string = "1";
-// 	Tenant: number = 0;
-// 	SearchFields: string | null = null;
-// 	CustomsItemHierarchic: string | null = null;
-// 	Reamarks: boolean = false;
-// 	Rules: boolean = false;
-// }
 
 export interface ItemData {
 	customsItemId: number;

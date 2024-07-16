@@ -5,7 +5,7 @@
 			<div class="data_row_container" [class.active]="!showDetails">
 				<app-table-top class="app-table-top" [class.active]="!showDetails" />
 				<ul *ngFor="let item of data" class="wtree">
-					<app-data-row [data]="item.CIH_GoodsDescription"
+					<app-data-row [data]="item"
 						(showCommentSidebar)="showAddComment = !showAddComment"
 						(showDetails)="showDetails = !showDetails"
 						(showChildern)="showChildern(item.CIH_GoodsDescription)" class="app-data-row"
@@ -16,7 +16,7 @@
 							*ngIf="item.children && item.children.length > 0 && childrenToDesplay.includes(item.CIH_GoodsDescription)">
 							<ng-container *ngFor="let key2 of Object.keys(item.children)">
 								<li [@inOutAnimation]>
-									<app-data-row [data]="item.children[key2]?.CIH_GoodsDescription"
+									<app-data-row [data]="item?.children[key2]"
 										(showCommentSidebar)="showAddComment = !showAddComment"
 										(showDetails)="showDetails = !showDetails" class="app-data-row"
 										(showChildern)="showChildern(item.children[key2]?.CIH_GoodsDescription)"
@@ -28,7 +28,7 @@
 												*ngFor="let key3 of Object.keys(item.children[key2].children)">
 												<li [@inOutAnimation]>
 													<app-data-row
-														[data]="item.children[key2].children[key3]?.CIH_GoodsDescription"
+														[data]="item?.children[key2]?.children[key3]"
 														(showCommentSidebar)="showAddComment = !showAddComment"
 														(showDetails)="showDetails = !showDetails" class="app-data-row"
 														(showChildern)="showChildern(item.children[key2].children[key3]?.CIH_GoodsDescription)"
@@ -40,7 +40,7 @@
 																*ngFor="let key4 of Object.keys(item.children[key2].children[key3].children)">
 																<li [@inOutAnimation]>
 																	<app-data-row
-																		[data]="item.children[key2].children[key3].children[key4]?.CIH_GoodsDescription"
+																		[data]="item?.children[key2]?.children[key3]?.children[key4]"
 																		(showCommentSidebar)="showAddComment = !showAddComment"
 																		(showDetails)="showDetails = !showDetails"
 																		class="app-data-row"

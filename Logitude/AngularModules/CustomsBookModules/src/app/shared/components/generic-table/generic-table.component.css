@@ -8,13 +8,11 @@ th, td {
     word-wrap: break-word; 
     white-space: normal;
     text-align: right;
-
 }
 
 .detailsSlide_table {
     border-radius: 10px;
     border: 1px solid var(--greyRO);
-    /* overflow: hidden; */
     overflow: auto;
     max-height: 450px;
 }

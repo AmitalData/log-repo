@@ -26,12 +26,24 @@ export class DataRowComponent {
 	faFileArchive = faFileText;
 	checked: boolean = false;
 	selected: boolean = false;
-	constructor(private addCommentService: AddCommentService) {}
+	constructor(private addCommentService: AddCommentService) { }
 	showAddComment = this.addCommentService.getIsOpened();
 
 	showAddCommentSidebar() {
 		this.addCommentService.setIsOpened(true);
 	}
 
-	ngOnInit() {}
+	ngOnInit() { }
+
+
+	checkThirdCharacter(item, value): string {
+		if (item.IsLeaf) return value;
+
+		const regex = /^(\d*[^0])\d*$/;
+		const match = value.match(regex);
+		if (match && match[1]) {
+			return match[1];
+		}
+		return '';
+	}
 }

@@ -35,14 +35,16 @@ export class MainPageComponent {
 		let filters: Filters = {
 			SearchFields: this.Service.GetSearchText(),
 			CustomsBookType: this.HeaderService.getSearchState(true),
-			CustomsItemHierarchic: '1,2,3',
+			CustomsItemHierarchic: '1,2,3,4',
 			Reamarks: false,
 			Rules: true,
 			SkippedRows: 0,
 			PageSize: 0,
 			Tenant: 0
 		};
-
+		if(filters.SearchFields == '' || filters.SearchFields == null) {
+			this.itemsData.next([]);		
+		}
 		if (SearchBy.searchBy_form01 == this.selectSearchBy) {
 			this.API_MainService.GetCustomsBookMainViewSearchByClassification(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
 				this.itemsData.next(data);				
