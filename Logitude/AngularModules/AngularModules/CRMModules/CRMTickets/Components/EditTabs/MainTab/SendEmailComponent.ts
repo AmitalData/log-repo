@@ -987,7 +987,8 @@ export class AttachmentsArgs {
     ViewAttachment() {
         if (this.DocumentFilingPM) {
             var documentSecurity = this.DocumentFilingPM.SecurityId;
-            var link = "/WebPages/CorrespondenceDownloadpage.aspx?id=" + documentSecurity + "~" + this.Tenant;
+       //   var link = "/WebPages/CorrespondenceDownloadpage.aspx?id=" + documentSecurity + "~" + this.Tenant;
+            var link = "api/CorrespondenceDownload/ValidateAndDownloadDocument?id=" + documentSecurity + "~" + this.Tenant;
             window.open(ServiceHelper.GetLogitudeURL() + link);
         }
         else if (!AppTool.IsNullOrEmpty(this.DocumentId)) {

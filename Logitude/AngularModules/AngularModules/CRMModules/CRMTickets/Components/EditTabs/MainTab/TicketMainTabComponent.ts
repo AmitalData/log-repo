@@ -1276,7 +1276,8 @@ export class TicketDocumentDataArgs {
 
     ViewAttachment() {
         var documentSecurity = this.DocumentDataPM.SecurityId;
-        var link = "/WebPages/CorrespondenceDownloadpage.aspx?id=" + documentSecurity + "~" + this.Tenant;
+     // var link = "/WebPages/CorrespondenceDownloadpage.aspx?id=" + documentSecurity + "~" + this.Tenant;
+        var link = "api/CorrespondenceDownload/ValidateAndDownloadDocument?id=" + documentSecurity + "~" + this.Tenant;
         window.open(ServiceHelper.GetLogitudeURL() + link);
     }
 }
