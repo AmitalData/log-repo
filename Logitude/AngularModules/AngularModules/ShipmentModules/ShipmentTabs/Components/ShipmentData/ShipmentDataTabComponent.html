@@ -38,7 +38,7 @@
                                             [ObjectTableName]="ObjectTableName"
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'Card'"
-                                            [DisplayMemberPath]="'EnglishName'"
+                                            [DisplayMemberPath]="'LocalName'"
                                             [DependencyFilter1Value]="CustomerDependencyProperty1"
                                             [DependencyFilter1IsList]="CustomerDependencyProperty1IsList"
                                             [HideAddLink]="true"
@@ -60,6 +60,7 @@
                                         [ObjectTableName]="ObjectTableName"
                                         [DataContext]="DataContext" 
                                         [LookUpTableName]="'Department'"
+                                        [DisplayMemberPath]="'LocalName'"
                                         [DependencyFilter1Value]="'C'">
                                     </LogLov>
                                 </td>
@@ -358,6 +359,7 @@
                                         [ObjectFieldName]="'TransportModeId'" 
                                         [SelectedValue]="TransportModeId"
                                         [ObjectTableName]="ObjectTableName"
+                                        [DisplayMemberPath]="'LocalName'"
                                         [DataContext]="DataContext"
                                         [LookUpTableName]="'TransportMode'">
                                     </LogLov>

@@ -709,15 +709,13 @@
                                                                 </td> -->
                             
                                                                 <td style="width:217px; float: right">
-                                                                    <!-- TODO: add DirectionId = "C" 
-                                                                        [DependencyFilter1Value]="CustomerDependencyProperty1"
-                                                                        [DependencyFilter1IsList]="CustomerDependencyProperty1IsList"
-                                                                     -->
                                                                     <LogLov 
                                                                         [ObjectFieldName]="'DepartmentId'" 
                                                                         [SelectedValue]="DepartmentId"
                                                                         [ObjectTableName]="'Shipment'" 
                                                                         [DataContext]="DataContext" 
+                                                                        [DisplayMemberPath]="'LocalName'"
+                                                                        [DependencyFilter1Value]="'C'"
                                                                         [LookUpTableName]="'Department'">
                                                                     </LogLov>
                                                                 </td>

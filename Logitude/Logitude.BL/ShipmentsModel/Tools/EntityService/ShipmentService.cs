@@ -223,6 +223,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         public void Create()
         {
+            if (entityPM.IsCustomShipment)
+            {
+                this.CreateCustomShipment();
+                return;
+            }
+
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
                 //used when create master from house, to check if house already connected to another master
@@ -563,6 +569,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         string CustomerChanged = "false";
         public void Update(bool mapComposition = false, bool isFromUpdateTool = false, bool isPatchUpdate = false)
         {
+            if (entityPM.IsCustomShipment)
+            {
+                this.UpdateCustomShipment();
+                return;
+            }
+
             //bool isPatchUpdate = false;
             InsertInShipmnetUpdateLog(0);
             try

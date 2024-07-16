@@ -262,6 +262,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 entityPoco.ToPortId = entityPM.ToPortId;
             }
 
+            if (entityPM.IsCustomShipment)
+            {
+                entityPoco.NumberOfPackages = entityPM.NumberOfPackages;
+                entityPoco.FromPortId = entityPM.MainCarriageFromPortId;
+            }
+
             if (entityPM.IsStatusChange)
             {
                 MapShipmentStatus(entityPM, entityPoco, entityMasterData, fieldChanges);
@@ -278,14 +284,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             LogBoxTenantSettingRepository LBtenantRepository = new LogBoxTenantSettingRepository(entityPM.Tenant);
             LogBoxTenantSetting LBcurrentTenant = LBtenantRepository.GetSingleLBTenant(entityPM.Tenant);
 
-            if (isNewEntity)
+            if (isNewEntity && entityPM.IsCustomShipment)
             {
                 FieldChange.Add(entityPoco.StatusId, entityPM.StatusId, nameof(entityPM.StatusId), fieldChanges);
                 entityPoco.StatusId = entityPM.StatusId;
             }
 
             if (isNewEntity && entityPM.IsHybrid)
-            {                
+            {
+                FieldChange.Add(entityPoco.StatusId, entityPM.StatusId, nameof(entityPM.StatusId), fieldChanges);
+                entityPoco.StatusId = entityPM.StatusId;
+
                 FieldChange.Add(entityPoco.StatusDate, entityPM.StatusDate, nameof(entityPM.StatusDate), fieldChanges);
                 entityPoco.StatusDate = entityPM.StatusDate;
                 
@@ -1235,7 +1244,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
         {
             if (IsLogboxEnvironment()) return;
             List<ShipmentPackagePM> shipmentPackages = entityPM.ShipmentPackages.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
-            if (shipmentPackages == null || (shipmentPackages != null && shipmentPackages.Count == 0))
+            if ((shipmentPackages == null || (shipmentPackages != null && shipmentPackages.Count == 0)) && !entityPM.IsCustomShipment)
             {
                 entityPoco.NumberOfPackages = entityPM.NumberOfPackages = null;
                 entityPoco.NumberOfContainers = entityPM.NumberOfContainers = null;

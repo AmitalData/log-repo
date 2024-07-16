@@ -136,22 +136,13 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                         IShipmentsContext objectContext = ShipmentsContext.GetContext(entityPM.Tenant);
                         ShipmentService service = new ShipmentService(objectContext, entityPM, SecurityUtility.GetAuthenticatedUser());
 
-                        bool isCustomShipment = false;
-                        if (entityPM.IsCustomShipment)
-                        {
-                            service.CreateCustomShipment();
-                            isCustomShipment = true;
-                        }
-                        else
-                        {
-                            service.Create();
-                        }
+                        bool isCustomShipment = entityPM.IsCustomShipment;
+                        service.Create();
 
                         IShipmentsContext updatedEntityContext = ShipmentsContext.GetContext(tenant);
                         ShipmentRepository updatedEntityRepository = new ShipmentRepository(updatedEntityContext);
                         ShipmentQuery updatedShipmentQuery = new ShipmentQuery(updatedEntityRepository);
                         entityPM = updatedShipmentQuery.GetSinglePM(entityPM.Id, entityPM.Tenant);
-
                         if (isCustomShipment)
                         {
                             entityPM.IsCustomShipment = true;
@@ -193,22 +184,13 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                         IShipmentsContext objectContext = ShipmentsContext.GetContext(entityPM.Tenant);
                         ShipmentService service = new ShipmentService(objectContext, entityPM, SecurityUtility.GetAuthenticatedUser());
 
-                        bool isCustomShipment = false;
-                        if (entityPM.IsCustomShipment)
-                        {
-                            service.UpdateCustomShipment();
-                            isCustomShipment = true;
-                        }
-                        else
-                        {
-                            service.Update(true);
-                        }
+                        bool isCustomShipment = entityPM.IsCustomShipment;
+                        service.Update(true);
 
                         IShipmentsContext updatedEntityContext = ShipmentsContext.GetContext(tenant);
                         ShipmentRepository updatedEntityRepository = new ShipmentRepository(updatedEntityContext);
                         ShipmentQuery updatedShipmentQuery = new ShipmentQuery(updatedEntityRepository);
                         entityPM = updatedShipmentQuery.GetSinglePM(entityPM.Id, entityPM.Tenant);
-
                         if (isCustomShipment)
                         {
                             entityPM.IsCustomShipment = true;
