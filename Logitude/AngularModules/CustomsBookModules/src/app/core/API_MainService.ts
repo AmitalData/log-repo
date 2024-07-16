@@ -23,16 +23,20 @@ export class API_MainService extends BaseService {
 
 	constructor(httpClient: HttpClient) {
 		super(httpClient);
-
 		// this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain';
 		// this.ApiURL = this.BaseURL + 'api/ShipmentDomain';
 	}
-	// GetCustomsBookMainView(filters: Filters) {
-	GetCustomsBookMainView(filters: Filters) {
+
+	RemarksClassification(data) {
+		const url = `${this._apiUrl}CB_CustomsItemExtended/AddNEWRemarksClassification`;
+		return this.Post(url, data);
+	}
+
+  GetCustomsBookMainView(filters: Filters) {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomsBookMainView?customsBookType=${filters.CustomsBookType}&Tenant=${filters.Tenant ? filters.Tenant : 0}`;
 		return this.Get(url);
 	}
-	
+
 
 	GetCustomsBookAgreementLevelData(customsItemId: number, measurementUnitMalamId: number) {
 		const url = `${this._apiUrl}CB_TariffExtended/GetCustomsBookAgreementLevelData?customsItemId=${customsItemId}&measurementUnitMalamId=${measurementUnitMalamId}`;
@@ -44,16 +48,25 @@ export class API_MainService extends BaseService {
 		return this.Get(url);
 	}
 
+	// GetCustomsBookMainViewSearchByClassification(filters: Filters) {
+	// 	const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomsBookMainViewSearchByClassification?CustomsBookType=${filters.CustomsBookType}&SkippedRows=${filters.SkippedRows}&PageSize=${filters.PageSize}&CustomsItemHierarchic=${filters.CustomsItemHierarchic}`;
+	// 	return this.Get(url);
+	// }
+	// GetCustomsBookMainViewSearchByText(filters: Filters) {
+	// 	const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomsBookMainViewSearchByText?SearchFields=${filters.SearchFields}&CustomsBookType= ${filters.CustomsBookType}&CustomsItemHierarchic= ${filters.CustomsItemHierarchic}&Reamarks= ${filters.Reamarks}&Rules= ${filters.Rules}&SkippedRows= ${filters.SkippedRows}&PageSize= ${filters.PageSize}`;
+	// 	return this.Get(url);
+	// }
+
 	GetCustomsBookMainViewSearchByClassification(filters: Filters) {
-		const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomsBookMainViewSearchByClassification?CustomsBookType=${filters.CustomsBookType}&SkippedRows=${filters.SkippedRows}&PageSize=${filters.PageSize}&CustomsItemHierarchic=${filters.CustomsItemHierarchic}`;
-		return this.Get(url);
+		const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomsBookMainViewSearchByClassification`;
+		return this.Post(url, filters);
 	}
-	
+
 	GetCustomsBookMainViewSearchByText(filters: Filters) {
-		const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomsBookMainViewSearchByText?SearchFields=${filters.SearchFields}&CustomsBookType= ${filters.CustomsBookType}&CustomsItemHierarchic= ${filters.CustomsItemHierarchic}&Reamarks= ${filters.Reamarks}&Rules= ${filters.Rules}&SkippedRows= ${filters.SkippedRows}&PageSize= ${filters.PageSize}`;
-		return this.Get(url);
+		const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomsBookMainViewSearchByText`;
+		return this.Post(url, filters);
 	}
-	
+
 	GetCustomsBookTaxRates(customsItemId: number) {
 		const url = `${this._apiUrl}CB_TariffExtended/GetCustomsBookTaxRates?customsItemId=${customsItemId}`;
 		return this.Get(url);

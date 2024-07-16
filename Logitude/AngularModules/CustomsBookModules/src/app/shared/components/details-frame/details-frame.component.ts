@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faStar as faStarBold } from '@fortawesome/free-solid-svg-icons';
 import { faSquareCaretRight, faFileText, faSquareCheck, faCommentAlt, faStar, faCommentDots, faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { AccordionComponent } from '../accordion/accordion.component';
 import { Output, Input, EventEmitter } from '@angular/core';
 import { CommentsComponent } from '../comments/comments.component';
+import { CB_CustomsItemComputedDataList, ItemData } from '../main-display/main-display.component';
+import { BehaviorSubject } from 'rxjs';
 
 
 
@@ -18,9 +20,11 @@ import { CommentsComponent } from '../comments/comments.component';
 })
 
 
-export class DetailsFrameComponent {
+export class DetailsFrameComponent implements OnInit {
   @Output() showDetails = new EventEmitter<boolean>();
   @Input() showAddComment: boolean = false;
+  @Input() itemData: BehaviorSubject<ItemData> = new BehaviorSubject<ItemData>(null);
+  @Input() currentItem: CB_CustomsItemComputedDataList;
   showComments: boolean = false;
   show: boolean = false;
   checked: boolean = false;
@@ -33,5 +37,9 @@ export class DetailsFrameComponent {
   faTrashCan = faTrashCan;
   faCaretSquareRight = faSquareCaretRight;
   faFileArchive = faFileText;
+
+  ngOnInit() {
+    // this.currentItem.FullClassification = "";
+  }
 }
 

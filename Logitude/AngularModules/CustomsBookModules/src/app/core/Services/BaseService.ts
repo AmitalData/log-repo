@@ -31,4 +31,13 @@ export class BaseService {
 			}),
 		);
 	}
+	
+	Post(url: string, data: any) {
+		return this.HttpClient.post(url, data).pipe(
+			map((response) => {
+				return response;
+			}),
+		);
+	}
+	
 }

@@ -8,7 +8,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
 //@ts-ignore
 import { mockData } from '../../../../../mock_data';
 import { API_MainService, Filters } from '../../../core/API_MainService';
-import { filter } from 'rxjs';
+import { BehaviorSubject, filter } from 'rxjs';
 
 @Component({
 	selector: 'app-main-display',
@@ -31,14 +31,14 @@ import { filter } from 'rxjs';
 })
 export class MainDisplayComponent {
 	@Input() showChiledren: boolean = false;
-	@Input() itemsData;
+	@Input() itemsData: BehaviorSubject<CB_CustomsItemComputedDataList[]>;
 	showDetails: boolean = false;
 	showAddComment: boolean = false;
 	showCommentSidebar: boolean = false;
 	childrenToDesplay: string[] = [];
 	private _filters;
 
-  //data: any | never | undefined = {};
+	//data: any | never | undefined = {};
 	data: CB_CustomsItemComputedDataList[] = [];
 
 	KeyValue = Object.keys;
@@ -46,13 +46,15 @@ export class MainDisplayComponent {
 
 	constructor(private API_MainService: API_MainService) { }
 
+	cbTariffList: CB_TariffList[];
+	cbRequirementComputedDataList: CB_RequirementComputedDataList[];
+
 	ngOnInit() {
-		// this.data = this.itemsData;
+		this.InitData();
+		this.ListenToItemsSearched();
+	}
 
-		// CHECK MOKE DATA:
-		//this.data = this.orderedData(mockData);
-		// this.item = this.data[0];
-
+	InitData() {
 		let filters: Filters = {
 			CustomsBookType: '1',
 			Tenant: 0,
@@ -62,15 +64,34 @@ export class MainDisplayComponent {
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
 			this.data = this.orderedData(data);
 		});
+	}
 
-		// CHECK DATA:
-		this.API_MainService.GetCustomsBookAgreementLevelData(23066,6).subscribe((data: CB_TariffList[]) => {
-			console.log(data);
+
+	// listen to itemsData when change:
+	ListenToItemsSearched() {
+		this.itemsData.subscribe((data: CB_CustomsItemComputedDataList[] = []) => {
+			if(data.length == 0) {
+				this.InitData();
+				return;
+			} 
+			this.data = this.orderedData(data);
 		});
-		this.API_MainService.GetCustomsBookRegularityRequirementData(17514).subscribe((data: CBRequirementComputedDataListComponent[]) => {
-			console.log(data);
-		});
-	
+	}
+
+	currentItem: CB_CustomsItemComputedDataList;
+	itemDataBehaviorSubject: BehaviorSubject<ItemData> = new BehaviorSubject<ItemData>({ customsItemId: 0, measurementUnitMalamId: 0 });
+	itemData: ItemData = { customsItemId: 0, measurementUnitMalamId: 0 };
+	showDetailsClick(CustomsItemID: number, item: CB_CustomsItemComputedDataList) {
+		if (this.itemData.customsItemId == CustomsItemID) return;
+
+		console.log(CustomsItemID);
+		// console.log(item);
+		// console.log(item.FullClassification);
+		this.itemData.customsItemId = CustomsItemID;
+		this.itemData.measurementUnitMalamId = 0; // change it
+		this.itemDataBehaviorSubject.next(this.itemData);
+		this.currentItem = item;
+		return this.showDetails;
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
@@ -79,7 +100,7 @@ export class MainDisplayComponent {
 		}
 		if (changes['itemsData']) {
 			this.itemsData = changes['itemsData'].currentValue;
-		}		
+		}
 	}
 
 	showChildern(id: string): boolean {
@@ -93,7 +114,7 @@ export class MainDisplayComponent {
 			const children = data.filter((item) => item?.CI_Parent_CustomsItemIDNum === parentItem?.CustomsItemID);
 			// CHECK MOKE DATA:
 			//const children = data.filter((item) => item?.Parent_CustomsItemID === parentItem?.ID);
-			
+
 			children.forEach((child) => {
 				// @ts-ignore
 				child.children = getChildren(child);
@@ -110,10 +131,10 @@ export class MainDisplayComponent {
 			const children = getChildren(rootItem);
 			return { ...rootItem, children };
 		});
-		
+
 		return orderedData;
 	};
-	
+
 }
 
 
@@ -126,7 +147,24 @@ export class MainDisplayComponent {
 // 	Rules: boolean = false;
 // }
 
-export class CB_CustomsItemComputedDataList {
+export interface ItemData {
+	customsItemId: number;
+	measurementUnitMalamId: number;
+}
+export class MainEntity {
+	CB_CustomsItemComputedDataList: CB_CustomsItemComputedDataList[];
+	CB_TariffList: CB_TariffList[];
+	CB_RequirementComputedDataList: CB_RequirementComputedDataList[];
+
+	constructor(CB_CustomsItemComputedDataList: CB_CustomsItemComputedDataList[], CB_TariffList: CB_TariffList[], CB_RequirementComputedDataList: CB_RequirementComputedDataList[]) {
+		this.CB_CustomsItemComputedDataList = CB_CustomsItemComputedDataList;
+		this.CB_TariffList = CB_TariffList;
+		this.CB_RequirementComputedDataList = CB_RequirementComputedDataList;
+	}
+}
+
+
+export interface CB_CustomsItemComputedDataList {
 	CB_ID: string;
 	ID: number;
 	CustomsItemID: number;
@@ -156,11 +194,11 @@ export class CB_CustomsItemComputedDataList {
 	OptionalTaxAddition?: number;
 	MeasurementUnitName: string;
 	Remarks: string;
-  	SearchByTextResult: string;
+	SearchByTextResult: string;
 	children: CB_CustomsItemComputedDataList[];
 }
 
-export class CBRequirementComputedDataListComponent {
+export interface CB_RequirementComputedDataList {
 	CB_ID: string;
 	ID: number;
 	RegularityRequirementID: number;
@@ -184,9 +222,9 @@ export class CBRequirementComputedDataListComponent {
 	IsCarnetIncluded?: boolean;
 	FromEpisodeDetail: string;
 	AutonomyRegion: string;
-  }
+}
 
-  export class CB_TariffList {
+export interface CB_TariffList {
 	ID: number;
 	CreateDate: Date;
 	UpdateDate?: Date;
@@ -203,4 +241,10 @@ export class CBRequirementComputedDataListComponent {
 	StartDate?: Date;
 	EndDate?: Date;
 	TradeAgreementName: string;
-  }
+}
+export interface RemarksClassificationPM {
+	id?: string;
+	tenant: number;
+	customsItemsID: number;
+	remarkDescription: string;
+}
