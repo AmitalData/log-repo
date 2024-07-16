@@ -1441,6 +1441,10 @@ export class CustomerPM extends ObjectCustomFieldPM {
     public get IsPotential() { return this.isPotential; }
     public set IsPotential(newValue: boolean) { if (this.isPotential != newValue) { this.isPotential = newValue; this.MarkAsDirty("IsPotential"); } }
        
+    private contactForAccounting: string;
+    public get ContactForAccounting() { return this.contactForAccounting; }
+    public set ContactForAccounting(newValue: string) { if (this.contactForAccounting != newValue) { this.contactForAccounting = newValue; this.MarkAsDirty("contactForAccounting"); } }
+       
 	 
 
     public OldEntityPM: CustomerPM;

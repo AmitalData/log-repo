@@ -138,6 +138,16 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         public virtual Category5 Category5 { get; set; }
         [Column("IsVATExempt")]
 	    public bool? IsVATExempt { get; set; }
+        [ForeignKey("CollectorUser")]
+        [Column("CollectorId")]
+	    public string CollectorId { get; set; }
+	      
+        public virtual User CollectorUser { get; set; }
+        [ForeignKey("SalesmanUser")]
+        [Column("SalesmanUserId")]
+	    public string SalesmanUserId { get; set; }
+	      
+        public virtual User SalesmanUser { get; set; }
         [ForeignKey("WithholdingTaxDeductionType")]
         [Column("DeductionFileTypeId")]
 	    public string DeductionFileTypeId { get; set; }
@@ -208,6 +218,12 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public decimal? PostponedChequesCommission { get; set; }
         [Column("DateFormat")]
         public string DateFormat { get; set; }
+
+        [ForeignKey("Contact")]
+        [Column("ContactId")]
+        public string ContactId { get; set; }
+	      
+        public virtual Contact Contact { get; set; }
     }
 }
 	 

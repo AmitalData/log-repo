@@ -554,5 +554,29 @@ namespace Simplog.Data.CommonDataModel.Repositories
                                                select a);
             return contactlist;
         }
+        public string GetContactForAccountingByGLAccountIdExcludeOneCard(string glAccountId, int tenant, string excludeContactId, string includeContactId)
+        {
+            var contacts = (
+                from contact in context.Contacts
+                where contact.ContactForAccounting == true 
+                && (
+                    from cardContact in context.CardContacts
+                    where (
+                        from card in context.Cards
+                        where card.GLAccountId == glAccountId && card.Tenant == tenant
+                        select card.Id
+                    ).Contains(cardContact.CardId)
+                    select cardContact.ContactId
+                ).Contains(contact.Id)
+                && (includeContactId == null || contact.Id.ToString() == includeContactId) // Include specific contact ID
+                && (excludeContactId == null || contact.Id.ToString() != excludeContactId) // Exclude specific contact ID
+                select contact
+            ).FirstOrDefault();
+
+            return contacts?.Id.ToString(); 
+        }
+
+
+
     }
 }

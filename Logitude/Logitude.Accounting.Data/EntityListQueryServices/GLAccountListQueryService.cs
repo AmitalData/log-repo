@@ -234,8 +234,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    PaymentTerm = CardsDatas != null ? CardsDatas.PaymentTerm.LocalName == null ? CardsDatas.PaymentTerm.EnglishName : CardsDatas.PaymentTerm.LocalName : null,
                                                    TotalOpenShipments = CardsDatas != null ? CardsDatas.TotalOpenShipments : null,
                                                    Phone = CardsDatas != null ? CardsDatas.Phone : null,
-                                                   Salesman = CardsDatas != null ? CardsDatas.SalesmanUser.Contact.LocalName == null ? CardsDatas.SalesmanUser.Contact.EnglishName : CardsDatas.SalesmanUser.Contact.LocalName : null,
-                                                   Collector = CardsDatas != null ? CardsDatas.CollectorUser.Contact.LocalName == null ? CardsDatas.CollectorUser.Contact.EnglishName : CardsDatas.CollectorUser.Contact.LocalName : null,
+                                                   Salesman = a.SalesmanUserId != null ? (a.SalesmanUser.Contact != null ? (a.SalesmanUser.Contact.LocalName == null ? a.SalesmanUser.Contact.EnglishName : a.SalesmanUser.Contact.LocalName) : null) : null,
+                                                   Collector = a.CollectorId != null ? (a.CollectorUser.Contact != null ? (a.CollectorUser.Contact.LocalName == null ? a.CollectorUser.Contact.EnglishName : a.CollectorUser.Contact.LocalName) : null) : null,
                                                    CardCollectorId = CardsDatas != null ? CardsDatas.CollectorUser.Id : null,
 
                                                    // GLAccount Follow Up Datas
@@ -334,7 +334,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                                                    InsuredCreditPercentage = (CardsDatas.CreditLimit == null || CardsDatas.CreditLimit == 0) ? 0 :
                                                    ( (CardsDatas.InsuredcreditLimit ?? 0) / CardsDatas.CreditLimit * 100 ),
-
+                                                   ContactId = a.ContactId,
+                                                   ContactName = a.ContactId != null ? (a.Contact.LocalName ?? a.Contact.EnglishName) : null,
 
 
                                                }); ;
@@ -656,6 +657,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                            Obligo = glaccount.Obligo,
                            CreditUsed = glaccount.CreditUsed,
                            InsuredCreditPercentage = glaccount.InsuredCreditPercentage,
+                           ContactId = glaccount.ContactId,
+                           ContactName = glaccount.ContactName,
                        };
 
 
@@ -940,7 +943,63 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             return accountListQuery;
         }
+        public IQueryable<GLAccountList> GetByIdsForAgingReport(List<string> ids, int tenant, bool noNeedTenant)
+        {
+            IQueryable<GLAccount> accountQuery = (from a in context.GLAccounts
+                                                      //where a.Tenant == tenant && ids.Contains(a.Id)
+                                                  where ids.Contains(a.Id)
+                                                  select a);
+            if (!noNeedTenant)
+            {
+                accountQuery = accountQuery.Where(a => a.Tenant == tenant);
+            }
+            string multi = TranslateTextsClass.Translate("GLAccounts.Q.Multi", 0);
+            IQueryable<GLAccountList> accountListQuery = (from a in accountQuery
+                                                          where a.Tenant == tenant
+                                                          join chartOfAccount in context.ChartOfAccounts on a.ChartOfAccountsId equals chartOfAccount.Id
+                                                          join chartOfAccountsType in context.ChartOfAccountsTypes on a.ChartOfAccountsTypeCode equals chartOfAccountsType.Code
+                                                          select new GLAccountList()
+                                                          {
+                                                              Id = a.Id,
+                                                              Tenant = a.Tenant,
+                                                              CardsDataId = a.CardsDataId,
+                                                              Salesman = a.SalesmanUserId != null ? (a.SalesmanUser.Contact != null ? a.SalesmanUser.Contact.LocalName : null) : null,
+                                                              SalesmanName = a.SalesmanUserId != null ? (a.SalesmanUser.Contact != null ? a.SalesmanUser.Contact.EnglishName : null) : null,
+                                                              Collector = a.CollectorId != null ? (a.CollectorUser.Contact != null ? a.CollectorUser.Contact.LocalName : null) : null,
+                                                              CollectorName = a.CollectorId != null ? (a.CollectorUser.Contact != null ? a.CollectorUser.Contact.EnglishName : null) : null,
+                                                              DisplayNumber = a.DisplayNumber,
+                                                              InternalNumber = a.InternalNumber,
+                                                              InterestCreditLimit = a.InterestCreditLimit,
+                                                              ChartOfAccountsName = chartOfAccount != null ? chartOfAccount.LocalName : null,
+                                                              CurrencyId = a.CurrencyId,
+                                                              ReconcileMethodCode = a.ReconcileMethodCode,
+                                                              Category1Name = a.Category1.EnglishName,
+                                                              Category2Name = a.Category2.EnglishName,
+                                                              Category3Name = a.Category3.EnglishName,
+                                                              Category4Name = a.Category4.EnglishName,
+                                                              Category5Name = a.Category5.EnglishName,
+                                                              Category1LocalName = a.Category1.LocalName,
+                                                              Category2LocalName = a.Category2.LocalName,
+                                                              Category3LocalName = a.Category3.LocalName,
+                                                              Category4LocalName = a.Category4.LocalName,
+                                                              Category5LocalName = a.Category5.LocalName,
+                                                              ChartOfAccountsLocalName = chartOfAccount != null ? chartOfAccount.LocalName : null,
+                                                              ChartOfAccountsEnglishName = chartOfAccount != null ? chartOfAccount.EnglishName : null,
+                                                              ChartOfAccountsTypeEnglishName = chartOfAccountsType != null ? chartOfAccountsType.EnglishName : null,
+                                                              ChartOfAccountsTypeLocalName = chartOfAccountsType != null ? chartOfAccountsType.LocalName : null,
+                                                              ChartOfAccountSecurityLevel = chartOfAccount.ChartOfAccountSecurityLevel,
+                                                              CurrencyCode = a.IsMultiCurrency == true ? multi : a.Currency != null ? a.Currency.Code : null,
+                                                              IsMultiCurrency = a.IsMultiCurrency,
+                                                              EnglishName = a.EnglishName,
+                                                              LocalName = a.LocalName,
+                                                              ContactPhone = a.Contact != null ? a.Contact.BusinessPhone : null,
+                                                              ContactEmail  = a.Contact != null ? a.Contact.Email : null,
+                                                              ContactName = a.ContactId != null ? (a.Contact.LocalName ?? a.Contact.EnglishName) : null,
+                                                          });
+            //var xxx = accountListQuery.ToList();
 
+            return accountListQuery;
+        }
 
     }
 }

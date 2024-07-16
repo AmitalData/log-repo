@@ -11,17 +11,19 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import {CustomerPM} from '../../../../Common/EntityPMs/CustomerPM';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse'; 
+import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 
 @Component({
     
     templateUrl: './ContactsTabComponent.html',
 })
 
-export class ContactsTabComponent implements OnDestroy {
+export class ContactsTabComponent extends BaseComponent implements OnDestroy {
     public ItemsSource: ContactItemClass[];
     public EntityPM: any = null;
     public EntityId: string = null;
     public ObjectTableName: string;
+    public DataContext = this;
     public Customer: CustomerPM = null;
     public PartnerTypeId: string = null;
     public DomainService: PartnersDomainService;
@@ -32,6 +34,7 @@ export class ContactsTabComponent implements OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     public HasExternalId: boolean = false;
     constructor(public entityArgs: EntityArgs) {
+        super();
         this._entityResourceService.getEntityResourceByTableName("Contact", 0).subscribe(response=> {
             this.IsVisibile = true;
             this.ItemsSource = [];
@@ -102,6 +105,7 @@ export class ContactsTabComponent implements OnDestroy {
         this.CurrentSession.StartBusyIndicatorLoading();
 
         this.DomainService.GetAllContactsPMsbyCardId(this.EntityPM.Id).subscribe((myResult:any) => {
+            this.SetContactForAccounting(myResult);
             this.BuildItemsSource(myResult);
             this.CurrentSession.StopBusyIndicator();
             this.HasExternalId = this.IsAllContactsHaveExternalId(myResult);
@@ -111,6 +115,7 @@ export class ContactsTabComponent implements OnDestroy {
 
 
     }
+
 
     private IsAllContactsHaveExternalId(contacts: any): boolean{
 
@@ -141,6 +146,17 @@ export class ContactsTabComponent implements OnDestroy {
         }
 
         this.IsNoDataVisible = isNoDataVisible;
+    }
+
+    SetContactForAccounting(items: ContactPM[]){
+        debugger;
+        items.forEach(item => {
+            if(item.ContactForAccounting == true){
+                this.EntityPM.ContactForAccounting=item.Id;
+                this.EntityPM.IsDirty=false;
+                return;
+            }
+        });
     }
 
     NewEntityClicked() {
@@ -219,14 +235,16 @@ export class ContactsTabComponent implements OnDestroy {
         }
     }
 }
-export class ContactItemClass {
+export class   ContactItemClass extends BaseComponent{
     public ObjectTableName = "Contact";
     public EntityPM: ContactPM;
     public IsNewEntity: boolean = false; 
     constructor(item: ContactPM, public fatherComponent: ContactsTabComponent, isNewEntity: boolean) {
+        super();
         this.EntityPM = item;
         this.IsNewEntity = isNewEntity; 
         this.CheckPrimary();
+        this.CheckContactForAccounting();
         if(fatherComponent != null) {
             
              this.CheckEmailForSending(this.fatherComponent.EntityPM['Card']['EmailForSendingSingArinvoice'])
@@ -258,8 +276,12 @@ export class ContactItemClass {
     get AnniversaryReminder() { return this.EntityPM.AnniversaryReminder; }
     get DontShowLocalLabels() { return this.EntityPM.DontShowLocalLabels; }
     public get ExternalId() { return this.EntityPM.ExternalId; }
-    
-    
+    public get ContactForAccounting() { return this.EntityPM.ContactForAccounting; }
+    public set ContactForAccounting(value: boolean) {
+        if (this.EntityPM.ContactForAccounting != value) {
+            this.EntityPM.ContactForAccounting = value;
+        }
+    }    
     public IsPrimary: boolean = false;
     public EmailForSending : boolean = false;
     public SendingInterestReport : boolean = false;
@@ -278,6 +300,28 @@ export class ContactItemClass {
      
         this.IsPrimary = isPrimary;
     }
+    CheckContactForAccounting(){
+        var ContactForAccounting = false;
+        var myCardContactForAccounting=null;
+        debugger;
+        if (this.fatherComponent && this.fatherComponent.EntityPM) {
+            myCardContactForAccounting = this.fatherComponent.EntityPM['ContactForAccounting'];
+            if (!AppTool.IsNullOrEmpty(myCardContactForAccounting)) {
+                if (myCardContactForAccounting == this.Id) {
+                    ContactForAccounting = true;
+                }
+            }
+        }
+        this.ContactForAccounting = ContactForAccounting;
+    }
+
+    setContactForAccounting(){
+        debugger;
+        this.fatherComponent.EntityPM['ContactForAccounting']=this.Id;
+        this.fatherComponent.ItemsSource.forEach(item => {
+            item.CheckContactForAccounting();
+        });
+    }
     SetPrimary() {
         this.fatherComponent.EntityPM['PrimaryContactId'] = this.Id;
         this.fatherComponent.EntityPM['PrimaryContactName'] = this.EnglishName;
@@ -287,6 +331,8 @@ export class ContactItemClass {
             item.CheckPrimary();
         });
     }
+
+    
 
 
     SetEmailForSendingSingArinvoices() {

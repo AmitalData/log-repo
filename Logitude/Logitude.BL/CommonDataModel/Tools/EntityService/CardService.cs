@@ -143,7 +143,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             this.isNewEntity = false;
             this.Poco = entityRepository.GetSingleCard(entityPM.Id , tenant);
-          
+            this.UpdateGLAccount();
+
             this.Initialize();
 
             CardValidating.Validate(entityPM);
@@ -182,7 +183,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             AddCardKafkaQueueMessage();
-
         }
 
         public void HandleGLAccountCardData(string cardId,string glaccountId, int tenant)
@@ -218,9 +218,18 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
             }
         }
+        private void UpdateGLAccount()
+        {
+            UpdateGLAccountWithAdditionalData(Poco.GLAccountId, Poco.Tenant,Poco.Id);
+        }
+        
 
-
-
+     
+        private void UpdateGLAccountWithAdditionalData(string accountId, int tenant,string excludeCardId)
+        {
+            IGLAccountUpdateServiceExt glaccountUpdate = ContainerAccessor.Container.Resolve(typeof(IGLAccountUpdateServiceExt), "GLAccountUpdateServiceExt", new ParameterOverride("", 1)) as IGLAccountUpdateServiceExt;
+            glaccountUpdate.UpdateGLAccountWithAdditionalData(accountId, tenant, excludeCardId);
+        }
         private void Initialize()
         {
             if (isNewEntity)

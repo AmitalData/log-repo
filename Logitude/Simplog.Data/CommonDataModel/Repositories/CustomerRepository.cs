@@ -487,7 +487,57 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public bool IsCustomerExist(string Id, int tenant)
         {
-            return GetSingleCustomerWithCardOnly(Id, tenant, true) != null ? true : false ;
+            return GetSingleCustomerWithCardOnly(Id, tenant, true) != null ? true : false;
+        }
+        public string GetSalesManByGLAccountId(string glAccountId, int tenant, string excludeCustomerId=null)
+        {
+            // Find all card IDs matching the given GLAccountId
+            var cardIds = (
+                from card in context.Cards
+                where card.GLAccountId == glAccountId
+                select card.Id
+            );
+
+            // Select SalesmanId from customers matching the card IDs and other conditions
+            var SalesmanUser = (
+                from customer in context.Customers
+                where cardIds.Contains(customer.Id) && customer.Tenant == tenant && customer.SalesmanUserId != null && (excludeCustomerId == null || customer.Id != excludeCustomerId)
+                select customer.SalesmanUser
+            );
+            var salesman = SalesmanUser.FirstOrDefault();
+            if(salesman != null)
+            {
+                return salesman.Id;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public string GetCollectorByGLAccount(string glAccountId, int tenant, string excludeCustomerId=null)
+        {
+            // Find all card IDs matching the given GLAccountId
+            var cardIds = (
+                from card in context.Cards
+                where card.GLAccountId == glAccountId
+                select card.Id
+            );
+
+            // Select SalesmanId from customers matching the card IDs and other conditions
+            var Collector = (
+                from customer in context.Customers
+                where cardIds.Contains(customer.Id) && customer.Tenant == tenant && customer.CollectorId != null && (excludeCustomerId == null || customer.Id != excludeCustomerId)
+                select customer.Collector
+            );
+            var colletor= Collector.FirstOrDefault();
+            if(colletor != null)
+            {
+                return colletor.Id;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

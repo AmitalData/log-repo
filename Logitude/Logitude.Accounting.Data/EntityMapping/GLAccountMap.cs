@@ -115,6 +115,10 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.IsVATExempt).HasColumnName("IsVATExempt");
 
+            this.Property(t => t.CollectorId).HasColumnName("CollectorId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.SalesmanUserId).HasColumnName("SalesmanUserId").HasMaxLength(15).IsUnicode(false);
+
             this.Property(t => t.DeductionFileTypeId).HasColumnName("DeductionFileTypeId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.DeductionFileNumber).HasColumnName("DeductionFileNumber").HasMaxLength(30).IsUnicode(false);
@@ -167,6 +171,9 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.DateFormat).HasColumnName("DateFormat").HasMaxLength(50).IsUnicode(true);
 
+            this.Property(t => t.PaymentTerms).HasColumnName("PaymentTerms").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ContactId).HasColumnName("ContactId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }
