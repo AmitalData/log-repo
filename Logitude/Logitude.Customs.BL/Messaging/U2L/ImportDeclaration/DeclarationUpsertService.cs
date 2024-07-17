@@ -212,7 +212,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 						MyGenericResponseObj.ApplicationId =
 						_MyDeclarationPM.Id;
 
-					
+
 					//<-- Yuval Chalup 04.03.2015 TASK-11617 - CHANGED FROM:
 					//if (this._MyDeclarationPM.PaymentDate != null)
 					//{
@@ -325,6 +325,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				{
 					this._MyDeclarationPM.TaxationDateTime = DateTime.Now;
 					this._MyDeclarationPM.ExternalDeclarationNumber = (_AmitalCustomsFile.CustomFileNo + DateTime.Today.Year.ToString());
+					this._MyDeclarationPM.SystemConnection = _AmitalCustomsFile.SystemConnection;
 					this._MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Insert;
 					if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.CargoTypeCode))
 					{
@@ -356,12 +357,20 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				AppendLogLine("_AmitalCustomsFile.Id = " + _AmitalCustomsFile.Id + " " + _MyDeclarationPM.ChangeSetOp.ToString());
 				//this._MyDeclarationPM.m = _AmitalCustomsFile.MAWB 
 				this._MyDeclarationPM.CustomFileNo = _AmitalCustomsFile.CustomFileNo;
-				this._MyDeclarationPM.DeclarationOfficeCode = _AmitalCustomsFile.DeclarationOfficeCode;
-				this._MyDeclarationPM.FileState = _AmitalCustomsFile.FileState;
-				this._MyDeclarationPM.AgentId = _AmitalCustomsFile.AgentId;//translate?
+				if (_AmitalCustomsFile.SystemConnection != "N" || (_AmitalCustomsFile.SystemConnection == "N" && _MyDeclarationPM.ChangeSetOp == ChangeSetOperation.Insert))
+				{
+					this._MyDeclarationPM.DeclarationOfficeCode = _AmitalCustomsFile.DeclarationOfficeCode;
+					this._MyDeclarationPM.FileState = _AmitalCustomsFile.FileState;
+					this._MyDeclarationPM.AgentId = _AmitalCustomsFile.AgentId;//translate?
+					this._MyDeclarationPM.ForwarderFiles = _AmitalCustomsFile.ForwarderFiles;
+				}
+				if (_AmitalCustomsFile.SystemConnection == "N")
+				{
+					this._MyDeclarationPM.IsFromUpdateShipment = true;
+				}
 				string DBcustomer = this._MyDeclarationPM.CustomerId; // moran 12.7.15 - Task 14510
-				this._MyDeclarationPM.CustomerId = TranslateCustomer(_AmitalCustomsFile.CustomerId);//check translate
-				this._MyDeclarationPM.ForwarderFiles = _AmitalCustomsFile.ForwarderFiles;
+				this._MyDeclarationPM.CustomerId = _AmitalCustomsFile.SystemConnection == "N" ? _AmitalCustomsFile.CustomerId : TranslateCustomer(_AmitalCustomsFile.CustomerId);//check translate
+
 				if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.CustomerId) && _AmitalCustomsFile.Direction != "E")
 				{
 					MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
@@ -414,9 +423,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				}
 				this._MyDeclarationPM.TransportModeId = _AmitalCustomsFile.TransportModeId;
 				//this._MyDeclarationPM.CreatedByUserId = _AmitalCustomsFile.CreatedByUserId;
-				this._MyDeclarationPM.CreatedByUserId = TranslateUser(_AmitalCustomsFile.CreatedByUserId);
-				this._MyDeclarationPM.ReferentUserId = TranslateUser(_AmitalCustomsFile.ReferentUserId);
-				this._MyDeclarationPM.DepartmentId = TranslateDepartment(_AmitalCustomsFile.DepartmentId);
+				if (_AmitalCustomsFile.SystemConnection != "N" || (_AmitalCustomsFile.SystemConnection == "N" && _MyDeclarationPM.ChangeSetOp == ChangeSetOperation.Insert)) 
+				{
+
+					this._MyDeclarationPM.CreatedByUserId = _AmitalCustomsFile.SystemConnection == "N" ? _AmitalCustomsFile.CreatedByUserId : TranslateUser(_AmitalCustomsFile.CreatedByUserId);
+				    this._MyDeclarationPM.ReferentUserId = _AmitalCustomsFile.SystemConnection == "N" ? _AmitalCustomsFile.ReferentUserId : TranslateUser(_AmitalCustomsFile.ReferentUserId);
+			    }
+				this._MyDeclarationPM.DepartmentId = _AmitalCustomsFile.SystemConnection == "N" ? _AmitalCustomsFile.DepartmentId : TranslateDepartment(_AmitalCustomsFile.DepartmentId);
 				if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.COUWTVAL))
 				{
 					this._MyDeclarationPM.WeightValue = _AmitalCustomsFile.COUWTVAL;
@@ -645,7 +658,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 					string warehouseId = null;
 					if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.WarehouseId))
 					{
-						warehouseId = TranslateWarehouse(_AmitalCustomsFile.WarehouseId);
+						warehouseId = _AmitalCustomsFile.SystemConnection == "N" ? _AmitalCustomsFile.WarehouseId : TranslateWarehouse(_AmitalCustomsFile.WarehouseId);
 					}
 					this._MyDeclarationPM.Consignments[0].StorageSiteCode = warehouseId;
 
@@ -915,7 +928,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 								}
 							}
 						}
-						_MyDeclarationPM.Consignments[0].StorageSiteCode = TranslateWarehouse(_AmitalCustomsFile.WarehouseId);
+						_MyDeclarationPM.Consignments[0].StorageSiteCode = _AmitalCustomsFile.SystemConnection == "N" ? _AmitalCustomsFile.WarehouseId : TranslateWarehouse(_AmitalCustomsFile.WarehouseId);
 						AppendLogLine("one Consignment6 Consignment.UnloadPortCode=" + this._MyDeclarationPM.Consignments[0].UnloadPortCode);
 						if (this._MyDeclarationPM.Consignments[0].ChangeSetOp != ChangeSetOperation.Insert)
 						{
@@ -1794,6 +1807,19 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 			else
 			{
 				this._DeclarationReferantDataPM.ChangeSetOp = ChangeSetOperation.Update;
+				if(this._MyDeclarationPM.SystemConnection == "N")
+				{
+					this._DeclarationReferantDataPM.MawbDate = !String.IsNullOrWhiteSpace(_AmitalCustomsFile.MawbDate) ? DateTime.Parse(_AmitalCustomsFile.MawbDate) : this._DeclarationReferantDataPM.MawbDate;
+					this._DeclarationReferantDataPM.EstimatedArrivalDate = !String.IsNullOrWhiteSpace(_AmitalCustomsFile.EstimatedArrivalDate) ? DateTime.Parse(_AmitalCustomsFile.EstimatedArrivalDate) : this._DeclarationReferantDataPM.EstimatedArrivalDate;
+					this._DeclarationReferantDataPM.PackageTypeCode = _AmitalCustomsFile.PackageTypeCode;
+					this._DeclarationReferantDataPM.ArrivalDate = !String.IsNullOrWhiteSpace(_AmitalCustomsFile.ArrivalDate) ? DateTime.Parse(_AmitalCustomsFile.ArrivalDate) : this._DeclarationReferantDataPM.ArrivalDate;
+					this._DeclarationReferantDataPM.Commodity = _AmitalCustomsFile.Commodity;
+					this._DeclarationReferantDataPM.Vessel = _AmitalCustomsFile.Vessel;
+					this._DeclarationReferantDataPM.FlightVoyageNumber = _AmitalCustomsFile.FlightVoyageNumber;
+					this._DeclarationReferantDataPM.CarrierCode = _AmitalCustomsFile.CarrierCode;
+
+
+				}
 			}
 			decimal myGrossMassMeasure = 0;
 			if (decimal.TryParse(_AmitalCustomsFile.GrossMassMeasure, out myGrossMassMeasure) || string.IsNullOrWhiteSpace(_AmitalCustomsFile.GrossMassMeasure))

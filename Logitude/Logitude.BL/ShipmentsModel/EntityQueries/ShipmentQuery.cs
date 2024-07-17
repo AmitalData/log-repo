@@ -1820,22 +1820,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.ReferantUserId = shipment.ReferantUserId;
                 // shipmentPM.ReferantUserId = shipment.UserId.Id;
                 shipmentPM.IskaNumber = shipment.IskaNumber;
-                shipmentPM.Status = "aa"; // todo: mapping
-
-                // todo: get declaration referent data
-                DeclarationReferantDataPM declarationReferantData = GetDeclarationReferantData();
-                if (declarationReferantData != null)
-                {
-                    shipmentPM.CarrierCode = declarationReferantData?.CarrierCode;
-                    shipmentPM.MawbDate = declarationReferantData?.MawbDate;
-                    shipmentPM.Hawb = declarationReferantData?.Hawb;
-                    shipmentPM.ArrivalDate = declarationReferantData?.ArrivalDate;
-                    shipmentPM.EstimatedArrivalDate = declarationReferantData?.EstimatedArrivalDate;
-                    shipmentPM.PackageTypeCode = declarationReferantData?.PackageTypeCode;
-                    shipmentPM.Vessel = declarationReferantData?.Vessel;
-                    shipmentPM.FlightVoyageNumber = declarationReferantData?.FlightVoyageNumber;
-                    shipmentPM.Commodity = declarationReferantData?.Commodity;
-                }
+                shipmentPM.Status = "aa"; // todo: mapping              
 
             }
 
@@ -2722,22 +2707,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return shipmentPM;
         }
 
-        public DeclarationReferantDataPM GetDeclarationReferantData()
-        {
-            DeclarationReferantDataPM declarationReferantData = new DeclarationReferantDataPM()
-            {
-                CarrierCode = "6",
-                Mawb = "7",
-                Hawb = "8",
-                ArrivalDate = DateTime.Now,
-                EstimatedArrivalDate = DateTime.Now,
-                PackageTypeCode = "9",
-                Vessel = "10",
-                FlightVoyageNumber = "11",
-                Commodity = "12",
-            };
-            return declarationReferantData;
-        }
+       
         public void UpdateDeclarationReferantData(DeclarationReferantDataPM declarationReferantDataPM)
         {
 
