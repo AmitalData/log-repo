@@ -41,9 +41,10 @@
   </Column>
   <Column
     Name="IsMandatory"
-    Type="bit">
+    Type="nvarchar"
+    Size="40">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="Location"
