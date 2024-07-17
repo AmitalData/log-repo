@@ -1511,7 +1511,7 @@ namespace WebFreight.Web.WebServices
             {
 
 
-                if (!string.IsNullOrEmpty(copyid))
+                if (!string.IsNullOrEmpty(copyid) && copyid != "null")
                 {
                     var docoutcopy = context.DocumentOutCopies.Where(d => d.DocumentOutId == documentFiling.Id && d.Id == copyid && d.Tenant == tenant).FirstOrDefault();
                     if (docoutcopy != null)
