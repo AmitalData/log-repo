@@ -1,23 +1,26 @@
 <div class="mainTable_item">
 	<div class="mainTable_itemToggle" [class.active]="selected" (click)="selected = !selected">
-		<button>
+		<button *ngIf="!data?.IsLeaf">
 			<i role="img" aria-hidden="true">
 				<fa-icon [icon]="faArrowAltCircleLeft" (click)="showChildern.emit()"></fa-icon
 			></i>
 		</button>
 	</div>
 	<div class="mainTable_itemName" (click)="showDetails.emit()">
-		<a href="#" role="button"
-			>{{ data }}
-			<span class="full_classification">
-				{{ data?.FullClassification }}
+		<a href="#" role="button"> 
+			<span class="full_classification"  *ngIf="data?.CI_Parent_CustomsItemIDNum">
+				{{ ClassificationNoDisplay(data,data?.FullClassification) }} | 
 			</span>
-			<span *ngIf="state === 'search'" class="item_details">
-				<!-- <a> {{ data?.MeasurementUnit }} </a> -->
-				<!-- <a> {{ data?.MeasurementUnit }} </a>
-				<a> {{ data?.MeasurementUnit }}</a>
-				<a> {{ data?.MeasurementUnit }} </a>
-				<a> {{ data?.MeasurementUnit }}</a> -->
+			<span class="full_classification">
+				{{ data.CIH_GoodsDescription }}
+			</span>
+			<span *ngIf="data?.CI_Parent_CustomsItemIDNum && ClassificationNoDisplay(data,data?.FullClassification).length > 2 && state === 'search'" class="item_details">
+				<!-- change to real fields -->
+				<a> {{ data?.FullClassification }} </a>
+				<a> {{ data?.FullClassification }} </a>
+				<a> {{ data?.FullClassification }}</a>
+				<a> {{ data?.FullClassification }} </a>
+				<a> {{ data?.FullClassification }}</a>
 			</span>
 		</a>
 	</div>

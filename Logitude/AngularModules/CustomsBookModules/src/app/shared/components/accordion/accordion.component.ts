@@ -85,39 +85,16 @@ export class AccordionComponent implements OnInit {
       data: []
     };
 
-    // split to other functions:
-    // TODO: change to sen real data customItemID and measurementUnitID are exist in CB_CustomsItemComputedDataList:
-    //GetCustomsBookAgreementLevelData
-    // this.API_MainService.GetCustomsBookAgreementLevelData(23066, 6).subscribe((data: CB_TariffList[]) => {
-    //   this.MainEntity.CB_TariffList = data;
-
-    //   console.log(this.MainEntity.CB_TariffList);
-    //   this.tableData1.data = this.MainEntity.CB_TariffList.filter(x => x.TradeAgreementName != 'מס קניה');
-
-    //   this.tableData2.data = this.MainEntity.CB_TariffList.filter(x => x.TradeAgreementName == 'מס קניה');
-    // });
-
-    // // GetCustomsBookRegularityRequirementData
-    // this.API_MainService.GetCustomsBookRegularityRequirementData(17514).subscribe((data: CB_RequirementComputedDataList[]) => {
-    //   this.MainEntity.CB_RequirementComputedDataList = data;
-    //   console.log(this.MainEntity.CB_RequirementComputedDataList);
-    //   this.tableData3.data = this.MainEntity.CB_RequirementComputedDataList
-    // });
-
     // שיעורי מס
     this.API_MainService.GetCustomsBookAgreementLevelData(this.customsItemId, 0).subscribe((data: CB_TariffList[]) => {
       this.MainEntity.CB_TariffList = data;
-
-      console.log(this.MainEntity.CB_TariffList);
       this.tableData1.data = this.MainEntity.CB_TariffList.filter(x => x.TradeAgreementName != 'מס קניה');
-
       this.tableData2.data = this.MainEntity.CB_TariffList.filter(x => x.TradeAgreementName == 'מס קניה');
     });
 
     // דרישות חוקיות
     this.API_MainService.GetCustomsBookRegularityRequirementData(this.customsItemId).subscribe((data: CB_RequirementComputedDataList[]) => {
       this.MainEntity.CB_RequirementComputedDataList = data;
-      console.log(this.MainEntity.CB_RequirementComputedDataList);
       this.tableData3.data = this.MainEntity.CB_RequirementComputedDataList
     });
   }

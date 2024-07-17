@@ -70,13 +70,26 @@ export class MainDisplayComponent {
 	// listen to itemsData when change:
 	ListenToItemsSearched() {
 		this.itemsData.subscribe((data: CB_CustomsItemComputedDataList[] = []) => {
-			if(data.length == 0) {
+			if (data.length == 0) {
 				this.InitData();
 				return;
 			} 
-			this.data = this.orderedData(data);
+			console.log(data);
+			// remove duplicates customsItemID:
+			data = data.filter((v, i, a) => a.findIndex(t => (t.CustomsItemID === v.CustomsItemID)) === i);
+
+			this.data = this.orderedDataForSearch(data);
+
+			this.extendAll(this.data);
 		});
 	}
+	extendAll(data: CB_CustomsItemComputedDataList[]) {
+		data.forEach((item) => {
+			this.showChildern(item.CIH_GoodsDescription);
+			if (item.children && item.children.length > 0) this.extendAll(item.children);
+		});
+	}
+
 
 	currentItem: CB_CustomsItemComputedDataList;
 	itemDataBehaviorSubject: BehaviorSubject<ItemData> = new BehaviorSubject<ItemData>({ customsItemId: 0, measurementUnitMalamId: 0 });
@@ -104,11 +117,51 @@ export class MainDisplayComponent {
 	}
 
 	showChildern(id: string): boolean {
+
 		const isShown = this.childrenToDesplay.indexOf(id);
 		isShown === -1 ? this.childrenToDesplay.push(id) : this.childrenToDesplay.splice(isShown);
 		return Boolean(isShown >= 0);
 	}
 
+
+	public orderedDataForSearch = (data) => {
+		const getChildren = (parentItem) => {
+			const children = data.filter((item) => item?.CI_Parent_CustomsItemIDNum === parentItem?.CustomsItemID);
+			children.forEach((child) => {
+				child.children = getChildren(child);
+			});
+			return children;
+		};
+	
+		let rootItems = data.filter((item) => !item?.CI_Parent_CustomsItemIDNum);
+		if (rootItems.length === 0) {
+			rootItems = data;
+		}
+	
+		const orderedData = rootItems.map((rootItem) => {
+			const children = getChildren(rootItem);
+			return { ...rootItem, children };
+		});
+	
+		// Remove root items that are found as children of other items
+		const removeRootItemsAsChildren = (items) => {
+			return items.filter((item) => {
+				const foundAsChild = items.some((otherItem) => {
+					if (otherItem.children) {
+						return otherItem.children.some((child) => child.CustomsItemID === item.CustomsItemID);
+					}
+					return false;
+				});
+				return !foundAsChild;
+			});
+		};
+	
+		// Filter out root items that are found as children
+		const filteredOrderedData = removeRootItemsAsChildren(orderedData);
+	
+		return filteredOrderedData;
+	};
+	
 	public orderedData = (data) => {
 		const getChildren = (parentItem) => {
 			const children = data.filter((item) => item?.CI_Parent_CustomsItemIDNum === parentItem?.CustomsItemID);
@@ -116,18 +169,16 @@ export class MainDisplayComponent {
 			//const children = data.filter((item) => item?.Parent_CustomsItemID === parentItem?.ID);
 
 			children.forEach((child) => {
-				// @ts-ignore
 				child.children = getChildren(child);
 			});
 			return children;
 		};
-		const rootItems = data.filter((item) => !item?.CI_Parent_CustomsItemIDNum);
-
+		let rootItems = data.filter((item) => !item?.CI_Parent_CustomsItemIDNum);
 		// CHECK MOKE DATA:
 		//const rootItems = data.filter((item) => !item?.Parent_CustomsItemID);
+		if (rootItems.length == 0) return;
 
 		const orderedData = rootItems.map((rootItem) => {
-			// debugger
 			const children = getChildren(rootItem);
 			return { ...rootItem, children };
 		});
@@ -137,15 +188,6 @@ export class MainDisplayComponent {
 
 }
 
-
-// export class Filters {
-// 	CustomsBookType: string = "1";
-// 	Tenant: number = 0;
-// 	SearchFields: string | null = null;
-// 	CustomsItemHierarchic: string | null = null;
-// 	Reamarks: boolean = false;
-// 	Rules: boolean = false;
-// }
 
 export interface ItemData {
 	customsItemId: number;
