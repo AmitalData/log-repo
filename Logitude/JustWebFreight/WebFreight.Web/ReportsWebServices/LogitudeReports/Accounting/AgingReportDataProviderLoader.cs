@@ -262,6 +262,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
                     ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
                     ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
+                    AccountContactEmail = d.First().AccountContactEmail,
+                    AccountContactName = d.First().AccountContactName,
+                    AccountContactPhone = d.First().AccountContactPhone,
+                   
+
                 }).ToList();
             else
                 groupedPeriodsByAccount = result.GroupBy(d => d.AccountId).Select(d => new AgingPeriod()
@@ -305,6 +310,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
                     ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
                     ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
+                    AccountContactEmail = d.First().AccountContactEmail,
+                    AccountContactName = d.First().AccountContactName,
+                    AccountContactPhone = d.First().AccountContactPhone,
                 }).ToList();
             totalData.AgingPeriods.AddRange(groupedPeriodsByAccount);
             
@@ -361,6 +369,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
                     ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
 
+                    AccountContactEmail = d.First().AccountContactEmail, 
+                    AccountContactName = d.First().AccountContactName,
+                    AccountContactPhone = d.First().AccountContactPhone,
 
                 }).ToList();
             else
@@ -408,6 +419,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
                     ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
                     ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
+
+                    AccountContactName = d.First().AccountContactName,
+                    AccountContactEmail = d.First().AccountContactEmail,
+                    AccountContactPhone = d.First().AccountContactPhone,
 
                 }).ToList();
             totalData.AgingPeriods.AddRange(groupedPeriodsByAccount);
@@ -463,7 +478,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
                     ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
                     ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
-
+                    AccountContactName = d.First().AccountContactName,
+                    AccountContactEmail = d.First().AccountContactEmail,
+                    AccountContactPhone = d.First().AccountContactPhone,
 
 
             }).ToList();
@@ -511,6 +528,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
                     ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
                     ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
+                    AccountContactName = d.First().AccountContactName,
+                    AccountContactEmail = d.First().AccountContactEmail,
+                    AccountContactPhone = d.First().AccountContactPhone,
 
                 }).ToList();
             }
@@ -557,6 +577,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
                     ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
                     ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
+                    AccountContactName = d.First().AccountContactName,
+                    AccountContactEmail = d.First().AccountContactEmail,
+                    AccountContactPhone = d.First().AccountContactPhone,
 
                 }).ToList();
 
@@ -613,6 +636,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
                     ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
                     ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
+                    AccountContactName = d.First().AccountContactName,
+                    AccountContactEmail = d.First().AccountContactEmail,
+                    AccountContactPhone = d.First().AccountContactPhone,
 
                 }).ToList();
             }
@@ -918,6 +944,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                         record.Total = item.Total;
 
+                    record.AccountContactName = item.AccountContactName;
+                    record.AccountContactEmail = item.AccountContactEmail;
+                    record.AccountContactPhone = item.AccountContactPhone;
+
 
                         periods.Add(record);
                     
@@ -971,6 +1001,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                         record.Category5LocalName = item.Category5LocalName;
 
                         record.Total = item.Total;
+                    record.AccountContactName = item.AccountContactName;
+                    record.AccountContactEmail = item.AccountContactEmail;
+                    record.AccountContactPhone = item.AccountContactPhone;
 
                         periods.Add(record);
                     }

@@ -435,7 +435,10 @@ export class ContactPM {
     public get DigitalPortalLanguage() { return this.digitalPortalLanguage; }
     public set DigitalPortalLanguage(newValue: string) { if (this.digitalPortalLanguage != newValue) { this.digitalPortalLanguage = newValue; this.MarkAsDirty("DigitalPortalLanguage"); } }
        
-	 
+    private contactForAccounting: boolean;
+    public get ContactForAccounting() { return this.contactForAccounting; }
+    public set ContactForAccounting(newValue: boolean) { if (this.contactForAccounting != newValue) { this.contactForAccounting = newValue; this.MarkAsDirty("ContactForAccounting"); } }
+       
 
     public OldEntityPM: ContactPM;
 		
@@ -463,4 +466,4 @@ export class ContactPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

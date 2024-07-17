@@ -51,7 +51,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.Position = entityPM.Position;
             entityPOCO.UpdateDate = entityPM.UpdateDate;
             entityPOCO.DigitalPortalLanguage = entityPM.DigitalPortalLanguage;
-
+           
             if (LogitudeSettings.DeploymentStage == "Simplog")
             {
                 entityPOCO.DontShowLocalLabels = true;
@@ -72,6 +72,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             }
 
             entityPOCO.CompanyName = entityPM.CompanyName;
+            entityPOCO.ContactForAccounting = entityPM.ContactForAccounting;
             BuildSearchFields(entityPM, entityPOCO);
         }
 

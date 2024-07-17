@@ -283,5 +283,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public string DigitalPortalLanguage { get; set; }
+
+        [DataMember]
+        public bool? ContactForAccounting { get; set; }
+
+
     }
 }

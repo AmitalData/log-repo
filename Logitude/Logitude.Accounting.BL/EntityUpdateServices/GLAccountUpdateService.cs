@@ -461,9 +461,29 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
 
         }
+        public void UpdateCardDisplayNumber(int tenant, string cardId, string displayNumber, string glaccountId, bool isFromGlaAccountUpdate)
+        {
+            CardQuery cardQuery = new CardQuery(tenant);
+            var context = CommonDataContext.GetContext(tenant);
+            CardPM cardPM = cardQuery.GetSinglePM(cardId, tenant);
+            cardPM.GLAccountId = glaccountId;
+            cardPM.GLAccountDisplayNumber = displayNumber;
+            cardPM.IsFromGlaAccountUpdate = isFromGlaAccountUpdate;
+            CardService cardService = new CardService(context, tenant);
+            cardService.Update(cardPM);
+        }
         protected override void OnUpdating(GLAccountPM entityPM, GLAccount entityPOCO)
         {
+            var tenant = entityPM.Tenant;
 
+            if (entityPM.DisplayNumber != entityPOCO.DisplayNumber)
+            {
+                List<CardList> cardLists = GetCardsByGLAccountId(entityPM.Id, tenant);
+                foreach (CardList card in cardLists)
+                {
+                    UpdateCardDisplayNumber(tenant, card.Id, entityPM.DisplayNumber, entityPM.Id, true);
+                }
+            }
             if (!entityPM.IsControlAccount.GetValueOrDefault())
             {
                 this.setAccountingTypeCodeByChartofAccountTypeCode(entityPM);
@@ -898,6 +918,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card connectedCard = new Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card();
                 connectedCard.Code = card.Code;
                 connectedCard.PartnerCode = card.PartnerTypeId;
+
                 if (gLAccount.CardCode == connectedCard.Code)
                 {
                     connectedCard.IsDisconnectedFromGLAccount = true;
@@ -2383,6 +2404,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 CardPM card = query.GetSinglePM(cardId, tenant);
                 card.GLAccountId = glAccountId;
                 card.GLAccountDisplayNumber = GetDisplayNumberFromGLAccount(glAccountId, tenant);
+                card.IsFromGlaAccountUpdate = true;
                 service.Update(card);
             }
         }
@@ -2392,23 +2414,33 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             CheckMultiToSingleCurrencyChanged(entityPM, entityPOCO);
             CheckSingleToSingleCurrencyChanged(entityPM, entityPOCO);
+    
             if (entityPM.ChangeSetOp != ChangeSetOperation.Insert)
             {
-                CheckIfGlaccountIsConnectedToBankGlAccount(entityPM, entityPOCO);
+                CheckIfGlaccountIsConnectedToBankAccountOrCashBook(entityPM, entityPOCO);
             }
             CheckReconcileMethodChange(entityPM, entityPOCO);
         }
 
         private void CheckIfGlaccountIsConnectedToBankGlAccount(GLAccountPM entityPM, GLAccount entityPOCO)
         {
+            if (entityPOCO.IsMultiCurrency != entityPM.IsMultiCurrency && entityPM.IsMultiCurrency == true)
+            {
             BankAccountRepository repo = new BankAccountRepository(entityPM.Tenant);
             var isGlaccountExistsInBankAccount = repo.CheckIfGlAccountExistsInBankAccount(entityPM.Id, entityPM.Tenant);
             if (entityPM.ChartOfAccountsTypeCode == ChartOfAccountsTypeEnum.Banks.ToIntString() && isGlaccountExistsInBankAccount
                 && ((entityPOCO.IsMultiCurrency != entityPM.IsMultiCurrency) || (entityPOCO.CurrencyId != entityPM.CurrencyId)))
             {
+                    CashBookRepository cashBookRepository = new CashBookRepository(entityPM.Tenant);
+                    isGlaccountExistsInCashBook = cashBookRepository.CheckIfGlAccountExistsInCashBook(entityPM.Id, entityPM.Tenant);
+                }
+                if (entityPM.ChartOfAccountsTypeCode == ChartOfAccountsTypeEnum.Banks.ToIntString() && (isGlaccountExistsInBankAccount || isGlaccountExistsInCashBook))
+                {
                 bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
                 throw new ApplicationException(TranslateTextsClass.Translate("BankAccounts.O.PreventChangingCurrency", 0, useLocal));
             }
+        }
+
         }
 
         private static void CheckSplittedGLAccount(GLAccountPM entityPM)
@@ -2718,9 +2750,40 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 throw new Exception("File is empty");
             }
         }
+
+
+
+        public void UpdateGLAccountWithAdditionalData(string glaccountId, int tenant, string excludeCardId = null, string excludeContactId = null, string includeContactId = null)
+        {
+            GLAccountQueryService gLAccountQuery = new GLAccountQueryService(tenant);
+            var glaccount = gLAccountQuery.GetSingle(glaccountId, true, false);
+            if (glaccount != null)
+            {
+                ContactRepository contactRep = new ContactRepository(tenant);
+                CustomerRepository customerRepository = new CustomerRepository(tenant);
+                glaccount.ContactId = contactRep.GetContactForAccountingByGLAccountIdExcludeOneCard(glaccount.Id, tenant, excludeContactId, includeContactId);
+                glaccount.SalesmanUserId = customerRepository.GetSalesManByGLAccountId(glaccount.Id, tenant, excludeCardId);
+                glaccount.CollectorId = customerRepository.GetCollectorByGLAccount(glaccount.Id, tenant, excludeCardId);
+                glaccount.ChangeSetOp = ChangeSetOperation.Update;
+                Update(glaccount, true);
+                var listOfChildren = gLAccountQuery.GetChildrenByCurrencyGLAccountIds(glaccount.Id, tenant);
+                foreach (var child in listOfChildren)
+                {
+                    if (!string.IsNullOrEmpty(child))
+                    {
+                        var item = gLAccountQuery.GetSingle(child, false, false);
+                        if (item != null)
+                        {
+                            item.ContactId = glaccount.ContactId;
+                            item.SalesmanUserId = glaccount.SalesmanUserId;
+                            item.CollectorId = glaccount.CollectorId;
+                            Update(item, true);
+                        }
+                    }
+                }
+            }
+        }
     }
-
-
     public class GLAccountUpdateServiceBalancePriv : GLAccountUpdateService
     {
         private decimal? _deltaBalanceInLocalCurrency;
@@ -2773,3 +2836,4 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
     }
 }
+

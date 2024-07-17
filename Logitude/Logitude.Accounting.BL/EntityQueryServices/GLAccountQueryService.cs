@@ -53,10 +53,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             GLAccountInterestPeriodQueryService gLAccountInterestPeriodQueryService = new GLAccountInterestPeriodQueryService(context);
             entityPM.GLAccountInterestPeriods = gLAccountInterestPeriodQueryService.GetMulti(gLAccountKeys, true);
 
-            GLAccountCurrencyQueryService gLAccountCurrencyQueryService = new GLAccountCurrencyQueryService  (context);
+            GLAccountCurrencyQueryService gLAccountCurrencyQueryService = new GLAccountCurrencyQueryService(context);
             entityPM.GLAccountCurrencies = gLAccountCurrencyQueryService.GetMulti(gLAccountKeys, true);
 
-            entityPM.GLAccountChildren = this.GetChildAccounts(entityPM.Id,entityPM.Tenant);
+            entityPM.GLAccountChildren = this.GetChildAccounts(entityPM.Id, entityPM.Tenant);
 
             if (entityPM.GLAccountWithholdingTaxes.Count > 0)
             {
@@ -66,14 +66,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
         public IQueryable<string> GetQGLAccIdByCollectorId(int tenant, string CollectorId, string AccountTypeCode)
         {
-             var q= (
-                 from a in this.repository.GetQAllByAccountTypeCode(tenant, AccountTypeCode)
-                 join card in  (this.context as AccountingContext).Cards.Where( r=>r.Tenant== tenant)
-                 on a.Id equals card.GLAccountId
-                 join cust in  (this.context as AccountingContext).Customers
-                 .Where(r => r.CollectorId == CollectorId && r.Tenant == tenant)
-                 on card.Id equals cust.Id
-                 select a.Id);
+            var q = (
+                from a in this.repository.GetQAllByAccountTypeCode(tenant, AccountTypeCode)
+                join card in (this.context as AccountingContext).Cards.Where(r => r.Tenant == tenant)
+                on a.Id equals card.GLAccountId
+                join cust in (this.context as AccountingContext).Customers
+                .Where(r => r.CollectorId == CollectorId && r.Tenant == tenant)
+                on card.Id equals cust.Id
+                select a.Id);
             return q;
         }
 
@@ -83,7 +83,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 from a in this.repository.GetQAllByAccountTypeCode(tenant, AccountTypeCode)
                 join cardsdata in (this.context as AccountingContext).GLAccountCardsDatas
                     .Where(r => r.CollectorUserId == CollectorId && r.Tenant == tenant)
-                 on a.CardsDataId equals cardsdata.Id              
+                 on a.CardsDataId equals cardsdata.Id
                 select a.Id);
             return q;
         }
@@ -102,7 +102,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 select a.Id);
             return q;
         }
-        
+
         public GLAccountPM GetGlaAccountByJouranlIdAndJournalLineNumber(int tenant, string JournalId, int JournalLineNumber)
         {
             var glAccountPM = (
@@ -160,7 +160,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
 
-        public List<string> GetGLAccountsWithoutLedgerTransactions(List<string> glAccountIds,OpenFormatReportPM openFormatReport, int tenant)
+        public List<string> GetGLAccountsWithoutLedgerTransactions(List<string> glAccountIds, OpenFormatReportPM openFormatReport, int tenant)
         {
             List<string> accountIds = (from l in context.LedgerTransactions
 
@@ -188,7 +188,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             //return pms;
         }
 
-        public List<GLAccount> GetAllGLAccountIdsByChartsofAccountId(int tenant,string chartsofAccountId)
+        public List<GLAccount> GetAllGLAccountIdsByChartsofAccountId(int tenant, string chartsofAccountId)
         {
             List<GLAccount> GLAccounts = this.repository.GetAll(tenant).Where(s => s.Inactive == false && s.ChartOfAccountsId == chartsofAccountId).ToList();
             return GLAccounts;
@@ -233,13 +233,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public List<GLAccountPM> GetByAcountTypeCategories(int tenant, string AccountType,
             string Category1, string Category2, string Category3, string Category4, string Category5)
         {
-            var listPoco =this.repository.GetByAcountTypeCategories(tenant, AccountType,
+            var listPoco = this.repository.GetByAcountTypeCategories(tenant, AccountType,
             Category1, Category2, Category3, Category4, Category5).ToList();
-            var pmList = listPoco.Select( poco=>  this.GetEntityPM(poco)).ToList();
+            var pmList = listPoco.Select(poco => this.GetEntityPM(poco)).ToList();
             return pmList;
         }
 
-   
+
 
         public bool CheckIfInternalNumberExists(string internalNumber, string id, int tenant)
         {
@@ -311,7 +311,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             {
                 var catAccounts = repository.GetQAccIdByAcountIdCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5)
                     .ToList();
-             }
+            }
             if (IncludeChildAccounts)
             {
                 var ChildAccounts = repository.GetChildAccounts(GLAccountId, tenant)
@@ -322,8 +322,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return new HashSet<string>(allIdAccounts);
         }
 
-        public IQueryable<string> GetAllIdAccountsTypeCat(int tenant, string GLAccountId, string cat1, string cat2, string cat3, string cat4, string cat5, string gLAccountType, string chartOfAccountsId, 
-    bool IncludeChildAccounts,string ChartOfAccountsTypeCode, string salesmanId,bool includeControlAccount, bool useSecurityLevel )
+        public IQueryable<string> GetAllIdAccountsTypeCat(int tenant, string GLAccountId, string cat1, string cat2, string cat3, string cat4, string cat5, string gLAccountType, string chartOfAccountsId,
+    bool IncludeChildAccounts, string ChartOfAccountsTypeCode, string salesmanId, bool includeControlAccount, bool useSecurityLevel)
         {
             int? securityLevel = GetSecurityLevel(useSecurityLevel, tenant);
             // List<String> allIdAccounts = new List<string>() { GLAccountId };
@@ -334,7 +334,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 || !String.IsNullOrWhiteSpace(salesmanId)
                 )
             {
-               
+
                 allIdAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType, chartOfAccountsId, ChartOfAccountsTypeCode, salesmanId, includeControlAccount, securityLevel);
 
                 //   .ToList();
@@ -393,19 +393,19 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public List<GLAccountAndMoreDTO> GetCurrentBalanceByType(int tenant)
         {
-            var fullPM=FullAccountingSettingQueryService.Get(tenant);
+            var fullPM = FullAccountingSettingQueryService.Get(tenant);
             //fullPM.
-            
+
             var qAllCards = this.repository.GetQAllCards(tenant);
 
             var qGruop = (from acc in qAllCards
-                        where acc.IsControlAccount == false
-                        group acc by 1 into g
-                        select new
-                        {
-                            TypeName = "All Rest",
-                            BalanceInLocalCurrency = g.Sum(r => r.BalanceInLocalCurrency)
-                        }
+                          where acc.IsControlAccount == false
+                          group acc by 1 into g
+                          select new
+                          {
+                              TypeName = "All Rest",
+                              BalanceInLocalCurrency = g.Sum(r => r.BalanceInLocalCurrency)
+                          }
                 ).Union(
 
                 (from acc in qAllCards
@@ -452,7 +452,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                       BalanceInLocalCurrency = acc.BalanceInLocalCurrency
                   })
 
-                 
+
                  ).Union(
                  (from acc in qAllCards
                   where acc.Id == fullPM.OceanImportJobControlAccountId
@@ -487,7 +487,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return dic;
         }
 
-       
+
         internal void SetSuppressFetchOpenReconcilation(bool suppressFetchOpenReconcilation)
         {
             (this.mapping as GLAccountDataMapping).SuppressFetchOpenReconcilation = suppressFetchOpenReconcilation;
@@ -524,7 +524,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return gLAccountPM;
         }
 
-      
+
         public FullAccountingSettingPM GetFullAccountingSettings(int tenant)
         {
             FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(tenant);
@@ -544,12 +544,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 loggedUser = userQuery.GetSinglePM(loggedContact.Id, tenant);
             }
 
-            if(loggedUser == null)
+            if (loggedUser == null)
             {
                 loggedUser = userQuery.GetSinglePMByEmail(AuthenticationUtil.AuthenticatedUserEmail, 0);
             }
 
-            if(loggedUser == null)
+            if (loggedUser == null)
             {
                 loggedUser = userQuery.GetSinglePMByEmail(AuthenticationUtil.AuthenticatedUserEmail, 0);
             }
@@ -557,11 +557,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return loggedUser;
         }
 
-        public GLAccount  GetSingleByAccountId(string gLAccountId, int tenant)
+        public GLAccount GetSingleByAccountId(string gLAccountId, int tenant)
         {
             GLAccount gLAccountPOCO = null;
             gLAccountPOCO = repository.GetGLAccountByIdTenant(gLAccountId, tenant);
-          
+
             return gLAccountPOCO;
         }
 
@@ -574,7 +574,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
         public string GetDisplayNumberByGLAccountId(string gLAccountId, int tenant)
         {
-           string result = repository.GetDisplayNumberByGLAccountId(gLAccountId, tenant);
+            string result = repository.GetDisplayNumberByGLAccountId(gLAccountId, tenant);
             return result;
         }
 
@@ -604,10 +604,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public List<GLAccountPM> GetChildAccounts(string GLAccountId, int tenant)
         {
             var pms = this.repository.GetChildAccounts(GLAccountId, tenant);
-            return pms.Select( rec=> this.GetEntityPM(rec)).ToList();
-            
+            return pms.Select(rec => this.GetEntityPM(rec)).ToList();
+
         }
-        internal List<GLAccountPM>  GetChildAccountsByChartOfAccountIdList(List<string> chartOfAccountIdList, int tenant)
+        internal List<GLAccountPM> GetChildAccountsByChartOfAccountIdList(List<string> chartOfAccountIdList, int tenant)
         {
             var pms = this.repository.GetChildAccountsByChartOfAccountIdList(chartOfAccountIdList, tenant);
             return pms.Select(rec => this.GetEntityPM(rec)).ToList();
@@ -627,7 +627,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         internal IQueryable<GLAccount> GetQAllControlAccount(int tenant)
         {
             return this.repository.GetQAllControlAccount(tenant);
-            
+
         }
         public List<GLAccountCurrencyBalance> GetCurrencyBalances(GLAccountPM gLAccountPM, DateTime revaluationDate, int tenant)
         {
@@ -732,19 +732,19 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             }
 
             return rvList;
-       }
+        }
 
 
         public GLAccountPM GetByInternalNumber(string internalNumber, int tenant)
         {
 
             var Ids = this.repository.GetIdsByInternalNumber(internalNumber, tenant);
-            if (Ids.Count==0)
+            if (Ids.Count == 0)
             {
                 return null;
             }
-          
-            GLAccountPM account= this.GetSingle(Ids.FirstOrDefault(), false,true);
+
+            GLAccountPM account = this.GetSingle(Ids.FirstOrDefault(), false, true);
             SetGLAccountMoreDataFields(account);
             return account;
             //List<GLAccount> pocos = this.repository.GetByInternalNumber(internalNumber, tenant);
@@ -784,7 +784,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public IQueryable<GLAccountPM> GetSplittedByCurrencyGLAccounts(string accountId, int tenant)
         {
-          
+
             IQueryable<GLAccountPM> Accounts = from a in context.GLAccounts
                                                join
                   c in context.GLAccountCurrencies on a.Id equals c.GLAccountId
@@ -796,13 +796,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                    CreateDate = a.CreateDate,
                                                    CurrencyId = c.CurrencyId,
                                                    DisplayNumber = c.GLAccount != null ? c.GLAccount.DisplayNumber : null,
-                                                   Inactive= a.Inactive,
-                                                   CurrencyCode = c.Currency != null? c.Currency.Code: null,
-                                                   ChartOfAccountsId = c.GLAccount != null? c.GLAccount.ChartOfAccountsId: null,
-                                                   ChartOfAccountsTypeCode = c.GLAccount != null? c.GLAccount.ChartOfAccountsTypeCode : null,
-                                                   LocalName = c.GLAccount != null? c.GLAccount.LocalName : null,
-                                                   ReconcileMethodCode = c.GLAccount != null? c.GLAccount.ReconcileMethodCode : null,
-                                                   RevenueExpenseType = c.GLAccount != null? c.GLAccount.RevenueExpenseType : null,
+                                                   Inactive = a.Inactive,
+                                                   CurrencyCode = c.Currency != null ? c.Currency.Code : null,
+                                                   ChartOfAccountsId = c.GLAccount != null ? c.GLAccount.ChartOfAccountsId : null,
+                                                   ChartOfAccountsTypeCode = c.GLAccount != null ? c.GLAccount.ChartOfAccountsTypeCode : null,
+                                                   LocalName = c.GLAccount != null ? c.GLAccount.LocalName : null,
+                                                   ReconcileMethodCode = c.GLAccount != null ? c.GLAccount.ReconcileMethodCode : null,
+                                                   RevenueExpenseType = c.GLAccount != null ? c.GLAccount.RevenueExpenseType : null,
                                                    Tenant = tenant,
                                                    BalanceInLocalCurrency = MoreDatas.BalanceInLocalCurrency,
 
@@ -815,8 +815,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                    AutomaticReconcileId = c.GLAccount.AutomaticReconcileId,
                                                    ControlAccountId = c.GLAccount.ControlAccountId,
                                                    CustomerGLAccountId = c.GLAccount.CustomerGLAccountId,
-                                                   InternalNumber= c.GLAccount.InternalNumber
-                                                   
+                                                   InternalNumber = c.GLAccount.InternalNumber
+
                                                };
             return Accounts;
         }
@@ -826,14 +826,24 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return (from a in glaccounts
                     join
                    c in context.GLAccountCurrencies on a.Id equals c.GLAccountId
-                                                where c.MainGLAccountId == accountId && a.Tenant == tenant && a.ActiveForInterest ==true
-                                                select a.Id).ToList();
-           
+                    where c.MainGLAccountId == accountId && a.Tenant == tenant && a.ActiveForInterest == true
+                    select a.Id).ToList();
+
+        }
+        public List<string> GetChildrenByCurrencyGLAccountIds(string accountId, int tenant)
+        {
+            IQueryable<GLAccount> glaccounts = repository.GetAll(tenant);
+            return (from a in glaccounts
+                    join
+                   c in context.GLAccountCurrencies on a.Id equals c.GLAccountId
+                    where c.MainGLAccountId == accountId && a.Tenant == tenant
+                    select a.Id).ToList();
+
         }
 
         public IQueryable<GLAccountPM> GetChildrenGLAccounts(string accountId, int tenant)
         {
-     
+
             IQueryable<GLAccountPM> Accounts = from a in context.GLAccounts
                                                where a.ParentAccountId == accountId && a.Tenant == tenant
                                                select new GLAccountPM()
@@ -859,15 +869,15 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                    ReconcileMethodName = a.ReconcileMethod != null ? a.ReconcileMethod.EnglishName : null,
                                                    CurrencyName = a.Currency != null ? a.Currency.EnglishName : null,
                                                    ChartOfAccountsTypeName = a.ChartOfAccountsType != null ? a.ChartOfAccountsType.EnglishName : null,
-                                                 
+
                                                    CurrencySign = a.IsMultiCurrency == true ? "" : a.Currency != null ? a.Currency.Sign : null,
                                                    ControlAccountName = a.ControlAccount != null ? a.ControlAccount.EnglishName : null,
                                                    ControlAccountId = a.ControlAccountId,
                                                    ControlAccountNumber = a.ControlAccount != null ? a.ControlAccount.DisplayNumber : null,
                                                    ChartOfAccountsName = a.ChartOfAccount != null ? a.ChartOfAccount.LocalName : null,
-                                                
+
                                                    AutomaticReconcileId = a.AutomaticReconcileId,
-                                                
+
                                                    PreviousEnglishName = a.PreviousEnglishName,
                                                    PreviousEnglishNameChangeDate = a.PreviousEnglishNameChangeDate,
                                                    PreviousLocalName = a.PreviousLocalName,
@@ -876,14 +886,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                    PreviousNumberChangeDate = a.PreviousNumberChangeDate,
                                                    PreviousChartOfAccountsId = a.PreviousChartOfAccountsId,
                                                    PreviousChartOfAccountsChangeDate = a.PreviousChartOfAccountsChangeDate,
-                                                   
+
                                                    CustomerGLAccountId = a.CustomerGLAccountId,
-                                                 
+
                                                    RevaluationEnabled = a.RevaluationEnabled,
-                                                
+
                                                    ParentAccountId = a.ParentAccountId,
                                                    IsVATExempt = a.IsVATExempt,
-                                                
+
 
                                                };
             return Accounts;
@@ -904,7 +914,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             Simplog.Data.CommonDataModel.ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
             IInvoiceContext invoicecontext = InvoiceContext.GetContext(tenant);
             taxDeduction = new TaxDeductionReportData();
-        //    taxDeduction.TaxYear = reportYear;
+            //    taxDeduction.TaxYear = reportYear;
             // 1- get ap payments by year and status ad
             // 2- group appayments by vendorId and percentage
             // 3- Get Cards by list of vendorids from step 2
@@ -1133,7 +1143,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             FullAccountingSettingPM setting = fullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
             TenantQuery tenantQuery = new TenantQuery(tenant);
             TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
-          
+
             taxDeduction.VendorsCount = DBVendorsList.GroupBy(d => d.VendorId).Count();
             taxDeduction.TotalAmountInLocalCurrency = Math.Round(DBVendorsList.Sum(d => d.AmountInLocalCurrency).Value, 0);
             taxDeduction.TotalDeductionInLocalCurrency = Math.Round(DBVendorsList.Sum(d => d.TaxDeductionLocalAmount).Value, 0);
@@ -1158,7 +1168,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public List<B110Data> GetB110sForGLAccounts(int tenant)
         {
-           
+
             List<B110Data> b110s = new List<B110Data>();
             //List<GLAccountPM> glaccounts = (from a in context.GLAccounts
             //                                join c in context.ChartOfAccounts on a.ChartOfAccountsId equals c.Id
@@ -1179,7 +1189,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             //                                    CurrencyCode = a.Currency.Code
             //                                }).ToList();
 
-            
+
             //ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
             //List<AddressData> addresses = (from a in commonDataContext.Cards
             //                             join d in commonDataContext.Addresses on a.Id equals d.CardId
@@ -1197,7 +1207,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             //                                Address1 = d.Address1,
             //                                ZipCode = a.ZipCode,
             //                             }).ToList();
-            
+
 
             b110s = (from a in context.GLAccounts
                      join c in context.ChartOfAccounts on a.ChartOfAccountsId equals c.Id
@@ -1205,18 +1215,18 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                      where a.Tenant == tenant
 
                      select new B110Data()
-                                    {
-                                        ChartOfAccountsCode =c.Code,
-                                        DisplayNumber = a.DisplayNumber,
-                                        LocalName = a.LocalName,
-                                        EnglishName = a.EnglishName,
-                                        ChartOfAccountsName = c.LocalName,
-                                        AccountTypeCode = a.AccountTypeCode,
-                                        GLAccountId = a.Id,
-                                        IsMultiCurrency = a.IsMultiCurrency,
-                                        CurrecnyId = a.CurrencyId,
-                                        CustomerGLAccountId= a.CustomerGLAccountId,
-                                        CurrencyCode = a.Currency !=null? a.Currency.Code:null, 
+                     {
+                         ChartOfAccountsCode = c.Code,
+                         DisplayNumber = a.DisplayNumber,
+                         LocalName = a.LocalName,
+                         EnglishName = a.EnglishName,
+                         ChartOfAccountsName = c.LocalName,
+                         AccountTypeCode = a.AccountTypeCode,
+                         GLAccountId = a.Id,
+                         IsMultiCurrency = a.IsMultiCurrency,
+                         CurrecnyId = a.CurrencyId,
+                         CustomerGLAccountId = a.CustomerGLAccountId,
+                         CurrencyCode = a.Currency != null ? a.Currency.Code : null,
                      }).ToList();
 
 
@@ -1235,7 +1245,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                               InternalNumber = a.InternalNumber,
                                               AccountTypeCode = a.AccountTypeCode,
                                               DisplayNumber = a.DisplayNumber,
-                                             
+
                                           }).ToList();
             return Accounts;
         }
@@ -1243,28 +1253,29 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public GLAccountPM GetSplittedByCurrencyGLAccount(string accountId, int tenant, string currency)
         {
 
-           return  (from a in context.GLAccounts
-                                   where a.CustomerGLAccountId == accountId && a.CurrencyId == currency && a.Tenant == tenant
-                                   && a.Inactive == false//Task 61118: Service for retrieving the splitted GLAccounts- change logic if GLAccountCurrencies is block
-                                    select new GLAccountPM() {
-                                       Id = a.Id,
-                                       CurrencyId = a.CurrencyId,
-                                       DisplayNumber =a.DisplayNumber,
-                                       Inactive = a.Inactive,
-                                       CurrencyCode = a.Currency != null ?a.Currency.Code : null,
-                                       ChartOfAccountsId =a.ChartOfAccountsId ,
-                                       ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
-                                       LocalName = a.LocalName ,
-                                       ReconcileMethodCode = a.ReconcileMethodCode,
-                                       RevenueExpenseType = a.RevenueExpenseType ,
-                                       Tenant = tenant,
-                                       AccountTypeCode = a.AccountTypeCode,
-                                       AutomaticReconcileId =a.AutomaticReconcileId,
-                                       ControlAccountId = a.ControlAccountId,
-                                       CustomerGLAccountId = a.CustomerGLAccountId,
-                                       InternalNumber = a.InternalNumber
+            return (from a in context.GLAccounts
+                    where a.CustomerGLAccountId == accountId && a.CurrencyId == currency && a.Tenant == tenant
+                    && a.Inactive == false//Task 61118: Service for retrieving the splitted GLAccounts- change logic if GLAccountCurrencies is block
+                    select new GLAccountPM()
+                    {
+                        Id = a.Id,
+                        CurrencyId = a.CurrencyId,
+                        DisplayNumber = a.DisplayNumber,
+                        Inactive = a.Inactive,
+                        CurrencyCode = a.Currency != null ? a.Currency.Code : null,
+                        ChartOfAccountsId = a.ChartOfAccountsId,
+                        ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
+                        LocalName = a.LocalName,
+                        ReconcileMethodCode = a.ReconcileMethodCode,
+                        RevenueExpenseType = a.RevenueExpenseType,
+                        Tenant = tenant,
+                        AccountTypeCode = a.AccountTypeCode,
+                        AutomaticReconcileId = a.AutomaticReconcileId,
+                        ControlAccountId = a.ControlAccountId,
+                        CustomerGLAccountId = a.CustomerGLAccountId,
+                        InternalNumber = a.InternalNumber
 
-                                   }).FirstOrDefault();
+                    }).FirstOrDefault();
         }
 
         public GLAccountPM GetSplittedGLAccount(string accountId, int tenant, string currency)
@@ -1299,7 +1310,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public GLAccountPM GetGLAccountByCardId(string cardId, int tenant)
         {
             CardPM card = GetCardById(cardId, tenant);
-            if(card.GLAccountId != null)
+            if (card.GLAccountId != null)
             {
                 return GetSinglePM(card.GLAccountId, tenant);
             }
@@ -1315,7 +1326,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public static int Update_ConnectCardToGLAccount(string cardId, int tenant, string gLAccountId, string gLAccountDisplayNumber)
         {
-
             string strConnString = TenantServerConfigration.GetDbConnection(tenant);
 
             using (SqlConnection connection = new SqlConnection(strConnString))
@@ -1349,16 +1359,17 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             }
         }
 
-
         public void ConnectCardToGLAccount(CardGLAccountConnectionArgs args)
         {
-          //  CardPM cardPM = GetCardById(args.CardId, args.Tenant);
+            //  CardPM cardPM = GetCardById(args.CardId, args.Tenant);
+            IAccountingContext context = MainContext as AccountingContext;
+            GLAccountUpdateService gLAccountUpdateService = new GLAccountUpdateService(context, new Dictionary<string, IContext>(), args.Tenant);
 
             if (!args.SkipConnectedCardsValidation)
                 CheckConnectCards(args.AccountId, args.CardId, args.Tenant);
 
-         //   cardPM.GLAccountId = args.AccountId;
-         //   cardPM.GLAccountDisplayNumber =  GetDisplayNumberByGLAccountId(args.AccountId, args.Tenant);
+            //   cardPM.GLAccountId = args.AccountId;
+            //   cardPM.GLAccountDisplayNumber =  GetDisplayNumberByGLAccountId(args.AccountId, args.Tenant);
             string displayNumber = GetDisplayNumberByGLAccountId(args.AccountId, args.Tenant);
 
             if (IsFullAccountingActivated(args.Tenant))
@@ -1369,10 +1380,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             //SubmitCard(cardPM);
             if (!String.IsNullOrEmpty(args.CardId) && !String.IsNullOrEmpty(args.AccountId) && args.Tenant > 0)
-            { 
-                int res = Update_ConnectCardToGLAccount(args.CardId, args.Tenant, args.AccountId, displayNumber); 
+            {
+                gLAccountUpdateService.UpdateCardDisplayNumber(args.Tenant, args.CardId, displayNumber, args.AccountId, false);
             }
-
 
             //ICommonDataContext context = CommonDataContext.GetContext(args.Tenant);
             //CardRepository cardRepository = new CardRepository(context);
@@ -1398,13 +1408,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         private void CreateTraceEvent(string CardId, string AccountId, int Tenant, string objectTableName, string eventTypeCode)
         {
-           // ContactPM loggedContact = new ContactQuery(Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), Tenant);
+            // ContactPM loggedContact = new ContactQuery(Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), Tenant);
 
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {
                 EntityId = CardId,
                 Tenant = Tenant,
-            //    UserId = loggedContact.Id,//contact.Id,
+                //    UserId = loggedContact.Id,//contact.Id,
                 ObjectTableName = objectTableName,
                 IsAddedManually = false,
                 EventTypeCode = eventTypeCode,
@@ -1413,8 +1423,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
         private string SetNotesForConnectGLAccountEvent(string id, int tenant)
         {
-       //   GLAccountPM glaccount = this.GetSingle(id, false, false);
-            GLAccountPMLite accLite = this.GetLiteById(id, tenant); 
+            //   GLAccountPM glaccount = this.GetSingle(id, false, false);
+            GLAccountPMLite accLite = this.GetLiteById(id, tenant);
 
             return string.Concat("Internal number: ", accLite.InternalNumber, "\nLocal name: ", accLite.LocalName);
         }
@@ -1450,7 +1460,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 //if (cardPM.PartnerTypeId == PartnerTypeValues.CustomClearance || cardPM.PartnerTypeId == PartnerTypeValues.CustomAgent || cardPM.PartnerTypeId == PartnerTypeValues.CustomsShipper || cardPM.PartnerTypeId == PartnerTypeValues.Coloader)
                 //    msg = GetCustomersErrorMessage(tenant, connectedCards);
                 //else
-                    msg = GetVendorsWarningMessage(tenant, connectedCards);
+                msg = GetVendorsWarningMessage(tenant, connectedCards);
                 throw new ApplicationException(msg);
             }
         }
@@ -1500,14 +1510,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return cardPM;
         }
 
-        public DateTime? GetInterestCalculationStartDate(string glaccountId,int tenant)
+        public DateTime? GetInterestCalculationStartDate(string glaccountId, int tenant)
         {
             GLAccountRepository gLAccountRepository = new GLAccountRepository(tenant);
             DateTime? interestCalculationStartDate = gLAccountRepository.GetInterestCalculationStartDate(glaccountId, tenant);
             return interestCalculationStartDate;
         }
 
-   
+
 
         public List<InterestReportCustomerPM> GetEligibleCustomersForInterestReports(int tenant)
         {
@@ -1555,8 +1565,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             List<ChartOfAccount> chartOfAccount = ChartOfAccountRepository.GetAll(tenatToCopy).Where(t => t.Inactive == false).ToList();
             //List<GLAccount> pocosIsControlAccount = repository.GetAll(tenant).Where(t => t.Inactive == false && t.IsControlAccount==true).ToList();
             List<GLAccount> pocosNotIsControlAccount = repository.GetAll(tenant).Where(t => t.Inactive == false && t.IsControlAccount == false).ToList();
-           
-          
+
+
 
 
             foreach (var item in pocosNotIsControlAccount)
@@ -1632,24 +1642,24 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             GLAccountMoreDataRepository glAccountMoreDataRepository = new GLAccountMoreDataRepository(context);
             List<GLAccountMoreData> GLAccountMoreData0 = glAccountMoreDataRepository.GetAll(tenant).ToList();
             List<GLAccount> GLAccountTenant0 = repository.GetAll(tenant).Where(t => t.Inactive == false && t.IsControlAccount == false).ToList();
-            List<GLAccount> GLAccount= repository.GetAll(tenatToCopy).Where(t => t.Inactive == false && t.IsControlAccount == false).ToList();
+            List<GLAccount> GLAccount = repository.GetAll(tenatToCopy).Where(t => t.Inactive == false && t.IsControlAccount == false).ToList();
             GLAccountMoreData0 = GLAccountMoreData0.Where(data => GLAccountTenant0.Any(account => account.Id == data.AccountId)).ToList();
 
             foreach (var item in GLAccountMoreData0)
             {
-                var interNumber= GLAccountTenant0.Find(c => c.Id == item.AccountId)?.InternalNumber;
-                var AccountId=GLAccount.Find(c => c.InternalNumber == interNumber)?.Id;
+                var interNumber = GLAccountTenant0.Find(c => c.Id == item.AccountId)?.InternalNumber;
+                var AccountId = GLAccount.Find(c => c.InternalNumber == interNumber)?.Id;
                 GLAccountMoreDataPM glAccountMoreDataPM = new GLAccountMoreDataPM()
                 {
-                    AccountId= AccountId,
-                    Tenant=tenatToCopy,
-                    BalanceInLocalCurrency=item.BalanceInLocalCurrency,
-                    LocalBalanceInDue=item.LocalBalanceInDue,
-                    NextDueDate=item.NextDueDate,
-                    TotalOpenChequesInLocalCur=item.TotalOpenChequesInLocalCur,
-                    TotFutureOpenChequesInLocalCur=item.TotFutureOpenChequesInLocalCur,
-                    BalanceInForeignCurrency=item.BalanceInForeignCurrency,
-                    ForeignBalanceInDue=item.ForeignBalanceInDue
+                    AccountId = AccountId,
+                    Tenant = tenatToCopy,
+                    BalanceInLocalCurrency = item.BalanceInLocalCurrency,
+                    LocalBalanceInDue = item.LocalBalanceInDue,
+                    NextDueDate = item.NextDueDate,
+                    TotalOpenChequesInLocalCur = item.TotalOpenChequesInLocalCur,
+                    TotFutureOpenChequesInLocalCur = item.TotFutureOpenChequesInLocalCur,
+                    BalanceInForeignCurrency = item.BalanceInForeignCurrency,
+                    ForeignBalanceInDue = item.ForeignBalanceInDue
                 };
                 glAccountMoreDataPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
                 glAccountMoreDataUpdateService.Update(glAccountMoreDataPM, true);
@@ -1698,7 +1708,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
     }
 
 
-   
+
 
 
 
