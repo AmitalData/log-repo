@@ -14,25 +14,25 @@
 			<span class="full_classification">
 				{{ data.CIH_GoodsDescription }}
 			</span>
-			<span *ngIf="data?.CI_Parent_CustomsItemIDNum && ClassificationNoDisplay(data,data?.FullClassification).length > 2 && state === 'search'" class="item_details">
-				<!-- change to real fields -->
+			<!-- change to real fields -->
+			<!-- <span *ngIf="data?.CI_Parent_CustomsItemIDNum && ClassificationNoDisplay(data,data?.FullClassification).length > 2 && state === 'search'" class="item_details">
 				<a> {{ data?.FullClassification }} </a>
 				<a> {{ data?.FullClassification }} </a>
 				<a> {{ data?.FullClassification }}</a>
 				<a> {{ data?.FullClassification }} </a>
 				<a> {{ data?.FullClassification }}</a>
-			</span>
+			</span> -->
 		</a>
 	</div>
 	<div></div>
 	<div class="mainTable_itemActions">
 		<ul>
-			<!-- <li>
+			<li>
 				<div class="mainTable_itemDocument">
 					<a class="icon"><i role="img" class="icon-document"> </i></a>
 				</div>
 			</li>
-			<li>
+			<!--<li>
 				<div class="mainTable_itemPopup">
 					<a class="icon"><i role="img" class="icon-popup"></i> </a>
 				</div>
