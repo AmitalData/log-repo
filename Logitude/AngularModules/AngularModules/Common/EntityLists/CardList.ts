@@ -128,5 +128,7 @@ export class CardList {
 		CustomsInvoiceTemplateId: string;
 		ConsolidationInvoiceTemplateId: string;
 		ManifestInvoiceTemplateId: string;
+		EmailForSendingSingArinvoice: string;
+		SendingInterestReport: boolean;
 	
 }
