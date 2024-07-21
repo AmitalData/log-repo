@@ -36,7 +36,7 @@ export class DataRowComponent {
 	ngOnInit() { }
 	
 	getTooltipText(text: string): string {
-		return text.length > 40 ? text : '';
+		return text.length > 20 ? text : '';
 	}
 
 	ClassificationNoDisplay(item, value): string {
