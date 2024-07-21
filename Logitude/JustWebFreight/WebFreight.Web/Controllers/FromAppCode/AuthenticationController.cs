@@ -1259,7 +1259,7 @@ namespace WebFreight.Web
                 return data;
             }
         }
-        private const string Secret = "amitalmain2024warmprocess"; // The secret key used to sign the token
+
         public class JwtPayload
         {
             public int[] Tenants { get; set; }
@@ -1267,7 +1267,12 @@ namespace WebFreight.Web
         public static T GetPayloadFromToken<T>(string token) where T : class, new()
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(Secret);
+            string secret = Environment.GetEnvironmentVariable("WarmSecret");
+            if (string.IsNullOrWhiteSpace(secret))
+            {
+                secret = ConfigurationManager.AppSettings["WarmSecret"];
+            }
+            var key = Encoding.UTF8.GetBytes(secret);
 
             var validationParameters = new TokenValidationParameters
             {
@@ -1299,6 +1304,7 @@ namespace WebFreight.Web
         {
             try
             {
+                string tenantsFromConfig = "";
                 List<int> tenants = new List<int>();
                 JwtPayload tokenData = GetPayloadFromToken<JwtPayload>(t);
                 if (tokenData == null)
@@ -1307,7 +1313,11 @@ namespace WebFreight.Web
                 }
                 if (tokenData != null && tokenData.Tenants == null)
                 {
-                    string tenantsFromConfig = ConfigurationManager.AppSettings["tenants"];
+                    tenantsFromConfig = Environment.GetEnvironmentVariable("Tenants");
+                    if (string.IsNullOrWhiteSpace(tenantsFromConfig))
+                    {
+                        tenantsFromConfig = ConfigurationManager.AppSettings["Tenants"];
+                    }
                     if (string.IsNullOrEmpty(tenantsFromConfig))
                     {
                         throw new Exception("No tenants specified in configuration file nor in the request");
