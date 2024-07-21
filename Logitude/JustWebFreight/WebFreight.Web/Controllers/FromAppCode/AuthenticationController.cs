@@ -59,7 +59,7 @@ using System.Web.UI.WebControls;
 using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
-
+using Newtonsoft.Json;
 namespace WebFreight.Web
 {
 #if DEBUG
@@ -1260,55 +1260,64 @@ namespace WebFreight.Web
             }
         }
         private const string Secret = "amitalmain2024warmprocess"; // The secret key used to sign the token
-        private bool validateWarnToken(string token)
+        public class JwtPayload
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Secret));
+            public int[] Tenants { get; set; }
+        }
+        public static T GetPayloadFromToken<T>(string token) where T : class, new()
+        {
             var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(Secret);
+
+            var validationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateLifetime = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key)
+            };
 
             try
             {
-                tokenHandler.ValidateToken(token, new TokenValidationParameters
-                {
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ValidateLifetime = false, // Since iat claim is present, we are not validating the lifetime
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = securityKey
-                }, out SecurityToken validatedToken);
+                tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
 
-                // If we reach here, it means the token is valid
-                return true;
+                // If token is valid, extract the payload
+                var jwtToken = validatedToken as JwtSecurityToken;
+                var payload = jwtToken.Payload.SerializeToJson();
+                return JsonConvert.DeserializeObject<T>(payload);
             }
             catch
             {
-                // Token validation failed
-                return false;
+                // If token is not valid, return null
+                return null;
             }
         }
         [HttpGet]
         [ActionName("StartWarm")]
-        public HttpResponseMessage StartWarm(string t, int? tenant=null)
+        public HttpResponseMessage StartWarm(string t)
         {
             try
             {
                 List<int> tenants = new List<int>();
-                bool isTokenValid = validateWarnToken(t);
-                if (!isTokenValid)
+                JwtPayload tokenData = GetPayloadFromToken<JwtPayload>(t);
+                if (tokenData == null)
                 {
                     throw new Exception("Invalid Token");
                 }
-                if (tenant == null)
+                if (tokenData != null && tokenData.Tenants == null)
                 {
                     string tenantsFromConfig = ConfigurationManager.AppSettings["tenants"];
                     if (string.IsNullOrEmpty(tenantsFromConfig))
                     {
                         throw new Exception("No tenants specified in configuration file nor in the request");
                     }
-                    tenants = tenantsFromConfig.Split(',').Select(int.Parse).ToList();
+                    int[] tenantsFromConfigArray = JsonConvert.DeserializeObject<int[]>(tenantsFromConfig);
+                    tenants.AddRange(tenantsFromConfigArray);
                 }
                 else
                 {
-                    tenants.Add(tenant.Value);
+                    tenants.AddRange(tokenData.Tenants);
                 }
 
                 Stopwatch stopwatch = new Stopwatch();
