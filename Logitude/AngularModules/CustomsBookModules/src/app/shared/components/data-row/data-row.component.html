@@ -11,7 +11,7 @@
 			<span class="full_classification"  *ngIf="data?.CI_Parent_CustomsItemIDNum">
 				{{ ClassificationNoDisplay(data,data?.FullClassification) }} | 
 			</span>
-			<span class="full_classification">
+			<span class="full_classification" [title]="getTooltipText(data.CIH_GoodsDescription)">
 				{{ data.CIH_GoodsDescription }}
 			</span>
 			<!-- change to real fields -->

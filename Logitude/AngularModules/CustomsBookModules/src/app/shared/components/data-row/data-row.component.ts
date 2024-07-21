@@ -34,7 +34,10 @@ export class DataRowComponent {
 	}
 
 	ngOnInit() { }
-
+	
+	getTooltipText(text: string): string {
+		return text.length > 40 ? text : '';
+	}
 
 	ClassificationNoDisplay(item, value): string {
 		if (item.IsLeaf) return value;
