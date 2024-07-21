@@ -17,7 +17,6 @@ using WebFreight.Web.InfrastructureModel;
 
 public class WarmService
 {
-    private static readonly HttpClient _httpClient = new HttpClient();
     private static void RunWithExceptionHandling(string actionName, Action action)
     {
         try
