@@ -90,11 +90,13 @@ export class MainDisplayComponent {
 		});
 	}
 
-
+	selectedItemId: number | null = null;
 	currentItem: CB_CustomsItemComputedDataList;
 	itemDataBehaviorSubject: BehaviorSubject<ItemData> = new BehaviorSubject<ItemData>({ customsItemId: 0, measurementUnitMalamId: 0 });
 	itemData: ItemData = { customsItemId: 0, measurementUnitMalamId: 0 };
 	showDetailsClick(CustomsItemID: number, item: CB_CustomsItemComputedDataList) {
+		this.selectedItemId = CustomsItemID;
+
 		if (this.itemData.customsItemId == CustomsItemID) return;
 
 		console.log(CustomsItemID);
