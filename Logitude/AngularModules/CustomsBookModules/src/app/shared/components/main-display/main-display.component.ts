@@ -90,14 +90,23 @@ export class MainDisplayComponent {
 		});
 	}
 
-
+	selectedItemId: number | null = null;
 	currentItem: CB_CustomsItemComputedDataList;
 	itemDataBehaviorSubject: BehaviorSubject<ItemData> = new BehaviorSubject<ItemData>({ customsItemId: 0, measurementUnitMalamId: 0 });
 	itemData: ItemData = { customsItemId: 0, measurementUnitMalamId: 0 };
 	showDetailsClick(CustomsItemID: number, item: CB_CustomsItemComputedDataList) {
-		if (this.itemData.customsItemId == CustomsItemID) return;
+		this.selectedItemId = CustomsItemID;
 
-		console.log(CustomsItemID);
+		if (this.itemData.customsItemId == CustomsItemID) {
+			this.showDetails = !this.showDetails;
+			return;
+		}
+		else if(!this.showDetails){
+			this.showDetails = !this.showDetails;
+		}
+
+		
+		// console.log(CustomsItemID);
 		// console.log(item);
 		// console.log(item.FullClassification);
 		this.itemData.customsItemId = CustomsItemID;

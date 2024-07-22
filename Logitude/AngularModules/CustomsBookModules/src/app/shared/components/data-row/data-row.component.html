@@ -1,4 +1,4 @@
-<div class="mainTable_item">
+<div class="mainTable_item" [ngClass]="{'selected': isSelected}">
 	<div class="mainTable_itemToggle" [class.active]="selected" (click)="selected = !selected">
 		<button *ngIf="!data?.IsLeaf">
 			<i role="img" aria-hidden="true">
@@ -7,11 +7,11 @@
 		</button>
 	</div>
 	<div class="mainTable_itemName" (click)="showDetails.emit()">
-		<a href="#" role="button"> 
+		<a href="#" role="button" [ngClass]="{'selectedLink': isSelected}"> 
 			<span class="full_classification"  *ngIf="data?.CI_Parent_CustomsItemIDNum">
 				{{ ClassificationNoDisplay(data,data?.FullClassification) }} | 
 			</span>
-			<span class="full_classification">
+			<span class="full_classification" [title]="getTooltipText(data.CIH_GoodsDescription)">
 				{{ data.CIH_GoodsDescription }}
 			</span>
 			<!-- change to real fields -->
