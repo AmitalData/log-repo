@@ -553,32 +553,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             
 			var respnse = APIConnectionHelper.Instance.PostViaWebAPI<Response, LogitudeCustomsFile>("/api/Declarartion/UpdateDeclarationInU2L", myAmitalCustom);
 		}
-		
-		private void PostUpdateDeclaration(LogitudeCustomsFile myAmitalCustom)
-        {
-			string URI = LogitudeSettings.LogitudeURL + "/api/Declarartion/UpdateDeclarationInU2L";
-
-			using (var client = new HttpClient())
-			{			
-				var jsonSettings = new JsonSerializerSettings
-				{
-					NullValueHandling = NullValueHandling.Ignore
-				};
-				string jsonContent = JsonConvert.SerializeObject(myAmitalCustom, Formatting.None, jsonSettings);
-                using (var content = new StringContent(jsonContent, Encoding.UTF8, "application/json"))
-                {
-                    var result1 =  client.PostAsync(URI, content);
-					result1.Wait();
-
-                    if (result1.Result.StatusCode == System.Net.HttpStatusCode.OK)
-                    {
-                        var jsonData = result1.Result.Content.ReadAsStringAsync().Result;
-                        var response = JsonConvert.DeserializeObject<string>(jsonData.ToString());
-                    }
-                }
-			}
-
-		}	
+				
 		private void InsertInShipmnetUpdateLog(int StartOrEnd, string errorMessage = null)
         {
             string mySubError = errorMessage;
