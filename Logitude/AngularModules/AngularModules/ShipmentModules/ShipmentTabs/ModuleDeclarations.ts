@@ -27,6 +27,7 @@ import { HarmonizesComponent } from './Components/Windows/Harmonizes/HarmonizesC
 import { ProductItemsTabComponent } from './Components/ProductItems/ProductItemsTabComponent';
 import { EditCustomerProductItemComponent } from './Components/ProductItems/EditCustomerProductItemComponent';
 import { ShipmentPackagesTabComponent } from './Components/ShipmentPackages/ShipmentPackagesTabComponent';
+import { ShipmentDataTabComponent } from './Components/ShipmentData/ShipmentDataTabComponent';
 
 export const Components =
     [
@@ -41,6 +42,7 @@ export const Components =
         OverviewTabComponent,
         CustomsTabComponent,
         ShipmentPackagesTabComponent,
+        ShipmentDataTabComponent,
         ExportFileComponent,
         OrdersTabComponent,
         AddEditOrderPackageComponent,
@@ -96,6 +98,7 @@ export class ModuleDeclarations {
             case "ProductItemsTabComponent": { myResult = ProductItemsTabComponent; break; }
             case "EditCustomerProductItemComponent": { myResult = EditCustomerProductItemComponent; break; }
             case "ShipmentPackagesTabComponent" : { myResult = ShipmentPackagesTabComponent; break; }
+            case "ShipmentDataTabComponent" : { myResult = ShipmentDataTabComponent; break; }
         }
 
         return myResult;

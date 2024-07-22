@@ -19,6 +19,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.PartnerId = itemPM.PartnerId;
             itemPoco.LineNumber = itemPM.LineNumber;
             itemPoco.ReferenceType = itemPM.ReferenceType;
+            itemPoco.ReferenceValue = itemPM.ReferenceValue;
         }
     }
 }

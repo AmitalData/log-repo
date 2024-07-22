@@ -116,7 +116,6 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     tabsService = new TableTabService();
     public IsDigitalAddsOn: boolean = false;
 
- 
     constructor(private entityPMService: EntityPMService, private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private _totangoService: TotangoService, private cd: ChangeDetectorRef) {
         this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
         this.ComponentIndex = this.CurrentSession.GetNewEditComponentIndex();
@@ -674,6 +673,10 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                     this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
                 });
             }
+            else if (this.EntityPM.DirectionId == "C") {
+                myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code.indexOf("CustomsHeaderScreen") != -1 )[0];
+                this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
+            }
 
             else {
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
@@ -963,8 +966,8 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         allTabs = this.FilterTabs(allTabs);
         allTabs = allTabs.sort((a, b) => { return a.IndexOrder - b.IndexOrder });
         for (var i = 0; i < allTabs.length; i++) {
-
-            var tab: ObjectTableTabPM = allTabs[i];
+            
+            var tab: ObjectTableTabPM = allTabs[i]; 
             if (tab.ControlPath != null) {
                 if (tab.ControlPath.indexOf("ExternalDocumentsControl") != -1) {
                     if (!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "DOCSIN")) {
@@ -1159,8 +1162,15 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                             allTabs.splice(indexOfTab, 1);
                         }
                     }
-                    if(this.EntityPM.ShipmentTypeId != "FCLD"){
+                    if (this.EntityPM.ShipmentTypeId != "FCLD" && this.EntityPM.DirectionId == "C") {
                         var indexOfTab = allTabs.findIndex(t => t.Code == "SHSP");
+                        if (indexOfTab > -1) {
+                            allTabs.splice(indexOfTab, 1);
+                        }
+                    }
+
+                    if(this.EntityPM.DirectionId != "C"){
+                        var indexOfTab = allTabs.findIndex(t => t.Code == "SHDA");
                         if (indexOfTab > -1) {
                             allTabs.splice(indexOfTab, 1);
                         }
@@ -2051,7 +2061,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                 });
             }
         }
-    
+        
     }
 
     private UpdateComponentMembers() {

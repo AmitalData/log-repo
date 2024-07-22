@@ -1584,6 +1584,11 @@ export class DeclarationPM {
     public set SystemConnection(newValue: string) { if (this.systemConnection != newValue) { this.systemConnection = newValue; this.MarkAsDirty("SystemConnection"); } }
        
 	 
+    private isFromUpdateShipment: boolean;
+    public get IsFromUpdateShipment() { return this.isFromUpdateShipment; }
+    public set IsFromUpdateShipment(newValue: boolean) { if (this.isFromUpdateShipment != newValue) { this.isFromUpdateShipment = newValue; this.MarkAsDirty("IsFromUpdateShipment"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

@@ -210,9 +210,15 @@ public partial class LogitudeCustomsFile
     private string receiverNameField;
     private string receiverAddressField;
     private string receiverCountryCodeField;
-
-    /// <remarks/>
-    public string CustomFileNo
+	private string systemConnectionField;
+	private string mawbDateField;
+	private string estimatedArrivalDateField;
+	private string arrivalDateField;
+	private string vesselField;
+	private string flightVoyageNumberField;
+	private string carrierCodeField;
+	/// <remarks/>
+	public string CustomFileNo
     {
         get
         {
@@ -1218,8 +1224,85 @@ public partial class LogitudeCustomsFile
         }
     }
 
-
-    [System.Xml.Serialization.XmlElementAttribute("Invoices")]
+	/// <remarks/>
+	public string SystemConnection
+	{
+		get
+		{
+			return this.systemConnectionField;
+		}
+		set
+		{
+			this.systemConnectionField = value;
+		}
+	}
+	public string MawbDate
+	{
+		get
+		{
+			return this.mawbDateField;
+		}
+		set
+		{
+			this.mawbDateField = value;
+		}
+	}
+	public string EstimatedArrivalDate
+	{
+		get
+		{
+			return this.estimatedArrivalDateField;
+		}
+		set
+		{
+			this.estimatedArrivalDateField = value;
+		}
+	}
+	public string ArrivalDate
+	{
+		get
+		{
+			return this.arrivalDateField;
+		}
+		set
+		{
+			this.arrivalDateField = value;
+		}
+	}
+	public string Vessel
+	{
+		get
+		{
+			return this.vesselField;
+		}
+		set
+		{
+			this.vesselField = value;
+		}
+	}
+	public string FlightVoyageNumber
+	{
+		get
+		{
+			return this.flightVoyageNumberField;
+		}
+		set
+		{
+			this.flightVoyageNumberField = value;
+		}
+	}
+	public string CarrierCode
+	{
+		get
+		{
+			return this.carrierCodeField;
+		}
+		set
+		{
+			this.carrierCodeField = value;
+		}
+	}
+	[System.Xml.Serialization.XmlElementAttribute("Invoices")]
 
     public ExportInvoices Invoices
     {

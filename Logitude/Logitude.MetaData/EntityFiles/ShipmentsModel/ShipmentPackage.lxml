@@ -11,6 +11,8 @@
   HasCustomFields="false"
   AvailableInCustomization="true"
   SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -38,7 +40,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment Package&quot;"
-  Code="&quot;7940&quot;"
+  Code="&quot;25b5&quot;"
   Name="&quot;ShipmentPackage&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -1745,6 +1747,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;PackageTypeId&quot;"
     DefaultText="&quot;Package Type&quot;"
+    FullLocalDefaultText="&quot;סוג מכולה &quot;"
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="&quot;PackageType&quot;"
@@ -1973,6 +1976,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ContainerNumber&quot;"
     DefaultText="&quot;Container Number&quot;"
+    FullLocalDefaultText="&quot;מס' מכולה&quot;"
     ShortFieldLable="&quot;ContainerNumber&quot;"
     ShortFieldLableDefaultText="&quot;Container #&quot;"
     IsNullable="false"
@@ -2351,6 +2355,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;Weight&quot;"
     DefaultText="&quot;Gross Weight (%WeightCode)&quot;"
+    FullLocalDefaultText="&quot;משקל &quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -3326,6 +3331,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ShipperSeal&quot;"
     DefaultText="&quot;Shipper Seal&quot;"
+    FullLocalDefaultText="&quot;סגר &quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -10790,6 +10796,12 @@
     <TextCode
       Code="&quot;ShipmentPackage.O.ActualEmptyReturn&quot;"
       DefaultText="&quot;Actual Empty Return&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ShipmentPackage.O.NotValidContainerNumber&quot;"
+      DefaultText="&quot;Container number should be 4 letters and 7 digits&quot;"
+      LocalDefaultText="&quot;מס מכולה צריך להיות 4 אותיות ו-7 ספרות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

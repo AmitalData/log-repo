@@ -6206,6 +6206,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isFromUpdateShipment ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsFromUpdateShipment  
+	   {
+	    
+	     get
+		{
+		   return isFromUpdateShipment;
+		 }
+		 set
+		 {
+		   if(isFromUpdateShipment != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsFromUpdateShipment",OldValue=isFromUpdateShipment,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isFromUpdateShipment=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

@@ -1828,7 +1828,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
                     }
                 }
             }
-            this.cd.detectChanges();
+           if (this.cd) this.cd.detectChanges();
 
     };
     HScrollPosition: number = -1;

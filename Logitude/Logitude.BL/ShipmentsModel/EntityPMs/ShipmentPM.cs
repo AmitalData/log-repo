@@ -1754,6 +1754,24 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
             }
         }
 
+        private List<ShipmentReferancePM> shipmentReferances;
+        [Include]
+        [Composition]
+        [Association("ShipmentReferancePMShipment", "Id", "ShipmentId")]
+        public List<ShipmentReferancePM> ShipmentReferances
+        {
+            get
+            {
+                if (shipmentReferances == null) { shipmentReferances = new List<ShipmentReferancePM>(); }
+                return shipmentReferances;
+            }
+
+            set
+            {
+                if (value != null) { shipmentReferances = value; }
+            }
+        }
+
         private List<ShipmentAPInvoicePM> shipmentApInvoices;
         [Include]
         [Composition]
@@ -2279,6 +2297,25 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ReferantUserId { get; set; }
         public string IskaNumber { get; set; }
+        public string DeclarationOfficeCode { get; set; }
+        public DateTime? HatraDate { get; set; }
+        public string CarrierCodeMawb { get; set; }
+        public string Hawb { get; set; }
+        public string ProcedureCurrentCode { get; set; }
+        public string ExternalDeclarationNumber { get; set; }
+        public string Status { get; set; }
+        public string DeclarationStatusTypeCode { get; set; }
+        public string CarrierCode { get; set; }
+        public string Mawb { get; set; }
+        public DateTime? MawbDate { get; set; }
+        public DateTime? ArrivalDate { get; set; }
+        public DateTime? EstimatedArrivalDate { get; set; }
+        public string PackageTypeCode { get; set; }
+        public string Vessel { get; set; }
+        public string FlightVoyageNumber { get; set; }
+        public string Commodity { get; set; }
+        public bool IsCustomShipment { get; set; }
+
 
         #region WarehouseLeg
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

@@ -1,0 +1,578 @@
+<style>
+
+    .section-title {
+        font-size: 14px;
+        color: #1B90CB;
+    }
+</style>
+
+<!-- <div *ngIf="EntityPM"> -->
+<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width: 1px;">{{('Shipment.TH.ShipmentData' | TextCodeTranslationPipe) || "Shipment Data"}}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <div style="margin-bottom: 40px; width: 100% " class="section">
+
+            <table style="width:100%;">
+                <tr style="height:100%">
+                    <!-- new section -->
+                    <td style="width: 430px;">
+                        <table>
+                            <!-- CustomerId -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov [ObjectFieldName]="'CustomerId'"
+                                            [SelectedValue]="CustomerId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Card'"
+                                            [DisplayMemberPath]="'LocalName'"
+                                            [DependencyFilter1Value]="CustomerDependencyProperty1"
+                                            [DependencyFilter1IsList]="CustomerDependencyProperty1IsList"
+                                            [HideAddLink]="true"
+                                            [HideAdd]="true">
+                                        </LogLov>
+                                </td>
+                            </tr>
+
+                            <!-- DepartmentId -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'DepartmentId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov 
+                                        [ObjectFieldName]="'DepartmentId'" 
+                                        [SelectedValue]="DepartmentId"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext" 
+                                        [LookUpTableName]="'Department'"
+                                        [DisplayMemberPath]="'LocalName'"
+                                        [DependencyFilter1Value]="'C'">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <!-- CarrierCode -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'CarrierCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov 
+                                        [ObjectFieldName]="'CarrierCode'" 
+                                        [SelectedValue]="CarrierCode"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext" 
+                                        [LookUpTableName]="'Airline'">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <!-- MawbDate -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'MawbDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <LogDatePicker [ObjectFieldName]="'MawbDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="MawbDate" [DataContext]="DataContext"
+                                                        [HideColumns]="true"
+                                                        [HideLastColumn]="HideLastColumn">
+                                            </LogDatePicker>
+                                        </td>
+                                        <td style="width:3px;">
+                                            <div></div>
+                                        </td>
+                                        <td>
+                                            <LogDatePicker [ObjectFieldName]="'MawbDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="MawbDate" [DataContext]="DataContext" [InputType]="'time'" [TimeMode]="12"
+                                                        [HideColumns]="HideColumns"
+                                                        [HideLastColumn]="HideLastColumn">
+
+                                            </LogDatePicker>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </tr>
+
+                            <!-- IskaNumber -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'IskaNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox 
+                                        [ObjectFieldName]="'IskaNumber'" 
+                                        [Text]="IskaNumber"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext">
+                                    </LogTextBox>
+                                </td>
+                            </tr>
+
+                            <!-- FreightForwarderId / ShipmentNumber -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [NoObjectField]="true" [Text]="'Shipment.O.FreightForwarderIdShipmentNumber' | TextCodeTranslationPipe" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <table>
+                                    <tr>
+                                        <!-- FreightForwarderId -->
+                                        <td>
+                                            <LogLov 
+                                                [ObjectFieldName]="'FreightForwarderId'" 
+                                                [SelectedValue]="FreightForwarderId"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Card'">
+                                            </LogLov>
+                                        </td>
+
+                                        <!-- ShipmentNumber -->
+                                        <td>
+                                            <LogTextBox 
+                                                [ObjectFieldName]="'ShipmentNumber'" 
+                                                [Text]="FreightForwarderReferenceShipmentNumber"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext">
+                                            </LogTextBox>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </tr>
+
+                            <!-- EstimatedArrivalDate -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'EstimatedArrivalDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <LogDatePicker [ObjectFieldName]="'EstimatedArrivalDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="EstimatedArrivalDate" [DataContext]="DataContext"
+                                                        [HideColumns]="true"
+                                                        [HideLastColumn]="HideLastColumn">
+                                            </LogDatePicker>
+                                        </td>
+                                        <td style="width:3px;">
+                                            <div></div>
+                                        </td>
+                                        <td>
+                                            <LogDatePicker [ObjectFieldName]="'EstimatedArrivalDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="EstimatedArrivalDate" [DataContext]="DataContext" [InputType]="'time'" [TimeMode]="12"
+                                                        [HideColumns]="HideColumns"
+                                                        [HideLastColumn]="HideLastColumn">
+
+                                            </LogDatePicker>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </tr>
+
+                            <!-- eretz motsa / todo -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [NoObjectField]="true" [Text]="'ארץ מוצא'" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                            </tr>
+                            
+                            <!-- PackageTypeCode -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'PackageTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov 
+                                        [ObjectFieldName]="'PackageTypeCode'" 
+                                        [SelectedValue]="PackageTypeCode"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext" 
+                                        [LookUpTableName]="'Customs.PackingType'">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <!-- ShipmentType -->
+                            <!-- <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'ShipmentType'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov 
+                                        [ObjectFieldName]="'ShipmentType'" 
+                                        [SelectedValue]="ShipmentType"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext" 
+                                        [LookUpTableName]="'ShipmentType'">
+                                    </LogLov>
+                                </td>
+                            </tr> -->
+
+                            <!-- House -->
+                            <!-- <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'House'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox 
+                                        [ObjectFieldName]="'House'" 
+                                        [Text]="House"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext">
+                                    </LogTextBox>
+                                </td>
+                            </tr> -->
+
+                            <!-- GrossWeight -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'GrossWeight'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox 
+                                        [ObjectFieldName]="'GrossWeight'" 
+                                        [Text]="GrossWeight"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext">
+                                    </LogTextBox>
+                                </td>
+                            </tr>
+
+                            <!-- ChargeableWeight -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'ChargeableWeight'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox 
+                                        [ObjectFieldName]="'ChargeableWeight'" 
+                                        [Text]="ChargeableWeight"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext">
+                                    </LogTextBox>
+                                </td>
+                            </tr>
+
+                            <!-- DescriptionOfGoods -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'DescriptionOfGoods'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="padding-bottom: 12px;">
+                                    <LogTextBox 
+                                        [ObjectFieldName]="'DescriptionOfGoods'" 
+                                        [Text]="DescriptionOfGoods"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext">
+                                    </LogTextBox>
+                                </td>
+                            </tr>
+
+                            <!-- ReferantUserId -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'ReferantUserId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov 
+                                        [ObjectFieldName]="'ReferantUserId'" 
+                                        [SelectedValue]="ReferantUserId"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"
+                                        [LookUpTableName]="'User'">
+                                    </LogLov>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="width: 50px;"></td>
+
+                    <!-- new section -->
+                    <td style="width: 430px;">
+                        <table>
+
+                            <!-- hazmanat lakoah -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [NoObjectField]="true" [Text]="'Shipment.O.ReferenceTypeValue' | TextCodeTranslationPipe" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <table>
+                                    <tr>
+                                        <!-- ReferenceType -->
+                                        <td>
+                                            <LogLov 
+                                                [ObjectFieldName]="'ReferenceType'" 
+                                                [SelectedValue]="ReferenceType"
+                                                [ObjectTableName]="ShipmentReferance"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'ReferenceType'">
+                                            </LogLov>
+                                        </td>
+
+                                        <!-- ReferenceValue -->
+                                        <td>
+                                            <LogTextBox 
+                                                [ObjectFieldName]="'ReferenceValue'" 
+                                                [Text]="ReferenceValue"
+                                                [ObjectTableName]="ShipmentReferance"
+                                                [DataContext]="DataContext">
+                                            </LogTextBox>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </tr>
+
+                            <!-- TransportModeId -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'TransportModeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov 
+                                        [ObjectFieldName]="'TransportModeId'" 
+                                        [SelectedValue]="TransportModeId"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"
+                                        [LookUpTableName]="'TransportMode'">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <!-- Vessel -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'Vessel'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov 
+                                        [ObjectFieldName]="'Vessel'" 
+                                        [SelectedValue]="Vessel"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"
+                                        [LookUpTableName]="'Vessel'">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <!-- HAWBDate -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'HAWBDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <LogDatePicker [ObjectFieldName]="'HAWBDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="HAWBDate" [DataContext]="DataContext"
+                                                        [HideColumns]="true"
+                                                        [HideLastColumn]="HideLastColumn">
+                                            </LogDatePicker>
+                                        </td>
+                                        <td style="width:3px;">
+                                            <div></div>
+                                        </td>
+                                        <td>
+                                            <LogDatePicker [ObjectFieldName]="'HAWBDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="HAWBDate" [DataContext]="DataContext" [InputType]="'time'" [TimeMode]="12"
+                                                        [HideColumns]="HideColumns"
+                                                        [HideLastColumn]="HideLastColumn">
+
+                                            </LogDatePicker>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </tr>
+
+                            <!-- FlightVoyageNumber -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'FlightVoyageNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox 
+                                        [ObjectFieldName]="'FlightVoyageNumber'" 
+                                        [Text]="FlightVoyageNumber"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext">
+                                    </LogTextBox>
+                                </td>
+                            </tr>
+
+                            <!-- IncotermId -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'IncotermId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov 
+                                        [ObjectFieldName]="'IncotermId'" 
+                                        [SelectedValue]="IncotermId"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"
+                                        [LookUpTableName]="'Incoterm'">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <!-- ArrivalDate -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'ArrivalDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <LogDatePicker [ObjectFieldName]="'ArrivalDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="ArrivalDate" [DataContext]="DataContext"
+                                                        [HideColumns]="true"
+                                                        [HideLastColumn]="HideLastColumn">
+                                            </LogDatePicker>
+                                        </td>
+                                        <td style="width:3px;">
+                                            <div></div>
+                                        </td>
+                                        <td>
+                                            <LogDatePicker [ObjectFieldName]="'ArrivalDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="ArrivalDate" [DataContext]="DataContext" [InputType]="'time'" [TimeMode]="12"
+                                                        [HideColumns]="HideColumns"
+                                                        [HideLastColumn]="HideLastColumn">
+
+                                            </LogDatePicker>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </tr>
+
+                            <!-- MainCarriageFromPortId -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'MainCarriageFromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov 
+                                        [ObjectFieldName]="'MainCarriageFromPortId'" 
+                                        [SelectedValue]="MainCarriageFromPortId"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"
+                                        [LookUpTableName]="'Port'"
+                                        [DisplayMemberPath]="'EnglishName'"
+                                        [DependencyFilter1Value]="TransportModeId">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <!-- NumberOfPackages -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'NumberOfPackages'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox 
+                                        [ObjectFieldName]="'NumberOfPackages'" 
+                                        [Text]="NumberOfPackages"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext">
+                                    </LogTextBox>
+                                </td>
+                            </tr>
+
+                            <!-- Volume -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [NoObjectField]="true" [Text]="'Shipment.O.VolumeKgCbm' | TextCodeTranslationPipe" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <LogTextBox 
+                                                [ObjectFieldName]="'VolumetricWeight'" 
+                                                [Text]="VolumetricWeight"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext">
+                                            </LogTextBox>
+                                        </td>
+
+                                        <td>
+                                            <LogTextBox 
+                                                [ObjectFieldName]="'Volume'" 
+                                                [Text]="Volume"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext">
+                                            </LogTextBox>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </tr>
+
+                            <!-- Commodity -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'Commodity'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox 
+                                        [ObjectFieldName]="'Commodity'" 
+                                        [Text]="Commodity"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext">
+                                    </LogTextBox>
+                                </td>
+                            </tr>
+
+                            <!-- SalesmanUserId -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'SalesmanUserId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov 
+                                        [ObjectFieldName]="'SalesmanUserId'" 
+                                        [SelectedValue]="SalesmanUserId"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"
+                                        [LookUpTableName]="'User'">
+                                    </LogLov>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </table>
+</div>
+

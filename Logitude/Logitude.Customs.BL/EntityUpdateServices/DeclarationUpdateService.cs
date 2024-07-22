@@ -52,6 +52,7 @@ using System.Configuration;
 using System.Globalization;
 using Logitude.Customs.BL.Messaging.ILSWS;
 using System.Xml;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -206,18 +207,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (entityPM.IsAmendment == true || entityPM.Direction == "E")
                 entityPM.ExternalDeclarationNumber = entityPM.CustomFileNo + DateTime.Now.Year;
 
-
-            ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
-            string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
-            Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
-
-
-
-
-
-
-            entityPM.CreatedByUserId = contact.Id;
-            if ((!entityPM.IsConnectedToUnifreight && entityPM.Direction != "E" && entityPM.IsAmendment != true) ||
+            if (entityPM.SystemConnection != "N") 
+            { 
+                ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
+                string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
+                Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
+                entityPM.CreatedByUserId = contact.Id;
+			}
+			if ((!entityPM.IsConnectedToUnifreight && entityPM.Direction != "E" && entityPM.IsAmendment != true && entityPM.SystemConnection != "N") ||
                 (entityPM.Direction == "E" && entityPM.IsAmendment != true && string.IsNullOrEmpty(entityPM.ReferentUserId)))
 
             {
@@ -233,10 +230,60 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
 
             OnCreatingExportDeclaration(entityPM);
+			if (entityPM.SystemConnection == "N")
+			    entityPM.IsChanged = true;
 
-        }
+		}
+        private void UpdateShipment(DeclarationPM entityPM)
+		{
+            DeclarationReferantDataQueryService declarationReferantDataQueryService = new DeclarationReferantDataQueryService(entityPM.Tenant);
+			DeclarationReferantDataPM declarationReferantDataPM = declarationReferantDataQueryService.GetSingle(entityPM.Id, false,false);
+			ShipmentPM shipmentPM = new ShipmentPM();
+			if (entityPM.TransportModeId == "A")
+            {
+				shipmentPM.House = entityPM.Consignments[0].ThirdCargoID;
 
-        private void OnCreatingExportDeclaration(DeclarationPM declarationPM)
+			}
+			if (entityPM.TransportModeId == "O")
+			{
+                shipmentPM.IskaNumber = "I_" + entityPM.Consignments[0].ManifestNumber + "_" + entityPM.Consignments[0].SecondCargoID;
+
+			}
+			if (entityPM.TransportModeId == "L")
+			{
+				shipmentPM.IskaNumber = entityPM.Consignments[0].ManifestNumber;
+
+			}
+
+			declarationReferantDataPM.ArrivalDate = entityPM.Consignments[0].UnloadDate;
+            if (string.IsNullOrEmpty(entityPM.Consignments[0].ThirdCargoID))
+            {
+                shipmentPM.HAWBDate = entityPM.Consignments[0].ManifestDate;
+			}
+            else
+            {
+				declarationReferantDataPM.MawbDate = entityPM.Consignments[0].ManifestDate;
+
+			}
+			declarationReferantDataPM.PackageTypeCode = entityPM.Consignments[0].ConsignmentPackages.Where(x => x.PackageMeasureQualifierCode == "2").FirstOrDefault()?.PackageTypeCode;
+			shipmentPM.NumberOfPackages = entityPM.Consignments[0].ConsignmentPackages.Where(x => x.PackageMeasureQualifierCode == "2").Sum(y=>y.PackageQuantity);
+			shipmentPM.GrossWeight = (double)entityPM.Consignments[0].ConsignmentPackages.Where(x => x.PackageMeasureQualifierCode == "2").Sum(y => y.GrossMassMeasure);
+            shipmentPM.DescriptionOfGoods = entityPM.Consignments[0].CargoDescription;
+			shipmentPM.ShipmentNumber = entityPM.CustomFileNo;
+			shipmentPM.CreatedByUserId = entityPM.CreatedByUserId;
+			shipmentPM.DirectionId = "C";
+			shipmentPM.Tenant = entityPM.Tenant;
+            shipmentPM.IsCustomShipment = true;
+ 
+			
+			ICustomContext context = MainContext as CustomContext;			
+			DeclarationReferantDataUpdateService declarationReferantDataUpdateService = new DeclarationReferantDataUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+			declarationReferantDataPM.ChangeSetOp = ChangeSetOperation.Update;
+			declarationReferantDataUpdateService.Update(declarationReferantDataPM, true);
+			var respnse = APIConnectionHelper.Instance.PostViaWebAPI<Response, object[]>("api/ShipmentHybrid/Upsert", new object[] { shipmentPM ,false});
+
+		}
+		private void OnCreatingExportDeclaration(DeclarationPM declarationPM)
         {
             if (String.IsNullOrWhiteSpace(declarationPM.Direction))
             {
@@ -820,8 +867,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     InternalBorderSiteTypeQueryService internalBorderSiteTypeQueryService = new InternalBorderSiteTypeQueryService(entityPM.Tenant);
                     entityPM.AutonomyRegionTypeCode = internalBorderSiteTypeQueryService.GetSingle(siteCode, false, true)?.AutonomyRegionTypeCode;
                 }
-
-            }
+				if (entityPM.SystemConnection == "N" && entityPM.ChangeSetOp == ChangeSetOperation.Update && !entityPM.IsFromUpdateShipment)
+					UpdateShipment(entityPM);
+			}
             finally
             {
                 //if (String.IsNullOrWhiteSpace(entityPM.PrimaryInvoiceCounterKey))
@@ -1061,14 +1109,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         private void UpdateReferantData(DeclarationPM entityPM)
         {
-            if (entityPM.Direction == "E") return;
-            DateTime stopLogAt = new DateTime(2021, 06, 01);
-            string logData = "";
-            var loggedUser = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
-            logData = $"entityPM.CustomFileNo={entityPM.CustomFileNo}, User name={loggedUser}, before update1";
-            LogitudeSettings.HandleLogMe("Referant update " + logData, false, "referant.NewFile", stopLogAt);
+            if (entityPM.Direction == "E") return;                   
+                DateTime stopLogAt = new DateTime(2021, 06, 01);
+                string logData = "";
+                var loggedUser = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
+                if (entityPM.SystemConnection != "N")
+			{
+				logData = $"entityPM.CustomFileNo={entityPM.CustomFileNo}, User name={loggedUser}, before update1";
+                LogitudeSettings.HandleLogMe("Referant update " + logData, false, "referant.NewFile", stopLogAt);
+            }
 
-            DeclarationReferantDataQueryService declarationReferantDataQueryService = new DeclarationReferantDataQueryService(entityPM.Tenant);
+			DeclarationReferantDataQueryService declarationReferantDataQueryService = new DeclarationReferantDataQueryService(entityPM.Tenant);
             DeclarationReferantDataPM referant = declarationReferantDataQueryService.GetSingle(entityPM.Id, false, false);
             if (referant != null)
             {

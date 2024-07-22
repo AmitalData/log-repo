@@ -637,7 +637,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.TraceRoutingDataOnForwarding();
             }
 
-            else
+            else if (entityMasterData != null) 
             {
                 this.TraceRoutingDataPreCarriage();
                 this.TraceRoutingDataOnCarriage();

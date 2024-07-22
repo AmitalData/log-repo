@@ -13,6 +13,7 @@ import {ShipmentListService} from './Services/StandardLists/ShipmentListService'
 import {ShipmentPayableStatusListService} from './Services/StandardLists/ShipmentPayableStatusListService';
 import {ShipmentReceivableStatusListService} from './Services/StandardLists/ShipmentReceivableStatusListService';
 import {ShipmentTypeListService} from './Services/StandardLists/ShipmentTypeListService';
+import {ReferenceTypeListService} from './Services/StandardLists/ReferenceTypeListService';
 import {SpecialServicesTypeListService} from './Services/StandardLists/SpecialServicesTypeListService';
 import {ShipmentFollowUpListService} from './Services/StandardLists/ShipmentFollowUpListService';
 import {MessagingStockPMService} from './Services/StandardPMs/MessagingStockPMService';
@@ -65,6 +66,7 @@ export class ModuleProviders {
             case "ShipmentPayableStatusListService": { myResult = new ShipmentPayableStatusListService(); break; }
             case "ShipmentReceivableStatusListService": { myResult = new ShipmentReceivableStatusListService(); break; }
             case "ShipmentTypeListService": { myResult = new ShipmentTypeListService(); break; }
+            case "ReferenceTypeListService": { myResult = new ReferenceTypeListService(); break; }
             case "SpecialServicesTypeListService": { myResult = new SpecialServicesTypeListService(); break; }
             case "ShipmentFollowUpListService": { myResult = new ShipmentFollowUpListService(); break; }
             case "ContainerFollowUpPMService": { myResult = new ContainerFollowUpPMService(); break; }

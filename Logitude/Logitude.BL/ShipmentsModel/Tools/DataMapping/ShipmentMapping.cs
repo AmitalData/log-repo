@@ -33,7 +33,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 {
     public partial class ShipmentMapping
     {
-        public static void MapEntity(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData, bool isNewEntity, 
+        public static void MapEntity(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData, bool isNewEntity,
                                      List<ShipmentPackagePM> myPackagesList, IShipmentsContext objectContext, List<FieldChange> fieldChanges)
         {
             IWebFreightContext webFrieghtcontext = WebFreightContext.GetContext(entityPM.Tenant);
@@ -89,12 +89,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
                 FieldChange.Add(entityPoco.OriginShipmentId, entityPM.OriginShipmentId, nameof(entityPM.OriginShipmentId), fieldChanges);
                 entityPoco.OriginShipmentId = entityPM.OriginShipmentId;
-
-                FieldChange.Add(entityPoco.IskaNumber, entityPM.IskaNumber, nameof(entityPM.IskaNumber), fieldChanges);
-                entityPoco.IskaNumber = entityPM.IskaNumber;
-
-                FieldChange.Add(entityPoco.ReferantUserId, entityPM.ReferantUserId, nameof(entityPM.ReferantUserId), fieldChanges);
-                entityPoco.ReferantUserId = entityPM.ReferantUserId;
             }
             else
             {
@@ -119,7 +113,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
                     {
                         entityPM.ComputedShipmentNumber = entityPM.ShipmentNumber;
-                    }                    
+                    }
                 }
             }
 
@@ -207,7 +201,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             FieldChange.Add(entityPoco.CreatedByPartner, entityPM.CreatedByPartner, nameof(entityPM.CreatedByPartner), fieldChanges);
             entityPoco.CreatedByPartner = entityPM.CreatedByPartner;
-            
+
+            FieldChange.Add(entityPoco.IskaNumber, entityPM.IskaNumber, nameof(entityPM.IskaNumber), fieldChanges);
+            entityPoco.IskaNumber = entityPM.IskaNumber;
+
+            FieldChange.Add(entityPoco.ReferantUserId, entityPM.ReferantUserId, nameof(entityPM.ReferantUserId), fieldChanges);
+            entityPoco.ReferantUserId = entityPM.ReferantUserId;
+
             if (entityPM.IsExceptionResolved)
             {
                 entityPoco.ExceptionDescription = null;
@@ -262,6 +262,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 entityPoco.ToPortId = entityPM.ToPortId;
             }
 
+            if (entityPM.IsCustomShipment)
+            {
+                entityPoco.NumberOfPackages = entityPM.NumberOfPackages;
+                entityPoco.FromPortId = entityPM.MainCarriageFromPortId;
+            }
+
             if (entityPM.IsStatusChange)
             {
                 MapShipmentStatus(entityPM, entityPoco, entityMasterData, fieldChanges);
@@ -278,11 +284,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             LogBoxTenantSettingRepository LBtenantRepository = new LogBoxTenantSettingRepository(entityPM.Tenant);
             LogBoxTenantSetting LBcurrentTenant = LBtenantRepository.GetSingleLBTenant(entityPM.Tenant);
 
+            if (isNewEntity && entityPM.IsCustomShipment)
+            {
+                FieldChange.Add(entityPoco.StatusId, entityPM.StatusId, nameof(entityPM.StatusId), fieldChanges);
+                entityPoco.StatusId = entityPM.StatusId;
+            }
+
             if (isNewEntity && entityPM.IsHybrid)
             {
                 FieldChange.Add(entityPoco.StatusId, entityPM.StatusId, nameof(entityPM.StatusId), fieldChanges);
                 entityPoco.StatusId = entityPM.StatusId;
-                
+
                 FieldChange.Add(entityPoco.StatusDate, entityPM.StatusDate, nameof(entityPM.StatusDate), fieldChanges);
                 entityPoco.StatusDate = entityPM.StatusDate;
                 
@@ -1232,7 +1244,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
         {
             if (IsLogboxEnvironment()) return;
             List<ShipmentPackagePM> shipmentPackages = entityPM.ShipmentPackages.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
-            if (shipmentPackages == null || (shipmentPackages != null && shipmentPackages.Count == 0))
+            if ((shipmentPackages == null || (shipmentPackages != null && shipmentPackages.Count == 0)) && !entityPM.IsCustomShipment)
             {
                 entityPoco.NumberOfPackages = entityPM.NumberOfPackages = null;
                 entityPoco.NumberOfContainers = entityPM.NumberOfContainers = null;
@@ -1490,7 +1502,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     toPort = PortQuery.GetSinglePort(entityPoco.Tenant, entityPoco.ToPortId, true);
                 }
 
-                myRoutingField = fromPort.Code + " , " + toPort.Code;
+                if (fromPort != null && toPort != null)
+                {
+                    myRoutingField = fromPort.Code + " , " + toPort.Code;
+                }
 
                 string preCrriageFromPortCode = null;
                 string onCarriageToPortCode = null;
@@ -4149,6 +4164,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddFieldChangedProperties(changeTrackingPM, "FirstPickupATD", changeTrackingPM.FirstPickupATD, pm.FirstPickupATD, "FirstPickupATD", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "IncludesCustoms", changeTrackingPM.IncludesCustoms, pm.IncludesCustoms, "IncludesCustoms", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "CustomsClearanceDate", changeTrackingPM.CustomsClearanceDate, pm.CustomsClearanceDate, "CustomsClearanceDate", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "IskaNumber", changeTrackingPM.IskaNumber, pm.IskaNumber, "string", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "ReferantUserId", changeTrackingPM.ReferantUserId, pm.ReferantUserId, "string", notifyPropertyChangeValuesList);
 
             AddFieldChangedProperties(changeTrackingPM, "MainCarriageFromPortId", changeTrackingPM.MainCarriageFromPortId, pm.MainCarriageFromPortId, "string", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "MainCarriageToPortId", changeTrackingPM.MainCarriageToPortId, pm.MainCarriageToPortId, "string", notifyPropertyChangeValuesList);

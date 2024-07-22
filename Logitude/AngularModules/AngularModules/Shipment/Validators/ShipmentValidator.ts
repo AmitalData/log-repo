@@ -60,6 +60,7 @@ export class ShipmentValidator implements IShipmentValidator {
             this.ValidateDeliveries();
             this.ValidatePayables();
             this.ValidateReceivables();
+            
             //this.ValidateProductItems();
             RoutingHelper.ValidateRoutingsActualDates(entityPM, this.Errors);
             RoutingHelper.ValidateRoutingsSeriesDates(entityPM, this.Errors);
@@ -107,14 +108,14 @@ export class ShipmentValidator implements IShipmentValidator {
             //}
 
             //else {
-            if (AppTool.IsNullOrEmpty(this.entityPM.CustomerId) || AppTool.IsNullOrEmpty(this.entityPM.ShipmentCustomerTypeCode)) {
+            if (AppTool.IsNullOrEmpty(this.entityPM.CustomerId) || (AppTool.IsNullOrEmpty(this.entityPM.ShipmentCustomerTypeCode) && !this.entityPM.IsCustomShipment)) {
                 this.Errors.push(this.message.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.CustomerId")));
             }
             //}
         }
     }
     private ValidatePorts() {
-        if (!this.IsInlandDomestic) {
+        if (!this.IsInlandDomestic && !this.entityPM.IsCustomShipment) {
             if (AppTool.IsNullOrEmpty(this.entityPM.MainCarriageFromPortId)) {
                 var textCode = ShipmentTool.GetFromPortTextCode(this.entityPM.TransportModeId, this.entityPM.ShipmentLevelCode);
                 this.Errors.push(this.message.replace("%FieldName", TextCodeTranslator.Translate(textCode)));
@@ -212,8 +213,23 @@ export class ShipmentValidator implements IShipmentValidator {
                     this.Errors.push("Gross Weight is required");
                 }
             }
+            if(this.entityPM.ShipmentTypeId == "FCLD" && this.entityPM.DirectionId == "C"){
+                this.Errors.push(this.ValidateContainerNumber(item.ContainerNumber));
+            }
+            
         });
     }
+
+    ValidateContainerNumber(containerNumber: string): string {
+        const pattern = /^[A-Za-z]{4}\d{7}$/;
+    
+        if (!pattern.test(containerNumber)) {
+            return TextCodeTranslator.Translate("ShipmentPackage.O.NotValidContainerNumber");
+        }
+    
+        return null;
+    }
+
     private ValidatePickups() {
 
         var validator = new ShipmentPickupValidator();
@@ -238,6 +254,7 @@ export class ShipmentValidator implements IShipmentValidator {
         });
 
     }
+
     private ValidatePayables() {
 
         var vatTypesIds: string[] = [];

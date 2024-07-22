@@ -5512,6 +5512,77 @@ export class ShipmentPM {
     public get Weight4() { return this.weight4; }
     public set Weight4(newValue: number) { if (this.weight4 != newValue) { this.weight4 = newValue; this.MarkAsDirty("Weight4"); } }
 
+    private iskaNumber: string;
+    public get IskaNumber() { return this.iskaNumber; }
+    public set IskaNumber(newValue: string) { if (this.iskaNumber != newValue) { this.iskaNumber = newValue; this.MarkAsDirty("IskaNumber"); } }
+
+    private referantUserId: string;
+    public get ReferantUserId() { return this.referantUserId; }
+    public set ReferantUserId(newValue: string) { if (this.referantUserId != newValue) { this.referantUserId = newValue; this.MarkAsDirty("ReferantUserId"); } }
+
+    private declarationOfficeCode: string;
+    public get DeclarationOfficeCode() { return this.declarationOfficeCode; }
+    public set DeclarationOfficeCode(newValue: string) { if (this.declarationOfficeCode != newValue) { this.declarationOfficeCode = newValue; this.MarkAsDirty("DeclarationOfficeCode"); } }
+
+    private isCustomShipment: boolean;
+    public get IsCustomShipment() { return this.isCustomShipment; }
+    public set IsCustomShipment(newValue: boolean) { if (this.isCustomShipment != newValue) { this.isCustomShipment = newValue; this.MarkAsDirty("IsCustomShipment"); } }
+
+    private shipmentReferances: []; // ShipmentReferance[];
+    public get ShipmentReferances() { return this.shipmentReferances; }
+    public set ShipmentReferances(newValue: []) { if (this.shipmentReferances != newValue) { this.shipmentReferances = newValue; this.MarkAsDirty("ShipmentReferances"); } }
+
+    private carrierCode: string;
+    public get CarrierCode() { return this.carrierCode; }
+    public set CarrierCode(newValue: string) { if (this.carrierCode != newValue) { this.carrierCode = newValue; this.MarkAsDirty("CarrierCode"); } }
+
+    private mawbDate: Date;
+    public get MawbDate() { return this.mawbDate; }
+    public set MawbDate(newValue: Date) { if (this.mawbDate != newValue) { this.mawbDate = newValue; this.MarkAsDirty("MawbDate"); } }
+
+    private estimatedArrivalDate: Date;
+    public get EstimatedArrivalDate() { return this.estimatedArrivalDate; }
+    public set EstimatedArrivalDate(newValue: Date) { if (this.estimatedArrivalDate != newValue) { this.estimatedArrivalDate = newValue; this.MarkAsDirty("EstimatedArrivalDate"); } }
+
+    private packageTypeCode: string;
+    public get PackageTypeCode() { return this.packageTypeCode; }
+    public set PackageTypeCode(newValue: string) { if (this.packageTypeCode != newValue) { this.packageTypeCode = newValue; this.MarkAsDirty("PackageTypeCode"); } }
+
+    private arrivalDate: Date;
+    public get ArrivalDate() { return this.arrivalDate; }
+    public set ArrivalDate(newValue: Date) { if (this.arrivalDate != newValue) { this.arrivalDate = newValue; this.MarkAsDirty("ArrivalDate"); } }
+
+    private vessel: string;
+    public get Vessel() { return this.vessel; }
+    public set Vessel(newValue: string) { if (this.vessel != newValue) { this.vessel = newValue; this.MarkAsDirty("Vessel"); } }
+
+    private flightVoyageNumber: string;
+    public get FlightVoyageNumber() { return this.flightVoyageNumber; }
+    public set FlightVoyageNumber(newValue: string) { if (this.flightVoyageNumber != newValue) { this.flightVoyageNumber = newValue; this.MarkAsDirty("FlightVoyageNumber"); } }
+
+    private commodity: string;
+    public get Commodity() { return this.commodity; }
+    public set Commodity(newValue: string) { if (this.commodity != newValue) { this.commodity = newValue; this.MarkAsDirty("Commodity"); } }
+
+    private hatraDate: Date;
+    public get HatraDate() { return this.hatraDate; }
+    public set HatraDate(newValue: Date) { if (this.hatraDate != newValue) { this.hatraDate = newValue; this.MarkAsDirty("HatraDate"); } }
+
+    private procedureCurrentCode: string;
+    public get ProcedureCurrentCode() { return this.procedureCurrentCode; }
+    public set ProcedureCurrentCode(newValue: string) { if (this.procedureCurrentCode != newValue) { this.procedureCurrentCode = newValue; this.MarkAsDirty("ProcedureCurrentCode"); } }
+
+    private externalDeclarationNumber: string;
+    public get ExternalDeclarationNumber() { return this.externalDeclarationNumber; }
+    public set ExternalDeclarationNumber(newValue: string) { if (this.externalDeclarationNumber != newValue) { this.externalDeclarationNumber = newValue; this.MarkAsDirty("ExternalDeclarationNumber"); } }
+
+    private declarationStatusTypeCode: string;
+    public get DeclarationStatusTypeCode() { return this.declarationStatusTypeCode; }
+    public set DeclarationStatusTypeCode(newValue: string) { if (this.declarationStatusTypeCode != newValue) { this.declarationStatusTypeCode = newValue; this.MarkAsDirty("DeclarationStatusTypeCode"); } }
+
+    private carrierCodeMawb: string;
+    public get CarrierCodeMawb() { return this.carrierCodeMawb; }
+    public set CarrierCodeMawb(newValue: string) { if (this.carrierCodeMawb != newValue) { this.carrierCodeMawb = newValue; this.MarkAsDirty("CarrierCodeMawb"); } }
 
     public OldEntityPM: ShipmentPM;
 
