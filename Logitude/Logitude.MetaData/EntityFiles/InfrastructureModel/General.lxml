@@ -39,8 +39,8 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;d662&quot;"
-    Name="&quot;General&quot;"
+  Code="&quot;06c1&quot;"
+  Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
   ServerModuleName="&quot;Generals&quot;"
@@ -403,11 +403,13 @@
     <TextCode
       Code="&quot;General.M.ContainerNumberFormatisInvalid&quot;"
       DefaultText="&quot;Container Number Format is Invalid &lt;Must be 4 Letters and 7 Digits&gt;&quot;"
+      LocalDefaultText="&quot; מס מכולה צריך להיות 4 אותיות ו-7 ספרות&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.M.ContainerNumberCheckDigitiswrong&quot;"
       DefaultText="&quot;Container Number Check Digit is wrong &lt;Must be %CheckDigit&gt;&quot;"
+      LocalDefaultText="&quot;ספרת ביקורת שגויה צריך להיות %CheckDigit&gt;&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode

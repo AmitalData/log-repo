@@ -220,14 +220,8 @@ export class ShipmentValidator implements IShipmentValidator {
         });
     }
 
-    ValidateContainerNumber(containerNumber: string): string {
-        const pattern = /^[A-Za-z]{4}\d{7}$/;
-    
-        if (!pattern.test(containerNumber)) {
-            return TextCodeTranslator.Translate("ShipmentPackage.O.NotValidContainerNumber");
-        }
-    
-        return null;
+    ValidateContainerNumber(input: string): string {
+        return FormatTool.ValidateContainerNumber(input);
     }
 
     private ValidatePickups() {
