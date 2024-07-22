@@ -39,8 +39,6 @@
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'Card'"
                                             [DisplayMemberPath]="'LocalName'"
-                                            [DependencyFilter1Value]="CustomerDependencyProperty1"
-                                            [DependencyFilter1IsList]="CustomerDependencyProperty1IsList"
                                             [HideAddLink]="true"
                                             [HideAdd]="true">
                                         </LogLov>
@@ -92,20 +90,13 @@
                                 <table>
                                     <tr>
                                         <td>
-                                            <LogDatePicker [ObjectFieldName]="'MawbDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="MawbDate" [DataContext]="DataContext"
-                                                        [HideColumns]="true"
-                                                        [HideLastColumn]="HideLastColumn">
-                                            </LogDatePicker>
+                                            <LogDatePicker [ObjectFieldName]="'MawbDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="MawbDate" [DataContext]="DataContext"></LogDatePicker>
                                         </td>
                                         <td style="width:3px;">
                                             <div></div>
                                         </td>
                                         <td>
-                                            <LogDatePicker [ObjectFieldName]="'MawbDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="MawbDate" [DataContext]="DataContext" [InputType]="'time'" [TimeMode]="12"
-                                                        [HideColumns]="HideColumns"
-                                                        [HideLastColumn]="HideLastColumn">
-
-                                            </LogDatePicker>
+                                            <LogDatePicker [ObjectFieldName]="'MawbDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="MawbDate" [DataContext]="DataContext" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
                                         </td>
                                     </tr>
                                 </table>
@@ -168,20 +159,13 @@
                                 <table>
                                     <tr>
                                         <td>
-                                            <LogDatePicker [ObjectFieldName]="'EstimatedArrivalDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="EstimatedArrivalDate" [DataContext]="DataContext"
-                                                        [HideColumns]="true"
-                                                        [HideLastColumn]="HideLastColumn">
-                                            </LogDatePicker>
+                                            <LogDatePicker [ObjectFieldName]="'EstimatedArrivalDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="EstimatedArrivalDate" [DataContext]="DataContext"></LogDatePicker>
                                         </td>
                                         <td style="width:3px;">
                                             <div></div>
                                         </td>
                                         <td>
-                                            <LogDatePicker [ObjectFieldName]="'EstimatedArrivalDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="EstimatedArrivalDate" [DataContext]="DataContext" [InputType]="'time'" [TimeMode]="12"
-                                                        [HideColumns]="HideColumns"
-                                                        [HideLastColumn]="HideLastColumn">
-
-                                            </LogDatePicker>
+                                            <LogDatePicker [ObjectFieldName]="'EstimatedArrivalDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="EstimatedArrivalDate" [DataContext]="DataContext" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
                                         </td>
                                     </tr>
                                 </table>
@@ -329,7 +313,7 @@
                                             <LogLov 
                                                 [ObjectFieldName]="'ReferenceType'" 
                                                 [SelectedValue]="ReferenceType"
-                                                [ObjectTableName]="ShipmentReferance"
+                                                [ObjectTableName]="'ShipmentReferance'"
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'ReferenceType'">
                                             </LogLov>
@@ -340,7 +324,7 @@
                                             <LogTextBox 
                                                 [ObjectFieldName]="'ReferenceValue'" 
                                                 [Text]="ReferenceValue"
-                                                [ObjectTableName]="ShipmentReferance"
+                                                [ObjectTableName]="'ShipmentReferance'"
                                                 [DataContext]="DataContext">
                                             </LogTextBox>
                                         </td>
@@ -391,20 +375,13 @@
                                 <table>
                                     <tr>
                                         <td>
-                                            <LogDatePicker [ObjectFieldName]="'HAWBDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="HAWBDate" [DataContext]="DataContext"
-                                                        [HideColumns]="true"
-                                                        [HideLastColumn]="HideLastColumn">
-                                            </LogDatePicker>
+                                            <LogDatePicker [ObjectFieldName]="'HAWBDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="HAWBDate" [DataContext]="DataContext"></LogDatePicker>
                                         </td>
                                         <td style="width:3px;">
                                             <div></div>
                                         </td>
                                         <td>
-                                            <LogDatePicker [ObjectFieldName]="'HAWBDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="HAWBDate" [DataContext]="DataContext" [InputType]="'time'" [TimeMode]="12"
-                                                        [HideColumns]="HideColumns"
-                                                        [HideLastColumn]="HideLastColumn">
-
-                                            </LogDatePicker>
+                                            <LogDatePicker [ObjectFieldName]="'HAWBDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="HAWBDate" [DataContext]="DataContext" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
                                         </td>
                                     </tr>
                                 </table>
@@ -452,20 +429,13 @@
                                 <table>
                                     <tr>
                                         <td>
-                                            <LogDatePicker [ObjectFieldName]="'ArrivalDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="ArrivalDate" [DataContext]="DataContext"
-                                                        [HideColumns]="true"
-                                                        [HideLastColumn]="HideLastColumn">
-                                            </LogDatePicker>
+                                            <LogDatePicker [ObjectFieldName]="'ArrivalDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="ArrivalDate" [DataContext]="DataContext"></LogDatePicker>
                                         </td>
                                         <td style="width:3px;">
                                             <div></div>
                                         </td>
                                         <td>
-                                            <LogDatePicker [ObjectFieldName]="'ArrivalDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="ArrivalDate" [DataContext]="DataContext" [InputType]="'time'" [TimeMode]="12"
-                                                        [HideColumns]="HideColumns"
-                                                        [HideLastColumn]="HideLastColumn">
-
-                                            </LogDatePicker>
+                                            <LogDatePicker [ObjectFieldName]="'ArrivalDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="ArrivalDate" [DataContext]="DataContext" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
                                         </td>
                                     </tr>
                                 </table>
