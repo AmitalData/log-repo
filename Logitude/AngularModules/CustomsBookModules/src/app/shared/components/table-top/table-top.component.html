@@ -1,6 +1,7 @@
 <div class="mainTable_top">
-	<h2>{{ service?.getTableTop(this.state) }}</h2>
-	<h2>{{ this.state === 'search' && '( ' + 0 + ' )' }}</h2>
+	<h2>{{ service?.getTableTop(searchMode) }}
+		<span *ngIf="searchMode == 'search'">({{countSearchResult}}) </span>
+	</h2>
 	<ul>
 		<li *ngFor="let item of service?.getCategories()">
 			{{ item }}
@@ -8,7 +9,10 @@
 	</ul>
 	<div class="searchResults_top">
 		<div class="searchResults_close">
-			<a role="button"><i role="img" aria-hidden="true" class="icon-close"></i><span>ניקוי תוצאות</span></a>
+			<a role="button" (click)="clearResults.emit()">
+				<i role="img" aria-hidden="true" class="icon-close"></i>
+				<span>ניקוי תוצאות</span>
+			</a>
 		</div>
 		<app-filter-popup />
 	</div>

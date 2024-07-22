@@ -1,7 +1,7 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { DataRowComponent } from '../data-row/data-row.component';
 import { DetailsFrameComponent } from '../details-frame/details-frame.component';
-import { TableTopComponent } from '../table-top/table-top.component';
+import { TableTopComponent, TableTopState } from '../table-top/table-top.component';
 import { AddCommentComponent } from '../add-comment/add-comment.component';
 import { NgFor, NgForOf, NgIf } from '@angular/common';
 import { trigger, style, animate, transition } from '@angular/animations';
@@ -72,15 +72,19 @@ export class MainDisplayComponent {
 		this.itemsData.subscribe((data: CB_CustomsItemComputedDataList[] = []) => {
 			if (data.length == 0) {
 				this.InitData();
+				this.searchMode = TableTopState.ViewAll;
 				return;
-			} 
-			console.log(data);
+			}
+			// console.log(data);
+
 			// remove duplicates customsItemID:
 			data = data.filter((v, i, a) => a.findIndex(t => (t.CustomsItemID === v.CustomsItemID)) === i);
 
 			this.data = this.orderedDataForSearch(data);
 
 			this.extendAll(this.data);
+
+			this.searchMode = TableTopState.Search;
 		});
 	}
 	extendAll(data: CB_CustomsItemComputedDataList[]) {
@@ -90,6 +94,7 @@ export class MainDisplayComponent {
 		});
 	}
 
+	searchMode: TableTopState = TableTopState.ViewAll;
 	selectedItemId: number | null = null;
 	currentItem: CB_CustomsItemComputedDataList;
 	itemDataBehaviorSubject: BehaviorSubject<ItemData> = new BehaviorSubject<ItemData>({ customsItemId: 0, measurementUnitMalamId: 0 });
@@ -101,11 +106,11 @@ export class MainDisplayComponent {
 			this.showDetails = !this.showDetails;
 			return;
 		}
-		else if(!this.showDetails){
+		else if (!this.showDetails) {
 			this.showDetails = !this.showDetails;
 		}
 
-		
+
 		// console.log(CustomsItemID);
 		// console.log(item);
 		// console.log(item.FullClassification);
@@ -126,12 +131,16 @@ export class MainDisplayComponent {
 	}
 
 	showChildern(id: string): boolean {
-
 		const isShown = this.childrenToDesplay.indexOf(id);
 		isShown === -1 ? this.childrenToDesplay.push(id) : this.childrenToDesplay.splice(isShown);
 		return Boolean(isShown >= 0);
 	}
 
+	handleClearResults() {
+		this.searchMode = TableTopState.ViewAll;
+		this.data = [];
+		this.InitData();
+  }
 
 	public orderedDataForSearch = (data) => {
 		const getChildren = (parentItem) => {
@@ -141,17 +150,17 @@ export class MainDisplayComponent {
 			});
 			return children;
 		};
-	
+
 		let rootItems = data.filter((item) => !item?.CI_Parent_CustomsItemIDNum);
 		if (rootItems.length === 0) {
 			rootItems = data;
 		}
-	
+
 		const orderedData = rootItems.map((rootItem) => {
 			const children = getChildren(rootItem);
 			return { ...rootItem, children };
 		});
-	
+
 		// Remove root items that are found as children of other items
 		const removeRootItemsAsChildren = (items) => {
 			return items.filter((item) => {
@@ -164,13 +173,13 @@ export class MainDisplayComponent {
 				return !foundAsChild;
 			});
 		};
-	
+
 		// Filter out root items that are found as children
 		const filteredOrderedData = removeRootItemsAsChildren(orderedData);
-	
+
 		return filteredOrderedData;
 	};
-	
+
 	public orderedData = (data) => {
 		const getChildren = (parentItem) => {
 			const children = data.filter((item) => item?.CI_Parent_CustomsItemIDNum === parentItem?.CustomsItemID);

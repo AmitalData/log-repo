@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { TableTopState } from '../table-top.component';
 
 @Injectable({
 	providedIn: 'root',
@@ -11,6 +12,6 @@ export class TableTopService {
 	}
 
 	getTableTop(state: string) {
-		return state === 'Search' ? ' קטרוגיות ספר מכס' : 'תוצאות חיפוש';
+		return state == TableTopState.Search ? 'תוצאות חיפוש' : ' קטרוגיות ספר מכס';
 	}
 }

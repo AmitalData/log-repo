@@ -3,7 +3,9 @@
 	<div class="centeredContent">
 		<div class="mainTable_list">
 			<div class="data_row_container" [class.active]="!showDetails">
-				<app-table-top class="app-table-top" [class.active]="!showDetails" />
+				<app-table-top class="app-table-top" [class.active]="!showDetails" 
+				(clearResults)="handleClearResults()"
+				[countSearchResult]="data?.length" [searchMode]="searchMode"/>
 				<ul *ngFor="let item of data" class="wtree">
 					<app-data-row [data]="item" [isSelected]="selectedItemId == item.CustomsItemID"
 						(showCommentSidebar)="showAddComment = !showAddComment"
