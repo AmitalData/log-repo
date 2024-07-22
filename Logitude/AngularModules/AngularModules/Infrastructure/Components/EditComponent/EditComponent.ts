@@ -42,8 +42,6 @@ import { WorkFlowVersionPMService } from 'Workflow/Services/StandardPMs/WorkFlow
 //import { CloneEntityPM } from 'Infrastructure/Helpers/SafeCloneDeep';
 import { GlobalDomainService } from '../../../Common/Services/GlobalDomainService';
 import { MessageWindow } from 'Controls/Windows/MessageWindow';
-import { DeclarationExtendedListService } from 'Customs/Services/ExtendedLists/DeclarationExtendedListService';
-import { DeclarationReferantDataPMService } from 'Customs/Services/StandardPMs/DeclarationReferantDataPMService';
 
 
 const InterestTransactionTabCode = 'GLIT';
@@ -117,9 +115,6 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     private static _CustomsSettingList:CustomsSettingList=null;
     tabsService = new TableTabService();
     public IsDigitalAddsOn: boolean = false;
-
-    _declarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
-    _declarationReferantDataPMService: DeclarationReferantDataPMService = new DeclarationReferantDataPMService();
 
     constructor(private entityPMService: EntityPMService, private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private _totangoService: TotangoService, private cd: ChangeDetectorRef) {
         this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
@@ -679,7 +674,8 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                 });
             }
             else if (this.EntityPM.DirectionId == "C") {
-                this.PrepareCustomShipmentHeader(myHeaderScreen, myObjectFields)
+                myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code.indexOf("CustomsHeaderScreen") != -1 )[0];
+                this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
 
             else {
@@ -2072,38 +2068,6 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         //this.BuildHelperControl();
         //this.BuildMenuButtons();
         this.BuildHeaderScreen();
-    }
-
-    PrepareCustomShipmentHeader(myHeaderScreen, myObjectFields) {
-        myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code.indexOf("CustomsHeaderScreen") != -1 )[0];
-
-        this._declarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.EntityPM.ShipmentNumber).subscribe((myResult: any) => {
-            var mm: ServiceResponse = myResult;
-            if (!mm.HasError) {
-                var entity = mm.Result;
-                if (entity != null) {
-                    this.EntityPM.DeclarationNumber = entity?.DeclarationNumber;
-                    this.EntityPM.DeclarationOfficeCode = entity?.DeclarationOfficeCode;
-                    this.EntityPM.HatraDate = entity?.HatraDate;
-                    this.EntityPM.ProcedureCurrentCode = entity?.ProcedureCurrentCode;
-                    this.EntityPM.ExternalDeclarationNumber = entity?.ExternalDeclarationNumber;
-                    this.EntityPM.DeclarationStatusTypeCode = entity?.DeclarationStatusTypeCode;
-
-                    // todo: get declaration referent data (or maybe it will be already inserted in the getShipment mapping)
-                    this._declarationExtendedListService.GetSingleDeclarationByCustomFileNo(entity.Id).subscribe((myResult: any) => {
-                        var mm: ServiceResponse = myResult;
-                        if (!mm.HasError && mm.Result != null) {
-                            var entity = mm.Result;
-                            this.EntityPM.CarrierCodeMawb = entity?.CarrierCode + "-" + entity?.Mawb;
-                        }
-                        this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
-                    });
-                }
-            }
-            else {
-                this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
-            }
-        });
     }
 
     private busyIndicatorText: string = null;

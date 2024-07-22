@@ -18,25 +18,19 @@ export class ShipmentDataTabComponent extends BaseComponent {
         this.EntityPM = this.entityArgs.EntityPM;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
         this.Listen();
-    }
+                }
 
     Listen() {
         if (this.entityArgs.EditComponent) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    // this.CustomerId = this.EntityPM.CustomerId;
-                    // this.ToCountryId = this.EntityPM.ToCountryId;
-                    // this.BuildProductItems();
                 }
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    // this.CustomerId = this.EntityPM.CustomerId;
-                    // this.ToCountryId = this.EntityPM.ToCountryId;
-                    // this.BuildProductItems();
                 }
             });
         }
@@ -250,14 +244,6 @@ export class ShipmentDataTabComponent extends BaseComponent {
     public set Vessel(newValue: string) {
         if (this.EntityPM.Vessel != newValue) {
             this.EntityPM.Vessel = newValue;
-            this.OnChanged();
-        }
-    }
-
-    public get HawbDate() { return this.EntityPM.HAWBDate; }
-    public set HawbDate(newValue: Date) {
-        if (this.EntityPM.HAWBDate != newValue) {
-            this.EntityPM.HAWBDate = newValue;
             this.OnChanged();
         }
     }

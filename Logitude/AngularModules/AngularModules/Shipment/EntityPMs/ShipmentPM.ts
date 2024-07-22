@@ -5564,6 +5564,26 @@ export class ShipmentPM {
     public get Commodity() { return this.commodity; }
     public set Commodity(newValue: string) { if (this.commodity != newValue) { this.commodity = newValue; this.MarkAsDirty("Commodity"); } }
 
+    private hatraDate: Date;
+    public get HatraDate() { return this.hatraDate; }
+    public set HatraDate(newValue: Date) { if (this.hatraDate != newValue) { this.hatraDate = newValue; this.MarkAsDirty("HatraDate"); } }
+
+    private procedureCurrentCode: string;
+    public get ProcedureCurrentCode() { return this.procedureCurrentCode; }
+    public set ProcedureCurrentCode(newValue: string) { if (this.procedureCurrentCode != newValue) { this.procedureCurrentCode = newValue; this.MarkAsDirty("ProcedureCurrentCode"); } }
+
+    private externalDeclarationNumber: string;
+    public get ExternalDeclarationNumber() { return this.externalDeclarationNumber; }
+    public set ExternalDeclarationNumber(newValue: string) { if (this.externalDeclarationNumber != newValue) { this.externalDeclarationNumber = newValue; this.MarkAsDirty("ExternalDeclarationNumber"); } }
+
+    private declarationStatusTypeCode: string;
+    public get DeclarationStatusTypeCode() { return this.declarationStatusTypeCode; }
+    public set DeclarationStatusTypeCode(newValue: string) { if (this.declarationStatusTypeCode != newValue) { this.declarationStatusTypeCode = newValue; this.MarkAsDirty("DeclarationStatusTypeCode"); } }
+
+    private carrierCodeMawb: string;
+    public get CarrierCodeMawb() { return this.carrierCodeMawb; }
+    public set CarrierCodeMawb(newValue: string) { if (this.carrierCodeMawb != newValue) { this.carrierCodeMawb = newValue; this.MarkAsDirty("CarrierCodeMawb"); } }
+
     public OldEntityPM: ShipmentPM;
 
     private aWBOCIPMs: AWBOCIPM[];
