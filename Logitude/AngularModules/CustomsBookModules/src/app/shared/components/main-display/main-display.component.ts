@@ -50,8 +50,8 @@ export class MainDisplayComponent {
 	cbRequirementComputedDataList: CB_RequirementComputedDataList[];
 
 	ngOnInit() {
-		this.InitData();
 		this.ListenToItemsSearched();
+		this.InitData();
 	}
 
 	InitData() {
@@ -63,6 +63,7 @@ export class MainDisplayComponent {
 
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
 			this.data = this.orderedData(data);
+			this.searchMode = TableTopState.ViewAll;
 		});
 	}
 
@@ -71,11 +72,15 @@ export class MainDisplayComponent {
 	ListenToItemsSearched() {
 		this.itemsData.subscribe((data: CB_CustomsItemComputedDataList[] = []) => {
 			if (data.length == 0) {
-				this.InitData();
-				this.searchMode = TableTopState.ViewAll;
+				//reset data:
+				// this.InitData();
+				// this.searchMode = TableTopState.ViewAll;
+
+				//not results:
+				this.data = [];
+				this.searchMode = TableTopState.Search;
 				return;
 			}
-			// console.log(data);
 
 			// remove duplicates customsItemID:
 			data = data.filter((v, i, a) => a.findIndex(t => (t.CustomsItemID === v.CustomsItemID)) === i);
@@ -137,7 +142,11 @@ export class MainDisplayComponent {
 	}
 
 	handleClearResults() {
+		if(this.searchMode === TableTopState.ViewAll) return;
+		
 		this.searchMode = TableTopState.ViewAll;
+		this.selectedItemId = null;
+		this.showDetails = false;
 		this.data = [];
 		this.InitData();
   }

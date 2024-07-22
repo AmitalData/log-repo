@@ -38,8 +38,7 @@ export class PageTopComponent {
 	}
 
 	clickSearch() {
-		console.log(this.service.selectSearchBy);
-		
+		// console.log(this.service.selectSearchBy);
 		this.searchClick.emit(this.service.selectSearchBy);
 	}
 }

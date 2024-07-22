@@ -42,9 +42,15 @@ export class MainPageComponent {
 			PageSize: 0,
 			Tenant: 0
 		};
-		if(filters.SearchFields == '' || filters.SearchFields == null) {
-			this.itemsData.next([]);		
+		
+		if(this.itemsData.value.length > 0 && filters.SearchFields == ''){
+			return;
 		}
+		else if(filters.SearchFields == '' || filters.SearchFields == null ||  filters.SearchFields.trim().length === 0) {
+			this.itemsData.next([]);	
+			return;
+		}
+
 		if (SearchBy.searchBy_form01 == this.selectSearchBy) {
 			this.API_MainService.GetCustomsBookMainViewSearchByClassification(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
 				this.itemsData.next(data);				
