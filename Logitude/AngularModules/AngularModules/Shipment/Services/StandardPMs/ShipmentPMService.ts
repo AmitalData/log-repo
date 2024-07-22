@@ -444,13 +444,6 @@ export class ShipmentPMService {
                     response.Result = shipment;
                     return response;
 
-                }), mergeMap((pmresponse: ServiceResponse) => {
-                    if (pmresponse?.Result?.DirectionId === "C") {
-                        return this.MapCustomShipment(pmresponse.Result);
-                    } else {
-                        return of(pmresponse);
-                    }
-
                 }), catchError(ServiceHelper.HandleServiceError));
             }
             else {
@@ -464,6 +457,7 @@ export class ShipmentPMService {
         });
     }
     update(entityPM: ShipmentPM, oldEntityPM: ShipmentPM | null = null) {
+        let IsCustomShipment = entityPM.IsCustomShipment;
         return defer(() => {
 
             var validator: ClassLevelValidator = new ClassLevelValidator();
@@ -511,7 +505,7 @@ export class ShipmentPMService {
                     return response;
 
                 }), mergeMap((pmresponse: ServiceResponse) => {
-                    if (pmresponse?.Result?.DirectionId === "C") {
+                    if (IsCustomShipment) {
                         return this.MapCustomShipment(pmresponse.Result);
                     } else {
                         return of(pmresponse);
