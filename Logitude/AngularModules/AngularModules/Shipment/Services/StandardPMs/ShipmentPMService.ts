@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, mergeMap } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
 import { ShipmentPM } from '../../EntityPMs/ShipmentPM';
 import { AWBOCIPM } from '../../EntityPMs/AWBOCIPM';
@@ -38,6 +38,10 @@ import { ShipmentUnassignedFieldPM } from '../../EntityPMs/ShipmentUnassignedFie
 import { CustomChildObjectPMService } from '../../../Infrastructure/Services/ExtendedPMs/CustomChildObjectPMService';
 import { JsonPatchBuilder } from 'Infrastructure/Helpers/JsonPatchBuilder';
 import { AppTool } from 'Infrastructure/Tools';
+import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
+import { DeclarationExtendedListService } from 'Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import { DeclarationReferantDataPM } from 'Customs/EntityPMs/DeclarationReferantDataPM';
+import { DeclarationReferantDataPMService } from 'Customs/Services/StandardPMs/DeclarationReferantDataPMService';
 
 @Injectable()
 
@@ -72,6 +76,13 @@ export class ShipmentPMService {
                     pmresponse.Result = entity;
                     return pmresponse;
 
+                }), mergeMap((pmresponse: ServiceResponse) => {
+                    if (pmresponse?.Result?.DirectionId === "C") {
+                        return this.MapCustomShipment(pmresponse.Result);
+                    } else {
+                        return of(pmresponse);
+                    }
+
                 }), catchError(ServiceHelper.HandleServiceError));
         });
 
@@ -87,6 +98,39 @@ export class ShipmentPMService {
                 return this._http.get(serverTime);
             })
         */
+    }
+
+    MapCustomShipment(entity) {
+        var pmresponse: ServiceResponse;
+        pmresponse = new ServiceResponse();
+
+        return this._declarationExtendedListService.GetSingleDeclarationByCustomFileNo(entity.ShipmentNumber).pipe(
+            mergeMap((myResult: any) => {
+                var mm: ServiceResponse = myResult;
+                if (!mm.HasError && mm?.Result) {
+                    entity.DeclarationPM = mm.Result;
+                    return this._declarationReferantDataPMService.get(entity.DeclarationPM.Id).pipe(
+                        map((myResult: any) => {
+                            var mm: ServiceResponse = myResult;
+                            if (!mm.HasError && mm?.Result) {
+                                entity.DeclarationReferentDataPM = mm.Result;
+
+                                entity = this.MapJsonToEntityPM(entity);
+
+                                entity.DeclarationReferentDataPM = null;
+                                entity.DeclarationPM = null;
+
+                                ShipmentPMInitService.ApplyUIPoperties(entity, false);
+                                pmresponse.Result = entity;
+                            }
+                            return pmresponse;
+                        })
+                    );
+                } else {
+                    return of(pmresponse);
+                }
+            })
+        );
     }
 
     CheckIsCFSShipmentById(shipmentId: string) {
@@ -400,6 +444,13 @@ export class ShipmentPMService {
                     response.Result = shipment;
                     return response;
 
+                }), mergeMap((pmresponse: ServiceResponse) => {
+                    if (pmresponse?.Result?.DirectionId === "C") {
+                        return this.MapCustomShipment(pmresponse.Result);
+                    } else {
+                        return of(pmresponse);
+                    }
+
                 }), catchError(ServiceHelper.HandleServiceError));
             }
             else {
@@ -459,6 +510,13 @@ export class ShipmentPMService {
                     response.Result = shipment;
                     return response;
 
+                }), mergeMap((pmresponse: ServiceResponse) => {
+                    if (pmresponse?.Result?.DirectionId === "C") {
+                        return this.MapCustomShipment(pmresponse.Result);
+                    } else {
+                        return of(pmresponse);
+                    }
+
                 }), catchError(ServiceHelper.HandleServiceError));
             }
             else {
@@ -504,6 +562,45 @@ export class ShipmentPMService {
         return entityPM;
     }
 
+    _declarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
+    _declarationReferantDataPMService: DeclarationReferantDataPMService = new DeclarationReferantDataPMService();
+
+    MapShipmentDeclaration(entity: ShipmentPM, declarationPM: DeclarationPM, declarationReferentDataPM: DeclarationReferantDataPM) {
+
+        if (declarationPM) {
+            entity.DeclarationNumber = declarationPM?.DeclarationNumber;
+            entity.DeclarationOfficeCode = declarationPM?.DeclarationOfficeCode;
+            if (declarationPM.HatraDate) {
+                entity.HatraDate = new Date(declarationPM.HatraDate);
+            }
+            entity.ProcedureCurrentCode = declarationPM?.ProcedureCurrentCode;
+            entity.ExternalDeclarationNumber = declarationPM?.ExternalDeclarationNumber;
+            entity.DeclarationStatusTypeCode = declarationPM?.DeclarationStatusTypeCode;
+        }
+
+        if (declarationReferentDataPM) {
+            entity.CarrierCodeMawb = declarationReferentDataPM.CarrierCode + "-" + declarationReferentDataPM.Mawb;
+            entity.CarrierCode = declarationReferentDataPM.CarrierCode;
+
+            if (declarationReferentDataPM.MawbDate) {
+                entity.MawbDate = new Date(declarationReferentDataPM.MawbDate);
+            }
+            if (declarationReferentDataPM.ArrivalDate) {
+                entity.ArrivalDate = new Date(declarationReferentDataPM.ArrivalDate);
+            }
+            if (declarationReferentDataPM.EstimatedArrivalDate) {
+                entity.EstimatedArrivalDate = new Date(declarationReferentDataPM.EstimatedArrivalDate);
+            }
+            entity.PackageTypeCode = declarationReferentDataPM.PackageTypeCode;
+            entity.Vessel = declarationReferentDataPM.Vessel;
+            entity.FlightVoyageNumber = declarationReferentDataPM.FlightVoyageNumber;
+            entity.Commodity = declarationReferentDataPM.Commodity;
+        }
+
+        return entity;
+    }
+
+
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ShipmentPM = null) {
         var customFields: Array<string> = [];
         for (var i = 1; i < 71; i++) {
@@ -530,6 +627,10 @@ export class ShipmentPMService {
             else {
                 entityPM[property] = jsonPM[property];
             }
+        }
+
+        if (jsonPM.DeclarationPM || jsonPM.DeclarationReferentDataPM) {
+            this.MapShipmentDeclaration(entityPM, jsonPM.DeclarationPM, jsonPM.DeclarationReferentDataPM);
         }
 
         this.MapShipmentOCIs(entityPM, jsonPM, mapParent);

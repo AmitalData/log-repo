@@ -1820,8 +1820,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.ReferantUserId = shipment.ReferantUserId;
                 // shipmentPM.ReferantUserId = shipment.UserId.Id;
                 shipmentPM.IskaNumber = shipment.IskaNumber;
-                shipmentPM.Status = "aa"; // todo: mapping              
-
+                shipmentPM.Status = "aa"; // todo: mapping
             }
 
             // Warehouse Leg 
@@ -2706,13 +2705,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return shipmentPM;
         }
-
-       
-        public void UpdateDeclarationReferantData(DeclarationReferantDataPM declarationReferantDataPM)
-        {
-
-        }
-
 
         private void SetInlandDomesticCountryFields(ShipmentPM shipmentPM, PortRepository portsRep)
         {
