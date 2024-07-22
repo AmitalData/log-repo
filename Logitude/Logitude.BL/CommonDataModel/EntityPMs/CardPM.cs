@@ -245,8 +245,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember]
         public bool SendingInterestReport { get; set; }
-        public bool IsFromGlaAccountUpdate { get; set; }
-        public bool IsExcludeCard { get; set; }
+
 
     }
 }
