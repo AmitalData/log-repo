@@ -1,7 +1,10 @@
 import {  Component, EventEmitter, OnDestroy, OnInit } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { EntityArgs } from "Infrastructure/DataContracts/EntityArgs";
+import { AppTool, FormatTool } from "Infrastructure/Tools";
 import { ObservableCollection } from "Infrastructure/Utilities/ObservableCollection";
+import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
+import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
 import { Validator } from "Infrastructure/Validators/Validator";
 import { ShipmentPackagePM } from "Shipment/EntityPMs/ShipmentPackagePM";
 
@@ -13,6 +16,8 @@ export class ShipmentPackagesTabComponent extends BaseComponent implements OnIni
     public IsReadOnly: boolean = false;
     public ItemsSource: ObservableCollection;
     public IsDisplayOnly: boolean = false;
+    public IsDisplayMessage: boolean = false;
+    public DisplayOnlyMessage: string = "";
     SelectedRow: ShipmentPackageItemLine;
     ChangeScrollPosition: EventEmitter<any> = new EventEmitter();
     public ObjectTableName = "ShipmentPackages";
@@ -22,12 +27,27 @@ export class ShipmentPackagesTabComponent extends BaseComponent implements OnIni
         super();
         this.ItemsSource = new ObservableCollection([]);
         this.EntityPM = this.entityArgs.EntityPM;
+        this.DisplayOnlyCheck();
+
     }
 
     OnFocus() {
         if (this.ItemsSource.Length == 0) {
             this.Add();
         }
+    }
+
+    DisplayOnlyCheck() {
+            if (this.EntityPM.ShipmentTypeId == "LCLD") {
+                this.IsDisplayOnly=true;
+                this.IsDisplayMessage= true;
+                this.DisplayOnlyMessage =  TextCodeTranslator.Translate("ShipmentPackage.O.DisplayOnlyMessage");
+                return;
+            }else if (this.EntityPM.ShipmentTypeId  == "FCLD"){
+                return;
+            }
+
+
     }
 
 
@@ -47,6 +67,7 @@ export class ShipmentPackagesTabComponent extends BaseComponent implements OnIni
         var itemPM=new ShipmentPackagePM(this.EntityPM);
         itemPM.Tenant = this.EntityPM.Tenant;
         itemPM.ShipmentId = this.EntityPM.ShipmentId;
+        itemPM.Quantity = 1 ;
         this.EntityPM.ShipmentPackages.push(itemPM);
         this.ItemsSource.Insert(new ShipmentPackageItemLine(itemPM, this, this.ItemsSource.Length + 1));
     }
@@ -97,7 +118,27 @@ export class ShipmentPackageItemLine extends BaseComponent {
         this.entityPM = EntityPM;
         this.Parent = parent;
         this.index = index; 
-        
+        this.UIProperties.SetRequired("ContainerNumber", "ShipmentPackages");
+
+    }
+
+    ValidateContainerNumber(logCellTemplate: any, containerNumberTextBox: any) {
+        var error = FormatTool.ValidateContainerNumber(this.ContainerNumber);
+        if (!AppTool.IsNullOrEmpty(error)) {
+            this.UIProperties.SetValidity("ContainerNumber", "ShipmentPackages", false, error);
+            SessionLocator.SustainFocusOnCell = true ;
+            SessionLocator.SelectedSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: containerNumberTextBox.InputId });
+        }else{
+            this.UIProperties.SetValidity("ContainerNumber", "ShipmentPackages", true,'');
+            SessionLocator.SustainFocusOnCell = false ;
+        }
+    }
+
+    ClassificationKeyUp(event, logCellTemplate: any, containerNumberTextBox: any) {
+        var key = event.keyCode;
+        if (key == 13) {
+            this.ValidateContainerNumber(logCellTemplate, containerNumberTextBox);
+        }
     }
 
 

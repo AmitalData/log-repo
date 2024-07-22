@@ -90,7 +90,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
    {  		
 
  
-		public const string HashString = "242294ca6c4177034a95df2120cad985";
+		public const string HashString = "242294ca6c41770345df2120cad985";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -898,11 +898,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralMThisEntityhasunsavedchanges = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.ThisEntityhasunsavedchanges", DefaultText = "This %Entity has unsaved changes do you want to save it?",LocalDefaultText = @"ב%Entity זו בוצעו שינויים שלא נשמרו האם לשמור?", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_GeneralMContainerNumberFormatisInvalid = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.ContainerNumberFormatisInvalid", DefaultText = "Container Number Format is Invalid <Must be 4 Letters and 7 Digits>",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+            TextCode GeneralTextCode_GeneralMContainerNumberFormatisInvalid = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.ContainerNumberFormatisInvalid", DefaultText = "Container Number Format is Invalid <Must be 4 Letters and 7 Digits>", LocalDefaultText = @" מס מכולה צריך להיות 4 אותיות ו-7 ספרות", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_GeneralMContainerNumberCheckDigitiswrong = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.ContainerNumberCheckDigitiswrong", DefaultText = "Container Number Check Digit is wrong <Must be %CheckDigit>",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+            TextCode GeneralTextCode_GeneralMContainerNumberCheckDigitiswrong = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.ContainerNumberCheckDigitiswrong", DefaultText = "Container Number Check Digit is wrong <Must be %CheckDigit>", LocalDefaultText = @"ספרת ביקורת שגויה צריך להיות %CheckDigit>", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_GeneralMAddingIsNotAvailable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.AddingIsNotAvailable", DefaultText = "Adding new %Entity is not available at this moment please send the requested %Entity by email to: support@logitudeworld.com",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+            TextCode GeneralTextCode_GeneralMAddingIsNotAvailable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.AddingIsNotAvailable", DefaultText = "Adding new %Entity is not available at this moment please send the requested %Entity by email to: support@logitudeworld.com",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMSaving = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.Saving", DefaultText = "Saving...",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

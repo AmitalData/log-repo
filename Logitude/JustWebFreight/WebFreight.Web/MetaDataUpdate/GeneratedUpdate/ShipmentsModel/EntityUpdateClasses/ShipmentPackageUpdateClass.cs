@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentPackageUpdateClass
    {  		
-		public const string HashString = "d497852a863eb88a18e663e321394cb9";
+		public const string HashString = "3a284dc6a0b978f91d1a73481845c7e5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -131,7 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment Package",
-			      				    Code =  "25b5",
+			      				    Code =  "161a",
 			      				    Name =  "ShipmentPackage",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
@@ -8495,7 +8495,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   TextCode ShipmentPackageTextCode_ShipmentPackageOActualEmptyReturn = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.O.ActualEmptyReturn", DefaultText = "Actual Empty Return",LocalDefaultText = null, ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ShipmentPackageTextCode_ShipmentPackageONotValidContainerNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.O.NotValidContainerNumber", DefaultText = "Container number should be 4 letters and 7 digits",LocalDefaultText = @"מס מכולה צריך להיות 4 םותיות ו-7 ספרות", ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ShipmentPackageTextCode_ShipmentPackageODisplayOnlyMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.O.DisplayOnlyMessage", DefaultText = "Container screen is inactive for LCL shipments",LocalDefaultText = @"מסך מכולות לם פעיל עבור משלוחי LCL", ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

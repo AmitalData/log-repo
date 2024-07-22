@@ -40,7 +40,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment Package&quot;"
-  Code="&quot;25b5&quot;"
+  Code="&quot;161a&quot;"
   Name="&quot;ShipmentPackage&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -10799,9 +10799,9 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;ShipmentPackage.O.NotValidContainerNumber&quot;"
-      DefaultText="&quot;Container number should be 4 letters and 7 digits&quot;"
-      LocalDefaultText="&quot;מס מכולה צריך להיות 4 אותיות ו-7 ספרות&quot;"
+      Code="&quot;ShipmentPackage.O.DisplayOnlyMessage&quot;"
+      DefaultText="&quot;Container screen is inactive for LCL shipments&quot;"
+      LocalDefaultText="&quot;מסך מכולות לא פעיל עבור משלוחי LCL&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
