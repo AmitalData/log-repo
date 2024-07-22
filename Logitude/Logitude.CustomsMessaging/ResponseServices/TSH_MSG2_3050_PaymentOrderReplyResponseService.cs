@@ -253,7 +253,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         declarationIdList.Add(tapagConnectionTableItem.DeclarationId);
                     }
-                    if (tapagConnectionTable != null && tapagConnectionTable.Count > 0 & tapagConnectionTable[0].DeclarationId != null)
+                    if (tapagConnectionTable != null && tapagConnectionTable.Count > 0 && tapagConnectionTable[0].DeclarationId != null)
                     {
                         DeclarationPM myDeclarationPM = myDeclarationQueryService.GetAcceptDeclarationAmendment(tapagConnectionTable[0].DeclarationId, requestParams.Tenant);
                         if (myDeclarationPM != null && !string.IsNullOrWhiteSpace(myDeclarationPM.DeclarationNumber))
