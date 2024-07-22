@@ -97,9 +97,16 @@ export class MainDisplayComponent {
 	showDetailsClick(CustomsItemID: number, item: CB_CustomsItemComputedDataList) {
 		this.selectedItemId = CustomsItemID;
 
-		if (this.itemData.customsItemId == CustomsItemID) return;
+		if (this.itemData.customsItemId == CustomsItemID) {
+			this.showDetails = !this.showDetails;
+			return;
+		}
+		else if(!this.showDetails){
+			this.showDetails = !this.showDetails;
+		}
 
-		console.log(CustomsItemID);
+		
+		// console.log(CustomsItemID);
 		// console.log(item);
 		// console.log(item.FullClassification);
 		this.itemData.customsItemId = CustomsItemID;
