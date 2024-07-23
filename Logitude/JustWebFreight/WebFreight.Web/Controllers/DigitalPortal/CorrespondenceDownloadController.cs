@@ -36,7 +36,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("CorrespondenceDownload/DownloadDocument")]
-        public HttpResponseMessage DownloadDocument(string da = "", string securitykey = "" , string id = "", bool limitedDateRange = true)
+        public HttpResponseMessage DownloadDocument(string DA = "", string securitykey = "" , string id = "", bool limitedDateRange = true)
         {
             
             byte[] _DatainByte;
@@ -46,7 +46,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 string documentExtension = "";
                 string filename = "";
                 //tenant = 0;
-                string AllHeaderRequest = da;
+                string AllHeaderRequest = DA;
                 if (AllHeaderRequest == "1")
                 {
                     string headerRequest = securitykey;
@@ -104,7 +104,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     }
                     if (limitedDateRange)
                     {
-                        DateTime dateTime = DateTime.Now.AddDays(-183); // half a year //was: new DateTime(2022, 01, 01);
+                        DateTime dateTime = new DateTime(2022, 01, 01);
+                        //DateTime dateTime = DateTime.Now.AddDays(-183); // half a year 
                         if (myDoc?.CreateDate != null && myDoc?.CreateDate.Value.Date < dateTime.Date)
                         {
                             throw new Exception("The document is not allowed.");
@@ -341,7 +342,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("CorrespondenceDownload/ValidateAndDownloadDocument")]
-        public HttpResponseMessage ValidateAndDownloadDocument(string da = "", string securitykey = "", string id = "")
+        public HttpResponseMessage ValidateAndDownloadDocument(string DA = "", string securitykey = "", string id = "")
         {
             try
             {
@@ -356,7 +357,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 }
                 else
                 {
-                    return DownloadDocument(da, securitykey, id, false);
+                    return DownloadDocument(DA, securitykey, id, false);
                 }
             }
             catch (Exception errorInfo)
