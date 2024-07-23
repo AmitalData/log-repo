@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Data.Entity.Core.Objects;
+using GLSHK;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -77,8 +78,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   CustomField = a.CustomField,
                                                   IsStatusNotModified = a.IsStatusNotModified,
                                                   EventTrigger = a.EventTrigger,
-                                                  EntityStatusCode = a.EntityStatus != null ? a.EntityStatus.Code : null
-
+                                                  EntityStatusCode = a.EntityStatus != null ? a.EntityStatus.Code : null,
+                                                  Weight=a.Weight
                                               });
                         //if (IsFullAccountingActivated(tenant))
                         //{
@@ -192,8 +193,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   CustomField = a.CustomField,
                                   IsStatusNotModified = a.IsStatusNotModified,
                                   EventTrigger = a.EventTrigger,
-                                  EntityStatusCode = a.EntityStatus != null ? a.EntityStatus.Code : null
-
+                                  EntityStatusCode = a.EntityStatus != null ? a.EntityStatus.Code : null,
+                                  Weight= a.Weight
                               }).FirstOrDefault();
 
                    // if (IsFullAccountingActivated(tenant))
@@ -268,6 +269,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      CustomField = a.CustomField,
                                                      IsStatusNotModified = a.IsStatusNotModified,
                                                      EventTrigger = a.EventTrigger,
+                                                     Weight= a.Weight
                                                  };
             return eventTypes;
         }
@@ -316,7 +318,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   CustomField = a.CustomField,
                                                   IsStatusNotModified = a.IsStatusNotModified,
                                                   EventTrigger = a.EventTrigger,
-
+                                                  Weight = a.Weight
                                               });
 
                         foreach (var s in entitystatuses)
@@ -369,6 +371,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   CustomField = a.CustomField,
                                   IsStatusNotModified = a.IsStatusNotModified,
                                   EventTrigger = a.EventTrigger,
+                                  Weight = a.Weight
                               }).FirstOrDefault();
                 }
 
@@ -416,6 +419,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                               CustomField = a.CustomField,
                                               IsStatusNotModified = a.IsStatusNotModified,
                                               EventTrigger = a.EventTrigger,
+                                              Weight= a.Weight
                                           }).FirstOrDefault();
 
                     return entity;
@@ -462,6 +466,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                       CustomField = a.CustomField,
                                                       IsStatusNotModified = a.IsStatusNotModified,
                                                       EventTrigger = a.EventTrigger,
+                                                      Weight = a.Weight
                                                   });
 
                             foreach (var s in entitystatuses)
@@ -514,6 +519,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                       CustomField = a.CustomField,
                                       IsStatusNotModified = a.IsStatusNotModified,
                                       EventTrigger = a.EventTrigger,
+                                      Weight = a.Weight
                                   }).FirstOrDefault();
                     }
                     return entity;
@@ -557,7 +563,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                            CustomField = a.CustomField,
                                            IsStatusNotModified = a.IsStatusNotModified,
                                            EventTrigger = a.EventTrigger,
-                                           ObjectTableName = a.ObjectTable.Name
+                                           ObjectTableName = a.ObjectTable.Name,
+                                           Weight = a.Weight
                                        }).FirstOrDefault();
             return eventTypePM;
         }
@@ -597,7 +604,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                            CustomField = a.CustomField,
                                            IsStatusNotModified = a.IsStatusNotModified,
                                            EventTrigger = a.EventTrigger,
-                                           ObjectTableName = a.ObjectTable.Name
+                                           ObjectTableName = a.ObjectTable.Name,
+                                           Weight = a.Weight
                                        }).FirstOrDefault();
             return eventTypePM;
         }
@@ -645,6 +653,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    AllowedInAutomation = eventType.AllowedInAutomation,
                                                    CustomField = eventType.CustomField,
                                                    EventTrigger = eventType.EventTrigger,
+                                                    Weight = eventType.Weight
                                                };
             return result;
         }
@@ -683,6 +692,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      CustomField = a.CustomField,
                                                      IsStatusNotModified = a.IsStatusNotModified,
                                                      EventTrigger = a.EventTrigger,
+                                                     Weight = a.Weight
                                                  };
             return eventTypes;
         }
@@ -721,6 +731,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      CustomField = a.CustomField,
                                                      IsStatusNotModified = a.IsStatusNotModified,
                                                      EventTrigger = a.EventTrigger,
+                                                     Weight = a.Weight
                                                  };
             return eventTypes;
         }
