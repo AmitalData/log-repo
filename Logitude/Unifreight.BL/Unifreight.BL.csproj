@@ -111,11 +111,6 @@
   <ItemGroup>
     <Compile Include="BL\CacheHelper.cs" />
     <Compile Include="BL\ExportDeclarationClosing.cs" />
-    <Compile Include="BL\QuoteOpCarriers.cs" />
-    <Compile Include="BL\QuoteOPIncoterms.cs" />
-    <Compile Include="BL\QuoteOPPorts.cs" />
-    <Compile Include="BL\QuoteOPPortsHelper.cs" />
-    <Compile Include="BL\QuoteOPSpecialServices.cs" />
     <Compile Include="ClosedTables\AutonomyDetails.cs" />
     <Compile Include="BL\ReferantUnifreightStatuses.cs" />
     <Compile Include="ClosedTables\SegmentsDetails.cs" />
@@ -426,7 +421,6 @@
     <Compile Include="EntityQueryServices\ESPSPEDQueryService.cs" />
     <Compile Include="EntityQueryServices\ETBAIRLINEQueryService.cs" />
     <Compile Include="EntityQueryServices\ETBPAYTRQueryService.cs" />
-    <Compile Include="EntityQueryServices\ETBPORTQueryService.cs" />
     <Compile Include="EntityQueryServices\ETBSERLVQueryService.cs" />
     <Compile Include="EntityQueryServices\ETBVENDQueryService.cs" />
     <Compile Include="EntityQueryServices\GAQDOCQueryService.cs" />
@@ -454,13 +448,9 @@
     <Compile Include="EntityQueryServices\GTRTRANPMRepository.cs" />
     <Compile Include="EntityQueryServices\GTRTRANQueryService.cs" />
     <Compile Include="EntityQueryServices\ITBPCKTYQueryService.cs" />
-    <Compile Include="EntityQueryServices\ITBPORTQueryService.cs" />
     <Compile Include="EntityQueryServices\LFIFILEMQueryService.cs" />
     <Compile Include="EntityQueryServices\MFIFILEMQueryService.cs" />
     <Compile Include="EntityQueryServices\MSPSPEDQueryService.cs" />
-    <Compile Include="EntityQueryServices\MTBCARRQueryService.cs" />
-    <Compile Include="EntityQueryServices\MTBPORTQueryService.cs" />
-    <Compile Include="EntityQueryServices\RTBPORTQueryService.cs" />
     <Compile Include="EntityQueryServices\SupplierInvoiceQueryService.cs" />
     <Compile Include="EntityQueryServices\CCUCRREQQueryService.cs" />
     <Compile Include="EntityQueryServices\SupplierInvoiceItems105QueryService.cs" />
@@ -503,7 +493,6 @@
     <Compile Include="EntityUpdateServices\CCUTAXUpdateService.cs" />
     <Compile Include="EntityUpdateServices\GGGQUpdateService.cs" />
     <Compile Include="EntityUpdateServices\YCULTASKUpdateService.cs" />
-    <Compile Include="Inteface\IGetSinglePortFromCacheWithCountry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\MethodExtentionOracleConvertor.cs" />
   </ItemGroup>

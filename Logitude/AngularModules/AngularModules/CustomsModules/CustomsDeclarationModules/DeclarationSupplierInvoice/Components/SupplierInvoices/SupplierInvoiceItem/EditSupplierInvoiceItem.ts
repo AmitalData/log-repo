@@ -31,7 +31,6 @@ import { ObjectsLocator } from '../../../../../../Infrastructure/Locators/Object
 import { SupplierInvoiceItemsPricePM } from '../../../../../../Customs/EntityPMs/SupplierInvoiceItemsPricePM';
 import { SuppInvoiceItemsAbachStatementPM } from '../../../../../../Customs/EntityPMs/SuppInvoiceItemsAbachStatementPM';
 import { CustomsRequiredFieldExtendedListService } from '../../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
-// import { customsItemsService } from 'QuoteOPM/Utilities/customsItems.service';
 import { SupplierInvoiceSharedService } from '../Services/SupplierInvoiceSharedService';
 import { customsItemsService } from 'Customs/Services/WebServices/customsItems.service';
 

@@ -84,6 +84,7 @@ using Logitude.DashboardModule.BL;
 
 
 
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses
 {
    public class GeneralUpdateClass

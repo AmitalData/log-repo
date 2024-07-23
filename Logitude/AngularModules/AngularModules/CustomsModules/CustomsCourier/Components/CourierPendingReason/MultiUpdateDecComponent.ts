@@ -12,7 +12,6 @@ import { SupplierInvoiceService } from "../../../../Customs/Services/Others/Supp
 import { MessageWindow } from "../../../../Controls/Windows/MessageWindow";
 import { PendingWebService } from "../../../../Customs/Services/WebServices/PendingWebService";
 import { ApiQueryFilters } from "../../../../Infrastructure/DataContracts/ApiQueryFilters";
-// import { customsItemsService } from "QuoteOPM/Utilities/customsItems.service";
 import { combineLatest, forkJoin } from "rxjs";
 import { DeclarationsBulkFeedWebService } from "Customs/Services/WebServices/DeclarationsBulkFeedWebService";
 import { EntityArgs } from "Infrastructure/DataContracts/EntityArgs";

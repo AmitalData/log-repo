@@ -84,6 +84,8 @@ using Logitude.DashboardModule.BL;
 
 
 
+
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class CustomerUpdateClass

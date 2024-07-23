@@ -8,7 +8,6 @@ import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryF
 import { DeclarationList } from '../../EntityLists/DeclarationList';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { LogtuideTableDataService } from 'Infrastructure/Services/logtuide-table-data.service';
-// import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 
 
 @Injectable()

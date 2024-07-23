@@ -223,7 +223,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         this.IsFirstOpen = args['IsFirstOpen'];
         this.JournalNumber = args['JournalNumber']
  
-        if (this.ObjectTableName == "Customs.ExportStorge" || this.ObjectTableName == "QuoteOP"  ) {
+        if (this.ObjectTableName == "Customs.ExportStorge"  ) {
             this.LayoutDirection = 'ltr'
         }
         else {

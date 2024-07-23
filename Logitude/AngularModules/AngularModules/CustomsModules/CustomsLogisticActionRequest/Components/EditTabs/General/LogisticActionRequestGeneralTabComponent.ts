@@ -4,7 +4,6 @@ import { BaseComponent } from '../../../../../Infrastructure/Components/Logitude
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
 import { ClientList } from 'Customs/EntityLists/ClientList';
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
-// import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { CargoIdentifireTypeList } from 'Customs/EntityLists/CargoIdentifireTypeList';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { Subscription } from 'rxjs';
