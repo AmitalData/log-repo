@@ -9,6 +9,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
 import { mockData } from '../../../../../mock_data';
 import { API_MainService, Filters } from '../../../core/API_MainService';
 import { BehaviorSubject, filter } from 'rxjs';
+import { SearchService } from '../page-top/service/top-page.service';
 
 @Component({
 	selector: 'app-main-display',
@@ -44,14 +45,14 @@ export class MainDisplayComponent {
 	KeyValue = Object.keys;
 	Object: ObjectConstructor = Object;
 
-	constructor(private API_MainService: API_MainService) { }
+	constructor(private API_MainService: API_MainService, private searchService: SearchService) { }
 
 	cbTariffList: CB_TariffList[];
 	cbRequirementComputedDataList: CB_RequirementComputedDataList[];
 
 	ngOnInit() {
-		this.ListenToItemsSearched();
-		this.InitData();
+		this.InitData();		
+		this.ListenToItemsSearched();		
 	}
 
 	InitData() {
@@ -66,32 +67,38 @@ export class MainDisplayComponent {
 			this.searchMode = TableTopState.ViewAll;
 		});
 	}
+	
+	
+  ListenToItemsSearched() {
+    // listen to search text changes:
+		this.searchService.searchText$.subscribe((searchText) => {
+			if (searchText === "") this.handleClearResults();
+			else if(this.itemsData.getValue().length > 0){
+				this.searchMode = TableTopState.Search;
+			}
+		});
 
-
-	// listen to itemsData when change:
-	ListenToItemsSearched() {
+    // listen to itemsData changes:
 		this.itemsData.subscribe((data: CB_CustomsItemComputedDataList[] = []) => {
-			if (data.length == 0) {
-				//reset data:
-				// this.InitData();
-				// this.searchMode = TableTopState.ViewAll;
-
-				//not results:
+			if (data.length == 0 && this.searchService.GetSearchText() !== "") {
+				//TODO: Add not results found message
 				this.data = [];
 				this.searchMode = TableTopState.Search;
 				return;
 			}
 
-			// remove duplicates customsItemID:
-			data = data.filter((v, i, a) => a.findIndex(t => (t.CustomsItemID === v.CustomsItemID)) === i);
+			if(this.itemsData.getValue().length > 0){
+				// remove duplicates customsItemID:
+				data = data.filter((v, i, a) => a.findIndex(t => (t.CustomsItemID === v.CustomsItemID)) === i);
 
-			this.data = this.orderedDataForSearch(data);
-
-			this.extendAll(this.data);
-
-			this.searchMode = TableTopState.Search;
+				// update list:
+				this.data = this.orderedDataForSearch(data);
+				this.extendAll(this.data);
+				this.searchMode = TableTopState.Search;
+			}
 		});
 	}
+
 	extendAll(data: CB_CustomsItemComputedDataList[]) {
 		data.forEach((item) => {
 			this.showChildern(item.CIH_GoodsDescription);
@@ -141,15 +148,20 @@ export class MainDisplayComponent {
 		return Boolean(isShown >= 0);
 	}
 
+	handleClearResultsClick() {
+		this.handleClearResults();
+		this.searchService.SetSearchText("");
+	}
+
 	handleClearResults() {
-		if(this.searchMode === TableTopState.ViewAll) return;
-		
+    	if (this.searchMode === TableTopState.ViewAll) return;
+
 		this.searchMode = TableTopState.ViewAll;
 		this.selectedItemId = null;
 		this.showDetails = false;
 		this.data = [];
 		this.InitData();
-  }
+	}
 
 	public orderedDataForSearch = (data) => {
 		const getChildren = (parentItem) => {
