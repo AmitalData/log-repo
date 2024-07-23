@@ -2359,6 +2359,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
                     this.ObjectContext.SaveChanges();
                     scope.Complete();
                 }
+
+                ReferenceTypeUpdateClass.FillReferenceTypeDetails();
             }
 
             if (MetadataUpdateUtility.IsChangedMetadataTable("ShipmentReferance", ObjectTables, ShipmentReferanceUpdateClass.HashString))
@@ -3838,17 +3840,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 	   
 	   
 	   	   ShipmentReceivableStatusUpdateClass.FillShipmentReceivableStatus();
-	
-	   
-	   
-	   
-	   
-	   
-	   
-        }
- 	 
-	 
 
-   }
+
+           ReferenceTypeUpdateClass.FillReferenceTypeDetails();
+
+
+
+
+
+        }
+
+
+
+    }
 
 }

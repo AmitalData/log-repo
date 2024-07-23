@@ -84,7 +84,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ReferenceTypeUpdateClass
    {  		
-		public const string HashString = "w92d90e742e3c72b34c97cb63d221895";
+		public const string HashString = "w92d90e742e3c72b34c97cb63d221888";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -608,9 +608,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    
 }
 
-    
 
-   }
+        public void FillReferenceTypeDetails()
+        {
+            var repo = new ReferenceTypeRepository(0);
+            var dic = repo.GetAll().ToDictionary(rec => rec.Code, rec => rec);
+            new FillCloseTables().FillCloseTable<
+                                ReferenceType,
+                                Logitude.BL.ShipmentsModel.ReferenceTypeDetails,
+                                ReferenceTypeRepository>(repo, dic);
+        }
+
+    }
     
 }
 	 
