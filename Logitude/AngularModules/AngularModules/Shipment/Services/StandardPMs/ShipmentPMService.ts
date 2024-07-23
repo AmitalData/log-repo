@@ -78,7 +78,7 @@ export class ShipmentPMService {
 
                 }), mergeMap((pmresponse: ServiceResponse) => {
                     if (pmresponse?.Result?.DirectionId === "C") {
-                        return this.MapCustomShipment(pmresponse.Result);
+                        return this.MapCustomShipment(pmresponse);
                     } else {
                         return of(pmresponse);
                     }
@@ -100,9 +100,8 @@ export class ShipmentPMService {
         */
     }
 
-    MapCustomShipment(entity) {
-        var pmresponse: ServiceResponse;
-        pmresponse = new ServiceResponse();
+    MapCustomShipment(pmresponse: ServiceResponse) {
+        var entity = pmresponse.Result;
 
         return this._declarationExtendedListService.GetSingleDeclarationByCustomFileNo(entity.ShipmentNumber).pipe(
             mergeMap((myResult: any) => {
@@ -506,7 +505,7 @@ export class ShipmentPMService {
 
                 }), mergeMap((pmresponse: ServiceResponse) => {
                     if (IsCustomShipment) {
-                        return this.MapCustomShipment(pmresponse.Result);
+                        return this.MapCustomShipment(pmresponse);
                     } else {
                         return of(pmresponse);
                     }
@@ -559,11 +558,13 @@ export class ShipmentPMService {
     _declarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
     _declarationReferantDataPMService: DeclarationReferantDataPMService = new DeclarationReferantDataPMService();
 
-    MapShipmentDeclaration(entity: ShipmentPM, declarationPM: DeclarationPM, declarationReferentDataPM: DeclarationReferantDataPM) {
+    MapShipmentDeclaration(entity: ShipmentPM, jsonPM: any) {
 
-        if (declarationPM) {
+        if (jsonPM.DeclarationPM) {
+            let declarationPM: DeclarationPM = jsonPM.DeclarationPM;
             entity.DeclarationNumber = declarationPM?.DeclarationNumber;
             entity.DeclarationOfficeCode = declarationPM?.DeclarationOfficeCode;
+            entity.DeclarationOfficeName = declarationPM.DeclarationOfficeName;
             if (declarationPM.HatraDate) {
                 entity.HatraDate = new Date(declarationPM.HatraDate);
             }
@@ -572,8 +573,11 @@ export class ShipmentPMService {
             entity.DeclarationStatusTypeCode = declarationPM?.DeclarationStatusTypeCode;
         }
 
-        if (declarationReferentDataPM) {
-            entity.CarrierCodeMawb = declarationReferentDataPM.CarrierCode + "-" + declarationReferentDataPM.Mawb;
+        if (jsonPM.DeclarationReferentDataPM) {
+            let declarationReferentDataPM: DeclarationReferantDataPM = jsonPM.DeclarationReferentDataPM;
+            if (declarationReferentDataPM.CarrierCode && declarationReferentDataPM.Mawb) {
+                entity.CarrierCodeMawb = declarationReferentDataPM.CarrierCode + "-" + declarationReferentDataPM.Mawb;
+            }
             entity.CarrierCode = declarationReferentDataPM.CarrierCode;
 
             if (declarationReferentDataPM.MawbDate) {
@@ -623,10 +627,7 @@ export class ShipmentPMService {
             }
         }
 
-        if (jsonPM.DeclarationPM || jsonPM.DeclarationReferentDataPM) {
-            this.MapShipmentDeclaration(entityPM, jsonPM.DeclarationPM, jsonPM.DeclarationReferentDataPM);
-        }
-
+        this.MapShipmentDeclaration(entityPM, jsonPM);
         this.MapShipmentOCIs(entityPM, jsonPM, mapParent);
         this.MapShipmentPackages(entityPM, jsonPM, mapParent);
         this.MapShipmentCommodities(entityPM, jsonPM, mapParent);

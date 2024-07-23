@@ -2296,6 +2296,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ReferantUserId { get; set; }
+        public string ReferantUserName { get; set; }
         public string IskaNumber { get; set; }
         public string DeclarationOfficeCode { get; set; }
         public DateTime? HatraDate { get; set; }
