@@ -212,7 +212,8 @@ namespace WebFreight.Web
             RouteTable.Routes.MapHttpRoute("Route2", "api/{controller}/getsinglepm/{id}/{tenant}", new { controller = "Shipments", action = "GetSingleShipmentPM" });
             RouteTable.Routes.MapHttpRoute("Route3", "api/{controller}/getsinglepmbykey/{securitykey}/{id}/{tenant}", new { controller = "Shipments", action = "GetSingleShipmentPMByKey" });
             RouteTable.Routes.MapHttpRoute("Route4", "api/{controller}/getsinglepmbykeyandtenant/{securitykey}/{tenant}", new { controller = "Shipments", action = "GetSingleShipmentPMByKeyAndTenant" });
-            RouteTable.Routes.MapHttpRoute("HybridTest", "api/WcfApi/Hybrid/Test/{action}", new { controller = "HybridTest", action = RouteParameter.Optional });
+            // RouteTable.Routes.MapHttpRoute("HybridTest", "api/WcfApi/Hybrid/Test/{action}", new { controller = "HybridTest", action = RouteParameter.Optional });
+            RouteTable.Routes.MapHttpRoute("HybridModel", "api/WebAPI/HybridModel/{controller}/{action}");
 
             RouteTable.Routes.Ignore("{resource}.axd/{*pathInfo}");
 
