@@ -53,18 +53,18 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
         {
 		  try
             {
-			    string logKey = PerformanceLogger.LogCurrentTime();
+                string logKey = PerformanceLogger.LogCurrentTime();
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SATInterfaceSettingQuery sATInterfaceSettingQuery = new SATInterfaceSettingQuery(authToken.Tenant);
-                SATInterfaceSettingPM sATInterfaceSettingPM = sATInterfaceSettingQuery.GetSinglePM(tenant, authToken.Tenant);
-                
-				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                SATInterfaceSettingPM sATInterfaceSettingPM = sATInterfaceSettingQuery.GetSinglePM(tenant);
 
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey); 
+              
                 return Request.CreateResponse(HttpStatusCode.OK, sATInterfaceSettingPM);
-			 
-			}
+			
+            }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
