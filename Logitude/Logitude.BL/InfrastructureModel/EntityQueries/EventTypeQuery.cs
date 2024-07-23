@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Data.Entity.Core.Objects;
-using GLSHK;
+
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
