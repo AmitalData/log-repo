@@ -94,8 +94,11 @@ namespace WebFreight.Web.Controllers.HybridModel
 
         [System.Web.Http.HttpPost]
         public Response BuildEventsList([FromBody] object[] t)//(int tenant, string shipmentNumber, List<TraceEventPM> eventsList)
-        {
-            int tenant = JsonConvert.DeserializeObject<int>(JsonConvert.SerializeObject(t[0]), jsonSerializerSettings);
+		{
+			var jsonSerializerSettings = new JsonSerializerSettings();
+			jsonSerializerSettings.MissingMemberHandling = MissingMemberHandling.Ignore;
+
+			int tenant = JsonConvert.DeserializeObject<int>(JsonConvert.SerializeObject(t[0]), jsonSerializerSettings);
             string shipmentNumber = JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(t[1]), jsonSerializerSettings);
             List<TraceEventPM> eventsList = JsonConvert.DeserializeObject<List<TraceEventPM>>(JsonConvert.SerializeObject(t[2]), jsonSerializerSettings);
 
