@@ -3,12 +3,12 @@
 	<div class="centeredContent">
 		<div class="mainTable_list">
 			<div class="data_row_container" [class.active]="!showDetails">
-				<app-table-top class="app-table-top" [class.active]="!showDetails" 
-				(clearResults)="handleClearResultsClick()"
-				[countSearchResult]="data?.length" [searchMode]="searchMode"/>
+				<app-table-top class="app-table-top" [class.active]="!showDetails"
+					(clearResults)="handleClearResultsClick()" [countSearchResult]="data?.length"
+					[searchMode]="searchMode" />
 				<ul *ngFor="let item of data" class="wtree">
 					<app-data-row [data]="item" [isSelected]="selectedItemId == item.CustomsItemID"
-						(showCommentSidebar)="showAddComment = !showAddComment"
+						[searchItem]="searchValue" (showCommentSidebar)="showAddComment = !showAddComment"
 						(showChildern)="showChildern(item.CIH_GoodsDescription)" class="app-data-row"
 						(showDetails)="showDetailsClick(item.CustomsItemID, item)">
 					</app-data-row>
@@ -17,10 +17,9 @@
 							*ngIf="item.children && item.children.length > 0 && childrenToDesplay.includes(item.CIH_GoodsDescription)">
 							<ng-container *ngFor="let key2 of Object.keys(item.children)">
 								<li [@inOutAnimation]>
-									<app-data-row [data]="item?.children[key2]"
+									<app-data-row [data]="item?.children[key2]" [searchItem]="searchValue"
 										[isSelected]="selectedItemId == item?.children[key2]?.CustomsItemID"
-										(showCommentSidebar)="showAddComment = !showAddComment"
-										 class="app-data-row"
+										(showCommentSidebar)="showAddComment = !showAddComment" class="app-data-row"
 										(showChildern)="showChildern(item.children[key2]?.CIH_GoodsDescription)"
 										(showDetails)="showDetailsClick(item.children[key2]?.CustomsItemID , item.children[key2])">
 									</app-data-row>
@@ -31,9 +30,10 @@
 												*ngFor="let key3 of Object.keys(item.children[key2].children)">
 												<li [@inOutAnimation]>
 													<app-data-row [data]="item?.children[key2]?.children[key3]"
+														[searchItem]="searchValue"
 														[isSelected]="selectedItemId == item?.children[key2]?.children[key3]?.CustomsItemID"
 														(showCommentSidebar)="showAddComment = !showAddComment"
-														 class="app-data-row"
+														class="app-data-row"
 														(showChildern)="showChildern(item.children[key2].children[key3]?.CIH_GoodsDescription)"
 														(showDetails)="showDetailsClick(item.children[key2].children[key3]?.CustomsItemID , item.children[key2].children[key3])">
 													</app-data-row>
@@ -45,6 +45,7 @@
 																<li [@inOutAnimation]>
 																	<app-data-row
 																		[data]="item?.children[key2]?.children[key3]?.children[key4]"
+																		[searchItem]="searchValue"
 																		[isSelected]="selectedItemId == item?.children[key2]?.children[key3]?.children[key4]?.CustomsItemID"
 																		(showCommentSidebar)="showAddComment = !showAddComment"
 																		class="app-data-row"
@@ -59,6 +60,7 @@
 																				<li [@inOutAnimation]>
 																					<app-data-row
 																						[data]="item?.children[key2]?.children[key3]?.children[key4]?.children[key5]"
+																						[searchItem]="searchValue"
 																						[isSelected]="selectedItemId == item?.children[key2]?.children[key3]?.children[key4]?.children[key5].CustomsItemID"
 																						(showCommentSidebar)="showAddComment = !showAddComment"
 																						class="app-data-row"

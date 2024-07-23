@@ -10,11 +10,12 @@ import { mockData } from '../../../../../mock_data';
 import { API_MainService, Filters } from '../../../core/API_MainService';
 import { BehaviorSubject, filter } from 'rxjs';
 import { SearchService } from '../page-top/service/top-page.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
-	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent],
+	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent, FormsModule],
 	templateUrl: './main-display.component.html',
 	styleUrl: './main-display.component.css',
 	animations: [
@@ -41,6 +42,7 @@ export class MainDisplayComponent {
 
 	//data: any | never | undefined = {};
 	data: CB_CustomsItemComputedDataList[] = [];
+	fullData: CB_CustomsItemComputedDataList[] = [];
 
 	KeyValue = Object.keys;
 	Object: ObjectConstructor = Object;
@@ -51,8 +53,8 @@ export class MainDisplayComponent {
 	cbRequirementComputedDataList: CB_RequirementComputedDataList[];
 
 	ngOnInit() {
-		this.InitData();		
-		this.ListenToItemsSearched();		
+		this.InitData();
+		this.ListenToItemsSearched();
 	}
 
 	InitData() {
@@ -63,31 +65,34 @@ export class MainDisplayComponent {
 		};
 
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
-			this.data = this.orderedData(data);
+			this.fullData = this.orderedData(data);
+			this.data = this.fullData;
 			this.searchMode = TableTopState.ViewAll;
 		});
 	}
-	
-	
-  ListenToItemsSearched() {
-    // listen to search text changes:
+
+	searchValue: string = '';
+
+	ListenToItemsSearched() {
+		// listen to search text changes:
 		this.searchService.searchText$.subscribe((searchText) => {
 			if (searchText === "") this.handleClearResults();
-			else if(this.itemsData.getValue().length > 0){
+			else if (this.itemsData.getValue().length > 0) {
 				this.searchMode = TableTopState.Search;
 			}
 		});
 
-    // listen to itemsData changes:
+		// listen to itemsData changes:
 		this.itemsData.subscribe((data: CB_CustomsItemComputedDataList[] = []) => {
 			if (data.length == 0 && this.searchService.GetSearchText() !== "") {
 				//TODO: Add not results found message
 				this.data = [];
 				this.searchMode = TableTopState.Search;
+				this.searchValue = "";
 				return;
 			}
 
-			if(this.itemsData.getValue().length > 0){
+			if (this.itemsData.getValue().length > 0) {
 				// remove duplicates customsItemID:
 				data = data.filter((v, i, a) => a.findIndex(t => (t.CustomsItemID === v.CustomsItemID)) === i);
 
@@ -95,10 +100,11 @@ export class MainDisplayComponent {
 				this.data = this.orderedDataForSearch(data);
 				this.extendAll(this.data);
 				this.searchMode = TableTopState.Search;
+				this.searchValue = this.searchService.GetSearchText();
 			}
 		});
 	}
-
+	
 	extendAll(data: CB_CustomsItemComputedDataList[]) {
 		data.forEach((item) => {
 			this.showChildern(item.CIH_GoodsDescription);
@@ -118,14 +124,8 @@ export class MainDisplayComponent {
 			this.showDetails = !this.showDetails;
 			return;
 		}
-		else if (!this.showDetails) {
-			this.showDetails = !this.showDetails;
-		}
+		else if (!this.showDetails) this.showDetails = !this.showDetails;
 
-
-		// console.log(CustomsItemID);
-		// console.log(item);
-		// console.log(item.FullClassification);
 		this.itemData.customsItemId = CustomsItemID;
 		this.itemData.measurementUnitMalamId = 0; // change it
 		this.itemDataBehaviorSubject.next(this.itemData);
@@ -154,13 +154,14 @@ export class MainDisplayComponent {
 	}
 
 	handleClearResults() {
-    	if (this.searchMode === TableTopState.ViewAll) return;
-
+		if (this.searchMode === TableTopState.ViewAll) return;
 		this.searchMode = TableTopState.ViewAll;
 		this.selectedItemId = null;
 		this.showDetails = false;
 		this.data = [];
-		this.InitData();
+		this.searchValue = "";
+		// this.InitData();
+		this.data = this.fullData;
 	}
 
 	public orderedDataForSearch = (data) => {

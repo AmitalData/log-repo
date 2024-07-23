@@ -18,6 +18,8 @@ export class DataRowComponent {
 	@Input() data: any;
 	@Input() isSelected?: boolean = false;
 	@Input() state = 'search';
+	@Input() searchItem?: string = '';
+
 	faStar = faStar;
 	faStarBold = faStarBold;
 	faComments = faCommentDots;
@@ -28,14 +30,22 @@ export class DataRowComponent {
 	checked: boolean = false;
 	selected: boolean = false;
 	constructor(private addCommentService: AddCommentService) { }
-	showAddComment = this.addCommentService.getIsOpened();
+  showAddComment = this.addCommentService.getIsOpened();
+
+	highlight(text: string, search: string): string {
+		if (!search) {
+			return text;
+		}
+		const regex = new RegExp(`(${search})`, 'gi');
+		return text.replace(regex, `<mark>$1</mark>`);
+  }
 
 	showAddCommentSidebar() {
 		this.addCommentService.setIsOpened(true);
 	}
 
 	ngOnInit() { }
-	
+
 	getTooltipText(text: string): string {
 		return text.length > 20 ? text : '';
 	}
