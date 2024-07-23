@@ -62410,16 +62410,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.FileIsReady", DefaultText = "File is ready to download", LocalDefaultText= "יוצר מסמך...", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             #endregion
 
-            #region QuoteOP
-
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.QuotesOP", DefaultText = "Quotes(OP)", LocalDefaultText = "הצעות מחיר(OP)", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
-            
-            //MenusTable - teaxtcode
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.OPSpecialServiceTypes", DefaultText = "Special Service Types (OP)", LocalDefaultText = "סוגי שירות מיוחדים(OP)", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, TextCodeRepository, textcodes);
-            
-            
-            
-            #endregion
+     
 
             #region CustomsMaintenance
 

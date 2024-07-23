@@ -5,7 +5,6 @@ import {Components, ModuleDeclarations} from './ModuleDeclarations';
 import { ModuleCustomsControls } from '../CustomsControls/ModuleCustomsControls';
 import { ModuleSharedPrimeNG } from './ModuleSharedPrimeNG';
 import { PendingWebService } from 'Customs/Services/WebServices/PendingWebService';
-// import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { CourierWorksheetSharedDataService } from 'Customs/Services/DataChange/CourierWorksheetSharedDataService';
 import { LogtuideTableDataService } from 'Infrastructure/Services/logtuide-table-data.service';
 //import { BrowserAnimationsModule } from '@angular/platform-browser/animations';

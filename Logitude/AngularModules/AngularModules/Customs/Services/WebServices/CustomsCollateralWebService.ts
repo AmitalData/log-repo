@@ -4,7 +4,6 @@ import { CustomsCollateralPM } from "Customs/EntityPMs/CustomsCollateralPM";
 import { CustomsCollateralsAnswerPM } from "Customs/EntityPMs/CustomsCollateralsAnswerPM";
 import { LogtuideTableDataService } from "Infrastructure/Services/logtuide-table-data.service";
 import { ServiceHelper } from "Infrastructure/Utilities/ServiceHelper";
-//import { LogtuideTableDataService } from "QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service";
 import { Observable } from "rxjs";
 
 @Injectable()

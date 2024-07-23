@@ -3,7 +3,6 @@ import { InfrastructureModule } from '../../Infrastructure/Module_INFR';
 //import {CustomsModule} from '../../Customs/Module_CUST';
 import { Components, ModuleDeclarations } from './ModuleDeclarations';
 import { ModuleCustomsControls } from '../CustomsControls/ModuleCustomsControls';
-// import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { LogisticActionRequestPMService } from 'Customs/Services/StandardPMs/LogisticActionRequestPMService';
 import { LogisticActionRequestWebService } from 'Customs/Services/WebServices/LogisticActionRequestWebService';
 import { loggerService } from 'Infrastructure/Utilities/logger.service';

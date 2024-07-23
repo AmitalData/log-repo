@@ -44,7 +44,6 @@ import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
 import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { IncotemrsFileValidationList } from '../../../../../Customs/EntityLists/IncotemrsFileValidationList';
-// import { LogtuideTableDataService } from '../../../../../QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { IncotemrsFileValidationListService } from '../../../../../Customs/Services/StandardLists/IncotemrsFileValidationListService';
 import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
 import { LogtuideTableDataService } from 'Infrastructure/Services/logtuide-table-data.service';

@@ -3,17 +3,7 @@ import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { GenericTableDataService } from './generic-table-data.service';
 import { GenericTableColumn, GenericTableComponent } from './generic-table.component';
-/* 
-example: 
-        this.genericTableService.openByTableName('QuoteOP','QuoteOP',['CreatedByUser','CreatedByUserId','CustomerId','CustomerName'])
-        this.genericTableService.openByService(new DocumentsFilingListService(),'', ['Name','DocumentId','ObjectTableId','OrigionalDocumentId','OwnerId','OwnerName','Received'], true)
-        this.genericTableService.openByTableName('DocumentsFiling','', ['Name','DocumentId','ObjectTableId','OrigionalDocumentId','OwnerId','OwnerName','Received'], true)
-        const promise  = async (filterVal: string, pageIndex: number, rowsTake: number, columnsFilter: '', sortField: string, sortOrder: number) =>{
-            const res: ServiceResponse = await this.newQuoteOPWebService.GetPortsItemsList("I", 'O', filterVal, 100, false).toPromise();
-            return res.Result;
-        }
-        this.genericTableService.openByPromise(promise,'', ['Name','Notes','ObjectTableId','OrigionalDocumentId','OwnerId','OwnerName','Received'], false)
- */
+
 
 @Injectable()
 export class GenericTableService {
