@@ -2,6 +2,7 @@ using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.Customs.BL.EntityQueryServices;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
@@ -129,6 +130,13 @@ public class WarmService
             {
                 var result = customPickListRepository.GetCustomPickListsCashe(tenant);
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result length: {1}", null, "GetCustomPickListsCashe", result.Count);
+            }),
+            () => RunWithExceptionHandling("sATInterfaceSettingQuery.GetSinglePM(id)",()=>
+            {
+               SATInterfaceSettingQuery sATInterfaceSettingQuery = new SATInterfaceSettingQuery(tenant);
+               var result= sATInterfaceSettingQuery.GetSinglePM(tenant);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result Tenant: {1}", null, "sATInterfaceSettingQuery.GetSinglePM(id)", result.Tenant);
+
             })
         };
 

@@ -1272,6 +1272,10 @@ namespace WebFreight.Web
             {
                 secret = ConfigurationManager.AppSettings["WarmSecret"];
             }
+            if(string.IsNullOrWhiteSpace(secret))
+            {
+                throw new Exception("No secret specified in configuration file");
+            }
             var key = Encoding.UTF8.GetBytes(secret);
 
             var validationParameters = new TokenValidationParameters
