@@ -68,6 +68,7 @@ export class ShipmentPackagesTabComponent extends BaseComponent implements OnIni
         itemPM.Tenant = this.EntityPM.Tenant;
         itemPM.ShipmentId = this.EntityPM.ShipmentId;
         itemPM.Quantity = 1 ;
+        this.EntityPM.IsCustomShipment = true;
         this.EntityPM.ShipmentPackages.push(itemPM);
         this.ItemsSource.Insert(new ShipmentPackageItemLine(itemPM, this, this.ItemsSource.Length + 1));
     }
@@ -149,6 +150,9 @@ export class ShipmentPackageItemLine extends BaseComponent {
 
     public get PackageTypeId() { return this.entityPM.PackageTypeId; }
     public set PackageTypeId(value:string) { this.entityPM.PackageTypeId = value; }
+
+    public get PackageTypeName() { return this.entityPM.PackageTypeName; }
+    public set PackageTypeName(value:string) { this.entityPM.PackageTypeName = value; }
 
     public get ShipperSeal() { return this.entityPM.ShipperSeal; }
     public set ShipperSeal(value:string) { this.entityPM.ShipperSeal = value; }
