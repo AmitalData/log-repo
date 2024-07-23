@@ -1,28 +1,23 @@
 using System.Collections.Generic;
 using System.Linq;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
+using Unifreight.Data.AmitalModel.EntityPOCOs;
 
-namespace Simplog.Data.CommonDataModel.Repositories
+namespace Unifreight.Data.AmitalModel.Repsitories
 {
     public class SyncRecordRepository : IRepository<SyncRecord>
     {
-        ICommonDataContext commonDataContext;
+        AmitalContext context;
 
-        public SyncRecordRepository(ICommonDataContext context)
+        public SyncRecordRepository(AmitalContext context)
         {
-            commonDataContext = context;
-        }
-
-        public SyncRecordRepository()
-        {
-            commonDataContext = new CommonDataContext();
+            this.context = context;
         }
 
         public SyncRecordRepository(int tenant)
         {
-            commonDataContext = CommonDataContext.GetContext(tenant);
+            context = AmitalContext.GetContext(tenant);
         }
 
         public void Add(SyncRecord entity)
@@ -47,9 +42,9 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return context.SyncRecord.ToList();
         }
 
-        public ICommonDataContext context
+        public AmitalContext Context
         {
-            get { return commonDataContext; }
+            get { return context; }
         }
 
         public void SubmitChanges()

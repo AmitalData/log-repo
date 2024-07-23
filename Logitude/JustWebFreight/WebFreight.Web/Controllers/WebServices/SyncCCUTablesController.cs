@@ -1,8 +1,8 @@
-﻿using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.CommonDataModel.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using Unifreight.BL.EntityQueryServices;
+using Unifreight.BL.Models;
 using WebFreight.Web.Helpers;
 
 namespace WebFreight.Web.Controllers.WebServices

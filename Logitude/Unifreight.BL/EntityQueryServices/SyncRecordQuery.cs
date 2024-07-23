@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
-using Logitude.BL.CommonDataModel.Helpers;
 using System.Text.Json;
-using Logitude.Server.Tools.Utils;
 using System.Data.SqlClient;
 using System.Data;
 using Logitude.Customs.BL.BL;
-using System.Runtime.Remoting.Contexts;
+using Unifreight.Data.AmitalModel.Repsitories;
+using Unifreight.Data.AmitalModel.EntityPOCOs;
+using Unifreight.BL.Models;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityPOCOs;
 
-namespace Logitude.BL.CommonDataModel.EntityQueries
+namespace Unifreight.BL.EntityQueryServices
 {
     public class SyncRecordQuery
     {
@@ -19,9 +19,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public SyncRecordQuery()
         {
-            repository = new SyncRecordRepository();
-        }
+            int tenant = CacheHelper.GetFromCache("SyncRecordQuery_tenant", () =>
+            {
+                CustomsSetting settings = new CustomsSettingRepository(0).GetRealAll().FirstOrDefault(x => x.UnfConnectionString != null);
+                if (settings == null)
+                    throw new Exception("No MSync connection string found");
 
+                return settings.Tenant;
+            });
+            repository = new SyncRecordRepository(tenant);
+        }
+        
         public SyncRecordQuery(int tenant)
         {
             repository = new SyncRecordRepository(tenant);
@@ -34,7 +42,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public List<SyncRecord> get()
         {
-            List<SyncRecord> a = repository.context.SyncRecord.ToList();
+            List<SyncRecord> a = repository.Context.SyncRecord.ToList();
             return a;
         }
 
@@ -78,7 +86,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             string query = $"SELECT * FROM {syncRecord.Entname} WHERE {syncRecord.KeyVal.Replace(",", " and ")}";
 
-            SqlConnection conn = repository.context.GetActiveDbContext().Database.Connection as SqlConnection;
+            SqlConnection conn = repository.Context.GetActiveDbContext().Database.Connection as SqlConnection;
             conn.Open();
             var dataReader = new SqlCommand(query, conn).ExecuteReader();
             var dt = new DataTable();

@@ -2981,10 +2981,6 @@
       <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
       <Name>Simplog.Server.Infrastructure</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Unifreight.BL\Unifreight.BL.csproj">
-      <Project>{0ec1bd46-2613-4227-a6d7-d345dd0978cd}</Project>
-      <Name>Unifreight.BL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Unifreight.Data\Unifreight.Data.csproj">
       <Project>{40f07800-11e8-4fba-9fc2-fd6c8d11e3ef}</Project>
       <Name>Unifreight.Data</Name>

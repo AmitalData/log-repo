@@ -5,6 +5,8 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unifreight.BL.EntityQueryServices;
+using Unifreight.Data.AmitalModel.EntityPOCOs;
 
 namespace CustomsWorkerRole
 {
