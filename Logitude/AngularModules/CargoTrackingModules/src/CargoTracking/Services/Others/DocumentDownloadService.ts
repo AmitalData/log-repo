@@ -19,8 +19,10 @@ export class DocumentDownloadService {
 
     public ExternalDownloadAllDocuments(securityId: string, forwardingShipmentId: string, tenant: number)
     {
-        var link = ServiceHelper.GetAppURL(this.baseUrl)
+        //var link = ServiceHelper.GetAppURL(this.baseUrl)
             + `WebPages/CorrespondenceDownloadpage.aspx?DA=1&securitykey=${securityId}::CS:${tenant}:${forwardingShipmentId ? forwardingShipmentId : ""}:cargo`;
+        var link = ServiceHelper.GetAppURL(this.baseUrl)
+            + `api/CorrespondenceDownload/ValidateAndDownloadDocument?DA=1&securitykey=${securityId}::CS:${tenant}:${forwardingShipmentId ? forwardingShipmentId : ""}:cargo`;
         var win = window.open(link, '_blank');
 
         if (win) {
@@ -30,8 +32,10 @@ export class DocumentDownloadService {
     }
     public ExternalDownloadPage(securityId: string, tenant: number, fileName: string)
     {
+        //var link = ServiceHelper.GetAppURL(this.baseUrl)
+        //    + `WebPages/CorrespondenceDownloadpage.aspx?Id=${securityId}~${tenant}~${null}~${fileName}`;
         var link = ServiceHelper.GetAppURL(this.baseUrl)
-            + `WebPages/CorrespondenceDownloadpage.aspx?Id=${securityId}~${tenant}~${null}~${fileName}`;
+            + `api/CorrespondenceDownload/ValidateAndDownloadDocument?Id=${securityId}~${tenant}~${null}~${fileName}`;
         var win = window.open(link, '_blank');
 
         if (win) {

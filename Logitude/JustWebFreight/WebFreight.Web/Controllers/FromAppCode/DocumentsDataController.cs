@@ -318,8 +318,7 @@ namespace WebFreight.Web.App_Code
                             string encodedUrl = item.SecurityId + "~" + tenant;
                             encodedUrl = documentOutCopy == null ? encodedUrl : encodedUrl + "~" + documentOutCopy.Id;
                             encodedUrl = WebUtility.UrlEncode(encodedUrl);
-                        //  url = "../WebPages/CorrespondenceDownloadpage.aspx?id=" + encodedUrl;
-                            url = "../api/CorrespondenceDownload/ValidateAndDownloadDocument?id=" + encodedUrl;
+                            url = "../WebPages/CorrespondenceDownloadpage.aspx?id=" + encodedUrl;
                         }
 
                         else
