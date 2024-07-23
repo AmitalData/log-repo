@@ -116,7 +116,6 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     tabsService = new TableTabService();
     public IsDigitalAddsOn: boolean = false;
 
- 
     constructor(private entityPMService: EntityPMService, private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private _totangoService: TotangoService, private cd: ChangeDetectorRef) {
         this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
         this.ComponentIndex = this.CurrentSession.GetNewEditComponentIndex();
@@ -674,6 +673,10 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                     this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
                 });
             }
+            else if (this.EntityPM.DirectionId == "C") {
+                myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code.indexOf("CustomsHeaderScreen") != -1 )[0];
+                this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
+            }
 
             else {
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
@@ -1173,6 +1176,13 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                         }
                     }
                     
+                    if(this.EntityPM.DirectionId != "C"){
+                        var indexOfTab = allTabs.findIndex(t => t.Code == "SHDA");
+                        if (indexOfTab > -1) {
+                            allTabs.splice(indexOfTab, 1);
+                        }
+                    }
+
 
                     // MHGC: Master General
                     // SHGC: Shipment General
@@ -2058,7 +2068,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                 });
             }
         }
-    
+        
     }
 
     private UpdateComponentMembers() {

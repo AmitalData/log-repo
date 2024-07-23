@@ -53,12 +53,12 @@ namespace RabbitMQSRV
             {
                 var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
                 prodInfo = assemblyUtil.GetProductInfo(typeof(Program).Assembly);
-                Logger.LogMe(prodInfo, false);
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(prodInfo);
 
-                Action<bool, bool, bool> BuildObjectTablesZipFilesDataAction = WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
+                Action<bool, bool,bool> BuildObjectTablesZipFilesDataAction = WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
                 /*CustomsWorkerRole.*/CustomsWorkerEntryPoint.StartStatic(false, BuildObjectTablesZipFilesDataAction, prodInfo, SecurityUtility.CheckContactFeature);
 
-                InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null);
+                InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null , null, null);
                 ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
                 InjectionUtil.GetRequiredFieldErrorsForCourierDeclarationIsValid =
                     (string courierMasterId, int tenant) =>
@@ -86,12 +86,9 @@ namespace RabbitMQSRV
             catch (Exception e)
             {
 
-                Logger.LogMe(e.ToString(), true);
-                if (Environment.UserInteractive)
-                {
-                    Debug.Fail("StartStatic");
-                }
-                Logger.LogMe(e.ToString(), true);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
+               
+               
                 _ThreadStartStaticLoaded = false;
             }
         }
@@ -249,7 +246,7 @@ namespace RabbitMQSRV
                 //throw;
             }
 
-            InjectionUtil.Init(null, null, checkContactFeature, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null);
+            InjectionUtil.Init(null, null, checkContactFeature, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null ,null , null);
             //ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
 
             //string storageServiceMode = ConfigurationManager.AppSettings.Get("StorageServiceMode");
@@ -264,7 +261,7 @@ namespace RabbitMQSRV
             //}
         }
 
-        public static void ThreadedRoleEntryPointStartStatic(Action<bool, bool, bool> BuildObjectTablesZipFilesDataAction = null, string ProductInfo = null)
+        public static void ThreadedRoleEntryPointStartStatic(Action<bool, bool ,bool> BuildObjectTablesZipFilesDataAction = null, string ProductInfo = null)
         {
             if (string.IsNullOrEmpty(LogitudeSettings.DeploymentStage))
             {
@@ -331,7 +328,11 @@ namespace RabbitMQSRV
                 LogitudeSettings.HandleLogMe = new Action<string, bool, string, DateTime>((mess, err, suffix, stopLogAt) =>
                 {
                     if (DateTime.Now > stopLogAt) return;
-                    Logger.LogMe(mess, err, suffix);
+                    if (err)
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError(mess);
+                    else
+                        NetCommonHelper.Logger.DevLog.Instance.WriteInfo(mess);
+                    
                 });
 
                 LogitudeSettings.RunWorkerRoleAutomaticBreakPoint = false;

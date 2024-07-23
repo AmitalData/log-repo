@@ -82,26 +82,26 @@ namespace AmitalCustomsWindowsService
             //GatewayService.TestXmlDF_MSG10000_ImportDeclaration(@"D:\Source\2012\UnifreightIIG\UnifreightIIG.ServerTester\UnifreightIIG.ServerTester\IIGProxys\ImportDeclaration\SaveDF_MSG2750_2754_ImportDeclarationRequest-309925709-7788.xml");
             
 
-            Debug.WriteLine("AmitalCustomsWindowsService !!!...");
-            Logger.LogMe("AmitalCustomsWindowsService", false);
-            Logger.LogMe("Environment.UserInteractive" + Environment.UserInteractive.ToString(), false);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("AmitalCustomsWindowsService !!!...");
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("AmitalCustomsWindowsService");
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Environment.UserInteractive" + Environment.UserInteractive.ToString());
 
             //TestSystemTable();
             //ThreadStartStatic();
 
             if (System.Environment.CommandLine.EndsWith("TesterForm", StringComparison.OrdinalIgnoreCase))
             {
-                Logger.LogMe("Debugger", false);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Debugger");
                 Program.ThreadStartStaticIsMustB4UsingTheDB();
                 System.Windows.Forms.Application.Run(new AmitalCustomsWindowsService.Tester.TesterForm());
                 return;
             }
             if (System.Environment.CommandLine.ToUpper().EndsWith("TST"))
             {
-                Logger.LogMe("Debugger", false);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Debugger");
 
                 ServiceBase d = GetMyService();
-                //CustomExportService.BaseAddress = System.Configuration.ConfigurationSettings.AppSettings["baseAddress"].ToString();
+                //CustomExportService.BaseAddress = ConfigurationManager.AppSettings["baseAddress"].ToString();
                 (d as IServiceStartMe).StartMe();
 
                 System.Windows.Forms.MessageBox.Show("debug mode");
@@ -112,7 +112,7 @@ namespace AmitalCustomsWindowsService
             }
             else if(string.IsNullOrEmpty(ConfigurationManager.AppSettings["WServiceName"]) || ConfigurationManager.AppSettings["WServiceName"] == "production")
             {
-                Logger.LogMe("Runtime", false);
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Runtime");
                 ServicesToRun = new ServiceBase[] { GetMyService() /*new MyWinService()*/ };
                 ServiceBase.Run(ServicesToRun);
             }
@@ -153,7 +153,7 @@ namespace AmitalCustomsWindowsService
             { 
                 var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
                 prodInfo = assemblyUtil.GetProductInfo(typeof(Program).Assembly);
-                Logger.LogMe(prodInfo, false);
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(prodInfo);
 
                 Action<bool, bool> BuildObjectTablesZipFilesDataAction = WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
                 CustomsWorkerRole.CustomsWorkerEntryPoint.StartStatic(false, BuildObjectTablesZipFilesDataAction, prodInfo, SecurityUtility.CheckContactFeature);
@@ -190,12 +190,12 @@ namespace AmitalCustomsWindowsService
             catch (Exception e)
             {
 
-                Logger.LogMe(e.ToString(), true);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
                 if (Environment.UserInteractive)
                 {
                     Debug.Fail("StartStatic");
                 }
-                Logger.LogMe(e.ToString(), true);
+              
                 _ThreadStartStaticLoaded = false;
             }
         }

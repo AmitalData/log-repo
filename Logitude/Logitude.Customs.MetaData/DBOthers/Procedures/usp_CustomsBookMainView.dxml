@@ -1,0 +1,56 @@
+﻿<Procedure DBType="Main" Name="usp_CustomsBookMainView" Schema="dbo" Module="Customs">
+  <SqlScript>
+	  <![CDATA[
+
+CREATE OR ALTER   PROCEDURE [dbo].[usp_CustomsBookMainView]
+    @CustomsBookType VARCHAR(2),
+	@Tenant INT = 0
+AS
+BEGIN
+
+            SELECT *
+			INTO #tempCustomsBookMainViews
+			FROM [dbo].[NewCustomsBookMainView] 
+
+			select
+			CustomsItemId,
+			Parent_CustomsItemId ,
+			ItemHierarchicLocationID,
+			Fullclassification,
+			BaseFullClassification,
+			ComputedCheckDigit,
+			IsLeaf,
+			GoodsDescription,--תאור טובין
+			Rules,--האם קיימים כללים
+			Agreements,-- הסכמים
+			customsRate AS CustomsRate, --'שיעור המכס',
+			purchaseTax AS PurchaseTax, --'מס קניה',
+			OptionalTaxAddition,  --'שיעור התוספת',
+			MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+			r.Id as Remarks 
+			from #tempCustomsBookMainViews t
+			LEFT JOIN 
+			(
+				SELECT top 1 Id,CustomsItemsID
+				FROM customs.RemarksClassifications
+				WHERE Tenant = @Tenant
+			)AS r ON t.CustomsItemId = r.CustomsItemsID
+
+			WHERE t.CI_CustomsBookTypeIDNum = @CustomsBookType
+			ORDER BY FullClassification
+END
+
+
+
+
+   
+    ]]>
+  </SqlScript>
+
+  <OracleScript>
+    <![CDATA[
+ 	
+	
+    ]]>
+  </OracleScript>
+</Procedure>

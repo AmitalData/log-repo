@@ -97,7 +97,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (String.IsNullOrWhiteSpace(dirtyEntityPM.DeclarationId))
                 {
                     errMessage = "Piscal check is not connected to Declaration ";
-                    Debug.WriteLine(errMessage);
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(errMessage);
                     return;
                 }
                 else
@@ -106,7 +106,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     if (connectedDeclarationPM == null)
                     {
                         errMessage = "Can not found connected declaration" + dirtyEntityPM.DeclarationId;
-                        Debug.WriteLine(errMessage);
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug(errMessage);
                         return;
                     }                   
                 }

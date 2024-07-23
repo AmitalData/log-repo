@@ -103,6 +103,8 @@ export class ListComponent implements OnInit, AfterViewInit {
     customsSettingListService: CustomsSettingListService = new CustomsSettingListService();
      public HasCustomsFilterMenu: boolean = false;
     public IsPhysicalCheckObjectTable: boolean = false;
+    public IsReportExecutionLogObjectTable: boolean = false;
+
     public IsLogisticActionRequestObjectTable: boolean = false;
      WorkFlowPMService: WorkFlowPMService = new WorkFlowPMService();
  
@@ -744,6 +746,9 @@ export class ListComponent implements OnInit, AfterViewInit {
         if (this.ObjectTableName == "Customs.PhysicalCheck") {
             this.IsPhysicalCheckObjectTable = true;
         }
+        else if (this.ObjectTableName == "ReportExecutionLog") {
+            this.IsReportExecutionLogObjectTable=true
+        }
         else if (this.ObjectTableName == "Customs.LogisticActionRequest") {
             this.IsLogisticActionRequestObjectTable = true;
         }
@@ -973,7 +978,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                 else {
                     this.isLoaderReady = true;
 
-                    if (this.ObjectTable.Name == "Customs.PhysicalCheck" || this.ObjectTable.Name == "Customs.LogisticActionRequest") {
+                    if (this.ObjectTable.Name == "Customs.PhysicalCheck" || this.ObjectTable.Name == "Customs.LogisticActionRequest" ||this.ObjectTable.Name=="ReportExecutionLog") {
                         this.LoadedActionBar("MNO", "ListActionBar");
                     } else {
                         this.LoadedActionBar("MNA", "ListActionBar");
@@ -1015,7 +1020,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                         this.FiltersMenu = $event.Filters;
                                         this.MenuHeaderchangeevent.emit({ Filters: $event.Filters, RemoveFilter: $event.RemoveFilter });
                                     });
-                                    cmpRef.instance.CustomGetTotalCount.subscribe(($event: number) => {
+                                    cmpRef.instance?.CustomGetTotalCount?.subscribe(($event: number) => {
                                         this.CustomGetTotalCount = $event;
                                     });
                                 });
@@ -2073,6 +2078,13 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 logWindow.Width = 650;
                                 break;
                             }
+
+                            case "DefaultAndConfiguration": {
+                                windowTitle = "Edit Default And Configuration";
+                                logWindow.Height = 400;
+                                logWindow.Width = 850;
+                                break;
+                            }
                         }
 
                         logWindow.Title = windowTitle
@@ -2938,7 +2950,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     public IsNewEntityButtonVisible: boolean = false;
     public IsNewEntityButtonDisabled: boolean = false;
     private SetNewEntityButton() {
-        
+
         if((!this.HaveFeatureNewExportDeclararion()) || (this.HaveFeatureNewExportDeclararion() && !AmitalGatewayUtil.Instance.AmitalBrowserInUse))
         {
             this.SetNewEntityLabel();
@@ -2958,8 +2970,14 @@ export class ListComponent implements OnInit, AfterViewInit {
             else if (this.ObjectTableName == "Customs.LogisticActionRequest") {
                 this.NewEntityButtonLabel = TextCodeTranslator.Translate('Customs.General.O.OpenLogisticActionRequest')
             }
+            else if (this.SelectedQuery?.NameTextCodeCode == "Shipment.Q.CustomsShipments") {
+                this.NewEntityButtonLabel = TextCodeTranslator.Translate('Shipment.O.OpenNewCustomShipment');
+            }
             else if (this.ObjectTableName == "Currency") {
                 this.NewEntityButtonLabel = TextCodeTranslator.Translate("General.B.Add");
+            }
+            else if (this.ObjectTableName == "DefaultAndConfiguration") {
+                this.NewEntityButtonLabel = 'new Default And Configuration';
             }
  
             else {
@@ -3079,7 +3097,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                         isVisible = false;
                                     }
                                 }
-                                if (!isVisible && this.HaveFeatureNewExportDeclararion()) {
+                                if (!isVisible && (this.HaveFeatureNewExportDeclararion() || (this.MenuTableQuerySection == "Customs.Declaration" && FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ADDNEWDECLARATION")))) {
                                     isVisible = true;
                                 }
                                 this.IsNewEntityButtonVisible = isVisible;
@@ -3152,7 +3170,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.ShowAddNewEntityValidationMsg();
             return;
         }
-        if (this.SelectedQuery != null) {
+       if (this.SelectedQuery != null) {
 
             if (!this.CheckPermissions(this.ObjectTableName, "NEW", true) && !this.ObjectTable?.IsCustom) {
                 return;
@@ -3199,9 +3217,12 @@ export class ListComponent implements OnInit, AfterViewInit {
                         if (this.QueryCode == "Masters" || this.QueryCode == "Open Payables Masters" || this.QueryCode == "All Masters" || IsOriginalMaster) {
                             this.RunNewMasterWizard();
                         } else {
-                            if (this.SelectedQuery.ObjectTableNewWizardControlName == "Logitude.Customs.NewDeclarationControlCommand" &&
-                                this.HaveFeatureNewExportDeclararion) {
-                                this.RunNewExportDeclaration();
+                            if (this.SelectedQuery.ObjectTableNewWizardControlName == "Logitude.Customs.NewDeclarationControlCommand" ) {
+                                if(this.HaveFeatureNewExportDeclararion())
+                                    this.RunNewExportDeclaration();
+                                else if(FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ADDNEWDECLARATION") && this.MenuTableQuerySection == "Customs.Declaration"){
+                                    this.RunNewDeclaration();
+                                }
 
                             } else if (this.ObjectTableName == "Customs.LogisticActionRequest")
                                 this.RunNewLogisticActionRequest();
@@ -3262,6 +3283,16 @@ export class ListComponent implements OnInit, AfterViewInit {
         logWindow.Height = 500;
         logWindow.NewWizardArgs = { IsNewEntity: true };
         logWindow.Show("./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/NewEntity/NewExportDeclarationComponent");
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnNewEntityWindowClosed($event));
+    }
+
+    RunNewDeclaration() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = TextCodeTranslator.Translate('Customs.Declaration.O.NewDeclaration');
+        logWindow.Width = 800;
+        logWindow.Height = 500;
+        logWindow.NewWizardArgs = { IsNewEntity: true };
+        logWindow.Show("./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/NewEntity/NewDeclarationComponent");
         logWindow.WindowClosed.subscribe(($event: any) => this.OnNewEntityWindowClosed($event));
     }
 
@@ -3464,6 +3495,12 @@ export class ListComponent implements OnInit, AfterViewInit {
                         logWindow.Height = 800;
                         break;
                     }
+                case "DefaultAndConfiguration":
+                    {                                                
+                        logWindow.Width = 850;
+                        logWindow.Height = 400;
+                        break;
+                    }
 
             }
 
@@ -3516,6 +3553,18 @@ export class ListComponent implements OnInit, AfterViewInit {
 
             if (this.ObjectTableName == "InterestBasesType") {
                 str = TextCodeTranslator.Translate("Accounting.General.O.NewInterestBases");
+            }
+
+            if (this.ObjectTableName == "DefaultAndConfiguration") {
+                str = 'Add Default And Configuration'
+            }
+
+            if (this.ObjectTableName == "Shipment"){
+                var args = new NewEntityArgs();
+                args.QueryNameTextCode = AppTool.IsNullOrEmpty(this.SelectedQuery) ? null : this.SelectedQuery.NameTextCodeCode;
+                logWindow.WindowArgs = args;
+
+                str = TextCodeTranslator.Translate('Shipment.O.NewShipment');
             }
 
             if (!AppTool.IsNullOrEmpty(this.NewButtonLable)) {
@@ -3951,6 +4000,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                             if (Param.ColIndexes.filter(a => a.FieldName == querycolumn.ObjectFieldName)[0].Width > 0) {
                                 querycolumn.ColumnWidth = Param.ColIndexes.filter(a => a.FieldName == querycolumn.ObjectFieldName)[0].Width;
                             }
+                            else if (SessionLocator.HomeComponent.SelectedTabItem.Index && Param.ColIndexes.filter(a => a.FieldName == querycolumn.ObjectFieldName)[SessionLocator.HomeComponent.SelectedTabItem.Index].Width > 0) {                                        
+                                querycolumn.ColumnWidth = Param.ColIndexes.filter(a => a.FieldName == querycolumn.ObjectFieldName)[SessionLocator.HomeComponent.SelectedTabItem.Index].Width;
+                            }
                             this.GeneralEntitiesArgs.QueryColumnsPMs.push(querycolumn);
                         });
                         this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
@@ -4217,6 +4269,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             case "Customs.DeclarationReferantData":
             case "Customs.PhysicalCheck":
             case "Customs.LogisticActionRequest":
+            case "ReportExecutionLog":
                 return true;
                 //return false;
                 break;
@@ -4234,6 +4287,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                 myObjectTableName = myObjectTableName.substr((this.ObjectTable.ClientModuleName + '.').length)
             }
             var myComponentPath = "./" + this.ObjectTable.ClientModuleName
+
                 //+ "/Components/FiltersMenu/" + myObjectTableName + "FiltersMenuComponent";
                 + "/Components/" + prefixComponent + "/" + myObjectTableName + prefixComponent + "Component";
             SessionLocator.DynamicLoader.Load(myComponentPath, myLocation.viewContainerRef)

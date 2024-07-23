@@ -89,8 +89,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     {
                         string logKey = PerformanceLogger.LogCurrentTime();
                         string token = HttpContext.Current.Request.Headers["Token"];
-                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        // AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        // SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                     
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
                         RemarksClassificationUpdateService service = new RemarksClassificationUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);

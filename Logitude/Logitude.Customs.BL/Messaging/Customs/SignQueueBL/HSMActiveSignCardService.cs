@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,6 +51,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
     
 };
                     LogMessagingUtil.Instance.AppendLine(signHSMGetActiveCertificates_Url);
+                    System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                     var result = client.PostAsync(signHSMGetActiveCertificates_Url, formContent);// "application/json");
                     result.Wait();
 
@@ -58,7 +60,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                     LogMessagingUtil.Instance.AppendLine($"Took:{stopwatch.Elapsed}");
                     LogMessagingUtil.Instance.AppendLine(result?.Result?.StatusCode.ToString());
                     //LogMessagingUtil.Instance.AppendLine(responseString);
-                    Debug.WriteLine(responseString);
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(responseString);
                     switch (result.Result.StatusCode)
                     {
                       

@@ -140,12 +140,12 @@ namespace Logitude.Customs.BL.Messaging.Maman
                         List<string> requiredField = courierGWMessageECTHRDataMamanService.GetRequiredField(drityMessage);
                         if (requiredField.Count > 0)
                         {
-                            Debug.WriteLine($"חסרים שדות חובה :{String.Join(",", requiredField)}");
+                           NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"חסרים שדות חובה :{String.Join(",", requiredField)}");
                             sb.AppendLine($"חסרים שדות חובה :{String.Join(",", requiredField)}");
                             return;// $"חסרים שדות חובה :{String.Join(",", requiredField)}";
                         }
                         var res = courierGWMessageECTHRDataMamanService.BuildComm2Maman(drityEntityPM.Id, drityEntityPM.Tenant, drityMessage);
-                        Debug.WriteLine(res);
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug(res);
                         sb.AppendLine(res);
                     }
 
@@ -182,11 +182,11 @@ namespace Logitude.Customs.BL.Messaging.Maman
                         List<string> requiredField = courierGWMessageECTHRDataMamanService.GetRequiredField(drityMessage);
                         if (requiredField.Count > 0)
                         {
-                            Debug.WriteLine($"חסרים שדות חובה :{String.Join(",", requiredField)}");
+                           NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"חסרים שדות חובה :{String.Join(",", requiredField)}");
                             return;// $"חסרים שדות חובה :{String.Join(",", requiredField)}";
                         }
                         var res = courierGWMessageECTHRDataMamanService.BuildUpdateHawbStatus(drityEntityPM.Id, drityEntityPM.Tenant, drityMessage);
-                        Debug.WriteLine(res);
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug(res);
                         
                         sb.AppendLine(res);
                         
@@ -228,12 +228,12 @@ namespace Logitude.Customs.BL.Messaging.Maman
                             List<string> requiredField = courierECSWSTHRMessageRequestService.GetRequiredField(drityMessage);
                             if (requiredField.Count > 0)
                             {
-                                Debug.WriteLine($"חסרים שדות חובה :{String.Join(",", requiredField)}");
+                               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"חסרים שדות חובה :{String.Join(",", requiredField)}");
                                 return;// $"חסרים שדות חובה :{String.Join(",", requiredField)}";
                             }
                             var XMLdrityMessage = courierECSWSTHRMessageRequestService.DeserializeXmlNode(drityMessage);
                             var res = courierECSWSTHRMessageRequestService.BuildUpdateHawbStatus(drityEntityPM.Id, drityEntityPM.Tenant, XMLdrityMessage);
-                            Debug.WriteLine(res);
+                           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(res);
                             sb.AppendLine(res);
                         }
                         else
@@ -248,15 +248,16 @@ namespace Logitude.Customs.BL.Messaging.Maman
             catch (Exception e)
             {
                 sb.AppendLine(e.ToString());
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
                 //e.SetMess
                 //throw;
             }
             finally
             {
-                if (Logger.ToLogUntilDateyyyyMMdd("20230112HDCall409236.LogUntilDateyyyyMMdd"))
-                {
-                    Logger.LogMe(sb.ToString(), false, "Send2Masof");
-                }
+                //if (Logger.ToLogUntilDateyyyyMMdd("20230112HDCall409236.LogUntilDateyyyyMMdd"))
+                //{
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo(sb.ToString());
+                //}
 
             }
 

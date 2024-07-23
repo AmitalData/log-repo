@@ -82,7 +82,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
                     using (var channel = connection.CreateModel())
                     {
                         BasicPublish(message, communicationLogId, InterfaceTypeCode, rabbitMQCode, messagePriority, channel);
-                        Logger.LogMe($"regelarRabbitMQPublisher", false, rabbitMQCode);
+                        NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"regelarRabbitMQPublisher" + ":" + rabbitMQCode);
                     }
                     Thread.Sleep(100);//better slowly dispose connection than crash!!
                 }
@@ -107,7 +107,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
             {
                 BasicPublish(message, communicationLogId, InterfaceTypeCode, rabbitMQCode, messagePriority, channel);
 
-                Logger.LogMe($"PooledRabbitMQPublisher:{PooledRabbitMQPolicy.GetCounter()}", false, rabbitMQCode);
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"PooledRabbitMQPublisher:{PooledRabbitMQPolicy.GetCounter()}" + ":" + rabbitMQCode);
             }
             catch (Exception ex)
             {
@@ -161,7 +161,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
                                          body: message);
 
 
-            Debug.WriteLine($"RABBITMQ.BasicPublish {rabbitMQCode}");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RABBITMQ.BasicPublish {rabbitMQCode}");
         }
 
         private void PublishOld(byte[] message, string communicationLogId,
@@ -214,7 +214,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
                                              routingKey: rabbitMQCode,
                                              basicProperties: prop,
                                              body: message);
-                Debug.WriteLine($"RABBITMQ.BasicPublish {rabbitMQCode}");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RABBITMQ.BasicPublish {rabbitMQCode}");
 
             }
         }

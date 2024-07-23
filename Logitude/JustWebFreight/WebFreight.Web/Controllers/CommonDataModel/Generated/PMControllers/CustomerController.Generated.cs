@@ -39,7 +39,6 @@ using Logitude.BL.CommonDataModel;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Devart.Data.Linq;
 using System.ServiceModel.DomainServices.Server;
 
 namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers

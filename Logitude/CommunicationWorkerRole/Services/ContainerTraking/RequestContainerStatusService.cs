@@ -224,7 +224,7 @@ namespace CommunicationWorkerRole.Services.ContainerTraking
         {
             var source = GetSource();
             VisionContainerStatus vizionContainerStatus = JsonConvert.DeserializeObject<VisionContainerStatus>(containerTrackingArgs.Data);
-            var result = APICaller.CallApi<object>(source.CallbackURL, vizionContainerStatus, Method.POST);
+            var result = APICaller.CallApi<object>(source.CallbackURL, vizionContainerStatus, Method.Post);
         }
 
         private void AddContainerTrackingRequest(string requestId)

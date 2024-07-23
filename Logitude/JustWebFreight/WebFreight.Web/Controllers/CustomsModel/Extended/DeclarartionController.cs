@@ -52,6 +52,7 @@ using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.RequestServices;
 using System.Xml;
+using Newtonsoft.Json;
 
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
@@ -669,5 +670,35 @@ new XElement("FileStreamError",
             }
         }
 
-    }
+
+		[HttpPost]
+		public async Task<HttpResponseMessage> UpdateDeclarationInU2L()
+		{
+			try
+			{
+                string body = await Request.Content.ReadAsStringAsync();
+                var myAmitalCu= JsonConvert.DeserializeObject<LogitudeCustomsFile>(body);
+				var amitalObjExample = new LOGICUSTFILE();
+
+				amitalObjExample.LogitudeCustomsFile = new LogitudeCustomsFile[] { myAmitalCu };
+
+				var xml = Logitude.AmitalMessaging.Utils.XmlGenericUtil<LOGICUSTFILE>.SerializeObject(amitalObjExample);
+
+				var dus = new Logitude.Customs.BL.Messaging.U2L.ImportDeclaration.DeclarationUpsertService();
+				string MoreParams = ""; string MessageOut = "";
+				dus.ProccessGenericRequest(xml, ref MoreParams,
+					out MessageOut);
+
+				return Request.CreateResponse(HttpStatusCode.OK, MessageOut);
+
+			}
+
+			catch (Exception ex)
+			{
+
+				return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+			}
+		}
+
+	}
 }

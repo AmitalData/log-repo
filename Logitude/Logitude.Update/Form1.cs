@@ -89,7 +89,7 @@ using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.Tools.Initializers;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours;
 using WebFreight.Web.MetaDataUpdate;
-using WebFreight.Web.MetaDataUpdate.SendBox;
+//using WebFreight.Web.MetaDataUpdate.SendBox;
 using WebFreight.Web.WebServices;
 using Logitude.Server.Tools.StorageService;
 using System.Web;
@@ -1348,7 +1348,7 @@ User/Pass",
                     {
                         if (tenant.Id != 0)
                         {
-                            DocumentTypeUpdateClass.UpdateDataForTenant(tenant.Id, "");
+                           // DocumentTypeUpdateClass.UpdateDataForTenant(tenant.Id, "");
                             label1.Text = "Update tenant" + tenant.Id + "completed successfully";
                         }
                     }

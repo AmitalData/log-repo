@@ -87,7 +87,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.FileState).HasColumnName("FileState").HasMaxLength(2).IsUnicode(false);
 
-            this.Property(t => t.TransportModeId).HasColumnName("TransportModeId").HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.TransportModeId).HasColumnName("TransportModeId").HasMaxLength(1).IsFixedLength();
 
             this.Property(t => t.ErrosXml).HasColumnName("ErrosXml").IsMaxLength().IsUnicode(true);
 
@@ -346,6 +346,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.UNFCourier).HasColumnName("UNFCourier");
 
             this.Property(t => t.AutoSending).HasColumnName("AutoSending");
+
+            this.Property(t => t.SystemConnection).HasColumnName("SystemConnection").HasMaxLength(1).IsUnicode(false);
         }
     }
 }

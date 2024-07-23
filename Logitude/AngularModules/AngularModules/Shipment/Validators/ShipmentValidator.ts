@@ -108,14 +108,14 @@ export class ShipmentValidator implements IShipmentValidator {
             //}
 
             //else {
-            if (AppTool.IsNullOrEmpty(this.entityPM.CustomerId) || AppTool.IsNullOrEmpty(this.entityPM.ShipmentCustomerTypeCode)) {
+            if (AppTool.IsNullOrEmpty(this.entityPM.CustomerId) || (AppTool.IsNullOrEmpty(this.entityPM.ShipmentCustomerTypeCode) && !this.entityPM.IsCustomShipment)) {
                 this.Errors.push(this.message.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.CustomerId")));
             }
             //}
         }
     }
     private ValidatePorts() {
-        if (!this.IsInlandDomestic) {
+        if (!this.IsInlandDomestic && !this.entityPM.IsCustomShipment) {
             if (AppTool.IsNullOrEmpty(this.entityPM.MainCarriageFromPortId)) {
                 var textCode = ShipmentTool.GetFromPortTextCode(this.entityPM.TransportModeId, this.entityPM.ShipmentLevelCode);
                 this.Errors.push(this.message.replace("%FieldName", TextCodeTranslator.Translate(textCode)));
@@ -220,9 +220,11 @@ export class ShipmentValidator implements IShipmentValidator {
         });
     }
 
+
     ValidateContainerNumber(input: string): string {
         return FormatTool.ValidateContainerNumber(input);
     }
+
 
     private ValidatePickups() {
 

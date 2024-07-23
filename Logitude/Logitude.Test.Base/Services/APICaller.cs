@@ -18,7 +18,7 @@ namespace Logitude.Base.Services
         {
             ApiRequestParameters request = new ApiRequestParameters()
             {
-                Method = Method.POST,
+                Method = Method.Post,
                 RequestBody = requestBody,
                 Token = token,
                 Url = url
@@ -31,7 +31,7 @@ namespace Logitude.Base.Services
         {
             ApiRequestParameters request = new ApiRequestParameters()
             {
-                Method = Method.PUT,
+                Method = Method.Put,
                 RequestBody = requestBody,
                 Token = token,
                 Url = url
@@ -44,7 +44,7 @@ namespace Logitude.Base.Services
         {
             ApiRequestParameters request = new ApiRequestParameters()
             {
-                Method = Method.GET,
+                Method = Method.Get,
                 Token = token,
                 Url = url,
                 IsApi = isApi
@@ -57,7 +57,7 @@ namespace Logitude.Base.Services
         {
             ApiRequestParameters request = new ApiRequestParameters()
             {
-                Method = Method.DELETE,
+                Method = Method.Delete,
                 Token = token,
                 Url = url
             };
@@ -69,7 +69,7 @@ namespace Logitude.Base.Services
         {
             ApiRequestParameters request = new ApiRequestParameters()
             {
-                Method = Method.GET,
+                Method = Method.Get,
                 Token = token,
                 Url = url
             };
@@ -84,7 +84,7 @@ namespace Logitude.Base.Services
 
             string restClientUrl = GetRequestUrl(requestParameters.Url, requestParameters.IsApi);
             RestClient restClient = new RestClient(restClientUrl);
-            RestRequest restRequest = new RestRequest(requestParameters.Method) { RequestFormat = DataFormat.Json };
+            RestRequest restRequest = new RestRequest("", requestParameters.Method) { RequestFormat = DataFormat.Json };
             var response = new ApiResponse<T>();
 
             if (!string.IsNullOrEmpty(requestParameters.Token))
@@ -97,7 +97,7 @@ namespace Logitude.Base.Services
             }
 
             var attempts = 0;
-            IRestResponse<T> restResponse;
+            RestResponse<T> restResponse;
             var exceptions = new List<Exception>();
             do
             {
@@ -152,7 +152,7 @@ namespace Logitude.Base.Services
             restClientUrl += GetQueryStringFromApiQueryFilters(apiQueryFilters);
 
             RestClient restClient = new RestClient(restClientUrl);
-            RestRequest restRequest = new RestRequest(requestParameters.Method) { RequestFormat = DataFormat.Json };
+            RestRequest restRequest = new RestRequest("",requestParameters.Method) { RequestFormat = DataFormat.Json };
             var response = new ApiResponse<T>();
 
             if (!string.IsNullOrEmpty(requestParameters.Token))
@@ -164,7 +164,7 @@ namespace Logitude.Base.Services
                 restRequest.AddJsonBody(JsonConvert.SerializeObject(requestParameters.RequestBody));
             }
 
-            IRestResponse<T> restResponse = restClient.Execute<T>(restRequest);
+            RestResponse<T> restResponse = restClient.Execute<T>(restRequest);
             response.StatusCode = restResponse.StatusCode;
 
             if (response.StatusCode == HttpStatusCode.OK)

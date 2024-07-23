@@ -19,7 +19,7 @@ using Simplog.Global.Data.GlobalModel.Helpers;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Data.Entity.ModelConfiguration.Conventions;
-
+using Devart.Data.Oracle.Entity.Configuration;
 
 namespace Logitude.SystemLogs
 {
@@ -95,7 +95,7 @@ namespace Logitude.SystemLogs
         {
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-                var config = Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance;
+                var config = OracleEntityProviderConfig.Instance;
                 config.Workarounds.DisableQuoting = true;
                 //modelBuilder.SetDefaultSchema("LOGITUDE_LOGS");
             }

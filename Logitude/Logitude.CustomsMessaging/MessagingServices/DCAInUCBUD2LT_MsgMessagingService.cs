@@ -363,7 +363,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             
             DeclarationPM declarationPM;
-            Debug.WriteLine("CreateUD2LTService");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CreateUD2LTService");
             string logData = "";
             try
             {
@@ -378,7 +378,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 if (_DocumentsFilingPM == null)
                 {
                     LogitudeSettings.HandleLogMe("_DocumentsFilingPM == null", false, "CreateUD2LTService", stopLogAt);
-                    Debug.WriteLine("_DocumentsFilingPM == null");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("_DocumentsFilingPM == null");
                     return;
                 }
                 logData = $"DocumentsFilingPM.Id={_DocumentsFilingPM.Id},Code={_DocumentsFilingPM.Code}"; //Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(_DocumentsFilingPM);
@@ -392,7 +392,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 if (String.IsNullOrWhiteSpace(_DocumentsFilingPM.DocumentTypeCode))
                 {
                     LogitudeSettings.HandleLogMe("_DocumentsFilingPM.DocumentTypeCode" + logData, false, "CreateUD2LTService.DOC_ID", stopLogAt);
-                    Debug.WriteLine("CreateUD2LTService.DOC_ID== null");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CreateUD2LTService.DOC_ID== null");
                     return;
                 }
 
@@ -401,7 +401,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 if (!IsConnected2Declaration())
                 {
                     LogitudeSettings.HandleLogMe("!IsConnected2Decalaration()" + logData, false, "CreateUD2LTService", stopLogAt);
-                    Debug.WriteLine("!IsConnected2Decalaration()");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("!IsConnected2Decalaration()");
                     return;
                 }
 
@@ -421,7 +421,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 if (declarationPM == null)
                 {
                     LogitudeSettings.HandleLogMe("declarationPM ==null" + logData, false, "CreateUD2LTService", stopLogAt);
-                    Debug.WriteLine("declarationPM ==null");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("declarationPM ==null");
                     return;
                 }
 
@@ -430,13 +430,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 {
                     shouldCreateDCAComm = false;
                     LogitudeSettings.HandleLogMe("declarationPM.PaymentDate.HasValue" + logData, false, "CreateUD2LTService", stopLogAt);
-                    Debug.WriteLine("Declaration has already been payed");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Declaration has already been payed");
                     return;
                 }
 
                 if (/*CourierENV() */ declarationPM.IsCourierDeclaration || declarationPM.UNFCourier)
                 {
-                    Debug.WriteLine("CourierENV");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CourierENV");
 
                     shouldCreateDCAComm = true;
                 }
@@ -455,7 +455,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                             if (!String.IsNullOrWhiteSpace(declarationPM.CustomerCode) && def.DEFDATA.Contains(declarationPM.CustomerCode)) // Maman
                             {
-                                Debug.WriteLine("def.DEFDATA.Contains(declarationPM.CustomerId)");
+                               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("def.DEFDATA.Contains(declarationPM.CustomerId)");
                                 shouldCreateDCAComm = true;
                             }
                             else
@@ -490,20 +490,20 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 if (!shouldCreateDCAComm)
                 {
                     LogitudeSettings.HandleLogMe("!shouldCreateDCAComm" + logData, false, "CreateUD2LTService", stopLogAt);
-                    Debug.WriteLine("!shouldCreateDCAComm");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("!shouldCreateDCAComm");
                     return;
                 }
 
                 if (TicketalreadyExistforthisDocument(declarationPM))
                 {
                     LogitudeSettings.HandleLogMe("TicketalreadyExistforthisDocument()" + logData, false, "CreateUD2LTService", stopLogAt);
-                    Debug.WriteLine("TicketalreadyExistforthisDocument");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("TicketalreadyExistforthisDocument");
                     return;
 
                 }
 
 
-                Debug.WriteLine("CreateCRS");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CreateCRS");
 
                 string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
 
@@ -726,8 +726,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
 
-		
-	}
+
+    }
     public class CustomCreateTicket : ICustomCreateTicket
 	{
 		public bool CreateTicket(string documentFilingId, string documentFilingCode, string documentTypeCode, int tenant, string declaratinId)

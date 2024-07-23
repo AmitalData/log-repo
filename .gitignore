@@ -499,3 +499,8 @@ __pycache__/
 /Logitude/Logitude.BL/packages.config
 /Logitude/JustWebFreight/WebFreight.Web/Nlog.config
  
+/Logitude/packages_elish.zip
+/Logitude/Library/netstandard2.0/licenses.licx
+/Logitude/Library/Justconfig
+/Logitude/AmitalTestConsoleApp/JustConfig
+/Logitude/JustWebFreight/WebFreight.Web/readme.txt

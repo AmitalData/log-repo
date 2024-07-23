@@ -1579,6 +1579,16 @@ export class DeclarationPM {
     public set DiamondsDeclarationFilter(newValue: string) { if (this.diamondsDeclarationFilter != newValue) { this.diamondsDeclarationFilter = newValue; this.MarkAsDirty("DiamondsDeclarationFilter"); } }
        
 	 
+    private systemConnection: string;
+    public get SystemConnection() { return this.systemConnection; }
+    public set SystemConnection(newValue: string) { if (this.systemConnection != newValue) { this.systemConnection = newValue; this.MarkAsDirty("SystemConnection"); } }
+       
+	 
+    private isFromUpdateShipment: boolean;
+    public get IsFromUpdateShipment() { return this.isFromUpdateShipment; }
+    public set IsFromUpdateShipment(newValue: boolean) { if (this.isFromUpdateShipment != newValue) { this.isFromUpdateShipment = newValue; this.MarkAsDirty("IsFromUpdateShipment"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

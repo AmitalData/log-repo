@@ -26,7 +26,7 @@ namespace MicrosoftGraphClient.GraphServices
                 return GraphAPICaller.Call<RefreshAccessTokenResponse>(new GraphAPICallerParameters
                 {
                     Url = Url + "/token",
-                    Method = Method.POST,
+                    Method = Method.Post,
                     RequestHeaders = requestHeaders,
                     RequestParameters = requestParameters
                 });

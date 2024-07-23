@@ -121,7 +121,7 @@
   </Column>
   <Column
     Name="TransportModeId"
-    Type="varchar"
+    Type="char"
     Size="1">
     <Constraints
       Nullable="true" />
@@ -155,7 +155,7 @@
     ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="TransportModeId"
-    ReferencedTable="CustomsTransportModes"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTable="TransportModes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

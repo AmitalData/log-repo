@@ -650,10 +650,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (entityPM.AmountInInvoiceCurrency == 0)
                 {
                     //***102417/
-                    Logger.LogMe("APInvoiceNormalService.InitializeComponent: APInvoice status 'Paid' Inv No. " + entityPM.InvoiceNumber.ToString()
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo("APINV_PD:APInvoiceNormalService.InitializeComponent: APInvoice status 'Paid' Inv No. " + entityPM.InvoiceNumber.ToString()
                         + ", SetApproved"
                         + ", old status= " + entityPM.StatusCode
-                        + ", AmountInInvoiceCurrency= " + entityPM.AmountInInvoiceCurrency.ToString(), false, "APINV_PD");
+                        + ", AmountInInvoiceCurrency= " + entityPM.AmountInInvoiceCurrency.ToString());
                     entityPM.StatusCode = "PD";
                     entityPM.IsClosed = true;
                 }
@@ -1854,12 +1854,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                             else
                             {
-                            //***102417/
-                            Logger.LogMe("APInvoiceNormalService.UpdateInvoiceAmountDue: APInvoice status 'Paid' Inv No. " + entityPM.InvoiceNumber.ToString()
+                                //***102417/
+                                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("APINV_PD:APInvoiceNormalService.UpdateInvoiceAmountDue: APInvoice status 'Paid' Inv No. " + entityPM.InvoiceNumber.ToString()
                                 + ", old status= " + entityPM.StatusCode
                                 + ", invoicepayments.Count= " + invoicepayments.Count.ToString()
                                 + ", connectedPaymentAmount= " + conntectedPaymentAmount.ToString()
-                                + ", AmountInInvoiceCurrency= " + entityPM.AmountInInvoiceCurrency.ToString(), false, "APINV_PD");
+                                + ", AmountInInvoiceCurrency= " + entityPM.AmountInInvoiceCurrency.ToString());
                             entityPM.StatusCode = "PD";
                                 entityPM.IsClosed = true;
                             }
@@ -2179,7 +2179,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             Reference1 = theEntityPm.InvoiceNumber,
                                                             Reference2 = theEntityPm.MainEntityReference,
                                                             Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
-                                                            Notes = d.Notes!=null?d.Notes:theEntityPm.InternalNotes,
+                                                            Notes =!string.IsNullOrEmpty(d.Notes) && !string.IsNullOrWhiteSpace(d.Notes) ? d.Notes:theEntityPm.InternalNotes,
                                                         }).ToList();
 
                     journalDebitLines.AddRange(journalLines);

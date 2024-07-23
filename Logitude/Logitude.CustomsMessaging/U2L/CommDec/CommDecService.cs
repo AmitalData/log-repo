@@ -1635,9 +1635,9 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             }
             finally
             {
-                if (Logger.ToLogUntilDateyyyyMMdd("20230122HD409236.LogUntilDateyyyyMMdd")){
-                    Logger.LogMe(sbWhyDecNotConnected2Master.ToString() + Environment.NewLine + base.GetLog(), false, "Connect2Master");
-                }
+                
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Connect2Mmaster:" +sbWhyDecNotConnected2Master.ToString() + Environment.NewLine + base.GetLog());
+                
                 
             }
 

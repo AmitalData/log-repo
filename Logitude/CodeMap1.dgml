@@ -1,0 +1,1170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph DataVirtualized="True" Layout="Sugiyama" ZoomLevel="-1" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="(@1)" Bounds="1001.65739462484,1443.37495,173.63,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" ErrorLevel="NoResult" FilePath="$(41ec268d-2956-43b6-9f68-b3fdb4041ebd.OutputPath)" Group="Collapsed" Label="WarehouseData.exe" />
+    <Node Id="(@10)" Category="CodeSchema_Assembly" Bounds="2579.64166666667,1273.375,264.306666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(7336b576-baef-4f3b-8019-b7f6f6c3c8c1.OutputPath)" Group="Collapsed" Label="Logitude.DeploymentAgentService.exe" />
+    <Node Id="(@102)" Category="CodeSchema_Assembly" Bounds="2382.41016143246,39.9997363636207,149.29,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(74fbc07e-5cbf-44c5-85c8-f86facaa06b6.OutputPath)" Group="Collapsed" Label="Logitude.Base.dll" />
+    <Node Id="(@103)" Category="CodeSchema_Assembly" Bounds="2465.38666666667,260,240.763333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(0700f932-be74-4d43-9441-5476c4faed35.OutputPath)" Group="Collapsed" Label="Logitude.IntegrationTest.Quote.dll">
+      <Category Ref="CodeMap_TestAsset" />
+      <Category Ref="CodeMap_TestProject" />
+      <Category Ref="FileSystem.Category.FileOfType.dll" />
+    </Node>
+    <Node Id="(@112)" Category="CodeSchema_Assembly" Bounds="440.437394624837,1388.3748,150.573333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(90a21087-a45a-4592-871e-ed0c0e8e2104.OutputPath)" Group="Collapsed" Label="Logitude.Tariff.dll" />
+    <Node Id="(@113)" Category="CodeSchema_Assembly" Bounds="-3.09560220177198,1108.37513333332,242.376666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(f9ba0bdd-401d-4ccc-9a8b-1f61b6e7a85d.OutputPath)" Group="Collapsed" Label="Logitude.AccountingMessaging.dll" />
+    <Node Id="(@120)" Category="CodeSchema_Assembly" Bounds="2203.92333333333,425,286.283333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(9b7919ad-3ec0-4da7-b4c7-31a87d72f525.OutputPath)" Group="Collapsed" Label="Logitude.IntegrationTest.FullAccounting.dll">
+      <Category Ref="CodeMap_TestAsset" />
+      <Category Ref="CodeMap_TestProject" />
+      <Category Ref="FileSystem.Category.FileOfType.dll" />
+    </Node>
+    <Node Id="(@155)" Category="CodeSchema_Assembly" Bounds="2873.94833333334,1273.375,280.026666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(30b30820-f5fa-4cf6-acad-e1c2bc3bea55.OutputPath)" Group="Collapsed" Label="Logitude.SystemLogs.OracleMigratrion.dll" />
+    <Node Id="(@156)" Category="CodeSchema_Assembly" Bounds="2492.07,370,270.416666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(ee1b819b-ad1f-4646-bfe2-73dd793195ce.OutputPath)" Group="Collapsed" Label="Logitude.IntegrationTest.Automation.dll">
+      <Category Ref="CodeMap_TestAsset" />
+      <Category Ref="CodeMap_TestProject" />
+      <Category Ref="FileSystem.Category.FileOfType.dll" />
+    </Node>
+    <Node Id="(@157)" Category="CodeSchema_Assembly" Bounds="2856.22833333333,1163.375,247.646666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(3e1d9324-ff25-4115-a141-446e7911ffb9.OutputPath)" Group="Collapsed" Label="Logitude.Global.OracleMigration.dll" />
+    <Node Id="(@160)" Category="CodeSchema_Assembly" Bounds="2579.64166666667,1218.375,260.033333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(07314fc7-08e5-4983-8b4c-6d91243f3bfc.OutputPath)" Group="Collapsed" Label="Logitude.OracleDatabaseMigration.dll" />
+    <Node Id="(@161)" Category="CodeSchema_Assembly" Bounds="-3.0956022017721,1163.37523333332,293.93,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(f8f97e6b-b14d-4d14-9913-81010027afa6.OutputPath)" Group="Collapsed" Label="Logitude.AccountingMessaging.Common.dll" />
+    <Node Id="(@164)" Category="CodeSchema_Assembly" Bounds="621.01072795817,1388.3748,170.133333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(a27c8b79-6d09-425e-a81e-232ea3522619.OutputPath)" Group="Collapsed" Label="Logitude.Warmup.dll" />
+    <Node Id="(@169)" Category="CodeSchema_Assembly" Bounds="2579.64166666667,1108.375,233.463333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(d99ec081-b556-44a4-989a-69576a79dd28.OutputPath)" Group="Collapsed" Label="Logitude.Customs.ApiServices.dll" />
+    <Node Id="(@17)" Bounds="2572.20773113156,833.374656666727,130.423333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" ErrorLevel="NoResult" FilePath="$(473192ce-cc25-4893-8364-661f2d0b963d.OutputPath)" Group="Collapsed" Label="General.exe" />
+    <Node Id="(@170)" Category="CodeSchema_Assembly" Bounds="3133.875,1163.375,259.059999999999,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(95c8fc5e-e864-436f-ac95-a0a81a801d30.OutputPath)" Group="Collapsed" Label="Logitude.AutoGeneratedTemplates.dll" />
+    <Node Id="(@175)" Category="CodeSchema_Assembly" Bounds="2481.16655885505,315.00015,253.393333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(294dd370-91fe-4d4c-85fb-0632f702c1a8.OutputPath)" Group="Collapsed" Label="Logitude.IntegrationTest.Customs.dll">
+      <Category Ref="CodeMap_TestAsset" />
+      <Category Ref="CodeMap_TestProject" />
+      <Category Ref="FileSystem.Category.FileOfType.dll" />
+    </Node>
+    <Node Id="(@176)" Category="CodeSchema_Assembly" Bounds="2446.92322552172,204.99995,224.226666666666,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(169a3591-dae5-4fd2-8a11-bb925658a893.OutputPath)" Group="Collapsed" Label="Logitude.CommonDataTests.dll" />
+    <Node Id="(@177)" Category="CodeSchema_Assembly" Bounds="2622.58682809913,94.9997500000001,188.066666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(4cdba717-9f04-4632-94c6-03f692ae76d9.OutputPath)" Group="Collapsed" Label="Logitude.InvoiceTests.dll" />
+    <Node Id="(@178)" Category="CodeSchema_Assembly" Bounds="646.40072795817,1443.3749,183.79,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(98786fef-8f2f-4ad1-9feb-90e7aff5f5b4.OutputPath)" Group="Collapsed" Label="Logitude.QuoteTests.dll" />
+    <Node Id="(@179)" Category="CodeSchema_Assembly" Bounds="676.787394624837,1553.375,226.18,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(b107b702-11c0-4efe-987e-44e89209dce1.OutputPath)" Group="Collapsed" Label="Logitude.CargoTrackingTests.dll" />
+    <Node Id="(@18)" Bounds="1001.65739462484,1388.37485,168.96,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" ErrorLevel="NoResult" FilePath="$(f0fbec4a-6857-4ce2-94b1-014ce72e72b6.OutputPath)" Group="Collapsed" Label="DW Editor Tool.exe" />
+    <Node Id="(@180)" Category="CodeSchema_Assembly" Bounds="440.437394624837,1608.3752,229.31,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(8b4039ce-e827-478d-872b-15ebcc7f64de.OutputPath)" Group="Collapsed" Label="Logitude.FullAccountingTests.dll" />
+    <Node Id="(@181)" Category="CodeSchema_Assembly" Bounds="440.437394624837,1553.3751,206.35,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(d1d5d2bb-cf8c-4477-9972-32922fda4c34.OutputPath)" Group="Collapsed" Label="Logitude.CrossDockTests.dll" />
+    <Node Id="(@182)" Category="CodeSchema_Assembly" Bounds="440.437394624837,1443.3749,175.963333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(7cd41ce5-aa2d-4ba9-9879-d618a544a88a.OutputPath)" Group="Collapsed" Label="Logitude.CRMTests.dll" />
+    <Node Id="(@183)" Category="CodeMap_TestAsset" Bounds="2198.87655885505,205.000036363621,218.046666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" ErrorLevel="NoResult" FilePath="$(55776e1b-6af0-424b-96f5-4ff5dcf0e79a.OutputPath)" Group="Collapsed" Label="Logitude.IntegrationTests.dll" />
+    <Node Id="(@184)" Category="CodeSchema_Assembly" Bounds="699.747394624837,1608.375,231.91,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(72957633-eeb2-49fc-aca8-8107c0915bfb.OutputPath)" Group="Collapsed" Label="Logitude.ShipmentOrderTests.dll" />
+    <Node Id="(@185)" Category="CodeSchema_Assembly" Bounds="440.437394624837,1663.3753,246.98,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(8e418b4c-875a-4919-9b64-272f6a633f02.OutputPath)" Group="Collapsed" Label="Logitude.TimeManagementTests.dll" />
+    <Node Id="(@186)" Category="CodeSchema_Assembly" Bounds="2433.60333333333,150,201.173333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(81e2985e-f90a-49b1-9d8c-6a28589e7aaf.OutputPath)" Group="Collapsed" Label="Logitude.ShipmentTests.dll" />
+    <Node Id="(@187)" Category="CodeSchema_Assembly" Bounds="656.444061291504,1498.375,205.826666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(5a80394a-fdcb-4ad1-baa3-385f367b904c.OutputPath)" Group="Collapsed" Label="Logitude.DocumentTests.dll" />
+    <Node Id="(@188)" Category="CodeSchema_Assembly" Bounds="440.437394624837,1498.375,186.006666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(3ed7270f-0fc0-4ac3-9d54-157d1b639533.OutputPath)" Group="Collapsed" Label="Logitude.ReportTests.dll" />
+    <Node Id="(@195)" Category="CodeSchema_Assembly" Bounds="2408.57333333333,95,182.013333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(98df8d4e-d654-401c-bc5d-e7df18984a80.OutputPath)" Group="Collapsed" Label="Logitude.HybridTest.dll">
+      <Category Ref="CodeMap_TestAsset" />
+      <Category Ref="CodeMap_TestProject" />
+      <Category Ref="FileSystem.Category.FileOfType.dll" />
+    </Node>
+    <Node Id="(@198)" Category="CodeMap_TestAsset" Bounds="2561.70016143246,39.9997363636206,176.493333333334,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" ErrorLevel="NoResult" FilePath="$(d9c5d50c-c0eb-49d3-b9a1-6a8d500eb236.OutputPath)" Group="Collapsed" Label="Logitude.UnitTest.dll" />
+    <Node Id="(@199)" Category="CodeSchema_Assembly" Bounds="2203.92333333333,95,174.65,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(a6824623-99f0-425e-8979-b643c1dac4ce.OutputPath)" Group="Collapsed" Label="Logitude.SpecFlow.dll" />
+    <Node Id="(@2)" Category="CodeSchema_Assembly" Bounds="2576.64166666667,888.374758717953,193.82,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(5b669934-9a06-4683-ae30-01960e11deaa.OutputPath)" Group="Collapsed" Label="LogitudeTransferData.exe" />
+    <Node Id="(@23)" Bounds="2881.60655885505,260,221.55,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" ErrorLevel="NoResult" FilePath="$(689eb128-ec42-4f9b-9e0b-b5ca4f6f56bb.OutputPath)" Group="Collapsed" Label="MeatadataGeneratorTool.exe" />
+    <Node Id="(@24)" Category="CodeSchema_Assembly" Bounds="4818.08106446489,1008.37480000007,239.83,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(4d8752fd-0002-4750-8549-7527bc3daf7e.OutputPath)" Group="Collapsed" Label="CargoTrackingSearchWinForm.exe" />
+    <Node Id="(@27)" Category="CodeSchema_Assembly" Bounds="2203.92333333333,150,199.68,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(06d4f58c-10c6-4f03-8c59-85ae3c2b86a4.OutputPath)" Group="Collapsed" Label="AmitalTestConsoleApp.exe" />
+    <Node Id="(@28)" Category="CodeSchema_Assembly" Bounds="2579.64166666667,1163.375,246.586666666666,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(f36d69d9-78f2-4f8a-8083-806ec05df4da.OutputPath)" Group="Collapsed" Label="LogitudeBatchServicesManager.exe" />
+    <Node Id="(@29)" Bounds="778.317731131561,1080.87510750007,219.183333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" ErrorLevel="NoResult" FilePath="$(1b61bc4b-4258-483b-b01c-4de42c5007a4.OutputPath)" Group="Collapsed" Label="AmitalOpenAccessTester.exe" />
+    <Node Id="(@3)" Bounds="1001.65739462484,1553.37515,210.926666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" ErrorLevel="NoResult" FilePath="$(99a34cd8-8ec8-4990-ab81-f1947298722b.OutputPath)" Group="Collapsed" Label="WarehouseDataService.exe" />
+    <Node Id="(@30)" Category="CodeSchema_Assembly" Bounds="3105.09439779823,833.374513984186,192.813333333334,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(66b4dc44-4d29-4dc4-92dd-537d1b8703aa.OutputPath)" Group="Collapsed" Label="LogitudeActiveServer.exe" />
+    <Node Id="(@31)" Bounds="2732.63106446489,833.374658717953,143.536666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" ErrorLevel="NoResult" FilePath="$(5172807f-7d70-4d28-85f7-d78aa5931345.OutputPath)" Group="Collapsed" Label="LXMLFixer.exe" />
+    <Node Id="(@34)" Category="CodeSchema_Assembly" Bounds="2579.64166666667,998.375,214.42,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(d9196289-649b-4165-9a16-505cb74c54ea.OutputPath)" Group="Collapsed" Label="Logitude.DXMLGenerator.exe" />
+    <Node Id="(@35)" Category="CodeSchema_Assembly" Bounds="3051.16833333333,943.375,213.643333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(50c94360-3d89-47dc-a7ba-42538ca0c04a.OutputPath)" Group="Collapsed" Label="Logitude.ViewsGenerator.exe" />
+    <Node Id="(@36)" Category="CodeSchema_Assembly" Bounds="3086.56166666667,1053.375,228.24,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(bdeb7465-e507-4461-a884-5ecc88b8129a.OutputPath)" Group="Collapsed" Label="LogitudeCardsCustomFields.exe" />
+    <Node Id="(@37)" Category="CodeSchema_Assembly" Bounds="3034.285,888.374613984186,199.29,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(5a4a5b74-f387-437c-ab41-9fb0ffadc392.OutputPath)" Group="Collapsed" Label="LogitudeBatchServices.exe" />
+    <Node Id="(@4)" Category="CodeSchema_Assembly" Bounds="2824.06166666667,998.375,217.573333333334,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(b0435347-16ae-4d93-8142-c3ab4a5a4252.OutputPath)" Group="Collapsed" Label="HighCPUIISRecycleService.exe" />
+    <Node Id="(@40)" Category="CodeSchema_Assembly" Bounds="2579.64166666667,943.375,202.323333333334,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(b4b8c0f5-3fa6-4674-83fc-633e1701cebf.OutputPath)" Group="Collapsed" Label="Logitude.DBMigrations.exe" />
+    <Node Id="(@41)" Category="CodeSchema_Assembly" Bounds="1001.65739462484,1498.37505,195.033333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(3ff3b8d8-d4fb-4e48-8e08-f28ba6904fa0.OutputPath)" Group="Collapsed" Label="WarehouseDataViews.exe" />
+    <Node Id="(@5)" Category="CodeSchema_Assembly" Bounds="3107.54833333333,1108.375,235.096666666666,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(4da357f9-166c-4423-a331-12ebc55ae213.OutputPath)" Group="Collapsed" Label="Logitude.ServerHealthService.exe" />
+    <Node Id="(@6)" Category="CodeSchema_Assembly" Bounds="4818.08106446489,1063.37490000007,241.863333333335,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(8108dd79-196b-4c2c-82a9-f995877723b1.OutputPath)" Group="Collapsed" Label="CargoTrackingWinFormService.exe" />
+    <Node Id="(@7)" Category="CodeSchema_Assembly" Bounds="4818.08106446489,953.374700000071,214.463333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(6d5cf168-5e41-4cb6-bb30-04445578c5b4.OutputPath)" Group="Collapsed" Label="CargoTrackingWinService.exe" />
+    <Node Id="(@74)" Category="CodeSchema_Assembly" Bounds="3473.50106446489,1108.3751,254.34,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(cbcc4ebd-887e-4c25-99f2-1e3a8d428851.OutputPath)" Group="Collapsed" Label="Logitude.WarehouseLib.MetaData.dll" />
+    <Node Id="(@77)" Bounds="2002.50106446489,970.874932499991,185.853333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" ErrorLevel="NoResult" FilePath="$(ef658c59-1d85-4d60-a725-98f3cef9546e.OutputPath)" Group="Collapsed" Label="Logitude.MetaData.dll" />
+    <Node Id="(@80)" Bounds="4473.14106446489,1108.3751,254.939999999999,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" ErrorLevel="NoResult" FilePath="$(f0459a30-5730-4f49-a631-2488fc3d6aae.OutputPath)" Group="Collapsed" Label="Logitude.TariffModule.MetaData.dll" />
+    <Node Id="(@81)" Category="CodeSchema_Assembly" Bounds="5380.96106446489,1135.87515,301.630000000001,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(842c3432-0faf-4b5e-9a27-e8096a2e4cec.OutputPath)" Group="Collapsed" Label="Logitude.ShipmentOrderModule.MetaData.dll" />
+    <Node Id="(@82)" Bounds="4143.69439779823,1108.3751,259.446666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" ErrorLevel="NoResult" FilePath="$(210221e2-727a-496c-ba7f-f6b820d5e9af.OutputPath)" Group="Collapsed" Label="Logitude.Infrastructure.MetaData.dll" />
+    <Node Id="(@83)" Category="CodeSchema_Assembly" Bounds="5055.90773113156,1193.37520000007,255.053333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(18671326-8a7d-4a09-91e3-98fa9bc82314.OutputPath)" Group="Collapsed" Label="Logitude.CargoTracking.MetaData.dll" />
+    <Node Id="(@84)" Category="CodeSchema_Assembly" Bounds="-3.09560220177207,1053.37503333332,239.72,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(69ffe000-958e-4b93-b743-67c433024d88.OutputPath)" Group="Collapsed" Label="Logitude.Accounting.MetaData.dll" />
+    <Node Id="(@85)" Category="CodeSchema_Assembly" Bounds="1413.45106446489,1108.3751,210.32,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(1337940b-af2a-4cd1-a99a-f3932724c981.OutputPath)" Group="Collapsed" Label="Logitude.Social.MetaData.dll" />
+    <Node Id="(@86)" Category="CodeSchema_Assembly" Bounds="503.481064464895,1108.3751,204.836666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(e19b6df1-f628-472d-b09e-848eb07d60bd.OutputPath)" Group="Collapsed" Label="Logitude.CRM.MetaData.dll" />
+    <Node Id="(@89)" Category="CodeSchema_Assembly" Bounds="3797.84106446489,1108.3751,275.853333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(832d1c12-5b6c-4030-8a34-827b978f1269.OutputPath)" Group="Collapsed" Label="Logitude.TimeManagement.MetaData.dll" />
+    <Node Id="(@90)" Category="CodeSchema_Assembly" Bounds="5752.5910644649,1108.3751,229.726666666666,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(e22411bc-ec46-4f60-b26b-b31d7bb2978f.OutputPath)" Group="Collapsed" Label="Logitude.Workflow.MetaData.dll" />
+    <Node Id="(@91 Namespace=WebFreight.Web.AccountingModel Type=AccountingRegistrations)" Category="CodeSchema_Class" Bounds="2861.215,581.6875,189.67,25" CodeSchemaProperty_IsPublic="True" CommonLabel="AccountingRegistrations" DelayedChildNodesState="NotFetched" Group="Collapsed" Icon="CodeSchema_Class" Label="AccountingRegistrations" SourceLocation="(Assembly=file:///C:/projects/log-repo/Logitude/JustWebFreight/WebFreight.Web/AccountingModel/AccountingRegistrations.cs StartLineNumber=18 StartCharacterOffset=17 EndLineNumber=18 EndCharacterOffset=40)" />
+    <Node Id="(@91 Namespace=WebFreight.Web.AccountingModel.Controllers Type=Journ2alControllerClass)" Category="CodeSchema_Class" Bounds="2893.80666666667,696.6875,184.963333333333,25" CodeSchemaProperty_IsPublic="True" CommonLabel="Journ2alControllerClass" DelayedChildNodesState="NotFetched" Group="Collapsed" Icon="CodeSchema_Class" Label="Journ2alControllerClass" SourceLocation="(Assembly=file:///C:/projects/log-repo/Logitude/JustWebFreight/WebFreight.Web/AccountingModel/Controllers/JournalControllerClass.cs StartLineNumber=21 StartCharacterOffset=17 EndLineNumber=21 EndCharacterOffset=40)" />
+    <Node Id="(@99)" Category="CodeSchema_Assembly" Bounds="2203.92333333333,260,231.463333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(83ee55e3-c13c-4df6-ac3c-c634e9cd8d66.OutputPath)" Group="Collapsed" Label="Logitude.IntegrationTest.Core.dll" />
+    <Node Id="@101" Category="CodeSchema_Assembly" Bounds="2231.48106446489,1135.87516250001,228.366666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(acc2ea9e-e150-4099-8aa1-66326ab14be8.OutputPath)" Group="Collapsed" Label="Simplog.Server.Infrastructure.dll" />
+    <Node Id="@105" Category="CodeSchema_Assembly" Bounds="5380.96106446489,1025.87495,268.156666666666,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(4148fda0-ef43-49bf-8d5c-23ff1fa4bd0e.OutputPath)" Group="Collapsed" Label="Logitude.ShipmentOrderModule.Def.dll" />
+    <Node Id="@107" Category="CodeSchema_Assembly" Bounds="5043.74439779823,1138.37510000007,221.58,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(1602a405-278e-4ff9-b7b5-dfc6e525b497.OutputPath)" Group="Collapsed" Label="Logitude.CargoTracking.Def.dll" />
+    <Node Id="@109" Category="CodeSchema_Assembly" Bounds="227.234397798228,943.374833333322,206.246666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(91564685-7ee1-466d-afcd-183a1bf62259.OutputPath)" Group="Collapsed" Label="Logitude.Accounting.Def.dll" />
+    <Node Id="@111" Category="CodeSchema_Assembly" Bounds="787.317731131561,1025.87500750007,191.82,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(89132340-6f21-4ce1-8de4-1ca45e2cd9f3.OutputPath)" Group="Collapsed" Label="Logitude.Customs.Def.dll" />
+    <Node Id="@115" Category="CodeSchema_Assembly" Bounds="1027.50106446489,1080.87503642851,216.173333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(e177d993-3117-420c-a59b-88f5398019ed.OutputPath)" Group="Collapsed" Label="Logitude.AmitalMessaging.dll" />
+    <Node Id="@117" Category="CodeSchema_Assembly" Bounds="1042.61106446489,1135.87513642851,227.95,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(7994d6f2-00a7-4c0d-a7d3-fd7d5304b665.OutputPath)" Group="Collapsed" Label="Logitude.CustomsMessaging.dll" />
+    <Node Id="@119" Category="CodeSchema_Assembly" Bounds="2011.50106446489,1025.87503249999,186.586666666666,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(1758a10f-0068-45c1-8e60-06022bbfb8b8.OutputPath)" Group="Collapsed" Label="ContainerMonitoring.dll" />
+    <Node Id="@12" Category="CodeSchema_Assembly" Bounds="2906.16773113156,833.374513984186,168.926666666666,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(1a81f8c5-fbdc-47fe-954a-e248fb8b3f19.OutputPath)" Group="Collapsed" Label="Logitude.Update.exe" />
+    <Node Id="@122" Category="CodeSchema_Assembly" Bounds="6428.71439779823,1053.375,115.130000000001,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(97dc0030-ff94-4879-9e2a-efccc541d914.OutputPath)" Group="Collapsed" Label="WWApi.dll" />
+    <Node Id="@124" Category="CodeSchema_Assembly" Bounds="2218.35439779823,970.874862500009,183.283333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(6d7ffad2-35b6-4133-8700-cf73e58d0c85.OutputPath)" Group="Collapsed" Label="Simplog.Data.Global.dll" />
+    <Node Id="@126" Category="CodeSchema_Assembly" Bounds="3473.50106446489,998.3749,214.95,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(7030ab59-9900-4ab9-b37c-59d424576e85.OutputPath)" Group="Collapsed" Label="Logitude.WarehouseLib.BL.dll" />
+    <Node Id="@128" Category="CodeSchema_Assembly" Bounds="1693.77106446489,998.3749,199.34,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(cb2702fc-5d52-44f2-a1d2-b760b07bdb91.OutputPath)" Group="Collapsed" Label="Logitude.BookingLib.BL.dll" />
+    <Node Id="@130" Category="CodeSchema_Assembly" Bounds="2011.50106446489,915.874832499991,137.463333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(a663e7ef-b858-4bb6-bc33-e473f51b8e56.OutputPath)" Group="Collapsed" Label="Logitude.BL.dll" />
+    <Node Id="@132" Category="CodeSchema_Assembly" Bounds="6052.31773113156,970.874849999999,238.743333333334,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(d3f9042c-8b29-4882-bcce-73ab5a06290b.OutputPath)" Group="Collapsed" Label="Logitude.DashboardModule.BL.dll" />
+    <Node Id="@134" Category="CodeSchema_Assembly" Bounds="4473.1410644649,998.3749,206.549999999999,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(312a7909-04d0-49b5-8d73-77598451f22e.OutputPath)" Group="Collapsed" Label="Logitude.TariffModule.BL.dll" />
+    <Node Id="@136" Category="CodeSchema_Assembly" Bounds="5380.96106446489,970.874849999999,262.24,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(f37bf2f7-0206-4123-a873-290a087538f6.OutputPath)" Group="Collapsed" Label="Logitude.ShipmentOrderModule.BL.dll" />
+    <Node Id="@138" Category="CodeSchema_Assembly" Bounds="4143.69439779823,998.3749,211.056666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(bd959ab6-4476-48b3-aa4d-cfd7ed120e55.OutputPath)" Group="Collapsed" Label="Logitude.Infrastructure.BL.dll" />
+    <Node Id="@14" Category="CodeSchema_Assembly" Bounds="3071.635,998.375,219.5,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(8b3e23a9-de23-4bec-ad7b-98bedf35063a.OutputPath)" Group="Collapsed" Label="Logitude.MetadataUpdate.exe" />
+    <Node Id="@140" Category="CodeSchema_Assembly" Bounds="4798.08106446489,1138.37510000007,215.663333333334,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(6b7fb227-28d2-45b8-b079-2e2f4251510d.OutputPath)" Group="Collapsed" Label="Logitude.CargoTracking.BL.dll" />
+    <Node Id="@142" Category="CodeSchema_Assembly" Bounds="-3.09560220177224,943.374833333322,200.33,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(00e5d96d-dd45-47e8-aaa3-fdbfd8add61a.OutputPath)" Group="Collapsed" Label="Logitude.Accounting.BL.dll" />
+    <Node Id="@144" Category="CodeSchema_Assembly" Bounds="1413.45106446489,998.3749,170.93,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(13ce8afb-6ada-4e96-b76c-67279095a018.OutputPath)" Group="Collapsed" Label="Logitude.Social.BL.dll" />
+    <Node Id="@146" Category="CodeSchema_Assembly" Bounds="503.481064464895,998.3749,165.446666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(40502295-5a7f-4a20-91d2-768ca7cd35ec.OutputPath)" Group="Collapsed" Label="Logitude.CRM.BL.dll" />
+    <Node Id="@148" Category="CodeSchema_Assembly" Bounds="1000.03439779823,970.874836428509,185.903333333334,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(d2951c0f-8a2b-4ee2-933a-8b6b4134f766.OutputPath)" Group="Collapsed" Label="Logitude.Customs.BL.dll" />
+    <Node Id="@150" Category="CodeSchema_Assembly" Bounds="787.317731131561,915.874807500065,143.586666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(0ec1bd46-2613-4227-a6d7-d345dd0978cd.OutputPath)" Group="Collapsed" Label="Unifreight.BL.dll" />
+    <Node Id="@152" Category="CodeSchema_Assembly" Bounds="3797.84106446489,998.3749,236.463333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(2b42c0df-9dd8-4ed1-8f6e-94746cfc1e63.OutputPath)" Group="Collapsed" Label="Logitude.TimeManagement.BL.dll" />
+    <Node Id="@154" Category="CodeSchema_Assembly" Bounds="5752.5910644649,998.374899999999,190.336666666666,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(3460f102-6bbb-4610-b6b7-22b222afb88c.OutputPath)" Group="Collapsed" Label="Logitude.Workflow.BL.dll" />
+    <Node Id="@159" Category="CodeSchema_Assembly" Bounds="2830.58166666667,1053.375,225.98,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(160cff77-92db-4578-bd3d-bf78a9258b00.OutputPath)" Group="Collapsed" Label="Logitude.DatabaseMigration.dll" />
+    <Node Id="@16" Bounds="2800.46166666667,888.37476076918,203.823333333334,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" ErrorLevel="NoResult" FilePath="$(1c73e85c-6d71-4a78-8e4c-17e69af3c978.OutputPath)" Group="Collapsed" Label="LogitudeDataLoading.exe" />
+    <Node Id="@163" Category="CodeSchema_Assembly" Bounds="1063.94773113156,1190.87523642851,279.503333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(f0039dbe-4a1a-4755-8f37-e4005ea74746.OutputPath)" Group="Collapsed" Label="Logitude.CustomsMessaging.Common.dll" />
+    <Node Id="@166" Category="CodeSchema_Assembly" Bounds="2011.50106446489,1135.87523249999,189.98,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(20837f2f-2acc-4350-ba91-decf89327194.OutputPath)" Group="Collapsed" Label="ContainerOISimulator.dll" />
+    <Node Id="@168" Category="CodeSchema_Assembly" Bounds="2011.50106446489,1190.87526250001,236.576666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(e2c58349-9b4c-4086-a829-5c0ab7ed22be.OutputPath)" Group="Collapsed" Label="Logitude.Common.ApiServices.dll" />
+    <Node Id="@172" Category="CodeSchema_Assembly" Bounds="2228.08773113156,1025.87496250001,187.376666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(9ffc5b97-f09a-4eed-a66e-d4160374ae6e.OutputPath)" Group="Collapsed" Label="Logitude.SystemLogs.dll" />
+    <Node Id="@174" Category="CodeSchema_Assembly" Bounds="2011.50106446489,1080.87513249999,187.73,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(9b477a08-8ee2-4457-88fe-17e8a6ec4d00.OutputPath)" Group="Collapsed" Label="Logitude.Server.Tools.dll" />
+    <Node Id="@190" Category="CodeSchema_Assembly" Bounds="2229.23106446489,1080.87506250001,188.59,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(df7d6bf3-c07e-471c-a8ed-526c431fd294.OutputPath)" Group="Collapsed" Label="MicrosoftGraphClient.dll" />
+    <Node Id="@192" Category="CodeSchema_Assembly" Bounds="2203.92333333333,370,258.146666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(6d103e86-ab24-4a62-8b24-e1ad015607e4.OutputPath)" Group="Collapsed" Label="Logitude.IntegrationTest.Shipment.dll">
+      <Category Ref="CodeMap_TestAsset" />
+      <Category Ref="CodeMap_TestProject" />
+      <Category Ref="FileSystem.Category.FileOfType.dll" />
+    </Node>
+    <Node Id="@194" Category="CodeMap_TestAsset" Bounds="2197.92349476579,39.9997363636207,154.486666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" ErrorLevel="NoResult" FilePath="$(29db79d3-f160-4f0b-8c4d-6cabab9e2dc5.OutputPath)" Group="Collapsed" Label="Logitude.Test.dll" />
+    <Node Id="@197" Category="CodeMap_TestAsset" Bounds="2198.87655885505,315.000236363621,252.29,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" ErrorLevel="NoResult" FilePath="$(3dd19857-5b09-4f68-91c3-d9267ef4fefb.OutputPath)" Group="Collapsed" Label="Logitude.LogboxIntegrationTest.dll" />
+    <Node Id="@20" Category="CodeSchema_Assembly" Bounds="6052.31773113156,1135.87515,306.396666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(15db9300-fb4e-415f-aeb4-965365250127.OutputPath)" Group="Collapsed" Label="Logitude.DashboardModule.MetaDataTool.exe">
+      <Category Ref="CodeMap_WpfProject" />
+      <Category Ref="FileSystem.Category.FileOfType.exe" />
+    </Node>
+    <Node Id="@200" Category="CodeSchema_Namespace" Bounds="2835.14833333333,541.6875,241.803333333333,85" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsStatic="True" CommonLabel="WebFreight.Web.AccountingModel" DelayedChildNodesState="Incomplete" Group="Expanded" Label="WebFreight.Web.AccountingModel" />
+    <Node Id="@201" Category="CodeSchema_Namespace" Bounds="2835.14833333333,656.6875,302.28,85" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsStatic="True" CommonLabel="WebFreight.Web.AccountingModel.Controllers" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" Group="Expanded" Label="WebFreight.Web.AccountingModel.Controllers" />
+    <Node Id="@22" Category="CodeSchema_Assembly" Bounds="2869.675,1218.375,263.866666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(2713adc3-641f-4ca4-ac94-e91dd2e498bb.OutputPath)" Group="Collapsed" Label="ReportAndDocumentWRTesterTool.exe" />
+    <Node Id="@26" Category="CodeSchema_Assembly" Bounds="2811.965,943.375,209.203333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(16f48bd9-1ee4-44c0-b86d-ddf18ade70b3.OutputPath)" Group="Collapsed" Label="TestTenantConfiguration.exe" />
+    <Node Id="@33" Bounds="2881.60655885505,205,194.706666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" ErrorLevel="NoResult" FilePath="$(49927a74-4c7a-44f5-a351-8a78dc643d2d.OutputPath)" Group="Collapsed" Label="MetaDataGenerator.exe" />
+    <Node Id="@39" Category="CodeSchema_Assembly" Bounds="2843.105,1108.375,234.443333333334,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(1525c5ea-083d-4ab4-b7f3-69e624d39e39.OutputPath)" Group="Collapsed" Label="Logitude.DeploymentUtilities.exe" />
+    <Node Id="@43" Bounds="1146.65439779823,915.874736428509,164.85,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" ErrorLevel="NoResult" FilePath="$(03577a36-d5a0-48c8-a246-17d4d28f2938.OutputPath)" Group="Collapsed" Label="RabbitMQSRV.exe" />
+    <Node Id="@45" Category="CodeSchema_Assembly" Bounds="3473.50106446489,1053.375,227.113333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(54a12a5c-659c-4410-a5e7-949acd43f3a5.OutputPath)" Group="Collapsed" Label="Logitude.WarehouseLib.Data.dll" />
+    <Node Id="@47" Category="CodeSchema_Assembly" Bounds="1693.77106446489,1053.375,211.503333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(147a706d-221a-4fd1-8f27-c12e4ab276cf.OutputPath)" Group="Collapsed" Label="Logitude.BookingLib.Data.dll" />
+    <Node Id="@49" Category="CodeSchema_Assembly" Bounds="6052.31773113156,1025.87495,250.906666666666,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(156bdc54-4d7d-4964-9b48-c0b86b571de9.OutputPath)" Group="Collapsed" Label="Logitude.DashboardModule.Data.dll" />
+    <Node Id="@51" Category="CodeSchema_Assembly" Bounds="4473.14106446489,1053.375,218.713333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(0a2a3ab8-4d14-4140-be2f-2d95b235bb7c.OutputPath)" Group="Collapsed" Label="Logitude.TariffModule.Data.dll" />
+    <Node Id="@53" Category="CodeSchema_Assembly" Bounds="5380.96106446489,1080.87505,274.403333333334,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(378db1a8-43c3-45a1-a4a0-0b8961cfdb52.OutputPath)" Group="Collapsed" Label="Logitude.ShipmentOrderModule.Data.dll" />
+    <Node Id="@55" Category="CodeSchema_Assembly" Bounds="4143.69439779823,1053.375,223.220000000001,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(b02e4d92-9226-4f3f-990f-66c7f66e9316.OutputPath)" Group="Collapsed" Label="Logitude.Infrastructure.Data.dll" />
+    <Node Id="@57" Category="CodeSchema_Assembly" Bounds="4798.08106446489,1193.37520000007,227.826666666668,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(7281a115-2213-41a3-a39a-22476f5a8db8.OutputPath)" Group="Collapsed" Label="Logitude.CargoTracking.Data.dll" />
+    <Node Id="@59" Category="CodeSchema_Assembly" Bounds="-3.09560220177195,998.374933333322,212.493333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(a3799525-14a2-42fc-a2de-69ed3fd1c5d1.OutputPath)" Group="Collapsed" Label="Logitude.Accounting.Data.dll" />
+    <Node Id="@61" Category="CodeSchema_Assembly" Bounds="2178.96439779823,915.874762500009,146.446666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(78ec8434-e6ad-4e93-9b17-c746f5403f7b.OutputPath)" Group="Collapsed" Label="Simplog.Data.dll" />
+    <Node Id="@63" Category="CodeSchema_Assembly" Bounds="1413.45106446489,1053.375,183.093333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(a00ae10e-2560-4e06-99fa-859ea7488ec3.OutputPath)" Group="Collapsed" Label="Logitude.Social.Data.dll" />
+    <Node Id="@65" Category="CodeSchema_Assembly" Bounds="503.481064464895,1053.375,177.61,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(4733f914-0e16-4412-84df-d98232dd43e9.OutputPath)" Group="Collapsed" Label="Logitude.CRM.Data.dll" />
+    <Node Id="@67" Category="CodeSchema_Assembly" Bounds="1009.13773113156,1025.87493642851,198.066666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(643f92c9-7cf1-4429-b79e-1e354b758abf.OutputPath)" Group="Collapsed" Label="Logitude.Customs.Data.dll" />
+    <Node Id="@69" Category="CodeSchema_Assembly" Bounds="960.904397798228,915.874736428509,155.75,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(40f07800-11e8-4fba-9fc2-fd6c8d11e3ef.OutputPath)" Group="Collapsed" Label="Unifreight.Data.dll" />
+    <Node Id="@71" Category="CodeSchema_Assembly" Bounds="3797.84106446489,1053.375,248.626666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(68f57541-574a-4ee9-b3fe-8c535c74456a.OutputPath)" Group="Collapsed" Label="Logitude.TimeManagement.Data.dll" />
+    <Node Id="@73" Category="CodeSchema_Assembly" Bounds="5752.5910644649,1053.375,202.5,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(726a5395-1875-44b9-aaa2-0951b8af8084.OutputPath)" Group="Collapsed" Label="Logitude.Workflow.Data.dll" />
+    <Node Id="@76" Category="CodeSchema_Assembly" Bounds="1693.77106446489,1108.3751,238.73,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(781af7f0-7a28-4b39-a8b1-93664ddc9555.OutputPath)" Group="Collapsed" Label="Logitude.BookingLib.MetaData.dll" />
+    <Node Id="@79" Category="CodeSchema_Assembly" Bounds="6052.31773113156,1080.87505,278.133333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(e6e7db5e-6c25-41e2-819e-9f52c7b4ffb9.OutputPath)" Group="Collapsed" Label="Logitude.DashboardModule.MetaData.dll" />
+    <Node Id="@88" Category="CodeSchema_Assembly" Bounds="787.317731131561,1135.87520750007,225.293333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(66797ccd-466c-4d18-8b6f-a4fc2694aa43.OutputPath)" Group="Collapsed" Label="Logitude.Customs.MetaData.dll" />
+    <Node Id="@9" Bounds="778.317731131561,1190.87530750007,255.63,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" ErrorLevel="NoResult" FilePath="$(b77bf93f-ec04-4ab7-9a2d-eb7f27a4c4fc.OutputPath)" Group="Collapsed" Label="AmitalCustomsWindowsService.exe" />
+    <Node Id="@92" Category="CodeSchema_Assembly" AssemblyTimestamp="06/25/2024 10:46:28" Bounds="2815.14833333333,501.6875,342.28,260" CodeSchemaProperty_StrongName="WebFreight.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" CommonLabel="WebFreight.Web" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" FilePath="$(8408e4e5-b4b7-46bc-8300-1ae163b36e2d.OutputPath)" Group="Expanded" Label="WebFreight.Web.dll">
+      <Category Ref="CodeMap_WebProject" />
+      <Category Ref="FileSystem.Category.FileOfType.dll" />
+    </Node>
+    <Node Id="@94" Category="CodeSchema_Assembly" Bounds="2355.41106446489,915.874762500009,146.796666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(3e75c83f-67c7-4b62-9759-7ea92e16f272.OutputPath)" Group="Collapsed" Label="Logitude.XSD.dll" />
+    <Node Id="@96" Category="CodeSchema_Assembly" Bounds="2579.64166666667,1053.375,220.940000000001,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(ba2a42b8-a348-4d44-984c-1d718cb20b6f.OutputPath)" Group="Collapsed" Label="CommunicationWorkerRole.dll" />
+    <Node Id="@98" Category="CodeSchema_Assembly" Bounds="787.317731131561,970.874907500066,182.716666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="NotFetched" FilePath="$(15b3e0d2-6217-493a-a690-158c497f5318.OutputPath)" Group="Collapsed" Label="CustomsWorkerRole.dll" />
+    <Node Id="Accounting{FD0B7736-DE96-4B32-9236-A54AA7CED866}" Category="CodeMap_SolutionFolder" Bounds="-23.0956022017722,903.374733333322,476.576666666667,305.0006" Group="Expanded" Label="Accounting" />
+    <Node Id="Amital.WorkerRole\Amital.WorkerRole.ccproj" Category="CodeMap_Project" Bounds="39.2173911661779,1484.33489225258,118.06,25.96" Label="Amital.WorkerRole" />
+    <Node Id="AmitalCloud\Amital.WebRole.ccproj" Category="CodeMap_Project" Bounds="39.2173910644528,1428.37479225258,103.773333333333,25.96" Label="Amital.WebRole" />
+    <Node Id="AmitalDependencyDiagram\AmitalDependencyDiagram.modelproj" Category="CodeMap_Project" Bounds="1518.80072795817,1348.37502193451,186.466666666667,26.0002002716064" Label="AmitalDependencyDiagram">
+      <Category Ref="CodeMap_ModelingProject" />
+    </Node>
+    <Node Id="Amital{3560C906-C9BD-453F-B94F-FCCFF4E013F1}" Category="CodeMap_SolutionFolder" Bounds="19.2173910644528,1388.37469225258,158.060000101725,141.9203" Group="Expanded" Label="Amital" />
+    <Node Id="AzureDev{BC80302F-AFAE-4BD1-B512-6269F20654E1}" Category="CodeMap_SolutionFolder" Bounds="1262.5840612915,1348.37488046875,226.216666666667,85.9602" Group="Expanded" Label="AzureDev" />
+    <Node Id="BDDTests{785555D1-1D4F-480B-B441-B6F0A35965AC}" Category="CodeMap_SolutionFolder" Bounds="420.437394624837,1348.3747,531.22,360.0007" Group="Expanded" Label="BDDTests" />
+    <Node Id="Booking{15D4CCF2-9680-467A-BAEC-CED8AD2C86B0}" Category="CodeMap_SolutionFolder" Bounds="1673.77106446489,958.3748,278.73,195.0004" Group="Expanded" Label="Booking" />
+    <Node Id="CRM{0C7C3EDC-254F-4243-BD4A-89097370F95B}" Category="CodeMap_SolutionFolder" Bounds="483.481064464895,958.3748,244.836666666667,195.0004" Group="Expanded" Label="CRM" />
+    <Node Id="CargoTracking{CD80E994-DF78-4461-A05A-618059A25313}" Category="CodeMap_SolutionFolder" Bounds="4778.08106446489,873.374500000071,552.880000000001,365.0008" Group="Expanded" Label="CargoTracking" />
+    <Node Id="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" Category="CodeMap_SolutionFolder" Bounds="758.317731131561,875.874636428509,605.133333333333,360.000771071556" Group="Expanded" Label="Customs" />
+    <Node Id="Dashboard{5D38F335-A7F5-4DD4-9F8A-379F493CC98E}" Category="CodeMap_SolutionFolder" Bounds="6032.31773113156,930.874749999999,346.396666666667,250.0005" Group="Expanded" Label="Dashboard" />
+    <Node Id="DataWarehouse{7470FF02-7469-44CF-847C-D146B0DFF146}" Category="CodeMap_SolutionFolder" Bounds="981.657394624837,1348.37475,250.926666666667,250.0005" Group="Expanded" Label="DataWarehouse" />
+    <Node Id="Deploy{759951AA-C86D-4FA7-A2D9-4C770F8B9AF3}" Category="CodeMap_SolutionFolder" Bounds="-0.782609444173374,1348.37459225258,391.22000406901,373.8409" Group="Expanded" Label="Deploy" />
+    <Node Id="Infrastructure{37ABB095-FAF7-49A6-8BBD-63D2929DED3A}" Category="CodeMap_SolutionFolder" Bounds="4123.69439779823,958.3748,299.446666666667,195.0004" Group="Expanded" Label="Infrastructure" />
+    <Node Id="LogBox.WorkerRole\LogBox.WorkerRole.ccproj" Category="CodeMap_Project" Bounds="227.277394624837,1484.33489225258,123.16,25.96" Label="LogBox.WorkerRole" />
+    <Node Id="LogBox1{AAFA7BB4-6EDA-4C4B-94DC-F4CA7F18C20D}" Category="CodeMap_SolutionFolder" Bounds="207.277391166178,1388.37469225258,163.160003458659,141.9203" Group="Expanded" Label="LogBox1" />
+    <Node Id="LogBox\LogBox.ccproj" Category="CodeMap_Project" Bounds="227.277391166178,1428.37479225258,59.1633333333333,25.96" Label="LogBox" />
+    <Node Id="LogitudeAzureCloudServiceDev\LogitudeAzureCloudServiceDev.ccproj" Category="CodeMap_Project" Bounds="1282.5840612915,1388.37498046875,186.216666666667,25.96" Label="LogitudeAzureCloudServiceDev" />
+    <Node Id="LogitudeWorkerR\Logitude.WorkerRole.ccproj" Category="CodeMap_Project" Bounds="39.2173982869465,1656.25529225258,130.85,25.96" Label="Logitude.WorkerRole" />
+    <Node Id="Logitude{42212008-0FB3-447A-BA5C-D55881B7A346}" Category="CodeMap_SolutionFolder" Bounds="19.2173905558266,1560.29509225258,170.85000773112,141.9203" Group="Expanded" Label="Logitude" />
+    <Node Id="MetadataTools{0C0A5461-77D4-4F29-B55B-8AD5D8740E8D}" Category="CodeMap_SolutionFolder" Bounds="2861.60655885505,164.9999,261.550000000001,140.0002" Group="Expanded" Label="MetadataTools" />
+    <Node Id="ServerOthers{58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}" Category="CodeMap_SolutionFolder" Bounds="1982.50106446489,875.874645000001,539.706666666667,360.000787499991" Group="Expanded" Label="ServerOthers" />
+    <Node Id="Services{B200DAF8-E173-44CB-9995-8CBE2691642E}" Category="CodeMap_SolutionFolder" Bounds="4798.08106446489,913.374600000071,281.863333333335,195.0004" Group="Expanded" Label="Services" />
+    <Node Id="ShipmentOrder{B965EB15-51A2-45AC-993D-5673E3376100}" Category="CodeMap_SolutionFolder" Bounds="5360.96106446489,930.874749999999,341.630000000001,250.0005" Group="Expanded" Label="ShipmentOrder" />
+    <Node Id="Simplog.Azure\Logitude.WebRole.ccproj" Category="CodeMap_Project" Bounds="39.2173905558267,1600.29519225258,116.563333333333,25.96" Label="Logitude.WebRole" />
+    <Node Id="Social{A4097F45-6A39-457C-90EA-DA898FC922A2}" Category="CodeMap_SolutionFolder" Bounds="1393.45106446489,958.3748,250.32,195.0004" Group="Expanded" Label="Social" />
+    <Node Id="TariffModule{864DF1B1-209F-46F9-B1E6-4D60E67CC5B3}" Category="CodeMap_SolutionFolder" Bounds="4453.1410644649,958.3748,294.939999999999,195.0004" Group="Expanded" Label="TariffModule" />
+    <Node Id="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" Category="CodeMap_SolutionFolder" Bounds="2177.92349476579,-0.00036363637929071,652.73,470.0009" Group="Expanded" Label="Test" />
+    <Node Id="TimeManagement{D6BD91CE-D913-49AD-AC82-216E670FB2B8}" Category="CodeMap_SolutionFolder" Bounds="3777.84106446489,958.3748,315.853333333334,195.0004" Group="Expanded" Label="TimeManagement" />
+    <Node Id="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Category="CodeMap_SolutionFolder" Bounds="2552.20773113156,793.374409881733,860.727268868439,525.001308204907" Group="Expanded" Label="Tools" />
+    <Node Id="WWApi{6CC2AFEC-B2FC-4066-A2BD-78602017A493}" Category="CodeMap_SolutionFolder" Bounds="6408.71439779823,1013.3749,155.130000000001,85.0001999999999" Group="Expanded" Label="WWApi" />
+    <Node Id="Warehouse{98D838A7-A959-4A41-924A-797DE085910B}" Category="CodeMap_SolutionFolder" Bounds="3453.50106446489,958.3748,294.34,195.0004" Group="Expanded" Label="Warehouse" />
+    <Node Id="Workflow{C082DC1B-CE1F-444E-A84F-97707EAF15F5}" Category="CodeMap_SolutionFolder" Bounds="5732.5910644649,958.374799999999,269.726666666666,195.0004" Group="Expanded" Label="Workflow" />
+  </Nodes>
+  <Links>
+    <Link Source="@12" Target="@92" Category="CodeMap_ProjectReference" />
+    <Link Source="@14" Target="@92" Category="CodeMap_ProjectReference" />
+    <Link Source="@16" Target="@92" Category="CodeMap_ProjectReference" />
+    <Link Source="@192" Target="@92" Category="CodeMap_ProjectReference" />
+    <Link Source="@194" Target="@92" Category="CodeMap_ProjectReference" />
+    <Link Source="@197" Target="@92" Category="CodeMap_ProjectReference" />
+    <Link Source="@200" Target="(@91 Namespace=WebFreight.Web.AccountingModel Type=AccountingRegistrations)" Category="Contains" FetchingParent="@200" />
+    <Link Source="@201" Target="(@91 Namespace=WebFreight.Web.AccountingModel.Controllers Type=Journ2alControllerClass)" Category="Contains" FetchingParent="@201" />
+    <Link Source="@22" Target="@92" Category="CodeMap_ProjectReference" />
+    <Link Source="@26" Target="@92" Category="CodeMap_ProjectReference" />
+    <Link Source="@33" Target="@92" Category="CodeMap_ExternalReference" />
+    <Link Source="@39" Target="@92" Category="CodeMap_ProjectReference" />
+    <Link Source="@43" Target="@92" Category="CodeMap_ProjectReference" />
+    <Link Source="@76" Target="@92" Category="CodeMap_ProjectReference" />
+    <Link Source="@88" Target="@92" Category="CodeMap_ProjectReference" />
+    <Link Source="@9" Target="@92" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@101" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@105" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@107" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@109" Category="CodeMap_ProjectReference" Bounds="462.015671361877,652.760381599745,2353.13266197146,289.74690881277" />
+    <Link Source="@92" Target="@111" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@115" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@117" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@119" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@122" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@124" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@126" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@128" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@130" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@132" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@134" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@136" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@138" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@140" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@142" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@144" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@146" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@148" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@150" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@152" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@154" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@159" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@163" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@166" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@168" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@172" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@174" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@190" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@20" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@200" Category="Contains" FetchingParent="@92" />
+    <Link Source="@92" Target="@201" Category="Contains" FetchingParent="@92" />
+    <Link Source="@92" Target="@45" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@47" Category="CodeMap_ProjectReference" Bounds="1842.14110155026,694.300410765311,973.007231783078,355.982324282085" />
+    <Link Source="@92" Target="@49" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@51" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@53" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@55" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@57" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@59" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@61" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@63" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@65" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@67" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@69" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@71" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@73" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@79" Category="CodeMap_ProjectReference" />
+    <Link Source="@92" Target="@94" Category="CodeMap_ProjectReference" />
+    <Link Source="@96" Target="@92" Category="CodeMap_ProjectReference" />
+    <Link Source="@98" Target="@92" Category="CodeMap_ProjectReference" />
+    <Link Source="Accounting{FD0B7736-DE96-4B32-9236-A54AA7CED866}" Target="(@113)" Category="Contains" FetchingParent="Accounting{FD0B7736-DE96-4B32-9236-A54AA7CED866}" />
+    <Link Source="Accounting{FD0B7736-DE96-4B32-9236-A54AA7CED866}" Target="(@161)" Category="Contains" FetchingParent="Accounting{FD0B7736-DE96-4B32-9236-A54AA7CED866}" />
+    <Link Source="Accounting{FD0B7736-DE96-4B32-9236-A54AA7CED866}" Target="(@84)" Category="Contains" FetchingParent="Accounting{FD0B7736-DE96-4B32-9236-A54AA7CED866}" />
+    <Link Source="Accounting{FD0B7736-DE96-4B32-9236-A54AA7CED866}" Target="@109" Category="Contains" FetchingParent="Accounting{FD0B7736-DE96-4B32-9236-A54AA7CED866}" />
+    <Link Source="Accounting{FD0B7736-DE96-4B32-9236-A54AA7CED866}" Target="@142" Category="Contains" FetchingParent="Accounting{FD0B7736-DE96-4B32-9236-A54AA7CED866}" />
+    <Link Source="Accounting{FD0B7736-DE96-4B32-9236-A54AA7CED866}" Target="@59" Category="Contains" FetchingParent="Accounting{FD0B7736-DE96-4B32-9236-A54AA7CED866}" />
+    <Link Source="Amital{3560C906-C9BD-453F-B94F-FCCFF4E013F1}" Target="Amital.WorkerRole\Amital.WorkerRole.ccproj" Category="Contains" FetchingParent="Amital{3560C906-C9BD-453F-B94F-FCCFF4E013F1}" />
+    <Link Source="Amital{3560C906-C9BD-453F-B94F-FCCFF4E013F1}" Target="AmitalCloud\Amital.WebRole.ccproj" Category="Contains" FetchingParent="Amital{3560C906-C9BD-453F-B94F-FCCFF4E013F1}" />
+    <Link Source="AzureDev{BC80302F-AFAE-4BD1-B512-6269F20654E1}" Target="LogitudeAzureCloudServiceDev\LogitudeAzureCloudServiceDev.ccproj" Category="Contains" FetchingParent="AzureDev{BC80302F-AFAE-4BD1-B512-6269F20654E1}" />
+    <Link Source="BDDTests{785555D1-1D4F-480B-B441-B6F0A35965AC}" Target="(@112)" Category="Contains" FetchingParent="BDDTests{785555D1-1D4F-480B-B441-B6F0A35965AC}" />
+    <Link Source="BDDTests{785555D1-1D4F-480B-B441-B6F0A35965AC}" Target="(@164)" Category="Contains" FetchingParent="BDDTests{785555D1-1D4F-480B-B441-B6F0A35965AC}" />
+    <Link Source="BDDTests{785555D1-1D4F-480B-B441-B6F0A35965AC}" Target="(@178)" Category="Contains" FetchingParent="BDDTests{785555D1-1D4F-480B-B441-B6F0A35965AC}" />
+    <Link Source="BDDTests{785555D1-1D4F-480B-B441-B6F0A35965AC}" Target="(@179)" Category="Contains" FetchingParent="BDDTests{785555D1-1D4F-480B-B441-B6F0A35965AC}" />
+    <Link Source="BDDTests{785555D1-1D4F-480B-B441-B6F0A35965AC}" Target="(@180)" Category="Contains" FetchingParent="BDDTests{785555D1-1D4F-480B-B441-B6F0A35965AC}" />
+    <Link Source="BDDTests{785555D1-1D4F-480B-B441-B6F0A35965AC}" Target="(@181)" Category="Contains" FetchingParent="BDDTests{785555D1-1D4F-480B-B441-B6F0A35965AC}" />
+    <Link Source="BDDTests{785555D1-1D4F-480B-B441-B6F0A35965AC}" Target="(@182)" Category="Contains" FetchingParent="BDDTests{785555D1-1D4F-480B-B441-B6F0A35965AC}" />
+    <Link Source="BDDTests{785555D1-1D4F-480B-B441-B6F0A35965AC}" Target="(@184)" Category="Contains" FetchingParent="BDDTests{785555D1-1D4F-480B-B441-B6F0A35965AC}" />
+    <Link Source="BDDTests{785555D1-1D4F-480B-B441-B6F0A35965AC}" Target="(@185)" Category="Contains" FetchingParent="BDDTests{785555D1-1D4F-480B-B441-B6F0A35965AC}" />
+    <Link Source="BDDTests{785555D1-1D4F-480B-B441-B6F0A35965AC}" Target="(@187)" Category="Contains" FetchingParent="BDDTests{785555D1-1D4F-480B-B441-B6F0A35965AC}" />
+    <Link Source="BDDTests{785555D1-1D4F-480B-B441-B6F0A35965AC}" Target="(@188)" Category="Contains" FetchingParent="BDDTests{785555D1-1D4F-480B-B441-B6F0A35965AC}" />
+    <Link Source="Booking{15D4CCF2-9680-467A-BAEC-CED8AD2C86B0}" Target="@128" Category="Contains" FetchingParent="Booking{15D4CCF2-9680-467A-BAEC-CED8AD2C86B0}" />
+    <Link Source="Booking{15D4CCF2-9680-467A-BAEC-CED8AD2C86B0}" Target="@47" Category="Contains" FetchingParent="Booking{15D4CCF2-9680-467A-BAEC-CED8AD2C86B0}" />
+    <Link Source="Booking{15D4CCF2-9680-467A-BAEC-CED8AD2C86B0}" Target="@76" Category="Contains" FetchingParent="Booking{15D4CCF2-9680-467A-BAEC-CED8AD2C86B0}" />
+    <Link Source="CRM{0C7C3EDC-254F-4243-BD4A-89097370F95B}" Target="(@86)" Category="Contains" FetchingParent="CRM{0C7C3EDC-254F-4243-BD4A-89097370F95B}" />
+    <Link Source="CRM{0C7C3EDC-254F-4243-BD4A-89097370F95B}" Target="@146" Category="Contains" FetchingParent="CRM{0C7C3EDC-254F-4243-BD4A-89097370F95B}" />
+    <Link Source="CRM{0C7C3EDC-254F-4243-BD4A-89097370F95B}" Target="@65" Category="Contains" FetchingParent="CRM{0C7C3EDC-254F-4243-BD4A-89097370F95B}" />
+    <Link Source="CargoTracking{CD80E994-DF78-4461-A05A-618059A25313}" Target="(@83)" Category="Contains" FetchingParent="CargoTracking{CD80E994-DF78-4461-A05A-618059A25313}" />
+    <Link Source="CargoTracking{CD80E994-DF78-4461-A05A-618059A25313}" Target="@107" Category="Contains" FetchingParent="CargoTracking{CD80E994-DF78-4461-A05A-618059A25313}" />
+    <Link Source="CargoTracking{CD80E994-DF78-4461-A05A-618059A25313}" Target="@140" Category="Contains" FetchingParent="CargoTracking{CD80E994-DF78-4461-A05A-618059A25313}" />
+    <Link Source="CargoTracking{CD80E994-DF78-4461-A05A-618059A25313}" Target="@57" Category="Contains" FetchingParent="CargoTracking{CD80E994-DF78-4461-A05A-618059A25313}" />
+    <Link Source="CargoTracking{CD80E994-DF78-4461-A05A-618059A25313}" Target="Services{B200DAF8-E173-44CB-9995-8CBE2691642E}" Category="Contains" FetchingParent="CargoTracking{CD80E994-DF78-4461-A05A-618059A25313}" />
+    <Link Source="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" Target="(@29)" Category="Contains" FetchingParent="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" />
+    <Link Source="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" Target="@111" Category="Contains" FetchingParent="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" />
+    <Link Source="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" Target="@115" Category="Contains" FetchingParent="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" />
+    <Link Source="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" Target="@117" Category="Contains" FetchingParent="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" />
+    <Link Source="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" Target="@148" Category="Contains" FetchingParent="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" />
+    <Link Source="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" Target="@150" Category="Contains" FetchingParent="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" />
+    <Link Source="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" Target="@163" Category="Contains" FetchingParent="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" />
+    <Link Source="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" Target="@43" Category="Contains" FetchingParent="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" />
+    <Link Source="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" Target="@67" Category="Contains" FetchingParent="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" />
+    <Link Source="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" Target="@69" Category="Contains" FetchingParent="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" />
+    <Link Source="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" Target="@88" Category="Contains" FetchingParent="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" />
+    <Link Source="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" Target="@9" Category="Contains" FetchingParent="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" />
+    <Link Source="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" Target="@98" Category="Contains" FetchingParent="Customs{6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}" />
+    <Link Source="Dashboard{5D38F335-A7F5-4DD4-9F8A-379F493CC98E}" Target="@132" Category="Contains" FetchingParent="Dashboard{5D38F335-A7F5-4DD4-9F8A-379F493CC98E}" />
+    <Link Source="Dashboard{5D38F335-A7F5-4DD4-9F8A-379F493CC98E}" Target="@20" Category="Contains" FetchingParent="Dashboard{5D38F335-A7F5-4DD4-9F8A-379F493CC98E}" />
+    <Link Source="Dashboard{5D38F335-A7F5-4DD4-9F8A-379F493CC98E}" Target="@49" Category="Contains" FetchingParent="Dashboard{5D38F335-A7F5-4DD4-9F8A-379F493CC98E}" />
+    <Link Source="Dashboard{5D38F335-A7F5-4DD4-9F8A-379F493CC98E}" Target="@79" Category="Contains" FetchingParent="Dashboard{5D38F335-A7F5-4DD4-9F8A-379F493CC98E}" />
+    <Link Source="DataWarehouse{7470FF02-7469-44CF-847C-D146B0DFF146}" Target="(@1)" Category="Contains" FetchingParent="DataWarehouse{7470FF02-7469-44CF-847C-D146B0DFF146}" />
+    <Link Source="DataWarehouse{7470FF02-7469-44CF-847C-D146B0DFF146}" Target="(@18)" Category="Contains" FetchingParent="DataWarehouse{7470FF02-7469-44CF-847C-D146B0DFF146}" />
+    <Link Source="DataWarehouse{7470FF02-7469-44CF-847C-D146B0DFF146}" Target="(@3)" Category="Contains" FetchingParent="DataWarehouse{7470FF02-7469-44CF-847C-D146B0DFF146}" />
+    <Link Source="DataWarehouse{7470FF02-7469-44CF-847C-D146B0DFF146}" Target="(@41)" Category="Contains" FetchingParent="DataWarehouse{7470FF02-7469-44CF-847C-D146B0DFF146}" />
+    <Link Source="Deploy{759951AA-C86D-4FA7-A2D9-4C770F8B9AF3}" Target="Amital{3560C906-C9BD-453F-B94F-FCCFF4E013F1}" Category="Contains" FetchingParent="Deploy{759951AA-C86D-4FA7-A2D9-4C770F8B9AF3}" />
+    <Link Source="Deploy{759951AA-C86D-4FA7-A2D9-4C770F8B9AF3}" Target="LogBox1{AAFA7BB4-6EDA-4C4B-94DC-F4CA7F18C20D}" Category="Contains" FetchingParent="Deploy{759951AA-C86D-4FA7-A2D9-4C770F8B9AF3}" />
+    <Link Source="Deploy{759951AA-C86D-4FA7-A2D9-4C770F8B9AF3}" Target="Logitude{42212008-0FB3-447A-BA5C-D55881B7A346}" Category="Contains" FetchingParent="Deploy{759951AA-C86D-4FA7-A2D9-4C770F8B9AF3}" />
+    <Link Source="Infrastructure{37ABB095-FAF7-49A6-8BBD-63D2929DED3A}" Target="(@82)" Category="Contains" FetchingParent="Infrastructure{37ABB095-FAF7-49A6-8BBD-63D2929DED3A}" />
+    <Link Source="Infrastructure{37ABB095-FAF7-49A6-8BBD-63D2929DED3A}" Target="@138" Category="Contains" FetchingParent="Infrastructure{37ABB095-FAF7-49A6-8BBD-63D2929DED3A}" />
+    <Link Source="Infrastructure{37ABB095-FAF7-49A6-8BBD-63D2929DED3A}" Target="@55" Category="Contains" FetchingParent="Infrastructure{37ABB095-FAF7-49A6-8BBD-63D2929DED3A}" />
+    <Link Source="LogBox1{AAFA7BB4-6EDA-4C4B-94DC-F4CA7F18C20D}" Target="LogBox.WorkerRole\LogBox.WorkerRole.ccproj" Category="Contains" FetchingParent="LogBox1{AAFA7BB4-6EDA-4C4B-94DC-F4CA7F18C20D}" />
+    <Link Source="LogBox1{AAFA7BB4-6EDA-4C4B-94DC-F4CA7F18C20D}" Target="LogBox\LogBox.ccproj" Category="Contains" FetchingParent="LogBox1{AAFA7BB4-6EDA-4C4B-94DC-F4CA7F18C20D}" />
+    <Link Source="Logitude{42212008-0FB3-447A-BA5C-D55881B7A346}" Target="LogitudeWorkerR\Logitude.WorkerRole.ccproj" Category="Contains" FetchingParent="Logitude{42212008-0FB3-447A-BA5C-D55881B7A346}" />
+    <Link Source="Logitude{42212008-0FB3-447A-BA5C-D55881B7A346}" Target="Simplog.Azure\Logitude.WebRole.ccproj" Category="Contains" FetchingParent="Logitude{42212008-0FB3-447A-BA5C-D55881B7A346}" />
+    <Link Source="MetadataTools{0C0A5461-77D4-4F29-B55B-8AD5D8740E8D}" Target="(@23)" Category="Contains" FetchingParent="MetadataTools{0C0A5461-77D4-4F29-B55B-8AD5D8740E8D}" />
+    <Link Source="MetadataTools{0C0A5461-77D4-4F29-B55B-8AD5D8740E8D}" Target="@33" Category="Contains" FetchingParent="MetadataTools{0C0A5461-77D4-4F29-B55B-8AD5D8740E8D}" />
+    <Link Source="ServerOthers{58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}" Target="(@77)" Category="Contains" FetchingParent="ServerOthers{58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}" />
+    <Link Source="ServerOthers{58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}" Target="@101" Category="Contains" FetchingParent="ServerOthers{58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}" />
+    <Link Source="ServerOthers{58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}" Target="@119" Category="Contains" FetchingParent="ServerOthers{58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}" />
+    <Link Source="ServerOthers{58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}" Target="@124" Category="Contains" FetchingParent="ServerOthers{58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}" />
+    <Link Source="ServerOthers{58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}" Target="@130" Category="Contains" FetchingParent="ServerOthers{58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}" />
+    <Link Source="ServerOthers{58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}" Target="@166" Category="Contains" FetchingParent="ServerOthers{58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}" />
+    <Link Source="ServerOthers{58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}" Target="@168" Category="Contains" FetchingParent="ServerOthers{58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}" />
+    <Link Source="ServerOthers{58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}" Target="@172" Category="Contains" FetchingParent="ServerOthers{58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}" />
+    <Link Source="ServerOthers{58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}" Target="@174" Category="Contains" FetchingParent="ServerOthers{58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}" />
+    <Link Source="ServerOthers{58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}" Target="@190" Category="Contains" FetchingParent="ServerOthers{58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}" />
+    <Link Source="ServerOthers{58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}" Target="@61" Category="Contains" FetchingParent="ServerOthers{58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}" />
+    <Link Source="ServerOthers{58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}" Target="@94" Category="Contains" FetchingParent="ServerOthers{58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}" />
+    <Link Source="Services{B200DAF8-E173-44CB-9995-8CBE2691642E}" Target="(@24)" Category="Contains" FetchingParent="Services{B200DAF8-E173-44CB-9995-8CBE2691642E}" />
+    <Link Source="Services{B200DAF8-E173-44CB-9995-8CBE2691642E}" Target="(@6)" Category="Contains" FetchingParent="Services{B200DAF8-E173-44CB-9995-8CBE2691642E}" />
+    <Link Source="Services{B200DAF8-E173-44CB-9995-8CBE2691642E}" Target="(@7)" Category="Contains" FetchingParent="Services{B200DAF8-E173-44CB-9995-8CBE2691642E}" />
+    <Link Source="ShipmentOrder{B965EB15-51A2-45AC-993D-5673E3376100}" Target="(@81)" Category="Contains" FetchingParent="ShipmentOrder{B965EB15-51A2-45AC-993D-5673E3376100}" />
+    <Link Source="ShipmentOrder{B965EB15-51A2-45AC-993D-5673E3376100}" Target="@105" Category="Contains" FetchingParent="ShipmentOrder{B965EB15-51A2-45AC-993D-5673E3376100}" />
+    <Link Source="ShipmentOrder{B965EB15-51A2-45AC-993D-5673E3376100}" Target="@136" Category="Contains" FetchingParent="ShipmentOrder{B965EB15-51A2-45AC-993D-5673E3376100}" />
+    <Link Source="ShipmentOrder{B965EB15-51A2-45AC-993D-5673E3376100}" Target="@53" Category="Contains" FetchingParent="ShipmentOrder{B965EB15-51A2-45AC-993D-5673E3376100}" />
+    <Link Source="Social{A4097F45-6A39-457C-90EA-DA898FC922A2}" Target="(@85)" Category="Contains" FetchingParent="Social{A4097F45-6A39-457C-90EA-DA898FC922A2}" />
+    <Link Source="Social{A4097F45-6A39-457C-90EA-DA898FC922A2}" Target="@144" Category="Contains" FetchingParent="Social{A4097F45-6A39-457C-90EA-DA898FC922A2}" />
+    <Link Source="Social{A4097F45-6A39-457C-90EA-DA898FC922A2}" Target="@63" Category="Contains" FetchingParent="Social{A4097F45-6A39-457C-90EA-DA898FC922A2}" />
+    <Link Source="TariffModule{864DF1B1-209F-46F9-B1E6-4D60E67CC5B3}" Target="(@80)" Category="Contains" FetchingParent="TariffModule{864DF1B1-209F-46F9-B1E6-4D60E67CC5B3}" />
+    <Link Source="TariffModule{864DF1B1-209F-46F9-B1E6-4D60E67CC5B3}" Target="@134" Category="Contains" FetchingParent="TariffModule{864DF1B1-209F-46F9-B1E6-4D60E67CC5B3}" />
+    <Link Source="TariffModule{864DF1B1-209F-46F9-B1E6-4D60E67CC5B3}" Target="@51" Category="Contains" FetchingParent="TariffModule{864DF1B1-209F-46F9-B1E6-4D60E67CC5B3}" />
+    <Link Source="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" Target="(@102)" Category="Contains" FetchingParent="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" />
+    <Link Source="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" Target="(@103)" Category="Contains" FetchingParent="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" />
+    <Link Source="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" Target="(@120)" Category="Contains" FetchingParent="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" />
+    <Link Source="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" Target="(@156)" Category="Contains" FetchingParent="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" />
+    <Link Source="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" Target="(@175)" Category="Contains" FetchingParent="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" />
+    <Link Source="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" Target="(@176)" Category="Contains" FetchingParent="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" />
+    <Link Source="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" Target="(@177)" Category="Contains" FetchingParent="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" />
+    <Link Source="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" Target="(@183)" Category="Contains" FetchingParent="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" />
+    <Link Source="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" Target="(@186)" Category="Contains" FetchingParent="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" />
+    <Link Source="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" Target="(@195)" Category="Contains" FetchingParent="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" />
+    <Link Source="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" Target="(@198)" Category="Contains" FetchingParent="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" />
+    <Link Source="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" Target="(@199)" Category="Contains" FetchingParent="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" />
+    <Link Source="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" Target="(@27)" Category="Contains" FetchingParent="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" />
+    <Link Source="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" Target="(@99)" Category="Contains" FetchingParent="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" />
+    <Link Source="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" Target="@192" Category="Contains" FetchingParent="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" />
+    <Link Source="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" Target="@194" Category="Contains" FetchingParent="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" />
+    <Link Source="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" Target="@197" Category="Contains" FetchingParent="Test{61E75C12-A7AA-4E3A-B459-985D04E42F84}" />
+    <Link Source="TimeManagement{D6BD91CE-D913-49AD-AC82-216E670FB2B8}" Target="(@89)" Category="Contains" FetchingParent="TimeManagement{D6BD91CE-D913-49AD-AC82-216E670FB2B8}" />
+    <Link Source="TimeManagement{D6BD91CE-D913-49AD-AC82-216E670FB2B8}" Target="@152" Category="Contains" FetchingParent="TimeManagement{D6BD91CE-D913-49AD-AC82-216E670FB2B8}" />
+    <Link Source="TimeManagement{D6BD91CE-D913-49AD-AC82-216E670FB2B8}" Target="@71" Category="Contains" FetchingParent="TimeManagement{D6BD91CE-D913-49AD-AC82-216E670FB2B8}" />
+    <Link Source="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Target="(@10)" Category="Contains" FetchingParent="Tools{EA704120-33C4-4C09-8831-B640B652A926}" />
+    <Link Source="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Target="(@155)" Category="Contains" FetchingParent="Tools{EA704120-33C4-4C09-8831-B640B652A926}" />
+    <Link Source="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Target="(@157)" Category="Contains" FetchingParent="Tools{EA704120-33C4-4C09-8831-B640B652A926}" />
+    <Link Source="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Target="(@160)" Category="Contains" FetchingParent="Tools{EA704120-33C4-4C09-8831-B640B652A926}" />
+    <Link Source="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Target="(@169)" Category="Contains" FetchingParent="Tools{EA704120-33C4-4C09-8831-B640B652A926}" />
+    <Link Source="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Target="(@17)" Category="Contains" FetchingParent="Tools{EA704120-33C4-4C09-8831-B640B652A926}" />
+    <Link Source="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Target="(@170)" Category="Contains" FetchingParent="Tools{EA704120-33C4-4C09-8831-B640B652A926}" />
+    <Link Source="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Target="(@2)" Category="Contains" FetchingParent="Tools{EA704120-33C4-4C09-8831-B640B652A926}" />
+    <Link Source="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Target="(@28)" Category="Contains" FetchingParent="Tools{EA704120-33C4-4C09-8831-B640B652A926}" />
+    <Link Source="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Target="(@30)" Category="Contains" FetchingParent="Tools{EA704120-33C4-4C09-8831-B640B652A926}" />
+    <Link Source="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Target="(@31)" Category="Contains" FetchingParent="Tools{EA704120-33C4-4C09-8831-B640B652A926}" />
+    <Link Source="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Target="(@34)" Category="Contains" FetchingParent="Tools{EA704120-33C4-4C09-8831-B640B652A926}" />
+    <Link Source="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Target="(@35)" Category="Contains" FetchingParent="Tools{EA704120-33C4-4C09-8831-B640B652A926}" />
+    <Link Source="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Target="(@36)" Category="Contains" FetchingParent="Tools{EA704120-33C4-4C09-8831-B640B652A926}" />
+    <Link Source="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Target="(@37)" Category="Contains" FetchingParent="Tools{EA704120-33C4-4C09-8831-B640B652A926}" />
+    <Link Source="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Target="(@4)" Category="Contains" FetchingParent="Tools{EA704120-33C4-4C09-8831-B640B652A926}" />
+    <Link Source="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Target="(@40)" Category="Contains" FetchingParent="Tools{EA704120-33C4-4C09-8831-B640B652A926}" />
+    <Link Source="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Target="(@5)" Category="Contains" FetchingParent="Tools{EA704120-33C4-4C09-8831-B640B652A926}" />
+    <Link Source="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Target="@12" Category="Contains" FetchingParent="Tools{EA704120-33C4-4C09-8831-B640B652A926}" />
+    <Link Source="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Target="@14" Category="Contains" FetchingParent="Tools{EA704120-33C4-4C09-8831-B640B652A926}" />
+    <Link Source="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Target="@159" Category="Contains" FetchingParent="Tools{EA704120-33C4-4C09-8831-B640B652A926}" />
+    <Link Source="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Target="@16" Category="Contains" FetchingParent="Tools{EA704120-33C4-4C09-8831-B640B652A926}" />
+    <Link Source="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Target="@22" Category="Contains" FetchingParent="Tools{EA704120-33C4-4C09-8831-B640B652A926}" />
+    <Link Source="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Target="@26" Category="Contains" FetchingParent="Tools{EA704120-33C4-4C09-8831-B640B652A926}" />
+    <Link Source="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Target="@39" Category="Contains" FetchingParent="Tools{EA704120-33C4-4C09-8831-B640B652A926}" />
+    <Link Source="Tools{EA704120-33C4-4C09-8831-B640B652A926}" Target="@96" Category="Contains" FetchingParent="Tools{EA704120-33C4-4C09-8831-B640B652A926}" />
+    <Link Source="WWApi{6CC2AFEC-B2FC-4066-A2BD-78602017A493}" Target="@122" Category="Contains" FetchingParent="WWApi{6CC2AFEC-B2FC-4066-A2BD-78602017A493}" />
+    <Link Source="Warehouse{98D838A7-A959-4A41-924A-797DE085910B}" Target="(@74)" Category="Contains" FetchingParent="Warehouse{98D838A7-A959-4A41-924A-797DE085910B}" />
+    <Link Source="Warehouse{98D838A7-A959-4A41-924A-797DE085910B}" Target="@126" Category="Contains" FetchingParent="Warehouse{98D838A7-A959-4A41-924A-797DE085910B}" />
+    <Link Source="Warehouse{98D838A7-A959-4A41-924A-797DE085910B}" Target="@45" Category="Contains" FetchingParent="Warehouse{98D838A7-A959-4A41-924A-797DE085910B}" />
+    <Link Source="Workflow{C082DC1B-CE1F-444E-A84F-97707EAF15F5}" Target="(@90)" Category="Contains" FetchingParent="Workflow{C082DC1B-CE1F-444E-A84F-97707EAF15F5}" />
+    <Link Source="Workflow{C082DC1B-CE1F-444E-A84F-97707EAF15F5}" Target="@154" Category="Contains" FetchingParent="Workflow{C082DC1B-CE1F-444E-A84F-97707EAF15F5}" />
+    <Link Source="Workflow{C082DC1B-CE1F-444E-A84F-97707EAF15F5}" Target="@73" Category="Contains" FetchingParent="Workflow{C082DC1B-CE1F-444E-A84F-97707EAF15F5}" />
+  </Links>
+  <Categories>
+    <Category Id="CodeMap_ExternalReference" Label="External Reference" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Referenced By" OutgoingActionLabel="References" />
+    <Category Id="CodeMap_ModelingProject" Label="Modeling Project" CanBeDataDriven="True" IsProviderRoot="False" NavigationActionLabel="Modeling Projects" />
+    <Category Id="CodeMap_Project" Label="Non Assembly Project" CanBeDataDriven="True" IsProviderRoot="False" NavigationActionLabel="Non Assembly Projects" />
+    <Category Id="CodeMap_ProjectReference" Label="Project Reference" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Referenced By" OutgoingActionLabel="References" />
+    <Category Id="CodeMap_SolutionFolder" Label="Solution Folder" CanBeDataDriven="True" IsProviderRoot="False" NavigationActionLabel="Solution Folder" />
+    <Category Id="CodeMap_TestAsset" Label="Test Asset" CanBeDataDriven="True" IsProviderRoot="False" NavigationActionLabel="Test Assets" />
+    <Category Id="CodeMap_TestProject" Label="Test Project" CanBeDataDriven="True" IsProviderRoot="False" NavigationActionLabel="Test Projects" />
+    <Category Id="CodeMap_WebProject" Label="Web Project" CanBeDataDriven="True" IsProviderRoot="False" NavigationActionLabel="Web Projects" />
+    <Category Id="CodeMap_WpfProject" Label="WPF Project" CanBeDataDriven="True" IsProviderRoot="False" NavigationActionLabel="WPF Projects" />
+    <Category Id="CodeSchema_Assembly" Label="Assembly" BasedOn="File" CanBeDataDriven="True" DefaultAction="Microsoft.Contains" Icon="CodeSchema_Assembly" NavigationActionLabel="Assemblies" />
+    <Category Id="CodeSchema_Class" Label="Class" BasedOn="CodeSchema_Type" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Member" Icon="CodeSchema_Class" NavigationActionLabel="Classes" />
+    <Category Id="CodeSchema_Namespace" Label="Namespace" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Type" Icon="CodeSchema_Namespace" NavigationActionLabel="Namespaces" />
+    <Category Id="CodeSchema_Type" Label="Type" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Member" Icon="CodeSchema_Class" NavigationActionLabel="Types" />
+    <Category Id="Contains" Label="Contains" Description="Whether the source of the link contains the target object" CanBeDataDriven="False" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Contained By" IsContainment="True" OutgoingActionLabel="Contains" />
+    <Category Id="File" Label="File" CanBeDataDriven="True" DefaultAction="Microsoft.Contains" Icon="File" NavigationActionLabel="Files" />
+    <Category Id="FileSystem.Category.FileOfType.dll" BasedOn="CodeSchema_Assembly" CanBeDataDriven="True" IsProviderRoot="False" />
+    <Category Id="FileSystem.Category.FileOfType.exe" BasedOn="CodeSchema_Assembly" CanBeDataDriven="True" IsProviderRoot="False" />
+  </Categories>
+  <Properties>
+    <Property Id="AssemblyTimestamp" DataType="System.DateTime" />
+    <Property Id="Bounds" DataType="System.Windows.Rect" />
+    <Property Id="CanBeDataDriven" Label="CanBeDataDriven" Description="CanBeDataDriven" DataType="System.Boolean" />
+    <Property Id="CanLinkedNodesBeDataDriven" Label="CanLinkedNodesBeDataDriven" Description="CanLinkedNodesBeDataDriven" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsPublic" Label="Is Public" Description="Flag to indicate the scope is Public" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsStatic" Label="Is Static" Description="Flag to indicate the member is a static member" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_StrongName" Label="StrongName" Description="StrongName" DataType="System.String" />
+    <Property Id="CommonLabel" DataType="System.String" />
+    <Property Id="DataVirtualized" Label="Data Virtualized" Description="If true, the graph can contain nodes and links that represent data for virtualized nodes/links (i.e. not actually created in the graph)." DataType="System.Boolean" />
+    <Property Id="DefaultAction" Label="DefaultAction" Description="DefaultAction" DataType="System.String" />
+    <Property Id="DelayedChildNodesState" Label="Delayed Child Nodes State" Description="Unspecified if the delayed child nodes state is not specified. NotFetched if the group contains child nodes that are not fetched into the graph yet. Fetched if the group has all its delayed child nodes already fetched." DataType="Microsoft.VisualStudio.GraphModel.DelayedDataState" />
+    <Property Id="DelayedCrossGroupLinksState" Label="Delayed Cross-Group Links State" Description="Unspecified if the delayed cross-group links state is not specified. NotFetched if delayed cross-group links on this node are not fetched into the graph yet. Fetched if all delayed cross-group links have already fetched." DataType="Microsoft.VisualStudio.GraphModel.DelayedDataState" />
+    <Property Id="ErrorLevel" Label="Error Level" Description="Used to associate an error level with a node or link in the graph" Group="Analysis" DataType="Microsoft.VisualStudio.Progression.ErrorLevel" />
+    <Property Id="Expression" DataType="System.String" />
+    <Property Id="FetchingParent" DataType="Microsoft.VisualStudio.GraphModel.GraphNodeId" />
+    <Property Id="FilePath" Label="File Path" Description="File Path" DataType="System.String" />
+    <Property Id="Group" Label="Group" Description="Display the node as a group" DataType="Microsoft.VisualStudio.GraphModel.GraphGroupStyle" />
+    <Property Id="GroupLabel" DataType="System.String" />
+    <Property Id="Icon" Label="Icon" DataType="System.String" />
+    <Property Id="IncomingActionLabel" Label="IncomingActionLabel" Description="IncomingActionLabel" DataType="System.String" />
+    <Property Id="IsContainment" DataType="System.Boolean" />
+    <Property Id="IsEnabled" DataType="System.Boolean" />
+    <Property Id="IsProviderRoot" Label="IsProviderRoot" Description="IsProviderRoot" DataType="System.Boolean" />
+    <Property Id="Label" Label="Label" Description="Displayable label of an Annotatable object" DataType="System.String" />
+    <Property Id="Layout" DataType="System.String" />
+    <Property Id="NavigationActionLabel" Label="NavigationActionLabel" Description="NavigationActionLabel" DataType="System.String" />
+    <Property Id="OutgoingActionLabel" Label="OutgoingActionLabel" Description="OutgoingActionLabel" DataType="System.String" />
+    <Property Id="SourceLocation" Label="Start Line Number" DataType="Microsoft.VisualStudio.GraphModel.CodeSchema.SourceLocation" />
+    <Property Id="TargetType" DataType="System.Type" />
+    <Property Id="Value" DataType="System.String" />
+    <Property Id="ValueLabel" DataType="System.String" />
+    <Property Id="Visibility" Label="Visibility" Description="Defines whether a node in the graph is visible or not" DataType="System.Windows.Visibility" />
+    <Property Id="ZoomLevel" DataType="System.String" />
+  </Properties>
+  <QualifiedNames>
+    <Name Id="Assembly" Label="Assembly" ValueType="Uri" />
+    <Name Id="Namespace" Label="Namespace" ValueType="System.String" />
+    <Name Id="Type" Label="Type" ValueType="System.Object" />
+  </QualifiedNames>
+  <IdentifierAliases>
+    <Alias n="1" Uri="Assembly=$(41ec268d-2956-43b6-9f68-b3fdb4041ebd.OutputPathUri)" />
+    <Alias n="2" Uri="Assembly=$(5b669934-9a06-4683-ae30-01960e11deaa.OutputPathUri)" />
+    <Alias n="3" Uri="Assembly=$(99a34cd8-8ec8-4990-ab81-f1947298722b.OutputPathUri)" />
+    <Alias n="4" Uri="Assembly=$(b0435347-16ae-4d93-8142-c3ab4a5a4252.OutputPathUri)" />
+    <Alias n="5" Uri="Assembly=$(4da357f9-166c-4423-a331-12ebc55ae213.OutputPathUri)" />
+    <Alias n="6" Uri="Assembly=$(8108dd79-196b-4c2c-82a9-f995877723b1.OutputPathUri)" />
+    <Alias n="7" Uri="Assembly=$(6d5cf168-5e41-4cb6-bb30-04445578c5b4.OutputPathUri)" />
+    <Alias n="8" Uri="Assembly=$(b77bf93f-ec04-4ab7-9a2d-eb7f27a4c4fc.OutputPathUri)" />
+    <Alias n="9" Id="(@8)" />
+    <Alias n="10" Uri="Assembly=$(7336b576-baef-4f3b-8019-b7f6f6c3c8c1.OutputPathUri)" />
+    <Alias n="11" Uri="Assembly=$(1a81f8c5-fbdc-47fe-954a-e248fb8b3f19.OutputPathUri)" />
+    <Alias n="12" Id="(@11)" />
+    <Alias n="13" Uri="Assembly=$(8b3e23a9-de23-4bec-ad7b-98bedf35063a.OutputPathUri)" />
+    <Alias n="14" Id="(@13)" />
+    <Alias n="15" Uri="Assembly=$(1c73e85c-6d71-4a78-8e4c-17e69af3c978.OutputPathUri)" />
+    <Alias n="16" Id="(@15)" />
+    <Alias n="17" Uri="Assembly=$(473192ce-cc25-4893-8364-661f2d0b963d.OutputPathUri)" />
+    <Alias n="18" Uri="Assembly=$(f0fbec4a-6857-4ce2-94b1-014ce72e72b6.OutputPathUri)" />
+    <Alias n="19" Uri="Assembly=$(15db9300-fb4e-415f-aeb4-965365250127.OutputPathUri)" />
+    <Alias n="20" Id="(@19)" />
+    <Alias n="21" Uri="Assembly=$(2713adc3-641f-4ca4-ac94-e91dd2e498bb.OutputPathUri)" />
+    <Alias n="22" Id="(@21)" />
+    <Alias n="23" Uri="Assembly=$(689eb128-ec42-4f9b-9e0b-b5ca4f6f56bb.OutputPathUri)" />
+    <Alias n="24" Uri="Assembly=$(4d8752fd-0002-4750-8549-7527bc3daf7e.OutputPathUri)" />
+    <Alias n="25" Uri="Assembly=$(16f48bd9-1ee4-44c0-b86d-ddf18ade70b3.OutputPathUri)" />
+    <Alias n="26" Id="(@25)" />
+    <Alias n="27" Uri="Assembly=$(06d4f58c-10c6-4f03-8c59-85ae3c2b86a4.OutputPathUri)" />
+    <Alias n="28" Uri="Assembly=$(f36d69d9-78f2-4f8a-8083-806ec05df4da.OutputPathUri)" />
+    <Alias n="29" Uri="Assembly=$(1b61bc4b-4258-483b-b01c-4de42c5007a4.OutputPathUri)" />
+    <Alias n="30" Uri="Assembly=$(66b4dc44-4d29-4dc4-92dd-537d1b8703aa.OutputPathUri)" />
+    <Alias n="31" Uri="Assembly=$(5172807f-7d70-4d28-85f7-d78aa5931345.OutputPathUri)" />
+    <Alias n="32" Uri="Assembly=$(49927a74-4c7a-44f5-a351-8a78dc643d2d.OutputPathUri)" />
+    <Alias n="33" Id="(@32)" />
+    <Alias n="34" Uri="Assembly=$(d9196289-649b-4165-9a16-505cb74c54ea.OutputPathUri)" />
+    <Alias n="35" Uri="Assembly=$(50c94360-3d89-47dc-a7ba-42538ca0c04a.OutputPathUri)" />
+    <Alias n="36" Uri="Assembly=$(bdeb7465-e507-4461-a884-5ecc88b8129a.OutputPathUri)" />
+    <Alias n="37" Uri="Assembly=$(5a4a5b74-f387-437c-ab41-9fb0ffadc392.OutputPathUri)" />
+    <Alias n="38" Uri="Assembly=$(1525c5ea-083d-4ab4-b7f3-69e624d39e39.OutputPathUri)" />
+    <Alias n="39" Id="(@38)" />
+    <Alias n="40" Uri="Assembly=$(b4b8c0f5-3fa6-4674-83fc-633e1701cebf.OutputPathUri)" />
+    <Alias n="41" Uri="Assembly=$(3ff3b8d8-d4fb-4e48-8e08-f28ba6904fa0.OutputPathUri)" />
+    <Alias n="42" Uri="Assembly=$(03577a36-d5a0-48c8-a246-17d4d28f2938.OutputPathUri)" />
+    <Alias n="43" Id="(@42)" />
+    <Alias n="44" Uri="Assembly=$(54a12a5c-659c-4410-a5e7-949acd43f3a5.OutputPathUri)" />
+    <Alias n="45" Id="(@44)" />
+    <Alias n="46" Uri="Assembly=$(147a706d-221a-4fd1-8f27-c12e4ab276cf.OutputPathUri)" />
+    <Alias n="47" Id="(@46)" />
+    <Alias n="48" Uri="Assembly=$(156bdc54-4d7d-4964-9b48-c0b86b571de9.OutputPathUri)" />
+    <Alias n="49" Id="(@48)" />
+    <Alias n="50" Uri="Assembly=$(0a2a3ab8-4d14-4140-be2f-2d95b235bb7c.OutputPathUri)" />
+    <Alias n="51" Id="(@50)" />
+    <Alias n="52" Uri="Assembly=$(378db1a8-43c3-45a1-a4a0-0b8961cfdb52.OutputPathUri)" />
+    <Alias n="53" Id="(@52)" />
+    <Alias n="54" Uri="Assembly=$(b02e4d92-9226-4f3f-990f-66c7f66e9316.OutputPathUri)" />
+    <Alias n="55" Id="(@54)" />
+    <Alias n="56" Uri="Assembly=$(7281a115-2213-41a3-a39a-22476f5a8db8.OutputPathUri)" />
+    <Alias n="57" Id="(@56)" />
+    <Alias n="58" Uri="Assembly=$(a3799525-14a2-42fc-a2de-69ed3fd1c5d1.OutputPathUri)" />
+    <Alias n="59" Id="(@58)" />
+    <Alias n="60" Uri="Assembly=$(78ec8434-e6ad-4e93-9b17-c746f5403f7b.OutputPathUri)" />
+    <Alias n="61" Id="(@60)" />
+    <Alias n="62" Uri="Assembly=$(a00ae10e-2560-4e06-99fa-859ea7488ec3.OutputPathUri)" />
+    <Alias n="63" Id="(@62)" />
+    <Alias n="64" Uri="Assembly=$(4733f914-0e16-4412-84df-d98232dd43e9.OutputPathUri)" />
+    <Alias n="65" Id="(@64)" />
+    <Alias n="66" Uri="Assembly=$(643f92c9-7cf1-4429-b79e-1e354b758abf.OutputPathUri)" />
+    <Alias n="67" Id="(@66)" />
+    <Alias n="68" Uri="Assembly=$(40f07800-11e8-4fba-9fc2-fd6c8d11e3ef.OutputPathUri)" />
+    <Alias n="69" Id="(@68)" />
+    <Alias n="70" Uri="Assembly=$(68f57541-574a-4ee9-b3fe-8c535c74456a.OutputPathUri)" />
+    <Alias n="71" Id="(@70)" />
+    <Alias n="72" Uri="Assembly=$(726a5395-1875-44b9-aaa2-0951b8af8084.OutputPathUri)" />
+    <Alias n="73" Id="(@72)" />
+    <Alias n="74" Uri="Assembly=$(cbcc4ebd-887e-4c25-99f2-1e3a8d428851.OutputPathUri)" />
+    <Alias n="75" Uri="Assembly=$(781af7f0-7a28-4b39-a8b1-93664ddc9555.OutputPathUri)" />
+    <Alias n="76" Id="(@75)" />
+    <Alias n="77" Uri="Assembly=$(ef658c59-1d85-4d60-a725-98f3cef9546e.OutputPathUri)" />
+    <Alias n="78" Uri="Assembly=$(e6e7db5e-6c25-41e2-819e-9f52c7b4ffb9.OutputPathUri)" />
+    <Alias n="79" Id="(@78)" />
+    <Alias n="80" Uri="Assembly=$(f0459a30-5730-4f49-a631-2488fc3d6aae.OutputPathUri)" />
+    <Alias n="81" Uri="Assembly=$(842c3432-0faf-4b5e-9a27-e8096a2e4cec.OutputPathUri)" />
+    <Alias n="82" Uri="Assembly=$(210221e2-727a-496c-ba7f-f6b820d5e9af.OutputPathUri)" />
+    <Alias n="83" Uri="Assembly=$(18671326-8a7d-4a09-91e3-98fa9bc82314.OutputPathUri)" />
+    <Alias n="84" Uri="Assembly=$(69ffe000-958e-4b93-b743-67c433024d88.OutputPathUri)" />
+    <Alias n="85" Uri="Assembly=$(1337940b-af2a-4cd1-a99a-f3932724c981.OutputPathUri)" />
+    <Alias n="86" Uri="Assembly=$(e19b6df1-f628-472d-b09e-848eb07d60bd.OutputPathUri)" />
+    <Alias n="87" Uri="Assembly=$(66797ccd-466c-4d18-8b6f-a4fc2694aa43.OutputPathUri)" />
+    <Alias n="88" Id="(@87)" />
+    <Alias n="89" Uri="Assembly=$(832d1c12-5b6c-4030-8a34-827b978f1269.OutputPathUri)" />
+    <Alias n="90" Uri="Assembly=$(e22411bc-ec46-4f60-b26b-b31d7bb2978f.OutputPathUri)" />
+    <Alias n="91" Uri="Assembly=$(8408e4e5-b4b7-46bc-8300-1ae163b36e2d.OutputPathUri)" />
+    <Alias n="92" Id="(@91)" />
+    <Alias n="93" Uri="Assembly=$(3e75c83f-67c7-4b62-9759-7ea92e16f272.OutputPathUri)" />
+    <Alias n="94" Id="(@93)" />
+    <Alias n="95" Uri="Assembly=$(ba2a42b8-a348-4d44-984c-1d718cb20b6f.OutputPathUri)" />
+    <Alias n="96" Id="(@95)" />
+    <Alias n="97" Uri="Assembly=$(15b3e0d2-6217-493a-a690-158c497f5318.OutputPathUri)" />
+    <Alias n="98" Id="(@97)" />
+    <Alias n="99" Uri="Assembly=$(83ee55e3-c13c-4df6-ac3c-c634e9cd8d66.OutputPathUri)" />
+    <Alias n="100" Uri="Assembly=$(acc2ea9e-e150-4099-8aa1-66326ab14be8.OutputPathUri)" />
+    <Alias n="101" Id="(@100)" />
+    <Alias n="102" Uri="Assembly=$(74fbc07e-5cbf-44c5-85c8-f86facaa06b6.OutputPathUri)" />
+    <Alias n="103" Uri="Assembly=$(0700f932-be74-4d43-9441-5476c4faed35.OutputPathUri)" />
+    <Alias n="104" Uri="Assembly=$(4148fda0-ef43-49bf-8d5c-23ff1fa4bd0e.OutputPathUri)" />
+    <Alias n="105" Id="(@104)" />
+    <Alias n="106" Uri="Assembly=$(1602a405-278e-4ff9-b7b5-dfc6e525b497.OutputPathUri)" />
+    <Alias n="107" Id="(@106)" />
+    <Alias n="108" Uri="Assembly=$(91564685-7ee1-466d-afcd-183a1bf62259.OutputPathUri)" />
+    <Alias n="109" Id="(@108)" />
+    <Alias n="110" Uri="Assembly=$(89132340-6f21-4ce1-8de4-1ca45e2cd9f3.OutputPathUri)" />
+    <Alias n="111" Id="(@110)" />
+    <Alias n="112" Uri="Assembly=$(90a21087-a45a-4592-871e-ed0c0e8e2104.OutputPathUri)" />
+    <Alias n="113" Uri="Assembly=$(f9ba0bdd-401d-4ccc-9a8b-1f61b6e7a85d.OutputPathUri)" />
+    <Alias n="114" Uri="Assembly=$(e177d993-3117-420c-a59b-88f5398019ed.OutputPathUri)" />
+    <Alias n="115" Id="(@114)" />
+    <Alias n="116" Uri="Assembly=$(7994d6f2-00a7-4c0d-a7d3-fd7d5304b665.OutputPathUri)" />
+    <Alias n="117" Id="(@116)" />
+    <Alias n="118" Uri="Assembly=$(1758a10f-0068-45c1-8e60-06022bbfb8b8.OutputPathUri)" />
+    <Alias n="119" Id="(@118)" />
+    <Alias n="120" Uri="Assembly=$(9b7919ad-3ec0-4da7-b4c7-31a87d72f525.OutputPathUri)" />
+    <Alias n="121" Uri="Assembly=$(97dc0030-ff94-4879-9e2a-efccc541d914.OutputPathUri)" />
+    <Alias n="122" Id="(@121)" />
+    <Alias n="123" Uri="Assembly=$(6d7ffad2-35b6-4133-8700-cf73e58d0c85.OutputPathUri)" />
+    <Alias n="124" Id="(@123)" />
+    <Alias n="125" Uri="Assembly=$(7030ab59-9900-4ab9-b37c-59d424576e85.OutputPathUri)" />
+    <Alias n="126" Id="(@125)" />
+    <Alias n="127" Uri="Assembly=$(cb2702fc-5d52-44f2-a1d2-b760b07bdb91.OutputPathUri)" />
+    <Alias n="128" Id="(@127)" />
+    <Alias n="129" Uri="Assembly=$(a663e7ef-b858-4bb6-bc33-e473f51b8e56.OutputPathUri)" />
+    <Alias n="130" Id="(@129)" />
+    <Alias n="131" Uri="Assembly=$(d3f9042c-8b29-4882-bcce-73ab5a06290b.OutputPathUri)" />
+    <Alias n="132" Id="(@131)" />
+    <Alias n="133" Uri="Assembly=$(312a7909-04d0-49b5-8d73-77598451f22e.OutputPathUri)" />
+    <Alias n="134" Id="(@133)" />
+    <Alias n="135" Uri="Assembly=$(f37bf2f7-0206-4123-a873-290a087538f6.OutputPathUri)" />
+    <Alias n="136" Id="(@135)" />
+    <Alias n="137" Uri="Assembly=$(bd959ab6-4476-48b3-aa4d-cfd7ed120e55.OutputPathUri)" />
+    <Alias n="138" Id="(@137)" />
+    <Alias n="139" Uri="Assembly=$(6b7fb227-28d2-45b8-b079-2e2f4251510d.OutputPathUri)" />
+    <Alias n="140" Id="(@139)" />
+    <Alias n="141" Uri="Assembly=$(00e5d96d-dd45-47e8-aaa3-fdbfd8add61a.OutputPathUri)" />
+    <Alias n="142" Id="(@141)" />
+    <Alias n="143" Uri="Assembly=$(13ce8afb-6ada-4e96-b76c-67279095a018.OutputPathUri)" />
+    <Alias n="144" Id="(@143)" />
+    <Alias n="145" Uri="Assembly=$(40502295-5a7f-4a20-91d2-768ca7cd35ec.OutputPathUri)" />
+    <Alias n="146" Id="(@145)" />
+    <Alias n="147" Uri="Assembly=$(d2951c0f-8a2b-4ee2-933a-8b6b4134f766.OutputPathUri)" />
+    <Alias n="148" Id="(@147)" />
+    <Alias n="149" Uri="Assembly=$(0ec1bd46-2613-4227-a6d7-d345dd0978cd.OutputPathUri)" />
+    <Alias n="150" Id="(@149)" />
+    <Alias n="151" Uri="Assembly=$(2b42c0df-9dd8-4ed1-8f6e-94746cfc1e63.OutputPathUri)" />
+    <Alias n="152" Id="(@151)" />
+    <Alias n="153" Uri="Assembly=$(3460f102-6bbb-4610-b6b7-22b222afb88c.OutputPathUri)" />
+    <Alias n="154" Id="(@153)" />
+    <Alias n="155" Uri="Assembly=$(30b30820-f5fa-4cf6-acad-e1c2bc3bea55.OutputPathUri)" />
+    <Alias n="156" Uri="Assembly=$(ee1b819b-ad1f-4646-bfe2-73dd793195ce.OutputPathUri)" />
+    <Alias n="157" Uri="Assembly=$(3e1d9324-ff25-4115-a141-446e7911ffb9.OutputPathUri)" />
+    <Alias n="158" Uri="Assembly=$(160cff77-92db-4578-bd3d-bf78a9258b00.OutputPathUri)" />
+    <Alias n="159" Id="(@158)" />
+    <Alias n="160" Uri="Assembly=$(07314fc7-08e5-4983-8b4c-6d91243f3bfc.OutputPathUri)" />
+    <Alias n="161" Uri="Assembly=$(f8f97e6b-b14d-4d14-9913-81010027afa6.OutputPathUri)" />
+    <Alias n="162" Uri="Assembly=$(f0039dbe-4a1a-4755-8f37-e4005ea74746.OutputPathUri)" />
+    <Alias n="163" Id="(@162)" />
+    <Alias n="164" Uri="Assembly=$(a27c8b79-6d09-425e-a81e-232ea3522619.OutputPathUri)" />
+    <Alias n="165" Uri="Assembly=$(20837f2f-2acc-4350-ba91-decf89327194.OutputPathUri)" />
+    <Alias n="166" Id="(@165)" />
+    <Alias n="167" Uri="Assembly=$(e2c58349-9b4c-4086-a829-5c0ab7ed22be.OutputPathUri)" />
+    <Alias n="168" Id="(@167)" />
+    <Alias n="169" Uri="Assembly=$(d99ec081-b556-44a4-989a-69576a79dd28.OutputPathUri)" />
+    <Alias n="170" Uri="Assembly=$(95c8fc5e-e864-436f-ac95-a0a81a801d30.OutputPathUri)" />
+    <Alias n="171" Uri="Assembly=$(9ffc5b97-f09a-4eed-a66e-d4160374ae6e.OutputPathUri)" />
+    <Alias n="172" Id="(@171)" />
+    <Alias n="173" Uri="Assembly=$(9b477a08-8ee2-4457-88fe-17e8a6ec4d00.OutputPathUri)" />
+    <Alias n="174" Id="(@173)" />
+    <Alias n="175" Uri="Assembly=$(294dd370-91fe-4d4c-85fb-0632f702c1a8.OutputPathUri)" />
+    <Alias n="176" Uri="Assembly=$(169a3591-dae5-4fd2-8a11-bb925658a893.OutputPathUri)" />
+    <Alias n="177" Uri="Assembly=$(4cdba717-9f04-4632-94c6-03f692ae76d9.OutputPathUri)" />
+    <Alias n="178" Uri="Assembly=$(98786fef-8f2f-4ad1-9feb-90e7aff5f5b4.OutputPathUri)" />
+    <Alias n="179" Uri="Assembly=$(b107b702-11c0-4efe-987e-44e89209dce1.OutputPathUri)" />
+    <Alias n="180" Uri="Assembly=$(8b4039ce-e827-478d-872b-15ebcc7f64de.OutputPathUri)" />
+    <Alias n="181" Uri="Assembly=$(d1d5d2bb-cf8c-4477-9972-32922fda4c34.OutputPathUri)" />
+    <Alias n="182" Uri="Assembly=$(7cd41ce5-aa2d-4ba9-9879-d618a544a88a.OutputPathUri)" />
+    <Alias n="183" Uri="Assembly=$(55776e1b-6af0-424b-96f5-4ff5dcf0e79a.OutputPathUri)" />
+    <Alias n="184" Uri="Assembly=$(72957633-eeb2-49fc-aca8-8107c0915bfb.OutputPathUri)" />
+    <Alias n="185" Uri="Assembly=$(8e418b4c-875a-4919-9b64-272f6a633f02.OutputPathUri)" />
+    <Alias n="186" Uri="Assembly=$(81e2985e-f90a-49b1-9d8c-6a28589e7aaf.OutputPathUri)" />
+    <Alias n="187" Uri="Assembly=$(5a80394a-fdcb-4ad1-baa3-385f367b904c.OutputPathUri)" />
+    <Alias n="188" Uri="Assembly=$(3ed7270f-0fc0-4ac3-9d54-157d1b639533.OutputPathUri)" />
+    <Alias n="189" Uri="Assembly=$(df7d6bf3-c07e-471c-a8ed-526c431fd294.OutputPathUri)" />
+    <Alias n="190" Id="(@189)" />
+    <Alias n="191" Uri="Assembly=$(6d103e86-ab24-4a62-8b24-e1ad015607e4.OutputPathUri)" />
+    <Alias n="192" Id="(@191)" />
+    <Alias n="193" Uri="Assembly=$(29db79d3-f160-4f0b-8c4d-6cabab9e2dc5.OutputPathUri)" />
+    <Alias n="194" Id="(@193)" />
+    <Alias n="195" Uri="Assembly=$(98df8d4e-d654-401c-bc5d-e7df18984a80.OutputPathUri)" />
+    <Alias n="196" Uri="Assembly=$(3dd19857-5b09-4f68-91c3-d9267ef4fefb.OutputPathUri)" />
+    <Alias n="197" Id="(@196)" />
+    <Alias n="198" Uri="Assembly=$(d9c5d50c-c0eb-49d3-b9a1-6a8d500eb236.OutputPathUri)" />
+    <Alias n="199" Uri="Assembly=$(a6824623-99f0-425e-8979-b643c1dac4ce.OutputPathUri)" />
+    <Alias n="200" Id="(@91 Namespace=WebFreight.Web.AccountingModel)" />
+    <Alias n="201" Id="(@91 Namespace=WebFreight.Web.AccountingModel.Controllers)" />
+  </IdentifierAliases>
+  <Styles>
+    <Style TargetType="Node" GroupLabel="Error" ValueLabel="Error Level">
+      <Condition Expression="HasValue('ErrorLevel')" />
+      <Setter Property="Icon" Value="Node.Error" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Results" ValueLabel="True">
+      <Condition Expression="HasCategory('QueryResult')" />
+      <Setter Property="Background" Value="#FFBCFFBE" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Test Project" ValueLabel="Test Project">
+      <Condition Expression="HasCategory('CodeMap_TestProject')" />
+      <Setter Property="Icon" Value="CodeMap_TestProject" />
+      <Setter Property="Background" Value="#FF307A69" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Web Project" ValueLabel="Web Project">
+      <Condition Expression="HasCategory('CodeMap_WebProject')" />
+      <Setter Property="Icon" Value="CodeMap_WebProject" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Windows Store Project" ValueLabel="Windows Store Project">
+      <Condition Expression="HasCategory('CodeMap_WindowsStoreProject')" />
+      <Setter Property="Icon" Value="CodeMap_WindowsStoreProject" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Phone Project" ValueLabel="Phone Project">
+      <Condition Expression="HasCategory('CodeMap_PhoneProject')" />
+      <Setter Property="Icon" Value="CodeMap_PhoneProject" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Portable Library" ValueLabel="Portable Library">
+      <Condition Expression="HasCategory('CodeMap_PortableLibraryProject')" />
+      <Setter Property="Icon" Value="CodeMap_PortableLibraryProject" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="WPF Project" ValueLabel="WPF Project">
+      <Condition Expression="HasCategory('CodeMap_WpfProject')" />
+      <Setter Property="Icon" Value="CodeMap_WpfProject" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="VSIX Project" ValueLabel="VSIX Project">
+      <Condition Expression="HasCategory('CodeMap_VsixProject')" />
+      <Setter Property="Icon" Value="CodeMap_VsixProject" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Modeling Project" ValueLabel="Modeling Project">
+      <Condition Expression="HasCategory('CodeMap_ModelingProject')" />
+      <Setter Property="Icon" Value="CodeMap_ModelingProject" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Assembly" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Assembly')" />
+      <Setter Property="Background" Value="#FF094167" />
+      <Setter Property="Stroke" Value="#FF094167" />
+      <Setter Property="Icon" Value="CodeSchema_Assembly" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Namespace" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Namespace')" />
+      <Setter Property="Background" Value="#FF0E619A" />
+      <Setter Property="Stroke" Value="#FF0E619A" />
+      <Setter Property="Icon" Value="CodeSchema_Namespace" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Interface" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Interface')" />
+      <Setter Property="Background" Value="#FF1382CE" />
+      <Setter Property="Stroke" Value="#FF1382CE" />
+      <Setter Property="Icon" Value="CodeSchema_Interface" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Struct" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Struct')" />
+      <Setter Property="Background" Value="#FF1382CE" />
+      <Setter Property="Stroke" Value="#FF1382CE" />
+      <Setter Property="Icon" Value="CodeSchema_Struct" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Enumeration" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Enum')" />
+      <Setter Property="Background" Value="#FF1382CE" />
+      <Setter Property="Stroke" Value="#FF1382CE" />
+      <Setter Property="Icon" Value="CodeSchema_Enum" />
+      <Setter Property="LayoutSettings" Value="List" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Delegate" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Delegate')" />
+      <Setter Property="Background" Value="#FF1382CE" />
+      <Setter Property="Stroke" Value="#FF1382CE" />
+      <Setter Property="Icon" Value="CodeSchema_Delegate" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Class" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Type')" />
+      <Setter Property="Background" Value="#FF0E70C0" />
+      <Setter Property="Stroke" Value="#FF0E70C0" />
+      <Setter Property="Icon" Value="CodeSchema_Class" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Property" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Property')" />
+      <Setter Property="Background" Value="#FFE0E0E0" />
+      <Setter Property="Stroke" Value="#FFE0E0E0" />
+      <Setter Property="Icon" Value="CodeSchema_Property" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Method" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Method') Or HasCategory('CodeSchema_CallStackUnresolvedMethod')" />
+      <Setter Property="Background" Value="#FFE0E0E0" />
+      <Setter Property="Stroke" Value="#FFE0E0E0" />
+      <Setter Property="Icon" Value="CodeSchema_Method" />
+      <Setter Property="LayoutSettings" Value="List" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Event" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Event')" />
+      <Setter Property="Background" Value="#FFE0E0E0" />
+      <Setter Property="Stroke" Value="#FFE0E0E0" />
+      <Setter Property="Icon" Value="CodeSchema_Event" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Field" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Field')" />
+      <Setter Property="Background" Value="#FFE0E0E0" />
+      <Setter Property="Stroke" Value="#FFE0E0E0" />
+      <Setter Property="Icon" Value="CodeSchema_Field" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Out Parameter" ValueLabel="Has category">
+      <Condition Expression="CodeSchemaProperty_IsOut = 'True'" />
+      <Setter Property="Icon" Value="CodeSchema_OutParameter" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Parameter" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Parameter')" />
+      <Setter Property="Icon" Value="CodeSchema_Parameter" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Local Variable" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_LocalExpression')" />
+      <Setter Property="Icon" Value="CodeSchema_LocalExpression" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Externals" ValueLabel="Has category">
+      <Condition Expression="HasCategory('Externals')" />
+      <Setter Property="Background" Value="#FF424242" />
+      <Setter Property="Stroke" Value="#FF424242" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Inherits From" ValueLabel="True">
+      <Condition Expression="HasCategory('InheritsFrom')" />
+      <Setter Property="Stroke" Value="#FF00A600" />
+      <Setter Property="StrokeDashArray" Value="2 0" />
+      <Setter Property="DrawArrow" Value="true" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Implements" ValueLabel="True">
+      <Condition Expression="HasCategory('Implements')" />
+      <Setter Property="Stroke" Value="#8000A600" />
+      <Setter Property="StrokeDashArray" Value="2 2" />
+      <Setter Property="DrawArrow" Value="true" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Calls" ValueLabel="True">
+      <Condition Expression="HasCategory('CodeSchema_Calls')" />
+      <Setter Property="Stroke" Value="#FFFF00FF" />
+      <Setter Property="StrokeDashArray" Value="2 0" />
+      <Setter Property="DrawArrow" Value="true" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Function Pointer" ValueLabel="True">
+      <Condition Expression="HasCategory('CodeSchema_FunctionPointer')" />
+      <Setter Property="Stroke" Value="#FFFF00FF" />
+      <Setter Property="StrokeDashArray" Value="2 2" />
+      <Setter Property="DrawArrow" Value="true" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Field Read" ValueLabel="True">
+      <Condition Expression="HasCategory('CodeSchema_FieldRead')" />
+      <Setter Property="Stroke" Value="#FF00AEEF" />
+      <Setter Property="StrokeDashArray" Value="2 2" />
+      <Setter Property="DrawArrow" Value="true" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Field Write" ValueLabel="True">
+      <Condition Expression="HasCategory('CodeSchema_FieldWrite')" />
+      <Setter Property="Stroke" Value="#FF00AEEF" />
+      <Setter Property="DrawArrow" Value="true" />
+      <Setter Property="IsHidden" Value="false" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Inherits From" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="HasCategory('InheritsFrom') And Target.HasCategory('CodeSchema_Class')" />
+      <Setter Property="TargetDecorator" Value="OpenArrow" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Implements" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="HasCategory('Implements') And Target.HasCategory('CodeSchema_Interface')" />
+      <Setter Property="TargetDecorator" Value="OpenArrow" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Comment Link" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="Source.HasCategory('Comment')" />
+      <Setter Property="Stroke" Value="#FFE5C365" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Cursor Location Changed" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="IsCursorLocation" />
+      <Setter Property="IndicatorWest" Value="WestIndicator" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Disabled Breakpoint Location Changed" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="DisabledBreakpointCount" />
+      <Setter Property="IndicatorWest" Value="WestIndicator" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Enabled Breakpoint Location Changed" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="EnabledBreakpointCount" />
+      <Setter Property="IndicatorWest" Value="WestIndicator" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Instruction Pointer Location Changed" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="IsInstructionPointerLocation" />
+      <Setter Property="IndicatorWest" Value="WestIndicator" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Current Callstack Changed" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="IsCurrentCallstackFrame" />
+      <Setter Property="IndicatorWest" Value="WestIndicator" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Return" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="HasCategory('CodeSchema_ReturnTypeLink')" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="References" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="HasCategory('References')" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Uses Attribute" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="HasCategory('CodeSchema_AttributeUse')" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Solution Folder" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="HasCategory('CodeMap_SolutionFolder')" />
+      <Setter Property="Background" Value="#FFDEBA83" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Project Reference" ValueLabel="Project Reference">
+      <Condition Expression="HasCategory('CodeMap_ProjectReference')" />
+      <Setter Property="Stroke" Value="#9A9A9A" />
+      <Setter Property="StrokeDashArray" Value="2 2" />
+      <Setter Property="DrawArrow" Value="true" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="External Reference" ValueLabel="External Reference">
+      <Condition Expression="HasCategory('CodeMap_ExternalReference')" />
+      <Setter Property="Stroke" Value="#9A9A9A" />
+      <Setter Property="StrokeDashArray" Value="2 2" />
+      <Setter Property="DrawArrow" Value="true" />
+    </Style>
+  </Styles>
+  <Paths>
+    <Path Id="00e5d96d-dd45-47e8-aaa3-fdbfd8add61a.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.Accounting.BL\bin\Debug\Logitude.Accounting.BL.dll" />
+    <Path Id="00e5d96d-dd45-47e8-aaa3-fdbfd8add61a.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.Accounting.BL/bin/Debug/Logitude.Accounting.BL.dll" />
+    <Path Id="03577a36-d5a0-48c8-a246-17d4d28f2938.OutputPath" Value="C:\projects\log-repo\Logitude\RabbitMQSRV\bin\Debug\RabbitMQSRV.exe" />
+    <Path Id="03577a36-d5a0-48c8-a246-17d4d28f2938.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/RabbitMQSRV/bin/Debug/RabbitMQSRV.exe" />
+    <Path Id="06d4f58c-10c6-4f03-8c59-85ae3c2b86a4.OutputPath" Value="C:\projects\log-repo\Logitude\AmitalTestConsoleApp\bin\Debug\AmitalTestConsoleApp.exe" />
+    <Path Id="06d4f58c-10c6-4f03-8c59-85ae3c2b86a4.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/AmitalTestConsoleApp/bin/Debug/AmitalTestConsoleApp.exe" />
+    <Path Id="0700f932-be74-4d43-9441-5476c4faed35.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.IntegrationTest.Quote\bin\Debug\Logitude.IntegrationTest.Quote.dll" />
+    <Path Id="0700f932-be74-4d43-9441-5476c4faed35.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.IntegrationTest.Quote/bin/Debug/Logitude.IntegrationTest.Quote.dll" />
+    <Path Id="07314fc7-08e5-4983-8b4c-6d91243f3bfc.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.OracleDatabaseMigration\bin\Debug\Logitude.OracleDatabaseMigration.dll" />
+    <Path Id="07314fc7-08e5-4983-8b4c-6d91243f3bfc.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.OracleDatabaseMigration/bin/Debug/Logitude.OracleDatabaseMigration.dll" />
+    <Path Id="0a2a3ab8-4d14-4140-be2f-2d95b235bb7c.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.TariffModule.Data\bin\Debug\Logitude.TariffModule.Data.dll" />
+    <Path Id="0a2a3ab8-4d14-4140-be2f-2d95b235bb7c.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.TariffModule.Data/bin/Debug/Logitude.TariffModule.Data.dll" />
+    <Path Id="0ec1bd46-2613-4227-a6d7-d345dd0978cd.OutputPath" Value="C:\projects\log-repo\Logitude\Unifreight.BL\bin\Debug\Unifreight.BL.dll" />
+    <Path Id="0ec1bd46-2613-4227-a6d7-d345dd0978cd.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Unifreight.BL/bin/Debug/Unifreight.BL.dll" />
+    <Path Id="1337940b-af2a-4cd1-a99a-f3932724c981.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.Social.MetaData\bin\Debug\Logitude.Social.MetaData.dll" />
+    <Path Id="1337940b-af2a-4cd1-a99a-f3932724c981.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.Social.MetaData/bin/Debug/Logitude.Social.MetaData.dll" />
+    <Path Id="13ce8afb-6ada-4e96-b76c-67279095a018.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.Social.BL\bin\Debug\Logitude.Social.BL.dll" />
+    <Path Id="13ce8afb-6ada-4e96-b76c-67279095a018.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.Social.BL/bin/Debug/Logitude.Social.BL.dll" />
+    <Path Id="147a706d-221a-4fd1-8f27-c12e4ab276cf.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.BookingLib.Data\bin\Debug\Logitude.BookingLib.Data.dll" />
+    <Path Id="147a706d-221a-4fd1-8f27-c12e4ab276cf.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.BookingLib.Data/bin/Debug/Logitude.BookingLib.Data.dll" />
+    <Path Id="1525c5ea-083d-4ab4-b7f3-69e624d39e39.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.DeploymentUtilities\bin\Debug\Logitude.DeploymentUtilities.exe" />
+    <Path Id="1525c5ea-083d-4ab4-b7f3-69e624d39e39.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.DeploymentUtilities/bin/Debug/Logitude.DeploymentUtilities.exe" />
+    <Path Id="156bdc54-4d7d-4964-9b48-c0b86b571de9.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.DashboardModule.Data\bin\Debug\Logitude.DashboardModule.Data.dll" />
+    <Path Id="156bdc54-4d7d-4964-9b48-c0b86b571de9.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.DashboardModule.Data/bin/Debug/Logitude.DashboardModule.Data.dll" />
+    <Path Id="15b3e0d2-6217-493a-a690-158c497f5318.OutputPath" Value="C:\projects\log-repo\Logitude\CustomsWorkerRole\bin\Debug\CustomsWorkerRole.dll" />
+    <Path Id="15b3e0d2-6217-493a-a690-158c497f5318.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/CustomsWorkerRole/bin/Debug/CustomsWorkerRole.dll" />
+    <Path Id="15db9300-fb4e-415f-aeb4-965365250127.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.DashboardModule.MetaDataTool\bin\Debug\Logitude.DashboardModule.MetaDataTool.exe" />
+    <Path Id="15db9300-fb4e-415f-aeb4-965365250127.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.DashboardModule.MetaDataTool/bin/Debug/Logitude.DashboardModule.MetaDataTool.exe" />
+    <Path Id="1602a405-278e-4ff9-b7b5-dfc6e525b497.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.CargoTracking.Def\bin\Debug\Logitude.CargoTracking.Def.dll" />
+    <Path Id="1602a405-278e-4ff9-b7b5-dfc6e525b497.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.CargoTracking.Def/bin/Debug/Logitude.CargoTracking.Def.dll" />
+    <Path Id="160cff77-92db-4578-bd3d-bf78a9258b00.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.DatabaseMigration\bin\Debug\Logitude.DatabaseMigration.dll" />
+    <Path Id="160cff77-92db-4578-bd3d-bf78a9258b00.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.DatabaseMigration/bin/Debug/Logitude.DatabaseMigration.dll" />
+    <Path Id="169a3591-dae5-4fd2-8a11-bb925658a893.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.CommonDataTests\bin\Debug\Logitude.CommonDataTests.dll" />
+    <Path Id="169a3591-dae5-4fd2-8a11-bb925658a893.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.CommonDataTests/bin/Debug/Logitude.CommonDataTests.dll" />
+    <Path Id="16f48bd9-1ee4-44c0-b86d-ddf18ade70b3.OutputPath" Value="C:\projects\log-repo\Logitude\TestTenantConfiguration\bin\Debug\TestTenantConfiguration.exe" />
+    <Path Id="16f48bd9-1ee4-44c0-b86d-ddf18ade70b3.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/TestTenantConfiguration/bin/Debug/TestTenantConfiguration.exe" />
+    <Path Id="1758a10f-0068-45c1-8e60-06022bbfb8b8.OutputPath" Value="C:\projects\log-repo\Logitude\ContainerMonitoring\bin\Debug\ContainerMonitoring.dll" />
+    <Path Id="1758a10f-0068-45c1-8e60-06022bbfb8b8.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/ContainerMonitoring/bin/Debug/ContainerMonitoring.dll" />
+    <Path Id="18671326-8a7d-4a09-91e3-98fa9bc82314.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.CargoTracking.MetaData\bin\Debug\Logitude.CargoTracking.MetaData.dll" />
+    <Path Id="18671326-8a7d-4a09-91e3-98fa9bc82314.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.CargoTracking.MetaData/bin/Debug/Logitude.CargoTracking.MetaData.dll" />
+    <Path Id="1a81f8c5-fbdc-47fe-954a-e248fb8b3f19.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.Update\bin\Debug\Logitude.Update.exe" />
+    <Path Id="1a81f8c5-fbdc-47fe-954a-e248fb8b3f19.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.Update/bin/Debug/Logitude.Update.exe" />
+    <Path Id="1b61bc4b-4258-483b-b01c-4de42c5007a4.OutputPath" Value="C:\projects\log-repo\Logitude\AmitalOpenAccessTester\bin\Debug\AmitalOpenAccessTester.exe" />
+    <Path Id="1b61bc4b-4258-483b-b01c-4de42c5007a4.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/AmitalOpenAccessTester/bin/Debug/AmitalOpenAccessTester.exe" />
+    <Path Id="1c73e85c-6d71-4a78-8e4c-17e69af3c978.OutputPath" Value="C:\projects\log-repo\Logitude\LogitudeDataLoading\bin\Debug\LogitudeDataLoading.exe" />
+    <Path Id="1c73e85c-6d71-4a78-8e4c-17e69af3c978.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/LogitudeDataLoading/bin/Debug/LogitudeDataLoading.exe" />
+    <Path Id="20837f2f-2acc-4350-ba91-decf89327194.OutputPath" Value="C:\projects\log-repo\Logitude\ContainerOISimulator\bin\Debug\ContainerOISimulator.dll" />
+    <Path Id="20837f2f-2acc-4350-ba91-decf89327194.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/ContainerOISimulator/bin/Debug/ContainerOISimulator.dll" />
+    <Path Id="210221e2-727a-496c-ba7f-f6b820d5e9af.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.Infrastructure.MetaData\bin\Debug\Logitude.Infrastructure.MetaData.dll" />
+    <Path Id="210221e2-727a-496c-ba7f-f6b820d5e9af.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.Infrastructure.MetaData/bin/Debug/Logitude.Infrastructure.MetaData.dll" />
+    <Path Id="2713adc3-641f-4ca4-ac94-e91dd2e498bb.OutputPath" Value="C:\projects\log-repo\Logitude\ReportAndDocumentWRTesterTool\bin\Debug\ReportAndDocumentWRTesterTool.exe" />
+    <Path Id="2713adc3-641f-4ca4-ac94-e91dd2e498bb.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/ReportAndDocumentWRTesterTool/bin/Debug/ReportAndDocumentWRTesterTool.exe" />
+    <Path Id="294dd370-91fe-4d4c-85fb-0632f702c1a8.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.IntegrationTest.Customs\bin\Debug\Logitude.IntegrationTest.Customs.dll" />
+    <Path Id="294dd370-91fe-4d4c-85fb-0632f702c1a8.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.IntegrationTest.Customs/bin/Debug/Logitude.IntegrationTest.Customs.dll" />
+    <Path Id="29db79d3-f160-4f0b-8c4d-6cabab9e2dc5.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.Test\bin\Debug\Logitude.Test.dll" />
+    <Path Id="29db79d3-f160-4f0b-8c4d-6cabab9e2dc5.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.Test/bin/Debug/Logitude.Test.dll" />
+    <Path Id="2b42c0df-9dd8-4ed1-8f6e-94746cfc1e63.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.TimeManagement.BL\bin\Debug\Logitude.TimeManagement.BL.dll" />
+    <Path Id="2b42c0df-9dd8-4ed1-8f6e-94746cfc1e63.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.TimeManagement.BL/bin/Debug/Logitude.TimeManagement.BL.dll" />
+    <Path Id="30b30820-f5fa-4cf6-acad-e1c2bc3bea55.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.SystemLogs.OracleMigratrion\bin\Debug\Logitude.SystemLogs.OracleMigratrion.dll" />
+    <Path Id="30b30820-f5fa-4cf6-acad-e1c2bc3bea55.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.SystemLogs.OracleMigratrion/bin/Debug/Logitude.SystemLogs.OracleMigratrion.dll" />
+    <Path Id="312a7909-04d0-49b5-8d73-77598451f22e.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.TariffModule.BL\bin\Debug\Logitude.TariffModule.BL.dll" />
+    <Path Id="312a7909-04d0-49b5-8d73-77598451f22e.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.TariffModule.BL/bin/Debug/Logitude.TariffModule.BL.dll" />
+    <Path Id="3460f102-6bbb-4610-b6b7-22b222afb88c.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.Workflow.BL\bin\Debug\Logitude.Workflow.BL.dll" />
+    <Path Id="3460f102-6bbb-4610-b6b7-22b222afb88c.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.Workflow.BL/bin/Debug/Logitude.Workflow.BL.dll" />
+    <Path Id="378db1a8-43c3-45a1-a4a0-0b8961cfdb52.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.ShipmentOrderModule.Data\bin\Debug\Logitude.ShipmentOrderModule.Data.dll" />
+    <Path Id="378db1a8-43c3-45a1-a4a0-0b8961cfdb52.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.ShipmentOrderModule.Data/bin/Debug/Logitude.ShipmentOrderModule.Data.dll" />
+    <Path Id="3dd19857-5b09-4f68-91c3-d9267ef4fefb.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.LogBoxIntegrationTest\bin\Debug\Logitude.LogboxIntegrationTest.dll" />
+    <Path Id="3dd19857-5b09-4f68-91c3-d9267ef4fefb.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.LogBoxIntegrationTest/bin/Debug/Logitude.LogboxIntegrationTest.dll" />
+    <Path Id="3e1d9324-ff25-4115-a141-446e7911ffb9.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.Global.OracleMigration\bin\Debug\Logitude.Global.OracleMigration.dll" />
+    <Path Id="3e1d9324-ff25-4115-a141-446e7911ffb9.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.Global.OracleMigration/bin/Debug/Logitude.Global.OracleMigration.dll" />
+    <Path Id="3e75c83f-67c7-4b62-9759-7ea92e16f272.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.XSD\bin\Debug\Logitude.XSD.dll" />
+    <Path Id="3e75c83f-67c7-4b62-9759-7ea92e16f272.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.XSD/bin/Debug/Logitude.XSD.dll" />
+    <Path Id="3ed7270f-0fc0-4ac3-9d54-157d1b639533.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.ReportTests\bin\Debug\Logitude.ReportTests.dll" />
+    <Path Id="3ed7270f-0fc0-4ac3-9d54-157d1b639533.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.ReportTests/bin/Debug/Logitude.ReportTests.dll" />
+    <Path Id="3ff3b8d8-d4fb-4e48-8e08-f28ba6904fa0.OutputPath" Value="C:\projects\log-repo\Logitude\WarehouseDataViews\bin\Debug\WarehouseDataViews.exe" />
+    <Path Id="3ff3b8d8-d4fb-4e48-8e08-f28ba6904fa0.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/WarehouseDataViews/bin/Debug/WarehouseDataViews.exe" />
+    <Path Id="40502295-5a7f-4a20-91d2-768ca7cd35ec.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.CRM.BL\bin\Debug\Logitude.CRM.BL.dll" />
+    <Path Id="40502295-5a7f-4a20-91d2-768ca7cd35ec.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.CRM.BL/bin/Debug/Logitude.CRM.BL.dll" />
+    <Path Id="40f07800-11e8-4fba-9fc2-fd6c8d11e3ef.OutputPath" Value="C:\projects\log-repo\Logitude\Unifreight.Data\bin\Debug\Unifreight.Data.dll" />
+    <Path Id="40f07800-11e8-4fba-9fc2-fd6c8d11e3ef.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Unifreight.Data/bin/Debug/Unifreight.Data.dll" />
+    <Path Id="4148fda0-ef43-49bf-8d5c-23ff1fa4bd0e.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.ShipmentOrderModule.Def\bin\Debug\Logitude.ShipmentOrderModule.Def.dll" />
+    <Path Id="4148fda0-ef43-49bf-8d5c-23ff1fa4bd0e.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.ShipmentOrderModule.Def/bin/Debug/Logitude.ShipmentOrderModule.Def.dll" />
+    <Path Id="41ec268d-2956-43b6-9f68-b3fdb4041ebd.OutputPath" Value="C:\projects\log-repo\Logitude\WarehouseData\bin\Debug\WarehouseData.exe" />
+    <Path Id="41ec268d-2956-43b6-9f68-b3fdb4041ebd.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/WarehouseData/bin/Debug/WarehouseData.exe" />
+    <Path Id="473192ce-cc25-4893-8364-661f2d0b963d.OutputPath" Value="C:\projects\log-repo\Logitude\General\bin\Debug\General.exe" />
+    <Path Id="473192ce-cc25-4893-8364-661f2d0b963d.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/General/bin/Debug/General.exe" />
+    <Path Id="4733f914-0e16-4412-84df-d98232dd43e9.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.CRM.Data\bin\Debug\Logitude.CRM.Data.dll" />
+    <Path Id="4733f914-0e16-4412-84df-d98232dd43e9.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.CRM.Data/bin/Debug/Logitude.CRM.Data.dll" />
+    <Path Id="49927a74-4c7a-44f5-a351-8a78dc643d2d.OutputPath" Value="C:\projects\log-repo\Logitude\MetaDataGenerator\bin\Debug\MetaDataGenerator.exe" />
+    <Path Id="49927a74-4c7a-44f5-a351-8a78dc643d2d.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/MetaDataGenerator/bin/Debug/MetaDataGenerator.exe" />
+    <Path Id="4cdba717-9f04-4632-94c6-03f692ae76d9.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.InvoiceTests\bin\Debug\Logitude.InvoiceTests.dll" />
+    <Path Id="4cdba717-9f04-4632-94c6-03f692ae76d9.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.InvoiceTests/bin/Debug/Logitude.InvoiceTests.dll" />
+    <Path Id="4d8752fd-0002-4750-8549-7527bc3daf7e.OutputPath" Value="C:\projects\log-repo\Logitude\CargoTrackingSearchWinForm\bin\Debug\CargoTrackingSearchWinForm.exe" />
+    <Path Id="4d8752fd-0002-4750-8549-7527bc3daf7e.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/CargoTrackingSearchWinForm/bin/Debug/CargoTrackingSearchWinForm.exe" />
+    <Path Id="4da357f9-166c-4423-a331-12ebc55ae213.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.ServerHealthService\bin\Debug\Logitude.ServerHealthService.exe" />
+    <Path Id="4da357f9-166c-4423-a331-12ebc55ae213.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.ServerHealthService/bin/Debug/Logitude.ServerHealthService.exe" />
+    <Path Id="50c94360-3d89-47dc-a7ba-42538ca0c04a.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.ViewsGenerator\bin\Debug\Logitude.ViewsGenerator.exe" />
+    <Path Id="50c94360-3d89-47dc-a7ba-42538ca0c04a.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.ViewsGenerator/bin/Debug/Logitude.ViewsGenerator.exe" />
+    <Path Id="5172807f-7d70-4d28-85f7-d78aa5931345.OutputPath" Value="C:\projects\log-repo\Logitude\LXMLFixer\bin\Debug\LXMLFixer.exe" />
+    <Path Id="5172807f-7d70-4d28-85f7-d78aa5931345.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/LXMLFixer/bin/Debug/LXMLFixer.exe" />
+    <Path Id="54a12a5c-659c-4410-a5e7-949acd43f3a5.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.WarehouseLib.Data\bin\Debug\Logitude.WarehouseLib.Data.dll" />
+    <Path Id="54a12a5c-659c-4410-a5e7-949acd43f3a5.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.WarehouseLib.Data/bin/Debug/Logitude.WarehouseLib.Data.dll" />
+    <Path Id="55776e1b-6af0-424b-96f5-4ff5dcf0e79a.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.IntegrationTests\bin\Debug\Logitude.IntegrationTests.dll" />
+    <Path Id="55776e1b-6af0-424b-96f5-4ff5dcf0e79a.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.IntegrationTests/bin/Debug/Logitude.IntegrationTests.dll" />
+    <Path Id="5a4a5b74-f387-437c-ab41-9fb0ffadc392.OutputPath" Value="C:\projects\log-repo\Logitude\LogitudeBatchServices\bin\Debug\LogitudeBatchServices.exe" />
+    <Path Id="5a4a5b74-f387-437c-ab41-9fb0ffadc392.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/LogitudeBatchServices/bin/Debug/LogitudeBatchServices.exe" />
+    <Path Id="5a80394a-fdcb-4ad1-baa3-385f367b904c.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.DocumentTests\bin\Debug\Logitude.DocumentTests.dll" />
+    <Path Id="5a80394a-fdcb-4ad1-baa3-385f367b904c.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.DocumentTests/bin/Debug/Logitude.DocumentTests.dll" />
+    <Path Id="5b669934-9a06-4683-ae30-01960e11deaa.OutputPath" Value="C:\projects\log-repo\Logitude\LogitudeTransferData\bin\Debug\LogitudeTransferData.exe" />
+    <Path Id="5b669934-9a06-4683-ae30-01960e11deaa.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/LogitudeTransferData/bin/Debug/LogitudeTransferData.exe" />
+    <Path Id="643f92c9-7cf1-4429-b79e-1e354b758abf.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.Customs.Data\bin\Debug\Logitude.Customs.Data.dll" />
+    <Path Id="643f92c9-7cf1-4429-b79e-1e354b758abf.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.Customs.Data/bin/Debug/Logitude.Customs.Data.dll" />
+    <Path Id="66797ccd-466c-4d18-8b6f-a4fc2694aa43.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.Customs.MetaData\bin\Debug\Logitude.Customs.MetaData.dll" />
+    <Path Id="66797ccd-466c-4d18-8b6f-a4fc2694aa43.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.Customs.MetaData/bin/Debug/Logitude.Customs.MetaData.dll" />
+    <Path Id="66b4dc44-4d29-4dc4-92dd-537d1b8703aa.OutputPath" Value="C:\projects\log-repo\Logitude\LogitudeActiveServer\bin\Debug\LogitudeActiveServer.exe" />
+    <Path Id="66b4dc44-4d29-4dc4-92dd-537d1b8703aa.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/LogitudeActiveServer/bin/Debug/LogitudeActiveServer.exe" />
+    <Path Id="689eb128-ec42-4f9b-9e0b-b5ca4f6f56bb.OutputPath" Value="C:\projects\log-repo\Logitude\MeatadataGeneratorTool\MeatadataGeneratorTool\MeatadataGeneratorTool\bin\Debug\MeatadataGeneratorTool.exe" />
+    <Path Id="689eb128-ec42-4f9b-9e0b-b5ca4f6f56bb.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/MeatadataGeneratorTool/MeatadataGeneratorTool/MeatadataGeneratorTool/bin/Debug/MeatadataGeneratorTool.exe" />
+    <Path Id="68f57541-574a-4ee9-b3fe-8c535c74456a.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.TimeManagement.Data\bin\Debug\Logitude.TimeManagement.Data.dll" />
+    <Path Id="68f57541-574a-4ee9-b3fe-8c535c74456a.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.TimeManagement.Data/bin/Debug/Logitude.TimeManagement.Data.dll" />
+    <Path Id="69ffe000-958e-4b93-b743-67c433024d88.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.Accounting.MetaData\bin\Debug\Logitude.Accounting.MetaData.dll" />
+    <Path Id="69ffe000-958e-4b93-b743-67c433024d88.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.Accounting.MetaData/bin/Debug/Logitude.Accounting.MetaData.dll" />
+    <Path Id="6b7fb227-28d2-45b8-b079-2e2f4251510d.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.CargoTracking.BL\bin\Debug\Logitude.CargoTracking.BL.dll" />
+    <Path Id="6b7fb227-28d2-45b8-b079-2e2f4251510d.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.CargoTracking.BL/bin/Debug/Logitude.CargoTracking.BL.dll" />
+    <Path Id="6d103e86-ab24-4a62-8b24-e1ad015607e4.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.IntegrationTest.Shipment\bin\Debug\Logitude.IntegrationTest.Shipment.dll" />
+    <Path Id="6d103e86-ab24-4a62-8b24-e1ad015607e4.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.IntegrationTest.Shipment/bin/Debug/Logitude.IntegrationTest.Shipment.dll" />
+    <Path Id="6d5cf168-5e41-4cb6-bb30-04445578c5b4.OutputPath" Value="C:\projects\log-repo\Logitude\CargoTrackingWinService\bin\Debug\CargoTrackingWinService.exe" />
+    <Path Id="6d5cf168-5e41-4cb6-bb30-04445578c5b4.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/CargoTrackingWinService/bin/Debug/CargoTrackingWinService.exe" />
+    <Path Id="6d7ffad2-35b6-4133-8700-cf73e58d0c85.OutputPath" Value="C:\projects\log-repo\Logitude\Simplog.Global.Data\bin\Debug\Simplog.Data.Global.dll" />
+    <Path Id="6d7ffad2-35b6-4133-8700-cf73e58d0c85.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Simplog.Global.Data/bin/Debug/Simplog.Data.Global.dll" />
+    <Path Id="7030ab59-9900-4ab9-b37c-59d424576e85.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.WarehouseLib.BL\bin\Debug\Logitude.WarehouseLib.BL.dll" />
+    <Path Id="7030ab59-9900-4ab9-b37c-59d424576e85.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.WarehouseLib.BL/bin/Debug/Logitude.WarehouseLib.BL.dll" />
+    <Path Id="726a5395-1875-44b9-aaa2-0951b8af8084.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.Workflow.Data\bin\Debug\Logitude.Workflow.Data.dll" />
+    <Path Id="726a5395-1875-44b9-aaa2-0951b8af8084.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.Workflow.Data/bin/Debug/Logitude.Workflow.Data.dll" />
+    <Path Id="7281a115-2213-41a3-a39a-22476f5a8db8.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.CargoTracking.Data\bin\Debug\Logitude.CargoTracking.Data.dll" />
+    <Path Id="7281a115-2213-41a3-a39a-22476f5a8db8.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.CargoTracking.Data/bin/Debug/Logitude.CargoTracking.Data.dll" />
+    <Path Id="72957633-eeb2-49fc-aca8-8107c0915bfb.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.ShipmentOrderTests\bin\Debug\Logitude.ShipmentOrderTests.dll" />
+    <Path Id="72957633-eeb2-49fc-aca8-8107c0915bfb.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.ShipmentOrderTests/bin/Debug/Logitude.ShipmentOrderTests.dll" />
+    <Path Id="7336b576-baef-4f3b-8019-b7f6f6c3c8c1.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.DeploymentAgentService\bin\Debug\Logitude.DeploymentAgentService.exe" />
+    <Path Id="7336b576-baef-4f3b-8019-b7f6f6c3c8c1.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.DeploymentAgentService/bin/Debug/Logitude.DeploymentAgentService.exe" />
+    <Path Id="74fbc07e-5cbf-44c5-85c8-f86facaa06b6.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.Test.Base\bin\Debug\Logitude.Base.dll" />
+    <Path Id="74fbc07e-5cbf-44c5-85c8-f86facaa06b6.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.Test.Base/bin/Debug/Logitude.Base.dll" />
+    <Path Id="781af7f0-7a28-4b39-a8b1-93664ddc9555.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.BookingLib.MetaData\bin\Debug\Logitude.BookingLib.MetaData.dll" />
+    <Path Id="781af7f0-7a28-4b39-a8b1-93664ddc9555.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.BookingLib.MetaData/bin/Debug/Logitude.BookingLib.MetaData.dll" />
+    <Path Id="78ec8434-e6ad-4e93-9b17-c746f5403f7b.OutputPath" Value="C:\projects\log-repo\Logitude\Simplog.Data\bin\Debug\Simplog.Data.dll" />
+    <Path Id="78ec8434-e6ad-4e93-9b17-c746f5403f7b.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Simplog.Data/bin/Debug/Simplog.Data.dll" />
+    <Path Id="7994d6f2-00a7-4c0d-a7d3-fd7d5304b665.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.CustomsMessaging\bin\Debug\Logitude.CustomsMessaging.dll" />
+    <Path Id="7994d6f2-00a7-4c0d-a7d3-fd7d5304b665.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.CustomsMessaging/bin/Debug/Logitude.CustomsMessaging.dll" />
+    <Path Id="7cd41ce5-aa2d-4ba9-9879-d618a544a88a.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.CRMTests\bin\Debug\Logitude.CRMTests.dll" />
+    <Path Id="7cd41ce5-aa2d-4ba9-9879-d618a544a88a.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.CRMTests/bin/Debug/Logitude.CRMTests.dll" />
+    <Path Id="8108dd79-196b-4c2c-82a9-f995877723b1.OutputPath" Value="C:\projects\log-repo\Logitude\CargoTrackingWinFormService\bin\Debug\CargoTrackingWinFormService.exe" />
+    <Path Id="8108dd79-196b-4c2c-82a9-f995877723b1.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/CargoTrackingWinFormService/bin/Debug/CargoTrackingWinFormService.exe" />
+    <Path Id="81e2985e-f90a-49b1-9d8c-6a28589e7aaf.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.ShipmentTests\bin\Debug\Logitude.ShipmentTests.dll" />
+    <Path Id="81e2985e-f90a-49b1-9d8c-6a28589e7aaf.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.ShipmentTests/bin/Debug/Logitude.ShipmentTests.dll" />
+    <Path Id="832d1c12-5b6c-4030-8a34-827b978f1269.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.TimeManagement.MetaData\bin\Debug\Logitude.TimeManagement.MetaData.dll" />
+    <Path Id="832d1c12-5b6c-4030-8a34-827b978f1269.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.TimeManagement.MetaData/bin/Debug/Logitude.TimeManagement.MetaData.dll" />
+    <Path Id="83ee55e3-c13c-4df6-ac3c-c634e9cd8d66.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.IntegrationTest.Core\bin\Debug\Logitude.IntegrationTest.Core.dll" />
+    <Path Id="83ee55e3-c13c-4df6-ac3c-c634e9cd8d66.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.IntegrationTest.Core/bin/Debug/Logitude.IntegrationTest.Core.dll" />
+    <Path Id="8408e4e5-b4b7-46bc-8300-1ae163b36e2d.OutputPath" Value="C:\projects\log-repo\Logitude\JustWebFreight\WebFreight.Web\bin\WebFreight.Web.dll" />
+    <Path Id="8408e4e5-b4b7-46bc-8300-1ae163b36e2d.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/JustWebFreight/WebFreight.Web/bin/WebFreight.Web.dll" />
+    <Path Id="842c3432-0faf-4b5e-9a27-e8096a2e4cec.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.ShipmentOrderModule.MetaData\bin\Debug\Logitude.ShipmentOrderModule.MetaData.dll" />
+    <Path Id="842c3432-0faf-4b5e-9a27-e8096a2e4cec.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.ShipmentOrderModule.MetaData/bin/Debug/Logitude.ShipmentOrderModule.MetaData.dll" />
+    <Path Id="89132340-6f21-4ce1-8de4-1ca45e2cd9f3.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.Customs.Def\bin\Debug\Logitude.Customs.Def.dll" />
+    <Path Id="89132340-6f21-4ce1-8de4-1ca45e2cd9f3.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.Customs.Def/bin/Debug/Logitude.Customs.Def.dll" />
+    <Path Id="8b3e23a9-de23-4bec-ad7b-98bedf35063a.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.MetadataUpdate\bin\Debug\Logitude.MetadataUpdate.exe" />
+    <Path Id="8b3e23a9-de23-4bec-ad7b-98bedf35063a.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.MetadataUpdate/bin/Debug/Logitude.MetadataUpdate.exe" />
+    <Path Id="8b4039ce-e827-478d-872b-15ebcc7f64de.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.FullAccounting.Test\bin\Debug\Logitude.FullAccountingTests.dll" />
+    <Path Id="8b4039ce-e827-478d-872b-15ebcc7f64de.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.FullAccounting.Test/bin/Debug/Logitude.FullAccountingTests.dll" />
+    <Path Id="8e418b4c-875a-4919-9b64-272f6a633f02.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.TimeManagementTests\bin\Debug\Logitude.TimeManagementTests.dll" />
+    <Path Id="8e418b4c-875a-4919-9b64-272f6a633f02.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.TimeManagementTests/bin/Debug/Logitude.TimeManagementTests.dll" />
+    <Path Id="90a21087-a45a-4592-871e-ed0c0e8e2104.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.Tariff\bin\Debug\Logitude.Tariff.dll" />
+    <Path Id="90a21087-a45a-4592-871e-ed0c0e8e2104.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.Tariff/bin/Debug/Logitude.Tariff.dll" />
+    <Path Id="91564685-7ee1-466d-afcd-183a1bf62259.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.Accounting.Def\bin\Debug\Logitude.Accounting.Def.dll" />
+    <Path Id="91564685-7ee1-466d-afcd-183a1bf62259.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.Accounting.Def/bin/Debug/Logitude.Accounting.Def.dll" />
+    <Path Id="95c8fc5e-e864-436f-ac95-a0a81a801d30.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.AutoGeneratedTemplates\bin\Debug\Logitude.AutoGeneratedTemplates.dll" />
+    <Path Id="95c8fc5e-e864-436f-ac95-a0a81a801d30.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.AutoGeneratedTemplates/bin/Debug/Logitude.AutoGeneratedTemplates.dll" />
+    <Path Id="97dc0030-ff94-4879-9e2a-efccc541d914.OutputPath" Value="C:\projects\log-repo\Logitude\WWApi\bin\Debug\WWApi.dll" />
+    <Path Id="97dc0030-ff94-4879-9e2a-efccc541d914.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/WWApi/bin/Debug/WWApi.dll" />
+    <Path Id="98786fef-8f2f-4ad1-9feb-90e7aff5f5b4.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.QuoteTests\bin\Debug\Logitude.QuoteTests.dll" />
+    <Path Id="98786fef-8f2f-4ad1-9feb-90e7aff5f5b4.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.QuoteTests/bin/Debug/Logitude.QuoteTests.dll" />
+    <Path Id="98df8d4e-d654-401c-bc5d-e7df18984a80.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.HybridTest\bin\Debug\Logitude.HybridTest.dll" />
+    <Path Id="98df8d4e-d654-401c-bc5d-e7df18984a80.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.HybridTest/bin/Debug/Logitude.HybridTest.dll" />
+    <Path Id="99a34cd8-8ec8-4990-ab81-f1947298722b.OutputPath" Value="C:\projects\log-repo\Logitude\WarehouseDataService\bin\Debug\WarehouseDataService.exe" />
+    <Path Id="99a34cd8-8ec8-4990-ab81-f1947298722b.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/WarehouseDataService/bin/Debug/WarehouseDataService.exe" />
+    <Path Id="9b477a08-8ee2-4457-88fe-17e8a6ec4d00.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.Server.Tools\bin\Debug\Logitude.Server.Tools.dll" />
+    <Path Id="9b477a08-8ee2-4457-88fe-17e8a6ec4d00.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.Server.Tools/bin/Debug/Logitude.Server.Tools.dll" />
+    <Path Id="9b7919ad-3ec0-4da7-b4c7-31a87d72f525.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.IntegrationTest.FullAccounting\bin\Debug\Logitude.IntegrationTest.FullAccounting.dll" />
+    <Path Id="9b7919ad-3ec0-4da7-b4c7-31a87d72f525.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.IntegrationTest.FullAccounting/bin/Debug/Logitude.IntegrationTest.FullAccounting.dll" />
+    <Path Id="9ffc5b97-f09a-4eed-a66e-d4160374ae6e.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.SystemLogs\bin\Debug\Logitude.SystemLogs.dll" />
+    <Path Id="9ffc5b97-f09a-4eed-a66e-d4160374ae6e.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.SystemLogs/bin/Debug/Logitude.SystemLogs.dll" />
+    <Path Id="a00ae10e-2560-4e06-99fa-859ea7488ec3.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.Social.Data\bin\Debug\Logitude.Social.Data.dll" />
+    <Path Id="a00ae10e-2560-4e06-99fa-859ea7488ec3.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.Social.Data/bin/Debug/Logitude.Social.Data.dll" />
+    <Path Id="a27c8b79-6d09-425e-a81e-232ea3522619.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.Test.Warmup\bin\Debug\Logitude.Warmup.dll" />
+    <Path Id="a27c8b79-6d09-425e-a81e-232ea3522619.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.Test.Warmup/bin/Debug/Logitude.Warmup.dll" />
+    <Path Id="a3799525-14a2-42fc-a2de-69ed3fd1c5d1.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.Accounting.Data\bin\Debug\Logitude.Accounting.Data.dll" />
+    <Path Id="a3799525-14a2-42fc-a2de-69ed3fd1c5d1.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.Accounting.Data/bin/Debug/Logitude.Accounting.Data.dll" />
+    <Path Id="a663e7ef-b858-4bb6-bc33-e473f51b8e56.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.BL\bin\Debug\Logitude.BL.dll" />
+    <Path Id="a663e7ef-b858-4bb6-bc33-e473f51b8e56.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.BL/bin/Debug/Logitude.BL.dll" />
+    <Path Id="a6824623-99f0-425e-8979-b643c1dac4ce.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.SpecFlow\bin\Debug\Logitude.SpecFlow.dll" />
+    <Path Id="a6824623-99f0-425e-8979-b643c1dac4ce.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.SpecFlow/bin/Debug/Logitude.SpecFlow.dll" />
+    <Path Id="acc2ea9e-e150-4099-8aa1-66326ab14be8.OutputPath" Value="C:\projects\log-repo\Logitude\Simplog.Server.Infrastructure\bin\Debug\Simplog.Server.Infrastructure.dll" />
+    <Path Id="acc2ea9e-e150-4099-8aa1-66326ab14be8.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Simplog.Server.Infrastructure/bin/Debug/Simplog.Server.Infrastructure.dll" />
+    <Path Id="b02e4d92-9226-4f3f-990f-66c7f66e9316.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.Infrastructure.Data\bin\Debug\Logitude.Infrastructure.Data.dll" />
+    <Path Id="b02e4d92-9226-4f3f-990f-66c7f66e9316.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.Infrastructure.Data/bin/Debug/Logitude.Infrastructure.Data.dll" />
+    <Path Id="b0435347-16ae-4d93-8142-c3ab4a5a4252.OutputPath" Value="C:\projects\log-repo\Logitude\HighCPUIISRecycleService\bin\Debug\HighCPUIISRecycleService.exe" />
+    <Path Id="b0435347-16ae-4d93-8142-c3ab4a5a4252.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/HighCPUIISRecycleService/bin/Debug/HighCPUIISRecycleService.exe" />
+    <Path Id="b107b702-11c0-4efe-987e-44e89209dce1.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.CargoTrackingTests\bin\Debug\Logitude.CargoTrackingTests.dll" />
+    <Path Id="b107b702-11c0-4efe-987e-44e89209dce1.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.CargoTrackingTests/bin/Debug/Logitude.CargoTrackingTests.dll" />
+    <Path Id="b4b8c0f5-3fa6-4674-83fc-633e1701cebf.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.DBMigrations\bin\Debug\Logitude.DBMigrations.exe" />
+    <Path Id="b4b8c0f5-3fa6-4674-83fc-633e1701cebf.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.DBMigrations/bin/Debug/Logitude.DBMigrations.exe" />
+    <Path Id="b77bf93f-ec04-4ab7-9a2d-eb7f27a4c4fc.OutputPath" Value="C:\projects\log-repo\Logitude\AmitalCustomsWindowsService\bin\Debug\AmitalCustomsWindowsService.exe" />
+    <Path Id="b77bf93f-ec04-4ab7-9a2d-eb7f27a4c4fc.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/AmitalCustomsWindowsService/bin/Debug/AmitalCustomsWindowsService.exe" />
+    <Path Id="ba2a42b8-a348-4d44-984c-1d718cb20b6f.OutputPath" Value="C:\projects\log-repo\Logitude\CommunicationWorkerRole\bin\Debug\CommunicationWorkerRole.dll" />
+    <Path Id="ba2a42b8-a348-4d44-984c-1d718cb20b6f.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/CommunicationWorkerRole/bin/Debug/CommunicationWorkerRole.dll" />
+    <Path Id="bd959ab6-4476-48b3-aa4d-cfd7ed120e55.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.Infrastructure.BL\bin\Debug\Logitude.Infrastructure.BL.dll" />
+    <Path Id="bd959ab6-4476-48b3-aa4d-cfd7ed120e55.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.Infrastructure.BL/bin/Debug/Logitude.Infrastructure.BL.dll" />
+    <Path Id="bdeb7465-e507-4461-a884-5ecc88b8129a.OutputPath" Value="C:\projects\log-repo\Logitude\LogitudeCardsCustomFields\bin\Debug\LogitudeCardsCustomFields.exe" />
+    <Path Id="bdeb7465-e507-4461-a884-5ecc88b8129a.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/LogitudeCardsCustomFields/bin/Debug/LogitudeCardsCustomFields.exe" />
+    <Path Id="cb2702fc-5d52-44f2-a1d2-b760b07bdb91.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.BookingLib.BL\bin\Debug\Logitude.BookingLib.BL.dll" />
+    <Path Id="cb2702fc-5d52-44f2-a1d2-b760b07bdb91.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.BookingLib.BL/bin/Debug/Logitude.BookingLib.BL.dll" />
+    <Path Id="cbcc4ebd-887e-4c25-99f2-1e3a8d428851.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.WarehouseLib.MetaData\bin\Debug\Logitude.WarehouseLib.MetaData.dll" />
+    <Path Id="cbcc4ebd-887e-4c25-99f2-1e3a8d428851.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.WarehouseLib.MetaData/bin/Debug/Logitude.WarehouseLib.MetaData.dll" />
+    <Path Id="d1d5d2bb-cf8c-4477-9972-32922fda4c34.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.CrossDockTests\bin\Debug\Logitude.CrossDockTests.dll" />
+    <Path Id="d1d5d2bb-cf8c-4477-9972-32922fda4c34.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.CrossDockTests/bin/Debug/Logitude.CrossDockTests.dll" />
+    <Path Id="d2951c0f-8a2b-4ee2-933a-8b6b4134f766.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.Customs.BL\bin\Debug\Logitude.Customs.BL.dll" />
+    <Path Id="d2951c0f-8a2b-4ee2-933a-8b6b4134f766.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.Customs.BL/bin/Debug/Logitude.Customs.BL.dll" />
+    <Path Id="d3f9042c-8b29-4882-bcce-73ab5a06290b.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.DashboardModule.BL\bin\Debug\Logitude.DashboardModule.BL.dll" />
+    <Path Id="d3f9042c-8b29-4882-bcce-73ab5a06290b.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.DashboardModule.BL/bin/Debug/Logitude.DashboardModule.BL.dll" />
+    <Path Id="d9196289-649b-4165-9a16-505cb74c54ea.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.DXMLGenerator\bin\Debug\Logitude.DXMLGenerator.exe" />
+    <Path Id="d9196289-649b-4165-9a16-505cb74c54ea.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.DXMLGenerator/bin/Debug/Logitude.DXMLGenerator.exe" />
+    <Path Id="d99ec081-b556-44a4-989a-69576a79dd28.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.Customs.ApiServices\bin\Debug\Logitude.Customs.ApiServices.dll" />
+    <Path Id="d99ec081-b556-44a4-989a-69576a79dd28.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.Customs.ApiServices/bin/Debug/Logitude.Customs.ApiServices.dll" />
+    <Path Id="d9c5d50c-c0eb-49d3-b9a1-6a8d500eb236.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.UnitTest\bin\Debug\Logitude.UnitTest.dll" />
+    <Path Id="d9c5d50c-c0eb-49d3-b9a1-6a8d500eb236.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.UnitTest/bin/Debug/Logitude.UnitTest.dll" />
+    <Path Id="df7d6bf3-c07e-471c-a8ed-526c431fd294.OutputPath" Value="C:\projects\log-repo\Logitude\MicrosoftGraphClient\bin\Debug\MicrosoftGraphClient.dll" />
+    <Path Id="df7d6bf3-c07e-471c-a8ed-526c431fd294.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/MicrosoftGraphClient/bin/Debug/MicrosoftGraphClient.dll" />
+    <Path Id="e177d993-3117-420c-a59b-88f5398019ed.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.AmitalMessaging\bin\Debug\Logitude.AmitalMessaging.dll" />
+    <Path Id="e177d993-3117-420c-a59b-88f5398019ed.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.AmitalMessaging/bin/Debug/Logitude.AmitalMessaging.dll" />
+    <Path Id="e19b6df1-f628-472d-b09e-848eb07d60bd.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.CRM.MetaData\bin\Debug\Logitude.CRM.MetaData.dll" />
+    <Path Id="e19b6df1-f628-472d-b09e-848eb07d60bd.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.CRM.MetaData/bin/Debug/Logitude.CRM.MetaData.dll" />
+    <Path Id="e22411bc-ec46-4f60-b26b-b31d7bb2978f.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.Workflow.MetaData\bin\Debug\Logitude.Workflow.MetaData.dll" />
+    <Path Id="e22411bc-ec46-4f60-b26b-b31d7bb2978f.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.Workflow.MetaData/bin/Debug/Logitude.Workflow.MetaData.dll" />
+    <Path Id="e2c58349-9b4c-4086-a829-5c0ab7ed22be.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.Services.Common\bin\Debug\Logitude.Common.ApiServices.dll" />
+    <Path Id="e2c58349-9b4c-4086-a829-5c0ab7ed22be.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.Services.Common/bin/Debug/Logitude.Common.ApiServices.dll" />
+    <Path Id="e6e7db5e-6c25-41e2-819e-9f52c7b4ffb9.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.DashboardModule.MetaData\bin\Debug\Logitude.DashboardModule.MetaData.dll" />
+    <Path Id="e6e7db5e-6c25-41e2-819e-9f52c7b4ffb9.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.DashboardModule.MetaData/bin/Debug/Logitude.DashboardModule.MetaData.dll" />
+    <Path Id="ee1b819b-ad1f-4646-bfe2-73dd793195ce.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.IntegrationTest.Automation\bin\Debug\Logitude.IntegrationTest.Automation.dll" />
+    <Path Id="ee1b819b-ad1f-4646-bfe2-73dd793195ce.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.IntegrationTest.Automation/bin/Debug/Logitude.IntegrationTest.Automation.dll" />
+    <Path Id="ef658c59-1d85-4d60-a725-98f3cef9546e.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.MetaData\bin\Debug\Logitude.MetaData.dll" />
+    <Path Id="ef658c59-1d85-4d60-a725-98f3cef9546e.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.MetaData/bin/Debug/Logitude.MetaData.dll" />
+    <Path Id="f0039dbe-4a1a-4755-8f37-e4005ea74746.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.CustomsMessaging.Common\bin\Debug\Logitude.CustomsMessaging.Common.dll" />
+    <Path Id="f0039dbe-4a1a-4755-8f37-e4005ea74746.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.CustomsMessaging.Common/bin/Debug/Logitude.CustomsMessaging.Common.dll" />
+    <Path Id="f0459a30-5730-4f49-a631-2488fc3d6aae.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.TariffModule.MetaData\bin\Debug\Logitude.TariffModule.MetaData.dll" />
+    <Path Id="f0459a30-5730-4f49-a631-2488fc3d6aae.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.TariffModule.MetaData/bin/Debug/Logitude.TariffModule.MetaData.dll" />
+    <Path Id="f0fbec4a-6857-4ce2-94b1-014ce72e72b6.OutputPath" Value="C:\projects\log-repo\Logitude\DW Editor Tool\bin\Debug\DW Editor Tool.exe" />
+    <Path Id="f0fbec4a-6857-4ce2-94b1-014ce72e72b6.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/DW Editor Tool/bin/Debug/DW Editor Tool.exe" />
+    <Path Id="f36d69d9-78f2-4f8a-8083-806ec05df4da.OutputPath" Value="C:\projects\log-repo\Logitude\LogitudeBatchServicesManager\bin\Debug\LogitudeBatchServicesManager.exe" />
+    <Path Id="f36d69d9-78f2-4f8a-8083-806ec05df4da.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/LogitudeBatchServicesManager/bin/Debug/LogitudeBatchServicesManager.exe" />
+    <Path Id="f37bf2f7-0206-4123-a873-290a087538f6.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.ShipmentOrderModule.BL\bin\Debug\Logitude.ShipmentOrderModule.BL.dll" />
+    <Path Id="f37bf2f7-0206-4123-a873-290a087538f6.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.ShipmentOrderModule.BL/bin/Debug/Logitude.ShipmentOrderModule.BL.dll" />
+    <Path Id="f8f97e6b-b14d-4d14-9913-81010027afa6.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.AccountingMessaging.Common\bin\Debug\Logitude.AccountingMessaging.Common.dll" />
+    <Path Id="f8f97e6b-b14d-4d14-9913-81010027afa6.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.AccountingMessaging.Common/bin/Debug/Logitude.AccountingMessaging.Common.dll" />
+    <Path Id="f9ba0bdd-401d-4ccc-9a8b-1f61b6e7a85d.OutputPath" Value="C:\projects\log-repo\Logitude\Logitude.AccountingMessaging\bin\Debug\Logitude.AccountingMessaging.dll" />
+    <Path Id="f9ba0bdd-401d-4ccc-9a8b-1f61b6e7a85d.OutputPathUri" Value="file:///C:/projects/log-repo/Logitude/Logitude.AccountingMessaging/bin/Debug/Logitude.AccountingMessaging.dll" />
+  </Paths>
+</DirectedGraph>

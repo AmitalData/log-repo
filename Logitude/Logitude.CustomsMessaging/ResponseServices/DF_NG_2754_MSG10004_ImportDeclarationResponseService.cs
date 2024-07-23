@@ -195,7 +195,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     defIsCollectActive = defaultValueQueryService.GetDefault("ISRAEL", "CGO_ACT_COLLECT", "NON", courierMaster.IntegratorNumber, _MyDeclarationPM.Tenant);
 
                     isCollectActive = defIsCollectActive == "Y";
-                    if (isCollectActive)
+                    if (isCollectActive && _MyDeclarationPM.IsConnectedToUnifreight)
                     {
                         try
                         {

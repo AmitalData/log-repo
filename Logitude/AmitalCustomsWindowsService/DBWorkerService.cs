@@ -46,7 +46,7 @@ namespace AmitalCustomsWindowsService
             }
             catch (System.Exception e)
             {
-                Logger.LogMe(e.ToString(), true, "DbError");
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
                 return false;
 
             }
@@ -104,19 +104,19 @@ namespace AmitalCustomsWindowsService
                 var patchDistributionMatch = new PatchDistributionMatch();
                 var _PatchDistributionMatchModel = patchDistributionMatch.GetPatchDistributionMatchModel(assemblyVersion);
 
-                Debug.WriteLine(_PatchDistributionMatchModel.Message);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(_PatchDistributionMatchModel.Message);
 
                 if (assemblyVersion == "1.0.0.0" || _PatchDistributionMatchModel.LastClosed_DBMigration == null)
                 {
                     return false;
                 }
-                Debug.WriteLine($"assemblyVersion ={assemblyVersion}");
-                Debug.WriteLine($"DB MajorVersion={_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion}");
-                Debug.WriteLine($"DB MinorVersion Last Closed !!!={_PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion}");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"assemblyVersion ={assemblyVersion}");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"DB MajorVersion={_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion}");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"DB MinorVersion Last Closed !!!={_PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion}");
                 //Debug.WriteLine($"DB MinorLine={_PatchDistributionMatchModel.Last_DBMigrationLine.CounterKey}");
                 if (_PatchDistributionMatchModel.MajorVersionMatch == PatchDistributionMatch.MajorVersionMatchEnum.OldDB)
                 {
-                    Logger.LogMe($"shuttttdown !!!_PatchDistributionMatchModel.MajorVersionMatch == PatchDistributionMatch.MajorVersionMatchEnum.OldDB", true);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError($"shuttttdown !!!_PatchDistributionMatchModel.MajorVersionMatch == PatchDistributionMatch.MajorVersionMatchEnum.OldDB");
                     return true;
 
                 }
@@ -125,14 +125,14 @@ namespace AmitalCustomsWindowsService
                     >
                     _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion)
                 {
-                    Logger.LogMe($"shuttttdown !!!OldDB !!! MyAssemblyDBMigrationModel.MinorVersion {_PatchDistributionMatchModel.MyAssemblyDBMigrationModel.MinorVersion }> _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion {_PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion}", true);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError($"shuttttdown !!!OldDB !!! MyAssemblyDBMigrationModel.MinorVersion {_PatchDistributionMatchModel.MyAssemblyDBMigrationModel.MinorVersion}> _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion {_PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion}");
                     return true;
                 }
                 return false;
             }
             catch (Exception ee)
             {
-                Logger.LogMe("IsOldDB -- " + ee.ToString(), true);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ee,"IsOldDB -- " );
                 return true;
             }
         }
@@ -142,7 +142,7 @@ namespace AmitalCustomsWindowsService
             if (WorkerRoleServiceLocator.PleaseShutDown)
             {
                 WorkerRoleServiceLocator.PleaseShutDown = false;
-                Logger.LogMe("WorkerRoleServiceLocator.PleaseShutDown = false;", false);
+                NetCommonHelper.Logger.DevLog.Instance.WriteWarning("WorkerRoleServiceLocator.PleaseShutDown = false;");
 
             }
             for (Int32 iWorker = 0; iWorker < _Workers.Count; iWorker++)
@@ -156,7 +156,7 @@ namespace AmitalCustomsWindowsService
                     }
                     else
                     {
-                        Logger.LogMe(GetThreadName(iWorker), false, "NotIsAliveBut_WhileServiceStarted_IsOut");
+                        NetCommonHelper.Logger.DevLog.Instance.WriteInfo(GetThreadName(iWorker)+":"+ "NotIsAliveBut_WhileServiceStarted_IsOut");
                     }
                     //_Threads[iWorker] = new Thread(_Workers[iWorker].Run);
                     //_Threads[iWorker].Start();
@@ -176,7 +176,7 @@ namespace AmitalCustomsWindowsService
             //_Threads.Add(t);
             _Threads[iWorker] = currThread;
             _Threads[iWorker].Start();
-            Logger.LogMe(GetThreadName(iWorker), false, "StartThread");
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(GetThreadName(iWorker));
         }
 
         private string GetThreadName(int iWorker)
@@ -377,7 +377,7 @@ namespace AmitalCustomsWindowsService
             catch (Exception e)
             {
 
-                Logger.LogMe(e.ToString(), true, "StopThreads");
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
             }
 
         }
@@ -386,7 +386,7 @@ namespace AmitalCustomsWindowsService
         {
 
             _Workers[iWorker].ServiceStarted = false;//== dispose !!!
-            Logger.LogMe(GetThreadName(iWorker), false, "StopThread");
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(GetThreadName(iWorker));
         }
 
 

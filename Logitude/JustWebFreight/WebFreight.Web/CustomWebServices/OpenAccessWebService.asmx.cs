@@ -22,6 +22,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
 using System.Web.Services;
+using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
 
 namespace WebFreight.Web.CustomWebServices
 {
@@ -184,14 +185,24 @@ namespace WebFreight.Web.CustomWebServices
                 ForcePersonalSign = true,
                 UnifreightListOnServerOnly = unifreightListOnServerOnly,
             };
+            var signQueueHSMService = new SignQueueHSMService();
+            var dbSignQueueService = new SignQueueHybridDbService();
+            SignMethodByQueueEnum signMethodByQueueEnum = SignMethodByQueueEnum.None;
+            string availableSignServer = null;
 
-            //CheckParamValid();
-            //CheckLock();
-
-            if (!CheckSignServerOn(tenant, personId))
+            if (signQueueHSMService.IsHSMSign_IsOn(tenant))
             {
-                errMessage = ("Sign server not available");
-                return false;
+                (availableSignServer, signMethodByQueueEnum) = dbSignQueueService
+                    .GetAvailableSignServer(tenant, SignQueueByType.SignQueueByPersonId, personId);
+            }
+            if (string.IsNullOrEmpty(availableSignServer))
+            {
+                if (!CheckSignServerOn(tenant, personId))
+                {
+                    errMessage = ("Sign server not available");
+                    return false;
+                }
+                            
             }
             INF_MSG_GenericResponseData responseData;
             var myDF_MSG10000_ImportDeclarationMessagingService = new DF_MSG10000_ImportDeclarationMessagingService();

@@ -31,16 +31,6 @@ import { filter } from 'rxjs/operators';
     //pipes: [TextCodeTranslationPipe],
     inputs: ['columns', 'rowCount', 'dataSource', 'searchFields', 'queryId', 'queryCode', 'QueryChangeEvent', 'Filterchangeevent', 'pubSubAdvanceQueryFiltersServiceRecived', 'autoLoad', 'SearchFieldchangeevent', 'MenuHeaderchangeevent', 'SelectedRow', 'ObjectTable', 'ColumnsReady', 'IsCustomTemplate', 'CustomColumnsReady', 'SelectFirstRow', 'EnableRowHoverVisibility', 'RowHoverVisibilityQueryName', 'HoverTemplateIndex', 'HasPermition', 'ShowArrow', 'IsGradiantSelectedColor', 'rowHeight', 'RowHoverColor', 'RowBackGroundColor', 'ChangeColorByPropName', 'ChangeColorByPropValue', 'IgnoreRowHoverVisibilityQueryName','PassAdditionalDataToTemplates', 'ShowHLineOverRow', 'EnableRowToolTip', 'ToolTipWidth', 'ToolTipHeight', 'ToolTipBinding', 'IsAllRecordsChecked', 'HighLightSelectedRow', 'SelectedRows', 'EnableMultiSelection', 'CustomBackFromEdit', 'CheckBoxFilterChanged', 'IsCheckBoxEnabled', 'FireCheckBoxChecked', 'Disabled', 'UseBusyIndecator', 'MarkIsChecked', 'MyScrollTop', 'MySelectedRowIndex', 'SortServerProp', 'ReloadData', 'CheckboxProp', 'FilterChangedEvent','DontApplyVirtualization', 'DataCy'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    styles: [`
-        cdk-virtual-scroll-viewport {
-            contain: none !important;
-            transform: none !important;
-        }
-
-        :host ::ng-deep .cdk-virtual-scroll-content-wrapper {
-            transform: none !important;
-        }
-    `]
 })
 export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnDestroy {
     func: Function;
@@ -1838,7 +1828,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
                     }
                 }
             }
-            this.cd.detectChanges();
+           if (this.cd) this.cd.detectChanges();
 
     };
     HScrollPosition: number = -1;

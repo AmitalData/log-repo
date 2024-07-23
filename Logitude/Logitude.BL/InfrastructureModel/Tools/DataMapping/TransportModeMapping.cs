@@ -10,6 +10,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             poco.Id = entityPM.Id;
             poco.Name = entityPM.Name;
             poco.SearchFields = entityPM.SearchFields; 
+            poco.LocalName = entityPM.LocalName;
 
         }
     }

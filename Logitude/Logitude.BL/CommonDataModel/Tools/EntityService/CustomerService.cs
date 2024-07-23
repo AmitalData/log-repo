@@ -798,8 +798,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityPM.CountryCode = entityCard.CountryCode;
                 entityPM.CountryName = entityCard.CountryName;
             }
-            entityCard.EmailForSendingSingArinvoice = entityCard.EmailForSendingSingArinvoice;
-            entityCard.SendingInterestReport = entityCard.SendingInterestReport;
+            entityCard.EmailForSendingSingArinvoice = entityPM.Card?.EmailForSendingSingArinvoice;
+            entityCard.SendingInterestReport = entityPM.Card != null ? entityPM.Card.SendingInterestReport : entityCard.SendingInterestReport; 
         }
 
         private void ComputeContactFields()
@@ -1233,6 +1233,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
         private void UpdateContactForAccounting()
         {
+            if (LogitudeSettings.DeploymentStage != "amitalstorage") return;
             ContactQuery entityQuery = new ContactQuery(entityPM.Tenant);
             ContactRepository repository = new ContactRepository(objectContext);
             var myResult = entityQuery.GetContactsbyCardId(entityPM.Id, entityPM.Tenant).ToList();
@@ -1264,6 +1265,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
             repository.SubmitChanges();
+
             this.UpdateGLAccountWithOldAndNewContactForAccounting(oldContactForAccounting, newContactForAccounting);
 
         }

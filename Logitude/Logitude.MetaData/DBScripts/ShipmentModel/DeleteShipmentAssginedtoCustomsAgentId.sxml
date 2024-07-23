@@ -1,7 +1,0 @@
-﻿<Script DBType="Main" Module="Shipment" >
-	<Sql Version="1">
-		<![CDATA[
-      ALTER TABLE shipments DROP COLUMN Drop_AssginedtoCustomsAgentId;
-    ]]>
-	</Sql>
-</Script>

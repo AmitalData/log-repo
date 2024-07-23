@@ -156,7 +156,7 @@ namespace Logitude.Server.Tools.Helpers
 
                                 if (idx == numChunks - 1)
                                 {
-                                    await client.Files.UploadSessionFinishAsync(cursor, new CommitInfo(folder + "/" + fileName), memStream);
+                                    await client.Files.UploadSessionFinishAsync(cursor, new CommitInfo(folder + "/" + fileName),null, memStream);
                                 }
                             }
 
@@ -166,7 +166,7 @@ namespace Logitude.Server.Tools.Helpers
 
                                 if (idx == numChunks - 1)
                                 {
-                                    await client.Files.UploadSessionFinishAsync(cursor, new CommitInfo(folder + "/" + fileName), memStream);
+                                    await client.Files.UploadSessionFinishAsync(cursor, new CommitInfo(folder + "/" + fileName),null, memStream);
                                 }
 
                                 else

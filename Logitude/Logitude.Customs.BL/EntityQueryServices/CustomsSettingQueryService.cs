@@ -43,6 +43,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 UnfConnectionString = customsSettingPM.UnfConnectionString,
                 OnPremiseFillingService = customsSettingPM.OnPremiseFillingService,
                 IsConnectedToUniFreight = customsSettingPM.IsConnectedToUniFreight,
+                Id = customsSettingPM.Id,
 
             };
         }

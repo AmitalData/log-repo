@@ -1,10 +1,20 @@
-﻿using Logitude.Accounting.BL.CoreBL;
-using Logitude.Accounting.Def.EntityPMs;
+﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.CoreBL;
+using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.BL.EntityDataMappings;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.InvoiceModel.Tools.EntityService;
+using Logitude.BL.Resolvers;
+using Logitude.BL.Security;
 //using Logitude.BL.CommonDataModel.EntityPMs;
 //using Logitude.BL.CommonDataModel.EntityQueries;
 //using Logitude.BL.Security;
@@ -14,30 +24,12 @@ using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel;
+using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Logitude.Accounting.BL.Validators;
 using System.ComponentModel.DataAnnotations;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-
-using Logitude.Accounting.Def.EntityUpdateServicesExt;
-using Logitude.BL.Interfaces;
-using Microsoft.Practices.Unity;
-using Logitude.BL.Helpers;
-using Logitude.BL.Resolvers;
-using Logitude.Accounting.BL.CloseTables;
-using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
-using Logitude.BL.InvoiceModel.EntityQueries;
-using Logitude.BL.InvoiceModel.EntityPMs;
-using Logitude.BL.InvoiceModel.Tools.EntityService;
-using Simplog.Data.InvoiceModel;
-using Logitude.BL.InvoiceModel.CloseTables;
 using System.Diagnostics;
 using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
 using Logitude.Accounting.BL.CoreBL.Reports;
@@ -49,6 +41,7 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Simplog.Data.InvoiceModel.Repositories;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Utils;
+using System.Linq;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -142,59 +135,55 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 LedgerTransactionUpdateService transactionService = new LedgerTransactionUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
                 EntityQueryServices.ARPaymentChequeQueryService aRPaymentChequeQueryService = new EntityQueryServices.ARPaymentChequeQueryService(entityPM.Tenant);
 
-                // get transactions
+
+
                 List<string> ledgerTransactionIds = entityPM.ReconciliationLines.Where(d => d.TransactionId != null).Select(d => d.TransactionId).ToList();
-                List<LedgerTransactionPM> ledgerTransactions = transQuery.GetLedgerTransactionPMsByIdList(ledgerTransactionIds, entityPM.Tenant);
-
-
-                if (ledgerTransactions.Any(d => d.SourceTypeCode == CloseTables.AccountingEntityValues.ARPayment))
+                IQueryable<string> jIds = GetReconcileTransactionJournalIds(ledgerTransactionIds, entityPM.Tenant);
+               
+                if (ExistsAccEntCodeByJIds(CloseTables.AccountingEntityValues.ARPayment, jIds, entityPM.Tenant))
                 {
-                    LedgerTransactionPM paymentTransaction = ledgerTransactions.Find(d => d.SourceTypeCode == CloseTables.AccountingEntityValues.ARPayment);
-                    if (paymentTransaction == null) throw new ApplicationException("Cannot find payment transaction on reco lines");
+                    string aRPaymentTransId = GetFirstIdByAccEntCodeByJIds(CloseTables.AccountingEntityValues.ARPayment, jIds, entityPM.Tenant);
+                    if (String.IsNullOrEmpty(aRPaymentTransId)) throw new ApplicationException("Cannot find A/R payment transaction on reco lines");
+
                     foreach (ReconciliationLinePM recoLine in entityPM.ReconciliationLines)
                     {
-                        if (recoLine.TransactionId != paymentTransaction.Id)
+                        if (recoLine.TransactionId != aRPaymentTransId)
                         {
-                            recoLine.ReconciledWithTransactionId = paymentTransaction.Id;
+                            recoLine.ReconciledWithTransactionId = aRPaymentTransId;
+                        }
+                    }
+                }
+
+
+                if (ExistsAccEntCodeByJIds(CloseTables.AccountingEntityValues.APPayment, jIds, entityPM.Tenant))
+                {
+                    string aPPaymentTransId = GetFirstIdByAccEntCodeByJIds(CloseTables.AccountingEntityValues.APPayment, jIds, entityPM.Tenant);
+                    if (String.IsNullOrEmpty(aPPaymentTransId)) throw new ApplicationException("Cannot find A/P payment transaction on reco lines");
+
+                    foreach (ReconciliationLinePM recoLine in entityPM.ReconciliationLines)
+                    {
+                        if (recoLine.TransactionId != aPPaymentTransId)
+                        {
+                            recoLine.ReconciledWithTransactionId = aPPaymentTransId;
                         }
                     }
 
                 }
 
-                if (ledgerTransactions.Any(d => d.SourceTypeCode == CloseTables.AccountingEntityValues.APPayment))
-                {
-                    LedgerTransactionPM paymentTransaction = ledgerTransactions.Find(d => d.SourceTypeCode == CloseTables.AccountingEntityValues.APPayment);
-                    if (paymentTransaction == null) throw new ApplicationException("Cannot find payment transaction on reco lines");
-                    foreach (ReconciliationLinePM recoLine in entityPM.ReconciliationLines)
-                    {
-                        if (recoLine.TransactionId != paymentTransaction.Id)
-                        {
-                            recoLine.ReconciledWithTransactionId = paymentTransaction.Id;
-                        }
-                    }
 
-                }
                 if (FeatureToggleHelper.HasFeatureToggle("PSR", entityPM.Tenant))
                 {
-                    IInvoiceContext invoiceContext = InvoiceContext.GetContext(entityPM.Tenant);
-                    if (ledgerTransactions.Any(d => d.SourceTypeCode == CloseTables.AccountingEntityValues.APInvoice))
+                    if (ExistsAccEntCodeByJIds(CloseTables.AccountingEntityValues.APInvoice, jIds, entityPM.Tenant))
                     {
-                        var aPInvoiceTransactions = ledgerTransactions.Where(d => d.SourceTypeCode == CloseTables.AccountingEntityValues.APInvoice);
-                        if (aPInvoiceTransactions == null) throw new ApplicationException("Cannot find A/P Invoice transaction on reco lines");
+                        IInvoiceContext invoiceContext = InvoiceContext.GetContext(entityPM.Tenant);
+
+                        List<LedgerTransactionJournalLineLT> aPInvoiceLTs = GetAPInvoiceLedgerTransactionsByIdList(ledgerTransactionIds, entityPM.Tenant);
+                        if (aPInvoiceLTs == null || aPInvoiceLTs.Count == 0) throw new ApplicationException("Cannot find A/P Invoice transaction on reco lines");
 
                         JournalLineRepository journalLineRepository = new JournalLineRepository(entityPM.Tenant);
-                        var lt_query = from jl in journalLineRepository.GetAll(entityPM.Tenant).Where(rec => rec.ActionCode == "1")
-                                       join
-                                       trans in aPInvoiceTransactions
-                                       on new { jl.JournalId, jl.Line }
-                                       equals new { trans.JournalId, Line = trans.JournalLineNumber }
-                                       select trans;
-                        if (lt_query == null) throw new ApplicationException("Cannot find A/P Invoice transactions on reco lines");
 
-                        List<LedgerTransactionPM> aPInvoiceLTs = lt_query.ToList();
-                        if (aPInvoiceLTs.Count == 0) throw new ApplicationException("Cannot find A/P Invoice transaction on reco. lines");
                         APInvoiceQuery aPInvoiceQuery = new APInvoiceQuery(entityPM.Tenant);
-                        foreach (LedgerTransactionPM lt in aPInvoiceLTs)
+                        foreach (LedgerTransactionJournalLineLT lt in aPInvoiceLTs)
                         {
                             APInvoicePM aPInvoicePM = aPInvoiceQuery.GetSinglePM(lt.SourceId, entityPM.Tenant);
                             if (aPInvoicePM == null) throw new ApplicationException("Cannot find A/P Invoice " + lt.SourceNumber);
@@ -250,43 +239,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
                 }
 
-                //foreach (var transactionPM in LedgerTransactions)
-                //{
 
-                //    if (transactionPM.SourceTypeCode == "3")
-                //    {
-                //        List<ARPaymentChequePM> aRPaymentChequePMs = aRPaymentChequeQueryService.GetListByPaymentId(transactionPM.SourceId, entityPM.Tenant);
-
-                //        foreach (ARPaymentChequePM item in aRPaymentChequePMs)
-                //        {
-                //            item.StatusCode = "8";
-                //        item.ChangeSetOp = ChangeSetOperation.Update;
-                //            ARPaymentChequeUpdateService aRPaymentChequeUpdateService = new ARPaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
-                //            aRPaymentChequeUpdateService.Update(item, true);
-                //        }
-                //    }
-
-                //}
-
-
-
-
-
-                //var validContext = AccountingValidationContextServiceProvider.NewReconciliationValidatorContext((MainContext as IAccountingContext), entityPM);
-                //var validationResult = ReconciliationValidator.IsReconciliationValid(entityPM, validContext);
-                //if (validationResult != null)
-                //{
-                //    string errorText = validationResult.ErrorMessage;//+ ", Number=" + _JournalPM.ExternalNo + @"/" + _JournalPM.Id;
-                //                                                     //ThrowException(errorText);
-                //    throw new ApplicationException(errorText);
-                //}
-
-
-
-                //if (entityPM.IsCancelled == null)
-                //{
-                //    entityPM.IsCancelled = false;
-                //}
                 if (entityPM.Number == "get")
                 {
                     entityPM.Number = CodeCounter.GetNumber("Reconciliation.Number", entityPM.Tenant).ToString();
@@ -298,6 +251,36 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
         }
+
+        private static IQueryable<String> GetReconcileTransactionJournalIds(List<string> ledgerTransactionIds, int tenant)
+        {
+            LedgerTransactionQueryService transactionQueryService = new LedgerTransactionQueryService(tenant);
+            IQueryable<String> jIds = transactionQueryService.GetJournalIdsByIdList(ledgerTransactionIds, tenant);
+            return jIds;
+        }
+
+        private static bool ExistsAccEntCodeByJIds(string accEntCode, IQueryable<string> jIds, int tenant)
+        {
+            JournalQueryService journalQueryService = new JournalQueryService(tenant);
+            bool rv = journalQueryService.ExistsAccEntCodeByJIds(accEntCode, jIds, tenant);
+            return rv;
+        }
+
+        private static string GetFirstIdByAccEntCodeByJIds(string accEntCode, IQueryable<string> jIds, int tenant)
+        {
+            JournalQueryService journalQueryService = new JournalQueryService(tenant);
+            string firstId = journalQueryService.GetFirstIdByAccEntCodeByJIds(accEntCode, jIds, tenant);
+            return firstId;
+        }
+
+
+        public static List<LedgerTransactionJournalLineLT> GetAPInvoiceLedgerTransactionsByIdList(List<String> ledgerTransactionIds, int tenant)
+        {
+            LedgerTransactionQueryService transactionQueryService = new LedgerTransactionQueryService(tenant);
+            List<LedgerTransactionJournalLineLT> ledgerTransactionLineLTs = transactionQueryService.GetAPInvoiceLedgerTransactionsByIdList(ledgerTransactionIds, tenant);
+            return ledgerTransactionLineLTs;
+        }
+
         private static void ULog(string text, DateTime stopLogAt)
         {
             string log_text = text + System.Environment.NewLine;
@@ -546,7 +529,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             var errLines = string.Join(Environment.NewLine, errorsList);
                             throw new ApplicationException(errLines);
                         }
-                        Debug.WriteLine("due CreatedByReconciliationAfterConversion do not   UpdateLedgerTransaction - dont change open Amount ");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("due CreatedByReconciliationAfterConversion do not   UpdateLedgerTransaction - dont change open Amount ");
                     }
                     else
                     {
@@ -573,11 +556,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     if (ledgerTransactionPM.OpenAmount == 0)
                     {
                         //***102417/
-                        Logger.LogMe("ReconciliationUpdateService.UpdateLedgerTransaction: APInvoice status 'Paid' Inv No. " + invoice.InvoiceNumber.ToString()
+                        NetCommonHelper.Logger.DevLog.Instance.WriteInfo("APINV_PD:ReconciliationUpdateService.UpdateLedgerTransaction: APInvoice status 'Paid' Inv No. " + invoice.InvoiceNumber.ToString()
                          //   + ", HasFeatureToggle 'ILO'"
                             + ", old status= " + invoice.StatusCode
                             + ", ledgerTransactionPM.Id= " + ledgerTransactionPM.Id.ToString()
-                            + ", reconciliationLine.ReconciliationId= " + reconciliationLine.ReconciliationId.ToString(), false, "APINV_PD");
+                            + ", reconciliationLine.ReconciliationId= " + reconciliationLine.ReconciliationId.ToString());
                         invoice.IsClosed = true;
                         invoice.StatusCode = "PD";
                     }
@@ -619,7 +602,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     Math.Abs(deltaGLAccountAgingDataPM.TotalOpenTransactions.GetValueOrDefault()) > 10_000
                     )
                 {
-                    Debug.WriteLine("Ohad: Given Reconciliation Update And tenant == Ship2u and the Delta of TotalOpenTransactions > 10,000 ,Do not Update (Cause lock cause Fail Journal Streaming  ) .... ");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Ohad: Given Reconciliation Update And tenant == Ship2u and the Delta of TotalOpenTransactions > 10,000 ,Do not Update (Cause lock cause Fail Journal Streaming  ) .... ");
                 }
                 else
                 {
@@ -648,8 +631,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             // update connected ARPayment 
             ARPaymentReconciliationService arpRecoService = new ARPaymentReconciliationService(entityPM.Tenant);
-            arpRecoService.UpdatePaymentOpenAmountAndStatusForReconciliaiton(entityPM);
-            arpRecoService.UpdateConnectedInvoices(entityPM);
+            arpRecoService.UpdatePaymentOpenAmountAndStatusForReconciliaitonLT(entityPM);
+            arpRecoService.UpdateConnectedInvoicesLT(entityPM);
 
         }
 

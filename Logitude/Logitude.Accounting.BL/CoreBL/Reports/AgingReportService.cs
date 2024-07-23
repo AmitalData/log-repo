@@ -29,6 +29,7 @@ using Logitude.Server.Tools.Utils;
 using Logitude.Server.Tools.Helpers;
 using System.Reflection;
 using System.Data.Entity;
+using Newtonsoft.Json;
 
 namespace Logitude.Accounting.BL.CoreBL.Reports
 {
@@ -73,10 +74,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 new PeriodM(){AccountId="1", CurrencyId="1", OrderDate = new DateTime(2016 ,5,1) , OrderDateB4=false , Total=10},
                 new PeriodM(){AccountId="1", CurrencyId="1", OrderDate = new DateTime(2016 ,5,1) , OrderDateB4=true, Total=-35},
             };
-            Debug.WriteLine(b4);
-            Debug.WriteLine("------");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(b4));
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("------");
             var after = ManipulateFifoPerAccCurr(b4);
-            Debug.WriteLine(after);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(after));
 
         }
 
@@ -92,7 +93,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
             IQueryable<GLAccountTotalByMonthsDTOAging> qTotalByMonthAcc = null;
 
-            Logger.LogDebug("Aging Report Start");
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Aging Report Start");
 
             _AccountingContext = AccountingContext.GetContext(_Param.Tenant);
             (_AccountingContext as System.Data.Entity.DbContext).Database.CommandTimeout = 300;
@@ -115,7 +116,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             bool fromGLAccountAgingData = false;
             if (_Param.FroceFromGLAccountAgingData && !_Param.SuppressFromGLAccountAgingData)
             {
-                Logger.LogDebug("{fromGLAccountAgingData}:{0}", fromGLAccountAgingData);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("{fromGLAccountAgingData}:{0}", fromGLAccountAgingData));
 
                 var agingReportFromAgingData = new AgingReportFromAgingData(_AccountingContext, _MainAccountIdList_ToFetchThenAggragrate, _qAllAccAging4AccountTypeCode_CustomerOrVendor, _AccountingCurrencyId);
                 theDBList = agingReportFromAgingData.GetFromGLAccountAgingData(_Param.Tenant, listPeriods, myorderLessThanExclusive);//, listLessThanExclusivePeriods);
@@ -132,7 +133,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 if (_Param.AggregateByGLAccountCurrencies)
                 {
 
-                    Logger.LogDebug("{AggregateByGLAccountCurrencies}:{0}", _Param.AggregateByGLAccountCurrencies);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("{AggregateByGLAccountCurrencies}:{0}", _Param.AggregateByGLAccountCurrencies));
 
 
                     var qlist = (from left_TotDB in theDBList
@@ -304,7 +305,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 }
             }
 
-            Logger.LogDebug("AccountListRelatedCurrencies Query \r\n {0} ", q_accountsList.ToTraceQuery());
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("AccountListRelatedCurrencies Query \r\n {0} ", q_accountsList.ToTraceQuery()));
 
             var myaccountsList = q_accountsList.ToList();
 
@@ -321,9 +322,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                       join card in _AccountingContext.GLAccountCardsDatas.Where(r => r.Tenant == _Param.Tenant)
                        on acc.CardsDataId equals card.Id into cardJoinT
-                      from card in cardJoinT.DefaultIfEmpty()
+                      from card in cardJoinT.DefaultIfEmpty() 
 
-                      let glaPeriod = _AccountingContext.GLAccountInterestPeriods.Where(r => r.Tenant == _Param.Tenant && r.GLAccountId == acc.Id && r.PeriodStartDate <= currentDate)
+                      let glaPeriod = _AccountingContext.GLAccountInterestPeriods.Where(r => r.Tenant == _Param.Tenant && r.GLAccountId == acc.Id && r.PeriodStartDate <= currentDate && acc.ActiveForInterest)
                       .OrderByDescending(d => d.PeriodStartDate).FirstOrDefault()
                       let basePeriod = _AccountingContext.InterestBasesPeriods.Where(d => d.InterestBaseTypeId == glaPeriod.StandardInterestRateBaseId)
                       .OrderByDescending(d => d.InterestBaseStartDate).FirstOrDefault()
@@ -1198,12 +1199,12 @@ _Param.AgingForDate.Date, false, true, true,false, false);
                     );
 
             //
-            Logger.LogDebug("GLAccountReconcileDefintionChanged Query \r\n {0} ", qCheck.ToTraceQuery());
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("GLAccountReconcileDefintionChanged Query \r\n {0} ", qCheck.ToTraceQuery()));
             DateTime start = DateTime.Now;
 
             var listEx = qCheck.ToList();
 
-            Logger.LogDebug("GLAccountReconcileDefintionChanged SUM duration {0} seconds ", (DateTime.Now - start).TotalSeconds);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("GLAccountReconcileDefintionChanged SUM duration {0} seconds ", (DateTime.Now - start).TotalSeconds));
 
            
             if (listEx.Any())
@@ -1758,7 +1759,7 @@ Period	Acc	Currency	Total
                     _Param.GroupByDate == AgingReportParam.DateEnum.DueDate))
 
                     {
-                        Debug.WriteLine("no no NO only if ReconcileOpenBalanceMethod + DueDate !!!");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("no no NO only if ReconcileOpenBalanceMethod + DueDate !!!");
                         _Param.SuppressFromGLAccountAgingData = true;
                     }
                     if (
@@ -1766,14 +1767,14 @@ Period	Acc	Currency	Total
                         _Param.AgingForDate.Date.Month != DateTime.Now.Date.Month
                         )
                     {
-                        Debug.WriteLine("no no NO only if 4 current month  !!!");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("no no NO only if 4 current month  !!!");
                         _Param.SuppressFromGLAccountAgingData = true;
 
                     }
 
                     if (_Param.NumberOfmonthsbackwards > 6)
                     {
-                        Debug.WriteLine("no no NO only if NumberOfmonthsbackwards<6!!!");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("no no NO only if NumberOfmonthsbackwards<6!!!");
                         _Param.SuppressFromGLAccountAgingData = true;
 
                     }

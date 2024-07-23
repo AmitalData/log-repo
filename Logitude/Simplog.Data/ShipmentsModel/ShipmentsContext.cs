@@ -491,6 +491,8 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<ContainerTrackingResponse> ContainerTrackingResponses { get; set; }
         public IDbSet<ContainerTrackingRequest> ContainerTrackingRequests { get; set; }
         public IDbSet<ShipmentDocsField> ShipmentDocsFields { get; set; }
+        public IDbSet<ReferenceType> ReferenceTypes { get; set; }
+        public IDbSet<ShipmentReferance> ShipmentReferances { get; set; }
 
         public void SetAsModified(object entity)
         {

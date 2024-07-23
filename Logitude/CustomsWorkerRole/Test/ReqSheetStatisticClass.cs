@@ -50,7 +50,7 @@ namespace CustomsWorkerRole.Test
 
                          )
                     {
-                        WriteLog("Starting Send Email");
+                        NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Starting Send Email");
                         _LastSendReqSheetStatistic = DateTime.Now;
                         //LastClacReqSheetStatistic = DateTime.Now;
                         var reqSheetStatisticClass = new ReqSheetStatisticClass();
@@ -68,21 +68,15 @@ namespace CustomsWorkerRole.Test
 
                 MySheetStatistic = "ReqSheetStatisticClass failed :" + stsE.ToString();
                 //Debug.WriteLine(MySheetStatistic);
-                WriteLog(MySheetStatistic);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(stsE,MySheetStatistic);
             }
         }
 
-        private static void WriteLog(string mess)
-        {
-            if (DateTime.Now < new DateTime(2018, 02, 01))
-            {
-                Logger.LogMe(mess, false, "Statistic");
-            }
-        }
+       
 
         private static void SendIt(Action<string, string> sendEmail)
         {
-            WriteLog("Start SendIt");
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Start SendIt");
             //_LastSendReqSheetStatistic = DateTime.Now;
             var doNotSendEmail = true;
             if (doNotSendEmail)
@@ -90,7 +84,7 @@ namespace CustomsWorkerRole.Test
                 Task.Factory.StartNew(() =>
                 {
                     sendEmail(MySheetStatistic, MySheetStatisticSubject);
-                    WriteLog("Email Sent !!!");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Email Sent !!!");
                 }); ;
             }
         }
@@ -275,7 +269,7 @@ pordInfo,//24
 TotWithHATARA,//25
 logBoxDocuments//26
             );
-            Debug.WriteLine(val);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(val);
             return val;
         }
 

@@ -140,5 +140,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
 
         public bool IsFromWorkerRole { get; set; }
         public string EntityStatusCode { get; set; }
+        [DataMember]
+        public int Weight { get; set; }
+
     }
 }

@@ -230,7 +230,7 @@
   </Column>
   <Column
     Name="TransportModeId"
-    Type="varchar"
+    Type="char"
     Size="1">
     <Constraints
       Nullable="true" />
@@ -1109,6 +1109,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="SystemConnection"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"
@@ -1181,9 +1188,9 @@
     ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="TransportModeId"
-    ReferencedTable="CustomsTransportModes"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTable="TransportModes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="DepartmentId"
     ReferencedTable="Departments"
@@ -1337,6 +1344,11 @@
   <Relation
     ForeignKeyColumn="ExportCloseAmendmentStatus"
     ReferencedTable="AmendmentRequestStatuses"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="SystemConnection"
+    ReferencedTable="NUniclouds"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Index

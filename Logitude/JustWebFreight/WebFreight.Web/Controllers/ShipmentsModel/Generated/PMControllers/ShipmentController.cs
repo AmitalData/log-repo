@@ -44,6 +44,7 @@ using Marvin.JsonPatch.Exceptions;
 using static Dropbox.Api.Sharing.ListFileMembersIndividualResult;
 using WebFreight.Web.WebServices;
 using Simplog.Server.Infrastructure;
+using Logitude.CustomsMessaging.Common.RequestParams;
 
 namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 {
@@ -118,7 +119,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
         public HttpResponseMessage Post(ShipmentPM entityPM)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid || entityPM.IsCustomShipment)
             {
                 try
                 {
@@ -134,6 +135,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
                         IShipmentsContext objectContext = ShipmentsContext.GetContext(entityPM.Tenant);
                         ShipmentService service = new ShipmentService(objectContext, entityPM, SecurityUtility.GetAuthenticatedUser());
+
                         service.Create();
 
                         IShipmentsContext updatedEntityContext = ShipmentsContext.GetContext(tenant);
@@ -158,7 +160,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             }
         }
 
-
         public HttpResponseMessage Put(ShipmentPM entityPM)
         {
             if (ModelState.IsValid)
@@ -177,6 +178,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
                         IShipmentsContext objectContext = ShipmentsContext.GetContext(entityPM.Tenant);
                         ShipmentService service = new ShipmentService(objectContext, entityPM, SecurityUtility.GetAuthenticatedUser());
+
                         service.Update(true);
 
                         IShipmentsContext updatedEntityContext = ShipmentsContext.GetContext(tenant);

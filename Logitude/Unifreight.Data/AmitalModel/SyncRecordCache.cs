@@ -1,5 +1,5 @@
 ﻿using Logitude.Customs.BL.BL;
-using Logitude.Server.Tools.Utils;
+using Simplog.Server.Infrastructure;
 using System;
 using Unifreight.Data.AmitalModel.Repsitories;
 
@@ -7,27 +7,30 @@ namespace Unifreight.Data.AmitalModel
 {
     public class SyncRecordCache
     {
-        public static void ClearCacheLasySync(string fileNo, int tenant)
+        public static void ClearCacheLastSync(string fileNo, int tenant)
         {
             TryCatch(() =>
             {
+                if (tenant == null || IsConnectedToUniFreight(tenant))
+                    return;
+
                 string cacheKey = $"SyncRecordQuery.GetLastSyncDate." + fileNo + ";" + tenant;
                 CacheHelper.ClearCache(cacheKey);
             });
         }
 
-        public static void ClearCacheLasySyncByPrimaryNum(string primaryNum, int? tenant)
-        {
+        public static void ClearCacheLastSyncByPrimaryNum(string primaryNum, int? tenant)
+        {            
             TryCatch(() =>
             {
-                if (tenant == null || !tenant.HasValue || primaryNum == null || !long.TryParse(primaryNum, out long lCUSTOMFILENO))
+                if (tenant == null || !tenant.HasValue || primaryNum == null || !long.TryParse(primaryNum, out long lCUSTOMFILENO) || IsConnectedToUniFreight(tenant.Value))
                     return;
 
                 var fileNo = new CCUFILEMRepository(tenant.Value).GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
                 if (fileNo == null)
                     return;
 
-                ClearCacheLasySync(fileNo.Value.ToString(), tenant.Value);
+                ClearCacheLastSync(fileNo.Value.ToString(), tenant.Value);
             });
         }
 
@@ -39,8 +42,14 @@ namespace Unifreight.Data.AmitalModel
             }
             catch (Exception e)
             {
-                Logger.LogMe("Error in ClearCacheLastSync error: " + e, true);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e,"Error in ClearCacheLastSync error" );
             }
+        }
+
+        private static bool IsConnectedToUniFreight(int tenant)
+        {
+            LogitudeCustomsSettingsM customsSettings = LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenant);
+            return customsSettings.Id == null || customsSettings.IsConnectedToUniFreight;            
         }
     }
 }

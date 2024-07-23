@@ -354,7 +354,7 @@ namespace CommunicationWorkerRole
                                         string p_more1=""; string p_status1; string p_message1;
                                         if (!String.IsNullOrWhiteSpace(System.Configuration.ConfigurationManager.AppSettings["SFTPLogoff"]))
                                         {
-                                            Debug.WriteLine("sftpService.Logoff");
+                                           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("sftpService.Logoff");
                                             sftpService.Logoff(ref p_more1, out p_status1, out p_message1);
                                         }
 
@@ -370,12 +370,12 @@ namespace CommunicationWorkerRole
 
                                 if (p_status == "-1")
                                 {
-                                    Debug.WriteLine("sftpService.Upload-failed");
+                                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("sftpService.Upload-failed");
                                     throw new FTPServiceException("SFTP upload file failed: " + p_message);
                                 }
                                 else
                                 {
-                                    Debug.WriteLine("sftpService.Upload-success");
+                                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("sftpService.Upload-success");
                                 }
                             }
                             else

@@ -40,6 +40,26 @@ namespace Logitude.Customs.Data.EntityLists
        public int? AutonomyCustomsItemID  { get; set; }
        [DataMember]
        public bool IsAllCustomsItems  { get; set; }
+       [DataMember]
+       public string RequirementValidOrigin  { get; set; }
+       [DataMember]
+       public string RequirementGoodsDescription  { get; set; }
+       [DataMember]
+       public string Authority  { get; set; }
+       [DataMember]
+       public string ConfirmationType  { get; set; }
+       [DataMember]
+       public string InterConditionsRelationship  { get; set; }
+       [DataMember]
+       public string TextualCondition  { get; set; }
+       [DataMember]
+       public bool? IsPersonalImportIncluded  { get; set; }
+       [DataMember]
+       public bool? IsCarnetIncluded  { get; set; }
+       [DataMember]
+       public string FromEpisodeDetail  { get; set; }
+       [DataMember]
+       public string AutonomyRegion  { get; set; }
    }
 
 }

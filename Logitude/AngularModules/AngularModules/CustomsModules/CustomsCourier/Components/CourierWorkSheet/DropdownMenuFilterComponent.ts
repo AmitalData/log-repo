@@ -107,59 +107,60 @@ export class DropdownMenuFilterComponent implements OnInit {
   }
     DropdowndisplayToggle(event) {
 
-        
+        this._DropdownDisplay = this._DropdownDisplay == 'none' ? 'block' : 'none';
         //MouseEvent
 
         DropdownMenuFilterComponent.LastDropdownMenuFilterId = this.MyDropdownMenuFilterId;
-        if (this._DropdownDisplay == 'none') {
-            var item = document.getElementById(this._DropdownMenuFilterComponentId);
-            var itemRect = item.getBoundingClientRect();
-            let myTop = itemRect.top;
-            let myleft = itemRect.left;
-            if (!AppTool.IsNullOrEmpty(event)) {
-                myleft = event.clientX;//: 19
-                myTop = event.clientY;//: 19
-                // event.stopPropagation();
-            }
+
+//         if (this._DropdownDisplay == 'none') {
+//             var item = document.getElementById(this._DropdownMenuFilterComponentId);
+//             var itemRect = item.getBoundingClientRect();
+//             let myTop = itemRect.top;
+//             let myleft = itemRect.left;
+//             if (!AppTool.IsNullOrEmpty(event)) {
+//                 myleft = event.clientX;//: 19
+//                 myTop = event.clientY;//: 19
+//                 // event.stopPropagation();
+//             }
             
-            //document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
-            //    (myTop/*itemRect.top*/ /*+ 27*/ /*-5*/) + 'px';
+//             //document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
+//             //    (myTop/*itemRect.top*/ /*+ 27*/ /*-5*/) + 'px';
 
-            let DDLHeight = 65+70;//    height: 22px; * 3 +30 
-            let Extra = 22 + 1 + 1; //    height: 22px; +1 UP +1 DOWN
-            let ExtraTop = 150;
-            document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top = myTop + 'px';
-            document.getElementById(this._DropdownMenuFilterComponentMenuId).style.left = (myleft -100) + 'px';
+//             let DDLHeight = 65+70;//    height: 22px; * 3 +30 
+//             let Extra = 22 + 1 + 1; //    height: 22px; +1 UP +1 DOWN
+//             let ExtraTop = 150;
+//             document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top = myTop + 'px';
+//             document.getElementById(this._DropdownMenuFilterComponentMenuId).style.left = (myleft -100) + 'px';
 
-            if (this.DivHight != -9999) {
-                if (itemRect.bottom + DDLHeight + Extra > this.getScreenHeight()) {
-                    document.getElementById(this._DropdownMenuFilterComponentMenuId).style.marginTop =
-                        -1 * (this.DivHight) + 'px';
-                }
+//             if (this.DivHight != -9999) {
+//                 if (itemRect.bottom + DDLHeight + Extra > this.getScreenHeight()) {
+//                     document.getElementById(this._DropdownMenuFilterComponentMenuId).style.marginTop =
+//                         -1 * (this.DivHight) + 'px';
+//                 }
 
-            } else {
+//             } else {
 
-                if (itemRect.bottom + DDLHeight + Extra > this.getScreenHeight()) {
-                    document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
-                        (itemRect.top - DDLHeight - Extra) + 'px';
-                }
-                if (itemRect.bottom + this.DivTop > this.getScreenHeight() && this.DivTop != -9999) {//this.PaintTop = true                
-                    document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
-                        (itemRect.top - this.DivTop - ExtraTop) + 'px';
-                }
-            }
+//                 if (itemRect.bottom + DDLHeight + Extra > this.getScreenHeight()) {
+//                     document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
+//                         (itemRect.top - DDLHeight - Extra) + 'px';
+//                 }
+//                 if (itemRect.bottom + this.DivTop > this.getScreenHeight() && this.DivTop != -9999) {//this.PaintTop = true                
+//                     document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
+//                         (itemRect.top - this.DivTop - ExtraTop) + 'px';
+//                 }
+//             }
 
-            if (this.DivLeft != -9999) {
-               // document.getElementById(this._DropdownMenuFilterComponentMenuId).style.left =
-//(myleft + this.DivLeft)+ 'px';
-            } else {
-                document.getElementById(this._DropdownMenuFilterComponentMenuId).style.left =
-                    (myleft/*itemRect.left*/ /*- 50*/ - 100 /*+5*/) + 'px';//min-width: 80px
-            }
-            this._DropdownDisplay = 'block';
-        } else {
-            this._DropdownDisplay = 'none';
-      }
+//             if (this.DivLeft != -9999) {
+//                // document.getElementById(this._DropdownMenuFilterComponentMenuId).style.left =
+// //(myleft + this.DivLeft)+ 'px';
+//             } else {
+//                 document.getElementById(this._DropdownMenuFilterComponentMenuId).style.left =
+//                     (myleft/*itemRect.left*/ /*- 50*/ - 100 /*+5*/) + 'px';//min-width: 80px
+//             }
+//             this._DropdownDisplay = 'block';
+//         } else {
+//             this._DropdownDisplay = 'none';
+//       }
       this._CD.detectChanges();
     }
     getScreenHeight() {

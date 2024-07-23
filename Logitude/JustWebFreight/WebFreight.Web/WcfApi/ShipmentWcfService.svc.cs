@@ -64,9 +64,11 @@ namespace WebFreight.Web.WcfApi
             Response response = new Response();
             try
             {
-                SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
-                SecurityUtility.CheckContactFeature("Shipment", "UPDATE", entityPM.Tenant);//UPDATE//READ
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                if (!entityPM.IsCustomShipment) {
+                    SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
+                    SecurityUtility.CheckContactFeature("Shipment", "UPDATE", entityPM.Tenant);//UPDATE//READ
+				}
+				using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
                     //IdCounter.GetNumber("Shipment", 1);
                     //Thread.Sleep(6000);
@@ -144,28 +146,36 @@ namespace WebFreight.Web.WcfApi
                         }
 
                     }
+                    User user = null;
 
+					if (entityPM.DirectionId != "C") 
+                    { 
+                       ClassLevelValidator validationClass = new ClassLevelValidator("Shipment", entityPM.Tenant) { IsHybrid = true };
+                       if (!validationClass.IsValid(entityPM, entityPM, null))
+                       {
+                           response.HasError = true;
+                           response.ErrorMessage = validationClass.GetErrorMessage(entityPM, null);
+                           return response;
+                       }
+					
 
-                    ClassLevelValidator validationClass = new ClassLevelValidator("Shipment", entityPM.Tenant) { IsHybrid = true };
-                    if (!validationClass.IsValid(entityPM, entityPM, null))
-                    {
-                        response.HasError = true;
-                        response.ErrorMessage = validationClass.GetErrorMessage(entityPM, null);
-                        return response;
-                    }
-
-                    User user = userrepository.GetSingleUserByCode(entityPM.CreatedByUserId, entityPM.Tenant, true);
-                    if (user != null)
-                    {
-                        entityPM.CreatedByUserId = user.Id;
-                    }
+					    user = userrepository.GetSingleUserByCode(entityPM.CreatedByUserId, entityPM.Tenant, true);
+                       if (user != null)
+                       {
+                           entityPM.CreatedByUserId = user.Id;
+                       }
+                       else
+                       {
+                           response.HasError = true;
+                           response.ErrorMessage = "CreatedByUserId field doesn’t  exist!";
+                           return response;
+                       }
+					}
                     else
                     {
-                        response.HasError = true;
-                        response.ErrorMessage = "CreatedByUserId field doesn’t  exist!";
-                        return response;
-                    }
-                    if (string.IsNullOrWhiteSpace(entityPM.MasterShipmentDataId))
+						 user = userrepository.GetSingleUserById(entityPM.CreatedByUserId);
+					}
+					if (string.IsNullOrWhiteSpace(entityPM.MasterShipmentDataId))
                     {
                         entityPM.MasterShipmentDataId = null;
                     }
@@ -698,7 +708,7 @@ namespace WebFreight.Web.WcfApi
                         return response;
                     }
 
-                    Contact contact = ContactRepository.GetSingleContact(user.Id, entityPM.Tenant, true);
+                    Contact contact = ContactRepository.GetSingleContact(user.Id, 0, true);
                     ShipmentService service = null;
 
                     Shipment entity = shipmentRepository.GetSingleShipmentOnlyByNumber(entityPM.ShipmentNumber, entityPM.Tenant);
@@ -853,7 +863,22 @@ namespace WebFreight.Web.WcfApi
                             }
 
                         }
-
+                        if (entityPM.IsCustomShipment)
+                        {
+							entityPM.ConcurrencyGUID = entity.ConcurrencyGUID;
+							entityPM.StatusId = entity.StatusId;
+							entityPM.ShipmentNumber = entity.ShipmentNumber;
+							entityPM.BranchId = entity.BranchId;
+							entityPM.CreatedByUserId = entity.CreatedByUserId;
+							entityPM.DepartmentId = entity.DepartmentId;
+							entityPM.DirectionId = entity.DirectionId;
+							entityPM.TransportModeId = entity.TransportModeId;
+							entityPM.FreightPrepaidCollectId = entity.FreightPrepaidCollectId;
+							entityPM.OtherPrepaidCollectId = entity.OtherPrepaidCollectId;
+							entityPM.CustomerId = entity.CustomerId;
+							entityPM.UpdatedByUserId = entity.UpdatedByUserId;
+							entityPM.LastUpdateDate = DateTime.Now;
+						}
 
                         service.Update();
 

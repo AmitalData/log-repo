@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Logitude.MetaData</RootNamespace>
     <AssemblyName>Logitude.MetaData</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -20,7 +20,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Library\Bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -28,7 +28,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\Library\Bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -108,6 +108,13 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
+      <Link>DependencyValidation1.layerdiagram</Link>
+      <Visible>False</Visible>
+    </AdditionalFiles>
+    <None Include="DBOthers\CommonDataModel\Procedures\usp_DeletePerformanceLogs.dxml" />
+    <None Include="DBOthers\CommonDataModel\Procedures\usp_DeleteMobileNotificationLogs.dxml" />
+    <None Include="DBOthers\CommonDataModel\Procedures\usp_CancelReportAndUpdateQueueMessage.dxml" />
     <None Include="DBOthers\CommonDataModel\Views\AllActiveGLAccountsView.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldBIReportsExecutionLogs.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldReportExecutionLogs.dxml" />
@@ -142,7 +149,6 @@
     <None Include="DBScripts\CommonModel\202304051240_MarkDuplicatedDocumentsAsDeletedCloudIgnore.Ignoresxml" />
     <None Include="DBScripts\CommonModel\202304051240_MarkDuplicatedDocumentsAsDeletedLogboxIgnore.Ignoresxml" />
     <None Include="DBScripts\CommonModel\202307021535_FillCargoTrackingInvitationFromSharedLogistics.sxml" />
-    <None Include="DBScripts\CommonModel\202403201211_UpdateSendingInterestReportinDefult.sxml" />
     <None Include="DBScripts\CommonModel\202308031135_FillEORInumberCardFromCustomer.sxml" />
     <None Include="DBScripts\CommonModel\FillCodeForCustomerSizes.sxml" />
     <None Include="DBScripts\CommonModel\FillTenantManagmentArchiveShipmentFilters.sxml" />
@@ -320,8 +326,10 @@
     <None Include="DBTables\ShipmentsModel\ContainerTrackingRequest.dxml" />
     <None Include="DBTables\ShipmentsModel\ContainerTrackingResponse.dxml" />
     <None Include="DBTables\ShipmentsModel\OceanInsightsStatusLog.dxml" />
+    <None Include="DBTables\ShipmentsModel\ReferenceType.dxml" />
     <None Include="DBTables\ShipmentsModel\ShipmentAnalytic.dxml" />
     <None Include="DBTables\ShipmentsModel\ShipmentDigitalField.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentReferance.dxml" />
     <None Include="EntityFiles\CommonDataModel\CarrierServiceLine.lxml" />
     <None Include="EntityFiles\CommonDataModel\CustomerGroup.lxml" />
     <None Include="EntityFiles\InfrastructureModel\DeploymentPackageExecutionLog.lxml" />
@@ -402,7 +410,6 @@
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_APPayments.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_ARInvoices.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_ARPayments.dxml" />
-    <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_Quotes.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_Shipments.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantProfitCurrency.dxml" />
     <None Include="DBOthers\InvoiceModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateAPInvoiceStatus.dxml" />
@@ -516,9 +523,7 @@
     <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdateDateVessels.dxml" />
     <None Include="DBScripts\CommonModel\202011190832_UpdateEORInumberInCustomerToField1Value.sxml" />
     <None Include="DBScripts\CommonModel\202012080421_UpdatePortsSearchFields.sxml" />
-    <None Include="DBScripts\CommonModel\202012080423_FillAirLineCardSearchData.sxml" />
     <None Include="DBScripts\CommonModel\202012080427_PreparerUpdateCardSearchData.sxml" />
-    <None Include="DBScripts\CommonModel\202012080440_FillContactCardSearchData.sxml" />
     <None Include="DBScripts\CommonModel\202012100811_QueryExportExecutionLogWorkerRole.asxml" />
     <None Include="DBScripts\CommonModel\202012211256_AddNewPickupDeliveryEventTypesToShipment.sxml" />
     <None Include="DBScripts\CommonModel\202012301040_UpdateChargeGroupById.sxml" />
@@ -698,7 +703,6 @@
     <None Include="DBScripts\CommonModel\202009151233_UpdateWarehouseReleaseEventTypeStatus.sxml" />
     <None Include="DBScripts\CommonModel\202009101501_AddChargeStorageGroupToTenants.sxml" />
     <None Include="DBScripts\CommonModel\BuildSearchKeywordFunction.sxml" />
-    <None Include="DBScripts\CommonModel\202006181218_DropCardCurrenciesAccountingsTable.sxml" />
     <None Include="DBScripts\CommonModel\FillCardSearchData._sxml_" />
     <None Include="DBScripts\GlobalModel\202006102217_FillSettingsDemoTenants.sxml" />
     <None Include="DBScripts\GlobalModel\202007061138_FillSettingsTMExpirationDate.sxml" />
@@ -757,7 +761,6 @@
     <None Include="DBScripts\ShipmentModel\202211010335_UpdateAutomaticLastUpdateDateOnContainerStatuses.sxml" />
     <None Include="DBScripts\ShipmentModel\202122031108_UpdateFollowUpForwardingEvents.sxml" />
     <None Include="DBScripts\ShipmentModel\202201031148_FillProratedAmountTable.soxml" />
-    <None Include="DBScripts\ShipmentModel\DeleteShipmentAssginedtoCustomsAgentId.sxml" />
     <None Include="DBScripts\ShipmentModel\FillAccountingClosedByUserInShipmentComputedFields.sxml" />
     <None Include="DBScripts\ShipmentModel\UpdateAutomaticLastUpdateDateOnContainer.sxml" />
     <Content Include="DBScripts\ShipmentModel\UpdateshipmentsCalculateDocumentsKPIFields.txt" />
@@ -955,6 +958,7 @@
     <None Include="DBTables\CommonDataModel\ShippingLine.dxml" />
     <None Include="DBTables\CommonDataModel\SmallDocument.dxml" />
     <None Include="DBTables\CommonDataModel\State.dxml" />
+    <None Include="DBTables\CommonDataModel\SyncRecord.dxml" />
     <None Include="DBTables\CommonDataModel\TariffCarrierTranslation.dxml" />
     <None Include="DBTables\CommonDataModel\TarrifCharge.dxml" />
     <None Include="DBTables\CommonDataModel\TarrifFromTo.dxml" />
@@ -1845,6 +1849,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\ShipmentsModel\PickUpDeliveryTransportMode.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ReferenceType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\Shipment.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -1877,6 +1882,7 @@
     <None Include="EntityFiles\ShipmentsModel\ShipmentProductItem.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentReceivable.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentReceivableStatus.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ShipmentReferance.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentStoragePricing.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentSubType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentType.lxml" />

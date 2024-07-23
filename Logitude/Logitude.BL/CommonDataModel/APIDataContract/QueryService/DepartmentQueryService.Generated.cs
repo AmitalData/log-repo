@@ -89,7 +89,8 @@ using Simplog.Data.CommonDataModel;
 				   temp.Id = MyEntityPM.Id;
 				   temp.Code = MyEntityPM.Code;
 				   temp.EnglishName = MyEntityPM.EnglishName;
-				   temp.LocalName = MyEntityPM.LocalName;
+				   temp.DirectionId = MyEntityPM.DirectionId;
+                   temp.LocalName = MyEntityPM.LocalName;
 				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
 				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Department");  					
 				   return temp;
@@ -179,9 +180,13 @@ using Simplog.Data.CommonDataModel;
 					{							
 						temp.LocalName = MyEntity.LocalName;
 
-										}  
+										}
 
-					
+					if (!IsUpdate)
+					{
+						temp.DirectionId = MyEntity.DirectionId;
+					}
+
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   

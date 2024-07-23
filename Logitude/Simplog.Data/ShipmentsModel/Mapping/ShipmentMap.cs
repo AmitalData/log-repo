@@ -404,6 +404,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.PickupPlace).HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.SealNo).HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.HSCode).HasMaxLength(30).IsUnicode(false);
+            this.Property(t => t.IskaNumber).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ReferantUserId).HasMaxLength(16).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Shipments");
@@ -920,6 +922,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.PickupPlace).HasColumnName("PickupPlace");
             this.Property(t => t.SealNo).HasColumnName("SealNo");
             this.Property(t => t.HSCode).HasColumnName("HSCode");
+            this.Property(t => t.IskaNumber).HasColumnName("IskaNumber");
+            this.Property(t => t.ReferantUserId).HasColumnName("ReferantUserId");
 
             if (dbms == "oracle")
             {
@@ -1141,6 +1145,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.TruckerAddress).WithMany().HasForeignKey(d => d.TruckerAddressId);
             this.HasOptional(t => t.TruckerContact).WithMany().HasForeignKey(d => d.TruckerContactId);
             this.HasOptional(t => t.TruckerCard).WithMany().HasForeignKey(d => d.TruckerId);
+            this.HasOptional(t => t.UserId).WithMany().HasForeignKey(d => d.ReferantUserId);
         }
     }
 }

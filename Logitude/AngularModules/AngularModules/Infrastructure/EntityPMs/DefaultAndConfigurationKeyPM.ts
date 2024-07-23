@@ -20,29 +20,24 @@ export class DefaultAndConfigurationKeyPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
     
-    private id: string;
-    public get Id() { return this.id; }
-    public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
-       
-	 
     private tenant: number;
     public get Tenant() { return this.tenant; }
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
-    private createDateTime: Date;
-    public get CreateDateTime() { return this.createDateTime; }
-    public set CreateDateTime(newValue: Date) { if (this.createDateTime != newValue) { this.createDateTime = newValue; this.MarkAsDirty("CreateDateTime"); } }
+    private createDate: Date;
+    public get CreateDate() { return this.createDate; }
+    public set CreateDate(newValue: Date) { if (this.createDate != newValue) { this.createDate = newValue; this.MarkAsDirty("CreateDate"); } }
        
 	 
-    private setType: string;
-    public get SetType() { return this.setType; }
-    public set SetType(newValue: string) { if (this.setType != newValue) { this.setType = newValue; this.MarkAsDirty("SetType"); } }
+    private setType1: string;
+    public get SetType1() { return this.setType1; }
+    public set SetType1(newValue: string) { if (this.setType1 != newValue) { this.setType1 = newValue; this.MarkAsDirty("SetType1"); } }
        
 	 
     private setKey: string;
@@ -58,6 +53,11 @@ export class DefaultAndConfigurationKeyPM {
     private fullDesctiption: string;
     public get FullDesctiption() { return this.fullDesctiption; }
     public set FullDesctiption(newValue: string) { if (this.fullDesctiption != newValue) { this.fullDesctiption = newValue; this.MarkAsDirty("FullDesctiption"); } }
+       
+	 
+    private setType2: string;
+    public get SetType2() { return this.setType2; }
+    public set SetType2(newValue: string) { if (this.setType2 != newValue) { this.setType2 = newValue; this.MarkAsDirty("SetType2"); } }
        
 	 
 

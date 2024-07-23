@@ -45,6 +45,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 objectTable.IsAutoComplete = objectTablesDetails.IsAutoComplete;
                 objectTable.SortingByObjectField = objectTablesDetails.SortingByObjectField;
                 objectTable.DBTableName = objectTablesDetails.DBTableName;
+                objectTable.DBTableShortName = objectTablesDetails.DBTableShortName;
                 objectTable.InActive = objectTablesDetails.InActive;
                 objectTable.IsSaveButtonVisible = objectTablesDetails.IsSaveButtonVisible;
                 objectTable.MainTipCode = objectTablesDetails.MainTipCode;
@@ -203,6 +204,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectTable.IsAutoComplete = objectTablesDetails.IsAutoComplete;
                 updatedObjectTable.SortingByObjectField = objectTablesDetails.SortingByObjectField;
                 updatedObjectTable.DBTableName = objectTablesDetails.DBTableName;
+                updatedObjectTable.DBTableShortName = objectTablesDetails.DBTableShortName;
                 updatedObjectTable.InActive = objectTablesDetails.InActive;
                 updatedObjectTable.IsSaveButtonVisible = objectTablesDetails.IsSaveButtonVisible;
                 updatedObjectTable.IsComposition = objectTablesDetails.IsComposition;
@@ -501,6 +503,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.FullNameTextCodeId = objectFieldTextCode.Id;
                 newObjectField.FullNameTextCodeCode = objectFieldTextCode.Code;
                 newObjectField.FieldName = objectFieldDetails.FieldName;
+                newObjectField.ShortName = objectFieldDetails.ShortName;
                 newObjectField.Code = objectFieldDetails.Code;
                 if (string.IsNullOrEmpty(newObjectField.FieldCode))
                 {
@@ -1158,6 +1161,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.FullNameTextCodeId = objectFieldTextCode.Id;
                 newObjectField.FullNameTextCodeCode = objectFieldTextCode.Code;
                 newObjectField.FieldName = objectFieldDetails.FieldName;
+                newObjectField.ShortName = objectFieldDetails.ShortName;
                 newObjectField.Code = objectFieldDetails.Code;
                 if (string.IsNullOrEmpty(newObjectField.FieldCode))
                 {
@@ -1764,6 +1768,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             newObjectField.FullNameTextCodeId = objectFieldTextCode.Id;
             newObjectField.FullNameTextCodeCode = objectFieldTextCode.Code;
             newObjectField.FieldName = objectFieldDetails.FieldName;
+            newObjectField.ShortName = objectFieldDetails.ShortName;
             newObjectField.Code = objectFieldDetails.Code;
             if (string.IsNullOrEmpty(newObjectField.FieldCode))
             {

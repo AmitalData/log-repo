@@ -86,7 +86,6 @@ using WebFreight.Web.Helpers.Reports;
 using WebFreight.Web.WebServices;
 using WebFreight.Web.Services;
 using System.Threading.Tasks;
-using NLog;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -10900,7 +10899,6 @@ namespace WebFreight.Web.ReportsWebServices
         bool showLocals;
 
         private readonly object _locker = new object();
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetLogger("AmitalLogger");
         private static int executionCount = 1;
         private RevenueExpenseDataProvider GetTrailBalanceDataProvider(byte[] xmlFilters, int tenant)
         {
@@ -11109,6 +11107,7 @@ namespace WebFreight.Web.ReportsWebServices
                 Category5 = category5,
                 DoNotShowCardWithLocalCloseBalanceEqualZero = dontShowCardsWith0Balance,
                 IsRevenueExpenseReport = false,
+                //Suppress_ControlAccount = true,
                 //  Skip = true
                 Suppress_DoNotShowCardWithoutActivity = false,
 
@@ -11156,6 +11155,7 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.DetailedControlJob = true;
                 trailReportParam.DetailedControlFile = true;
                 trailReportParam.CurrenciesDetailed = false;
+                trailReportParam.Suppress_ControlAccount = true;
                 trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
                 trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = false;
                 trailReportParam.Category1 = null;
@@ -11248,6 +11248,7 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.DetailedControlJob = true;
                 trailReportParam.DetailedControlFile = true;
                 trailReportParam.CurrenciesDetailed = false;
+               // trailReportParam.Suppress_ControlAccount = true;
                 trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
                 trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = false;
                 trailReportParam.Category1 = null;
@@ -11758,7 +11759,9 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.Category4 = category4;
                 trailReportParam.Category5 = category5;
                 trailReportParam.MyTrailReportLevel = ReportLevel.GLAccount;
-                trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
+                //trailReportParam.Suppress_ControlAccount = true;
+                trailReportParam.Suppress_DoNotShowCardWithoutActivity = false; // may it be 'true' sometimes? 
+
                 trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = dontShowCardsWith0Balance;
 
                 var servce = TrailReportFactory.CreateNew(trailReportParam);

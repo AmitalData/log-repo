@@ -76,7 +76,7 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
         }
         public override string ToString()
         {
-            _List.OrderBy(rec => rec.IndexSeq).ToList().ForEach(rec => Debug.WriteLine(rec.ToString()));
+            _List.OrderBy(rec => rec.IndexSeq).ToList().ForEach(rec =>NetCommonHelper.Logger.DevLog.Instance.WriteDebug(rec.ToString()));
             return base.ToString();
         }
     }

@@ -276,7 +276,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for MADADRATE in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> MADADRATE
+        public virtual global::System.Nullable<decimal> MADADRATE
         {
             get
             {
@@ -291,7 +291,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _MADADRATE;
+        private global::System.Nullable<decimal> _MADADRATE;
 
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for WEIGHT in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> WEIGHT
+        public virtual global::System.Nullable<decimal> WEIGHT
         {
             get
             {
@@ -335,7 +335,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _WEIGHT;
+        private global::System.Nullable<decimal> _WEIGHT;
 
 
         /// <summary>

@@ -123,6 +123,20 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool ImporterApproval { get; set; }
         [Column("DeclarationIdToDisplay")]
 	    public string DeclarationIdToDisplay { get; set; }
+        [Column("MawbDate")]
+	    public DateTime? MawbDate { get; set; }
+        [ForeignKey("VesselCode")]
+        [Column("Vessel")]
+	    public string Vessel { get; set; }
+	      
+        public virtual Vessel VesselCode { get; set; }
+        [Column("FlightVoyageNumber")]
+	    public string FlightVoyageNumber { get; set; }
+        [ForeignKey("AirlineCode")]
+        [Column("CarrierCode")]
+	    public string CarrierCode { get; set; }
+	      
+        public virtual Airline AirlineCode { get; set; }
     }
 }
 	 

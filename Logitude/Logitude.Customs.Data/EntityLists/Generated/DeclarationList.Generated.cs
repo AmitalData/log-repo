@@ -85,6 +85,8 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string FileState  { get; set; }
        [DataMember]
+       public string TransportModeId  { get; set; }
+       [DataMember]
        public string DeclarationOfficeName  { get; set; }
        [DataMember]
        public string ImporterName  { get; set; }
@@ -474,6 +476,8 @@ namespace Logitude.Customs.Data.EntityLists
        public decimal? ComputerFee  { get; set; }
        [DataMember]
        public bool EffectiveFlight  { get; set; }
+       [DataMember]
+       public string SystemConnection  { get; set; }
    }
 
 }

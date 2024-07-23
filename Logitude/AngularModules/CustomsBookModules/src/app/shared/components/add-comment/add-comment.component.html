@@ -6,7 +6,8 @@
             <h3>כתיבת הערה חדשה ל:</h3>
             <div class="commentWritesTo">
                 <div class="commentWritesTo_read">
-                    <div><span>0101210000/2</span><span>גזעיים לרביה</span></div>
+                    <!-- <div><span>0101210000/2</span><span>גזעיים לרביה</span></div> -->
+                    <div><span>{{currentItem?.FullClassification}}</span><span>{{currentItem?.CIH_GoodsDescription}}</span></div>
                 </div>
             </div>
         </div>
@@ -16,7 +17,7 @@
                 <textarea [(value)]="commentText" (input)="updateCommentText($event)"
                     placeholder="הקלידו תיאור/ שמות פריטים/ מידע עבור פרט מכס זה..."></textarea>
             </div>
-            <div class="addComment_submit"><button [class.disabled]="commentText.length < 1 ">שמירת הערה</button>
+            <div class="addComment_submit" (click)="sendComment()"><button [class.disabled]="commentText.length < 1 ">שמירת הערה</button>
             </div>
         </div>
         <div class="sidePanel_trapFocus"><a href="#" role="button">חזור לתחילת הפאנל</a></div>

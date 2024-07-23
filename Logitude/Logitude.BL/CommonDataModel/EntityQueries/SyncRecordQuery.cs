@@ -55,6 +55,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     Entname = syncRecord.Entname,
                     RecordAsJson = recordAsJson,
                     UpdateDate = syncRecord.SyncDT,
+                    CraeteDate = syncRecord.CreateDate                
                 };
             }).SkipWhile(x => x == null).ToList();
 
@@ -71,7 +72,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             
             if (syncRecord == null || string.IsNullOrEmpty(syncRecord.KeyVal))
             {
-                Logger.LogMe($"GetRecordOfRowNeedSync, keyVal is empty or null, id: " + syncRecord?.Id, true);
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"GetRecordOfRowNeedSync, keyVal is empty or null, id: " + syncRecord?.Id);
                 return null;
             }
 
@@ -86,7 +87,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (dt.Rows.Count != 1)
             {
-                Logger.LogMe($"record not found once for table: {syncRecord.Entname: name} and keyVal: {syncRecord.KeyVal.Replace(",", " and ")}", true);
+                NetCommonHelper.Logger.DevLog.Instance.WriteError($"record not found once for table: {syncRecord.Entname: name} and keyVal: {syncRecord.KeyVal.Replace(",", " and ")}");
                 return null;
             }
 

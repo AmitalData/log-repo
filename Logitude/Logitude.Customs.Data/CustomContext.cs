@@ -708,6 +708,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new NotificationTypeMap());
 	
+            modelBuilder.Configurations.Add(new NUnicloudMap());
+	
             modelBuilder.Configurations.Add(new OcrDocumentMap());
 	
             modelBuilder.Configurations.Add(new OcrStatusMap());
@@ -3450,6 +3452,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<NotificationType> NotificationTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<NUnicloud> NUniclouds 
 	 {
 	      get; set;
 	 

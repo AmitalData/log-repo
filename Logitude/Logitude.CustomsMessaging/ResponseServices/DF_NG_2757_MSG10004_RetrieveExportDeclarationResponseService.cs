@@ -317,7 +317,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
-                                if (governmentAgencyGoodsItem.Origin != null)
+                                if (governmentAgencyGoodsItem.Origin?.CountryCode != null)
                                 {
                                     requestResult.OriginCountry = GetValueCodeType(governmentAgencyGoodsItem.Origin.CountryCode).ToString();
                                 }

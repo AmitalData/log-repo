@@ -20,11 +20,11 @@ namespace Unifreight.BL.EntityPMs
         
         public int? ACAMOUNT { get; set; }
         
-        public long? AGNTPAYBITHA { get; set; }
+        public decimal? AGNTPAYBITHA { get; set; }
         
-        public long? AGNTPAYCUST { get; set; }
+        public decimal? AGNTPAYCUST { get; set; }
         
-        public long? AGNTPAYTAX { get; set; }
+        public decimal? AGNTPAYTAX { get; set; }
         
         public int? AIRBAGSAMOUNT { get; set; }
         
@@ -49,7 +49,7 @@ namespace Unifreight.BL.EntityPMs
         
         public string EXPRESHIMONNO { get; set; }
         
-        public long? EXTRAQNTY { get; set; }
+        public decimal? EXTRAQNTY { get; set; }
         
         public decimal? FOREIGNCURRVAL { get; set; }
         
@@ -61,7 +61,7 @@ namespace Unifreight.BL.EntityPMs
         
         public string GUARANTEETYPE { get; set; }
         
-        public long? IMPORTADDITION { get; set; }
+        public decimal? IMPORTADDITION { get; set; }
         
         public int? ITEMLINENO { get; set; }
         
@@ -71,11 +71,11 @@ namespace Unifreight.BL.EntityPMs
         
         public string LICENSENO { get; set; }
         
-        public long? NIDHEMASPCNT { get; set; }
+        public decimal? NIDHEMASPCNT { get; set; }
         
-        public long? NIDHEMEHESPCNT { get; set; }
+        public decimal? NIDHEMEHESPCNT { get; set; }
         
-        public long? NISVALUE { get; set; }
+        public decimal? NISVALUE { get; set; }
         
         public string ORIGINCOUNTRY { get; set; }
         
@@ -89,11 +89,11 @@ namespace Unifreight.BL.EntityPMs
         
         public string PURCHCOUNTRY { get; set; }
         
-        public long? QUANTITY { get; set; }
+        public decimal? QUANTITY { get; set; }
         
-        public long? RAISEPERCENT { get; set; }
+        public decimal? RAISEPERCENT { get; set; }
         
-        public long? RAISEVALUE { get; set; }
+        public decimal? RAISEVALUE { get; set; }
         
         public string STANDARDNO { get; set; }
         
@@ -113,7 +113,7 @@ namespace Unifreight.BL.EntityPMs
 
         public string PURCHCOUNTRYN { get; set; }
 
-        public long? STSQNTY { get; set; }
+        public decimal? STSQNTY { get; set; }
 
 
         private List<SupplierInvoiceItem105PM> _DeletedSupplierInvoiceItems105;

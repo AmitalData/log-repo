@@ -43,7 +43,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.Inactive).HasColumnName("Inactive");
 
-            this.Property(t => t.IsMandatory).HasColumnName("IsMandatory");
+            this.Property(t => t.IsMandatory).HasColumnName("IsMandatory").HasMaxLength(40).IsUnicode(true);
 
             this.Property(t => t.Location).HasColumnName("Location");
 

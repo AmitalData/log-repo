@@ -44,6 +44,8 @@ namespace Logitude.Customs.Data.EntityLists
        public DateTime? StartDate  { get; set; }
        [DataMember]
        public DateTime? EndDate  { get; set; }
+       [DataMember]
+       public string TradeAgreementName  { get; set; }
    }
 
 }

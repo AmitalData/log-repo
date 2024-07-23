@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginMandatoryFieldsUpdateClass
    {  		
-		public const string HashString = "9e871fceb59af1b523408a0987227c0f";
+		public const string HashString = "a61b09b57bc49722e2f55e3f61aa391c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -394,10 +394,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "English Name",
-					  						FullLocalDefaultText =  "שם אנגלית",
+					  						FullLocalDefaultText =  "שם םנגלית",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultText =  "שם אנגלית",
+					  						ListLocalDefaultText =  "שם םנגלית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -459,10 +459,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Inactive",
 					  						DefaultText =  "Inactive",
-					  						FullLocalDefaultText =  "לא פּעיל",
+					  						FullLocalDefaultText =  "לם פּעיל",
 					  						ListFieldLable =  "InactiveListLable",
 					  						ListLableDefaultText =  "Inactive",
-					  						ListLocalDefaultText =  "לא פּעיל",
+					  						ListLocalDefaultText =  "לם פּעיל",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -485,9 +485,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "IsMandatory",
 					  						ObjectTableName =  "Customs.CertificateOfOriginMandatoryFields",
-					  						FieldsDataType =  "Boolean",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
-					  						MaxLength =  0,
+					  						MaxLength =  40,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -495,7 +495,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
+					  						SystemMaxLength =  40,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
@@ -524,10 +524,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsMandatory",
 					  						DefaultText =  "Is Mandatory",
-					  						FullLocalDefaultText =  "האם חובה",
+					  						FullLocalDefaultText =  "הםם חובה",
 					  						ListFieldLable =  "IsMandatoryListLable",
 					  						ListLableDefaultText =  "Is Mandatory",
-					  						ListLocalDefaultText =  "האם חובה",
+					  						ListLocalDefaultText =  "הםם חובה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -654,10 +654,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastUpdatedDate",
 					  						DefaultText =  "Last Updated Date",
-					  						FullLocalDefaultText =  "תאריך עדכון אחרון",
+					  						FullLocalDefaultText =  "תםריך עדכון םחרון",
 					  						ListFieldLable =  "LastUpdatedDateListLable",
 					  						ListLableDefaultText =  "Last Updated Date",
-					  						ListLocalDefaultText =  "תאריך עדכון אחרון",
+					  						ListLocalDefaultText =  "תםריך עדכון םחרון",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,

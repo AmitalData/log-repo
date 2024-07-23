@@ -61,7 +61,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Mawb, 
 	         Hawb, 
 	         ImporterApproval, 
-	         DeclarationIdToDisplay,
+	         DeclarationIdToDisplay, 
+	         MawbDate, 
+	         Vessel, 
+	         FlightVoyageNumber, 
+	         CarrierCode,
 	      }
 
 
@@ -117,7 +121,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         DeclarationIdToDisplay, 
 	         IsCloseOrOpenFromUser, 
 	         OccuredStatus, 
-	         NotOccuredStatus,
+	         NotOccuredStatus, 
+	         MawbDate, 
+	         Vessel, 
+	         FlightVoyageNumber, 
+	         CarrierCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -319,6 +327,26 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationIdToDisplay))
             {
 				entityPOCO.DeclarationIdToDisplay = entityPM.DeclarationIdToDisplay;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MawbDate))
+            {
+				entityPOCO.MawbDate = entityPM.MawbDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Vessel))
+            {
+				entityPOCO.Vessel = entityPM.Vessel;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FlightVoyageNumber))
+            {
+				entityPOCO.FlightVoyageNumber = entityPM.FlightVoyageNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CarrierCode))
+            {
+				entityPOCO.CarrierCode = entityPM.CarrierCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -527,6 +555,26 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.DeclarationIdToDisplay = entityPOCO.DeclarationIdToDisplay;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MawbDate))
+            {
+					entityPM.MawbDate = entityPOCO.MawbDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Vessel))
+            {
+					entityPM.Vessel = entityPOCO.Vessel;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FlightVoyageNumber))
+            {
+					entityPM.FlightVoyageNumber = entityPOCO.FlightVoyageNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CarrierCode))
+            {
+					entityPM.CarrierCode = entityPOCO.CarrierCode;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationReferantDataPM entityPM, DeclarationReferantDataPM oldEntityPM)
@@ -726,6 +774,26 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationIdToDisplay))
             {
                 oldEntityPM.DeclarationIdToDisplay = entityPM.DeclarationIdToDisplay;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MawbDate))
+            {
+                oldEntityPM.MawbDate = entityPM.MawbDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Vessel))
+            {
+                oldEntityPM.Vessel = entityPM.Vessel;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FlightVoyageNumber))
+            {
+                oldEntityPM.FlightVoyageNumber = entityPM.FlightVoyageNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CarrierCode))
+            {
+                oldEntityPM.CarrierCode = entityPM.CarrierCode;
             }
 			
 		}

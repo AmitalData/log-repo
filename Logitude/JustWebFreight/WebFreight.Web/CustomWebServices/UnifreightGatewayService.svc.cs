@@ -365,12 +365,12 @@ namespace WebFreight.Web.CustomWebServices
             {
                 var FormatedException = ExceptionFormatUtil.GetFormated(ex);
                 _sbGatewayLog.Insert(0, "ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
-                Debug.WriteLine("ProccessRequest():Exception " + FormatedException.ToString(), true);
+               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex,"ProccessRequest():Exception ");
             }
             catch (Exception e)
             {
                 _sbGatewayLog.Insert(0, "ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
-                Debug.WriteLine("ProccessRequest():Exception " + e.ToString(), true);
+               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e,"ProccessRequest():Exception " );
             }
             finally
             {
@@ -380,7 +380,7 @@ namespace WebFreight.Web.CustomWebServices
                 DataOut1 = DataOut1 ?? "";
                 DataOut2 = DataOut2 ?? "";
 
-                Debug.WriteLine(
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
                     "GatewayService:Request=" + _HashCode.ToString() +
 string.Format(
 @"DataIn1={0}
@@ -388,7 +388,7 @@ DataIn2={1}
 DataOut1={2}
 DataOut2={3}                  
 SUCCESS={4}"
-, string.Concat(DataIn1.Take(100)), string.Concat(DataIn2.Take(100)), string.Concat(DataOut1.Take(100)), string.Concat(DataOut2.Take(100)), SUCCESS), false);
+, string.Concat(DataIn1.Take(100)), string.Concat(DataIn2.Take(100)), string.Concat(DataOut1.Take(100)), string.Concat(DataOut2.Take(100)), SUCCESS));
                 if (myWSProxy != null)
                 {
                     _sbGatewayLog.AppendLine(myWSProxy.GetLog());
@@ -484,7 +484,7 @@ SUCCESS={4}"
             {
                 var formatedException = ExceptionFormatUtil.GetFormated(ex);
                 //_sbLog.Insert(0, "ProccessRequest():Exception " + formatedException.ToString() + Environment.NewLine + "---------------------------------------------");
-                Debug.WriteLine("ProccessRequest():Exception " + formatedException.ToString(), true);
+               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex,"ProccessRequest():Exception ");
                 unifreightGenericService.MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                 unifreightGenericService.MyGenericResponseObj.Message = "Error while DeclarationUpdateService.Update " + formatedException.Message;
                 unifreightGenericService.MyGenericResponseObj.ErrorDescription = formatedException.ToString();
@@ -689,7 +689,7 @@ SUCCESS={4}"
         {
             _swGatewayLog.Stop();
             _sbGatewayLog.AppendLine("Dispose:ElapsedMilliseconds=" + _swGatewayLog.ElapsedMilliseconds.ToString());
-            Debug.WriteLine(_sbGatewayLog.ToString(), false);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(_sbGatewayLog.ToString());
         }
 
 

@@ -163,7 +163,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     //}
 
                     this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-
+                    myDeclarationUpdateService.Update(_MyDeclarationPM, true);
                 }
                 if(_MyDeclarationPM.Direction == "E" && requestParams.RequestVIA != SendRequestVIA.WebServiceBatch && !setting.IsConnectedToUniFreight && customResponse.ResponseContentHeader?.Exception?.Length > 0 && customResponse.Response?.Declaration == null)
                 {
@@ -183,11 +183,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (!string.IsNullOrWhiteSpace(requestParams.AppicationId))
                 {   if(_MyDeclarationPM==null)
                          _MyDeclarationPM = myQueryService.GetSingle(requestParams.AppicationId, true, false);
-                    if (_MyDeclarationPM != null)
-                    {
-                        //_MyDeclarationPM.IsSubmitDeclaration = false;
-                        //myDeclarationUpdateService.Update(_MyDeclarationPM, true);
-                    }
+                  
                 }
 
                 this.MyResponseData.UserMessage = GetExceptionMsg(customResponse.ResponseContentHeader.Exception[0]);
@@ -1187,6 +1183,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
+
+
+
+       
         private void SendSoyStatusToUnifreight(DF_NG_2757_MSG10004_ExportDeclarationResponse customResponse, string userId, string additionalComment = null, DateTime? dateTime = null)
         {
             // determine if the export diamonds feature is enabled to allow autosending
@@ -1199,7 +1199,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (featureExportDiamonds != null)
             {
                 string declarationStatus = "0";
-                string declarationStatusLabel = "";
+                string declarationStatusLabel = "שגיאה עסקית";
                 if (!string.IsNullOrEmpty(customResponse.Response?.Status[0]?.NameCode?.Value))
                 {
                     declarationStatus = customResponse.Response.Status[0].NameCode.Value;
@@ -1207,13 +1207,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     // get the declaration status label
                     DeclarationStatusTypeQueryService declarationStatusTypeQueryService = new DeclarationStatusTypeQueryService(_MyDeclarationPM.Tenant);
                     DeclarationStatusTypePM declarationStatusType = declarationStatusTypeQueryService.GetSingle(customResponse.Response.Status[0].NameCode.Value, false, true);
-                    declarationStatusLabel = declarationStatusType?.LocalName ?? "";
+                    declarationStatusLabel = declarationStatusType?.LocalName ?? "לא ידוע";
                 }
-                string statusSoyRemarks = $"CODE-{declarationStatus}-{declarationStatusLabel}";
+                string statusSoyRemarks = $"CODE-{declarationStatus}-{declarationStatusLabel}-";
 
                 if (!string.IsNullOrEmpty(this._MyDeclarationPM.DeclarationNumber))
                 {
-                    statusSoyRemarks += $"-{this._MyDeclarationPM.DeclarationNumber}";
+                    statusSoyRemarks += this._MyDeclarationPM.DeclarationNumber;
+                }
+                else if (!string.IsNullOrEmpty(customResponse.Response?.Declaration?.ID?.Value))
+                {
+                    statusSoyRemarks += customResponse.Response.Declaration.ID.Value;
                 }
 
                 if (!string.IsNullOrEmpty(additionalComment))
@@ -1239,9 +1243,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                  payment = new DeclarationPaymentPM()
                 {
                     DeclarationId = _MyDeclarationPM.Id,
-                    CreatedByUserId = _MyDeclarationPM.CreatedByUserId,
+                    CreatedByUserId = _MyDeclarationPM.SignedByUserId,
                     PaymentDate = DateTime.Now,
-                    SignatoryIdentification = requestParams.SignByPersonalId,
+                    SignatoryIdentification = _MyDeclarationPM.SignerPersonalId,
                     Tenant = requestParams.Tenant,
                     ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                 };
@@ -1251,7 +1255,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             else
             {
                 payment.PaymentDate = DateTime.Now;
-                payment.SignatoryIdentification = requestParams.SignByPersonalId;
+                payment.SignatoryIdentification = _MyDeclarationPM.SignerPersonalId;
+                payment.CreatedByUserId = _MyDeclarationPM.SignedByUserId;
                 payment.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
 
             }

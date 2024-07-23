@@ -87,7 +87,9 @@ using Simplog.Data.InfrastructureModel;
 				   temp.Id = MyEntityPM.Id;
 				   temp.Code = MyEntityPM.Code;
 				   temp.EnglishName = MyEntityPM.EnglishName;
-				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
+                 
+
+                ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
 				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"EventType");  					
 				   return temp;
 			}

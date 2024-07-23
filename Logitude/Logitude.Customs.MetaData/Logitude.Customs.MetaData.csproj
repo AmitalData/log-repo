@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Logitude.Customs.MetaData</RootNamespace>
     <AssemblyName>Logitude.Customs.MetaData</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -18,12 +19,14 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Library\Bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -31,14 +34,14 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\Library\Bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\All Projects\</OutputPath>
+    <OutputPath>..\Library\Bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -46,22 +49,27 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
-    <OutputPath>bin\None\</OutputPath>
+    <OutputPath>..\Library\Bin\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AmazedSaint.Elastic">
       <HintPath>..\packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Shell.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Program Files (x86)\Microsoft Visual Studio 11.0\VSSDK\VisualStudioIntegration\Common\Assemblies\v4.0\Microsoft.VisualStudio.Shell.11.0.dll</HintPath>
     </Reference>
+    <!--<Reference Include="Microsoft.VisualStudio.Shell.Interop.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath> ..\..\..\Program Files (x86)\Microsoft Visual Studio 11.0\VSSDK\VisualStudioIntegration\Common\Assemblies\v4.0\Microsoft.VisualStudio.Shell.Interop.11.0.dll</HintPath>
+    </Reference>-->
     <Reference Include="Microsoft.VisualStudio.TextTemplating.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Program Files (x86)\Microsoft Visual Studio 11.0\VSSDK\VisualStudioIntegration\Common\Assemblies\v4.0\Microsoft.VisualStudio.TextTemplating.11.0.dll</HintPath>
@@ -99,16 +107,26 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContextGenerator.tt</DependentUpon>
     </Compile>
+    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
+      <Link>DependencyValidation1.layerdiagram</Link>
+      <Visible>False</Visible>
+    </AdditionalFiles>
     <None Include="DBOthers\Procedures\Queue_Peek_list.dxml" />
+    <None Include="DBOthers\Procedures\usp_CB_AgreementLevelData.dxml" />
+    <None Include="DBOthers\Procedures\usp_CB_RegularityRequirementData.dxml" />
     <None Include="DBOthers\Procedures\QueueEnqueue_succeedRequestsheets.dxml" />
+    <None Include="DBOthers\Procedures\usp_NewCustomsBookMainViewSearchByText.dxml" />
+    <None Include="DBOthers\Procedures\usp_NEWCustomsBookMainViewSearchByClassification.dxml" />
     <None Include="DBOthers\Procedures\Usp_DeleteCustomsRequestSheets.dxml" />
     <None Include="DBOthers\Procedures\Usp_DeleteComLogSteps.dxml" />
     <None Include="DBOthers\Procedures\Usp_DeleteQueMessMoreDet.dxml" />
     <None Include="DBOthers\Procedures\Usp_DeleteCommLogs.dxml" />
     <None Include="DBOthers\Procedures\usp_UpdateCourierHawbFromExcel.dxml" />
+    <None Include="DBOthers\Procedures\usp_CustomsBookMainView.dxml" />
     <None Include="DBOthers\Procedures\usp_UpdateQueueMessagePriority.dxml" />
     <None Include="DBOthers\Procedures\usp_UpdateQueueMessagePrio2.dxml" />
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
+    <None Include="DBOthers\Views\NewCustomsBookMainView.dxml" />
     <None Include="DBOthers\Views\CustomsBookMainView.dxml" />
     <None Include="DBOthers\Views\RequestSheetInQueueMesView.dxml" />
     <None Include="DBOthers\Views\DecTaxesByTaxTypeCodeViews.dxml" />
@@ -128,6 +146,7 @@
     <None Include="DBScripts\Post\202310031714_DeleteDeclarationStatusFieldC.sxml" />
     <None Include="DBScripts\Post\202308060942_AddINTERFACETENANTDEFINITIONS.sxml" />
     <None Include="DBScripts\Post\202422051020_UpdateCustomsEnvironmentSettings.sxml" />
+    <None Include="DBScripts\Post\20241006_UpdateTransportModeInTables.sxml" />
     <None Include="DBScripts\Post\202414041313_AddClientItemsSearchFields.sxml" />
     <None Include="DBScripts\Post\202208281500_UpdateLoadingOfDeclaration.sxml" />
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
@@ -217,6 +236,8 @@
     <None Include="DBScripts\Pre\20221220_AddCustomsHSMSignWR_Global.sxml" />
     <None Include="DBScripts\Pre\20221220_AddCustomsHSMSignWR_MAIN.sxml" />
     <None Include="DBScripts\Pre\20230310_CreateTypeVarcharTable.sxml" />
+    <None Include="DBScripts\Pre\20240610_UpdateTransportMode.sxml" />
+    <None Include="DBScripts\Post\20240610_UpdateTransportmodeLocalName.sxml" />
     <None Include="DBTables\AcceptanceStatus.dxml" />
     <None Include="DBTables\AccumalationState.dxml" />
     <None Include="DBTables\ActionCode.dxml" />
@@ -350,6 +371,7 @@
     <None Include="DBTables\ConverterType.dxml" />
     <None Include="DBTables\CoolingReportingMethod.dxml" />
     <None Include="DBTables\CountryCurrency.dxml" />
+    <None Include="DBTables\NUnicloud.dxml" />
     <None Include="DBTables\CountryGroup.dxml" />
     <None Include="DBTables\CourierCustomStatus.dxml" />
     <None Include="DBTables\CourierDeclaration.dxml" />
@@ -684,6 +706,7 @@
     <None Include="EntityFiles\CB_TariffComputedData.lxml" />
     <None Include="EntityFiles\CB_TradeLevy.lxml" />
     <None Include="EntityFiles\CB_Vendor.lxml" />
+    <None Include="EntityFiles\NUnicloud.lxml" />
     <None Include="EntityFiles\DiscountTypeRegulation.lxml" />
     <None Include="EntityFiles\CustomsItemGroup.lxml" />
     <None Include="EntityFiles\RegularityRequirementWarning.lxml" />
@@ -1231,9 +1254,9 @@
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Data.Global.csproj">
       <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
-      <Name>Simplog.Global.Data</Name>
+      <Name>Simplog.Data.Global</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
       <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
@@ -1281,6 +1304,14 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

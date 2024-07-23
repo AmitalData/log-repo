@@ -45,12 +45,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reports.Aging
                          select  new {  myGLAccountAgingData , currencyData }
                         );
 
-            Logger.LogDebug("GetFromGLAccountAgingData Query \r\n {0} ", qjoin.ToTraceQuery());
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("GetFromGLAccountAgingData Query \r\n {0} ", qjoin.ToTraceQuery()));
             DateTime start = DateTime.Now;
 
             var listAgingCurrency = qjoin.ToList();
 
-            Logger.LogDebug("GetFromGLAccountAgingData SUM duration {0} seconds ", (DateTime.Now - start).TotalSeconds);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("GetFromGLAccountAgingData SUM duration {0} seconds ", (DateTime.Now - start).TotalSeconds));
 
             
             listPeriods = listPeriods.OrderByDescending(r => r).ToList();

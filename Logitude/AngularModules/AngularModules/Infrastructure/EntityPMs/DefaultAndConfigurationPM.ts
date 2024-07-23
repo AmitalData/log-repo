@@ -35,14 +35,9 @@ export class DefaultAndConfigurationPM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
-    private queueDefinitionCode: string;
-    public get QueueDefinitionCode() { return this.queueDefinitionCode; }
-    public set QueueDefinitionCode(newValue: string) { if (this.queueDefinitionCode != newValue) { this.queueDefinitionCode = newValue; this.MarkAsDirty("QueueDefinitionCode"); } }
-       
-	 
-    private createDateTime: string;
-    public get CreateDateTime() { return this.createDateTime; }
-    public set CreateDateTime(newValue: string) { if (this.createDateTime != newValue) { this.createDateTime = newValue; this.MarkAsDirty("CreateDateTime"); } }
+    private createDate: Date;
+    public get CreateDate() { return this.createDate; }
+    public set CreateDate(newValue: Date) { if (this.createDate != newValue) { this.createDate = newValue; this.MarkAsDirty("CreateDate"); } }
        
 	 
     private searchFields: string;

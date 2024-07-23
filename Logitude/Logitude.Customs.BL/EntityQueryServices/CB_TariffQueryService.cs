@@ -22,6 +22,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
    public partial class CB_TariffQueryService: EntityQueryService<CB_Tariff,CB_TariffKeys,CB_TariffPM,object,CB_TariffKeys>
    {
 
+        public List<CB_TariffList> GetCustomsBookAgreementLevelData(int customsItemId, int measurementUnitMalamId)
+        {
+            return this.repository.GetCustomsBookAgreementLevelData(customsItemId, measurementUnitMalamId);
+        }      
         public List<CB_TariffList> GetCustomsBookTaxRates(int customsItemId)
         {
             return this.repository.GetCustomsBookTaxRates(customsItemId);

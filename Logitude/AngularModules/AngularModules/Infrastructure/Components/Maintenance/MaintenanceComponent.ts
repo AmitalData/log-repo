@@ -1,5 +1,5 @@
 declare var window: any;
-import { Component } from '@angular/core';
+import { Component, isDevMode } from '@angular/core';
 import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
 import { SessionLocator } from '../../Utilities/SessionLocator';
 import { FeatureLocator } from '../../Utilities/FeatureLocator';
@@ -36,11 +36,12 @@ import { TaxesWebService } from 'Customs/Services/WebServices/TaxesWebService';
 })
 
 export class MaintenanceComponent {
+        
     public ItemsSource: MaintenanceMenuItem[];
     LayoutDirection: string = 'ltr';
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
-     private readonly invoiceConfirmationNumber = "InvoiceConfirmationNumber";
+     private readonly invoiceConfirmationNumber = "SHAAM";
 
      private textCodeTranslationPipe: TextCodeTranslationPipe;
  
@@ -242,6 +243,15 @@ export class MaintenanceComponent {
     }
 
     private BuildSystemSettings() {
+        var item = new MenusTablePM();
+        item.CategoryTypeCode = "CMS";
+        item.Icon = "List"
+        item.Code = "DEFU";
+        item.ObjectTableName = "Defaults",
+        item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "DefaultAndConfiguration")[0].Id
+        item.TranslatedName = "Defaults", // TextCodeTranslator.Translate('General.MC.Logs');
+        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+
         if (FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber)) {
             var item2 = new MenusTablePM();
             item2.CategoryTypeCode = "CMS";
@@ -1102,7 +1112,7 @@ export class MaintenanceComponent {
                         logWindow.Height = window.outerHeight;
                         logWindow.Title = TextCodeTranslator.Translate("Customs.MC.General.AmitalAPISettings");
                         logWindow.IsShowCloseButton = true;
-                        logWindow.Show('./Common/Components/Maintenance/AmitalAPI/AmitalAPISettingsComponent');
+                        logWindow.Show('./InfrastructureModules/InfrastructureOthers/AmitalAPI/AmitalAPISettingsComponent');                        
                     break;
                 }
 
@@ -1112,7 +1122,7 @@ export class MaintenanceComponent {
                         logWindow.Height = window.outerHeight;
                         logWindow.Title = TextCodeTranslator.Translate("Customs.MC.General.APISettings");
                         logWindow.IsShowCloseButton = true;
-                        logWindow.Show('./Common/Components/Maintenance/AmitalAPI/APISettingsComponent');
+                        logWindow.Show('./InfrastructureModules/InfrastructureOthers/AmitalAPI/APISettingsComponent');
                     break;
                 }
 
@@ -1122,7 +1132,7 @@ export class MaintenanceComponent {
                         logWindow.Height = window.outerHeight;
                         logWindow.Title = TextCodeTranslator.Translate("Customs.MC.General.API_Requests");
                         logWindow.IsShowCloseButton = true;
-                        logWindow.Show('./Common/Components/Maintenance/AmitalAPI/AmitalAPIRequestsComponent');
+                        logWindow.Show('./InfrastructureModules/InfrastructureOthers/AmitalAPI/AmitalAPIRequestsComponent');
                     break;
                 }
 

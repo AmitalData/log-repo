@@ -38,6 +38,7 @@ using System.Web;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.Tools.DataMapping;
 using Logitude.BL.ShipmentsModel.Tools.ExternalService;
+using Logitude.Customs.Def.EntityPMs;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -1576,7 +1577,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 str = shipment.ShipmentType.Name;
             }
 
-            str = string.IsNullOrEmpty(str) ? shipmentLevel.Name : str + " " + shipmentLevel.Name;
+            str = string.IsNullOrEmpty(str) ? shipmentLevel?.Name : str + " " + shipmentLevel?.Name;
             shipmentPM.ShipmentType = str;
             shipmentPM.Tenant = shipment.Tenant;
             shipmentPM.ShipmentPMId = shipment.Id;
@@ -1813,6 +1814,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
             #endregion
+
+            if (shipment.DirectionId == "C")
+            {
+                shipmentPM.ReferantUserId = shipment.ReferantUserId;
+                // shipmentPM.ReferantUserId = shipment.UserId.Id;
+                shipmentPM.IskaNumber = shipment.IskaNumber;
+                shipmentPM.Status = "aa"; // todo: mapping
+            }
 
             // Warehouse Leg 
             shipmentPM.WarehouseLegWarehouseName = shipment.WarehouseLegCard?.EnglishName;
@@ -2254,7 +2263,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #endregion
 
                 #region Shipment ARInvoices
-                if (shipmentPM.ShipmentARInvoices != null)
+                if (shipmentPM.ShipmentARInvoices != null && shipmentPM.ShipmentARInvoices.Count > 0)
                 {
                     ARInvoiceStatusRepository statusRepository = new ARInvoiceStatusRepository(tenant);
                     List<ARInvoiceStatus> allStatuses = statusRepository.GetARInvoiceStatus().ToList();
@@ -2325,7 +2334,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #endregion
 
                 #region Shipment APInvoices
-                if (shipmentPM.ShipmentAPInvoices != null)
+                if (shipmentPM.ShipmentAPInvoices != null && shipmentPM.ShipmentAPInvoices.Count > 0)
                 {
                     APInvoiceStatusRepository statusRepository = new APInvoiceStatusRepository(tenant);
                     List<APInvoiceStatus> allStatuses = statusRepository.GetAPInvoiceStatus().ToList();
