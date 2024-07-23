@@ -148,7 +148,7 @@ namespace WebFreight.Web.WcfApi
                     }
                     User user = null;
 
-					if (entityPM.DirectionId != "C") 
+					if(!entityPM.IsCustomShipment) 
                     { 
                        ClassLevelValidator validationClass = new ClassLevelValidator("Shipment", entityPM.Tenant) { IsHybrid = true };
                        if (!validationClass.IsValid(entityPM, entityPM, null))
@@ -707,9 +707,13 @@ namespace WebFreight.Web.WcfApi
                     {
                         return response;
                     }
+                    Contact contact = null;
+					if (!entityPM.IsCustomShipment)
+                     contact = ContactRepository.GetSingleContact(user.Id, entityPM.Tenant, true);
+                    else
+					 contact = ContactRepository.GetSingleContact(user.Id, user.Tenant, true);
 
-                    Contact contact = ContactRepository.GetSingleContact(user.Id, 0, true);
-                    ShipmentService service = null;
+					ShipmentService service = null;
 
                     Shipment entity = shipmentRepository.GetSingleShipmentOnlyByNumber(entityPM.ShipmentNumber, entityPM.Tenant);
                     if (entity == null)
