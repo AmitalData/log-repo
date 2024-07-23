@@ -1271,6 +1271,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var cardRepository = new CardRepository(_DirtyDeclarationPM.Tenant);
             var userRepository = new UserRepository(_DirtyDeclarationPM.Tenant);
             var DepartmentRepository = new DepartmentRepository(_DirtyDeclarationPM.Tenant);
+            bool isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
             string userCode = "";
             _loanAmount = 0; // moran 17.1.16 - Task 19798
             if (_CCUFILEMPM == null)
@@ -1532,6 +1533,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (short.TryParse(rightownid, out importerEntitlementTypeCode))
                 {
                     _CCUFILEMPM.RIGHTOWNID = importerEntitlementTypeCode;
+                }
+                if (!isConnectedToUniFreight)
+                {
+                    if (short.TryParse(_DirtyDeclarationPM.ImporterEntitlementTypeCode, out importerEntitlementTypeCode))
+                    {
+                        _CCUFILEMPM.RIGHTOWNID = importerEntitlementTypeCode;
+                    }
                 }
             }
 
@@ -2477,6 +2485,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         private Unifreight.BL.EntityPMs.SupplierInvoicePM SetSupplierInvoice(Def.EntityPMs.SupplierInvoicePM decSupplierInvoice)
         {
+            bool isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
             CustomsExchangeRatePM rate = new CustomsExchangeRatePM();
             Unifreight.BL.EntityPMs.SupplierInvoicePM supplierInvoicePM = new Unifreight.BL.EntityPMs.SupplierInvoicePM();
             supplierInvoicePM.ChangeSetOp = ChangeSetOperation.Insert;
@@ -2500,6 +2509,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 //Set Customs file fields
                 _CCUFILEMPM.SELLCONDITIONID = GetTranslationP2L("IIGC", "CTBINCOTERMS", decSupplierInvoice.IncotermCode);
+                if(!isConnectedToUniFreight)
+                {
+                    _CCUFILEMPM.SELLCONDITIONID = decSupplierInvoice.IncotermCode;
+                }
                 _CCUFILEMPM.COINID = GetTranslationP2L("IIGC", "CTBCURRENCY", decSupplierInvoice.InvoiceCurrencyTypeCode);
                 _CCUFILEMPM.COINIDN = decSupplierInvoice.InvoiceCurrencyTypeCode;
 
@@ -2604,6 +2617,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             supplierInvoicePM.COUNTRYID = GetTranslationP2L("IIGC", "CTBCOUNTRY", decSupplierInvoice.IssueCountryCode);
             supplierInvoicePM.INCOTERMID = GetTranslationP2L("IIGC", "CTBINCOTERMS", decSupplierInvoice.IncotermCode);
             supplierInvoicePM.CURRENCYID = GetTranslationP2L("IIGC", "CTBCURRENCY", decSupplierInvoice.InvoiceCurrencyTypeCode);
+            if (!isConnectedToUniFreight)
+            {
+                supplierInvoicePM.COUNTRYID = decSupplierInvoice.IssueCountryCode;
+                supplierInvoicePM.INCOTERMID = decSupplierInvoice.IncotermCode;
+                supplierInvoicePM.CURRENCYID = decSupplierInvoice.InvoiceCurrencyTypeCode;
+            }
              CalculateSupplierInvoiceModifications(_CCUFILEMPM, supplierInvoicePM, decSupplierInvoice);
 
             supplierInvoicePM.CHANGINGVALUE = supplierInvoicePM.CHANGINGVALUE.GetValueOrDefault() + supplierInvoicePM.VALUE;
