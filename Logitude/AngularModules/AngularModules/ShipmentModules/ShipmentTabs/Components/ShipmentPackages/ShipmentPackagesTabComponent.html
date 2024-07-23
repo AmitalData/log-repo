@@ -1,7 +1,7 @@
 <table>
     <tr>
         <td class="title-container" style="top:5px;right:5px;">
-            <div *ngIf="!IsDisplayOnly && (IsDisplayMessage)">
+            <div *ngIf="!IsDisplayOnly">
 
                 <div style="width:5px">
                 </div>
@@ -10,7 +10,7 @@
             </div>
         </td>
         <td style="height: 25px;padding-bottom: 0px;top:2px; left:30px;width:30px">
-            <div *ngIf="!IsDisplayOnly && (IsDisplayMessage)">
+            <div *ngIf="!IsDisplayOnly">
 
                 <IconButton [IsEnabled]="!IsReadOnly" [Name]="'Add'" [IsSmall]="true" (click)="Add()"
                     style="top:18px; ">
@@ -37,7 +37,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <div *ngIf="!IsDisplayOnly && (IsDisplayMessage)">
+                        <div *ngIf="!IsDisplayOnly">
                             <logitude-edit-grid GridWidth="100%" GridHeight="100%" (RowEnded)="OnRowEnded($event)"
                                 (Ondblclick)="OnFocus()" [IsReadOnly]="IsReadOnly" [UseVirtuallization]="true"
                                 [SelectedRow]="SelectedRow" [ItemSource]="ItemsSource"
