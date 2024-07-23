@@ -51,6 +51,7 @@ export class MainDisplayComponent {
 
 	cbTariffList: CB_TariffList[];
 	cbRequirementComputedDataList: CB_RequirementComputedDataList[];
+	isExpand: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	ngOnInit() {
 		this.InitData();
@@ -68,6 +69,7 @@ export class MainDisplayComponent {
 			this.fullData = this.orderedData(data);
 			this.data = this.fullData;
 			this.searchMode = TableTopState.ViewAll;
+			this.isExpand.next(false);
 		});
 	}
 
@@ -98,17 +100,39 @@ export class MainDisplayComponent {
 
 				// update list:
 				this.data = this.orderedDataForSearch(data);
-				this.extendAll(this.data);
+				// this.expandAll(this.data);
+				this.toggleAllChildren(true); // expand all 
+				this.isExpand.next(true);
+
 				this.searchMode = TableTopState.Search;
 				this.searchValue = this.searchService.GetSearchText();
 			}
 		});
 	}
+
 	
-	extendAll(data: CB_CustomsItemComputedDataList[]) {
+	toggleAllChildren(extend: boolean) {
+		
+		const toggleVisibility = (data: CB_CustomsItemComputedDataList[]) => {
+			data.forEach(item => {
+				if (extend) {
+					this.childrenToDesplay.push(item.CIH_GoodsDescription);
+				} else if (!extend ) {
+					const isShown = this.childrenToDesplay.indexOf(item.CIH_GoodsDescription);
+					this.childrenToDesplay.splice(isShown);
+				}
+				if (item.children && item.children.length > 0) {
+					toggleVisibility(item.children); // Recursively toggle children
+				}
+			});
+		};
+		toggleVisibility(this.data); // Assuming this.data is your main data array
+	}
+	
+	expandAll(data: CB_CustomsItemComputedDataList[]) {
 		data.forEach((item) => {
 			this.showChildern(item.CIH_GoodsDescription);
-			if (item.children && item.children.length > 0) this.extendAll(item.children);
+			if (item.children && item.children.length > 0) this.expandAll(item.children);
 		});
 	}
 
@@ -142,11 +166,13 @@ export class MainDisplayComponent {
 		}
 	}
 
-	showChildern(id: string): boolean {
+	showChildern(id: string) {
 		const isShown = this.childrenToDesplay.indexOf(id);
 		isShown === -1 ? this.childrenToDesplay.push(id) : this.childrenToDesplay.splice(isShown);
-		return Boolean(isShown >= 0);
+		// return Boolean(isShown >= 0);
 	}
+
+	
 
 	handleClearResultsClick() {
 		this.handleClearResults();
@@ -162,6 +188,8 @@ export class MainDisplayComponent {
 		this.searchValue = "";
 		// this.InitData();
 		this.data = this.fullData;
+		this.toggleAllChildren(false);  
+		this.isExpand.next(false);
 	}
 
 	public orderedDataForSearch = (data) => {

@@ -42,7 +42,7 @@ export class MainPageComponent {
 			Tenant: 0
 		};
 		
-
+		if(filters.SearchFields === "") return;
 		if (SearchBy.searchBy_form01 == this.selectSearchBy) {
 			this.API_MainService.GetCustomsBookMainViewSearchByClassification(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
 				this.itemsData.next(data);				

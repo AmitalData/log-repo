@@ -1,9 +1,10 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faStar as faStarBold, faChevronLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { faStar, faCommentDots, faSquareCaretRight, faFileText } from '@fortawesome/free-regular-svg-icons';
 import { AddCommentService } from '../add-comment/service/add-comment.service';
 import { NgIf, NgClass } from '@angular/common';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
 	selector: 'app-data-row',
@@ -12,11 +13,13 @@ import { NgIf, NgClass } from '@angular/common';
 	templateUrl: './data-row.component.html',
 	styleUrl: './data-row.component.css',
 })
-export class DataRowComponent {
+export class DataRowComponent implements OnInit {
 	@Output() showDetails: EventEmitter<boolean> = new EventEmitter<boolean>();
 	@Output() showChildern: EventEmitter<boolean> = new EventEmitter<boolean>();
 	@Input() data: any;
-	@Input() isSelected?: boolean = false;
+	@Input() isSelected?: boolean = true;
+	@Input() isExpand: BehaviorSubject<boolean>;
+
 	@Input() state = 'search';
 	@Input() searchItem?: string = '';
 
@@ -29,8 +32,20 @@ export class DataRowComponent {
 	faFileArchive = faFileText;
 	checked: boolean = false;
 	selected: boolean = false;
+	showAddComment = this.addCommentService.getIsOpened();
+
 	constructor(private addCommentService: AddCommentService) { }
-  showAddComment = this.addCommentService.getIsOpened();
+	
+	ngOnInit() {
+		this.listerToExpand();
+	}
+
+	listerToExpand() {
+		this.isExpand.subscribe((value) => {
+			this.selected = value;
+		});
+	}
+
 
 	highlight(text: string, search: string): string {
 		if (!search) {
@@ -38,13 +53,16 @@ export class DataRowComponent {
 		}
 		const regex = new RegExp(`(${search})`, 'gi');
 		return text.replace(regex, `<mark>$1</mark>`);
-  }
+	}
+
+	expandClick() {	
+		this.selected = !this.selected;
+		this.showChildern.emit();
+	}
 
 	showAddCommentSidebar() {
 		this.addCommentService.setIsOpened(true);
 	}
-
-	ngOnInit() { }
 
 	getTooltipText(text: string): string {
 		return text.length > 20 ? text : '';

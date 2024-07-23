@@ -1,7 +1,7 @@
 <div class="mainTable_item" [ngClass]="{'selected': isSelected}">
-	<div class="mainTable_itemToggle" [class.active]="selected" (click)="selected = !selected">
+	<div class="mainTable_itemToggle" [class.active]="selected" (click)="expandClick()">
 		<button *ngIf="!data?.IsLeaf">
-			<i role="img" aria-hidden="true"> <fa-icon [icon]="faArrowAltCircleLeft" (click)="showChildern.emit()"></fa-icon> </i>
+			<i role="img" aria-hidden="true"> <fa-icon [icon]="faArrowAltCircleLeft" ></fa-icon> </i>
 		</button>
 	</div>
 	<div class="mainTable_itemName" (click)="showDetails.emit()">
