@@ -11,11 +11,11 @@ import { API_MainService, Filters } from '../../../core/API_MainService';
 import { BehaviorSubject, filter } from 'rxjs';
 import { SearchService } from '../page-top/service/top-page.service';
 import { FormsModule } from '@angular/forms';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
-	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent, FormsModule],
+	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent, FormsModule, MatProgressSpinnerModule],
 	templateUrl: './main-display.component.html',
 	styleUrl: './main-display.component.css',
 	animations: [
@@ -39,19 +39,16 @@ export class MainDisplayComponent implements OnInit {
 	showCommentSidebar: boolean = false;
 	childrenToDesplay: string[] = [];
 	private _filters;
-
 	//data: any | never | undefined = {};
 	data: CB_CustomsItemComputedDataList[] = [];
 	fullData: CB_CustomsItemComputedDataList[] = [];
-
 	KeyValue = Object.keys;
 	Object: ObjectConstructor = Object;
-
-	constructor(private API_MainService: API_MainService, private searchService: SearchService) { }
-
 	cbTariffList: CB_TariffList[];
 	cbRequirementComputedDataList: CB_RequirementComputedDataList[];
 	isExpand: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+	constructor(private API_MainService: API_MainService, private searchService: SearchService) { }
 
 	ngOnInit() {
 		this.InitData();

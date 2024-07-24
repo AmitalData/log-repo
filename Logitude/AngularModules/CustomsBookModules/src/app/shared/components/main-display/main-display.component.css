@@ -273,8 +273,8 @@ a.searchResults_filterPop_clear {
 	padding: 10px 0px 0px;
 }
 
-.mainTable_itemChkAll label	:hover {
-    background-color: transparent !important;
+.mainTable_itemChkAll label:hover {
+	background-color: transparent !important;
 	border: 0 !important;
 }
 
@@ -331,4 +331,18 @@ a.searchResults_filterPop_clear {
 
 .mainTable_itemChkAll label input:checked+span:after {
 	right: 2px;
+}
+
+
+.loadingBox {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 50%;
+}
+
+.loadingBox>img {
+	width: 100px;
+	height: 100px;
 }

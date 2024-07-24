@@ -159,3 +159,15 @@ textarea,
 li {
     outline: none !important;
 }
+
+::ng-deep .mdc-snackbar__label {
+    display: flex !important;
+    flex-direction: row-reverse !important;
+}
+
+::ng-deep .mat-mdc-snack-bar-container {
+    position: absolute !important;
+    top: 80% !important;
+    right: 10px !important;
+    background: #0071CE !important;
+}

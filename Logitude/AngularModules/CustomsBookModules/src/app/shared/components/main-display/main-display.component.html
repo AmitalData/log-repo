@@ -1,11 +1,14 @@
 <div class="mainTable">
-	<app-add-comment class="addCommentSlider" [currentItem]="currentItem" />
+	<app-add-comment class="addCommentSlider" />
 	<div class="centeredContent">
 		<div class="mainTable_list">
 			<div class="data_row_container" [class.active]="!showDetails">
 				<app-table-top class="app-table-top" [class.active]="!showDetails"
 					(clearResults)="handleClearResultsClick()" [countSearchResult]="data?.length"
 					[searchMode]="searchMode" />
+				<div class="loadingBox" *ngIf="data.length <= 0">
+					<img src="../../../../assets/images/loadingProgressBar.gif" alt="">
+				</div>
 				<ul *ngFor="let item of data" class="wtree">
 					<app-data-row [data]="item" [isSelected]="selectedItemId == item.CustomsItemID"
 						[isExpand]="isExpand" [searchItem]="searchValue"

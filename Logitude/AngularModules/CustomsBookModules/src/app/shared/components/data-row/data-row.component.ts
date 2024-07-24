@@ -5,6 +5,7 @@ import { faStar, faCommentDots, faSquareCaretRight, faFileText } from '@fortawes
 import { AddCommentService } from '../add-comment/service/add-comment.service';
 import { NgIf, NgClass } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
+import { CB_CustomsItemComputedDataList } from '../main-display/main-display.component';
 
 @Component({
 	selector: 'app-data-row',
@@ -35,7 +36,7 @@ export class DataRowComponent implements OnInit {
 	showAddComment = this.addCommentService.getIsOpened();
 
 	constructor(private addCommentService: AddCommentService) { }
-	
+
 	ngOnInit() {
 		this.listerToExpand();
 	}
@@ -55,13 +56,13 @@ export class DataRowComponent implements OnInit {
 		return text.replace(regex, `<mark>$1</mark>`);
 	}
 
-	expandClick() {	
+	expandClick() {
 		this.selected = !this.selected;
 		this.showChildern.emit(this.selected);
 	}
 
-	showAddCommentSidebar() {
-		this.addCommentService.setIsOpened(true);
+	showAddCommentSidebar(data: CB_CustomsItemComputedDataList) {
+		this.addCommentService.setIsOpened(true, data);
 	}
 
 	getTooltipText(text: string): string {
