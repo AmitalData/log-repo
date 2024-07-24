@@ -35,6 +35,7 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.Resolvers;
 
 using System.Text.RegularExpressions;
+using System.Data.Entity.Core.Objects;
 
 
 namespace Logitude.BL.InvoiceModel.Tools.Validating
@@ -860,7 +861,28 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
             else return null;
         }
+        public static string ValidateConfirmationNumber(DateTime? invoiceDate, decimal localVATAmount,int tenant, string email)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+            if (tenantPOCO != null && tenantPOCO.AccountingActivated)
+            {
 
+                bool useLocal = !(GetLoggedContact(tenant, email).DontShowLocal);
+                IInvoiceContext objectContext=new InvoiceContext();
+                var confirmationNumberDefault = (from a in objectContext.ConfirmationNumberDefaults
+                                                 where a.Tenant == tenant && a.FromDate <= invoiceDate &&a.InActive==false
+                                                 orderby a.FromDate descending
+                                                 select a
+                                            ).FirstOrDefault();
+              if ( localVATAmount >= confirmationNumberDefault?.AmountForConfirmationNumber)
+               {
+                return TranslateTextsClass.Translate("Accounting.General.O.ConfirmationNumberValidation", tenant, useLocal);
+               }
+            else return null;
+            }
+            else return null;
+        }
         private static GLAccountPM GetGLAccountByCardId(string cardId, int tenant)
         {
             GLAccountPM glaAccount = null;
