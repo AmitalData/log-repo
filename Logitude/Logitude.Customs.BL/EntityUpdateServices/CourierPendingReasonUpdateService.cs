@@ -16,7 +16,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void OnCreating(CourierPendingReasonPM entityPM, EntityPM entityParentPM)
         {
             ValidateEntity(entityPM);
-            entityPM.Id = IdCounter.GetNumber("Customs.CourierPendingReason", entityPM.Tenant);
+
+            entityPM.Id = entityPM.Code;// IdCounter.GetNumber("Customs.CourierPendingReason", entityPM.Tenant);
         }
 
         protected override void OnUpdating(CourierPendingReasonPM entityPM, CourierPendingReason entityPOCO)
