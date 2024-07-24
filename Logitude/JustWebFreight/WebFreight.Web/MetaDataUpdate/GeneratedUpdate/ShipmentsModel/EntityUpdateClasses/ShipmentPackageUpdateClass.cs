@@ -8495,7 +8495,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   TextCode ShipmentPackageTextCode_ShipmentPackageOActualEmptyReturn = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.O.ActualEmptyReturn", DefaultText = "Actual Empty Return",LocalDefaultText = null, ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ShipmentPackageTextCode_ShipmentPackageODisplayOnlyMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.O.DisplayOnlyMessage", DefaultText = "Container screen is inactive for LCL shipments",LocalDefaultText = @"מסך מכולות לם פעיל עבור משלוחי LCL", ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ShipmentPackageTextCode_ShipmentPackageODisplayOnlyMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.O.DisplayOnlyMessage", DefaultText = "Container screen is inactive for LCL shipments",LocalDefaultText = @"מסך מכולות לא פעיל עבור משלוחי LCL", ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
