@@ -3027,37 +3027,37 @@
       <ScreenField
         Column="1"
         Row="0"
-        ObjectFieldName="&quot;IsFollowUp&quot;"
+        ObjectFieldName="&quot;Weight&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="1"
         Row="1"
-        ObjectFieldName="&quot;FollowUpEnglishName&quot;"
+        ObjectFieldName="&quot;IsFollowUp&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="1"
         Row="2"
-        ObjectFieldName="&quot;FollowUpLocalName&quot;"
+        ObjectFieldName="&quot;FollowUpEnglishName&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="1"
         Row="3"
-        ObjectFieldName="&quot;IsCustomerView&quot;"
+        ObjectFieldName="&quot;FollowUpLocalName&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="1"
         Row="4"
-        ObjectFieldName="&quot;IsAgentView&quot;"
+        ObjectFieldName="&quot;IsCustomerView&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="1"
         Row="5"
-        ObjectFieldName="&quot;InActive&quot;"
+        ObjectFieldName="&quot;IsAgentView&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="1"
         Row="6"
-        ObjectFieldName="&quot;Weight&quot;"
+        ObjectFieldName="&quot;InActive&quot;"
         ScreenName="General Tab Screen" />
     </ScreenFields>
   </Screen>

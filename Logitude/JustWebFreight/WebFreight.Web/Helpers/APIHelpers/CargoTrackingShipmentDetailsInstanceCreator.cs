@@ -240,8 +240,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
         {
             return new StatusDetails()
             {
-                StatusCode = traceEventPM.EntityStatusCode,
-                StatusName = traceEventPM.EntityStatusName,
+                StatusCode = traceEventPM.EventTypeCode,
+                StatusName = traceEventPM.EventTypeEnglishName,
                StatusDateTime=traceEventPM.EventDateTime,
                StatusRemarks=traceEventPM.Notes
             };
