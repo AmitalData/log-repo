@@ -32,6 +32,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 //Chartofaccount==1111.50+76.15	
                 QBaseAllCardsAndDetailsAccType = QBaseAllCardsAndDetailsAccType.Where(coa => coa.ChartOfAccountsTypeCode == "1");
             }
+            if (_TrailReportParam.Suppress_ControlAccount)
+            {
+                QBaseAllCardsAndDetailsAccType = QBaseAllCardsAndDetailsAccType.Where(coa => coa.IsControlAccount == false);
+            }
 
             IQueryable<TrailReportTemp> qLocalAmountOnly_TotalStart_GroupByAccount = Init_LocalAmountOnly_TotalStart_JoinAccounts_GroupByAccount();
             if (!String.IsNullOrWhiteSpace(_accountId))
@@ -53,10 +57,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             IQueryable<TrailReportTemp> qAccumulateLocalAmountOnly_TransStart_GroupByAccount_All = qAccumulateLocalAmountOnly_TransStart_JoinAccountsNotControlAccount_GroupByAccount;
             if (!base.NotUsingControlAccount())
             {
-                IQueryable<TrailReportTemp> qAccumulate_LocalAmountOnly_TransStart_JoinAccountsWhereIscontrolAccount_GroupByAccount = Init_LocalAmountOnly_TransStart_JoinAccountsWhereIscontrolAccount_GroupByAccount();
+                //IQueryable<TrailReportTemp> qAccumulate_LocalAmountOnly_TransStart_JoinAccountsWhereIscontrolAccount_GroupByAccount = Init_LocalAmountOnly_TransStart_JoinAccountsWhereIscontrolAccount_GroupByAccount();
+                //qAccumulateLocalAmountOnly_TransStart_GroupByAccount_All =
+                //qAccumulateLocalAmountOnly_TransStart_JoinAccountsNotControlAccount_GroupByAccount.Union(
+                //qAccumulate_LocalAmountOnly_TransStart_JoinAccountsWhereIscontrolAccount_GroupByAccount);
                 qAccumulateLocalAmountOnly_TransStart_GroupByAccount_All =
-                qAccumulateLocalAmountOnly_TransStart_JoinAccountsNotControlAccount_GroupByAccount.Union(
-                qAccumulate_LocalAmountOnly_TransStart_JoinAccountsWhereIscontrolAccount_GroupByAccount);
+                qAccumulateLocalAmountOnly_TransStart_JoinAccountsNotControlAccount_GroupByAccount;
             }
 
 
@@ -70,11 +76,13 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             IQueryable<TrailReportTemp> qLocalAmountOnly_LocalAmountTransEnd_GroupByAccount_All = qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsNotControlAccount_GroupByAccount;
             if (!base.NotUsingControlAccount())
             {
-                IQueryable<TrailReportTemp> qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsWhereIsControlAccount_GroupByAccount = Init_LocalAmountOnly_TransEnd__JoinAccountsWhereIsControlAccount_GroupByAccount();
+                //IQueryable<TrailReportTemp> qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsWhereIsControlAccount_GroupByAccount = Init_LocalAmountOnly_TransEnd__JoinAccountsWhereIsControlAccount_GroupByAccount();
 
+                //qLocalAmountOnly_LocalAmountTransEnd_GroupByAccount_All =
+                //qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsNotControlAccount_GroupByAccount.Union(
+                //qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsWhereIsControlAccount_GroupByAccount);
                 qLocalAmountOnly_LocalAmountTransEnd_GroupByAccount_All =
-                qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsNotControlAccount_GroupByAccount.Union(
-                qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsWhereIsControlAccount_GroupByAccount);
+                qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsNotControlAccount_GroupByAccount;
             }
             if (!String.IsNullOrWhiteSpace(_accountId))
             {

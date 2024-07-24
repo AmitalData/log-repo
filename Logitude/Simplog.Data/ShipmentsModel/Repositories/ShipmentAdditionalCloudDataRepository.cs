@@ -48,6 +48,13 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             }
             return null;
         }
+        public ShipmentAdditionalCloudData GetSingleShipmentAdditionalCloudDataTest()
+        {
+            ShipmentAdditionalCloudData entity = (from a in context.ShipmentAdditionalCloudDatas join b in context.Shipments on a.Id equals b.Id
+                                                  where a.IsUserIDNumberRequired == true && !b.IsCancelled && a.UserIdNumberUpdateDate == null && a.UserIdNumberXMLData != null && a.UserIdNumberXMLData.Contains("<UserIdNumberRequestPM")
+                                                  select a).FirstOrDefault();
+                return entity;
+        }
         public void Add(ShipmentAdditionalCloudData entity)
         {
             context.ShipmentAdditionalCloudDatas.Add(entity);

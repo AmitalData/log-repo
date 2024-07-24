@@ -40,8 +40,15 @@ namespace WebFreight.Web.Helpers
     //public class ExportToExcelHelper
     public partial class ExportToExcelHelper
     {
+        public readonly int MaxCellLength = 32767;
         public byte[] ExportQueryToExcel(ExportToExcelArgs exportToExcelArgs)
         {
+            Stopwatch _Stopwatch;
+            Stopwatch _Stopwatch1;
+
+
+            LogTime("start all at : ", exportToExcelArgs.IsXslxFormat, exportToExcelArgs.Tenant);
+            _Stopwatch1 = Stopwatch.StartNew();
             string xmlData = "";
             MemoryStream memory = new MemoryStream();
 
@@ -355,8 +362,12 @@ namespace WebFreight.Web.Helpers
                     xmlFilters = filterSerializer.SerializeFilterItems(queryOperations);
 
                     parameters = new object[] { xmlFilters, tenant };
+                    _Stopwatch = Stopwatch.StartNew();
+                    LogTime("start queryResult at : ", exportToExcelArgs.IsXslxFormat, tenant);
                     var queryResult = getListMethodInfo.Invoke(context, parameters);
                     querableEntities = queryResult as IQueryable;
+                    LogTime("stop queryResult at : ", exportToExcelArgs.IsXslxFormat, tenant);
+                    LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "2 Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
 
                     IEnumerator datalist = null;
                     if (querableEntities == null)
@@ -626,6 +637,7 @@ namespace WebFreight.Web.Helpers
                             excelEngine.Dispose();
                         }
                     }
+
                 }
             }
             //}
@@ -898,6 +910,7 @@ namespace WebFreight.Web.Helpers
             //    queryName = queryName.Substring(0, 31);
 
             System.Xml.Linq.XElement entities = new System.Xml.Linq.XElement(queryName);
+            //System.Xml.Linq.XElement entities = new System.Xml.Linq.XElement(query.ObjectTableName + "s");
             try
             {
                 int datacount = 0;
@@ -1117,8 +1130,24 @@ namespace WebFreight.Web.Helpers
             return ReturnData;
         }
 
+        // Method to set cell value with length check
+        public void SetCellValueWithMaxLength(ICell cell, string value)
+        {
+            if (value.Length > MaxCellLength)
+            {
+                value = value.Substring(0, MaxCellLength);
+            }
+            cell.SetCellValue(value);
+        }
+
+        // Optionally, you can have a method to get the max cell length
+        public int GetMaxCellLength()
+        {
+            return MaxCellLength;
+        }
         private byte[] NpoiExcelGenerator(IEnumerator dataList, QueryPM query, List<QueryColumnPM> queryColumns, int tenant)
         {
+            LogTime("start NpoiExcelGenerator Func at : ", true);
 
             MemoryStream ms = new MemoryStream();
             TextCodeRepository textCodeRepoitory = new TextCodeRepository(tenant);
@@ -1204,7 +1233,7 @@ namespace WebFreight.Web.Helpers
 
                     cell.SetCellType(NPOI.SS.UserModel.CellType.String);
                     var Text = !string.IsNullOrEmpty(query.DisplayText) ? query.DisplayText : TextCodesTranslator.TranslateText(query.NameTextCodeCode, tenant);
-                    cell.SetCellValue(Text);
+                    SetCellValueWithMaxLength(cell, Text);
                     WorkingRowIndex++;
 
                     #endregion
@@ -1213,15 +1242,23 @@ namespace WebFreight.Web.Helpers
                     foreach (QueryColumnPM column in queryColumns)
                     {
 
-                        string text = !string.IsNullOrWhiteSpace(column.ObjectFieldFieldLableTextCodeDefaultText)
-                                      ? column.ObjectFieldFieldLableTextCodeDefaultText
-                                     : column.ObjectFieldListLabelTextCodeCode;
+                      //  string text = !string.IsNullOrWhiteSpace(column.ObjectFieldFieldLableTextCodeDefaultText)
+                      //                ? column.ObjectFieldFieldLableTextCodeDefaultText
+                      //               : column.ObjectFieldListLabelTextCodeCode;
+
+                        string text = !string.IsNullOrWhiteSpace(column.ObjectFieldListLabelTextCodeCode)
+                                      ? column.ObjectFieldListLabelTextCodeCode
+                                     : column.ObjectFieldFullNameTextCodeCode;
 
 
                         if (!string.IsNullOrEmpty(column.DisplayText))
                         {
 
                             text = column.DisplayText;
+                        }
+                        else if (!string.IsNullOrEmpty(column.ObjectFieldFieldLableTextCodeDefaultText))
+                        {
+                            text = column.ObjectFieldFieldLableTextCodeDefaultText;
                         }
 
 
@@ -1238,7 +1275,7 @@ namespace WebFreight.Web.Helpers
                         cell.CellStyle = QueryNameHeaderCellFontStyle;
 
                         cell.SetCellType(NPOI.SS.UserModel.CellType.String);
-                        cell.SetCellValue(text);
+                        SetCellValueWithMaxLength(cell, text);
                         i++;
 
                     }
@@ -1274,7 +1311,9 @@ namespace WebFreight.Web.Helpers
 
                             if (column.ObjectFieldDataTypeCode == "DateTime" && value != null)
                             {
-                                value = value.ToString("dd/MM/yyyy");
+                               // value = value.ToString("dd/MM/yyyy");
+
+                                value = ((DateTime)value).ToString("dd/MM/yyyy");
 
                             }
 
@@ -1297,9 +1336,10 @@ namespace WebFreight.Web.Helpers
                                 {
                                     if (value == "") value = "0";
                                     cell.SetCellValue(bool.Parse(value));
+                                 
                                 }
                                 else
-                                    cell.SetCellValue(value.ToString());
+                                    SetCellValueWithMaxLength(cell, value.ToString());
                             }
                             catch (Exception ex1)
                             {
@@ -1327,6 +1367,9 @@ namespace WebFreight.Web.Helpers
             {
 
             }
+
+
+            LogTime("Stop NpoiExcelGenerator Func at : ", true);
 
 
             return ms.ToArray();
@@ -1363,6 +1406,22 @@ namespace WebFreight.Web.Helpers
                     {
                         return CellType.String;
                     }
+            }
+        }
+
+        private void LogTime(string msg, bool isXslx, int tenant = 0)
+        {
+
+
+            if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant) && isXslx)
+            {
+                //DateTime stopLogAt = DateTime.MinValue;
+                string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20230601T000000.LogUntilDateyyyyMMdd"];
+                //if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+                //stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None);
+                msg += DateTime.Now.ToString();
+                DateTime date = new DateTime(2023, 06, 01);
+                LogitudeSettings.HandleLogMe(msg, false, "ExportToExcel", date);
             }
         }
     }

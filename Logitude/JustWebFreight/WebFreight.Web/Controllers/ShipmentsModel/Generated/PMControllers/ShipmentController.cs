@@ -43,6 +43,7 @@ using Marvin.JsonPatch;
 using Marvin.JsonPatch.Exceptions;
 using static Dropbox.Api.Sharing.ListFileMembersIndividualResult;
 using WebFreight.Web.WebServices;
+using Simplog.Server.Infrastructure;
 
 namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 {
@@ -657,10 +658,13 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
         }
 
-        public HttpResponseMessage GetSingleBySecurityKeyWithoutToken(string key, int tenant)
+        public HttpResponseMessage GetSingleBySecurityKeyWithoutToken(string key, int? tenant = null)
         {
             try
             {
+                ShipmentQuery shipmentQuery;
+                ShipmentAdditionalCloudCustomData CustomData;
+                const string testKey = "d5e6d15f4cb24f12a8ac9c5e8c54a06d";
                 //string logKey = PerformanceLogger.LogCurrentTime();
 
                 //string token = HttpContext.Current.Request.Headers["Token"];
@@ -669,14 +673,23 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
                 //SecurityUtility.AuthenticationOnTenant(tenant);
                 //SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
-
-                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                ShipmentAdditionalCloudCustomData CustomData = shipmentQuery.GetSingleShipmentAdditionalCloudCustomData(key, tenant);//GetSingleShipmentPMBySecurityKeyTenant(key,tenant); // Check the 0
+                if (key == testKey)
+                {
+                    shipmentQuery = new ShipmentQuery(0);
+                    CustomData = shipmentQuery.GetSingleShipmentAdditionalCloudCustomDataTest();
+                    tenant = CustomData.Tenant;
+                }
+                else
+                {
+                    shipmentQuery = new ShipmentQuery(tenant.Value);
+                    CustomData = shipmentQuery.GetSingleShipmentAdditionalCloudCustomData(key, tenant.Value);//GetSingleShipmentPMBySecurityKeyTenant(key,tenant); // Check the 0
+                }
                 if (CustomData != null && !string.IsNullOrEmpty(CustomData.PaymentRequestXML))
                 {
-                    AddDataToResponseHeader(tenant);
-                    TenantAdditionalDataRepository TADR = new TenantAdditionalDataRepository(tenant);
-                    var MyAdditionalData = TADR.GetSingleTenantAdditionalData(tenant);
+                   
+                    AddWhatsAppMessagingPhoneNumberToResponseHeader(tenant.Value);
+                    TenantAdditionalDataRepository TADR = new TenantAdditionalDataRepository(tenant.Value);
+                    var MyAdditionalData = TADR.GetSingleTenantAdditionalData(tenant.Value);
                     if (MyAdditionalData != null)
                     {
                         var MyPaymentData = LogitudeXmlSerializer.DeserializeObject<RequestPayment>(CustomData.PaymentRequestXML);
@@ -692,7 +705,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                         string myParams = MyConString;// "sum=" + MyPaymentData.TotalChargesInNIS + "&supplier=amitaltest&TranzilaPW=4Jwdsb&currency=1&op=1&DCdisable=" + myId + "&DclickTK=" + myId;
                         Dictionary<string, string> dict = GetParamsAsDict(myParams);
                         string result = "";
-                        var success = GetRequestToken(dict, out result, tenant);
+                        var success = GetRequestToken(dict, out result, tenant.Value);
                         if (success)
                         {
                             CustomData.PaymentData = ForwardToPaymentLink(result, myParams);
@@ -917,13 +930,25 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             }
         }
 
-        public HttpResponseMessage GetUserIdDetailsByShipmentSecurityKeyWithoutToken(int tenant, string key)
+        public HttpResponseMessage GetUserIdDetailsByShipmentSecurityKeyWithoutToken(string key, int? tenant = null)
         {
             try
             {
+                ShipmentQuery shipmentQuery;
+                ShipmentPM RequestedShipment;
+                const string testKey = "d5e6d15f4cb24f12a8ac9c5e8c54a06d";
+                if (key == testKey)
+                {
+                    shipmentQuery = new ShipmentQuery(0);
+                    RequestedShipment = shipmentQuery.GetSingleShipmentPMBySecurityKeyTenantTest();
+                }
+                else
+                {
 
-                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                var RequestedShipment = shipmentQuery.GetSingleShipmentPMBySecurityKeyTenant(key, tenant);
+               
+                    shipmentQuery = new ShipmentQuery(tenant.Value);
+                    RequestedShipment = shipmentQuery.GetSingleShipmentPMBySecurityKeyTenant(key, tenant.Value);
+                }
                 var MyData = LogitudeXmlSerializer.DeserializeObject<UserIdNumberRequestPM>(RequestedShipment.UserIdNumberXMLData);
                 MyData.Id = RequestedShipment.Id;
                 MyData.IsUserIDNumberRequired = RequestedShipment.IsUserIDNumberRequired;
@@ -931,7 +956,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 MyData.UserIdNumber = RequestedShipment.UserIdNumber;
                 return Request.CreateResponse(HttpStatusCode.OK, MyData);
             }
-
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));

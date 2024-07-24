@@ -1061,7 +1061,7 @@
                             <tr *ngFor="let item of cargoTrackingShipmentPM.DocumentsFilings">
                               
                                 <td style="width: 450px;">
-                                    <span [ngSwitch]="item.FileExtension.toLowerCase()">
+                                    <span [ngSwitch]="item.FileExtension?.toLowerCase()">
                                         <img class="file-extension" *ngSwitchCase="'pdf'" src="./assets/images/FileIcons/File-pdf-48.png" />
                                         <img class="file-extension" *ngSwitchCase="'txt'" src="./assets/images/FileIcons/txt_48.png" />
                                         <img class="file-extension" *ngSwitchCase="'xls'" src="./assets/images/FileIcons/Microsoft-Office-Excel-48.png" />
