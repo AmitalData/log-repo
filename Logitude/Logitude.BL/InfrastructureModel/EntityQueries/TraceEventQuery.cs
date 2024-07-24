@@ -161,40 +161,43 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
             }
 
-            IQueryable<TraceEventPM> traceEvents = from a in repository.context.TraceEvent.Include("EventType").Include("User.Contact").Include("EventType.EventTypeCategory")
-                                                   where a.Tenant == tenant && (a.EntityId == entityId || a.EntityId == masterId) && a.ObjectTableId == objectTableId && !a.Deleted
-                                                   && a.EventType.Weight == (from e2 in repository.context.EventType
-                                                                             select e2.Weight).Max()
-                                                   orderby a.LogDateTime descending
-                                                   select new TraceEventPM()
-                                                   {
-                                                       EntityId = a.EntityId,
-                                                       EventDateTime = a.EventDateTime,
-                                                       EventTypeId = a.EventTypeId,
-                                                       Id = a.Id,
-                                                       LogDateTime = a.LogDateTime,
-                                                       Notes = a.Notes,
-                                                       ObjectTableId = a.ObjectTableId,
-                                                       Tenant = a.Tenant,
-                                                       UserId = a.UserId,
-                                                       Deleted = a.Deleted,
-                                                       ShortView = a.EventType.ShortView,
-                                                       EventTypeEnglishName = a.EventType.EnglishName,
-                                                       EventTypeLocalName = a.EventType.LocalName,
-                                                       EventTypeCode = a.EventType.Code,
-                                                       ContactEnglishFirstName = a.User.Contact.EnglishName,
-                                                       IsManualEntry = a.EventType.IsManualEntry,
-                                                       EventTypeCategoryCode = a.EventType.EventTypeCategory != null ? a.EventType.EventTypeCategory.Code : null,
-                                                       IsAgentView = a.EventType.IsAgentView,
-                                                       IsCustomerView = a.EventType.IsCustomerView,
-                                                       ExternalId = a.ExternalId,
-                                                       IsAddedManually = a.IsAddedManually,
-                                                       CustomerCareUserEmail = a.CustomerCareUserEmail,
-                                                       Location = a.Location,
-                                                       PartnerName = a.PartnerName,
-                                                       ChildEntityId = a.ChildEntityId,
-                                                       ChildObjectTableId = a.ChildObjectTableId,
-                                                   };
+            IQueryable<TraceEventPM> traceEvents = from a in repository.context.TraceEvent.Include("EventType")
+                              group a by new { a.Tenant, a.EntityId, a.ObjectTableId, a.Deleted } into g
+                              where g.Key.Tenant == tenant
+                                    && (g.Key.EntityId == entityId || g.Key.EntityId == masterId)
+                                    && g.Key.ObjectTableId == objectTableId
+                                    && !g.Key.Deleted
+                              from traceEvent in g
+                              where traceEvent.EventType.Weight == g.Max(a => a.EventType.Weight)
+                              orderby traceEvent.LogDateTime descending
+
+                              select new TraceEventPM()
+                              {
+                                  EntityId = traceEvent.EntityId,
+                                  EventDateTime = traceEvent.EventDateTime,
+                                  EventTypeId = traceEvent.EventTypeId,
+                                  Id = traceEvent.Id,
+                                  LogDateTime = traceEvent.LogDateTime,
+                                  Notes = traceEvent.Notes,
+                                  ObjectTableId = traceEvent.ObjectTableId,
+                                  Tenant = traceEvent.Tenant,
+                                  UserId = traceEvent.UserId,
+                                  Deleted = traceEvent.Deleted,
+                                  ShortView = traceEvent.EventType.ShortView,
+                                  EventTypeEnglishName = traceEvent.EventType.EnglishName,
+                                  EventTypeLocalName = traceEvent.EventType.LocalName,
+                                  EventTypeCode = traceEvent.EventType.Code,
+                                  IsManualEntry = traceEvent.EventType.IsManualEntry,
+                                  IsAgentView = traceEvent.EventType.IsAgentView,
+                                  IsCustomerView = traceEvent.EventType.IsCustomerView,
+                                  ExternalId = traceEvent.ExternalId,
+                                  IsAddedManually = traceEvent.IsAddedManually,
+                                  CustomerCareUserEmail = traceEvent.CustomerCareUserEmail,
+                                  Location = traceEvent.Location,
+                                  PartnerName = traceEvent.PartnerName,
+                                  ChildEntityId = traceEvent.ChildEntityId,
+                                  ChildObjectTableId = traceEvent.ChildObjectTableId,
+                              };
 
 
             List<TraceEventPM> list = traceEvents.ToList();
