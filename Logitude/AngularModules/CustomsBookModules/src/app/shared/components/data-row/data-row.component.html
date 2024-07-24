@@ -1,17 +1,18 @@
 <div class="mainTable_item" [ngClass]="{'selected': isSelected}">
-	<div class="mainTable_itemToggle" [class.active]="selected" (click)="selected = !selected">
-		<button *ngIf="!data?.IsLeaf">
-			<i role="img" aria-hidden="true">
-				<fa-icon [icon]="faArrowAltCircleLeft" (click)="showChildern.emit()"></fa-icon
-			></i>
+	<div class="mainTable_itemToggle" [class.active]="selected" (click)="expandClick()">
+		<button *ngIf="data?.children.length > 0">
+			<i role="img" aria-hidden="true"> <fa-icon [icon]="faArrowAltCircleLeft" ></fa-icon> </i>
 		</button>
 	</div>
 	<div class="mainTable_itemName" (click)="showDetails.emit()">
-		<a href="#" role="button" [ngClass]="{'selectedLink': isSelected}"> 
-			<span class="full_classification"  *ngIf="data?.CI_Parent_CustomsItemIDNum">
-				{{ ClassificationNoDisplay(data,data?.FullClassification) }} | 
+		<a href="#" role="button" [ngClass]="{'selectedLink': isSelected}">
+			<span class="full_classification" *ngIf="data?.CI_Parent_CustomsItemIDNum"
+				[innerHTML]="highlight(ClassificationNoDisplay(data,data?.FullClassification), searchItem)">
+				{{ ClassificationNoDisplay(data,data?.FullClassification) }} 
 			</span>
-			<span class="full_classification" [title]="getTooltipText(data.CIH_GoodsDescription)">
+			<span *ngIf="data?.CI_Parent_CustomsItemIDNum"> | </span>
+			<span class="full_classification" [title]="getTooltipText(data.CIH_GoodsDescription)"
+				[innerHTML]="highlight(data.CIH_GoodsDescription, searchItem)">
 				{{ data.CIH_GoodsDescription }}
 			</span>
 			<!-- change to real fields -->
@@ -38,7 +39,7 @@
 				</div>
 			</li> -->
 			<li>
-				<div class="mainTable_itemComment" (click)="showAddCommentSidebar()">
+				<div class="mainTable_itemComment" (click)="showAddCommentSidebar(data)">
 					<a class="icon"> <i role="img" class="icon-comment_plus"></i></a>
 				</div>
 			</li>

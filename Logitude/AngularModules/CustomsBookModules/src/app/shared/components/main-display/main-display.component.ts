@@ -1,7 +1,7 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { DataRowComponent } from '../data-row/data-row.component';
 import { DetailsFrameComponent } from '../details-frame/details-frame.component';
-import { TableTopComponent } from '../table-top/table-top.component';
+import { TableTopComponent, TableTopState } from '../table-top/table-top.component';
 import { AddCommentComponent } from '../add-comment/add-comment.component';
 import { NgFor, NgForOf, NgIf } from '@angular/common';
 import { trigger, style, animate, transition } from '@angular/animations';
@@ -9,11 +9,13 @@ import { trigger, style, animate, transition } from '@angular/animations';
 import { mockData } from '../../../../../mock_data';
 import { API_MainService, Filters } from '../../../core/API_MainService';
 import { BehaviorSubject, filter } from 'rxjs';
-
+import { SearchService } from '../page-top/service/top-page.service';
+import { FormsModule } from '@angular/forms';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
-	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent],
+	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent, FormsModule, MatProgressSpinnerModule],
 	templateUrl: './main-display.component.html',
 	styleUrl: './main-display.component.css',
 	animations: [
@@ -29,7 +31,7 @@ import { BehaviorSubject, filter } from 'rxjs';
 		]),
 	],
 })
-export class MainDisplayComponent {
+export class MainDisplayComponent implements OnInit {
 	@Input() showChiledren: boolean = false;
 	@Input() itemsData: BehaviorSubject<CB_CustomsItemComputedDataList[]>;
 	showDetails: boolean = false;
@@ -37,17 +39,16 @@ export class MainDisplayComponent {
 	showCommentSidebar: boolean = false;
 	childrenToDesplay: string[] = [];
 	private _filters;
-
 	//data: any | never | undefined = {};
 	data: CB_CustomsItemComputedDataList[] = [];
-
+	fullData: CB_CustomsItemComputedDataList[] = [];
 	KeyValue = Object.keys;
 	Object: ObjectConstructor = Object;
-
-	constructor(private API_MainService: API_MainService) { }
-
 	cbTariffList: CB_TariffList[];
 	cbRequirementComputedDataList: CB_RequirementComputedDataList[];
+	isExpand: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+	constructor(private API_MainService: API_MainService, private searchService: SearchService) { }
 
 	ngOnInit() {
 		this.InitData();
@@ -62,34 +63,80 @@ export class MainDisplayComponent {
 		};
 
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
-			this.data = this.orderedData(data);
+			this.fullData = this.orderedData(data);
+			this.data = this.fullData;
+			this.searchMode = TableTopState.ViewAll;
+			this.isExpand.next(false);
 		});
 	}
 
+	searchValue: string = '';
 
-	// listen to itemsData when change:
 	ListenToItemsSearched() {
+		// listen to search text changes:
+		this.searchService.searchText$.subscribe((searchText) => {
+			if (searchText === "") this.handleClearResults();
+			else if (this.itemsData.getValue().length > 0) {
+				this.searchMode = TableTopState.Search;
+			}
+		});
+
+		// listen to itemsData changes:
 		this.itemsData.subscribe((data: CB_CustomsItemComputedDataList[] = []) => {
-			if (data.length == 0) {
-				this.InitData();
+			if (data.length == 0 && this.searchService.GetSearchText() !== "") {
+				//TODO: Add not results found message
+				this.data = [];
+				this.searchMode = TableTopState.Search;
+				this.searchValue = "";
 				return;
-			} 
-			console.log(data);
-			// remove duplicates customsItemID:
-			data = data.filter((v, i, a) => a.findIndex(t => (t.CustomsItemID === v.CustomsItemID)) === i);
+			}
 
-			this.data = this.orderedDataForSearch(data);
+			if (this.itemsData.getValue().length > 0) {
+				// remove duplicates customsItemID:
+				data = data.filter((v, i, a) => a.findIndex(t => (t.CustomsItemID === v.CustomsItemID)) === i);
 
-			this.extendAll(this.data);
+				// update list:
+				this.data = this.orderedDataForSearch(data);
+
+				this.searchToggleAllChildren(true); // expand all 
+				this.isExpand.next(true);
+
+				this.searchMode = TableTopState.Search;
+				this.searchValue = this.searchService.GetSearchText();
+			}
 		});
 	}
-	extendAll(data: CB_CustomsItemComputedDataList[]) {
-		data.forEach((item) => {
-			this.showChildern(item.CIH_GoodsDescription);
-			if (item.children && item.children.length > 0) this.extendAll(item.children);
-		});
+
+	onToggleAll(event: Event, item: CB_CustomsItemComputedDataList): void {
+		const checked = (event.target as HTMLInputElement)?.checked;
+		this.toggleVisibility(checked, item.children);
 	}
 
+
+	searchToggleAllChildren(expend: boolean) {
+		this.toggleVisibility(expend, this.data); // Assuming this.data is your main data array
+
+		// Find all child checkboxes using class selector and update their checked state class name-.mainTable_itemChkAllCheckBox
+		setTimeout(() => {
+			const childCheckboxes: HTMLCollection = document.getElementsByClassName('mainTable_itemChkAllCheckBox');
+			for (let i = 0; i < childCheckboxes.length; i++) {
+				(childCheckboxes[i] as HTMLInputElement).checked = expend;
+			}
+		}, 0);
+	}
+
+	toggleVisibility(expend: boolean, data: CB_CustomsItemComputedDataList[]) {
+		data.forEach(item => {
+			this.showChildern(expend, item);
+
+			if (item.children && item.children.length > 0) {
+				this.toggleVisibility(expend, item.children); // Recursively toggle children
+			}
+		});
+	};
+
+
+	searchMode: TableTopState = TableTopState.ViewAll;
 	selectedItemId: number | null = null;
 	currentItem: CB_CustomsItemComputedDataList;
 	itemDataBehaviorSubject: BehaviorSubject<ItemData> = new BehaviorSubject<ItemData>({ customsItemId: 0, measurementUnitMalamId: 0 });
@@ -101,14 +148,8 @@ export class MainDisplayComponent {
 			this.showDetails = !this.showDetails;
 			return;
 		}
-		else if(!this.showDetails){
-			this.showDetails = !this.showDetails;
-		}
+		else if (!this.showDetails) this.showDetails = !this.showDetails;
 
-		
-		// console.log(CustomsItemID);
-		// console.log(item);
-		// console.log(item.FullClassification);
 		this.itemData.customsItemId = CustomsItemID;
 		this.itemData.measurementUnitMalamId = 0; // change it
 		this.itemDataBehaviorSubject.next(this.itemData);
@@ -125,13 +166,38 @@ export class MainDisplayComponent {
 		}
 	}
 
-	showChildern(id: string): boolean {
 
-		const isShown = this.childrenToDesplay.indexOf(id);
-		isShown === -1 ? this.childrenToDesplay.push(id) : this.childrenToDesplay.splice(isShown);
-		return Boolean(isShown >= 0);
+	showChildern(isOpen: any, item: CB_CustomsItemComputedDataList) {
+		const isShown = this.childrenToDesplay.indexOf(item.CIH_GoodsDescription);
+		if (isOpen && isShown === -1) {
+			this.childrenToDesplay.push(item.CIH_GoodsDescription);
+		}
+		else if (!isOpen && isShown !== -1) {
+			this.childrenToDesplay.splice(isShown);
+		}
+		// isShown === -1 ? this.childrenToDesplay.push(id) : this.childrenToDesplay.splice(isShown);
+		// return Boolean(isShown >= 0);
 	}
 
+
+
+	handleClearResultsClick() {
+		this.handleClearResults();
+		this.searchService.SetSearchText("");
+	}
+
+	handleClearResults() {
+		if (this.searchMode === TableTopState.ViewAll) return;
+		this.searchMode = TableTopState.ViewAll;
+		this.selectedItemId = null;
+		this.showDetails = false;
+		this.data = [];
+		this.searchValue = "";
+		// this.InitData();
+		this.data = this.fullData;
+		this.searchToggleAllChildren(false);
+		this.isExpand.next(false);
+	}
 
 	public orderedDataForSearch = (data) => {
 		const getChildren = (parentItem) => {
@@ -141,17 +207,17 @@ export class MainDisplayComponent {
 			});
 			return children;
 		};
-	
+
 		let rootItems = data.filter((item) => !item?.CI_Parent_CustomsItemIDNum);
 		if (rootItems.length === 0) {
 			rootItems = data;
 		}
-	
+
 		const orderedData = rootItems.map((rootItem) => {
 			const children = getChildren(rootItem);
 			return { ...rootItem, children };
 		});
-	
+
 		// Remove root items that are found as children of other items
 		const removeRootItemsAsChildren = (items) => {
 			return items.filter((item) => {
@@ -164,13 +230,13 @@ export class MainDisplayComponent {
 				return !foundAsChild;
 			});
 		};
-	
+
 		// Filter out root items that are found as children
 		const filteredOrderedData = removeRootItemsAsChildren(orderedData);
-	
+
 		return filteredOrderedData;
 	};
-	
+
 	public orderedData = (data) => {
 		const getChildren = (parentItem) => {
 			const children = data.filter((item) => item?.CI_Parent_CustomsItemIDNum === parentItem?.CustomsItemID);
