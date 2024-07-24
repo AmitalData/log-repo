@@ -3494,6 +3494,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         logWindow.Height = 400;
                         break;
                     }
+
             }
 
             var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
