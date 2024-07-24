@@ -2882,10 +2882,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;Weight&quot;"
     DefaultText="&quot;Weight&quot;"
-    FullLocalDefaultText="&quot;חוזק&quot;"
+    FullLocalDefaultText="&quot;Weight&quot;"
     ListFieldLable="&quot;WeightListLable&quot;"
     ListLableDefaultText="&quot;Weight&quot;"
-    ListLocalDefaultText="&quot;חוזק&quot;"
+    ListLocalDefaultText="&quot;Weight&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -3027,12 +3027,12 @@
       <ScreenField
         Column="1"
         Row="0"
-        ObjectFieldName="&quot;Weight&quot;"
+        ObjectFieldName="&quot;IsFollowUp&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="1"
         Row="1"
-        ObjectFieldName="&quot;IsFollowUp&quot;"
+        ObjectFieldName="&quot;Weight&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="1"

@@ -90,7 +90,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class EventTypeUpdateClass
    {  		
-		public const string HashString = "67b699b0e6779d0d27f163b38ed4b2ab";
+		public const string HashString = "d03eb1a23d3dd5981b68e911df30da17";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2570,10 +2570,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Weight",
 					  						DefaultText =  "Weight",
-					  						FullLocalDefaultText =  "חוזק",
+					  						FullLocalDefaultText =  "Weight",
 					  						ListFieldLable =  "WeightListLable",
 					  						ListLableDefaultText =  "Weight",
-					  						ListLocalDefaultText =  "חוזק",
+					  						ListLocalDefaultText =  "Weight",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2675,9 +2675,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	          
              ScreenField EventTypeEventTypeGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.EventTrigger", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField EventTypeEventTypeGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.Weight", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField EventTypeEventTypeGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.IsFollowUp", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField EventTypeEventTypeGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.IsFollowUp", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField EventTypeEventTypeGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.Weight", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField EventTypeEventTypeGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.FollowUpEnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
