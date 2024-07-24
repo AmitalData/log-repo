@@ -138,6 +138,15 @@ customs.Declarations d on p.PARENTENTITYID = d.id where t.DOCUMENTSFILINGID=@DOC
 <DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
 <OCC>
 <DAT name=""CODE"">A75</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>select invoicenumber,InvoiceCurrencyTypeCode,IssueCountryCode from supplierinvoices</DAT>
+<DAT name=""REFERENCE"">CFIFFORMS.Lp_Currency_Check2</DAT>
+<DAT name=""PARAMETERS"">DeclarationId=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select invoicenumber,InvoiceCurrencyTypeCode,IssueCountryCode from supplierinvoices where  and Tenant=@Tenant and DeclarationId=@DeclarationId</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select invoicenumber,InvoiceCurrencyTypeCode,IssueCountryCode from supplierinvoices where  and Tenant=@Tenant and DeclarationId=@DeclarationId</DAT>
+<DAT name=""EXAMPLE_RESULT"">111,3333,1</DAT>
+<DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
+<OCC>
+<DAT name=""CODE"">A76</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>Select TAXRATE,TAXBASEAMOUNT from SUPPLIERINVOICEITEMSTAXES</DAT>
 <DAT name=""REFERENCE"">CFIRDEC</DAT>
 <DAT name=""PARAMETERS"">DECLARATIONID=True</DAT>
