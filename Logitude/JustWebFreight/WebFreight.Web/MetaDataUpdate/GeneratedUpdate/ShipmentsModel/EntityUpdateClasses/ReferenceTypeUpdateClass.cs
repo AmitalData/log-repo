@@ -42,10 +42,14 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.BookingLib.Data.EntityPOCOs;
 using Logitude.BookingLib.BL;
 using Logitude.BookingLib.Data.Repositories;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.BL;
+using Logitude.Customs.Data.Repsitories;
 using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -80,11 +84,11 @@ using Logitude.DashboardModule.BL;
 
 
 
-namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
+namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpdateClasses
 {
    public class ReferenceTypeUpdateClass
    {  		
-		public const string HashString = "w92d90e742e3c72b34c97cb63d221895";
+		public const string HashString = "3e98d84cd610499f1e53ec0195236213";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -136,7 +140,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    CloseTableName =  "LocalName",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
-			      				    ServerModuleName = "Shipment",
+			      				    ServerModuleName =  "Shipment",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -608,7 +612,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    
 }
 
-    
+
+	    public void FillReferenceType()
+        { 
+            var repo = new ReferenceTypeRepository(0);
+            var dic =repo.GetAll().ToDictionary(rec => rec.Code, rec => rec);
+            new FillCloseTables().FillCloseTable<
+                                ReferenceType,
+                                Logitude.BL.ShipmentsModel.ReferenceTypeDetails,
+                                ReferenceTypeRepository>(repo, dic);
+        }
+
+	    
 
    }
     
