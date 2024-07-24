@@ -86,13 +86,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 return;
             }
             OurVersionToUpdateDeclarationPlatformFeeAndPrimaryInvoice(dirtyDeclarationPM);
-            //var setting = CustomsSettingQueryService.GetSettingByTenant(dirtyDeclarationPM.Tenant);
-            //if (!setting.IsConnectedToUniFreight)
-            //if(!dirtyDeclarationPM.IsConnectedToUnifreight)
-            //{
-            //    LogitudeSettings.HandleLogMe("IsConnectedToUnifreight == " + dirtyDeclarationPM.IsConnectedToUnifreight, false, "UpdateUnifreight_" + dirtyDeclarationPM.Id, stopLogAt);
-            //    return;
-            //}
+
+            if (dirtyDeclarationPM.IsAmendment==true)
+            {
+                LogitudeSettings.HandleLogMe("IsAmendment", false, "UpdateUnifreight_" + dirtyDeclarationPM.Id, stopLogAt);
+                return;
+            }
 
             string loggingUserId = "";
             /*var contactRep = new ContactRepository(dirtyDeclarationPM.Tenant);

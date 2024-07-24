@@ -1527,7 +1527,7 @@ After that Remove file  from DCA  .. ");
             }
             else
             {
-                Debug.WriteLine("this._InterfaceTenantDefinitionManagement  not init ???");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("this._InterfaceTenantDefinitionManagement  not init ???");
             }
 
             var currRequestDescriptionIsNullOrDef = false;

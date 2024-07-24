@@ -20,7 +20,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Library\Bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -28,7 +28,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\Library\Bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -114,6 +114,7 @@
     </AdditionalFiles>
     <None Include="DBOthers\CommonDataModel\Procedures\usp_DeletePerformanceLogs.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\usp_DeleteMobileNotificationLogs.dxml" />
+    <None Include="DBOthers\CommonDataModel\Procedures\usp_CancelReportAndUpdateQueueMessage.dxml" />
     <None Include="DBOthers\CommonDataModel\Views\AllActiveGLAccountsView.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldBIReportsExecutionLogs.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldReportExecutionLogs.dxml" />
@@ -197,7 +198,6 @@
     <None Include="DBScripts\CommonModel\202208071040_FillCustomerGroupOnCardLevel.sxml" />
     <None Include="DBScripts\GlobalModel\AddStarWorkflowInstanceRetryWorkerBatchService.sxml" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -703,7 +703,6 @@
     <None Include="DBScripts\CommonModel\202009151233_UpdateWarehouseReleaseEventTypeStatus.sxml" />
     <None Include="DBScripts\CommonModel\202009101501_AddChargeStorageGroupToTenants.sxml" />
     <None Include="DBScripts\CommonModel\BuildSearchKeywordFunction.sxml" />
-    <None Include="DBScripts\CommonModel\202006181218_DropCardCurrenciesAccountingsTable.sxml" />
     <None Include="DBScripts\CommonModel\FillCardSearchData._sxml_" />
     <None Include="DBScripts\GlobalModel\202006102217_FillSettingsDemoTenants.sxml" />
     <None Include="DBScripts\GlobalModel\202007061138_FillSettingsTMExpirationDate.sxml" />
@@ -1897,10 +1896,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.11.0\analyzers\dotnet\cs\Microsoft.DependencyValidation.Analyzers.resources.dll" />
-    <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.11.0\analyzers\dotnet\Microsoft.DependencyValidation.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -30,14 +30,16 @@ delete from TRANSPORTMODES where ID = 'L';
 
 	<Oracle Version="1">
 		<![CDATA[
- EXECUTE IMMEDIATE 'UPDATE Containerizations SET TransportModeId = ''I'' WHERE TransportModeId = ''L''';
+BEGIN
+  EXECUTE IMMEDIATE 'UPDATE Containerizations SET TransportModeId = ''I'' WHERE TransportModeId = ''L''';
   EXECUTE IMMEDIATE 'UPDATE CustomsDocumentsDefinitions SET TransportationTypeCode = ''I'' WHERE TransportationTypeCode = ''L''';
   EXECUTE IMMEDIATE 'UPDATE CustomsHouseTypeAdditionals SET TransportModeId = ''I'' WHERE TransportModeId = ''L''';
   EXECUTE IMMEDIATE 'UPDATE Declarations SET TransportModeId = ''I'' WHERE TransportModeId = ''L''';
-    EXECUTE IMMEDIATE 'UPDATE Declarations SET TransportModeId = ''I'' WHERE TransportModeId = ''L''';
-    EXECUTE IMMEDIATE 'delete from TRANSPORTMODES where ID = 'L'';
+  EXECUTE IMMEDIATE 'UPDATE Declarations SET TransportModeId = ''I'' WHERE TransportModeId = ''L''';
+  EXECUTE IMMEDIATE 'delete from TRANSPORTMODES where ID = ''L'' ';
 
   EXECUTE IMMEDIATE 'COMMIT';
+END;
   ]]>
 	</Oracle>
 </Script>

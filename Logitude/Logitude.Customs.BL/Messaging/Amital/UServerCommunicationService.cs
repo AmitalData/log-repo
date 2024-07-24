@@ -384,7 +384,7 @@ MoreParams:blockdata ~{1}~
 
             var mySerilazeObject = XmlGenericUtil<TransmissionBodyType>.SerializeObject(this._TransmissionBodyModel, true);
 
-            Debug.WriteLine(mySerilazeObject);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(mySerilazeObject);
 
 
 

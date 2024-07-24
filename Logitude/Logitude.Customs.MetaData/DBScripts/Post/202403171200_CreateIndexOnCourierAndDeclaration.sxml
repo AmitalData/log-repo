@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Script DBType="Main" Module="Customs">
-	<Sql Version="2">
+	<Sql Version="3">
 		<![CDATA[
        IF NOT EXISTS(SELECT * FROM sys.indexes WHERE name = 'IX_COURIERDECLARATIONS_DECLARATIONID' AND object_id = OBJECT_ID('Customs.COURIERDECLARATIONS'))
     BEGIN
@@ -30,7 +30,7 @@
         ]]>
 	</Sql>
 
-	<Oracle Version="2">
+	<Oracle Version="3">
 		<![CDATA[
 		DECLARE
         i INTEGER;

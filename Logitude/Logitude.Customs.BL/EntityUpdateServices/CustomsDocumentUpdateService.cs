@@ -149,7 +149,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
             var myDocumentsFilingService = new DocumentsFilingService(commonContext, entityPM.Tenant);
 
-            Debug.WriteLine("AutoSetMetaDataValue");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("AutoSetMetaDataValue");
             string logData = "";
 
             foreach (CustomsDocumentMetaDataValuePM val in entityPM.CustomsDocumentMetaDataValues)

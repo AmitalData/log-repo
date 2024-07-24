@@ -9,9 +9,22 @@
 	border-radius: 20px;
 	padding-right: 10px;
 }
-
-.mainTable_item:hover {
+/* .mainTable_item:hover {
 	background-color: var(--greyRO);
+} */
+ 
+.selected {
+    background-color: var(--blue);
+    color: white;
+	/* font-weight: 700; */
+}
+a {
+	text-decoration: none;
+	color: var(--general);
+}
+.selectedLink {
+	color: white !important;
+	font-weight: 700;
 }
 
 .mainTable_itemToggle {
@@ -48,7 +61,8 @@ i[role='img'][aria-hidden='true'] {
 
 .mainTable_itemName {
 	padding-right: 15px;
-	width: 100%;
+	/* width: 100%; */
+	width: 68%;
 	height: 100%;
 	line-height: 100%;
 	display: flex;
@@ -58,7 +72,7 @@ i[role='img'][aria-hidden='true'] {
 .mainTable_itemName a {
 	display: block;
 	white-space: nowrap;
-	width: 100%;
+	width: 93%;
 	height: 100%;
 	padding-top: 15px;
 	font-size: 14px;

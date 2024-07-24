@@ -361,7 +361,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     if (ENDOC == null)
                     {
                         LogitudeSettings.HandleLogMe("ENDOC not exist in DocumentsMetaDataType", false, "SendBondedCustomDocument", stopLogAt);
-                        Debug.WriteLine("_DocumentsFilingPM == null");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("_DocumentsFilingPM == null");
                         return;
 
                     }
@@ -370,7 +370,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     if (myDocumentsFilingMetaDataValue == null)
                     {
                         LogitudeSettings.HandleLogMe("ENDOC not exist in DocumentsFilingMetaDataValues", false, "SendBondedCustomDocument", stopLogAt);
-                        Debug.WriteLine("ENDOC not exist in DocumentsFilingMetaDataValues");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("ENDOC not exist in DocumentsFilingMetaDataValues");
                         return;
 
                     }
@@ -392,7 +392,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     return;
                 }
 
-                Debug.WriteLine("Create.....");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Create.....");
 
                 string loggingUserId = AuthenticationUtil.ResolveUserId(_DocumentsFilingPM.Tenant);
                 bool interactive = false;
@@ -574,13 +574,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 if (!String.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
                 {
                     LogitudeSettings.HandleLogMe("IscustomsDocumentSent(): myCustomsDocument already send !!" + _DocumentsFilingPM.Code, false, "SendBondedCustomDocument", stopLogAt);
-                    Debug.WriteLine("myCustomsDocument already send !!");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("myCustomsDocument already send !!");
                     return false;
                 }
                 //if (customsDocumentPM.DocumentStatusCode != "2")
                 //{
                 //    LogitudeSettings.HandleLogMe(" myCustomsDocumentPM.DocumentStatusCode!=2 !!", false, "SendBondedCustomDocument", stopLogAt);
-                //    Debug.WriteLine("myCustomsDocumentPM.DocumentStatusCode!=2 !!");
+                //   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("myCustomsDocumentPM.DocumentStatusCode!=2 !!");
                 //    return false;
                 //}
             }
@@ -592,7 +592,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             if (_DocumentsFilingPM == null)
             {
                 LogitudeSettings.HandleLogMe("_DocumentsFilingPM == null", false, "SendBondedCustomDocument", stopLogAt);
-                Debug.WriteLine("_DocumentsFilingPM == null");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("_DocumentsFilingPM == null");
                 return false;
             }
 
@@ -600,7 +600,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             //{
 
             //    LogitudeSettings.HandleLogMe(" refernce where DocumentsMetaDataTypeCode is ENDOC not found "+_DocumentsFilingPM.Code, false, "SendBondedCustomDocument", stopLogAt);
-            //    Debug.WriteLine("refernce where DocumentsMetaDataTypeCode is ENDOC not found ");
+            //   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("refernce where DocumentsMetaDataTypeCode is ENDOC not found ");
             //    return false;
             //}
             return true;

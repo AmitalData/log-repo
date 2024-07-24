@@ -121,7 +121,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         LogMessagingUtil.Instance.AppendLine($"Took:{stopwatch.Elapsed}");
                       
                         responseString = task.Result.Content.ReadAsStringAsync().Result;
-                        Debug.WriteLine(responseString);
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug(responseString);
 
                         return responseString;
 

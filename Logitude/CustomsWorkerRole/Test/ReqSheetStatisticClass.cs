@@ -269,7 +269,7 @@ pordInfo,//24
 TotWithHATARA,//25
 logBoxDocuments//26
             );
-            Debug.WriteLine(val);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(val);
             return val;
         }
 

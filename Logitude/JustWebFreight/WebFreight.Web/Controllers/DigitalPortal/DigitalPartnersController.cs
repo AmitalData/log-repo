@@ -25,7 +25,7 @@ using Logitude.BL.CommonDataModel.EntityLists;
 using System.Reflection;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using WebFreight.Web.Controllers.DigitalPortal.Models;
+using Simplog.Server.Infrastructure.DataContracts.Models;
 using WebFreight.Web.Extensions;
 using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 using Logitude.SystemLogs;

@@ -33,7 +33,6 @@ import {CustomsCollateralsAnswerPM} from '../../EntityPMs/CustomsCollateralsAnsw
 import {CustomsCollateralsConditionPM} from '../../EntityPMs/CustomsCollateralsConditionPM';
 import { AppTool } from '../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-// import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 import { EntityListService } from 'Infrastructure/Services/EntityListService';
 import { ConsignmentPM } from 'Customs/EntityPMs/ConsignmentPM';

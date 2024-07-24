@@ -121232,6 +121232,7 @@
       LocalDefaultText="&quot;פתיחת תיק עמילות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+
     <TextCode
       Code="&quot;Shipment.O.ShipmentPackages&quot;"
       DefaultText="&quot;ShipmentPackages&quot;"

@@ -602,7 +602,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void AddVIRExternalTaskQueue()
         {
-            if (entityPM.IsHybrid && entityPM.ExternalStatuses == "VIR" && !CustomsSettingsHelper.GetCache(tenant).StandAlone)
+            if (entityPM.IsHybrid && entityPM.ExternalStatuses == "VIR")
             {
                 ExternalTasksQueueService externalTasksQueueService = new ExternalTasksQueueService(entityPM.Tenant, "User ID Link Received");
                 externalTasksQueueService.AddVIRExternalTaskQueue(entityPM);
@@ -614,6 +614,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             if (entityPM.IsCustomShipment)
             {
+                if (!entityPM.IsHybrid && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
+                {
+                    shipmentTracing = new ShipmentTracing(entityPM, entityPoco, entityMasterData, loggedContact.Id, isNewEntity);
+                    shipmentTracing.BeginTracing();
+                }
                 this.UpdateCustomShipment();
                 return;
             }
@@ -939,6 +944,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, new List<ShipmentPackagePM> { }, objectContext, FieldChanges);
 
                     entityRepository.Update(entityPoco);
+                    this.UpdateShipmentPackageCustom();
                     ////
                     entityRepository.SubmitChanges();
 
@@ -2121,6 +2127,34 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
+                }
+            }
+        }
+        private void UpdateShipmentPackageCustom()
+        {
+            foreach (ShipmentPackagePM itemPM in entityPM.ShipmentPackages)
+            {
+                switch (itemPM.ChangeSetOp)
+                {
+                    case ChangeSetOperation.Insert:
+                        {
+                            this.CreateShipmentPackage(itemPM);
+                            break;
+                        }
+
+                    case ChangeSetOperation.Update:
+                        {
+                            this.UpdateShipmentPackage(itemPM);
+                            break;
+                        }
+
+                    case ChangeSetOperation.Delete:
+                        {
+                            this.DeleteShipmentPackage(itemPM);
+                            break;
+                        }
+
+                    default: { break; }
                 }
             }
         }

@@ -22,7 +22,6 @@ import { EntityResourceService } from '../../../Infrastructure/Services/EntityRe
 import { PhysicalChecksCloseSharedDataService } from '../../Services/DataChange/PhysicalChecksCloseSharedDataService';
 import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
 import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPMService';
-// import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { PendingByKeywordWebService } from 'Customs/Services/ExtendedPMs/PendingByKeywordWebService';
 import { LogisticActionRequestsCloseSharedDataService } from 'Customs/Services/DataChange/LogisticActionRequestCloseSharedDataService';
 import { ServersNameExtendedPMService } from 'Customs/Services/ExtendedPMs/ServersNameExtendedPMService';

@@ -475,7 +475,10 @@ export class CreateEditTicketComponent extends BaseComponent {
         if (AppTool.IsNullOrEmpty(this.AttachmentTypeCode)) {
             errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvioceItemCertificat.F.AttachmentTypeCode"));
              this.isValid = false;
-
+        }
+        else if (AppTool.IsNullOrEmpty(this.ReqConfirmationTypeCode)) {
+            errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvioceItemCertificat.F.ReqConfirmationTypeCode"));
+             this.isValid = false;
         }
         else {
             if (this.IsNewCertificate) {

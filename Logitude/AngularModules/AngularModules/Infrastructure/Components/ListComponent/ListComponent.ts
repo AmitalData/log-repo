@@ -103,6 +103,8 @@ export class ListComponent implements OnInit, AfterViewInit {
     customsSettingListService: CustomsSettingListService = new CustomsSettingListService();
      public HasCustomsFilterMenu: boolean = false;
     public IsPhysicalCheckObjectTable: boolean = false;
+    public IsReportExecutionLogObjectTable: boolean = false;
+
     public IsLogisticActionRequestObjectTable: boolean = false;
      WorkFlowPMService: WorkFlowPMService = new WorkFlowPMService();
  
@@ -744,6 +746,9 @@ export class ListComponent implements OnInit, AfterViewInit {
         if (this.ObjectTableName == "Customs.PhysicalCheck") {
             this.IsPhysicalCheckObjectTable = true;
         }
+        else if (this.ObjectTableName == "ReportExecutionLog") {
+            this.IsReportExecutionLogObjectTable=true
+        }
         else if (this.ObjectTableName == "Customs.LogisticActionRequest") {
             this.IsLogisticActionRequestObjectTable = true;
         }
@@ -751,7 +756,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         if (["Customs.DeclarationReferantData", "Customs.DeclarationCargoSplit", "Customs.LogisticActionRequest"].includes(this.ObjectTableName)) {
             this.HasCustomsFilterMenu = true;
         }
-        if (this.ObjectTableName == "Customs.ExportStorge" || this.ObjectTableName == "QuoteOP") {
+        if (this.ObjectTableName == "Customs.ExportStorge") {
 
             this.LayoutDirection = "ltr";
             this.RTL = false;
@@ -973,7 +978,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                 else {
                     this.isLoaderReady = true;
 
-                    if (this.ObjectTable.Name == "Customs.PhysicalCheck" || this.ObjectTable.Name == "Customs.LogisticActionRequest") {
+                    if (this.ObjectTable.Name == "Customs.PhysicalCheck" || this.ObjectTable.Name == "Customs.LogisticActionRequest" ||this.ObjectTable.Name=="ReportExecutionLog") {
                         this.LoadedActionBar("MNO", "ListActionBar");
                     } else {
                         this.LoadedActionBar("MNA", "ListActionBar");
@@ -2075,7 +2080,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                             }
 
                             case "DefaultAndConfiguration": {
-                                windowTitle = "Add/Edit Default And Configuration";
+                                windowTitle = "Edit Default And Configuration";
                                 logWindow.Height = 400;
                                 logWindow.Width = 850;
                                 break;
@@ -2971,6 +2976,9 @@ export class ListComponent implements OnInit, AfterViewInit {
             else if (this.ObjectTableName == "Currency") {
                 this.NewEntityButtonLabel = TextCodeTranslator.Translate("General.B.Add");
             }
+            else if (this.ObjectTableName == "DefaultAndConfiguration") {
+                this.NewEntityButtonLabel = 'new Default And Configuration';
+            }
  
             else {
                 //this.NewEntityButtonLabel = "New " + TextCodeTranslator.TranslateTable(this.ObjectTableName);
@@ -3480,12 +3488,14 @@ export class ListComponent implements OnInit, AfterViewInit {
                         logWindow.Height = 200;
                         break;
                     }
-                case "QuoteOP":
-                    {
-                        logWindow.RTL = false;
-                        logWindow.Width = 1200;
-                        logWindow.Height = 800;
+                case "DefaultAndConfiguration":
+                    {                                                
+                        logWindow.Width = 850;
+                        logWindow.Height = 400;
                         break;
+                    }
+        
+
                     }
 
             }
@@ -3539,6 +3549,10 @@ export class ListComponent implements OnInit, AfterViewInit {
 
             if (this.ObjectTableName == "InterestBasesType") {
                 str = TextCodeTranslator.Translate("Accounting.General.O.NewInterestBases");
+            }
+
+            if (this.ObjectTableName == "DefaultAndConfiguration") {
+                str = 'Add Default And Configuration'
             }
 
             if (this.ObjectTableName == "Shipment"){
@@ -4251,6 +4265,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             case "Customs.DeclarationReferantData":
             case "Customs.PhysicalCheck":
             case "Customs.LogisticActionRequest":
+            case "ReportExecutionLog":
                 return true;
                 //return false;
                 break;
@@ -4268,6 +4283,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                 myObjectTableName = myObjectTableName.substr((this.ObjectTable.ClientModuleName + '.').length)
             }
             var myComponentPath = "./" + this.ObjectTable.ClientModuleName
+
                 //+ "/Components/FiltersMenu/" + myObjectTableName + "FiltersMenuComponent";
                 + "/Components/" + prefixComponent + "/" + myObjectTableName + prefixComponent + "Component";
             SessionLocator.DynamicLoader.Load(myComponentPath, myLocation.viewContainerRef)

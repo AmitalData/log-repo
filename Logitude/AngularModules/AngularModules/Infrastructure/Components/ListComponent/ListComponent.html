@@ -338,7 +338,7 @@
             </div>
         </div>-->
                          </td>
-                         <td *ngIf="IsPhysicalCheckObjectTable || IsLogisticActionRequestObjectTable" style="width: 100px;">
+                         <td *ngIf="IsPhysicalCheckObjectTable || IsLogisticActionRequestObjectTable|| IsReportExecutionLogObjectTable" style="width: 100px;">
                             <div LocationDirective Code="MNO"></div>
                         </td>
  
@@ -438,23 +438,23 @@
             <td class="CellStretch">
                 <div class="CellContent">
                     <!--<div class="GeneratedGridContainer">-->
-                    <!--*ngIf="!DestroyMe" only in customs-->
-                    <!-- <logitude-grid *ngIf="1" [dataSource]="dataSource" [QueryChangeEvent]="onQueryChangeEvent" [pubSubAdvanceQueryFiltersServiceRecived]="pubSubAdvanceQueryFiltersServiceRecived" [Filterchangeevent]="Filterchangeevent"
+                    <!--*ngIf="!DestroyMe" only in customs-->           
+                    <logitude-grid *ngIf="1" [dataSource]="dataSource" [QueryChangeEvent]="onQueryChangeEvent" [pubSubAdvanceQueryFiltersServiceRecived]="pubSubAdvanceQueryFiltersServiceRecived" [Filterchangeevent]="Filterchangeevent"
                                       [rows]="items" [SearchFieldchangeevent]="SearchFieldchangeevent" [MenuHeaderchangeevent]="MenuHeaderchangeevent"
                                       [columns]="columns" (ColumnResisedevent)="ColumnResisedevent($event)" (MenuHeaderchanged)="onMenuHeaderchanged($event)"
                                       [ObjectTable]="ObjectTable" [ColumnsReady]="ColumnsReady" [HasPermition]="HasPermition"
                                       [rowCount]="rowCount" [searchFields]="searchFields" [queryId]="SelectedQueryId" [queryCode]="SelectedQueryCode" (rowSelectedEvent)="onRowSelected($event)"
                                       (AfterViewInitCompleted)="ViewInitCompleted($event)" [ReattachToDetection]="ReattachToDetection" [MyScrollTop]="MyScrollTop" [MySelectedRowIndex]="MySelectedRowIndex" [SortServerProp]="SortServerProp" (SortInvoked)="OnSortInvoked($event)"
-                                       [FilterChangedEvent]="FilterChangedEvent">
-                    </logitude-grid> -->
-                    <logitude-grid-v2 [dataSource]="dataSource" [QueryChangeEvent]="onQueryChangeEvent" [pubSubAdvanceQueryFiltersServiceRecived]="pubSubAdvanceQueryFiltersServiceRecived" [Filterchangeevent]="Filterchangeevent"
+                                       [FilterChangedEvent]="FilterChangedEvent">                    
+                    </logitude-grid>
+                    <!-- <logitude-grid-v2 [dataSource]="dataSource" [QueryChangeEvent]="onQueryChangeEvent" [pubSubAdvanceQueryFiltersServiceRecived]="pubSubAdvanceQueryFiltersServiceRecived" [Filterchangeevent]="Filterchangeevent"
                                       [rows]="items" [SearchFieldchangeevent]="SearchFieldchangeevent" [MenuHeaderchangeevent]="MenuHeaderchangeevent"
                                       [columns]="columns" (ColumnResisedevent)="ColumnResisedevent($event)" (MenuHeaderchanged)="onMenuHeaderchanged($event)"
                                       [ObjectTable]="ObjectTable" [ColumnsReady]="ColumnsReady" [HasPermition]="HasPermition" [DontApplyVirtualization]="DontApplyVirtualization"
                                       [rowCount]="rowCount" [searchFields]="searchFields" [queryId]="SelectedQueryId" [queryCode]="SelectedQueryCode" (rowSelectedEvent)="onRowSelected($event)"
                                       (AfterViewInitCompleted)="ViewInitCompleted($event)" [ReattachToDetection]="ReattachToDetection" [MyScrollTop]="MyScrollTop" [MySelectedRowIndex]="MySelectedRowIndex" [SortServerProp]="SortServerProp" (SortInvoked)="OnSortInvoked($event)"
                                       [FilterChangedEvent]="FilterChangedEvent">
-                    </logitude-grid-v2>
+                    </logitude-grid-v2> -->
                     <!--</div>-->
                 </div>
             </td>

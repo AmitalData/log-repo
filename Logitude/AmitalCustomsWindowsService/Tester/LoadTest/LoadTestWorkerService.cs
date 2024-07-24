@@ -160,7 +160,7 @@ namespace AmitalCustomsWindowsService.Tester.LoadTest
         public override void WorkOnce()
         {
             //throw new NotImplementedException();
-            Debug.WriteLine("LoadTestWR");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("LoadTestWR");
 
             var myLoadTestParam =this.DebugObject as LoadTestParam;
 

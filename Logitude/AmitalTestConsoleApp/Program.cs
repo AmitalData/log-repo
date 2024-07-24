@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Logitude.BL.Helpers;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 
 namespace AmitalTestConsoleApp
 {
@@ -29,7 +29,7 @@ namespace AmitalTestConsoleApp
 
                 if (string.IsNullOrEmpty(key))
                 {
-                    var settingsList = Logitude.BL.Helpers.SettingsHelper.Instance.GetByTenant(tenantId);
+                    var settingsList = DefaultService.Instance.Get(tenantId);
 
                     if (settingsList != null && settingsList.Count > 0)
                     {
@@ -46,12 +46,12 @@ namespace AmitalTestConsoleApp
                 }
                 else
                 {
-                    var settingByKey = Logitude.BL.Helpers.SettingsHelper.Instance.GetByTenant(tenantId, key);
+                    var settingByKey = DefaultService.Instance.Get(tenantId, key);
 
                     if (settingByKey != null)
                     {
                         Console.WriteLine($"\nSettings for Tenant ID: {tenantId} and Key: {key}");
-                        DisplaySetting(settingByKey);
+                        settingByKey.ForEach(DisplaySetting);                        
                     }
                     else
                     {
@@ -67,9 +67,10 @@ namespace AmitalTestConsoleApp
         {
             var objVal1 = setting.ObjVal1;
             var objVal2 = setting.ObjVal2;
-
-            Console.WriteLine(objVal1 != null ? $"-- ObjVal1: {objVal1}" : "ObjVal1 deserialization failed.");
-            Console.WriteLine(objVal2 != null ? $"-- ObjVal2: {objVal2}" : "ObjVal2 deserialization failed.");
+            Console.WriteLine("SetKey: " + setting.SetKey + ",AdditionalKey: " + setting.AdditionalKey);
+            Console.WriteLine(objVal1 != null ? $"-- ObjVal1: {JsonConvert.SerializeObject(objVal1)}, type: {setting.SetValueType1}" : "ObjVal1 deserialization failed.");
+            Console.WriteLine(objVal2 != null ? $"-- ObjVal2: {JsonConvert.SerializeObject(objVal2)}, type: {setting.SetValueType2}" : "ObjVal2 deserialization failed.");
+            Console.WriteLine("------------");
             Console.WriteLine();
         }
     }

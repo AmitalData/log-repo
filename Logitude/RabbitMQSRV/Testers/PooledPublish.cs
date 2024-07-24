@@ -107,12 +107,12 @@ namespace RabbitMQSRV.Testers
                         Thread.Sleep(10000);
                     }
                     //RabbitPublishService.Publish(message, "communicationLogId", InterfaceTypeCode, rabbitMQCode, 5);
-                    Debug.WriteLine($"{Thread.CurrentThread.Name}:{x}:success=true");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"{Thread.CurrentThread.Name}:{x}:success=true");
                 }
                 catch (Exception eee)
                 {
 
-                    Debug.WriteLine($"{Thread.CurrentThread.Name}:{x}:success=false,{eee.Message}");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"{Thread.CurrentThread.Name}:{x}:success=false,{eee.Message}");
                 }
              
                 

@@ -208,7 +208,7 @@ namespace CustomsWorkerRole
                         channel.BasicConsume(queue:myRabbitQueueCode /*this._RabbitQueueCode*/,
                                             autoAck: false,
                                             consumer: consumer);
-                        Debug.WriteLine("Start BasicConsume " + myRabbitQueueCode);
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Start BasicConsume " + myRabbitQueueCode);
                         while (!WorkerRoleServiceLocator.PleaseShutDown)
                         {
                             if (

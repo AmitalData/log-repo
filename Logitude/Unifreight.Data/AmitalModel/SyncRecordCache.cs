@@ -1,5 +1,5 @@
 ﻿using Logitude.Customs.BL.BL;
-using Logitude.Server.Tools.Utils;
+using Simplog.Server.Infrastructure;
 using System;
 using Unifreight.Data.AmitalModel.Repsitories;
 
@@ -11,16 +11,19 @@ namespace Unifreight.Data.AmitalModel
         {
             TryCatch(() =>
             {
+                if (tenant == null || IsConnectedToUniFreight(tenant))
+                    return;
+
                 string cacheKey = $"SyncRecordQuery.GetLastSyncDate." + fileNo + ";" + tenant;
                 CacheHelper.ClearCache(cacheKey);
             });
         }
 
         public static void ClearCacheLastSyncByPrimaryNum(string primaryNum, int? tenant)
-        {
+        {            
             TryCatch(() =>
             {
-                if (tenant == null || !tenant.HasValue || primaryNum == null || !long.TryParse(primaryNum, out long lCUSTOMFILENO))
+                if (tenant == null || !tenant.HasValue || primaryNum == null || !long.TryParse(primaryNum, out long lCUSTOMFILENO) || IsConnectedToUniFreight(tenant.Value))
                     return;
 
                 var fileNo = new CCUFILEMRepository(tenant.Value).GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
@@ -41,6 +44,12 @@ namespace Unifreight.Data.AmitalModel
             {
                 NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e,"Error in ClearCacheLastSync error" );
             }
+        }
+
+        private static bool IsConnectedToUniFreight(int tenant)
+        {
+            LogitudeCustomsSettingsM customsSettings = LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenant);
+            return customsSettings.Id == null || customsSettings.IsConnectedToUniFreight;            
         }
     }
 }

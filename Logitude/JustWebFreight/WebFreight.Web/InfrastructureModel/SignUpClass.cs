@@ -3259,7 +3259,8 @@ namespace WebFreight.Web.InfrastructureModel
             {
                 Id = theTenant.ToString(),
                 Tenant = theTenant,
-            };
+				TenantForConfirmationNumberApi = "-1"
+			};
 
             theFullAccountingSettingsRepository.Add(settings);
             theFullAccountingSettingsRepository.SubmitChanges();

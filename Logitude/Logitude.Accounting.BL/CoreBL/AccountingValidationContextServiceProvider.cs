@@ -15,6 +15,7 @@ using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Logitude.Accounting.Data.EntityLists;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -159,7 +160,13 @@ namespace Logitude.Accounting.BL.CoreBL
             return a.GetLedgerTransactionPMsByIdList(transactionIdList, tenant);
         }
 
-        
+        public List<LedgerTransactionJournalLineLT> GetLedgerTransactionJournalLineLTsByIdList(List<string> transactionIdList, int tenant)
+        {
+            var a = new LedgerTransactionQueryService(_AccountingContext);
+            return a.GetLedgerTransactionJournalLineLTsByIdList(transactionIdList, tenant);
+        }
+
+
     }
     public class JournalValidatorDataProvider : IJournalValidatorContextDataProvider
     {

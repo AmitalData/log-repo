@@ -1,10 +1,16 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Mapping;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq; 
 using System.Text;
 using System.Threading.Tasks;
@@ -105,7 +111,91 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                         };
             return result;
         }
-         
-         
+
+        public void CancelStuckReports(int tenant ,string report=null)
+        {
+            if(report=="null")
+            {
+                report = null;
+            }
+            string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(tenant);
+            var contactRep = new ContactRepository(tenant);
+            Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, tenant);
+            string strConnString = TenantServerConfigration.GetDbConnection(tenant);
+
+            using (SqlConnection cn = new SqlConnection(strConnString))
+            {
+                SqlCommand cmd = new SqlCommand("[dbo].[CancelReportAndUpdateQueueMessage]", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlParameter reportId = new SqlParameter("@ReportId", SqlDbType.NText);
+                SqlParameter cancelByUser = new SqlParameter("@CancelByUser", SqlDbType.NText);
+                SqlParameter tenantId = new SqlParameter("@TenantId", SqlDbType.Int);
+                SqlParameter queueDefinitionCode = new SqlParameter("@QueueDefinitionCode", SqlDbType.NText);
+
+                reportId.Direction = ParameterDirection.Input;
+                cancelByUser.Direction = ParameterDirection.Input;
+                tenantId.Direction = ParameterDirection.Input;
+                queueDefinitionCode.Direction = ParameterDirection.Input;
+
+                reportId.Value = report;
+                cancelByUser.Value= contact?.Id;
+                tenantId.Value = tenant;
+                queueDefinitionCode.Value = FeatureToggleHelper.HasFeatureToggle("RE2", tenant) ? "ReportExecutionLogV2Queue" : "ReportExecutionLogQueue"; 
+
+                cmd.Parameters.Add(reportId);
+                cmd.Parameters.Add(cancelByUser);
+                cmd.Parameters.Add(tenantId);
+                cmd.Parameters.Add(queueDefinitionCode);
+
+                cn.Open();
+                var output = cmd.ExecuteNonQuery();
+                cn.Close();
+            }
+       
+    }
+
+        public void Cancel(ReportExecutionLog reportExecutionLog, string cancelByUserId)
+        {
+           
+            reportExecutionLog.StatusCode = "F";
+            reportExecutionLog.ExceptionMessage = string.Format("Stopped manually by {0}", cancelByUserId);
+            reportExecutionLog.DoneDate = DateTime.Now;
+            repository.Update(reportExecutionLog);
+            
+
+            QueueMessageRepository messagesRepository = new QueueMessageRepository(reportExecutionLog.Tenant);
+            var message = messagesRepository.GetSingleQueueMessageByReportId(reportExecutionLog.Id, reportExecutionLog.Tenant);
+            string strConnString = TenantServerConfigration.GetDbConnection(reportExecutionLog.Tenant);
+            if (message != null)
+            {
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    SqlCommand cmd = new SqlCommand("[dbo].[Queue_SetStatus]", cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlParameter messageIdPar = new SqlParameter("@MessageId", SqlDbType.BigInt);
+                    SqlParameter statusPar = new SqlParameter("@Statud", SqlDbType.Int);
+
+
+                    messageIdPar.Direction = ParameterDirection.Input;
+                    statusPar.Direction = ParameterDirection.Input;
+
+                    messageIdPar.Value = message.Id;
+                    statusPar.Value = 22;
+
+                    cmd.Parameters.Add(messageIdPar);
+                    cmd.Parameters.Add(statusPar);
+
+                    cn.Open();
+                    var output = cmd.ExecuteNonQuery();
+                    cn.Close();
+                    }
+                     }
+
+               
+          
+
+        }
+
+
     }
 }

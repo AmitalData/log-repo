@@ -26,7 +26,7 @@ namespace Logitude.CustomsMessaging.Testers.Mirit
             catch (Exception e)
             {
 
-                Debug.WriteLine(e.ToString()); 
+               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e); 
             }
         }        
     }

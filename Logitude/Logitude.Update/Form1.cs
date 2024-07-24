@@ -89,7 +89,7 @@ using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.Tools.Initializers;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours;
 using WebFreight.Web.MetaDataUpdate;
-using WebFreight.Web.MetaDataUpdate.SendBox;
+//using WebFreight.Web.MetaDataUpdate.SendBox;
 using WebFreight.Web.WebServices;
 using Logitude.Server.Tools.StorageService;
 using System.Web;
@@ -1348,7 +1348,7 @@ User/Pass",
                     {
                         if (tenant.Id != 0)
                         {
-                            DocumentTypeUpdateClass.UpdateDataForTenant(tenant.Id, "");
+                           // DocumentTypeUpdateClass.UpdateDataForTenant(tenant.Id, "");
                             label1.Text = "Update tenant" + tenant.Id + "completed successfully";
                         }
                     }
@@ -1881,13 +1881,7 @@ User/Pass",
                 SetControlPropertyValue(CustZibFilesLbl, "Text", "Building...");
                 generalLabel = CustZibFilesLbl; // timer
             }
-            else if (this.buildQuoteOPMZIPFiles)
-            {
-                SetControlPropertyValue(CustZibFilesLbl, "Text", "Building...");
-                generalLabel = CustZibFilesLbl; // timer
-
-
-            }
+          
             else
             {
                 SetControlPropertyValue(BuildZipFileslbl, "Text", "Building...");
@@ -4698,8 +4692,7 @@ User/Pass",
         }
 
         private int packagesTypesCount = 0;
-        private bool buildQuoteOPMZIPFiles;
-
+ 
         private void AddPackagesTypesByTenant(List<dynamic> allPackagesTypes, int tenant)
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
@@ -4781,20 +4774,9 @@ User/Pass",
  
         }
 
-        private void UpdateQuoteOPM_Click(object sender, EventArgs e)
-        {
-            Thread thread = new Thread(() => UpdateModule(0, "QuoteOPM", lblUQuote));
-            thread.IsBackground = true;
-            thread.Start();
-        }
+       
 
-        private void buttonQuoteOPMZIP_Click(object sender, EventArgs e)
-        {
-            this.buildQuoteOPMZIPFiles = true;
-            Thread thread = new Thread(UpdateZipFiles);
-            thread.IsBackground = true;
-            thread.Start();
-        }
+      
 
         private void tESTToolStripMenuItem_Click(object sender, EventArgs e)
         {

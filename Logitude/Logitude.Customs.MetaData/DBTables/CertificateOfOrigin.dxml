@@ -501,6 +501,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="OpenDate"
+    Type="date">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CooTypeCode"
     ReferencedTable="CertificateOfOriginTypeCodeEnums"

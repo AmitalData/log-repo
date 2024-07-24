@@ -54,6 +54,7 @@ using Logitude.BL.Helpers.ExportServer;
 using Newtonsoft.Json;
 using System.Text.Json;
 using Logitude.Server.Tools.TreeFilterQuery.Expression;
+using NetCommonHelper.Logger;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -359,6 +360,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.AfterServiceFinished();
             if (entityPM.ARInvoiceTypeCode == "IT")
             {
+
+                string[] stacklines = ARInvoiceService.GetStack(0);
+                string logtext = "ARInvoiceService.Create(), Point 2, Invoice Number " + entityPM.InvoiceNumber;
+                if (entityPM.InvoiceEntities != null && entityPM.InvoiceEntities.Count > 0) logtext += ", Interest Report Id" + entityPM.InvoiceEntities[0].EntityId;
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(stacklines));
+
+
                 this.UpdateInterestReportFields(entityPM);
                 this.UpdateInterestReportsConnectedInvoice(entityPM);
             }
@@ -456,6 +465,25 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             }
         }
+
+        private static string[] GetStack(int removeLines)
+        {
+            string[] stack = Environment.StackTrace.Split(
+                new string[] { Environment.NewLine },
+                StringSplitOptions.RemoveEmptyEntries);
+
+            if (stack.Length <= removeLines)
+                return new string[0];
+
+            string[] actualResult = new string[stack.Length - removeLines];
+            for (int i = removeLines; i < stack.Length; i++)
+                // Remove 6 characters (e.g. "  at ") from the beginning of the line
+                // This might be different for other languages and platforms
+                actualResult[i - removeLines] = stack[i].Substring(6);
+
+            return actualResult;
+        }
+
         private void GetConfirmationNumberAPI()
         {
             try

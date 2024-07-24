@@ -72,19 +72,7 @@
                                                     </LogLov>
                                                 </td>
                                             </tr>
-                                            <tr *ngIf="IsQuoteOPMaintence" class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'QuoteGroupSectionID'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                </td>
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'QuoteGroupSectionID'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [SelectedValue]="QuoteGroupSectionID"
-                                                            [LookUpTableName]="'QuoteGroupSection'">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
+                                     
                                             <tr class="FormFieldRow">
                                                 <td>
                                                     <LogLabel [ObjectFieldName]="'MeasurementId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>

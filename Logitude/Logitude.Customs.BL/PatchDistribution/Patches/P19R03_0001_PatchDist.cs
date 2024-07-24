@@ -39,7 +39,7 @@ namespace Logitude.Customs.BL.PatchDistribution.Patches
 (dr) =>
 {
     res = dr.GetString(0);
-    Debug.WriteLine($"Enshure_SeedDbMigrateTable():Last MinorVersion is {res}");
+   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Enshure_SeedDbMigrateTable():Last MinorVersion is {res}");
     return 0;
 });
 

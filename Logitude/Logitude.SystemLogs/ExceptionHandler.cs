@@ -32,7 +32,7 @@ namespace Logitude.SystemLogs
                     }
                 }
 
-                Debug.WriteLine(exception.ToString());
+               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(exception);
                 AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Error);
 
 
@@ -108,7 +108,7 @@ namespace Logitude.SystemLogs
                     string stacktrace = "";
                     if (exception.StackTrace != null)
                         stacktrace = exception.StackTrace;
-                    Debug.WriteLine("***HandleException** " + ErrorMessage);//May cause slowness ,But worth - If u Decides to delete ,Please inform itzik !!!!!
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("***HandleException** " + ErrorMessage);//May cause slowness ,But worth - If u Decides to delete ,Please inform itzik !!!!!
                     AzureLog.SaveLogsInStorage(ErrorMessage, "E", clientDate, exception.Message, exception.StackTrace, tenant, userId, userName, ip, exception);
 
                 }
@@ -130,7 +130,7 @@ namespace Logitude.SystemLogs
             }
             catch (Exception)
             {
-                Debug.WriteLine("Unable to write to File (OnExceptionOnDbLogInFile)");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Unable to write to File (OnExceptionOnDbLogInFile)");
                 //throw;
              }
         }

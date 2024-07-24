@@ -42,9 +42,7 @@ export class GeneralTabComponent implements AfterViewInit {
                 if (this.ObjectTableName == "BatchTaskExecution") {
                     ScreenCode = "BatchTaskExecutionGeneralTabScreen";
                 }
-                 if (FeatureLocator.HasFeaturePermession("QuoteOP", "QuoteOPMaintence") && this.OPObjectTablesName.includes(this.ObjectTableName)){
-                    var ScreenCode = this.ObjectTableName +"OP"+ ".GeneralTabScreen";
-                }
+               
  
           this.SetTabTitle();
  

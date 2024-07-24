@@ -76,7 +76,7 @@ Parameter name: transactionOptions.IsolationLevel
                     string tabSql = table1.Length > table2.Length ? table1 : table2;
                     string tabOra = table1.Length > table2.Length ? table2 : table1;
 
-                    Debug.WriteLine($"EXEC sp_rename 'dbo.{tabOra}', '{tabSql}';");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"EXEC sp_rename 'dbo.{tabOra}', '{tabSql}';");
 
                 }
             }
@@ -102,7 +102,7 @@ EXEC sp_rename 'dbo.AccountingInfoIdentifiers', 'AccountingInformationIdentifier
         public void GetReNameSchemaCustoms(string root)
         {
             root = @"C:\log2004\Logitude\Logitude.Customs.Data\EntityMapping";
-            Debug.WriteLine("CREATE SCHEMA Customs;  ");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CREATE SCHEMA Customs;  ");
             var files = Directory.GetFiles(root, "*Map.cs", SearchOption.AllDirectories);
             foreach (var file in files)
             {
@@ -118,7 +118,7 @@ EXEC sp_rename 'dbo.AccountingInfoIdentifiers', 'AccountingInformationIdentifier
                     var d = new char[] { c };
                     string table1 = arr[1].Split(d)[1];
 
-                    Debug.WriteLine($"ALTER SCHEMA Customs TRANSFER OBJECT::dbo.{table1};   ");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"ALTER SCHEMA Customs TRANSFER OBJECT::dbo.{table1};   ");
                     
 
                 }
@@ -422,9 +422,9 @@ EXEC sp_rename 'SETTINGS.USINGAZURE_MSQL', 'USINGAZURE';
                     .Replace("USINGAZURE", arry[1])
                     );
             }
-            Debug.WriteLine(string.Join(Environment.NewLine, entities2));
-            Debug.WriteLine("------");
-            Debug.WriteLine(string.Join(Environment.NewLine, restScript));
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Join(Environment.NewLine, entities2));
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("------");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Join(Environment.NewLine, restScript));
         }
 
        
@@ -441,7 +441,7 @@ EXEC sp_rename 'SETTINGS.USINGAZURE_MSQL', 'USINGAZURE';
                     string table1=line.Substring(pos + 1);
                     var ary=table1.Split( new string[] {" "} , StringSplitOptions.RemoveEmptyEntries);
                     string table = ary[0];
-                    Debug.WriteLine($"var test{C++}= customContext.{table}.FirstOrDefault();");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"var test{C++}= customContext.{table}.FirstOrDefault();");
                 }
             }
 

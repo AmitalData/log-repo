@@ -373,12 +373,12 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
 
                         correlationIDs.Add(new NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs { CorrelationIDs = itemOutgoingMessage.CorrelationId });
                         sbFilename.Enqueue(myFileName);
-                        Debug.WriteLine($"SaveInDB({myFileName}) -Done");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SaveInDB({myFileName}) -Done");
                         //NumOfMessages++;
                     }
                     catch (System.Exception EE)
                     {
-                        Debug.WriteLine($"SaveInDB({myFileName}) -{EE.ToString()}");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteFatal(EE,$"SaveInDB({myFileName})");
                         _SaveError = true;
                         exceptionBag.Add($"Error while save message in DCA : {EE.ToString()}");
                         //throw;
@@ -388,7 +388,7 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
                 {
 
                     sbFilename.Enqueue($"NOT NEEDED!!!! {myFileName}");
-                    Debug.WriteLine($"NOT NEEDED!!!! needed in our tenant =SaveInDB({myFileName})");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"NOT NEEDED!!!! needed in our tenant =SaveInDB({myFileName})");
                     if (_DedicatedCourierDCAModel != null)
                     {
                         string fileBackupPath = null;
@@ -439,12 +439,12 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
 
                         correlationIDs.Add(new NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs { CorrelationIDs = itemOutgoingMessage.CorrelationId });
                         sbFilename.AppendLine(myFileName);
-                        Debug.WriteLine($"SaveInDB({myFileName}) -Done");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SaveInDB({myFileName}) -Done");
                         NumOfMessages++;
                     }
                     catch (System.Exception EE)
                     {
-                        Debug.WriteLine($"SaveInDB({myFileName}) -{EE.ToString()}");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteFatal(EE, $"SaveInDB({myFileName})");
                         _SaveError = true;
                         _SBErrorLog.AppendLine($"Error while save message in DCA : {EE.ToString()}");
                         //throw;
@@ -454,7 +454,7 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
                 {
 
                     sbFilename.AppendLine($"NOT NEEDED!!!! {myFileName}");
-                    Debug.WriteLine($"NOT NEEDED!!!! needed in our tenant =SaveInDB({myFileName})");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"NOT NEEDED!!!! needed in our tenant =SaveInDB({myFileName})");
                     if (_DedicatedCourierDCAModel != null)
                     {
                         string fileBackupPath = null;
@@ -505,8 +505,8 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
             {
                 try
                 {
-                    Debug.WriteLine("DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass = " + currMessagingService);
-                    Debug.WriteLine("Due infinite errors i cancel writing log");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass = " + currMessagingService);
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Due infinite errors i cancel writing log");
 
                     if (DateTime.Now.Subtract(_LastErrordateTime) > TimeSpan.FromMinutes(10))
                     {

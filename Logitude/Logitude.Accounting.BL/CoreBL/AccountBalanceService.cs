@@ -167,7 +167,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
 
             mess = mess + ":Took:" + _sw.Elapsed.ToString();
-            Debug.WriteLine(mess);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(mess);
 
             _sw.Restart();
             _StringBuilder.AppendLine(mess);
@@ -179,7 +179,7 @@ namespace Logitude.Accounting.BL.CoreBL
             var have = myJournalQueryService.GetAnyPendingApprovedDev(_ListOfAccountId, _Tenant);
             if (_sw.Elapsed > TimeSpan.FromSeconds(1))
             {
-                Debug.WriteLine("AnyAccountingQueued():Please make index  ");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("AnyAccountingQueued():Please make index  ");
             }
             return have;
         }

@@ -186,7 +186,10 @@ export class EventTypePM {
     public get EventTrigger() { return this.eventTrigger; }
     public set EventTrigger(newValue: string) { if (this.eventTrigger != newValue) { this.eventTrigger = newValue; this.MarkAsDirty("EventTrigger"); } }
        
-	 
+    private weight: number;
+    public get Weight() { return this.weight; }
+    public set Weight(newValue: number) { if (this.weight != newValue) { this.weight = newValue; this.MarkAsDirty("Weight"); } }
+     
      
 	private eventRemarks: EventRemarkPM[];
     get  EventRemarks() {
@@ -251,4 +254,4 @@ export class EventTypePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

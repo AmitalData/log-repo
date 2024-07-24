@@ -1613,7 +1613,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             return table.HashString != updateClassHashString;
         }
-        public static void BuildObjectTablesZipFilesData(bool savetodisk = false, bool includeCustoms = false ,bool temp = false)
+        public static void BuildObjectTablesZipFilesData(bool savetodisk = false, bool includeCustoms = false )
         {
 
             ObjectFieldQuery objectFieldsQuery = new ObjectFieldQuery(0);

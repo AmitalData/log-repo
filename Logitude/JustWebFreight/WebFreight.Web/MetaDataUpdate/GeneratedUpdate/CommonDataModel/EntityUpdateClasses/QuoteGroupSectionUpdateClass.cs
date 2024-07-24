@@ -75,7 +75,7 @@ using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.BL;
 using Logitude.CargoTracking.Data.EntityPOCOs;
 
-//using Amital.QuoteOPM.BL.CLoseTable;
+
 
 
 

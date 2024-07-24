@@ -77,6 +77,29 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               }).ToList();
             return copies;
         }
+        public DocumentOutCopyPM GetDocumentOutCopiesForDocumentOutAndType(string documentOutId, int tenant,string code)
+        {
+            DocumentOutCopyPM copies = (from a in repository.context.DocumentOutCopies.Include("DocumentTypeCopy").Include("DocumentOut.DocumentsFiling.DocumentType").Include("Document").Include("LastPrintedByUser.Contact")
+                                              where a.DocumentOutId == documentOutId && a.Tenant == tenant && a.DocumentTypeCopy.Code== code
+                                              select new DocumentOutCopyPM()
+                                              {
+                                                  DocumentId = a.DocumentId,
+                                                  DocumentOutId = a.DocumentOutId,
+                                                  DocumentTypeCopyId = a.DocumentTypeCopyId,
+                                                  Id = a.Id,
+                                                  Tenant = a.Tenant,
+                                                  DocoumentTypeCopyName = a.DocumentTypeCopy.Name,
+                                                  DocumentTypeCopyNameWithDocumentTypeName = a.Document != null && !string.IsNullOrEmpty(a.Document.CalculatedFileName) ? a.Document.CalculatedFileName : a.DocumentOut.DocumentsFiling.DocumentType.Name != a.DocumentTypeCopy.Name ? a.DocumentOut.DocumentsFiling.DocumentType.Name + " - " + a.DocumentTypeCopy.Name : a.DocumentTypeCopy.Name,
+                                                  // DocumentTypeCopyNameWithDocumentTypeName = a.DocumentOut.DocumentsFiling.DocumentType.Name != a.DocumentTypeCopy.Name ? a.DocumentOut.DocumentsFiling.DocumentType.Name + " - " + a.DocumentTypeCopy.Name : a.DocumentTypeCopy.Name,
+                                                  FileName = a.Document != null ? a.Document.FileName : null,
+                                                  FileSize = a.Document != null ? a.Document.FileSize : null,
+                                                  LastPrintDate = a.LastPrintDate,
+                                                  LastPrintedByUserId = a.LastPrintedByUserId,
+                                                  LastPrintedByUserName = a.LastPrintedByUser != null ? (a.LastPrintedByUser.Contact != null ? a.LastPrintedByUser.Contact.EnglishName : null) : null,
+                                                  CalculatedFileName = a.Document != null && !string.IsNullOrEmpty(a.Document.CalculatedFileName) ? a.Document.CalculatedFileName : a.DocumentOut.DocumentsFiling.DocumentType.Name != a.DocumentTypeCopy.Name ? a.DocumentOut.DocumentsFiling.DocumentType.Name + " - " + a.DocumentTypeCopy.Name : a.DocumentTypeCopy.Name,
+                                              }).FirstOrDefault();
+            return copies;
+        }
 
 
         public List<DocumentOutCopyList> GeDocumentOutCopiesListsBydocumentTypeCopyIdsAndDocumentOutIds(List<string> documentTypeCopyIds, List<string> documentOutIds, int tenant)

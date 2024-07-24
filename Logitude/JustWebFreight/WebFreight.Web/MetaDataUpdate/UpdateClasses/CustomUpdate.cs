@@ -15170,48 +15170,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSSH", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 1, CategoryTypeCode = null, TextCode = "General.MH.CustomsShipments", Icon = "OperationsPath", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Shipment").FirstOrDefault().Id, FeatureId = customsShipmentsFeature.Id, FeatureUniqeCode = customsShipmentsFeature.FeatureUniqeCode, QuerySection = "CustomsShipments" }, MenusTablesRepository, tenantMenusTables);
 
 
-            Feature QuoteOPFeature = tenantFeatures.Where(d => d.Code == "QuoteOP" && d.FeatureTypeCode == "MENU").FirstOrDefault();
-            var quoteOPObjectTable = tenantObjectTables.FirstOrDefault(o => o.Name == "QuoteOP");
-            if (quoteOPObjectTable != null)/// FIRST CLICK BuildOPM  !!!
-            {
-                Feature GeneralFeature_OPSPECIALSERVICESTYPES = tenantFeatures.Where(d => d.Code == "OPSpecialServiceTypeMTC" && d.FeatureTypeCode == "MENU").FirstOrDefault();
-
-                var GeneralObjectTable = tenantObjectTables.Where(o => o.Name == "General").FirstOrDefault();
-                ///AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "QOPM", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 19, CategoryTypeCode = null, TextCode = "General.MH.QuotesOP", Icon = "QuotesPath", FeatureId = QuoteOPFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "QuoteOP").FirstOrDefault().Id, FeatureUniqeCode = QuoteOPFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
-                AddMenusTables.AddMenusTable(new MenusTableDetails()
-                {
-                    Code = "QOPM",
-                    Tenant = 0,
-                    MenuTypeCode = "Main",
-                    IndexOfOrder = 19,
-                    CategoryTypeCode = null,
-                    TextCode = "General.MH.QuotesOP",
-                    Icon = "QuotesPath",
-                    FeatureId = QuoteOPFeature.Id,
-                    ObjectTableId = quoteOPObjectTable.Id,
-                    FeatureUniqeCode = QuoteOPFeature.FeatureUniqeCode
-                }, MenusTablesRepository, tenantMenusTables);
-
-                //OPSpecialServiceTypes
-                //OPSpecialServiceTypes
-
-                AddMenusTables.AddMenusTable(new MenusTableDetails()
-                {
-                    Code = "SPOP",
-                    Tenant = 0,
-                    MenuTypeCode = "MTC",
-                    IndexOfOrder = 56,
-                    CategoryTypeCode = "Oth",
-                    TextCode = "General.MC.Others.OPSpecialServiceTypes",
-                    Icon = "DocumentTypes.png",
-                    ObjectTableId = tenantObjectTables.Where(o => o.Name == "OPSpecialServicesType").FirstOrDefault().Id,
-                    FeatureId = GeneralFeature_OPSPECIALSERVICESTYPES.Id,
-                    FeatureUniqeCode = GeneralFeature_OPSPECIALSERVICESTYPES.FeatureUniqeCode,
-                },
-                    MenusTablesRepository, tenantMenusTables);
-
-            }
-
+       
 
             #endregion
             #region Maintanance
@@ -15828,8 +15787,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Feature GeneralWorkSheetFromExcelFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WorkSheetFromExcel", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.General.O.WorkSheetFromExcel1", NameTextCodeDefaultText = "מסך עבודה מאקסל", FullLocalDefaultText = "מסך עבודה מאקסל", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
 
-            Feature GeneralQuoteOPFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteOP", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.QuoteOP", NameTextCodeDefaultText = "Quote(OP)", FullLocalDefaultText = "(OP) הצעות מחיר ", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
+        
             Feature CustomsPartnerFtpFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails()
             {
                 Code = "CPARTNERFTP",
@@ -15860,35 +15818,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             #endregion
 
-            #region QuoteOP
-            //Feature GeneralHouseTypeFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails()
-            //{
-            //    Code = "HOUSETYPE",
-            //    Packagable = true,
-            //    ObjectTableId = GeneralObjectTable.Id,
-            //    Tenant = tenant,
-            //    NameTextCodeCode = "General.Features.CustomHouseType",
-            //    NameTextCodeDefaultText = "Customs House Type",
-            //    FeatureTypeCode = "MENU"
-            //}, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
-
-            Feature GeneralFeature_OPSPECIALSERVICESTYPES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails()
-            {
-                Code = "OPSpecialServiceTypeMTC",
-                FeatureTypeCode = "MENU",
-                Packagable = true,
-                IsBusinessUnitEnabled = false,
-                IsOld = false,
-                IsCoreFeature = false,
-                ObjectTableId = GeneralObjectTable.Id,
-                Tenant = tenant,
-                NameTextCodeCode = "General.Features.OPSpecialServiceType",
-                NameTextCodeDefaultText = @"Special Service Types(OP)"
-            }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
-            #endregion//QuoteOP
-            textCodeRep.SubmitChanges();
+             textCodeRep.SubmitChanges();
             FeaturesRepository.SubmitChanges();
 
             //#region CustomsCollateral
@@ -17976,95 +17906,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             }
             #endregion
 
-            #region QuoteOP Counters
-
-            var objectTablesQuoteOP = ObjectContext.ObjectTables.Where(o => o.Name == "QuoteOP").FirstOrDefault();
-            Counter counterQUOTOP = CounterRepository.GetCounterByCode("QTOP", tenant);
-            if (objectTablesQuoteOP != null && counterQUOTOP == null)
-            {
-                Counter quoteCounter = new Counter()
-                {
-                    Id = IdCounter.GetNumber("Counter", 0).ToString(),
-                    ObjectTableId = objectTablesQuoteOP.Id,//QuoteObject.Id,
-                    Code = "QTOP",
-                    Tenant = 0,
-                    Name = "Quote(OP)",
-
-                };
-
-                CounterRepository.Add(quoteCounter);
-
-                CounterDefinition Quote_Export_Air_Counter = new CounterDefinition()
-                {
-                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-                    CounterId = quoteCounter.Id,
-                    Tenant = 0,
-                    StartNumber = 1000,
-                    Parameter1 = "E",
-                    Parameter2 = "A",
-                };
-                CounterDefinition Quote_Export_Ocean_Counter = new CounterDefinition()
-                {
-                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-                    CounterId = quoteCounter.Id,
-                    Tenant = 0,
-                    StartNumber = 1000,
-                    Parameter1 = "E",
-                    Parameter2 = "O",
-                };
-
-                CounterDefinition Quote_Export_Inland_Counter = new CounterDefinition()
-                {
-                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-                    CounterId = quoteCounter.Id,
-                    Tenant = 0,
-                    StartNumber = 1000,
-                    Parameter1 = "E",
-                    Parameter2 = "I",
-                };
-
-                CounterDefinition Quote_Import_Air_Counter = new CounterDefinition()
-                {
-                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-                    CounterId = quoteCounter.Id,
-                    Tenant = 0,
-                    StartNumber = 1000,
-                    Parameter1 = "I",
-                    Parameter2 = "A",
-                };
-
-                CounterDefinition Quote_Import_Ocean_Counter = new CounterDefinition()
-                {
-                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-                    CounterId = quoteCounter.Id,
-                    Tenant = 0,
-                    StartNumber = 1000,
-                    Parameter1 = "I",
-                    Parameter2 = "O",
-                };
-
-                CounterDefinition Quote_Import_Inland_Counter = new CounterDefinition()
-                {
-                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-                    CounterId = quoteCounter.Id,
-                    Tenant = 0,
-                    StartNumber = 1000,
-                    Parameter1 = "I",
-                    Parameter2 = "I",
-                };
-
-
-                CounterDefinitionRepository.Add(Quote_Export_Air_Counter);
-                CounterDefinitionRepository.Add(Quote_Export_Ocean_Counter);
-                CounterDefinitionRepository.Add(Quote_Export_Inland_Counter);
-                CounterDefinitionRepository.Add(Quote_Import_Air_Counter);
-                CounterDefinitionRepository.Add(Quote_Import_Ocean_Counter);
-                CounterDefinitionRepository.Add(Quote_Import_Inland_Counter);
-
-
-            }
-            #endregion
-
+ 
             this.ObjectContext.SaveChanges();
         }
         #endregion

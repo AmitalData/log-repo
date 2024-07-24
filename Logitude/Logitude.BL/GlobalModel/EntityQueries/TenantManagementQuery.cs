@@ -1076,7 +1076,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
                        IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
                        PrivateLabelId = a.GlobalTenant != null ? a.GlobalTenant.PrivateLabelId : "",
-                       PrivateLabelName = a.GlobalTenant != null ? a.GlobalTenant.TenantManagmentPrivateLabel != null ? a.GlobalTenant.TenantManagmentPrivateLabel.PrivateLabelName : "" : "",
+                       PrivateLabelName = a.GlobalTenant != null ? a.GlobalTenant.TenantManagmentPrivateLabel != null ? a.GlobalTenant.TenantManagmentPrivateLabel.PrivateLabelName : null : null,
                        ShowMoneyOrder = a.ShowMoneyOrder,
                        DigitalPortalLastDate = a.DigitalPortalLastDate,
                        DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,

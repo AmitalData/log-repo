@@ -54,5 +54,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 
         public bool IsStatusNotModified { get; set; }
         public string EventTrigger { get; set; }
+
+        public int? Weight { get; set; }
+
     }
 }
