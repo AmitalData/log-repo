@@ -854,7 +854,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 bool useLocal = !(GetLoggedContact(tenant, email).DontShowLocal);
                 IInvoiceContext objectContext=new InvoiceContext();
                 var confirmationNumberDefault = (from a in objectContext.ConfirmationNumberDefaults
-                                                 where a.Tenant == tenant && a.FromDate <= invoiceDate
+                                                 where a.Tenant == tenant && a.FromDate <= invoiceDate &&a.InActive==false
                                                  orderby a.FromDate descending
                                                  select a
                                             ).FirstOrDefault();
