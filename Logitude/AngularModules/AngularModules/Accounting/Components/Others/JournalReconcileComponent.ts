@@ -74,8 +74,8 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         });
 
         this.GLAccountsFilterItems = new ApiQueryFilters();
-        this.GLAccountsFilterItems.addAdditionalFilter("AccountTypeCode", "5,4", null, null,
-            "Exclude", false, false, false, "string", false, true);
+      //  this.GLAccountsFilterItems.addAdditionalFilter("AccountTypeCode", "5,4", null, null,
+      //      "Exclude", false, false, false, "string", false, true);
         this.GLAccountsFilterItems.addAdditionalFilter("IsControlAccount", false, null, null,
             "Equals", false, false, false, "string", false, true);
 

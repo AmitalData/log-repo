@@ -84,6 +84,10 @@ namespace WebFreight.Web.DataProviders
         public string ChartOfAccountsEnglishName { get; set; }
         public string ChartOfAccountsTypeEnglishName { get; set; }
         public string ChartOfAccountsTypeLocalName { get; set; }
+        public string AccountContactName { get; set; }
+        public string AccountContactEmail { get; set; }
+        public string AccountContactPhone { get; set; }
+
     }
 
     public class AgingPeriodTotal

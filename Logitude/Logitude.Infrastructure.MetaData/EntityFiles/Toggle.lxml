@@ -982,6 +982,11 @@
       SearchFields="&quot;RE2, Reports Execution WR Version 2&quot;"
       Description="&quot;Reports Execution WR Version 2&quot;" />
     <Record
+      Code="&quot;VPI&quot;"
+      Name="&quot;Get Tax Report VAT from A/P Invoice&quot;"
+      SearchFields="&quot;VPI, Get Tax Report VAT from A/P Invoice&quot;"
+      Description="&quot;Get Tax Report VAT from A/P Invoice&quot;" />
+    <Record
       Code="&quot;JAM&quot;"
       Name="&quot;Journal Approval MultiThreading&quot;"
       SearchFields="&quot;JAM, Journal Approval MultiThreading&quot;"

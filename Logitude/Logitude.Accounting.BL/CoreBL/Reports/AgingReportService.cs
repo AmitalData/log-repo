@@ -293,7 +293,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
             GLAccountListQueryService accountQS = new GLAccountListQueryService(_AccountingContext);
             bool noNeedTenant = true;
-            IQueryable<GLAccountList> q_accountsList = accountQS.GetByIds(accountsIds, _Param.Tenant, noNeedTenant);
+                IQueryable<GLAccountList> q_accountsList = accountQS.GetByIdsForAgingReport(accountsIds, _Param.Tenant, noNeedTenant);
             bool blanceCureency4SplitIsNeeded = true;
             if (!blanceCureency4SplitIsNeeded)
             {
@@ -321,9 +321,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                       join card in _AccountingContext.GLAccountCardsDatas.Where(r => r.Tenant == _Param.Tenant)
                        on acc.CardsDataId equals card.Id into cardJoinT
-                      from card in cardJoinT.DefaultIfEmpty()
+                      from card in cardJoinT.DefaultIfEmpty() 
 
-                      let glaPeriod = _AccountingContext.GLAccountInterestPeriods.Where(r => r.Tenant == _Param.Tenant && r.GLAccountId == acc.Id && r.PeriodStartDate <= currentDate)
+                      let glaPeriod = _AccountingContext.GLAccountInterestPeriods.Where(r => r.Tenant == _Param.Tenant && r.GLAccountId == acc.Id && r.PeriodStartDate <= currentDate && acc.ActiveForInterest)
                       .OrderByDescending(d => d.PeriodStartDate).FirstOrDefault()
                       let basePeriod = _AccountingContext.InterestBasesPeriods.Where(d => d.InterestBaseTypeId == glaPeriod.StandardInterestRateBaseId)
                       .OrderByDescending(d => d.InterestBaseStartDate).FirstOrDefault()
@@ -382,7 +382,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                           AccountLocalName = acc.LocalName,
                           AccountCurrencyCode = acc.ReconcileMethodCode == "0" ? tenant.CurrencyCode : acc.CurrencyCode,
                           AccountPhone = card.Phone,
-                          InsuredCreditLimit = card != null ? (card.InsuredcreditLimit != null ? (double)card.InsuredcreditLimit : 0) : 0
+                          InsuredCreditLimit = card != null ? (card.InsuredcreditLimit != null ? (double)card.InsuredcreditLimit : 0) : 0,
+                          AccountContactPhone = acc.ContactPhone,
+                          AccountContactEmail = acc.ContactEmail,
+                          AccountContactName = acc.ContactName,
 
                       }
 
@@ -486,7 +489,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      ChartOfAccountsTypeEnglishName = r.ChartOfAccountsTypeEnglishName,
                      ChartOfAccountsTypeLocalName = r.ChartOfAccountsTypeLocalName,
                      ChartOfAccountSecurityLevel = r.ChartOfAccountSecurityLevel,
-                     AccountPhone = r.AccountPhone
+                         AccountPhone = r.AccountPhone , 
+
+                         AccountContactName = r.AccountContactName,
+                         AccountContactEmail = r.AccountContactEmail,
+                         AccountContactPhone = r.AccountContactPhone,
 
                  }
                 ).ToList();
@@ -1081,6 +1088,9 @@ _Param.AgingForDate.Date, false, true, true,false, false);
                                                       ChartOfAccountsTypeLocalName = account != null ? account.ChartOfAccountsTypeLocalName : null,
                                                       ChartOfAccountSecurityLevel = account != null ? account.ChartOfAccountSecurityLevel : null,
                                                       AccountPhone = account != null ? account.AccountPhone : null,
+                                                      AccountContactPhone = account != null ? account.AccountContactPhone : null,
+                                                      AccountContactName = account != null ? account.AccountContactName : null,
+                                                      AccountContactEmail = account != null ? account.AccountContactEmail : null,
                                                   }).ToList();
             return namedPeriods;
         }
@@ -1916,6 +1926,9 @@ Period	Acc	Currency	Total
 
         public string AccountCollectorName { get; set; }
         public string AccountCollectorLocalName { get; set; }
+        public string AccountContactName { get; set; }
+        public string AccountContactEmail { get; set; }
+        public string AccountContactPhone { get; set; }
         public string Category1Name { get; set; }
         public string Category2Name { get; set; }
         public string Category3Name { get; set; }
@@ -1934,6 +1947,7 @@ Period	Acc	Currency	Total
         public string ChartOfAccountsTypeEnglishName { get; set; }
         public string ChartOfAccountsTypeLocalName { get; set; }
         public int? ChartOfAccountSecurityLevel { get; set; }
+
     }
 
     public class AgingReportParam

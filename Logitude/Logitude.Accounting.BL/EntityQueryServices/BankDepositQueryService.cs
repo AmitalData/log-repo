@@ -234,7 +234,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 IsVoided = false,
                 QueueId = null,
 
-                AccountingDate = depositPM.AccountingDate,
+                AccountingDate = DateTime.Now,                //depositPM.AccountingDate,
                 TypeCode = "0",                     // 0- Manual
                 StatusCode = "6",                   // 2- Approved
                 AccountingEntityCode = "6",         // 6- Deposit
@@ -265,7 +265,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 ActionCode = "1", // 1- Credit
                 Notes = notes,
 
-                AccountingDate = depositPM.AccountingDate,
+                AccountingDate = DateTime.Now,                //depositPM.AccountingDate,
                 DueDate = depositPM.AccountingDate,
                 DocumentDate = depositPM.AccountingDate,
                 ForeignAmount = chequePM.ForeignAmount,
@@ -328,7 +328,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 ActionCode = "2", // 2- Debit
                 Notes = notes,
 
-                AccountingDate = depositPM.AccountingDate,
+                AccountingDate = DateTime.Now,                //depositPM.AccountingDate,
                 DueDate = depositPM.AccountingDate,
                 DocumentDate = depositPM.AccountingDate,
                 ForeignAmount = chequePM.ForeignAmount,

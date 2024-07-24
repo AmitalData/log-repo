@@ -256,6 +256,9 @@
     <Reference Include="Microsoft.Azure.Management.ResourceManager, Version=3.17.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Azure.Management.ResourceManager.3.17.4-preview\lib\net461\Microsoft.Azure.Management.ResourceManager.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.Edm, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Data.Edm.5.7.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
@@ -465,8 +468,8 @@
       <HintPath>..\..\packages\WindowsAzure.Storage.8.0.1\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NetCommonHelper, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NetCommonHelper.1.0.6\lib\net46\NetCommonHelper.dll</HintPath>
+    <Reference Include="NetCommonHelper, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NetCommonHelper.1.0.7\lib\net472\NetCommonHelper.dll</HintPath>
     </Reference>
     <Reference Include="NewRelic.Api.Agent, Version=4.5.90.0, Culture=neutral, PublicKeyToken=06552fced0b33d87, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NewRelicWindowsAzure.4.5.90.0\lib\NewRelic.Api.Agent.dll</HintPath>
@@ -477,6 +480,9 @@
     </Reference>
     <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NLog.5.3.2\lib\net46\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog.Loki, Version=0.0.0.0, Culture=neutral, PublicKeyToken=8dab11a1448ce9d0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NLog.Targets.Loki.2.2.0\lib\netstandard2.0\NLog.Loki.dll</HintPath>
     </Reference>
     <Reference Include="NLog.Targets.GrowlNotify, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NLog.Growl.New.1.1.0\lib\NLog.Targets.GrowlNotify.dll</HintPath>
@@ -595,6 +601,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.IdentityModel" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.1.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.IdentityModel.Tokens.Jwt.5.1.2\lib\net451\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
     <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
       <Private>True</Private>
@@ -638,8 +647,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Management" />
-    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
     </Reference>
     <Reference Include="System.Net">
       <Private>True</Private>
@@ -656,6 +665,9 @@
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Net.Http.Json.8.0.0\lib\net462\System.Net.Http.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Net.Http.Formatting.Extension.5.2.3.0\lib\System.Net.Http.Primitives.dll</HintPath>
@@ -684,8 +696,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime.Caching" />
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Extensions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Runtime.Extensions.4.1.0\lib\net462\System.Runtime.Extensions.dll</HintPath>
@@ -751,6 +763,12 @@
       <HintPath>..\..\packages\System.Spatial.5.7.0\lib\net40\System.Spatial.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Text.Json.8.0.0\lib\net462\System.Text.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Text.RegularExpressions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Text.RegularExpressions.4.1.0\lib\net463\System.Text.RegularExpressions.dll</HintPath>
       <Private>True</Private>
@@ -760,7 +778,13 @@
       <HintPath>..\..\packages\Microsoft.Tpl.Dataflow.4.5.24\lib\portable-net45+win8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Transactions" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Cors, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.Cors.5.2.4\lib\net45\System.Web.Cors.dll</HintPath>
       <Private>True</Private>
@@ -900,6 +924,7 @@
     <Compile Include="Controllers\DigitalPortal\DigitalActivityController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalCustomizationController.cs" />
     <Compile Include="Controllers\DigitalPortal\Helpers\UpdateLanguageRequest.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\BatchTaskExecutionsExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\ContainerSettingsController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\CounterDefinitionExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\DeploymentPackageExtendedController.cs" />
@@ -942,8 +967,6 @@
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ConfirmationNumberDefaultViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ConfirmationNumberStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\ConfirmationNumberDefaultController.Generated.cs" />
-
-
     <Compile Include="Controllers\Monitoring\MonitoringController.cs" />
     <Compile Include="Controllers\SendGridNotifications\SendGridNotificationsController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ContainersController.cs" />
@@ -4171,7 +4194,7 @@
     <Content Include="css\kendo.mobile.all.min.css.map" />
     <Content Include="Integration Test\LoginVars\Production\Cloud\TeamIslam\LoginVars.csv" />
     <Content Include="ApplicationInsights.config" />
-    <Content Include="NLog.config" />
+    <Content Include="Nlog.config" />
     <None Include="Properties\PublishProfiles\AmitalTestNewProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FeatureBranchPub.pubxml" />
     <None Include="Properties\PublishProfiles\AmitalProfile.pubxml" />
@@ -4190,7 +4213,6 @@
     <None Include="Resources\Stimulsoft Reports.Ultimate 2013.1 Trial A252_020150909133627201254900033002.mrt.txt" />
     <Content Include="QuickbooksOnlineAuth2.aspx" />
     <EmbeddedResource Include="Properties\webfreight.web.dll.licenses" />
-    <Content Include="readme.txt" />
     <Content Include="ReportsWebServices\APInvoiceWebService.asmx" />
     <None Include="Properties\PublishProfiles\sendgrid.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />
@@ -6239,6 +6261,7 @@
     </Compile>
     <Compile Include="Services\LogitudeAuthenticationService.cs" />
     <Compile Include="Helpers\ReportMemoryStreamService.cs" />
+    <Compile Include="Services\WarmService.cs" />
     <Compile Include="SharedDocuments.aspx.cs">
       <DependentUpon>SharedDocuments.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

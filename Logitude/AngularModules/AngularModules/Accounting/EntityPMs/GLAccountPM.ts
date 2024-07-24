@@ -80,7 +80,6 @@ export class GLAccountPM {
     public get PaymentTerms() { return this.paymentTerms; }
     public set PaymentTerms(newValue: string) { if (this.paymentTerms != newValue) { this.paymentTerms = newValue; this.MarkAsDirty("PaymentTerms"); } }
        
-	 
     private revenueExpenseType: string;
     public get RevenueExpenseType() { return this.revenueExpenseType; }
     public set RevenueExpenseType(newValue: string) { if (this.revenueExpenseType != newValue) { this.revenueExpenseType = newValue; this.MarkAsDirty("RevenueExpenseType"); } }
@@ -901,14 +900,27 @@ export class GLAccountPM {
     public get CreditUsed() { return this.creditUsed; }
     public set CreditUsed(newValue: number) { if (this.creditUsed != newValue) { this.creditUsed = newValue; this.MarkAsDirty("CreditUsed"); } }
 
+	 
     private insuredCreditPercentage: number;
     public get InsuredCreditPercentage() { return this.insuredCreditPercentage; }
     public set InsuredCreditPercentage(newValue: number) { if (this.insuredCreditPercentage != newValue) { this.insuredCreditPercentage = newValue; this.MarkAsDirty("InsuredCreditPercentage"); } }
     
+	 
     private dateFormat: string;
     public get DateFormat() { return this.dateFormat; }
     public set DateFormat(newValue: string) { if (this.dateFormat != newValue) { this.dateFormat = newValue; this.MarkAsDirty("DateFormat"); } }
     
+    private contactId: string;
+    public get ContactId() { return this.contactId; }
+    public set ContactId(newValue: string) { if (this.contactId != newValue) { this.contactId = newValue; this.MarkAsDirty("ContactId"); } }
+
+	 
+    private contactName: string;
+    public get ContactName() { return this.contactName; }
+    public set ContactName(newValue: string) { if (this.contactName != newValue) { this.contactName = newValue; this.MarkAsDirty("ContactName"); } }
+       
+	 
+
     public OldEntityPM: GLAccountPM;
 		
     public IsDirty: boolean;

@@ -16,6 +16,7 @@ using Logitude.Accounting.Data.EntityKeys;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.CloseTables;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -64,6 +65,35 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             //}
             return query;
         }
+
+        public List<DuplicateRows> GetDuplicateRows(string taxReportId, int tenant)
+        {
+            IQueryable<string> duplicates = from t in context.TaxReportLines
+                             where t.Tenant == tenant && t.TaxReportId == taxReportId
+                             group t by new { t.Reference, t.VatNumber } into g
+                             where g.Count() > 1
+                             select g.Key.Reference + "_" + g.Key.VatNumber;
+
+            IQueryable<DuplicateRows> q = from t in context.TaxReportLines.Include("Journal")
+                    where t.Tenant == tenant &&
+                        t.TaxReportId == taxReportId &&
+                        duplicates.Contains(t.Reference + "_" + t.VatNumber)
+                    select new DuplicateRows
+                    {
+                        Reference = t.Reference,
+                        VatNumber = t.VatNumber,
+                        IsVoided = t.Journal.IsVoided,
+                        ReferenceDate = t.ReferenceDate,
+                        AccountingEntityId = t.Journal.AccountingEntityId,
+                        AccountingEntityCode = t.Journal.AccountingEntityCode,
+                        Line = t.Line
+                    };
+
+            List<DuplicateRows> res = q.ToList();
+
+            return res;
+        }
+
         public List<TaxReportLinePM> GetSpecificReportLines(string taxReportId, int tenant)
         {
             IQueryable<TaxReportLine> query = (from a in context.TaxReportLines
@@ -80,6 +110,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             }).ToList();
             return listQuery;
         }
+
         public List<TaxReportLinePM> GetReportLinesPMs(string taxReportId, int tenant)
         {
             IQueryable<TaxReportLine> query = (from a in context.TaxReportLines
@@ -262,5 +293,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
     {
         public int Line { get; set; }
         public string JournalNumber { get; set; }
+    }
+
+    public class DuplicateRows
+    {
+        public string Reference { get;set; }
+        public string VatNumber { get;set; }
+        public bool? IsVoided { get;set; }
+        public DateTime? ReferenceDate { get;set; }
+        public string AccountingEntityId { get;set; }
+        public string AccountingEntityCode { get; set; }
+        public int Line { get; set; }
     }
 }

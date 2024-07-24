@@ -454,6 +454,7 @@ export class APInvoiceMenuButtonsHandler {
     }
 
     CheckDuplication() {
+        
         var service: InvoiceDomainService = new InvoiceDomainService();
         service.CheckVendor_NumberDuplication(this.EntityPM.VendorId, this.EntityPM.InvoiceNumber, this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
             if (myResponse.HasError) {
@@ -468,10 +469,10 @@ export class APInvoiceMenuButtonsHandler {
                     confirmWindow.Title = "Warning";
                     confirmWindow.Width = 450;
                     confirmWindow.Height = 190;
-                    confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Save");
+                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Ok");
                     confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.Cancel");
                     confirmWindow.ShowCancelButton = false;
-                    confirmWindow.Show(TextCodeTranslator.Translate("APInvoice.M.SameInvoiceNumber"));
+                        confirmWindow.Show(TextCodeTranslator.Translate("APInvoice.M.SameInvoiceNumber")+": "+this.EntityPM.InvoiceNumber);
 
                     confirmWindow.WindowClosed.subscribe(c => {
                         if (confirmWindow.Yes) {

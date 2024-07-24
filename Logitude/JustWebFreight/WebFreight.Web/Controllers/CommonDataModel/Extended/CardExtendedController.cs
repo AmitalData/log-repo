@@ -53,6 +53,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                  card = GetCardById(Id);
                 if (card.GLAccountId != null)
                 {
+                    card.IsExcludeCard = true;
                     GLAccountPM glaccount = UpdateGLAccountFields(card);
                     SendHybridTask(glaccount);
                     UpdateCard(card);

@@ -711,10 +711,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             FullAccountingSettingQueryService settingQueryService = new FullAccountingSettingQueryService(tenant);
             return settingQueryService.GetSingleFullAccountingSetting(tenant);
         }
-        public virtual void CreateInterestTransactionTo_RegularJournal(JournalPM entityPM)
+        public virtual void CreateInterestTransactionTo_RegularJournal(JournalPM entityPM ,bool isTester=false)
         {
                 var myRegularJournalInterestTransactionService = new RegularJournalInterestTransactionMapping();
-                myRegularJournalInterestTransactionService.CreatelInterestTransactions(entityPM);
+                myRegularJournalInterestTransactionService.CreatelInterestTransactions(entityPM , isTester);
         }
         protected void ReCheckFromDBThrowIfNotValid(JournalPM entityPM)
         {

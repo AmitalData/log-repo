@@ -50,7 +50,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             this.GetLoggedContact();
         }
-        public CardService(ICommonDataContext objectContext,int tenant)
+        public CardService(ICommonDataContext objectContext, int tenant)
         {
 
             this.tenant = tenant;
@@ -87,7 +87,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         public void Create()
         {
             this.isNewEntity = true;
-            
+
             if (string.IsNullOrEmpty(entityPM.Id))
             {
                 this.entityPM.Id = IdCounter.GetNumber("Card", tenant).ToString();
@@ -142,8 +142,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         public void Update()
         {
             this.isNewEntity = false;
-            this.Poco = entityRepository.GetSingleCard(entityPM.Id , tenant);
-          
+            this.Poco = entityRepository.GetSingleCard(entityPM.Id, tenant);
+            if (!entityPM.IsFromGlaAccountUpdate)
+            {
+                this.UpdateGLAccount();
+            }
+
             this.Initialize();
 
             CardValidating.Validate(entityPM);
@@ -176,16 +180,15 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 CardContactRepository.Remove(cardContact);
                 CardContactRepository.SubmitChanges();
             }
-            if((entityPM.PartnerTypeId== PartnerTypes.Customer || entityPM.PartnerTypeId == PartnerTypes.Vendor || entityPM.PartnerTypeId == PartnerTypes.AccountingPartner) && entityPM.GLAccountId !=null)
+            if ((entityPM.PartnerTypeId == PartnerTypes.Customer || entityPM.PartnerTypeId == PartnerTypes.Vendor || entityPM.PartnerTypeId == PartnerTypes.AccountingPartner) && entityPM.GLAccountId != null)
             {
-                HandleGLAccountCardData(entityPM.Id,entityPM.GLAccountId,entityPM.Tenant);              
+                HandleGLAccountCardData(entityPM.Id, entityPM.GLAccountId, entityPM.Tenant);
             }
 
             AddCardKafkaQueueMessage();
-
         }
 
-        public void HandleGLAccountCardData(string cardId,string glaccountId, int tenant)
+        public void HandleGLAccountCardData(string cardId, string glaccountId, int tenant)
         {
             if (glaccountId != null)
             {
@@ -203,13 +206,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
         private bool CheckIfGlAccountCardDataExists()
         {
-                if (gLAccountCardDataService.gLAccountCardsDataPM == null)
-                {
-                    return false;
-                }
-                else return true;            
+            if (gLAccountCardDataService.gLAccountCardsDataPM == null)
+            {
+                return false;
+            }
+            else return true;
         }
-        private void RunStoredProcedures()
+        public void RunStoredProcedures()
         {
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -218,9 +221,25 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
             }
         }
+        private void UpdateGLAccount()
+        {
+            if (entityPM.IsExcludeCard)
+            {
+                UpdateGLAccountWithAdditionalData(Poco.GLAccountId, Poco.Tenant, Poco.Id);
+            }
+            else
+            {
+                UpdateGLAccountWithAdditionalData(Poco.GLAccountId, Poco.Tenant,null);
+            }
+        }
 
 
 
+        private void UpdateGLAccountWithAdditionalData(string accountId, int tenant, string excludeCardId)
+        {
+            IGLAccountUpdateServiceExt glaccountUpdate = ContainerAccessor.Container.Resolve(typeof(IGLAccountUpdateServiceExt), "GLAccountUpdateServiceExt", new ParameterOverride("", 1)) as IGLAccountUpdateServiceExt;
+            glaccountUpdate.UpdateGLAccountWithAdditionalData(accountId, tenant, excludeCardId);
+        }
         private void Initialize()
         {
             if (isNewEntity)

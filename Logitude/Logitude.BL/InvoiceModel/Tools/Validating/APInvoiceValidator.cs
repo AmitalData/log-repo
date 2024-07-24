@@ -56,7 +56,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             AccountingSetting accountingSetting = (from d in commonContext.AccountingSettings where d.Id == entityPM.Tenant select d).FirstOrDefault();
             if (accountingSetting != null)
             {
-                if(accountingSetting.IsVatNumberMandatoryInAP)
+                if (accountingSetting.IsVatNumberMandatoryInAP)
                 {
                     if (string.IsNullOrEmpty(entityPM.VATNumber))
                     {
@@ -80,7 +80,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     }
                 }
             }
-            
+
             if (entityPM.IsMultipleEntities)
             {
                 #region
@@ -162,7 +162,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
             else if (activeLines.Where(d => d.InvoiceCurrencyAmount == 0).Any())
             {
-                if (entityPM.CreatedFromAPI && entityPM.IsGeneralInvoice && tenantPOCO.AccountingActivated) {}
+                if (entityPM.CreatedFromAPI && entityPM.IsGeneralInvoice && tenantPOCO.AccountingActivated) { }
                 else
                 {
                     string msg = TranslateTextsClass.Translate("APInvoice.M.InvoiceLineAmountNotZero", entityPM.Tenant);
@@ -288,6 +288,11 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 string msg = TranslateTextsClass.Translate("APInvoice.O.CheckInvoiceDate", entityPM.Tenant, !(GetLoggedContact(entityPM.Tenant).DontShowLocal));//.t "nvoice Date cant be bigger the the Accounting Date"; // TranslateTextsClass.Translate("APInvoice.M.CantReceiveFutureDateInvoice", entityPM.Tenant);
                 throw new ApplicationException(msg);
             }
+            if (!string.IsNullOrEmpty(entityPM.ConfirmationNumber) && (entityPM.ConfirmationNumber.Length < 9 || entityPM.ConfirmationNumber.Length > 30))
+            {
+                string msg = TranslateTextsClass.Translate("APInvoice.O.ConfirmationNumberLength", entityPM.Tenant);
+                throw new ApplicationException(msg);
+            }
         }
 
         private static void ValidateUnUpdateFields(APInvoicePM entityPM, APInvoice entityPOCO, bool isNew)
@@ -332,7 +337,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             var user = GetLoggedContact(tenant);
             if (user != null)
             {
-                showLocal= !(GetLoggedContact(tenant).DontShowLocal);
+                showLocal = !(GetLoggedContact(tenant).DontShowLocal);
             }
             return showLocal;
         }
@@ -691,7 +696,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     bool just_one_value = localAmount.HasValue ^ localAmount_Computed.HasValue;
                     if (absdiff > 0.2 | just_one_value) 
                     {
-                        decimal head_amt_dec = Convert.ToDecimal(head_amt); 
+                        decimal head_amt_dec = Convert.ToDecimal(head_amt);
                         decimal lines_amt_dec = Convert.ToDecimal(lines_amt);
                         string text = $"Wrong Invoice Local Amount, Head={head_amt_dec} Lines={lines_amt_dec}";
                         throw new ApplicationException(text);
@@ -736,7 +741,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
         }
 
-        public static void ValidateFullAccounting(APInvoicePM invoicePM,bool inNew)//int tenant, string vendorId, string invoiceCurrencyId, DateTime? accountingDate)
+        public static void ValidateFullAccounting(APInvoicePM invoicePM, bool inNew)//int tenant, string vendorId, string invoiceCurrencyId, DateTime? accountingDate)
         {
             Tenant tenantPOCO = GetTenant(invoicePM.Tenant);
 
@@ -744,8 +749,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             {
                 string errors = "";
                 ValidateInvoiceGLaccount(invoicePM, ref errors, invoicePM.Tenant);
-                if(inNew)
-                     ValidateAccountingPeriod(invoicePM, ref errors, invoicePM.Tenant);
+                if (inNew)
+                    ValidateAccountingPeriod(invoicePM, ref errors, invoicePM.Tenant);
                 ThrowErrors(errors);
             }
         }
@@ -843,9 +848,9 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
             if (tenantPOCO != null && tenantPOCO.AccountingActivated)
             {
-              
-                bool useLocal = !(GetLoggedContact(tenant,email).DontShowLocal);
-            
+
+                bool useLocal = !(GetLoggedContact(tenant, email).DontShowLocal);
+
                 DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
                 DateTime last180days = date.AddDays(-180);
                 if (invoiceDate < last180days)
@@ -898,7 +903,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             return glaAccount;
         }
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
-        private static ContactPM GetLoggedContact( int tenant, string email = null)
+        private static ContactPM GetLoggedContact(int tenant, string email = null)
         {
             if (OverrideGetLoggedContactFunc != null)
             {
@@ -907,23 +912,23 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             ContactPM loggedContact = null;
             if (email != null)
             {
-                loggedContact= GetLoggedContactByAuthTokenEmail(email, tenant);
+                loggedContact = GetLoggedContactByAuthTokenEmail(email, tenant);
             }
             else
             {
-                loggedContact = new ContactQuery(tenant).GetSingleByEmail( AuthenticationUtil.ResolveUserIdentityName(tenant) , tenant);
+                loggedContact = new ContactQuery(tenant).GetSingleByEmail(AuthenticationUtil.ResolveUserIdentityName(tenant), tenant);
             }
             if (loggedContact == null)
             {
                 loggedContact = new ContactQuery(tenant).GetSingleByEmail("system@tenant" + tenant + ".com", tenant);
             }
-            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() {  };
+            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { };
             return loggedContact;
         }
         private static void ValidateOnVoid(APInvoicePM entityPM)
         {
             if (entityPM.SetVoided)
-            {               
+            {
                 if (entityPM.InvoicePayments.Count > 0)
                 {
                     string msg = TranslateTextsClass.Translate("APInvoice.M.DisconnectPayments", entityPM.Tenant);
@@ -983,12 +988,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
         private static void ValidateInvoiceAmountDue(APInvoicePM entityPM, APInvoice entityPOCO, bool isNew, IInvoiceContext context)
         {
-            if(!isNew && !entityPM.IsUpdateFromPaymentService)
+            if (!isNew && !entityPM.IsUpdateFromPaymentService)
             {
                 IQueryable<APInvoicePayment> allConnectedPaymentsFromDB = (from a in context.APInvoicePayments where a.APInvoiceId == entityPM.Id && a.Tenant == entityPM.Tenant select a);
                 List<APInvoicePaymentPM> allConnectedPaymentsFromUI = entityPM.InvoicePayments;
 
-                if(allConnectedPaymentsFromDB.Count() != allConnectedPaymentsFromUI.Count && entityPM.AmountDue != entityPOCO.AmountDue)
+                if (allConnectedPaymentsFromDB.Count() != allConnectedPaymentsFromUI.Count && entityPM.AmountDue != entityPOCO.AmountDue)
                 {
                     string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
                     throw new ApplicationException(msg);

@@ -581,15 +581,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 APInvoiceRepository aPInvoiceRepository = new APInvoiceRepository(tenant);
 
                 IQueryable<APInvoice> iQueryable = aPInvoiceRepository.GetIQueryableInvoices(tenant);
-
+               
                 if (string.IsNullOrEmpty(entityId))
                 {
-                    isDuplicated = iQueryable.Where(d => d.VendorId == vendorId && d.InvoiceNumber == invoiceNumber).Any();
+                    isDuplicated = iQueryable.Where(d => d.VendorId == vendorId && d.InvoiceNumber == invoiceNumber && d.StatusCode!= "VD").Any();
                 }
 
                 else
                 {
-                    isDuplicated = iQueryable.Where(d => d.VendorId == vendorId && d.InvoiceNumber == invoiceNumber && d.Id != entityId).Any();
+                    isDuplicated = iQueryable.Where(d => d.VendorId == vendorId && d.InvoiceNumber == invoiceNumber && d.Id != entityId && d.StatusCode != "VD").Any();
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, isDuplicated);

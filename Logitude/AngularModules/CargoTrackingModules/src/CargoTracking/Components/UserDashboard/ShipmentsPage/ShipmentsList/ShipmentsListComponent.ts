@@ -144,6 +144,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         private logitudeGridExportToExcelService: LogitudeGridExportToExcelService,
         private tenantManagementService: TenantManagementService,
     ) {
+        
         this.InitComponent();
         this.SetDefaultBackgroundColor();
 
@@ -210,15 +211,17 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     public FilterByATADateDataLessThan: string = "";
 
     ngOnInit(): void {
+       
         this.setMaxNumberOfCarachter(window.innerWidth);
         this.setDefaultSort();
+        this.setDefaultDates()
         this.GetMilstones();
         this.getPreviousScroll();
         this.GetCompanyLoginsFromCache();
         this.fillFeltersDictionary();
         this.setViews();
     }
-
+   
     OnRouteChanged(event) {
         if (event instanceof NavigationEnd) {
             this.RerenderVirtualScroll();
@@ -315,7 +318,15 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.ShipmentSearchInput.SortFieldName = SortOptions.CMD;
         this.ShipmentSearchInput.SortType = SortOptions.DESC;
     }
-
+    private setDefaultDates() {
+        const fromDate = new Date();
+        fromDate.setMonth(fromDate.getMonth() - 6);
+        this.FilterByOpenDateDataGreaterThan = fromDate.toISOString().slice(0, 10);
+        this.FilterByOpenDateDataLessThan = new Date().toISOString().slice(0, 10);
+        this.ApplyFilterButtonClicked(true)  
+              
+    }
+    
     private selectDefaultSortFields() {
         this.sortByMultipleSelection.select.options.filter(d =>
             [SortOptions.CMD, SortOptions.DESC].includes(d.value.Code))
@@ -337,6 +348,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
     ngAfterViewInit(): void {
+        
         this.selectDefaultSortFields();
         this.SetShipmentsScrollPosition();
         this.LoadScreenData();
@@ -838,7 +850,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     private WaitShipment() {
         this.ShipmentsDataSource.$fetchData.subscribe(isReload => {
             if (isReload) {
-                RootContext.StartBusyIndicatorDynamic("בתהליך איתור נתונים");
+                RootContext.StartBusyIndicatorDynamic("בתהליך םיתור נתונים");
             }
             else {
                 RootContext.StopBusyIndicator();
@@ -854,10 +866,13 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
     private async getFromDate() {
-        const fromDate = new Date();
-        this.backMonths = this.backMonths || await this.tenantManagementService.getShipmentBuildMonth();
-
-        fromDate.setMonth(fromDate.getMonth() - this.backMonths);
+       
+        const fromDate = new Date(this.FilterByOpenDateDataGreaterThan);
+        if (this.FilterByOpenDateDataGreaterThan=="") {
+            this.backMonths = this.backMonths || await this.tenantManagementService.getShipmentBuildMonth();
+            fromDate.setMonth(fromDate.getMonth() - this.backMonths);
+        }
+        
         return fromDate;
     }
 
@@ -1148,7 +1163,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
             const day = dateObj.getDate();
             const month = dateObj.getMonth() + 1;
             const year = dateObj.getFullYear();
-            return `${day}/${month}/${year}`;
+            return `${year}/${month}/${day}`;
         }
         else {
             return "";
@@ -1165,7 +1180,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
     // public tempArr:any;
 
-    ApplyFilterButtonClicked() {
+    ApplyFilterButtonClicked(loaded:boolean=false) {
 
         this.ShipmentSearchInput.OpenDateGreaterThan = this.formatDate(this.FilterByOpenDateDataGreaterThan);
         this.ShipmentSearchInput.ClearanceDateGreaterThan = this.formatDate(this.FilterByClearanceDateDataGreaterThan);
@@ -1186,7 +1201,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         }
 
         RootContext.ShipmentsScrollPosition = 0;
-        this.LoadScreenData();
+        if(!loaded)
+            this.LoadScreenData();
     }
 
     MapMoreMobileFilter() {

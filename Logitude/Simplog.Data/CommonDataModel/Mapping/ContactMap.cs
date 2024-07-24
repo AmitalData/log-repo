@@ -65,6 +65,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
             this.Property(t => t.ExternalId).HasColumnName("ExternalId");
             this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
+            this.Property(t => t.ContactForAccounting).HasColumnName("ContactForAccounting");
+
 
             // Relationships
             this.HasOptional(t => t.ColorIndex).WithMany().HasForeignKey(d => d.IndexColor);
