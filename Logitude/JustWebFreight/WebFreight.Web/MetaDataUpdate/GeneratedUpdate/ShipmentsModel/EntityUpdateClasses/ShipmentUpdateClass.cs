@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "a97c39030cd7ef0f0640993f5cebb547";
+		public const string HashString = "930bcd1302edd3bc2613c1c1062d13ad";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -535,7 +535,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationNumber",
 					  						DefaultText =  "Declaration Number",
-					  						FullLocalDefaultText =  "DeclarationNumber",
+					  						FullLocalDefaultText =  "מס' הצהרה",
 					  						ListFieldLable =  "DeclarationNumberListLable",
 					  						ListLableDefaultText =  "Declaration Number",
 					  						ListLocalDefaultText =  "DeclarationNumber",
@@ -7637,6 +7637,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "House",
 					  						DefaultText =  "House",
+					  						FullLocalDefaultText =  "ש.מ.פ",
 					  						ListFieldLable =  "HouseListLable",
 					  						ListLableDefaultText =  "HWB",
 					  						IsForeignKey =  false,
@@ -11059,6 +11060,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullLocalDefaultText =  "נמל טעינה",
 					  						ShortFieldLable =  "MainCarriageFromPortId",
 					  						ShortFieldLableDefaultText =  "Main Carriage From Port",
+					  						ShortLocalDefaultText =  "נמל טעינה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11272,6 +11274,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ListLocalDefaultText =  "סוג הובלה",
 					  						ShortFieldLable =  "TransportModeId",
 					  						ShortFieldLableDefaultText =  "Transport",
+					  						ShortLocalDefaultText =  "סוג הובלה",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "TransportMode",
 					  						NavigationPropertyName =  "TransportMode",
@@ -25590,6 +25593,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ListLableDefaultText =  "Charg. Weight",
 					  						ShortFieldLable =  "ChargeableWeight",
 					  						ShortFieldLableDefaultText =  "Wt / Msr (%ChargWeightCode)",
+					  						ShortLocalDefaultText =  "משקל לחיוב בק\"ג",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -91286,6 +91290,125 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ReferantUserName",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  100,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ReferantUserName",
+					  						ListPropertyPath =  "ReferantUserName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ReferantUserName",
+					  						DefaultText =  "Referant User Name",
+					  						FullLocalDefaultText =  "רפרנט",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "DeclarationOfficeName",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  100,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "DeclarationOfficeName",
+					  						ListPropertyPath =  "DeclarationOfficeName",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "DeclarationOfficeName",
+					  						DefaultText =  "Declaration Office Name",
+					  						FullLocalDefaultText =  "בית מכס",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -92278,7 +92401,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
       
              ScreenField ShipmentCustomsHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ShipmentCustomsHeaderScreenScreen9.Id,ScreenCode = ShipmentCustomsHeaderScreenScreen9.Code, ObjectFieldCode = "Shipment.DeclarationNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ShipmentCustomsHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ShipmentCustomsHeaderScreenScreen9.Id,ScreenCode = ShipmentCustomsHeaderScreenScreen9.Code, ObjectFieldCode = "Shipment.DeclarationOfficeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ShipmentCustomsHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ShipmentCustomsHeaderScreenScreen9.Id,ScreenCode = ShipmentCustomsHeaderScreenScreen9.Code, ObjectFieldCode = "Shipment.DeclarationOfficeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField ShipmentCustomsHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ShipmentCustomsHeaderScreenScreen9.Id,ScreenCode = ShipmentCustomsHeaderScreenScreen9.Code, ObjectFieldCode = "Shipment.HatraDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
@@ -92288,9 +92411,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	          
              ScreenField ShipmentCustomsHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = ShipmentCustomsHeaderScreenScreen9.Id,ScreenCode = ShipmentCustomsHeaderScreenScreen9.Code, ObjectFieldCode = "Shipment.ProcedureCurrentCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ShipmentCustomsHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ShipmentCustomsHeaderScreenScreen9.Id,ScreenCode = ShipmentCustomsHeaderScreenScreen9.Code, ObjectFieldCode = "Shipment.DepartmentId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ShipmentCustomsHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ShipmentCustomsHeaderScreenScreen9.Id,ScreenCode = ShipmentCustomsHeaderScreenScreen9.Code, ObjectFieldCode = "Shipment.DepartmentName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ShipmentCustomsHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = ShipmentCustomsHeaderScreenScreen9.Id,ScreenCode = ShipmentCustomsHeaderScreenScreen9.Code, ObjectFieldCode = "Shipment.ReferantUserId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ShipmentCustomsHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = ShipmentCustomsHeaderScreenScreen9.Id,ScreenCode = ShipmentCustomsHeaderScreenScreen9.Code, ObjectFieldCode = "Shipment.ReferantUserName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField ShipmentCustomsHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 2, ScreenId = ShipmentCustomsHeaderScreenScreen9.Id,ScreenCode = ShipmentCustomsHeaderScreenScreen9.Code, ObjectFieldCode = "Shipment.ExternalDeclarationNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          

@@ -1818,9 +1818,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipment.DirectionId == "C")
             {
                 shipmentPM.ReferantUserId = shipment.ReferantUserId;
-                // shipmentPM.ReferantUserId = shipment.UserId.Id;
+                shipmentPM.ReferantUserName = shipment.UserId?.Contact?.LocalName;
                 shipmentPM.IskaNumber = shipment.IskaNumber;
-                shipmentPM.Status = "aa"; // todo: mapping
+                shipmentPM.Status = ""; // todo: mapping
+                shipmentPM.DepartmentName = shipment.Department?.LocalName;
             }
 
             // Warehouse Leg 
@@ -4547,6 +4548,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                               .Include("ShipmentMasterData")
                                               .Include("SpecialServicesType")
                                               .Include("MoveType")
+                                              .Include("UserId").Include("UserId.Contact") // for ReferentUserId
+                                              .Include("Department")
                                               .FirstOrDefault(a => a.Id == id && a.Tenant == tenant);
                 if (shipment != null)
                 {
@@ -4557,7 +4560,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                     ShipmentPM shipmentPM = new ShipmentPM();
                     shipmentPM.Tenant = shipment.Tenant;
-                    shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true, false, cardId);
+                    shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true, shipment.DirectionId == "C"? true: false, cardId);
                     ShipmentPM securedPM = new ShipmentPM();
 
                     securedPM = SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);

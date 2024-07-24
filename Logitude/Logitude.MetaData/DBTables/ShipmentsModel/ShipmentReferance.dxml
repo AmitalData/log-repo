@@ -16,13 +16,15 @@
     Name="Tenant"
     Type="int">
     <Constraints
+      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
     Name="LineNumber"
     Type="int">
     <Constraints
-      Nullable="true" />
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
   <Column
     Name="ReferenceType"

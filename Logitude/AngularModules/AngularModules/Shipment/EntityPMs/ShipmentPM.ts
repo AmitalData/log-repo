@@ -5520,9 +5520,17 @@ export class ShipmentPM {
     public get ReferantUserId() { return this.referantUserId; }
     public set ReferantUserId(newValue: string) { if (this.referantUserId != newValue) { this.referantUserId = newValue; this.MarkAsDirty("ReferantUserId"); } }
 
+    private referantUserName: string;
+    public get ReferantUserName() { return this.referantUserName; }
+    public set ReferantUserName(newValue: string) { if (this.referantUserName != newValue) { this.referantUserName = newValue; this.MarkAsDirty("ReferantUserName"); } }
+
     private declarationOfficeCode: string;
     public get DeclarationOfficeCode() { return this.declarationOfficeCode; }
     public set DeclarationOfficeCode(newValue: string) { if (this.declarationOfficeCode != newValue) { this.declarationOfficeCode = newValue; this.MarkAsDirty("DeclarationOfficeCode"); } }
+
+    private declarationOfficeName: string;
+    public get DeclarationOfficeName() { return this.declarationOfficeName; }
+    public set DeclarationOfficeName(newValue: string) { if (this.declarationOfficeName != newValue) { this.declarationOfficeName = newValue; this.MarkAsDirty("DeclarationOfficeName"); } }
 
     private isCustomShipment: boolean;
     public get IsCustomShipment() { return this.isCustomShipment; }
