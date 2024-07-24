@@ -49,9 +49,9 @@ export class CertificateOfOriginMandatoryFieldsPM {
     public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
        
 	 
-    private isMandatory: boolean;
+    private isMandatory: string;
     public get IsMandatory() { return this.isMandatory; }
-    public set IsMandatory(newValue: boolean) { if (this.isMandatory != newValue) { this.isMandatory = newValue; this.MarkAsDirty("IsMandatory"); } }
+    public set IsMandatory(newValue: string) { if (this.isMandatory != newValue) { this.isMandatory = newValue; this.MarkAsDirty("IsMandatory"); } }
        
 	 
     private location: number;

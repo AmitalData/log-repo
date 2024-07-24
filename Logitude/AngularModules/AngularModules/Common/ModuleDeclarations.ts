@@ -64,11 +64,13 @@ import { StartWorkingListHeaderTemplate } from './Components/Templates/ListHeade
 import { OcrDefaultsSettingsComponent } from './Components/Maintenance/OcrDefaultsSettingsComponent';
 import { TariffsTabComponent } from './Components/TariffsTab/TariffsTabComponent';
 import { HostScreenComponent } from './Components/HostScreen/HostScreenComponent';
+import { ReportExecutionLogListActionBarComponent } from './Components/ListActionBar/ReportExecutionLogListActionBarComponent';
 
   export const Components =
     [
         CustomerHelperComponent,
         CustomerShortTitleComponent,
+        TariffsTabComponent,
         AssignComponent,
         NewStackComponent,
         StackSelectionComponent,
@@ -132,7 +134,8 @@ import { HostScreenComponent } from './Components/HostScreen/HostScreenComponent
         EnglishNameListHeaderTemplate,
         StartWorkingListHeaderTemplate,
         HostScreenComponent,
-        TariffsTabComponent,
+
+        ReportExecutionLogListActionBarComponent
     ];
   
 export class ModuleDeclarations {
@@ -210,6 +213,8 @@ export class ModuleDeclarations {
             case "StartWorkingListHeaderTemplate": { myResult = StartWorkingListHeaderTemplate; break; }
             case "TariffsTabComponent": { myResult = TariffsTabComponent; break; }
             case "HostScreenComponent": { myResult = HostScreenComponent; break; }
+            case "ReportExecutionLogListActionBarComponent": { myResult = ReportExecutionLogListActionBarComponent; break; }
+
         }
  
         return myResult;

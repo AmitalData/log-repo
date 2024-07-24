@@ -1737,7 +1737,7 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
                     id = systemrecord.id + "," + bankCode;
                 }
 
-                Debug.WriteLine(systemrecord.id + "-" + (bankCode ?? ""));
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(systemrecord.id + "-" + (bankCode ?? ""));
                 bankCodeInfo.SetValue(existedRecord, bankCode);
                 bankIdKeyInfo.SetValue(existedRecord, id);
             }

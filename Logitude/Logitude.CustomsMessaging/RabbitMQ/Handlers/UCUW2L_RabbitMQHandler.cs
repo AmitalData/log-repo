@@ -79,7 +79,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ.Handlers
                     var myQueryService = new DeclarationQueryService(tenant);
                     var pm = myQueryService.GetSingle(res.EntityID, true, false);
                     var json=ProxyUtil.JsonConvertSerialize(pm);//log the result !!
-                    Debug.WriteLine(json);
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(json);
 
                 }
                 res.EntityReference = customFileNo;

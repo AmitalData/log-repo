@@ -14,17 +14,15 @@ namespace Simplog.Data.InfrastructureModel.Mapping
         public DefaultAndConfigurationKeyMap()
         {
             // Primary Key
-            this.HasKey(t => new { t.SetKey, t.Tenant, t.SetType });
+            this.HasKey(t => new { t.SetKey, t.Tenant });
 
             // Properties
 
 
-
-            this.Property(t => t.SetType)
+            this.Property(t => t.SetType1)
                 .IsRequired()
                 .HasMaxLength(128)
                 .IsUnicode(false);
-
 
             this.Property(t => t.SetKey)
                 .IsRequired()
@@ -39,15 +37,22 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(4000)
                 .IsUnicode(false);
 
+            this.Property(t => t.SetType2)
+                .IsRequired()
+                .HasMaxLength(128)
+                .IsUnicode(false);
+
+
             // Table & Column Mappings
             this.ToTable("DefaultAndConfigurationKeys");
 
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
-            this.Property(t => t.SetType).HasColumnName("SetType");
+            this.Property(t => t.SetType1).HasColumnName("SetType1");
             this.Property(t => t.SetKey).HasColumnName("SetKey");
             this.Property(t => t.ShortDescription).HasColumnName("ShortDescription");
             this.Property(t => t.FullDesctiption).HasColumnName("FullDesctiption");
+            this.Property(t => t.SetType2).HasColumnName("SetType2");
 
         }
     }

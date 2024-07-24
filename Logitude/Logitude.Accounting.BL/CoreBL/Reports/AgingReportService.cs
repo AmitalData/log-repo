@@ -29,6 +29,7 @@ using Logitude.Server.Tools.Utils;
 using Logitude.Server.Tools.Helpers;
 using System.Reflection;
 using System.Data.Entity;
+using Newtonsoft.Json;
 
 namespace Logitude.Accounting.BL.CoreBL.Reports
 {
@@ -73,10 +74,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 new PeriodM(){AccountId="1", CurrencyId="1", OrderDate = new DateTime(2016 ,5,1) , OrderDateB4=false , Total=10},
                 new PeriodM(){AccountId="1", CurrencyId="1", OrderDate = new DateTime(2016 ,5,1) , OrderDateB4=true, Total=-35},
             };
-            Debug.WriteLine(b4);
-            Debug.WriteLine("------");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(b4));
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("------");
             var after = ManipulateFifoPerAccCurr(b4);
-            Debug.WriteLine(after);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(after));
 
         }
 
@@ -321,9 +322,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                       join card in _AccountingContext.GLAccountCardsDatas.Where(r => r.Tenant == _Param.Tenant)
                        on acc.CardsDataId equals card.Id into cardJoinT
-                      from card in cardJoinT.DefaultIfEmpty()
+                      from card in cardJoinT.DefaultIfEmpty() 
 
-                      let glaPeriod = _AccountingContext.GLAccountInterestPeriods.Where(r => r.Tenant == _Param.Tenant && r.GLAccountId == acc.Id && r.PeriodStartDate <= currentDate)
+                      let glaPeriod = _AccountingContext.GLAccountInterestPeriods.Where(r => r.Tenant == _Param.Tenant && r.GLAccountId == acc.Id && r.PeriodStartDate <= currentDate && acc.ActiveForInterest)
                       .OrderByDescending(d => d.PeriodStartDate).FirstOrDefault()
                       let basePeriod = _AccountingContext.InterestBasesPeriods.Where(d => d.InterestBaseTypeId == glaPeriod.StandardInterestRateBaseId)
                       .OrderByDescending(d => d.InterestBaseStartDate).FirstOrDefault()
@@ -1758,7 +1759,7 @@ Period	Acc	Currency	Total
                     _Param.GroupByDate == AgingReportParam.DateEnum.DueDate))
 
                     {
-                        Debug.WriteLine("no no NO only if ReconcileOpenBalanceMethod + DueDate !!!");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("no no NO only if ReconcileOpenBalanceMethod + DueDate !!!");
                         _Param.SuppressFromGLAccountAgingData = true;
                     }
                     if (
@@ -1766,14 +1767,14 @@ Period	Acc	Currency	Total
                         _Param.AgingForDate.Date.Month != DateTime.Now.Date.Month
                         )
                     {
-                        Debug.WriteLine("no no NO only if 4 current month  !!!");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("no no NO only if 4 current month  !!!");
                         _Param.SuppressFromGLAccountAgingData = true;
 
                     }
 
                     if (_Param.NumberOfmonthsbackwards > 6)
                     {
-                        Debug.WriteLine("no no NO only if NumberOfmonthsbackwards<6!!!");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("no no NO only if NumberOfmonthsbackwards<6!!!");
                         _Param.SuppressFromGLAccountAgingData = true;
 
                     }

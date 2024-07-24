@@ -37,7 +37,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             //this.MyRequestSheetParam.EntityId1 = _MyDeclarationPM.Id;
             this.MyRequestSheetParam.RequestDescription = "Build Custom Zip File";
-            LogitudeSettings.HandleBuildObjectTablesZipFilesData_Inject(false, true,false);
+            LogitudeSettings.HandleBuildObjectTablesZipFilesData_Inject(false, true);
             
 
             this.MyResponseData.Succeeded = true;

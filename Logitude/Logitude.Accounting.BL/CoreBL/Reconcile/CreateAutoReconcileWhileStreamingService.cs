@@ -90,14 +90,14 @@ namespace Logitude.Accounting.BL.CoreBL
             string jsonJournalPM = ProxyUtil.JsonConvertSerialize(_JournalPM);
             string jsonNewLedgerTransactionsWithCounters = ProxyUtil.JsonConvertSerialize(_NewLedgerTransactionsWithCounters);
 
-            Debug.WriteLine("jsonOldTransToReconcile=");
-            Debug.WriteLine(jsonOldTransToReconcile);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("jsonOldTransToReconcile=");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(jsonOldTransToReconcile);
 
-            Debug.WriteLine("jsonJournalPM=");
-            Debug.WriteLine(jsonJournalPM);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("jsonJournalPM=");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(jsonJournalPM);
 
-            Debug.WriteLine("jsonNewLedgerTransactionsWithCounters=");
-            Debug.WriteLine(jsonNewLedgerTransactionsWithCounters);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("jsonNewLedgerTransactionsWithCounters=");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(jsonNewLedgerTransactionsWithCounters);
 
         }
 
@@ -165,8 +165,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     _NewLedgerTransactionsWithCounters[0].AccountId == _NewLedgerTransactionsWithCounters[1].AccountId
                     )
                     {
-                        Debug.WriteLine("במעיין ARPayment  שורה לחיוב ה הקופה ושורה לזיכוי הקופה");
-                        Debug.WriteLine("צריך להשתמש בשורה לזכות !!");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("במעיין ARPayment  שורה לחיוב ה הקופה ושורה לזיכוי הקופה");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("צריך להשתמש בשורה לזכות !!");
                         newLTranListOfAccountID = newLTranListOfAccountID.Where(r => r.LocalAmountCredit != 0).ToList();
                         totalNewLedgerOpenAmount = newLTranListOfAccountID.Sum(r => r.OpenAmount);
 
@@ -182,7 +182,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             if (isPartialReconciliation)
             {
-                Debug.WriteLine("isPartialReconciliation!!!! eyal said only 1 oldTRans Against 1 newTrans");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("isPartialReconciliation!!!! eyal said only 1 oldTRans Against 1 newTrans");
                 if (newLTranListOfAccountID.Count != 1 || oldLTransGroupByAccountId.Count() != 1)
                 {
                     //throw new ApplicationException("isPartialReconciliation!!!! eyal said only 1 oldTRans Against 1 newTrans");
@@ -191,7 +191,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             else
             {
-                Debug.WriteLine("NOT!!! Partial Reconciliation!!!! new.amount againt  old.amount = (eyal said reference1 + 2 +2 + not the same- but who care - its all in 1 group )");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("NOT!!! Partial Reconciliation!!!! new.amount againt  old.amount = (eyal said reference1 + 2 +2 + not the same- but who care - its all in 1 group )");
             }
 
             ReconciliationPM myReconciliationPM = GetReconciliationPM(currentAccountId);
@@ -237,7 +237,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private static decimal OnAdjustJournalSameAccount_UseFirstLine(ref List<LedgerTransactionPM> newLTranListOfAccountID)
         {
             decimal totalNewLedgerOpenAmount;
-            Debug.WriteLine(
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
 @"Task 75738: ADJUST SERVICE- allow the user to define chose the same glaccount for debit and credit
 במקרה שהחן הנגדי == החשבון
 המטרה בעצם להעביר את ההפרש לתאריך אחר
@@ -245,8 +245,8 @@ namespace Logitude.Accounting.BL.CoreBL
 תנועה אחת *בלבד* מהתנעות החדשות מהפקודה שיצרנו
 ללא התנועה השניה
 ");
-            Debug.WriteLine("באם הסכום של כל התנועות החדשות לחן הינו אפס דאז זה להתאמה ");
-            Debug.WriteLine("בשורה הראשונה יש את ההפרש להתאמה מול הכרטיס (בשורה השניה לחן ההפרשים) !!");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("באם הסכום של כל התנועות החדשות לחן הינו אפס דאז זה להתאמה ");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("בשורה הראשונה יש את ההפרש להתאמה מול הכרטיס (בשורה השניה לחן ההפרשים) !!");
             //newLTranListOfAccountID = newLTranListOfAccountID.Where(r => r.LocalAmountCredit != 0).ToList();
             // adjust journal 
             //- the first line its the diff amount to adujust 
@@ -259,7 +259,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private decimal MoveAdjustSum2SameAccountButDiffDate_useOnly1NewTransaction(ref List<LedgerTransactionPM> newLTranListOfAccountID)
         {
             decimal totalNewLedgerOpenAmount;
-            Debug.WriteLine(
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
 @"Task 75738: ADJUST SERVICE- allow the user to define chose the same glaccount for debit and credit
 במקרה שהחן הנגדי == החשבון
 המטרה בעצם להעביר את ההפרש לתאריך אחר

@@ -1,50 +1,35 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
+﻿using Newtonsoft.Json;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
+using System.Linq;
 
 namespace Logitude.BL.Helpers
 {
     public class DefaultAndConfiguration_Ext : DefaultAndConfiguration
     {
+        public DefaultAndConfiguration_Ext(DefaultAndConfiguration a)
+        {
+            Id = a.Id;
+            Tenant = a.Tenant;
+            CreateDate = a.CreateDate;
+            SearchFields = a.SearchFields;
+            Is_Active = a.Is_Active;
+            StoreInCache = a.StoreInCache;
+            SetKey = a.SetKey;
+            AdditionalKey = a.AdditionalKey;
+            SortOrder = a.SortOrder;
+            SetValueType1 = a.SetValueType1;
+            Value1 = a.Value1;
+            SetValueType2 = a.SetValueType2;
+            Value2 = a.Value2;
+            AllowInheritance = a.AllowInheritance;
+        }
+
         public object ObjVal1
         {
             get
             {
-                try
-                {
-                    if (string.IsNullOrWhiteSpace(base.SetValueType1) || string.IsNullOrWhiteSpace(base.Value1))
-                    {
-                        Console.WriteLine("SetValueType1 or Value1 is null or empty.");
-                        return null;
-                    }
-
-                    Type type1 = Type.GetType(base.SetValueType1);
-                    if (type1 == null)
-                    {
-                        //Console.WriteLine($"Type.GetType failed for SetValueType1: {base.SetValueType1}");
-                        return null;
-                    }
-
-                    var deserializedObject = Newtonsoft.Json.JsonConvert.DeserializeObject(base.Value1, type1);
-                    
-                    if (deserializedObject is Array array)
-                    {
-                        foreach (var item in array)
-                        {
-                            Console.WriteLine(item);
-                        }
-                        return array;
-                    }
-                    else
-                    {
-                        return deserializedObject;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"An error occurred while deserializing ObjVal1: {ex.Message}");
-                    Console.WriteLine(ex.StackTrace);
-                    return null;
-                }
+                return Convert(Value1, SetValueType1);
             }
         }
 
@@ -52,31 +37,63 @@ namespace Logitude.BL.Helpers
         {
             get
             {
-                try
-                {
-                    if (string.IsNullOrWhiteSpace(base.SetValueType2) || string.IsNullOrWhiteSpace(base.Value2))
-                    {
-                        Console.WriteLine("SetValueType2 or Value2 is null or empty.");
-                        return null;
-                    }
-
-                    Type type2 = Type.GetType(base.SetValueType2);
-                    if (type2 == null)
-                    {
-                        //Console.WriteLine($"Type.GetType failed for SetValueType2: {base.SetValueType2}");
-                        return null;
-                    }
-
-                    return Newtonsoft.Json.JsonConvert.DeserializeObject(base.Value2, type2);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"An error occurred while deserializing ObjVal2: {ex.Message}");
-                    Console.WriteLine(ex.StackTrace);
-                    return null;
-                }
+                return Convert(Value2, SetValueType2);
             }
         }
 
+        private object Convert(string value, string typeString)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(value) || string.IsNullOrWhiteSpace(typeString))
+                    return null;
+                
+                Type type = Type.GetType(typeString) ?? AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.GetType(typeString) != null)?.GetType(typeString);
+                if(type == null)
+                    throw new Exception("Type not found: " + typeString);
+
+                if (type == typeof(string))
+                    return value;
+                if (type == typeof(int))
+                    return int.Parse(value);
+                if (type == typeof(long))
+                    return long.Parse(value);
+                if (type == typeof(double))
+                    return double.Parse(value);
+                if (type == typeof(bool))
+                    return bool.Parse(value);
+                if (type == typeof(DateTime))
+                    return DateTime.Parse(value);
+                if (type == typeof(DateTimeOffset))
+                    return DateTimeOffset.Parse(value);
+                if (type == typeof(string))
+                    return value;
+                if (type == typeof(string[]))
+                    return value.Split(',');
+                if (type == typeof(int[]))
+                    return Array.ConvertAll(value.Split(','), int.Parse);
+                if (type == typeof(long[]))
+                    return Array.ConvertAll(value.Split(','), long.Parse);
+                if (type == typeof(double[]))
+                    return Array.ConvertAll(value.Split(','), double.Parse);
+                if (type == typeof(bool[]))
+                    return Array.ConvertAll(value.Split(','), bool.Parse);
+                if (type == typeof(DateTime[]))
+                    return Array.ConvertAll(value.Split(','), DateTime.Parse);
+                if (type == typeof(Guid[]))
+                    return Array.ConvertAll(value.Split(','), Guid.Parse);
+                if (type == typeof(DateTimeOffset[]))
+                    return Array.ConvertAll(value.Split(','), DateTimeOffset.Parse);
+
+                object deserializedObject = JsonConvert.DeserializeObject(value, type);
+
+                return deserializedObject is Array array ? array : deserializedObject;
+            }
+            catch (Exception e)
+            {                
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e, "An error occurred while deserializing value: " + value + ", type: " + typeString);
+                return null;
+            }
+        }
     }
 }

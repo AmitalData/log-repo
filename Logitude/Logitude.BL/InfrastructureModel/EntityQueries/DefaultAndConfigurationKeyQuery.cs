@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-
-using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Server.Infrastructure.Helpers;
-
-using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
-using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
- 
- 
 using Logitude.BL.InfrastructureModel.EntityLists;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
@@ -36,51 +26,24 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             repository = DefaultAndConfigurationKeyRepository;
         }
 
-        public DefaultAndConfigurationKeyPM GetSinglePM( int tenant1, string settype, string setkey, int tenant)
+        public DefaultAndConfigurationKeyPM GetSinglePM(int tenant1, string setkey, int tenant)
         {        
             DefaultAndConfigurationKeyPM result =
-          (from a in repository.context.DefaultAndConfigurationKey
-           where a.SetKey == setkey
-           select new DefaultAndConfigurationKeyPM()
-           { 
+            (from a in repository.context.DefaultAndConfigurationKey
+            where a.SetKey == setkey && a.Tenant == tenant
+            select new DefaultAndConfigurationKeyPM()
+            { 
                Tenant = a.Tenant,
                CreateDate = a.CreateDate,
-               SetType = a.SetType,
+               SetType1 = a.SetType1,
                SetKey = a.SetKey,
                ShortDescription = a.ShortDescription,
-               FullDesctiption = a.FullDesctiption
-
-           }).FirstOrDefault();
-
+               FullDesctiption = a.FullDesctiption,
+               SetType2 = a.SetType2,
+            }).FirstOrDefault();
 
             return result;
-
         }
-
-        //public DefaultAndConfigurationKeyPM GetSingleDefaultAndConfigurationKeyPM(string id)
-        //{
-        //    DefaultAndConfigurationKeyPM result =
-        //    (from a in repository.context.DefaultAndConfigurationKey
-        //     where a.Id == id
-        //     select new DefaultAndConfigurationKeyPM()
-        //     {
-                
-        //         Tenant = a.Tenant,
-        //         CreateDateTime = a.CreateDateTime,
-        //         SetType = a.SetType,
-        //         SetKey = a.SetKey,
-        //         ShortDescription = a.ShortDescription,
-        //         FullDesctiption = a.FullDesctiption
-
-        //     }).FirstOrDefault();
-
-             
-        //    return result;
-
-        //}
-
-      
-    
 
         public List<DefaultAndConfigurationKeyPM> GetDefaultAndConfigurationKeyPMByField1(string SetKey)
         {
@@ -88,56 +51,35 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             (from a in repository.context.DefaultAndConfigurationKey
              where a.SetKey == SetKey
              select new DefaultAndConfigurationKeyPM()
-             {
-                
+             {                
                  Tenant = a.Tenant,
                  CreateDate = a.CreateDate,
-                 SetType = a.SetType,
+                 SetType1 = a.SetType1,
                  SetKey = a.SetKey,
                  ShortDescription = a.ShortDescription,
-                 FullDesctiption = a.FullDesctiption
+                 FullDesctiption = a.FullDesctiption,
+                 SetType2 = a.SetType2
 
              }).ToList();
 
-
             return result;
-
-        }
-
-        public List<DefaultAndConfigurationKeyPM> GetDefaultAndConfigurationKeyPMByField2(string SetType)
-        {
-            List<DefaultAndConfigurationKeyPM> result =
-            (from a in repository.context.DefaultAndConfigurationKey
-             where a.SetType == SetType
-             select new DefaultAndConfigurationKeyPM()
-             {
-                 Tenant = a.Tenant,
-                 CreateDate = a.CreateDate,
-                 SetType = a.SetType,
-                 SetKey = a.SetKey,
-                 ShortDescription = a.ShortDescription,
-                 FullDesctiption = a.FullDesctiption
-
-             }).ToList();
-
-
-            return result;
-
         }
 
         public IQueryable<DefaultAndConfigurationKeyList> GetIQueryableEntityList(IQueryable<DefaultAndConfigurationKey> iQueryable)
         {
             IQueryable<DefaultAndConfigurationKeyList> result = from a in iQueryable
-                                                             select new DefaultAndConfigurationKeyList()
-                                                             {
+                select new DefaultAndConfigurationKeyList()
+                {
                                                                  
-                                                                 Tenant = a.Tenant,
-                                                                 CreateDate = a.CreateDate,
-                                                                 SetType = a.SetType,
-                                                                 SetKey = a.SetKey,
-                                                                 ShortDescription = a.ShortDescription,
-                                                                 FullDesctiption = a.FullDesctiption
-                                                             };
+                    Tenant = a.Tenant,
+                    CreateDate = a.CreateDate,
+                    SetType1 = a.SetType1,
+                    SetKey = a.SetKey,
+                    ShortDescription = a.ShortDescription,
+                    FullDesctiption = a.FullDesctiption,
+                    SetType2 = a.SetType2
+                };
+
             return result;
         }
         
@@ -147,41 +89,17 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             (from a in repository.context.DefaultAndConfigurationKey
              where a.SetKey == SetKey
              select new DefaultAndConfigurationKeyPM()
-             {
-                
+             {                
                  Tenant = a.Tenant,
                  CreateDate = a.CreateDate,
-                 SetType = a.SetType,
+                 SetType1 = a.SetType1,
                  SetKey = a.SetKey,
                  ShortDescription = a.ShortDescription,
-                 FullDesctiption = a.FullDesctiption
-
+                 FullDesctiption = a.FullDesctiption,
+                 SetType2 = a.SetType2
              });
 
-
             return result;
-
-        }
-
-        public IQueryable<DefaultAndConfigurationKeyPM> GetIQueryableDefaultAndConfigurationKeyPMByField1Field2(string SetKey, string SetType)
-        {
-            IQueryable<DefaultAndConfigurationKeyPM> result =
-            (from a in repository.context.DefaultAndConfigurationKey
-             where a.SetKey == SetKey && a.SetType == SetType
-             select new DefaultAndConfigurationKeyPM()
-             {
-                 Tenant = a.Tenant,
-                 CreateDate = a.CreateDate,
-                 SetType = a.SetType,
-                 SetKey = a.SetKey,
-                 ShortDescription = a.ShortDescription,
-                 FullDesctiption = a.FullDesctiption
-
-             });
-
-
-            return result;
-
         }
 
         public IQueryable<DefaultAndConfigurationKeyList> GetIQueryableDefaultAndConfigurationKeyPMByField1List(string SetKey)
@@ -193,40 +111,14 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
              { 
                  Tenant = a.Tenant,
                  CreateDate = a.CreateDate,
-                 SetType = a.SetType,
+                 SetType1 = a.SetType1,
                  SetKey = a.SetKey,
                  ShortDescription = a.ShortDescription,
-                 FullDesctiption = a.FullDesctiption
-
+                 FullDesctiption = a.FullDesctiption,
+                 SetType2 = a.SetType2
              });
 
-
             return result;
-
-        }
-
-        public IQueryable<DefaultAndConfigurationKeyList> GetIQueryableDefaultAndConfigurationKeyPMByField2List(string SetType)
-        {
-            IQueryable<DefaultAndConfigurationKeyList> result =
-            (from a in repository.context.DefaultAndConfigurationKey
-             where a.SetType == SetType
-             select new DefaultAndConfigurationKeyList()
-             {
-                
-                 Tenant = a.Tenant,
-                 CreateDate = a.CreateDate,
-                 SetType = a.SetType,
-                 SetKey = a.SetKey,
-                 ShortDescription = a.ShortDescription,
-                 FullDesctiption = a.FullDesctiption
-
-             });
-
-
-            return result;
-
-        }
-         
-         
+        }               
     }
 }

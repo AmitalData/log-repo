@@ -64,7 +64,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             entityPM.DeclarationId = entityPM.DeclarationId ?? _DeclarationPMAncestor.Id;
             var a = 44;
             a = 444;
-            Debug.WriteLine("323");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("323");
             ICustomContext _Context = MainContext as CustomContext;
 
             SupplierInvoiceQueryService supplierInvoiceQueryService = new SupplierInvoiceQueryService(_Context);

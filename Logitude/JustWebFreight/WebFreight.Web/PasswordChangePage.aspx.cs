@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -24,6 +25,14 @@ namespace WebFreight.Web
             {
                 if (LogitudeSettings.WorkEnvironment == "logbox")
                 {
+                    var isAppServiceENV = Environment.GetEnvironmentVariable("IsAppService") == "true";
+                    bool isAppService = ConfigurationManager.AppSettings["IsAppService"] == "true";
+
+                    if (isAppServiceENV || isAppService)
+                    {
+                        if (!string.IsNullOrEmpty(context.Request.Headers["X-ORIGINAL-HOST"]))
+                            url = context.Request.Headers["X-ORIGINAL-HOST"];
+                    }
 
                     if (url.Contains("system.dsv.co.il"))
                     {

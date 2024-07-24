@@ -1,67 +1,72 @@
 <div class="mainTable">
-	<app-add-comment class="addCommentSlider" />
+	<app-add-comment class="addCommentSlider" [currentItem]="currentItem" />
 	<div class="centeredContent">
 		<div class="mainTable_list">
 			<div class="data_row_container" [class.active]="!showDetails">
 				<app-table-top class="app-table-top" [class.active]="!showDetails" />
-				<ul class="wtree">
-					<app-data-row
-						[data]="data.name"
+				<ul *ngFor="let item of data" class="wtree">
+					<app-data-row [data]="item" [isSelected]="selectedItemId == item.CustomsItemID"
 						(showCommentSidebar)="showAddComment = !showAddComment"
-						(showDetails)="showDetails = !showDetails"
-						(showChildern)="showChildern(data.name)"
-						class="app-data-row"
-					>
+						(showChildern)="showChildern(item.CIH_GoodsDescription)" class="app-data-row"
+						(showDetails)="showDetailsClick(item.CustomsItemID, item)">
 					</app-data-row>
 					<ul class="wtree" [@inOutAnimation]>
-						<ng-container *ngIf="data.children && data.children.length > 0 && childrenToDesplay.includes(data.name)">
-							<ng-container *ngFor="let key2 of Object.keys(data.children)">
+						<ng-container
+							*ngIf="item.children && item.children.length > 0 && childrenToDesplay.includes(item.CIH_GoodsDescription)">
+							<ng-container *ngFor="let key2 of Object.keys(item.children)">
 								<li [@inOutAnimation]>
-									<app-data-row
-										[data]="data.children[key2]?.name"
+									<app-data-row [data]="item?.children[key2]"
+										[isSelected]="selectedItemId == item?.children[key2]?.CustomsItemID"
 										(showCommentSidebar)="showAddComment = !showAddComment"
-										(showDetails)="showDetails = !showDetails"
-										class="app-data-row"
-										(showChildern)="showChildern(data.children[key2]?.name)"
-									>
+										 class="app-data-row"
+										(showChildern)="showChildern(item.children[key2]?.CIH_GoodsDescription)"
+										(showDetails)="showDetailsClick(item.children[key2]?.CustomsItemID , item.children[key2])">
 									</app-data-row>
 									<ng-container
-										*ngIf="
-											data.children[key2] &&
-											data.children.length > 0 &&
-											childrenToDesplay.includes(data.children[key2]?.name)
-										"
-									>
+										*ngIf=" item.children[key2] && item.children.length > 0 && childrenToDesplay.includes(item.children[key2]?.CIH_GoodsDescription)">
 										<ul [@inOutAnimation]>
-											<ng-container *ngFor="let key3 of Object.keys(data.children[key2].children)">
+											<ng-container
+												*ngFor="let key3 of Object.keys(item.children[key2].children)">
 												<li [@inOutAnimation]>
-													<app-data-row
-														[data]="data.children[key2].children[key3]?.name"
+													<app-data-row [data]="item?.children[key2]?.children[key3]"
+														[isSelected]="selectedItemId == item?.children[key2]?.children[key3]?.CustomsItemID"
 														(showCommentSidebar)="showAddComment = !showAddComment"
-														(showDetails)="showDetails = !showDetails"
-														class="app-data-row"
-														(showChildern)="showChildern(data.children[key2].children[key3]?.name)"
-													>
+														 class="app-data-row"
+														(showChildern)="showChildern(item.children[key2].children[key3]?.CIH_GoodsDescription)"
+														(showDetails)="showDetailsClick(item.children[key2].children[key3]?.CustomsItemID , item.children[key2].children[key3])">
 													</app-data-row>
 													<ng-container
-														*ngIf="
-															data.children[key2].children[key3] &&
-															data.children.length > 0 &&
-															childrenToDesplay.includes(data.children[key2].children[key3]?.name)
-														"
-													>
+														*ngIf=" item.children[key2].children[key3] && item.children.length > 0 && childrenToDesplay.includes(item.children[key2].children[key3]?.CIH_GoodsDescription)">
 														<ul [@inOutAnimation]>
 															<ng-container
-																*ngFor="let key4 of Object.keys(data.children[key2].children[key3].children)"
-															>
+																*ngFor="let key4 of Object.keys(item.children[key2].children[key3].children)">
 																<li [@inOutAnimation]>
 																	<app-data-row
-																		[data]="data.children[key2].children[key3].children[key4]?.name"
+																		[data]="item?.children[key2]?.children[key3]?.children[key4]"
+																		[isSelected]="selectedItemId == item?.children[key2]?.children[key3]?.children[key4]?.CustomsItemID"
 																		(showCommentSidebar)="showAddComment = !showAddComment"
-																		(showDetails)="showDetails = !showDetails"
 																		class="app-data-row"
-																	>
+																		(showChildern)="showChildern(item.children[key2].children[key3].children[key4]?.CIH_GoodsDescription)"
+																		(showDetails)="showDetailsClick(item.children[key2].children[key3].children[key4]?.CustomsItemID, item.children[key2].children[key3].children[key4])">
 																	</app-data-row>
+																	<ng-container
+																		*ngIf="item.children[key2].children[key3].children[key4] && item.children.length > 0 && childrenToDesplay.includes(item.children[key2].children[key3].children[key4]?.CIH_GoodsDescription)">
+																		<ul [@inOutAnimation]>
+																			<ng-container
+																				*ngFor="let key5 of Object.keys(item.children[key2].children[key3].children[key4].children)">
+																				<li [@inOutAnimation]>
+																					<app-data-row
+																						[data]="item?.children[key2]?.children[key3]?.children[key4]?.children[key5]"
+																						[isSelected]="selectedItemId == item?.children[key2]?.children[key3]?.children[key4]?.children[key5].CustomsItemID"
+																						(showCommentSidebar)="showAddComment = !showAddComment"
+																						class="app-data-row"
+																						(showChildern)="showChildern(item.children[key2].children[key3].children[key4].children[key5]?.CIH_GoodsDescription)"
+																						(showDetails)="showDetailsClick(item.children[key2].children[key3].children[key4].children[key5]?.CustomsItemID, item.children[key2].children[key3].children[key4].children[key5])">
+																					</app-data-row>
+																				</li>
+																			</ng-container>
+																		</ul>
+																	</ng-container>
 																</li>
 															</ng-container>
 														</ul>
@@ -77,7 +82,8 @@
 				</ul>
 			</div>
 			<div class="details_frame_container" [class.active]="showDetails">
-				<app-details-frame (showDetails)="showDetails = !showDetails" />
+				<app-details-frame (showDetails)="showDetails = !showDetails" [itemData]="itemDataBehaviorSubject"
+					[currentItem]="currentItem" />
 			</div>
 		</div>
 	</div>

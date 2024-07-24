@@ -18,12 +18,12 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="SetType"
+    Name="SetType1"
+    OldNames="SetType"
     Type="varchar"
     Size="128">
     <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="SetKey"
@@ -44,6 +44,13 @@
     Name="FullDesctiption"
     Type="nvarchar"
     Size="4000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SetType2"
+    Type="varchar"
+    Size="128">
     <Constraints
       Nullable="true" />
   </Column>

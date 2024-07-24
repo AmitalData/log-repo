@@ -338,7 +338,7 @@ namespace CustomsWorkerRole
             {
                 throw new Exception("UServer did not return response : " + P_MESSAGE);
             }
-            Debug.WriteLine(myUServerUtil.UnifreightTester); 
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(myUServerUtil.UnifreightTester); 
             // var UNIQUE_ENVIRONMENT_ID = UnifaceAssociativeListUtil.GetValue(P_XML_DATA, "UNIQUE_ENVIRONMENT_ID");
             
 

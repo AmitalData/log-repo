@@ -81,7 +81,7 @@ namespace CustomsWorkerRole.BL
             {
                 //Task.Delay(TimeSpan.FromSeconds(1));
                 System.Threading.Thread.Sleep(200);
-                Debug.WriteLine("SHUTDOWN!!! Before Exit - try to Write logs");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("SHUTDOWN!!! Before Exit - try to Write logs");
             }
 
             Environment.Exit(0);

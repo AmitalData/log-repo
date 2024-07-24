@@ -14,7 +14,8 @@
 								name="search_toggle"
 								class="fst-btn"
 								aria-controls="pageSearch_form01"
-							/><span class="fst-btn">פרט מכס</span></label
+							/><span class="fst-btn">{{ searchBy.Classification }}</span></label
+
 						>
 					</li>
 					<li>
@@ -26,7 +27,8 @@
 								(input)="search('pageSearch_form02')"
 								class="lst-btn"
 								aria-controls="pageSearch_form02"
-							/><span class="lst-btn">מילה/ צירוף מילים</span></label
+							/><span class="lst-btn">{{searchBy.WordCombination}}</span></label
+
 						>
 					</li>
 				</ul>
@@ -37,7 +39,7 @@
 						<input type="text" (input)="onChange($event)" [placeholder]="text" />
 					</div>
 
-					<button (click)="searchClick.emit()">חיפוש</button>
+					<button (click)="clickSearch()">חיפוש</button>
 				</fieldset>
 			</div>
 		</div>

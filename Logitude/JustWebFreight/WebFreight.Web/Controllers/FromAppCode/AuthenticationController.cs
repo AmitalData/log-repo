@@ -56,6 +56,7 @@ using WebFreight.Web.Helpers.MixPanel;
 using System.Data;
 using WebFreight.Web.CustomersHTML;
 using System.Web.UI.WebControls;
+using System.Configuration;
 
 namespace WebFreight.Web
 {
@@ -269,7 +270,7 @@ namespace WebFreight.Web
                         {
                             if (dbcontact.Password != loginParameters.Password)
                             {
-                                Debug.WriteLine(@"ihab(@Itzik):SSO:the Hash Password from token irrelevant Allow Login even though HashPass  not match");
+                               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(@"ihab(@Itzik):SSO:the Hash Password from token irrelevant Allow Login even though HashPass  not match");
                                 loginParameters.Password = dbcontact.Password;
                             }
                         }
@@ -644,6 +645,15 @@ namespace WebFreight.Web
             HttpContext context = HttpContext.Current;
             string Url = context.Request.Url.ToString().Split('/')[2];//("http://", "");
 
+            var isAppServiceENV = Environment.GetEnvironmentVariable("IsAppService") == "true";
+            bool isAppService = ConfigurationManager.AppSettings["IsAppService"] == "true";
+
+            if (isAppServiceENV || isAppService)
+            {
+                if (!string.IsNullOrEmpty(context.Request.Headers["X-ORIGINAL-HOST"]))
+                    Url = context.Request.Headers["X-ORIGINAL-HOST"];
+            }
+
             Url = Url.Split(':')[0];
 
             return Request.CreateResponse(HttpStatusCode.OK, Url);
@@ -766,6 +776,7 @@ namespace WebFreight.Web
                                     PrivateLabelId = globalTenant.PrivateLabelId
                                 };
 
+                                
                                 loginsList.Add(company);
                             }
                         }

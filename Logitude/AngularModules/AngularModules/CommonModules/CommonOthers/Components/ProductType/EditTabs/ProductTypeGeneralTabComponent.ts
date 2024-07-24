@@ -44,18 +44,13 @@ export class ProductTypeGeneralTabComponent extends BaseComponent {
 
     public service = new ProductTypeModificationPMService();
 
-    public IsQuoteOPMaintence = false;
 
     DataContext: ProductTypeGeneralTabComponent = this;
     constructor(public entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.ObjectTableName = entityArgs.ObjectTableName;
-        if (FeatureLocator.HasFeaturePermession("QuoteOP", "QuoteOPMaintence")) {
-            this.IsQuoteOPMaintence = true;
-            this.RunComponent();
-            this.SetUIProperties();
-        }
+       
     }
 
     RunComponent() {

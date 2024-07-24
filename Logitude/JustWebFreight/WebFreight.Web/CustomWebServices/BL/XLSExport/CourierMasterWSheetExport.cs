@@ -410,7 +410,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
             dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("Customs.DeclarationCourierStatus.F.TotalInvoiceAmountInUSD", tenant, true), ColumnName = "TotalInvoiceAmountInUSD", DataType = typeof(Decimal) });
 
             settingCol.Columns.Add(new Column() { Index = 5, Code = "CourierCustomStatusName", Name = "CourierCustomStatusName", DataTypeCode = "String", Width = 90, });
-            dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("Customs.DeclarationCourierStatus.F.CourierCustomStatusName", tenant, true), ColumnName = "CourierCustomStatusName", DataType = "".GetType() });
+            dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("Customs.DeclarationCourierStatus.F.CourierCustomStatusName", tenant, true), ColumnName = "CourierCustomStatusName", DataType = System.Type.GetType("System.String") });
 
             settingCol.Columns.Add(new Column() { Index = 6, Code = "CourierSuspentionReasonName", Name = "CourierSuspentionReasonName", DataTypeCode = "String", Width = 100, });
             dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("Customs.DeclarationCourierStatus.F.CourierSuspentionReasonName", tenant, true), ColumnName = "CourierSuspentionReasonName", DataType = "".GetType() });

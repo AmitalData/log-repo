@@ -100,7 +100,7 @@ LastError:{4}",
                         _LastGetServiceBusStateAt = DateTime.Now;
                         _AllQ = CustomsWorkerRole.Utils.ServiceBusUtil.ShowAll();
                         _AllQ = "Retrieve ServiceBus at " + DateTime.Now.ToString() + " :" + _AllQ;
-                        Debug.WriteLine(_AllQ);
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug(_AllQ);
                     }
 
 
@@ -108,7 +108,7 @@ LastError:{4}",
                 catch (Exception eee)
                 {
                     _AllQ = "CustomsWorkerRole.Utils.ServiceBusUtil.ShowAll failed :" + eee.ToString();
-                    Debug.WriteLine(_AllQ);
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(_AllQ);
                 }
 
                 //SendReqSheetStatistic();
@@ -178,7 +178,7 @@ LastError:{4}",
                                 };
                     //parameters.To += ";itzik@amital.co.il;YaronC@AMITAL.CO.IL";
                     //parameters.Tenant = 92;
-                    Debug.WriteLine(parameters.To);
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(parameters.To);
                                 CommunicationWorkerRole.EmailingHelper.SendEmail(parameters);
                             });
         }

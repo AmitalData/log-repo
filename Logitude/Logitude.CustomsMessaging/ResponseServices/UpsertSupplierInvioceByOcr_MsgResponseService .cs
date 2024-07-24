@@ -217,7 +217,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                             this.MyResponseData.Succeeded = true;
                             this.MyResponseData.HasException = false;
-                            string InvoiceSuccess = Result.isNewInvoice ? "Customs.OcrDocument.O.InvoiceSuccessfullyOpened" : "Customs.OcrDocument.O.InvoiceUpdatedSuccessfully";
+                            string InvoiceSuccess = Result.isNewInvoice ? "Customs.OcrDocument.O.InvoiceSuccessfullyOpened" : "Customs.OcrDocument.O.InvoiceUpdatedSuccessfully"; this.MyResponseData.UserMessage =
                             this.MyResponseData.UserMessage = TranslateTextsClass.Translate(InvoiceSuccess, customResponse.tenant, true);
                             if (Result.invalidValuesRemarks != null)
                                 this.MyResponseData.Remarks = "Invalid value, not exist in table - " + Result.invalidValuesRemarks;
@@ -499,7 +499,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         if (CustomsCountry == null)
                             invalidValuesRemarks += $" FieldJson: Item_country_of_origin, FieldName: OriginCountryCode, InvalidValueReceived: {itemCountryOfOrigin};";
                         else
-
                             supplierInvoiceItemPM.OriginCountryCode = CustomsCountry.Code;
                     }
                     if (supplierInvoiceItem.TryGetValue("ITEM_HS_CODE", out string itemCode))
@@ -507,7 +506,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         itemCode = new string(itemCode.Where(char.IsDigit).ToArray());
                         if (itemCode.Length > 7)
                         {
-                            var validate = ValidateClassificationCode(itemCode.Length > 11 ? itemCode.Substring(0, 11) : itemCode);
+                            var validate = ValidateClassificationCode(itemCode.Length > 10? itemCode.Substring(0, 10) : itemCode);
                             if (validate != null)
                             {
                                 supplierInvoiceItemPM.ClassificationCode = validate;
@@ -528,7 +527,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         classificationCode = new string(classificationCode.Where(char.IsDigit).ToArray());
                         if (classificationCode.Length > 7)
                         {
-                            var validate = ValidateClassificationCode(classificationCode.Length > 11 ? classificationCode.Substring(0, 11) : classificationCode);
+                            var validate = ValidateClassificationCode(classificationCode.Length > 10 ? classificationCode.Substring(0, 10) : classificationCode);
                             if (validate != null)
                             {
                                 supplierInvoiceItemPM.ClassificationCode = validate;
@@ -585,6 +584,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                     }
 
+
+
                     //add supplierInvoiceItem
                     mySupplierInvoice.SupplierInvoiceItems.Add(supplierInvoiceItemPM);
                     counter++;
@@ -626,10 +627,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 newValue += LuhnAlgorithm.CalculateLuhnAlgorithm(newValue);
             }
-            else if (newValue.Length == 11)
-            {
-                newValue += LuhnAlgorithm.CalculateLuhnAlgorithm(newValue.Substring(0, 10));
-            }
+            
 
             return newValue;
         }

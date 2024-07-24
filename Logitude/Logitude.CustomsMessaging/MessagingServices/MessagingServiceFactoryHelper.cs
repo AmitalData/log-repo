@@ -648,7 +648,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 		}
         public static void InitContainer()
         {
-            Debug.WriteLine("this method its to enshur static constractor is up ");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("this method its to enshur static constractor is up ");
         }
         //public static void ResolveAndExecute(string mainInterfaceCode, int tenant, string correlationId,
         //    CustomsCommandEnum myCustomsCommandEnum)
@@ -729,7 +729,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var responseDataBase = resDat as Logitude.CustomsMessaging.Common.ResponseData.ResponseDataBase;
             if (responseDataBase != null && responseDataBase.HasException)
             {
-                Debug.WriteLine(responseDataBase.UserMessage);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(responseDataBase.UserMessage);
             }
         }
 
@@ -769,7 +769,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var responseDataBase = resDat as Logitude.CustomsMessaging.Common.ResponseData.ResponseDataBase;
             if (responseDataBase != null && responseDataBase.HasException)
             {
-                Debug.WriteLine(responseDataBase.UserMessage);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(responseDataBase.UserMessage);
             }
         }
 #if false

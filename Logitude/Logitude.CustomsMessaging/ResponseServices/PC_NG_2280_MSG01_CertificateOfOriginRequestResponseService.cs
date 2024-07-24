@@ -119,7 +119,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			certificateOfOriginPM.QueryUrl = customResponse.CertificateOfOriginRequestFeedback.QueryURL;
 			certificateOfOriginPM.IssueDateIfReleased = customResponse.CertificateOfOriginRequestFeedback.IssueDateIfReleased;
 
-			if(requestParams.RequestReasonCode == 1)
+			if(requestParams.RequestReasonCode == 10 && certificateOfOriginPM.COONumber != null)
+				certificateOfOriginPM.RequestReasonCode = "12";
+
+
+            if (requestParams.RequestReasonCode == 1)
 			  certificateOfOriginPM.IsSubmitted = true;
 
 			DeclarationQueryService declarationQueryService = new DeclarationQueryService(certificateOfOriginPM.Tenant);

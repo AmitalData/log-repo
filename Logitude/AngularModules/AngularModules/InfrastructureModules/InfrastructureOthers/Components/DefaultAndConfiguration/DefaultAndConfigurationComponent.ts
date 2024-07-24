@@ -59,6 +59,12 @@ import { LogtuideTableDataService } from 'Infrastructure/Services/logtuide-table
             .form-data-field-field.is-array {
                 height: 110px !important;
             }
+
+            log-close-save-buttons {
+                bottom: 0;
+                position: absolute;
+                left: 0;
+            }
         `],
 })
 export class DefaultAndConfigurationComponent {
@@ -73,7 +79,7 @@ export class DefaultAndConfigurationComponent {
     type1IsArray: boolean = false;
     type2: string = 'System.String';
     type2IsArray: boolean = false;
-    typesList: string[] = ['System.String', 'System.Int', 'System.Double', 'System.Boolean', 'System.DateTime', 'System.String[]', 'System.Int[]', 'System.Double[]', 'System.Boolean[]'];
+    typesList: string[] = ['System.String', 'System.Int32', 'System.Double32', 'System.Boolean', 'System.DateTime', 'System.String[]', 'System.Int32[]', 'System.Double32[]', 'System.Boolean[]'];
     fields: TextBoxField[] = [
         { name: 'Is_Active', label: 'Is Active', type: 'boolean', value: true },
         { name: 'StoreInCache', label: 'Store In Cache', type: 'boolean', value: true },
@@ -119,9 +125,15 @@ export class DefaultAndConfigurationComponent {
                 this.errorMaeasge = true;
                 return;
             }
-
-            const CreateDate = this.DataContext['CreateDate'] || new Date();
-            const values = { ...this.DataContext, ...this.Form.values, Value1: this.value1.value, Value2: this.value2.value, CreateDate };
+            
+            const values = { 
+                ...this.DataContext, 
+                ...this.Form.values, 
+                Value1: JSON.stringify(this.value1.value), 
+                Value2: JSON.stringify(this.value2.value), 
+                CreateDate: this.DataContext['CreateDate'] || new Date(),
+                Tenant: SessionLocator.Tenant
+            };
             SessionLocator.SelectedSession.StartBusyIndicator('');
             await this.sendToServer(values);
             SessionLocator.SelectedSession.StopBusyIndicator();

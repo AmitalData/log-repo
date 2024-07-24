@@ -42,8 +42,8 @@ namespace AmitalCustomsWindowsService.Tester
         public TesterForm()
         {
             InitializeComponent();
-            TraceListener debugListener = new MyTraceListener(this.textBoxLogger);
-            Debug.Listeners.Add(debugListener);
+            //TraceListener debugListener = new MyTraceListener(this.textBoxLogger);
+            //Debug.Listeners.Add(debugListener);
             _CBWorkerRole.Items.Add("CustomsCommandGetCustomRequestWR");
             _CBWorkerRole.Items.Add("CustomsCommandSignRequestWR");
             _CBWorkerRole.Items.Add("CustomsCommandSendDCAWR");
@@ -59,8 +59,8 @@ namespace AmitalCustomsWindowsService.Tester
             _CBWorkerRole.Items.Add("CustomsHSMSignWR");
             _CBWorkerRole.Items.Add("ReportExecutionLogWR");
 
-            Debug.WriteLine("Env:");
-            Debug.WriteLine(LogitudeSettings.LogitudeURL);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Env:");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(LogitudeSettings.LogitudeURL);
 
             var t = new Thread(GetENV);
             t.Start();
@@ -73,7 +73,7 @@ namespace AmitalCustomsWindowsService.Tester
             
             var pmCustomsSetting = Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(1);
             var jsonSetting = ProxyUtil.JsonConvertSerialize(pmCustomsSetting);
-            Debug.WriteLine(jsonSetting);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(jsonSetting);
         }
 
         private void BlobToolStripMenuItem_Click(object sender, EventArgs e)
@@ -87,7 +87,7 @@ namespace AmitalCustomsWindowsService.Tester
             var stopwatch = System.Diagnostics.Stopwatch.StartNew();
             Logitude.Server.Tools.Communications.SetBolb(1, filename, "Amital", GetByte());
             stopwatch.Stop();
-            Debug.WriteLine("SetBlob:" + filename + ":Took:" + stopwatch.Elapsed.ToString());
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("SetBlob:" + filename + ":Took:" + stopwatch.Elapsed.ToString());
         }
 
         private byte[] GetByte()
@@ -185,12 +185,12 @@ namespace AmitalCustomsWindowsService.Tester
             try
             {
                 var AllQ = CustomsWorkerRole.Utils.ServiceBusUtil.ShowAll();
-                Debug.WriteLine(AllQ);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(AllQ);
             }
             catch (Exception eee)
             {
 
-                Debug.WriteLine("CustomsWorkerRole.Utils.ServiceBusUtil.ShowAll failed :" + eee.ToString());
+               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee,"CustomsWorkerRole.Utils.ServiceBusUtil.ShowAll failed :" );
             }
 
         }
@@ -321,7 +321,7 @@ namespace AmitalCustomsWindowsService.Tester
             catch (Exception ex)
             {
 
-                Debug.WriteLine(ex.ToString()); 
+               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex); 
             }
             
         }
@@ -397,8 +397,7 @@ namespace AmitalCustomsWindowsService.Tester
             int tenant =GetTenant();
             _MultiThreard = !_MultiThreard;
             var res=clsTester.CheckWSCourierStatistic(tenant, _MultiThreard);
-            Debug.WriteLine(res);
-            Debug.WriteLine(sw.ElapsedMilliseconds);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("{0} in {1}ms",res,sw.ElapsedMilliseconds));
             
             return;
             return;
@@ -524,7 +523,7 @@ namespace AmitalCustomsWindowsService.Tester
                 {
                     signUpWorkerRole.WorkOnceSuppressClearQ();
                 }
-                Debug.WriteLine("signUpWorkerRole.WorkOnce END !!");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("signUpWorkerRole.WorkOnce END !!");
             //}
             //catch (Exception ee)
             //{
@@ -546,7 +545,7 @@ namespace AmitalCustomsWindowsService.Tester
             };
                     parameters.To += ";itzik@amital.co.il;YaronC@AMITAL.CO.IL";
                     parameters.Tenant = 92;
-            Debug.WriteLine(parameters.To);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(parameters.To);
             CommunicationWorkerRole.EmailingHelper.SendEmail(parameters);
         }
 
@@ -572,7 +571,7 @@ namespace AmitalCustomsWindowsService.Tester
         {
             var wr = new CommunicationWorkerRole.CommunicationLogWorkerRoleWinService();
             wr.WorkOnce();
-            Debug.WriteLine("CommunicationWorkerRole.WorkOnce END !!");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CommunicationWorkerRole.WorkOnce END !!");
         }
 
         private void repushQToolStripMenuItem_Click(object sender, EventArgs e)
@@ -786,8 +785,8 @@ namespace AmitalCustomsWindowsService.Tester
                     };
                     //parameters.To += ";itzik@amital.co.il;YaronC@AMITAL.CO.IL";
                     //parameters.Tenant = 92;
-                    Debug.WriteLine(parameters.To);
-                    Debug.WriteLine(emailbody);
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(parameters.To);
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(emailbody);
                     
                     CommunicationWorkerRole.EmailingHelper.SendEmail(parameters);
                 },true);
@@ -809,7 +808,7 @@ namespace AmitalCustomsWindowsService.Tester
             catch (Exception ee)
             {
 
-                Debug.WriteLine(ee.ToString());
+               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ee);
                 MessageBox.Show("maybe tenant not exist !!!");
             }
             
@@ -829,7 +828,7 @@ namespace AmitalCustomsWindowsService.Tester
             var xml = CustomsWorkerRole.Test.clsTester.GetDeclarationXml(tenant, DecId);
             var file= Path.Combine(@"c:\",DecId +".xml");
             File.WriteAllText(file, xml);
-            Debug.WriteLine(file); 
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(file); 
 
             var checkXml = @"C:\Program Files (x86)\Microsoft Visual Studio 11.0\DeclarationPM.FromXsd.xml";
             var xmlCheck=File.ReadAllText(checkXml);
@@ -947,14 +946,14 @@ namespace AmitalCustomsWindowsService.Tester
                     ;
                 notUniqeNames.ForEach(r =>
                 {
-                    Debug.WriteLine(r);
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(r);
                 }
                 );
 
             }
             else
             {
-                Debug.WriteLine("folder Not Exist ");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("folder Not Exist ");
             }
         }
 

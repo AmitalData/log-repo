@@ -85,7 +85,7 @@ namespace Logitude.Server.Tools.FTP
                     _TenantFeatureExist.TryGetValue(_tenant, out tenantFeatureExist);
                     if (!tenantFeatureExist)
                     {
-                        Debug.WriteLine($"SFTPDeleteTempFilesService:does not  HasFeatureToggle -SFD");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SFTPDeleteTempFilesService:does not  HasFeatureToggle -SFD");
                         return false;
                     }
                     ///Debug.WriteLine($"HasFeatureToggle -SFD ..");
@@ -99,11 +99,11 @@ namespace Logitude.Server.Tools.FTP
                     }
                     else
                     {
-                        Debug.WriteLine($"SFTPDeleteTempFilesService:wait... (DELETE_EveryMin:{DELETE_EveryMin}) ");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SFTPDeleteTempFilesService:wait... (DELETE_EveryMin:{DELETE_EveryMin}) ");
                         return false;
                     }
                 }
-                Debug.WriteLine($"SFTPDeleteTempFilesService:actionDeleteTempFiles(DELETE_EveryMin:{DELETE_EveryMin}) ...");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SFTPDeleteTempFilesService:actionDeleteTempFiles(DELETE_EveryMin:{DELETE_EveryMin}) ...");
                 actionDeleteTempFiles?.Invoke();
                 return true;
             }

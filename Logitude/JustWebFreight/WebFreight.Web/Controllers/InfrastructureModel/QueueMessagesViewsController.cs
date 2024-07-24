@@ -30,7 +30,7 @@ using Simplog.Data.InfrastructureModel;
 using Simplog.Server.Infrastructure.Helpers;
 using WebFreight.Web.Services;
 using System.Linq.Expressions;
-using WebFreight.Web.Controllers.DigitalPortal.Models;
+using Simplog.Server.Infrastructure.DataContracts.Models;
 using Newtonsoft.Json;
 using Microsoft.TeamFoundation.Common;
 

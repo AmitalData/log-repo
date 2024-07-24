@@ -4,12 +4,9 @@
                 &#10005;</a></div>
         <div class="detailsSlide_top">
             <div class="detailsSlide_title">
-                <p class="rull_no">0101210000/2</p>
-                <p class="rull_text">חלק 1231239- עץ ופריטים מעץ; פחם עץ; שעם ופריטים משעם; מוצרים מקש, מאספרטו או
-                    מחומרי קליעה אחרים;
-                    מוצרי
-                    נצרים וקליעה חלק 9- עץ ופריטים מעץ; פחם עץ; שעם ופריטים משעם; מוצרים מקש, מאספרטו או מחומרי קליעה
-                    אחרים; מוצרי נצרים וקליעה</p>
+
+                <p class="rull_no">{{currentItem?.FullClassification}}</p>
+                <p class="rull_no">{{currentItem?.CIH_GoodsDescription}}</p>
             </div>
             <div class="detailsSlide_topActions">
                 <ul>
@@ -18,29 +15,28 @@
                                 </i></a>
                         </div>
                     </li>
-                    <li>
+                    <!-- <li>
                         <div class="mainTable_itemPopup"><a class="icon"><i role="img" class="icon-popup"></i> </a>
                         </div>
-                    </li>
+                    </li> -->
                     <li>
                         <div class="mainTable_itemComment" (click)="showComments =!showComments"><a class="icon">
                                 <i role="img" class="icon-comment_plus"></i></a>
                         </div>
                     </li>
-                    <li>
+                    <!-- <li>
                         <div class="mainTable_itemStarred" (click)="checked = !checked"><a class="icon"><i role="img"
                                     [class]="checked? ' icon-star_full' :'icon-star' ">
                                 </i></a>
-
-                        </div>
-                    </li>
+=                        </div>
+                    </li> -->
                 </ul>
 
             </div>
         </div>
         <div class="conetnt_container">
             <app-comments [showComments]="showComments" />
-            <app-accordion></app-accordion>
+            <app-accordion [itemData]="itemData" ></app-accordion>
         </div>
     </div>
 </div>

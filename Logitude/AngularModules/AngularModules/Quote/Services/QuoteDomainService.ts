@@ -16,7 +16,7 @@ export class QuoteDomainService {
     constructor() {
         this._http = ServiceHelper.HttpClient;
         this._httpClient = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/QuoteOPDomain';
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/QuoteDomain';
     }
     
     GetQuotesCounts(ownerId: string, businessUnitId: string, directionId: string, transportModeId: string, RecordsTypeCode: string) {

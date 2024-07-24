@@ -239,7 +239,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             finally
             {
-                Debug.WriteLine(debugIt);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(debugIt);
             }
 
 
@@ -405,7 +405,7 @@ namespace Logitude.Accounting.BL.CoreBL
         //    }
         //    finally
         //    {
-        //        Debug.WriteLine(debugIt);
+        //       NetCommonHelper.Logger.DevLog.Instance.WriteDebug(debugIt);
         //    }
 
 
@@ -702,7 +702,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             finally
             {
-                Debug.WriteLine(debugIt);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(debugIt);
             }
 
 

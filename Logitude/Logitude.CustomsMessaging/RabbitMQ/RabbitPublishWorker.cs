@@ -84,7 +84,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
                         if (DateTime.Now.Subtract(rabbitQueue.CreateAt) > TimeSpan.FromMilliseconds(2 * _TimeoutInMS))
                         {
                             _TimeoutX2++;
-                            Debug.WriteLine("Dequeue timeout - enqueue without work");
+                           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Dequeue timeout - enqueue without work");
                             continue;
                         }
                         if (channel?.IsClosed== true)

@@ -182,6 +182,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Weight"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerRoleId"
     ReferencedTable="Roles"

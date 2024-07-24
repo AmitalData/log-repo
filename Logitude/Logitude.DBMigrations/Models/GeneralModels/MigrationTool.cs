@@ -9,6 +9,7 @@ using System.Text;
 using System.Reflection;
 using System.Xml;
 using Oracle.ManagedDataAccess.Client;
+//using Oracle.DataAccess.Client;
 
 namespace Logitude.DBMigrations.Models
 {
@@ -289,7 +290,7 @@ namespace Logitude.DBMigrations.Models
 
             foreach (var dxmlTable in dxmlTables)
             {
-          //      if (!(dxmlTable.DXMLFileName.Contains("DigitalFieldSecuri"))) continue;
+                //      if (!(dxmlTable.DXMLFileName.Contains("DigitalFieldSecuri"))) continue;
                 Console.WriteLine("Generating Script For " + dxmlTable.DXMLFileName + " ...");
 
                 if (IsDXMLFileForHistoryTable(dxmlTable.DXMLFileName))
@@ -679,6 +680,7 @@ namespace Logitude.DBMigrations.Models
 
                 try
                 {
+                    oracleConnection.SqlNetAllowedLogonVersionClient = OracleAllowedLogonVersionClient.Version11;
                     oracleConnection.Open();
 
                     string[] commands = script.Split(new string[] { ";\n" }, StringSplitOptions.None);
@@ -693,7 +695,18 @@ namespace Logitude.DBMigrations.Models
                             oracleCommand.CommandText = (command.ToUpper().EndsWith(" END") || command.ToUpper().EndsWith("\nEND")) ? (command + ";") : command;
                             currentCommandText = oracleCommand.CommandText;
                             PrintExecutingScript(currentCommandText);
-                            oracleCommand.ExecuteNonQuery();
+                            // try
+                            // {
+                                oracleCommand.ExecuteNonQuery();
+                            // }
+                            /* catch (Exception ex)
+                            {
+                                if (!ex.Message.Contains("ORA-01442") && !ex.Message.Contains("ORA-02262") && !ex.Message.Contains("ORA-22858"))
+                                {
+                                    //  throw ex;
+                                    var t = ex;
+                                }
+                             }*/
                         }
                     }
 
@@ -1109,6 +1122,7 @@ namespace Logitude.DBMigrations.Models
 
                 try
                 {
+                    connection.SqlNetAllowedLogonVersionClient = OracleAllowedLogonVersionClient.Version11;
                     connection.Open();
                     reader = command.ExecuteReader();
 
@@ -1223,6 +1237,7 @@ namespace Logitude.DBMigrations.Models
 
                             try
                             {
+                                oracleConnection.SqlNetAllowedLogonVersionClient = OracleAllowedLogonVersionClient.Version11;
                                 oracleConnection.Open();
                                 OracleCommand oracleCommand = new OracleCommand();
                                 oracleCommand.Connection = oracleConnection;
@@ -1323,6 +1338,7 @@ namespace Logitude.DBMigrations.Models
                 {
                     try
                     {
+                        oracleConnection.SqlNetAllowedLogonVersionClient = OracleAllowedLogonVersionClient.Version11;
                         oracleConnection.Open();
                     }
                     catch (Exception exception)
@@ -1712,6 +1728,7 @@ namespace Logitude.DBMigrations.Models
 
                     try
                     {
+                        connection.SqlNetAllowedLogonVersionClient = OracleAllowedLogonVersionClient.Version11;
                         connection.Open();
                         reader = command.ExecuteReader();
 
@@ -1796,6 +1813,7 @@ namespace Logitude.DBMigrations.Models
 
                 try
                 {
+                    connection.SqlNetAllowedLogonVersionClient = OracleAllowedLogonVersionClient.Version11;
                     connection.Open();
                     reader = command.ExecuteReader();
 
@@ -1853,7 +1871,7 @@ namespace Logitude.DBMigrations.Models
         protected ExecuteSxmlFileResult ShouldExecuteSxmlFile(string sxmlFileName, ScriptDefinition scriptDefinition)
         {
 
-            
+
             if (!ExecutedSxmlFiles.Where(e => e.SxmlFileName.ToLower() == sxmlFileName.ToLower() && e.DBType.ToLower() == scriptDefinition.DBType.ToLower()).Any())
             {
                 return new ExecuteSxmlFileResult
@@ -1886,7 +1904,7 @@ namespace Logitude.DBMigrations.Models
                             Action = null
                         };
                     }
-                    
+
                     ExitTool("Error: The Script Inside " + sxmlFileName + " File Has Been Changed, If You Are Sure You Want To Continue Executing The Script, You Should Change The Script Version");
                 }
 
@@ -1982,6 +2000,7 @@ namespace Logitude.DBMigrations.Models
 
                     try
                     {
+                        connection.SqlNetAllowedLogonVersionClient = OracleAllowedLogonVersionClient.Version11;
                         connection.Open();
                         reader = command.ExecuteReader();
 
@@ -2681,6 +2700,10 @@ namespace Logitude.DBMigrations.Models
         protected void ExitTool(string message)
         {
             Console.WriteLine(message);
+#if DEBUG
+
+            Console.ReadLine();
+#endif
             Environment.Exit(1);
         }
     }

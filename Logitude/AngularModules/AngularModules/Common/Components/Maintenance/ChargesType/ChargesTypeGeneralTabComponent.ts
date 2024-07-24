@@ -27,7 +27,6 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
     public DisplayRegoinalTax: boolean = false;
     public MeasurementsQueryFilters: ApiQueryFilters;
     public IsChargeTypesRestrictedFeatureToggleOn = false;
-    public IsQuoteOPMaintence = false;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -39,9 +38,7 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
             this.DisplayRegoinalTax = true;
         }
         this.ReadChargeTypesRestrictedFeatureToggleFeature();
-        if (FeatureLocator.HasFeaturePermession("QuoteOP", "QuoteOPMaintence")) {
-            this.IsQuoteOPMaintence = true;
-        }
+     
     }
 
     ngOnInit() {

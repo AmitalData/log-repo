@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
-using WebFreight.Web.Controllers.DigitalPortal.Models;
+using Simplog.Server.Infrastructure.DataContracts.Models;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.SystemLogs;
 using Syncfusion.XlsIO;

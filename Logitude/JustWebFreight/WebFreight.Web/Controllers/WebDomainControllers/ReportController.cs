@@ -136,6 +136,133 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        //   public HttpResponseMessage GetPrepareSendReport(string type, string fileName, int tenant)
+        //   {
+        //       try
+        //       {
+        //           string token = HttpContext.Current.Request.Headers["Token"];
+        //           AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+        //           SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+        //           SecurityUtility.AuthenticationOnTenant(tenant);
+
+        //           string extension = "";
+        //           MemoryStream memoryStream = new MemoryStream();
+        //           Document document = null;
+
+        //           StiReport stiReport = new StiReport();
+        //           IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+
+        //           BlobFileInfo fileInfo = new BlobFileInfo()
+        //           {
+        //               FileName = (fileName + "mdc"),
+        //               FolderName = "others",
+        //               Extension = "mdc",
+        //               Tenant = tenant,
+        //           };
+
+        //           byte[] result = storageservice.Read(fileInfo);
+
+        //           if (!string.IsNullOrEmpty(fileName))
+        //           {
+        //               string[] Names = fileName.Split('@');
+        //               if (Names.Length > 1) fileName = Names[1];
+        //           }
+
+        //           if (result != null)
+        //           {
+
+        //var isAppServiceENV = Environment.GetEnvironmentVariable("IsAppService") == "true";
+        //bool isAppService = ConfigurationManager.AppSettings["IsAppService"] == "true";
+
+        //if ((isAppServiceENV || isAppService) && !string.IsNullOrEmpty(LogitudeSettings.LogitudeIISURL))
+        //{
+        //	string URI = LogitudeSettings.LogitudeIISURL.TrimEnd('/') + "/api/Report/" + "GetMemoryStreamForExcelOrPdf";
+
+        //	using (var client = new HttpClient())
+        //	{
+        //                       var memoryStreamForExcelOrPdfRequest = new { Result = result, Type = type };
+
+        //		string serializedObject = JsonConvert.SerializeObject(memoryStreamForExcelOrPdfRequest);
+        //		StringContent content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
+        //		var result1 = client.PostAsync(URI, content);
+
+        //		result1.Wait();
+        //		if (result1.Result.StatusCode == System.Net.HttpStatusCode.OK)
+        //		{
+
+        //			var  memoryStream1 = result1.Result.Content.ReadAsAsync(typeof(MemoryStream)).Result;
+        //                           memoryStream = (MemoryStream)memoryStream1;
+
+        //		}
+
+        //	}
+        //                   extension = type == "Excel" ? "xlsx" : "pdf";
+        //}
+        //               else
+        //               {
+
+
+        //                   stiReport.LoadDocument(result);
+
+        //	if (type == "Excel")
+        //	{
+
+        //		extension = "xlsx";
+        //		StiExcel2007ExportSettings setting = new StiExcel2007ExportSettings();
+        //		setting.UseOnePageHeaderAndFooter = true;
+        //		StiExcel2007ExportService service = new StiExcel2007ExportService();
+        //		service.ExportExcel(stiReport, memoryStream, setting);
+        //	}
+
+        //	else
+        //	{
+        //		stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
+        //		extension = "pdf";
+        //	}
+        //}
+        //               if (memoryStream != null)
+        //               {
+        //                   byte[] ByteData = memoryStream.ToArray();
+
+        //                   DocumentRepository documentRepository = new DocumentRepository(tenant);
+        //                   document = new Document()
+        //                   {
+        //                       FileName = fileName,
+        //                       CreateDate = DateTime.Now,
+        //                       Extension = extension,
+        //                       FileSize = ByteData.Length,
+        //                       Tenant = tenant,
+        //                       Id = IdCounter.GetNumber("Document", tenant),
+        //                       HasFile = true,
+        //                       Folder = "others",
+        //                   };
+
+        //                   documentRepository.Add(document);
+        //                   documentRepository.SubmitChanges();
+
+        //                   fileInfo = new BlobFileInfo()
+        //                   {
+        //                       FileName = document.Id,
+        //                       FolderName = "others",
+        //                       Extension = document.Extension,
+        //                       Tenant = tenant,
+        //                       FileSize = document.FileSize,
+
+        //                   };
+
+        //                   storageservice.Write(ByteData, fileInfo);
+        //               }
+        //           }
+
+        //           return Request.CreateResponse(HttpStatusCode.OK, document);
+        //       }
+
+        //       catch (Exception ex)
+        //       {
+        //           return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+        //       }
+        //   }
+
         public HttpResponseMessage GetPrepareSendReport(string type, string fileName, int tenant)
         {
             try
@@ -145,113 +272,126 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
-
                 string extension = "";
                 MemoryStream memoryStream = new MemoryStream();
                 Document document = null;
 
-                StiReport stiReport = new StiReport();
                 IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
 
-                BlobFileInfo fileInfo = new BlobFileInfo()
-                {
-                    FileName = (fileName + "mdc"),
-                    FolderName = "others",
-                    Extension = "mdc",
-                    Tenant = tenant,
-                };
 
-                byte[] result = storageservice.Read(fileInfo);
+                var isAppServiceENV = Environment.GetEnvironmentVariable("IsAppService") == "true";
+                bool isAppService = ConfigurationManager.AppSettings["IsAppService"] == "true";
 
-                if (!string.IsNullOrEmpty(fileName))
+                if ((isAppServiceENV || isAppService) && !string.IsNullOrEmpty(LogitudeSettings.LogitudeIISURL))
                 {
-                    string[] Names = fileName.Split('@');
-                    if (Names.Length > 1) fileName = Names[1];
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("step 1 get report for send- this is app service sent to IISWR ");
+
+                    string URI = LogitudeSettings.LogitudeIISURL.TrimEnd('/') + "/api/Report/" + "GetMemoryStreamFromStorageForExcelOrPdf";
+
+                    using (var client = new HttpClient())
+                    {
+                        var memoryStreamForExcelOrPdfRequest = new { fileName = fileName, Tenant = tenant, Type = type };
+
+                        string serializedObject = JsonConvert.SerializeObject(memoryStreamForExcelOrPdfRequest);
+                        StringContent content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
+                        var result1 = client.PostAsync(URI, content);
+
+                        result1.Wait();
+                        if (result1.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                        {
+                            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("step 2 back from IISWR ");
+                            var memoryStream1 = result1.Result.Content.ReadAsAsync(typeof(MemoryStream)).Result;
+                            memoryStream = (MemoryStream)memoryStream1;
+
+                        }
+                        else
+                        {
+                            throw new Exception("get report for send failed to get file from IISWR");
+                        }
+
+                    }
+
                 }
-
-                if (result != null)
+                else
                 {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("step 1 this is WR not appservice");
 
-					var isAppServiceENV = Environment.GetEnvironmentVariable("IsAppService") == "true";
-					bool isAppService = ConfigurationManager.AppSettings["IsAppService"] == "true";
 
-					if ((isAppServiceENV || isAppService) && !string.IsNullOrEmpty(LogitudeSettings.LogitudeIISURL))
-					{
-						string URI = LogitudeSettings.LogitudeIISURL.TrimEnd('/') + "/api/Report/" + "GetMemoryStreamForExcelOrPdf";
+                    StiReport stiReport = new StiReport();
 
-						using (var client = new HttpClient())
-						{
-                            var memoryStreamForExcelOrPdfRequest = new { Result = result, Type = type };
+                    BlobFileInfo fileInfo = new BlobFileInfo()
+                    {
+                        FileName = (fileName + "mdc"),
+                        FolderName = "others",
+                        Extension = "mdc",
+                        Tenant = tenant,
+                    };
 
-							string serializedObject = JsonConvert.SerializeObject(memoryStreamForExcelOrPdfRequest);
-							StringContent content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-							var result1 = client.PostAsync(URI, content);
+                    byte[] result = storageservice.Read(fileInfo);
 
-							result1.Wait();
-							if (result1.Result.StatusCode == System.Net.HttpStatusCode.OK)
-							{
+                    if (!string.IsNullOrEmpty(fileName))
+                    {
+                        string[] Names = fileName.Split('@');
+                        if (Names.Length > 1) fileName = Names[1];
+                    }
 
-								var  memoryStream1 = result1.Result.Content.ReadAsAsync(typeof(MemoryStream)).Result;
-                                memoryStream = (MemoryStream)memoryStream1;
-								
-							}
+                    if (result == null || result.Length == 0) throw new Exception(string.Format("get report for send in WR to get file from storage. file name {0}", fileName));
 
-						}
-                        extension = type == "Excel" ? "xlsx" : "pdf";
-					}
+                    stiReport.LoadDocument(result);
+
+                    if (type == "Excel")
+                    {
+
+                        extension = "xlsx";
+                        StiExcel2007ExportSettings setting = new StiExcel2007ExportSettings();
+                        setting.UseOnePageHeaderAndFooter = true;
+                        StiExcel2007ExportService service = new StiExcel2007ExportService();
+                        service.ExportExcel(stiReport, memoryStream, setting);
+                    }
+
                     else
                     {
-						stiReport.LoadDocument(result);
-
-						if (type == "Excel")
-						{
-
-							extension = "xlsx";
-							StiExcel2007ExportSettings setting = new StiExcel2007ExportSettings();
-							setting.UseOnePageHeaderAndFooter = true;
-							StiExcel2007ExportService service = new StiExcel2007ExportService();
-							service.ExportExcel(stiReport, memoryStream, setting);
-						}
-
-						else
-						{
-							stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
-							extension = "pdf";
-						}
-					}
-                    if (memoryStream != null)
-                    {
-                        byte[] ByteData = memoryStream.ToArray();
-
-                        DocumentRepository documentRepository = new DocumentRepository(tenant);
-                        document = new Document()
-                        {
-                            FileName = fileName,
-                            CreateDate = DateTime.Now,
-                            Extension = extension,
-                            FileSize = ByteData.Length,
-                            Tenant = tenant,
-                            Id = IdCounter.GetNumber("Document", tenant),
-                            HasFile = true,
-                            Folder = "others",
-                        };
-
-                        documentRepository.Add(document);
-                        documentRepository.SubmitChanges();
-
-                        fileInfo = new BlobFileInfo()
-                        {
-                            FileName = document.Id,
-                            FolderName = "others",
-                            Extension = document.Extension,
-                            Tenant = tenant,
-                            FileSize = document.FileSize,
-
-                        };
-
-                        storageservice.Write(ByteData, fileInfo);
+                        stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
+                        extension = "pdf";
                     }
                 }
+
+
+                if (memoryStream != null)
+                {
+                    extension = type == "Excel" ? "xlsx" : "pdf";
+
+                    byte[] ByteData = memoryStream.ToArray();
+
+                    DocumentRepository documentRepository = new DocumentRepository(tenant);
+                    document = new Document()
+                    {
+                        FileName = fileName,
+                        CreateDate = DateTime.Now,
+                        Extension = extension,
+                        FileSize = ByteData.Length,
+                        Tenant = tenant,
+                        Id = IdCounter.GetNumber("Document", tenant),
+                        HasFile = true,
+                        Folder = "others",
+                    };
+
+                    documentRepository.Add(document);
+                    documentRepository.SubmitChanges();
+
+                    BlobFileInfo fileInfo = new BlobFileInfo()
+                    {
+                        FileName = document.Id,
+                        FolderName = "others",
+                        Extension = document.Extension,
+                        Tenant = tenant,
+                        FileSize = document.FileSize,
+
+                    };
+
+                    storageservice.Write(ByteData, fileInfo);
+                }
+
 
                 return Request.CreateResponse(HttpStatusCode.OK, document);
             }
@@ -261,6 +401,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
         public HttpResponseMessage GetCheckIfStimulSoftReportIsBliud(string reportKey, int tenant)
         {
             try
@@ -440,7 +581,67 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 			}
 		}
 
-		[HttpPost]
+        [HttpPost]
+        public HttpResponseMessage GetMemoryStreamFromStorageForExcelOrPdf(MemoryStreamForExcelOrPdfRequest memoryStreamForExcelOrPdfRequest)
+        {
+            try
+            {
+                StiReport stiReport = new StiReport();
+                MemoryStream memoryStream = new MemoryStream();
+
+                string fileName = memoryStreamForExcelOrPdfRequest.FileName;
+
+                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+
+                BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = (fileName + "mdc"),
+                    FolderName = "others",
+                    Extension = "mdc",
+                    Tenant = memoryStreamForExcelOrPdfRequest.Tenant ,
+                };
+
+                byte[] result = storageservice.Read(fileInfo);
+
+                if (!string.IsNullOrEmpty(fileName))
+                {
+                    string[] Names = fileName.Split('@');
+                    if (Names.Length > 1) fileName = Names[1];
+                }
+                 
+                if (result == null || result.Length == 0) throw new Exception(string.Format("Get report to send in IISWR failed to get file from storage. file name {0}", fileName));
+              
+                stiReport.LoadDocument(result);
+
+                if (memoryStreamForExcelOrPdfRequest.Type == "Excel")
+                {
+
+                    StiExcel2007ExportSettings setting = new StiExcel2007ExportSettings();
+                    setting.UseOnePageHeaderAndFooter = true;
+                    StiExcel2007ExportService service = new StiExcel2007ExportService();
+                    service.ExportExcel(stiReport, memoryStream, setting);
+                }
+
+                else
+                {
+                    stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
+
+                }
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, memoryStream);
+
+            }
+
+            catch (Exception ex)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Get report for send in IISWR failed to create file");
+
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [HttpPost]
 		public HttpResponseMessage GetMemoryStreamForPrintExcelOrPdf(MemoryStreamForPrintExcelOrPdfRequest memoryStreamForPrintExcelOrPdfRequest)
 		{
 			try
@@ -448,9 +649,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 				StiReport stiReport = new StiReport();
 				MemoryStream memoryStream = new MemoryStream();
 
-				stiReport.LoadDocument(memoryStreamForPrintExcelOrPdfRequest.Result);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("step 2 this appService working om IISWR lenth of bytes {0} ", null, memoryStreamForPrintExcelOrPdfRequest?.Result?.Length);
 
-				if (memoryStreamForPrintExcelOrPdfRequest.Type == "PrintToPDF")
+                stiReport.LoadDocument(memoryStreamForPrintExcelOrPdfRequest.Result);
+
+                if (memoryStreamForPrintExcelOrPdfRequest.Type == "PrintToPDF")
 				{
 
 					stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
@@ -469,17 +672,91 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 				}
 
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("step 3 StiExcel created file in IISWR ");
 
-				return Request.CreateResponse(HttpStatusCode.OK, memoryStream);
+
+                return Request.CreateResponse(HttpStatusCode.OK, memoryStream);
 
 			}
 
 			catch (Exception ex)
 			{
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "step ex IISWR failed to create file");
 
-				return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
 			}
 		}
+
+        [HttpPost]
+        public HttpResponseMessage GetMemoryStreamFromStorageForPrintExcelOrPdf(MemoryStreamForPrintExcelOrPdfRequest memoryStreamForPrintExcelOrPdfRequest)
+        {
+            try
+            {
+
+                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+
+                string fileName = memoryStreamForPrintExcelOrPdfRequest.FileName;
+
+                BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = fileName + "mdc",
+                    FolderName = "others",
+                    Extension = "mdc",
+                    Tenant = (int)memoryStreamForPrintExcelOrPdfRequest.Tenant,
+
+                };
+
+                byte[] result = storageservice.Read(fileInfo);
+
+                if (result == null || result.Length == 0) throw new Exception(string.Format("Dwonload page faild to get file from storage. file name {0}", fileName));
+
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("step 1 this is from appService work on IISWR  get file from storage {0} file size {1}", null, fileName, result?.Length);
+
+                if (!string.IsNullOrEmpty(fileName))
+                {
+                    string[] Names = fileName.Split('@');
+                    if (Names.Count() > 1) fileName = Names[1];
+
+                }
+
+                StiReport stiReport = new StiReport();
+                MemoryStream memoryStream = new MemoryStream();
+
+                stiReport.LoadDocument(result);
+
+                if (memoryStreamForPrintExcelOrPdfRequest.Type == "PrintToPDF")
+                {
+
+                    stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
+
+                }
+                else if (memoryStreamForPrintExcelOrPdfRequest.Type == "MicrosoftExce" || memoryStreamForPrintExcelOrPdfRequest.Type == "MicrosoftExceAdvanced")
+                {
+
+                    StiExcel2007ExportSettings setting = new StiExcel2007ExportSettings();
+                    setting.UseOnePageHeaderAndFooter = memoryStreamForPrintExcelOrPdfRequest.UseOnePageHeaderAndFooter;
+                    setting.ExportDataOnly = memoryStreamForPrintExcelOrPdfRequest.ExportDataOnly;
+                    setting.ExportObjectFormatting = memoryStreamForPrintExcelOrPdfRequest.ExportObjectFormatting;
+                    StiExcel2007ExportService service = new StiExcel2007ExportService();
+                    service.ExportExcel(stiReport, memoryStream, setting);
+
+                }
+
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("step 3 StiExcel created file in IISWR ");
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, memoryStream);
+
+            }
+
+            catch (Exception ex)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "step ex IISWR failed to create file");
+
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
 
         public HttpResponseMessage GetDataProviderProperties(string code)
         {
@@ -523,7 +800,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 		public byte[] Result { get; set; }
 		public string Type { get; set; }
 
-	}
+        public string FileName { get; set; }
+
+        public int Tenant { get; set; }
+
+    }
 	public class MemoryStreamForPrintExcelOrPdfRequest
 	{
 		public byte[] Result { get; set; }
@@ -532,5 +813,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 		public bool ExportDataOnly { get; set; }
 		public bool ExportObjectFormatting { get; set; }
 
-	}
+        public string FileName { get; set; }
+
+        public int Tenant { get; set; }
+
+    }
 }

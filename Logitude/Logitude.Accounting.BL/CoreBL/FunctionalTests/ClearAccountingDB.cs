@@ -125,7 +125,7 @@ namespace Logitude.Accounting.BL.CoreBL.FunctionalTests
                 
                 using (var cn = conn as SqlConnection)
                 {
-                    Debug.WriteLine($"CommandExecuteNonQuery({cmd})");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"CommandExecuteNonQuery({cmd})");
 
 
                     var command = new SqlCommand(cmd, cn);

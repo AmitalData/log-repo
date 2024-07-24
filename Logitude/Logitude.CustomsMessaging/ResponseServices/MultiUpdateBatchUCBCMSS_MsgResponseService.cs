@@ -130,6 +130,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
 
                 LogMessagingUtil.Instance.AppendLine("updating invoice (CounterKey,LineNumber):" + supplierInvoiceItem.CounterKey + "," + supplierInvoiceItem.LineNumber);
+               
+                if (!isFromPendingView) supplierInvoiceItem.ItemAdditionalStatus = true;
 
                 updateService.Update(supplierInvoiceItem, true);
 

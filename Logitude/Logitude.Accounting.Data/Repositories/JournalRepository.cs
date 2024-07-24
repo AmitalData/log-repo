@@ -543,6 +543,38 @@ namespace Logitude.Accounting.Data.Repositories
                     select record).Any();
         }
 
+
+
+        public bool ExistsAccEntCodeByJIds(string accEntCode, IQueryable<string> jIds, int tenant)
+        {
+            bool rv = false;
+
+            var query = from record in context.Journals
+                        where record.Tenant == tenant
+                        && jIds.Contains(record.Id)
+                        && record.AccountingEntityCode == accEntCode
+                        select record.Id;
+
+            rv = query.Any();
+
+            return rv;
+        }
+
+        public string GetFirstIdByAccEntCodeByJIds(string accEntCode, IQueryable<string> jIds, int tenant)
+        {
+            string rv = "";
+
+            var query = from record in context.Journals
+                        where record.Tenant == tenant
+                        && jIds.Contains(record.Id)
+                        && record.AccountingEntityCode == accEntCode
+                        select record.Id;
+
+            rv = query.FirstOrDefault();
+
+            return rv;
+        }
+
         public List<CustomTaxReportData> GetARInvoiceJournals(DateTime? taxReportMonth, int tenant)
         {
             int days= DateTime.DaysInMonth(taxReportMonth.Value.Year, taxReportMonth.Value.Month);
