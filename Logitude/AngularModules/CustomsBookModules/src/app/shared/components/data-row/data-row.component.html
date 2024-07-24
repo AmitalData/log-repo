@@ -1,6 +1,6 @@
 <div class="mainTable_item" [ngClass]="{'selected': isSelected}">
 	<div class="mainTable_itemToggle" [class.active]="selected" (click)="expandClick()">
-		<button *ngIf="!data?.IsLeaf">
+		<button *ngIf="data?.children.length > 0">
 			<i role="img" aria-hidden="true"> <fa-icon [icon]="faArrowAltCircleLeft" ></fa-icon> </i>
 		</button>
 	</div>
@@ -8,8 +8,9 @@
 		<a href="#" role="button" [ngClass]="{'selectedLink': isSelected}">
 			<span class="full_classification" *ngIf="data?.CI_Parent_CustomsItemIDNum"
 				[innerHTML]="highlight(ClassificationNoDisplay(data,data?.FullClassification), searchItem)">
-				{{ ClassificationNoDisplay(data,data?.FullClassification) }} |
+				{{ ClassificationNoDisplay(data,data?.FullClassification) }} 
 			</span>
+			<span *ngIf="data?.CI_Parent_CustomsItemIDNum"> | </span>
 			<span class="full_classification" [title]="getTooltipText(data.CIH_GoodsDescription)"
 				[innerHTML]="highlight(data.CIH_GoodsDescription, searchItem)">
 				{{ data.CIH_GoodsDescription }}

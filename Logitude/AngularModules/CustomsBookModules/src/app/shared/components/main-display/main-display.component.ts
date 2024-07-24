@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { DataRowComponent } from '../data-row/data-row.component';
 import { DetailsFrameComponent } from '../details-frame/details-frame.component';
 import { TableTopComponent, TableTopState } from '../table-top/table-top.component';
@@ -31,7 +31,7 @@ import { FormsModule } from '@angular/forms';
 		]),
 	],
 })
-export class MainDisplayComponent {
+export class MainDisplayComponent implements OnInit {
 	@Input() showChiledren: boolean = false;
 	@Input() itemsData: BehaviorSubject<CB_CustomsItemComputedDataList[]>;
 	showDetails: boolean = false;
@@ -100,8 +100,8 @@ export class MainDisplayComponent {
 
 				// update list:
 				this.data = this.orderedDataForSearch(data);
-				// this.expandAll(this.data);
-				this.toggleAllChildren(true); // expand all 
+
+				this.searchToggleAllChildren(true); // expand all 
 				this.isExpand.next(true);
 
 				this.searchMode = TableTopState.Search;
@@ -110,31 +110,34 @@ export class MainDisplayComponent {
 		});
 	}
 
-	
-	toggleAllChildren(extend: boolean) {
-		
-		const toggleVisibility = (data: CB_CustomsItemComputedDataList[]) => {
-			data.forEach(item => {
-				if (extend) {
-					this.childrenToDesplay.push(item.CIH_GoodsDescription);
-				} else if (!extend ) {
-					const isShown = this.childrenToDesplay.indexOf(item.CIH_GoodsDescription);
-					this.childrenToDesplay.splice(isShown);
-				}
-				if (item.children && item.children.length > 0) {
-					toggleVisibility(item.children); // Recursively toggle children
-				}
-			});
-		};
-		toggleVisibility(this.data); // Assuming this.data is your main data array
+	onToggleAll(event: Event, item: CB_CustomsItemComputedDataList): void {
+		const checked = (event.target as HTMLInputElement)?.checked;
+		this.toggleVisibility(checked, item.children);
 	}
-	
-	expandAll(data: CB_CustomsItemComputedDataList[]) {
-		data.forEach((item) => {
-			this.showChildern(item.CIH_GoodsDescription);
-			if (item.children && item.children.length > 0) this.expandAll(item.children);
+
+
+	searchToggleAllChildren(expend: boolean) {
+		this.toggleVisibility(expend, this.data); // Assuming this.data is your main data array
+
+		// Find all child checkboxes using class selector and update their checked state class name-.mainTable_itemChkAllCheckBox
+		setTimeout(() => {
+			const childCheckboxes: HTMLCollection = document.getElementsByClassName('mainTable_itemChkAllCheckBox');
+			for (let i = 0; i < childCheckboxes.length; i++) {
+				(childCheckboxes[i] as HTMLInputElement).checked = expend;
+			}
+		}, 0);
+	}
+
+	toggleVisibility(expend: boolean, data: CB_CustomsItemComputedDataList[]) {
+		data.forEach(item => {
+			this.showChildern(expend, item);
+
+			if (item.children && item.children.length > 0) {
+				this.toggleVisibility(expend, item.children); // Recursively toggle children
+			}
 		});
-	}
+	};
+
 
 	searchMode: TableTopState = TableTopState.ViewAll;
 	selectedItemId: number | null = null;
@@ -166,13 +169,20 @@ export class MainDisplayComponent {
 		}
 	}
 
-	showChildern(id: string) {
-		const isShown = this.childrenToDesplay.indexOf(id);
-		isShown === -1 ? this.childrenToDesplay.push(id) : this.childrenToDesplay.splice(isShown);
+
+	showChildern(isOpen: any, item: CB_CustomsItemComputedDataList) {
+		const isShown = this.childrenToDesplay.indexOf(item.CIH_GoodsDescription);
+		if (isOpen && isShown === -1) {
+			this.childrenToDesplay.push(item.CIH_GoodsDescription);
+		}
+		else if (!isOpen && isShown !== -1) {
+			this.childrenToDesplay.splice(isShown);
+		}
+		// isShown === -1 ? this.childrenToDesplay.push(id) : this.childrenToDesplay.splice(isShown);
 		// return Boolean(isShown >= 0);
 	}
 
-	
+
 
 	handleClearResultsClick() {
 		this.handleClearResults();
@@ -188,7 +198,7 @@ export class MainDisplayComponent {
 		this.searchValue = "";
 		// this.InitData();
 		this.data = this.fullData;
-		this.toggleAllChildren(false);  
+		this.searchToggleAllChildren(false);
 		this.isExpand.next(false);
 	}
 

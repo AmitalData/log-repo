@@ -57,7 +57,7 @@ export class DataRowComponent implements OnInit {
 
 	expandClick() {	
 		this.selected = !this.selected;
-		this.showChildern.emit();
+		this.showChildern.emit(this.selected);
 	}
 
 	showAddCommentSidebar() {
