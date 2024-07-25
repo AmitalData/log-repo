@@ -21,11 +21,11 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectTableRuleFieldRepository = new ObjectTableRuleFieldRepository(ObjectContext);
             ObjectFieldValidationRepository = new ObjectFieldValidationRepository(ObjectContext);
             RuleConditionFieldRepository = new RuleConditionFieldRepository(ObjectContext);
-            Dictionary<string, ObjectTableRule> TenantObjectTableRule = ObjectTableRuleRepository.GetObjectTableRules(0).ToDictionary(d => d.RuleCode, a => a);
+            Dictionary<string, ObjectTableRule> TenantObjectTableRule = ObjectTableRuleRepository.GetObjectTableRules(0).GroupBy(d => d.RuleCode).ToDictionary(g => g.Key, a => a.FirstOrDefault());
 
-            Dictionary<string, ObjectTableRuleField> TenantObjectTableRuleFields = ObjectTableRuleFieldRepository.GetObjectTableRuleFields(0).ToDictionary(d => d.ObjectTableRuleId + d.ObjectFieldCode, a => a);
+            Dictionary<string, ObjectTableRuleField> TenantObjectTableRuleFields = ObjectTableRuleFieldRepository.GetObjectTableRuleFields(0).GroupBy(d => d.ObjectTableRuleId + d.ObjectFieldCode).ToDictionary(g => g.Key, a => a.FirstOrDefault());
 
-            Dictionary<string, RuleConditionField> TenantRuleConditionFields = RuleConditionFieldRepository.GetRuleConditionFieldsByTenant(0).ToDictionary(d => d.ObjectTableRuleId + d.ObjectFieldCode, a => a);
+            Dictionary<string, RuleConditionField> TenantRuleConditionFields = RuleConditionFieldRepository.GetRuleConditionFieldsByTenant(0).GroupBy(d => d.ObjectTableRuleId + d.ObjectFieldCode).ToDictionary(g => g.Key, a => a.FirstOrDefault());
 
             List<ObjectFieldValidation> TenantObjectFieldValidations = ObjectFieldValidationRepository.GetObjectFieldValidations(0).ToList();
 
