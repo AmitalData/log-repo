@@ -1468,7 +1468,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
         public static void ValidateCustomShipment(ShipmentPM entityPM, bool isNewEntity)
         {
-            // todo: create translations
             if (string.IsNullOrEmpty(entityPM.DepartmentId))
             {
                 throw new ApplicationException("DepartmentId is mandatory");
@@ -1484,19 +1483,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
             if (!string.IsNullOrEmpty(entityPM.IskaNumber) && !entityPM.IskaNumber.ToUpper().StartsWith("I"))
             {
-                throw new ApplicationException("IskaNumber must start with 'I'");
+                throw new ApplicationException(TranslateTextsClass.Translate("Shipment.O.InvalidIskaNumber", entityPM.Tenant));
             }
 
             if (!string.IsNullOrEmpty(entityPM.FlightVoyageNumber))
             {
-                if (entityPM.TransportModeId == "A" && entityPM.FlightVoyageNumber.Any(char.IsDigit) && entityPM.FlightVoyageNumber.Count(char.IsDigit) == 4) 
+                if (entityPM.TransportModeId == "A" && !(entityPM.FlightVoyageNumber.Count() == 4 && entityPM.FlightVoyageNumber.Count(char.IsDigit) == 4)) 
                 {
-                    // throw new ApplicationException(TranslateTextsClass.Translate("Shipment.O.Routings.MainCarriage", entityPM.Tenant));
-                    throw new ApplicationException("FlightVoyageNumber must be 4 digits");
+                    throw new ApplicationException(TranslateTextsClass.Translate("Shipment.O.InvalidFlightVoyageNumber", entityPM.Tenant));
                 }
-                if (entityPM.TransportModeId == "O" && entityPM.FlightVoyageNumber.Any(char.IsDigit) && entityPM.FlightVoyageNumber.Count(char.IsDigit) == 3 && entityPM.FlightVoyageNumber.Any(char.IsLetter) && entityPM.FlightVoyageNumber.Count(char.IsLetter) == 1)
+                if (entityPM.TransportModeId == "O" && !(entityPM.FlightVoyageNumber.Count() == 4 && entityPM.FlightVoyageNumber.Count(char.IsDigit) == 3 && char.IsLetter(entityPM.FlightVoyageNumber[0])))
                 {
-                    throw new ApplicationException("FlightVoyageNumber must be 4 digits or 1 letter + 3 digits");
+                    throw new ApplicationException(TranslateTextsClass.Translate("Shipment.O.InvalidFlightVoyageNumber2", entityPM.Tenant));
                 }
             }
         }

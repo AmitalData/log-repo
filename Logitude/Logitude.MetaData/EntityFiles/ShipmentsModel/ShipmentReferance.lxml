@@ -42,7 +42,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;רפרנט&quot;"
   DefaultText="&quot;Shipment Referance&quot;"
-  Code="&quot;3cdb&quot;"
+  Code="&quot;6677&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -565,6 +565,19 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;ShipmentReferance.O.MissingReferenceType&quot;"
+      DefaultText="&quot;Reference type is mandatory if reference value is filled&quot;"
+      LocalDefaultText="&quot; סוג אסמכתא הוא  שדה חובה אם קיים אסמכתא&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ShipmentReferance.O.MissingReferenceValue&quot;"
+      DefaultText="&quot;Reference value is mandatory if reference type is filled&quot;"
+      LocalDefaultText="&quot; אסמכתא הוא שדה חובה אם קיים סוג אסמכתא&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

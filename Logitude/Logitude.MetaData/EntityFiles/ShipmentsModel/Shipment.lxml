@@ -121265,6 +121265,24 @@
       LocalDefaultText="&quot;משלח/אסמכתא משלח&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.O.InvalidIskaNumber&quot;"
+      DefaultText="&quot;IskaNumber must start with I&quot;"
+      LocalDefaultText="&quot;מזהה עיסקה חייב להתחיל ב I&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.O.InvalidFlightVoyageNumber&quot;"
+      DefaultText="&quot;Flight voyage number must be 4 digits&quot;"
+      LocalDefaultText="&quot;מס' טיסה/הפלגה חייב להיות 4 ספרות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.O.InvalidFlightVoyageNumber1&quot;"
+      DefaultText="&quot;Flight voyage number must be one letter and 3 digits&quot;"
+      LocalDefaultText="&quot;מס' טיסה/הפלגה חייב להיות אות ו-3 ספרות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
