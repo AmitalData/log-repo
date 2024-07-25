@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "930bcd1302edd3bc2613c1c1062d13ad";
+		public const string HashString = "3b79893bc29fea8c0a51c91ecb8e4eac";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -8279,6 +8279,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullLocalDefaultText =  "קוד לקוח",
 					  						HelpTextCode =  "CustomerId",
 					  						HelpTextDefaultText =  "Indicates who the customer is, so that Logitude knows to refer to the relevant partner for statistics, billing and shared logistics. For Export, the Shipper is selected automatically. For Import, the Consignee is selected automatically.",
+					  						HelpLocalDefaultText =  "מציין מי הלקוח, כך ש-Logitude תדע לפנות לשותף הרלוונטי לסטטיסטיקה, חיוב ולוגיסטיקה משותפת. עבור ייצוא, השולח נבחר באופן אוטומטי. עבור ייבוא, הנמען נבחר באופן אוטומטי.",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Card",
 					  						NavigationPropertyName =  "CustomerCard",
@@ -89625,6 +89626,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DepartmentName",
 					  						DefaultText =  "Department",
+					  						FullLocalDefaultText =  "חוליה",
 					  						ListFieldLable =  "DepartmentNameListLable",
 					  						ListLableDefaultText =  "Department",
 					  						IsForeignKey =  false,
@@ -91375,6 +91377,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "DeclarationOfficeName",
 					  						ListPropertyPath =  "DeclarationOfficeName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -97292,6 +97295,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  		   TextCode ShipmentTextCode_ShipmentOReferenceTypeValue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.ReferenceTypeValue", DefaultText = "Reference Type Value",LocalDefaultText = @"מס' הזמנת לקוח", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentOFreightForwarderIdShipmentNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.FreightForwarderIdShipmentNumber", DefaultText = "FreightForwarderId ShipmentNumber",LocalDefaultText = @"משלח/אסמכתא משלח", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOInvalidIskaNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.InvalidIskaNumber", DefaultText = "IskaNumber must start with I",LocalDefaultText = @"מזהה עיסקה חייב להתחיל ב I", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOInvalidFlightVoyageNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.InvalidFlightVoyageNumber", DefaultText = "Flight voyage number must be 4 digits",LocalDefaultText = @"מס' טיסה/הפלגה חייב להיות 4 ספרות", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOInvalidFlightVoyageNumber1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.InvalidFlightVoyageNumber1", DefaultText = "Flight voyage number must be one letter and 3 digits",LocalDefaultText = @"מס' טיסה/הפלגה חייב להיות אות ו-3 ספרות", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -84,14 +84,11 @@ using Logitude.DashboardModule.BL;
 
 
 
-
-
-
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class UserUpdateClass
    {  		
-		public const string HashString = "35e492ec81fed41550bdb272fe3085874";
+		public const string HashString = "0b819e894643849ba4f04091389c06f2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -107,6 +104,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasCustomFilter =  true,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  true,
+			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -1039,7 +1039,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MaxLength =  40,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  true,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -1054,7 +1054,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  true,
 					  						PMPropertyPath =  "LocalName",
 					  						ListPropertyPath =  "LocalName",
-					  						DisplayInLookUpIndex =  0,
+					  						DisplayInLookUpIndex =  2,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  2,
@@ -2238,6 +2238,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsShowContactDetailsInTheMobileApp",
+					  						ShortName =  "IsShowContactDetailsInMobile",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2544,10 +2545,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search names/ positions",
-                                            FullLocalDefaultText = "חיפוש שמות/תפקידים",
-
-
-                                              HelpTextCode =  "SearchFields",
+					  						FullLocalDefaultText =  "חיפוש שמות/תפקידים",
+					  						HelpTextCode =  "SearchFields",
 					  						HelpTextDefaultText =  "Searching by :\n1: Emails\n2: names",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -4343,6 +4342,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsTwoFactorAuthenticationEnabled",
+					  						ShortName =  "IsTwoFactorAuthenticateEnabled",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
