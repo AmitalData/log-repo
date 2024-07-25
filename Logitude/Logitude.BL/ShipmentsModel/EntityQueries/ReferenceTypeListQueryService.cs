@@ -36,7 +36,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             IQueryable<ReferenceType> iQueryable = (from a in context.ReferenceTypes
                                                select a);
-            			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
+            // iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
@@ -161,7 +161,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             IQueryable<ReferenceType> iQueryable = (from a in context.ReferenceTypes  select a);
 
-			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
+			// iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
@@ -186,20 +186,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             IQueryable<ReferenceTypeList> query = (from a in iQueryable
                                                    select new ReferenceTypeList()
                                                    {
-
+                                                       Code = a.Code,
+                                                       LocalName = a.LocalName,
+                                                       EnglishName = a.EnglishName,
                                                        SearchFields = a.SearchFields,
-
                                                        Inactive = a.Inactive,
-
                                                    });
             return query;
         }
-
-        private IQueryable<ReferenceType> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<ReferenceType> iQueryable)
-        {
-            throw new NotImplementedException();
-        }
-
 
     }
 }

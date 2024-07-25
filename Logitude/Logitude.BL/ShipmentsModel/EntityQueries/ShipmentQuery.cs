@@ -2185,6 +2185,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.ShipmentAssemblies = shipmentAssemblyQuery.GetShipmentAssemblies(shipment.Id, shipment.Tenant);
                 #endregion
 
+                #region Shipment references
+                if (shipment.DirectionId == "C")
+                {
+                    ShipmentReferanceRepository shipmentReferanceRepository = new ShipmentReferanceRepository(tenant);
+                    ShipmentReferanceQuery shipmentReferanceQuery = new ShipmentReferanceQuery(shipmentReferanceRepository);
+                    shipmentPM.ShipmentReferances = shipmentReferanceQuery.GetShipmentReferances(shipment.Id, shipment.Tenant);
+                }
+                #endregion
+
                 #region Packages | Commodities
                 ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(tenant);
                 ShipmentPackageQuery shipmentPackageQuery = new ShipmentPackageQuery(shipmentPackageRepository);

@@ -9189,6 +9189,7 @@
     DefaultText="&quot;Create Date&quot;"
     ListFieldLable="&quot;CreateDateTimeListLable&quot;"
     ListLableDefaultText="&quot;Open Date&quot;"
+    ListLocalDefaultText="&quot;תאריך פתיחה&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -9598,6 +9599,7 @@
     DefaultText="&quot;Customer Name&quot;"
     ListFieldLable="&quot;CustomerNameListLable&quot;"
     ListLableDefaultText="&quot;Customer&quot;"
+    ListLocalDefaultText="&quot;לקוח&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -104659,6 +104661,7 @@
     FullLocalDefaultText="&quot;חוליה&quot;"
     ListFieldLable="&quot;DepartmentNameListLable&quot;"
     ListLableDefaultText="&quot;Department&quot;"
+    ListLocalDefaultText="&quot;חוליה&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -108748,6 +108751,7 @@
   <Query
     Code="&quot;CustomsShipments&quot;"
     TextCode="&quot;Customs Shipments&quot;"
+    LocalTextCode="&quot;עמילות מכס&quot;"
     QueryGroupCode="&quot;SHIP&quot;"
     IndexOrder="22"
     ObjectTableName="&quot;Shipment&quot;"
@@ -108756,7 +108760,7 @@
     IsAddNewEntity="true"
     IsPackagable="true"
     DefaultSortName="&quot;CreateDateTime&quot;"
-    DefaultSortDirection="&quot;Ascending&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
@@ -108767,27 +108771,22 @@
       <QueryColumn
         QueryCode="&quot;CustomsShipments&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;CreateDateTime&quot;"
+        ObjectFieldName="&quot;DepartmentName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CustomsShipments&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;ShipmentNumber&quot;"
+        ObjectFieldName="&quot;CreateDateTime&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CustomsShipments&quot;"
         IndexOrder="3"
-        ObjectFieldName="&quot;ShipmentType&quot;"
+        ObjectFieldName="&quot;ShipmentNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CustomsShipments&quot;"
         IndexOrder="4"
         ObjectFieldName="&quot;CustomerName&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;CustomsShipments&quot;"
-        IndexOrder="5"
-        ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="100" />
     </QueryColumns>
     <QueryFilters>

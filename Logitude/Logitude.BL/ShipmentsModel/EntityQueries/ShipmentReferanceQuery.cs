@@ -115,5 +115,23 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                });
             return result;
         }
+
+        public List<ShipmentReferancePM> GetShipmentReferances(string shipmentId, int tenant)
+        {
+            List<ShipmentReferancePM> shipmentReferances
+                = (from a in repository.context.ShipmentReferances.Include("Card").Include("ReferenceType")
+                   where a.ShipmentId == shipmentId && a.Tenant == tenant
+                   select new ShipmentReferancePM()
+                   {
+                       ShipmentId = a.ShipmentId,
+                       Tenant = a.Tenant,
+                       LineNumber = a.LineNumber,
+                       ReferenceType = a.ReferenceType == null ? null : a.ReferenceTypeCode.Code,
+                       PartnerId = a.Card == null ? null : a.Card.Code,
+                       ReferenceValue = a.ReferenceValue,
+                   }).ToList();
+
+            return shipmentReferances;
+        }
     }
 }

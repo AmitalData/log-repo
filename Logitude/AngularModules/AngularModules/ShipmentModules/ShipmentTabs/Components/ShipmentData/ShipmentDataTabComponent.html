@@ -4,6 +4,11 @@
         font-size: 14px;
         color: #1B90CB;
     }
+
+    .readonly {
+        pointer-events: none;
+        opacity: 0.5;
+    }
 </style>
 
 <!-- <div *ngIf="EntityPM"> -->
@@ -319,30 +324,32 @@
                                     <tr>
                                         <!-- ReferenceType -->
                                         <td>
-                                            <LogLov 
+                                            <LogLov [class.readonly]="disableReferenceTypeValue"
                                                 [ObjectFieldName]="'ReferenceType'" 
                                                 [SelectedValue]="ReferenceType"
                                                 [ObjectTableName]="'ShipmentReferance'"
                                                 [DataContext]="DataContext"
                                                 [HideColumns]="true"
                                                 [HideLastColumn]="true"
-                                                [LookUpTableName]="'ReferenceTypes'">
+                                                [LookUpTableName]="'ReferenceType'">
                                             </LogLov>
                                         </td>
-
+                                        
                                         <td style="width:3px;">
                                             <div></div>
                                         </td>
 
                                         <!-- ReferenceValue -->
-                                        <td>
-                                            <LogTextBox 
+                                        <td [class.readonly]="disableReferenceTypeValue">
+                                            <LogTextBox
                                                 [ObjectFieldName]="'ReferenceValue'" 
                                                 [Text]="ReferenceValue"
                                                 [ObjectTableName]="'ShipmentReferance'"
+                                                [HideLastColumn]="true"
                                                 [DataContext]="DataContext">
                                             </LogTextBox>
                                         </td>
+                                        <td><IconButton [IsSmall]="true" [Name]="'Edit'" (click)="EditReferenceTypeValue()"></IconButton></td>
                                     </tr>
                                 </table>
                             </tr>
@@ -354,12 +361,12 @@
                                 </td>
 
                                 <td>
-                                    <LogLov 
-                                        [ObjectFieldName]="'TransportModeId'" 
-                                        [SelectedValue]="TransportModeId"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [DataContext]="DataContext"
-                                        [LookUpTableName]="'TransportMode'">
+                                    <LogLov
+                                            [ObjectFieldName]="'TransportModeId'"
+                                            [SelectedValue]="TransportModeId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'TransportMode'">
                                     </LogLov>
                                 </td>
                             </tr>
