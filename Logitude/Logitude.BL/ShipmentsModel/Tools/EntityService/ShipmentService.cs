@@ -471,8 +471,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 				entityPM.ShipmentTypeId = null;
 
 				// todo: get default values
-				this.entityPM.SalesmanUserId = "1-1";
-				this.entityPM.ReferantUserId = "1-1";
+				this.entityPM.SalesmanUserId = "1-421340";
+				this.entityPM.ReferantUserId = "1-421335";
 
 				this.entityPM.CreatedByUserId = loggedContact.Id;
 				this.entityPM.UpdatedByUserId = loggedContact.Id;
@@ -930,9 +930,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         // myOldCustomerId = entityPoco.CustomerId;
 
                         // todo: get default values (if value from client is not changed?)
-                        this.entityPM.DepartmentId = "1-1";
-                        this.entityPM.SalesmanUserId = "1-1";
-                        this.entityPM.ReferantUserId = "1-1";
+                        this.entityPM.DepartmentId = "1-10140";
+                        this.entityPM.SalesmanUserId = "1-421340";
+                        this.entityPM.ReferantUserId = "1-421335";
                     }
 
                     ShipmentValidating.ValidateCustomShipment(entityPM, false);

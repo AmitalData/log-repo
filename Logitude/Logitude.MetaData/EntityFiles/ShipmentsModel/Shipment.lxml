@@ -9516,6 +9516,7 @@
     FullLocalDefaultText="&quot;קוד לקוח&quot;"
     HelpTextCode="&quot;CustomerId&quot;"
     HelpTextDefaultText="&quot;Indicates who the customer is, so that Logitude knows to refer to the relevant partner for statistics, billing and shared logistics. For Export, the Shipper is selected automatically. For Import, the Consignee is selected automatically.&quot;"
+    HelpLocalDefaultText="&quot;מציין מי הלקוח, כך ש-Logitude תדע לפנות לשותף הרלוונטי לסטטיסטיקה, חיוב ולוגיסטיקה משותפת. עבור ייצוא, השולח נבחר באופן אוטומטי. עבור ייבוא, הנמען נבחר באופן אוטומטי.&quot;"
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="&quot;Card&quot;"
@@ -104655,6 +104656,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;DepartmentName&quot;"
     DefaultText="&quot;Department&quot;"
+    FullLocalDefaultText="&quot;חוליה&quot;"
     ListFieldLable="&quot;DepartmentNameListLable&quot;"
     ListLableDefaultText="&quot;Department&quot;"
     IsNullable="false"
@@ -106725,6 +106727,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;DeclarationOfficeName&quot;"
     ListPropertyPath="&quot;DeclarationOfficeName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -121232,7 +121235,6 @@
       LocalDefaultText="&quot;פתיחת תיק עמילות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-
     <TextCode
       Code="&quot;Shipment.O.ShipmentPackages&quot;"
       DefaultText="&quot;ShipmentPackages&quot;"
@@ -121261,6 +121263,24 @@
       Code="&quot;Shipment.O.FreightForwarderIdShipmentNumber&quot;"
       DefaultText="&quot;FreightForwarderId ShipmentNumber&quot;"
       LocalDefaultText="&quot;משלח/אסמכתא משלח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.O.InvalidIskaNumber&quot;"
+      DefaultText="&quot;IskaNumber must start with I&quot;"
+      LocalDefaultText="&quot;מזהה עיסקה חייב להתחיל ב I&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.O.InvalidFlightVoyageNumber&quot;"
+      DefaultText="&quot;Flight voyage number must be 4 digits&quot;"
+      LocalDefaultText="&quot;מס' טיסה/הפלגה חייב להיות 4 ספרות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.O.InvalidFlightVoyageNumber1&quot;"
+      DefaultText="&quot;Flight voyage number must be one letter and 3 digits&quot;"
+      LocalDefaultText="&quot;מס' טיסה/הפלגה חייב להיות אות ו-3 ספרות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

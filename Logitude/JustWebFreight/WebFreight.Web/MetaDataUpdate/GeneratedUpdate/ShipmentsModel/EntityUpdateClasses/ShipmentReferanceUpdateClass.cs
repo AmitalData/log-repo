@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentReferanceUpdateClass
    {  		
-		public const string HashString = "54032b255617c60b5a7feed98b44443d";
+		public const string HashString = "7be69806563f2a8943047378506bc781";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -133,7 +133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "רפרנט",
 			      				    DefaultText =  "Shipment Referance",
-			      				    Code =  "3cdb",
+			      				    Code =  "6677",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
@@ -628,7 +628,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ShipmentReferanceObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShipmentReferance" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ShipmentReferanceTextCode_ShipmentReferanceOMissingReferenceType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentReferance.O.MissingReferenceType", DefaultText = "Reference type is mandatory if reference value is filled",LocalDefaultText = @" סוג אסמכתא הוא  שדה חובה אם קיים אסמכתא", ObjectTableId = ShipmentReferanceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentReferanceTextCode_ShipmentReferanceOMissingReferenceValue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentReferance.O.MissingReferenceValue", DefaultText = "Reference value is mandatory if reference type is filled",LocalDefaultText = @" אסמכתא הוא שדה חובה אם קיים סוג אסמכתא", ObjectTableId = ShipmentReferanceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 
