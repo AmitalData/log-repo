@@ -1272,7 +1272,7 @@ namespace WebFreight.Web
             {
                 secret = ConfigurationManager.AppSettings["WarmSecret"];
             }
-            if(string.IsNullOrWhiteSpace(secret))
+            if (string.IsNullOrWhiteSpace(secret))
             {
                 throw new Exception("No secret specified in configuration file");
             }
@@ -1304,12 +1304,24 @@ namespace WebFreight.Web
         }
         [HttpGet]
         [ActionName("StartWarm")]
-        public HttpResponseMessage StartWarm(string t)
+        public HttpResponseMessage StartWarm(string t = null)
         {
             try
             {
                 string tenantsFromConfig = "";
                 List<int> tenants = new List<int>();
+                if (string.IsNullOrWhiteSpace(t))
+                {
+                    t = Environment.GetEnvironmentVariable("WarmJwt");
+                    if (string.IsNullOrWhiteSpace(t))
+                    {
+                        t = ConfigurationManager.AppSettings["WarmJwt"];
+                    }
+                }
+                if (string.IsNullOrWhiteSpace(t))
+                {
+                    throw new Exception("No Jwt provided");
+                }
                 JwtPayload tokenData = GetPayloadFromToken<JwtPayload>(t);
                 if (tokenData == null)
                 {
