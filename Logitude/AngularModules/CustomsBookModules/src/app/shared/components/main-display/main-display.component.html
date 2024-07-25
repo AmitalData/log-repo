@@ -10,7 +10,7 @@
 					<img src="../../../../assets/images/loadingProgressBar.gif" alt="">
 				</div>
 				<ul *ngFor="let item of data" class="wtree">
-					<app-data-row [data]="item" [isSelected]="selectedItemId == item.CustomsItemID"
+					<app-data-row [data]="item" [isSelected]="showDetails && selectedItemId == item.CustomsItemID"
 						[isExpand]="isExpand" [searchItem]="searchValue"
 						(showCommentSidebar)="showAddComment = !showAddComment"
 						(showChildern)="showChildern($event, item)" class="app-data-row"
@@ -23,7 +23,7 @@
 								<li [@inOutAnimation]>
 									<app-data-row [data]="item?.children[key2]" [searchItem]="searchValue"
 										[isExpand]="isExpand"
-										[isSelected]="selectedItemId == item?.children[key2]?.CustomsItemID"
+										[isSelected]="showDetails && selectedItemId == item?.children[key2]?.CustomsItemID"
 										(showCommentSidebar)="showAddComment = !showAddComment" class="app-data-row"
 										(showChildern)="showChildern($event, item.children[key2])"
 										(showDetails)="showDetailsClick(item.children[key2]?.CustomsItemID , item.children[key2])">
@@ -40,7 +40,7 @@
 												<li [@inOutAnimation]>
 													<app-data-row [data]="item?.children[key2]?.children[key3]"
 														[searchItem]="searchValue"
-														[isSelected]="selectedItemId == item?.children[key2]?.children[key3]?.CustomsItemID"
+														[isSelected]="showDetails && selectedItemId == item?.children[key2]?.children[key3]?.CustomsItemID"
 														[isExpand]="isExpand"
 														(showCommentSidebar)="showAddComment = !showAddComment"
 														class="app-data-row"
@@ -57,7 +57,7 @@
 																	<app-data-row
 																		[data]="item?.children[key2]?.children[key3]?.children[key4]"
 																		[isExpand]="isExpand" [searchItem]="searchValue"
-																		[isSelected]="selectedItemId == item?.children[key2]?.children[key3]?.children[key4]?.CustomsItemID"
+																		[isSelected]="showDetails && selectedItemId == item?.children[key2]?.children[key3]?.children[key4]?.CustomsItemID"
 																		(showCommentSidebar)="showAddComment = !showAddComment"
 																		class="app-data-row"
 																		(showChildern)="showChildern($event, item.children[key2].children[key3].children[key4])"
@@ -73,7 +73,7 @@
 																						[data]="item?.children[key2]?.children[key3]?.children[key4]?.children[key5]"
 																						[searchItem]="searchValue"
 																						[isExpand]="isExpand"
-																						[isSelected]="selectedItemId == item?.children[key2]?.children[key3]?.children[key4]?.children[key5].CustomsItemID"
+																						[isSelected]="showDetails && selectedItemId == item?.children[key2]?.children[key3]?.children[key4]?.children[key5].CustomsItemID"
 																						(showCommentSidebar)="showAddComment = !showAddComment"
 																						class="app-data-row"
 																						(showChildern)="showChildern($event, item.children[key2].children[key3].children[key4].children[key5])"

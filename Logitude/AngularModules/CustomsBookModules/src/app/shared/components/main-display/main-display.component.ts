@@ -143,7 +143,7 @@ export class MainDisplayComponent implements OnInit {
 	itemData: ItemData = { customsItemId: 0, measurementUnitMalamId: 0 };
 	showDetailsClick(CustomsItemID: number, item: CB_CustomsItemComputedDataList) {
 		this.selectedItemId = CustomsItemID;
-
+		
 		if (this.itemData.customsItemId == CustomsItemID) {
 			this.showDetails = !this.showDetails;
 			return;
@@ -167,12 +167,12 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 
-	showChildern(isOpen: any, item: CB_CustomsItemComputedDataList) {
+	showChildern(openAction: any, item: CB_CustomsItemComputedDataList) {
 		const isShown = this.childrenToDesplay.indexOf(item.CIH_GoodsDescription);
-		if (isOpen && isShown === -1) {
+		if (openAction && isShown === -1) {
 			this.childrenToDesplay.push(item.CIH_GoodsDescription);
 		}
-		else if (!isOpen && isShown !== -1) {
+		else if (!openAction && isShown !== -1) {
 			this.childrenToDesplay.splice(isShown);
 		}
 		// isShown === -1 ? this.childrenToDesplay.push(id) : this.childrenToDesplay.splice(isShown);
