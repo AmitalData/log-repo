@@ -63,6 +63,8 @@ export class MainDisplayComponent implements OnInit {
 		};
 
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
+			this.countSearchResult = 0;
+
 			this.fullData = this.orderedData(data);
 			this.data = this.fullData;
 			this.searchMode = TableTopState.ViewAll;
@@ -71,14 +73,14 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 	searchValue: string = '';
-
+	countSearchResult:number = 0;
 	ListenToItemsSearched() {
 		// listen to search text changes:
 		this.searchService.searchText$.subscribe((searchText) => {
 			if (searchText === "") this.handleClearResults();
-			else if (this.itemsData.getValue().length > 0) {
-				this.searchMode = TableTopState.Search;
-			}
+			// else if (this.itemsData.getValue().length > 0) {
+			// 	this.searchMode = TableTopState.Search;
+			// }
 		});
 
 		// listen to itemsData changes:
@@ -86,6 +88,7 @@ export class MainDisplayComponent implements OnInit {
 			if (data.length == 0 && this.searchService.GetSearchText() !== "") {
 				//TODO: Add not results found message
 				this.data = [];
+				this.countSearchResult = 0;
 				this.searchMode = TableTopState.Search;
 				this.searchValue = "";
 				return;
@@ -94,16 +97,17 @@ export class MainDisplayComponent implements OnInit {
 			if (this.itemsData.getValue().length > 0) {
 				// remove duplicates customsItemID:
 				data = data.filter((v, i, a) => a.findIndex(t => (t.CustomsItemID === v.CustomsItemID)) === i);
-
+				
+				this.countSearchResult = data.length;
 				// update list:
 				this.data = this.orderedDataForSearch(data);
-
 				this.searchToggleAllChildren(true); // expand all 
 				this.isExpand.next(true);
 
 				this.searchMode = TableTopState.Search;
 				this.searchValue = this.searchService.GetSearchText();
 			}
+			else this.countSearchResult = 0;
 		});
 	}
 
@@ -193,6 +197,7 @@ export class MainDisplayComponent implements OnInit {
 		this.showDetails = false;
 		this.data = [];
 		this.searchValue = "";
+		this.countSearchResult = 0;
 		// this.InitData();
 		this.data = this.fullData;
 		this.searchToggleAllChildren(false);
@@ -364,4 +369,11 @@ export interface RemarksClassificationPM {
 	tenant: number;
 	customsItemsID: number;
 	remarkDescription: string;
+}
+
+export interface RemarksClassificationList {
+	Id: string;
+	Tenant: number;
+	CustomsItemsID: number;
+	RemarkDescription: string;
 }

@@ -194,7 +194,7 @@ a.searchResults_filterPop_clear {
 	width: 0;
 
 	&.active {
-		width: 90%;
+		width: 100%;
 	}
 
 	transition: width 0.6s ease-in-out;

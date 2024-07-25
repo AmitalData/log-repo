@@ -35,6 +35,10 @@
     margin-bottom: 0px;
 }
 
+/* ::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; 
+} */
 .commentsList {
     overflow-y: scroll;
     scrollbar-width: thin;

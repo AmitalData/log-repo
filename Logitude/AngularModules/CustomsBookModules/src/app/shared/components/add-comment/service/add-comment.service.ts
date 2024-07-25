@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { CB_CustomsItemComputedDataList } from '../../main-display/main-display.component';
+import { CB_CustomsItemComputedDataList, RemarksClassificationList } from '../../main-display/main-display.component';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +8,7 @@ import { CB_CustomsItemComputedDataList } from '../../main-display/main-display.
 export class AddCommentService {
   isOpened: BehaviorSubject<boolean>;
   itemData: BehaviorSubject<CB_CustomsItemComputedDataList> = new BehaviorSubject<CB_CustomsItemComputedDataList>(null);
+  allComments: BehaviorSubject<RemarksClassificationList[]> = new BehaviorSubject<RemarksClassificationList[]>([]);
 
   constructor() {
     this.isOpened = new BehaviorSubject<boolean>(false);

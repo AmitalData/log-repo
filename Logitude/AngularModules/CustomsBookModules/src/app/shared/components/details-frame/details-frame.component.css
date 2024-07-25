@@ -1,6 +1,7 @@
 .detailsSlideFrame {
 	position: relative;
-	width: calc(100vw - 700px);
+	/* width: calc(100vw - 700px); */
+	width: calc(100vw - 534px);
 	min-height: 100vh;
 	padding: 0 50px 0 10px;
 

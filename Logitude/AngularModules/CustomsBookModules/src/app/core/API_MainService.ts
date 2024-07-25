@@ -27,12 +27,15 @@ export class API_MainService extends BaseService {
 		// this.ApiURL = this.BaseURL + 'api/ShipmentDomain';
 	}
 
+	getTenant() {
+		return 1; // TODO: change to real tenant
+	}
 	RemarksClassification(data) {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/AddNEWRemarksClassification`;
 		return this.Post(url, data);
 	}
 
-  GetCustomsBookMainView(filters: Filters) {
+	GetCustomsBookMainView(filters: Filters) {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomsBookMainView?customsBookType=${filters.CustomsBookType}&Tenant=${filters.Tenant ? filters.Tenant : 0}`;
 		return this.Get(url);
 	}
@@ -69,6 +72,10 @@ export class API_MainService extends BaseService {
 
 	GetCustomsBookTaxRates(customsItemId: number) {
 		const url = `${this._apiUrl}CB_TariffExtended/GetCustomsBookTaxRates?customsItemId=${customsItemId}`;
+		return this.Get(url);
+	}
+	GetAllCommentsByCustomsItemId(customsItemId: number, tenant: number) {
+		const url = `${this._apiUrl}CB_CustomsItemExtended/GetAllCommentsByCustomsItemId?customsItemId=${customsItemId}&tenant=${tenant}`;
 		return this.Get(url);
 	}
 }
