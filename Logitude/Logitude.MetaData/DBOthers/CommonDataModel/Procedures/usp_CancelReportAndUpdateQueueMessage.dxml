@@ -6,7 +6,7 @@
   Module="Common">
   <SqlScript>
     <![CDATA[
-create PROCEDURE [dbo].[CancelReportAndUpdateQueueMessage] 
+create or alter PROCEDURE [dbo].[CancelReportAndUpdateQueueMessage] 
     @ReportId NVARCHAR(255) = NULL, -- Optional: Specific report ID or NULL for all reports with a given status
     @CancelByUser NVARCHAR(255), -- User ID performing the operation
     @TenantId INT ,
