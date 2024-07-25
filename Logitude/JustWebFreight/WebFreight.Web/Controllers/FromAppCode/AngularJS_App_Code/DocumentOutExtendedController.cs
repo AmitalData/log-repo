@@ -320,30 +320,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             }
         }
         DocumentHelper documentHelper = new DocumentHelper();
-        public void CheckDetailsToHSM(string documentOutId,int tenant, FullAccountingSettingPM accountingSettings)
-        {
-           
-            ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
-            ARInvoiceRepository repository = new ARInvoiceRepository(tenant);
-
-
-            var documentsFiling = objectContext.DocumentsFilings.Where(doc => doc.Id == documentOutId).FirstOrDefault();
-            ARInvoice invocie = repository.GetARInvoiceById(tenant, documentsFiling.EntityId).FirstOrDefault();
-
-            if (invocie != null)
-            {
-                string contactEmail = this.IsSignatureHtmlPresentByBillToId(invocie.BillToId, tenant);
-                if (!string.IsNullOrEmpty(contactEmail))
-                {
-                    this.CreatePdfDoc(documentsFiling, invocie.Id, invocie.Tenant,"ARInvoice");
-                    if(documentHelper.isInterestReport && invocie.ARInvoiceTypeCode == "IT")
-                    {
-                        this.createDocumentInterestReport(invocie.Tenant,invocie.Id);
-                    }
-                    documentHelper.StartSignPDFInvoice(invocie, invocie.Tenant, repository, contactEmail,  accountingSettings);
-                }
-            }
-        }
+      
 
         public void createDocumentInterestReport(int tenant,string arinvocieId)
         {
@@ -391,28 +368,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         }
 
-        private string IsSignatureHtmlPresentByBillToId(string Billto,int tenant)
-        {
-            ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
+       
 
-            if (string.IsNullOrEmpty(Billto)) return "";
-            Customer myCustomer = (from customer in objectContext.Customers
-                                                where customer.Id == Billto
-                                                // join cardContact in objectContext.CardContacts on card.Id equals cardContact.CardId
-                                                select customer).FirstOrDefault();
-            string email = "";
-            if (myCustomer!=null && !string.IsNullOrEmpty(myCustomer.EmailForSendingSingArinvoice))
-            {
-                  email = objectContext.Contacts.Where(contact => contact.Id == myCustomer.EmailForSendingSingArinvoice).FirstOrDefault().Email;
-                if (!string.IsNullOrEmpty(email))
-                {
-                    documentHelper.isInterestReport = myCustomer.SendingInterestReport!=null ? true:false;
-                    return email;
-                }
-                
-            }
-            return email;
-        }
+        
         private static void Authentication()
         {
             string token = HttpContext.Current.Request.Headers["Token"];

@@ -739,6 +739,17 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             }
         }
 
+        private static void AddWhatsAppMessagingPhoneNumberToResponseHeader(int tenant)
+        {
+            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
+            TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(tenant);
+            if (tenantManagementPM != null && !string.IsNullOrEmpty(tenantManagementPM.WhatsAppMessagingPhoneNumber))
+            {
+                HttpContext.Current.Response.Headers.Add("WhatsAppMessagingPhoneNumber", tenantManagementPM.WhatsAppMessagingPhoneNumber);
+                HttpContext.Current.Response.Headers.Add("Access-Control-Expose-Headers", "WhatsAppMessagingPhoneNumber");
+            }
+        }
+
         public HttpResponseMessage GetTenantBySecurityKeyWithoutToken(string securityKey)
         {
             try
