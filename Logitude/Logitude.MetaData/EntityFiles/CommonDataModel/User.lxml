@@ -1098,7 +1098,7 @@
     MaxLength="40"
     IsRequired="false"
     CopyToDW="false"
-    DisplayOnLookUp="false"
+    DisplayOnLookUp="true"
     DisplayOnLookUpLocal="true"
     CanFilter="true"
     DisplayOnly="false"
@@ -1114,7 +1114,7 @@
     DisplayInSearchWindowList="true"
     PMPropertyPath="&quot;LocalName&quot;"
     ListPropertyPath="&quot;LocalName&quot;"
-    DisplayInLookUpIndex="0"
+    DisplayInLookUpIndex="2"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="2"
@@ -2492,7 +2492,6 @@
     Id="&quot;09f97dcf-e190-4aea-b756-049e3474ff55&quot;"
     FieldName="&quot;IsShowContactDetailsInTheMobileApp&quot;"
     ShortName="IsShowContactDetailsInMobile"
-
     OldNames="IsShowContactDetailsInTheMobileApp,IsShowContactDetailsInMobile"
     IsNew="false"
     IsChecked="false"
@@ -4955,7 +4954,6 @@
     Id="&quot;09f97dcf-e190-4aea-b756-049e3474ff55&quot;"
     FieldName="&quot;IsTwoFactorAuthenticationEnabled&quot;"
     ShortName="IsTwoFactorAuthenticateEnabled"
-
     OldNames="IsTwoFactorAuthenticationEnabled,IsTwoFactorAuthenticateEnabled"
     IsNew="false"
     IsChecked="false"
