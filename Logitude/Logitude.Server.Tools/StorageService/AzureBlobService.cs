@@ -6,6 +6,7 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Azure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
