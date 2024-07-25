@@ -1,5 +1,6 @@
 ﻿using Logitude.AmitalMessaging.Utils;
 using Logitude.BL.Helpers;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
@@ -14,7 +15,10 @@ using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.Helpers;
 using Logitude.CustomsMessaging.Helpers.ClosedTable;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -149,8 +153,36 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var list = customResponse.TableData.OrderBy(rec => rec.id).ToList();
                 SystemTables.Send2Amital(requestParams.TableId, list, requestParams.Tenant);
             }
-        }
 
+
+            UpdateSyncRecord(customResponse, requestParams);
+ 
+        }
+        void UpdateSyncRecord(SYSTBL_NG_9001_MSG_SystemTablesResponse customResponse, SystemTableRequestParams requestParams)
+        {
+            ICustomContext customContext = CustomContext.GetContext(requestParams.Tenant);
+            var qs = new CustomsClosedTableQueryService(customContext);
+            string objecttableid = qs.GetObjectTableIdById(requestParams.TableId);
+            var tableName = "";
+            if (!string.IsNullOrWhiteSpace(objecttableid))
+            {
+                ObjectTableQuery objectTableQuery = new ObjectTableQuery(requestParams.Tenant);
+                tableName = objectTableQuery.GetObjectTableNamesById(objecttableid, requestParams.Tenant);
+            }
+
+            var syncRecord = new SyncRecord();
+            syncRecord.CreateDate = DateTime.Now;
+            syncRecord.Id = IdCounter.GetNumber("SyncRecord", requestParams.Tenant).ToString();
+            syncRecord.Tenant = 0;
+            syncRecord.KeyVal = "ALL";
+            syncRecord.Entname = tableName;
+            syncRecord.TrigAction = "U";
+            syncRecord.IsSync = 1;
+            syncRecord.FileNo = "0";
+            var syncRecordRepository = new SyncRecordRepository(requestParams.Tenant);
+            syncRecordRepository.Add(syncRecord);
+            syncRecordRepository.SubmitChanges();
+        }
         private void UpdateCustomZipFile(int tenant, string LoggingUserId)
         {
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CustomsClosedTable");
