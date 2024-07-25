@@ -73,7 +73,7 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 	searchValue: string = '';
-	countSearchResult:number = 0;
+	countSearchResult: number = 0;
 	ListenToItemsSearched() {
 		// listen to search text changes:
 		this.searchService.searchText$.subscribe((searchText) => {
@@ -97,7 +97,7 @@ export class MainDisplayComponent implements OnInit {
 			if (this.itemsData.getValue().length > 0) {
 				// remove duplicates customsItemID:
 				data = data.filter((v, i, a) => a.findIndex(t => (t.CustomsItemID === v.CustomsItemID)) === i);
-				
+
 				this.countSearchResult = data.length;
 				// update list:
 				this.data = this.orderedDataForSearch(data);
@@ -139,31 +139,36 @@ export class MainDisplayComponent implements OnInit {
 		});
 	};
 
-
+	showDetailsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	searchMode: TableTopState = TableTopState.ViewAll;
 	selectedItemId: number | null = null;
-	currentItem: CB_CustomsItemComputedDataList;
-	itemDataBehaviorSubject: BehaviorSubject<ItemData> = new BehaviorSubject<ItemData>({ customsItemId: 0, measurementUnitMalamId: 0 });
-	itemData: ItemData = { customsItemId: 0, measurementUnitMalamId: 0 };
+	currentItem: BehaviorSubject<CB_CustomsItemComputedDataList> = new BehaviorSubject<CB_CustomsItemComputedDataList>(null);
+	// itemDataBehaviorSubject: BehaviorSubject<ItemData> = new BehaviorSubject<ItemData>({ customsItemId: 0, measurementUnitMalamId: 0 });
+	// itemData: ItemData = { customsItemId: 0, measurementUnitMalamId: 0 };
 	showDetailsClick(CustomsItemID: number, item: CB_CustomsItemComputedDataList) {
 		this.selectedItemId = CustomsItemID;
-		
-		if (this.itemData.customsItemId == CustomsItemID) {
+		if (this.currentItem.getValue()?.CustomsItemID == CustomsItemID) {
 			this.showDetails = !this.showDetails;
+			this.showDetailsOpen.next(this.showDetails);
 			return;
 		}
-		else if (!this.showDetails) this.showDetails = !this.showDetails;
+		else if (!this.showDetails){
+			this.showDetails = !this.showDetails;
+			this.showDetailsOpen.next(this.showDetails);
+		} 
 
-		this.itemData.customsItemId = CustomsItemID;
-		this.itemData.measurementUnitMalamId = 0; // change it
-		this.itemDataBehaviorSubject.next(this.itemData);
-		this.currentItem = item;
+		// this.itemData.customsItemId = CustomsItemID;
+		// this.itemData.measurementUnitMalamId = 0; // change it
+		// this.itemDataBehaviorSubject.next(this.itemData);
+		this.currentItem.next(item);
 		return this.showDetails;
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes['showDetails']) {
 			this.showDetails = changes['showDetails'].currentValue;
+			this.showDetailsOpen.next(this.showDetails);
+
 		}
 		if (changes['itemsData']) {
 			this.itemsData = changes['itemsData'].currentValue;
@@ -195,6 +200,8 @@ export class MainDisplayComponent implements OnInit {
 		this.searchMode = TableTopState.ViewAll;
 		this.selectedItemId = null;
 		this.showDetails = false;
+		this.showDetailsOpen.next(this.showDetails);
+
 		this.data = [];
 		this.searchValue = "";
 		this.countSearchResult = 0;

@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter, Input, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faStar as faStarBold, faChevronLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { faStar, faCommentDots, faSquareCaretRight, faFileText } from '@fortawesome/free-regular-svg-icons';
@@ -21,6 +21,7 @@ export class DataRowComponent implements OnInit {
 	@Input() isSelected?: boolean = true;
 	@Input() isExpand: BehaviorSubject<boolean>;
 
+	@Input() showDetailsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	@Input() state = 'search';
 	@Input() searchItem?: string = '';
 
@@ -35,18 +36,17 @@ export class DataRowComponent implements OnInit {
 	selected: boolean = false;
 	showAddComment = this.addCommentService.getIsOpened();
 
-	constructor(private addCommentService: AddCommentService) { }
+	constructor(private addCommentService: AddCommentService, private renderer: Renderer2) { }
 
 	ngOnInit() {
-		this.listerToExpand();
+		this.listerUpdates();
 	}
 
-	listerToExpand() {
+	listerUpdates() {
 		this.isExpand.subscribe((value) => {
 			this.selected = value;
 		});
 	}
-
 
 	highlight(text: string, search: string): string {
 		if (!search) {
@@ -65,13 +65,12 @@ export class DataRowComponent implements OnInit {
 		this.addCommentService.setIsOpened(true, data);
 	}
 
-	getTooltipText(text: string): string {
+	getTooltipText(text: string) {
 		return text.length > 20 ? text : '';
 	}
 
 	ClassificationNoDisplay(item, value): string {
 		if (item.IsLeaf) return value;
-
 		const regex = /^(\d*[^0])\d*$/;
 		const match = value.match(regex);
 		if (match && match[1]) {
@@ -79,4 +78,31 @@ export class DataRowComponent implements OnInit {
 		}
 		return '';
 	}
+
+
+	@ViewChild('dynamicDiv') dynamicDiv: ElementRef;
+	ngAfterViewInit(): void {
+		this.showDetailsOpen.subscribe((value) => {
+			if (value) this.dynamicDivClick();
+			else this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "90%");
+		});
+	}
+
+	dynamicDivClick() {
+		const containerWidth: number = this.dynamicDiv.nativeElement.offsetWidth;
+		const spans = this.dynamicDiv.nativeElement.querySelectorAll('span');
+		let totalSpanWidth = (Array.from(spans).reduce((total: number, span) => total + (span as HTMLElement).offsetWidth, 0)) as number;
+		if (containerWidth - 100 < totalSpanWidth || this.data.CustomsItemID) {
+			// let width = (containerWidth - 100) * 0.80 + "px";
+			// if (this.data.CustomsItemID) width = "50%";
+
+			let calculatedWidth = (containerWidth - 100) + "px";
+			let width = Math.min(parseInt(calculatedWidth), 40) + "%";
+
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', width);
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'white-space', 'nowrap');
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'text-overflow', 'ellipsis');
+		}
+	}
 }
+

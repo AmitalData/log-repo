@@ -5,18 +5,21 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { API_MainService } from '../../../core/API_MainService';
 import { CB_CustomsItemComputedDataList, RemarksClassificationList } from '../main-display/main-display.component';
 import { BehaviorSubject } from 'rxjs';
+import { NgFor, NgIf } from '@angular/common';
 
 
 @Component({
   selector: 'app-comments',
   standalone: true,
-  imports: [FontAwesomeModule],
+  imports: [FontAwesomeModule, NgIf, NgFor],
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.css'
 })
 export class CommentsComponent implements OnInit, OnChanges {
   @Input() showComments: boolean = false;
-  //@Input() currentItem: BehaviorSubject<CB_CustomsItemComputedDataList> = new BehaviorSubject<CB_CustomsItemComputedDataList>(null);
+  // @Input() currentItem: BehaviorSubject<CB_CustomsItemComputedDataList> = new BehaviorSubject<CB_CustomsItemComputedDataList>(null);
+  @Input() currentItem: CB_CustomsItemComputedDataList;
+  allComments: RemarksClassificationList[] = [];
 
   // faPlusCircle = faPlusCircle;
 
@@ -28,7 +31,14 @@ export class CommentsComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.showCommentsByClick();
+    // this.currentItem.subscribe((data: CB_CustomsItemComputedDataList) => {
+    //   // debugger
+    //   if (data?.CustomsItemID != null) this.showCommentsByClick();
+    // });\
+    this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {
+      console.log(data);
+      this.allComments = data;
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -39,12 +49,12 @@ export class CommentsComponent implements OnInit, OnChanges {
   }
 
 
-  
-  showCommentsByClick() {
-    //this.API_MainService.GetAllCommentsByCustomsItemId(this.currentItem.getValue().CustomsItemID, this.API_MainService.getTenant()).subscribe((data: RemarksClassificationList[]) => {
-    //  console.log(data);
-    //  this.addCommentService.allComments.next(data);
-   // });
-  }
+
+  // showCommentsByClick() {
+  //   this.API_MainService.GetAllCommentsByCustomsItemId(this.currentItem.getValue().CustomsItemID, this.API_MainService.getTenant()).subscribe((data: RemarksClassificationList[]) => {
+  //     console.log(data);
+  //     this.addCommentService.allComments.next(data);
+  //   });
+  // }
 }
 

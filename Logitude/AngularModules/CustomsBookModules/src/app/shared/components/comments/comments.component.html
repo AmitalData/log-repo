@@ -15,7 +15,7 @@
             <div class="detailsSlide_commentsClose" (click)="showComments = !showComments"><a href="#" role="button"
                     aria-controls="comments"><i role="img" aria-hidden="true" class="icon-close"></i></a></div>
         </div>
-        <div class="commentsList">
+        <div class="commentsList" *ngIf="allComments?.length > 0">
             <div class="comment">
                 <div class="commentTitle">
                     <div class="commentUser"><img src="assets/images/man.jpg" alt=""><span>יונתן
@@ -41,7 +41,10 @@
                     <p>רלוונטי ל- X ו-Y.</p>
                 </div>
             </div>
-            <div class="comment">
+            <div class="comment" *ngFor="let comment of allComments">
+                <p>{{ comment.RemarkDescription }}</p>
+            </div>
+            <!-- <div class="comment">
                 <div class="commentTitle">
                     <div class="commentUser"><img src="assets/images/woman.jpg" alt=""><span>מעיין
                             משה</span></div>
@@ -136,7 +139,7 @@
                 <div class="commentText">
                     <p>ניתן למצוא בסעיף זה זה גם את החיות הבאות: תייש, סוס פוני </p>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

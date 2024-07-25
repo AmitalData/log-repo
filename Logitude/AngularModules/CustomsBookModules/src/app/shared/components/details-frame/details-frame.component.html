@@ -5,8 +5,8 @@
         <div class="detailsSlide_top">
             <div class="detailsSlide_title">
 
-                <p class="rull_no">{{currentItem?.FullClassification}}</p>
-                <p class="rull_no">{{currentItem?.CIH_GoodsDescription}}</p>
+                <p class="rull_no">{{item?.FullClassification}}</p>
+                <p class="rull_no">{{item?.CIH_GoodsDescription}}</p>
             </div>
             <div class="detailsSlide_topActions">
                 <ul>
@@ -28,15 +28,15 @@
                         <div class="mainTable_itemStarred" (click)="checked = !checked"><a class="icon"><i role="img"
                                     [class]="checked? ' icon-star_full' :'icon-star' ">
                                 </i></a>
-=                        </div>
+                        </div>
                     </li> -->
                 </ul>
 
             </div>
         </div>
         <div class="conetnt_container">
-            <app-comments [showComments]="showComments" />
-            <app-accordion [itemData]="itemData" ></app-accordion>
+            <app-comments [showComments]="showComments"  [currentItem]="item"/>
+            <app-accordion [currentItem]="currentItem"></app-accordion>
         </div>
     </div>
 </div>
