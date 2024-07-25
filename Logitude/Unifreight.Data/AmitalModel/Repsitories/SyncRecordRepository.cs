@@ -25,10 +25,21 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             context.SyncRecord.Add(entity);
         }
 
+        public void Add(List<SyncRecord> records)
+        {
+            context.SyncRecord.AddRange(records);            
+        }
+
         public void Remove(SyncRecord entity)
         {
             context.SyncRecord.Attach(entity);
             context.SyncRecord.Remove(entity);
+        }
+
+        public void Remove(List<SyncRecord> entityList)
+        {            
+            entityList.ForEach(entity => context.SyncRecord.Attach(entity));
+            context.SyncRecord.RemoveRange(entityList);         
         }
 
         public void Update(SyncRecord entity)
@@ -62,14 +73,14 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             throw new NotImplementedException();
         }
 
-        public List<SyncRecord> GetUnsyncAndMarkAsInProcess(int tenant, string fileNo)
+        public List<SyncRecord> GetUnsyncAndMarkAsInProcess(int tenant, string item)
         {
             DateTime date = DateTime.Now;
 
             IQueryable<SyncRecord> records = context.SyncRecord.Where(syncRecord =>
                 syncRecord.Tenant == tenant &&
                 (syncRecord.IsSync == SyncRecordStatus.InQueue || syncRecord.IsSync == SyncRecordStatus.Synced) &&
-                syncRecord.FileNo == fileNo
+                (syncRecord.FileNo == item || syncRecord.Entname == item)
             );
 
             foreach (SyncRecord syncRecord in records)
@@ -88,13 +99,14 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             return groupRecord;
         }
 
-        public void UpdateSyncDate(string fileNo, DateTime syncDT, int tenant)
+        public void UpdateSyncDate(string itemUpdate, DateTime syncDT, int tenant)
         {
             DateTime yesterday = DateTime.Now.AddDays(-1);
+            syncDT = syncDT.AddSeconds(1);
 
             IEnumerable<SyncRecord> records = context.SyncRecord.Where(syncRecord =>
                 syncRecord.Tenant == tenant &&
-                syncRecord.FileNo == fileNo &&
+                (syncRecord.FileNo == itemUpdate || syncRecord.Entname == itemUpdate) &&
                 syncRecord.IsSync == SyncRecordStatus.Synced &&
                 syncRecord.SyncDT <= syncDT &&
                 syncRecord.CreateDate > yesterday
@@ -102,16 +114,6 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
             for (int i = 0; i < records.Count(); i++)
                 records.ElementAt(i).IsSync = SyncRecordStatus.SyncedAndUpdated;
-
-            //IEnumerable<SyncRecord> records2 = context.SyncRecord.Where(syncRecord =>
-            //    syncRecord.Tenant == tenant &&
-            //    syncRecord.FileNo == fileNo &&                
-            //    syncRecord.SyncDT == syncDT &&
-            //    syncRecord.CreateDate > yesterday
-            //);
-
-            //for (int i = 0; i < records2.Count(); i++)
-            //    records2.ElementAt(i).IsSync = 2;
 
             context.SaveChanges();
         }

@@ -1,19 +1,21 @@
 ﻿using Simplog.Server.Infrastructure.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logitude.Customs.BL.BL
 {
     public static class CacheHelper
     {
+        static CacheHelper()
+        {
+            if (CacheManager.CacheWrapper == null)
+                CacheManager.CacheWrapper = new MockCacheWrapper();
+        }
+
         public static void ClearCache(string cacheId) => CacheManager.CacheWrapper.Remove(cacheId);
 
         public static T GetFromCache<T>(string cacheId, Func<T> action)
         {
-            T entity = (T)CacheManager.CacheWrapper.Get(cacheId);
+            object entity = CacheManager.CacheWrapper.Get(cacheId);
 
             if (entity == null)
             {
@@ -23,8 +25,7 @@ namespace Logitude.Customs.BL.BL
                     CacheManager.CacheWrapper.Insert(cacheId, entity, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
             }
 
-            return entity;
+            return entity == null ? default : (T)entity;
         }
-
     }
 }

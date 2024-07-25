@@ -10,6 +10,10 @@ using Unifreight.Data.AmitalModel.EntityPOCOs;
 using Unifreight.BL.Models;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Data.EntityPOCOs;
+using NetCommonHelper.Logger;
+using Simplog.Data.CommonDataModel;
+using System.Text.Encodings.Web;
+using Simplog.Server.Infrastructure;
 
 namespace Unifreight.BL.EntityQueryServices
 {
@@ -46,9 +50,9 @@ namespace Unifreight.BL.EntityQueryServices
             return a;
         }
 
-        public List<EntityRecord> GetUnsyncRecordsAndMarkAsInProcess(int tenant, string fileNo)
+        public List<EntityRecord> GetUnsyncRecordsAndMarkAsInProcess(int tenant, string item)
         {
-            List<SyncRecord> groupRecord = repository.GetUnsyncAndMarkAsInProcess(tenant, fileNo);
+            List<SyncRecord> groupRecord = repository.GetUnsyncAndMarkAsInProcess(tenant, item);
 
             List<EntityRecord> entityRecords = groupRecord.Select(syncRecord =>
             {
@@ -70,38 +74,46 @@ namespace Unifreight.BL.EntityQueryServices
             return entityRecords;
         }
 
-        public void UpdateSyncData(int tenant, string fileNo, DateTime syncDT)
+        public void UpdateSyncData(int tenant, string itemUpdate, DateTime syncDT)
         {
-            repository.UpdateSyncDate(fileNo, syncDT, tenant);
+            repository.UpdateSyncDate(itemUpdate, syncDT, tenant);
         }
 
         private string GetRecordOfRowNeedSync(SyncRecord syncRecord)
         {
-            
             if (syncRecord == null || string.IsNullOrEmpty(syncRecord.KeyVal))
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"GetRecordOfRowNeedSync, keyVal is empty or null, id: " + syncRecord?.Id);
+                DevLog.Instance.WriteInfo($"GetRecordOfRowNeedSync, keyVal is empty or null, id: " + syncRecord?.Id);
                 return null;
             }
 
-            string query = $"SELECT * FROM {syncRecord.Entname} WHERE {syncRecord.KeyVal.Replace(",", " and ")}";
+            bool isCloseTeable = syncRecord.KeyVal == "ALL";
 
-            SqlConnection conn = repository.Context.GetActiveDbContext().Database.Connection as SqlConnection;
+            string query = $"SELECT * FROM {syncRecord.Entname}"; 
+            if(!isCloseTeable)
+                query += " WHERE " + syncRecord.KeyVal.Replace(",", " and ");
+
+            SqlConnection conn = 
+                (isCloseTeable ? CommonDataContext.GetContext(syncRecord.Tenant) as IContext : repository.Context as IContext)
+                .GetActiveDbContext().Database.Connection as SqlConnection;
             conn.Open();
-            var dataReader = new SqlCommand(query, conn).ExecuteReader();
-            var dt = new DataTable();
+            SqlDataReader dataReader = new SqlCommand(query, conn).ExecuteReader();
+            DataTable dt = new DataTable();
             dt.Load(dataReader);
             conn.Close();
 
-            if (dt.Rows.Count != 1)
+            if (dt.Rows.Count != 1 && !isCloseTeable)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteError($"record not found once for table: {syncRecord.Entname: name} and keyVal: {syncRecord.KeyVal.Replace(",", " and ")}");
+                DevLog.Instance.WriteError($"record not found once for table: {syncRecord.Entname: name} and keyVal: {syncRecord.KeyVal.Replace(",", " and ")}");
                 return null;
             }
 
-            DataRow record = dt.Rows[0];
-            Dictionary<string, object> dic = record.Table.Columns.Cast<DataColumn>().ToDictionary(c => c.ColumnName, c => record.IsNull(c) ? null : record[c]);
-            string recordAsJson = JsonSerializer.Serialize(dic);
+            string[] columns = dt.Columns.Cast<DataColumn>().Select(c => c.ColumnName).ToArray();
+            IEnumerable<Dictionary<string, object>> data = dt.Rows.Cast<DataRow>()
+                    .Select(dr => columns.ToDictionary(c => c, c => dr[c]));
+
+            JsonSerializerOptions jsonOptions = new JsonSerializerOptions { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
+            string recordAsJson = JsonSerializer.Serialize(data, jsonOptions);
 
             return recordAsJson;
         }
@@ -118,5 +130,17 @@ namespace Unifreight.BL.EntityQueryServices
         public List<SyncRecord> GetAndMarkNewSyncRecord() => repository.GetAndMarkNewSyncRecord();
 
         public void UpdateStatusInQueue(List<SyncRecord> records) => repository.UpdateStatusInQueue(records);
+
+        public void Add(List<SyncRecord> records)
+        {
+            repository.Add(records);
+            repository.SubmitChanges();
+        }
+
+        public void Remove(List<SyncRecord> records)
+        {
+            repository.Remove(records);
+            repository.SubmitChanges();
+        }
     }
 }

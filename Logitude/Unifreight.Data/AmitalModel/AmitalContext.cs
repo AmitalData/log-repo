@@ -189,14 +189,14 @@ namespace Unifreight.Data.AmitalModel
             }
         }
 
-        public System.Data.Common.DbConnection GetConnection()
+        public DbConnection GetConnection()
         {
-            throw new NotImplementedException();
+            return this.Database.Connection;
         }
 
-        public System.Data.Entity.DbContext GetActiveDbContext()
+        public DbContext GetActiveDbContext()
         {
-            throw new NotImplementedException();
+            return this;
         }
 
         public void SetAsModified(object entity)
