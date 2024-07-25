@@ -4,7 +4,7 @@
   
   <SqlScript>
     <![CDATA[
-create procedure QueryReports.usp_OpenTransaction 
+create or alter procedure QueryReports.usp_OpenTransaction 
 @tenant int
 as
 begin
