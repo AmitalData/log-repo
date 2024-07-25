@@ -20,7 +20,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectContext = WebFreightContext.GetContext(0);
             MenusTablesRepository = new MenusTableRepository(ObjectContext);
             FeatureRepository featureRepository = new FeatureRepository(0);
-            Dictionary<string, MenusTable> tenantMenusTables = MenusTablesRepository.GetMenusTablesByTenant(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, MenusTable> tenantMenusTables = MenusTablesRepository.GetMenusTablesByTenant(0).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
 
             List<ObjectTable> tenantObjectTables = ObjectTableRepository.GetObjectsByTenant(0).ToList();
             List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();

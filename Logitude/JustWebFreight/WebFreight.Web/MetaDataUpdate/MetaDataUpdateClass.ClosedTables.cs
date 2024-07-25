@@ -2611,7 +2611,8 @@ namespace WebFreight.Web.MetaDataUpdate
         public void LoadMeasurements()
         {
             MeasurementRepository = new MeasurementRepository(0);
-            Dictionary<string, Measurement> TenantMeasurements = MeasurementRepository.GetMeasurementsByTenant(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, Measurement> TenantMeasurements = MeasurementRepository.GetMeasurementsByTenant(0).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
+
             AddMeasurements.AddMeasurement(new MeasurementDetails() { Code = "GRWT", Name = "Gross Weight", ShortName = "Gr Weight" }, MeasurementRepository, TenantMeasurements);
             AddMeasurements.AddMeasurement(new MeasurementDetails() { Code = "CHWT", Name = "Chargeable Weight / WM", ShortName = "Ch Weight" }, MeasurementRepository, TenantMeasurements);
             AddMeasurements.AddMeasurement(new MeasurementDetails() { Code = "VOLU", Name = "Volume", ShortName = "Volume" }, MeasurementRepository, TenantMeasurements);
@@ -2635,7 +2636,8 @@ namespace WebFreight.Web.MetaDataUpdate
         public void LoadCreditCardTypes()
         {
             CreditCardTypeRepository = new CreditCardTypeRepository(0);
-            Dictionary<string, CreditCardType> TenantCreditCardTypes = CreditCardTypeRepository.GetCreditCardTypes(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, CreditCardType> TenantCreditCardTypes = CreditCardTypeRepository.GetCreditCardTypes(0).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
+
 
             AddCreditCardTypes.AddCreditCardType(new CreditCardTypeDetails() { Code = "VI", Name = "Visa" }, CreditCardTypeRepository, TenantCreditCardTypes);
             AddCreditCardTypes.AddCreditCardType(new CreditCardTypeDetails() { Code = "AX", Name = "AMEX" }, CreditCardTypeRepository, TenantCreditCardTypes);
@@ -2650,7 +2652,8 @@ namespace WebFreight.Web.MetaDataUpdate
         public void LoadMoveTypes()
         {
             MoveTypeRepository = new MoveTypeRepository(0);
-            Dictionary<string, MoveType> TenantMoveTypes = MoveTypeRepository.GetMoveTypesByTenant(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, MoveType> TenantMoveTypes = MoveTypeRepository.GetMoveTypesByTenant(0).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
+
 
             AddMoveTypes.AddMoveType(new MoveTypeDetails() { Code = "ATA", MoveTypeEnglishName = "Airport to Airport", MoveTypeLocalName = "Airport to Airport", TransportModeId = "A" }, MoveTypeRepository, TenantMoveTypes);
             AddMoveTypes.AddMoveType(new MoveTypeDetails() { Code = "ATD", MoveTypeEnglishName = "Airport to Door", MoveTypeLocalName = "Airport to Door", TransportModeId = "A" }, MoveTypeRepository, TenantMoveTypes);
@@ -2671,7 +2674,7 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             ICommonDataContext ObjectContext = CommonDataContext.GetContext(0);
             RankRepository = new RankRepository(ObjectContext);
-            Dictionary<string, Rank> tenantRanks = RankRepository.GetRanks(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, Rank> tenantRanks = RankRepository.GetRanks(0).GroupBy(d => d.Code ).ToDictionary(g => g.Key, a => a.FirstOrDefault());
 
             AddRanks.AddRank(new RankDetails() { Name = "Silver", Tenant = 0, Code = "1", SearchFields = "Silver,1" }, RankRepository, tenantRanks);
             AddRanks.AddRank(new RankDetails() { Name = "Gold", Tenant = 0, Code = "2", SearchFields = "Gold,2" }, RankRepository, tenantRanks);
@@ -2692,7 +2695,7 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             ObjectContext = WebFreightContext.GetContext(0);
             TranslationHeaderRepository = new TranslationHeaderRepository(ObjectContext);
-            Dictionary<string, TranslationHeader> tenantTranslationHeaders = TranslationHeaderRepository.GetTranslationHeadersByTenant(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, TranslationHeader> tenantTranslationHeaders = TranslationHeaderRepository.GetTranslationHeadersByTenant(0).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
             //AddTranslationHeaders.AddTranslationHeader(new TranslationHeaderDetails() { Description = "Arabic", Tenant = 0 }, TranslationHeaderRepository, tenantTranslationHeaders);
             AddTranslationHeaders.AddTranslationHeader(new TranslationHeaderDetails() { Code = "EN", Description = "English", Tenant = 0 }, TranslationHeaderRepository, tenantTranslationHeaders);
             //AddTranslationHeaders.AddTranslationHeader(new TranslationHeaderDetails() { Description = "Spanish", Tenant = 0 }, TranslationHeaderRepository, tenantTranslationHeaders);
