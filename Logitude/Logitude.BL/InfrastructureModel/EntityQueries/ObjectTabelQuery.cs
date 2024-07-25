@@ -1032,5 +1032,15 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         {
             return repository.GetObjectTableIdByName(tableName);
         }
+
+        public string GetObjectTableNamesById(string id,int tenant)
+        {
+            var item = repository.GetSingleObjectTable(id, tenant, true);
+            if (item != null)
+            {
+                return item.Name;
+            }
+            return null;
+        }
     }
 }

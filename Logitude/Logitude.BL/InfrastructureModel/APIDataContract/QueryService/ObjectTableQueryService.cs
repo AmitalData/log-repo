@@ -108,5 +108,10 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
             }
         }
 
+        public string GetObjectTableNamesById(string Id,int tenant)
+        {
+            return query.GetObjectTableNamesById(Id,tenant);
+        }
+
     }
 }
