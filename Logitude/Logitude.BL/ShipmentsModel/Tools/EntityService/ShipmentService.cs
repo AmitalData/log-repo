@@ -935,7 +935,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         this.entityPM.ReferantUserId = "1-421335";
                     }
 
+                    initializer.IsMappingComposition = true;
+                    this.initializer.HandleBehaviours();
+
                     ShipmentValidating.ValidateCustomShipment(entityPM, false);
+                    ValidateShipmentReferancesCollection();
 
                     // todo: GrossWeight.Shipment + volume
                     // יש לחשב את הגדול בין נפח בק"ג למשקל בק"ג ולעדכן את שדה משקל לחיוב
@@ -948,24 +952,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     ////
                     entityRepository.SubmitChanges();
 
-                    // todo: update a list of shipment references
-                    /*
-                    ShipmentReferanceQuery shipmentReferanceQuery = new ShipmentReferanceQuery(tenant);
-                    ShipmentReferancePM shipmentReferancePM = shipmentReferanceQuery.GetSinglePM(this.entityPM.Id, tenant);
-
-                    if (entityPM.ReferenceType != shipmentReferancePM?.ReferenceType || entityPM.ReferenceValue != shipmentReferancePM?.ReferenceValue)
-                    {
-                        if (shipmentReferancePM == null)
-                        {
-                            shipmentReferancePM = new ShipmentReferancePM();
-                            this.CreateShipmentReferance(shipmentReferancePM);
-                        }
-
-                        shipmentReferancePM.ReferenceType = this.entityPM.ReferenceType;
-                        shipmentReferancePM.ReferenceValue = this.entityPM.ReferenceValue;
-                        this.UpdateShipmentReferance(shipmentReferancePM);
-                    }*/
-                 
+                    this.UpdateShipmentReferancesCollection();
 
                     AuditLog auditLog = null;
                     if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant))
@@ -1052,7 +1039,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 				myAmitalCustom.CargoTypeCode = "11";
                 myAmitalCustom.ManifestNumber = shipmentPM.IskaNumber?.Length >= 7 ? shipmentPM.IskaNumber.Substring(1, 7): shipmentPM.IskaNumber;
 				myAmitalCustom.SecondCargoID = shipmentPM.IskaNumber?.Length >= 7 ? shipmentPM.IskaNumber.Substring(7) : "";
-			}
+            }
 			if (shipmentPM.TransportModeId == "L")
 			{
 				myAmitalCustom.CargoTypeCode = "20";
@@ -2589,6 +2576,64 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
+        private void UpdateShipmentReferancesCollection()
+        {
+            if (initializer.ShipmentReferanceChangeSet != null && initializer.ShipmentReferanceChangeSet.Count > 0)
+            {
+                foreach (ShipmentReferancePM itemPM in initializer.ShipmentReferanceChangeSet)
+                {
+                    switch (itemPM.ChangeSetOp)
+                    {
+                        case ChangeSetOperation.Insert:
+                            {
+                                this.CreateShipmentReferance(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Update:
+                            {
+                                this.UpdateShipmentReferance(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Delete:
+                            {
+                                this.DeleteShipmentReferance(itemPM);
+                                break;
+                            }
+
+                        default: { break; }
+                    }
+                }
+                this.shipmentReferanceRepository.SubmitChanges();
+            }
+        }
+        private void ValidateShipmentReferancesCollection()
+        {
+            if (initializer.ShipmentReferanceChangeSet != null && initializer.ShipmentReferanceChangeSet.Count > 0)
+            {
+                foreach (ShipmentReferancePM itemPM in initializer.ShipmentReferanceChangeSet)
+                {
+                    if (itemPM.ChangeSetOp == ChangeSetOperation.Insert || itemPM.ChangeSetOp == ChangeSetOperation.Update)
+                    {
+                        if (string.IsNullOrEmpty(itemPM.ReferenceType) && !string.IsNullOrEmpty(itemPM.ReferenceValue))
+                        {
+                            throw new ApplicationException(TranslateTextsClass.Translate("ShipmentReferance.O.MissingReferenceType", tenant));
+                        }
+                        else if (!string.IsNullOrEmpty(itemPM.ReferenceType) && string.IsNullOrEmpty(itemPM.ReferenceValue))
+                        {
+                            throw new ApplicationException(TranslateTextsClass.Translate("ShipmentReferance.O.MissingReferenceValue", tenant));
+                        }
+                        else if (itemPM.ChangeSetOp == ChangeSetOperation.Insert && string.IsNullOrEmpty(itemPM.ReferenceType) && string.IsNullOrEmpty(itemPM.ReferenceValue))
+                        {
+                            initializer.ShipmentReferanceChangeSet.Remove(itemPM);
+                        }
+                    }
+                }
+                this.shipmentReferanceRepository.SubmitChanges();
+            }
+        }
+
         private void UpdateShipmentStoragePricingsCollection()
         {
             if (initializer.ShipmentStoragePricingsChangeSet != null)

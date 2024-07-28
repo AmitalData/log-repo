@@ -86,6 +86,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         public List<AWBOCIPM> AWBOCIPMChangeSet;
         public List<ShipmentCommodityPM> ShipmentCommoditiesChangeSet;
         public List<ShipmentAssemblyPM> ShipmentAssembliesChangeSet;
+        public List<ShipmentReferancePM> ShipmentReferanceChangeSet;
         public List<ShipmentStoragePricingPM> ShipmentStoragePricingsChangeSet;
         public List<ShipmentProductItemPM> ShipmentProductItemsChangeSet;
         public List<ShipmentUnassignedFieldPM> ShipmentUnassignedFieldChangeSet;

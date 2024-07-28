@@ -4,6 +4,11 @@ import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeCom
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';
 
+import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
+import { LogitudeWindow } from "Controls/Windows/LogitudeWindow";
+import { ShipmentReferancePM } from "Shipment/EntityPMs/ShipmentReferancePM";
+import { MessageWindow } from "Controls/Windows/MessageWindow";
+
 @Component({    
     templateUrl: './ShipmentDataTabComponent.html',
 })
@@ -16,15 +21,30 @@ export class ShipmentDataTabComponent extends BaseComponent {
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
+        this.InitializeShipmentReferance();
+
         this.ObjectTableName = this.entityArgs.ObjectTableName;
         this.Listen();
-                }
+    }
+
+    InitializeShipmentReferance() {
+        for (var i = 0; i < this.ShipmentReferances.length; i++) {
+            let shipmentReferance = new ShipmentReferancePM();
+
+            for (var field in this.ShipmentReferances[i]) {
+                shipmentReferance[field] = this.ShipmentReferances[i][field];
+            }
+            this.ShipmentReferances[i] = shipmentReferance;
+        }
+        this.SetReferenceTypeValueState();
+    }
 
     Listen() {
         if (this.entityArgs.EditComponent) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.InitializeShipmentReferance();
                 }
             });
 
@@ -66,19 +86,6 @@ export class ShipmentDataTabComponent extends BaseComponent {
         }
     }
 
-    // public get ShipmentType() { return this.EntityPM.ShipmentType; }
-    // public set ShipmentType(newValue: string) {
-    //     if (this.EntityPM.ShipmentType != newValue) {
-    //         this.EntityPM.ShipmentType = newValue;
-    //     }
-    // }
-
-    // public get House() { return this.EntityPM.House; }
-    // public set House(newValue: string) {
-    //     if (this.EntityPM.House != newValue) {
-    //         this.EntityPM.House = newValue;
-    //     }
-    // }
     public get IskaNumber() { return this.EntityPM.IskaNumber; }
     public set IskaNumber(newValue: string) {
         if (this.EntityPM.IskaNumber != newValue) {
@@ -108,31 +115,131 @@ export class ShipmentDataTabComponent extends BaseComponent {
         }
     }
 
-    referenceType: string;
-    public get ReferenceType() { 
-        // todo: if references of ORT & SHP, show: SHP
-        return this.referenceType;
+    EditReferenceTypeValue() {
+
+        const shipmentReferences = this.GetActiveShipmentReferances();
+        if (shipmentReferences.length == 0 || (shipmentReferences.length > 0 && AppTool.IsNullOrEmpty(shipmentReferences[0].ReferenceType))) {
+            var messageWindow: MessageWindow = new MessageWindow();
+            messageWindow.Show("יש לבחור סוג אסמכתא");
+            return;
+        }
+
+        //this.CurrentSession.StopBusyIndicator();
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 400;
+        logWindow.Height = 350;
+        logWindow.Title = TextCodeTranslator.Translate("Shipment.O.ReferenceTypeValue");
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            if ($event == "ok") {
+                this.OnChanged();
+                this.SetReferenceTypeValueState();
+                // this.EntityPM.MarkAsDirty();
+            }
+        });
+        logWindow.Show('./ShipmentModules/ShipmentTabs/Components/ShipmentData/ShipmentReferenceDetails/ShipmentReferenceDetailsComponent');   
     }
-    public set ReferenceType(newValue: string) {
-        if (this.referenceType != newValue) {
-            this.referenceType = newValue;
-            // todo: maybe prevent update if multiple lines?
-            // todo: update this.EntityPM.ShipmentReferances.referencetype that is LineNumber = 1
+
+    disableReferenceTypeValue = false;
+    public get ShipmentReferances() { return this.EntityPM.ShipmentReferances; }
+    public set ShipmentReferances(newValue: ShipmentReferancePM[]) {
+        if (this.EntityPM.ShipmentReferances != newValue) {
+            this.EntityPM.ShipmentReferances = newValue;
+
             this.OnChanged();
+            this.SetReferenceTypeValueState();
         }
     }
 
-    referenceValue: string;
+    SetReferenceTypeValueState() {
+        this.disableReferenceTypeValue = this.GetActiveShipmentReferances().length > 1;
+    }
+
+    AddShipmentReferance() {
+        var item: ShipmentReferancePM = new ShipmentReferancePM();
+        item.ShipmentId = this.EntityPM.Id;
+        item.Tenant = this.EntityPM.Tenant;
+        item.LineNumber = 1;
+        item.ChangeSetOp = "Insert";
+        this.EntityPM.ShipmentReferances.push(item);
+    }
+
+    GetActiveShipmentReferances() {
+        return this.ShipmentReferances.filter(entity => entity.ChangeSetOp != "Delete");
+    }
+
+    public get ReferenceType() { 
+        let shipmentReferances = this.GetActiveShipmentReferances();
+
+        if (shipmentReferances.length > 1) {
+            const uniqueValues = new Set(shipmentReferances.map(item => item.ReferenceType));
+            if (uniqueValues.size > 1) {
+                return "SHP";
+            }
+            else {
+                return shipmentReferances[0].ReferenceType;
+            }
+        }
+        else {
+            return shipmentReferances[0]?.ReferenceType;
+        }
+    }
+    public set ReferenceType(newValue: string) {
+        let shipmentReferances = this.GetActiveShipmentReferances();
+
+        if (shipmentReferances.length == 0 || (shipmentReferances.length == 1 && shipmentReferances[0]?.ReferenceType != newValue)) {
+
+            var index = 0;
+            if (shipmentReferances.length == 0) {
+                this.AddShipmentReferance();
+            }
+            else {
+                index = this.ShipmentReferances.indexOf(shipmentReferances[0]);
+            }
+
+            if (index > -1) {
+                this.ShipmentReferances[index].ReferenceType = newValue;
+                if (!this.ShipmentReferances[index].ChangeSetOp) {
+                    this.ShipmentReferances[index].ChangeSetOp = "Update";
+                }
+                this.OnChanged();
+            }
+        }
+    }
+
     public get ReferenceValue() { 
-        // todo: if multiples, show "LIST"
-        return this.referenceValue; 
+        let shipmentReferances = this.GetActiveShipmentReferances();
+        if (shipmentReferances.length > 1) {
+            return "LIST";
+        }
+        else {
+            return shipmentReferances[0]?.ReferenceValue;
+        }
     }
     public set ReferenceValue(newValue: string) {
-        if (this.referenceValue != newValue) {
-            this.referenceValue = newValue;
-            // todo: maybe prevent update if multiple lines?
-            // todo: update shipmentreferncetype.ReferenceValue that is LineNumber = 1
-            this.OnChanged();
+        let shipmentReferances = this.GetActiveShipmentReferances();
+
+        if (shipmentReferances.length == 0 || (shipmentReferances.length == 1 && shipmentReferances[0]?.ReferenceValue != newValue)) {
+
+            var index = 0;
+            if (shipmentReferances.length == 0) {
+                this.AddShipmentReferance();
+            }
+            else {
+                index = this.ShipmentReferances.indexOf(shipmentReferances[0]);
+            }
+
+            if (index > -1) {
+                this.ShipmentReferances[index].ReferenceValue = newValue;
+                if (!this.ShipmentReferances[index].ChangeSetOp) {
+                    this.ShipmentReferances[index].ChangeSetOp = "Update";
+                }
+                this.OnChanged();
+            }
         }
     }
 

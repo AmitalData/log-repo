@@ -23,6 +23,7 @@ import { ShipmentProductItemPM } from './ShipmentProductItemPM';
 import { ShipmentUnassignedFieldPM } from './ShipmentUnassignedFieldPM';
 import { CustomChildEntity } from '../../Infrastructure/EntityPMs/CustomChildEntity';
 import { ShipmentAdditionalData } from '../DataContract/ShipmentAdditionalData';
+import { ShipmentReferancePM } from './ShipmentReferancePM';
 
 export class ShipmentPM {
     public UIProperties: UIProperties;
@@ -5536,9 +5537,10 @@ export class ShipmentPM {
     public get IsCustomShipment() { return this.isCustomShipment; }
     public set IsCustomShipment(newValue: boolean) { if (this.isCustomShipment != newValue) { this.isCustomShipment = newValue; this.MarkAsDirty("IsCustomShipment"); } }
 
-    private shipmentReferances: []; // ShipmentReferance[];
+    private shipmentReferances: ShipmentReferancePM[];
     public get ShipmentReferances() { return this.shipmentReferances; }
-    public set ShipmentReferances(newValue: []) { if (this.shipmentReferances != newValue) { this.shipmentReferances = newValue; this.MarkAsDirty("ShipmentReferances"); } }
+    public set ShipmentReferances(newValue: ShipmentReferancePM[]) { if (this.shipmentReferances != newValue) { this.shipmentReferances = newValue; this.MarkAsDirty("ShipmentReferances"); } }
+
 
     private carrierCode: string;
     public get CarrierCode() { return this.carrierCode; }

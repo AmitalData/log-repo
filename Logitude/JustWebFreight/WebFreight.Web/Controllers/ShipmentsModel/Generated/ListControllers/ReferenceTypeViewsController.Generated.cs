@@ -44,7 +44,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
     {
 	  
        
-        public HttpResponseMessage GetSingle(string code)
+        public HttpResponseMessage GetSingle(string id)
         {
 		  try
             {
@@ -54,7 +54,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                 ReferenceTypeListQueryService referenceTypeQuery = new ReferenceTypeListQueryService(MyContext);
-                ReferenceTypeList referenceTypeList = referenceTypeQuery.GetSingle(code);
+                ReferenceTypeList referenceTypeList = referenceTypeQuery.GetSingle(id);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
                 return Request.CreateResponse(HttpStatusCode.OK,  referenceTypeList);

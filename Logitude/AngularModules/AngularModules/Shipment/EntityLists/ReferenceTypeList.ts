@@ -7,10 +7,9 @@
 //------------------------------------------------------------------------------
 
 export class ReferenceTypeList {
-   		ShipmentId: string;
-		Tenant: number;
-		LineNumber: number;
-		ReferenceType: string;
-		ReferenceValue: string;
-		PartnerId: string;
+   		Code: string;
+		LocalName: string;
+		EnglishName: string;
+		SearchFields: string;
+		Inactive: boolean;
 }
