@@ -174,7 +174,7 @@ i[role="img"][aria-hidden="true"] {
 }
 
 .commentOptions_pop {
-    display: none;
+    display:flex;
     position: absolute;
     left: 100%;
     top: 50%;

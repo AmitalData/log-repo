@@ -24,17 +24,12 @@ export class CommentsComponent implements OnInit, OnChanges {
   // faPlusCircle = faPlusCircle;
 
   constructor(private addCommentService: AddCommentService, private API_MainService: API_MainService) { }
-  showAddComment = this.addCommentService.getIsOpened();
 
   showAddCommentSidebar() {
-    this.addCommentService.setIsOpened(true);
+    this.addCommentService.setIsOpened(true, this.currentItem);
   }
 
   ngOnInit(): void {
-    // this.currentItem.subscribe((data: CB_CustomsItemComputedDataList) => {
-    //   // debugger
-    //   if (data?.CustomsItemID != null) this.showCommentsByClick();
-    // });\
     this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {
       console.log(data);
       this.allComments = data;
@@ -47,14 +42,5 @@ export class CommentsComponent implements OnInit, OnChanges {
 
     }
   }
-
-
-
-  // showCommentsByClick() {
-  //   this.API_MainService.GetAllCommentsByCustomsItemId(this.currentItem.getValue().CustomsItemID, this.API_MainService.getTenant()).subscribe((data: RemarksClassificationList[]) => {
-  //     console.log(data);
-  //     this.addCommentService.allComments.next(data);
-  //   });
-  // }
 }
 

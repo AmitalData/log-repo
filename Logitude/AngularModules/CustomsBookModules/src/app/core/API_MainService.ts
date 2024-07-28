@@ -31,7 +31,7 @@ export class API_MainService extends BaseService {
 		return 0; // TODO: change to real tenant
   }
 
-	RemarksClassification(data) {
+	AddNEWRemarksClassification(data) {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/AddNEWRemarksClassification`;
 		return this.Post(url, data);
 	}

@@ -9,12 +9,13 @@ import { CB_CustomsItemComputedDataList, ItemData, RemarksClassificationList } f
 import { BehaviorSubject } from 'rxjs';
 import { API_MainService } from '../../../core/API_MainService';
 import { AddCommentService } from '../add-comment/service/add-comment.service';
+import { NgClass } from '@angular/common';
 
 
 @Component({
   selector: 'app-details-frame',
   standalone: true,
-  imports: [FontAwesomeModule, AccordionComponent, CommentsComponent],
+  imports: [NgClass, FontAwesomeModule, AccordionComponent, CommentsComponent],
   templateUrl: './details-frame.component.html',
   styleUrl: './details-frame.component.css'
 })
@@ -51,10 +52,16 @@ export class DetailsFrameComponent implements OnInit {
     });
   }
 
+  countOfComments: number = 0;
   showCommentsByClick() {
     this.API_MainService.GetAllCommentsByCustomsItemId(this.currentItem.getValue().CustomsItemID, this.API_MainService.getTenant()).subscribe((data: RemarksClassificationList[]) => {
       // console.log(data);
+      this.countOfComments = data?.length > 0 ? data.length : 0;
       this.addCommentService.allComments.next(data);
+    });
+
+    this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {
+      this.countOfComments = data?.length > 0 ? data.length : 0;
     });
   }
 }

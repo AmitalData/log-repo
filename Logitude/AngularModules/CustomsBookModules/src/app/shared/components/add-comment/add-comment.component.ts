@@ -49,16 +49,19 @@ export class AddCommentComponent {
       remarkDescription: this.commentText != null && this.commentText != '' ? this.commentText : '',
     };
     if (remarksClassificationPM.remarkDescription == '' || !remarksClassificationPM.customsItemsID) return;
+    this.addCommentService.setIsOpened(false);
 
-    this.API_MainService.RemarksClassification(remarksClassificationPM).subscribe((data: any) => {
+    this.API_MainService.AddNEWRemarksClassification(remarksClassificationPM).subscribe((data: any) => {
       this.showMessage('הערה נוספה בהצלחה');
+      this.addCommentService.allComments.next([...this.addCommentService.allComments.getValue(), data]);
+      // add if error: 
+      // this.showMessage('הוספת הערה נכשלה');
     });
 
     this.commentText = '';
   }
 
   showMessage(message?: string): void {
-    this.addCommentService.setIsOpened(false);
 
     if (message === "") return;
     this.snackBar.open(message, 'סגור',
