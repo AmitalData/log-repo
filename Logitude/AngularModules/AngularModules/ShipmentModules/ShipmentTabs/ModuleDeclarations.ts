@@ -28,6 +28,7 @@ import { ProductItemsTabComponent } from './Components/ProductItems/ProductItems
 import { EditCustomerProductItemComponent } from './Components/ProductItems/EditCustomerProductItemComponent';
 import { ShipmentPackagesTabComponent } from './Components/ShipmentPackages/ShipmentPackagesTabComponent';
 import { ShipmentDataTabComponent } from './Components/ShipmentData/ShipmentDataTabComponent';
+import { ShipmentReferenceDetailsComponent } from './Components/ShipmentData/ShipmentReferenceDetails/ShipmentReferenceDetailsComponent';
 
 export const Components =
     [
@@ -43,6 +44,7 @@ export const Components =
         CustomsTabComponent,
         ShipmentPackagesTabComponent,
         ShipmentDataTabComponent,
+        ShipmentReferenceDetailsComponent,
         ExportFileComponent,
         OrdersTabComponent,
         AddEditOrderPackageComponent,
@@ -99,6 +101,7 @@ export class ModuleDeclarations {
             case "EditCustomerProductItemComponent": { myResult = EditCustomerProductItemComponent; break; }
             case "ShipmentPackagesTabComponent" : { myResult = ShipmentPackagesTabComponent; break; }
             case "ShipmentDataTabComponent" : { myResult = ShipmentDataTabComponent; break; }
+            case "ShipmentReferenceDetailsComponent" : { myResult = ShipmentReferenceDetailsComponent; break; }
         }
 
         return myResult;

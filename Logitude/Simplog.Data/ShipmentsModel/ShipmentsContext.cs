@@ -282,6 +282,8 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new CommunicationLogStepMap());
             modelBuilder.Configurations.Add(new SharedLogisticsInvitationStatusMap());
             modelBuilder.Configurations.Add(new ShipmentPackageItemMap());
+            modelBuilder.Configurations.Add(new ShipmentReferanceMap());
+            modelBuilder.Configurations.Add(new ReferenceTypeMap());
             modelBuilder.Configurations.Add(new IndustryMap());
             modelBuilder.Configurations.Add(new LeadSourceMap());
             modelBuilder.Configurations.Add(new ProductPeriodMap());

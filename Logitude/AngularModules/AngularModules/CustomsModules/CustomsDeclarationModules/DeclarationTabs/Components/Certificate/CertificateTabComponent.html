@@ -354,15 +354,15 @@
                                             <td colspan="2" >
                                                 <ul class="FiltersMenu">
                                                     <li id="All" style="width: 50px; height: 22px;"
-                                                        [class.SelectedFilter]="item.FilterSelectedValue == '2'" (click)="item.ticket.AttachmentTypeCode = '2'; item.EditTicket(item)" class="noselect">
+                                                        [class.SelectedFilter]="item.FilterSelectedValue == '2'" (click)="item.EditTicket(item)" class="noselect">
                                                        {{'Customs.Declaration.O.Digital' | TextCodeTranslationPipe}}
                                                     </li>
                                                     <li id="Errors" style="width: 50px; height: 22px;"
-                                                        [class.SelectedFilter]="item.FilterSelectedValue == '1'" (click)="item.ticket.AttachmentTypeCode = '1'; item.EditTicket(item)" class="noselect">
+                                                        [class.SelectedFilter]="item.FilterSelectedValue == '1'" (click)="item.EditTicket(item)" class="noselect">
                                                        {{'Customs.Declaration.O.Manual' | TextCodeTranslationPipe}}
                                                     </li>
                                                     <li id="Constraints" style="width: 50px; height: 22px;"
-                                                        [class.SelectedFilter]="item.FilterSelectedValue == '4'" (click)="item.ticket.AttachmentTypeCode = '4'; item.EditTicket(item)" class="noselect">
+                                                        [class.SelectedFilter]="item.FilterSelectedValue == '4'" (click)="item.EditTicket(item)" class="noselect">
                                                      {{'Customs.Declaration.O.Exempt' |TextCodeTranslationPipe }}
                                                     </li>
                                                 </ul>

@@ -169,7 +169,7 @@ export class ReferenceTypeListService {
 
 		if (ReferenceTypeListService.CachedData.length > 0) {
 			return defer(() => {
-				var filteredData = ReferenceTypeListService.CachedData.filter(a => a.ShipmentId === id)[0];
+				var filteredData = ReferenceTypeListService.CachedData.filter(a => a.Code === id)[0];
 				serviceResponse.CallTime = callTime;
 				serviceResponse.Result = filteredData; 
                 return of(serviceResponse);
@@ -191,7 +191,7 @@ export class ReferenceTypeListService {
 
 					ReferenceTypeListService.CachedData = _mappedListsArray;
 
-					var filteredData = ReferenceTypeListService.CachedData.filter(a => a.ShipmentId === id)[0];
+					var filteredData = ReferenceTypeListService.CachedData.filter(a => a.Code === id)[0];
 					serviceResponse.Result = filteredData; 
 					serviceResponse.CallTime = callTime;
 			     

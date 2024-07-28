@@ -8,7 +8,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
     {
         public ShipmentReferanceMap()
         {
-            this.HasKey(t => t.ShipmentId);
+            this.HasKey(t => new { t.ShipmentId, t.Tenant, t.LineNumber });
             this.Property(t => t.ShipmentId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ReferenceType).HasMaxLength(10).IsUnicode(false);
             this.Property(t => t.PartnerId).HasMaxLength(15).IsUnicode(false);
@@ -24,9 +24,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ReferenceValue).HasColumnName("ReferenceValue");
 
             // Relationships
-            this.HasOptional(t => t.ReferenceType).WithMany().HasForeignKey(d => d.ReferenceTypeCode);
-            this.HasOptional(t => t.PartnerId).WithMany().HasForeignKey(d => d.Card);
-            this.HasRequired(t => t.ShipmentId).WithMany().HasForeignKey(d => d.Shipment);
+            this.HasOptional(t => t.ReferenceTypeCode).WithMany().HasForeignKey(d => d.ReferenceType);
+            this.HasOptional(t => t.Card).WithMany().HasForeignKey(d => d.PartnerId);
+            this.HasRequired(t => t.Shipment).WithMany().HasForeignKey(d => d.ShipmentId);
         }
     }
 }

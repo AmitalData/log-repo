@@ -6,13 +6,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class ReferenceTypeList {
-   
-	Code: string;
-	LocalName: string;
-	EnglishName: string;
-	SearchFields: string;
-	Inactive: boolean;
-	
+export class ShipmentReferance {
+   		ShipmentId: string;
+		Tenant: number;
+		LineNumber: number;
+		ReferenceType: string;
+		ReferenceValue: string;
+		PartnerId: string;
 }
- 

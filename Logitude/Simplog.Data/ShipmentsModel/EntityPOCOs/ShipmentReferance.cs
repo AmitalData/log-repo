@@ -13,7 +13,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
     {
         [Key]
         public string ShipmentId { get; set; }
+        [Key]
         public int Tenant { get; set; }
+        [Key]
         public int LineNumber { get; set; }
         public string ReferenceType { get; set; }
         public string PartnerId { get; set; }
