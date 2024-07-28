@@ -4184,7 +4184,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             Reference1 = theEntityPm.CustomerRef != null ? theEntityPm.CustomerRef : theEntityPm.InvoiceNumber,
                                                             Reference2 = theEntityPm.MainEntityReference,
                                                             Reference3 = !string.IsNullOrEmpty(theEntityPm.MasterNumber) ? theEntityPm.MasterNumber : (!string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber),
-                                                            Notes = d.Notes,
+                                                            Notes = !string.IsNullOrWhiteSpace(d.Notes) ? d.Notes : (!string.IsNullOrWhiteSpace(theEntityPm.PrintNotes) ? theEntityPm.PrintNotes : theEntityPm.InternalNotes),
                                                         }).ToList();
 
                     UpdateJournalLinesDebitAccounts(journalLines);
