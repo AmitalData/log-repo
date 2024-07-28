@@ -4,7 +4,7 @@
 		<div class="mainTable_list">
 			<div class="data_row_container" [class.active]="!showDetails">
 				<app-table-top class="app-table-top" [class.active]="!showDetails"
-					(clearResults)="handleClearResultsClick()" [countSearchResult]="countSearchResult"
+					(clearResults)="handleClearResultsClick()" (filterClick)="filtersSearchClick($event)" [countSearchResult]="countSearchResult"
 					[searchMode]="searchMode" />
 
 				<div class="loadingBox" *ngIf="data?.length == 0 && this.searchMode == 'search'; else loading">

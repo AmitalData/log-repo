@@ -13,6 +13,7 @@ import { SearchService } from '../page-top/service/top-page.service';
 import { FormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HeaderService, searchState } from '../app-header/service/header.service';
+import { FiltersSearch } from '../filter-popup/service/filter-popup.service';
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
@@ -69,6 +70,7 @@ export class MainDisplayComponent implements OnInit {
 		};
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
 			this.countSearchResult = 0;
+			this.handleClearResults();
 
 			this.fullData = this.orderedData(data);
 			this.data = this.fullData;
@@ -194,6 +196,26 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 
+
+	filtersSearchClick(filtersSearch: FiltersSearch) {
+		console.log(filtersSearch);
+		let filters: Filters = {
+			SearchFields: this.searchService.GetSearchText(),
+			CustomsBookType: this.searchState,
+			CustomsItemHierarchic: '1,2,3,4', // change it to real
+			Reamarks: filtersSearch.remarks,
+			Rules: filtersSearch.rules,
+			SkippedRows: 0,
+			PageSize: 0,
+			Tenant: this.API_MainService.getTenant()
+		};
+		
+		debugger
+		// work also with GetCustomsBookMainViewSearchByClasssification?
+		this.API_MainService.GetCustomsBookMainViewSearchByText(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
+			this.itemsData.next(data);
+		});
+	}
 
 	handleClearResultsClick() {
 		this.handleClearResults();

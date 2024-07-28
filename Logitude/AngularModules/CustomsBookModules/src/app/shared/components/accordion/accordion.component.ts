@@ -41,7 +41,6 @@ export class AccordionComponent implements OnInit {
 
   listenToChanges() {
     this.currentItem.subscribe((data: CB_CustomsItemComputedDataList) => {
-      // debugger
       this.customsItemId = data?.CustomsItemID;
       if(this.customsItemId)
         this.InitData();

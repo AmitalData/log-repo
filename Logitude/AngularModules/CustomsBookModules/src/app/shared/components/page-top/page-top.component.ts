@@ -21,15 +21,15 @@ export class PageTopComponent {
 	public text: string = '';
 	public checked: string | number = '';
 	public searchBy = SearchByParam;
-	public selectedSearchOption:SearchByParam = this.searchBy.Classification;
-	public currentSearchState:string = searchState.יבוא;
-
+	public selectedSearchOption: SearchByParam = this.searchBy.Classification;
+	public currentSearchState: string = searchState.יבוא;
+	public SearchByValidation: SearchBy = SearchBy.searchBy_form01;
 	ngOnInit() {
 		this.text = this.searchService.SearchBy('searchBy_form01');
-		this.checked = this.searchService.GetDefaultValue();	
+		this.checked = this.searchService.GetDefaultValue();
 		this.headerService.searchState$.subscribe((searchText) => {
 			this.currentSearchState = searchText;
-		});	
+		});
 	}
 
 	public search(id: string) {
@@ -45,7 +45,7 @@ export class PageTopComponent {
 		this.searchClick.emit(this.searchService.selectSearchBy);
 
 		this.searchService.searchText$.subscribe((searchText) => {
-				// reset search input in html:
+			// reset search input in html:
 			if (searchText === "") this.textToSearch = "";
 		});
 	}
@@ -56,4 +56,4 @@ export enum SearchByParam {
 	WordCombination = "מילה/צירוף מילים"
 }
 
-		
+

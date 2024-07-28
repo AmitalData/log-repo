@@ -30,7 +30,7 @@ export class MainPageComponent {
 
 	SearchByText(searchBy: any) {
 		this.selectSearchBy = searchBy;
-
+		
 		let filters: Filters = {
 			SearchFields: this.searchService.GetSearchText(),
 			CustomsBookType: this.HeaderService.getSearchState(true),
@@ -39,7 +39,7 @@ export class MainPageComponent {
 			Rules: true,
 			SkippedRows: 0,
 			PageSize: 0,
-			Tenant: 0
+			Tenant: this.API_MainService.getTenant()
 		};
 		
 		if(filters.SearchFields === "") return;

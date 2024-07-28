@@ -36,7 +36,7 @@
 			<div class="pageSearch_form">
 				<fieldset>
 					<div class="pageSearch_formField shown" [id]="text">
-						<input type="text" (input)="onChange($event)" [(ngModel)]="textToSearch" [placeholder]="text" />
+						<input type="text" (input)="onChange($event)" [(ngModel)]="textToSearch"  [maxlength]="text === SearchByValidation ? 13 : 100" [placeholder]="text" />
 					</div>
 
 					<button (click)="clickSearch()">חיפוש</button>
