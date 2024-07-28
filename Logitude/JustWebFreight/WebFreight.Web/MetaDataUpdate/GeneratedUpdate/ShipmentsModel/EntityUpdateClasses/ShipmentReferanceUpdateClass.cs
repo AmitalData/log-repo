@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentReferanceUpdateClass
    {  		
-		public const string HashString = "7be69806563f2a8943047378506bc781";
+		public const string HashString = "7be69806563f2a8943047378506bc782";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -133,7 +133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "רפרנט",
 			      				    DefaultText =  "Shipment Referance",
-			      				    Code =  "6677",
+			      				    Code =  "ad33",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
@@ -526,7 +526,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReferenceValue",
 					  						DefaultText =  "Reference Value",
-					  						ListFieldLable =  "ReferenceValueListLable",
+										    FullLocalDefaultText = "אסמכתא",
+										    ListFieldLable =  "ReferenceValueListLable",
 					  						ListLableDefaultText =  "Reference Value",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
