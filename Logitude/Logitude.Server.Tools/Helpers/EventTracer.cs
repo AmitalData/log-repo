@@ -156,7 +156,6 @@ namespace Logitude.Server.Tools.Helpers
                         ChildObjectTableId = childObjectTable?.Id,
                     };
 
-
                     if ((Transaction.Current != null && Transaction.Current.IsolationLevel == System.Transactions.IsolationLevel.Snapshot)
                         || (Transaction.Current == null && dbms != "oracle"))
                     {
