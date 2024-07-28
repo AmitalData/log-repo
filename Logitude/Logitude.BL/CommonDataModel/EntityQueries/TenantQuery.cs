@@ -379,6 +379,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         UseNewTermsOfUse = tt.UseNewTermsOfUse,
                         ShipmentATADateIndicator = tt.ShipmentATADateIndicator,
                         ApproveUploadedDocuments = tt.ApproveUploadedDocuments,
+                        StorageEncryptionKey = tt.StorageEncryptionKey,
                     }; 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {

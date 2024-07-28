@@ -47,6 +47,9 @@ namespace WebFreight.Web.Helpers
             AzureStorage.GetFromCache(LogitudeSettings.TempStorageConnection, GetTempStorageContainerName(tenant))
             .CreateSaSWrite().ToString().Replace("&amp;", "&");
 
+        public static string GetStorageEncryptionKey(int tenant) => 
+            new TenantQuery(tenant).GetSinglePM(tenant).StorageEncryptionKey;
+
         private static string GetTempStorageContainerName(int tenant) => "hybrid-upload-tenant" + tenant.ToString();
 
         public static Response AddDocumentAndSendToInternalStorage(int tenant, string blobname, string DocumentId)
