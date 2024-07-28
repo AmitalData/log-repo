@@ -26,6 +26,7 @@ using System.Xml.Xsl;
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
 using System.Linq.Expressions;
+using NPOI.SS.Formula.Functions;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -36,7 +37,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("CorrespondenceDownload/DownloadDocument")]
-        public HttpResponseMessage DownloadDocument(string DA = "", string securitykey = "" , string id = "", bool limitedDateRange = true)
+
+        public HttpResponseMessage DownloadDocumentLimited(string DA = "", string securitykey = "", string id = "")
+        { 
+            return DownloadDocumentInner(DA, securitykey, id, true);
+        }
+
+        private HttpResponseMessage DownloadDocumentInner(string DA = "", string securitykey = "" , string id = "", bool limitedDateRange = true)
         {
             
             byte[] _DatainByte;
@@ -341,6 +348,85 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         }
 
         [HttpGet]
+        [Route("CorrespondenceDownload/PreValidateAndDownloadDocument")]
+        public HttpResponseMessage PreValidateAndDownloadDocument(string DA = "", string securitykey = "", string id = "")
+        {
+            try
+            {
+
+
+                if (!HttpContext.Current.Request.IsAuthenticated)
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError("Not Authenticated DA= " + DA + ", securitykey= " + securitykey + ", id= " + id);
+
+                    HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Redirect);
+                    response.Headers.Location = new Uri("../login.aspx");
+                    return response;
+
+                }
+                else
+                {
+                    try
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        int authTenant = authToken.Tenant;
+                        int tenant = authTenant;
+
+                        string AllHeaderRequest = DA;
+                        if (AllHeaderRequest == "1")
+                        {
+                            string headerRequest = securitykey;
+                            string[] filestrings = headerRequest.Split(':');
+                            string securityId = filestrings[0].ToString();
+                            string EntityId = filestrings[1].ToString();
+                            string partnertype = filestrings[2].ToString();
+                            string forwardingShipmentEntityId = null;
+                            string domainName = "";
+
+                            tenant = int.Parse(filestrings[3] + "");
+
+
+                        }
+                        else
+                        {
+                            string headerRequest = id;
+                            string[] filestrings = headerRequest.Split('~');
+                            string securityId = filestrings[0].ToString();
+                            tenant = Convert.ToInt32(filestrings[1]);
+                        }
+                        if (authTenant != tenant)
+                        {
+                            NetCommonHelper.Logger.DevLog.Instance.WriteError("Authenticated Tenant " + authTenant.ToString() + ", Document link tenant " + tenant.ToString() + ", DA= " + DA + ", securitykey= " + securitykey + ", id= " + id);
+                            return Request.CreateResponse(HttpStatusCode.Unauthorized, new StringContent("Invalid Security Id!", System.Text.Encoding.UTF8, "text/plain"));
+                        }
+                        return Request.CreateResponse(HttpStatusCode.OK, new StringContent(" ", System.Text.Encoding.UTF8, "text/plain"));
+
+                    }
+                    catch (Exception ex)
+                    {
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError("PreValidateAndDownloadDocument (1)  Exception= " + ex.ToString());
+
+                        return Request.CreateResponse(HttpStatusCode.Unauthorized, ApiExceptionBuilder.BuildException(ex)); ;
+                    }
+
+
+                }
+            }
+            catch (Exception errorInfo)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteError("PreValidateAndDownloadDocument (2)  Exception= " + errorInfo.ToString());
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Redirect);
+                response.Headers.Location = new Uri("../login.aspx");
+                return response;
+            }  
+
+
+
+        }
+
+
+        [HttpGet]
         [Route("CorrespondenceDownload/ValidateAndDownloadDocument")]
         public HttpResponseMessage ValidateAndDownloadDocument(string DA = "", string securitykey = "", string id = "")
         {
@@ -357,20 +443,20 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 }
                 else
                 {
-                    return DownloadDocument(DA, securitykey, id, false);
+                    return DownloadDocumentInner(DA, securitykey, id, false);
                 }
             }
             catch (Exception errorInfo)
             {
+                NetCommonHelper.Logger.DevLog.Instance.WriteError("ValidateAndDownloadDocument  Exception= " + errorInfo.ToString());
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Redirect);
                 response.Headers.Location = new Uri("../login.aspx");
                 return response;
-            }  
+            }
 
 
 
         }
-
 
 
         private byte[] TransformXml2Html(byte[] myByteArray)

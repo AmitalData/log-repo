@@ -5,7 +5,10 @@ import { catchError, map } from 'rxjs/operators';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
+import { HomeComponent } from 'src/CargoTracking/Components/PublicSite/HomeComponent/HomeComponent';
+import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 declare var window: any;
+
 
 
 @Injectable()
@@ -19,8 +22,17 @@ export class DocumentDownloadService {
 
     public ExternalDownloadAllDocuments(securityId: string, forwardingShipmentId: string, tenant: number)
     {
-        //var link = ServiceHelper.GetAppURL(this.baseUrl)
-            + `WebPages/CorrespondenceDownloadpage.aspx?DA=1&securitykey=${securityId}::CS:${tenant}:${forwardingShipmentId ? forwardingShipmentId : ""}:cargo`;
+        var pre_link = ServiceHelper.GetAppURL(this.baseUrl)
+            + `api/CorrespondenceDownload/PreValidateAndDownloadDocument?DA=1&securitykey=${securityId}::CS:${tenant}:${forwardingShipmentId ? forwardingShipmentId : ""}:cargo`;
+
+        let _http = ServiceHelper.HttpClient;
+            _http.get(pre_link, ServiceHelper.GetHeadersWithToken())
+                .subscribe(
+                    r => {  },
+                    e => { this.OnSignoutClicked(); },
+                    () => {  }
+                );
+
         var link = ServiceHelper.GetAppURL(this.baseUrl)
             + `api/CorrespondenceDownload/ValidateAndDownloadDocument?DA=1&securitykey=${securityId}::CS:${tenant}:${forwardingShipmentId ? forwardingShipmentId : ""}:cargo`;
         var win = window.open(link, '_blank');
@@ -32,16 +44,31 @@ export class DocumentDownloadService {
     }
     public ExternalDownloadPage(securityId: string, tenant: number, fileName: string)
     {
-        //var link = ServiceHelper.GetAppURL(this.baseUrl)
-        //    + `WebPages/CorrespondenceDownloadpage.aspx?Id=${securityId}~${tenant}~${null}~${fileName}`;
+        var pre_link = ServiceHelper.GetAppURL(this.baseUrl)
+            + `api/CorrespondenceDownload/PreValidateAndDownloadDocument?Id=${securityId}~${tenant}~${null}~${fileName}`;
+
+
+            let _http = ServiceHelper.HttpClient;
+            _http.get(pre_link, ServiceHelper.GetHeadersWithToken())
+                .subscribe(
+                    r => {  },
+                    e => { this.OnSignoutClicked(); },
+                    () => {  }
+                );
+
         var link = ServiceHelper.GetAppURL(this.baseUrl)
-            + `api/CorrespondenceDownload/ValidateAndDownloadDocument?Id=${securityId}~${tenant}~${null}~${fileName}`;
+                + `api/CorrespondenceDownload/ValidateAndDownloadDocument?Id=${securityId}~${tenant}~${null}~${fileName}`;
+
         var win = window.open(link, '_blank');
 
         if (win) {
             win.focus();
         }
 
+    }
+
+    OnSignoutClicked() {
+        SessionLocator.HomeComponent.SignoutClicked();
     }
 
     public  DownloadPage(id: string, documentName: string) {
