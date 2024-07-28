@@ -35,12 +35,10 @@
                                     <span>{{item.ReferenceType}}</span>
                                 </div>
                                 <div *ngIf="logcelltemplate.IsEditMode">
-                                    <!-- (SelectedItemChanged)="item.ReferenceType = $event" -->
                                     <LogLov [ObjectFieldName]="'ReferenceType'"
                                             [ObjectTableName]="ObjectTableName"
                                             [DataContext]="item"
                                             [LookUpTableName]="'ReferenceType'"
-                                            [DisplayMemberPath]="'LocalName'"
                                             [SelectedValue]="item.ReferenceType"
                                             [HideColumns]="true"
                                             [FocusOnMe]="true">

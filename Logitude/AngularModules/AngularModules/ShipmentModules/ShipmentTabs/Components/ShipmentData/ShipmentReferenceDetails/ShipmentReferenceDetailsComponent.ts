@@ -1,12 +1,15 @@
 import {Component}  from '@angular/core';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 import { AppTool } from 'Infrastructure/Tools';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { ReferenceTypePM } from 'Shipment/EntityPMs/ReferenceTypePM';
 import { ShipmentPM } from 'Shipment/EntityPMs/ShipmentPM';
 import { ShipmentReferancePM } from 'Shipment/EntityPMs/ShipmentReferancePM';
+import { ReferenceTypeListService } from 'Shipment/Services/StandardLists/ReferenceTypeListService';
 
 @Component({
     templateUrl: './ShipmentReferenceDetailsComponent.html',
@@ -17,9 +20,11 @@ export class ShipmentReferenceDetailsComponent extends BaseComponent {
     public DataContext: any = this;
     public ObjectTableName: string;
     public IsDisplayOnly: boolean = false;
-    ShipmentReferances: ShipmentReferancePM[];
+    public ShipmentReferances: ShipmentReferancePM[];
     public entityResourceService: EntityResourceService = new EntityResourceService();
+    public referenceTypeListService: ReferenceTypeListService = new ReferenceTypeListService();
     public IsResourcesReady: boolean = false;
+    public referenceTypesTranslations = {};
 
     constructor() {
         super();
@@ -27,7 +32,14 @@ export class ShipmentReferenceDetailsComponent extends BaseComponent {
         this.ObjectTableName = "ShipmentReferance"; 
 
         this.entityResourceService.getEntityResourceByTableName("ShipmentReferance").subscribe((response: any) => {
-            this.IsResourcesReady = true;
+            this.referenceTypeListService.getAll().subscribe((response: ServiceResponse) => {
+                if (!response.HasError) {
+                    const referenceTypePMList: ReferenceTypePM[] = response.Result;
+                    referenceTypePMList.forEach(referenceTypePM => this.referenceTypesTranslations[referenceTypePM.Code] = referenceTypePM.LocalName);
+                }
+                
+                this.IsResourcesReady = true;
+            });
         });
     }
 
@@ -98,7 +110,6 @@ export class ShipmentReferenceDetailsComponent extends BaseComponent {
                 }
                 else {
                     this.ShipmentReferances[index].ChangeSetOp = "Delete";
-                    // todo: do we need to update lineNumber of other elements?
                 }
             }
         }
@@ -231,7 +242,7 @@ export class ShipmentReferenceLine extends BaseComponent {
     public ShowValidatioIcon: boolean = false;
     public closedManullay: boolean = false;
 
-    constructor(EntityPM: ShipmentReferancePM, parent: ShipmentReferenceDetailsComponent, allowExport: boolean = false) {
+    constructor(EntityPM: ShipmentReferancePM, parent: ShipmentReferenceDetailsComponent) {
         super();
         this.entityPM = EntityPM;
         this.Parent = parent;
@@ -249,7 +260,7 @@ export class ShipmentReferenceLine extends BaseComponent {
         }
     }
 
-    public get ReferenceType() { return this.entityPM.ReferenceType; }
+    public get ReferenceType() { return this.Parent.referenceTypesTranslations[this.entityPM.ReferenceType] || this.entityPM.ReferenceType; }
     public set ReferenceType(newValue: string) { 
         if (this.entityPM.ReferenceType != newValue && typeof(newValue) == "string") {
             this.entityPM.ReferenceType = newValue; 

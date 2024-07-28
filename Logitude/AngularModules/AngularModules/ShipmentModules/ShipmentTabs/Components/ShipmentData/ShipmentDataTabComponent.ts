@@ -7,6 +7,7 @@ import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';
 import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
 import { LogitudeWindow } from "Controls/Windows/LogitudeWindow";
 import { ShipmentReferancePM } from "Shipment/EntityPMs/ShipmentReferancePM";
+import { MessageWindow } from "Controls/Windows/MessageWindow";
 
 @Component({    
     templateUrl: './ShipmentDataTabComponent.html',
@@ -115,6 +116,13 @@ export class ShipmentDataTabComponent extends BaseComponent {
     }
 
     EditReferenceTypeValue() {
+
+        const shipmentReferences = this.GetActiveShipmentReferances();
+        if (shipmentReferences.length == 0 || (shipmentReferences.length > 0 && AppTool.IsNullOrEmpty(shipmentReferences[0].ReferenceType))) {
+            var messageWindow: MessageWindow = new MessageWindow();
+            messageWindow.Show("יש לבחור סוג אסמכתא");
+            return;
+        }
 
         //this.CurrentSession.StopBusyIndicator();
         var windowArgs: any = {};
