@@ -588,8 +588,10 @@ namespace WebFreight.Web.WcfApi
             Response response = new Response();
             try
             {
-                SecurityUtility.AuthenticationOnTenant(tenant);                
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 response.Result = DocumentFileUploadHelper.GetTempStorageSasWrite(tenant);
+                response.Result2 = DocumentFileUploadHelper.GetStorageEncryptionKey(tenant);
 
                 return response;
             }
