@@ -12,6 +12,7 @@ import { BehaviorSubject, filter } from 'rxjs';
 import { SearchService } from '../page-top/service/top-page.service';
 import { FormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { HeaderService, searchState } from '../app-header/service/header.service';
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
@@ -48,20 +49,24 @@ export class MainDisplayComponent implements OnInit {
 	cbRequirementComputedDataList: CB_RequirementComputedDataList[];
 	isExpand: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-	constructor(private API_MainService: API_MainService, private searchService: SearchService) { }
+	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService) { }
+	searchState: string = searchState.יבוא;
 
 	ngOnInit() {
-		this.InitData();
-		this.ListenToItemsSearched();
+		this.headerService.searchState$.subscribe((data) => {
+			if (!searchState[data]) return;
+			this.searchState = searchState[data];
+			this.InitData();
+			this.ListenToItemsSearched();
+		});
 	}
 
 	InitData() {
 		let filters: Filters = {
-			CustomsBookType: '1',
+			CustomsBookType: this.searchState,
 			Tenant: 0,
 			SearchFields: ''
 		};
-
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
 			this.countSearchResult = 0;
 
@@ -152,10 +157,10 @@ export class MainDisplayComponent implements OnInit {
 			this.showDetailsOpen.next(this.showDetails);
 			return;
 		}
-		else if (!this.showDetails){
+		else if (!this.showDetails) {
 			this.showDetails = !this.showDetails;
 			this.showDetailsOpen.next(this.showDetails);
-		} 
+		}
 
 		// this.itemData.customsItemId = CustomsItemID;
 		// this.itemData.measurementUnitMalamId = 0; // change it
