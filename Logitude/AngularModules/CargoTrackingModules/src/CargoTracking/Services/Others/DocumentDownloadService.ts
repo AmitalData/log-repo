@@ -6,7 +6,8 @@ import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { HomeComponent } from 'src/CargoTracking/Components/PublicSite/HomeComponent/HomeComponent';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import { Router } from '@angular/router';
+import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
 declare var window: any;
 
 
@@ -16,7 +17,7 @@ export class DocumentDownloadService {
     private  _apiUrl: string;
     private  token: string;
 
-    constructor(@Inject('BASE_URL') private baseUrl: string, private  _http: HttpClient) {
+    constructor(@Inject('BASE_URL') private baseUrl: string, private  _http: HttpClient, private router: Router) {
 
     }
 
@@ -68,8 +69,25 @@ export class DocumentDownloadService {
     }
 
     OnSignoutClicked() {
-        SessionLocator.HomeComponent.SignoutClicked();
+
+        CargoTrackingBrandingData.Tenant = +sessionStorage.getItem("LoggedUserTenant");
+
+        sessionStorage.clear();
+
+        if (CargoTrackingBrandingData.Tenant)
+
+
+
+
+            this.router.navigate(["cargo-tracking/login"]);//,{ queryParams: {tenant: this.tenant}}
+
+        else
+
+            this.router.navigate(["cargo-tracking/login"]);    
+
     }
+
+
 
     public  DownloadPage(id: string, documentName: string) {
         var url: string = "id=" + id;
