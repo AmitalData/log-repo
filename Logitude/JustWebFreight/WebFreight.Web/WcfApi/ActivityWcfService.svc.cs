@@ -620,7 +620,10 @@ namespace WebFreight.Web.WcfApi
             try
             {
                 SecurityUtility.AuthenticationOnTenant(tenant);
+
                 response.Result = DocumentFileUploadHelper.GetTempStorageSasWrite(tenant);
+                response.Result2 = DocumentFileUploadHelper.GetStorageEncryptionKey(tenant);
+
                 return response;
             }
             catch (Exception ex)
