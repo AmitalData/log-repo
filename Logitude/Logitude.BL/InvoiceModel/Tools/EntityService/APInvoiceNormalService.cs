@@ -2187,7 +2187,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                     foreach (APInvoiceTotalVATPM vat in totalVats)
                     {
-                        vat.LocalVatAmountWithVatRecognized = Math.Round((vat.VatRecognizedPercentage != null) ? (((decimal)vat.VatRecognizedPercentage / 100) * (decimal)vat.LocalVATAmount) : (decimal)vat.LocalVATAmount, 2);
+                        //     Moved into aPInvoiceTotalVATQuery.GetInvoiceTotalVatsForInvoiceWithoutZeroVATPercent()
+                        //     vat.LocalVatAmountWithVatRecognized = Math.Round((vat.VatRecognizedPercentage != null) ? (((decimal)vat.VatRecognizedPercentage / 100) * (decimal)vat.LocalVATAmount) : (decimal)vat.LocalVATAmount, 2);
+
                         journalLine = new JournalLinePM()
                         {
                             Tenant = tenant,
