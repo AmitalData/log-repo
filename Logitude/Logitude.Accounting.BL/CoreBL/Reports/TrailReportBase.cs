@@ -4,6 +4,8 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -25,7 +27,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         protected IQueryable<AccountCOAM> QBaseAllCardsAndDetailsAccType;
         private IQueryable<ChartOfAccount5LevelM> _QAllChartOfAccountFlattenBy5LevelofHierarchy;
 
-        protected IEnumerable //IQueryable
+        protected IQueryable //IEnumerable //IQueryable
             <TrailReportM> _QBaseTrailReportFull = null;
         //protected DbContextBase.IDbContextLogger _DbLogger;
 
@@ -103,7 +105,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 {
                     throw new Exception("(_QBaseTrailReportFull==null)");
                 }
+                
+
+                string sqltext = _QBaseTrailReportFull.ToTraceQuery();
+                NetCommonHelper.Logger.DevLog.Instance.WriteTrace("Start query to list \r\n " + sqltext + " \r\n ");
                 var myOutputReport = _QBaseTrailReportFull.ToList();
+                NetCommonHelper.Logger.DevLog.Instance.WriteTrace("End query to list");
                 var myTotalRow =
                     (from r in
                          myOutputReport
