@@ -65,7 +65,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     cargoDescription: string = "";
     supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
     InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin, IsDisplayOnly: boolean) {
-        debugger;
         this.entityPM = EntityPM;
         this.IsNewOrEdit = IsNewOrEdit;
         this.IsDisplayOnly = IsDisplayOnly;
@@ -103,7 +102,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true : false;
     }
     InitMoreDataScreenValues() {
-        debugger;
         this.certificateOfOriginWebService.GetCityOfDeclarationByImporterID(this.currentDeclaration.ImporterId, this.currentDeclaration.Tenant).subscribe(myResult => {
             if (!myResult.HasError && myResult.Result != null) {
                 this.PlaceOfManufacture = myResult.Result.LocalCityCode;
