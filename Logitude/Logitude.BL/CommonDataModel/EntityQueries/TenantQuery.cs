@@ -2098,6 +2098,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         }
 
+        public List<Tenant> GetAll(bool fromCache = false) => fromCache ? CacheHelper.GetFromCache("TenantsAll", repository.All) : repository.All();
     }
 
 }

@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Simplog.Data.CommonDataModel.EntityPOCOs
+namespace Unifreight.Data.AmitalModel.EntityPOCOs
 {
     [Table("SyncRecord")]
     public class SyncRecord

@@ -13201,6 +13201,61 @@ namespace Unifreight.Data.AmitalModel
 
             #endregion
 
+            #region SYNRECORD
+
+            modelBuilder.Entity<SyncRecord>()
+                .HasKey(p => new { p.Id })
+                .ToTable("SYNCRECORD", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<SyncRecord>()
+                .Property(p => p.Id)
+                .HasColumnName(@"Id")
+                .IsRequired()
+                .HasMaxLength(36)
+                .HasColumnType("nvarchar");
+            modelBuilder.Entity<SyncRecord>()
+            .Property(p => p.Tenant)
+                .HasColumnName(@"Tenant")
+                .IsRequired()
+                .HasColumnType("int");
+            modelBuilder.Entity<SyncRecord>()
+            .Property(p => p.Entname)
+                .HasColumnName(@"Entname")
+                .HasMaxLength(30)
+                .HasColumnType("nvarchar");
+            modelBuilder.Entity<SyncRecord>()
+                .Property(p => p.KeyVal)
+                .HasColumnName(@"KeyVal")
+                .HasMaxLength(255)
+                .HasColumnType("nvarchar");
+            modelBuilder.Entity<SyncRecord>()
+                .Property(p => p.FileNo)
+                .HasColumnName(@"FileNo")
+                .HasMaxLength(50)
+                .HasColumnType("nvarchar");
+            modelBuilder.Entity<SyncRecord>()
+                .Property(p => p.TrigAction)
+                .HasColumnName(@"TrigAction")
+                .HasMaxLength(1)
+                .HasColumnType("nvarchar");
+            modelBuilder.Entity<SyncRecord>()
+                .Property(p => p.CreateDate)
+                .IsRequired()
+                .HasColumnName(@"CreateDate")
+                .HasColumnType("Datetime");
+            modelBuilder.Entity<SyncRecord>()
+                .Property(p => p.SyncDT)
+                .HasColumnName(@"SyncDT")
+                .HasColumnType("Datetime");
+            modelBuilder.Entity<SyncRecord>()
+                .Property(p => p.IsSync)
+                .IsRequired()
+                .HasColumnName(@"IsSync")
+                .HasColumnType("int");
+
+
+            #endregion
+
             #region Disabled conventions
 
 
@@ -13331,7 +13386,6 @@ namespace Unifreight.Data.AmitalModel
         public virtual DbSet<EFIMMN> EFIMMNs { get; set; }
         public virtual DbSet<LFIFILEM> LFIFILEMs { get; set; }
         public virtual DbSet<GAQTEAM> GAQTEAMs { get; set; }
-       
-
+        public virtual DbSet<SyncRecord> SyncRecord { get; set; }
     }
 }

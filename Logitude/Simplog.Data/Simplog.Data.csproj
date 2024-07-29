@@ -282,7 +282,6 @@
     <Compile Include="InfrastructureModel\EntityPOCOs\DataCustomObject.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DeploymentPackageExecutionLog.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\QuoteChargesGroup.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\SyncRecord.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TariffCarrierTranslation.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UnassignedEntity.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UserLastSettings.cs" />
@@ -619,7 +618,6 @@
     <Compile Include="CommonDataModel\Repositories\HTSCodeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\PortTimeZoneRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ProductItemRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\SyncRecordRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\TariffCarrierTranslationRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\UnassignedEntityrRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\UserLastSettingsRepository.cs" />

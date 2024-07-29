@@ -380,6 +380,7 @@
     <Compile Include="AmitalModel\EntityPOCOs\Class1.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUCARSC.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVLINE.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\SyncRecord.cs" />
     <Compile Include="AmitalModel\ExtensionObjectContext.cs" />
     <Compile Include="AmitalModel\Repsitories\ATBPTILRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CCUACCSUPRepository.cs" />
@@ -479,6 +480,7 @@
     <Compile Include="AmitalModel\Repsitories\MTBCARRRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\MTBPORTRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\RTBPORTRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\SyncRecordRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\VRELEASE2ENTRYRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\YCULTASKRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\YTBTABLERepository.cs" />

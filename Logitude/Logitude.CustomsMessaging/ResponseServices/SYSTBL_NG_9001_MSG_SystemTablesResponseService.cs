@@ -31,6 +31,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Unifreight.Data.AmitalModel.EntityPOCOs;
+using Unifreight.Data.AmitalModel.Repsitories;
 using UnifreightIIG.Common.SystemTableServiceReference;
 
 namespace Logitude.CustomsMessaging.ResponseServices

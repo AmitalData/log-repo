@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Logitude.BL.CommonDataModel.Helpers
+namespace Unifreight.BL.Models
 {
     public class EntityRecord
     {
