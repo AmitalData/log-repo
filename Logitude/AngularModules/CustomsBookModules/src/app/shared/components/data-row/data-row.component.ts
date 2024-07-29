@@ -5,7 +5,8 @@ import { faStar, faCommentDots, faSquareCaretRight, faFileText } from '@fortawes
 import { AddCommentService } from '../add-comment/service/add-comment.service';
 import { NgIf, NgClass } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
-import { CB_CustomsItemComputedDataList } from '../main-display/main-display.component';
+import { CB_CustomsItemComputedDataList, CB_TariffList } from '../main-display/main-display.component';
+import { API_MainService } from '../../../core/API_MainService';
 
 @Component({
 	selector: 'app-data-row',
@@ -17,10 +18,11 @@ import { CB_CustomsItemComputedDataList } from '../main-display/main-display.com
 export class DataRowComponent implements OnInit {
 	@Output() showDetails: EventEmitter<boolean> = new EventEmitter<boolean>();
 	@Output() showChildern: EventEmitter<boolean> = new EventEmitter<boolean>();
-	@Input() data: any;
+	@Input() data: CB_CustomsItemComputedDataList;
 	@Input() isSelected?: boolean = true;
 	@Input() isExpand: BehaviorSubject<boolean>;
 
+	@Input() showTaxData: boolean = false;
 	@Input() showDetailsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	@Input() state = 'search';
 	@Input() searchItem?: string = '';
@@ -36,10 +38,23 @@ export class DataRowComponent implements OnInit {
 	selected: boolean = false;
 	showAddComment = this.addCommentService.getIsOpened();
 
-	constructor(private addCommentService: AddCommentService, private renderer: Renderer2) { }
+	constructor(private addCommentService: AddCommentService, private renderer: Renderer2, private API_MainService: API_MainService) { }
 
 	ngOnInit() {
 		this.listerUpdates();
+		this.getCustomsBookAgreementLevelData();
+	}
+
+	TariffList1: CB_TariffList;
+	TariffList2: CB_TariffList;
+	TariffListCount: number = 0;
+	getCustomsBookAgreementLevelData() {
+		if (!this.showTaxData || !this.data.CustomsItemID) return;
+		this.API_MainService.GetCustomsBookAgreementLevelData(this.data.CustomsItemID, this.API_MainService.getTenant()).subscribe((data: CB_TariffList[]) => {
+			this.TariffList1 = data.find(x => x.TradeAgreementName == 'מכס כללי');
+			this.TariffList2 = data.find(x => x.TradeAgreementName == 'מס קניה');
+			this.TariffListCount = data.filter(x => x.TradeAgreementName != 'מס קניה').length;
+		});
 	}
 
 	listerUpdates() {

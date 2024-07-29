@@ -16,7 +16,7 @@
 					</div>
 				</ng-template>
 				<ul *ngFor="let item of data" class="wtree">
-					<app-data-row [showDetailsOpen]="showDetailsOpen"  [data]="item" [isSelected]="showDetails && selectedItemId == item.CustomsItemID"
+					<app-data-row [showTaxData]= "false"  [showDetailsOpen]="showDetailsOpen"  [data]="item" [isSelected]="showDetails && selectedItemId == item.CustomsItemID"
 						[isExpand]="isExpand" [searchItem]="searchValue"
 						(showCommentSidebar)="showAddComment = !showAddComment"
 						(showChildern)="showChildern($event, item)" class="app-data-row"
@@ -27,7 +27,7 @@
 							*ngIf="item.children && item.children.length > 0 && childrenToDesplay.includes(item.CIH_GoodsDescription)">
 							<ng-container *ngFor="let key2 of Object.keys(item.children)">
 								<li [@inOutAnimation]>
-									<app-data-row [showDetailsOpen]="showDetailsOpen"  [data]="item?.children[key2]" [searchItem]="searchValue"
+									<app-data-row [showTaxData]= "false"  [showDetailsOpen]="showDetailsOpen"  [data]="item?.children[key2]" [searchItem]="searchValue"
 										[isExpand]="isExpand"
 										[isSelected]="showDetails && selectedItemId == item?.children[key2]?.CustomsItemID"
 										(showCommentSidebar)="showAddComment = !showAddComment" class="app-data-row"
@@ -47,7 +47,7 @@
 											<ng-container
 												*ngFor="let key3 of Object.keys(item.children[key2].children)">
 												<li [@inOutAnimation]>
-													<app-data-row [showDetailsOpen]="showDetailsOpen"  [data]="item?.children[key2]?.children[key3]"
+													<app-data-row [showTaxData]= "true"  [showDetailsOpen]="showDetailsOpen"  [data]="item?.children[key2]?.children[key3]"
 														[searchItem]="searchValue"
 														[isSelected]="showDetails && selectedItemId == item?.children[key2]?.children[key3]?.CustomsItemID"
 														[isExpand]="isExpand"
@@ -63,7 +63,7 @@
 															<ng-container
 																*ngFor="let key4 of Object.keys(item.children[key2].children[key3].children)">
 																<li [@inOutAnimation]>
-																	<app-data-row [showDetailsOpen]="showDetailsOpen" 
+																	<app-data-row [showTaxData]= "true"  [showDetailsOpen]="showDetailsOpen" 
 																		[data]="item?.children[key2]?.children[key3]?.children[key4]"
 																		[isExpand]="isExpand" [searchItem]="searchValue"
 																		[isSelected]="showDetails && selectedItemId == item?.children[key2]?.children[key3]?.children[key4]?.CustomsItemID"
@@ -78,7 +78,7 @@
 																			<ng-container
 																				*ngFor="let key5 of Object.keys(item.children[key2].children[key3].children[key4].children)">
 																				<li [@inOutAnimation]>
-																					<app-data-row [showDetailsOpen]="showDetailsOpen" 
+																					<app-data-row [showTaxData]= "true"  [showDetailsOpen]="showDetailsOpen" 
 																						[data]="item?.children[key2]?.children[key3]?.children[key4]?.children[key5]"
 																						[searchItem]="searchValue"
 																						[isExpand]="isExpand"

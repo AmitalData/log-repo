@@ -16,15 +16,15 @@
 				[innerHTML]="highlight(data.CIH_GoodsDescription, searchItem)">
 				{{ data.CIH_GoodsDescription }}
 			</span>
-			<!-- display only when details not open -->
-			<!-- change to real fields -->
-			<!-- <span *ngIf="data?.CI_Parent_CustomsItemIDNum && ClassificationNoDisplay(data,data?.FullClassification).length > 2 && state === 'search'" class="item_details">
-				<a> {{ data?.FullClassification }} </a>
-				<a> {{ data?.FullClassification }} </a>
-				<a> {{ data?.FullClassification }}</a>
-				<a> {{ data?.FullClassification }} </a>
-				<a> {{ data?.FullClassification }}</a>
-			</span> -->
+			<span
+				*ngIf="TariffListCount > 0 && data?.CI_Parent_CustomsItemIDNum && ClassificationNoDisplay(data,data?.FullClassification).length > 2 && state === 'search'"
+				class="item_details">
+				<a> {{TariffListCount }} </a>
+				<a> {{ TariffList1?.CustomsRate }} </a>
+				<a> {{ TariffList2?.CustomsRate }} </a>
+				<a> {{ TariffList2?.OptionalTaxAddition }} </a>
+				<a> {{ TariffList1?.MeasurementUnitName }} </a>
+			</span>
 		</a>
 	</div>
 	<div></div>
