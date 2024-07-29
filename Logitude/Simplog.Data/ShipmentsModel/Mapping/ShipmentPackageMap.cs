@@ -10,7 +10,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
         {
             this.HasKey(t => t.Id);
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.Description).HasMaxLength(2000).IsUnicode(false);
+            this.Property(t => t.Description).HasMaxLength(4000).IsUnicode(true);
             this.Property(t => t.PackageTypeId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ContainerNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.ShipperSeal).HasMaxLength(15).IsUnicode(false);
@@ -24,7 +24,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Temperature).HasMaxLength(8).IsUnicode(false);
             this.Property(t => t.Harmonize).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.ShipmentId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.MaterialDescription).HasMaxLength(30).IsUnicode(false);
+            this.Property(t => t.MaterialDescription).HasMaxLength(60).IsUnicode(true);
             this.Property(t => t.OriginalShipmentPackageId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CommodityId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.NumberOfInsidePackages).IsRequired();
@@ -40,11 +40,11 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Reference3).HasMaxLength(2000).IsUnicode(false);
             this.Property(t => t.Reference4).HasMaxLength(2000).IsUnicode(false);
             this.Property(t => t.CommodityNumber).HasMaxLength(20).IsUnicode(false);
-            this.Property(t => t.CommodityName).HasMaxLength(250).IsUnicode(false);
+            this.Property(t => t.CommodityName).HasMaxLength(500).IsUnicode(true);
             this.Property(t => t.CeficClass).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.KelmerCode).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.EMS).HasMaxLength(25).IsUnicode(false);
-            this.Property(t => t.ProperShippingName).HasMaxLength(25).IsUnicode(false);
+            this.Property(t => t.ProperShippingName).HasMaxLength(50).IsUnicode(true);
             this.Property(t => t.Notes).HasMaxLength(1000).IsUnicode(true);
             this.Property(t => t.TemperatureUnitCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.LastStatusCode).HasMaxLength(2).IsUnicode(false);

@@ -5,7 +5,7 @@
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
 
-  <Column Name="SxmlFileName" Type="varchar" Size="500">
+  <Column Name="SxmlFileName" Type="nvarchar" Size="1000">
     <Constraints Nullable="false" />
   </Column>
 
@@ -53,7 +53,7 @@
     <Constraints Nullable="false" />
   </Column>
 
-  <Column Name="TargetTableName" Type="varchar" Size="500">
+  <Column Name="TargetTableName" Type="nvarchar" Size="1000">
     <Constraints Nullable="false" />
   </Column>
 

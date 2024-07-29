@@ -14,7 +14,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
         {
             this.HasKey(t => t.Code);
             this.Property(t => t.Code).IsRequired().HasMaxLength(4).IsUnicode(false);
-            this.Property(t => t.Name).IsRequired().HasMaxLength(70).IsUnicode(false);
+            this.Property(t => t.Name).IsRequired().HasMaxLength(140).IsUnicode(true);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
 
             this.ToTable("ShipmentCustomsMessageTypes");

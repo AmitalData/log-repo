@@ -16,7 +16,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Tenant).IsRequired();
             this.Property(t => t.TransferNumber).IsRequired().HasMaxLength(20).IsUnicode(false);
-            this.Property(t => t.FileName).HasMaxLength(40).IsRequired().IsUnicode(false);
+            this.Property(t => t.FileName).HasMaxLength(80).IsRequired().IsUnicode(true);
             this.Property(t => t.CreatedByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CustomsTransferTypeCode).IsRequired().HasMaxLength(4).IsUnicode(false);
             //this.Property(t => t.TransferDate).IsOptional();

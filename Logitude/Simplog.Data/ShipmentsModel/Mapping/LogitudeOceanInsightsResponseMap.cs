@@ -17,7 +17,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
 
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ContainerNumber).HasMaxLength(250).IsUnicode(false);
-            this.Property(t => t.CarrierName).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.CarrierName).HasMaxLength(200).IsUnicode(true);
 
 
             this.ToTable("LogitudeOceanInsightsResponses");

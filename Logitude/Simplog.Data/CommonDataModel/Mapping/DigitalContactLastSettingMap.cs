@@ -20,7 +20,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
             this.Property(t => t.FilterCode).HasColumnName("FilterCode").HasMaxLength(100).IsUnicode(false);
 
-            this.Property(t => t.FilterName).HasColumnName("FilterName").HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.FilterName).HasColumnName("FilterName").HasMaxLength(100).IsUnicode(true);
 
             this.Property(t => t.IsChecked).HasColumnName("IsChecked");
 

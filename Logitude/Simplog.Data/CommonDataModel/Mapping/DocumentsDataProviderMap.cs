@@ -23,8 +23,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
             this.Property(t => t.Name)
                 .IsRequired()
-                .HasMaxLength(250)
-                .IsUnicode(false);
+                .HasMaxLength(500)
+                .IsUnicode(true);
 
             // Table & Column Mappings
             this.ToTable("DocumentsDataProviders");

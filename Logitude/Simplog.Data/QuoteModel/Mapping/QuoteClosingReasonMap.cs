@@ -27,8 +27,8 @@ namespace Simplog.Data.QuoteModel.Mapping
 
             this.Property(t => t.Name)
                 .IsRequired()
-                .HasMaxLength(60)
-                .IsUnicode(false);
+                .HasMaxLength(120)
+                .IsUnicode(true);
 
             this.Property(t => t.SearchFields)
                 .HasMaxLength(1000)

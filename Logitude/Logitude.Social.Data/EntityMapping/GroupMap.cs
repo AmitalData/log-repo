@@ -27,9 +27,9 @@ namespace Logitude.Social.Data.EntityMapping
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(200).IsUnicode(true);
 
-            this.Property(t => t.Description).HasColumnName("Description").HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.Description).HasColumnName("Description").HasMaxLength(200).IsUnicode(true);
 
             this.Property(t => t.IsPrivate).HasColumnName("IsPrivate");
 

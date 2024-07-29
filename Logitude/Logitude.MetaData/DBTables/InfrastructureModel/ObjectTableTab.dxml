@@ -34,8 +34,8 @@
   </Column>
   <Column
     Name="TabNameTextCodeId"
-    Type="varchar"
-    Size="30">
+    Type="nvarchar"
+    Size="60">
     <Constraints
       Nullable="true" />
   </Column>
@@ -61,8 +61,8 @@
   </Column>
   <Column
     Name="TabNameTextCodeCode"
-    Type="varchar"
-    Size="100">
+    Type="nvarchar"
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>
@@ -75,8 +75,8 @@
   </Column>
   <Column
     Name="HtmlComponentName"
-    Type="varchar"
-    Size="100">
+    Type="nvarchar"
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>

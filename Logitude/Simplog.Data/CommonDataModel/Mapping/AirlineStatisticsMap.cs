@@ -14,7 +14,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
         {
             this.HasKey(t => t.Id);
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.SourceTenantName).IsRequired().HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.SourceTenantName).IsRequired().HasMaxLength(200).IsUnicode(true);
             this.Property(t => t.ShipmentId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ShipmentLevelCode).HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.BookingId).HasMaxLength(15).IsUnicode(false);
@@ -22,7 +22,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AWBNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.HWBNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.AirlineCode).IsRequired().HasMaxLength(3).IsUnicode(false);
-            this.Property(t => t.EntityCreatedByUserName).IsRequired().HasMaxLength(60).IsUnicode(false);
+            this.Property(t => t.EntityCreatedByUserName).IsRequired().HasMaxLength(120).IsUnicode(true);
             this.Property(t => t.MessageType).IsRequired().HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.EntityStatus).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.ChargeableWeightUnitCode).HasMaxLength(3).IsUnicode(false);
@@ -30,9 +30,9 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.VolumeUnitCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.OriginCode).IsRequired().HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.DestinationCode).IsRequired().HasMaxLength(3).IsUnicode(false);
-            this.Property(t => t.DescriptionOfGoods).HasMaxLength(512).IsUnicode(false);
-            this.Property(t => t.ShipperName).HasMaxLength(70).IsUnicode(false);
-            this.Property(t => t.ConsigneeName).HasMaxLength(70).IsUnicode(false);
+            this.Property(t => t.DescriptionOfGoods).HasMaxLength(1024).IsUnicode(true);
+            this.Property(t => t.ShipperName).HasMaxLength(140).IsUnicode(true);
+            this.Property(t => t.ConsigneeName).HasMaxLength(140).IsUnicode(true);
             this.Property(t => t.Flight1).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Flight2).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Flight3).HasMaxLength(15).IsUnicode(false);
@@ -41,7 +41,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Allotment).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
             this.Property(t => t.AirlinePrefix).HasMaxLength(4).IsUnicode(false);
-            this.Property(t => t.ProductName).HasMaxLength(60).IsUnicode(false);
+            this.Property(t => t.ProductName).HasMaxLength(120).IsUnicode(true);
             this.Property(t => t.Sender).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.MessagingStatus).HasMaxLength(60).IsUnicode(false);
 

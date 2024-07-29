@@ -93,8 +93,8 @@
   </Column>
   <Column
     Name="ExecutedByServerName"
-    Type="varchar"
-    Size="100">
+    Type="nvarchar"
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>
@@ -105,8 +105,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Index
-	Columns="CreateDate" />
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
@@ -127,4 +125,6 @@
     ReferencedTable="ReportsTemplates"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Index
+    Columns="CreateDate" />
 </Table>

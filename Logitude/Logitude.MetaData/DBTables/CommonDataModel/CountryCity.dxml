@@ -19,16 +19,9 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Code"
-    Type="nvarchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="EnglishName"
-    Type="varchar"
-    Size="40">
+    Type="nvarchar"
+    Size="80">
     <Constraints
       Nullable="false" />
   </Column>
@@ -40,11 +33,11 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Notes"
-    Type="nvarchar"
-    Size="250">
+    Name="CountryId"
+    Type="varchar"
+    Size="15">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="InActive"
@@ -66,8 +59,15 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="CountryId"
-    Type="varchar"
+    Name="Notes"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Code"
+    Type="nvarchar"
     Size="15">
     <Constraints
       Nullable="false" />

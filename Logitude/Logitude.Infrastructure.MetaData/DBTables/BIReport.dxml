@@ -101,8 +101,8 @@
   </Column>
   <Column
     Name="FactTableName"
-    Type="varchar"
-    Size="30">
+    Type="nvarchar"
+    Size="60">
     <Constraints
       Nullable="false" />
   </Column>

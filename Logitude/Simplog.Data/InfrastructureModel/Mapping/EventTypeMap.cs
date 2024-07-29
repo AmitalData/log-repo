@@ -14,11 +14,11 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             // Properties
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Code).IsRequired().HasMaxLength(4).IsUnicode(false);
-            this.Property(t => t.EnglishName).IsRequired().HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.EnglishName).IsRequired().HasMaxLength(200).IsUnicode(true);
             this.Property(t => t.LocalName).HasMaxLength(100).IsUnicode(true);
             this.Property(t => t.EntityStatusId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ObjectTableId).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.FollowUpEnglishName).HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.FollowUpEnglishName).HasMaxLength(80).IsUnicode(true);
             this.Property(t => t.FollowUpLocalName).HasMaxLength(40).IsUnicode(true);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
             this.Property(t => t.CustomerRoleId).HasMaxLength(15).IsUnicode(false);

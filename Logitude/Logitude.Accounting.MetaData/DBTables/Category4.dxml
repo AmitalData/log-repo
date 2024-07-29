@@ -20,7 +20,7 @@
   </Column>
   <Column
     Name="EnglishName"
-    Type="varchar"
+    Type="nvarchar"
     Size="-1">
     <Constraints
       Nullable="false" />

@@ -36,16 +36,16 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .IsUnicode(false);
 
             this.Property(t => t.UserName)
-                .HasMaxLength(200)
-                .IsUnicode(false);
+                .HasMaxLength(400)
+                .IsUnicode(true);
 
             this.Property(t => t.Catalog)
                 .HasMaxLength(200)
                 .IsUnicode(false);
 
             this.Property(t => t.PrivateUserName)
-                .HasMaxLength(200)
-               .IsUnicode(false);
+                .HasMaxLength(400)
+               .IsUnicode(true);
 
             this.ToTable("DWHSettings");
 

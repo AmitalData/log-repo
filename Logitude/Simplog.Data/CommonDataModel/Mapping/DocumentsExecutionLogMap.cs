@@ -65,8 +65,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .IsUnicode(true);
 
             this.Property(t => t.ExecutedByServerName)
-                .HasMaxLength(100)
-                .IsUnicode(false);
+                .HasMaxLength(200)
+                .IsUnicode(true);
 
             // Table & Column Mappings
             this.ToTable("DocumentsExecutionLogs");

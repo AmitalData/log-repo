@@ -14,7 +14,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
         {
             this.HasKey(t => t.Id);
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.EventName).IsRequired().HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.EventName).IsRequired().HasMaxLength(200).IsUnicode(true);
             this.Property(t => t.RuleCode).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.CreatedByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.UpdatedByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);

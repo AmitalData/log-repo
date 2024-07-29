@@ -63,8 +63,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
 
             this.Property(t => t.AirlineName)
          
-          .HasMaxLength(60)
-          .IsUnicode(false);
+          .HasMaxLength(120)
+          .IsUnicode(true);
 
             // Table & Column Mappings
             this.ToTable("ShipmentCarrierStatuses");

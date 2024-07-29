@@ -2,8 +2,7 @@
 <Table
   Name="Groups"
   Schema="dbo"
-  DBType="Main"
-  Module="Social">
+  DBType="Main">
   <Column
     Name="Id"
     Type="varchar"
@@ -20,15 +19,15 @@
   </Column>
   <Column
     Name="Name"
-    Type="varchar"
-    Size="100">
+    Type="nvarchar"
+    Size="200">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
     Name="Description"
-    Type="varchar"
-    Size="100">
+    Type="nvarchar"
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>

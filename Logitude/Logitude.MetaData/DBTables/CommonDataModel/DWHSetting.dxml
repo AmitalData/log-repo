@@ -39,8 +39,8 @@
   </Column>
   <Column
     Name="UserName"
-    Type="varchar"
-    Size="200">
+    Type="nvarchar"
+    Size="400">
     <Constraints
       Nullable="true" />
   </Column>
@@ -60,8 +60,8 @@
   <Column
     Name="PrivateUserName"
     OldNames="CustomerAccessUserName"
-    Type="varchar"
-    Size="200">
+    Type="nvarchar"
+    Size="400">
     <Constraints
       Nullable="true" />
   </Column>

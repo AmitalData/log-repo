@@ -29,7 +29,7 @@ namespace Logitude.CRM.Data.EntityMapping
 
             this.Property(t => t.Code).HasColumnName("Code").HasMaxLength(2).IsUnicode(false);
 
-            this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(60).IsUnicode(false);
+            this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(120).IsUnicode(true);
 
             this.Property(t => t.LocalName).HasColumnName("LocalName").HasMaxLength(60).IsUnicode(true);
 

@@ -19,35 +19,7 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Code"
-    Type="varchar"
-    Size="4">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Name"
-    Type="varchar"
-    Size="40">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="LocalName"
-    Type="nvarchar"
-    Size="100">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ShortName"
-    Type="varchar"
-    Size="40">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="InActive"
+    Name="IsContainer"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -59,7 +31,35 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="IsContainer"
+    Name="Code"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Name"
+    Type="nvarchar"
+    Size="80">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShortName"
+    Type="nvarchar"
+    Size="80">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InActive"
     Type="bit">
     <Constraints
       Nullable="false" />

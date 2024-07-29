@@ -14,8 +14,8 @@
   </Column>
   <Column
     Name="Name"
-    Type="varchar"
-    Size="40">
+    Type="nvarchar"
+    Size="80">
     <Constraints
       Nullable="false" />
   </Column>
@@ -27,15 +27,15 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="InActive"
-    Type="bit">
+    Name="FeaturePackageTypeCode"
+    Type="varchar"
+    Size="2">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="FeaturePackageTypeCode"
-    Type="varchar"
-    Size="2">
+    Name="InActive"
+    Type="bit">
     <Constraints
       Nullable="false" />
   </Column>

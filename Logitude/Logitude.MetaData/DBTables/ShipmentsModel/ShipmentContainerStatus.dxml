@@ -113,8 +113,8 @@
   </Column>
   <Column
     Name="VesselName"
-    Type="varchar"
-    Size="35">
+    Type="nvarchar"
+    Size="70">
     <Constraints
       Nullable="true" />
   </Column>
@@ -127,8 +127,8 @@
   </Column>
   <Column
     Name="ShippingLineName"
-    Type="varchar"
-    Size="60">
+    Type="nvarchar"
+    Size="120">
     <Constraints
       Nullable="true" />
   </Column>
