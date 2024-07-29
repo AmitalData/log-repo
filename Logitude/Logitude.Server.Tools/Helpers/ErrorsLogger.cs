@@ -27,9 +27,18 @@ namespace Logitude.Server.Tools.Helpers
     {
 
         private static DbConnection GetLogsDBConnection()
-        {
-            var ConfigConnectionString = ConfigurationManager.ConnectionStrings["SystemLogsStr"].ConnectionString;
-            return DatabaseInitializer.GetConnection(ConfigConnectionString);
+        {            
+			var ConfigConnectionString = string.Empty;
+
+			if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+			{
+				ConfigConnectionString = ConfigurationManager.ConnectionStrings["Oracle_SystemLogsStr"].ConnectionString; ;
+			}
+			else
+			{
+				ConfigConnectionString = ConfigurationManager.ConnectionStrings["SystemLogsStr"].ConnectionString;
+			}
+			return DatabaseInitializer.GetConnection(ConfigConnectionString);
         }
         public static void AddErrorLog(ErrorLog errorLog)
         { 
