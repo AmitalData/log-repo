@@ -5,8 +5,24 @@ using Unifreight.Data.AmitalModel.Repsitories;
 
 namespace Unifreight.Data.AmitalModel
 {
-    public class SyncRecordCache
+    public static class SyncRecordCache
     {
+        private static string GetLastSyncKey(string fileNo, int tenant) =>
+            "SyncRecordQuery.." + fileNo + ";" + tenant;
+
+        public static DateTime? GetLastSyncDate(string fileNo, int tenant) 
+        {
+            DateTime? lastSync = null;
+            TryCatch(() =>
+            {
+                string cacheKey = GetLastSyncKey(fileNo, tenant);
+                lastSync = CacheHelper.GetFromCache(cacheKey, () =>
+                    new SyncRecordRepository(tenant).GetLastSyncDate(tenant, fileNo));                
+            });
+
+            return lastSync;
+        }
+
         public static void ClearCacheLastSync(string fileNo, int tenant)
         {
             TryCatch(() =>
@@ -14,7 +30,7 @@ namespace Unifreight.Data.AmitalModel
                 if (tenant == null || IsConnectedToUniFreight(tenant))
                     return;
 
-                string cacheKey = $"SyncRecordQuery.GetLastSyncDate." + fileNo + ";" + tenant;
+                string cacheKey = GetLastSyncKey(fileNo, tenant);
                 CacheHelper.ClearCache(cacheKey);
             });
         }

@@ -14,6 +14,7 @@ using NetCommonHelper.Logger;
 using Simplog.Data.CommonDataModel;
 using System.Text.Encodings.Web;
 using Simplog.Server.Infrastructure;
+using Unifreight.Data.AmitalModel;
 
 namespace Unifreight.BL.EntityQueryServices
 {
@@ -77,6 +78,7 @@ namespace Unifreight.BL.EntityQueryServices
         public void UpdateSyncData(int tenant, string itemUpdate, DateTime syncDT)
         {
             repository.UpdateSyncDate(itemUpdate, syncDT, tenant);
+            SyncRecordCache.ClearCacheLastSync(itemUpdate, tenant);
         }
 
         private string GetRecordOfRowNeedSync(SyncRecord syncRecord)
@@ -118,14 +120,7 @@ namespace Unifreight.BL.EntityQueryServices
             return recordAsJson;
         }
 
-        public DateTime? GetLastSyncDate(int tenant, string fileNo)
-        {         
-            string cacheKey = "SyncRecordQuery.GetLastSyncDate." + fileNo + ";" + tenant;
-            DateTime? lastSync = CacheHelper.GetFromCache(cacheKey, () => 
-                repository.GetLastSyncDate(tenant, fileNo));
-
-            return lastSync;
-        }
+        public DateTime? GetLastSyncDate(int tenant, string fileNo) => SyncRecordCache.GetLastSyncDate(fileNo, tenant);         
 
         public List<SyncRecord> GetAndMarkNewSyncRecord() => repository.GetAndMarkNewSyncRecord();
 
