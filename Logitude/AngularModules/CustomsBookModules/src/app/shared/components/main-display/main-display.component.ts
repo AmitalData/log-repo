@@ -195,23 +195,29 @@ export class MainDisplayComponent implements OnInit {
 		// return Boolean(isShown >= 0);
 	}
 
-
+	getCustomsItemHierarchic(filtersSearch: FiltersSearch): string {
+		const selectedFilters = [];
+		if (filtersSearch.parts) selectedFilters.push(FilterOption.Parts);
+		if (filtersSearch.chapters) selectedFilters.push(FilterOption.Chapters);
+		if (filtersSearch.details) selectedFilters.push(FilterOption.Details);
+		if (filtersSearch.sections) selectedFilters.push(FilterOption.Sections);
+		if (filtersSearch.customsDetails) selectedFilters.push(FilterOption.CustomsDetails);
+		return selectedFilters.join(',');
+	}
 
 	filtersSearchClick(filtersSearch: FiltersSearch) {
 		console.log(filtersSearch);
 		let filters: Filters = {
 			SearchFields: this.searchService.GetSearchText(),
 			CustomsBookType: this.searchState,
-			CustomsItemHierarchic: '1,2,3,4', // change it to real
+			CustomsItemHierarchic: this.getCustomsItemHierarchic(filtersSearch),
 			Reamarks: filtersSearch.remarks,
 			Rules: filtersSearch.rules,
 			SkippedRows: 0,
 			PageSize: 0,
 			Tenant: this.API_MainService.getTenant()
 		};
-		
-		debugger
-		// work also with GetCustomsBookMainViewSearchByClasssification?
+
 		this.API_MainService.GetCustomsBookMainViewSearchByText(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
 			this.itemsData.next(data);
 		});
@@ -302,6 +308,13 @@ export class MainDisplayComponent implements OnInit {
 
 }
 
+enum FilterOption {
+	Parts = '1',
+	Chapters = '2',
+	Details = '3',
+	Sections = '4',
+	CustomsDetails = '5,6,7'
+}
 
 export interface ItemData {
 	customsItemId: number;
