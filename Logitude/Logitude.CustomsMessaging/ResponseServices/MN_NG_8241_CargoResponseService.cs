@@ -1185,7 +1185,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private List<ConsignmentPackagePM> GetDeclarationConsignmentsPackagesPM(MN_NG_8241_Cargo_Message customResponse)
         {
-            var declarationConsignmentsPackagesPMList = new List<ConsignmentPackagePM>();
+			LogMessagingUtil.Instance.AppendLine(string.Format("logs declarationId{0} Customfileno{1}", _MyDeclarationPM.Id, _MyDeclarationPM.CustomFileNo));
+
+			var declarationConsignmentsPackagesPMList = new List<ConsignmentPackagePM>();
 
             if (customResponse.CargoItem == null)
             {
@@ -1199,89 +1201,103 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var cargoItems = customResponse.CargoItem.GroupBy(x => x.PackingType).Select(x=> new { packingType=x.First().PackingType 
                 , sumGrossMassMeasureWeight = x.Sum(c=>c.grossMassMeasureWeight), sumQuantity = x.Sum(c=> c.Quantity) });
 
- 
-            foreach (var package in cargoItems)
-            {
-                if (_MyDeclarationPM.Consignments[0].ConsignmentPackages!= null && _MyDeclarationPM.Consignments[0].ConsignmentPackages.Count()>0)
-                {
-                    count = _MyDeclarationPM.Consignments[0].ConsignmentPackages.Count();
-                    //|| string.IsNullOrEmpty(p.PackageTypeCode)
-                    var packages = _MyDeclarationPM.Consignments[0].ConsignmentPackages.Where(p => p.PackageMeasureQualifierCode == "2" && (p.PackageTypeCode == package.packingType || string.IsNullOrEmpty(p.PackageTypeCode)));
-                    if(packages != null && packages.Count()>0)
-                    {
-                        foreach (var packagePM in packages)
-                        {
+
+			foreach (var package in cargoItems)
+			{
+				LogMessagingUtil.Instance.AppendLine(string.Format($"log1 packingType{0} sumGrossMassMeasureWeight{1} sumQuantity{2}  Finish:{3}", package.packingType, package.sumGrossMassMeasureWeight, package.sumQuantity, DateTime.Now));
+				if (_MyDeclarationPM.Consignments[0].ConsignmentPackages != null && _MyDeclarationPM.Consignments[0].ConsignmentPackages.Count() > 0)
+				{
+					LogMessagingUtil.Instance.AppendLine("log2");
+
+					count = _MyDeclarationPM.Consignments[0].ConsignmentPackages.Count();
+					//|| string.IsNullOrEmpty(p.PackageTypeCode)
+					var packages = _MyDeclarationPM.Consignments[0].ConsignmentPackages.Where(p => p.PackageMeasureQualifierCode == "2" && (p.PackageTypeCode == package.packingType || string.IsNullOrEmpty(p.PackageTypeCode)));
+					if (packages != null && packages.Count() > 0)
+					{
+						LogMessagingUtil.Instance.AppendLine("log3");
+
+						foreach (var packagePM in packages)
+						{
+
+							LogMessagingUtil.Instance.AppendLine(string.Format("log8 GrossMassMeasure{0} PackageQuantity{1}", packagePM.GrossMassMeasure, packagePM.PackageQuantity));
+
+
+							if ((packagePM.PackageQuantity == null || packagePM.PackageQuantity == 0) && (packagePM.GrossMassMeasure == null || packagePM.GrossMassMeasure == 0))
+							{
+								LogMessagingUtil.Instance.AppendLine(string.Format("log4 sumGrossMassMeasureWeight{0} sumQuantity{1}", package.sumGrossMassMeasureWeight, package.sumQuantity));
+
+								packagePM.PackageTypeCode = package.packingType;
+								packagePM.PackageQuantity = package.sumQuantity;
+								packagePM.GrossMassMeasure = package.sumGrossMassMeasureWeight;
+								packagePM.ChangeSetOp = ChangeSetOperation.Update;
+								_MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+
+							}
+
+							else
+							{
+								LogMessagingUtil.Instance.AppendLine("log5");
+
+								continue;
+							}
+
+						}
+					}
+
+					else
+					{
+						LogMessagingUtil.Instance.AppendLine(string.Format("log6 sumGrossMassMeasureWeight{0} sumQuantity{1}", package.sumGrossMassMeasureWeight, package.sumQuantity));
+
+						var declarationConsignmentPackage = new ConsignmentPackagePM()
+						{
+							SequenceNumeric = count,
+							ChangeSetOp = ChangeSetOperation.Insert,
+							ConsignmentNumber = _MyDeclarationPM.Consignments[0].ConsignmentNumber,
+							DeclarationId = _MyDeclarationPM.Consignments[0].DeclarationId,
+							LineNumber = count,
+							Tenant = _MyDeclarationPM.Consignments[0].Tenant,
+							PackageMeasureQualifierCode = "2",
+							PackageTypeCode = package.packingType,
+							GrossMassMeasure = package.sumGrossMassMeasureWeight,
+							PackageQuantity = package.sumQuantity
+
+						};
+						_MyDeclarationPM.Consignments[0].ConsignmentPackages.Add(declarationConsignmentPackage);
+						_MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+
+						count++;
+					}
+
+				}
+
+				else
+				{
+					LogMessagingUtil.Instance.AppendLine(string.Format("log7"));
+
+					var declarationConsignmentPackage = new ConsignmentPackagePM()
+					{
+						SequenceNumeric = count,
+						ChangeSetOp = ChangeSetOperation.Insert,
+						ConsignmentNumber = _MyDeclarationPM.Consignments[0].ConsignmentNumber,
+						DeclarationId = _MyDeclarationPM.Consignments[0].DeclarationId,
+						LineNumber = count,
+						Tenant = _MyDeclarationPM.Consignments[0].Tenant,
+						PackageMeasureQualifierCode = "2",
+						PackageTypeCode = package.packingType,
+						GrossMassMeasure = package.sumGrossMassMeasureWeight,
+						PackageQuantity = package.sumQuantity
+
+					};
+					_MyDeclarationPM.Consignments[0].ConsignmentPackages.Add(declarationConsignmentPackage);
+					_MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+
+					count++;
+				}
 
 
 
-                            if((packagePM.PackageQuantity== null || packagePM.PackageQuantity==0) && (packagePM.GrossMassMeasure == null || packagePM.GrossMassMeasure == 0))
-                            {
-                                packagePM.PackageTypeCode = package.packingType;
-                                packagePM.PackageQuantity = package.sumQuantity;
-                                packagePM.GrossMassMeasure = package.sumGrossMassMeasureWeight;
-                                packagePM.ChangeSetOp = ChangeSetOperation.Update;
-                                _MyDeclarationPM.Consignments[0].ChangeSetOp=ChangeSetOperation.Update;
-                                
-                            }
 
-                            else
-                            {
-                                continue;
-                            }
-                            
-                        }
-                    }
-
-                    else
-                    {
-                        var declarationConsignmentPackage = new ConsignmentPackagePM()
-                        {
-                            SequenceNumeric = count,
-                            ChangeSetOp = ChangeSetOperation.Insert,
-                            ConsignmentNumber = _MyDeclarationPM.Consignments[0].ConsignmentNumber,
-                            DeclarationId = _MyDeclarationPM.Consignments[0].DeclarationId,
-                            LineNumber = count,
-                            Tenant = _MyDeclarationPM.Consignments[0].Tenant,
-                            PackageMeasureQualifierCode = "2",
-                            PackageTypeCode = package.packingType,
-                            GrossMassMeasure = package.sumGrossMassMeasureWeight,
-                            PackageQuantity = package.sumQuantity
-
-                        };
-                        _MyDeclarationPM.Consignments[0].ConsignmentPackages.Add(declarationConsignmentPackage);
-                        _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
-
-                        count++;
-                    }
-
-                }
-
-                else
-                {
-                    var declarationConsignmentPackage = new ConsignmentPackagePM()
-                    {
-                        SequenceNumeric = count,
-                        ChangeSetOp = ChangeSetOperation.Insert,
-                        ConsignmentNumber = _MyDeclarationPM.Consignments[0].ConsignmentNumber,
-                        DeclarationId = _MyDeclarationPM.Consignments[0].DeclarationId,
-                        LineNumber = count,
-                        Tenant = _MyDeclarationPM.Consignments[0].Tenant,
-                        PackageMeasureQualifierCode = "2",
-                        PackageTypeCode = package.packingType,
-                        GrossMassMeasure = package.sumGrossMassMeasureWeight,
-                        PackageQuantity = package.sumQuantity
-
-                };
-                    _MyDeclarationPM.Consignments[0].ConsignmentPackages.Add(declarationConsignmentPackage);
-                    _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
-
-                    count++;
-                }
-
-               
-              
-
-            }
+			}
 
             // foreach (var package in customResponse.CargoItem)
             //{
