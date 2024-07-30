@@ -1,25 +1,39 @@
 
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AddCommentService } from '../add-comment/service/add-comment.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { API_MainService } from '../../../core/API_MainService';
+import { CB_CustomsItemComputedDataList, RemarksClassificationList } from '../main-display/main-display.component';
+import { BehaviorSubject } from 'rxjs';
+import { NgFor, NgIf } from '@angular/common';
 
 
 @Component({
   selector: 'app-comments',
   standalone: true,
-  imports: [FontAwesomeModule],
+  imports: [FontAwesomeModule, NgIf, NgFor],
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.css'
 })
-export class CommentsComponent {
+export class CommentsComponent implements OnInit, OnChanges {
   @Input() showComments: boolean = false;
+  // @Input() currentItem: BehaviorSubject<CB_CustomsItemComputedDataList> = new BehaviorSubject<CB_CustomsItemComputedDataList>(null);
+  @Input() currentItem: CB_CustomsItemComputedDataList;
+  allComments: RemarksClassificationList[] = [];
+
   // faPlusCircle = faPlusCircle;
 
-  constructor(private addCommentService: AddCommentService) { }
-  showAddComment = this.addCommentService.getIsOpened();
+  constructor(private addCommentService: AddCommentService, private API_MainService: API_MainService) { }
 
   showAddCommentSidebar() {
-    this.addCommentService.setIsOpened(true);
+    this.addCommentService.setIsOpened(true, this.currentItem);
+  }
+
+  ngOnInit(): void {
+    this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {
+      console.log(data);
+      this.allComments = data;
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {

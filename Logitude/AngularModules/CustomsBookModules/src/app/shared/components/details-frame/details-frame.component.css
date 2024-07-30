@@ -1,6 +1,7 @@
 .detailsSlideFrame {
 	position: relative;
-	width: calc(100vw - 700px);
+	/* width: calc(100vw - 700px); */
+	width: calc(100vw - 534px);
 	min-height: 100vh;
 	padding: 0 50px 0 10px;
 
@@ -119,6 +120,32 @@
 	font-size: 18px;
 	width: 30px;
 	height: 30px;
+}
+
+.mainTable_itemComment {
+    position: relative;
+    cursor: pointer;
+}
+
+.icon {
+    display: inline-block;
+}
+
+.countOfComments {
+    position: relative;
+    left: 12px;
+    bottom: 36px;
+    width: 16px !important; 
+    height: 16px;
+    background-color: var(--blue);
+    border: 1px solid #f0f2f5;
+    border-radius: 50%;
+    color: white;
+    text-align: center;
+    font-weight: 300;
+    font-size: 11px;
+    line-height: 14px;
+    display: inline-block;
 }
 
 .detailsSlide_box {
@@ -242,8 +269,11 @@ a.detailsSlide_commentsPinned i:nth-child(2) {
 	text-decoration: none;
 	width: 100%;
 	height: 100%;
+	color: black;
 }
-
+.icon-comment_full {
+    color: var(--blue);
+}
 .commentOptions a.commentOptions_toggle i {
 	pointer-events: none;
 }
@@ -304,7 +334,7 @@ li {
 	padding: 0;
 }
 
-.detailsSlide_box + .detailsSlide_box {
+.detailsSlide_box+.detailsSlide_box {
 	margin-top: 30px;
 }
 

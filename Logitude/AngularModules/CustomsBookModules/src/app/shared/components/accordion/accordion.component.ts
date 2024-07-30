@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faChevronLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { GenericTableComponent, TableData } from '../generic-table/generic-table.component';
-import { CB_RequirementComputedDataList, CB_TariffList, ItemData, MainEntity } from '../main-display/main-display.component';
+import { CB_CustomsItemComputedDataList, CB_RequirementComputedDataList, CB_TariffList, ItemData, MainEntity } from '../main-display/main-display.component';
 import { API_MainService, Filters } from '../../../core/API_MainService';
 import { CommonModule } from '@angular/common';
 import { NgFor, NgForOf } from '@angular/common';
@@ -17,7 +17,9 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AccordionComponent implements OnInit {
   // add input type customs:
-  @Input() itemData: BehaviorSubject<ItemData> = new BehaviorSubject<ItemData>(null);
+  // @Input() itemData: BehaviorSubject<ItemData> = new BehaviorSubject<ItemData>(null);
+  @Input() currentItem: BehaviorSubject<CB_CustomsItemComputedDataList> = new BehaviorSubject<CB_CustomsItemComputedDataList>(null);
+
   customsItemId: number;
   tableData1: TableData;
   tableData2: TableData;
@@ -38,9 +40,10 @@ export class AccordionComponent implements OnInit {
   }
 
   listenToChanges() {
-    this.itemData.subscribe((data: ItemData) => {
-      this.customsItemId = data.customsItemId;
-      this.InitData();
+    this.currentItem.subscribe((data: CB_CustomsItemComputedDataList) => {
+      this.customsItemId = data?.CustomsItemID;
+      if(this.customsItemId)
+        this.InitData();
     });
   }
 
@@ -85,8 +88,10 @@ export class AccordionComponent implements OnInit {
       data: []
     };
 
+    
+    if(!this.currentItem.getValue().PH_MeasurementUnitID) return;
     // שיעורי מס
-    this.API_MainService.GetCustomsBookAgreementLevelData(this.customsItemId, 0).subscribe((data: CB_TariffList[]) => {
+    this.API_MainService.GetCustomsBookAgreementLevelData(this.customsItemId, this.currentItem.getValue().PH_MeasurementUnitID).subscribe((data: CB_TariffList[]) => {
       this.MainEntity.CB_TariffList = data;
       this.tableData1.data = this.MainEntity.CB_TariffList.filter(x => x.TradeAgreementName != 'מס קניה');
       this.tableData2.data = this.MainEntity.CB_TariffList.filter(x => x.TradeAgreementName == 'מס קניה');

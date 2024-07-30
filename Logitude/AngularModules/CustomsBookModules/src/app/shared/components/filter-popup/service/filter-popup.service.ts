@@ -5,14 +5,14 @@ import { Injectable } from '@angular/core';
 })
 export class FilterPopupService {
 	private _showFilterPopup: boolean = false;
-	private _filterMarked: Filters = {
+	private _filterMarked: FiltersSearch = {
 		parts: false,
 		chapters: false,
 		details: false,
 		sections: false,
 		customsDetails: false,
 		rules: false,
-		comments: false,
+		remarks: false,
 	};
 	constructor() {}
 
@@ -36,17 +36,17 @@ export class FilterPopupService {
 			sections: false,
 			customsDetails: false,
 			rules: false,
-			comments: false,
+			remarks: false,
 		};
 	}
 }
 
-interface Filters {
+export interface FiltersSearch {
 	parts: boolean;
 	chapters: boolean;
 	details: boolean;
 	sections: boolean;
 	customsDetails: boolean;
 	rules: boolean;
-	comments: boolean;
+	remarks: boolean;
 }

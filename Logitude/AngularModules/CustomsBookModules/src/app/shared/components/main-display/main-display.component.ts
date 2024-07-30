@@ -12,6 +12,8 @@ import { BehaviorSubject, filter } from 'rxjs';
 import { SearchService } from '../page-top/service/top-page.service';
 import { FormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { HeaderService, searchState } from '../app-header/service/header.service';
+import { FiltersSearch } from '../filter-popup/service/filter-popup.service';
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
@@ -48,21 +50,27 @@ export class MainDisplayComponent implements OnInit {
 	cbRequirementComputedDataList: CB_RequirementComputedDataList[];
 	isExpand: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-	constructor(private API_MainService: API_MainService, private searchService: SearchService) { }
+	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService) { }
+	searchState: string = searchState.יבוא;
 
 	ngOnInit() {
-		this.InitData();
-		this.ListenToItemsSearched();
+		this.headerService.searchState$.subscribe((data) => {
+			if (!searchState[data]) return;
+			this.searchState = searchState[data];
+			this.InitData();
+			this.ListenToItemsSearched();
+		});
 	}
 
 	InitData() {
 		let filters: Filters = {
-			CustomsBookType: '1',
+			CustomsBookType: this.searchState,
 			Tenant: 0,
 			SearchFields: ''
 		};
-
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
+			this.countSearchResult = 0;
+			this.handleClearResults();
 			this.fullData = this.orderedData(data);
 			this.data = this.fullData;
 			this.searchMode = TableTopState.ViewAll;
@@ -71,14 +79,14 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 	searchValue: string = '';
-
+	countSearchResult: number = 0;
 	ListenToItemsSearched() {
 		// listen to search text changes:
 		this.searchService.searchText$.subscribe((searchText) => {
 			if (searchText === "") this.handleClearResults();
-			else if (this.itemsData.getValue().length > 0) {
-				this.searchMode = TableTopState.Search;
-			}
+			// else if (this.itemsData.getValue().length > 0) {
+			// 	this.searchMode = TableTopState.Search;
+			// }
 		});
 
 		// listen to itemsData changes:
@@ -86,6 +94,7 @@ export class MainDisplayComponent implements OnInit {
 			if (data.length == 0 && this.searchService.GetSearchText() !== "") {
 				//TODO: Add not results found message
 				this.data = [];
+				this.countSearchResult = 0;
 				this.searchMode = TableTopState.Search;
 				this.searchValue = "";
 				return;
@@ -95,15 +104,16 @@ export class MainDisplayComponent implements OnInit {
 				// remove duplicates customsItemID:
 				data = data.filter((v, i, a) => a.findIndex(t => (t.CustomsItemID === v.CustomsItemID)) === i);
 
+				this.countSearchResult = data.length;
 				// update list:
 				this.data = this.orderedDataForSearch(data);
-
 				this.searchToggleAllChildren(true); // expand all 
 				this.isExpand.next(true);
 
 				this.searchMode = TableTopState.Search;
 				this.searchValue = this.searchService.GetSearchText();
 			}
+			else this.countSearchResult = 0;
 		});
 	}
 
@@ -135,31 +145,36 @@ export class MainDisplayComponent implements OnInit {
 		});
 	};
 
-
+	showDetailsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	searchMode: TableTopState = TableTopState.ViewAll;
 	selectedItemId: number | null = null;
-	currentItem: CB_CustomsItemComputedDataList;
-	itemDataBehaviorSubject: BehaviorSubject<ItemData> = new BehaviorSubject<ItemData>({ customsItemId: 0, measurementUnitMalamId: 0 });
-	itemData: ItemData = { customsItemId: 0, measurementUnitMalamId: 0 };
+	currentItem: BehaviorSubject<CB_CustomsItemComputedDataList> = new BehaviorSubject<CB_CustomsItemComputedDataList>(null);
+	// itemDataBehaviorSubject: BehaviorSubject<ItemData> = new BehaviorSubject<ItemData>({ customsItemId: 0, measurementUnitMalamId: 0 });
+	// itemData: ItemData = { customsItemId: 0, measurementUnitMalamId: 0 };
 	showDetailsClick(CustomsItemID: number, item: CB_CustomsItemComputedDataList) {
 		this.selectedItemId = CustomsItemID;
-
-		if (this.itemData.customsItemId == CustomsItemID) {
+		if (this.currentItem.getValue()?.CustomsItemID == CustomsItemID) {
 			this.showDetails = !this.showDetails;
+			this.showDetailsOpen.next(this.showDetails);
 			return;
 		}
-		else if (!this.showDetails) this.showDetails = !this.showDetails;
+		else if (!this.showDetails) {
+			this.showDetails = !this.showDetails;
+			this.showDetailsOpen.next(this.showDetails);
+		}
 
-		this.itemData.customsItemId = CustomsItemID;
-		this.itemData.measurementUnitMalamId = 0; // change it
-		this.itemDataBehaviorSubject.next(this.itemData);
-		this.currentItem = item;
+		// this.itemData.customsItemId = CustomsItemID;
+		// this.itemData.measurementUnitMalamId = 0; // change it
+		// this.itemDataBehaviorSubject.next(this.itemData);
+		this.currentItem.next(item);
 		return this.showDetails;
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes['showDetails']) {
 			this.showDetails = changes['showDetails'].currentValue;
+			this.showDetailsOpen.next(this.showDetails);
+
 		}
 		if (changes['itemsData']) {
 			this.itemsData = changes['itemsData'].currentValue;
@@ -167,19 +182,45 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 
-	showChildern(isOpen: any, item: CB_CustomsItemComputedDataList) {
+	showChildern(openAction: any, item: CB_CustomsItemComputedDataList) {
 		const isShown = this.childrenToDesplay.indexOf(item.CIH_GoodsDescription);
-		if (isOpen && isShown === -1) {
+		if (openAction && isShown === -1) {
 			this.childrenToDesplay.push(item.CIH_GoodsDescription);
 		}
-		else if (!isOpen && isShown !== -1) {
+		else if (!openAction && isShown !== -1) {
 			this.childrenToDesplay.splice(isShown);
 		}
 		// isShown === -1 ? this.childrenToDesplay.push(id) : this.childrenToDesplay.splice(isShown);
 		// return Boolean(isShown >= 0);
 	}
 
+	getCustomsItemHierarchic(filtersSearch: FiltersSearch): string {
+		const selectedFilters = [];
+		if (filtersSearch.parts) selectedFilters.push(FilterOption.Parts);
+		if (filtersSearch.chapters) selectedFilters.push(FilterOption.Chapters);
+		if (filtersSearch.details) selectedFilters.push(FilterOption.Details);
+		if (filtersSearch.sections) selectedFilters.push(FilterOption.Sections);
+		if (filtersSearch.customsDetails) selectedFilters.push(FilterOption.CustomsDetails);
+		return selectedFilters.join(',');
+	}
 
+	filtersSearchClick(filtersSearch: FiltersSearch) {
+		console.log(filtersSearch);
+		let filters: Filters = {
+			SearchFields: this.searchService.GetSearchText(),
+			CustomsBookType: this.searchState,
+			CustomsItemHierarchic: this.getCustomsItemHierarchic(filtersSearch),
+			Reamarks: filtersSearch.remarks,
+			Rules: filtersSearch.rules,
+			SkippedRows: 0,
+			PageSize: 0,
+			Tenant: this.API_MainService.getTenant()
+		};
+
+		this.API_MainService.GetCustomsBookMainViewSearchByText(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
+			this.itemsData.next(data);
+		});
+	}
 
 	handleClearResultsClick() {
 		this.handleClearResults();
@@ -191,8 +232,11 @@ export class MainDisplayComponent implements OnInit {
 		this.searchMode = TableTopState.ViewAll;
 		this.selectedItemId = null;
 		this.showDetails = false;
+		this.showDetailsOpen.next(this.showDetails);
+
 		this.data = [];
 		this.searchValue = "";
+		this.countSearchResult = 0;
 		// this.InitData();
 		this.data = this.fullData;
 		this.searchToggleAllChildren(false);
@@ -263,6 +307,13 @@ export class MainDisplayComponent implements OnInit {
 
 }
 
+enum FilterOption {
+	Parts = '1',
+	Chapters = '2',
+	Details = '3',
+	Sections = '4',
+	CustomsDetails = '5,6,7'
+}
 
 export interface ItemData {
 	customsItemId: number;
@@ -364,4 +415,11 @@ export interface RemarksClassificationPM {
 	tenant: number;
 	customsItemsID: number;
 	remarkDescription: string;
+}
+
+export interface RemarksClassificationList {
+	Id: string;
+	Tenant: number;
+	CustomsItemsID: number;
+	RemarkDescription: string;
 }

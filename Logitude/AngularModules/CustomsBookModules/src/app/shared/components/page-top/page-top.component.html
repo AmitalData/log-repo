@@ -1,6 +1,6 @@
 <div class="pageTop">
 	<div class="centeredContent">
-		<h1>ספר מכס: יבוא</h1>
+		<h1 *ngIf="currentSearchState">ספר מכס: {{currentSearchState}}</h1>
 		<div class="pageSearch">
 			<strong>חיפוש פרט מכס</strong>
 			<div class="pageSearch_toggle">
@@ -36,7 +36,7 @@
 			<div class="pageSearch_form">
 				<fieldset>
 					<div class="pageSearch_formField shown" [id]="text">
-						<input type="text" (input)="onChange($event)" [(ngModel)]="textToSearch" [placeholder]="text" />
+						<input type="text" (input)="onChange($event)" [(ngModel)]="textToSearch"  [maxlength]="text === SearchByValidation ? 13 : 100" [placeholder]="text" />
 					</div>
 
 					<button (click)="clickSearch()">חיפוש</button>

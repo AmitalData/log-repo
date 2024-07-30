@@ -1,5 +1,5 @@
 <div class="detailsSlide_table tableBox">
-    <table>
+    <table *ngIf="tableData?.columns?.length > 0">
         <tr>
             <ng-container *ngFor="let col of tableData.columns">
                 <th [style.width]="col.width" *ngIf="col.visible">{{ col.displayName }}</th>

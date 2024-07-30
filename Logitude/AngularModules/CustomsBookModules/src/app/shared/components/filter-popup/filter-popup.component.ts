@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FilterPopupService } from './service/filter-popup.service';
+import { FilterPopupService, FiltersSearch } from './service/filter-popup.service';
 import { NgClass, NgIf } from '@angular/common';
 
 @Component({
@@ -11,11 +11,10 @@ import { NgClass, NgIf } from '@angular/common';
 })
 export class FilterPopupComponent {
 	service: FilterPopupService;
-	private _initFilters;
+	private _initFilters: FiltersSearch;
 	openPopup = false;
 	numberOfFilters = 0;
-
-	@Output() filterClick = new EventEmitter();
+	@Output() filterClick: EventEmitter<any> = new EventEmitter();
 
 	constructor() {
 		this.service = new FilterPopupService();
@@ -38,5 +37,10 @@ export class FilterPopupComponent {
 
 	isMarked(id: string) {
 		return this._initFilters[id];
+	}
+
+	filterClickEvent() {
+		this.filterClick.emit(this._initFilters);
+		this.openPopup = false;
 	}
 }

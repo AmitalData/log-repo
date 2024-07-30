@@ -22,7 +22,8 @@ tarrif.Agreements,-- הסכמים
 ComputationMethodData.customsRate AS CustomsRate, --'שיעור המכס',
 ComputationMethodData.purchaseTax AS PurchaseTax, --'מס קניה',
 ComputationMethodData.OptionalTaxAddition,  --'שיעור התוספת',
-m.LOCALNAME AS MeasurementUnitName -- יחידה סטטיסטית של פרט המכס
+m.LOCALNAME AS MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+m.MALAMID -- יחידת מידה
 from  customs.cb_CustomsItemComputedDatas item
 LEFT JOIN -- הסכמים
 	(

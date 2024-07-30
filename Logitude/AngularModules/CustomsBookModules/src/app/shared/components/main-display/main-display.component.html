@@ -4,13 +4,19 @@
 		<div class="mainTable_list">
 			<div class="data_row_container" [class.active]="!showDetails">
 				<app-table-top class="app-table-top" [class.active]="!showDetails"
-					(clearResults)="handleClearResultsClick()" [countSearchResult]="data?.length"
+					(clearResults)="handleClearResultsClick()" (filterClick)="filtersSearchClick($event)" [countSearchResult]="countSearchResult"
 					[searchMode]="searchMode" />
-				<div class="loadingBox" *ngIf="data.length <= 0">
-					<img src="../../../../assets/images/loadingProgressBar.gif" alt="">
+
+				<div class="loadingBox" *ngIf="data?.length == 0 && this.searchMode == 'search'; else loading">
+					<span>לא נמצאות תוצאות לחיפוש</span>
 				</div>
+				<ng-template #loading>
+					<div class="loadingBox" *ngIf="data?.length <= 0">
+						<img src="../../../../assets/images/loadingProgressBar.gif" alt="">
+					</div>
+				</ng-template>
 				<ul *ngFor="let item of data" class="wtree">
-					<app-data-row [data]="item" [isSelected]="selectedItemId == item.CustomsItemID"
+					<app-data-row [showTaxData]= "false"  [showDetailsOpen]="showDetailsOpen"  [data]="item" [isSelected]="showDetails && selectedItemId == item.CustomsItemID"
 						[isExpand]="isExpand" [searchItem]="searchValue"
 						(showCommentSidebar)="showAddComment = !showAddComment"
 						(showChildern)="showChildern($event, item)" class="app-data-row"
@@ -21,9 +27,9 @@
 							*ngIf="item.children && item.children.length > 0 && childrenToDesplay.includes(item.CIH_GoodsDescription)">
 							<ng-container *ngFor="let key2 of Object.keys(item.children)">
 								<li [@inOutAnimation]>
-									<app-data-row [data]="item?.children[key2]" [searchItem]="searchValue"
+									<app-data-row [showTaxData]= "false"  [showDetailsOpen]="showDetailsOpen"  [data]="item?.children[key2]" [searchItem]="searchValue"
 										[isExpand]="isExpand"
-										[isSelected]="selectedItemId == item?.children[key2]?.CustomsItemID"
+										[isSelected]="showDetails && selectedItemId == item?.children[key2]?.CustomsItemID"
 										(showCommentSidebar)="showAddComment = !showAddComment" class="app-data-row"
 										(showChildern)="showChildern($event, item.children[key2])"
 										(showDetails)="showDetailsClick(item.children[key2]?.CustomsItemID , item.children[key2])">
@@ -31,16 +37,19 @@
 									<ng-container
 										*ngIf=" item.children[key2] && item.children.length > 0 && childrenToDesplay.includes(item.children[key2]?.CIH_GoodsDescription)">
 										<ul [@inOutAnimation]>
-											<li [@inOutAnimation] class="mainTable_itemChkAll" *ngIf="item.children[key2]?.children.length > 0">
-												<label><input class="mainTable_itemChkAllCheckBox" type="checkbox" (change)="onToggleAll($event , item.children[key2])"><span>פתח הכל</span></label>
+											<li [@inOutAnimation] class="mainTable_itemChkAll"
+												*ngIf="item.children[key2]?.children.length > 0">
+												<label><input class="mainTable_itemChkAllCheckBox" type="checkbox"
+														(change)="onToggleAll($event , item.children[key2])"><span>פתח
+														הכל</span></label>
 											</li>
-										
+
 											<ng-container
 												*ngFor="let key3 of Object.keys(item.children[key2].children)">
 												<li [@inOutAnimation]>
-													<app-data-row [data]="item?.children[key2]?.children[key3]"
+													<app-data-row [showTaxData]= "true"  [showDetailsOpen]="showDetailsOpen"  [data]="item?.children[key2]?.children[key3]"
 														[searchItem]="searchValue"
-														[isSelected]="selectedItemId == item?.children[key2]?.children[key3]?.CustomsItemID"
+														[isSelected]="showDetails && selectedItemId == item?.children[key2]?.children[key3]?.CustomsItemID"
 														[isExpand]="isExpand"
 														(showCommentSidebar)="showAddComment = !showAddComment"
 														class="app-data-row"
@@ -54,10 +63,10 @@
 															<ng-container
 																*ngFor="let key4 of Object.keys(item.children[key2].children[key3].children)">
 																<li [@inOutAnimation]>
-																	<app-data-row
+																	<app-data-row [showTaxData]= "true"  [showDetailsOpen]="showDetailsOpen" 
 																		[data]="item?.children[key2]?.children[key3]?.children[key4]"
 																		[isExpand]="isExpand" [searchItem]="searchValue"
-																		[isSelected]="selectedItemId == item?.children[key2]?.children[key3]?.children[key4]?.CustomsItemID"
+																		[isSelected]="showDetails && selectedItemId == item?.children[key2]?.children[key3]?.children[key4]?.CustomsItemID"
 																		(showCommentSidebar)="showAddComment = !showAddComment"
 																		class="app-data-row"
 																		(showChildern)="showChildern($event, item.children[key2].children[key3].children[key4])"
@@ -69,11 +78,11 @@
 																			<ng-container
 																				*ngFor="let key5 of Object.keys(item.children[key2].children[key3].children[key4].children)">
 																				<li [@inOutAnimation]>
-																					<app-data-row
+																					<app-data-row [showTaxData]= "true"  [showDetailsOpen]="showDetailsOpen" 
 																						[data]="item?.children[key2]?.children[key3]?.children[key4]?.children[key5]"
 																						[searchItem]="searchValue"
 																						[isExpand]="isExpand"
-																						[isSelected]="selectedItemId == item?.children[key2]?.children[key3]?.children[key4]?.children[key5].CustomsItemID"
+																						[isSelected]="showDetails && selectedItemId == item?.children[key2]?.children[key3]?.children[key4]?.children[key5].CustomsItemID"
 																						(showCommentSidebar)="showAddComment = !showAddComment"
 																						class="app-data-row"
 																						(showChildern)="showChildern($event, item.children[key2].children[key3].children[key4].children[key5])"
@@ -98,8 +107,7 @@
 				</ul>
 			</div>
 			<div class="details_frame_container" [class.active]="showDetails">
-				<app-details-frame (showDetails)="showDetails = !showDetails" [itemData]="itemDataBehaviorSubject"
-					[currentItem]="currentItem" />
+				<app-details-frame (showDetails)="showDetails = !showDetails" [currentItem]="currentItem" />
 			</div>
 		</div>
 	</div>

@@ -21,6 +21,7 @@ using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using System.Transactions;
+using Logitude.Server.Tools;
 
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
@@ -134,6 +135,65 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
+        public HttpResponseMessage EditRemarksClassification(RemarksClassificationPM entityPM)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string logKey = PerformanceLogger.LogCurrentTime();
+
+
+                        ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
+                        RemarksClassificationUpdateService service = new RemarksClassificationUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                        service.Update(entityPM, true);
+
+                        scope.Complete();
+                        PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
+        public HttpResponseMessage GetAllCommentsByCustomsItemId(int customsItemId, int tenant)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                // SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                ICustomContext MyContext = CustomContext.GetContext(tenant);
+                RemarksClassificationQueryService remarksClassificationQuery = new RemarksClassificationQueryService(MyContext);
+                remarksClassificationQuery.InitializeSettings();
+
+                List<RemarksClassificationList> remarksClassificationPMList = remarksClassificationQuery.GetAllCommentsByCustomsItemId(customsItemId,tenant);
+
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return Request.CreateResponse(HttpStatusCode.OK, remarksClassificationPMList);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
     }
 
   

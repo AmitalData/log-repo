@@ -21,7 +21,6 @@ export class SearchService {
   }
 
   SearchBy(value?: number | string) {
-	
     if (!value) {
       this.selectSearchBy = SearchBy[this._Default_selectSearchBy as keyof typeof SearchBy];
     } else {
@@ -39,7 +38,6 @@ export class SearchService {
   }
 
   SetSearchText(value: string) {
-	
     this._searchTextSubject.next(value);
   }
 }
