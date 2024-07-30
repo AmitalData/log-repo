@@ -1219,7 +1219,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
 						foreach (var packagePM in packages)
 						{
 
-							LogMessagingUtil.Instance.AppendLine(string.Format("log8 GrossMassMeasure{0} PackageQuantity{1}", packagePM.GrossMassMeasure, packagePM.PackageQuantity));
 
 
 							if ((packagePM.PackageQuantity == null || packagePM.PackageQuantity == 0) && (packagePM.GrossMassMeasure == null || packagePM.GrossMassMeasure == 0))
@@ -1236,7 +1235,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 							else
 							{
-								LogMessagingUtil.Instance.AppendLine("log5");
+								LogMessagingUtil.Instance.AppendLine(string.Format("log5 GrossMassMeasure{0} PackageQuantity{1}", packagePM.GrossMassMeasure, packagePM.PackageQuantity));
 
 								continue;
 							}
