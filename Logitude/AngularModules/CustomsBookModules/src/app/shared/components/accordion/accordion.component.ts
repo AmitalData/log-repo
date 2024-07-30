@@ -88,8 +88,10 @@ export class AccordionComponent implements OnInit {
       data: []
     };
 
+    
+    if(!this.currentItem.getValue().PH_MeasurementUnitID) return;
     // שיעורי מס
-    this.API_MainService.GetCustomsBookAgreementLevelData(this.customsItemId, this.API_MainService.getTenant()).subscribe((data: CB_TariffList[]) => {
+    this.API_MainService.GetCustomsBookAgreementLevelData(this.customsItemId, this.currentItem.getValue().PH_MeasurementUnitID).subscribe((data: CB_TariffList[]) => {
       this.MainEntity.CB_TariffList = data;
       this.tableData1.data = this.MainEntity.CB_TariffList.filter(x => x.TradeAgreementName != 'מס קניה');
       this.tableData2.data = this.MainEntity.CB_TariffList.filter(x => x.TradeAgreementName == 'מס קניה');

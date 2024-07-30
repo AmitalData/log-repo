@@ -27,6 +27,7 @@ BEGIN
 			purchaseTax AS PurchaseTax, --'מס קניה',
 			OptionalTaxAddition,  --'שיעור התוספת',
 			MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+      MALAMID as MeasurementUnitID, -- יחידה סטטיסטית 
 			r.Id as Remarks 
 			from #tempCustomsBookMainViews t
 			LEFT JOIN 

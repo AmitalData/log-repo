@@ -71,7 +71,6 @@ export class MainDisplayComponent implements OnInit {
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
 			this.countSearchResult = 0;
 			this.handleClearResults();
-
 			this.fullData = this.orderedData(data);
 			this.data = this.fullData;
 			this.searchMode = TableTopState.ViewAll;

@@ -16,7 +16,7 @@
 				[innerHTML]="highlight(data.CIH_GoodsDescription, searchItem)">
 				{{ data.CIH_GoodsDescription }}
 			</span>
-			<span
+			<div
 				*ngIf="TariffListCount > 0 && data?.CI_Parent_CustomsItemIDNum && ClassificationNoDisplay(data,data?.FullClassification).length > 2 && state === 'search'"
 				class="item_details">
 				<a> {{TariffListCount }} </a>
@@ -24,7 +24,7 @@
 				<a> {{ TariffList2?.CustomsRate }} </a>
 				<a> {{ TariffList2?.OptionalTaxAddition }} </a>
 				<a> {{ TariffList1?.MeasurementUnitName }} </a>
-			</span>
+			</div>
 		</a>
 	</div>
 	<div></div>

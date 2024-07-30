@@ -49,8 +49,8 @@ export class DataRowComponent implements OnInit {
 	TariffList2: CB_TariffList;
 	TariffListCount: number = 0;
 	getCustomsBookAgreementLevelData() {
-		if (!this.showTaxData || !this.data.CustomsItemID) return;
-		this.API_MainService.GetCustomsBookAgreementLevelData(this.data.CustomsItemID, this.API_MainService.getTenant()).subscribe((data: CB_TariffList[]) => {
+		if (!this.showTaxData || !this.data.CustomsItemID || !this.data?.PH_MeasurementUnitID) return;
+		this.API_MainService.GetCustomsBookAgreementLevelData(this.data?.CustomsItemID, this.data?.PH_MeasurementUnitID).subscribe((data: CB_TariffList[]) => {
 			this.TariffList1 = data.find(x => x.TradeAgreementName == 'מכס כללי');
 			this.TariffList2 = data.find(x => x.TradeAgreementName == 'מס קניה');
 			this.TariffListCount = data.filter(x => x.TradeAgreementName != 'מס קניה').length;
@@ -99,18 +99,23 @@ export class DataRowComponent implements OnInit {
 	ngAfterViewInit(): void {
 		this.showDetailsOpen.subscribe((value) => {
 			if (value) this.dynamicDivClick();
-			else this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "90%");
+			else {
+				if (!this.showTaxData) this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "90%");
+				else {
+					this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "27%");
+					this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'white-space', 'nowrap');
+					this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'text-overflow', 'ellipsis');
+				}
+			}
 		});
 	}
 
+	// display text shorter when the div is smaller width 
 	dynamicDivClick() {
 		const containerWidth: number = this.dynamicDiv.nativeElement.offsetWidth;
 		const spans = this.dynamicDiv.nativeElement.querySelectorAll('span');
 		let totalSpanWidth = (Array.from(spans).reduce((total: number, span) => total + (span as HTMLElement).offsetWidth, 0)) as number;
 		if (containerWidth - 100 < totalSpanWidth || this.data.CustomsItemID) {
-			// let width = (containerWidth - 100) * 0.80 + "px";
-			// if (this.data.CustomsItemID) width = "50%";
-
 			let calculatedWidth = (containerWidth - 100) + "px";
 			let width = Math.min(parseInt(calculatedWidth), 40) + "%";
 

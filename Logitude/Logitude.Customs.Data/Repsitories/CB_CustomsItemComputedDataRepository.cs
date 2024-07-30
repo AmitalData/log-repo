@@ -174,6 +174,7 @@ namespace Logitude.Customs.Data.Repsitories
                                 PurchaseTax = reader["PurchaseTax"] != DBNull.Value ? (string)reader["PurchaseTax"] : null,
                                 OptionalTaxAddition = reader["OptionalTaxAddition"] != DBNull.Value ? (decimal?)reader["OptionalTaxAddition"] : null,
                                 MeasurementUnitName = reader["MeasurementUnitName"] != DBNull.Value ? (string)reader["MeasurementUnitName"] : null,
+                                PH_MeasurementUnitID = reader["MeasurementUnitID"] != DBNull.Value ? (int?)reader["MeasurementUnitID"] : null,
                                 Remarks = reader["Remarks"] != DBNull.Value ? (string)reader["Remarks"] : null,
                             };
                             results.Add(result);
