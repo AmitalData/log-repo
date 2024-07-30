@@ -38,8 +38,17 @@ namespace CommunicationWorkerRole.Tasks
 
         private string GetSystemLogsConnectionString()
         {
-            string dbConnectionTo = ConfigurationManager.ConnectionStrings["SystemLogsStr"].ConnectionString;
-            string destinationConnectionString = BuildConnectionString(GetConnectionStringArguments(dbConnectionTo));
+			string dbConnectionTo = string.Empty;
+
+			if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+			{
+				dbConnectionTo = ConfigurationManager.ConnectionStrings["Oracle_SystemLogsStr"].ConnectionString; ;
+			}
+			else
+			{
+				dbConnectionTo = ConfigurationManager.ConnectionStrings["SystemLogsStr"].ConnectionString;
+			}
+			string destinationConnectionString = BuildConnectionString(GetConnectionStringArguments(dbConnectionTo));
             return destinationConnectionString;
         }
 

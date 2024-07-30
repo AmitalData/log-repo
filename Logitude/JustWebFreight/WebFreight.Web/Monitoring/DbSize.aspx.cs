@@ -14,6 +14,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Logitude.SystemLogs;
 using System.Configuration;
+using Simplog.Server.Infrastructure;
 
 namespace WebFreight.Web.Monitoring
 {
@@ -81,11 +82,19 @@ namespace WebFreight.Web.Monitoring
                     return false;
 
             }
-            #endregion
+			#endregion
 
-            #region Check ErrorLogs DB size
+			#region Check ErrorLogs DB size
+			string ErrorLogs_strConnString = string.Empty;
 
-            string ErrorLogs_strConnString = ConfigurationManager.ConnectionStrings["SystemLogsStr"].ConnectionString;
+			if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+			{
+				ErrorLogs_strConnString = ConfigurationManager.ConnectionStrings["Oracle_SystemLogsStr"].ConnectionString; ;
+			}
+			else
+			{
+				ErrorLogs_strConnString = ConfigurationManager.ConnectionStrings["SystemLogsStr"].ConnectionString;
+			}
 
             if (!CheckDbSize(ErrorLogs_strConnString))
                 return false;

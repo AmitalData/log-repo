@@ -77,8 +77,17 @@ namespace Logitude.ViewsGenerator
             //SystemLogContext systemLogContext = SystemLogContext.GetContext();
 
         
-            string dbConnectionInfo = ConfigurationManager.ConnectionStrings["SystemLogsStr"].ConnectionString;
-            DbConnection logconnection = DatabaseInitializer.GetConnection(dbConnectionInfo);
+			string dbConnectionInfo = string.Empty;
+
+			if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+			{
+				dbConnectionInfo = ConfigurationManager.ConnectionStrings["Oracle_SystemLogsStr"].ConnectionString; ;
+			}
+			else
+			{
+				dbConnectionInfo = ConfigurationManager.ConnectionStrings["SystemLogsStr"].ConnectionString;
+			}
+			DbConnection logconnection = DatabaseInitializer.GetConnection(dbConnectionInfo);
             SystemLogContext systemLogContext = new SystemLogContext(logconnection);
 
 
