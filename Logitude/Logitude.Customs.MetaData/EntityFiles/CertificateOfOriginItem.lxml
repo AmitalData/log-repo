@@ -42,7 +42,7 @@
   NewWizardControlName="&quot;&quot;"
   LocalDefaultText="&quot;פריטי תעודת מקור&quot;"
   DefaultText="&quot;Certificate Of Origin Item&quot;"
-  Code="&quot;c2d5&quot;"
+  Code="&quot;66e4&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -1545,6 +1545,24 @@
       Code="&quot;Customs.CertificateOfOrigin.O.InvoiceConnect&quot;"
       DefaultText="&quot;Invoice Connect&quot;"
       LocalDefaultText="&quot;חשבון&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CertificateOfOriginItem.O.SearchItems&quot;"
+      DefaultText="&quot;Item Serial / Marks and Numbers&quot;"
+      LocalDefaultText="&quot;מס' / סימנים ומספרים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CertificateOfOriginItem.O.MultiUpdate&quot;"
+      DefaultText="&quot;This screen allows to multi update {field}&quot;"
+      LocalDefaultText="&quot;מסך זה מאפשר לעדכן את {field} באופן גורף לכל שורות או לחלקן. אנא בחר ב{field} ובפעולה הרצויה.&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CertificateOfOriginItem.O.ItemsWithNoValueTitle&quot;"
+      DefaultText="&quot;Update Items with no {field}&quot;"
+      LocalDefaultText="&quot;עדכן פריטים ללא {field}&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

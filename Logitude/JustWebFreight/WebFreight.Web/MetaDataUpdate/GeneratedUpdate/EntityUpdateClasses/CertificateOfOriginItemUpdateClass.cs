@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginItemUpdateClass
    {  		
-		public const string HashString = "db05fddb3fe34ad9c22ddefa371a3dc3";
+		public const string HashString = "0b37348b0f4e4f120e693cd5d28e5009";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -132,7 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardControlName =  "",
 			      				    LocalDefaultText =  "פריטי תעודת מקור",
 			      				    DefaultText =  "Certificate Of Origin Item",
-			      				    Code =  "c2d5",
+			      				    Code =  "66e4",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -1434,6 +1434,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CertificateOfOriginItemTextCode_CustomsCertificateOfOriginOOriginCriterionCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.OriginCriterionCode", DefaultText = "Origin CriterionCode",LocalDefaultText = @"העדפה", ObjectTableId = CertificateOfOriginItemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CertificateOfOriginItemTextCode_CustomsCertificateOfOriginOInvoiceConnect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.InvoiceConnect", DefaultText = "Invoice Connect",LocalDefaultText = @"חשבון", ObjectTableId = CertificateOfOriginItemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CertificateOfOriginItemTextCode_CustomsCertificateOfOriginItemOSearchItems = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOriginItem.O.SearchItems", DefaultText = "Item Serial / Marks and Numbers",LocalDefaultText = @"מס' / סימנים ומספרים", ObjectTableId = CertificateOfOriginItemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CertificateOfOriginItemTextCode_CustomsCertificateOfOriginItemOMultiUpdate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOriginItem.O.MultiUpdate", DefaultText = "This screen allows to multi update {field}",LocalDefaultText = @"מסך זה מאפשר לעדכן את {field} באופן גורף לכל שורות או לחלקן. אנא בחר ב{field} ובפעולה הרצויה.", ObjectTableId = CertificateOfOriginItemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CertificateOfOriginItemTextCode_CustomsCertificateOfOriginItemOItemsWithNoValueTitle = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOriginItem.O.ItemsWithNoValueTitle", DefaultText = "Update Items with no {field}",LocalDefaultText = @"עדכן פריטים ללא {field}", ObjectTableId = CertificateOfOriginItemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -446,7 +446,29 @@
                         <td class="TabTitleRow">{{'Customs.Declaration.O.ConsignmentPackages' |
                             TextCodeTranslationPipe}} </td>
                     </tr>
+
+                    <tr style="height:5px"></tr>
+                    <tr style="padding-top:5px" *ngIf="currentDeclaration.Direction == 'E' && currentDeclaration.TransportModeId == 'O'">
+                        <td style="width: 80px;" tabindex="-1">
+                            <div tabindex="-1" class="ToggleButton" style="float:right" id="toggleButton">
+                                <label style="float:right; left:45px">{{'Customs.Declaration.B.Actions' | TextCodeTranslationPipe}}</label>
+                                <img src="./Images/ToggleIcon.png" style="right:65px" />
+                                <div class="ToggleButtonMenu" style="width: 140px;top:21px;text-align:right; right: 0px;">
+                                    <button *ngFor="let option of UpdateOptionParams | keyvalue" [id]="'Update' + option.key"  (click)="UpdateClicked(option.key)" [disabled]="!IsActionButtonsEnabled" style="text-align:right">{{('Customs.Declaration.O.Update' | TextCodeTranslationPipe) + " " + (('Customs.CertificateOfOrigin.O.' + option.key) | TextCodeTranslationPipe) }}</button>
+                                </div>
+                            </div>
+                        </td>
+    
+                        <td></td>
+
+                        <td style="width:120px">
+                            <SearchTextBox [PlaceHolder]="'Customs.CertificateOfOriginItem.O.SearchItems' | TextCodeTranslationPipe" [ObjectTableName]="'Customs.CertificateOfOriginItem'" (SearchTextChangeEvent)="Search($event)"></SearchTextBox>
+                        </td>
+                    </tr>
+                    <tr style="height:5px"></tr>
+    
                     <tr class="FieldRow" style="height : 120px">
+                        <td colspan="6">
                         <div class="GeneratedGridContainer" style="height : 100%;">
                             <logitude-edit-grid GridWidth="100%" GridHeight="100%"
                                 [ItemSource]="CertificateOriginItemItems">
@@ -711,6 +733,7 @@
                                 </log-column>
                             </logitude-edit-grid>
                         </div>
+                        </td>
                     </tr>
 
                 </table>
