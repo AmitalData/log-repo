@@ -39,12 +39,14 @@ using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Xml.Serialization;
 
 namespace Logitude.Accounting.BL.CoreBL.Batch
@@ -168,14 +170,28 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             }
             else
             {
-                ARInvoicePM aRInvoicePM = FullMapInvoice(interestReportArgs, interestReport);
-                CheckVatNumber(interestReportArgs.Tenant, aRInvoicePM);
-                IInvoiceContext invoiceContext = InvoiceContext.GetContext(interestReportArgs.Tenant);
-                ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, interestReportArgs.Tenant, interestReportArgs.Email);
-                invoiceService.Create(aRInvoicePM);
-                BuildDocumentsForNewInvoice(aRInvoicePM, interestReport);
-                UpdateInterestReportsStatues(interestReport, interestReportArgs.Tenant, "2", aRInvoicePM);
-                SignInvoice(aRInvoicePM, interestReportArgs.Tenant);
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                {
+                    try
+                    {
+                        NetCommonHelper.Logger.DevLog.Instance.WriteTrace("Start CreateInvoiceForInterestReport interestReport.ARinvoiceId=" + interestReport.ARinvoiceId);
+                        ARInvoicePM aRInvoicePM = FullMapInvoice(interestReportArgs, interestReport);
+                        CheckVatNumber(interestReportArgs.Tenant, aRInvoicePM);
+                        IInvoiceContext invoiceContext = InvoiceContext.GetContext(interestReportArgs.Tenant);
+                        ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, interestReportArgs.Tenant, interestReportArgs.Email);
+                        invoiceService.Create(aRInvoicePM);
+                        BuildDocumentsForNewInvoice(aRInvoicePM, interestReport);
+                        UpdateInterestReportsStatues(interestReport, interestReportArgs.Tenant, "2", aRInvoicePM);
+                        SignInvoice(aRInvoicePM, interestReportArgs.Tenant);
+                        NetCommonHelper.Logger.DevLog.Instance.WriteTrace("End CreateInvoiceForInterestReport aRInvoicePM.Id=" + aRInvoicePM.Id);
+                        scope.Complete();
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Dispose(); 
+                        throw;   
+                    }
+                }
             }
 
         }
