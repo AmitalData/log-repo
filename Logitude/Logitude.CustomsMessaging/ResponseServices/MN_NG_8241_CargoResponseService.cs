@@ -1205,12 +1205,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 , sumGrossMassMeasureWeight = x.Sum(c=>c.grossMassMeasureWeight), sumQuantity = x.Sum(c=> c.Quantity) });
 
 
-			foreach (var package in cargoItems)
-			{
+            foreach (var package in cargoItems)
+            {
 
-				LogMessagingUtil.Instance.AppendLine(string.Format($"log1 packingType{0} sumGrossMassMeasureWeight{1} sumQuantity{2}  Finish:{3}", package.packingType, package.sumGrossMassMeasureWeight, package.sumQuantity, DateTime.Now));
-				if (_MyDeclarationPM.Consignments[0].ConsignmentPackages != null && _MyDeclarationPM.Consignments[0].ConsignmentPackages.Count() > 0)
-
+                LogMessagingUtil.Instance.AppendLine(string.Format($"log1 packingType{0} sumGrossMassMeasureWeight{1} sumQuantity{2}  Finish:{3}", package.packingType, package.sumGrossMassMeasureWeight, package.sumQuantity, DateTime.Now));
+                if (_MyDeclarationPM.Consignments[0].ConsignmentPackages != null && _MyDeclarationPM.Consignments[0].ConsignmentPackages.Count() > 0)
+                {
 
 					LogMessagingUtil.Instance.AppendLine("log2");
 
