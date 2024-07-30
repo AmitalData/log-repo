@@ -98,13 +98,14 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             {
                 ClientAddressQueryService clientAddressQueryService = new ClientAddressQueryService(tenant);
                 ClientAddressPM clientAddress = clientAddressQueryService.GetCityOfDeclarationByImporterID(importerID, "1", tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, clientAddress.LocalCityCode);
+                return Request.CreateResponse(HttpStatusCode.OK, clientAddress);
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
 
         public HttpResponseMessage Delete(string certificateOfOriginId)
         {
