@@ -370,7 +370,7 @@
                     </tr>
 
                     <tr style="height:5px"></tr>
-                    <tr style="padding-top:5px" *ngIf="currentDeclaration.Direction == 'E'"><!--  && currentDeclaration.TransportModeId == 'O' -->
+                    <tr style="padding-top:5px" *ngIf="currentDeclaration.Direction == 'E' && currentDeclaration.TransportModeId == 'O'">
                         <td style="width: 80px;" tabindex="-1">
                             <div tabindex="-1" class="ToggleButton" style="float:right" id="toggleButton">
                                 <label style="float:right; left:45px">{{'Customs.Declaration.B.Actions' | TextCodeTranslationPipe}}</label>
