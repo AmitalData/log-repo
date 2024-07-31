@@ -29,6 +29,9 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.VALUE = entityPM.VALUE;
             entityPOCO.SUPPLIERACCOUNTN = entityPM.SUPPLIERACCOUNTN;
             entityPOCO.COMMISSIONPERCENT = entityPM.COMMISSIONPERCENT;
+            entityPOCO.INCOTERMIDN = entityPM.INCOTERMIDN;
+            entityPOCO.COUNTRYIDN = entityPM.COUNTRYIDN;
+            entityPOCO.CURRENCYIDN = entityPM.CURRENCYIDN;
         }
 
         public void POCOToPM(SupplierInvoicePM entityPM, CCUACCSUP entityPOCO)
@@ -48,6 +51,9 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.VALUE = entityPOCO.VALUE;
             entityPM.SUPPLIERACCOUNTN = entityPOCO.SUPPLIERACCOUNTN;
             entityPM.COMMISSIONPERCENT = entityPOCO.COMMISSIONPERCENT;
+            entityPM.INCOTERMIDN = entityPOCO.INCOTERMIDN;
+            entityPM.COUNTRYIDN = entityPOCO.COUNTRYIDN;
+            entityPM.CURRENCYIDN = entityPOCO.CURRENCYIDN;
         }
 
         public void CustomPMToPOCO(SupplierInvoicePM entityPM, CCUACCSUP entityPOCO)
