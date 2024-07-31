@@ -286,6 +286,7 @@
                         <td class="TabTitleRow" style="width:130px">
                             <!-- PART 2- headline -->
                             {{'Customs.Declaration.TH.ExporterInvoices'| TextCodeTranslationPipe}}
+                            <IconButton *ngIf="!IsNewEntity" [Name]="'Refresh'" (click)="RefreshCertificateOriginInvoiceItemsClicked()" style="vertical-align: -5px; display: inline-flex;"></IconButton>
                         </td>
                         <td style="width:180px"></td>
                         <td></td>
@@ -443,8 +444,10 @@
                 <!-- Part 3: -->
                 <table style="width:870px">
                     <tr>
-                        <td class="TabTitleRow">{{'Customs.Declaration.O.ConsignmentPackages' |
-                            TextCodeTranslationPipe}} </td>
+                        <td class="TabTitleRow" style="float: right;">
+                            {{'Customs.Declaration.O.ConsignmentPackages' | TextCodeTranslationPipe}} 
+                            <IconButton *ngIf="!IsNewEntity" [Name]="'Refresh'" (click)="RefreshCertificateOriginItemItemsClicked()" style="margin-left: 5px;"></IconButton>
+                        </td>
                     </tr>
 
                     <tr style="height:5px"></tr>
