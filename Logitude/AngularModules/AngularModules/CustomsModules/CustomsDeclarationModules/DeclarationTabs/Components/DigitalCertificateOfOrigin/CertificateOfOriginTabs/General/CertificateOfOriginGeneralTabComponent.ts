@@ -30,6 +30,7 @@ import { EventEmitter } from '@angular/core';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { CertificateOfOriginWebService } from 'Customs/Services/WebServices/CertificateOfOriginWebService';
 import { QueryFilterItem } from 'Report/Components/Filters/QueryFilterItem';
+import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 
 
 class UpdateGeneralArgsParams {
@@ -83,6 +84,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
     public ErrorsList: string[];
     public StatusCode:string = "4";
+    public IsNewEntity = false;
 
     constructor() {
         super();
@@ -94,6 +96,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin, IsDisplayOnly: boolean) {
         this.entityPM = EntityPM;
         this.IsNewOrEdit = IsNewOrEdit;
+        this.IsNewEntity = IsNewOrEdit === StatusCertificateOfOrigin.IsNew;
         this.IsDisplayOnly = IsDisplayOnly;
         this.IsActionButtonsEnabled = !IsDisplayOnly;
         this.CertificateOriginInvoiceItems = new ObservableCollection([]);
@@ -209,17 +212,25 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
 
     InitilizeListsFromCertificateOfOrigin(EntityPM: CertificateOfOriginPM) {
+        this.InitializeCertificateOriginInvoiceItems(EntityPM.CertificateOriginInvoiceItems);
+        this.InitializeCertificateOriginItemItems(EntityPM.CertificateOriginItemItems);
+    }
+
+    InitializeCertificateOriginInvoiceItems(certificateOriginInvoiceItems: CertificateOfOriginInvoicePM[]) {
         this.CertificateOriginInvoiceItems.Clear();
+
+        // update CertificateOriginInvoice list:
+        certificateOriginInvoiceItems.forEach((item) => {
+            this.CertificateOriginInvoiceItems.Insert(new CertificateOfOriginInvoiceLine(item, this));
+        });
+    }
+
+    InitializeCertificateOriginItemItems(certificateOriginItemItems: CertificateOfOriginItemPM[]) {
         this.CertificateOriginItemItems.Clear();
         this.originalItemSource.Clear();
 
-        // update CertificateOriginInvoice list:
-        EntityPM.CertificateOriginInvoiceItems.forEach((item) => {
-            this.CertificateOriginInvoiceItems.Insert(new CertificateOfOriginInvoiceLine(item, this));
-        });
-
         // update CertificateOriginItemItems list:
-        EntityPM.CertificateOriginItemItems.forEach((item) => {
+        certificateOriginItemItems.forEach((item) => {
             this.getMeasureNameFromCache(item.MeasureType, item);
             this.getPackageTypeNameFromCache(item.PackageType, item);
             this.getOriginCriterionCodeNameFromCache(item.OriginCriterionCode, true, item);
@@ -227,6 +238,54 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             const certificateOfOriginItemLine = new CertificateOfOriginItemLine(item, this);
             this.CertificateOriginItemItems.Insert(certificateOfOriginItemLine);
             this.originalItemSource.Insert(certificateOfOriginItemLine);
+        });
+    }
+
+    RefreshCertificateOriginItemItemsClicked() {
+
+        var confirmMsg: string = TextCodeTranslator.Translate('Customs.CertificateOfOriginItem.O.RefreshConfirmationQuestion');
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
+        confirmWindow.Width = 400;
+        confirmWindow.Height = 180;
+        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+        confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.Cancel");
+        confirmWindow.Show(confirmMsg);
+
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.certificateOfOriginWebService.GetCertificateOfOriginByIDIncludeChildrens(this.Id, this.DeclarationId, this.Tenant).subscribe(myResult => {
+                    var myResponse: ServiceResponse = myResult;
+                    if (!myResponse.HasError && myResponse.Result) {
+                        const entity: CertificateOfOriginPM = myResponse.Result;
+                        this.InitializeCertificateOriginItemItems(entity.CertificateOriginItemItems);
+                    }
+                });
+            }
+        });
+    }
+
+    RefreshCertificateOriginInvoiceItemsClicked() {
+
+        var confirmMsg: string = TextCodeTranslator.Translate('Customs.CertificateOfOriginInvoice.O.RefreshConfirmationQuestion');
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
+        confirmWindow.Width = 400;
+        confirmWindow.Height = 180;
+        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+        confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.Cancel");
+        confirmWindow.Show(confirmMsg);
+
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.certificateOfOriginWebService.GetCertificateOfOriginByIDIncludeChildrens(this.Id, this.DeclarationId, this.Tenant).subscribe(myResult => {
+                    var myResponse: ServiceResponse = myResult;
+                    if (!myResponse.HasError && myResponse.Result) {
+                        const entity: CertificateOfOriginPM = myResponse.Result;
+                        this.InitializeCertificateOriginInvoiceItems(entity.CertificateOriginInvoiceItems);
+                    }
+                });
+            }
         });
     }
 

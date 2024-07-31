@@ -1565,6 +1565,12 @@
       LocalDefaultText="&quot;עדכן פריטים ללא {field}&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CertificateOfOriginItem.O.RefreshConfirmationQuestion&quot;"
+      DefaultText="&quot;Are you sure to update the items ?&quot;"
+      LocalDefaultText="&quot;האם לבצע בנייה מחדש של כלל המשגורים לתעודה ?&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
