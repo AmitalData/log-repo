@@ -2508,7 +2508,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 _CCUFILEMPM.SELLCONDITIONID = GetTranslationP2L("IIGC", "CTBINCOTERMS", decSupplierInvoice.IncotermCode);
                 if(!isConnectedToUniFreight)
                 {
-                    _CCUFILEMPM.SELLCONDITIONID = decSupplierInvoice.IncotermCode;
+                    _CCUFILEMPM.SELLCONDITIONIDN = decSupplierInvoice.IncotermCode;
                 }
                 _CCUFILEMPM.COINID = GetTranslationP2L("IIGC", "CTBCURRENCY", decSupplierInvoice.InvoiceCurrencyTypeCode);
                 _CCUFILEMPM.COINIDN = decSupplierInvoice.InvoiceCurrencyTypeCode;
@@ -2619,6 +2619,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 supplierInvoicePM.COUNTRYIDN = decSupplierInvoice.IssueCountryCode;
                 supplierInvoicePM.INCOTERMIDN = decSupplierInvoice.IncotermCode;
                 supplierInvoicePM.CURRENCYIDN = decSupplierInvoice.InvoiceCurrencyTypeCode;
+                supplierInvoicePM.Tenant = _DirtyDeclarationPM.Tenant;
             }
              CalculateSupplierInvoiceModifications(_CCUFILEMPM, supplierInvoicePM, decSupplierInvoice);
 
