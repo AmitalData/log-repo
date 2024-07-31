@@ -21,7 +21,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
     /// There are no comments for Unifreight.Data.AmitalModel.CCUACCSUP in the schema.
     /// </summary>
     [System.Runtime.Serialization.DataContractAttribute(IsReference=true)]
-    public partial class CCUACCSUP : INotifyPropertyChanged    {
+    public partial class CCUACCSUP : UNIFBASICPOCO , INotifyPropertyChanged    {
 
         public CCUACCSUP()
         {
