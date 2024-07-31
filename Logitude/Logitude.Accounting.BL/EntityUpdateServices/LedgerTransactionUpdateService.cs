@@ -93,6 +93,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
                 }
             }
+            else
+            {
+                entityPM.AmountToReconcile = 0;
+            }
 
             if (entityPM.OpenAmount != 0 && entityPM.OpenAmount != entityPOCO.OpenAmount)
             {
