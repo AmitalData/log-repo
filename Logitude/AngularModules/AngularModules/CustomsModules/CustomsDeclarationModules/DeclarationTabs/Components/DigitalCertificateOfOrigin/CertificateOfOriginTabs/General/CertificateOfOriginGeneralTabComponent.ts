@@ -77,7 +77,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     public IsActionButtonsEnabled: boolean = true;
     public originalItemSource: ObservableCollection = new ObservableCollection([]);
     public updateOptionsMap = new Map<string, UpdateGeneralParams>();
-    private UpdateOptionParams = {
+    public UpdateOptionParams = {
         ContainerIsoCode: { validate: null},
         ItemId: null,
         OriginCriterionCode: { LookUpTableName: 'Customs.OriginCriterion', ObjectTableName: 'Customs.CertificateOfOriginItem', QueryFilterItems: null},
