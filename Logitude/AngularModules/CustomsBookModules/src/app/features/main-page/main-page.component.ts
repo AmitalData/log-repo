@@ -8,11 +8,12 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { FilterPopupService } from '../../shared/components/filter-popup/service/filter-popup.service';
 import { SearchBy, SearchService } from '../../shared/components/page-top/service/top-page.service';
 import { HeaderService } from '../../shared/components/app-header/service/header.service';
+import { AppHeaderComponent } from '../../shared/components/app-header/app-header.component';
 
 @Component({
 	selector: 'app-main-page',
 	standalone: true,
-	imports: [PageTopComponent, MainDisplayComponent, AddCommentComponent, CommonModule],
+	imports: [PageTopComponent, MainDisplayComponent, AddCommentComponent, CommonModule, AppHeaderComponent],
 	templateUrl: './main-page.component.html',
 	styleUrl: './main-page.component.css',
 })
