@@ -11059,17 +11059,17 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.INCOTERMIDN)
                 .HasColumnName(@"INCOTERM_ID_N")
                 .HasMaxLength(35)
-                .HasColumnType("varchar2");
+                .HasColumnType("varchar");
             modelBuilder.Entity<CCUACCSUP>()
                 .Property(p => p.COUNTRYIDN)
                     .HasColumnName(@"COUNTRY_ID_N")
                     .HasMaxLength(35)
-                    .HasColumnType("varchar2");
+                    .HasColumnType("varchar");
             modelBuilder.Entity<CCUACCSUP>()
                 .Property(p => p.CURRENCYIDN)
                     .HasColumnName(@"CURRENCY_ID_N")
                     .HasMaxLength(35)
-                    .HasColumnType("varchar2");
+                    .HasColumnType("varchar");
 
             #endregion
 
@@ -12732,12 +12732,12 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.RIGHTOWNIDN)
                     .HasColumnName(@"RIGHT_OWN_ID_N")
                     .HasMaxLength(35)
-                    .HasColumnType("varchar2");
+                    .HasColumnType("varchar");
             modelBuilder.Entity<CCUFILEM>()
                .Property(p => p.SELLCONDITIONIDN)
                    .HasColumnName(@"SELL_CONDITION_ID_N")
                    .HasMaxLength(35)
-                   .HasColumnType("varchar2");
+                   .HasColumnType("varchar");
 
 
 
