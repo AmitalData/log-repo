@@ -1536,10 +1536,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 if (!isConnectedToUniFreight)
                 {
-                    if (short.TryParse(_DirtyDeclarationPM.ImporterEntitlementTypeCode, out importerEntitlementTypeCode))
-                    {
-                        _CCUFILEMPM.RIGHTOWNID = importerEntitlementTypeCode;
-                    }
+                    _CCUFILEMPM.RIGHTOWNIDN = _DirtyDeclarationPM.ImporterEntitlementTypeCode;
                 }
             }
 
@@ -2619,9 +2616,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             supplierInvoicePM.CURRENCYID = GetTranslationP2L("IIGC", "CTBCURRENCY", decSupplierInvoice.InvoiceCurrencyTypeCode);
             if (!isConnectedToUniFreight)
             {
-                supplierInvoicePM.COUNTRYID = decSupplierInvoice.IssueCountryCode;
-                supplierInvoicePM.INCOTERMID = decSupplierInvoice.IncotermCode;
-                supplierInvoicePM.CURRENCYID = decSupplierInvoice.InvoiceCurrencyTypeCode;
+                supplierInvoicePM.COUNTRYIDN = decSupplierInvoice.IssueCountryCode;
+                supplierInvoicePM.INCOTERMIDN = decSupplierInvoice.IncotermCode;
+                supplierInvoicePM.CURRENCYIDN = decSupplierInvoice.InvoiceCurrencyTypeCode;
             }
              CalculateSupplierInvoiceModifications(_CCUFILEMPM, supplierInvoicePM, decSupplierInvoice);
 
