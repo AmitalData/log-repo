@@ -3,6 +3,7 @@ import { AddCommentService } from './service/add-comment.service';
 import { CB_CustomsItemComputedDataList, RemarksClassificationPM } from '../main-display/main-display.component';
 import { API_MainService, Filters } from '../../../core/API_MainService';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 
 @Component({
   selector: 'app-add-comment',
@@ -44,7 +45,7 @@ export class AddCommentComponent {
   sendComment() {
 
     let remarksClassificationPM: RemarksClassificationPM = {
-      tenant: 0,
+      tenant: SessionInfo.Tenant,
       customsItemsID: this.currentItem?.CustomsItemID,
       remarkDescription: this.commentText != null && this.commentText != '' ? this.commentText : '',
     };

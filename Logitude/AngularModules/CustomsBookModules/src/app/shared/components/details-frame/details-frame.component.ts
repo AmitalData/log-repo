@@ -10,6 +10,7 @@ import { BehaviorSubject } from 'rxjs';
 import { API_MainService } from '../../../core/API_MainService';
 import { AddCommentService } from '../add-comment/service/add-comment.service';
 import { NgClass } from '@angular/common';
+import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 
 
 @Component({
@@ -54,7 +55,7 @@ export class DetailsFrameComponent implements OnInit {
 
   countOfComments: number = 0;
   showCommentsByClick() {
-    this.API_MainService.GetAllCommentsByCustomsItemId(this.currentItem.getValue().CustomsItemID, this.API_MainService.getTenant()).subscribe((data: RemarksClassificationList[]) => {
+    this.API_MainService.GetAllCommentsByCustomsItemId(this.currentItem.getValue().CustomsItemID, SessionInfo.Tenant).subscribe((data: RemarksClassificationList[]) => {
       // console.log(data);
       this.countOfComments = data?.length > 0 ? data.length : 0;
       this.addCommentService.allComments.next(data);

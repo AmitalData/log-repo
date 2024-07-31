@@ -160,7 +160,7 @@ export class LoginComponent implements OnInit {
 
     private Login(LoginParams: any, userData: any) {
         this.Tenant =  userData.Tenant;
-
+      SessionInfo.Tenant = userData.Tenant;
         this.errorMessage = "";
         let tenantList = userData.CompanyLogins;
         let LogInToTenant  = tenantList.filter(tenan => tenan.Tenant == this.Tenant)[0];

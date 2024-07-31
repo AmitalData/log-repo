@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { HeaderService, searchState } from '../app-header/service/header.service';
 import { FiltersSearch } from '../filter-popup/service/filter-popup.service';
 import { AddCommentComponent } from '../add-comment/add-comment.component';
+import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
@@ -64,7 +65,7 @@ export class MainDisplayComponent implements OnInit {
 	InitData() {
 		let filters: Filters = {
 			CustomsBookType: this.searchState,
-			Tenant: 0,
+			Tenant: SessionInfo.Tenant,
 			SearchFields: ''
 		};
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
@@ -213,7 +214,7 @@ export class MainDisplayComponent implements OnInit {
 			Rules: filtersSearch.rules,
 			SkippedRows: 0,
 			PageSize: 0,
-			Tenant: this.API_MainService.getTenant()
+			Tenant: SessionInfo.Tenant
 		};
 
 		this.API_MainService.GetCustomsBookMainViewSearchByText(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {

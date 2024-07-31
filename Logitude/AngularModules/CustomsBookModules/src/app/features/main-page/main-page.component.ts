@@ -9,6 +9,7 @@ import { FilterPopupService } from '../../shared/components/filter-popup/service
 import { SearchBy, SearchService } from '../../shared/components/page-top/service/top-page.service';
 import { HeaderService } from '../../shared/components/app-header/service/header.service';
 import { AppHeaderComponent } from '../../shared/components/app-header/app-header.component';
+import { SessionInfo } from '../../core/Infrastructure/Utilities/SessionInfo';
 
 @Component({
 	selector: 'app-main-page',
@@ -40,7 +41,7 @@ export class MainPageComponent {
 			Rules: true,
 			SkippedRows: 0,
 			PageSize: 0,
-			Tenant: this.API_MainService.getTenant()
+			Tenant: SessionInfo.Tenant
 		};
 		
 		if(filters.SearchFields === "") return;
