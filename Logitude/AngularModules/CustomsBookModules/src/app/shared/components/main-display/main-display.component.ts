@@ -2,7 +2,6 @@ import { AfterViewInit, Component, Input, OnInit, SimpleChanges } from '@angular
 import { DataRowComponent } from '../data-row/data-row.component';
 import { DetailsFrameComponent } from '../details-frame/details-frame.component';
 import { TableTopComponent, TableTopState } from '../table-top/table-top.component';
-import { AddCommentComponent } from '../add-comment/add-comment.component';
 import { NgFor, NgForOf, NgIf } from '@angular/common';
 import { trigger, style, animate, transition } from '@angular/animations';
 //@ts-ignore
@@ -11,13 +10,13 @@ import { API_MainService, Filters } from '../../../core/API_MainService';
 import { BehaviorSubject, filter } from 'rxjs';
 import { SearchService } from '../page-top/service/top-page.service';
 import { FormsModule } from '@angular/forms';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HeaderService, searchState } from '../app-header/service/header.service';
 import { FiltersSearch } from '../filter-popup/service/filter-popup.service';
+import { AddCommentComponent } from '../add-comment/add-comment.component';
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
-	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent, FormsModule, MatProgressSpinnerModule],
+	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent,AddCommentComponent, FormsModule],
 	templateUrl: './main-display.component.html',
 	styleUrl: './main-display.component.css',
 	animations: [
