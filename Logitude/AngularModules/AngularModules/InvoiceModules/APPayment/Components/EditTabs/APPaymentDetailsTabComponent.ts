@@ -831,6 +831,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
     }
     LoadPaymentInvoices(invoiceNumbers) {
+        debugger;
         var filters = new ApiQueryFilters();
         filters.PageIndex = 0;
         filters.PageSize = 1000;
@@ -838,7 +839,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         filters.SortDirection = "Descending";
 
         //filters.addAdditionalFilter("VendorId", this.EntityPM.VendorId, null, null, "Equals", false, false, false, "string");
-        filters.addAdditionalFilter("InvoiceNumber", invoiceNumbers, null, null, "InList", false, true, false, "string");
+        filters.addAdditionalFilter("InvoiceNumber", invoiceNumbers, null, null, "InListExact", false, true, false, "string");
 
       
 
