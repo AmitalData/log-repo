@@ -69,7 +69,8 @@ export class MainDisplayComponent implements OnInit {
 			SearchFields: ''
 		};
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: any) => {
-			const result: CB_CustomsItemComputedDataList[] = data.body;
+			debugger
+			const result: CB_CustomsItemComputedDataList[] = data;
 			if (!result) return; // TODO: add error message
 			this.countSearchResult = 0;
 			this.handleClearResults();

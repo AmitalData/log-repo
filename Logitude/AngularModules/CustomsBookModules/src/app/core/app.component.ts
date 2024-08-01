@@ -23,11 +23,11 @@ export class AppComponent {
     }
 
     private SetSeSessionInfo() {
-        SessionInfo.LoggedUserEmail = sessionStorage.getItem("LoggedUserEmail");
-        SessionInfo.LoggedUserId = sessionStorage.getItem("LoggedUserId");
-        SessionInfo.LoggedUserTenant = Number(sessionStorage.getItem("LoggedUserTenant"));
-        SessionInfo.Token = sessionStorage.getItem("Token");
-        SessionInfo.DocumentDownloadToken = sessionStorage.getItem("DocumentDownloadToken");
+        // SessionInfo.LoggedUserEmail = sessionStorage.getItem("LoggedUserEmail");
+        // SessionInfo.LoggedUserId = sessionStorage.getItem("LoggedUserId");
+        // SessionInfo.LoggedUserTenant = Number(sessionStorage.getItem("LoggedUserTenant"));
+        // SessionInfo.Token = sessionStorage.getItem("Token");
+        // SessionInfo.DocumentDownloadToken = sessionStorage.getItem("DocumentDownloadToken");
     }
 
 }
