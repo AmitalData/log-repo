@@ -1,23 +1,29 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 import { AddCommentService } from './service/add-comment.service';
 import { CB_CustomsItemComputedDataList, RemarksClassificationPM } from '../main-display/main-display.component';
-import { API_MainService, Filters } from '../../../core/API_MainService';
+import { API_MainService } from '../../../core/API_MainService';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-add-comment',
   standalone: true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './add-comment.component.html',
-  styleUrl: './add-comment.component.css'
+  styleUrls: ['./add-comment.component.css']
 })
-export class AddCommentComponent {
-  constructor(private addCommentService: AddCommentService, private API_MainService: API_MainService, private snackBar: MatSnackBar) { }
+export class AddCommentComponent implements OnInit, OnChanges {
   remarksClassificationPM: RemarksClassificationPM;
   showAddComment: boolean = false;
   commentText: string = '';
   currentItem: CB_CustomsItemComputedDataList;
+
+  constructor(
+    private addCommentService: AddCommentService,
+    private API_MainService: API_MainService,
+    private snackBar: MatSnackBar
+  ) { }
 
   ngOnInit() {
     this.addCommentService.isOpened.subscribe((isOpened: boolean) => {
@@ -28,12 +34,7 @@ export class AddCommentComponent {
     });
   }
 
-  updateCommentText(event: any) {
-    this.commentText = event.target.value;
-  }
-
   ngOnChanges(changes: SimpleChanges) {
-
     if (changes['showAddComment']) {
       this.showAddComment = changes['showAddComment'].currentValue;
       this.addCommentService.setIsOpened(this.showAddComment);
@@ -41,31 +42,34 @@ export class AddCommentComponent {
     }
   }
 
-  // send comment to server:
-  sendComment() {
+  updateCommentText(event: any) {
+    this.commentText = event.target.value;
+  }
 
+  sendComment() {
     let remarksClassificationPM: RemarksClassificationPM = {
       tenant: SessionInfo.LoggedUserTenant,
       customsItemsID: this.currentItem?.CustomsItemID,
-      remarkDescription: this.commentText != null && this.commentText != '' ? this.commentText : '',
+      remarkDescription: this.commentText || '',
     };
-    if (remarksClassificationPM.remarkDescription == '' || !remarksClassificationPM.customsItemsID) return;
+
+    if (!remarksClassificationPM.remarkDescription || !remarksClassificationPM.customsItemsID) return;
+
     this.addCommentService.setIsOpened(false);
 
     this.API_MainService.AddNEWRemarksClassification(remarksClassificationPM).subscribe((data: any) => {
-      if (!data.body) this.showMessage('שגיאה בהוספת הערה'); // change color
+      if (!data.body) {
+        this.showMessage('שגיאה בהוספת הערה');
+        return;
+      }
       this.showMessage('הערה נוספה בהצלחה');
       this.addCommentService.allComments.next([...this.addCommentService.allComments.getValue(), data.body]);
     });
-
     this.commentText = '';
   }
 
-  showMessage(message?: string): void {
-    if (message === "") return;
-    this.snackBar.open(message, 'סגור',
-      {
-        duration: 2000
-      });
+  showMessage(message: string): void {
+    if (!message) return;
+    this.snackBar.open(message, 'סגור', { duration: 1000 });
   }
 }
