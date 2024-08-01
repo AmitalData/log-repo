@@ -273,7 +273,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     if (!string.IsNullOrWhiteSpace(customsDocumentsTicket.RequestedCustomsDocId) && _MyCustomsDocumentPM.DocumentStatusCode  != "2")
                     {
-                        if (_MyCustomsDocumentPM.DocumentStatusCode == "1")
+                        if (_MyCustomsDocumentPM.DocumentStatusCode == "1" && declarationPM != null)
                         {
                             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
 
