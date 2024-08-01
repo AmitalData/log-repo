@@ -6,21 +6,21 @@ import { ResetPasswordComponent } from '../features/reset-password-page/reset-pa
 import { ChangePasswordComponent } from '../features/change-password-page/change-password.component';
 
 export const routes: Routes = [
-    // { path: 'Customs-Book', redirectTo: "customs-book/login", pathMatch: "full" },
-    // { path: 'Customs-Book/login', redirectTo: "customs-book/login", pathMatch: "full" },
-    // { path: 'customs-book/resetpassword', component: ResetPasswordComponent },
-    // { path: 'customs-book/changepassword', component: ChangePasswordComponent },
-    // { path: 'customs-book/login', component: LoginComponent },
-    // {
-    //     path: 'customs-book',
-    //     component: MainPageComponent,
-    //     canActivate: [AuthGuard],
-    //     children: [
-    //         { path: "", component: MainPageComponent },
-    //         { path: '**', redirectTo: 'customs-book', pathMatch: 'full' },
-    //     ]
-    // },
-    // // { path: 'Error401', component: Error401Component },
-    // { path: '', redirectTo: 'customs-book', pathMatch: 'full' },
-    // { path: '**', redirectTo: 'customs-book', pathMatch: 'full' },
+    { path: 'Customs-Book', redirectTo: "customs-book/login", pathMatch: "full" },
+    { path: 'Customs-Book/login', redirectTo: "customs-book/login", pathMatch: "full" },
+    { path: 'customs-book/resetpassword', component: ResetPasswordComponent },
+    { path: 'customs-book/changepassword', component: ChangePasswordComponent },
+    { path: 'customs-book/login', component: LoginComponent },
+    {
+        path: 'customs-book',
+        component: MainPageComponent,
+        canActivate: [AuthGuard],
+        children: [
+            { path: "", component: MainPageComponent },
+            { path: '**', redirectTo: 'customs-book', pathMatch: 'full' },
+        ]
+    },
+    // { path: 'Error401', component: Error401Component },
+    { path: '', redirectTo: 'customs-book', pathMatch: 'full' },
+    { path: '**', redirectTo: 'customs-book', pathMatch: 'full' },
 ];

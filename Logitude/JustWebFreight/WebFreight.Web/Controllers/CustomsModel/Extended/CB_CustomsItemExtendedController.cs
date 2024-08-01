@@ -38,12 +38,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 filters.Tenant = Tenant;
                
                 string token = HttpContext.Current.Request.Headers["Token"];
-                //if (token == null)
-                //    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(new Exception("Token is missing")));
+                if (token == null)
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(new Exception("Token is missing")));
 
-                //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                //string loggedUserEmail = authToken.Email;
-                //SecurityUtility.AuthenticationOnTenant(0);
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(0);
 
                 CB_CustomsItemComputedDataQueryService customsItemComputedDataQueryService = new CB_CustomsItemComputedDataQueryService(0);
                 List<CB_CustomsItemComputedDataList> result = customsItemComputedDataQueryService.GetCustomsBookMainView(filters.CustomsBookType, filters.Tenant);

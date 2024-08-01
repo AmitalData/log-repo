@@ -25,7 +25,7 @@ export class BaseService {
 	}
 
 	Get(url: string) {
-		return this.HttpClient.get(url).pipe(
+		return this.HttpClient.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(
 			map((response) => {
 				return response;
 			}),
@@ -33,7 +33,7 @@ export class BaseService {
 	}
 
 	Post(url: string, data: any) {
-		return this.HttpClient.post(url, data).pipe(
+		return this.HttpClient.post(url, data, ServiceHelper.GetHttpFullHeaders()).pipe(
 			map((response) => {
 				return response;
 			}),
