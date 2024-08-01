@@ -1,123 +1,272 @@
 <div class="col">
-    <div class="row">        
-        <LogLabel [Text]='"סוג מטען FCL/LCL"' [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        <LogTextBox disabled [ObjectFieldName]="'CargoTypeName'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
-        [DataContext]="DataContext" [Text]="CargoTypeName"></LogTextBox>
-    </div>
-    
-    <div class="row">        
-        <LogLabel [ObjectFieldName]="'CargoTypeCodeName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        <LogTextBox [ObjectFieldName]="'CargoTypeCodeName'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
-        [DataContext]="DataContext" [Text]="CargoTypeCodeName"></LogTextBox>
-    </div>
-    
-    <div class="row">        
-        <LogLabel [ObjectFieldName]="'SecondCargoID'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        <LogTextBox [ObjectFieldName]="'SecondCargoID'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
-        [DataContext]="DataContext" [Text]="SecondCargoID"></LogTextBox>
+    <div class="row">
+        <LogLabel
+            [Text]='"סוג מטען FCL/LCL"'
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+        ></LogLabel>
+        <LogTextBox
+            disabled
+            [ObjectFieldName]="'CargoTypeName'"
+            [ObjectTableName]="ObjectTableName"
+            [HideColumns]="true"
+            [DataContext]="DataContext"
+            [Text]="CargoTypeName"
+        ></LogTextBox>
     </div>
 
-    <div class="row">        
-        <LogLabel  [ObjectFieldName]="'ExportLoadingPortcode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>        
-     
-            <LogLov style="width: 146px;" [ObjectFieldName]="'ExportLoadingPortcode'"
+    <div class="row">
+        <LogLabel
+            [ObjectFieldName]="'CargoTypeCodeName'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+        ></LogLabel>
+        <LogTextBox
+            [ObjectFieldName]="'CargoTypeCodeName'"
+            [ObjectTableName]="ObjectTableName"
+            [HideColumns]="true"
+            [DataContext]="DataContext"
+            [Text]="CargoTypeCodeName"
+        ></LogTextBox>
+    </div>
+
+    <div class="row">
+        <LogLabel
+            [ObjectFieldName]="'SecondCargoID'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+        ></LogLabel>
+        <LogTextBox
+            [ObjectFieldName]="'SecondCargoID'"
+            [ObjectTableName]="ObjectTableName"
+            [HideColumns]="true"
+            [DataContext]="DataContext"
+            [Text]="SecondCargoID"
+        ></LogTextBox>
+    </div>
+
+    <div class="row">
+        <LogLabel
+            [ObjectFieldName]="'ExportLoadingPortcode'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+        ></LogLabel>
+
+        <LogLov
+            style="width: 146px"
+            [ObjectFieldName]="'ExportLoadingPortcode'"
             [ObjectTableName]="ObjectTableName"
             [DataContext]="DataContext"
             [HideColumns]="true"
             [LookUpTableName]="'Customs.UnloadingSiteType'"
-            [SelectedValue]="ExportLoadingPortcode">
-            </LogLov>
-            
+            [SelectedValue]="ExportLoadingPortcode"
+        >
+        </LogLov>
     </div>
 
-    <div class="row">        
-            <LogLabel [ObjectFieldName]="'StorageSiteCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-            <LogLov style="width: 146px;" [ObjectFieldName]="'StorageSiteCode'"
+    <div class="row">
+        <LogLabel
+            [ObjectFieldName]="'StorageSiteCode'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+        ></LogLabel>
+        <LogLov
+            style="width: 146px"
+            [ObjectFieldName]="'StorageSiteCode'"
             [ObjectTableName]="ObjectTableName"
             [DataContext]="DataContext"
             [HideColumns]="true"
             [LookUpTableName]="'Customs.DeliverySiteType'"
-            [SelectedValue]="StorageSiteCode">
-            </LogLov>
+            [SelectedValue]="StorageSiteCode"
+        >
+        </LogLov>
     </div>
 
-    <div class="row">        
-        <LogLabel [ObjectFieldName]="'ShipCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        <LogTextBox [ObjectFieldName]="'ShipName'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
-        [DataContext]="DataContext" [Text]="ShipName"></LogTextBox>
-    </div>
-
-    <div class="row">        
-        <LogLabel [ObjectFieldName]="'PackageQuantity'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        <LogTextBox [ObjectFieldName]="'PackageQuantity'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
-        [DataContext]="DataContext" [Text]="PackageQuantity"></LogTextBox>
-    </div>
-
-    <div class="row">        
-        <LogLabel [ObjectFieldName]="'MarksNumbers'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        <LogTextBox [ObjectFieldName]="'MarksNumbers'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
-        [DataContext]="DataContext" [Text]="MarksNumbers"></LogTextBox>
-    </div>
-</div>
-
-<div class="col">
-    <div class="row">        
-        <LogLabel [ObjectFieldName]="'ExporterCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        <LogTextBox [ObjectFieldName]="'ExporterCode'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
-        [DataContext]="DataContext" [Text]="ExporterCode"></LogTextBox>
-    </div>
-    
-    <div class="row">        
-        <LogLabel [ObjectFieldName]="'FirstCargoID'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        <LogTextBox [ObjectFieldName]="'FirstCargoID'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
-        [DataContext]="DataContext" [Text]="FirstCargoID"></LogTextBox>
-    </div>
-    
     <div class="row">
-        <LogLabel [ObjectFieldName]="'ThirdCargoID'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        <LogTextBox [ObjectFieldName]="'ThirdCargoID'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
-        [DataContext]="DataContext" [Text]="ThirdCargoID"></LogTextBox>
+        <LogLabel
+            [ObjectFieldName]="'ShipCode'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+        ></LogLabel>
+        <LogTextBox
+            [ObjectFieldName]="'ShipName'"
+            [ObjectTableName]="ObjectTableName"
+            [HideColumns]="true"
+            [DataContext]="DataContext"
+            [Text]="ShipName"
+        ></LogTextBox>
     </div>
 
-    <div class="row">        
-        <LogLabel [ObjectFieldName]="'ExportUnloadingPortCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        <LogLov style="width: 146px;" [ObjectFieldName]="'ExportUnloadingPortCode'"
-        [ObjectTableName]="ObjectTableName"
-        [DataContext]="DataContext"
-        [HideColumns]="true"
-        [LookUpTableName]="'Customs.InternationalSite'"
-        [SelectedValue]="ExportUnloadingPortCode">
-        </LogLov>
+    <div class="row">
+        <LogLabel
+            [ObjectFieldName]="'PackageQuantity'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+        ></LogLabel>
+        <LogTextBox
+            [ObjectFieldName]="'PackageQuantity'"
+            [ObjectTableName]="ObjectTableName"
+            [HideColumns]="true"
+            [DataContext]="DataContext"
+            [Text]="PackageQuantity"
+        ></LogTextBox>
     </div>
-    <div class="row">        
-        <LogLabel [ObjectFieldName]="'FinalDestinationPortCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        <LogLov style="width: 146px;" [ObjectFieldName]="'FinalDestinationPortCode'"
-        [ObjectTableName]="ObjectTableName"
-        [DataContext]="DataContext"
-        [HideColumns]="true"
-        [LookUpTableName]="'Customs.InternationalSite'"
-        [SelectedValue]="FinalDestinationPortCode">
-        </LogLov>
-    </div>
-    <div class="row">        
-        <LogLabel [ObjectFieldName]="'GrossMassMeasure'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        <LogTextBox [ObjectFieldName]="'GrossMassMeasure'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
-        [DataContext]="DataContext" [Text]="GrossMassMeasure"></LogTextBox>
-    </div>
-    <div class="row">        
-        <LogLabel [ObjectFieldName]="'IsDangerousGoods'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        <LogCheckBox style="width: 100px;" [ObjectFieldName]="'IsDangerousGoods'" [Checked]="IsDangerousGoods===1" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" ></LogCheckBox>
+
+    <div class="row">
+        <LogLabel
+            [ObjectFieldName]="'MarksNumbers'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+        ></LogLabel>
+        <LogTextBox
+            [ObjectFieldName]="'MarksNumbers'"
+            [ObjectTableName]="ObjectTableName"
+            [HideColumns]="true"
+            [DataContext]="DataContext"
+            [IsMultiline]="MarksNumbers.includes(':')"
+            [Text]="MarksNumbers"
+        ></LogTextBox>
     </div>
 </div>
 
 <div class="col">
-    <div class="row">        
-        <LogLabel [ObjectFieldName]="'ExportDealIdentification'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        <LogTextBox  class="export-deal-identification" [ObjectFieldName]="'ExportDealIdentification'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
-        [DataContext]="DataContext" [Text]="ExportDealIdentification"></LogTextBox>
+    <div class="row">
+        <LogLabel
+            [ObjectFieldName]="'ExporterCode'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+        ></LogLabel>
+        <LogTextBox
+            [ObjectFieldName]="'ExporterCode'"
+            [ObjectTableName]="ObjectTableName"
+            [HideColumns]="true"
+            [DataContext]="DataContext"
+            [Text]="ExporterCode"
+        ></LogTextBox>
+    </div>
+
+    <div class="row">
+        <LogLabel
+            [ObjectFieldName]="'FirstCargoID'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+        ></LogLabel>
+        <LogTextBox
+            [ObjectFieldName]="'FirstCargoID'"
+            [ObjectTableName]="ObjectTableName"
+            [HideColumns]="true"
+            [DataContext]="DataContext"
+            [Text]="FirstCargoID"
+        ></LogTextBox>
+    </div>
+
+    <div class="row">
+        <LogLabel
+            [ObjectFieldName]="'ThirdCargoID'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+        ></LogLabel>
+        <LogTextBox
+            [ObjectFieldName]="'ThirdCargoID'"
+            [ObjectTableName]="ObjectTableName"
+            [HideColumns]="true"
+            [DataContext]="DataContext"
+            [Text]="ThirdCargoID"
+        ></LogTextBox>
+    </div>
+
+    <div class="row">
+        <LogLabel
+            [ObjectFieldName]="'ExportUnloadingPortCode'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+        ></LogLabel>
+        <LogLov
+            style="width: 146px"
+            [ObjectFieldName]="'ExportUnloadingPortCode'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+            [HideColumns]="true"
+            [LookUpTableName]="'Customs.InternationalSite'"
+            [SelectedValue]="ExportUnloadingPortCode"
+        >
+        </LogLov>
+    </div>
+    <div class="row">
+        <LogLabel
+            [ObjectFieldName]="'FinalDestinationPortCode'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+        ></LogLabel>
+        <LogLov
+            style="width: 146px"
+            [ObjectFieldName]="'FinalDestinationPortCode'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+            [HideColumns]="true"
+            [LookUpTableName]="'Customs.InternationalSite'"
+            [SelectedValue]="FinalDestinationPortCode"
+        >
+        </LogLov>
+    </div>
+    <div class="row">
+        <LogLabel
+            [ObjectFieldName]="'GrossMassMeasure'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+        ></LogLabel>
+        <LogTextBox
+            [ObjectFieldName]="'GrossMassMeasure'"
+            [ObjectTableName]="ObjectTableName"
+            [HideColumns]="true"
+            [DataContext]="DataContext"
+            [Text]="GrossMassMeasure"
+        ></LogTextBox>
+    </div>
+    <div class="row">
+        <LogLabel
+            [ObjectFieldName]="'IsDangerousGoods'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+        ></LogLabel>
+        <LogCheckBox
+            style="width: 146px"
+            [ObjectFieldName]="'IsDangerousGoods'"
+            [Checked]="IsDangerousGoods===1"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+        ></LogCheckBox>
+    </div>
+    <div class="row">
+        <LogLabel
+            [ObjectFieldName]="'ContainerTypeWCO'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+        ></LogLabel>
+        <LogTextBox
+            class="container-type-wco"
+            [ObjectFieldName]="'ContainerTypeWCO'"
+            [ObjectTableName]="ObjectTableName"
+            [HideColumns]="true"
+            [DataContext]="DataContext"
+            [Text]="ContainerTypeWCO"
+        ></LogTextBox>
     </div>
 </div>
-
-
-
-
+<div class="col">
+    <div class="row">
+        <LogLabel
+            [ObjectFieldName]="'ExportDealIdentification'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+        ></LogLabel>
+        <LogTextBox
+            class="export-deal-identification"
+            [ObjectFieldName]="'ExportDealIdentification'"
+            [ObjectTableName]="ObjectTableName"
+            [HideColumns]="true"
+            [DataContext]="DataContext"
+            [Text]="ExportDealIdentification"
+        ></LogTextBox>
+    </div>
+</div>
