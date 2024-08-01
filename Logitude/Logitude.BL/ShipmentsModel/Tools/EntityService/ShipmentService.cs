@@ -3718,7 +3718,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void AddPaymentReceivedToQueue()
         {
-            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner) && !CustomsSettingsHelper.GetCache(tenant).StandAlone)
+            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner) )
             {
                 //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 //{
