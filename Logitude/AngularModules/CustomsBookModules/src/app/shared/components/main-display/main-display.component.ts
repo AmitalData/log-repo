@@ -65,7 +65,7 @@ export class MainDisplayComponent implements OnInit {
 	InitData() {
 		let filters: Filters = {
 			CustomsBookType: this.searchState,
-			Tenant: SessionInfo.Tenant,
+			Tenant: SessionInfo.LoggedUserTenant,
 			SearchFields: ''
 		};
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: any) => {
@@ -216,7 +216,7 @@ export class MainDisplayComponent implements OnInit {
 			Rules: filtersSearch.rules,
 			SkippedRows: 0,
 			PageSize: 0,
-			Tenant: SessionInfo.Tenant
+			Tenant: SessionInfo.LoggedUserTenant
 		};
 
 		this.API_MainService.GetCustomsBookMainViewSearchByText(filters).subscribe((data: any) => {

@@ -45,7 +45,7 @@ export class AddCommentComponent {
   sendComment() {
 
     let remarksClassificationPM: RemarksClassificationPM = {
-      tenant: SessionInfo.Tenant,
+      tenant: SessionInfo.LoggedUserTenant,
       customsItemsID: this.currentItem?.CustomsItemID,
       remarkDescription: this.commentText != null && this.commentText != '' ? this.commentText : '',
     };

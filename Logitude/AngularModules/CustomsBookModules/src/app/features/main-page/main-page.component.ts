@@ -41,7 +41,7 @@ export class MainPageComponent {
 			Rules: true,
 			SkippedRows: 0,
 			PageSize: 0,
-			Tenant: SessionInfo.Tenant
+			Tenant: SessionInfo.LoggedUserTenant
 		};
 
 		if (filters.SearchFields === "") return;

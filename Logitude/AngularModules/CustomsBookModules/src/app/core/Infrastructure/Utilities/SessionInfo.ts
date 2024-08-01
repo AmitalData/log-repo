@@ -2,13 +2,7 @@ import { UserPM } from '../../Infrastructure/EntityPMs/UserPM';
 import { SessionLocator } from './SessionLocator';
 
 export class SessionInfo {
-	private static tenant: number;
-	public static get Tenant(): number {
-		return this.tenant;
-	}
-	public static set Tenant(newValue: number) {
-		this.tenant = newValue;
-	}
+	
 	private static loggedUserId: string;
 	public static get LoggedUserId(): string {
 		return this.loggedUserId;

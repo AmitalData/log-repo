@@ -55,7 +55,7 @@ export class DetailsFrameComponent implements OnInit {
 
   countOfComments: number = 0;
   showCommentsByClick() {
-    this.API_MainService.GetAllCommentsByCustomsItemId(this.currentItem.getValue().CustomsItemID, SessionInfo.Tenant).subscribe((data: any) => {
+    this.API_MainService.GetAllCommentsByCustomsItemId(this.currentItem.getValue().CustomsItemID, SessionInfo.LoggedUserTenant).subscribe((data: any) => {
       const result: RemarksClassificationList[] = data.body;
       if (!result) return; // TODO: add error message
 
