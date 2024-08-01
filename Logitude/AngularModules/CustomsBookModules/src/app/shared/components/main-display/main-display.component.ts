@@ -17,7 +17,7 @@ import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo'
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
-	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent,AddCommentComponent, FormsModule],
+	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent, FormsModule],
 	templateUrl: './main-display.component.html',
 	styleUrl: './main-display.component.css',
 	animations: [
@@ -68,10 +68,12 @@ export class MainDisplayComponent implements OnInit {
 			Tenant: SessionInfo.Tenant,
 			SearchFields: ''
 		};
-		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
+		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: any) => {
+			const result: CB_CustomsItemComputedDataList[] = data.body;
+			if (!result) return; // TODO: add error message
 			this.countSearchResult = 0;
 			this.handleClearResults();
-			this.fullData = this.orderedData(data);
+			this.fullData = this.orderedData(result);
 			this.data = this.fullData;
 			this.searchMode = TableTopState.ViewAll;
 			this.isExpand.next(false);
@@ -217,8 +219,10 @@ export class MainDisplayComponent implements OnInit {
 			Tenant: SessionInfo.Tenant
 		};
 
-		this.API_MainService.GetCustomsBookMainViewSearchByText(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
-			this.itemsData.next(data);
+		this.API_MainService.GetCustomsBookMainViewSearchByText(filters).subscribe((data: any) => {
+			const result: CB_CustomsItemComputedDataList[] = data.body;
+			if (!result) return; // TODO: add error message
+			this.itemsData.next(result);
 		});
 	}
 

@@ -53,22 +53,19 @@ export class AddCommentComponent {
     this.addCommentService.setIsOpened(false);
 
     this.API_MainService.AddNEWRemarksClassification(remarksClassificationPM).subscribe((data: any) => {
+      if (!data.body) this.showMessage('שגיאה בהוספת הערה'); // change color
       this.showMessage('הערה נוספה בהצלחה');
-      this.addCommentService.allComments.next([...this.addCommentService.allComments.getValue(), data]);
-      // add if error: 
-      // this.showMessage('הוספת הערה נכשלה');
+      this.addCommentService.allComments.next([...this.addCommentService.allComments.getValue(), data.body]);
     });
 
     this.commentText = '';
   }
 
   showMessage(message?: string): void {
-
     if (message === "") return;
     this.snackBar.open(message, 'סגור',
       {
-        duration: 3000
+        duration: 2000
       });
   }
-
 }

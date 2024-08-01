@@ -29,6 +29,7 @@ export class API_MainService extends BaseService {
 
 	AddNEWRemarksClassification(data) {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/AddNEWRemarksClassification`;
+		// const url = `${this._apiUrl}RemarksClassifications/Post`;
 		return this.Post(url, data);
 	}
 

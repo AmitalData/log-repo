@@ -33,15 +33,17 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
                 Filters filters = new Filters();
                 filters.CustomsBookType = customsBookType;
                 filters.Tenant = Tenant;
                
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string token = HttpContext.Current.Request.Headers["Token"];
+                if (token == null)
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(new Exception("Token is missing")));
 
-                //string loggedUserEmail = authToken.Email;
-                //SecurityUtility.AuthenticationOnTenant(0);
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(0);
 
                 CB_CustomsItemComputedDataQueryService customsItemComputedDataQueryService = new CB_CustomsItemComputedDataQueryService(0);
                 List<CB_CustomsItemComputedDataList> result = customsItemComputedDataQueryService.GetCustomsBookMainView(filters.CustomsBookType, filters.Tenant);
@@ -61,10 +63,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                if (token == null)
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(new Exception("Token is missing")));
 
-                //string loggedUserEmail = authToken.Email;
-                //SecurityUtility.AuthenticationOnTenant(0);
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(0);
 
                 CB_CustomsItemComputedDataQueryService customsItemComputedDataQueryService = new CB_CustomsItemComputedDataQueryService(0);
                 List<CB_CustomsItemComputedDataList> result = customsItemComputedDataQueryService.GetCustomsBookMainViewSearchByClassification(filters.CustomsBookType,
@@ -84,10 +88,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                if (token == null)
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(new Exception("Token is missing")));
 
-                //string loggedUserEmail = authToken.Email;
-                //SecurityUtility.AuthenticationOnTenant(0);
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(0);
 
                 CB_CustomsItemComputedDataQueryService customsItemComputedDataQueryService = new CB_CustomsItemComputedDataQueryService(0);
                 List<CB_CustomsItemComputedDataList> result = customsItemComputedDataQueryService.GetCustomsBookMainViewSearchByText(filters.SearchFields,
@@ -110,7 +116,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         string logKey = PerformanceLogger.LogCurrentTime();
-                     
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
                         RemarksClassificationUpdateService service = new RemarksClassificationUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -119,7 +127,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);
                     }
                 }
@@ -144,6 +151,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         string logKey = PerformanceLogger.LogCurrentTime();
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
 
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
@@ -175,8 +185,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             {
                 string logKey = PerformanceLogger.LogCurrentTime();
                 string token = HttpContext.Current.Request.Headers["Token"];
-                //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                // SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 ICustomContext MyContext = CustomContext.GetContext(tenant);
                 RemarksClassificationQueryService remarksClassificationQuery = new RemarksClassificationQueryService(MyContext);

@@ -50,10 +50,12 @@ export class DataRowComponent implements OnInit {
 	TariffListCount: number = 0;
 	getCustomsBookAgreementLevelData() {
 		if (!this.showTaxData || !this.data.CustomsItemID || !this.data?.PH_MeasurementUnitID) return;
-		this.API_MainService.GetCustomsBookAgreementLevelData(this.data?.CustomsItemID, this.data?.PH_MeasurementUnitID).subscribe((data: CB_TariffList[]) => {
-			this.TariffList1 = data.find(x => x.TradeAgreementName == 'מכס כללי');
-			this.TariffList2 = data.find(x => x.TradeAgreementName == 'מס קניה');
-			this.TariffListCount = data.filter(x => x.TradeAgreementName != 'מס קניה').length;
+		this.API_MainService.GetCustomsBookAgreementLevelData(this.data?.CustomsItemID, this.data?.PH_MeasurementUnitID).subscribe((data: any) => {
+			const result: CB_TariffList[] = data.body;
+			if (!result) return;
+			this.TariffList1 = result.find(x => x.TradeAgreementName == 'מכס כללי');
+			this.TariffList2 = result.find(x => x.TradeAgreementName == 'מס קניה');
+			this.TariffListCount = result.filter(x => x.TradeAgreementName != 'מס קניה').length;
 		});
 	}
 
