@@ -4,16 +4,12 @@
   ObjectTableName="&quot;Customs.Bank&quot;"
   IsNew="false"
   DBTableName="&quot;Customs.Banks&quot;"
-  DBTableShortName="&quot;Customs.Banks&quot;"
-  DBTableOldNames="Customs.Banks,Liron"
+  DBTableOldNames="Customs.Banks"
   ObjectTableSingular="&quot;Bank&quot;"
   ObjectTablePlural="&quot;Banks&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="true"
-  SupportSubEntity="false"
-  ApplyGenericCustomFields="false"
-  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -60,7 +56,6 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
-  TenantZeroData="false"
   Code1="&quot;a3ab&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -70,871 +65,870 @@
   IsTabsHidden="false"
   DxmlDatabaseTypeCode="Main"
   DxmlDatabaseSchemaCode="Customs">
-  <field
-    Id="&quot;0e71e69b-11e1-4857-9c54-599ac0554461&quot;"
-    FieldName="&quot;Code&quot;"
-    ShortName="Code"
-    OldNames="Code,Liron2"
-    IsNew="false"
-    IsChecked="false"
-    IsDeleted="false"
-    ObjectTableName="&quot;Customs.Bank&quot;"
-    FieldsDataType="&quot;Text&quot;"
-    MinLength="0"
-    MaxLength="2"
-    IsRequired="false"
-    CopyToDW="false"
-    DisplayOnLookUp="true"
-    DisplayOnLookUpLocal="false"
-    CanFilter="true"
-    DisplayOnly="false"
-    SystemRequired="false"
-    ObjectFieldNotRequired="false"
-    SystemMaxLength="2"
-    DisplayInList="true"
-    IsCustomFilter="false"
-    IsListFilter="false"
-    Operator="&quot;StartsWith&quot;"
-    MultiLine="false"
-    IsTimeFrameFilter="false"
-    DisplayInSearchWindowList="true"
-    PMPropertyPath="&quot;Code&quot;"
-    ListPropertyPath="&quot;Code&quot;"
-    DisplayInLookUpIndex="0"
-    AutomaticField="false"
-    UniqueField="false"
-    DisplayInSearchWindowListIndex="0"
-    IsMulti="false"
-    DependencyFilter1IsList="false"
-    DependencyFilter2IsList="false"
-    DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;Banks&quot;"
-    IsRestrictable="false"
-    DisplayInEntityVariables="false"
-    AllowedInCustomerFieldsSettings="false"
-    DisplayInSearchWindowFilters="false"
-    DisplayInSearchWindowFiltersIndex="0"
-    DisplayInDocumentReferences="false"
-    DigitsAfterPoint="0"
-    InActive="false"
-    DisplayLongName="false"
-    FullFieldLable="&quot;Code&quot;"
-    DefaultText="&quot;Code&quot;"
-    FullLocalDefaultText="&quot;קוד&quot;"
-    ListFieldLable="&quot;CodeListLable&quot;"
-    ListLableDefaultText="&quot;Code&quot;"
-    ListLocalDefaultText="&quot;קוד&quot;"
-    IsNullable="false"
-    IsForeignKey="false"
-    DontBuildRelationOnDB="false"
-    IsPrimaryKey="true"
-    HasDataBaseField="true"
-    HasPMField="true"
-    IsComposition="false"
-    IsMaxLength="false"
-    NoMetaDataField="false"
-    GenerateInList="false"
-    IsFixedLength="false"
-    EnableAutoFill="false"
-    IncludeInSearchField="false"
-    AllowedinAutomationConditions="false"
-    AutomationEmailRecipient="false"
-    CanAutomateSetValue="false"
-    DisplayInAutomationAsEnitity="false"
-    HasTemplate="false"
-    IsCustom="false"
-    IsSpellCheckedFullFieldLable="false"
-    IsSpellCheckedHelpLocalDefaultText="false"
-    IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
-  <field
-    Id="&quot;f52b6955-8990-4d28-9c61-8b882e2a6acb&quot;"
-    FieldName="&quot;EnglishName&quot;"
-    OldNames="EnglishName"
-    IsNew="false"
-    IsChecked="false"
-    IsDeleted="false"
-    ObjectTableName="&quot;Customs.Bank&quot;"
-    FieldsDataType="&quot;Text&quot;"
-    MinLength="0"
-    MaxLength="100"
-    IsRequired="false"
-    CopyToDW="false"
-    DisplayOnLookUp="false"
-    DisplayOnLookUpLocal="false"
-    CanFilter="true"
-    DisplayOnly="false"
-    SystemRequired="false"
-    ObjectFieldNotRequired="false"
-    SystemMaxLength="100"
-    DisplayInList="true"
-    IsCustomFilter="false"
-    IsListFilter="false"
-    Operator="&quot;StartsWith&quot;"
-    MultiLine="false"
-    IsTimeFrameFilter="false"
-    DisplayInSearchWindowList="false"
-    PMPropertyPath="&quot;EnglishName&quot;"
-    ListPropertyPath="&quot;EnglishName&quot;"
-    DisplayInLookUpIndex="0"
-    AutomaticField="false"
-    UniqueField="false"
-    DisplayInSearchWindowListIndex="0"
-    IsMulti="false"
-    DependencyFilter1IsList="false"
-    DependencyFilter2IsList="false"
-    DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;Banks&quot;"
-    IsRestrictable="false"
-    DisplayInEntityVariables="false"
-    AllowedInCustomerFieldsSettings="false"
-    DisplayInSearchWindowFilters="false"
-    DisplayInSearchWindowFiltersIndex="0"
-    DisplayInDocumentReferences="false"
-    DigitsAfterPoint="0"
-    InActive="false"
-    DisplayLongName="false"
-    FullFieldLable="&quot;EnglishName&quot;"
-    DefaultText="&quot;English Name&quot;"
-    FullLocalDefaultText="&quot;שם אנגלית&quot;"
-    ListFieldLable="&quot;EnglishNameListLable&quot;"
-    ListLableDefaultText="&quot;English Name&quot;"
-    ListLocalDefaultText="&quot;שם אנגלית&quot;"
-    IsNullable="true"
-    IsForeignKey="false"
-    DontBuildRelationOnDB="false"
-    IsPrimaryKey="false"
-    HasDataBaseField="true"
-    HasPMField="true"
-    IsComposition="false"
-    IsMaxLength="false"
-    NoMetaDataField="false"
-    GenerateInList="false"
-    IsFixedLength="false"
-    EnableAutoFill="false"
-    IncludeInSearchField="false"
-    AllowedinAutomationConditions="false"
-    AutomationEmailRecipient="false"
-    CanAutomateSetValue="false"
-    DisplayInAutomationAsEnitity="false"
-    HasTemplate="false"
-    IsCustom="false"
-    IsSpellCheckedFullFieldLable="false"
-    IsSpellCheckedHelpLocalDefaultText="false"
-    IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
-  <field
-    Id="&quot;26e1be83-da18-4456-9edc-6bec6f5a011e&quot;"
-    FieldName="&quot;LocalName&quot;"
-    OldNames="LocalName"
-    IsNew="false"
-    IsChecked="false"
-    IsDeleted="false"
-    ObjectTableName="&quot;Customs.Bank&quot;"
-    FieldsDataType="&quot;nText&quot;"
-    MinLength="0"
-    MaxLength="100"
-    IsRequired="false"
-    CopyToDW="false"
-    DisplayOnLookUp="true"
-    DisplayOnLookUpLocal="false"
-    CanFilter="true"
-    DisplayOnly="false"
-    SystemRequired="false"
-    ObjectFieldNotRequired="false"
-    SystemMaxLength="100"
-    DisplayInList="true"
-    IsCustomFilter="false"
-    IsListFilter="false"
-    Operator="&quot;StartsWith&quot;"
-    MultiLine="false"
-    IsTimeFrameFilter="false"
-    DisplayInSearchWindowList="true"
-    PMPropertyPath="&quot;LocalName&quot;"
-    ListPropertyPath="&quot;LocalName&quot;"
-    DisplayInLookUpIndex="1"
-    AutomaticField="false"
-    UniqueField="false"
-    DisplayInSearchWindowListIndex="1"
-    IsMulti="false"
-    DependencyFilter1IsList="false"
-    DependencyFilter2IsList="false"
-    DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;Banks&quot;"
-    IsRestrictable="false"
-    DisplayInEntityVariables="false"
-    AllowedInCustomerFieldsSettings="false"
-    DisplayInSearchWindowFilters="false"
-    DisplayInSearchWindowFiltersIndex="0"
-    DisplayInDocumentReferences="false"
-    DigitsAfterPoint="0"
-    InActive="false"
-    DisplayLongName="false"
-    FullFieldLable="&quot;LocalName&quot;"
-    DefaultText="&quot;Local Name&quot;"
-    FullLocalDefaultText="&quot;שם מקומי&quot;"
-    ListFieldLable="&quot;LocalNameListLable&quot;"
-    ListLableDefaultText="&quot;Local Name&quot;"
-    ListLocalDefaultText="&quot;שם מקומי&quot;"
-    IsNullable="true"
-    IsForeignKey="false"
-    DontBuildRelationOnDB="false"
-    IsPrimaryKey="false"
-    HasDataBaseField="true"
-    HasPMField="true"
-    IsComposition="false"
-    IsMaxLength="false"
-    NoMetaDataField="false"
-    GenerateInList="false"
-    IsFixedLength="false"
-    EnableAutoFill="false"
-    IncludeInSearchField="false"
-    AllowedinAutomationConditions="false"
-    AutomationEmailRecipient="false"
-    CanAutomateSetValue="false"
-    DisplayInAutomationAsEnitity="false"
-    HasTemplate="false"
-    IsCustom="false"
-    IsSpellCheckedFullFieldLable="false"
-    IsSpellCheckedHelpLocalDefaultText="false"
-    IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
-  <field
-    Id="&quot;fa6e3f79-cd76-4d95-97d6-1850dc5dc065&quot;"
-    FieldName="&quot;SearchFields&quot;"
-    OldNames="SearchFields"
-    IsNew="false"
-    IsChecked="false"
-    IsDeleted="false"
-    ObjectTableName="&quot;Customs.Bank&quot;"
-    FieldsDataType="&quot;nText&quot;"
-    MinLength="0"
-    MaxLength="1000"
-    IsRequired="false"
-    CopyToDW="false"
-    DisplayOnLookUp="false"
-    DisplayOnLookUpLocal="false"
-    CanFilter="false"
-    DisplayOnly="false"
-    SystemRequired="false"
-    ObjectFieldNotRequired="false"
-    SystemMaxLength="1000"
-    DisplayInList="false"
-    IsCustomFilter="false"
-    IsListFilter="false"
-    MultiLine="false"
-    IsTimeFrameFilter="false"
-    DisplayInSearchWindowList="false"
-    PMPropertyPath="&quot;SearchFields&quot;"
-    ListPropertyPath="&quot;SearchFields&quot;"
-    DisplayInLookUpIndex="0"
-    AutomaticField="false"
-    UniqueField="false"
-    DisplayInSearchWindowListIndex="0"
-    IsMulti="false"
-    DependencyFilter1IsList="false"
-    DependencyFilter2IsList="false"
-    DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;Banks&quot;"
-    IsRestrictable="false"
-    DisplayInEntityVariables="false"
-    AllowedInCustomerFieldsSettings="false"
-    DisplayInSearchWindowFilters="false"
-    DisplayInSearchWindowFiltersIndex="0"
-    DisplayInDocumentReferences="false"
-    DigitsAfterPoint="0"
-    InActive="false"
-    DisplayLongName="false"
-    FullFieldLable="&quot;SearchFields&quot;"
-    DefaultText="&quot;SearchFields&quot;"
-    ListFieldLable="&quot;SearchFieldsListLable&quot;"
-    ListLableDefaultText="&quot;SearchFields&quot;"
-    IsNullable="true"
-    IsForeignKey="false"
-    DontBuildRelationOnDB="false"
-    IsPrimaryKey="false"
-    HasDataBaseField="true"
-    HasPMField="true"
-    IsComposition="false"
-    IsMaxLength="false"
-    NoMetaDataField="false"
-    GenerateInList="true"
-    IsFixedLength="false"
-    EnableAutoFill="false"
-    IncludeInSearchField="false"
-    AllowedinAutomationConditions="false"
-    AutomationEmailRecipient="false"
-    CanAutomateSetValue="false"
-    DisplayInAutomationAsEnitity="false"
-    HasTemplate="false"
-    IsCustom="false"
-    IsSpellCheckedFullFieldLable="false"
-    IsSpellCheckedHelpLocalDefaultText="false"
-    IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
-  <field
-    Id="&quot;5d9683f6-5fe0-4978-979c-f07fcd730993&quot;"
-    FieldName="&quot;Inactive&quot;"
-    OldNames="Inactive"
-    IsNew="false"
-    IsChecked="false"
-    IsDeleted="false"
-    ObjectTableName="&quot;Customs.Bank&quot;"
-    FieldsDataType="&quot;Boolean&quot;"
-    MinLength="0"
-    MaxLength="0"
-    IsRequired="false"
-    CopyToDW="false"
-    DisplayOnLookUp="false"
-    DisplayOnLookUpLocal="false"
-    CanFilter="true"
-    DisplayOnly="false"
-    SystemRequired="false"
-    ObjectFieldNotRequired="false"
-    SystemMaxLength="0"
-    DisplayInList="true"
-    IsCustomFilter="false"
-    IsListFilter="false"
-    Operator="&quot;Equals&quot;"
-    MultiLine="false"
-    IsTimeFrameFilter="false"
-    DisplayInSearchWindowList="false"
-    PMPropertyPath="&quot;Inactive&quot;"
-    ListPropertyPath="&quot;Inactive&quot;"
-    DisplayInLookUpIndex="0"
-    AutomaticField="false"
-    UniqueField="false"
-    DisplayInSearchWindowListIndex="0"
-    IsMulti="false"
-    DependencyFilter1IsList="false"
-    DependencyFilter2IsList="false"
-    DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;Banks&quot;"
-    IsRestrictable="false"
-    DisplayInEntityVariables="false"
-    AllowedInCustomerFieldsSettings="false"
-    DisplayInSearchWindowFilters="false"
-    DisplayInSearchWindowFiltersIndex="0"
-    DisplayInDocumentReferences="false"
-    InActive="false"
-    DisplayLongName="false"
-    FullFieldLable="&quot;Inactive&quot;"
-    DefaultText="&quot;Inactive &quot;"
-    FullLocalDefaultText="&quot;לא פּעיל&quot;"
-    ListFieldLable="&quot;InactiveListLable&quot;"
-    ListLableDefaultText="&quot;Inactive&quot;"
-    ListLocalDefaultText="&quot;לא פּעיל&quot;"
-    IsNullable="false"
-    IsForeignKey="false"
-    DontBuildRelationOnDB="false"
-    IsPrimaryKey="false"
-    HasDataBaseField="true"
-    HasPMField="true"
-    IsComposition="false"
-    IsMaxLength="false"
-    NoMetaDataField="false"
-    GenerateInList="true"
-    IsFixedLength="false"
-    EnableAutoFill="false"
-    IncludeInSearchField="false"
-    AllowedinAutomationConditions="false"
-    AutomationEmailRecipient="false"
-    CanAutomateSetValue="false"
-    DisplayInAutomationAsEnitity="false"
-    HasTemplate="false"
-    IsCustom="false"
-    IsSpellCheckedFullFieldLable="false"
-    IsSpellCheckedHelpLocalDefaultText="false"
-    IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
-  <Query
-    Code="&quot;Bank&quot;"
-    TextCode="&quot;Banks&quot;"
-    LocalTextCode="&quot;בנק&quot;"
-    QueryGroupCode="&quot;BANK&quot;"
-    IndexOrder="0"
-    ObjectTableName="&quot;Customs.Bank&quot;"
-    QuerySection="&quot;Banks&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="false"
-    IsPackagable="true"
-    QueryGroupName="&quot;Customs.Bank&quot;"
-    TextCodeCode="&quot;Customs.Bank.Q.BankQuery&quot;"
-    FeatureCode="&quot;BANKS&quot;"
-    FeatureTextCodeCode="&quot;Customs.Bank.Features.Banks&quot;"
-    FeatureDefaultText="&quot;Banks&quot;"
-    IsSpellChecked="false">
-    <QueryColumns>
-      <QueryColumn
-        QueryCode="&quot;Bank&quot;"
-        IndexOrder="0"
-        ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="70" />
-      <QueryColumn
-        QueryCode="&quot;Bank&quot;"
-        IndexOrder="1"
-        ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="250" />
-      <QueryColumn
-        QueryCode="&quot;Bank&quot;"
-        IndexOrder="2"
-        ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="250" />
-      <QueryColumn
-        QueryCode="&quot;Bank&quot;"
-        IndexOrder="3"
-        ObjectFieldName="&quot;Inactive&quot;"
-        ColumnWidth="250" />
-    </QueryColumns>
-    <QueryFilters />
-  </Query>
-  <Screen
-    Name="&quot;Customs.BankHeaderScreen&quot;"
-    ObjectTableName="&quot;Customs.Bank&quot;"
-    IsReadOnly="true"
-    IsHeaderScreen="true"
-    NumberOfColumns="2"
-    NumberOfRows="1">
-    <ScreenFields />
-  </Screen>
-  <EventTypes>
-    <EventType
-      Code="&quot;CREV&quot;"
-      ObjectTableName="&quot;Customs.Bank&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
-      IsManualEntry="false"
-      ShortView="true"
-      EventTypeCategoryCode="&quot;OPE&quot;"
-      IsAgentView="false"
-      IsCustomerView="false"
-      IsSharedLogisticsEnabled="false"
-      AllowedInAutomation="false"
-      ManualActivatedFollowUp="false"
-      IsFollowUp="false" />
-    <EventType
-      Code="&quot;UPEV&quot;"
-      ObjectTableName="&quot;Customs.Bank&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
-      IsManualEntry="false"
-      ShortView="false"
-      EventTypeCategoryCode="&quot;OPE&quot;"
-      IsAgentView="false"
-      IsCustomerView="false"
-      IsSharedLogisticsEnabled="false"
-      AllowedInAutomation="false"
-      ManualActivatedFollowUp="false"
-      IsFollowUp="false" />
-  </EventTypes>
-  <Records>
-    <Record
-      Code="&quot;1&quot;"
-      SearchFields="&quot;1,יורו טרייד&quot;"
-      Inactive="false"
-      LocalName="&quot;יורו טרייד&quot;" />
-    <Record
-      Code="&quot;10&quot;"
-      SearchFields="&quot;10,לאומי&quot;"
-      Inactive="false"
-      LocalName="&quot;לאומי&quot;" />
-    <Record
-      Code="&quot;11&quot;"
-      SearchFields="&quot;11,דיסקונט&quot;"
-      Inactive="false"
-      LocalName="&quot;דיסקונט&quot;" />
-    <Record
-      Code="&quot;12&quot;"
-      SearchFields="&quot;12,הפועלים&quot;"
-      Inactive="false"
-      LocalName="&quot;הפועלים&quot;" />
-    <Record
-      Code="&quot;13&quot;"
-      SearchFields="&quot;13,אגוד&quot;"
-      Inactive="false"
-      LocalName="&quot;אגוד&quot;" />
-    <Record
-      Code="&quot;14&quot;"
-      SearchFields="&quot;14,אוצר החייל&quot;"
-      Inactive="false"
-      LocalName="&quot;אוצר החייל&quot;" />
-    <Record
-      Code="&quot;17&quot;"
-      SearchFields="&quot;17,מרכנתיל דיסקונט&quot;"
-      Inactive="false"
-      LocalName="&quot;מרכנתיל דיסקונט&quot;" />
-    <Record
-      Code="&quot;19&quot;"
-      SearchFields="&quot;19,החקלאות לישראל&quot;"
-      Inactive="false"
-      LocalName="&quot;החקלאות לישראל&quot;" />
-    <Record
-      Code="&quot;2&quot;"
-      SearchFields="&quot;2,צפון אמריקה&quot;"
-      Inactive="false"
-      LocalName="&quot;צפון אמריקה&quot;" />
-    <Record
-      Code="&quot;20&quot;"
-      SearchFields="&quot;20,מזרחי טפחות&quot;"
-      Inactive="false"
-      LocalName="&quot;מזרחי טפחות&quot;" />
-    <Record
-      Code="&quot;21&quot;"
-      SearchFields="&quot;21,deretrahC dradnat&quot;"
-      Inactive="false"
-      LocalName="&quot;deretrahC dradnat&quot;" />
-    <Record
-      Code="&quot;22&quot;"
-      SearchFields="&quot;22,Citibank&quot;"
-      Inactive="false"
-      LocalName="&quot;Citibank&quot;" />
-    <Record
-      Code="&quot;23&quot;"
-      SearchFields="&quot;23,HSBC  Bank plc&quot;"
-      Inactive="false"
-      LocalName="&quot;HSBC  Bank plc&quot;" />
-    <Record
-      Code="&quot;24&quot;"
-      SearchFields="&quot;24,בנק אמריקאי ישראלי&quot;"
-      Inactive="false"
-      LocalName="&quot;בנק אמריקאי ישראלי&quot;" />
-    <Record
-      Code="&quot;25&quot;"
-      SearchFields="&quot;25,BNP paribas&quot;"
-      Inactive="false"
-      LocalName="&quot;BNP paribas&quot;" />
-    <Record
-      Code="&quot;26&quot;"
-      SearchFields="&quot;26,יובנק&quot;"
-      Inactive="false"
-      LocalName="&quot;יובנק&quot;" />
-    <Record
-      Code="&quot;27&quot;"
-      SearchFields="&quot;27,עין חי&quot;"
-      Inactive="false"
-      LocalName="&quot;עין חי&quot;" />
-    <Record
-      Code="&quot;28&quot;"
-      SearchFields="&quot;28,קונטיננטל לישראל&quot;"
-      Inactive="false"
-      LocalName="&quot;קונטיננטל לישראל&quot;" />
-    <Record
-      Code="&quot;3&quot;"
-      SearchFields="&quot;3,גמול&quot;"
-      Inactive="false"
-      LocalName="&quot;גמול&quot;" />
-    <Record
-      Code="&quot;30&quot;"
-      SearchFields="&quot;30,למסחר&quot;"
-      Inactive="false"
-      LocalName="&quot;למסחר&quot;" />
-    <Record
-      Code="&quot;31&quot;"
-      SearchFields="&quot;31,הבינלאומי הראשון&quot;"
-      Inactive="false"
-      LocalName="&quot;הבינלאומי הראשון&quot;" />
-    <Record
-      Code="&quot;32&quot;"
-      SearchFields="&quot;32,למימון ומסחר&quot;"
-      Inactive="false"
-      LocalName="&quot;למימון ומסחר&quot;" />
-    <Record
-      Code="&quot;33&quot;"
-      SearchFields="&quot;33,מרכנתיל&quot;"
-      Inactive="false"
-      LocalName="&quot;מרכנתיל&quot;" />
-    <Record
-      Code="&quot;34&quot;"
-      SearchFields="&quot;34,ערבי ישראלי&quot;"
-      Inactive="false"
-      LocalName="&quot;ערבי ישראלי&quot;" />
-    <Record
-      Code="&quot;35&quot;"
-      SearchFields="&quot;35,פולסקא קאסא&quot;"
-      Inactive="false"
-      LocalName="&quot;פולסקא קאסא&quot;" />
-    <Record
-      Code="&quot;37&quot;"
-      SearchFields="&quot;37,אלאורדון&quot;"
-      Inactive="false"
-      LocalName="&quot;אלאורדון&quot;" />
-    <Record
-      Code="&quot;38&quot;"
-      SearchFields="&quot;38,אל תיג'ארי אלפלסטיני&quot;"
-      Inactive="false"
-      LocalName="&quot;אל תיג'ארי אלפלסטיני&quot;" />
-    <Record
-      Code="&quot;39&quot;"
-      SearchFields="&quot;39,SBI State Babk&quot;"
-      Inactive="false"
-      LocalName="&quot;SBI State Babk&quot;" />
-    <Record
-      Code="&quot;4&quot;"
-      SearchFields="&quot;4,יהב&quot;"
-      Inactive="false"
-      LocalName="&quot;יהב&quot;" />
-    <Record
-      Code="&quot;40&quot;"
-      SearchFields="&quot;40,טפחות- חברה להנפק&quot;"
-      Inactive="false"
-      LocalName="&quot;טפחות- חברה להנפק&quot;" />
-    <Record
-      Code="&quot;41&quot;"
-      SearchFields="&quot;41,מזרחי השק.&quot;"
-      Inactive="false"
-      LocalName="&quot;מזרחי השק.&quot;" />
-    <Record
-      Code="&quot;42&quot;"
-      SearchFields="&quot;42,משאבים&quot;"
-      Inactive="false"
-      LocalName="&quot;משאבים&quot;" />
-    <Record
-      Code="&quot;43&quot;"
-      SearchFields="&quot;43,בנק אלאהלי אלאורדוני&quot;"
-      Inactive="false"
-      LocalName="&quot;בנק אלאהלי אלאורדוני&quot;" />
-    <Record
-      Code="&quot;44&quot;"
-      SearchFields="&quot;44,פועלים שוקי הון&quot;"
-      Inactive="false"
-      LocalName="&quot;פועלים שוקי הון&quot;" />
-    <Record
-      Code="&quot;46&quot;"
-      SearchFields="&quot;46,מסד&quot;"
-      Inactive="false"
-      LocalName="&quot;מסד&quot;" />
-    <Record
-      Code="&quot;47&quot;"
-      SearchFields="&quot;47,בנק עולמי&quot;"
-      Inactive="false"
-      LocalName="&quot;בנק עולמי&quot;" />
-    <Record
-      Code="&quot;48&quot;"
-      SearchFields="&quot;48,קופת העובד הלאומי&quot;"
-      Inactive="false"
-      LocalName="&quot;קופת העובד הלאומי&quot;" />
-    <Record
-      Code="&quot;49&quot;"
-      SearchFields="&quot;49,אלבנק אלערבי&quot;"
-      Inactive="false"
-      LocalName="&quot;אלבנק אלערבי&quot;" />
-    <Record
-      Code="&quot;5&quot;"
-      SearchFields="&quot;5,מניב&quot;"
-      Inactive="false"
-      LocalName="&quot;מניב&quot;" />
-    <Record
-      Code="&quot;50&quot;"
-      SearchFields="&quot;50,מ.ס.ב&quot;"
-      Inactive="false"
-      LocalName="&quot;מ.ס.ב&quot;" />
-    <Record
-      Code="&quot;51&quot;"
-      SearchFields="&quot;51,כאל&quot;"
-      Inactive="false"
-      LocalName="&quot;כאל&quot;" />
-    <Record
-      Code="&quot;52&quot;"
-      SearchFields="&quot;52,פאג&quot;י&quot;"
-      Inactive="false"
-      LocalName="&quot;פאג&quot;י&quot;" />
-    <Record
-      Code="&quot;53&quot;"
-      SearchFields="&quot;53,עליה לאומי&quot;"
-      Inactive="false"
-      LocalName="&quot;עליה לאומי&quot;" />
-    <Record
-      Code="&quot;54&quot;"
-      SearchFields="&quot;54,ירושלים&quot;"
-      Inactive="false"
-      LocalName="&quot;ירושלים&quot;" />
-    <Record
-      Code="&quot;56&quot;"
-      SearchFields="&quot;56,ד. מימון&quot;"
-      Inactive="false"
-      LocalName="&quot;ד. מימון&quot;" />
-    <Record
-      Code="&quot;57&quot;"
-      SearchFields="&quot;57,מזרחי תעשי&quot;"
-      Inactive="false"
-      LocalName="&quot;מזרחי תעשי&quot;" />
-    <Record
-      Code="&quot;58&quot;"
-      SearchFields="&quot;58,לאומי ושות&quot;"
-      Inactive="false"
-      LocalName="&quot;לאומי ושות&quot;" />
-    <Record
-      Code="&quot;59&quot;"
-      SearchFields="&quot;59,ש.ב.א&quot;"
-      Inactive="false"
-      LocalName="&quot;ש.ב.א&quot;" />
-    <Record
-      Code="&quot;6&quot;"
-      SearchFields="&quot;6,אדנים למשכנתאות&quot;"
-      Inactive="false"
-      LocalName="&quot;אדנים למשכנתאות&quot;" />
-    <Record
-      Code="&quot;64&quot;"
-      SearchFields="&quot;64,גחלת&quot;"
-      Inactive="false"
-      LocalName="&quot;גחלת&quot;" />
-    <Record
-      Code="&quot;65&quot;"
-      SearchFields="&quot;65,חסך&quot;"
-      Inactive="false"
-      LocalName="&quot;חסך&quot;" />
-    <Record
-      Code="&quot;66&quot;"
-      SearchFields="&quot;66,בנק אלקהירה- עמאן&quot;"
-      Inactive="false"
-      LocalName="&quot;בנק אלקהירה- עמאן&quot;" />
-    <Record
-      Code="&quot;67&quot;"
-      SearchFields="&quot;67,אלעקרי אלמצרי אלערבי&quot;"
-      Inactive="false"
-      LocalName="&quot;אלעקרי אלמצרי אלערבי&quot;" />
-    <Record
-      Code="&quot;68&quot;"
-      SearchFields="&quot;68,בנק דקסיה ישראל&quot;"
-      Inactive="false"
-      LocalName="&quot;בנק דקסיה ישראל&quot;" />
-    <Record
-      Code="&quot;69&quot;"
-      SearchFields="&quot;69,בלל לתעשיה&quot;"
-      Inactive="false"
-      LocalName="&quot;בלל לתעשיה&quot;" />
-    <Record
-      Code="&quot;7&quot;"
-      SearchFields="&quot;7,בנק לפיתוח התעשיה&quot;"
-      Inactive="false"
-      LocalName="&quot;בנק לפיתוח התעשיה&quot;" />
-    <Record
-      Code="&quot;70&quot;"
-      SearchFields="&quot;70,לאומי נחל&quot;"
-      Inactive="false"
-      LocalName="&quot;לאומי נחל&quot;" />
-    <Record
-      Code="&quot;71&quot;"
-      SearchFields="&quot;71,קומרציאל ג'ורדן בנק&quot;"
-      Inactive="false"
-      LocalName="&quot;קומרציאל ג'ורדן בנק&quot;" />
-    <Record
-      Code="&quot;73&quot;"
-      SearchFields="&quot;73,אלאסלאמי אלערבי&quot;"
-      Inactive="false"
-      LocalName="&quot;אלאסלאמי אלערבי&quot;" />
-    <Record
-      Code="&quot;74&quot;"
-      SearchFields="&quot;74,HSBC בנק מזרח תיכון&quot;"
-      Inactive="false"
-      LocalName="&quot;HSBC בנק מזרח תיכון&quot;" />
-    <Record
-      Code="&quot;75&quot;"
-      SearchFields="&quot;75,חב. למימון&quot;"
-      Inactive="false"
-      LocalName="&quot;חב. למימון&quot;" />
-    <Record
-      Code="&quot;76&quot;"
-      SearchFields="&quot;76,אלאסתת'מאר אלפלסטיני&quot;"
-      Inactive="false"
-      LocalName="&quot;אלאסתת'מאר אלפלסטיני&quot;" />
-    <Record
-      Code="&quot;77&quot;"
-      SearchFields="&quot;77,לאומי למשכנתאות&quot;"
-      Inactive="false"
-      LocalName="&quot;לאומי למשכנתאות&quot;" />
-    <Record
-      Code="&quot;78&quot;"
-      SearchFields="&quot;78,אלראיסי ללתנמיה&quot;"
-      Inactive="false"
-      LocalName="&quot;אלראיסי ללתנמיה&quot;" />
-    <Record
-      Code="&quot;8&quot;"
-      SearchFields="&quot;8,הספנות&quot;"
-      Inactive="false"
-      LocalName="&quot;הספנות&quot;" />
-    <Record
-      Code="&quot;80&quot;"
-      SearchFields="&quot;80,טפחות&quot;"
-      Inactive="false"
-      LocalName="&quot;טפחות&quot;" />
-    <Record
-      Code="&quot;81&quot;"
-      SearchFields="&quot;81,אלאסלאמי אלפלסטינ&quot;"
-      Inactive="false"
-      LocalName="&quot;אלאסלאמי אלפלסטינ&quot;" />
-    <Record
-      Code="&quot;82&quot;"
-      SearchFields="&quot;82,אלקודס ללתנמיה וללסת&quot;"
-      Inactive="false"
-      LocalName="&quot;אלקודס ללתנמיה וללסת&quot;" />
-    <Record
-      Code="&quot;83&quot;"
-      SearchFields="&quot;83,אל-אתיחאד ללדיכאר&quot;"
-      Inactive="false"
-      LocalName="&quot;אל-אתיחאד ללדיכאר&quot;" />
-    <Record
-      Code="&quot;84&quot;"
-      SearchFields="&quot;84,אלאסכאן אלאורדוני&quot;"
-      Inactive="false"
-      LocalName="&quot;אלאסכאן אלאורדוני&quot;" />
-    <Record
-      Code="&quot;86&quot;"
-      SearchFields="&quot;86,כרמל&quot;"
-      Inactive="false"
-      LocalName="&quot;כרמל&quot;" />
-    <Record
-      Code="&quot;87&quot;"
-      SearchFields="&quot;87,אלדאולי אלפלסטיני&quot;"
-      Inactive="false"
-      LocalName="&quot;אלדאולי אלפלסטיני&quot;" />
-    <Record
-      Code="&quot;89&quot;"
-      SearchFields="&quot;89,בנק פלסטין&quot;"
-      Inactive="false"
-      LocalName="&quot;בנק פלסטין&quot;" />
-    <Record
-      Code="&quot;9&quot;"
-      SearchFields="&quot;9,הדואר&quot;"
-      Inactive="false"
-      LocalName="&quot;הדואר&quot;" />
-    <Record
-      Code="&quot;90&quot;"
-      SearchFields="&quot;90,דיסקונט למשכנתאות&quot;"
-      Inactive="false"
-      LocalName="&quot;דיסקונט למשכנתאות&quot;" />
-    <Record
-      Code="&quot;91&quot;"
-      SearchFields="&quot;91,משכן&quot;"
-      Inactive="false"
-      LocalName="&quot;משכן&quot;" />
-    <Record
-      Code="&quot;92&quot;"
-      SearchFields="&quot;92,הבינלאומי למשכנתא&quot;"
-      Inactive="false"
-      LocalName="&quot;הבינלאומי למשכנתא&quot;" />
-    <Record
-      Code="&quot;93&quot;"
-      SearchFields="&quot;93,אלאורדון ואלכווית&quot;"
-      Inactive="false"
-      LocalName="&quot;אלאורדון ואלכווית&quot;" />
-    <Record
-      Code="&quot;94&quot;"
-      SearchFields="&quot;94,עצמאות למשכנתאות&quot;"
-      Inactive="false"
-      LocalName="&quot;עצמאות למשכנתאות&quot;" />
-    <Record
-      Code="&quot;99&quot;"
-      SearchFields="&quot;99,בנק ישראל&quot;"
-      Inactive="false"
-      LocalName="&quot;בנק ישראל&quot;" />
-  </Records>
-  <DataContracts />
-  <AdditionalTextCodes />
-  <AdditionalFeatures />
+	<field
+	  Id="&quot;0e71e69b-11e1-4857-9c54-599ac0554461&quot;"
+	  FieldName="&quot;Code&quot;"
+	  OldNames="Code"
+	  IsNew="false"
+	  IsChecked="false"
+	  IsDeleted="false"
+	  ObjectTableName="&quot;Customs.Bank&quot;"
+	  FieldsDataType="&quot;Text&quot;"
+	  MinLength="0"
+	  MaxLength="2"
+	  IsRequired="false"
+	  CopyToDW="false"
+	  DisplayOnLookUp="true"
+	  DisplayOnLookUpLocal="false"
+	  CanFilter="true"
+	  DisplayOnly="false"
+	  SystemRequired="false"
+	  ObjectFieldNotRequired="false"
+	  SystemMaxLength="2"
+	  DisplayInList="true"
+	  IsCustomFilter="false"
+	  IsListFilter="false"
+	  Operator="&quot;StartsWith&quot;"
+	  MultiLine="false"
+	  IsTimeFrameFilter="false"
+	  DisplayInSearchWindowList="true"
+	  PMPropertyPath="&quot;Code&quot;"
+	  ListPropertyPath="&quot;Code&quot;"
+	  DisplayInLookUpIndex="0"
+	  AutomaticField="false"
+	  UniqueField="false"
+	  DisplayInSearchWindowListIndex="0"
+	  IsMulti="false"
+	  DependencyFilter1IsList="false"
+	  DependencyFilter2IsList="false"
+	  DependencyFilter3IsList="false"
+	  ValidForQuerySection1="&quot;Banks&quot;"
+	  IsRestrictable="false"
+	  DisplayInEntityVariables="false"
+	  AllowedInCustomerFieldsSettings="false"
+	  DisplayInSearchWindowFilters="false"
+	  DisplayInSearchWindowFiltersIndex="0"
+	  DisplayInDocumentReferences="false"
+	  DigitsAfterPoint="0"
+	  InActive="false"
+	  DisplayLongName="false"
+	  FullFieldLable="&quot;Code&quot;"
+	  DefaultText="&quot;Code&quot;"
+	  FullLocalDefaultText="&quot;קוד&quot;"
+	  ListFieldLable="&quot;CodeListLable&quot;"
+	  ListLableDefaultText="&quot;Code&quot;"
+	  ListLocalDefaultText="&quot;קוד&quot;"
+	  IsNullable="false"
+	  IsForeignKey="false"
+	  DontBuildRelationOnDB="false"
+	  IsPrimaryKey="true"
+	  HasDataBaseField="true"
+	  HasPMField="true"
+	  IsComposition="false"
+	  IsMaxLength="false"
+	  NoMetaDataField="false"
+	  GenerateInList="false"
+	  IsFixedLength="false"
+	  EnableAutoFill="false"
+	  IncludeInSearchField="false"
+	  AllowedinAutomationConditions="false"
+	  AutomationEmailRecipient="false"
+	  CanAutomateSetValue="false"
+	  DisplayInAutomationAsEnitity="false"
+	  HasTemplate="false"
+	  IsCustom="false"
+	  IsSpellCheckedFullFieldLable="false"
+	  IsSpellCheckedHelpLocalDefaultText="false"
+	  IsSpellCheckedShortLocalDefaultText="false"
+	  IsSpellCheckedListLocalDefaultText="false"
+	  EnableFullscreenTextBox="false" />
+	<field
+	  Id="&quot;f52b6955-8990-4d28-9c61-8b882e2a6acb&quot;"
+	  FieldName="&quot;EnglishName&quot;"
+	  OldNames="EnglishName"
+	  IsNew="false"
+	  IsChecked="false"
+	  IsDeleted="false"
+	  ObjectTableName="&quot;Customs.Bank&quot;"
+	  FieldsDataType="&quot;Text&quot;"
+	  MinLength="0"
+	  MaxLength="100"
+	  IsRequired="false"
+	  CopyToDW="false"
+	  DisplayOnLookUp="false"
+	  DisplayOnLookUpLocal="false"
+	  CanFilter="true"
+	  DisplayOnly="false"
+	  SystemRequired="false"
+	  ObjectFieldNotRequired="false"
+	  SystemMaxLength="100"
+	  DisplayInList="true"
+	  IsCustomFilter="false"
+	  IsListFilter="false"
+	  Operator="&quot;StartsWith&quot;"
+	  MultiLine="false"
+	  IsTimeFrameFilter="false"
+	  DisplayInSearchWindowList="false"
+	  PMPropertyPath="&quot;EnglishName&quot;"
+	  ListPropertyPath="&quot;EnglishName&quot;"
+	  DisplayInLookUpIndex="0"
+	  AutomaticField="false"
+	  UniqueField="false"
+	  DisplayInSearchWindowListIndex="0"
+	  IsMulti="false"
+	  DependencyFilter1IsList="false"
+	  DependencyFilter2IsList="false"
+	  DependencyFilter3IsList="false"
+	  ValidForQuerySection1="&quot;Banks&quot;"
+	  IsRestrictable="false"
+	  DisplayInEntityVariables="false"
+	  AllowedInCustomerFieldsSettings="false"
+	  DisplayInSearchWindowFilters="false"
+	  DisplayInSearchWindowFiltersIndex="0"
+	  DisplayInDocumentReferences="false"
+	  DigitsAfterPoint="0"
+	  InActive="false"
+	  DisplayLongName="false"
+	  FullFieldLable="&quot;EnglishName&quot;"
+	  DefaultText="&quot;English Name&quot;"
+	  FullLocalDefaultText="&quot;שם אנגלית&quot;"
+	  ListFieldLable="&quot;EnglishNameListLable&quot;"
+	  ListLableDefaultText="&quot;English Name&quot;"
+	  ListLocalDefaultText="&quot;שם אנגלית&quot;"
+	  IsNullable="true"
+	  IsForeignKey="false"
+	  DontBuildRelationOnDB="false"
+	  IsPrimaryKey="false"
+	  HasDataBaseField="true"
+	  HasPMField="true"
+	  IsComposition="false"
+	  IsMaxLength="false"
+	  NoMetaDataField="false"
+	  GenerateInList="false"
+	  IsFixedLength="false"
+	  EnableAutoFill="false"
+	  IncludeInSearchField="false"
+	  AllowedinAutomationConditions="false"
+	  AutomationEmailRecipient="false"
+	  CanAutomateSetValue="false"
+	  DisplayInAutomationAsEnitity="false"
+	  HasTemplate="false"
+	  IsCustom="false"
+	  IsSpellCheckedFullFieldLable="false"
+	  IsSpellCheckedHelpLocalDefaultText="false"
+	  IsSpellCheckedShortLocalDefaultText="false"
+	  IsSpellCheckedListLocalDefaultText="false"
+	  EnableFullscreenTextBox="false" />
+	<field
+	  Id="&quot;26e1be83-da18-4456-9edc-6bec6f5a011e&quot;"
+	  FieldName="&quot;LocalName&quot;"
+	  OldNames="LocalName"
+	  IsNew="false"
+	  IsChecked="false"
+	  IsDeleted="false"
+	  ObjectTableName="&quot;Customs.Bank&quot;"
+	  FieldsDataType="&quot;nText&quot;"
+	  MinLength="0"
+	  MaxLength="100"
+	  IsRequired="false"
+	  CopyToDW="false"
+	  DisplayOnLookUp="true"
+	  DisplayOnLookUpLocal="false"
+	  CanFilter="true"
+	  DisplayOnly="false"
+	  SystemRequired="false"
+	  ObjectFieldNotRequired="false"
+	  SystemMaxLength="100"
+	  DisplayInList="true"
+	  IsCustomFilter="false"
+	  IsListFilter="false"
+	  Operator="&quot;StartsWith&quot;"
+	  MultiLine="false"
+	  IsTimeFrameFilter="false"
+	  DisplayInSearchWindowList="true"
+	  PMPropertyPath="&quot;LocalName&quot;"
+	  ListPropertyPath="&quot;LocalName&quot;"
+	  DisplayInLookUpIndex="1"
+	  AutomaticField="false"
+	  UniqueField="false"
+	  DisplayInSearchWindowListIndex="1"
+	  IsMulti="false"
+	  DependencyFilter1IsList="false"
+	  DependencyFilter2IsList="false"
+	  DependencyFilter3IsList="false"
+	  ValidForQuerySection1="&quot;Banks&quot;"
+	  IsRestrictable="false"
+	  DisplayInEntityVariables="false"
+	  AllowedInCustomerFieldsSettings="false"
+	  DisplayInSearchWindowFilters="false"
+	  DisplayInSearchWindowFiltersIndex="0"
+	  DisplayInDocumentReferences="false"
+	  DigitsAfterPoint="0"
+	  InActive="false"
+	  DisplayLongName="false"
+	  FullFieldLable="&quot;LocalName&quot;"
+	  DefaultText="&quot;Local Name&quot;"
+	  FullLocalDefaultText="&quot;שם מקומי&quot;"
+	  ListFieldLable="&quot;LocalNameListLable&quot;"
+	  ListLableDefaultText="&quot;Local Name&quot;"
+	  ListLocalDefaultText="&quot;שם מקומי&quot;"
+	  IsNullable="true"
+	  IsForeignKey="false"
+	  DontBuildRelationOnDB="false"
+	  IsPrimaryKey="false"
+	  HasDataBaseField="true"
+	  HasPMField="true"
+	  IsComposition="false"
+	  IsMaxLength="false"
+	  NoMetaDataField="false"
+	  GenerateInList="false"
+	  IsFixedLength="false"
+	  EnableAutoFill="false"
+	  IncludeInSearchField="false"
+	  AllowedinAutomationConditions="false"
+	  AutomationEmailRecipient="false"
+	  CanAutomateSetValue="false"
+	  DisplayInAutomationAsEnitity="false"
+	  HasTemplate="false"
+	  IsCustom="false"
+	  IsSpellCheckedFullFieldLable="false"
+	  IsSpellCheckedHelpLocalDefaultText="false"
+	  IsSpellCheckedShortLocalDefaultText="false"
+	  IsSpellCheckedListLocalDefaultText="false"
+	  EnableFullscreenTextBox="false" />
+	<field
+	  Id="&quot;fa6e3f79-cd76-4d95-97d6-1850dc5dc065&quot;"
+	  FieldName="&quot;SearchFields&quot;"
+	  OldNames="SearchFields"
+	  IsNew="false"
+	  IsChecked="false"
+	  IsDeleted="false"
+	  ObjectTableName="&quot;Customs.Bank&quot;"
+	  FieldsDataType="&quot;nText&quot;"
+	  MinLength="0"
+	  MaxLength="1000"
+	  IsRequired="false"
+	  CopyToDW="false"
+	  DisplayOnLookUp="false"
+	  DisplayOnLookUpLocal="false"
+	  CanFilter="false"
+	  DisplayOnly="false"
+	  SystemRequired="false"
+	  ObjectFieldNotRequired="false"
+	  SystemMaxLength="1000"
+	  DisplayInList="false"
+	  IsCustomFilter="false"
+	  IsListFilter="false"
+	  MultiLine="false"
+	  IsTimeFrameFilter="false"
+	  DisplayInSearchWindowList="false"
+	  PMPropertyPath="&quot;SearchFields&quot;"
+	  ListPropertyPath="&quot;SearchFields&quot;"
+	  DisplayInLookUpIndex="0"
+	  AutomaticField="false"
+	  UniqueField="false"
+	  DisplayInSearchWindowListIndex="0"
+	  IsMulti="false"
+	  DependencyFilter1IsList="false"
+	  DependencyFilter2IsList="false"
+	  DependencyFilter3IsList="false"
+	  ValidForQuerySection1="&quot;Banks&quot;"
+	  IsRestrictable="false"
+	  DisplayInEntityVariables="false"
+	  AllowedInCustomerFieldsSettings="false"
+	  DisplayInSearchWindowFilters="false"
+	  DisplayInSearchWindowFiltersIndex="0"
+	  DisplayInDocumentReferences="false"
+	  DigitsAfterPoint="0"
+	  InActive="false"
+	  DisplayLongName="false"
+	  FullFieldLable="&quot;SearchFields&quot;"
+	  DefaultText="&quot;SearchFields&quot;"
+	  ListFieldLable="&quot;SearchFieldsListLable&quot;"
+	  ListLableDefaultText="&quot;SearchFields&quot;"
+	  IsNullable="true"
+	  IsForeignKey="false"
+	  DontBuildRelationOnDB="false"
+	  IsPrimaryKey="false"
+	  HasDataBaseField="true"
+	  HasPMField="true"
+	  IsComposition="false"
+	  IsMaxLength="false"
+	  NoMetaDataField="false"
+	  GenerateInList="true"
+	  IsFixedLength="false"
+	  EnableAutoFill="false"
+	  IncludeInSearchField="false"
+	  AllowedinAutomationConditions="false"
+	  AutomationEmailRecipient="false"
+	  CanAutomateSetValue="false"
+	  DisplayInAutomationAsEnitity="false"
+	  HasTemplate="false"
+	  IsCustom="false"
+	  IsSpellCheckedFullFieldLable="false"
+	  IsSpellCheckedHelpLocalDefaultText="false"
+	  IsSpellCheckedShortLocalDefaultText="false"
+	  IsSpellCheckedListLocalDefaultText="false"
+	  EnableFullscreenTextBox="false" />
+	<field
+	  Id="&quot;5d9683f6-5fe0-4978-979c-f07fcd730993&quot;"
+	  FieldName="&quot;Inactive&quot;"
+	  OldNames="Inactive"
+	  IsNew="false"
+	  IsChecked="false"
+	  IsDeleted="false"
+	  ObjectTableName="&quot;Customs.Bank&quot;"
+	  FieldsDataType="&quot;Boolean&quot;"
+	  MinLength="0"
+	  MaxLength="0"
+	  IsRequired="false"
+	  CopyToDW="false"
+	  DisplayOnLookUp="false"
+	  DisplayOnLookUpLocal="false"
+	  CanFilter="true"
+	  DisplayOnly="false"
+	  SystemRequired="false"
+	  ObjectFieldNotRequired="false"
+	  SystemMaxLength="0"
+	  DisplayInList="true"
+	  IsCustomFilter="false"
+	  IsListFilter="false"
+	  Operator="&quot;Equals&quot;"
+	  MultiLine="false"
+	  IsTimeFrameFilter="false"
+	  DisplayInSearchWindowList="false"
+	  PMPropertyPath="&quot;Inactive&quot;"
+	  ListPropertyPath="&quot;Inactive&quot;"
+	  DisplayInLookUpIndex="0"
+	  AutomaticField="false"
+	  UniqueField="false"
+	  DisplayInSearchWindowListIndex="0"
+	  IsMulti="false"
+	  DependencyFilter1IsList="false"
+	  DependencyFilter2IsList="false"
+	  DependencyFilter3IsList="false"
+	  ValidForQuerySection1="&quot;Banks&quot;"
+	  IsRestrictable="false"
+	  DisplayInEntityVariables="false"
+	  AllowedInCustomerFieldsSettings="false"
+	  DisplayInSearchWindowFilters="false"
+	  DisplayInSearchWindowFiltersIndex="0"
+	  DisplayInDocumentReferences="false"
+	  InActive="false"
+	  DisplayLongName="false"
+	  FullFieldLable="&quot;Inactive&quot;"
+	  DefaultText="&quot;Inactive &quot;"
+	  FullLocalDefaultText="&quot;לא פּעיל&quot;"
+	  ListFieldLable="&quot;InactiveListLable&quot;"
+	  ListLableDefaultText="&quot;Inactive&quot;"
+	  ListLocalDefaultText="&quot;לא פּעיל&quot;"
+	  IsNullable="false"
+	  IsForeignKey="false"
+	  DontBuildRelationOnDB="false"
+	  IsPrimaryKey="false"
+	  HasDataBaseField="true"
+	  HasPMField="true"
+	  IsComposition="false"
+	  IsMaxLength="false"
+	  NoMetaDataField="false"
+	  GenerateInList="true"
+	  IsFixedLength="false"
+	  EnableAutoFill="false"
+	  IncludeInSearchField="false"
+	  AllowedinAutomationConditions="false"
+	  AutomationEmailRecipient="false"
+	  CanAutomateSetValue="false"
+	  DisplayInAutomationAsEnitity="false"
+	  HasTemplate="false"
+	  IsCustom="false"
+	  IsSpellCheckedFullFieldLable="false"
+	  IsSpellCheckedHelpLocalDefaultText="false"
+	  IsSpellCheckedShortLocalDefaultText="false"
+	  IsSpellCheckedListLocalDefaultText="false"
+	  EnableFullscreenTextBox="false" />
+	<Query
+	  Code="&quot;Bank&quot;"
+	  TextCode="&quot;Banks&quot;"
+	  LocalTextCode="&quot;בנק&quot;"
+	  QueryGroupCode="&quot;BANK&quot;"
+	  IndexOrder="0"
+	  ObjectTableName="&quot;Customs.Bank&quot;"
+	  QuerySection="&quot;Banks&quot;"
+	  SystemLevel="true"
+	  IsAddNewEntity="false"
+	  IsPackagable="true"
+	  QueryGroupName="&quot;Customs.Bank&quot;"
+	  TextCodeCode="&quot;Customs.Bank.Q.BankQuery&quot;"
+	  FeatureCode="&quot;BANKS&quot;"
+	  FeatureTextCodeCode="&quot;Customs.Bank.Features.Banks&quot;"
+	  FeatureDefaultText="&quot;Banks&quot;"
+	  IsSpellChecked="false">
+		<QueryColumns>
+			<QueryColumn
+			  QueryCode="&quot;Bank&quot;"
+			  IndexOrder="0"
+			  ObjectFieldName="&quot;Code&quot;"
+			  ColumnWidth="70" />
+			<QueryColumn
+			  QueryCode="&quot;Bank&quot;"
+			  IndexOrder="1"
+			  ObjectFieldName="&quot;EnglishName&quot;"
+			  ColumnWidth="250" />
+			<QueryColumn
+			  QueryCode="&quot;Bank&quot;"
+			  IndexOrder="2"
+			  ObjectFieldName="&quot;LocalName&quot;"
+			  ColumnWidth="250" />
+			<QueryColumn
+			  QueryCode="&quot;Bank&quot;"
+			  IndexOrder="3"
+			  ObjectFieldName="&quot;Inactive&quot;"
+			  ColumnWidth="250" />
+		</QueryColumns>
+		<QueryFilters />
+	</Query>
+	<Screen
+	  Name="&quot;Customs.BankHeaderScreen&quot;"
+	  ObjectTableName="&quot;Customs.Bank&quot;"
+	  IsReadOnly="true"
+	  IsHeaderScreen="true"
+	  NumberOfColumns="2"
+	  NumberOfRows="1">
+		<ScreenFields />
+	</Screen>
+	<EventTypes>
+		<EventType
+		  Code="&quot;CREV&quot;"
+		  ObjectTableName="&quot;Customs.Bank&quot;"
+		  EnglishName="&quot;Created&quot;"
+		  LocalName="&quot;Created&quot;"
+		  IsManualEntry="false"
+		  ShortView="true"
+		  EventTypeCategoryCode="&quot;OPE&quot;"
+		  IsAgentView="false"
+		  IsCustomerView="false"
+		  IsSharedLogisticsEnabled="false"
+		  AllowedInAutomation="false"
+		  ManualActivatedFollowUp="false"
+		  IsFollowUp="false" />
+		<EventType
+		  Code="&quot;UPEV&quot;"
+		  ObjectTableName="&quot;Customs.Bank&quot;"
+		  EnglishName="&quot;Updated&quot;"
+		  LocalName="&quot;Updated&quot;"
+		  IsManualEntry="false"
+		  ShortView="false"
+		  EventTypeCategoryCode="&quot;OPE&quot;"
+		  IsAgentView="false"
+		  IsCustomerView="false"
+		  IsSharedLogisticsEnabled="false"
+		  AllowedInAutomation="false"
+		  ManualActivatedFollowUp="false"
+		  IsFollowUp="false" />
+	</EventTypes>
+	<Records>
+		<Record
+		  Code="&quot;1&quot;"
+		  SearchFields="&quot;1,יורו טרייד&quot;"
+		  Inactive="false"
+		  LocalName="&quot;יורו טרייד&quot;" />
+		<Record
+		  Code="&quot;10&quot;"
+		  SearchFields="&quot;10,לאומי&quot;"
+		  Inactive="false"
+		  LocalName="&quot;לאומי&quot;" />
+		<Record
+		  Code="&quot;11&quot;"
+		  SearchFields="&quot;11,דיסקונט&quot;"
+		  Inactive="false"
+		  LocalName="&quot;דיסקונט&quot;" />
+		<Record
+		  Code="&quot;12&quot;"
+		  SearchFields="&quot;12,הפועלים&quot;"
+		  Inactive="false"
+		  LocalName="&quot;הפועלים&quot;" />
+		<Record
+		  Code="&quot;13&quot;"
+		  SearchFields="&quot;13,אגוד&quot;"
+		  Inactive="false"
+		  LocalName="&quot;אגוד&quot;" />
+		<Record
+		  Code="&quot;14&quot;"
+		  SearchFields="&quot;14,אוצר החייל&quot;"
+		  Inactive="false"
+		  LocalName="&quot;אוצר החייל&quot;" />
+		<Record
+		  Code="&quot;17&quot;"
+		  SearchFields="&quot;17,מרכנתיל דיסקונט&quot;"
+		  Inactive="false"
+		  LocalName="&quot;מרכנתיל דיסקונט&quot;" />
+		<Record
+		  Code="&quot;19&quot;"
+		  SearchFields="&quot;19,החקלאות לישראל&quot;"
+		  Inactive="false"
+		  LocalName="&quot;החקלאות לישראל&quot;" />
+		<Record
+		  Code="&quot;2&quot;"
+		  SearchFields="&quot;2,צפון אמריקה&quot;"
+		  Inactive="false"
+		  LocalName="&quot;צפון אמריקה&quot;" />
+		<Record
+		  Code="&quot;20&quot;"
+		  SearchFields="&quot;20,מזרחי טפחות&quot;"
+		  Inactive="false"
+		  LocalName="&quot;מזרחי טפחות&quot;" />
+		<Record
+		  Code="&quot;21&quot;"
+		  SearchFields="&quot;21,deretrahC dradnat&quot;"
+		  Inactive="false"
+		  LocalName="&quot;deretrahC dradnat&quot;" />
+		<Record
+		  Code="&quot;22&quot;"
+		  SearchFields="&quot;22,Citibank&quot;"
+		  Inactive="false"
+		  LocalName="&quot;Citibank&quot;" />
+		<Record
+		  Code="&quot;23&quot;"
+		  SearchFields="&quot;23,HSBC  Bank plc&quot;"
+		  Inactive="false"
+		  LocalName="&quot;HSBC  Bank plc&quot;" />
+		<Record
+		  Code="&quot;24&quot;"
+		  SearchFields="&quot;24,בנק אמריקאי ישראלי&quot;"
+		  Inactive="false"
+		  LocalName="&quot;בנק אמריקאי ישראלי&quot;" />
+		<Record
+		  Code="&quot;25&quot;"
+		  SearchFields="&quot;25,BNP paribas&quot;"
+		  Inactive="false"
+		  LocalName="&quot;BNP paribas&quot;" />
+		<Record
+		  Code="&quot;26&quot;"
+		  SearchFields="&quot;26,יובנק&quot;"
+		  Inactive="false"
+		  LocalName="&quot;יובנק&quot;" />
+		<Record
+		  Code="&quot;27&quot;"
+		  SearchFields="&quot;27,עין חי&quot;"
+		  Inactive="false"
+		  LocalName="&quot;עין חי&quot;" />
+		<Record
+		  Code="&quot;28&quot;"
+		  SearchFields="&quot;28,קונטיננטל לישראל&quot;"
+		  Inactive="false"
+		  LocalName="&quot;קונטיננטל לישראל&quot;" />
+		<Record
+		  Code="&quot;3&quot;"
+		  SearchFields="&quot;3,גמול&quot;"
+		  Inactive="false"
+		  LocalName="&quot;גמול&quot;" />
+		<Record
+		  Code="&quot;30&quot;"
+		  SearchFields="&quot;30,למסחר&quot;"
+		  Inactive="false"
+		  LocalName="&quot;למסחר&quot;" />
+		<Record
+		  Code="&quot;31&quot;"
+		  SearchFields="&quot;31,הבינלאומי הראשון&quot;"
+		  Inactive="false"
+		  LocalName="&quot;הבינלאומי הראשון&quot;" />
+		<Record
+		  Code="&quot;32&quot;"
+		  SearchFields="&quot;32,למימון ומסחר&quot;"
+		  Inactive="false"
+		  LocalName="&quot;למימון ומסחר&quot;" />
+		<Record
+		  Code="&quot;33&quot;"
+		  SearchFields="&quot;33,מרכנתיל&quot;"
+		  Inactive="false"
+		  LocalName="&quot;מרכנתיל&quot;" />
+		<Record
+		  Code="&quot;34&quot;"
+		  SearchFields="&quot;34,ערבי ישראלי&quot;"
+		  Inactive="false"
+		  LocalName="&quot;ערבי ישראלי&quot;" />
+		<Record
+		  Code="&quot;35&quot;"
+		  SearchFields="&quot;35,פולסקא קאסא&quot;"
+		  Inactive="false"
+		  LocalName="&quot;פולסקא קאסא&quot;" />
+		<Record
+		  Code="&quot;37&quot;"
+		  SearchFields="&quot;37,אלאורדון&quot;"
+		  Inactive="false"
+		  LocalName="&quot;אלאורדון&quot;" />
+		<Record
+		  Code="&quot;38&quot;"
+		  SearchFields="&quot;38,אל תיג'ארי אלפלסטיני&quot;"
+		  Inactive="false"
+		  LocalName="&quot;אל תיג'ארי אלפלסטיני&quot;" />
+		<Record
+		  Code="&quot;39&quot;"
+		  SearchFields="&quot;39,SBI State Babk&quot;"
+		  Inactive="false"
+		  LocalName="&quot;SBI State Babk&quot;" />
+		<Record
+		  Code="&quot;4&quot;"
+		  SearchFields="&quot;4,יהב&quot;"
+		  Inactive="false"
+		  LocalName="&quot;יהב&quot;" />
+		<Record
+		  Code="&quot;40&quot;"
+		  SearchFields="&quot;40,טפחות- חברה להנפק&quot;"
+		  Inactive="false"
+		  LocalName="&quot;טפחות- חברה להנפק&quot;" />
+		<Record
+		  Code="&quot;41&quot;"
+		  SearchFields="&quot;41,מזרחי השק.&quot;"
+		  Inactive="false"
+		  LocalName="&quot;מזרחי השק.&quot;" />
+		<Record
+		  Code="&quot;42&quot;"
+		  SearchFields="&quot;42,משאבים&quot;"
+		  Inactive="false"
+		  LocalName="&quot;משאבים&quot;" />
+		<Record
+		  Code="&quot;43&quot;"
+		  SearchFields="&quot;43,בנק אלאהלי אלאורדוני&quot;"
+		  Inactive="false"
+		  LocalName="&quot;בנק אלאהלי אלאורדוני&quot;" />
+		<Record
+		  Code="&quot;44&quot;"
+		  SearchFields="&quot;44,פועלים שוקי הון&quot;"
+		  Inactive="false"
+		  LocalName="&quot;פועלים שוקי הון&quot;" />
+		<Record
+		  Code="&quot;46&quot;"
+		  SearchFields="&quot;46,מסד&quot;"
+		  Inactive="false"
+		  LocalName="&quot;מסד&quot;" />
+		<Record
+		  Code="&quot;47&quot;"
+		  SearchFields="&quot;47,בנק עולמי&quot;"
+		  Inactive="false"
+		  LocalName="&quot;בנק עולמי&quot;" />
+		<Record
+		  Code="&quot;48&quot;"
+		  SearchFields="&quot;48,קופת העובד הלאומי&quot;"
+		  Inactive="false"
+		  LocalName="&quot;קופת העובד הלאומי&quot;" />
+		<Record
+		  Code="&quot;49&quot;"
+		  SearchFields="&quot;49,אלבנק אלערבי&quot;"
+		  Inactive="false"
+		  LocalName="&quot;אלבנק אלערבי&quot;" />
+		<Record
+		  Code="&quot;5&quot;"
+		  SearchFields="&quot;5,מניב&quot;"
+		  Inactive="false"
+		  LocalName="&quot;מניב&quot;" />
+		<Record
+		  Code="&quot;50&quot;"
+		  SearchFields="&quot;50,מ.ס.ב&quot;"
+		  Inactive="false"
+		  LocalName="&quot;מ.ס.ב&quot;" />
+		<Record
+		  Code="&quot;51&quot;"
+		  SearchFields="&quot;51,כאל&quot;"
+		  Inactive="false"
+		  LocalName="&quot;כאל&quot;" />
+		<Record
+		  Code="&quot;52&quot;"
+		  SearchFields="&quot;52,פאג&quot;י&quot;"
+		  Inactive="false"
+		  LocalName="&quot;פאג&quot;י&quot;" />
+		<Record
+		  Code="&quot;53&quot;"
+		  SearchFields="&quot;53,עליה לאומי&quot;"
+		  Inactive="false"
+		  LocalName="&quot;עליה לאומי&quot;" />
+		<Record
+		  Code="&quot;54&quot;"
+		  SearchFields="&quot;54,ירושלים&quot;"
+		  Inactive="false"
+		  LocalName="&quot;ירושלים&quot;" />
+		<Record
+		  Code="&quot;56&quot;"
+		  SearchFields="&quot;56,ד. מימון&quot;"
+		  Inactive="false"
+		  LocalName="&quot;ד. מימון&quot;" />
+		<Record
+		  Code="&quot;57&quot;"
+		  SearchFields="&quot;57,מזרחי תעשי&quot;"
+		  Inactive="false"
+		  LocalName="&quot;מזרחי תעשי&quot;" />
+		<Record
+		  Code="&quot;58&quot;"
+		  SearchFields="&quot;58,לאומי ושות&quot;"
+		  Inactive="false"
+		  LocalName="&quot;לאומי ושות&quot;" />
+		<Record
+		  Code="&quot;59&quot;"
+		  SearchFields="&quot;59,ש.ב.א&quot;"
+		  Inactive="false"
+		  LocalName="&quot;ש.ב.א&quot;" />
+		<Record
+		  Code="&quot;6&quot;"
+		  SearchFields="&quot;6,אדנים למשכנתאות&quot;"
+		  Inactive="false"
+		  LocalName="&quot;אדנים למשכנתאות&quot;" />
+		<Record
+		  Code="&quot;64&quot;"
+		  SearchFields="&quot;64,גחלת&quot;"
+		  Inactive="false"
+		  LocalName="&quot;גחלת&quot;" />
+		<Record
+		  Code="&quot;65&quot;"
+		  SearchFields="&quot;65,חסך&quot;"
+		  Inactive="false"
+		  LocalName="&quot;חסך&quot;" />
+		<Record
+		  Code="&quot;66&quot;"
+		  SearchFields="&quot;66,בנק אלקהירה- עמאן&quot;"
+		  Inactive="false"
+		  LocalName="&quot;בנק אלקהירה- עמאן&quot;" />
+		<Record
+		  Code="&quot;67&quot;"
+		  SearchFields="&quot;67,אלעקרי אלמצרי אלערבי&quot;"
+		  Inactive="false"
+		  LocalName="&quot;אלעקרי אלמצרי אלערבי&quot;" />
+		<Record
+		  Code="&quot;68&quot;"
+		  SearchFields="&quot;68,בנק דקסיה ישראל&quot;"
+		  Inactive="false"
+		  LocalName="&quot;בנק דקסיה ישראל&quot;" />
+		<Record
+		  Code="&quot;69&quot;"
+		  SearchFields="&quot;69,בלל לתעשיה&quot;"
+		  Inactive="false"
+		  LocalName="&quot;בלל לתעשיה&quot;" />
+		<Record
+		  Code="&quot;7&quot;"
+		  SearchFields="&quot;7,בנק לפיתוח התעשיה&quot;"
+		  Inactive="false"
+		  LocalName="&quot;בנק לפיתוח התעשיה&quot;" />
+		<Record
+		  Code="&quot;70&quot;"
+		  SearchFields="&quot;70,לאומי נחל&quot;"
+		  Inactive="false"
+		  LocalName="&quot;לאומי נחל&quot;" />
+		<Record
+		  Code="&quot;71&quot;"
+		  SearchFields="&quot;71,קומרציאל ג'ורדן בנק&quot;"
+		  Inactive="false"
+		  LocalName="&quot;קומרציאל ג'ורדן בנק&quot;" />
+		<Record
+		  Code="&quot;73&quot;"
+		  SearchFields="&quot;73,אלאסלאמי אלערבי&quot;"
+		  Inactive="false"
+		  LocalName="&quot;אלאסלאמי אלערבי&quot;" />
+		<Record
+		  Code="&quot;74&quot;"
+		  SearchFields="&quot;74,HSBC בנק מזרח תיכון&quot;"
+		  Inactive="false"
+		  LocalName="&quot;HSBC בנק מזרח תיכון&quot;" />
+		<Record
+		  Code="&quot;75&quot;"
+		  SearchFields="&quot;75,חב. למימון&quot;"
+		  Inactive="false"
+		  LocalName="&quot;חב. למימון&quot;" />
+		<Record
+		  Code="&quot;76&quot;"
+		  SearchFields="&quot;76,אלאסתת'מאר אלפלסטיני&quot;"
+		  Inactive="false"
+		  LocalName="&quot;אלאסתת'מאר אלפלסטיני&quot;" />
+		<Record
+		  Code="&quot;77&quot;"
+		  SearchFields="&quot;77,לאומי למשכנתאות&quot;"
+		  Inactive="false"
+		  LocalName="&quot;לאומי למשכנתאות&quot;" />
+		<Record
+		  Code="&quot;78&quot;"
+		  SearchFields="&quot;78,אלראיסי ללתנמיה&quot;"
+		  Inactive="false"
+		  LocalName="&quot;אלראיסי ללתנמיה&quot;" />
+		<Record
+		  Code="&quot;8&quot;"
+		  SearchFields="&quot;8,הספנות&quot;"
+		  Inactive="false"
+		  LocalName="&quot;הספנות&quot;" />
+		<Record
+		  Code="&quot;80&quot;"
+		  SearchFields="&quot;80,טפחות&quot;"
+		  Inactive="false"
+		  LocalName="&quot;טפחות&quot;" />
+		<Record
+		  Code="&quot;81&quot;"
+		  SearchFields="&quot;81,אלאסלאמי אלפלסטינ&quot;"
+		  Inactive="false"
+		  LocalName="&quot;אלאסלאמי אלפלסטינ&quot;" />
+		<Record
+		  Code="&quot;82&quot;"
+		  SearchFields="&quot;82,אלקודס ללתנמיה וללסת&quot;"
+		  Inactive="false"
+		  LocalName="&quot;אלקודס ללתנמיה וללסת&quot;" />
+		<Record
+		  Code="&quot;83&quot;"
+		  SearchFields="&quot;83,אל-אתיחאד ללדיכאר&quot;"
+		  Inactive="false"
+		  LocalName="&quot;אל-אתיחאד ללדיכאר&quot;" />
+		<Record
+		  Code="&quot;84&quot;"
+		  SearchFields="&quot;84,אלאסכאן אלאורדוני&quot;"
+		  Inactive="false"
+		  LocalName="&quot;אלאסכאן אלאורדוני&quot;" />
+		<Record
+		  Code="&quot;86&quot;"
+		  SearchFields="&quot;86,כרמל&quot;"
+		  Inactive="false"
+		  LocalName="&quot;כרמל&quot;" />
+		<Record
+		  Code="&quot;87&quot;"
+		  SearchFields="&quot;87,אלדאולי אלפלסטיני&quot;"
+		  Inactive="false"
+		  LocalName="&quot;אלדאולי אלפלסטיני&quot;" />
+		<Record
+		  Code="&quot;89&quot;"
+		  SearchFields="&quot;89,בנק פלסטין&quot;"
+		  Inactive="false"
+		  LocalName="&quot;בנק פלסטין&quot;" />
+		<Record
+		  Code="&quot;9&quot;"
+		  SearchFields="&quot;9,הדואר&quot;"
+		  Inactive="false"
+		  LocalName="&quot;הדואר&quot;" />
+		<Record
+		  Code="&quot;90&quot;"
+		  SearchFields="&quot;90,דיסקונט למשכנתאות&quot;"
+		  Inactive="false"
+		  LocalName="&quot;דיסקונט למשכנתאות&quot;" />
+		<Record
+		  Code="&quot;91&quot;"
+		  SearchFields="&quot;91,משכן&quot;"
+		  Inactive="false"
+		  LocalName="&quot;משכן&quot;" />
+		<Record
+		  Code="&quot;92&quot;"
+		  SearchFields="&quot;92,הבינלאומי למשכנתא&quot;"
+		  Inactive="false"
+		  LocalName="&quot;הבינלאומי למשכנתא&quot;" />
+		<Record
+		  Code="&quot;93&quot;"
+		  SearchFields="&quot;93,אלאורדון ואלכווית&quot;"
+		  Inactive="false"
+		  LocalName="&quot;אלאורדון ואלכווית&quot;" />
+		<Record
+		  Code="&quot;94&quot;"
+		  SearchFields="&quot;94,עצמאות למשכנתאות&quot;"
+		  Inactive="false"
+		  LocalName="&quot;עצמאות למשכנתאות&quot;" />
+		<Record
+		  Code="&quot;99&quot;"
+		  SearchFields="&quot;99,בנק ישראל&quot;"
+		  Inactive="false"
+		  LocalName="&quot;בנק ישראל&quot;" />
+	</Records>
+	<DataContracts />
+	<AdditionalTextCodes />
+	<AdditionalFeatures />
 </entity>
