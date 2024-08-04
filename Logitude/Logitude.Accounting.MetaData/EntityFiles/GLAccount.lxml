@@ -16364,6 +16364,19 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
     <EventType
+      Code="&quot;RCLC&quot;"
+      ObjectTableName="&quot;GLAccount&quot;"
+      EnglishName="&quot;Account Recalculated&quot;"
+      LocalName="&quot;בוצע חישוב מחדש&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
       Code="&quot;DSCS&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Card is connected&quot;"
@@ -16421,6 +16434,13 @@
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="0"
         LocalDefaultText="&quot;הפעל מחדש&quot;"
+        IsPackagable="true" />
+      <MenuItem
+        EventCode="&quot;GLAccountRecalculate&quot;"
+        DefaultText="&quot;Recalculate&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="0"
+        LocalDefaultText="&quot;חשב מחדש&quot;"
         IsPackagable="true" />
     </MenuButton>
   </MenuButtons>
@@ -18312,6 +18332,12 @@
       Code="&quot;GLAccounts.O.GLAccountReactivated&quot;"
       DefaultText="&quot;GLAccount Reactivated&quot;"
       LocalDefaultText="&quot;הכרטיס הופעל מחדש&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.GLAccountRecalculating&quot;"
+      DefaultText="&quot;Recalculating; check batch or event&quot;"
+      LocalDefaultText="&quot;מבצע חישוב מחדש, בדוק תור או אירוע&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
