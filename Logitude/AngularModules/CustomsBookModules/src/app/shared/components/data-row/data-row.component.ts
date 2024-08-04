@@ -26,6 +26,7 @@ export class DataRowComponent implements OnInit {
 	@Input() showDetailsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	@Input() state = 'search';
 	@Input() searchItem?: string = '';
+	@Input() fullClassificationLengthCharToDisplay?: number = 0;
 
 	faStar = faStar;
 	faStarBold = faStarBold;
@@ -86,15 +87,24 @@ export class DataRowComponent implements OnInit {
 		return text.length > 20 ? text : '';
 	}
 
-	ClassificationNoDisplay(item, value): string {
-		if (item.IsLeaf) return value;
-		const regex = /^(\d*[^0])\d*$/;
-		const match = value.match(regex);
-		if (match && match[1]) {
-			return match[1];
+	ClassificationNoDisplay(item, value: string): string {
+		if (item.IsLeaf ||  !this.fullClassificationLengthCharToDisplay || this.fullClassificationLengthCharToDisplay > 5) return value;
+		if (value.length >= this.fullClassificationLengthCharToDisplay) {
+			return value.substring(0, this.fullClassificationLengthCharToDisplay);
 		}
 		return '';
 	}
+	
+	// ClassificationNoDisplay(item, value): string {
+	// 	debugger
+	// 	if (item.IsLeaf) return value;
+	// 	const regex = /^(\d*[^0])\d*$/;
+	// 	const match = value.match(regex);
+	// 	if (match && match[1]) {
+	// 		return match[1];
+	// 	}
+	// 	return '';
+	// }
 
 
 	@ViewChild('dynamicDiv') dynamicDiv: ElementRef;
