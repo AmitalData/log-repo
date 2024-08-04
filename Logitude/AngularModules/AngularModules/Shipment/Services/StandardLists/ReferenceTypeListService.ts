@@ -32,12 +32,12 @@ export class ReferenceTypeListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/referencetypeviews';  
     }
 
-	getSingle(id: string) {
+	getSingle(code: string) {
 
 		var callTime = new Date();
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle/?' + 'code=' + code, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
 					map((response: HttpResponse<any>) => {
 
@@ -52,7 +52,7 @@ export class ReferenceTypeListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ReferenceType", "GetSingleList", 'id=' + id); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ReferenceType", "GetSingleList", 'code=' + code); 
 
 						return serviceResponse;
 					}),
@@ -103,7 +103,7 @@ export class ReferenceTypeListService {
         for (var i in mykeys) {
 			var propName = mykeys[i];
 			var propValue = filters[propName];
-			var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters" || propName == "TreeFilters");
+			var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters" || propName == "TreeFilters"  || propName == "ParentEntity");
 
             if (urlparameters != "?") {
                 urlparameters = urlparameters.concat('&');
@@ -115,6 +115,10 @@ export class ReferenceTypeListService {
 			}
 
 			if (propName == "TreeFilters" && propValue && propValue.length > 0) {
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+            }
+			
+			if (propName == "ParentEntity" && propValue) {
                 urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
             }
 
@@ -157,19 +161,19 @@ export class ReferenceTypeListService {
 		});
 	}
 
-	getSingleFromCache(id: string) {
+	getSingleFromCache(code: string) {
 
 		var callTime = new Date(); 	    
 
 		if (!SessionLocator.UseCachedData) {
-            return this.getSingle(id);
+            return this.getSingle(code);
         }
 
         var serviceResponse: ServiceResponse = new ServiceResponse();
 
 		if (ReferenceTypeListService.CachedData.length > 0) {
 			return defer(() => {
-				var filteredData = ReferenceTypeListService.CachedData.filter(a => a.Code === id)[0];
+				var filteredData = ReferenceTypeListService.CachedData.filter(a => a.Code === code)[0];
 				serviceResponse.CallTime = callTime;
 				serviceResponse.Result = filteredData; 
                 return of(serviceResponse);
@@ -191,11 +195,11 @@ export class ReferenceTypeListService {
 
 					ReferenceTypeListService.CachedData = _mappedListsArray;
 
-					var filteredData = ReferenceTypeListService.CachedData.filter(a => a.Code === id)[0];
+					var filteredData = ReferenceTypeListService.CachedData.filter(a => a.Code === code)[0];
 					serviceResponse.Result = filteredData; 
 					serviceResponse.CallTime = callTime;
 			     
-					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "ReferenceType", "GetSingleListFromCache", 'id=' + id); 
+					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "ReferenceType", "GetSingleListFromCache", 'code=' + code); 
 
 					return serviceResponse;
 				}),

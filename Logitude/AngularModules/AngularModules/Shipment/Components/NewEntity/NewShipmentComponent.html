@@ -635,6 +635,7 @@
                                                                             [DisplayMemberPath]="'LocalName'"
                                                                             [DependencyFilter1Value]="CustomerDependencyProperty1"
                                                                             [DependencyFilter1IsList]="CustomerDependencyProperty1IsList"
+                                                                            [HideLastColumn]="EntityPM.IsCustomShipment"
                                                                             [HideAddLink]="true"
                                                                             [HideAdd]="true">
                                                                     </LogLov>
@@ -649,6 +650,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </td>
+                                                                <td *ngIf="EntityPM.IsCustomShipment"></td>
                                                             </tr>
                                                         </table>
                                                     </div>
@@ -1900,7 +1902,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" id="{{'ShipmentCancelbtn' | IdGeneratorAsyncPipe | async}}" (click)="CancelButtonClicked()">Cancel</button>
+                        <button class="Button" id="{{'ShipmentCancelbtn' | IdGeneratorAsyncPipe | async}}" (click)="CancelButtonClicked()">{{"Customs.General.B.Cancel" | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">

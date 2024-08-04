@@ -4,6 +4,7 @@ import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 import { AppTool } from 'Infrastructure/Tools';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
+import { ServiceHelper } from 'Infrastructure/Utilities/ServiceHelper';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { ReferenceTypePM } from 'Shipment/EntityPMs/ReferenceTypePM';
@@ -51,8 +52,8 @@ export class ShipmentReferenceDetailsComponent extends BaseComponent {
             this.ShipmentReferances = [];
             for (var i = 0; i < this.EntityPM.ShipmentReferances.length; i++) {
                 if (this.EntityPM.ShipmentReferances[i].ChangeSetOp != "Delete") {
-                    this.EntityPM.ShipmentReferances[i].CloneMe();
-                    this.ShipmentReferances.push(this.EntityPM.ShipmentReferances[i].MyClone);
+                    const myClone = ServiceHelper.CloneEntityPM(this.EntityPM.ShipmentReferances[i]);
+                    this.ShipmentReferances.push(myClone);
                 }
             }
 
