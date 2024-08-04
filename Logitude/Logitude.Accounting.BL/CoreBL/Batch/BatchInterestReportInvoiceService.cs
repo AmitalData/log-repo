@@ -188,7 +188,8 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                     }
                     catch (Exception ex)
                     {
-                        scope.Dispose(); 
+                        scope.Dispose();
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError("Error in CreateInvoiceForInterestReport interestReport.Id=" + interestReport.Id + " \r\n" + ex.ToString());
                         throw;   
                     }
                 }
