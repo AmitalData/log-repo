@@ -8,7 +8,7 @@
 	<div id="searchResults_filterPop" class="searchResults_filterPop" [class.shown]="openPopup" aria-hidden="false">
 		<div class="searchResults_filterPop_title">
 			<strong>בחרו סננים</strong>
-			<a href="#" class="searchResults_filterPop_clear" (click)="clearFilter()" role="button">נקה הכל</a>
+			<a href="#" class="searchResults_filterPop_clear" (click)="clearFilter()" (click)="$event.preventDefault()" role="button">נקה הכל</a>
 		</div>
 		<div class="searchResults_filterPop_list">
 			<b>חפש ב:</b>
