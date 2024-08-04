@@ -415,9 +415,6 @@ export class ServiceHelper {
             return 'http://localhost:9996/';
         }
         else{
-            if(baseUrl.includes('/CargoTracking')){
-                baseUrl = baseUrl.replace("/CargoTracking","");
-            }
             if(baseUrl.includes('/CustomsBook')){
                 baseUrl = baseUrl.replace("/CustomsBook","");
             }
