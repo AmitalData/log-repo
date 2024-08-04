@@ -1006,6 +1006,15 @@ namespace Logitude.Infrastructure.BL
 			});
 			
 			
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "LCB", 
+                Name = "Login Customs Book", 
+                SearchFields = "LCB,Login Customs Book", 
+                Description = "Customs Book Login For Normal Users", 
+			});
+			
             return all;
        }
 

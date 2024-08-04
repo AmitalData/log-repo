@@ -157,6 +157,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ExportStorage
                         StorageNo = _UnifreigntExportStorage.StorageNo,
                         OpenDate = AmitalConvertUtil.GetUnifreightFormatedDate(_UnifreigntExportStorage.OpenDate, "UnifreigntExportStorage.OpenDate") ?? DateTime.Now,
                         ExportFileNo = _UnifreigntExportStorage.ExportFileNo,
+                        MarksNumbers = _UnifreigntExportStorage.CargoDetails.CargoDescription + "                    " + _UnifreigntExportStorage.ContainerDetails.Seal.SealType + " : " + _UnifreigntExportStorage.ContainerDetails.Seal.SealNumber,
                     };
                 }
                 else
@@ -207,7 +208,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ExportStorage
                 if (_UnifreigntExportStorage.CargoDetails != null)
                 {
                     _DBExportStoragePM.CargoType = _UnifreigntExportStorage.CargoDetails.CargoType;
-                    _DBExportStoragePM.MarksNumbers = _UnifreigntExportStorage.CargoDetails.CargoDescription;
+                    _DBExportStoragePM.MarksNumbers = _UnifreigntExportStorage.CargoDetails.CargoDescription + "\n" + _UnifreigntExportStorage.ContainerDetails.Seal.SealType + " : " + _UnifreigntExportStorage.ContainerDetails.Seal.SealNumber;
                     decimal PackageQuantity = 0;
                     if (!String.IsNullOrWhiteSpace(_UnifreigntExportStorage.CargoDetails.Quantity))
                     {

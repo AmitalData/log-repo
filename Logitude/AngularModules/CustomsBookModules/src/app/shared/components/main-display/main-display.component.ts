@@ -2,7 +2,6 @@ import { AfterViewInit, Component, Input, OnInit, SimpleChanges } from '@angular
 import { DataRowComponent } from '../data-row/data-row.component';
 import { DetailsFrameComponent } from '../details-frame/details-frame.component';
 import { TableTopComponent, TableTopState } from '../table-top/table-top.component';
-import { AddCommentComponent } from '../add-comment/add-comment.component';
 import { NgFor, NgForOf, NgIf } from '@angular/common';
 import { trigger, style, animate, transition } from '@angular/animations';
 //@ts-ignore
@@ -11,13 +10,14 @@ import { API_MainService, Filters } from '../../../core/API_MainService';
 import { BehaviorSubject, filter } from 'rxjs';
 import { SearchService } from '../page-top/service/top-page.service';
 import { FormsModule } from '@angular/forms';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HeaderService, searchState } from '../app-header/service/header.service';
 import { FiltersSearch } from '../filter-popup/service/filter-popup.service';
+import { AddCommentComponent } from '../add-comment/add-comment.component';
+import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
-	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent, FormsModule, MatProgressSpinnerModule],
+	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent, FormsModule],
 	templateUrl: './main-display.component.html',
 	styleUrl: './main-display.component.css',
 	animations: [
@@ -65,13 +65,15 @@ export class MainDisplayComponent implements OnInit {
 	InitData() {
 		let filters: Filters = {
 			CustomsBookType: this.searchState,
-			Tenant: 0,
+			Tenant: SessionInfo.LoggedUserTenant,
 			SearchFields: ''
 		};
-		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
+		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: any) => {
+			const result: CB_CustomsItemComputedDataList[] = data.body;
+			if (!result) return; // TODO: add error message
 			this.countSearchResult = 0;
 			this.handleClearResults();
-			this.fullData = this.orderedData(data);
+			this.fullData = this.orderedData(result);
 			this.data = this.fullData;
 			this.searchMode = TableTopState.ViewAll;
 			this.isExpand.next(false);
@@ -214,11 +216,15 @@ export class MainDisplayComponent implements OnInit {
 			Rules: filtersSearch.rules,
 			SkippedRows: 0,
 			PageSize: 0,
-			Tenant: this.API_MainService.getTenant()
+			Tenant: SessionInfo.LoggedUserTenant
 		};
 
-		this.API_MainService.GetCustomsBookMainViewSearchByText(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
-			this.itemsData.next(data);
+		if (filters.CustomsItemHierarchic === '') filters.CustomsItemHierarchic = '1,2,3,4';
+
+		this.API_MainService.GetCustomsBookMainViewSearchByText(filters).subscribe((data: any) => {
+			const result: CB_CustomsItemComputedDataList[] = data.body;
+			if (!result) return; // TODO: add error message
+			this.itemsData.next(result);
 		});
 	}
 

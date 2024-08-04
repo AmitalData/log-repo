@@ -111,8 +111,8 @@ namespace Unifreight.BL.EntityQueryServices
             }
 
             string[] columns = dt.Columns.Cast<DataColumn>().Select(c => c.ColumnName).ToArray();
-            IEnumerable<Dictionary<string, object>> data = dt.Rows.Cast<DataRow>()
-                    .Select(dr => columns.ToDictionary(c => c, c => dr[c]));
+            IEnumerable<Dictionary<string, string>> data = dt.Rows.Cast<DataRow>()
+                    .Select(dr => columns.ToDictionary(c => c, c => dr[c].ToString()));
 
             JsonSerializerOptions jsonOptions = new JsonSerializerOptions { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
             string recordAsJson = JsonSerializer.Serialize(data, jsonOptions);

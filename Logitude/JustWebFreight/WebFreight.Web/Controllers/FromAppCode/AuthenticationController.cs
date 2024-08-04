@@ -866,7 +866,10 @@ namespace WebFreight.Web
                                                          where t.Id == contact.GlobalTenantId
                                                          select t).Include("TenantManagement").FirstOrDefault();
 
-                            if (contact.IsUser && !loginParameters.IsCargoTracking)
+
+                            if (contact.IsUser && 
+                                (!loginParameters.IsCargoTracking || !loginParameters.IsCustomsBook || 
+                                (loginParameters.IsCustomsBook && FeatureToggleHelper.HasFeatureToggle("LCB", contact.GlobalTenantId))))
                             {
                                 bool Licensed = true;
                                 if (globalTenant.TenantManagement.ManageLicencesPerUser)

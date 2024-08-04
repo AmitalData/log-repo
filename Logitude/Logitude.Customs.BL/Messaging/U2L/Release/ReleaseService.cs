@@ -344,7 +344,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                             customsDocumentsTicketPM.Tenant = _MyDeclarationPM.Tenant;
                             customsDocumentsTicketPM.DocumentsFilingId = customsDocument.COM_ID;
                             customsDocumentsTicketPM.DocumentTypeCode = customsDocument.DocumentTypeCode;
+                            AppendLogLine("start myCustomsDocumentsTicketUpdateService:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
                             myCustomsDocumentsTicketUpdateService.Update(customsDocumentsTicketPM, true);
+                            AppendLogLine("END myCustomsDocumentsTicketUpdateService:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
 
                             CustomsDocumentPointerPM customsDocumentPointerPM = new CustomsDocumentPointerPM();
                             customsDocumentPointerPM.ChangeSetOp = ChangeSetOperation.Insert;
@@ -366,7 +369,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                                 customsDocumentPointerPM.Child2EntityId = "1"; //customsDocument.Key_3;
                             }
                              customsDocumentPointerPM.DocumentTypeCode = customsDocumentsTicketPM.DocumentTypeCode;
+                            AppendLogLine("start myCustomsDocumentPointerUpdateService:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
                             myCustomsDocumentPointerUpdateService.Update(customsDocumentPointerPM, true);
+                            AppendLogLine("END myCustomsDocumentPointerUpdateService:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
 
                             var myDocumentId = myCustomsDocumentQueryService.GetSingle(customsDocument.COM_ID, true, false);
                             if (myDocumentId == null)
@@ -382,8 +388,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                                 {
                                     value.ChangeSetOp = ChangeSetOperation.Insert;
                                 }
+                                AppendLogLine("start myCustomsDocumentUpdateService:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
 
                                 myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
+                                AppendLogLine("DONE myCustomsDocumentUpdateService:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
+                                AppendLogLine("start myCustomsDocumentsTicketUpdateService:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
                             }
                         }
                     }

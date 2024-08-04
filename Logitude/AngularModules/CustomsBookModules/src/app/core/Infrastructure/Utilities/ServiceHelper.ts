@@ -409,6 +409,36 @@ export class ServiceHelper {
 
 		return buffer;
 	}
+    public static GetAppURL(baseUrl:string){
+
+        if (window.location.origin.indexOf('localhost') > -1) {
+            return 'http://localhost:9996/';
+        }
+        else{
+            if(baseUrl.includes('/CustomsBook')){
+                baseUrl = baseUrl.replace("/CustomsBook","");
+            }
+            return baseUrl
+        }
+    }
+    public static GetHeaders(){
+
+        var authHeader = new HttpHeaders();
+        authHeader.append('Access-Control-Allow-Origin', '*');
+
+        return authHeader;
+    }
+    public static GetHeadersWithToken() {
+
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Token': SessionInfo.Token
+            })
+        };
+       
+        return httpOptions;
+    }
 	public static GetLogitudeURL() {
 		return AppTool.GetLogitudeURL();
 	}
