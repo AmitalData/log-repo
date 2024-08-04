@@ -3,6 +3,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Helpers.AmitalAPI;
@@ -17,11 +18,7 @@ namespace WebFreight.Web.Controllers.WebServices
         [HttpGet]
         public virtual HttpResponseMessage Get(string id)
         {
-            int? tenant = HeaderHelper.GetTenantFromToken();
-            if (tenant == null)
-                return Request.CreateResponse(HttpStatusCode.Unauthorized);
-
-            string token = GetAmitalApiToken(tenant.Value);
+            string token = AutorizeAndGetToken();
             var res = amitalApiCRUDApi.Get(token, id);
             return Request.CreateResponse(HttpStatusCode.OK, res);
         }
@@ -29,11 +26,7 @@ namespace WebFreight.Web.Controllers.WebServices
         [HttpGet]
         public virtual HttpResponseMessage GetAll()
         {
-            int? tenant = HeaderHelper.GetTenantFromToken();
-            if (tenant == null)
-                return Request.CreateResponse(HttpStatusCode.Unauthorized);
-
-            string token = GetAmitalApiToken(tenant.Value);
+            string token = AutorizeAndGetToken();
             var res = amitalApiCRUDApi.GetAll(token);
             return Request.CreateResponse(HttpStatusCode.OK, res);
         }
@@ -75,5 +68,14 @@ namespace WebFreight.Web.Controllers.WebServices
         }
 
         protected string GetAmitalApiToken(int tenant) => tenantManagementQuery.GetSinglePM(tenant).AmitalApiToken;
+
+        protected string AutorizeAndGetToken()
+        {
+            AuthenticationToken tokenData = HeaderHelper.GetTokenData();
+            if (tokenData == null)
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);
+
+            return GetAmitalApiToken(tokenData.Tenant);
+        }
     }
 }
