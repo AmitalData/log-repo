@@ -1,6 +1,6 @@
 <div class="detailsSlide active" aria-hidden="false">
     <div class="detailsSlideFrame">
-        <div class="detailsSlide_close"><a href="#" role="button" (click)="showDetails.emit(false)">
+        <div class="detailsSlide_close"><a href="#" role="button" (click)="showDetails.emit(false)" (click)="$event.preventDefault()">
                 &#10005;</a></div>
         <div class="detailsSlide_top">
             <div class="detailsSlide_title">
