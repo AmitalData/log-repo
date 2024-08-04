@@ -1478,6 +1478,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 Reference2 = paymentPM.PaymentNo,
                 Notes = paymentPM.PrintNotes,
                 DebitAccountId = glAccount != null ? glAccount.Id : null,
+                CreditAccountId=GetCreditAccoutId(paymentPM),
                 ChangeSetOp = ChangeSetOperation.Insert
             };
             journal.JournalLines.Add(debitForVendorGLAccount);
@@ -1485,6 +1486,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void AddCreditJournalLineForBankGLAccount(APPaymentPM paymentPM, JournalPM journal)
         {
+            GLAccountPM glAccount = getDebitGLAccount(paymentPM.VendorId, paymentPM.Tenant);
+
             JournalLinePM creditForTaxGLAccount = new JournalLinePM
             {
                 Tenant = tenant,
@@ -1503,6 +1506,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 Reference2 = paymentPM.PaymentNo,
                 Notes = paymentPM.PrintNotes,
                 CreditAccountId = GetCreditAccoutId(paymentPM),
+                DebitAccountId = glAccount!=null? glAccount.Id:null,
+
                 ChangeSetOp = ChangeSetOperation.Insert
             };
 
