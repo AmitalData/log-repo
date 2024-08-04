@@ -688,6 +688,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -22157,7 +22158,9 @@
         Operator="&quot;Equal&quot;"
         IndexOrder="0"
         CustomPredefined="false" />
-    </QueryFilters>
+        IndexOrder="0"
+        CustomPredefined="false" />
+     </QueryFilter>
   </Query>
   <Query
     Code="&quot;CourierMasterOpenIndividual&quot;"
@@ -22366,6 +22369,8 @@
         Operator="&quot;Equal&quot;"
         IndexOrder="0"
         CustomPredefined="false" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -22557,6 +22562,8 @@
         Operator="&quot;Equal&quot;"
         IndexOrder="0"
         CustomPredefined="false" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -22648,6 +22655,8 @@
         ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
+        IndexOrder="0"
+        CustomPredefined="false" />
         IndexOrder="0"
         CustomPredefined="false" />
     </QueryFilters>
