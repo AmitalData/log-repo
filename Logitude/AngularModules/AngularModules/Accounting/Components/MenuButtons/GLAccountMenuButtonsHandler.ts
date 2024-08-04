@@ -13,6 +13,7 @@ import { EntityPMService } from '../../../Infrastructure/Services/EntityPMServic
 import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { GLAccountList } from '../../EntityLists/GLAccountList';
 import { GLAccountListService } from '../../Services/StandardLists/GLAccountListService';
 import { GLAccountExtendedListService } from '../../Services/ExtendedLists/GLAccountExtendedListService';
@@ -115,6 +116,25 @@ export class GLAccountMenuButtonsHandler {
                                 break;
                             }
 
+
+
+                        case "GLAccountRecalculate": 
+                            {
+                                if (this.EntityPM.Inactive == true) {
+                                    button.IsHidden = true;
+                                }
+                                else {
+                                    if (SessionLocator.LoggedUserPM.IsCustomerCare)
+                                    {
+                                        button.IsHidden = false;
+                                    }
+                                    else
+                                    {
+                                        button.IsHidden = true;
+                                    }
+                                }
+                                break;
+                            }
                         //                         case "GLAccountPrintCardIndex":
                         //                             {
                         // //                                if (this.EntityPM.Inactive == true) {
@@ -196,6 +216,13 @@ export class GLAccountMenuButtonsHandler {
                     {
                         this.ReconcileButtonClicked();
 
+                        break;
+                    }
+
+                case "Reconcile":
+                    {
+                        this.RecalculateButtonClicked();
+    
                         break;
                     }
             }
@@ -281,6 +308,35 @@ export class GLAccountMenuButtonsHandler {
             }
         });
     }
+
+
+    RecalculateButtonClicked() {
+
+        let _GLAccountRecalculateUrl = ServiceHelper.GetLogitudeURL() + '/api/GLAccountRecalculate';
+        let myUrl = _GLAccountRecalculateUrl + "?tenant=" + this.EntityPM.Tenant;
+        myUrl = myUrl + "&accountId=" + this.EntityPM.Id;
+
+
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { 
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Show(TextCodeTranslator.Translate("GLAccounts.O.GLAccountRecalculating"));
+                    this.CurrentSession.StopBusyIndicator(); 
+                },
+                e => {  
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Show(JSON.stringify(e));
+                    this.CurrentSession.StopBusyIndicator(); 
+                },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+
+   }
+
+
 
     GetCards() {
 
