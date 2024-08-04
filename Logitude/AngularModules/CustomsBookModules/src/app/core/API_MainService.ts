@@ -27,12 +27,9 @@ export class API_MainService extends BaseService {
 		// this.ApiURL = this.BaseURL + 'api/ShipmentDomain';
 	}
 
-	getTenant() {
-		return 0; // TODO: change to real tenant
-  }
-
 	AddNEWRemarksClassification(data) {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/AddNEWRemarksClassification`;
+		// const url = `${this._apiUrl}RemarksClassifications/Post`;
 		return this.Post(url, data);
 	}
 

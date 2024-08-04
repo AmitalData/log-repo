@@ -91,15 +91,21 @@ export class AccordionComponent implements OnInit {
     
     if(!this.currentItem.getValue().PH_MeasurementUnitID) return;
     // שיעורי מס
-    this.API_MainService.GetCustomsBookAgreementLevelData(this.customsItemId, this.currentItem.getValue().PH_MeasurementUnitID).subscribe((data: CB_TariffList[]) => {
-      this.MainEntity.CB_TariffList = data;
+    this.API_MainService.GetCustomsBookAgreementLevelData(this.customsItemId, this.currentItem.getValue().PH_MeasurementUnitID).subscribe((data: any) => {
+      const result: CB_TariffList[] = data.body;
+      if (!result) return; // TODO: add error message
+
+      this.MainEntity.CB_TariffList = result;
       this.tableData1.data = this.MainEntity.CB_TariffList.filter(x => x.TradeAgreementName != 'מס קניה');
       this.tableData2.data = this.MainEntity.CB_TariffList.filter(x => x.TradeAgreementName == 'מס קניה');
     });
 
     // דרישות חוקיות
-    this.API_MainService.GetCustomsBookRegularityRequirementData(this.customsItemId).subscribe((data: CB_RequirementComputedDataList[]) => {
-      this.MainEntity.CB_RequirementComputedDataList = data;
+    this.API_MainService.GetCustomsBookRegularityRequirementData(this.customsItemId).subscribe((data: any) => {
+      const result: CB_RequirementComputedDataList[] = data.body;
+      if (!result) return; // TODO: add error message
+
+      this.MainEntity.CB_RequirementComputedDataList = result;
       this.tableData3.data = this.MainEntity.CB_RequirementComputedDataList
     });
   }

@@ -5,12 +5,11 @@
                 <a href="#" class="detailsSlide_commentsPinned" role="checkbox" aria-checked="false"><i role="img"
                         aria-hidden="true" class="icon-pin"></i><i role="img" aria-hidden="true"
                         class="icon-pin_full"></i></a>
-                <h3>הערות בפרק (5)</h3>
+                <h3 *ngIf="allComments?.length >= 0">הערות בפרק ({{allComments?.length}})</h3>
             </div>
             <div class="detailsSlide_commentsNew">
-                <a href="#" role="button" (click)="showAddCommentSidebar()"> <i role="img" aria-hidden="true"
-                        class="icon-new"> </i><span>הערה
-                        חדשה</span></a>
+                <a href="#" role="button" (click)="showAddCommentSidebar()" (click)="$event.preventDefault()"> <i role="img" aria-hidden="true"
+                        class="icon-new"> </i><span>הערה חדשה</span></a>
             </div>
             <div class="detailsSlide_commentsClose" (click)="showComments = !showComments"><a href="#" role="button"
                     aria-controls="comments"><i role="img" aria-hidden="true" class="icon-close"></i></a></div>
@@ -26,8 +25,7 @@
                 </div>
                 <div class="commentOptions">
                     <a href="#" role="button" class="commentOptions_toggle">
-                        <i role="img" aria-hidden="true"
-                            class="icon-dots"></i></a>
+                        <i role="img" aria-hidden="true" class="icon-dots"></i></a>
                     <div class="commentOptions_pop">
                         <ul>
                             <li><a href="#" role="button"><i role="img" aria-hidden="true"

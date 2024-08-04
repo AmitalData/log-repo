@@ -5,7 +5,7 @@
 		</button>
 	</div>
 	<div class="mainTable_itemName" (click)="showDetails.emit()" #dynamicDiv>
-		<a href="#" role="button" [ngClass]="{'selectedLink': isSelected}">
+		<a href="#" role="button" [ngClass]="{'selectedLink': isSelected}" (click)="$event.preventDefault()">
 			<span class="full_classification" *ngIf="data?.CI_Parent_CustomsItemIDNum"
 				[innerHTML]="highlight(ClassificationNoDisplay(data,data?.FullClassification), searchItem)"
 				[title]="data.CIH_GoodsDescription">

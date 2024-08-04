@@ -8,11 +8,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { FilterPopupService } from '../../shared/components/filter-popup/service/filter-popup.service';
 import { SearchBy, SearchService } from '../../shared/components/page-top/service/top-page.service';
 import { HeaderService } from '../../shared/components/app-header/service/header.service';
+import { AppHeaderComponent } from '../../shared/components/app-header/app-header.component';
+import { SessionInfo } from '../../core/Infrastructure/Utilities/SessionInfo';
 
 @Component({
 	selector: 'app-main-page',
 	standalone: true,
-	imports: [PageTopComponent, MainDisplayComponent, AddCommentComponent, CommonModule],
+	imports: [PageTopComponent, MainDisplayComponent, AddCommentComponent, CommonModule, AppHeaderComponent],
 	templateUrl: './main-page.component.html',
 	styleUrl: './main-page.component.css',
 })
@@ -24,13 +26,13 @@ export class MainPageComponent {
 	private _filters;
 	selectSearchBy: string;
 
-	constructor(private API_MainService: API_MainService, private headerService: HeaderService, private searchService: SearchService) { 
-		this._filters = this.filterService.getFilters();		
+	constructor(private API_MainService: API_MainService, private headerService: HeaderService, private searchService: SearchService) {
+		this._filters = this.filterService.getFilters();
 	}
 
 	SearchByText(searchBy: any) {
 		this.selectSearchBy = searchBy;
-		
+
 		let filters: Filters = {
 			SearchFields: this.searchService.GetSearchText(),
 			CustomsBookType: this.HeaderService.getSearchState(true),
@@ -39,18 +41,22 @@ export class MainPageComponent {
 			Rules: true,
 			SkippedRows: 0,
 			PageSize: 0,
-			Tenant: this.API_MainService.getTenant()
+			Tenant: SessionInfo.LoggedUserTenant
 		};
-		
-		if(filters.SearchFields === "") return;
+
+		if (filters.SearchFields === "") return;
 		if (SearchBy.searchBy_form01 == this.selectSearchBy) {
-			this.API_MainService.GetCustomsBookMainViewSearchByClassification(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
-				this.itemsData.next(data);				
+			this.API_MainService.GetCustomsBookMainViewSearchByClassification(filters).subscribe((data: any) => {
+				const result: CB_CustomsItemComputedDataList[] = data.body;
+				if (!result) return; // TODO: add error message
+				this.itemsData.next(result);
 			});
 		}
 		else if (SearchBy.pageSearch_form02 == this.selectSearchBy) {
-			this.API_MainService.GetCustomsBookMainViewSearchByText(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
-				this.itemsData.next(data);
+			this.API_MainService.GetCustomsBookMainViewSearchByText(filters).subscribe((data: any) => {
+				const result: CB_CustomsItemComputedDataList[] = data.body;
+				if (!result) return; // TODO: add error message
+				this.itemsData.next(result);
 			});
 		}
 	}

@@ -26,6 +26,7 @@ export class DataRowComponent implements OnInit {
 	@Input() showDetailsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	@Input() state = 'search';
 	@Input() searchItem?: string = '';
+	@Input() fullClassificationLengthCharToDisplay?: number = 0;
 
 	faStar = faStar;
 	faStarBold = faStarBold;
@@ -50,10 +51,12 @@ export class DataRowComponent implements OnInit {
 	TariffListCount: number = 0;
 	getCustomsBookAgreementLevelData() {
 		if (!this.showTaxData || !this.data.CustomsItemID || !this.data?.PH_MeasurementUnitID) return;
-		this.API_MainService.GetCustomsBookAgreementLevelData(this.data?.CustomsItemID, this.data?.PH_MeasurementUnitID).subscribe((data: CB_TariffList[]) => {
-			this.TariffList1 = data.find(x => x.TradeAgreementName == 'מכס כללי');
-			this.TariffList2 = data.find(x => x.TradeAgreementName == 'מס קניה');
-			this.TariffListCount = data.filter(x => x.TradeAgreementName != 'מס קניה').length;
+		this.API_MainService.GetCustomsBookAgreementLevelData(this.data?.CustomsItemID, this.data?.PH_MeasurementUnitID).subscribe((data: any) => {
+			const result: CB_TariffList[] = data.body;
+			if (!result) return;
+			this.TariffList1 = result.find(x => x.TradeAgreementName == 'מכס כללי');
+			this.TariffList2 = result.find(x => x.TradeAgreementName == 'מס קניה');
+			this.TariffListCount = result.filter(x => x.TradeAgreementName != 'מס קניה').length;
 		});
 	}
 
@@ -84,15 +87,24 @@ export class DataRowComponent implements OnInit {
 		return text.length > 20 ? text : '';
 	}
 
-	ClassificationNoDisplay(item, value): string {
-		if (item.IsLeaf) return value;
-		const regex = /^(\d*[^0])\d*$/;
-		const match = value.match(regex);
-		if (match && match[1]) {
-			return match[1];
+	ClassificationNoDisplay(item, value: string): string {
+		if (item.IsLeaf ||  !this.fullClassificationLengthCharToDisplay || this.fullClassificationLengthCharToDisplay > 5) return value;
+		if (value.length >= this.fullClassificationLengthCharToDisplay) {
+			return value.substring(0, this.fullClassificationLengthCharToDisplay);
 		}
 		return '';
 	}
+	
+	// ClassificationNoDisplay(item, value): string {
+	// 	debugger
+	// 	if (item.IsLeaf) return value;
+	// 	const regex = /^(\d*[^0])\d*$/;
+	// 	const match = value.match(regex);
+	// 	if (match && match[1]) {
+	// 		return match[1];
+	// 	}
+	// 	return '';
+	// }
 
 
 	@ViewChild('dynamicDiv') dynamicDiv: ElementRef;

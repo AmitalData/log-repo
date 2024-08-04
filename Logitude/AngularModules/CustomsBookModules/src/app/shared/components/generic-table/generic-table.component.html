@@ -8,7 +8,7 @@
         <tr *ngFor="let row of tableData.data">
             <ng-container *ngFor="let col of tableData.columns">
                 <td *ngIf="col.visible && col.dataType == 'img'; else notImgCell">
-                    <img src="../../../../assets/images/united_kingdom.svg" />
+                    <img src="assets/images/united_kingdom.svg" />
                     <!-- <img [src]="'' + row[col.key]"/>   change if map icon-->
                 </td>
                 <ng-template #notImgCell>

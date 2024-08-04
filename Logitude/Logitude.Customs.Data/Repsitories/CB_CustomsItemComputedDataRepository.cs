@@ -20,13 +20,13 @@ using System.Transactions;
 
 namespace Logitude.Customs.Data.Repsitories
 {
-   public partial class CB_CustomsItemComputedDataRepository:IRepository<CB_CustomsItemComputedData>
-   {
-        
-		public List<CB_CustomsItemComputedData> GetMulti(EntityKeyFields entityKeys)
+    public partial class CB_CustomsItemComputedDataRepository : IRepository<CB_CustomsItemComputedData>
+    {
+
+        public List<CB_CustomsItemComputedData> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+
+            throw new NotImplementedException();
         }
 
         public List<CB_CustomsItemComputedDataList> GetCustomsBookMainViewSearchByText(string searchFields, string customsBookType, string customsItemHierarchic, bool isReamarks, bool isRules, int tenant)
@@ -60,9 +60,9 @@ namespace Logitude.Customs.Data.Repsitories
                                 CI_BaseFullClassification = reader["BaseFullClassification"] != DBNull.Value ? (string)reader["BaseFullClassification"] : null,
                                 CI_ComputedCheckDigit = reader["ComputedCheckDigit"] != DBNull.Value ? (string)reader["ComputedCheckDigit"] : null,
                                 ItemHierarchicLocationID = reader["ItemHierarchicLocationID"] != DBNull.Value ? (string)reader["ItemHierarchicLocationID"] : null,
-                                IsLeaf = reader["IsLeaf"] != DBNull.Value && (int)reader["IsLeaf"]  == 1 ? true : false,
+                                IsLeaf = reader["IsLeaf"] != DBNull.Value && (reader["IsLeaf"].ToString().ToLower() == "true" || reader["IsLeaf"].ToString().ToLower() == "false") ? Convert.ToBoolean(reader["IsLeaf"]) : false,
                                 CIH_GoodsDescription = reader["GoodsDescription"] != DBNull.Value ? (string)reader["GoodsDescription"] : null,
-                                IsRulesExists = reader["Rules"] != DBNull.Value && (int)reader["Rules"] == 1 ? true : false,
+                                IsRulesExists = reader["Rules"] != DBNull.Value && (reader["Rules"].ToString().ToLower() == "true" || reader["Rules"].ToString().ToLower() == "false") ? Convert.ToBoolean(reader["Rules"]) : false,
                                 Agreements = reader["Agreements"] != DBNull.Value ? (int?)reader["Agreements"] : null,
                                 CustomsRate = reader["CustomsRate"] != DBNull.Value ? (string)reader["CustomsRate"] : null,
                                 PurchaseTax = reader["PurchaseTax"] != DBNull.Value ? (string)reader["PurchaseTax"] : null,
@@ -114,9 +114,9 @@ namespace Logitude.Customs.Data.Repsitories
                                 CI_BaseFullClassification = reader["BaseFullClassification"] != DBNull.Value ? (string)reader["BaseFullClassification"] : null,
                                 CI_ComputedCheckDigit = reader["ComputedCheckDigit"] != DBNull.Value ? (string)reader["ComputedCheckDigit"] : null,
                                 ItemHierarchicLocationID = reader["ItemHierarchicLocationID"] != DBNull.Value ? (string)reader["ItemHierarchicLocationID"] : null,
-                                IsLeaf = reader["IsLeaf"] != DBNull.Value ? (bool)reader["IsLeaf"] : false,
+                                IsLeaf = reader["IsLeaf"] != DBNull.Value && (reader["IsLeaf"].ToString().ToLower() == "true" || reader["IsLeaf"].ToString().ToLower() == "false") ? Convert.ToBoolean(reader["IsLeaf"]) : false,
                                 CIH_GoodsDescription = reader["GoodsDescription"] != DBNull.Value ? (string)reader["GoodsDescription"] : null,
-                                IsRulesExists = reader["Rules"] != DBNull.Value ? (bool)reader["Rules"] : false,
+                                IsRulesExists = reader["Rules"] != DBNull.Value && (reader["Rules"].ToString().ToLower() == "true" || reader["Rules"].ToString().ToLower() == "false") ? Convert.ToBoolean(reader["Rules"]) : false,
                                 Agreements = reader["Agreements"] != DBNull.Value ? (int?)reader["Agreements"] : null,
                                 CustomsRate = reader["CustomsRate"] != DBNull.Value ? (string)reader["CustomsRate"] : null,
                                 PurchaseTax = reader["PurchaseTax"] != DBNull.Value ? (string)reader["PurchaseTax"] : null,
@@ -166,9 +166,9 @@ namespace Logitude.Customs.Data.Repsitories
                                 CI_BaseFullClassification = reader["BaseFullClassification"] != DBNull.Value ? (string)reader["BaseFullClassification"] : null,
                                 CI_ComputedCheckDigit = reader["ComputedCheckDigit"] != DBNull.Value ? (string)reader["ComputedCheckDigit"] : null,
                                 ItemHierarchicLocationID = reader["ItemHierarchicLocationID"] != DBNull.Value ? (string)reader["ItemHierarchicLocationID"] : null,
-                                IsLeaf = reader["IsLeaf"] != DBNull.Value ? (bool)reader["IsLeaf"] : false,
+                                IsLeaf = reader["IsLeaf"] != DBNull.Value && (reader["IsLeaf"].ToString().ToLower() == "true" || reader["IsLeaf"].ToString().ToLower() == "false") ? Convert.ToBoolean(reader["IsLeaf"]) : false,
                                 CIH_GoodsDescription = reader["GoodsDescription"] != DBNull.Value ? (string)reader["GoodsDescription"] : null,
-                                IsRulesExists = reader["Rules"] != DBNull.Value ? (bool)reader["Rules"] : false,
+                                IsRulesExists = reader["Rules"] != DBNull.Value && (reader["Rules"].ToString().ToLower() == "true" || reader["Rules"].ToString().ToLower() == "false") ? Convert.ToBoolean(reader["Rules"]) : false,
                                 Agreements = reader["Agreements"] != DBNull.Value ? (int?)reader["Agreements"] : null,
                                 CustomsRate = reader["CustomsRate"] != DBNull.Value ? (string)reader["CustomsRate"] : null,
                                 PurchaseTax = reader["PurchaseTax"] != DBNull.Value ? (string)reader["PurchaseTax"] : null,

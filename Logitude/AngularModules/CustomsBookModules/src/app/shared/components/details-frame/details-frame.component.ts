@@ -10,6 +10,7 @@ import { BehaviorSubject } from 'rxjs';
 import { API_MainService } from '../../../core/API_MainService';
 import { AddCommentService } from '../add-comment/service/add-comment.service';
 import { NgClass } from '@angular/common';
+import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 
 
 @Component({
@@ -54,14 +55,16 @@ export class DetailsFrameComponent implements OnInit {
 
   countOfComments: number = 0;
   showCommentsByClick() {
-    this.API_MainService.GetAllCommentsByCustomsItemId(this.currentItem.getValue().CustomsItemID, this.API_MainService.getTenant()).subscribe((data: RemarksClassificationList[]) => {
-      // console.log(data);
-      this.countOfComments = data?.length > 0 ? data.length : 0;
-      this.addCommentService.allComments.next(data);
+    this.API_MainService.GetAllCommentsByCustomsItemId(this.currentItem.getValue().CustomsItemID, SessionInfo.LoggedUserTenant).subscribe((data: any) => {
+      const result: RemarksClassificationList[] = data.body;
+      if (!result) return; // TODO: add error message
+
+      this.countOfComments = result?.length > 0 ? result.length : 0;
+      this.addCommentService.allComments.next(result);
     });
 
-    this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {
-      this.countOfComments = data?.length > 0 ? data.length : 0;
+    this.addCommentService.allComments.subscribe((result: RemarksClassificationList[]) => {
+      this.countOfComments = result?.length > 0 ? result.length : 0;
     });
   }
 }
