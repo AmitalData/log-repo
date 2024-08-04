@@ -219,6 +219,8 @@ export class MainDisplayComponent implements OnInit {
 			Tenant: SessionInfo.LoggedUserTenant
 		};
 
+		if (filters.CustomsItemHierarchic === '') filters.CustomsItemHierarchic = '1,2,3,4';
+
 		this.API_MainService.GetCustomsBookMainViewSearchByText(filters).subscribe((data: any) => {
 			const result: CB_CustomsItemComputedDataList[] = data.body;
 			if (!result) return; // TODO: add error message
