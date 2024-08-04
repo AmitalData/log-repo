@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     public ShowbusyIndicator: boolean = false;
     public MainColor: string = "rgb(25, 105, 180)"; // "#000000";;
     public SecondaryColor: string = "rgb(184, 189, 229)"; // "#002664";
-    public BackGroundImg: string = "url('/assets/images/map-bg.svg')";
+    public BackGroundImg: string = "url('assets/images/map-bg.svg')";
 
 
     constructor(private router: Router,
