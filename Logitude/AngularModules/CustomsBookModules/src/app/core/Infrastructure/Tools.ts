@@ -239,7 +239,10 @@ export class AppTool {
 			logitude_url = 'http://localhost:9996/'; //test.logitudeworld.com/test/';//
 		} else {
 			const baseUrl = document.getElementsByTagName('base')[0].href;
-			if(logitude_url.includes('/customs-book')){
+			if(baseUrl.includes('/customs-book/customs-book')){
+				logitude_url = baseUrl.replace("/customs-book/customs-book","");
+			}
+			else if(baseUrl.includes('/customs-book')){
 				logitude_url = baseUrl.replace("/customs-book","");
 			}
 		}
