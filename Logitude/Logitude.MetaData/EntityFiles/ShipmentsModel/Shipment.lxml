@@ -111563,6 +111563,32 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false"
       EntityStatusCode="&quot;COST&quot;" />
+    <EventType
+      Code="&quot;OPN&quot;"
+      ObjectTableName="&quot;Shipment&quot;"
+      EnglishName="&quot;Shipment opened&quot;"
+      LocalName="&quot;פתיחת תיק&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;CST&quot;"
+      ObjectTableName="&quot;Shipment&quot;"
+      EnglishName="&quot;User Updated&quot;"
+      LocalName="&quot;עדכון לקוח&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons
@@ -111783,6 +111809,21 @@
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="26"
         LocalDefaultText="&quot;Container Tracking Unsubscribe&quot;"
+        IsPackagable="true" />
+    </MenuButton>
+    <MenuButton
+      EventCode="&quot;Forms&quot;"
+      DefaultText="&quot;Forms&quot;"
+      MenuButtonType="&quot;dropdownbutton&quot;"
+      IndexOrder="0"
+      LocalDefaultText="&quot;טפסים&quot;"
+      IsPackagable="true">
+      <MenuItem
+        EventCode="&quot;ShipmentForm&quot;"
+        DefaultText="&quot;Shipment Form&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="0"
+        LocalDefaultText="&quot;טופס תיק&quot;"
         IsPackagable="true" />
     </MenuButton>
   </MenuButtons>

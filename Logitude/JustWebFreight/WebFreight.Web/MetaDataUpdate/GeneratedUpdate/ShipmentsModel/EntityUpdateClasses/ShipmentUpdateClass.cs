@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "d5edf306da15b008d15ed4cc219aa106";
+		public const string HashString = "a3af717a9289c4cd8a734f8543b35d09";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -95410,6 +95410,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             }, EventTypeRepository, tenantEventTypes);
 
 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "OPN",
+                EnglishName =  "Shipment opened",
+                LocalName =  "פתיחת תיק",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ShipmentObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CST",
+                EnglishName =  "User Updated",
+                LocalName =  "עדכון לקוח",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ShipmentObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
@@ -95437,6 +95473,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
              			   Feature ShipmentFeature_MB018 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendToAMANAC", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.SendtoAMANAC", NameTextCodeDefaultText = "Send to AMANAC", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
              			   Feature ShipmentFeature_MB019 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendCartaPorte", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.TransmittoSAT", NameTextCodeDefaultText = "Transmit to SAT", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
              			   Feature ShipmentFeature_MB020 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ViziionUnsubscribe", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ContainerTrackingUnsubscribe", NameTextCodeDefaultText = "Container Tracking Unsubscribe", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
+             			   Feature ShipmentFeature_MB10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShipmentForm", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ShipmentForm", NameTextCodeDefaultText = "Shipment Form", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -95946,6 +95983,46 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  ShipmentFeature_MB020.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	          
+   
+			   MenuButton ShipmentMenuButton1 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "Forms",
+						Index = 0, 
+						IsActive = false,
+						LabelTextCodeCode = "Shipment.B.Forms",
+						LabelTextCodeDefaultText = "Forms",
+						Tenant = 0,
+						MenuButtonGroupId = ShipmentMenuButtonGroup.Id,
+						ObjectTableId = ShipmentObjectTable.Id,
+						MenuButtonType = "dropdownbutton",
+						FeatureId = null,
+						Style = null,
+						LocalDefaultText = "טפסים",
+						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+
+			   MenuButton ShipmentMenuButton10 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "ShipmentForm",
+						Index = 0, 
+						IsActive = true,
+						LabelTextCodeCode = "Shipment.B.ShipmentForm",
+						LabelTextCodeDefaultText = "Shipment Form",
+						Tenant = 0,
+						MenuButtonGroupId = ShipmentMenuButtonGroup.Id,
+						ParentMenuButtonId = ShipmentMenuButton1.Id,
+						ObjectTableId = ShipmentObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  ShipmentFeature_MB10.Id,
+						Style = null,
+						LocalDefaultText = "טופס תיק",
+                        HtmlComponentPath=null,
+                        Width=0,
+						FeatureUniqeCode=  ShipmentFeature_MB10.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }
