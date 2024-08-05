@@ -6856,6 +6856,7 @@
     </Compile>
     <Compile Include="Services\LogitudeAuthenticationService.cs" />
     <Compile Include="Helpers\ReportMemoryStreamService.cs" />
+    <Compile Include="Services\WarmService.cs" />
     <Compile Include="SharedDocuments.aspx.cs">
       <DependentUpon>SharedDocuments.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
