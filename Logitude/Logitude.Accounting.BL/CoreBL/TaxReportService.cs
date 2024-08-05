@@ -23,6 +23,8 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -314,6 +316,22 @@ namespace Logitude.Accounting.BL.CoreBL
                     ConfirmationNumber = aPInvoicePM != null ? aPInvoicePM.ConfirmationNumber : null,
 
                 };
+                if (aPInvoicePM != null)
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("APInvoice " + aPInvoicePM.InvoiceNumber
+                       + ", Invoice VAT No. " + aPInvoicePM.VATNumber
+                       + ", aPInvoiceVatNumber=" + aPInvoiceVatNumber
+                       + ", aPInvoiceVatNumberNormalized=" + aPInvoiceVatNumberNormalized
+                       + ", inputReportLine.VatNumber=" + inputReportLine.VatNumber
+                        );
+                }
+                else
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("APInvoice is null"
+                       + ", inputReportLine.VatNumber=" + inputReportLine.VatNumber
+                        );
+                }
+
 
                 JournalPM journal = journalPMs.Where(d => d.Id == transaction.JournalId && d.TaxReportJournalLineNumber == transaction.JournalLineNumber).FirstOrDefault();
                 if (inputReportLine.ConfirmationNumber == null && journal.ConfirmationNumber != null)
@@ -326,7 +344,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     inputReportLine.LineTypeCode = "H";
                     inputReportLine.ConfirmationNumber = null;
                 }
-                else if (aPInvoicePM != null && aPInvoicePM.VATNumber == tenantPM.VatNumber)
+                else if (aPInvoicePM != null && inputReportLine.VatNumber == tenantPM.VatNumber)
                 {
                     inputReportLine.LineTypeCode = "C";
                 }
