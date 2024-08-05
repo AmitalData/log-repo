@@ -35,7 +35,7 @@ export class ResetPasswordComponent implements OnInit {
     public SecondaryColor: string = "rgb(184, 189, 229)"; // "#002664";
     public CustomerURL: string = "";
     public ContactEmail: string = "mailto:support@amital.co.il";
-    public BackGroundImg: string = "url('/assets/images/map-bg.svg')";
+    public BackGroundImg: string = "url('assets/images/map-bg.svg')";
 
     constructor(private router: Router,
         private route: ActivatedRoute,
