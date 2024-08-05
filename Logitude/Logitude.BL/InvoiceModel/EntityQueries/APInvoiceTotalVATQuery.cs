@@ -184,6 +184,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             }
             else if (interimList != null)
             {
+                APInvoiceTotalVATPM item = interimList[0];
+                interimList[0].LocalVatAmountWithVatRecognized = Math.Round((item.VatRecognizedPercentage != null) ? (((decimal)item.VatRecognizedPercentage / 100) * (decimal)item.LocalVATAmount) : (decimal)item.LocalVATAmount, 2);
                 rv = interimList;
             }
             else
