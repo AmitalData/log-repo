@@ -49,12 +49,15 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     public apiQueryFilters: ApiQueryFilters = null;
     private CurrentSession = SessionLocator.SelectedSession;
     private invoiceDomainService: InvoiceDomainService;
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
         this.EntityPM = entityArgs.EntityPM;
         this.LocalCurrencyId = SessionLocator.LocalCurrencyId;
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
+        this.InitLOVFilters();
         this.InitializeServices();
         this.SetUIProperties();
         this.BuildScreenData();
@@ -63,7 +66,10 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
             this.IsEditExchangeRateVisible = true;
         }
     }
-
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
+    }
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     private Listen() {

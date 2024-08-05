@@ -9784,7 +9784,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CreditLimit",
 					  						ObjectTableName =  "GLAccount",
-					  						FieldsDataType =  "Double",
+					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
@@ -11584,7 +11584,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
@@ -11596,7 +11596,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CreditUsed",
 					  						ObjectTableName =  "GLAccount",
-					  						FieldsDataType =  "Double",
+					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
@@ -11651,7 +11651,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		

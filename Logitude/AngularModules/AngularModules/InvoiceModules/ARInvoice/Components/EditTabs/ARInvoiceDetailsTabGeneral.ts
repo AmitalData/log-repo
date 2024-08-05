@@ -70,11 +70,12 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public BillToFilter: ApiQueryFilters;
     public PartnerTypeComboBoxIsDisabled: boolean = true;
     constructor(private entityArgs: EntityArgs, private cdRef: ChangeDetectorRef) {
-        super();
+      super();
         // this.CurrentSession.StartBusyIndicatorLoading();
         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.EntityPM = entityArgs.EntityPM;
+        this.InitLOVFilters();
         this.BuildPartnersTypes();
         this.IsManifest = this.EntityPM.ARInvoiceTypeCode == "MN" ? true : false;
         this.IsCustomsInvoice = (this.EntityPM.ARInvoiceTypeCode == "CI" || this.EntityPM.ARInvoiceTypeCode == "CC") ? true : false;
@@ -98,7 +99,10 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     get CheckIsFullAccounting() {
         return SessionLocator.TenantPM.AccountingActivated;
     }
-
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
+    }
     BuildPartnersTypes() {
         this.InvoicePartners = InvoiceTool.GetARInvoicePartners(null);
         this.PartnersTypeSelectionMethod(this.InvoicePartners[0]);

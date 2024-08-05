@@ -48,12 +48,15 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public InvoiceNumberFilterList: CodeNameClass[] = [];
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");    
         this.EntityPM = entityArgs.EntityPM;
         this.LocalCurrencyId = SessionLocator.LocalCurrencyId;
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
+        this.InitLOVFilters();
         this.InitializeServices();
         this.InitializeComponent();
         this.SetUIProperties();
@@ -75,7 +78,10 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
 
         this.BuildInvoiceNumberFilters();
     }
-
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
+    }
     private BuildEntityWarnings() {
         this.EntityWarning = "";
         this.EntityWarningsList = [];

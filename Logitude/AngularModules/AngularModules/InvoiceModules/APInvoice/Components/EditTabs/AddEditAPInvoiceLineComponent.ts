@@ -23,22 +23,21 @@ export class AddEditAPInvoiceLineComponent {
     public EnableMultiRateAPInvoices: boolean = false;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     constructor() {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
         if (SessionLocator.AccountingSettingPM) {
             this.EnableMultiRateAPInvoices = SessionLocator.AccountingSettingPM.EnableMultiRateAPInvoices;
         }
+        this.InitLOVFilters();
+    }
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
     }
     
-    public ChargeTypesQueryFilters: ApiQueryFilters;
-    private BuildQueryFilters() {
-        this.ChargeTypesQueryFilters = new ApiQueryFilters();
-        this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
-        this.ChargeTypesQueryFilters.addAdditionalFilter("IsPayable", true, null, null, "Equals", false, false, false, "boolean");
-        this.ChargeTypesQueryFilters.addAdditionalFilter("PayableDebitGLAcountId", true, null, null, "IsNotNull", false, false, false, "Text");
-    }
- 
-    
+   
     public TotalVATOnly: boolean = false;
     SetDataContext(dataContext: APInvoiceLineItem) {
         this.EntityPM = dataContext.EntityPM;

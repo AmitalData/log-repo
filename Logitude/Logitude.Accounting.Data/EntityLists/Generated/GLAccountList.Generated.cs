@@ -332,7 +332,7 @@ namespace Logitude.Accounting.Data.EntityLists
         [DataMember]
         public decimal? Obligo { get; set; }
         [DataMember]
-        public double? CreditUsed { get; set; }
+        public decimal? CreditUsed { get; set; }
         [DataMember]
         public double? InsuredCreditPercentage { get; set; }
         [DataMember]

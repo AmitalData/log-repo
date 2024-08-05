@@ -47,7 +47,16 @@
                             }}
                         </div>
                     </div>
-
+                    <div *ngIf="FieldName == 'CreditUsed'">
+                        <div [style.text-align]="isRTL ? 'right' : 'left'" style="text-align: left; padding-left: 3px; direction: ltr;">
+                            {{FieldValue| NumbersPipe:'n2'}}
+                        </div>
+                    </div>
+                    <div *ngIf="FieldName == 'Obligo'">
+                        <div [style.text-align]="isRTL ? 'right' : 'left'" style="text-align: left; padding-left: 3px; direction: ltr;">
+                            {{FieldValue| NumbersPipe:'n2'}}
+                        </div>
+                    </div>
                     <div *ngIf="FieldName == 'ForeignBalanceInDue'">
                         <div [style.text-align]="isRTL ? 'right' : 'left'" style="text-align: left; padding-left: 3px;direction: ltr;"
                              [style.color]="FieldValue > 0 ? 'green' : 'red'" [class.black]="FieldValue == 0">

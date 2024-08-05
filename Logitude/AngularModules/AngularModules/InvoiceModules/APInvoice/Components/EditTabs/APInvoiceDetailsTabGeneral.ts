@@ -36,6 +36,7 @@ import { GLAccountPM } from '../../../../Accounting/EntityPMs/GLAccountPM';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { GLAccountList } from 'Accounting/EntityLists/GLAccountList';
 import { GLAccountListService } from 'Accounting/Services/StandardLists/GLAccountListService';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 declare var window: any;
 
 @Component({
@@ -64,10 +65,13 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public AllowVatTypes: boolean = true;
     ColumnsWidths: any[] = [];
     public IsUsingVirtuallization: boolean = false;
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     constructor(private entityArgs: EntityArgs) {
         super();
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        this.InitLOVFilters();
         this.SetIsUsingVirtuallization();
         this.IsFullAccounting = SessionLocator.TenantPM.AccountingActivated;
         this.EntityPM = entityArgs.EntityPM;
@@ -97,7 +101,10 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
 
     }
-
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
+    }
     SetIsUsingVirtuallization() {
         var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
         if (hasGridVirtuallizationToggleFeature) {
