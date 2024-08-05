@@ -7101,7 +7101,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void UpdateShipmentReferance(ShipmentReferancePM itemPM)
         {
-            ShipmentReferance itemPoco = shipmentReferanceRepository.GetSingleShipmentReferance(itemPM.ShipmentId, itemPM.Tenant);
+            ShipmentReferance itemPoco = shipmentReferanceRepository.GetSingleShipmentReferance(itemPM.ShipmentId, itemPM.Tenant, itemPM.LineNumber);
             if (itemPoco != null)
             {
                 ShipmentMapping.MapShipmentReferance(itemPM, itemPoco, false);
@@ -7110,7 +7110,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void DeleteShipmentReferance(ShipmentReferancePM itemPM)
         {
-            ShipmentReferance itemPoco = shipmentReferanceRepository.GetSingleShipmentReferance(itemPM.ShipmentId, itemPM.Tenant);
+            ShipmentReferance itemPoco = shipmentReferanceRepository.GetSingleShipmentReferance(itemPM.ShipmentId, itemPM.Tenant, itemPM.LineNumber);
             if (itemPoco != null)
             {
                 shipmentReferanceRepository.Remove(itemPoco);

@@ -1,5 +1,5 @@
 
-   
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,6 +11,8 @@ using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.CloseTablesClasses;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel.EntityPMs; 
+using Simplog.Data.ShipmentsModel;
 
 namespace Logitude.BL.ShipmentsModel
 {

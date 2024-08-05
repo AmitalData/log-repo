@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "3b79893bc29fea8c0a51c91ecb8e4eae";
+		public const string HashString = "a3af717a9289c4cd8a734f8543b35d09";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -7996,8 +7996,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DefaultText =  "Create Date",
 					  						ListFieldLable =  "CreateDateTimeListLable",
 					  						ListLableDefaultText =  "Open Date",
-											ListLocalDefaultText =  "תאריך פתיחה",
-                                            IsForeignKey =  false,
+					  						ListLocalDefaultText =  "תאריך פתיחה",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
@@ -8351,7 +8351,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DefaultText =  "Customer Name",
 					  						ListFieldLable =  "CustomerNameListLable",
 					  						ListLableDefaultText =  "Customer",
-											ListLocalDefaultText =  "לקוח",
+					  						ListLocalDefaultText =  "לקוח",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -89631,7 +89631,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullLocalDefaultText =  "חוליה",
 					  						ListFieldLable =  "DepartmentNameListLable",
 					  						ListLableDefaultText =  "Department",
-											ListLocalDefaultText =  "חוליה",
+					  						ListLocalDefaultText =  "חוליה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -92233,11 +92233,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	
 			 QueryColumn CustomsShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsShipmentsQuery.Id,QueryCode = CustomsShipmentsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Shipment.TransportModeId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CustomsShipmentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsShipmentsQuery.Id,QueryCode = CustomsShipmentsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Shipment.DepartmentName", ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CustomsShipmentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsShipmentsQuery.Id,QueryCode = CustomsShipmentsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Shipment.DepartmentName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CustomsShipmentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsShipmentsQuery.Id,QueryCode = CustomsShipmentsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Shipment.CreateDateTime", ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CustomsShipmentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsShipmentsQuery.Id,QueryCode = CustomsShipmentsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Shipment.CreateDateTime" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CustomsShipmentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsShipmentsQuery.Id,QueryCode = CustomsShipmentsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Shipment.ShipmentNumber", ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CustomsShipmentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsShipmentsQuery.Id,QueryCode = CustomsShipmentsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Shipment.ShipmentNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn CustomsShipmentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsShipmentsQuery.Id,QueryCode = CustomsShipmentsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Shipment.CustomerName" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -95410,6 +95410,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             }, EventTypeRepository, tenantEventTypes);
 
 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "OPN",
+                EnglishName =  "Shipment opened",
+                LocalName =  "פתיחת תיק",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ShipmentObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CST",
+                EnglishName =  "User Updated",
+                LocalName =  "עדכון לקוח",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ShipmentObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
@@ -95437,6 +95473,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
              			   Feature ShipmentFeature_MB018 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendToAMANAC", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.SendtoAMANAC", NameTextCodeDefaultText = "Send to AMANAC", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
              			   Feature ShipmentFeature_MB019 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendCartaPorte", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.TransmittoSAT", NameTextCodeDefaultText = "Transmit to SAT", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
              			   Feature ShipmentFeature_MB020 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ViziionUnsubscribe", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ContainerTrackingUnsubscribe", NameTextCodeDefaultText = "Container Tracking Unsubscribe", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
+             			   Feature ShipmentFeature_MB10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShipmentForm", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ShipmentForm", NameTextCodeDefaultText = "Shipment Form", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -95947,6 +95984,46 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
                         Width=0,
 						FeatureUniqeCode=  ShipmentFeature_MB020.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	          
+   
+			   MenuButton ShipmentMenuButton1 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "Forms",
+						Index = 0, 
+						IsActive = false,
+						LabelTextCodeCode = "Shipment.B.Forms",
+						LabelTextCodeDefaultText = "Forms",
+						Tenant = 0,
+						MenuButtonGroupId = ShipmentMenuButtonGroup.Id,
+						ObjectTableId = ShipmentObjectTable.Id,
+						MenuButtonType = "dropdownbutton",
+						FeatureId = null,
+						Style = null,
+						LocalDefaultText = "טפסים",
+						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+
+			   MenuButton ShipmentMenuButton10 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "ShipmentForm",
+						Index = 0, 
+						IsActive = true,
+						LabelTextCodeCode = "Shipment.B.ShipmentForm",
+						LabelTextCodeDefaultText = "Shipment Form",
+						Tenant = 0,
+						MenuButtonGroupId = ShipmentMenuButtonGroup.Id,
+						ParentMenuButtonId = ShipmentMenuButton1.Id,
+						ObjectTableId = ShipmentObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  ShipmentFeature_MB10.Id,
+						Style = null,
+						LocalDefaultText = "טופס תיק",
+                        HtmlComponentPath=null,
+                        Width=0,
+						FeatureUniqeCode=  ShipmentFeature_MB10.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }
 
@@ -95969,7 +96046,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   TextCode ShipmentTextCode_ShipmentSCustomsAdditionalFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Customs.AdditionalFields", DefaultText = "Additional Fields",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ShipmentTextCode_ShipmentBCreate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Create", DefaultText = "Create",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ShipmentTextCode_ShipmentBCreate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Create", DefaultText = "Create",LocalDefaultText = @"שמירה", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentMOrdersHasLocalCharacters = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Orders.HasLocalCharacters", DefaultText = "Some fields has local characters. Proccess?",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -97283,7 +97360,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   TextCode ShipmentTextCode_ShipmentGContainersLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.ContainersLines", DefaultText = "Containers lines",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ShipmentTextCode_ShipmentONewShipment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.NewShipment", DefaultText = "New Shipment",LocalDefaultText = @"משלוח חדש", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ShipmentTextCode_ShipmentONewShipment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.NewShipment", DefaultText = "New Shipment",LocalDefaultText = @"פתיחת תיק", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentOOpenNewCustomShipment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.OpenNewCustomShipment", DefaultText = "Open New Shipment",LocalDefaultText = @"פתיחת תיק עמילות", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -97302,6 +97379,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  		   TextCode ShipmentTextCode_ShipmentOInvalidFlightVoyageNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.InvalidFlightVoyageNumber", DefaultText = "Flight voyage number must be 4 digits",LocalDefaultText = @"מס' טיסה/הפלגה חייב להיות 4 ספרות", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentOInvalidFlightVoyageNumber1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.InvalidFlightVoyageNumber1", DefaultText = "Flight voyage number must be one letter and 3 digits",LocalDefaultText = @"מס' טיסה/הפלגה חייב להיות אות ו-3 ספרות", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentONewCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.NewCustomer", DefaultText = "New Customer",LocalDefaultText = @"לקוח חדש", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentONewShipmentCancelWarning = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.NewShipmentCancelWarning", DefaultText = "You are about to cancel shipment and all data will be lost",LocalDefaultText = @"אתה עומד לבטל את פתיחת התיק וכל הנתונים יאבדו", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

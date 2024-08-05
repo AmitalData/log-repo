@@ -30,9 +30,13 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return (from record in context.ShipmentReferances where record.Tenant == tenant select record);
         }
 
-        public ShipmentReferance GetSingleShipmentReferance(string id, int tenant)
+        public ShipmentReferance GetSingleShipmentReferance(string id, int tenant, int? lineNumber, int? authTokenTenant = null)
         {
-            return (from record in context.ShipmentReferances where record.ShipmentId == id && record.Tenant == tenant select record).FirstOrDefault();
+            return (from record in context.ShipmentReferances 
+                    where record.ShipmentId == id && record.Tenant == tenant 
+                        && (lineNumber == null || (lineNumber != null && record.LineNumber == lineNumber))
+                    select record
+                    ).FirstOrDefault();
         }
 
         public List<ShipmentReferance> GetShipmentReferancesByIds(List<string> ids, int tenant)

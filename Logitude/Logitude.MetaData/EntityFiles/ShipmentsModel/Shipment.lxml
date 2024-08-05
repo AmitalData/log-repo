@@ -111563,6 +111563,32 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false"
       EntityStatusCode="&quot;COST&quot;" />
+    <EventType
+      Code="&quot;OPN&quot;"
+      ObjectTableName="&quot;Shipment&quot;"
+      EnglishName="&quot;Shipment opened&quot;"
+      LocalName="&quot;פתיחת תיק&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;CST&quot;"
+      ObjectTableName="&quot;Shipment&quot;"
+      EnglishName="&quot;User Updated&quot;"
+      LocalName="&quot;עדכון לקוח&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons
@@ -111783,6 +111809,21 @@
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="26"
         LocalDefaultText="&quot;Container Tracking Unsubscribe&quot;"
+        IsPackagable="true" />
+    </MenuButton>
+    <MenuButton
+      EventCode="&quot;Forms&quot;"
+      DefaultText="&quot;Forms&quot;"
+      MenuButtonType="&quot;dropdownbutton&quot;"
+      IndexOrder="0"
+      LocalDefaultText="&quot;טפסים&quot;"
+      IsPackagable="true">
+      <MenuItem
+        EventCode="&quot;ShipmentForm&quot;"
+        DefaultText="&quot;Shipment Form&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="0"
+        LocalDefaultText="&quot;טופס תיק&quot;"
         IsPackagable="true" />
     </MenuButton>
   </MenuButtons>
@@ -117931,6 +117972,7 @@
     <TextCode
       Code="&quot;Shipment.B.Create&quot;"
       DefaultText="&quot;Create&quot;"
+      LocalDefaultText="&quot;שמירה&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -121225,7 +121267,7 @@
     <TextCode
       Code="&quot;Shipment.O.NewShipment&quot;"
       DefaultText="&quot;New Shipment&quot;"
-      LocalDefaultText="&quot;משלוח חדש&quot;"
+      LocalDefaultText="&quot;פתיחת תיק&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -121280,6 +121322,18 @@
       Code="&quot;Shipment.O.InvalidFlightVoyageNumber1&quot;"
       DefaultText="&quot;Flight voyage number must be one letter and 3 digits&quot;"
       LocalDefaultText="&quot;מס' טיסה/הפלגה חייב להיות אות ו-3 ספרות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.O.NewCustomer&quot;"
+      DefaultText="&quot;New Customer&quot;"
+      LocalDefaultText="&quot;לקוח חדש&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.O.NewShipmentCancelWarning&quot;"
+      DefaultText="&quot;You are about to cancel shipment and all data will be lost&quot;"
+      LocalDefaultText="&quot;אתה עומד לבטל את פתיחת התיק וכל הנתונים יאבדו&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

@@ -416,6 +416,7 @@ export class ShipmentList {
 		GrossWeightPerTon: number;
 		ManifestLastSharingDate: Date;
 		MainCarriageFinalDestinationPortCode: string;
+		WarehouseLegWarehouseName: string;
 		WarehouseLegWarehouseId: string;
 		WarehouseLegAddressId: string;
 		WarehouseLegTerminalCode: string;
@@ -597,5 +598,8 @@ export class ShipmentList {
 		NotesSharedWithCustomer: string;
 		Volume: number;
 		IsDocumentsNeedApprove: boolean;
+		ContainersNumbers: string;
+		ReferantUserId: string;
+		IskaNumber: string;
 	
 }

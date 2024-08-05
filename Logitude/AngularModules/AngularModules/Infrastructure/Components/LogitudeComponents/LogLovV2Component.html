@@ -776,7 +776,7 @@
                 <HelpIcon *ngIf="ShowHelp" [HideHeader]="true" [Text]="ObjectFieldHelp" [IconSize]="15"></HelpIcon>
             </td>
 
-            <td *ngIf="!HideColumns && !ShowSearchButton" style="width: 18px;">
+            <td *ngIf="(!HideColumns && !ShowSearchButton) || (!HideColumns && HideLastColumn)" style="width: 18px;">
                 <div></div>
             </td>
         </tr>
