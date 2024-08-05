@@ -1742,6 +1742,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;SearchFields&quot;"
     DefaultText="&quot;Search codes/ names&quot;"
+    FullLocalDefaultText="&quot;חיפוש קודים/ שמות&quot;"
     HelpTextCode="&quot;SearchFields&quot;"
     HelpTextDefaultText="&quot;Searching by :&#xA;1: code &#xA;2: english name &#xA;3: local name&quot;"
     IsNullable="false"

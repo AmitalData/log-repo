@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CountryCityUpdateClass
    {  		
-		public const string HashString = "f2360b2f3145e1cb958dee069089ece7";
+		public const string HashString = "f2360b2f3145e1cb958dee069089eed5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -792,7 +792,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search codes/ names",
-					  						HelpTextCode =  "SearchFields",
+                                            FullLocalDefaultText = "חיפוש קודים/ שמות",
+
+
+                                              HelpTextCode =  "SearchFields",
 					  						HelpTextDefaultText =  "Searching by english name and local names",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,

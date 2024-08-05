@@ -124,7 +124,7 @@
 
                                                         <tr [style.background-color]="DataSource.rowCount == ConstantPageSize && DontApplyVirtualization ? '#FFFBDA':''">
                                                             <td style="color: #666666; font-size: 11px; padding-left: 15px;">
-                                                                <div *ngIf="IsReady"> <span *ngIf="(DataSource.rowCount != ConstantPageSize || !DontApplyVirtualization)"> My {{ObjectTableNamePluralName}} ({{DataSource.rowCount}}) </span>   <span *ngIf="(DataSource.rowCount == ConstantPageSize && DontApplyVirtualization)">Showing the first {{ConstantPageSize}} rows, use the search field to find more results.</span></div>
+                                                                <div *ngIf="IsReady"> <span *ngIf="(DataSource.rowCount != ConstantPageSize || !DontApplyVirtualization)">  {{ObjectTableNamePluralName}} ({{DataSource.rowCount}}) </span>   <span *ngIf="(DataSource.rowCount == ConstantPageSize && DontApplyVirtualization)">Showing the first {{ConstantPageSize}} rows, use the search field to find more results.</span></div>
                                                             </td>
 
                                                             <!-- Add US Warehouse Button -->

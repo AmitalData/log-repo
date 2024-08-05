@@ -151,8 +151,8 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     private InitializeBillToLov() {
         this.InitLOVBillToFilters();
         if (this.IsAccountingActivated) {
-            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
-            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,CalculatedLocalName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
+            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
             this.BillToLovSizeForFullAccounting = 550;
         }
     }
