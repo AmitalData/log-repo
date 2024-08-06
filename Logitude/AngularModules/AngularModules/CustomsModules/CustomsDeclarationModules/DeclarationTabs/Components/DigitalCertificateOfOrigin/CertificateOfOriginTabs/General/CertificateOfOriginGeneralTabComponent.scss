@@ -51,6 +51,9 @@ $spacing: 0px; /* Space between boxes */
     height: 100%;
 }
 
+.FirstRowBox{
+    border-bottom: $border-width solid $border-color;
+}
 
 ::ng-deep .AddressBox .InputDiv {
     height: 55px !important;
