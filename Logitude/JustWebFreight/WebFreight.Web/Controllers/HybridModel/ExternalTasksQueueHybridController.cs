@@ -95,8 +95,8 @@ namespace WebFreight.Web.Controllers.HybridModel
 
 
             ExternalTasksQueueWcfService ExternalTasksQueueWcfService = new ExternalTasksQueueWcfService();
-            Response response = ExternalTasksQueueWcfService.GetTaskFromQueue(tenant, priority);
-            return response.ToString();
+            string response = ExternalTasksQueueWcfService.GetTaskFromQueue(tenant, priority);
+            return response; 
         }
 
 
@@ -111,8 +111,8 @@ namespace WebFreight.Web.Controllers.HybridModel
             int priority = JsonConvert.DeserializeObject<int>(JsonConvert.SerializeObject(t[2]), jsonSerializerSettings);
 
             ExternalTasksQueueWcfService ExternalTasksQueueWcfService = new ExternalTasksQueueWcfService();
-            Response Response = ExternalTasksQueueWcfService.MarkTaskAsDone(communicationLogId, tenant, priority);
-            return Response;
+            Response response = ExternalTasksQueueWcfService.MarkTaskAsDone(communicationLogId, tenant, priority);
+            return response;
         }
     }
 }
