@@ -193,11 +193,12 @@ export class ShipmentValidator implements IShipmentValidator {
                 }
             }
         }
+        var validateCustomsShipment = this.entityPM.ShipmentTypeId == "FCLD" && this.entityPM.DirectionId == "C";
 
         this.entityPM.ShipmentPackages.forEach(item => {
             Validator.TryValidateObject(item, "ShipmentPackage", this.Errors);
 
-            if (this.entityPM.TransportModeId != 'A') {
+            if (this.entityPM.TransportModeId != 'A' && !validateCustomsShipment) {
                 if (AppTool.IsNullOrEmpty(item.PackageTypeId)) {
 
                     if (this.IsLCLEntity) {
@@ -213,8 +214,11 @@ export class ShipmentValidator implements IShipmentValidator {
                     this.Errors.push("Gross Weight is required");
                 }
             }
-            if(this.entityPM.ShipmentTypeId == "FCLD" && this.entityPM.DirectionId == "C"){
+            if (validateCustomsShipment) {
+                var error = this.ValidateContainerNumber(item.ContainerNumber)
+                if (error != null) {
                 this.Errors.push(this.ValidateContainerNumber(item.ContainerNumber));
+            }
             }
             
         });
