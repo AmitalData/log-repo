@@ -39,8 +39,6 @@ export class AddEditMultipleAPInvoiceLineComponent {
         this.ChargeTypesQueryFilters.addAdditionalFilter("IsPayable", true, null, null, "Equals", false, false, false, "boolean");
         this.ChargeTypesQueryFilters.addAdditionalFilter("PayableDebitGLAcountId", true, null, null, "IsNotNull", false, false, false, "Text");
     }
-    
-     
     SetDataContext(dataContext: APInvoiceLineShortItem) {
         this.EntityPM = dataContext.EntityPM;
         this.DataContext = dataContext;

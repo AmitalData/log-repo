@@ -94,6 +94,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public BillToFilter:ApiQueryFilters;
     public GLAccountsFilterItems: ApiQueryFilters;
 
+
     get TextStore()
     {
         return TextStore;

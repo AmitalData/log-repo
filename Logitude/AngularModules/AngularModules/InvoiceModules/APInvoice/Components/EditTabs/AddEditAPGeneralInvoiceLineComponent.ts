@@ -53,7 +53,8 @@ export class AddEditAPGeneralInvoiceLineComponent {
         this.ChargeTypesQueryFilters.addAdditionalFilter("PayableDebitGLAcountId", true, null, null, "IsNotNull", false, false, false, "Text");
     }
  
-    FillChargesTypesCustomLOVColumnsWidths()
+
+   FillChargesTypesCustomLOVColumnsWidths()
     {
         this.ColumnsWidths = [
             { ColumnName: 'Code', Width: 80 },

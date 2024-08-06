@@ -70,6 +70,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     VendorLovSizeForFullAccounting:number;
     _JournalExtendedPMService: JournalExtendedPMService = new JournalExtendedPMService();
     public FilterInvoiceByAPPayment:boolean= false
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
 
@@ -79,6 +81,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
         }
         this.IsFullAccounting = SessionLocator.TenantPM.AccountingActivated;
+        this.InitLOVFilters();
         this.InitializeBillToLov()
         this.EntityPM = entityArgs.EntityPM;
         this.ReconcileInternalTrans = this.EntityPM.ReconcileInternalTrans;
@@ -108,11 +111,14 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
     }
-
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
+    }
     private InitializeBillToLov() {
         if (this.IsFullAccounting) {
-            this.DisplayFieldsFromList = "Code,GLAccountDisplayNumber,CalculatedEnglishName,CalculatedLocalName,PartnerTypeName,CountryCode";
-            this.DisplayLocalFieldsFromList = "Code,GLAccountDisplayNumber,CalculatedLocalName,PartnerTypeName,CountryCode";
+            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,CalculatedLocalName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
+            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
             this.VendorLovSizeForFullAccounting = 550;
         }
     }

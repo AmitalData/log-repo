@@ -134,6 +134,7 @@
     <None Include="DBOthers\ShipmentsModel\Views\DigitalShipmentDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\LogBoxShipmentDataView.dxml" />
     <None Include="DBScripts\CommonModel\202007051540_UpdateCardGlaAccountDisplayNumber.sxml" />
+    <None Include="DBOthers\ShipmentsModel\Views\LogBoxShipmentDataView.dxml" />
     <None Include="DBScripts\CommonModel\202304051240_MarkDuplicatedDocumentsAsDeletedLogbox2Ignore.Ignoresxml" />
     <None Include="DBScripts\CommonModel\202304051240_MarkDuplicatedDocumentsAsDeletedCloud2Ignore.Ignoresxml" />
     <None Include="DBScripts\CommonModel\202208160224_AddBinaryTypeToFieldDataTypes.sxml" />

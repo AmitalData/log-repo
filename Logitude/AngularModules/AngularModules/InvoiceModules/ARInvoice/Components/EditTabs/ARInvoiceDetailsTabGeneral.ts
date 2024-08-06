@@ -75,7 +75,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
    
 
 
-        super();
+      super();
         // this.CurrentSession.StartBusyIndicatorLoading();
         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
