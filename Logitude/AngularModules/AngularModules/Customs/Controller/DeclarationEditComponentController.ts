@@ -126,7 +126,6 @@ export class DeclarationEditComponentController implements IEditComponentControl
                     resolve(this._ControllerOn);
                     return;
                 }
-           if(this._CurrentEntity.Direction != "E")
             this.RaiseCFIFILMLockReturnCFIFILMAlreadyLock(resolve)
           /*else
             //this.RaiseBFIFILELockReturnBFIFILEAlreadyLock(resolve) */ 
@@ -283,7 +282,6 @@ export class DeclarationEditComponentController implements IEditComponentControl
                 return;
             }
          
-            if(this._CurrentEntity.Direction != "E")
               setTimeout(() => { this.RaiseCFIFILMLockReturnCFIFILMAlreadyLock(resolve); }, 500)
             /*else
               setTimeout(() => { this.RaiseBFIFILELockReturnBFIFILEAlreadyLock(resolve); }, 500)
