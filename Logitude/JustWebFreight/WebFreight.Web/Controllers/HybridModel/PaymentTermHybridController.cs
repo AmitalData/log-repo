@@ -28,4 +28,5 @@ namespace WebFreight.Web.Controllers.HybridModel
             List<PaymentTermList> listResponse = PaymentTermWcfService.GetPaymentTerms(ref response, tenant);
             return listResponse;
         }
+    }
 }
