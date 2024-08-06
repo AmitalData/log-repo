@@ -18,7 +18,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.OriginalQueryId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.QuerySection).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.QueryGroupCode).IsRequired().HasMaxLength(4).IsUnicode(false);
-            this.Property(t => t.NameTextCodeId).HasMaxLength(60).IsUnicode(true);
+            this.Property(t => t.NameTextCodeId).HasMaxLength(30).IsUnicode(false);  
             this.Property(t => t.DefaultSortColumn).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.DefaultSortDirection).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.SpotlightDataTemplate).HasMaxLength(50).IsUnicode(false);

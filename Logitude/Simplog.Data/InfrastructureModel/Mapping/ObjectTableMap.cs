@@ -22,7 +22,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             this.Property(t => t.SortingByObjectField).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.DBTableName).HasMaxLength(200).IsUnicode(true);
-            this.Property(t => t.DescriptionTextCodeId).HasMaxLength(60).IsUnicode(true);
+            this.Property(t => t.DescriptionTextCodeId).HasMaxLength(30).IsUnicode(false);   
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
             this.Property(t => t.MainTipCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.ObjectTableTypeCode).IsRequired().HasMaxLength(4).IsUnicode(false);
@@ -44,7 +44,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.ParentObjectTableName).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.ParentObjectTableId).HasMaxLength(15).IsUnicode(true);
             this.Property(t => t.IsCustom);
-            this.Property(t => t.FullNameTextCodeId).HasMaxLength(60).IsUnicode(true);
+            this.Property(t => t.FullNameTextCodeId).HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.FullNameTextCodeCode).HasMaxLength(200).IsUnicode(true);
 
             //this.Property(t => t.FilterMenuComponentPath).HasMaxLength(250).IsUnicode(false);

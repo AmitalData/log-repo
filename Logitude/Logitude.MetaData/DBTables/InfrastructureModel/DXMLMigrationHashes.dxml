@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="DXMLMigrationHashes" Schema="dbo" DBType="Main" Module="Infrastructure">
 
-  <Column Name="DxmlFileName" Type="nvarchar" Size="1000">
+  <Column Name="DxmlFileName" Type="varchar" Size="500">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   

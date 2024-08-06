@@ -12,12 +12,12 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.HasKey(t => t.Id);
            
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.FieldName).IsRequired().HasMaxLength(200).IsUnicode(true);
+            this.Property(t => t.FieldName).IsRequired().HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.ObjectTableId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.DataTypeCode).HasMaxLength(10).IsUnicode(false);
             this.Property(t => t.LookUpTableId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.HelpTextCodeId).HasMaxLength(30).IsUnicode(false);
-            this.Property(t => t.FullNameTextCodeId).HasMaxLength(60).IsUnicode(true);
+            this.Property(t => t.FullNameTextCodeId).HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.ListTextCodeId).HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.ConverterName).HasMaxLength(200).IsUnicode(true);
             this.Property(t => t.DataTemplateName).HasMaxLength(100).IsUnicode(true);
@@ -25,7 +25,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Operator).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.PMPropertyPath).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.ListPropertyPath).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.ShortNameTextCodeId).HasMaxLength(60).IsUnicode(true);
+            this.Property(t => t.ShortNameTextCodeId).HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.MultiTableId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.DependencyFilter1Type).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.DependencyFilter2Type).HasMaxLength(20).IsUnicode(false);

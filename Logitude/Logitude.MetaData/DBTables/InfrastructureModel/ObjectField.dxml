@@ -20,15 +20,15 @@
   </Column>
   <Column
     Name="FullNameTextCodeId"
-    Type="nvarchar"
-    Size="60">
+    Type="varchar"
+    Size="30">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="FieldName"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="false" />
   </Column>
@@ -206,8 +206,8 @@
   </Column>
   <Column
     Name="ShortNameTextCodeId"
-    Type="nvarchar"
-    Size="60">
+    Type="varchar"
+    Size="30">
     <Constraints
       Nullable="true" />
   </Column>

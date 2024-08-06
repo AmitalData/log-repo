@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="DBScriptsHistory" Schema="dbo" Module="Infrastructure">
 
-  <Column Name="SxmlFileName" Type="nvarchar" Size="1000">
+  <Column Name="SxmlFileName" Type="varchar" Size="500">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   
