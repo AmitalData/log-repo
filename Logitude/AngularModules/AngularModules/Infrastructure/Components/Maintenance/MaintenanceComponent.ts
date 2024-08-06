@@ -83,9 +83,6 @@ export class MaintenanceComponent {
         this.PagesMenu.push(new Menu("PRS", TextCodeTranslator.Translate("General.MC.PersonalSettings.PersonalSettings")));
         this.PagesMenu.push(new Menu("CMS", TextCodeTranslator.Translate("General.MC.SystemSettings.SystemSettings")));
 
-        if (FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber))
-            this.PagesMenu.push(new Menu("SHA", TextCodeTranslator.Translate("General.MC.ShaamTokenManagement")));
-
         if (SessionLocator.Tenant == 0) {
             this.PagesMenu.push(new Menu("MNG", TextCodeTranslator.Translate("General.MC.Management.Management")));
         }
@@ -224,7 +221,7 @@ export class MaintenanceComponent {
         this.BuildAccountingMenus();
         this.BuildOtherMenus();
         this.BuildTransmissionsMenus();
-         this.BuildShaamTokenManagementMenu();
+        this.BuildShaamTokenManagementMenu();
         this.BuildAmitalAPISettingsMenu();
          this.BuildCustomizationMenus();
         this.BuildCustomObjectsMenus();
@@ -995,7 +992,8 @@ export class MaintenanceComponent {
         maintenanceMenuItem.DescriptionText = objectTable.Description != null ? objectTable.Description : TextCodeTranslator.Translate(objectTable.DescriptionTextCodeCode);
         this.AllMaintenanceMenu.push(maintenanceMenuItem);
     }
-       private BuildShaamTokenManagementMenu() {
+    
+    private BuildShaamTokenManagementMenu() {
         if (!FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber)) return;
 
         var item = new MenusTablePM();
@@ -1058,7 +1056,7 @@ export class MaintenanceComponent {
  
     // Commands
      PageChanged(item: Menu) {
-        if (item.Code === 'SHA')
+        if (SessionLocator.TenantPM.AccountingActivated && item.Code === 'SHA')
             return this.navigateToExportCustoms('showShaamTokenManagment');
  
         this.SelectedMenu = item;
