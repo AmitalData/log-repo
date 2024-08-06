@@ -69,6 +69,8 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public InvoicePartners: InvoicePartnerType[] = [];
     public BillToFilter: ApiQueryFilters;
     public PartnerTypeComboBoxIsDisabled: boolean = true;
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     constructor(private entityArgs: EntityArgs, private cdRef: ChangeDetectorRef) {
       super();
         // this.CurrentSession.StartBusyIndicatorLoading();
