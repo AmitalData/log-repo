@@ -121,7 +121,7 @@ export class DeclarationEditComponentController implements IEditComponentControl
                 return;
             }
             //if (!(this._CurrentEntity.IsConvertedDeclaration || this._CurrentEntity.IsConnectedToUnifreight)) {        
-                if ((!(this._CurrentEntity.IsConnectedToUnifreight))&& this._CurrentEntity.Direction != "E" ) {
+                if ((!(this._CurrentEntity.IsConnectedToUnifreight)) ) {
                     this._ControllerOn = false;
                     resolve(this._ControllerOn);
                     return;
@@ -322,7 +322,7 @@ export class DeclarationEditComponentController implements IEditComponentControl
                         }
                     }
                 );
-           if(this._CurrentEntity.Direction!="E"){
+          // if(this._CurrentEntity.Direction!="E"){
                 if (!AppTool.IsNullOrEmpty(onCallBack)) {
                     setTimeout(() => {
                         AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseUnlockCFIFILEM(this._CurrentEntity.CustomFileNo, this._CurrentEntity.Id, this.HaveSaved);
@@ -332,18 +332,18 @@ export class DeclarationEditComponentController implements IEditComponentControl
                     AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseUnlockCFIFILEM(this._CurrentEntity.CustomFileNo, this._CurrentEntity.Id, this.HaveSaved);
     
                 }
-            }
-            else{
-                if (!AppTool.IsNullOrEmpty(onCallBack)) {
-                    setTimeout(() => {
-                        AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseUnlockBFIFILE(this._CurrentEntity.CustomFileNo, this._CurrentEntity.Id, this.HaveSaved);
+            // }
+            // else{
+            //     if (!AppTool.IsNullOrEmpty(onCallBack)) {
+            //         setTimeout(() => {
+            //             AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseUnlockBFIFILE(this._CurrentEntity.CustomFileNo, this._CurrentEntity.Id, this.HaveSaved);
     
-                    }, 300);
-                } else {
-                      AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseUnlockBFIFILE(this._CurrentEntity.CustomFileNo, this._CurrentEntity.Id, this.HaveSaved);
-                }
+            //         }, 300);
+            //     } else {
+            //           AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseUnlockBFIFILE(this._CurrentEntity.CustomFileNo, this._CurrentEntity.Id, this.HaveSaved);
+            //     }
 
-            }
+            // }
 
 
         } else {
