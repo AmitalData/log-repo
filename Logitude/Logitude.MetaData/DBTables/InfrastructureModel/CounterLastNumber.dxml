@@ -13,8 +13,8 @@
   </Column>
   <Column
     Name="TableName"
-    Type="varchar"
-    Size="40">
+    Type="nvarchar"
+    Size="80">
     <Constraints
       Nullable="false" />
   </Column>

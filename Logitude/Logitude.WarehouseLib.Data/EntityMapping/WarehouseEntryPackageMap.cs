@@ -45,7 +45,7 @@ namespace Logitude.WarehouseLib.Data.EntityMapping
 
             this.Property(t => t.Volume).HasColumnName("Volume").HasPrecision(16, 3);
 
-            this.Property(t => t.Description).HasColumnName("Description").HasMaxLength(2000).IsUnicode(false);
+            this.Property(t => t.Description).HasColumnName("Description").HasMaxLength(4000).IsUnicode(true);
 
             this.Property(t => t.PackageTypeId).HasColumnName("PackageTypeId").HasMaxLength(15).IsUnicode(false);
 

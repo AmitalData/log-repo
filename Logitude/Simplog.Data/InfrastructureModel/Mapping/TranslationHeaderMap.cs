@@ -18,8 +18,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .IsUnicode(false);
 
             this.Property(t => t.Description)
-                .HasMaxLength(250)
-                .IsUnicode(false);
+                .HasMaxLength(500)
+                .IsUnicode(true);
 
             // Table & Column Mappings
             this.ToTable("TranslationHeaders");

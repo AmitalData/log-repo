@@ -550,9 +550,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "Name",
 					  						ObjectTableName =  "HybridPartner",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
-					  						MaxLength =  25,
+					  						MaxLength =  50,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,

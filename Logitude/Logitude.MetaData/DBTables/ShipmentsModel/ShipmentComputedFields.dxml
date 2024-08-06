@@ -142,8 +142,8 @@
   </Column>
   <Column
     Name="OperationallyClosedByUserName"
-    Type="varchar"
-    Size="100">
+    Type="nvarchar"
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>

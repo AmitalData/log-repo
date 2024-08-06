@@ -3576,9 +3576,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "CountryName",
 					  						ObjectTableName =  "Card",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
-					  						MaxLength =  120,
+					  						MaxLength =  240,
 					  						IsRequired =  false,
 					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  true,
@@ -5099,7 +5099,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "SalesmanUserEnglishName",
 					  						ObjectTableName =  "Card",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
@@ -6386,9 +6386,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "StateName",
 					  						ObjectTableName =  "Card",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
-					  						MaxLength =  40,
+					  						MaxLength =  80,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,

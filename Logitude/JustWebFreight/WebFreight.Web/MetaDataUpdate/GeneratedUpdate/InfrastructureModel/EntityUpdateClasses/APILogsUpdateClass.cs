@@ -1313,9 +1313,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					 
 					 						FieldName =  "PartnerName",
 					  						ObjectTableName =  "APILogs",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
-					  						MaxLength =  100,
+					  						MaxLength =  200,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,

@@ -51,11 +51,11 @@ namespace Logitude.BookingLib.Data.EntityMapping
 
             this.Property(t => t.FromPortCode).HasColumnName("FromPortCode").IsRequired().HasMaxLength(3).IsUnicode(false);
 
-            this.Property(t => t.FromPortName).HasColumnName("FromPortName").HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.FromPortName).HasColumnName("FromPortName").HasMaxLength(80).IsUnicode(true);
 
             this.Property(t => t.ToPortCode).HasColumnName("ToPortCode").IsRequired().HasMaxLength(3).IsUnicode(false);
 
-            this.Property(t => t.ToPortName).HasColumnName("ToPortName").HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.ToPortName).HasColumnName("ToPortName").HasMaxLength(80).IsUnicode(true);
 
             this.Property(t => t.MissingPort).HasColumnName("MissingPort").IsRequired();
         }

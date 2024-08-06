@@ -13,20 +13,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="CarrierAreaId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="PortId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="Tenant"
     Type="int">
     <Constraints
@@ -34,8 +20,8 @@
   </Column>
   <Column
     Name="Name"
-    Type="varchar"
-    Size="100">
+    Type="nvarchar"
+    Size="200">
     <Constraints
       Nullable="false" />
   </Column>
@@ -52,6 +38,25 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CarrierAreaId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PortId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="AddedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="CarrierAreaId"
     ReferencedTable="CarrierAreas"
@@ -60,11 +65,6 @@
   <Relation
     ForeignKeyColumn="PortId"
     ReferencedTable="Ports"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="AddedByUserId"
-    ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

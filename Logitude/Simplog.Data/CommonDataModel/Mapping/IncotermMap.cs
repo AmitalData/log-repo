@@ -24,8 +24,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
             this.Property(t => t.Name)
                 .IsRequired()
-                .HasMaxLength(40)
-                .IsUnicode(false);
+                .HasMaxLength(80)
+                .IsUnicode(true);
 
             this.Property(t => t.Notes)
                 .HasMaxLength(250)

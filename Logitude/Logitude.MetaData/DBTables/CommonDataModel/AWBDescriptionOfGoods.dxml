@@ -2,8 +2,7 @@
 <Table
   Name="AWBDescriptionOfGoods"
   Schema="dbo"
-  DBType="Main"
-  Module="Common">
+  DBType="Main">
   <Column
     Name="Id"
     Type="varchar"
@@ -13,16 +12,36 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Name"
+    Name="Service"
     Type="varchar"
-    Size="60">
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsTemperatureSensitive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Name"
+    Type="nvarchar"
+    Size="120">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
     Name="ShortDescriptionOfGoods"
-    Type="varchar"
-    Size="100">
+    Type="nvarchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>
@@ -39,25 +58,5 @@
     Size="4">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Service"
-    Type="varchar"
-    Size="40">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="IsTemperatureSensitive"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
   </Column>
 </Table>

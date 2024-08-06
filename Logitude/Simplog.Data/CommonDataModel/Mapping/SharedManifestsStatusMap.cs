@@ -14,7 +14,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
         {
             this.HasKey(t => t.StatusCode);
             this.Property(t => t.StatusCode).IsRequired().HasMaxLength(4).IsUnicode(false);
-            this.Property(t => t.StatusName).IsRequired().HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.StatusName).IsRequired().HasMaxLength(200).IsUnicode(true);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
 
 

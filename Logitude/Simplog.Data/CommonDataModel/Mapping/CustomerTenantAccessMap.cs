@@ -19,16 +19,16 @@ namespace Simplog.Data.CommonDataModel.Mapping
             .IsUnicode(false);
 
             this.Property(t => t.ContactName)      
-           .HasMaxLength(60)
-           .IsUnicode(false);
+           .HasMaxLength(120)
+           .IsUnicode(true);
 
             this.Property(t => t.CompanyVat)
            .HasMaxLength(20)
            .IsUnicode(false);
 
             this.Property(t => t.CompanyName)
-           .HasMaxLength(100)
-           .IsUnicode(false);
+           .HasMaxLength(200)
+           .IsUnicode(true);
 
             this.Property(t => t.CompanyEmail)
            .HasMaxLength(70)

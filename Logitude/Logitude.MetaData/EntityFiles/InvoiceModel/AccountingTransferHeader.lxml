@@ -9,6 +9,10 @@
   ObjectTablePlural="&quot;Accounting Transfers&quot;"
   HasCustomFilter="true"
   HasCustomFields="false"
+  AvailableInCustomization="false"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="true"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -50,6 +54,8 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;fb08&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -82,6 +88,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -155,6 +162,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -228,6 +236,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -305,6 +314,7 @@
     DisplayInList="true"
     DataTemplateName="&quot;TransferDateDataTemplate&quot;"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -364,12 +374,12 @@
     FieldName="&quot;FileName&quot;"
     OldNames="FileName"
     IsNew="false"
-    IsChecked="false"
+    IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;AccountingTransferHeader&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
-    MaxLength="40"
+    MaxLength="80"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -381,6 +391,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -457,6 +468,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -486,9 +498,9 @@
     DefaultText="&quot;User&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="User"
+    ForeignEntity="&quot;User&quot;"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="User"
+    NavigationPropertyName="&quot;User&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -533,6 +545,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -562,9 +575,9 @@
     DefaultText="&quot;Transfer Type&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="AccountingTransferType"
+    ForeignEntity="&quot;AccountingTransferType&quot;"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="TransferType"
+    NavigationPropertyName="&quot;TransferType&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -609,6 +622,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Contains&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -683,6 +697,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -759,6 +774,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -833,6 +849,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="true"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -907,6 +924,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="true"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -981,6 +999,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -1058,6 +1077,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -1135,6 +1155,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="true"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -1209,6 +1230,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="true"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -1302,7 +1324,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;ARInvoiceTransferHistory&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -1346,7 +1369,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;APInvoiceTransferHistory&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -1390,7 +1414,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;ARPaymentTransferHistory&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -1434,7 +1459,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;APPaymentTransferHistory&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Screen
@@ -1523,22 +1549,21 @@
     <Feature
       Code="&quot;REBUILD&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;AccountingTransferHeader.Features.Rebuild&quot;"
+      FeatureDefaultText="&quot;Rebuild&quot;"
       IsPackagable="false"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;AccountingTransferHeader.Features.Rebuild&quot;"
-      FeatureDefaultText="&quot;Rebuild&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;QuickbooksConnectAuth1&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      IsPackagable="true"
-      IsBusinessUnitEnabled="false"
-      IsOld="false"
-      IsCoreFeature="false"
       FeatureTextCodeCode="&quot;AccountingTransferHeader.Features.QuickbooksConnectAuth1&quot;"
       FeatureDefaultText="&quot;Quickbooks Connect Auth1&quot;"
-       />
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;DisableFTPSettings&quot;"
       FeatureTypeCode="&quot;AREA&quot;"

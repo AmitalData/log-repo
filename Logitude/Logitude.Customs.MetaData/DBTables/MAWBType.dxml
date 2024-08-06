@@ -2,8 +2,7 @@
 <Table
   Name="MAWBTypes"
   Schema="Customs"
-  DBType="Main"
-  Module="Customs">
+  DBType="Main">
   <Column
     Name="Code"
     Type="varchar"
@@ -14,8 +13,8 @@
   </Column>
   <Column
     Name="Name"
-    Type="varchar"
-    Size="100">
+    Type="nvarchar"
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>

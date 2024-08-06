@@ -97,9 +97,9 @@ namespace Logitude.ShipmentOrderModule.Data.EntityMapping
 
             this.Property(t => t.GatewayId).HasColumnName("GatewayId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.CasualImporterName).HasColumnName("CasualImporterName").HasMaxLength(70).IsUnicode(false);
+            this.Property(t => t.CasualImporterName).HasColumnName("CasualImporterName").HasMaxLength(140).IsUnicode(true);
 
-            this.Property(t => t.CasualSupplierName).HasColumnName("CasualSupplierName").HasMaxLength(70).IsUnicode(false);
+            this.Property(t => t.CasualSupplierName).HasColumnName("CasualSupplierName").HasMaxLength(140).IsUnicode(true);
 
             this.Property(t => t.ShipmentLevelCode).HasColumnName("ShipmentLevelCode").HasMaxLength(1).IsUnicode(false);
 

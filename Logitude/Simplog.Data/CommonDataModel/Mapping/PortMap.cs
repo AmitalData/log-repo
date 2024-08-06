@@ -25,8 +25,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
             this.Property(t => t.EnglishName)
                 .IsRequired()
-                .HasMaxLength(40)
-                .IsUnicode(false);
+                .HasMaxLength(80)
+                .IsUnicode(true);
 
             this.Property(t => t.LocalName)
                 .HasMaxLength(40)
@@ -93,10 +93,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
               .HasMaxLength(30)
               .IsUnicode(false);
 
-            this.Property(t => t.StateName).HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.StateName).HasMaxLength(80).IsUnicode(true);
             this.Property(t => t.StateCode).HasMaxLength(10).IsUnicode(false);
             this.Property(t => t.CountryCode).HasMaxLength(2).IsUnicode(false);
-            this.Property(t => t.CountryName).HasMaxLength(120).IsUnicode(false);
+            this.Property(t => t.CountryName).HasMaxLength(240).IsUnicode(true);
             this.Property(t => t.PortTimeZoneCode).HasMaxLength(150).IsUnicode(false);
 
             // Table & Column Mappings

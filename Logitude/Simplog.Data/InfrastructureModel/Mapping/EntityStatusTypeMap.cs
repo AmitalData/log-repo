@@ -23,8 +23,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             this.Property(t => t.Name)
                 .IsRequired()
-                .HasMaxLength(15)
-                .IsUnicode(false);
+                .HasMaxLength(30)
+                .IsUnicode(true);
 
             this.Property(t => t.SearchFields)
                 .HasMaxLength(1000)

@@ -28,8 +28,8 @@
   </Column>
   <Column
     Name="EnglishName"
-    Type="varchar"
-    Size="60">
+    Type="nvarchar"
+    Size="120">
     <Constraints
       Nullable="true" />
   </Column>

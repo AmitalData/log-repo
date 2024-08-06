@@ -21,7 +21,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.HTSCode).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.SKU).HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.Brand).HasMaxLength(60).IsUnicode(false);
-            this.Property(t => t.Name).HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.Name).HasMaxLength(80).IsUnicode(true);
             this.Property(t => t.OtherDuties).HasMaxLength(200).IsUnicode(false);
             this.Property(t => t.Remarks).HasMaxLength(1000).IsUnicode(true);
             this.Property(t => t.ShipperId).HasMaxLength(15).IsUnicode(false);

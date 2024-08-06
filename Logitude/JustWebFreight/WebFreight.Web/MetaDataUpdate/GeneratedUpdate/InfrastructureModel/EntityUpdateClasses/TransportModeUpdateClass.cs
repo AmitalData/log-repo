@@ -280,9 +280,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					 
 					 						FieldName =  "Name",
 					  						ObjectTableName =  "TransportMode",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
-					  						MaxLength =  10,
+					  						MaxLength =  20,
 					  						IsRequired =  true,
 					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  true,

@@ -34,7 +34,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.DeliveryTo).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.PickupFrom).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.PickupTo).HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.OperationallyClosedByUserName).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.OperationallyClosedByUserName).HasMaxLength(200).IsUnicode(true);
 
             this.Property(t => t.DeliveryTruckerId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.PickupTruckerId).HasMaxLength(15).IsUnicode(false);

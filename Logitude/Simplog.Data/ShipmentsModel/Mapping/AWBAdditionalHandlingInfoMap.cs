@@ -15,8 +15,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasKey(t => t.Id);
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Code).IsRequired().HasMaxLength(5).IsUnicode(false);
-            this.Property(t => t.Name).IsRequired().HasMaxLength(60).IsUnicode(false);
-            this.Property(t => t.PrintDescription).IsRequired().HasMaxLength(60).IsUnicode(false);
+            this.Property(t => t.Name).IsRequired().HasMaxLength(120).IsUnicode(true);
+            this.Property(t => t.PrintDescription).IsRequired().HasMaxLength(120).IsUnicode(true);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
 
             this.ToTable("AWBAdditionalHandlingInfos");

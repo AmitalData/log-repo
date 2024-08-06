@@ -36,8 +36,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .IsUnicode(false);
 
             this.Property(t => t.UserControlName)
-                .HasMaxLength(120)
-                .IsUnicode(false);
+                .HasMaxLength(240)
+                .IsUnicode(true);
 
             this.Property(t => t.ObjectTableId)
                 .HasMaxLength(15)
