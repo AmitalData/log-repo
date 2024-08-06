@@ -38,7 +38,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.ServerModuleName).HasMaxLength(120).IsUnicode(true);
             this.Property(t => t.NewWizardComponentPath).HasMaxLength(250).IsUnicode(false);
             this.Property(t => t.DownloadToExcelFeatureCode).HasMaxLength(120).IsUnicode(false);
-            this.Property(t => t.DescriptionTextCodeCode).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.DescriptionTextCodeCode).HasMaxLength(200).IsUnicode(true);
             this.Property(t => t.NewButtonTextCodeCode).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.SplitComponentPath).HasMaxLength(500).IsUnicode(true);
             this.Property(t => t.ParentObjectTableName).HasMaxLength(100).IsUnicode(false);
