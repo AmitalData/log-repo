@@ -42,10 +42,6 @@ namespace Logitude.Server.Tools.Helpers
                         Array.Copy(data, IV, IV.Length);
                         Array.Copy(data, IV.Length, cipherText, 0, cipherText.Length);
 
-                        // Validate ciphertext length
-                        if (cipherText.Length % aesAlg.BlockSize != 0)
-                            throw new Exception("Invalid ciphertext length. Not a multiple of block size.");
-
                         aesAlg.IV = IV;
 
                         aesAlg.Mode = CipherMode.CBC;
