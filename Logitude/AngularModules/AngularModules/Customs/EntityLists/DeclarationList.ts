@@ -212,6 +212,7 @@ export class DeclarationList {
 	TerminalReleaseDate: Date;
 	IntegratorCode: string;
 	IsExportClosed: boolean;
+	DeclarationOfficeHandlerCode: string;
 	DeclarationTypeName: string;
 	IsExportDeclarationAmendments: boolean;
 	CargoTypeCode: string;
