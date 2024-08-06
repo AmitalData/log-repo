@@ -138,7 +138,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    MaxNumberOfCustomFields =  50,
 			      				    LocalDefaultText =  "כרטיסים",
 			      				    DefaultText =  "Card",
-                                    LocalDefaultText = "כרטיסים",
 									Code =  "1561",
 			      				    Name =  "Card",
 			      				    GenerateDomainService =  false,
