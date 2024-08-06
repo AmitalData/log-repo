@@ -45,4 +45,5 @@ namespace WebFreight.Web.Controllers.HybridModel
             TruckerPM Response = TruckerWcfService.GetTruckerPM(code, tenant, ref response);
             return Response;
         }
+    }
 }

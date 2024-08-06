@@ -28,4 +28,5 @@ namespace WebFreight.Web.Controllers.HybridModel
             Response response = OcrDocumentWcfService.Upsert(ocrDocumentPM, batch);
             return response;
         }
+    }
 }
