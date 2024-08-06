@@ -209,7 +209,7 @@
   </Column>
   <Column
     Name="StateName"
-    Type="varchar"
+    Type="nvarchar"
     Size="80">
     <Constraints
       Nullable="true" />
