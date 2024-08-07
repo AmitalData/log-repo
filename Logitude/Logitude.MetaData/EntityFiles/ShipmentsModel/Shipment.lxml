@@ -105471,7 +105471,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;CarrierCodeMawb&quot;"
     DefaultText="&quot;Carrier Code Mawb&quot;"
-    FullLocalDefaultText="&quot;ש.מ.ר&quot;"
+    FullLocalDefaultText="&quot;שטר מטען ראשי&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -111602,6 +111602,21 @@
     MenuButtonGroupType="&quot;ShipmentEdit&quot;"
     MenuButtonGroupName="&quot;ShipmentEditButtonsGroup&quot;">
     <MenuButton
+      EventCode="&quot;Forms&quot;"
+      DefaultText="&quot;Forms&quot;"
+      MenuButtonType="&quot;dropdownbutton&quot;"
+      IndexOrder="0"
+      LocalDefaultText="&quot;טפסים&quot;"
+      IsPackagable="true">
+      <MenuItem
+        EventCode="&quot;ShipmentForm&quot;"
+        DefaultText="&quot;Shipment Form&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="0"
+        LocalDefaultText="&quot;טופס תיק&quot;"
+        IsPackagable="true" />
+    </MenuButton>
+    <MenuButton
       EventCode="&quot;Actions&quot;"
       DefaultText="&quot;More&quot;"
       MenuButtonType="&quot;dropdownbutton&quot;"
@@ -111816,21 +111831,6 @@
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="26"
         LocalDefaultText="&quot;Container Tracking Unsubscribe&quot;"
-        IsPackagable="true" />
-    </MenuButton>
-    <MenuButton
-      EventCode="&quot;Forms&quot;"
-      DefaultText="&quot;Forms&quot;"
-      MenuButtonType="&quot;dropdownbutton&quot;"
-      IndexOrder="0"
-      LocalDefaultText="&quot;טפסים&quot;"
-      IsPackagable="true">
-      <MenuItem
-        EventCode="&quot;ShipmentForm&quot;"
-        DefaultText="&quot;Shipment Form&quot;"
-        MenuButtonType="&quot;menuitem&quot;"
-        IndexOrder="0"
-        LocalDefaultText="&quot;טופס תיק&quot;"
         IsPackagable="true" />
     </MenuButton>
   </MenuButtons>
@@ -121341,6 +121341,12 @@
       Code="&quot;Shipment.O.NewShipmentCancelWarning&quot;"
       DefaultText="&quot;You are about to cancel shipment and all data will be lost&quot;"
       LocalDefaultText="&quot;אתה עומד לבטל את פתיחת התיק וכל הנתונים יאבדו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.O.InvalidMawb&quot;"
+      DefaultText="&quot;Mawb must be 8 digits&quot;"
+      LocalDefaultText="&quot;שטר מטען ראשי חייב להיות 8 ספרות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

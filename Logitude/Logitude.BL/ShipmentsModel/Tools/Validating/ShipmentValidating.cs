@@ -1486,6 +1486,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 throw new ApplicationException(TranslateTextsClass.Translate("Shipment.O.InvalidIskaNumber", entityPM.Tenant));
             }
 
+            if (!string.IsNullOrEmpty(entityPM.Mawb) && entityPM.TransportModeId == "A" && !(entityPM.Mawb.Count() == 8 && entityPM.Mawb.Count(char.IsDigit) == 8))
+            {
+                throw new ApplicationException(TranslateTextsClass.Translate("Shipment.O.InvalidMawb", entityPM.Tenant));
+            }
+
             if (!string.IsNullOrEmpty(entityPM.FlightVoyageNumber))
             {
                 if (entityPM.TransportModeId == "A" && !(entityPM.FlightVoyageNumber.Count() == 4 && entityPM.FlightVoyageNumber.Count(char.IsDigit) == 4)) 
