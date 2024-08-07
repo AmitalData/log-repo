@@ -4709,16 +4709,21 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
 
                 this.CurrentSession.CloseCurrentWindowEmit('OK');
 
-                if (this.IsShipmentCreatedFromOtherEntity()) {
+                if (this.IsShipmentCreatedFromOtherEntity() || this.EntityPM.IsCustomShipment) {
 
                     var myBackButtonLabel: string = null;
                     var myBackSessionTextCode: string = null;
+                    var selectedTabCode: string = null;
 
                     if (this.IsBuildFromQuote) {
                         myBackButtonLabel = "Quote: " + this.SourceEntityPM.QuoteNumber;
                         myBackSessionTextCode = "General.MH.Quotes";
                     }
-
+                    else if (this.EntityPM.IsCustomShipment) {
+                        myBackButtonLabel = TextCodeTranslator.Translate("General.MH.CustomsShipments");
+                        myBackSessionTextCode = "General.MH.CustomsShipments";
+                        selectedTabCode = "SHDA";
+                    }
                     else {
                         myBackButtonLabel = "Shipment: " + this.SourceEntityPM.ShipmentNumber;
                         myBackSessionTextCode = "General.MH.Operations";
@@ -4727,7 +4732,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
-                            cmpRef.instance.Run({ EntityId: this.EntityPM.Id, ObjectTableName: 'Shipment', BackButtonLabel: myBackButtonLabel });
+                            cmpRef.instance.Run({ EntityId: this.EntityPM.Id, ObjectTableName: 'Shipment', BackButtonLabel: myBackButtonLabel, SelectedTabCode: selectedTabCode });
 
                             this.CurrentSession.ChangeSessionHeader({ MenuTextCode: "General.MH.Operations" });
 
