@@ -464,9 +464,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 				// generate shipment number
 				this.entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "SHIP", entityPM.DirectionId, entityPM.TransportModeId);
 
-				// todo: execute UpdateINTTRASIStatuses
-				entityPM.INTTRASIStatusCode = null;
-
 				// todo: add AIR to AddShipmentTypes and execute it
 				entityPM.ShipmentTypeId = null;
 
@@ -927,8 +924,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     if (entityPM.CustomerId != entityPoco.CustomerId)
                     {
-                        // myOldCustomerId = entityPoco.CustomerId;
-
                         // todo: get default values (if value from client is not changed?)
                         this.entityPM.DepartmentId = "1-10140";
                         this.entityPM.SalesmanUserId = "1-421340";
@@ -940,10 +935,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     ShipmentValidating.ValidateCustomShipment(entityPM, false);
                     ValidateShipmentReferancesCollection();
-
-                    // todo: GrossWeight.Shipment + volume
-                    // יש לחשב את הגדול בין נפח בק"ג למשקל בק"ג ולעדכן את שדה משקל לחיוב
-                    // ChargeableWeight = max(Volume in kilo, GrossWeight in kilo)
 
                     ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, new List<ShipmentPackagePM> { }, objectContext, FieldChanges);
 
@@ -1060,6 +1051,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 			myAmitalCustom.Tenant = shipmentPM.Tenant.ToString();
 
 			#region declaration referant data fields
+            myAmitalCustom.MAWB = shipmentPM.Mawb;
 			myAmitalCustom.MawbDate = shipmentPM.MawbDate?.ToString();
 			myAmitalCustom.EstimatedArrivalDate = shipmentPM.EstimatedArrivalDate?.ToString();
 			myAmitalCustom.PackageTypeCode = shipmentPM.PackageTypeCode;

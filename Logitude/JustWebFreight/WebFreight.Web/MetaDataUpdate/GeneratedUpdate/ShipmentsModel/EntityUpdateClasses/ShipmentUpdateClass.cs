@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "a3af717a9289c4cd8a734f8543b35d09";
+		public const string HashString = "9c998f3dc5d8dcc9657421df6295d06f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -7637,9 +7637,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "House",
 					  						DefaultText =  "House",
-					  						FullLocalDefaultText =  "ש.מ.פ",
+					  						FullLocalDefaultText =  "שטר מטען פנימי",
 					  						ListFieldLable =  "HouseListLable",
 					  						ListLableDefaultText =  "HWB",
+					  						ShortFieldLable =  "House",
+					  						ShortFieldLableDefaultText =  "House",
+					  						ShortLocalDefaultText =  "ש.מ.פ",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -10992,7 +10995,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "HAWBDate",
 					  						DefaultText =  "HAWB Date",
-					  						FullLocalDefaultText =  "תאריך ש.מ.פ",
+					  						FullLocalDefaultText =  "תאריך שטר מטען פנימי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -90737,7 +90740,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Mawb",
 					  						DefaultText =  "Mawb",
-					  						FullLocalDefaultText =  "ש.מ.ר",
+					  						FullLocalDefaultText =  "שטר מטען ראשי",
+					  						ShortFieldLable =  "Mawb",
+					  						ShortFieldLableDefaultText =  "Mawb",
+					  						ShortLocalDefaultText =  "ש.מ.ר",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -90797,7 +90803,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MawbDate",
 					  						DefaultText =  "Mawb Date",
-					  						FullLocalDefaultText =  "תאריך ש.מ.ר",
+					  						FullLocalDefaultText =  "תאריך שטר מטען ראשי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -92509,7 +92515,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   Feature ShipmentMasterFeature_TH18 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MASTER", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Master", NameTextCodeDefaultText = "Master", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
  
                  
-			   TextCode ShipmentEventsTextCode_TH19 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode ShipmentEventsTextCode_TH19 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature ShipmentEventsFeature_TH19 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
  
                  
@@ -97380,7 +97386,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   TextCode ShipmentTextCode_ShipmentOInvalidFlightVoyageNumber1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.InvalidFlightVoyageNumber1", DefaultText = "Flight voyage number must be one letter and 3 digits",LocalDefaultText = @"מס' טיסה/הפלגה חייב להיות אות ו-3 ספרות", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ShipmentTextCode_ShipmentONewCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.NewCustomer", DefaultText = "New Customer",LocalDefaultText = @"לקוח חדש", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ShipmentTextCode_ShipmentONewCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.NewCustomer", DefaultText = "New Customer",LocalDefaultText = @"", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentONewShipmentCancelWarning = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.NewShipmentCancelWarning", DefaultText = "You are about to cancel shipment and all data will be lost",LocalDefaultText = @"אתה עומד לבטל את פתיחת התיק וכל הנתונים יאבדו", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

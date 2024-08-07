@@ -5546,6 +5546,10 @@ export class ShipmentPM {
     public get CarrierCode() { return this.carrierCode; }
     public set CarrierCode(newValue: string) { if (this.carrierCode != newValue) { this.carrierCode = newValue; this.MarkAsDirty("CarrierCode"); } }
 
+    private mawb: string;
+    public get Mawb() { return this.mawb; }
+    public set Mawb(newValue: string) { if (this.mawb != newValue) { this.mawb = newValue; this.MarkAsDirty("Mawb"); } }
+
     private mawbDate: Date;
     public get MawbDate() { return this.mawbDate; }
     public set MawbDate(newValue: Date) { if (this.mawbDate != newValue) { this.mawbDate = newValue; this.MarkAsDirty("MawbDate"); } }

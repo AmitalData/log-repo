@@ -1870,6 +1870,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 this._DeclarationReferantDataPM.Vessel = _AmitalCustomsFile.Vessel;
                 this._DeclarationReferantDataPM.FlightVoyageNumber = _AmitalCustomsFile.FlightVoyageNumber;
                 this._DeclarationReferantDataPM.CarrierCode = _AmitalCustomsFile.CarrierCode;
+                this._DeclarationReferantDataPM.Mawb = _AmitalCustomsFile.MAWB;
             }
 
             myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
