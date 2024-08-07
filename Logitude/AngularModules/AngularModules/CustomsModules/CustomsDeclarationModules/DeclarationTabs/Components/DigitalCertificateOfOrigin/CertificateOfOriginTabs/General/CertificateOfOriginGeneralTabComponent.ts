@@ -707,6 +707,11 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
 
     public get TradeAgreementCountry1(): string {
+        if (AppTool.IsNullOrEmpty(this.entityPM.TradeAgreementCountry1)) {
+            const countryCode = "IL";
+            this.entityPM.TradeAgreementCountry1 = countryCode;
+            return this.entityPM.TradeAgreementCountry1;
+        }
         return this.entityPM.TradeAgreementCountry1;
     }
     public set TradeAgreementCountry1(newValue: string) {
