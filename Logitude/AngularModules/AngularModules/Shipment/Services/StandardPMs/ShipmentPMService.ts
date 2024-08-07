@@ -108,6 +108,7 @@ export class ShipmentPMService {
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError && mm?.Result) {
                     entity.DeclarationPM = mm.Result;
+                    entity.IsCustomShipment = true;
                     return this._declarationReferantDataPMService.get(entity.DeclarationPM.Id).pipe(
                         map((myResult: any) => {
                             var mm: ServiceResponse = myResult;
@@ -578,6 +579,10 @@ export class ShipmentPMService {
             if (declarationReferentDataPM.CarrierCode && declarationReferentDataPM.Mawb) {
                 entity.CarrierCodeMawb = declarationReferentDataPM.CarrierCode + "-" + declarationReferentDataPM.Mawb;
             }
+            else if (declarationReferentDataPM.Mawb) {
+                entity.CarrierCodeMawb = declarationReferentDataPM.Mawb;
+            }
+            entity.Mawb = declarationReferentDataPM.Mawb;
             entity.CarrierCode = declarationReferentDataPM.CarrierCode;
 
             if (declarationReferentDataPM.MawbDate) {
