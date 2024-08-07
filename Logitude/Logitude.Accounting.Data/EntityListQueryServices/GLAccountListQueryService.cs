@@ -501,7 +501,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                              CollectorName = a.CollectorId != null ? (a.CollectorUser.Contact != null ? (a.CollectorUser.Contact.LocalName == null ? a.CollectorUser.Contact.EnglishName : a.CollectorUser.Contact.LocalName) : null) : null,
                              SalesmanUserId = a.SalesmanUserId,
 
-
                          });
             }
 

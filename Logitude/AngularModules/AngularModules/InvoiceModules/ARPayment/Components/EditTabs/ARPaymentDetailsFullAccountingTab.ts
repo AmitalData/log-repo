@@ -109,6 +109,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     DisplayFieldsFromList:string;
     DisplayLocalFieldsFromList:string;
     BillToLovSizeForFullAccounting:number;
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, public entityListService: EntityListService)
     {
         super();
@@ -219,7 +221,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     get IsRateDisabled (){
         return (this.isFullAccounting && !this.FullAccountingSetting.AllowEditingExchangeRate);
     }
-
+    
     CreateARPayment() {
         //this.EntityPM = new ARPaymentPM();
         this.EntityPM.Tenant =  SessionLocator.TenantPM.Id;

@@ -51,7 +51,7 @@ export class AddEditAPInvoiceLineComponent {
         this.EntityPM = dataContext.invoiceLinePM;
         this.TotalVATOnly = this.DataContext.fatherComponent.EntityPM.TotalVATOnly;
         this.Clone();
-        this.BuildQueryFilters();
+       // this.BuildQueryFilters();
     }
 
     CancelButtonClicked() {

@@ -70,7 +70,8 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
     public BillToFilter: ApiQueryFilters;
     public PartnerTypeComboBoxIsDisabled: boolean = true;
- public GLAccountsFilterItems: ApiQueryFilters;
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     constructor(private entityArgs: EntityArgs, private cdRef: ChangeDetectorRef) {
    
 

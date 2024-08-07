@@ -44,7 +44,7 @@ export class AddEditMultipleAPInvoiceLineComponent {
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;
         this.Clone();
-        this.BuildQueryFilters();
+      //  this.BuildQueryFilters();
     }
 
     CancelButtonClicked() {
