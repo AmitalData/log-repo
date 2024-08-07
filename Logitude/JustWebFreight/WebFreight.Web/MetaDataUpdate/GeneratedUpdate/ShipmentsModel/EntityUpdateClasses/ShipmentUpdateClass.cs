@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "9c998f3dc5d8dcc9657421df6295d06f";
+		public const string HashString = "8810b7e87e5af7d024f28984bc0a7aca";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -90320,7 +90320,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CarrierCodeMawb",
 					  						DefaultText =  "Carrier Code Mawb",
-					  						FullLocalDefaultText =  "ש.מ.ר",
+					  						FullLocalDefaultText =  "שטר מטען ראשי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -97389,6 +97389,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  		   TextCode ShipmentTextCode_ShipmentONewCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.NewCustomer", DefaultText = "New Customer",LocalDefaultText = @"", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentONewShipmentCancelWarning = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.NewShipmentCancelWarning", DefaultText = "You are about to cancel shipment and all data will be lost",LocalDefaultText = @"אתה עומד לבטל את פתיחת התיק וכל הנתונים יאבדו", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOInvalidMawb = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.InvalidMawb", DefaultText = "Mawb must be 8 digits",LocalDefaultText = @"שטר מטען ראשי חייב להיות 8 ספרות", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
