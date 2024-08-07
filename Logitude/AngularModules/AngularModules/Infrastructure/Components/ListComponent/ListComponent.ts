@@ -3558,6 +3558,11 @@ export class ListComponent implements OnInit, AfterViewInit {
                 logWindow.WindowArgs = args;
 
                 str = TextCodeTranslator.Translate('Shipment.O.NewShipment');
+
+                if (this.SelectedQuery?.NameTextCodeCode == "Shipment.Q.CustomsShipments") {
+                    logWindow.Width = 650;
+                    logWindow.Height = 300;
+                }
             }
 
             if (!AppTool.IsNullOrEmpty(this.NewButtonLable)) {

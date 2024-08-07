@@ -4,6 +4,7 @@ import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer } from 'rxjs';
 import { SessionInfo } from '../Infrastructure/Utilities/SessionInfo';
+import { AppTool } from '../Infrastructure/Tools';
 
 function getBaseUrl(): string {
     return document.getElementsByTagName('base')[0].href;
@@ -20,7 +21,8 @@ export const BASE_URL = new InjectionToken<string>('BaseURL', {
 export class LoginExtendedService {
 	private _apiUrl: string;
 	constructor(private _http: HttpClient, @Inject(BASE_URL) baseUrl: string) {
-		this._apiUrl = ServiceHelper.GetAppURL(baseUrl) + 'api/';
+		// this._apiUrl = ServiceHelper.GetAppURL(baseUrl) + 'api/';
+		this._apiUrl = AppTool.GetLogitudeURL() + "api/"
 	}
 
 	PostUserValidation(loginParameters: LoginParameters) {

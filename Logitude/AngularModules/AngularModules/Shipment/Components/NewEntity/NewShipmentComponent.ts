@@ -1990,6 +1990,10 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                     else if (this.ShipmentCustomerTypeCode == "CON") {
                         isCustomer = this.IsConsigneeMyCustomer;
                     }
+                    else if (this.EntityPM.IsCustomShipment) {
+                        isCustomer = true;
+                        title = TextCodeTranslator.Translate("Shipment.O.NewCustomer")
+                    }
                 }
             }
         }
@@ -4280,10 +4284,11 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             confirmWindow.Width = 450;
             confirmWindow.Height = 190;
             confirmWindow.ShowCancelButton = false;
-            confirmWindow.YesButtonText = "Don't Save";
-            confirmWindow.NoButtonText = "Cancel";
+            confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.DontSave");
+            confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
+
             confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
-            confirmWindow.Show("You are about to cancel Shipment and all data will be lost");
+            confirmWindow.Show(TextCodeTranslator.Translate("Shipment.O.NewShipmentCancelWarning"));
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     this.CloseWizardWindow();

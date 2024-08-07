@@ -93,6 +93,14 @@ export class ShipmentDataTabComponent extends BaseComponent {
             this.OnChanged();
         }
     }
+
+    public get House() { return this.EntityPM.House; }
+    public set House(newValue: string) {
+        if (this.EntityPM.House != newValue) {
+            this.EntityPM.House = newValue;
+            this.OnChanged();
+        }
+    }
     public get HAWBDate() { return this.EntityPM.HAWBDate; }
     public set HAWBDate(newValue: Date) {
         if (this.EntityPM.HAWBDate != newValue) {
@@ -254,6 +262,7 @@ export class ShipmentDataTabComponent extends BaseComponent {
     public set GrossWeight(newValue: number) {
         if (this.EntityPM.GrossWeight != newValue) {
             this.EntityPM.GrossWeight = newValue;
+            this.UpdateChargeableWeight();
             this.OnChanged();
         }
     }
@@ -275,6 +284,9 @@ export class ShipmentDataTabComponent extends BaseComponent {
     public set Volume(newValue: number) {
         if (this.EntityPM.Volume != newValue) {
             this.EntityPM.Volume = newValue;
+            this.EntityPM.VolumeUnitCode = "CBM";
+            this.VolumetricWeight = this.EntityPM.Volume * 1000;
+
             this.OnChanged();
         }
     }
@@ -282,9 +294,18 @@ export class ShipmentDataTabComponent extends BaseComponent {
     public set VolumetricWeight(newValue: number) {
         if (this.EntityPM.VolumetricWeight != newValue) {
             this.EntityPM.VolumetricWeight = newValue;
+
+            this.Volume = this.EntityPM.VolumetricWeight / 1000;
+            this.UpdateChargeableWeight();
+
             this.OnChanged();
         }
     }
+
+    UpdateChargeableWeight() {
+        this.EntityPM.ChargeableWeight = this.EntityPM.GrossWeight > this.EntityPM.VolumetricWeight? this.EntityPM.GrossWeight: this.EntityPM.VolumetricWeight;
+    }
+
     public get SalesmanUserId() { return this.EntityPM.SalesmanUserId; }
     public set SalesmanUserId(newValue: string) {
         if (this.EntityPM.SalesmanUserId != newValue) {
@@ -304,6 +325,13 @@ export class ShipmentDataTabComponent extends BaseComponent {
     public set CarrierCode(newValue: string) {
         if (this.EntityPM.CarrierCode != newValue) {
             this.EntityPM.CarrierCode = newValue;
+            this.OnChanged();
+        }
+    }
+    public get Mawb() { return this.EntityPM.Mawb; }
+    public set Mawb(newValue: string) {
+        if (this.EntityPM.Mawb != newValue) {
+            this.EntityPM.Mawb = newValue;
             this.OnChanged();
         }
     }

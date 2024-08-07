@@ -6,11 +6,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class ShipmentReferance {
+export class ShipmentReferanceList {
    		ShipmentId: string;
 		Tenant: number;
 		LineNumber: number;
 		ReferenceType: string;
-		ReferenceValue: string;
 		PartnerId: string;
-}
+		ReferenceValue: string;
+	
+}

@@ -86,15 +86,11 @@ export class MainDisplayComponent implements OnInit {
 		// listen to search text changes:
 		this.searchService.searchText$.subscribe((searchText) => {
 			if (searchText === "") this.handleClearResults();
-			// else if (this.itemsData.getValue().length > 0) {
-			// 	this.searchMode = TableTopState.Search;
-			// }
 		});
 
 		// listen to itemsData changes:
 		this.itemsData.subscribe((data: CB_CustomsItemComputedDataList[] = []) => {
 			if (data.length == 0 && this.searchService.GetSearchText() !== "") {
-				//TODO: Add not results found message
 				this.data = [];
 				this.countSearchResult = 0;
 				this.searchMode = TableTopState.Search;
@@ -106,7 +102,7 @@ export class MainDisplayComponent implements OnInit {
 				// remove duplicates customsItemID:
 				data = data.filter((v, i, a) => a.findIndex(t => (t.CustomsItemID === v.CustomsItemID)) === i);
 
-				this.countSearchResult = data.length;
+				this.countSearchResult = data.length;				
 				// update list:
 				this.data = this.orderedDataForSearch(data);
 				this.searchToggleAllChildren(true); // expand all 
@@ -151,8 +147,7 @@ export class MainDisplayComponent implements OnInit {
 	searchMode: TableTopState = TableTopState.ViewAll;
 	selectedItemId: number | null = null;
 	currentItem: BehaviorSubject<CB_CustomsItemComputedDataList> = new BehaviorSubject<CB_CustomsItemComputedDataList>(null);
-	// itemDataBehaviorSubject: BehaviorSubject<ItemData> = new BehaviorSubject<ItemData>({ customsItemId: 0, measurementUnitMalamId: 0 });
-	// itemData: ItemData = { customsItemId: 0, measurementUnitMalamId: 0 };
+
 	showDetailsClick(CustomsItemID: number, item: CB_CustomsItemComputedDataList) {
 		this.selectedItemId = CustomsItemID;
 		if (this.currentItem.getValue()?.CustomsItemID == CustomsItemID) {
@@ -164,10 +159,6 @@ export class MainDisplayComponent implements OnInit {
 			this.showDetails = !this.showDetails;
 			this.showDetailsOpen.next(this.showDetails);
 		}
-
-		// this.itemData.customsItemId = CustomsItemID;
-		// this.itemData.measurementUnitMalamId = 0; // change it
-		// this.itemDataBehaviorSubject.next(this.itemData);
 		this.currentItem.next(item);
 		return this.showDetails;
 	}
@@ -262,6 +253,7 @@ export class MainDisplayComponent implements OnInit {
 		if (rootItems.length === 0) {
 			rootItems = data;
 		}
+		this.sortByFullClassification(rootItems);
 
 		const orderedData = rootItems.map((rootItem) => {
 			const children = getChildren(rootItem);
@@ -290,18 +282,16 @@ export class MainDisplayComponent implements OnInit {
 	public orderedData = (data) => {
 		const getChildren = (parentItem) => {
 			const children = data.filter((item) => item?.CI_Parent_CustomsItemIDNum === parentItem?.CustomsItemID);
-			// CHECK MOKE DATA:
-			//const children = data.filter((item) => item?.Parent_CustomsItemID === parentItem?.ID);
-
 			children.forEach((child) => {
 				child.children = getChildren(child);
 			});
 			return children;
 		};
 		let rootItems = data.filter((item) => !item?.CI_Parent_CustomsItemIDNum);
-		// CHECK MOKE DATA:
-		//const rootItems = data.filter((item) => !item?.Parent_CustomsItemID);
 		if (rootItems.length == 0) return;
+
+		// order by FullClassification number
+		this.sortByFullClassification(rootItems);
 
 		const orderedData = rootItems.map((rootItem) => {
 			const children = getChildren(rootItem);
@@ -311,6 +301,17 @@ export class MainDisplayComponent implements OnInit {
 		return orderedData;
 	};
 
+	// Function to convert Roman numeral to integer
+	private romanToInt(roman: string): number {
+		const romanMap: { [key: string]: number } = { I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000 };
+		return roman.split('').reduce((num, char, i, arr) =>
+			num + (romanMap[char] < romanMap[arr[i + 1]] ? -romanMap[char] : romanMap[char]), 0);
+	}
+
+	// Function to sort the list based on FullClassification
+	sortByFullClassification(items: CB_CustomsItemComputedDataList[]): CB_CustomsItemComputedDataList[] {
+		return items.sort((a, b) => this.romanToInt(a.FullClassification) - this.romanToInt(b.FullClassification));
+	}
 }
 
 enum FilterOption {

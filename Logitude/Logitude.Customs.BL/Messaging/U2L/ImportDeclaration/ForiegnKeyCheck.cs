@@ -122,12 +122,17 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     object[] _metohdArgs = new object[] { GetValueFormPm(pm, "ReferentUserId"), tenant };
                     return GetValueOfForgienKeySimplogData(tenant, pm, entityName, "GetSingleUser", _metohdArgs, 2);
                 }
-                //else if (entityName == "Importer")
-                //{
-                //    object[] _metohdArgs = new object[] { GetValueFormPm(pm, "ImporterId"), tenant };
-                //    return GetValueOfForgienKeySimplogData(tenant, pm, entityName, "GetSingle", _metohdArgs, 2);
-                //}
-            }
+				else if (entityName == "TransportMode")
+				{
+					object[] _metohdArgs = new object[] { GetValueFormPm(pm, "TransportModeId")};
+					return GetValueOfForgienKeySimplogData(tenant, pm, entityName, "GetSingleTransportMode", _metohdArgs, 1, "InfrastructureModel");
+				}
+				//else if (entityName == "Importer")
+				//{
+				//    object[] _metohdArgs = new object[] { GetValueFormPm(pm, "ImporterId"), tenant };
+				//    return GetValueOfForgienKeySimplogData(tenant, pm, entityName, "GetSingle", _metohdArgs, 2);
+				//}
+			}
 
 
             Type repositoryType = GetRepositoryType(entityName);
@@ -206,9 +211,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
         private static void SetPmProp(object pm, string prop, object value) =>
             pm.GetType().GetProperty(prop).SetValue(pm, value, null);
 
-        private static object GetValueOfForgienKeySimplogData(int tenant, object pm, string entityName, string methodName, object[] metohdArgs, int countParameter = -1)
+        private static object GetValueOfForgienKeySimplogData(int tenant, object pm, string entityName, string methodName, object[] metohdArgs, int countParameter = -1,string model = "CommonDataModel")
         {
-            Type repositoryType = GetSimplogDataRepositoryType(entityName);
+            Type repositoryType = GetSimplogDataRepositoryType(entityName, model);
             MethodInfo methodInfos = GetMethod(repositoryType, methodName, countParameter);
 
             object repositoryInstance = Activator.CreateInstance(repositoryType, new object[] { tenant });
@@ -217,8 +222,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             return value;
         }
 
-        private static Type GetSimplogDataRepositoryType(string entityName) =>
-            GetRepositoryType("Simplog.Data", "CommonDataModel.Repositories." + entityName + "Repository");
+        private static Type GetSimplogDataRepositoryType(string entityName,string model) =>
+            GetRepositoryType("Simplog.Data", model + ".Repositories." + entityName + "Repository");
 
         private static MethodInfo GetMethod(Type type, string methodName, int countParameter = -1) =>
            type.GetMethods()

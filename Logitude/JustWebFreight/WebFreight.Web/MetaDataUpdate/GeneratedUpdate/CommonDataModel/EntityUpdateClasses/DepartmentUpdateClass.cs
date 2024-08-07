@@ -84,14 +84,12 @@ using Logitude.DashboardModule.BL;
 
 
 
-
-
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class DepartmentUpdateClass
    {  		
-		public const string HashString = "cd3bc527167e7678d95f166c322765ae";
-	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+        public const string HashString = "b98c9806346fed306aafacf1416a1198";
+        public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -428,7 +426,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MaxLength =  40,
 					  						IsRequired =  false,
 					  						CopyToDW =  true,
-					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -440,7 +438,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowList =  true,
 					  						PMPropertyPath =  "LocalName",
 					  						ListPropertyPath =  "LocalName",
 					  						DisplayInLookUpIndex =  0,

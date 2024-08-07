@@ -90,6 +90,12 @@
         background-size: contain;
         cursor: pointer;
     }
+
+    .customShipmentCustomer {
+        height: initial !important;
+        line-height: initial !important;
+        padding-top: 15px;
+    }
 </style>
 
 <table [hidden]="!ScreenIsReady">
@@ -605,7 +611,7 @@
 
                                                 <!-- Customer -->
                                                 <div>
-                                                    <div class="SectionTitle" style="height:40px; line-height:40px;">
+                                                    <div class="SectionTitle" [class.customShipmentCustomer]="EntityPM.IsCustomShipment" style="height:40px; line-height:40px;">
                                                         <table>
                                                             <tr>
                                                                 <td style="width:105px;">{{(EntityPM.IsCustomShipment? 'Shipment.F.CustomerId': 'Shipment.S.NewShipment.MyCustomer') | TextCodeTranslationPipe}}</td>
@@ -635,16 +641,17 @@
                                                                             [DisplayMemberPath]="'LocalName'"
                                                                             [DependencyFilter1Value]="CustomerDependencyProperty1"
                                                                             [DependencyFilter1IsList]="CustomerDependencyProperty1IsList"
+                                                                            [HideLastColumn]="EntityPM.IsCustomShipment"
                                                                             [HideAddLink]="true"
                                                                             [HideAdd]="true">
                                                                     </LogLov>
                                                                 </td>
 
-                                                                <td style="width:3px;"><div></div></td>
+                                                                <td *ngIf="!EntityPM.IsCustomShipment" style="width:3px;"><div></div></td>
 
                                                                 <td>
                                                                     <div class="MediaFill">
-                                                                        <div class="LeftCenter" style="width: 12px; height: 12px;">
+                                                                        <div [ngClass]="EntityPM.IsCustomShipment? 'RightCenter' : 'LeftCenter'" style="width: 12px; height: 12px;">
                                                                             <div *ngIf="!IsStandalone || IsNewStandAlonePickupDelivery" class="GreenAddButton" [class.GreenAddButtonDisabled]="!IsScreenEnabled && !EntityPM.IsCustomShipment" (mousedown)="AddPartnerClicked('T')"></div>
                                                                         </div>
                                                                     </div>
@@ -653,7 +660,7 @@
                                                         </table>
                                                     </div>
 
-                                                    <div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
+                                                    <div *ngIf="!EntityPM.IsCustomShipment" style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
                                                 </div>
 
                                                 <!-- DeclarationOfficeCode -->
@@ -687,8 +694,6 @@
                                                             </tr>
                                                         </table>
                                                     </div>
-
-                                                    <div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
                                                 </div>
 
                                                 <!-- DepartmentId -->
@@ -704,10 +709,6 @@
                                                                     </div>
                                                                 </td>
 
-                                                                <!-- <td>
-                                                                    <LogLabel [ObjectFieldName]="'DepartmentId'" [ObjectTableName]="'User'" [DataContext]="DataContext"></LogLabel>
-                                                                </td> -->
-                            
                                                                 <td style="width:217px; float: right">
                                                                     <LogLov 
                                                                         [ObjectFieldName]="'DepartmentId'" 
@@ -722,8 +723,6 @@
                                                             </tr>
                                                         </table>
                                                     </div>
-
-                                                    <div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
                                                 </div>
                                                 
                                                 <!-- Pickup -->
@@ -1900,7 +1899,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" id="{{'ShipmentCancelbtn' | IdGeneratorAsyncPipe | async}}" (click)="CancelButtonClicked()">Cancel</button>
+                        <button class="Button" id="{{'ShipmentCancelbtn' | IdGeneratorAsyncPipe | async}}" (click)="CancelButtonClicked()">{{"Customs.General.B.Cancel" | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">

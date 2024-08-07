@@ -44,6 +44,7 @@
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'Card'"
                                             [DisplayMemberPath]="'LocalName'"
+                                            [HideLastColumn]="true"
                                             [HideAddLink]="true"
                                             [HideAdd]="true">
                                         </LogLov>
@@ -82,8 +83,25 @@
                                         [ObjectTableName]="ObjectTableName"
                                         [DisplayMemberPath]="'LocalName'"
                                         [DataContext]="DataContext" 
+                                        [SearchFieldName]="'Prefix'"
                                         [LookUpTableName]="'Airline'">
                                     </LogLov>
+                                </td>
+                            </tr>
+
+                            <!-- Mawb -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'Mawb'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox
+                                        [ObjectFieldName]="'Mawb'" 
+                                        [Text]="Mawb"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext">
+                                    </LogTextBox>
                                 </td>
                             </tr>
 
@@ -96,14 +114,7 @@
                                 <table>
                                     <tr>
                                         <td>
-                                            <LogDatePicker [ObjectFieldName]="'MawbDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="MawbDate" [DataContext]="DataContext"
-                                            [HideColumns]="true" [HideLastColumn]="true"></LogDatePicker>
-                                        </td>
-                                        <td style="width:3px;">
-                                            <div></div>
-                                        </td>
-                                        <td>
-                                            <LogDatePicker [ObjectFieldName]="'MawbDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="MawbDate" [DataContext]="DataContext" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                            <LogDatePicker [ObjectFieldName]="'MawbDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="MawbDate" [DataContext]="DataContext"></LogDatePicker>
                                         </td>
                                     </tr>
                                 </table>
@@ -222,22 +233,6 @@
                                         [DataContext]="DataContext" 
                                         [LookUpTableName]="'ShipmentType'">
                                     </LogLov>
-                                </td>
-                            </tr> -->
-
-                            <!-- House -->
-                            <!-- <tr class="FormFieldRow">
-                                <td style="width: 180px;">
-                                    <LogLabel [ObjectFieldName]="'House'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
-
-                                <td>
-                                    <LogTextBox 
-                                        [ObjectFieldName]="'House'" 
-                                        [Text]="House"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [DataContext]="DataContext">
-                                    </LogTextBox>
                                 </td>
                             </tr> -->
 
@@ -388,6 +383,23 @@
                                 </td>
                             </tr>
 
+                            <!-- House -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'House'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox
+                                        [ObjectFieldName]="'House'" 
+                                        [Text]="House"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext">
+                                    </LogTextBox>
+                                </td>
+                            </tr>
+                            
+                            
                             <!-- HAWBDate -->
                             <tr class="FormFieldRow">
                                 <td style="width: 180px;">
@@ -397,14 +409,7 @@
                                 <table>
                                     <tr>
                                         <td>
-                                            <LogDatePicker [ObjectFieldName]="'HAWBDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="HAWBDate" [DataContext]="DataContext"
-                                            [HideColumns]="true" [HideLastColumn]="true"></LogDatePicker>
-                                        </td>
-                                        <td style="width:3px;">
-                                            <div></div>
-                                        </td>
-                                        <td>
-                                            <LogDatePicker [ObjectFieldName]="'HAWBDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="HAWBDate" [DataContext]="DataContext" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                            <LogDatePicker [ObjectFieldName]="'HAWBDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="HAWBDate" [DataContext]="DataContext"></LogDatePicker>
                                         </td>
                                     </tr>
                                 </table>
@@ -549,6 +554,10 @@
                                         [DataContext]="DataContext">
                                     </LogTextBox>
                                 </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="height: 48px"></td>
                             </tr>
 
                             <!-- SalesmanUserId -->

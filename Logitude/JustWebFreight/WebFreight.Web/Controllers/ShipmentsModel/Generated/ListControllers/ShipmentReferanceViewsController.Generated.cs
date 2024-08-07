@@ -43,8 +43,6 @@ using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Simplog.Data.ShipmentsModel.Repositories;
-using Logitude.BL.ShipmentsModel.CustomFilters;
-		  
 namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 { 
 
@@ -53,7 +51,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
     {
 	  
        
-        public HttpResponseMessage GetSingle(string shipmentid)
+        public HttpResponseMessage GetSingle(string shipmentid, int tenant, int? linenumber)
         {
 		  try
             {
@@ -66,7 +64,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 		    	IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
 				ShipmentReferanceRepository  shipmentReferanceRepository = new ShipmentReferanceRepository(MyContext);
 				ShipmentReferanceList entityList = null;
-				ShipmentReferance entityPoco = shipmentReferanceRepository.GetSingleShipmentReferance(shipmentid , authToken.Tenant);
+				ShipmentReferance entityPoco = shipmentReferanceRepository.GetSingleShipmentReferance(shipmentid, tenant, linenumber , authToken.Tenant);
                 
                 if (entityPoco != null)
 				{
@@ -240,7 +238,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
-	
+				
                 entityPocos = genericFilter.GetFilteredQuery<ShipmentReferance>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<ShipmentReferanceList> entityLists = shipmentReferanceQuery.GetIQueryableEntityList(entityPocos);

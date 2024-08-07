@@ -39,6 +39,7 @@ using Logitude.Customs.BL.BL;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.Security;
 using Unifreight.BL.EntityUpdateServices;
+using System.Data.Entity.Core;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -119,6 +120,22 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     LogMessagingUtil.Instance.AppendLine("Check for ACCUMULATION Feature Failed, Message: " + ex.Message);
                     if (string.IsNullOrEmpty(entityPM.AccumalationStateCode)) entityPM.AccumalationStateCode = "3";
                 }
+                catch (InvalidOperationException ex)
+                {
+                    LogMessagingUtil.Instance.AppendLine("Invalid operation, possibly due to transaction isolation level: " + ex.Message);
+                    // Additional handling for InvalidOperationException if needed
+                }
+                catch (EntityException ex)
+                {
+                    LogMessagingUtil.Instance.AppendLine("EntityException occurred, possible database connection issue: " + ex.Message);
+                    // Additional handling for EntityException if needed
+                }
+                catch (Exception ex)
+                {
+                    LogMessagingUtil.Instance.AppendLine("An unexpected error occurred: " + ex.Message);
+                    // Additional handling for other exceptions
+                }
+
             }
             //base.OnCreating(entityPM, entityParentPM);
         }

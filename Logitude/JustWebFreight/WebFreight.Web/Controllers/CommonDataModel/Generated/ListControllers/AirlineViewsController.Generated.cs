@@ -101,7 +101,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 				AirlineQuery airlineQuery = new AirlineQuery(airlineRepository);
 			    IQueryable<AirlineList> entityLists = airlineQuery.GetIQueryableEntityList(entityPocos);
-				entityLists = entityLists.OrderBy(d => d.Id);
+				entityLists = entityLists.OrderBy(d => d.Code);
 				List<AirlineList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
                 CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
@@ -305,7 +305,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                             }
                         default:
                             {
-                                entityLists = entityLists.OrderBy(d => d.Id);
+                                entityLists = entityLists.OrderBy(d => d.Code);
                                 break;
                             }
                     }
@@ -314,7 +314,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
             }					  						
 	       else
             {
-                entityLists = entityLists.OrderBy(d => d.Id);
+                entityLists = entityLists.OrderBy(d => d.Code);
             } 
 
 			ServiceResponse response = new ServiceResponse();

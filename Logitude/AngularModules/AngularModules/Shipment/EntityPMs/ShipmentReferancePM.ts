@@ -14,24 +14,25 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
+
 export class ShipmentReferancePM {
-      
+
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-                    this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
     
-    private shipmentId: string;
-    public get ShipmentId() { return this.shipmentId; }
-    public set ShipmentId(newValue: string) { if (this.shipmentId != newValue) { this.shipmentId = newValue; this.MarkAsDirty("ShipmentId"); } }
-       
-	 
     private tenant: number;
     public get Tenant() { return this.tenant; }
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
+       
+	 
+    private shipmentId: string;
+    public get ShipmentId() { return this.shipmentId; }
+    public set ShipmentId(newValue: string) { if (this.shipmentId != newValue) { this.shipmentId = newValue; this.MarkAsDirty("ShipmentId"); } }
        
 	 
     private lineNumber: number;
@@ -48,15 +49,17 @@ export class ShipmentReferancePM {
     public get PartnerId() { return this.partnerId; }
     public set PartnerId(newValue: string) { if (this.partnerId != newValue) { this.partnerId = newValue; this.MarkAsDirty("PartnerId"); } }
        
-
+	 
     private referenceValue: string;
     public get ReferenceValue() { return this.referenceValue; }
     public set ReferenceValue(newValue: string) { if (this.referenceValue != newValue) { this.referenceValue = newValue; this.MarkAsDirty("ReferenceValue"); } }
+       
 	 
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
-    public set ChangeSetOp(newValue: string) { this.changeSetOp = newValue;  }
-
+    public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
+       
+	 
 
     public OldEntityPM: ShipmentReferancePM;
 		
@@ -69,13 +72,12 @@ export class ShipmentReferancePM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.ReferenceType");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ShipmentReferance");
            
         }
-       }
+	 }
     }
-
-    public MyClone: ShipmentReferancePM;
+    private MyClone: ShipmentReferancePM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);
@@ -85,4 +87,4 @@ export class ShipmentReferancePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

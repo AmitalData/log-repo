@@ -84,14 +84,11 @@ using Logitude.DashboardModule.BL;
 
 
 
-
-
-
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class AirlineUpdateClass
    {  		
-		public const string HashString = "c623d63391c4864c6ea5f05480a9bfe8";
+		public const string HashString = "d39d2e85ffaad5c0b26ad65120450adf";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -115,6 +112,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  true,
 			      				    IsNewWizard =  true,
+			      				    LookUp1 =  "Code",
+			      				    LookUp2 =  "LocalName",
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
