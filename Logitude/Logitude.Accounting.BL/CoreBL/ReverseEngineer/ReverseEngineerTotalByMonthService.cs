@@ -669,9 +669,9 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         var GLAccountTotalByMonthsList =
                             //qNotinLedgerTransaction.Union(qNotinTotalByMonth).Union(qDiff).ToList();
-                            qNotinLedgerTransaction.Take(30)
-                            .Concat(qNotinTotalByMonth.Take(30))
-                            .Concat(qDiff.Take(30)).ToList();
+                            qNotinLedgerTransaction.Take(900)
+                            .Concat(qNotinTotalByMonth.Take(900))
+                            .Concat(qDiff.Take(900)).ToList();
                         ;
                         GLAccountTotalByMonthsList.ForEach(
                             r =>
