@@ -17,7 +17,7 @@
 				{{ data.CIH_GoodsDescription }}
 			</span>
 			<div
-				*ngIf="TariffListCount > 0 && data?.CI_Parent_CustomsItemIDNum && ClassificationNoDisplay(data,data?.FullClassification).length > 2 && state === 'search'"
+				*ngIf="!isShowDetailsOpen && ( TariffListCount > 0 && data?.CI_Parent_CustomsItemIDNum && ClassificationNoDisplay(data,data?.FullClassification).length > 2 && state === 'search')"
 				class="item_details">
 				<a> {{TariffListCount }} </a>
 				<a> {{ TariffList1?.CustomsRate }} </a>
