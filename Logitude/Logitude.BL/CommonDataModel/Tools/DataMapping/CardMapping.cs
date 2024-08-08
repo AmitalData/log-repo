@@ -76,6 +76,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.CustomsInvoiceTemplateId = entityPM.CustomsInvoiceTemplateId;
             entityPOCO.ConsolidationInvoiceTemplateId = entityPM.ConsolidationInvoiceTemplateId;
             entityPOCO.ManifestInvoiceTemplateId = entityPM.ManifestInvoiceTemplateId;
+            entityPOCO.EmailForSendingSingArinvoice = entityPM.EmailForSendingSingArinvoice;
+            entityPOCO.SendingInterestReport = entityPM.SendingInterestReport;
             BuildSearchFields(entityPM, entityPOCO);
         }
 

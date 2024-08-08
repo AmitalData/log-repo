@@ -360,7 +360,15 @@ export class CardPM extends ObjectCustomFieldPM {
     public get SATForeignRFC() { return this.sATForeignRFC; }
     public set SATForeignRFC(newValue: string) { if (this.sATForeignRFC != newValue) { this.sATForeignRFC = newValue; this.MarkAsDirty("SATForeignRFC"); } }
        
+    private emailForSendingSingArinvoice: string;
+    public get EmailForSendingSingArinvoice() { return this.emailForSendingSingArinvoice; }
+    public set EmailForSendingSingArinvoice(newValue: string) { if (this.emailForSendingSingArinvoice != newValue) { this.emailForSendingSingArinvoice = newValue; this.MarkAsDirty("EmailForSendingSingArinvoice"); } }
+       
 	 
+    private sendingInterestReport: boolean;
+    public get SendingInterestReport() { return this.sendingInterestReport; }
+    public set SendingInterestReport(newValue: boolean) { if (this.sendingInterestReport != newValue) { this.sendingInterestReport = newValue; this.MarkAsDirty("SendingInterestReport"); } }
+       
      
 	private contacts: ContactPM[];
     get  Contacts() {
@@ -633,4 +641,4 @@ export class CardPM extends ObjectCustomFieldPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

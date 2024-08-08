@@ -286,6 +286,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityPM.Address1 = entityCard.Address1;
                 entityPM.Address2 = entityCard.Address2;
             }
+            entityCard.EmailForSendingSingArinvoice = entityPM.Card.EmailForSendingSingArinvoice;
+            entityCard.SendingInterestReport = entityPM.Card.SendingInterestReport;
         }
 
         private void ComputeContactFields()
