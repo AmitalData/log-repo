@@ -539,11 +539,11 @@ using Simplog.Data.InvoiceModel;
 
 				                        }
 
-                    if (!IsUpdate)
-                    {
-                        temp.InternalNotes = MyEntity.InternalNotes;
+                    //if (!IsUpdate)
+                    //{
+                    //    temp.InternalNotes = MyEntity.InternalNotes;
 
-                                        }
+                    //                    }
 
                     if (!IsUpdate)
                     {
@@ -647,11 +647,11 @@ using Simplog.Data.InvoiceModel;
                 }
 
 
-                if (!IsUpdate)
-                {
-                    temp.InternalNotes = MyEntity.InternalNotes;
+                //if (!IsUpdate)
+                //{
+                //    temp.InternalNotes = MyEntity.InternalNotes;
 
-                }
+                //}
 
 
                 if (!IsUpdate)
