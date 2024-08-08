@@ -243,6 +243,30 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         }
     }
 
+    
+    checkRequestReasonCode() {
+        if (this.EntityPM.RequestReasonCode != "10" && this.EntityPM.RequestReasonCode != "13"  && this.EntityPM.RequestReasonCode != "14") {
+            let counterLine = 1;
+            this.EntityPM.CertificateOriginItemItems.forEach(item => {
+                if(AppTool.IsNullOrEmpty(item.MarksAndNumbers)){
+                    this.ValidationErrors.push( `${TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.number")} ${counterLine}- ${ TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.MarkIsReq")}`);
+                }
+                if((item.PackingTypeName == "CONTAINER" || item.PackageType == "D5")  && AppTool.IsNullOrEmpty(item.ContainerIsoCode)){
+                    this.ValidationErrors.push(`${TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.number")} ${counterLine}- ${ TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.ContainerTypeReq")}`);
+                }
+                counterLine++;
+            });
+ 
+            counterLine = 1;
+            this.EntityPM.CertificateOriginInvoiceItems.forEach(item => {
+                if(AppTool.IsNullOrEmpty(item.DescriptionOfInvoice)){
+                    this.ValidationErrors.push( `${TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.number")} ${counterLine}- ${ TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.DescIsReq")}`);
+                }
+             
+                counterLine++;
+            });
+        }
+    }
 
     // Init data from MOREDATA page:
     InitMoreDataScreenValues() {
@@ -264,7 +288,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     }
 
     SaveAndSendClick(customSendOptionsArgs: any = null) {
-        if (!this.EntityPM.CooTypeCode || !this.EntityPM.RequestReasonCode) {// manddatory fields
+        if ((!this.EntityPM.CooTypeCode || !this.EntityPM.RequestReasonCode) && ((this.EntityPM.RequestReasonCode != "10" && this.EntityPM.RequestReasonCode != "13" && this.EntityPM.RequestReasonCode != "14") )){// manddatory fields
             this.GENERAL.CheckMandatoryFields();
             return;
         }
@@ -272,8 +296,11 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         this.EntityPM.IsUnitedInvoices ? this.EntityPM.IsUnitedInvoices : this.EntityPM.IsUnitedInvoices = false;
 
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-
+               
         if (this.IsNewOrEdit == StatusCertificateOfOrigin.IsNew) {
+            // init open date:
+            this.EntityPM.OpenDate = new Date();
+            
             this.certificateOfOriginPMService.insert(this.EntityPM).subscribe((response: any) => {
                 if (!response.HasError) {
                     var result = response.Result;
@@ -335,45 +362,54 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     MoreDataValidationErrors = [];
 
     async SendButtonClicked(customSendOptionsArgs: any) {
+        
         // init lists:
         this.ValidationErrors = [];
         this.GeneralValidationErrors = [];
         this.MoreDataValidationErrors = [];
+
+        if (this.EntityPM.RequestReasonCode != "10" && this.EntityPM.RequestReasonCode != "13" && this.EntityPM.RequestReasonCode != "14") {
+            this.checkRequestReasonCode();
+            if (this.SelectedTabCode == "GENERAL"){
+                this.GeneralValidationErrors = this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);            
+            }
+            else if(this.SelectedTabCode == "MOREDATA"){
+                this.MOREDATA.CheckMandatoryCustomsFields(this.MoreDataValidationErrors);
+            }
+            this.GeneralValidationErrors.forEach(i => {
+                const isUniqueElement = !this.MoreDataValidationErrors.includes(i);
+                if (isUniqueElement && i != "" ) {
+                    this.ValidationErrors.push(i);
+                }
+            });
+    
+            this.MoreDataValidationErrors.forEach(j => {
+                const isUniqueElement = !this.GeneralValidationErrors.includes(j);
+                if (isUniqueElement && j != "") {
+                    this.ValidationErrors.push(j);
+                }
+            });
+    
+            // check duplicates items: 
+            if(this.ValidationErrors.length > 0){
+                this.ValidationErrors = Array.from(new Set(this.ValidationErrors));
+            }
+            // check mandatory fields
+            if (this.ValidationErrors.length > 0 ) {  
+                this.CheckMandatoryCustomsFields(customSendOptionsArgs, this.ValidationErrors, "");
+            }
+            else {
+                this.SendCertificateOfOrigin(customSendOptionsArgs);
+            }
+        }else{
+            this.SendCertificateOfOrigin(customSendOptionsArgs);
+        }
         
-        if (this.SelectedTabCode == "GENERAL"){
-            this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);
-        }
-        else if(this.SelectedTabCode == "MOREDATA"){
-            this.MOREDATA.CheckMandatoryCustomsFields(this.MoreDataValidationErrors);
-        }
+       
         // var generalScreen = "כללי";
         // var moreDataScreen = "נוספים";
         // var bothDataScreen = "כללי ונוספים";
-        this.GeneralValidationErrors.forEach(i => {
-            const isUniqueElement = !this.MoreDataValidationErrors.includes(i);
-            if (isUniqueElement && i != "" ) {
-                this.ValidationErrors.push(i);
-            }
-        });
-
-        this.MoreDataValidationErrors.forEach(j => {
-            const isUniqueElement = !this.GeneralValidationErrors.includes(j);
-            if (isUniqueElement && j != "") {
-                this.ValidationErrors.push(j);
-            }
-        });
-
-        // check duplicates items: 
-        if(this.ValidationErrors.length > 0){
-            this.ValidationErrors = Array.from(new Set(this.ValidationErrors));
-        }
-        // check mandatory fields
-        if (this.ValidationErrors.length > 0 ) {  
-            this.CheckMandatoryCustomsFields(customSendOptionsArgs, this.ValidationErrors, "");
-        }
-        else {
-            this.SendCertificateOfOrigin(customSendOptionsArgs);
-        }
+       
     }
 
     async SendCertificateOfOrigin(customSendOptionsArgs: any) {

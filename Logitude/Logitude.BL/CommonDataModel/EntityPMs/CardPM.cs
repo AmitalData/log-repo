@@ -236,5 +236,12 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string ConsolidationInvoiceTemplateId { get; set; }
         public string ManifestInvoiceTemplateId { get; set; }
         public bool IsFromGlaAccountUpdate { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        [DataMember]
+        public string EmailForSendingSingArinvoice { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        [DataMember]
+        public bool SendingInterestReport { get; set; }
     }
 }

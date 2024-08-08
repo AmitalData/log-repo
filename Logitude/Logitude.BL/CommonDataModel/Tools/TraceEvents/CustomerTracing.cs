@@ -81,24 +81,24 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
                 {
                     notes = "External ID removed";
                 }
-				if (entityPM.EmailForSendingSingArinvoice != entityPOCO.EmailForSendingSingArinvoice)
-				{
-                    ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
-                    string emailContactPm = contactRepository.GetSingleContactForUpdate(entityPM.EmailForSendingSingArinvoice, entityPM.Tenant)?.Email;
-					string emailContactPoco = contactRepository.GetSingleContactForUpdate(entityPOCO.EmailForSendingSingArinvoice, entityPM.Tenant)?.Email;
+				//if (entityPM.EmailForSendingSingArinvoice != entityPOCO.EmailForSendingSingArinvoice)
+				//{
+    //                ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
+    //                string emailContactPm = contactRepository.GetSingleContactForUpdate(entityPM.EmailForSendingSingArinvoice, entityPM.Tenant)?.Email;
+				//	string emailContactPoco = contactRepository.GetSingleContactForUpdate(entityPOCO.EmailForSendingSingArinvoice, entityPM.Tenant)?.Email;
 
-					var note =  TranslateTextsClass.Translate("Contact.F.Email", entityPM.Tenant) + ":\n" + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant) + " " + emailContactPoco?.ToString()   + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant) + emailContactPm?.ToString() ;
-					if (string.IsNullOrEmpty(notes))
-					{
-						notes = note;
+				//	var note =  TranslateTextsClass.Translate("Contact.F.Email", entityPM.Tenant) + ":\n" + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant) + " " + emailContactPoco?.ToString()   + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant) + emailContactPm?.ToString() ;
+				//	if (string.IsNullOrEmpty(notes))
+				//	{
+				//		notes = note;
 
-                    }
-                    else
-                    {
-                        notes += "\n" + note;
+    //                }
+    //                else
+    //                {
+    //                    notes += "\n" + note;
 
-					}
-				}
+				//	}
+				//}
 			
 				EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {

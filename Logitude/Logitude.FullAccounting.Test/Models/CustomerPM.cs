@@ -302,7 +302,6 @@ namespace Logitude.FullAccounting.Test.Models
 
         public string PrimaryContactPhone { get; set; }
 
-        public string EmailForSendingSingArinvoice { get; set; }
 
 
         public string CustomerStatusName { get; set; }

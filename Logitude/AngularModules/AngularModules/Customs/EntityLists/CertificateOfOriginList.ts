@@ -86,6 +86,7 @@ export class CertificateOfOriginList {
 	ListCounter: number;
 	UpdateDeclaration: string;
 	IsChange: boolean;
+	OpenDate: Date;
 	
 }
  

@@ -246,6 +246,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string UpdateDeclaration { get; set; }
         [Column("IsChange")]
 	    public bool IsChange { get; set; }
+        [Column("OpenDate")]
+	    public DateTime? OpenDate { get; set; }
     }
 }
 	 
