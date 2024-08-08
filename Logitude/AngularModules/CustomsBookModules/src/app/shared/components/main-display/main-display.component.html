@@ -107,7 +107,7 @@
 				</ul>
 			</div>
 			<div class="details_frame_container" [class.active]="showDetails">
-				<app-details-frame (showDetails)="showDetails = !showDetails" [currentItem]="currentItem" />
+				<app-details-frame (showDetails)="updateShowDetailsClick()" [currentItem]="currentItem" />
 			</div>
 		</div>
 	</div>

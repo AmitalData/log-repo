@@ -163,6 +163,11 @@ export class MainDisplayComponent implements OnInit {
 		return this.showDetails;
 	}
 
+	updateShowDetailsClick() {
+		this.showDetails = !this.showDetails;
+		this.showDetailsOpen.next(this.showDetails);
+	}
+
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes['showDetails']) {
 			this.showDetails = changes['showDetails'].currentValue;
