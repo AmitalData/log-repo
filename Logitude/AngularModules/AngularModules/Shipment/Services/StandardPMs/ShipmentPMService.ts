@@ -200,7 +200,48 @@ export class ShipmentPMService {
             })
         */
     }
+    SubmitToTranzila(SecurityKey:string,Tenant:number,TargetEnv:string) {
 
+        var myCustomURL = "https://systemwr.amital.co.il/api/shipment";
+       
+        if (location.href.indexOf('localhost') > -1 || location.href.indexOf('test') > -1) {
+            myCustomURL = this._apiUrl;
+        }
+
+        return defer(() => {
+            var url = myCustomURL + '/submittotranzila/?key=' + SecurityKey+'&tenant=' + Tenant+'&targetenv=' + TargetEnv;
+
+
+            return this._http.post(url, ServiceHelper.GetHttpFullHeadersWithoutToken()).pipe(
+                map((response: HttpResponse<any>) => {
+                    var res = response;
+                    if (res) {
+                       
+                        let parent = window.parent;
+                        parent.location.href = TargetEnv;
+                        parent.document.write(`<base target="_parent" href="${TargetEnv}" />${res.toString()}`);
+                        parent.document.close();
+
+                    
+
+                        
+                    }
+                }), catchError(ServiceHelper.HandleServiceError));
+        });
+
+        // .flatMap((res: Response) => {
+        //    var location = res.headers.get('Location');
+        //    return this._http.get(location);
+        //}).map((res: Response) => res.json()))
+        //.catch(this.handleError)
+
+        /*
+        .flatMap((res: Response) => {
+                var serverTime = res.headers.get('ServerTime');
+                return this._http.get(serverTime);
+            })
+        */
+    }
     getLogoAndUrlWithoutToken(securityKey: string): Promise<UrlAndLogo> {
         const url = (location.href.indexOf('localhost') > -1 || location.href.indexOf('test') > -1) ? this._apiUrl : "https://systemwr.amital.co.il/api/shipment";
         return this._http.get(url + '/GetLogoAndUrlWithoutToken', { params: { securityKey: securityKey } }).toPromise() as Promise<UrlAndLogo>;

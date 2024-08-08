@@ -333,6 +333,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public set thtk(newValue: string) { this.AdditionalData.PaymentData.thtk = newValue; }
 
     public get TargetEnv() {
+        debugger
         let directTranzilaLink = this.GetDirectTranzilaLink();
         var Env = directTranzilaLink + this.AdditionalData.PaymentData?.TargetEnv + "/";//amitaltest
         return Env;
@@ -380,9 +381,14 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     MyAdditionalData: any = null;
 
     OnPayClick() {
+
+
+        this._ShipmentPMService.SubmitToTranzila(this.SecurityKey, this.Tenant,this.TargetEnv).subscribe((MyResult: any) => {
+           
+        });
         //alert("Yes");
-        document.forms["form"].action = this.TargetEnv
-        document.forms["form"].submit();
+        //  document.forms["form"].action = this.TargetEnv
+        //  document.forms["form"].submit();
     }
     IsAgreed: boolean = false;
     IsAggreeChicked(isAgreed) {
