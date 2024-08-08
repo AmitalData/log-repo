@@ -44,11 +44,24 @@ using Marvin.JsonPatch.Exceptions;
 using static Dropbox.Api.Sharing.ListFileMembersIndividualResult;
 using WebFreight.Web.WebServices;
 using Simplog.Server.Infrastructure;
+using System.Threading.Tasks;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.BL.GlobalModel.EntityQueries;
+using Simplog.Global.Data.GlobalModel;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Runtime.Remoting.Messaging;
+using Logitude.Customs.Def.EntityPMs;
+
 
 namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 {
     public class ShipmentController : ApiController
     {
+
         public HttpResponseMessage GetSingle(string id)
         {
             try
@@ -739,6 +752,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             }
         }
 
+        // Other methods...
+
+       
+       
         public HttpResponseMessage GetTenantBySecurityKeyWithoutToken(string securityKey)
         {
             try
@@ -810,14 +827,14 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             return (dict);
         }
 
-        private static readonly HttpClient client = new HttpClient();
+        private static readonly HttpClient client1 = new HttpClient();
 
         private bool GetRequestToken(Dictionary<string, string> myDict, out string result, int tenant)
         {
             SetServicePointManagerSecurityProtocol(tenant);
             var content = new FormUrlEncodedContent(myDict);
             string Uri = GetSecureTranzilaURI(tenant);
-            var response = client.PostAsync(Uri, content);
+            var response = client1.PostAsync(Uri, content);
             var httpResponse = response.Result.Content.ReadAsStringAsync();// .Content.ReadAsStringAsync();
             result = httpResponse.Result;
             return (result.Contains("thtk") ? true : false);
