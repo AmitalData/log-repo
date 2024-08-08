@@ -101,6 +101,26 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true : false;
     }
 
+    // TradeAgreementGroupOfCountries/TradeAgreementCountry2
+    fieldNameTradeAgreementCountry2: string = TextCodeTranslator.Translate('Customs.CertificateOfOrigin.F.TradeAgreementCountry2');
+    fieldNameTradeAgreementGroupOfCountries: string = TextCodeTranslator.Translate('Customs.CertificateOfOrigin.F.TradeAgreementGroupOfCountries');
+    TradeAgreementSelectionList: string[] = [this.fieldNameTradeAgreementCountry2, this.fieldNameTradeAgreementGroupOfCountries];
+    selectedValueTradeAgreement: string = this.fieldNameTradeAgreementCountry2;
+    
+    // OriginGroupOfCountry/OriginCountry
+    fieldNameOriginCountry: string = TextCodeTranslator.Translate('Customs.CertificateOfOrigin.F.OriginCountry');
+    fieldNameOriginGroupOfCountry: string = TextCodeTranslator.Translate('Customs.CertificateOfOrigin.F.OriginGroupOfCountry');
+    OriginCountrySelectionList: string[] = [this.fieldNameOriginCountry, this.fieldNameOriginGroupOfCountry];
+    selectedValueOriginCountry: string = this.fieldNameOriginCountry;
+   
+   
+    // DestinationGroupOfCountries/DestinationCountry
+    fieldNameDestinationCountry: string = TextCodeTranslator.Translate('Customs.CertificateOfOrigin.F.DestinationCountry');
+    fieldNameDestinationGroupOfCountries: string = TextCodeTranslator.Translate('Customs.CertificateOfOrigin.F.DestinationGroupOfCountries');
+    DestinationCountrySelectionList: string[] = [this.fieldNameDestinationCountry, this.fieldNameDestinationGroupOfCountries];
+    selectedValueDestinationCountry: string = this.fieldNameDestinationCountry;
+
+
     InitNewCertificate(EntityPM: CertificateOfOriginPM) {
         this.entityPM.ExporterName = !AppTool.IsNullOrEmpty(this.currentCard.EnglishName) ? this.currentCard.EnglishName : "";
         this.entityPM.ExporterAddress = `${this.currentCard.Address1 ? this.currentCard.Address1 + " ," : ""}${this.currentCard.Address2 ? this.currentCard.Address2 : ""}`;
@@ -361,12 +381,12 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 this.UIProperties.SetWarning(this.formSectionsCouples.middleBottom.fields[1], this.ObjectTableName, true);
             }
         }
-        else{
+        else {
             this.setWarningFalseForCouples()
         }
     }
 
-    private setWarningFalseForCouples(){
+    private setWarningFalseForCouples() {
         this.UIProperties.SetWarning(this.formSectionsCouples.upperLeft.fields[0], this.ObjectTableName, false);
         this.UIProperties.SetWarning(this.formSectionsCouples.upperLeft.fields[1], this.ObjectTableName, false);
         this.UIProperties.SetWarning(this.formSectionsCouples.upperMiddle.fields[0], this.ObjectTableName, false);
@@ -510,7 +530,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         if (!(this.entityPM.RequestReasonCode != "10" && this.entityPM.RequestReasonCode != "13" && this.entityPM.RequestReasonCode != "14")) {
             this.setWarningFalseForCouples();
-        }else{
+        } else {
             this.checkWarningsCouples();
         }
 
@@ -687,6 +707,11 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
 
     public get TradeAgreementCountry1(): string {
+        if (AppTool.IsNullOrEmpty(this.entityPM.TradeAgreementCountry1)) {
+            const countryCode = "IL";
+            this.entityPM.TradeAgreementCountry1 = countryCode;
+            return this.entityPM.TradeAgreementCountry1;
+        }
         return this.entityPM.TradeAgreementCountry1;
     }
     public set TradeAgreementCountry1(newValue: string) {
