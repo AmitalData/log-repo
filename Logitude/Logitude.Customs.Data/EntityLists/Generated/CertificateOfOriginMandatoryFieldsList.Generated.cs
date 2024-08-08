@@ -25,7 +25,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool Inactive  { get; set; }
        [DataMember]
-       public bool IsMandatory  { get; set; }
+       public string IsMandatory  { get; set; }
        [DataMember]
        public int? Location  { get; set; }
        [DataMember]

@@ -50,6 +50,26 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             List<CustomsDocumentsTicketPM> myCustomsDocumentsTicketPMList = CustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketsByDocumentsFilingId(documentsFilingId, requestParams.Tenant);
             CustomsDocumentsTicketPM myCustomsDocumentsTicketPM = myCustomsDocumentsTicketPMList.FirstOrDefault();
+
+            if (myCustomsDocumentsTicketPMList.Count > 1)
+            {
+                // determine the right document ticket by getting its id from the declaration document
+                var myDeclarationUpdateService = new DeclarationUpdateService(commonContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+                var myQueryService = new DeclarationQueryService(requestParams.Tenant);
+                if (customResponse?.ConnectedEntity.Length > 0 && customResponse?.ConnectedEntity[0].entityIdKey1 != null)
+                {
+                    string declarationId = myQueryService.GetIdByDeclarationNumber(customResponse?.ConnectedEntity[0].entityIdKey1, requestParams.Tenant);
+
+                    CustomsDocumentPointerQueryService customsDocumentPointerQuery = new CustomsDocumentPointerQueryService(commonContext);
+                    CustomsDocumentPointerPM pointer = customsDocumentPointerQuery.GetCustomDocumentPoinersForClosingData(declarationId, requestParams.Tenant, documentsFilingId);
+                    if (pointer != null)
+                    {
+                        myCustomsDocumentsTicketPM = myCustomsDocumentsTicketPMList.FirstOrDefault(x => x.Id == pointer.CustomsDocumentsTicketId);
+                    }
+                }
+            }
+
+
             myCustomsDocumentsTicketPM.ChangeSetOp = ChangeSetOperation.Update;
 
             string remarks = "";
