@@ -150,6 +150,13 @@ i[role="img"][aria-hidden="true"] {
     /* padding-right: 20px; */
 }
 
+.commentSection {
+    max-width: calc(100% - 51px);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
 .commentOptions {
     position: absolute;
     left: 8px;
