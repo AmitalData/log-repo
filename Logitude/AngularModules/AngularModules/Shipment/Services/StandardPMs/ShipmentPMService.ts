@@ -617,7 +617,7 @@ export class ShipmentPMService {
         var jsonPMKeys = Object.keys(jsonPM);
 
         for (var key in jsonPMKeys) {
-            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
+            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged" || jsonPMKeys[key] === "IsCustomShipment") {
                 continue;
             }
             var property = jsonPMKeys[key];

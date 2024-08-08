@@ -8,6 +8,7 @@ import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator"
 import { LogitudeWindow } from "Controls/Windows/LogitudeWindow";
 import { ShipmentReferancePM } from "Shipment/EntityPMs/ShipmentReferancePM";
 import { MessageWindow } from "Controls/Windows/MessageWindow";
+import { ColumnsWidths } from "Infrastructure/Components/LogitudeComponents/LogLovV2Component";
 
 @Component({    
     templateUrl: './ShipmentDataTabComponent.html',
@@ -17,6 +18,7 @@ export class ShipmentDataTabComponent extends BaseComponent {
     public EntityPM: ShipmentPM;
     public ObjectTableName: string;
     public DataContext = this;
+    public ColumnsWidths: ColumnsWidths[];
 
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -25,6 +27,17 @@ export class ShipmentDataTabComponent extends BaseComponent {
 
         this.ObjectTableName = this.entityArgs.ObjectTableName;
         this.Listen();
+
+        this.ColumnsWidths = [
+            { ColumnName: 'Code', Width: 40 },
+            { ColumnName: 'CalculatedEnglishName', Width: 85 },
+            { ColumnName: 'CalculatedLocalName', Width: 85 },
+            { ColumnName: 'Address1', Width: 50 },
+            { ColumnName: 'PartnerTypeName', Width: 50 },
+            { ColumnName: 'CountryName', Width: 50 },
+            { ColumnName: 'CityName', Width: 50 },
+            { ColumnName: 'CountryCode', Width: 60 },
+        ];
     }
 
     InitializeShipmentReferance() {
@@ -303,7 +316,9 @@ export class ShipmentDataTabComponent extends BaseComponent {
     }
 
     UpdateChargeableWeight() {
-        this.EntityPM.ChargeableWeight = this.EntityPM.GrossWeight > this.EntityPM.VolumetricWeight? this.EntityPM.GrossWeight: this.EntityPM.VolumetricWeight;
+        const grossWeight = this.EntityPM.GrossWeight || 0;
+        const volumetricWeight = this.EntityPM.VolumetricWeight || 0;
+        this.EntityPM.ChargeableWeight = grossWeight > volumetricWeight? this.EntityPM.GrossWeight: this.EntityPM.VolumetricWeight;
     }
 
     public get SalesmanUserId() { return this.EntityPM.SalesmanUserId; }
