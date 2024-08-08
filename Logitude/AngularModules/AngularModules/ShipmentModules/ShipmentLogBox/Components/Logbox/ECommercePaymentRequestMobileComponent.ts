@@ -35,6 +35,7 @@ import { TenantPMService } from '../../../../Common/Services/StandardPMs/TenantP
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
 import { DatePipe } from '@angular/common';
 import { TenantManagementPM } from 'Infrastructure/EntityPMs/TenantManagementPM';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -69,7 +70,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     logoUrl: string = '';
     serviceAgreementURL: string = '';
 
-    constructor(private cd: ChangeDetectorRef) {
+    constructor(private cd: ChangeDetectorRef,private http: HttpClient) {
         super();
         this._documentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
         this._ShipmentAdditionalCloudDataService = new ShipmentAdditionalCloudDataService();
@@ -383,12 +384,43 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     OnPayClick() {
 
 
-        this._ShipmentPMService.SubmitToTranzila(this.SecurityKey, this.Tenant,this.TargetEnv).subscribe((MyResult: any) => {
-           
-        });
-        //alert("Yes");
-        //  document.forms["form"].action = this.TargetEnv
-        //  document.forms["form"].submit();
+         this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe(res=>{
+            this.MapFieldsFromResponseData(res);
+            if (res.Result) {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = this.TargetEnv; // Assuming this.TargetEnv is your target URL
+              
+                // Data to be sent
+                const formData = {
+                  sum: res.Result.sum,
+                  currency: res.Result.currency,
+                  u71: res.Result.u71,
+                  op: res.Result.op,
+                  DCdisable: res.Result.DCdisable,
+                  DclickTK: res.Result.dclickTK,
+                  thtk: res.Result.thtk
+                };
+              
+                Object.entries(formData).forEach(([key, value]) => {
+                  const input = document.createElement('input');
+                  input.type = 'hidden';
+                  input.name = key;
+                  input.value = value;
+                  form.appendChild(input);
+                });
+                document.body.appendChild(form);
+                form.submit();              
+                document.body.removeChild(form);
+              
+
+            }
+         });
+
+         
+        
+        
+
     }
     IsAgreed: boolean = false;
     IsAggreeChicked(isAgreed) {
