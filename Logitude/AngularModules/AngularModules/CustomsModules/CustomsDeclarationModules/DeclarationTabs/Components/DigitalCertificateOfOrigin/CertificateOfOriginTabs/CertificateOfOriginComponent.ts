@@ -274,7 +274,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
             this.EntityPM.IsConsigneeForPrint = true;
         }
         // if (AppTool.IsNullOrEmpty(this.EntityPM.IsDeclaredByManufacture)) {
-        //     this.EntityPM.IsDeclaredByManufacture = false;
+        //     this.EntityPM.IsDeclaredByManufacture = true;
         // }
         
         if (AppTool.IsNullOrEmpty(this.EntityPM.CityOfDeclaration)) {
