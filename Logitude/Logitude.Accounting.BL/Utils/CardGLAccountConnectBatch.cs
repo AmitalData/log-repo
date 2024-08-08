@@ -509,7 +509,7 @@ namespace Logitude.Accounting.BL.Utils
                     Tenant = tenant,
                     SkipConnectedCardsValidation = skipConnectedCardsValidation
                 };
-                query.ConnectCardToGLAccount(args);
+                query.ConnectCardToGLAccount(args, true);
             }
             catch (Exception ex)
             {
