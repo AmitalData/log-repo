@@ -727,7 +727,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
 
         if (this.ObjectTableName != "PortTimeZone") {
-            if (!this.CheckPermissions(this.ObjectTableName, "READ", false)) {
+            if (!this.CheckPermissions(this.ObjectTableName, "READ", false)) { 
                 this.HasPermition = false;
             }
         }
