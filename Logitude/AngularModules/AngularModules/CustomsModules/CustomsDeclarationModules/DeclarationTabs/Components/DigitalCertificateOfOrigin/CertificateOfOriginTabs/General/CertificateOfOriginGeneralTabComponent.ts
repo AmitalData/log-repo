@@ -98,11 +98,11 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.SetPropertiesEnabled();
         this.SetWarning();
         this.SetWarningByCooTypeCode(EntityPM.CooTypeCode);
-        this.initSelectectionValueFields();    
+        this.initSelectionValueFields();    
         this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true : false;
     }
 
-    initSelectectionValueFields(){
+    initSelectionValueFields(){
         this.selectedValueOriginCountry = this.entityPM.OriginGroupOfCountry && !this.entityPM.OriginCountry ? this.fieldNameOriginGroupOfCountry : this.fieldNameOriginCountry;
         this.selectedValueDestinationCountry = this.entityPM.DestinationGroupOfCountries && !this.entityPM.DestinationCountry ? this.fieldNameDestinationGroupOfCountries : this.fieldNameDestinationCountry;
         this.selectedValueTradeAgreement = this.entityPM.TradeAgreementGroupOfCountries && !this.entityPM.TradeAgreementCountry2 ? this.fieldNameTradeAgreementGroupOfCountries : this.fieldNameTradeAgreementCountry2;
