@@ -75,12 +75,21 @@
                         <!-- --------- selection between TradeAgreementCountry2/ TradeAgreementGroupOfCountries ------------------------ -->
                         <td style="width: 130px;">
                             <div style="height: 5px;"></div>
-                            <select id="selectedValueTradeAgreementBox" class="LogLovContainer LogLOVControl LogLovInputDiv"
-                                style="width: 110px;height: 100%;margin-right: 7px; cursor:pointer;"
-                                [(ngModel)]="selectedValueTradeAgreement">
-                                <option *ngFor="let c of TradeAgreementSelectionList" [value]="c"
-                                    [selected]="c==selectedValueTradeAgreement">{{c}}</option>
-                            </select>
+                            <div style="display: flex; align-items: center; margin-right: 4px;">
+                                <div *ngIf="isMandatorySelectedTradeAgreement; else notMandatorySelectedTradeAgreement"
+                                    style="width: 7px; height: 7px; background: #FFCB00; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;">
+                                </div>
+                                <ng-template #notMandatorySelectedTradeAgreement>
+                                    <div style="width: 7px;"></div>
+                                </ng-template>
+                                <select id="selectedValueTradeAgreementBox"
+                                    class="LogLovContainer LogLOVControl LogLovInputDiv"
+                                    style="width: 110px;height: 100%;margin-right: 4px; cursor:pointer;"
+                                    [(ngModel)]="selectedValueTradeAgreement" (change)="updateSelectedValueChange(selectedValueTradeAgreement)">
+                                    <option *ngFor="let c of TradeAgreementSelectionList" [value]="c"
+                                        [selected]="c==selectedValueTradeAgreement">{{c}}</option>
+                                </select>
+                            </div>
                         </td>
                         <td style="width:180px">
                             <div>
@@ -117,12 +126,21 @@
                         <!-- --------- selection between OriginGroupOfCountry/OriginCountry  ------------------------ -->
                         <td style="width: 130px;" rowspan="1">
                             <div style="height: 5px;"></div>
-                            <select id="selectedValueOriginCountryBox" class="LogLovContainer LogLOVControl LogLovInputDiv"
-                                style="width: 110px;height: 100%;margin-right: 7px; cursor:pointer;"
-                                [(ngModel)]="selectedValueOriginCountry">
-                                <option *ngFor="let c of OriginCountrySelectionList" [value]="c"
-                                    [selected]="c==selectedValueOriginCountry">{{c}}</option>
-                            </select>
+                            <div style="display: flex; align-items: center; margin-right: 4px;">
+                                <div *ngIf="isMandatorySelectedOriginCountry; else notMandatorySelectedOriginCountry"
+                                    style="width: 7px; height: 7px; background: #FFCB00; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;">
+                                </div>
+                                <ng-template #notMandatorySelectedOriginCountry>
+                                    <div style="width: 7px;"></div>
+                                </ng-template>
+                                <select id="selectedValueOriginCountryBox"
+                                    class="LogLovContainer LogLOVControl LogLovInputDiv"
+                                    style="width: 110px;height: 100%;margin-right: 4px; cursor:pointer;"
+                                    [(ngModel)]="selectedValueOriginCountry" (change)="updateSelectedValueChange(selectedValueOriginCountry)">
+                                    <option *ngFor="let c of OriginCountrySelectionList" [value]="c"
+                                        [selected]="c==selectedValueOriginCountry">{{c}}</option>
+                                </select>
+                            </div>
                         </td>
                         <td style="width:180px">
                             <div>
@@ -146,12 +164,21 @@
                         <!-- --------- selection between  DestinationGroupOfCountries/DestinationCountry   ------------------------ -->
                         <td style="width: 130px;" rowspan="1">
                             <div style="height: 5px;"></div>
-                            <select id="selectedValueDestinationCountryBox" class="LogLovContainer LogLOVControl LogLovInputDiv"
-                                style="width: 110px;height: 100%;margin-right: 7px; cursor:pointer;"
-                                [(ngModel)]="selectedValueDestinationCountry">
-                                <option *ngFor="let c of DestinationCountrySelectionList" [value]="c"
-                                    [selected]="c==selectedValueDestinationCountry">{{c}}</option>
-                            </select>
+                            <div style="display: flex; align-items: center; margin-right: 4px;">
+                                <div *ngIf="isMandatorySelectedDestinationCountry; else notMandatorySelectedDestinationCountry"
+                                    style="width: 7px; height: 7px; background: #FFCB00; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;">
+                                </div>
+                                <ng-template #notMandatorySelectedDestinationCountry>
+                                    <div style="width: 7px;"></div>
+                                </ng-template>
+                                <select id="selectedValueDestinationCountryBox"
+                                    class="LogLovContainer LogLOVControl LogLovInputDiv"
+                                    style="width: 110px;height: 100%;margin-right: 4px; cursor:pointer;"
+                                    [(ngModel)]="selectedValueDestinationCountry" (change)="updateSelectedValueChange(selectedValueDestinationCountry)">
+                                    <option *ngFor="let c of DestinationCountrySelectionList" [value]="c"
+                                        [selected]="c==selectedValueDestinationCountry">{{c}}</option>
+                                </select>
+                            </div>
                         </td>
                         <td style="width:180px">
                             <div>
