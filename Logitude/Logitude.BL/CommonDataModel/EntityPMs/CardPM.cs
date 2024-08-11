@@ -235,7 +235,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string CustomsInvoiceTemplateId { get; set; }
         public string ConsolidationInvoiceTemplateId { get; set; }
         public string ManifestInvoiceTemplateId { get; set; }
-        public bool IsFromGlaAccountUpdate { get; set; }
+         public bool IsFromGlaAccountUpdate { get; set; }
         public bool IsExcludeCard { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -245,5 +245,5 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember]
         public bool SendingInterestReport { get; set; }
-    }
+     }
 }

@@ -323,7 +323,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             SetSatStatus();
             if (entityPM.SetApproved)
             {
-                if (entityPM.ConfirmationNumberStatus == null)
+                if (entityPM.ConfirmationNumberStatus == null &&! (entityPM.ConfirmationNumber!=null && entityPM.IsExternalEntity))
                 {
                     SetConfirmationNumberStatus();
                 }
@@ -450,7 +450,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void SetConfirmationNumberStatus()
         {
             var confirmationNumberDefault = (from a in objectContext.ConfirmationNumberDefaults
-                                             where a.Tenant == entityPM.Tenant && a.FromDate <= entityPM.InvoiceDate
+                                             where a.Tenant == entityPM.Tenant && a.FromDate <= entityPM.InvoiceDate && a.InActive == false
                                              orderby a.FromDate descending
                                              select a
                                            ).FirstOrDefault();
@@ -4184,7 +4184,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             Reference1 = theEntityPm.CustomerRef != null ? theEntityPm.CustomerRef : theEntityPm.InvoiceNumber,
                                                             Reference2 = theEntityPm.MainEntityReference,
                                                             Reference3 = !string.IsNullOrEmpty(theEntityPm.MasterNumber) ? theEntityPm.MasterNumber : (!string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber),
-                                                            Notes = d.Notes,
+                                                            Notes = !string.IsNullOrWhiteSpace(d.Notes) ? d.Notes : (!string.IsNullOrWhiteSpace(theEntityPm.PrintNotes) ? theEntityPm.PrintNotes : theEntityPm.InternalNotes),
                                                         }).ToList();
 
                     UpdateJournalLinesDebitAccounts(journalLines);

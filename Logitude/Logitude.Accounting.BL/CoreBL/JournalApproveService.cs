@@ -130,7 +130,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 LogMessagingUtil.Instance.AppendLine("SubmitApprove(" + _SeedJournalId + ") took:" + sw.Elapsed.ToString());
             }
         }
-        private void CreateInterestTransactions(JournalPM journalPM, IAccountingContext context)
+        private void CreateInterestTransactions(JournalPM journalPM, IAccountingContext context,bool  isTester=false)
         {
             if (journalPM is null || journalPM.IsLedgerCreated == true)
             {
@@ -166,7 +166,7 @@ namespace Logitude.Accounting.BL.CoreBL
                || journalPM.AccountingEntityCode == AccountingEntityValues.BankAdjustment)
             {
                 var journalUpdateService = new JournalUpdateService(context, new Dictionary<string, IContext>(), journalPM.Tenant);
-                journalUpdateService.CreateInterestTransactionTo_RegularJournal(journalPM);
+                journalUpdateService.CreateInterestTransactionTo_RegularJournal(journalPM, isTester);
             }
             else if (journalPM.AccountingEntityCode == AccountingEntityValues.Revaluation)
             {
@@ -578,7 +578,19 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
             }
         }
-
+        public void CreateInterestTransactionsByDate(DateTime date)
+        {
+            _AccountingContext = AccountingContext.GetContext(_Tenant);
+           var ListOfJournals= _AccountingContext.Journals.Where(j=>j.ExternalSystem=="AMITAL" && j.DocumentDate >= date&& j.CreateDate<date ).ToList();
+            foreach (var journal in ListOfJournals)
+            {
+                var journalQueryService = new JournalQueryService(_AccountingContext);
+                _JournalPM = journalQueryService.GetSingle(journal.Id, true, false);
+                CreateInterestTransactions(_JournalPM, _AccountingContext,true);
+                this._AccountingContext.SaveChanges();
+               
+            }
+        }
         private TransactionScope GetTransactionScope(TimeSpan? timeout)
         {
             if (FeatureToggleHelper.HasFeatureToggle("JAM", _Tenant))

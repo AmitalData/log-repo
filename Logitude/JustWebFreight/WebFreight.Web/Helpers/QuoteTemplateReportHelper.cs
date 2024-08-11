@@ -83,17 +83,18 @@ namespace Logitude.BL.Helpers
 				};
 
 
-				using (var client = new HttpClient())
+                using (var client = new HttpClient())
                 {
                     string serializedObject = JsonConvert.SerializeObject(buildQuoteRequest);
                     StringContent content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
+                    content.Headers.Add("Token", HttpContext.Current.Request.Headers["Token"]); 
                     var result1 = client.PostAsync(URI, content);
 
                     result1.Wait();
                     if (result1.Result.StatusCode == System.Net.HttpStatusCode.OK)
                     {
-						var result = result1.Result.Content.ReadAsAsync(typeof(byte[])).Result;
-						pdfData = (byte[])result;						                     
+                        var result = result1.Result.Content.ReadAsAsync(typeof(byte[])).Result;
+                        pdfData = (byte[])result;
                     }
                 }
             }

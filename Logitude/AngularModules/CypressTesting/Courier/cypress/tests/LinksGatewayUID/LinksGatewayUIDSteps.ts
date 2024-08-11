@@ -12,7 +12,7 @@ import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetai
 //#region Logged in to LinksGatewayUID
 
 Given("the user logged in to LinksGatewayUID", () => {
-    cy.visit('https://test-accounting.amital.co.il/test/LinksGateway.aspx?Menu=UID&SecurityKey=d5e6d15f4cb24f12a8ac9c5e8c54a06d');
+    cy.visit('https://accounting-staging.amital.co.il/accounting/LinksGateway.aspx?Menu=UID&SecurityKey=d5e6d15f4cb24f12a8ac9c5e8c54a06d&Tenant=');
 });
 
 
