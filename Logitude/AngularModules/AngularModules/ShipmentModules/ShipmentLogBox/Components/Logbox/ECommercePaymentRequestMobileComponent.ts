@@ -35,6 +35,7 @@ import { TenantPMService } from '../../../../Common/Services/StandardPMs/TenantP
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
 import { DatePipe } from '@angular/common';
 import { TenantManagementPM } from 'Infrastructure/EntityPMs/TenantManagementPM';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -69,7 +70,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     logoUrl: string = '';
     serviceAgreementURL: string = '';
 
-    constructor(private cd: ChangeDetectorRef) {
+    constructor(private cd: ChangeDetectorRef,private http: HttpClient) {
         super();
         this._documentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
         this._ShipmentAdditionalCloudDataService = new ShipmentAdditionalCloudDataService();
@@ -106,7 +107,6 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     ShowErrorMessage: boolean = false;
     SecurityKey: string = "";
     Tenant: number = null;
-    TranzilaPaymentWithBit: string = "0";
     WhatsAppMessagingNumber: string = "00";
     ShowWhatsAppIcon: boolean = false;
 
@@ -153,7 +153,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     }
                 }
                 else {
-                    var myMessage = "משלוח זה כבר שולם בתםריך";
+                    var myMessage = "משלוח זה כבר שולם בתאריך";
                     if (this.AdditionalData.PaymentDateTime != null) {
                         var formatedPaymentDateTime = this.datePipe.transform(this.AdditionalData.PaymentDateTime, 'dd/MM/yyyy');
                         myMessage = myMessage + " " + formatedPaymentDateTime;
@@ -184,7 +184,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
             }
             else {
-                this.FinalMessage = "התיק לם קיים בסביבה הזו";
+                this.FinalMessage = "התיק לא קיים בסביבה הזו";
                 this.ShowFinalMessage = true;
                 this.ShowErrorMessage = true;
                 this.StopBusyIndicator();
@@ -197,8 +197,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
     MapFieldsFromResponseData(responseResult) {
         if (responseResult.Data) {
-            this.TranzilaPaymentWithBit = responseResult.Data.TranzilaPaymentWithBit;
-            this.WhatsAppMessagingNumber = responseResult.Data.WhatsAppMessagingNumber;
+            this.WhatsAppMessagingNumber = responseResult.Data;
             this.SetShowWatsAppIcon();
         }
     }
@@ -255,7 +254,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
                 }
                 else {
-                    this.FinalMessage = "התיק לם קיים בסביבה הזו";
+                    this.FinalMessage = "התיק לא קיים בסביבה הזו";
                     this.ShowFinalMessage = true;
                     this.ShowErrorMessage = true;
                 }
@@ -336,6 +335,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public set thtk(newValue: string) { this.AdditionalData.PaymentData.thtk = newValue; }
 
     public get TargetEnv() {
+        debugger
         let directTranzilaLink = this.GetDirectTranzilaLink();
         var Env = directTranzilaLink + this.AdditionalData.PaymentData?.TargetEnv + "/";//amitaltest
         return Env;
@@ -383,21 +383,45 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     MyAdditionalData: any = null;
 
     OnPayClick() {
-        //alert("Yes");
-        if (this.TranzilaPaymentWithBit == "1") {
-            // Create a hidden input element
-            var hiddenInput = document.createElement("input");
 
-            // Set the attributes for the input element
-            hiddenInput.setAttribute("type", "hidden");
-            hiddenInput.setAttribute("name", "bit_pay");
-            hiddenInput.setAttribute("value", "1");
 
-            // Append the input element to the form with the id "form"
-            document.forms['form'].appendChild(hiddenInput);
-        }
-        document.forms["form"].action = this.TargetEnv
-        document.forms["form"].submit();
+         this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe(res=>{
+            this.MapFieldsFromResponseData(res);
+            if (res.Result) {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = this.TargetEnv; // Assuming this.TargetEnv is your target URL
+              
+                // Data to be sent
+                const formData = {
+                  sum: res.Result.sum,
+                  currency: res.Result.currency,
+                  u71: res.Result.u71,
+                  op: res.Result.op,
+                  DCdisable: res.Result.DCdisable,
+                  DclickTK: res.Result.dclickTK,
+                  thtk: res.Result.thtk
+                };
+              
+                Object.entries(formData).forEach(([key, value]) => {
+                  const input = document.createElement('input');
+                  input.type = 'hidden';
+                  input.name = key;
+                  input.value = value;
+                  form.appendChild(input);
+                });
+                document.body.appendChild(form);
+                form.submit();              
+                document.body.removeChild(form);
+              
+
+            }
+         });
+
+         
+        
+        
+
     }
     IsAgreed: boolean = false;
     IsAggreeChicked(isAgreed) {

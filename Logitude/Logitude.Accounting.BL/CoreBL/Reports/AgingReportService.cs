@@ -320,6 +320,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                       on acc.Id equals moredata.AccountId into moredataJoinT
                       from moredata in moredataJoinT.DefaultIfEmpty()
 
+                      join applCard in _AccountingContext.Cards.Where(r => r.Tenant == _Param.Tenant)
+                      on acc.Id equals applCard.GLAccountId into applCardsJoinT
+
+                      from applCard in applCardsJoinT.DefaultIfEmpty()
                       join card in _AccountingContext.GLAccountCardsDatas.Where(r => r.Tenant == _Param.Tenant)
                        on acc.CardsDataId equals card.Id into cardJoinT
                       from card in cardJoinT.DefaultIfEmpty() 
@@ -335,12 +339,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                           AccountDisplayNumber = acc.DisplayNumber,
                           AccountInternalNumber = acc.InternalNumber,
                           InterestCreditLimit = acc.InterestCreditLimit,
-                          AccountTermName = card.PaymentTerm.EnglishName,
+                          AccountTermName = applCard.PaymentTerm.EnglishName,
                           ChartOfAccountLocalName = acc.ChartOfAccountsName,
 
                           CurrencyId = acc.ReconcileMethodCode == "0" ? tenant.CurrencyId : acc.CurrencyId,
 
-                          AccountTermLocalName = card.PaymentTerm.LocalName,
+                          AccountTermLocalName = applCard.PaymentTerm.LocalName,
                           AccountSalesmanName = card.SalesmanUser.Contact.EnglishName,
                           AccountSalesmanLocalName = card.SalesmanUser.Contact.LocalName,
                           AccountCollectorName = card.CollectorUser.Contact.EnglishName,

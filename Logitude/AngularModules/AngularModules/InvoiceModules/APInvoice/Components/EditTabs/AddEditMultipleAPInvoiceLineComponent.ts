@@ -32,7 +32,7 @@ export class AddEditMultipleAPInvoiceLineComponent {
         this.GLAccountsFilterItems = new ApiQueryFilters();
         this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
     }
-      public ChargeTypesQueryFilters: ApiQueryFilters;
+       public ChargeTypesQueryFilters: ApiQueryFilters;
     private BuildQueryFilters() {
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
@@ -42,6 +42,7 @@ export class AddEditMultipleAPInvoiceLineComponent {
  
     
      
+ 
     SetDataContext(dataContext: APInvoiceLineShortItem) {
         this.EntityPM = dataContext.EntityPM;
         this.DataContext = dataContext;

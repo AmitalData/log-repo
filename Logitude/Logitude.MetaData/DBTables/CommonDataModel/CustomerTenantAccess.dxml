@@ -26,8 +26,8 @@
   </Column>
   <Column
     Name="ContactName"
-    Type="varchar"
-    Size="60">
+    Type="nvarchar"
+    Size="120">
     <Constraints
       Nullable="true" />
   </Column>
@@ -40,8 +40,8 @@
   </Column>
   <Column
     Name="CompanyName"
-    Type="varchar"
-    Size="100">
+    Type="nvarchar"
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>

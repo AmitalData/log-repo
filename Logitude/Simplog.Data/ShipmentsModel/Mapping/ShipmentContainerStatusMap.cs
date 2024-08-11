@@ -20,12 +20,12 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.FromPortId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ToPortId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.VoyageNumber).HasMaxLength(35).IsUnicode(false);
-            this.Property(t => t.VesselName).HasMaxLength(35).IsUnicode(false);
+            this.Property(t => t.VesselName).HasMaxLength(70).IsUnicode(true);
             this.Property(t => t.RecordHash).IsRequired().HasMaxLength(500).IsUnicode(true);
             this.Property(t => t.Location).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.TimeOfDepartureInfo).HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.TimeOfArrivalInfo).HasMaxLength(1).IsUnicode(false);
-            this.Property(t => t.ShippingLineName).HasMaxLength(60).IsUnicode(false);
+            this.Property(t => t.ShippingLineName).HasMaxLength(120).IsUnicode(true);
             this.Property(t => t.ContainerId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ContainerNumber).HasMaxLength(20).IsUnicode(false);
 

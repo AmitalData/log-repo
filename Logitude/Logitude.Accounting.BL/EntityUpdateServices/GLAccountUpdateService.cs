@@ -83,7 +83,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
 
             }
-            AddAcitivityLog(entityPM, "N");
 
             FillSearchFields(entityPM);
 
@@ -395,7 +394,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
             base.OnCreating(entityPM, entityParentPM);
-
+            AddAcitivityLog(entityPM, "N");
         }
 
         private void SetDisplayNumber(GLAccountPM entityPM)
@@ -468,7 +467,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             CardPM cardPM = cardQuery.GetSinglePM(cardId, tenant);
             cardPM.GLAccountId = glaccountId;
             cardPM.GLAccountDisplayNumber = displayNumber;
-            cardPM.IsFromGlaAccountUpdate = isFromGlaAccountUpdate;
+            //cardPM.IsFromGlaAccountUpdate = isFromGlaAccountUpdate;
             CardService cardService = new CardService(context, tenant);
             cardService.Update(cardPM);
         }
@@ -2404,7 +2403,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 CardPM card = query.GetSinglePM(cardId, tenant);
                 card.GLAccountId = glAccountId;
                 card.GLAccountDisplayNumber = GetDisplayNumberFromGLAccount(glAccountId, tenant);
-                card.IsFromGlaAccountUpdate = true;
+                //card.IsFromGlaAccountUpdate = true;
                 service.Update(card);
             }
         }
@@ -2623,6 +2622,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             }, false);
         }
+
         public class CsvModel
         {
             public int Tenant { get; set; }
@@ -2647,10 +2647,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             List<CsvModel> records = new List<CsvModel>();
             string decodedString = Encoding.UTF8.GetString(fileUploaded);
             var textReader = new StringReader(decodedString);
-            using (var csv = new CsvHelper.CsvReader(textReader, CultureInfo.InvariantCulture))
-            {
-                records = csv.GetRecords<CsvModel>().ToList();
-            }
+            //using (var csv = new CsvHelper.CsvReader(textReader, CultureInfo.InvariantCulture))
+            //{
+            //    records = csv.GetRecords<CsvModel>().ToList();
+            //}
             return records;
         }
         public UpdateFromCsvResult UpdateFromCsv(byte[] fileUploader, int tenant)

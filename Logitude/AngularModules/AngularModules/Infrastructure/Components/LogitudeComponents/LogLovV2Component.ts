@@ -852,6 +852,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private InitializeLovPartnerTypsForSomeTables() {
+        debugger
         if (this.LookUpTableName == "Card" || this.LookUpTableName == "Carrier") {
             if (this.DependencyFilter1Value != null && this.DependencyFilter1Value != undefined) {
 
@@ -1797,7 +1798,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         if (searchText) {
             this.LocalFilterServerSearchTxtLength = searchText.length;
         }
-
+        this.QueryFilterItems=null
         //reset counters
         this.bufferData = [];
         this.callCount = 0;
@@ -3360,6 +3361,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             filterParams.IsLookUpFilter = true;
             //filters.addAdditionalFilter("CompactSearchField", searchText, null, null, "Contains", false, false, false, null);
             filters.pushAdditionalFilter(filterParams);
+            debugger
             if (this.LookUpTableName == "Card"){
                 loadPromise = this.cardExtendedPMService.getByCompactFilters(this.LookUpTableName, filters);
 

@@ -21,8 +21,8 @@
   </Column>
   <Column
     Name="Name"
-    Type="varchar"
-    Size="10">
+    Type="nvarchar"
+    Size="20">
     <Constraints
       Nullable="false" />
   </Column>

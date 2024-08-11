@@ -33,7 +33,7 @@ namespace Logitude.Infrastructure.Data.EntityMapping
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.ClassName).HasColumnName("ClassName").HasMaxLength(120).IsUnicode(false);
+            this.Property(t => t.ClassName).HasColumnName("ClassName").HasMaxLength(240).IsUnicode(true);
 
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

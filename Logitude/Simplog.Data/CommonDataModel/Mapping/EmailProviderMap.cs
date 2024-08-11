@@ -30,8 +30,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 
 
             this.Property(t => t.UserName)
-                .HasMaxLength(100)
-                .IsUnicode(false);
+                .HasMaxLength(200)
+                .IsUnicode(true);
 
             this.Property(t => t.Status)
             .HasMaxLength(15)

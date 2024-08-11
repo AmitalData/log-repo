@@ -41,15 +41,15 @@
   </Column>
   <Column
     Name="Name"
-    Type="varchar"
-    Size="40">
+    Type="nvarchar"
+    Size="80">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="FilterControlName"
-    Type="varchar"
-    Size="100">
+    Type="nvarchar"
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>

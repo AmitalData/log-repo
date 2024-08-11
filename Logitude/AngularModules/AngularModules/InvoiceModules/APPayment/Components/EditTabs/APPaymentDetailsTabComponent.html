@@ -138,11 +138,12 @@
             </div>
         </td>
     </tr>
-    <tr *ngIf="ValidationWarningsList != null && ValidationWarningsList.length > 0" style="height:1px;">
+    <!-- <tr *ngIf="ValidationWarningsList != null && ValidationWarningsList.length > 0" style="height:1px;">
         <td>
             <WarningSummary [ItemsSource]="ValidationWarningsList"></WarningSummary>
         </td>
-    </tr>
+    </tr> -->
+    
     <tr>
         <td>
             <div class="TableHolder">
@@ -201,7 +202,7 @@
                                                             [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
                                                             [CustomizedWidth]="VendorLovSizeForFullAccounting"
                                                             [StartSearchFromChar]="3"
-                                            [StartSearchFromNumber]="5"
+                                                            [StartSearchFromNumber]="5"
                                             [QueryFilterItems]="GLAccountsFilterItems"
                                                             >
                                                     </LogLov>

@@ -25,13 +25,13 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.IATACode).HasMaxLength(7).IsUnicode(false);
             this.Property(t => t.CASSCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.UserEmail).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.UserName).HasMaxLength(70).IsUnicode(false);
+            this.Property(t => t.UserName).HasMaxLength(140).IsUnicode(true);
             this.Property(t => t.Origin).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.Destination).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.GrossWeightUnitCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.ChargeableWeightUnitCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.VolumeUnitCode).HasMaxLength(3).IsUnicode(false);
-            this.Property(t => t.DescriptionOfGoods).HasMaxLength(2000).IsUnicode(false);
+            this.Property(t => t.DescriptionOfGoods).HasMaxLength(4000).IsUnicode(true);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
 
              string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

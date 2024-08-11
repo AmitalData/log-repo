@@ -13,7 +13,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
             // Properties
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.PrimaryContactName).HasMaxLength(60).IsUnicode(false);
+            this.Property(t => t.PrimaryContactName).HasMaxLength(120).IsUnicode(true);
             this.Property(t => t.PrimaryContactEmail).HasMaxLength(70).IsUnicode(false);
             this.Property(t => t.PrimaryContactPhone).HasMaxLength(25).IsUnicode(false);
 

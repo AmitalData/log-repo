@@ -836,8 +836,8 @@ export class MaintenanceComponent {
             item.ObjectTableName = "Cargo Tracking";
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
-
-        if (FeatureLocator.HasFeaturePermession("General", "CARGOTRACKING")) {
+        
+        if (SessionInfo.LoggedUserPM.IsCustomerCare && FeatureLocator.HasFeaturePermession("General", "CARGOTRACKING")) {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "OTH";
             item.Icon = "List"

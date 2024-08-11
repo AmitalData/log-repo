@@ -9,15 +9,15 @@
     <Constraints Nullable="false" />
   </Column>
 
-  <Column Name="SchemaName" Type="varchar" Size="15">
+  <Column Name="SchemaName" Type="nvarchar" Size="30">
     <Constraints Nullable="false" />
   </Column>
 
-  <Column Name="TableName" Type="varchar" Size="500">
+  <Column Name="TableName" Type="nvarchar" Size="1000">
     <Constraints Nullable="false" />
   </Column>
 
-  <Column Name="ColumnName" Type="varchar" Size="500">
+  <Column Name="ColumnName" Type="nvarchar" Size="1000">
     <Constraints Nullable="false" />
   </Column>
 

@@ -43,7 +43,7 @@ export class AddEditAPGeneralInvoiceLineComponent {
         this.GLAccountsFilterItems = new ApiQueryFilters();
         this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
     }
-  
+   
 
     public ChargeTypesQueryFilters: ApiQueryFilters;
     private BuildQueryFilters() {
@@ -53,6 +53,7 @@ export class AddEditAPGeneralInvoiceLineComponent {
         this.ChargeTypesQueryFilters.addAdditionalFilter("PayableDebitGLAcountId", true, null, null, "IsNotNull", false, false, false, "Text");
     }
   
+ 
 
    FillChargesTypesCustomLOVColumnsWidths()
     {

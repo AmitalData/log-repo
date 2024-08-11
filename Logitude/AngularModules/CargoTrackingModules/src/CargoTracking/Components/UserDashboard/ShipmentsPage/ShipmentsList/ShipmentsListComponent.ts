@@ -854,7 +854,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
     private async filterWithAllCustomersWhenCustomersNotSelected() {
         let filter: CargoTrackingShipmentSearchInput = Object.assign({}, this.ShipmentSearchInput);
-        filter.CustomersIds = filter.CustomersIds.length == 0 ? this.InvitedCustomers.map(d => d.CardId) : filter.CustomersIds;
+        if(!SessionInfo.IsAdmin) {filter.CustomersIds =filter.CustomersIds.length == 0 ? this.InvitedCustomers.map(d => d.CardId) : filter.CustomersIds};
         filter.FromDate = await this.getFromDate();
         return filter;
     }
@@ -869,10 +869,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         
         return fromDate;
     }
-
     private async InitiateShipmentDataSource() {
         let filter = await this.filterWithAllCustomersWhenCustomersNotSelected();
-
         this.ShipmentsDataSource = new ShipmentDataSource(this.changeDetector, this.searchService, filter, this);
         let s = SessionInfo.LoggedUserCompanyLogins.filter(a => a.Tenant == this.tenant)[0];
         if (SessionInfo.LoggedUserCompanyLogins.filter(a => a.Tenant == this.tenant)[0].IsUser === true) {

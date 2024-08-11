@@ -1152,6 +1152,28 @@ Line3
 
 
 
+    ButtonRedempt_a_Cheque_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        defaultParam.ARChequeId = "";
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _Redempt_a_ChequeUrl = ServiceHelper.GetLogitudeURL() + '/api/Redempt_a_Cheque';
+        let myUrl = _Redempt_a_ChequeUrl + "?tenant=" + objToCheck1.Tenant;
+        myUrl = myUrl + "&aRChequeId=" + objToCheck1.ARChequeId;
+
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); this.CurrentSession.StopBusyIndicator(); },
+                e => { this._LabelLog = JSON.stringify(e); this.CurrentSession.StopBusyIndicator(); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+    }
 
 
 

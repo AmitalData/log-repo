@@ -192,7 +192,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                              Salesman = a.SalesmanUserId != null ? (a.SalesmanUser.Contact != null ? (a.SalesmanUser.Contact.LocalName == null ? a.SalesmanUser.Contact.EnglishName : a.SalesmanUser.Contact.LocalName) : null) : null,
                              Collector = a.CollectorId != null ? (a.CollectorUser.Contact != null ? (a.CollectorUser.Contact.LocalName == null ? a.CollectorUser.Contact.EnglishName : a.CollectorUser.Contact.LocalName) : null) : null,
-                            CardCollectorId = CardsDatas != null ? CardsDatas.CollectorUser.Id : null,
+                             CardCollectorId = CardsDatas != null ? CardsDatas.CollectorUser.Id : null,
                              Category1Id = a.Category1Id,
                              Category2Id = a.Category2Id,
                              Category3Id = a.Category3Id,
@@ -272,7 +272,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                              CreditUsed = -1 * ((((decimal)(long)((CardsDatas.CreditLimit == null ? 0 : CardsDatas.CreditLimit) * 10000)) / 10000) + (-1 * MoreDatas.BalanceInLocalCurrency) + (-1 * (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0)) + (-1 * (CardsDatas.TotalOpenShipments ?? 0))),
 
                              InsuredCreditPercentage = (CardsDatas.CreditLimit == null || CardsDatas.CreditLimit == 0) ? 0 :
-                                                   ( (CardsDatas.InsuredcreditLimit ?? 0) / CardsDatas.CreditLimit * 100 ),
+                                                    ( (CardsDatas.InsuredcreditLimit ?? 0) / CardsDatas.CreditLimit * 100 ),
                                                    ContactId = a.ContactId,
                                                    ContactName = a.ContactId != null ? (a.Contact.LocalName ?? a.Contact.EnglishName) : null,
                                                    ContactPhone = a.Contact != null ? a.Contact.BusinessPhone : null,
@@ -281,13 +281,15 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    CollectorName = a.CollectorId != null ? (a.CollectorUser.Contact != null ? (a.CollectorUser.Contact.LocalName == null ? a.CollectorUser.Contact.EnglishName : a.CollectorUser.Contact.LocalName) : null) : null,
                                                    SalesmanUserId = a.SalesmanUserId,
 
+ 
+
                              ContactId = a.ContactId,
                              ContactName = a.ContactId != null ? (a.Contact.LocalName ?? a.Contact.EnglishName) : null,
-                                                   ContactPhone = a.Contact != null ? a.Contact.BusinessPhone : null,
-                                                   ContactEmail = a.Contact != null ? a.Contact.Email : null,
-                                                   SalesmanName = a.SalesmanUserId != null ? (a.SalesmanUser.Contact != null ? (a.SalesmanUser.Contact.LocalName == null ? a.SalesmanUser.Contact.EnglishName : a.SalesmanUser.Contact.LocalName) : null) : null,
-                                                   CollectorName = a.CollectorId != null ? (a.CollectorUser.Contact != null ? (a.CollectorUser.Contact.LocalName == null ? a.CollectorUser.Contact.EnglishName : a.CollectorUser.Contact.LocalName) : null) : null,
-                                                   SalesmanUserId = a.SalesmanUserId,
+                             ContactPhone = a.Contact != null ? a.Contact.BusinessPhone : null,
+                             ContactEmail = a.Contact != null ? a.Contact.Email : null,
+                             SalesmanName = a.SalesmanUserId != null ? (a.SalesmanUser.Contact != null ? (a.SalesmanUser.Contact.LocalName == null ? a.SalesmanUser.Contact.EnglishName : a.SalesmanUser.Contact.LocalName) : null) : null,
+                             CollectorName = a.CollectorId != null ? (a.CollectorUser.Contact != null ? (a.CollectorUser.Contact.LocalName == null ? a.CollectorUser.Contact.EnglishName : a.CollectorUser.Contact.LocalName) : null) : null,
+                             SalesmanUserId = a.SalesmanUserId,
 
                          }); ;
             }

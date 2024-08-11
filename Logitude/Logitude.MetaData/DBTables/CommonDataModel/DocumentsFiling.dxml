@@ -114,8 +114,8 @@
   </Column>
   <Column
     Name="ExternalEntityName"
-    Type="varchar"
-    Size="12">
+    Type="nvarchar"
+    Size="24">
     <Constraints
       Nullable="true" />
   </Column>
@@ -404,6 +404,11 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Relation
+    ForeignKeyColumn="DocumentId"
+    ReferencedTable="Documents"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="ChildObjectTableId"
     ReferencedTable="ObjectTables"

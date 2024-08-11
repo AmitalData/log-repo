@@ -52,7 +52,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.LastExceptionDescription).HasMaxLength(500).IsUnicode(true);
             this.Property(t => t.EmptyContainerReturnTo).HasMaxLength(200).IsUnicode(false);
             this.Property(t => t.EmptyContainerReturnFrom).HasMaxLength(200).IsUnicode(false);
-            this.Property(t => t.VesselName).HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.VesselName).HasMaxLength(80).IsUnicode(true);
             this.Property(t => t.ConcurrencyGUID).IsRequired().HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.UpdatedByPartner).HasMaxLength(60).IsUnicode(false);
 

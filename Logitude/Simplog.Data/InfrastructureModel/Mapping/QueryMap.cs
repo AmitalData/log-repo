@@ -18,15 +18,15 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.OriginalQueryId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.QuerySection).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.QueryGroupCode).IsRequired().HasMaxLength(4).IsUnicode(false);
-            this.Property(t => t.NameTextCodeId).HasMaxLength(30).IsUnicode(false);
+            this.Property(t => t.NameTextCodeId).HasMaxLength(30).IsUnicode(false);  
             this.Property(t => t.DefaultSortColumn).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.DefaultSortDirection).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.SpotlightDataTemplate).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.FeatureId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.EditWizardName).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.EditWizardName).HasMaxLength(200).IsUnicode(true);
             this.Property(t => t.Perspective).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.EditWizardComponentPath).HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.NameTextCodeCode).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.NameTextCodeCode).HasMaxLength(200).IsUnicode(true);
             this.Property(t => t.FeatureUniqeCode)
                 .HasMaxLength(120)
                 .IsUnicode(false);

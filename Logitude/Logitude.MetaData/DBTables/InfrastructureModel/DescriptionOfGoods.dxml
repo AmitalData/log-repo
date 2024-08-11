@@ -19,20 +19,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Name"
-    Type="varchar"
-    Size="40">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="DescriptionOfGood"
-    Type="varchar"
-    Size="500">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="AddedManually"
     Type="bit">
     <Constraints
@@ -41,6 +27,20 @@
   <Column
     Name="InActive"
     Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Name"
+    Type="nvarchar"
+    Size="80">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DescriptionOfGood"
+    Type="nvarchar"
+    Size="1000">
     <Constraints
       Nullable="false" />
   </Column>

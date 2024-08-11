@@ -357,7 +357,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.GetForeignFields();
             this.RunStoredProcedures();
-            this.AfterServiceFinished();
+           
             if (entityPM.ARInvoiceTypeCode == "IT")
             {
 
@@ -371,7 +371,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.UpdateInterestReportFields(entityPM);
                 this.UpdateInterestReportsConnectedInvoice(entityPM);
             }
-
+            this.GenerateInvoiceNumber();
+            this.AfterServiceFinished();
+            ARInvoiceMapping.MapEntity(entityPM, invoice, false, loggedContactId);
+            invoiceRepository.Update(invoice);
+            invoiceRepository.SubmitChanges();
             new ARInvoiceAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(invoice, tenant);
 
             entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
@@ -1314,7 +1318,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     if (!entityPM.IsInvoiceNumberManuallySet)
                     {
-                        this.GenerateInvoiceNumber();
+                       // this.GenerateInvoiceNumber();
                     }
                 }
 
@@ -1386,7 +1390,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 if (!entityPM.IsInvoiceNumberManuallySet)
                 {
-                    this.GenerateInvoiceNumber();
+                   // this.GenerateInvoiceNumber();
                 }
 
                 this.UpdateNeedRebuild();
@@ -1431,7 +1435,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 entityPM.StatusCode = "AC";
 
-                this.GenerateInvoiceNumber();
+               // this.GenerateInvoiceNumber();
             }
 
             if (!entityPM.IsConstituentInvoice)

@@ -236,8 +236,8 @@
   <Column
     Name="QueueName"
     ShortName="QueueName_"
-    Type="varchar"
-    Size="100">
+    Type="nvarchar"
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>
