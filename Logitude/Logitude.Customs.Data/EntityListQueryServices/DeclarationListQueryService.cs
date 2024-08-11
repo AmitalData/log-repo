@@ -159,7 +159,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 IQueryable<DeclarationList> query = (from a in iQueryable.Include("DeclarationOffice").Include("AutonomyRegionType").Include("CustomerCard").Include("EntitleImporterCountry").Include("ImporterEntitlementType").Include("ImporterPassCountry").Include("ProcedureCurrent").Include("TransferImporterCountry").Include("Department").Include("DeclarationStatusType")
                                                      //.Include("CreatedByUser.Contact")
                                                      .Include("Importer").Include("EntitleImporter").Include("TransferImporter").Include("ImporterType").Include("TransferImporterType").Include("EntitleImporterType").Include("StorageStatus").Include("FreightPaymentMethod")
-                                                     .Include("CustomsCountry").Include("CustomsShip")
+                                                     .Include("CustomsCountry").Include("CustomsShip").Include("TransportMode")
                                                      //join recConsignment in context.Consignments.Include("CargoType")
                                                      //.Select(x => new { x.DeclarationId, x.ConsignmentNumber, x.CargoDescription, x.CargoType.LocalName, x.SecondCargoID, x.ThirdCargoID, x.ManifestNumber })
                                                      //on a.Id equals recConsignment.DeclarationId into qjoinConsignments
@@ -242,8 +242,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          ExportDeclarationOfficeCode = a.ExportDeclarationOfficeCode,
                                                          ExportAutonomyRegionTypeCode = a.ExportAutonomyRegionTypeCode,
                                                          DepartmentId = a.DepartmentId,
-                                                         DepartmentName = a.Department.LocalName,
-                                                         TransportModeName = a.TransportMode == null ? null : a.TransportMode.LocalName,
+                                                         DepartmentName = a.Department == null ? null : a.Department.LocalName,
+                                                         TransportModeName = a.TransportMode != null ? a.TransportMode.LocalName : null,
                                                          EntitleImporterCode = a.EntitleImporterCode,
                                                          CreatedByUserName =
 
@@ -360,7 +360,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                 IQueryable<DeclarationList> query2 = (from a in iQueryable.Include("DeclarationOffice").Include("AutonomyRegionType").Include("CustomerCard").Include("EntitleImporterCountry").Include("ImporterEntitlementType").Include("ImporterPassCountry").Include("ProcedureCurrent").Include("TransferImporterCountry").Include("Department").Include("DeclarationStatusType")
                                      .Include("Importer").Include("ImporterType").Include("FreightPaymentMethod")
-                                     .Include("CustomsCountry")
+                                     .Include("CustomsCountry").Include("TransportMode")
 
                                                       join cdJoin in context.CourierDeclarations.Include("CourierMaster").Include("Card")
                                                       .Select(x => new
@@ -475,7 +475,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           ExportAutonomyRegionTypeCode = a.ExportAutonomyRegionTypeCode,
 
                                                           DepartmentId = a.DepartmentId,
-                                                          DepartmentName = a.Department.LocalName,
+                                                          DepartmentName = a.Department == null ? null : a.Department.LocalName,
                                                           TransportModeName = a.TransportMode == null ? null : a.TransportMode.LocalName,
                                                           CreatedByUserName =
 
