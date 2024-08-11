@@ -15,7 +15,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ShipmentId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Tenant).IsRequired();
-            this.Property(t => t.FieldName).HasMaxLength(35).IsUnicode(true);
+            this.Property(t => t.FieldName).HasMaxLength(70).IsUnicode(true);
             this.Property(t => t.ReceivedCode).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ReceivedData).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.ReplacedDataId).HasMaxLength(15).IsUnicode(false);

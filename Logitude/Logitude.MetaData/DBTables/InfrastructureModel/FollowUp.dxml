@@ -99,8 +99,8 @@
   </Column>
   <Column
     Name="DateFieldName"
-    Type="varchar"
-    Size="120">
+    Type="nvarchar"
+    Size="240">
     <Constraints
       Nullable="true" />
   </Column>

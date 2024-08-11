@@ -23,7 +23,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.AutomationId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Area).HasMaxLength(20).IsUnicode(false);
 
-            this.Property(t => t.DateFieldName).HasMaxLength(120).IsUnicode(false);
+            this.Property(t => t.DateFieldName).HasMaxLength(240).IsUnicode(true);
             this.Property(t => t.DateEscalationActionTimeIndicatorCode).HasMaxLength(2).IsUnicode(false);
             
             

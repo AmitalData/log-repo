@@ -20,8 +20,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Name)
                 .IsRequired()
                 //.HasMaxLength(40)
-                .HasMaxLength(80) //Itzik 
-                .IsUnicode(false);
+                .HasMaxLength(160) //Itzik 
+                .IsUnicode(true);
 
             // Table & Column Mappings
             this.ToTable("QueryGroups");

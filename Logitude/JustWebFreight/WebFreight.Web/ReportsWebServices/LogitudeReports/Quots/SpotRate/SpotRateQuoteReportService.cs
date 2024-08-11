@@ -96,7 +96,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Quots.SpotRate
                 ShipperName = quoteCharge.Quote?.ShipperCard?.EnglishName,
                 ConsigneeName = quoteCharge.Quote?.ConsigneeCard?.EnglishName,
                 ChargeType = quoteCharge.ChargesType?.EnglishName,
-
+                ChargeTypeCode= quoteCharge.ChargesType?.Code,
                 CostMeasurement = quoteCharge.CostMeasurement?.Code,
                 CostCurrency = quoteCharge.CostCurrency?.Code,
                 CostQuantity = showAmount ? quoteCharge.CostQuantity : null,

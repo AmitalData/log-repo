@@ -230,8 +230,8 @@
   </Column>
   <Column
     Name="EnglishName"
-    Type="varchar"
-    Size="70">
+    Type="nvarchar"
+    Size="140">
     <Constraints
       Nullable="false" />
   </Column>
@@ -285,8 +285,8 @@
   </Column>
   <Column
     Name="CountryName"
-    Type="varchar"
-    Size="120">
+    Type="nvarchar"
+    Size="240">
     <Constraints
       Nullable="true" />
   </Column>
@@ -388,8 +388,8 @@
   </Column>
   <Column
     Name="StateName"
-    Type="varchar"
-    Size="40">
+    Type="nvarchar"
+    Size="80">
     <Constraints
       Nullable="true" />
   </Column>
@@ -631,10 +631,10 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
- ForeignKeyColumn="SingleInvoiceTemplateId"
-    ReferencedTable="DocumentTypeTemplates"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+  ForeignKeyColumn="SingleInvoiceTemplateId"
+     ReferencedTable="DocumentTypeTemplates"
+     ReferencedColumn="Id"
+     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="CustomsInvoiceTemplateId"
     ReferencedTable="DocumentTypeTemplates"

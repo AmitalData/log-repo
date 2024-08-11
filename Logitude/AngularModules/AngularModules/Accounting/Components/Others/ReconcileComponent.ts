@@ -866,15 +866,15 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             //Adjust
             if (this.SelectedLines.Length > 0 && this.TotalsDeference != 0) {
 
-                var chartType = this.GLAccountPM.ChartOfAccountsTypeCode; // 6 == Works
-                if (chartType == "6") {
-                    var confirmWindow = new ConfirmWindow();
-                    confirmWindow.Width = 390;
-                    confirmWindow.IsYesEnabled = false;
-                    confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileNoAdjusment"));
-                    confirmWindow.WindowClosed.subscribe((event: any) => {
-                    });
-                } else {
+                //var chartType = this.GLAccountPM.ChartOfAccountsTypeCode; // 6 == Works
+                //if (chartType == "6") {
+                //    var confirmWindow = new ConfirmWindow();
+                //    confirmWindow.Width = 390;
+                //    confirmWindow.IsYesEnabled = false;
+                //    confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileNoAdjusment"));
+                //    confirmWindow.WindowClosed.subscribe((event: any) => {
+                //    });
+                //} else {
                     //errors.push(TextCodeTranslator.Translate("Accounting.General.O.DifferenceMustEqual0"));//"The difference must be equal to zero"
                     //this.AdjustButton();
                     var confirmWindow = new ConfirmWindow();
@@ -886,7 +886,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                         } else if (confirmWindow.No) {
                         }
                     });
-                }
+                //}
                 return;
 
             }
@@ -1031,8 +1031,21 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         this.CurrentSession.StartBusyIndicatorSaving();
         this._ReconciliationExtendedPMService.UpdateDraftReconciliationTransactions(ledgerTransactionsPMs).subscribe((serviceResponse: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
-            this.ShowDraftTransactionsSuccessMessage();
+            if (!serviceResponse.HasError) {
+                this.ShowDraftTransactionsSuccessMessage();
+            } else {
+                this.ShowDraftTransactionsFaiorMessage(serviceResponse.ErrorsArray[0]);
+            }
         });
+    }
+
+    private ShowDraftTransactionsFaiorMessage(error) {
+        var msg = new MessageWindow();
+        msg.IsMessageMultiLine = true;
+        msg.ShowErrorIcon = true;
+        msg.RTL = this.isRTL;
+        msg.Width = 400;
+        msg.Show(error);
     }
 
     private ShowDraftTransactionsSuccessMessage() {
@@ -1253,9 +1266,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             ServerSideSortable: true,
             SortByName: 'OriginalAmount',
         });
-       this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("OriginalAmount", 'Decimal', this.OriginalAmountTextCode));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("OriginalAmount", 'Decimal', this.OriginalAmountTextCode));
 
-       if(this.GLAccountPM.ReconcileMethodCode == "0" && this.GLAccountPM.CurrencyCode!='NIS') {
+        if (this.GLAccountPM.ReconcileMethodCode == "0" && this.GLAccountPM.CurrencyCode != 'NIS') {
             this.columns.push({ // Check ReconcileMethodCode.GLAccounts:
                 FieldName: 'ForeignAmount',
                 DataTypeCode: 'String',
@@ -1268,7 +1281,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                 ServerSideSortable: true,
                 SortByName: 'ForeignAmount',
             });
-           this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ForeignAmount", 'Decimal', TextCodeTranslator.Translate("LedgerTransaction.F.ForeignAmount")));
+            this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ForeignAmount", 'Decimal', TextCodeTranslator.Translate("LedgerTransaction.F.ForeignAmount")));
         }
         //this.columns.push({
         //    FieldName: 'OpenAmountCurrencyCode',

@@ -25,9 +25,9 @@ namespace Logitude.DashboardModule.Data.EntityMapping
 	 
             this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.Name).HasColumnName("Name").HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.Name).HasColumnName("Name").HasMaxLength(200).IsUnicode(true);
 
-            this.Property(t => t.TableName).HasColumnName("TableName").HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.TableName).HasColumnName("TableName").HasMaxLength(200).IsUnicode(true);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant");
 
@@ -35,7 +35,7 @@ namespace Logitude.DashboardModule.Data.EntityMapping
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
 
-            this.Property(t => t.ObjectTableName).HasColumnName("ObjectTableName").HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.ObjectTableName).HasColumnName("ObjectTableName").HasMaxLength(200).IsUnicode(true);
         }
     }
 }

@@ -39,9 +39,9 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;06c1&quot;"
-  Name="&quot;General&quot;"
-  GenerateDomainService="false"
+    Code="&quot;c589&quot;"
+      Name="&quot;General&quot;"
+   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
   ServerModuleName="&quot;Generals&quot;"
   NoViewController="true"
@@ -4975,6 +4975,12 @@
       DefaultText="&quot;The selected operational card is connected to a client-type account and therefore will not be included in the tax withholding report&quot;"
       LocalDefaultText="&quot;הכרטיס התפעולי שנבחר מחובר לחשבון מסוג לקוח ולכן לא ייכלל בדוח ניכוי מס במקור&quot;"
       TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />    
+    <TextCode
+      Code="&quot;Accounting.General.O.VendorWithCustomerGLAccount&quot;"
+      DefaultText="&quot;The selected operational card is connected to a client-type account and therefore will not be included in the tax withholding report&quot;"
+      LocalDefaultText="&quot;הכרטיס התפעולי שנבחר מחובר לחשבון מסוג לקוח ולכן לא ייכלל בדוח ניכוי מס במקור&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Accounting.General.O.VendorWithCustomerGLAccount&quot;"
@@ -5989,12 +5995,12 @@
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;General.O.Mine&quot;"
+       Code="&quot;General.O.Mine&quot;"
       DefaultText="&quot;Mine&quot;"
       LocalDefaultText="&quot;שלי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-    <TextCode
+     <TextCode
       Code="&quot;Accounting.O.Year&quot;"
       DefaultText="&quot;Year&quot;"
       LocalDefaultText="&quot;שנה&quot;"
@@ -6012,7 +6018,14 @@
       LocalDefaultText="&quot;ביטול דוחות תקועים&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-  </AdditionalTextCodes>
+     <TextCode
+       Code="&quot;Accounting.General.O.ConfirmationNumberValidation&quot;"
+      DefaultText="&quot;Confirmation Number is required for a apinvoice&quot;"
+      LocalDefaultText="&quot;עבור חשבונית ספק נדרש מספר הקצאה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+
+   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
       Code="&quot;DASHBOARD&quot;"

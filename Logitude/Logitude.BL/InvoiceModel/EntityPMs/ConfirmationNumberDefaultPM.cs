@@ -13,6 +13,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string SearchFields { get; set; }
 
         public int AmountForConfirmationNumber { get; set; }
+        public bool InActive { get; set; }
 
     }
 }

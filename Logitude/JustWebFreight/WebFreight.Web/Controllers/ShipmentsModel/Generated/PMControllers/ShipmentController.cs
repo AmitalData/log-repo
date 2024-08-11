@@ -44,12 +44,17 @@ using Marvin.JsonPatch.Exceptions;
 using static Dropbox.Api.Sharing.ListFileMembersIndividualResult;
 using WebFreight.Web.WebServices;
 using Simplog.Server.Infrastructure;
-using Logitude.CustomsMessaging.Common.RequestParams;
+ using Logitude.CustomsMessaging.Common.RequestParams;
+ 
+using System.Runtime.Remoting.Messaging;
+using Logitude.Customs.Def.EntityPMs;
+ 
 
 namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 {
     public class ShipmentController : ApiController
     {
+
         public HttpResponseMessage GetSingle(string id)
         {
             try
@@ -664,6 +669,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
         {
             try
             {
+                TenantAdditionalDataRepository TADR = new TenantAdditionalDataRepository(0);
                 ShipmentQuery shipmentQuery;
                 ShipmentAdditionalCloudCustomData CustomData;
                 const string testKey = "d5e6d15f4cb24f12a8ac9c5e8c54a06d";
@@ -678,7 +684,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 if (key == testKey)
                 {
                     shipmentQuery = new ShipmentQuery(0);
-                    CustomData = shipmentQuery.GetSingleShipmentAdditionalCloudCustomDataTest();
+                    var listOfTenantsWithAdditionalData = TADR.All().Select(x=>x.Tenant).Distinct().ToList();
+                    CustomData = shipmentQuery.GetSingleShipmentAdditionalCloudCustomDataTest(listOfTenantsWithAdditionalData);
                     tenant = CustomData.Tenant;
                 }
                 else
@@ -688,9 +695,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 }
                 if (CustomData != null && !string.IsNullOrEmpty(CustomData.PaymentRequestXML))
                 {
+                   
                     AddDataToResponseHeader(tenant.Value);
-                    TenantAdditionalDataRepository TADR = new TenantAdditionalDataRepository(tenant.Value);
                     var MyAdditionalData = TADR.GetSingleTenantAdditionalData(tenant.Value);
+
                     if (MyAdditionalData != null)
                     {
                         var MyPaymentData = LogitudeXmlSerializer.DeserializeObject<RequestPayment>(CustomData.PaymentRequestXML);
@@ -740,7 +748,20 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             }
         }
 
-        public HttpResponseMessage GetTenantBySecurityKeyWithoutToken(string securityKey)
+        // Other methods...
+
+         private static void AddWhatsAppMessagingPhoneNumberToResponseHeader(int tenant)
+        {
+            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
+            TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(tenant);
+            if (tenantManagementPM != null && !string.IsNullOrEmpty(tenantManagementPM.WhatsAppMessagingPhoneNumber))
+            {
+                HttpContext.Current.Response.Headers.Add("WhatsAppMessagingPhoneNumber", tenantManagementPM.WhatsAppMessagingPhoneNumber);
+                HttpContext.Current.Response.Headers.Add("Access-Control-Expose-Headers", "WhatsAppMessagingPhoneNumber");
+            }
+        }
+
+         public HttpResponseMessage GetTenantBySecurityKeyWithoutToken(string securityKey)
         {
             try
             {
@@ -811,14 +832,14 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             return (dict);
         }
 
-        private static readonly HttpClient client = new HttpClient();
+        private static readonly HttpClient client1 = new HttpClient();
 
         private bool GetRequestToken(Dictionary<string, string> myDict, out string result, int tenant)
         {
             SetServicePointManagerSecurityProtocol(tenant);
             var content = new FormUrlEncodedContent(myDict);
             string Uri = GetSecureTranzilaURI(tenant);
-            var response = client.PostAsync(Uri, content);
+            var response = client1.PostAsync(Uri, content);
             var httpResponse = response.Result.Content.ReadAsStringAsync();// .Content.ReadAsStringAsync();
             result = httpResponse.Result;
             return (result.Contains("thtk") ? true : false);
@@ -948,6 +969,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                     shipmentQuery = new ShipmentQuery(tenant.Value);
                     RequestedShipment = shipmentQuery.GetSingleShipmentPMBySecurityKeyTenant(key, tenant.Value);
                 }
+
                 var MyData = LogitudeXmlSerializer.DeserializeObject<UserIdNumberRequestPM>(RequestedShipment.UserIdNumberXMLData);
                 MyData.Id = RequestedShipment.Id;
                 MyData.IsUserIDNumberRequired = RequestedShipment.IsUserIDNumberRequired;

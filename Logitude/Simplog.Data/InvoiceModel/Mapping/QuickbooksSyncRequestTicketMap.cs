@@ -24,8 +24,8 @@ namespace Simplog.Data.InvoiceModel.Mapping
                 .IsUnicode(false);
 
             this.Property(d => d.UserName)
-                .HasMaxLength(70)
-                .IsUnicode(false);
+                .HasMaxLength(140)
+                .IsUnicode(true);
 
             this.Property(d => d.Password)
                 .HasMaxLength(40)

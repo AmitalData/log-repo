@@ -13,7 +13,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
         public ComputingPartnerTableMap()
         {
             this.HasKey(t => new { t.ObjectTableId, t.ComputingPartnerId ,t.Tenant});
-            this.Property(t => t.Name).IsRequired().HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.Name).IsRequired().HasMaxLength(100).IsUnicode(true);
             this.Property(t => t.ObjectTableId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ComputingPartnerId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CreatedByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);

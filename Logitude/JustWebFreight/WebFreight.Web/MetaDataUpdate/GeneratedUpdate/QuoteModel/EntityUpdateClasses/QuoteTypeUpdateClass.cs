@@ -205,9 +205,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					 
 					 						FieldName =  "Name",
 					  						ObjectTableName =  "QuoteType",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
-					  						MaxLength =  40,
+					  						MaxLength =  80,
 					  						IsRequired =  true,
 					  						DisplayOnLookUp =  true,
 					  						CanFilter =  true,

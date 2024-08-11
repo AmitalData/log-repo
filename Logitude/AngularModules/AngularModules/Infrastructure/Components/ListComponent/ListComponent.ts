@@ -729,7 +729,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
 
         if (this.ObjectTableName != "PortTimeZone") {
-            if (!this.CheckPermissions(this.ObjectTableName, "READ", false)) {
+            if (!this.CheckPermissions(this.ObjectTableName, "READ", false)) { 
                 this.HasPermition = false;
             }
         }
@@ -738,7 +738,7 @@ export class ListComponent implements OnInit, AfterViewInit {
  
         this.Listen();
          //this.CD.detectChanges();
-        if (this.ObjectTable.ClientModuleName == "Customs") {
+        if (this.ObjectTable.ClientModuleName == "Customs" || this.SelectedQuery?.NameTextCodeCode == "Shipment.Q.CustomsShipments") {
             this.HasCustomsFilterMenu = true;
  
         }

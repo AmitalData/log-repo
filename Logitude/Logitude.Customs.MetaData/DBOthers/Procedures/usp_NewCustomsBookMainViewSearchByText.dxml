@@ -30,6 +30,7 @@ BEGIN
 		    max(sub.PurchaseTax) AS PurchaseTax,
 		    max(sub.OptionalTaxAddition) AS OptionalTaxAddition,
 		    max(sub.MeasurementUnitName) AS MeasurementUnitName,
+		    max(sub.MeasurementUnitID) AS MeasurementUnitID,
 			r.Id as Remarks ,
 		    STRING_AGG(Result, ', ') AS Result
 		from(
@@ -48,6 +49,7 @@ BEGIN
 			   m.PurchaseTax, --'מס קניה',
 			   m.OptionalTaxAddition,  --'שיעור התוספת',
 			   m.MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+         m.MALAMID as MeasurementUnitID, -- יחידה סטטיסטית
 			   'GoodsDescription' AS Result
 		FROM [dbo].[NewCustomsBookMainView] m
 		WHERE m.CI_CustomsBookTypeIDNum = @CustomsBookType
@@ -70,6 +72,7 @@ BEGIN
 			   m.PurchaseTax, --'מס קניה',
 			   m.OptionalTaxAddition,  --'שיעור התוספת',
 			   m.MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+         m.MALAMID as MeasurementUnitID, -- יחידה סטטיסטית 
 			   'Rules' AS Result
 		FROM [dbo].[NewCustomsBookMainView] m
 		JOIN customs.CB_Rules r ON m.CustomsItemId = r.CustomsItemID
@@ -111,6 +114,7 @@ BEGIN
 			   m.PurchaseTax, --'מס קניה',
 			   m.OptionalTaxAddition,  --'שיעור התוספת',
 			   m.MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+				 m.MALAMID as MeasurementUnitID, -- יחידה סטטיסטית
 			   'Remarks' AS Result
 		FROM [dbo].[NewCustomsBookMainView] m
 		JOIN customs.RemarksClassifications r ON m.CustomsItemId = r.CustomsItemsID
@@ -149,6 +153,7 @@ BEGIN
 			purchaseTax AS PurchaseTax, --'מס קניה',
 			OptionalTaxAddition,  --'שיעור התוספת',
 			MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+			MALAMID as MeasurementUnitID, -- יחידה סטטיסטית
 			r.Id AS Remarks,
 			'GoodDescription' as Result
 		FROM [dbo].[NewCustomsBookMainView] m
@@ -181,6 +186,7 @@ BEGIN
 			purchaseTax AS PurchaseTax, 
 			OptionalTaxAddition, 
 			MeasurementUnitName,
+      MALAMID as MeasurementUnitID, -- יחידה סטטיסטית
 			r.Id AS Remarks,
 			'Rules' as Result
 			FROM [dbo].[NewCustomsBookMainView] m
@@ -220,6 +226,7 @@ BEGIN
 			purchaseTax AS PurchaseTax, 
 			OptionalTaxAddition, 
 			MeasurementUnitName, 
+      MALAMID as MeasurementUnitID, -- יחידה סטטיסטית
 			r.Id AS Remarks,
 			'Remarks' as Result
 			FROM [dbo].[NewCustomsBookMainView] m
@@ -249,6 +256,7 @@ BEGIN
 		    max(sub.PurchaseTax) AS PurchaseTax,
 		    max(sub.OptionalTaxAddition) AS OptionalTaxAddition,
 		    max(sub.MeasurementUnitName) AS MeasurementUnitName,
+		    max(sub.MeasurementUnitID) AS MeasurementUnitID,
 			Remark.Id as Remarks ,
 		    STRING_AGG(Result, ', ') AS Result
 		FROM
@@ -268,6 +276,7 @@ BEGIN
 			   m.PurchaseTax, --'מס קניה',
 			   m.OptionalTaxAddition,  --'שיעור התוספת',
 			   m.MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+         m.MALAMID as MeasurementUnitID, -- יחידה סטטיסטית
 			   'GoodsDescription' AS Result
 		   FROM [dbo].[NewCustomsBookMainView] m
 		   WHERE m.CI_CustomsBookTypeIDNum = @CustomsBookType
@@ -290,6 +299,7 @@ BEGIN
 			   m.PurchaseTax, --'מס קניה',
 			   m.OptionalTaxAddition,  --'שיעור התוספת',
 			   m.MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+         m.MALAMID as MeasurementUnitID, -- יחידה סטטיסטית
 			   'Rules' AS Result
 		FROM [dbo].[NewCustomsBookMainView] m
 		JOIN customs.CB_Rules r ON m.CustomsItemId = r.CustomsItemID
@@ -344,6 +354,7 @@ BEGIN
 		    max(sub.PurchaseTax) AS PurchaseTax,
 		    max(sub.OptionalTaxAddition) AS OptionalTaxAddition,
 		    max(sub.MeasurementUnitName) AS MeasurementUnitName,
+		    max(sub.MeasurementUnitID) AS MeasurementUnitID,
 			Remark.Id as Remarks ,
 		    STRING_AGG(Result, ', ') AS Result
 		FROM
@@ -363,6 +374,7 @@ BEGIN
 			   m.PurchaseTax, --'מס קניה',
 			   m.OptionalTaxAddition,  --'שיעור התוספת',
 			   m.MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+         m.MALAMID as MeasurementUnitID, -- יחידה סטטיסטית
 		   'GoodsDescription' AS Result
 		   FROM [dbo].[NewCustomsBookMainView] m
 		   WHERE m.CI_CustomsBookTypeIDNum = @CustomsBookType
@@ -386,6 +398,7 @@ BEGIN
 			   m.PurchaseTax, --'מס קניה',
 			   m.OptionalTaxAddition,  --'שיעור התוספת',
 			   m.MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס 
+         m.MALAMID as MeasurementUnitID, -- יחידה סטטיסטית
 			   'Remarks' AS Result
 		FROM [dbo].[NewCustomsBookMainView] m
 		JOIN customs.RemarksClassifications r ON m.CustomsItemId = r.CustomsItemsID
@@ -422,6 +435,7 @@ BEGIN
 		    max(sub.PurchaseTax) AS PurchaseTax,
 		    max(sub.OptionalTaxAddition) AS OptionalTaxAddition,
 		    max(sub.MeasurementUnitName) AS MeasurementUnitName,
+		    max(sub.MeasurementUnitID) AS MeasurementUnitID,
 			r.Id as Remarks ,
 		    STRING_AGG(Result, ', ') AS Result
 		from(
@@ -440,6 +454,7 @@ BEGIN
 			   m.PurchaseTax, --'מס קניה',
 			   m.OptionalTaxAddition,  --'שיעור התוספת',
 			   m.MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+				 m.MALAMID as MeasurementUnitID, -- יחידה סטטיסטית
 			   'GoodsDescription' AS Result
 		FROM [dbo].[NewCustomsBookMainView] m
 		WHERE m.CI_CustomsBookTypeIDNum = @CustomsBookType
@@ -462,6 +477,7 @@ BEGIN
 			   m.PurchaseTax, --'מס קניה',
 			   m.OptionalTaxAddition,  --'שיעור התוספת',
 			   m.MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+         m.MALAMID as MeasurementUnitID, -- יחידה סטטיסטי
 			   'Rules' AS Result
 		FROM [dbo].[NewCustomsBookMainView] m
 		JOIN customs.CB_Rules r ON m.CustomsItemId = r.CustomsItemID
@@ -503,6 +519,7 @@ BEGIN
 			   m.PurchaseTax, --'מס קניה',
 			   m.OptionalTaxAddition,  --'שיעור התוספת',
 			   m.MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+         m.MALAMID as MeasurementUnitID, -- יחידה סטטיסטית
 			   'Remarks' AS Result
 		FROM [dbo].[NewCustomsBookMainView] m
 		JOIN customs.RemarksClassifications r ON m.CustomsItemId = r.CustomsItemsID
@@ -538,6 +555,7 @@ BEGIN
 		    max(sub.PurchaseTax) AS PurchaseTax,
 		    max(sub.OptionalTaxAddition) AS OptionalTaxAddition,
 		    max(sub.MeasurementUnitName) AS MeasurementUnitName,
+		    max(sub.MeasurementUnitID) AS MeasurementUnitID,
 			MAX(sub.Remarks) as Remarks ,
 		    STRING_AGG(Result, ', ') AS Result
 		from(
@@ -556,6 +574,7 @@ BEGIN
 			   m.PurchaseTax, --'מס קניה',
 			   m.OptionalTaxAddition,  --'שיעור התוספת',
 			   m.MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+         m.MALAMID as MeasurementUnitID, -- יחידה סטטיסטית
 			   '' AS Remarks,
 			   'Rules' AS Result
 		FROM [dbo].[NewCustomsBookMainView] m
@@ -598,6 +617,7 @@ BEGIN
 			   m.PurchaseTax, --'מס קניה',
 			   m.OptionalTaxAddition,  --'שיעור התוספת',
 			   m.MeasurementUnitName,
+          m.MALAMID,
 			   r.id AS Remarks,
 			   'Remarks' AS Result
 		FROM [dbo].[NewCustomsBookMainView] m

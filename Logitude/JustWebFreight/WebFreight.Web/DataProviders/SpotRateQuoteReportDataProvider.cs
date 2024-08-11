@@ -23,6 +23,7 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneeName { get; set; }
         public string ChargeType { get; set; }
 
+        public string ChargeTypeCode { get; set; }
 
         public string CostMeasurement { get; set; }
         public string CostCurrency { get; set; }

@@ -71,34 +71,30 @@
         <td></td>
 
     </tr>
-    <tr style="height: 32px;">
-
+   
+    <tr style="height: 32px;" class="FormFieldRow">
         <td style="width:10px"></td>
-        <td style="width:70px">{{'Accounting.O.Detailed' | TextCodeTranslationPipe}}:</td>
+        <td style="width: 120px;">
+            <LogLabel [NoObjectField]="true"  [ObjectTableName]="ObjectTableName"
+                [DataContext]="DataContext" [Text]="'Accounting.O.Year' | TextCodeTranslationPipe"></LogLabel>
 
-        <td style="width:20px">
-            <CheckBox [IsChecked]="DetailedForJobs" (Checked)="DetailedForJobs = $event"></CheckBox>
         </td>
-        <td style="width:10px"></td>
+        <td style="width: 120px;">
+            <LogTextBox [ObjectFieldName]="'NumberOfYear'" [ObjectTableName]="ObjectTableName" [IsNewEntityCall]="true"
+                [InputType]="'integer'" [DataContext]="DataContext" [Text]="NumberOfYear" [NoObjectField]="true">
+            </LogTextBox>
+        </td>
 
-
-
-    </tr>
-    <tr style="height: 32px;">
-        <td style="width:10px"></td>
-        <td style="width:20px ;">{{'Accounting.O.Year' | TextCodeTranslationPipe}}:</td>
-        <div style="width:150px;top: 11px; position: relative;">
-            <td>
-                <NumberInput [(ngModel)]="NumberOfYear" name="no"></NumberInput>
-            </td>
-        </div>
 
     </tr>
     <tr style="height:10px"></tr>
     <tr style="height: 32px;">
         <td style="width:10px"></td>
+        <td style="width:70px">
+            <LogLabel [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                [Text]="'GLAccount.F.ChartOfAccountsId' | TextCodeTranslationPipe"></LogLabel>
 
-        <td style="width:70px">{{'GLAccount.F.ChartOfAccountsId' | TextCodeTranslationPipe}}</td>
+        </td>
         <td style="width: 150px;" *ngIf="chartOfAccounts.length > 0">
             <ComboBoxWithInCheckBox [AutoHeight]="true" [MinHeight]="150" [ItemsSource]="chartOfAccounts"
                 [SelectedItem]="ChartOfAccountsComboBoxValue" (EditedItemSource)="OnChartOfAccountsItemClicked($event)"
@@ -106,27 +102,40 @@
                 (SelectedItemChanged)="ChartOfAccountsComboBoxValue = $event" [Binding]="'LocalName'"
                 [AlternativeBinding]="'EnglishName'"></ComboBoxWithInCheckBox>
         </td>
-        <td style="width:100px"></td>
-
+        <!-- <td style="width:100px"></td>
+        <td colspan="3" style="padding-right: 100px;">
+            <div style="width: 90px;">
+                <button class="GreenButton" (click)="RunReport()">
+                    {{
+                    'AgingReport.O.RunReport' | TextCodeTranslationPipe
+                    }}
+                </button>
+            </div>
+        </td> -->
     </tr>
-    <tr>
-        <td>
-            <table>
-                <tr>
-                    <td style="width:860px"></td>
+    <tr style="height: 32px;">
 
-                    <td style="width:90px;">
-                        <button (click)="RunReport()" class="greenButton" style="width:90px;height:22px;border:1px solid green;border-radius:3px;">
-                            <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">{{'Accounting.General.O.Run' | TextCodeTranslationPipe}}</div>
-                        </button>
+        <td style="width:10px"></td>
+        <td style="width:70px">
+            <LogLabel [NoObjectField]="true"  [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext" [Text]="'Accounting.O.Detailed' | TextCodeTranslationPipe"></LogLabel>
 
-                    </td>
-                    <td></td>
-                </tr>
-
-            </table>
         </td>
 
-    </tr>
+        <td style="width:20px">
+            <CheckBox [IsChecked]="DetailedForJobs" (Checked)="DetailedForJobs = $event"></CheckBox>
+        </td>
+        <td style="width:100px"></td>
+        <td colspan="3" style="padding-right: 100px;">
+            <div style="width: 90px;">
+                <button class="GreenButton" (click)="RunReport()">
+                    {{
+                    'AgingReport.O.RunReport' | TextCodeTranslationPipe
+                    }}
+                </button>
+            </div>
+        </td>
 
+
+    </tr>
 </table>

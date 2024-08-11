@@ -411,7 +411,19 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         if (apPaymentDataProvider.TotalPaymentAfterDeduction != null)
                         {
-                            apPaymentDataProvider.TotalPaymentAfterDeduction -= (double?)apPaymentDataProvider.DeductionAmount;
+                            if (currentPayment.PaymentCurrencyId == tenantSettings.CurrencyId)
+                            {
+                                apPaymentDataProvider.TotalPaymentAfterDeduction -= (double?)apPaymentDataProvider.DeductionAmount;
+                            }
+                            else if (currentPayment.PaymentCurrencyExchangeRate != 0)
+                            {
+                                double? deductionAmount = (double?)apPaymentDataProvider.DeductionAmount / (double?)currentPayment.PaymentCurrencyExchangeRate;
+                                apPaymentDataProvider.TotalPaymentAfterDeduction -= (double?)deductionAmount;
+                            }
+                            else // must no get there 
+                            {
+                                apPaymentDataProvider.TotalPaymentAfterDeduction -= (double?)apPaymentDataProvider.DeductionAmount;
+                            }
                         }
                         else {
                             apPaymentDataProvider.TotalPaymentAfterDeduction = (double?)apPaymentDataProvider.DeductionAmount;

@@ -32,8 +32,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                .IsUnicode(false);
 
             this.Property(t => t.Description)
-              .HasMaxLength(500)
-              .IsUnicode(false);
+              .HasMaxLength(1000)
+              .IsUnicode(true);
 
 
             this.Property(t => t.InActive)

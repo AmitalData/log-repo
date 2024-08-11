@@ -1,4 +1,3 @@
-
 <style type="text/css">
     .MessageWindowLayout {
         position: absolute;
@@ -21,9 +20,9 @@
         border-radius: 8px;
         -moz-border-radius: 8px;
         -webkit-border-radius: 8px;
-        background: -moz-linear-gradient(50% 100% 90deg,rgba(255, 255, 255, 1) 89.25%,rgba(247, 247, 247, 1) 100%);
+        background: -moz-linear-gradient(50% 100% 90deg, rgba(255, 255, 255, 1) 89.25%, rgba(247, 247, 247, 1) 100%);
         background: -webkit-linear-gradient(90deg, rgba(255, 255, 255, 1) 89.25%, rgba(247, 247, 247, 1) 100%);
-        background: -webkit-gradient(linear,50% 100%,50% 0%,color-stop(0.8925,rgba(255, 255, 255, 1) ),color-stop(1,rgba(247, 247, 247, 1) ));
+        background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0.8925, rgba(255, 255, 255, 1)), color-stop(1, rgba(247, 247, 247, 1)));
         background: -o-linear-gradient(90deg, rgba(255, 255, 255, 1) 89.25%, rgba(247, 247, 247, 1) 100%);
         background: linear-gradient(0deg, rgba(255, 255, 255, 1) 89.25%, rgba(247, 247, 247, 1) 100%);
         box-sizing: border-box;
@@ -67,25 +66,52 @@
         -webkit-box-sizing: border-box;
     }
 
-    .red{
-          color: #e50a0a !important;
-      }
+    .red {
+        color: #e50a0a !important;
+    }
 
-      .MediaFillAbsolute {
+       .MediaFillAbsolute {
         z-index: 2;
       }
-</style>
+     .table {
+        display: table;
+        height: 100%;
+    }
+
+    .scroll-viewer {
+        max-height: 100%;
+        max-width: 100%;
+        overflow-y: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .message {
+        white-space: normal;
+        word-wrap: break-word;
+        width: 100%;
+        font-size: 11px;
+        text-align: left;
+        color: #6E7172;
+        text-align: right;
+        display: table-cell;
+        vertical-align: middle;
+    }
+ </style>
 
 <div class="MessageWindowLayout" tabindex="-1" contenteditable="false" *ngIf="ShowModal"></div>
-<LogitudeHotKeysComponent  (CTRL_S_HotKey)="OnCTRL_S_HotKeyPressed()" ></LogitudeHotKeysComponent>
+<LogitudeHotKeysComponent (CTRL_S_HotKey)="OnCTRL_S_HotKeyPressed()"></LogitudeHotKeysComponent>
 <div class="MediaFillAbsolute">
     <div class="MediaFillRelative">
-        <div [attr.id]="WindowId" class="MessageWindow" [ngStyle]="{left: Left, top: Top, width: Width, height: Height}" [style.zIndex]="ZIndex">
+        <div [attr.id]="WindowId" class="MessageWindow" [ngStyle]="{left: Left, top: Top, width: Width, height: Height}"
+            [style.zIndex]="ZIndex">
             <table [style.direction]="RTL == true ? 'rtl' : 'ltr'">
                 <tr style="height: 40px;">
                     <td colspan="3" style="vertical-align: middle;">
-                        <div [class.WindowHeader]="RTL == false" [class.WindowHeaderRTL]="RTL == true" (mousedown)="OnMouseDown()" style="height: 40px; line-height: 40px;"
-                             [class.red]="ShowErrorIcon">
+                        <div [class.WindowHeader]="RTL == false" [class.WindowHeaderRTL]="RTL == true"
+                            (mousedown)="OnMouseDown()" style="height: 40px; line-height: 40px;"
+                            [class.red]="ShowErrorIcon">
                             {{Title}}
                         </div>
                     </td>
@@ -100,7 +126,8 @@
                         <table class="FixedTable">
                             <tr>
                                 <td *ngIf="ShowIcon" style="width: 70px; position: relative;">
-                                    <img  [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" style="width: 70px; height: 70px;" [attr.src]="GetIconPath()" />
+                                    <img [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'"
+                                        style="width: 70px; height: 70px;" [attr.src]="GetIconPath()" />
                                 </td>
                                 <td *ngIf="!ShowIcon" style="">
                                 </td>
@@ -111,11 +138,18 @@
 
                                 <td>
                                     <div class="MediaFill">
-                                        <ScrollViewer>
+                                        <ScrollViewer class="scroll-viewer">
                                             <div class="MediaFillRelative">
-                                                <div style="position: absolute; top: 50%; transform:translateY(-50%);">
-                                                    <div *ngIf="!IsMessageMultiLine" style="white-space:normal; word-wrap: break-word; width: 100%; font-size: 11px; text-align: left; color: #6E7172;" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">{{Message}}</div>
-                                                    <div *ngIf="IsMessageMultiLine" style="white-space:pre-line; word-wrap: break-word; width: 100%; font-size: 11px; text-align: left; color: #6E7172;" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">{{Message}}</div>
+                                                <div class="table">
+                                                    <div *ngIf="!IsMessageMultiLine" class="message"
+                                                        [style.text-align]="LayoutDirection == 'rtl' ? 'right' : 'left'">
+                                                        {{Message}}
+                                                    </div>
+                                                    <div *ngIf="IsMessageMultiLine" class="message"
+                                                        style="white-space: pre-line;"
+                                                        [style.text-align]="LayoutDirection == 'rtl' ? 'right' : 'left'">
+                                                        {{Message}}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </ScrollViewer>
@@ -143,7 +177,8 @@
                                 </td>
 
                                 <td style="width: 57px;">
-                                    <button class="Button" (click)="OkButtonClicked()" [attr.id]="OkButtonId">{{OkButtonText}}</button>
+                                    <button class="Button" (click)="OkButtonClicked()"
+                                        [attr.id]="OkButtonId">{{OkButtonText}}</button>
                                 </td>
 
                                 <td style="width: 10px;">
@@ -169,5 +204,3 @@
         </div>
     </div>
 </div>
-
-

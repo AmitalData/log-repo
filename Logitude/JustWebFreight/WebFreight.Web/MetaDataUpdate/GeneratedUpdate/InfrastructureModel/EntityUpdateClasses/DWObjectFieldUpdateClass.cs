@@ -283,9 +283,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 				FieldName = "Name",
 				ObjectTableName = "DWObjectField",
-				FieldsDataType = "Text",
+				FieldsDataType = "nText",
 				MinLength = 0,
-				MaxLength = 100,
+				MaxLength = 200,
 				IsRequired = true,
 				CopyToDW = false,
 				DisplayOnLookUp = false,

@@ -20,8 +20,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .HasMaxLength(15);
 
             this.Property(t => t.Name)
-                .IsUnicode(false)
-                .HasMaxLength(100);
+                .IsUnicode(true)
+                .HasMaxLength(200);
 
             this.Property(t => t.SearchFields)
                 .IsUnicode(true)

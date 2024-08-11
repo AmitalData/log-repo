@@ -35,6 +35,12 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                 }
             }
 
+
+            if (tenant != 0)
+            {
+                entityPocos = entityPocos.Where(msg => msg.Tenant == tenant);
+            }
+
             //var sqlQuery = entityPocos.ToString();
 
             return entityPocos.ToList();

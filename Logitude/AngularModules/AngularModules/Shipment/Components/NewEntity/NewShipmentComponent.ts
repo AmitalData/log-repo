@@ -48,6 +48,7 @@ import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator'
 import { CountryListService } from '../../../Common/Services/StandardLists/CountryListService';
 import { VesselList } from '../../../Common/EntityLists/VesselList';
 import { CustomsHouseTypeList } from 'Customs/EntityLists/CustomsHouseTypeList';
+import { ColumnsWidths } from 'Infrastructure/Components/LogitudeComponents/LogLovV2Component';
 
 @Component({
     templateUrl: './NewShipmentComponent.html',
@@ -81,6 +82,17 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.OkButtonLabel = TextCodeTranslator.Translate("Shipment.B.Create");
 
         this.SetCardDependency();
+
+        this.ColumnsWidths = [
+            { ColumnName: 'Code', Width: 40 },
+            { ColumnName: 'CalculatedEnglishName', Width: 85 },
+            { ColumnName: 'CalculatedLocalName', Width: 85 },
+            { ColumnName: 'Address1', Width: 50 },
+            { ColumnName: 'PartnerTypeName', Width: 50 },
+            { ColumnName: 'CountryName', Width: 50 },
+            { ColumnName: 'CityName', Width: 50 },
+            { ColumnName: 'CountryCode', Width: 60 },
+        ];
     }
 
     private SetCardDependency() {
@@ -257,6 +269,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     public ShowShipmentLevels: boolean = true;
     public IsStandalone: boolean = false;
     public IsNewStandAlonePickupDelivery: boolean = false; 
+    public ColumnsWidths: ColumnsWidths[];
     SetWindowArgs(args: any) {
         this.EntityPM.IsCustomShipment = args?.QueryNameTextCode == "Shipment.Q.CustomsShipments";
         if (this.EntityPM.IsCustomShipment) {

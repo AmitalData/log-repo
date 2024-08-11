@@ -5,7 +5,7 @@
   DBType="Main"
   Module="Accounting">
   <Column
-    Name="Id"
+     Name="Id"
     Type="varchar"
     Size="15">
     <Constraints
@@ -13,7 +13,7 @@
       Nullable="false" /> 
   </Column>
   <Column
-    Name="Code"
+     Name="Code"
     Type="varchar"
     Size="1">
     <Constraints
@@ -21,8 +21,8 @@
   </Column>
   <Column
     Name="EnglishName"
-    Type="varchar"
-    Size="60">
+    Type="nvarchar"
+    Size="120">
     <Constraints
       Nullable="true" />
   </Column>
@@ -32,6 +32,14 @@
     Size="-1">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
   <Column
     Name="Tenant"

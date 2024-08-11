@@ -107,9 +107,11 @@ export class DataRowComponent implements OnInit {
 	// }
 
 
+	isShowDetailsOpen:boolean = false;
 	@ViewChild('dynamicDiv') dynamicDiv: ElementRef;
 	ngAfterViewInit(): void {
 		this.showDetailsOpen.subscribe((value) => {
+			this.isShowDetailsOpen = value;
 			if (value) this.dynamicDivClick();
 			else {
 				if (!this.showTaxData) this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "90%");

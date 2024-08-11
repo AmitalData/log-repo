@@ -53,8 +53,8 @@
   </Column>
   <Column
     Name="Name"
-    Type="varchar"
-    Size="200">
+    Type="nvarchar"
+    Size="400">
     <Constraints
       Nullable="false" />
   </Column>

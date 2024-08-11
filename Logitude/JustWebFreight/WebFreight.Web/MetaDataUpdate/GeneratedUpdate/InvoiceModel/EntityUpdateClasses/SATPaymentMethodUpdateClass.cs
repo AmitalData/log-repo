@@ -208,9 +208,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 
 					 						FieldName =  "Name",
 					  						ObjectTableName =  "SATPaymentMethod",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
-					  						MaxLength =  40,
+					  						MaxLength =  80,
 					  						IsRequired =  true,
 					  						DisplayOnLookUp =  true,
 					  						CanFilter =  true,
@@ -333,9 +333,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 
 					 						FieldName =  "LocalName",
 					  						ObjectTableName =  "SATPaymentMethod",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
-					  						MaxLength =  100,
+					  						MaxLength =  200,
 					  						IsRequired =  true,
 					  						DisplayOnLookUp =  true,
 					  						CanFilter =  true,

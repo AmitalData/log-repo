@@ -14,16 +14,8 @@
   </Column>
   <Column
     Name="Name"
-    Type="varchar"
-    Size="40">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="LocalName"
-    Type="varchar"
-    Size="100"
-    DefaultValue="''">
+    Type="nvarchar"
+    Size="80">
     <Constraints
       Nullable="false" />
   </Column>
@@ -33,5 +25,13 @@
     Size="1000">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="200"
+    DefaultValue="''">
+    <Constraints
+      Nullable="false" />
   </Column>
 </Table>

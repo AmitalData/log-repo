@@ -19,7 +19,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
 
             this.Property(t => t.Name)
                 .IsRequired()
-                .HasMaxLength(60)
+                .HasMaxLength(120)
                 .IsUnicode(true);
 
             this.Property(t => t.LocalName)

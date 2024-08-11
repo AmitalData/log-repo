@@ -132,6 +132,12 @@ namespace CommunicationWorkerRole// DUE LOADER ///.Accounting
 
                 OnStart();
 
+
+                string logtext = "AccountingConversionJournalApproveWR.WorkOnce(), Point 2";
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+
+
+
                 var myWorker = new JournalApproveService.JournalApproveWorker();
                 myWorker.SetLastActivate = () => { this.LastActivity = DateTime.UtcNow; };
                 myWorker.LogDoneItemInMemoryAction = this.LogDoneItemInMemory;

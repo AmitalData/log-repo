@@ -36,7 +36,7 @@ namespace WebFreight.Web.Controller
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(values));//Log debug
 
                 var jsonData = values;
-                
+
                 if (jsonData != null)
                 {
                     List<ResponseItem> emailsList = ((JArray)jsonData).Select(x =>
@@ -67,7 +67,9 @@ namespace WebFreight.Web.Controller
 
 
                 return Request.CreateResponse(HttpStatusCode.OK);
+
             }
+
 
             catch (Exception errorInfo)
             {
@@ -78,6 +80,7 @@ namespace WebFreight.Web.Controller
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(errorInfo));
 
             }
+
         }
 
 

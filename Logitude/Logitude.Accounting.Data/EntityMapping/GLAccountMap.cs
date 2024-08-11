@@ -35,7 +35,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.LocalName).HasColumnName("LocalName").IsRequired().HasMaxLength(105).IsUnicode(true);
 
-            this.Property(t => t.EnglishName).HasColumnName("EnglishName").HasMaxLength(75).IsUnicode(false);
+            this.Property(t => t.EnglishName).HasColumnName("EnglishName").HasMaxLength(150).IsUnicode(true);
 
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
@@ -72,7 +72,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.AutomaticReconcileId).HasColumnName("AutomaticReconcileId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.PreviousEnglishName).HasColumnName("PreviousEnglishName").HasMaxLength(75).IsUnicode(false);
+            this.Property(t => t.PreviousEnglishName).HasColumnName("PreviousEnglishName").HasMaxLength(150).IsUnicode(true);
 
             this.Property(t => t.PreviousEnglishNameChangeDate).HasColumnName("PreviousEnglishNameChangeDate");
 

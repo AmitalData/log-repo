@@ -21,7 +21,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.UpdatedByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.DeploymentPackageID).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.DocumentId).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.VersionName).IsRequired().HasMaxLength(20).IsUnicode(false);
+            this.Property(t => t.VersionName).IsRequired().HasMaxLength(40).IsUnicode(true);
             this.Property(t => t.VersionNumber).IsRequired();
 
             this.ToTable("DeploymentPackagesVersions");

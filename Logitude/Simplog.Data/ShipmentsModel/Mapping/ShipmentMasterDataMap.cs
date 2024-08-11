@@ -84,12 +84,12 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.OnCarriageVesselId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.OnCarriageCarrierId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.OnCarriageAdditionalTransportModeCode).HasMaxLength(4).IsUnicode(false);
-            this.Property(t => t.MainCarriageVesselName).HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.Transshipment1VesselName).HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.Transshipment2VesselName).HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.Transshipment3VesselName).HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.PreCarriageVesselName).HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.OnCarriageVesselName).HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.MainCarriageVesselName).HasMaxLength(80).IsUnicode(true);
+            this.Property(t => t.Transshipment1VesselName).HasMaxLength(80).IsUnicode(true);
+            this.Property(t => t.Transshipment2VesselName).HasMaxLength(80).IsUnicode(true);
+            this.Property(t => t.Transshipment3VesselName).HasMaxLength(80).IsUnicode(true);
+            this.Property(t => t.PreCarriageVesselName).HasMaxLength(80).IsUnicode(true);
+            this.Property(t => t.OnCarriageVesselName).HasMaxLength(80).IsUnicode(true);
             this.Property(t => t.CarrierServiceLineId).HasMaxLength(15).IsUnicode(false);
 
             // Table & Column Mappings

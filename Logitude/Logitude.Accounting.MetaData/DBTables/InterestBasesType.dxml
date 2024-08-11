@@ -67,8 +67,8 @@
   </Column>
   <Column
     Name="EnglishName"
-    Type="varchar"
-    Size="256">
+    Type="nvarchar"
+    Size="512">
     <Constraints
       Nullable="true" />
   </Column>

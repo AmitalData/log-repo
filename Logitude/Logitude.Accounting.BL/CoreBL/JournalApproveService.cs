@@ -130,7 +130,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 LogMessagingUtil.Instance.AppendLine("SubmitApprove(" + _SeedJournalId + ") took:" + sw.Elapsed.ToString());
             }
         }
-        private void CreateInterestTransactions(JournalPM journalPM, IAccountingContext context)
+        private void CreateInterestTransactions(JournalPM journalPM, IAccountingContext context,bool  isTester=false)
         {
             if (journalPM is null || journalPM.IsLedgerCreated == true)
             {
@@ -166,7 +166,7 @@ namespace Logitude.Accounting.BL.CoreBL
                || journalPM.AccountingEntityCode == AccountingEntityValues.BankAdjustment)
             {
                 var journalUpdateService = new JournalUpdateService(context, new Dictionary<string, IContext>(), journalPM.Tenant);
-                journalUpdateService.CreateInterestTransactionTo_RegularJournal(journalPM);
+                journalUpdateService.CreateInterestTransactionTo_RegularJournal(journalPM, isTester);
             }
             else if (journalPM.AccountingEntityCode == AccountingEntityValues.Revaluation)
             {
@@ -578,7 +578,19 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
             }
         }
-
+        public void CreateInterestTransactionsByDate(DateTime date)
+        {
+            _AccountingContext = AccountingContext.GetContext(_Tenant);
+           var ListOfJournals= _AccountingContext.Journals.Where(j=>j.ExternalSystem=="AMITAL" && j.DocumentDate >= date&& j.CreateDate<date ).ToList();
+            foreach (var journal in ListOfJournals)
+            {
+                var journalQueryService = new JournalQueryService(_AccountingContext);
+                _JournalPM = journalQueryService.GetSingle(journal.Id, true, false);
+                CreateInterestTransactions(_JournalPM, _AccountingContext,true);
+                this._AccountingContext.SaveChanges();
+               
+            }
+        }
         private TransactionScope GetTransactionScope(TimeSpan? timeout)
         {
             if (FeatureToggleHelper.HasFeatureToggle("JAM", _Tenant))
@@ -863,6 +875,12 @@ namespace Logitude.Accounting.BL.CoreBL
             List<string> journalBufferKeys = null;
             //List<string> Last_journalBufferKeys = null;
             sw.Restart();
+
+            string logtext = "JournalApproveService.WorkWithoutQueueStatus4(), Point 2, SeedTenant " + SeedTenant.ToString();
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+
+
+
             using (var scope = TransactionFactory.GetTransaction())
             // maybe to do GetNewSerializableTransaction Lock ?!?!?!
             {
@@ -946,6 +964,13 @@ namespace Logitude.Accounting.BL.CoreBL
             List<string> journalBufferKeys = null;
             //List<string> Last_journalBufferKeys = null;
             sw.Restart();
+
+
+            string logtext = "JournalApproveService.WorkWithoutQueue(), Point 2, SeedTenant " + SeedTenant.ToString();
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+
+
+
             using (var scope = TransactionFactory.GetTransaction())
             // maybe to do GetNewSerializableTransaction Lock ?!?!?!
             {
@@ -1088,8 +1113,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
                             //OnException(null, null, journalId, SeedTenant, eee);
                           
-                            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee2,journalId.ToString());
-                            //ExceptionHandler.HandleException(eee, DateTime.Now, 0, "", "JournalApproveWorkerRole", "approveJournalService.SubmitApprove", null);
+                             NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee2,journalId.ToString());
+                             //ExceptionHandler.HandleException(eee, DateTime.Now, 0, "", "JournalApproveWorkerRole", "approveJournalService.SubmitApprove", null);
                             Logitude.SystemLogs.ExceptionHandler.HandleException(eee2, DateTime.Now, 0, "", "", "JournalApproveService.ReturnToQueue()" + eee2.Message, null);
 
                             Thread.Sleep(100);
@@ -1658,7 +1683,12 @@ namespace Logitude.Accounting.BL.CoreBL
 
             public void WorkUntilQEmptyQueueDB(TimeSpan? timeSpan = null, string selectedQueue = null)
             {
-                               
+
+                string[] stacklines = JournalApproveWorker.GetStack(0);
+                string logtext = "JournalApproveService.cs JournalApproveWorker.WorkUntilQEmptyQueueDB(), Point 1, selectedQueue " + selectedQueue;
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(stacklines));
+
                 selectedQueue = selectedQueue ?? JournalApproveService.K_AccountingJournalApproveWR;
                 Stopwatch stopwatch = null;
                 if (timeSpan != null)
@@ -1667,6 +1697,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
                 QueueResponse response = null;
+                // 1. Main Loop Start 
                 while (true)
                 {
                     if (stopwatch != null && timeSpan != null)
@@ -1676,6 +1707,13 @@ namespace Logitude.Accounting.BL.CoreBL
                             return;
                         }
                     }
+
+                    
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("JournalApprove inloop selected queue: " + selectedQueue 
+                        + ", workerRoleName: " + LogitudeSettings.WorkerRoleName 
+                        + ", _NextDueDoneAt.Date" + _NextDueDoneAt.Date.ToString()
+                        + ", _NextDueDoneAt.Time" + _NextDueDoneAt.TimeOfDay.ToString());
+
                     DbQueueService queueservice = null;
                     //ThrowNewException("BrokeredMessage receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5));");
                     try
@@ -1683,7 +1721,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         queueservice = new DbQueueService(selectedQueue, 0);
                         response = queueservice.Receive(new TimeSpan(0, 0, 0, 5));
                     }
-                    catch (Exception)
+                    catch (Exception) // in the main loop
                     {
 
                         throw;
@@ -1715,20 +1753,79 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                 }
+                // Main Loop Finish 
 
-                if (DateTime.UtcNow.Date > _NextDueDoneAt.Date)
+
+                if (DateTime.UtcNow.Date > _NextDueDoneAt.Date) // 2. Checking and logging after the main loop 
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("JornalApprove beforeAddBatchTask selected queue: {0}, workerRoleName: {1}  , time:{2} ",
-                        null,selectedQueue, LogitudeSettings.WorkerRoleName, DateTime.Now );
-
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("JournalApprove beforeAddBatchTask selected queue: " + selectedQueue
+                          + ", workerRoleName: " + LogitudeSettings.WorkerRoleName
+                          + ",time" + DateTime.Now.ToString());
                 }
 
+                // 3. Queue selector
+                if (selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR)
+                {
 
+                    try
+                    {
+                        string workerRoleName = "";
+                        if(!string.IsNullOrEmpty(LogitudeSettings.WorkerRoleName))
+                        {
+                            workerRoleName = LogitudeSettings.WorkerRoleName;
+
+
+                            if (DateTime.UtcNow.Date > _NextDueDoneAt.Date && workerRoleName != "staging")// _NextDueDoneAt DateTime.UtcNow.TimeOfDay < TimeSpan.FromHours(6) ) 
+                            {
+                                if (DateTime.Now < new DateTime(2050, 06, 01))
+                                {
+                                 CreateBatchAccountingIntegrityCheck();
+                                }
+                                _NextDueDoneAt = DateTime.UtcNow.Date;
+                                var myDueLocalBalanceService = new DueLocalBalanceService();
+                                myDueLocalBalanceService.RunAllTenants();
+
+                                var dailyRebuildAgingService = new DailyRebuildAgingService();
+                                dailyRebuildAgingService.RunAllAgingTenants();
+
+                            }
+                        }
+                    }
+                    catch (Exception) // In the queue selector
+                    {
+                     NetCommonHelper.Logger.DevLog.Instance.WriteDebug("JornalApprove beforeAddBatchTask selected queue: {0}, workerRoleName: {1}  , time:{2} ",
+                        null,selectedQueue, LogitudeSettings.WorkerRoleName, DateTime.Now );
+ 
+                }
 
             }
 
+
+            private static string[] GetStack(int removeLines)
+            {
+                string[] stack = Environment.StackTrace.Split(
+                    new string[] { Environment.NewLine },
+                    StringSplitOptions.RemoveEmptyEntries);
+
+                if (stack.Length <= removeLines)
+                    return new string[0];
+
+                string[] actualResult = new string[stack.Length - removeLines];
+                for (int i = removeLines; i < stack.Length; i++)
+                    // Remove 6 characters (e.g. "  at ") from the beginning of the line
+                    // This might be different for other languages and platforms
+                    actualResult[i - removeLines] = stack[i].Substring(6);
+
+                return actualResult;
+            }
             public void WorkUntilQEmptyQueueDBMultiThreaded(TimeSpan? timeSpan = null, string selectedQueue = null)
             {
+
+                string[] stacklines = JournalApproveWorker.GetStack(0);
+                string logtext = "JournalApproveService.cs JournalApproveWorker.WorkUntilQEmptyQueueDBMultiThreaded(), Point 1, selectedQueue " + selectedQueue;
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(stacklines));
+
                 selectedQueue = selectedQueue ?? JournalApproveService.K_AccountingJournalApproveMutliThreadingWR;
                 Stopwatch stopwatch = null;
                 if (timeSpan != null)
@@ -1739,6 +1836,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 QueueResponse response = null;
                 while (true)
                 {
+
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WorkUntilQEmptyQueueDBMultiThreaded inloop selected queue: " + selectedQueue
+    + ", workerRoleName: " + LogitudeSettings.WorkerRoleName
+    + ", _NextDueDoneAt.Date" + _NextDueDoneAt.Date.ToString()
+    + ", _NextDueDoneAt.Time" + _NextDueDoneAt.TimeOfDay.ToString());
+
                     if (stopwatch != null && timeSpan != null)
                     {
                         if (stopwatch.Elapsed > timeSpan)
@@ -1769,25 +1872,28 @@ namespace Logitude.Accounting.BL.CoreBL
                         break;
                     }
 
+                    Logger.LogDebug(String.Format("JournalApproveService, Point 0, tenant {0}, selectedQueue {1}", response.Tenant, selectedQueue));
+
                     if (selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR 
                         && response != null && response.Tenant != 0)
                     {
                         try
                         {
-                            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("JournalApproveService, Point 1, tenant {0}", response.Tenant));
+                             NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("JournalApproveService, Point 1, tenant {0}", response.Tenant));
+ 
                             if (_NextDueDoneDict == null) _NextDueDoneDict = new Dictionary<int, DateTime>();
                             if (!_NextDueDoneDict.ContainsKey(response.Tenant))
                                 _NextDueDoneDict.Add(response.Tenant, DateTime.MinValue);
 
                             if (DateTime.UtcNow.Date > _NextDueDoneDict[response.Tenant].Date)  
                             {
-                                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("JournalApproveService, Point 2, tenant {0}, date {1} ", response.Tenant, _NextDueDoneDict[response.Tenant].Date));
-
+                                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("JournalApproveService, Point 2, tenant {0}, date {1} ", response.Tenant, _NextDueDoneDict[response.Tenant].Date));
+ 
                                 _NextDueDoneDict[response.Tenant] = DateTime.UtcNow.Date;
                                 var myDueLocalBalanceService = new DueLocalBalanceService();
                                 myDueLocalBalanceService.RunOneTenantFast(response.Tenant);
-                                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("JournalApproveService, Point 3, tenant {0}", response.Tenant));
-                            }
+                                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("JournalApproveService, Point 3, tenant {0}", response.Tenant));
+                             }
                         }
                         catch (Exception)
                         {

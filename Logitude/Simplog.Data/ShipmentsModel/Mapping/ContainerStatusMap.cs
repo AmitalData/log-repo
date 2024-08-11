@@ -23,8 +23,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
 
             this.Property(t => t.Name)
                 .IsRequired()
-                .HasMaxLength(100)
-                .IsUnicode(false);
+                .HasMaxLength(200)
+                .IsUnicode(true);
 
             this.Property(t => t.SearchFields)
                 .HasMaxLength(1000)

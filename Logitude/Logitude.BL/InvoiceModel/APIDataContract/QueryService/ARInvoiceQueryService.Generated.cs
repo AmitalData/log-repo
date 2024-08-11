@@ -149,8 +149,9 @@ using Simplog.Data.InvoiceModel;
 				   temp.ProfitCurrencyExchangeRate = MyEntityPM.ProfitCurrencyExchangeRate;
 				   temp.AmountInProfitCurrency = MyEntityPM.AmountInProfitCurrency; 
 				   temp.ConfirmationNumber = MyEntityPM.ConfirmationNumber;
-			  
-				   if(MyEntityPM.TransferStatusCode != null)
+                   temp.InternalNotes = MyEntityPM.InternalNotes;
+
+                if (MyEntityPM.TransferStatusCode != null)
 				   {
 					   ARInvoiceTransferStatusQueryService ARInvoiceTransferStatusService6 = new ARInvoiceTransferStatusQueryService(Tenant);
 					   					   temp.TransferStatus = ARInvoiceTransferStatusService6.GetARInvoiceTransferStatusByCode(MyEntityPM.TransferStatusCode,Tenant,ComputingPartnerName); 
@@ -181,9 +182,9 @@ using Simplog.Data.InvoiceModel;
 				   temp.ExternalAccountingEntityId = MyEntityPM.ExternalAccountingEntityId;
 				   temp.BillToGLAccount = MyEntityPM.BillToGLAccountId;
                    temp.ConfirmationNumber = MyEntityPM.ConfirmationNumber;
+                   temp.InternalNotes = MyEntityPM.InternalNotes;
 
-			  
-				   if(MyEntityPM.StatusCode != null)
+                if (MyEntityPM.StatusCode != null)
 				   {
 					   ARInvoiceStatusQueryService ARInvoiceStatusService9 = new ARInvoiceStatusQueryService(Tenant);
 					   					   temp.Status = ARInvoiceStatusService9.GetARInvoiceStatusByCode(MyEntityPM.StatusCode,Tenant,ComputingPartnerName); 
@@ -538,6 +539,11 @@ using Simplog.Data.InvoiceModel;
 
 				                        }
 
+                    //if (!IsUpdate)
+                    //{
+                    //    temp.InternalNotes = MyEntity.InternalNotes;
+
+                    //                    }
 
                     if (!IsUpdate)
                     {
@@ -641,6 +647,11 @@ using Simplog.Data.InvoiceModel;
                 }
 
 
+                //if (!IsUpdate)
+                //{
+                //    temp.InternalNotes = MyEntity.InternalNotes;
+
+                //}
 
 
                 if (!IsUpdate)

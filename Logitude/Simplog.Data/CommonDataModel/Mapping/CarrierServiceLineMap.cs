@@ -15,7 +15,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.HasKey(t => t.Id);
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CardId).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.Name).IsRequired().HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.Name).IsRequired().HasMaxLength(200).IsUnicode(true);
             this.Property(t => t.Description).HasMaxLength(500).IsUnicode(true);
             this.Property(t => t.PartnerTypeId).IsRequired().IsFixedLength().HasMaxLength(2).IsUnicode(false);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);

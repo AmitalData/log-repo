@@ -1,7 +1,10 @@
 {
-  "url": "https://test-merged.azurewebsites.net/",
+   "url": "https://test-merged.azurewebsites.net/",
   "email": "SmokeStagingCloud2@mail.com",
   "password": "!Cypress1",
+ 
+
+ 
   "customerCareEmail": "ahmada@logitudeworld.com",
   "customerCarePassword": "!A123456",
   "tenant": "UNF 58 Accounting (1071)"

@@ -43,7 +43,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-   Code="&quot;69e6&quot;"
+  Code="&quot;e8d0&quot;"
    Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -153,9 +153,9 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;Toggle&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
-    MaxLength="100"
+    MaxLength="200"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="true"
@@ -164,7 +164,7 @@
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
-    SystemMaxLength="100"
+    SystemMaxLength="200"
     DisplayInList="false"
     IsCustomFilter="false"
     IsListFilter="false"
@@ -990,6 +990,11 @@
       Name="&quot;Reports Execution WR Version 2&quot;"
       SearchFields="&quot;RE2, Reports Execution WR Version 2&quot;"
       Description="&quot;Reports Execution WR Version 2&quot;" />
+    <Record
+      Code="&quot;VPI&quot;"
+      Name="&quot;Get Tax Report VAT from A/P Invoice&quot;"
+      SearchFields="&quot;VPI, Get Tax Report VAT from A/P Invoice&quot;"
+      Description="&quot;Get Tax Report VAT from A/P Invoice&quot;" />
     <Record
       Code="&quot;JAM&quot;"
       Name="&quot;Journal Approval MultiThreading&quot;"

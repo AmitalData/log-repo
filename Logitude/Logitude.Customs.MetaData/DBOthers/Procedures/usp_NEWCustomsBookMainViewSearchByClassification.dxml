@@ -25,7 +25,8 @@ BEGIN
 				CustomsRate, --'שיעור המכס',
 				PurchaseTax, --'מס קניה',
 				OptionalTaxAddition,  --'שיעור התוספת',
-				MeasurementUnitName -- יחידה סטטיסטית של פרט המכס
+				MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+        MALAMID as MeasurementUnitID -- יחידה סטטיסטית 
 			FROM [dbo].[NewCustomsBookMainView]
 			WHERE CASE WHEN CHARINDEX('/', @FullClassification) = 0 THEN REPLACE(FullClassification, '/', '')  ELSE FullClassification END like @FullClassification + '%' 
 
@@ -47,7 +48,8 @@ BEGIN
 				ft.CustomsRate, --'שיעור המכס',
 				ft.PurchaseTax, --'מס קניה',
 				ft.OptionalTaxAddition,  --'שיעור התוספת',
-				ft.MeasurementUnitName -- יחידה סטטיסטית של פרט המכס
+				ft.MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+        ft.MALAMID as MeasurementUnitID -- יחידה סטטיסטית 
 			FROM [dbo].[NewCustomsBookMainView] ft
 			
 			INNER JOIN RecursiveAncestors ra ON ft.CustomsItemId = ra.Parent_CustomsItemID
@@ -69,7 +71,8 @@ BEGIN
 				PurchaseTax, --'מס קניה',
 				OptionalTaxAddition,  --'שיעור התוספת',
 				MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
-				 r.Id AS Remarks 
+        MeasurementUnitID,
+				r.Id AS Remarks 
 			FROM RecursiveAncestors ra
 			LEFT JOIN 
 			  (
