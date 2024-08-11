@@ -121297,7 +121297,7 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Shipment.O.VolumeKgCbm&quot;"
-      DefaultText="&quot;Volume (KG/CBM)&quot;"
+      DefaultText="&quot;Volume (CBM/KG)&quot;"
       LocalDefaultText="&quot;נפח (KG/CBM)&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
