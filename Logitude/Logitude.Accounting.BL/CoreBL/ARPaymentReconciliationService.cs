@@ -446,16 +446,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     invoice.StatusCode = ARInvoiceStatusValues.Unpaid;
                 }
             }
-            else
-                 {
-                    invoice.IsClosed = false;
-                    invoice.StatusCode = ARInvoiceStatusValues.PartiallyPaid;
-                }
-                else
-                {
-                    invoice.IsClosed = false;
-                    invoice.StatusCode = ARInvoiceStatusValues.Unpaid;
-                }
+            
  
 
         }

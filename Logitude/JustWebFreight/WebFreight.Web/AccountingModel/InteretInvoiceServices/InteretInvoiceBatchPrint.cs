@@ -34,7 +34,8 @@ namespace Logitude.Accounting.BL.InterestService
 
         public PdfDocument CheckValidCopiesForInvoicesAndPrint(InterestReportArguments interestReportArgs,int tenant,string email)
         {
-            Logger.LogInfo("Starting document validation and printing process.");
+           
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Starting document validation and printing process.");
             PdfDocument pdfDoc = new PdfDocument();
             using (var scope = TransactionFactory.GetTransaction())
             {
@@ -57,7 +58,7 @@ namespace Logitude.Accounting.BL.InterestService
                 }
 
                 interestReportArgs.SelectedIds = interestReportQueryService.GetInterestReprtsWithInvocies(tenant, interestReportArgs.SelectedIds);
-                Logger.LogInfo($"Total invoices selected for processing: {interestReportArgs.SelectedIds.Count}");
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"Total invoices selected for processing: {interestReportArgs.SelectedIds.Count}");
 
                 for (int i = 0; i < interestReportArgs.SelectedIds.Count; i++)
                 {
@@ -72,13 +73,13 @@ namespace Logitude.Accounting.BL.InterestService
 
                 }
                 scope.Complete();  // Commit the transaction
-                Logger.LogInfo("All documents processed successfully and transaction completed.");
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("All documents processed successfully and transaction completed.");
             }
             return pdfDoc;
         }
         public bool PrintDocuments(InterestReportArguments interestReportArgs, int tenant, string email)
         {
-            Logger.LogInfo("Starting PrintDocuments");
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Starting PrintDocuments");
             bool isPrintSuccess = false;
             using (var scope = TransactionFactory.GetTransaction())
             {
@@ -88,12 +89,12 @@ namespace Logitude.Accounting.BL.InterestService
                     {
                         scope.Complete();  // Commit the transaction
                         isPrintSuccess = true;
-                        Logger.LogInfo("All documents processed successfully and transaction completed.");
+                        NetCommonHelper.Logger.DevLog.Instance.WriteInfo("All documents processed successfully and transaction completed.");
                     }
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError($"Error processing documents: {ex}");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError($"Error processing documents: {ex}");
                 }
 
             }
@@ -139,7 +140,7 @@ namespace Logitude.Accounting.BL.InterestService
 
                 if (documentOut == null)
                 {
-                    Logger.LogError("No document found for printing.");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError("No document found for printing.");
                     return false;
                 }
 
@@ -147,7 +148,7 @@ namespace Logitude.Accounting.BL.InterestService
             }
             catch (Exception ex)
             {
-                Logger.LogError($"Failed to print document {invoiceId}: {ex.Message}");
+                NetCommonHelper.Logger.DevLog.Instance.WriteError($"Failed to print document {invoiceId}: {ex.Message}");
                 return false;
             }
         }
@@ -164,7 +165,7 @@ namespace Logitude.Accounting.BL.InterestService
             }
             if (copy == null)
             {
-                Logger.LogError("No valid document copy found for printing.");
+                NetCommonHelper.Logger.DevLog.Instance.WriteError("No valid document copy found for printing.");
                 return false;
             }
             UserRepository userRep = new UserRepository((int)tenant);
@@ -191,7 +192,7 @@ namespace Logitude.Accounting.BL.InterestService
                 aRInvoiceRepository.Update(aRInvoice);
                 aRInvoiceRepository.SubmitChanges();
             }
-            Logger.LogInfo($"Printing document {documentOut.Id} for tenant {tenant}.");
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"Printing document {documentOut.Id} for tenant {tenant}.");
             return true; // Replace with actual printing and updating logic
         }
         private List<string> GetInterestInvoiceIds(InterestReportArguments args, int tenant)
@@ -337,7 +338,7 @@ namespace Logitude.Accounting.BL.InterestService
                     }
                     if (copy == null)
                     {
-                        Logger.LogError("No valid document copy found for printing.");
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError("No valid document copy found for printing.");
                         return false;
                     }
 
@@ -359,8 +360,8 @@ namespace Logitude.Accounting.BL.InterestService
 
                             string documentExtension = up.GetFileExtension(copy.DocumentId, (int)tenant);
                             string documentId = copy.DocumentId;
-                            Logger.LogDebug($"Attempting to download and merge document ID={documentId} with extension={documentExtension}.");
-
+                            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Attempting to download and merge document ID={documentId} with extension={documentExtension}.");
+ 
                             if (!string.IsNullOrEmpty(documentExtension))
                             {
                                 _Stream = DownloadFile(documentId, documentExtension, "", (int)tenant);
@@ -402,7 +403,7 @@ namespace Logitude.Accounting.BL.InterestService
                                 }
                                 else
                                 {
-                                    Logger.LogError("Failed to download file.");
+                                    NetCommonHelper.Logger.DevLog.Instance.WriteError("Failed to download file.");
                                 }
                             }
                             }

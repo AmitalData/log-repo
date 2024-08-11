@@ -270,9 +270,9 @@
     <Reference Include="Microsoft.Azure.Management.ResourceManager, Version=3.17.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Azure.Management.ResourceManager.3.17.4-preview\lib\net461\Microsoft.Azure.Management.ResourceManager.dll</HintPath>
     </Reference>
-     <Reference Include="Microsoft.Azure.Pipelines.WebApi, Version=19.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Azure.Pipelines.WebApi, Version=19.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.TeamFoundationServer.Client.19.225.1\lib\net472\Microsoft.Azure.Pipelines.WebApi.dll</HintPath>
-     </Reference>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
@@ -537,9 +537,9 @@
       <HintPath>..\..\packages\WindowsAzure.Storage.9.3.3\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-     <Reference Include="NetCommonHelper, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="NetCommonHelper, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NetCommonHelper.1.0.7\lib\net472\NetCommonHelper.dll</HintPath>
-     </Reference>
+    </Reference>
     <Reference Include="NetCommonHelper, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NetCommonHelper.1.0.6\lib\net46\NetCommonHelper.dll</HintPath>
     </Reference>
@@ -555,9 +555,8 @@
     <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NLog.5.3.2\lib\net46\NLog.dll</HintPath>
     </Reference>
-     <Reference Include="NLog.Loki, Version=0.0.0.0, Culture=neutral, PublicKeyToken=8dab11a1448ce9d0, processorArchitecture=MSIL">
+    <Reference Include="NLog.Loki, Version=0.0.0.0, Culture=neutral, PublicKeyToken=8dab11a1448ce9d0, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NLog.Targets.Loki.2.2.0\lib\netstandard2.0\NLog.Loki.dll</HintPath>
- 
     </Reference>
     <Reference Include="NPOI.Core, Version=2.7.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NPOI.2.7.0\lib\net472\NPOI.Core.dll</HintPath>
@@ -585,9 +584,8 @@
     <Reference Include="Profact.TimbraCFDI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Profact4.0.1.2.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
     </Reference>
-     <Reference Include="RabbitMQ.Client, Version=6.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+    <Reference Include="RabbitMQ.Client, Version=6.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
       <HintPath>..\..\packages\RabbitMQ.Client.6.8.1\lib\net462\RabbitMQ.Client.dll</HintPath>
- 
     </Reference>
     <Reference Include="SendGrid.SmtpApi, Version=1.4.6.0, Culture=neutral, PublicKeyToken=5ab2e3607d8f9343, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SendGrid.SmtpApi.1.4.6\lib\net452\SendGrid.SmtpApi.dll</HintPath>
@@ -700,9 +698,9 @@
     <Reference Include="System.Data.OracleClient" />
     <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.Design" />
-     <Reference Include="System.Diagnostics.DiagnosticSource, Version=8.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=8.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Diagnostics.DiagnosticSource.8.0.1\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
-     </Reference>
+    </Reference>
     <Reference Include="System.Diagnostics.EventLog, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Diagnostics.EventLog.8.0.0\lib\net462\System.Diagnostics.EventLog.dll</HintPath>
     </Reference>
@@ -719,10 +717,9 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
-     <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Globalization.Calendars, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Globalization.Calendars.4.3.0\lib\net46\System.Globalization.Calendars.dll</HintPath>
- 
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
@@ -867,9 +864,9 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Security" />
-     <Reference Include="System.Security.AccessControl, Version=6.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+    <Reference Include="System.Security.AccessControl, Version=6.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Security.AccessControl.6.0.1\lib\net461\System.Security.AccessControl.dll</HintPath>
-     </Reference>
+    </Reference>
     <Reference Include="System.Security.Claims, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Security.Claims.4.3.0\lib\net46\System.Security.Claims.dll</HintPath>
       <Private>True</Private>
@@ -928,7 +925,7 @@
     <Reference Include="System.Spatial, Version=5.8.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Spatial.5.8.5\lib\net40\System.Spatial.dll</HintPath>
     </Reference>
-     <Reference Include="System.Text.Encoding.CodePages, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+    <Reference Include="System.Text.Encoding.CodePages, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Text.Encoding.CodePages.8.0.0\lib\net462\System.Text.Encoding.CodePages.dll</HintPath>
     </Reference>
     <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -937,15 +934,15 @@
     <Reference Include="System.Text.Json, Version=8.0.0.3, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Text.Json.8.0.3\lib\net462\System.Text.Json.dll</HintPath>
     </Reference>
-     <Reference Include="System.Text.RegularExpressions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+    <Reference Include="System.Text.RegularExpressions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Text.RegularExpressions.4.3.1\lib\net463\System.Text.RegularExpressions.dll</HintPath>
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
-     <Reference Include="System.Threading.Channels, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+    <Reference Include="System.Threading.Channels, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Threading.Channels.8.0.0\lib\net462\System.Threading.Channels.dll</HintPath>
-     </Reference>
-     <Reference Include="System.Threading.Tasks.Dataflow, Version=4.5.24.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Dataflow, Version=4.5.24.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Tpl.Dataflow.4.5.24\lib\portable-net45+win8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -1067,9 +1064,9 @@
     <Compile Include="AccountingModel\DomainServices\OpenFormatReportDomainService.cs" />
     <Compile Include="AccountingModel\DomainServices\TaxReportDomainService.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ChequeCounterSerialViewsController.Generated.cs" />
-     <Compile Include="Controllers\AccountingModel\APInvoiceStatusUpdateController.cs" />
-     <Compile Include="Controllers\AccountingModel\GLAccountMultiToCurrencyController.cs" />
-     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\NUnicloudViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\APInvoiceStatusUpdateController.cs" />
+    <Compile Include="Controllers\AccountingModel\GLAccountMultiToCurrencyController.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\NUnicloudViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ReferenceTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\HybridModel\AccountingPartnerHybridController.cs" />
     <Compile Include="Controllers\HybridModel\ActivityDWHybridController.cs" />
@@ -1142,12 +1139,11 @@
     <Compile Include="Controllers\HybridModel\VesselHybridController.cs" />
     <Compile Include="Controllers\HybridModel\WarehouseHybridController.cs" />
     <Compile Include="Controllers\InfrastructureModel\QueueMessagesViewsController.cs" />
-     <Compile Include="Controllers\CommonDataModel\ApiHelpers\CardAPiHelper.cs" />
- 
+    <Compile Include="Controllers\CommonDataModel\ApiHelpers\CardAPiHelper.cs" />
     <Compile Include="Controllers\InfrastructureModel\QueueMessagesViewsController.cs" />
     <Compile Include="Controllers\AccountingModel\Redempt_a_ChequeController.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountRecalculateController.cs" />
-     <!-- <Compile Include="ContainerTracking\ContainerTrackingHelper.cs" /> -->
+    <!-- <Compile Include="ContainerTracking\ContainerTrackingHelper.cs" /> -->
     <Compile Include="Controllers\AccountingModel\CopyFromTenant0ExtendedController.cs" />
     <Compile Include="Controllers\AccountingModel\ChartOfAccountsTypesExtendedController.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\CopyFromTenant0ViewsController.Generated.cs" />
@@ -1169,9 +1165,9 @@
     <Compile Include="Controllers\DigitalPortal\DigitalActivityController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalCustomizationController.cs" />
     <Compile Include="Controllers\DigitalPortal\Helpers\UpdateLanguageRequest.cs" />
-     <Compile Include="Controllers\InfrastructureModel\Extended\BatchTaskExecutionsExtendedController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\BatchTaskExecutionsExtendedController.cs" />
     <Compile Include="Controllers\FromAppCode\AngularJS_App_Code\Shipment\LogBoxShipmentViewsController.cs" />
-     <Compile Include="Controllers\InfrastructureModel\Extended\ContainerSettingsController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\ContainerSettingsController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\CounterDefinitionExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\DeploymentPackageExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\ImporterEntityStatusesController.cs" />
@@ -1214,9 +1210,7 @@
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ConfirmationNumberStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\ConfirmationNumberDefaultController.Generated.cs" />
     <Compile Include="Controllers\Monitoring\MonitoringController.cs" />
-
     <Compile Include="Controllers\SendGridNotifications\SendGridNotificationsController.cs" />
-
     <Compile Include="Controllers\ShipmentsModel\Extended\ContainersController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AWBAdditionalHandlingInfoViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ShipmentReferanceViewsController.Generated.cs" />
@@ -1874,8 +1868,7 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DefaultAndConfigurationController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DefaultAndConfigurationKeyController.Generated.cs" />
     <Compile Include="Controllers\Integration\IntegrationTestController.cs" />
-    
-<Compile Include="Controllers\CommonDataModel\ApiHelpers\AgentAPiHelper.cs" />
+    <Compile Include="Controllers\CommonDataModel\ApiHelpers\AgentAPiHelper.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\CustomAgentAPiHelper.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\ShippingAgentAPiHelper.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\TruckerAPiHelper.cs" />
@@ -2036,7 +2029,7 @@
     <Compile Include="Controllers\WebServices\Services\ShaamService.cs" />
     <Compile Include="Controllers\WebServices\ShaamWebServiceController.cs" />
     <Compile Include="Controllers\WebServices\ShipmentContainersWebServiceController.cs" />
-     <Compile Include="Controllers\WebServices\SyncCCUTablesController.cs" />
+    <Compile Include="Controllers\WebServices\SyncCCUTablesController.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.LoadingSiteType.cs" />
     <Compile Include="CustomModel\DomainServices\Generated\CB_CustomsItemDomainService.Generated.cs" />
     <Compile Include="CustomModel\DomainServices\Generated\LogisticActionRequestTypeDomainService.Generated.cs" />
@@ -2058,7 +2051,7 @@
     <Compile Include="CustomWebServices\Testers\IzikTester.aspx.designer.cs">
       <DependentUpon>IzikTester.aspx</DependentUpon>
     </Compile>
-     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowAPInvoiceController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowAPInvoiceController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowARInvoiceController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowContainerController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentPackageController.cs" />
@@ -2126,9 +2119,9 @@
     <Compile Include="DataProviders\CustomFieldDataProviedr.cs" />
     <Compile Include="DataProviders\ControlForInvoiceLinesDataProvider.cs" />
     <Compile Include="DataProviders\LogitudeCRMReportDataProvider.cs" />
-     <Compile Include="DataProviders\CustomsCollateralDataProvider.cs" />
+    <Compile Include="DataProviders\CustomsCollateralDataProvider.cs" />
     <Compile Include="DataProviders\ExportDeclarationDataProvider.cs" />
-     <Compile Include="DataProviders\ProductItemLine.Shared.cs" />
+    <Compile Include="DataProviders\ProductItemLine.Shared.cs" />
     <Compile Include="DataProviders\RoutingDataProvider.cs" />
     <Compile Include="DataProviders\SpotRateQuoteReportDataProvider.cs" />
     <Compile Include="DataProviders\TaxDeductionReportPerVendorDataProvider.cs" />
@@ -4178,7 +4171,6 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BIReportsExecutionLogUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BIReportsTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BIReportUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BorderOPTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BusinessProcessQueueUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BusinessRoleUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BuyerRoleTypeUpdateClass.cs" />
@@ -4269,7 +4261,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ConditionalExemptionTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ConfirmationNumberTokenLogUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ConsignmentPackDangerUpdateClass.cs" />
-     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContainerizationHataraStatusUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContainerizationHataraStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContainerizationStatusCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContainerizationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContainerTypeUpdateClass.cs" />
@@ -4277,7 +4269,6 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CoolingReportingMethodUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CountryCurrencyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContainerSettingUpdateClass.cs" />
- 
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CopyFromTenant0UpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierCustomStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierDeclarationStatusUpdateClass.cs" />
@@ -4423,10 +4414,9 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OccasionContactUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OccasionInviteeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\NbcDeclarationTypeUpdateClass.cs" />
-     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OcrDocumentUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OcrDocumentUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OcrStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OriginCriterionUpdateClass.cs" />
- 
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OperatorCategoryUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OperatorUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PartyRelationshipTypeUpdateClass.cs" />
@@ -4449,17 +4439,17 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PaymentChequeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PriceStepUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ProceduralFaultUpdateClass.cs" />
-     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuotaComputationBasisUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuotaComputationBasisUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuotaIncrementUpdateClass.cs" />
-     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReconcileExternalPageLineUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReconcileExternalPageLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReconcileExternalPageStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReconcileExternalPageUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReferantExceptionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReferantTeamUpdateClass.cs" />
-     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReferenceInputTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReferenceInputTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReferenceStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ReferenceTypeUpdateClass.cs" />
-     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\RefundCustomerActivityTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\RefundCustomerActivityTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\RegularityPublicationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\RegularityRequirementWarningUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\RegularitySourceUpdateClass.cs" />
@@ -4479,11 +4469,10 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SecurityClearenceTypeCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SeizureFactorTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SeizureMethodTypeUpdateClass.cs" />
-     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ServersNameUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ServersNameUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SharedLogisticsSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SignStationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ServiceProviderSubscriptionUpdateClass.cs" />
- 
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ShipmentOrderUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SLALineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SplitOrMergeReasonUpdateClass.cs" />
@@ -4804,11 +4793,6 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\WarehouseLibUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\WorkflowUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\ObjectFields\MetaDataUpdateClass.InvoiceModel.cs" />
- 
-   
-   
-   
-   
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARInvoiceLineAction.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.SATPaymentMethod.cs" />
     <Compile Include="CommonDataModel\DomainServices\PartnersDomainService.WarehouseType.cs" />
@@ -4873,7 +4857,7 @@
     <Content Include="css\kendo.default.min.css.map" />
     <Content Include="css\kendo.mobile.all.min.css.map" />
     <Content Include="Integration Test\LoginVars\Production\Cloud\TeamIslam\LoginVars.csv" />
-     <Content Include="newrelic.cmd">
+    <Content Include="newrelic.cmd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <AdditionalFiles Include="..\..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
@@ -4884,7 +4868,7 @@
     <None Include="Properties\PublishProfiles\CustomsNewProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FeatureBranchPub.pubxml" />
     <None Include="Properties\PublishProfiles\HybridWS - Web Deploy.pubxml" />
-     <Content Include="ApplicationInsights.config" />
+    <Content Include="ApplicationInsights.config" />
     <None Include="Properties\PublishProfiles\AmitalTestNewProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FeatureBranchPub.pubxml" />
     <None Include="Properties\PublishProfiles\AmitalProfile.pubxml" />
@@ -6854,45 +6838,11 @@
     <Compile Include="MetaDataUpdate\UpdateClasses\AccountingUpdate.cs" />
     <Compile Include="MetaDataUpdate\UpdateClasses\BookingUpdate.cs" />
     <Compile Include="MetaDataUpdate\UpdateClasses\CRMUpdate.cs" />
-     <Compile Include="MetaDataUpdate\UpdateClasses\ObjectTablesKeys.cs" />
-     <Compile Include="MetaDataUpdate\UpdateClasses\SocialUpdate.cs" />
+    <Compile Include="MetaDataUpdate\UpdateClasses\ObjectTablesKeys.cs" />
+    <Compile Include="MetaDataUpdate\UpdateClasses\SocialUpdate.cs" />
     <Compile Include="MetaDataUpdate\UpdateClasses\TariffModuleUpdate.cs" />
     <Compile Include="MetaDataUpdate\UpdateClasses\TimeManagementUpdate.cs" />
     <Compile Include="MetaDataUpdate\UpdateClasses\WarehouseUpdate.cs" />
- 
-   
-   
-    
-    
-    
-   
-    
-   
-   
-    
-   
-   
-    
-    
-   
-   
-   
-   
-   
-   
-  
-   
-   
-   
-    
-   
-   
-   
-   
-    
-    
-     
-   
     <Compile Include="Params\EmailBodyArgs.cs" />
     <Compile Include="Params\EmailBodyParams.cs" />
     <Compile Include="Params\EmailBodyResults.cs" />
@@ -6950,9 +6900,8 @@
     <Compile Include="ReportsWebServices\LogitudeReports\CRM\MonthlyConversionManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\CRM\RacingQuoteManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\CRM\BluesnapPaymentsReportManager.cs" />
-     <Compile Include="ReportsWebServices\LogitudeReports\Customs\CustomsCollateralLoader.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\Customs\CustomsCollateralLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Customs\ExportDeclarationLoader.cs" />
- 
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\ShipperReturnsManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\FlightBookingsManifestManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\UnicargoExportManager.cs" />

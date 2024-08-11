@@ -132,10 +132,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 return;
 
             }
-            if (!String.IsNullOrWhiteSpace(entityPM.Name)) //T4 find type == nText 
-            {
-                entityPM.Name = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Name));
-            }
+            //if (!String.IsNullOrWhiteSpace(entityPM.Name)) //T4 find type == nText 
+            //{
+            //    entityPM.Name = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Name));
+            //}
             if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
