@@ -39,8 +39,8 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
- Code="&quot;29d5&quot;"
-    Name="&quot;General&quot;"
+   Code="&quot;c589&quot;"
+     Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
   ServerModuleName="&quot;Generals&quot;"
@@ -5992,6 +5992,7 @@
       LocalDefaultText="&quot;עבור חשבונית ספק נדרש מספר הקצאה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+
   </AdditionalTextCodes>
    <AdditionalFeatures>
     <Feature

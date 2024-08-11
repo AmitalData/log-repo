@@ -903,6 +903,8 @@
     <Compile Include="ShipmentsModel\APIDataContract\Shipments.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\VizionModels.cs" />
     <Compile Include="ShipmentsModel\CustomFilters\DigitalPortalCustomFilter.cs" />
+    <Compile Include="ShipmentsModel\CustomFilters\LogBoxShipmentCustomFilter.cs" />
+    <Compile Include="ShipmentsModel\EntityLists\LogBoxShipmentList.cs" />
     <Compile Include="ShipmentsModel\EntityOtherServices\ContainerShipmentUpdateService.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\OceanInsightsStatusLogPM.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\OceanInsightsStatusLogMapping.cs" />

@@ -1092,6 +1092,13 @@ namespace WebFreight.Web.Helpers
             MethodInfo getCountMethodInfo = null;
             switch (query.QuerySection)
             {
+                case "ShipmentLogBox":
+                    {
+                        getListMethodInfo = context.GetType().GetMethod("GetLogBoxShipmentFilters");
+                        getCountMethodInfo = context.GetType().GetMethod("GetLogBoxShipmentFiltersCount");
+
+                        break;
+                    }
                 case "ShipmentFollowUp":
                     {
                         getListMethodInfo = context.GetType().GetMethod("GetFollowUpsByShipmentsFilter");

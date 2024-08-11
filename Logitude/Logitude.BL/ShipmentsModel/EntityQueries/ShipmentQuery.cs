@@ -13573,6 +13573,57 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                            };
             return myResult;
         }
+        public IQueryable<LogBoxShipmentList> GetIQueryableLogBoxShipmentList(IQueryable<LogBoxShipmentDataView> shipments, int tenant)
+        {
+            TenantQuery tenantQuery = new TenantQuery(tenant);
+            TenantPM currentTenant = tenantQuery.GetSinglePM(tenant);
+
+            var myResult = from f in shipments
+                           select new LogBoxShipmentList()
+                           {
+                               DirectionName=f.DirectionName,
+                               IsShipmentOrder = f.IsShipmentOrder,
+                               PartnerLogoId=f.PartnerLogoId,
+                               TransportModeName=f.TransportModeName,
+                               CarrierNumber =f.CarrierNumber,
+                               ContainersNumbersandTypesArray = f.ContainersNumbersandTypesArray,
+                               PartnerName=f.PartnerName,
+                               TruckNumber =f.TruckNumber,
+                               TruckContainerNumber = "",
+                               CustomsClearanceDate = f.CustomsClearanceDate,
+                               StatusLocation = f.StatusLocation,
+                               Tenant = f.Tenant,
+                               Id = f.Id,
+                               Shipper = f.Shipper,
+                               DirectionId = f.DirectionId,
+                               CreateDateTime = f.CreateDateTime,
+                               ShipmentNumber = f.ShipmentNumber,
+                               TransportModeId = f.TransportModeId,
+                               CustomerReference1 = f.CustomerReference1,
+                               CustomerReference2 = f.CustomerReference2,
+                               CustomerReference3 = f.CustomerReference3,
+                               IsOperationalClosed = f.IsOperationalClosed,
+                               DocumentsSearchFields = f.DocumentsSearchFields,
+                               ShipperName = f.ShipperName,
+                               ForwarderShipmentNumber = f.ForwarderShipmentNumber,
+                               LastDocumentDateTime = f.LastDocumentDateTime,
+                               MainCarriageExpectedOrActual = f.MainCarriageExpectedOrActual,
+                               StatusDate = f.StatusDate,
+                               IsRequestedDocuments = f.IsRequestedDocuments,
+                               IsDigitalSignRequired = f.IsDigitalSignRequired,
+                               RequestedDocumentsCount = f.RequestedDocumentsCount,
+                               IsImporterApprovalRequried = f.IsImporterApprovalRequried,
+                               ApprovedByUserName = f.ApprovedByUserName,
+                               IsDepositionRequired = f.IsDepositionRequired,
+                               ForwarderPartnerId = f.ForwarderPartnerId,
+                               ComputedStatusDate = f.ComputedStatusDate,
+                               StatusName = !string.IsNullOrEmpty(f.StatusLocation) ? f.StatusName + " (" + f.StatusLocation + ")" : f.StatusName,
+                               PrivateLabelAgentName = f.PrivateLabelAgentName,
+                               IsCancelled = f.IsCancelled,
+                               SearchFields = f.SearchFields
+                           };
+            return myResult;
+        }
 
         public IQueryable<DigitalShipmentList> GetDigitalIQueryableShipmentList(IQueryable<DigitalShipmentsDataView> shipments, int tenant)
         {
@@ -14618,7 +14669,69 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return myResult;
         }
+        public LogBoxShipmentList GetSingleLogBoxShipmentList(LogBoxShipmentDataView f, int tenant)
+        {
+            LogBoxShipmentList myResult = null;
 
+            if (f != null)
+            {
+                myResult = new LogBoxShipmentList()
+                {
+                    DirectionName= f.DirectionName,
+                    TransportModeName = f.TransportModeName,
+                    IsShipmentOrder=f.IsShipmentOrder,
+                    PartnerLogoId=f.PartnerLogoId,
+                    CarrierNumber = f.CarrierNumber,
+                    Shipper = f.ShipperName,
+                    TruckNumber = f.TruckNumber,
+                    TruckContainerNumber="",
+                    PartnerName=f.PartnerName,
+                    ContainersNumbersandTypesArray = f.ContainersNumbersandTypesArray,
+                    StatusLocation = f.StatusLocation,
+                    Tenant = f.Tenant,
+                    Id = f.Id,
+                    DirectionId = f.DirectionId,
+                    CreateDateTime = f.CreateDateTime,
+                    ShipmentNumber = f.ShipmentNumber,
+                    TransportModeId = f.TransportModeId,
+                    CustomerReference1 = f.CustomerReference1,
+                    CustomerReference2 = f.CustomerReference2,
+                    CustomerReference3 = f.CustomerReference3,
+                    IsOperationalClosed = f.IsOperationalClosed,
+                    DocumentsSearchFields = f.DocumentsSearchFields,
+                    ShipperName = f.ShipperName,
+                    ForwarderShipmentNumber = f.ForwarderShipmentNumber,
+                    LastDocumentDateTime = f.LastDocumentDateTime,
+                    MainCarriageExpectedOrActual = f.MainCarriageExpectedOrActual,
+                    StatusDate = f.StatusDate,
+                    IsRequestedDocuments = f.IsRequestedDocuments,
+                    IsDigitalSignRequired = f.IsDigitalSignRequired,
+                    RequestedDocumentsCount = f.RequestedDocumentsCount,
+                    IsImporterApprovalRequried = f.IsImporterApprovalRequried,
+                    ApprovedByUserName = f.ApprovedByUserName,
+                    IsDepositionRequired = f.IsDepositionRequired,
+                    ForwarderPartnerId = f.ForwarderPartnerId,
+                    ComputedStatusDate = f.ComputedStatusDate,
+                    StatusName = !string.IsNullOrEmpty(f.StatusLocation) ? f.StatusName + " (" + f.StatusLocation + ")" : f.StatusName,
+                    PrivateLabelAgentName = f.PrivateLabelAgentName,
+                    IsCancelled = f.IsCancelled,
+                    SearchFields = f.SearchFields,
+                    CustomsClearanceDate = f.CustomsClearanceDate,
+                };
+
+                List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+
+                foreach (ObjectField field in customFields)
+                {
+                    PropertyInfo propInfo = typeof(ShipmentList).GetProperty(field.FieldName);
+                    object newValue = customFieldResolver.GetFieldValue(myResult, field, tenant);
+                    propInfo.SetValue(myResult, newValue, null);
+                }
+            }
+
+            return myResult;
+        }
         public ShipmentList GetSingleShipmentListForFollowup(ShipmentFollowUpDataView f, int tenant)
         {
             ShipmentList myResult = null;

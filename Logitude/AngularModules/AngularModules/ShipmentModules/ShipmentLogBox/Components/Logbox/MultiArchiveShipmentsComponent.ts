@@ -1,31 +1,31 @@
-import {ShipmentArchiveFilter} from '../../../../Controls/ShipmentArchiveFilter';
-import {TransportsFilter} from '../../../../Controls/TransportsFilter';
-import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
-import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {SearchTextBox} from '../../../../Controls/SearchTextBox';
-import {IconButton} from '../../../../Controls/IconButton';
-import {LogGridComponent} from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
+import { ShipmentArchiveFilter } from '../../../../Controls/ShipmentArchiveFilter';
+import { TransportsFilter } from '../../../../Controls/TransportsFilter';
+import { Component, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { SearchTextBox } from '../../../../Controls/SearchTextBox';
+import { IconButton } from '../../../../Controls/IconButton';
+import { LogGridComponent } from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
 
-import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
-import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {LogBoxDocumentsComponent} from './LogBoxDocumentsComponent';
-import {ShipmentDomainService, ImporterQueriesDataCounts} from '../../../../Shipment/Services/ShipmentDomainService';
-import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
-import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {PortExtendedPMService} from '../../../../Common/Services/ExtendedPMs/PortExtendedPMService';
-import {ShipmentPMService} from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
-import {EntityStatusExtendedListService} from '../../../../Infrastructure/Services/ExtendedLists/EntityStatusExtendedListService';
-import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
-import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow'; 
+import { ServiceArgs } from '../../../../Infrastructure/DataContracts/ServiceArgs';
+import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { LogBoxDocumentsComponent } from './LogBoxDocumentsComponent';
+import { ShipmentDomainService, ImporterQueriesDataCounts } from '../../../../Shipment/Services/ShipmentDomainService';
+import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
+import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { PortExtendedPMService } from '../../../../Common/Services/ExtendedPMs/PortExtendedPMService';
+import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
+import { EntityStatusExtendedListService } from '../../../../Infrastructure/Services/ExtendedLists/EntityStatusExtendedListService';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { SystemEnvironmentService } from '../../../../Infrastructure/Utilities/SystemEnvironmentService';
 import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 
 @Component({
-    
+
     templateUrl: './MultiArchiveShipmentsComponent.html',
     //providers: [Http, ServiceArgs, EntityListService]
 })
@@ -47,22 +47,22 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     AllRecordsCount: number = 0;
     public TransportationTypes = [new TransportationTypes("Ocean Haifa", "O", "HFA", "IL"), new TransportationTypes("Ocean Ashdod", "O", "ASH", "IL")];
     private CurrentSession = SessionLocator.SelectedSession;
-    public isLogbox = SystemEnvironmentService.IsLogBox(); 
+    public isLogbox = SystemEnvironmentService.IsLogBox();
     public IsExportActivated: boolean = false;
-    public IsCustomsActivated: boolean = true; 
+    public IsCustomsActivated: boolean = true;
     public ShowDirectionFilters: boolean = false;
-     
+
     constructor(private _entityListService: EntityListService) {
         super();
         this.myShipmentDomainService = new ShipmentDomainService();
         this._PortExtendedPMService = new PortExtendedPMService();
         this._ShipmentPMService = new ShipmentPMService();
-        this._EntityStatusExtendedListService = new EntityStatusExtendedListService(); 
-        
+        this._EntityStatusExtendedListService = new EntityStatusExtendedListService();
+
     }
-     
+
     ngOnInit() {
-        this.handlePrivateLable(); 
+        this.handlePrivateLable();
         this.LoadImporterShipments();
     }
 
@@ -98,7 +98,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     public set SelectedDirectionFilter(newValue: string) {
         if (this.selectedDirectionFilter != newValue) {
             this.selectedDirectionFilter = newValue;
-             this.LoadImporterShipments();
+            this.LoadImporterShipments();
         }
     }
 
@@ -142,7 +142,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
 
     private GetSourceEntityEvent: any = null;
     SetWindowArgs(args: any) {
-        this.SetFiltersOptions(args); 
+        this.SetFiltersOptions(args);
         this.SourceEntity = {};//args.SourceEntity;
         this.HasSharedDocs = args.HasSharedDocs;
         if (this.SourceEntity) {
@@ -284,7 +284,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
 
 
 
-        return this._entityListService.getByFilters("Shipment", filters);
+        return this._entityListService.getByFilters("Shipment", filters, "LogBoxShipment");
     }
 
 
@@ -386,7 +386,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
             this.filterAgrs.addAdditionalFilter("CreateDateTime", FilterDate, null, null, "LessThanOrEqual", false, true, false, "Date", true);
         }
 
-         this.FilterLogboxShipments();
+        this.FilterLogboxShipments();
         this.FilterPrivateLabelShipments();
         this.filterAgrs.SortBy = "StatusDate";
         this.filterAgrs.SortDirection = "Descending";
@@ -454,7 +454,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
         this.isAllRecordSelected = value;
         if (value == true) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("loading ..");
-            this._ShipmentPMService.GetTop100ShipmentIds(this.filterAgrs).subscribe((myResult:any) => {
+            this._ShipmentPMService.GetTop100ShipmentIds(this.filterAgrs).subscribe((myResult: any) => {
                 if (!myResult.HasError) {
                     this.SelectedRecordsCount = myResult.Result.length;
                     this.SelectedRecords = myResult.Result;
@@ -516,7 +516,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     ArchivedRecordNumber = 0;
     SaveData() {
         this.ArchivedRecordNumber = 0;
-        if (this.SelectedRecords.length > 0 || this.IsAllRecordSelected == true) { 
+        if (this.SelectedRecords.length > 0 || this.IsAllRecordSelected == true) {
             //if (this.IsAllRecordSelected == true) {
             //    this._ShipmentPMService.ArchiveAllShipments(this.filterAgrs).subscribe((myResult:any) => {
             //        if (!myResult.HasError) {
@@ -534,10 +534,10 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
             for (var i = 0; i < NumberOfTimes; i++) {
                 var nextStart = (i * 10);
                 var TenSelectedRecords = this.SelectedRecords.slice(nextStart, nextStart + 10)
-                this.StartBusyIndicator("Archiving " + TenSelectedRecords.length + "/" + this.SelectedRecords.length  + " ...");
-                this._ShipmentPMService.ArchiveShipments(TenSelectedRecords).subscribe((myResult:any) => {
+                this.StartBusyIndicator("Archiving " + TenSelectedRecords.length + "/" + this.SelectedRecords.length + " ...");
+                this._ShipmentPMService.ArchiveShipments(TenSelectedRecords).subscribe((myResult: any) => {
                     if (!myResult.HasError) {
-                        MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Archive Shipment" });
+                        MixPanelLocator.Action({ ProjectName: "LogBox", ActionName: "Archive Shipment" });
                         if ((this.ArchivedRecordNumber + 10) > this.SelectedRecords.length) {
                             this.ArchivedRecordNumber = this.SelectedRecords.length;
                         }
