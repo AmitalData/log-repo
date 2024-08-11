@@ -31,6 +31,7 @@ import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { CertificateOfOriginWebService } from 'Customs/Services/WebServices/CertificateOfOriginWebService';
 import { QueryFilterItem } from 'Report/Components/Filters/QueryFilterItem';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
+import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPMService';
 
 
 class UpdateGeneralArgsParams {
@@ -84,7 +85,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
     public ErrorsList: string[];
     public StatusCode:string = "4";
-    public IsNewEntity = false;
+    private _declarationPMService: DeclarationPMService = new DeclarationPMService();
 
     constructor() {
         super();
@@ -96,7 +97,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin, IsDisplayOnly: boolean) {
         this.entityPM = EntityPM;
         this.IsNewOrEdit = IsNewOrEdit;
-        this.IsNewEntity = IsNewOrEdit === StatusCertificateOfOrigin.IsNew;
         this.IsDisplayOnly = IsDisplayOnly;
         this.IsActionButtonsEnabled = !IsDisplayOnly;
         this.CertificateOriginInvoiceItems = new ObservableCollection([]);
@@ -136,10 +136,11 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.entityPM.ExporterName = !AppTool.IsNullOrEmpty(this.currentCard.EnglishName) ? this.currentCard.EnglishName : "";
         this.entityPM.ExporterAddress = `${this.currentCard.Address1 ? this.currentCard.Address1 + " ," : ""}${this.currentCard.Address2 ? this.currentCard.Address2 : ""}`;
         this.InitializeRelatedDeclarationData();
-        this.InitilizeNewCertificateWithSupplierInvoicesAndConsignments(EntityPM);
+        this.InitilizeNewCertificateWithSupplierInvoices(EntityPM);
+        this.InitilizeNewCertificateWithConsignments(EntityPM);
     }
  
-    InitilizeNewCertificateWithSupplierInvoicesAndConsignments(EntityPM: CertificateOfOriginPM) {
+    InitilizeNewCertificateWithSupplierInvoices(EntityPM: CertificateOfOriginPM) {
         // SupplierInvoices for CertificateOriginInvoiceItems:
         this.CertificateOriginInvoiceItems.Clear();
         this.entityPM.CertificateOriginInvoiceItems = [];
@@ -161,7 +162,9 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         });
 
-        
+    }
+
+    InitilizeNewCertificateWithConsignments(EntityPM: CertificateOfOriginPM) {
         // Consignments for CertificateOriginItemItems:
         this.CertificateOriginItemItems.Clear();
         this.originalItemSource.Clear();
@@ -254,11 +257,11 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                this.certificateOfOriginWebService.GetCertificateOfOriginByIDIncludeChildrens(this.Id, this.DeclarationId, this.Tenant).subscribe(myResult => {
+                this._declarationPMService.get(this.DeclarationId).subscribe(myResult => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError && myResponse.Result) {
-                        const entity: CertificateOfOriginPM = myResponse.Result;
-                        this.InitializeCertificateOriginItemItems(entity.CertificateOriginItemItems);
+                        this.currentDeclaration = myResponse.Result;
+                        this.InitilizeNewCertificateWithConsignments(this.entityPM);
                     }
                 });
             }
@@ -278,11 +281,11 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                this.certificateOfOriginWebService.GetCertificateOfOriginByIDIncludeChildrens(this.Id, this.DeclarationId, this.Tenant).subscribe(myResult => {
+                this._declarationPMService.get(this.DeclarationId).subscribe(myResult => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError && myResponse.Result) {
-                        const entity: CertificateOfOriginPM = myResponse.Result;
-                        this.InitializeCertificateOriginInvoiceItems(entity.CertificateOriginInvoiceItems);
+                        this.currentDeclaration = myResponse.Result;
+                        this.InitilizeNewCertificateWithSupplierInvoices(this.entityPM);
                     }
                 });
             }
