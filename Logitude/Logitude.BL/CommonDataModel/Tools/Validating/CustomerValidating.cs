@@ -13,6 +13,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.CustomsMessaging.Common.Gen;
 using Logitude.Server.Tools.Helpers;
+using Newtonsoft.Json;
 
 namespace Logitude.BL.CommonDataModel.Tools.Validating
 {
@@ -119,21 +120,51 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
                 }
             }
         }
+
+
+        private static string[] GetStack(int removeLines)
+        {
+            string[] stack = Environment.StackTrace.Split(
+                new string[] { Environment.NewLine },
+                StringSplitOptions.RemoveEmptyEntries);
+
+            if (stack.Length <= removeLines)
+                return new string[0];
+
+            string[] actualResult = new string[stack.Length - removeLines];
+            for (int i = removeLines; i < stack.Length; i++)
+                // Remove 6 characters (e.g. "  at ") from the beginning of the line
+                // This might be different for other languages and platforms
+                actualResult[i - removeLines] = stack[i].Substring(6);
+
+            return actualResult;
+        }
+
         private static void ValidateVAT_Unique(CustomerPM entityPM, ICommonDataContext myContext, Tenant myTenant, bool isNewEntity)
         {
             if (entityPM.IsCustomer)
             {
                 if (!string.IsNullOrEmpty(entityPM.VatNumber))
                 {
-                    List<Card> allMatchedCards
+                    //List<Card> allMatchedCards
+                   var q  
                         = (from a in myContext.Cards.Include("Customer")
                            where a.Tenant == entityPM.Tenant
                            && a.VatNumber == entityPM.VatNumber
                            && (a.PartnerTypeId == "CS" || a.PartnerTypeId == "PO")
                            && !a.InActive
                            && a.Customer != null && a.Customer.CustomerStatusCode != "INA"
-                           select a).ToList();
-                    
+                           select a);
+
+                    string[] stacklines = CustomerValidating.GetStack(0);
+                    string logtext = "CustomerValidating.ValidateVAT_Unique(), Point 1, Customer " + entityPM.Code + ", T=" + entityPM.Tenant.ToString() + ", VatNumber=" + entityPM.VatNumber;
+                    if (q != null) logtext += "\n" + q.ToString();
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(stacklines));
+
+
+                    List<Card> allMatchedCards = q.ToList();
+
                     if (allMatchedCards != null)
                     {
                         if(myTenant.VatUniqueTypeCode != "UNT")

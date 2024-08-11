@@ -46,6 +46,7 @@ using WebFreight.Web.WebServices;
 using Simplog.Server.Infrastructure;
 using Logitude.CustomsMessaging.Common.RequestParams;
 
+
 namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 {
     public class ShipmentController : ApiController
@@ -688,9 +689,11 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 }
                 if (CustomData != null && !string.IsNullOrEmpty(CustomData.PaymentRequestXML))
                 {
+                   
                     AddDataToResponseHeader(tenant.Value);
                     TenantAdditionalDataRepository TADR = new TenantAdditionalDataRepository(tenant.Value);
                     var MyAdditionalData = TADR.GetSingleTenantAdditionalData(tenant.Value);
+
                     if (MyAdditionalData != null)
                     {
                         var MyPaymentData = LogitudeXmlSerializer.DeserializeObject<RequestPayment>(CustomData.PaymentRequestXML);
@@ -737,6 +740,17 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        private static void AddWhatsAppMessagingPhoneNumberToResponseHeader(int tenant)
+        {
+            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
+            TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(tenant);
+            if (tenantManagementPM != null && !string.IsNullOrEmpty(tenantManagementPM.WhatsAppMessagingPhoneNumber))
+            {
+                HttpContext.Current.Response.Headers.Add("WhatsAppMessagingPhoneNumber", tenantManagementPM.WhatsAppMessagingPhoneNumber);
+                HttpContext.Current.Response.Headers.Add("Access-Control-Expose-Headers", "WhatsAppMessagingPhoneNumber");
             }
         }
 
@@ -948,6 +962,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                     shipmentQuery = new ShipmentQuery(tenant.Value);
                     RequestedShipment = shipmentQuery.GetSingleShipmentPMBySecurityKeyTenant(key, tenant.Value);
                 }
+
                 var MyData = LogitudeXmlSerializer.DeserializeObject<UserIdNumberRequestPM>(RequestedShipment.UserIdNumberXMLData);
                 MyData.Id = RequestedShipment.Id;
                 MyData.IsUserIDNumberRequired = RequestedShipment.IsUserIDNumberRequired;

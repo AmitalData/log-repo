@@ -277,9 +277,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
 
 
-
-
-
         //[HttpPost]
         //public HttpResponseMessage UpdateFromCsv(ImageParameter fileUploadParamerter)
         //{

@@ -153,4 +153,4 @@ export class CustomerList {
 		LastLoginDateViaPC: Date;
 		LastLoginDateViaMobile: Date;
 	
-}
+}

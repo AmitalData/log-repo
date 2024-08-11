@@ -76,7 +76,7 @@ export class ShipmentPMService {
                     pmresponse.Result = entity;
                     return pmresponse;
 
-                }), mergeMap((pmresponse: ServiceResponse) => {
+                 }), mergeMap((pmresponse: ServiceResponse) => {
                     if (pmresponse?.Result?.DirectionId === "C") {
                         return this.MapCustomShipment(pmresponse);
                     } else {
@@ -84,7 +84,7 @@ export class ShipmentPMService {
                     }
 
                 }), catchError(ServiceHelper.HandleServiceError));
-        });
+         });
 
         // .flatMap((res: Response) => {
         //    var location = res.headers.get('Location');
@@ -224,6 +224,7 @@ export class ShipmentPMService {
                     var pmresponse: ServiceResponse;
                     pmresponse = new ServiceResponse();
                     pmresponse.Result = entity;
+              
                 pmresponse.Data = {};
                 pmresponse.Data.WhatsAppMessagingPhoneNumber = response.headers.get('WhatsAppMessagingPhoneNumber');
                 pmresponse.Data.TranzilaPaymentWithBit = response.headers.get('TranzilaPaymentWithBit');
@@ -503,7 +504,7 @@ export class ShipmentPMService {
                     response.Result = shipment;
                     return response;
 
-                }), mergeMap((pmresponse: ServiceResponse) => {
+                 }), mergeMap((pmresponse: ServiceResponse) => {
                     if (IsCustomShipment) {
                         return this.MapCustomShipment(pmresponse);
                     } else {
@@ -511,7 +512,7 @@ export class ShipmentPMService {
                     }
 
                 }), catchError(ServiceHelper.HandleServiceError));
-            }
+             }
             else {
 
                 response.HasError = true;

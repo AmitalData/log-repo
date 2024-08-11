@@ -85,7 +85,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APInvoiceUpdateClass
    {  		
-		public const string HashString = "d34ccb07c67e5ce5f4fe1bcb892524ca";
+
+		public const string HashString = "341c9f90f935dc759dc3d15a0cefbe31";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -9410,7 +9411,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 
  		   TextCode APInvoiceTextCode_APInvoiceMInvoiceDetailAmountVatNotMatched = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.M.InvoiceDetailAmountVatNotMatched", DefaultText = "Do not include in the same invoice lines of credit and debit according to the regulations, they must be separated into two separate thoughts",LocalDefaultText = "לם ניתן לקלוט בםותה חשבונית שורות של זיכוי וחיוב ע''פ התקנות יש להפרידם לשתי חשבוניות נפרדות", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
  		   TextCode APInvoiceTextCode_APInvoiceOConfirmationNumberLength = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.ConfirmationNumberLength", DefaultText = "Confirmation number length should be between 9 to 30 ",LocalDefaultText = @"מספר הקצםה צריך להיות בםורך שבין 9 ל-30 תווים", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
 

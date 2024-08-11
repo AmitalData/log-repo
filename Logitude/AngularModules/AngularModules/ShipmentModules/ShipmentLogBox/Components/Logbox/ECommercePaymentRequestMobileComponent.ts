@@ -147,6 +147,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 this.AdditionalData = MyResult.Result;//AdditionalResult.Result
                 if (this.AdditionalData.IsPaymentRequired) {
                     if (this.EntityPm) {
+
                         this.qaIndicator = 1;
                         this.SetTotalAmountInNIS();
                     }
@@ -268,7 +269,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public get TotalAmount() { return this.totalAmount }
     public set TotalAmount(newValue: number) { this.totalAmount = newValue; }
     public ValidationWarningsList: string = null;
-    public FinalMessage: string = "גרסה זו אושרה";
+    public FinalMessage: string = "גרסה זו םושרה";
 
     private ecommerceSupportEmail: string = "";
     public get EcommerceSupportEmail() { return this.ecommerceSupportEmail }
