@@ -168,8 +168,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                     && g.Key.ObjectTableId == objectTableId
                                     && !g.Key.Deleted
                               from traceEvent in g
-                              where traceEvent.EventType.Weight == g.Max(a => a.EventType.Weight)
-                              orderby traceEvent.LogDateTime descending
+                              where traceEvent.EventType.Weight == g.Max(a => a.EventType.Weight) && traceEvent.EventType.Weight!=null
+                                                   orderby traceEvent.LogDateTime descending
 
                               select new TraceEventPM()
                               {
