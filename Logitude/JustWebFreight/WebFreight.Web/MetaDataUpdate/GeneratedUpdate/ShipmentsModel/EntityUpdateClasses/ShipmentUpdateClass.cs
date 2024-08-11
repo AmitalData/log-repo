@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "8810b7e87e5af7d024f28984bc0a7aca";
+		public const string HashString = "8810b7e87e5af7d024f28984bc0a7acb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -97374,7 +97374,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   TextCode ShipmentTextCode_ShipmentOShipmentPackagesGeneral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.ShipmentPackages.General", DefaultText = "ShipmentPackages",LocalDefaultText = @"מסך מכולות ", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ShipmentTextCode_ShipmentOVolumeKgCbm = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.VolumeKgCbm", DefaultText = "Volume (KG/CBM)",LocalDefaultText = @"נפח (KG/CBM)", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ShipmentTextCode_ShipmentOVolumeKgCbm = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.VolumeKgCbm", DefaultText = "Volume (CBM/KG)", LocalDefaultText = @"נפח (CBM/KG)", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentOReferenceTypeValue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.ReferenceTypeValue", DefaultText = "Reference Type Value",LocalDefaultText = @"מס' הזמנת לקוח", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

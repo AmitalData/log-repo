@@ -227,6 +227,7 @@ export class ShipmentDataTabComponent extends BaseComponent {
                 if (!this.ShipmentReferances[index].ChangeSetOp) {
                     this.ShipmentReferances[index].ChangeSetOp = "Update";
                 }
+                this.EntityPM.MarkAsDirty("ShipmentReferances");
                 this.OnChanged();
             }
         }
@@ -259,6 +260,7 @@ export class ShipmentDataTabComponent extends BaseComponent {
                 if (!this.ShipmentReferances[index].ChangeSetOp) {
                     this.ShipmentReferances[index].ChangeSetOp = "Update";
                 }
+                this.EntityPM.MarkAsDirty("ShipmentReferances");
                 this.OnChanged();
             }
         }
