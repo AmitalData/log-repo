@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.Server.Tools.FTP
 {
-    public class SFTPService
+    public class SFTPService:IDisposable    
     {
         private nsoftware.IPWorksSSH.Sftp sftp;
         private int _currIdxFile;
@@ -21,6 +21,10 @@ namespace Logitude.Server.Tools.FTP
         private List<FileParam> _files;
         private readonly SFTPDeleteTempFilesService _SFTPDeleteTempFiles;
 
+        ~SFTPService()
+        {
+            Dispose();
+        }
         public SFTPService(SFTPDeleteTempFilesService sFTPDeleteTempFilesService=null)
         {
             _SFTPDeleteTempFiles = sFTPDeleteTempFilesService;
@@ -808,8 +812,28 @@ namespace Logitude.Server.Tools.FTP
                 Directory.SetCurrentDirectory(_start_path);
 
         }
-        # endregion
 
+        public void Dispose()
+        {
+            try
+            {
+                //throw new NotImplementedException();
+                if (sftp != null)
+                {
+                    if (sftp.Connected)
+                    {
+                        sftp.SSHLogoff();
+                    }
+                    sftp.Dispose();
+                    sftp = null;
+                }
+            }
+            catch (Exception ex)
+            {
+               
+            }
+        }
+        #endregion
 
 
     }

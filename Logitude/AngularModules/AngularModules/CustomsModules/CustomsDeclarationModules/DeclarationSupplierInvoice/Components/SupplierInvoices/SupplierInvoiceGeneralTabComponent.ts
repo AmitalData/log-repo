@@ -3997,6 +3997,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             this.entityPM.ItemPrice = newValue;
 
             let hasOcr = FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR");
+
             if(this.entityPM.EntityParentPM.supplierInvoicePayments?.length == 1 && this.entityPM.EntityParentPM.supplierInvoicePayments[0].paymentAmount != null && hasOcr && this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E"){
                 let sum = 0;
                 
