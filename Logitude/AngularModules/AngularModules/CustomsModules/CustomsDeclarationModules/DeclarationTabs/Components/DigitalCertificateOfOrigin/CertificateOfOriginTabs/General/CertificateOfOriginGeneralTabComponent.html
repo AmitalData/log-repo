@@ -280,17 +280,12 @@
                                 <div style="height: 5px;"></div>
                             </div>
                         </td>
-                        <td style="width:180px" class="addressbox">
-                            <div>
-                                <div>
-                                    <div style="height: 9px;"></div>
-                                    <LogTextBox style="width:240px;" [IsMultiline]="true"
-                                        [ObjectFieldName]="'ConsigneeAddress'" [HideColumns]="true"
-                                        [ObjectTableName]="ObjectTableName" [InputType]="'nText'"
-                                        [DataContext]="DataContext" [Direction]="'LTR'"></LogTextBox>
-                                </div>
-                                <div style="height: 5px;"></div>
-                            </div>
+                        <td style="width:180px;" rowspan="1" class="AddressBox">
+                            <LogTextBox style="width:240px;max-height: 50px;" [IsMultiline]="true"
+                                [ObjectFieldName]="'ConsigneeAddress'" [HideColumns]="true"
+                                [ObjectTableName]="ObjectTableName" [InputType]="'nText'" [DataContext]="DataContext"
+                                [Direction]="'LTR'">
+                            </LogTextBox>
                         </td>
                     </tr>
 

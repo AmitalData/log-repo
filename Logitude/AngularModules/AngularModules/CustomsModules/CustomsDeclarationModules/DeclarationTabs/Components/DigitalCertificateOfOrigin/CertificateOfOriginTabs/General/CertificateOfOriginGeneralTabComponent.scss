@@ -65,6 +65,10 @@ $spacing: 0px;
     border-bottom: $border-width solid $border-color;
 }
 
+.AddressBox {
+    padding-bottom: 11px !important;
+}
+
 ::ng-deep .AddressBox .InputDiv {
     height: 55px !important;
 }
