@@ -34,14 +34,7 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="Id"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
+
   <Column
     Name="LocalName"
     Type="nvarchar"
