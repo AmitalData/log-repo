@@ -62,6 +62,8 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     public TenantPM: TenantPM;
     public items: any[] = [];
     public Args: CustomEntityArgs = new CustomEntityArgs();
+    public cardExtendedPMService: CardExtendedPMService = new CardExtendedPMService();
+
     public DependencyFilter1Value: Object;
     public DependencyFilter2Value: Object;
     public DependencyFilter3Value: Object;

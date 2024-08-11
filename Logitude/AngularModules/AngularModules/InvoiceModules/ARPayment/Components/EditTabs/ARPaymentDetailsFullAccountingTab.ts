@@ -109,8 +109,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     DisplayFieldsFromList:string;
     DisplayLocalFieldsFromList:string;
     BillToLovSizeForFullAccounting:number;
-    public GLAccountsFilterItems: ApiQueryFilters;
-
+ 
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, public entityListService: EntityListService)
     {
         super();
