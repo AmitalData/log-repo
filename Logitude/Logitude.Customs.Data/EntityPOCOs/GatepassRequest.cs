@@ -18,8 +18,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
     {
 	 string dbms;
 
-        [Key]
-        [Column("MasterCourierId")]
+           [Column("MasterCourierId")]
 	    public string MasterCourierId { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
@@ -49,6 +48,14 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string GatepassRequestStatus { get; set; }
         [Column("CustomsUpdateDateTime")]
 	    public DateTime? CustomsUpdateDateTime { get; set; }
+     [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
+        [ForeignKey("Declaration")]
+        [Column("DeclarationId")]
+	    public string DeclarationId { get; set; }
+	      
+        public virtual Declaration Declaration { get; set; }
     }
 }
 	 

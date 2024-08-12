@@ -28,10 +28,10 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  GatepassRequest GetSingle(string mastercourierid, int tenant)
+		public  GatepassRequest GetSingle(string id, int tenant)
         {
             return (from a in context.GatepassRequests
-                    where a.MasterCourierId == mastercourierid && a.Tenant == tenant
+                    where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
@@ -46,7 +46,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             GatepassRequestKeys keys = entityKeys as GatepassRequestKeys;
             return (from a in context.GatepassRequests
-                    where a.MasterCourierId == keys.MasterCourierId
+                    where a.Id == keys.Id
                     select a).FirstOrDefault();
         }
 		 		                 
