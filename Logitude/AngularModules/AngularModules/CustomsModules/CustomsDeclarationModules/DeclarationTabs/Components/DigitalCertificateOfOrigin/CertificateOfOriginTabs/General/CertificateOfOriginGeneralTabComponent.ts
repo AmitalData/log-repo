@@ -257,10 +257,11 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                this._declarationPMService.get(this.DeclarationId).subscribe(myResult => {
+                this._declarationPMService.get(this.currentDeclaration.Id).subscribe(myResult => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError && myResponse.Result) {
                         this.currentDeclaration = myResponse.Result;
+                        this.entityPM.IsChange = true;
                         this.InitilizeNewCertificateWithConsignments(this.entityPM);
                     }
                 });
@@ -281,10 +282,11 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                this._declarationPMService.get(this.DeclarationId).subscribe(myResult => {
+                this._declarationPMService.get(this.currentDeclaration.Id).subscribe(myResult => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError && myResponse.Result) {
                         this.currentDeclaration = myResponse.Result;
+                        this.entityPM.IsChange = true;
                         this.InitilizeNewCertificateWithSupplierInvoices(this.entityPM);
                     }
                 });

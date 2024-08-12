@@ -89,7 +89,8 @@ export class CertificateOfOriginWebService {
             return this._http.get(this._apiUrl + "/GetCertificateOfOriginByIDIncludeChildrens/?certificateId=" + certificateId + "&declarationId=" + declarationId + "&tenant=" + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+                var mappedResult: CertificateOfOriginPM = this.MapJsonToEntityPM(response, false);
+                serviceResponse.Result = mappedResult;
                 return serviceResponse;
             }), catchError(ServiceHelper.HandleServiceError));
         }
