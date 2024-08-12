@@ -23,7 +23,7 @@ namespace WebFreight.Web.Controllers.HybridModel
 
             Response response = JsonConvert.DeserializeObject<Response>(JsonConvert.SerializeObject(t[0]), jsonSerializerSettings);
             int tenant = JsonConvert.DeserializeObject<int>(JsonConvert.SerializeObject(t[1]), jsonSerializerSettings);
-     
+
             PaymentTermWcfService PaymentTermWcfService = new PaymentTermWcfService();
             List<PaymentTermList> listResponse = PaymentTermWcfService.GetPaymentTerms(ref response, tenant);
             return listResponse;
