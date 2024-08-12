@@ -5,8 +5,8 @@
 
   <Oracle Version="1">
     <![CDATA[
-alter table  GATEPASSREQUESTS_buckup add Id varchar(15);
-update GATEPASSREQUESTS_buckup SET Id = MASTERCOURIERID;
+EXECUTE IMMEDIATE 'alter table  GATEPASSREQUESTS add Id varchar(15)';
+EXECUTE IMMEDIATE 'update GATEPASSREQUESTS SET Id = MASTERCOURIERID';
     ]]>
   </Oracle>
 </Script>
