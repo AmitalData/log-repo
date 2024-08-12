@@ -21,6 +21,8 @@ export class GatepassRequestList {
 	UpdateCodeName: string;
 	DesignateSiteName: string;
 	TransportationTypeName: string;
+	Id: string;
+	DeclarationId: string;
 	
 }
  

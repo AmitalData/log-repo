@@ -19,9 +19,7 @@ namespace Logitude.Customs.Def.EntityPMs
    public partial class GatepassRequestPM : EntityPM
    {
    	  private string masterCourierId ;
-	  
-       [Key]
-	  
+	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -315,6 +313,54 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransportationTypeName",OldValue=transportationTypeName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   transportationTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string id ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Id  
+	   {
+	    
+	     get
+		{
+		   return id;
+		 }
+		 set
+		 {
+		   if(id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   id=value;
+		   }
+			
+		 }
+	   }
+	  private string declarationId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeclarationId  
+	   {
+	    
+	     get
+		{
+		   return declarationId;
+		 }
+		 set
+		 {
+		   if(declarationId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationId",OldValue=declarationId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationId=value;
 		   }
 			
 		 }

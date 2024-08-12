@@ -12,9 +12,7 @@ namespace Logitude.Customs.Data.EntityLists
    [DataContract]
    public partial class GatepassRequestList
    {
-   
-       [Key]
-       [DataMember]
+          [DataMember]
        public string MasterCourierId  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
@@ -40,6 +38,12 @@ namespace Logitude.Customs.Data.EntityLists
        public string DesignateSiteName  { get; set; }
        [DataMember]
        public string TransportationTypeName  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string Id  { get; set; }
+       [DataMember]
+       public string DeclarationId  { get; set; }
    }
 
 }

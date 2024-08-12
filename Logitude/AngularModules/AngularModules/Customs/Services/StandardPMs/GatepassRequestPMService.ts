@@ -32,12 +32,12 @@ export class GatepassRequestPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/gatepassrequests';      
     }
 
-	get(mastercourierid: string) {       
+	get(id: string) {       
 
 		var callTime = new Date();		
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle?' + 'mastercourierid=' + mastercourierid, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
@@ -51,7 +51,7 @@ export class GatepassRequestPMService {
 						serviceResponse.Result = entity;
               
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "GatepassRequest", "GetSinglePM", 'mastercourierid=' + mastercourierid);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "GatepassRequest", "GetSinglePM", 'id=' + id);
 				 
 						return serviceResponse;
 

@@ -12,7 +12,7 @@ namespace Logitude.Customs.Data.EntityKeys
 {
    public partial class GatepassRequestKeys : EntityKeyFields
    {
-   	  public string MasterCourierId  { get; set; }
+   	  public string Id  { get; set; }
 	  
 				 
 	    			   
@@ -20,7 +20,7 @@ namespace Logitude.Customs.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-                 return MasterCourierId ;
+                 return Id ;
                  
       }
 

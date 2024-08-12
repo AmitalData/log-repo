@@ -21,9 +21,9 @@ namespace Logitude.Customs.Data.EntityMapping
         { 
 			  this.ToTable("GatepassRequests", "Customs");
 		
-		    this.HasKey(t => new { t.MasterCourierId });
+		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.MasterCourierId).HasColumnName("MasterCourierId").IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.MasterCourierId).HasColumnName("MasterCourierId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
@@ -40,6 +40,10 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.GatepassRequestStatus).HasColumnName("GatepassRequestStatus").HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.CustomsUpdateDateTime).HasColumnName("CustomsUpdateDateTime");
+
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.DeclarationId).HasColumnName("DeclarationId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }
