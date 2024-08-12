@@ -2610,11 +2610,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
                         if (string.IsNullOrEmpty(itemPM.ReferenceType) && !string.IsNullOrEmpty(itemPM.ReferenceValue))
                         {
-                            throw new ApplicationException(TranslateTextsClass.Translate("ShipmentReferance.O.MissingReferenceType", tenant));
+                            throw new ApplicationException(TranslateTextsClass.Translate("ShipmentReferance.O.MissingReferenceType", tenant, true));
                         }
                         else if (!string.IsNullOrEmpty(itemPM.ReferenceType) && string.IsNullOrEmpty(itemPM.ReferenceValue))
                         {
-                            throw new ApplicationException(TranslateTextsClass.Translate("ShipmentReferance.O.MissingReferenceValue", tenant));
+                            throw new ApplicationException(TranslateTextsClass.Translate("ShipmentReferance.O.MissingReferenceValue", tenant, true));
                         }
                         else if (itemPM.ChangeSetOp == ChangeSetOperation.Insert && string.IsNullOrEmpty(itemPM.ReferenceType) && string.IsNullOrEmpty(itemPM.ReferenceValue))
                         {
