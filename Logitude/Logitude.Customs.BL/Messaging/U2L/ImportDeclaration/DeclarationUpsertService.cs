@@ -796,6 +796,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                         }
                     }
 
+                    if (_AmitalCustomsFile.SystemConnection == "N")
+                    {
+                        this._MyDeclarationPM.Consignments[0].ManifestNumber = _AmitalCustomsFile.ManifestNumber;
+                        this._MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.SecondCargoID;
+                        this._MyDeclarationPM.Consignments[0].ThirdCargoID = _AmitalCustomsFile.ThirdCargoID;
+                    }
 
                 }
 				else // moran 19.12.13 - task 2423 - multi Consignments adjusments
