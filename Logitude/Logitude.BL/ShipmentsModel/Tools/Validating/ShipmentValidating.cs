@@ -1483,23 +1483,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
             if (!string.IsNullOrEmpty(entityPM.IskaNumber) && !entityPM.IskaNumber.ToUpper().StartsWith("I"))
             {
-                throw new ApplicationException(TranslateTextsClass.Translate("Shipment.O.InvalidIskaNumber", entityPM.Tenant));
+                throw new ApplicationException(TranslateTextsClass.Translate("Shipment.O.InvalidIskaNumber", entityPM.Tenant, true));
             }
 
             if (!string.IsNullOrEmpty(entityPM.Mawb) && entityPM.TransportModeId == "A" && !(entityPM.Mawb.Count() == 8 && entityPM.Mawb.Count(char.IsDigit) == 8))
             {
-                throw new ApplicationException(TranslateTextsClass.Translate("Shipment.O.InvalidMawb", entityPM.Tenant));
+                throw new ApplicationException(TranslateTextsClass.Translate("Shipment.O.InvalidMawb", entityPM.Tenant, true));
             }
 
             if (!string.IsNullOrEmpty(entityPM.FlightVoyageNumber))
             {
                 if (entityPM.TransportModeId == "A" && !(entityPM.FlightVoyageNumber.Count() == 4 && entityPM.FlightVoyageNumber.Count(char.IsDigit) == 4)) 
                 {
-                    throw new ApplicationException(TranslateTextsClass.Translate("Shipment.O.InvalidFlightVoyageNumber", entityPM.Tenant));
+                    throw new ApplicationException(TranslateTextsClass.Translate("Shipment.O.InvalidFlightVoyageNumber", entityPM.Tenant, true));
                 }
                 if (entityPM.TransportModeId == "O" && !(entityPM.FlightVoyageNumber.Count() == 4 && entityPM.FlightVoyageNumber.Count(char.IsDigit) == 3 && char.IsLetter(entityPM.FlightVoyageNumber[0])))
                 {
-                    throw new ApplicationException(TranslateTextsClass.Translate("Shipment.O.InvalidFlightVoyageNumber2", entityPM.Tenant));
+                    throw new ApplicationException(TranslateTextsClass.Translate("Shipment.O.InvalidFlightVoyageNumber2", entityPM.Tenant, true));
                 }
             }
         }
