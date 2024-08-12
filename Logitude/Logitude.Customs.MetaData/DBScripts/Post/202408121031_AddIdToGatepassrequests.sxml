@@ -5,8 +5,8 @@
 
   <Oracle Version="1">
     <![CDATA[
-delete from objecttabletabs where code in ('ACGC','ACEV');
-delete from TextCodes where code in ('AccountingPartner.TH.General','AccountingPartner.TH.Events');
+alter table  GATEPASSREQUESTS_buckup add Id varchar(15);
+update GATEPASSREQUESTS_buckup SET Id = MASTERCOURIERID;
     ]]>
   </Oracle>
 </Script>
