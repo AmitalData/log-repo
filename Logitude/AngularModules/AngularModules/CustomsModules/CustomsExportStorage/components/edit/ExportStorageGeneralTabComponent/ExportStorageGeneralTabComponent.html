@@ -124,6 +124,7 @@
             [HideColumns]="true"
             [DataContext]="DataContext"
             [IsMultiline]="MarksNumbers.includes(':')"
+            [ForceDirection]="MarksNumbers.includes(':')  ? 'LTR' : 'RTL'"
             [Text]="MarksNumbers"
         ></LogTextBox>
     </div>
