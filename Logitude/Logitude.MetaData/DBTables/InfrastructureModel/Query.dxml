@@ -106,8 +106,8 @@
   </Column>
   <Column
     Name="NameTextCodeId"
-    Type="nvarchar"
-    Size="60">
+    Type="varchar"
+    Size="30">
     <Constraints
       Nullable="true" />
   </Column>
