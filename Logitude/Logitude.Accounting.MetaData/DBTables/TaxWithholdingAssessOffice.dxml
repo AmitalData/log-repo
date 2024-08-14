@@ -41,14 +41,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Id"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
     Name="Tenant"
     Type="int">
     <Constraints

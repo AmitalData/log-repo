@@ -100,7 +100,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ExportStorage
                 var formatedException = ExceptionFormatUtil.GetFormated(ex);
 
                 InsertLogLine(0, "ProccessRequest():Exception " + formatedException.ToString() + Environment.NewLine + "---------------------------------------------");
-               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex,  "ProccessRequest():Exception " );
+                Debug.WriteLine("ProccessRequest():Exception " + formatedException.ToString(), true);
                 MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                 MyGenericResponseObj.Message = "Error while ExportStorageUpdateService.Update " + formatedException.Message;
                 MyGenericResponseObj.ErrorDescription = formatedException.ToString();
@@ -157,7 +157,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.ExportStorage
                         StorageNo = _UnifreigntExportStorage.StorageNo,
                         OpenDate = AmitalConvertUtil.GetUnifreightFormatedDate(_UnifreigntExportStorage.OpenDate, "UnifreigntExportStorage.OpenDate") ?? DateTime.Now,
                         ExportFileNo = _UnifreigntExportStorage.ExportFileNo,
-                        MarksNumbers = _UnifreigntExportStorage.CargoDetails.CargoDescription + "                    " + _UnifreigntExportStorage.ContainerDetails.Seal.SealType + " : " + _UnifreigntExportStorage.ContainerDetails.Seal.SealNumber,
                     };
                 }
                 else
@@ -208,7 +207,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ExportStorage
                 if (_UnifreigntExportStorage.CargoDetails != null)
                 {
                     _DBExportStoragePM.CargoType = _UnifreigntExportStorage.CargoDetails.CargoType;
-                    _DBExportStoragePM.MarksNumbers = _UnifreigntExportStorage.CargoDetails.CargoDescription + "\n" + _UnifreigntExportStorage.ContainerDetails.Seal.SealType + " : " + _UnifreigntExportStorage.ContainerDetails.Seal.SealNumber;
+                    _DBExportStoragePM.MarksNumbers = _UnifreigntExportStorage.CargoDetails.CargoDescription + "SEAL : " + _UnifreigntExportStorage.ContainerDetails.Seal.SealNumber;
                     decimal PackageQuantity = 0;
                     if (!String.IsNullOrWhiteSpace(_UnifreigntExportStorage.CargoDetails.Quantity))
                     {
