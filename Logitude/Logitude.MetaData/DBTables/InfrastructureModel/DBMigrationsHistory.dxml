@@ -13,7 +13,7 @@
     <Constraints Nullable="false" />
   </Column>
 
-  <Column Name="ColumnName" Type="nvarchar" Size="-1">
+  <Column Name="ColumnName" Type="varchar" Size="-1">
     <Constraints Nullable="true" />
   </Column>
 
