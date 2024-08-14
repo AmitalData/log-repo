@@ -107,77 +107,96 @@ export class DropdownMenuFilterComponent implements OnInit {
   }
 
   MenuPosition(event) {
-    // _DropdownMenuFilterComponentId by the position of the button on the screen, put div on the right side of the button: _DropdownMenuFilterComponentMenuId
-    var item = document.getElementById(this._DropdownMenuFilterComponentId);
-    var itemRect = item.getBoundingClientRect();
+    // Get the button and dropdown menu elements
+    const item = document.getElementById(this._DropdownMenuFilterComponentId);
+    const dropdownMenu = document.getElementById(this._DropdownMenuFilterComponentMenuId);
+
+    if (!item || !dropdownMenu) return; // Early return if either element doesn't exist
+
+    const itemRect = item.getBoundingClientRect();
     let myTop = itemRect.top;
-    let myleft = itemRect.left;
-    if (!AppTool.IsNullOrEmpty(event)) {
-      myleft = event.clientX;
+    let myLeft = itemRect.left;
+
+    // Adjust position based on the event, if provided
+    if (event) {
+      myLeft = event.clientX;
       myTop = event.clientY;
     }
-    document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
-      (myTop + 11) + 'px';
-    document.getElementById(this._DropdownMenuFilterComponentMenuId).style.left =
-      (myleft - 70) + 'px';//min-width: 70px
+
+    // Set initial positioning of the dropdown
+    dropdownMenu.style.top = `${myTop + 3}px`; // Initial position below the button
+    dropdownMenu.style.left = `${myLeft - 70}px`; // Adjust left position as needed
+
     this._CD.detectChanges();
+
+    // Adjust for screen space and dropdown height
+    const screenHeight = window.innerHeight;
+    const dropdownHeight = dropdownMenu.offsetHeight; // Assuming dropdownMenu is visible to calculate height
+    const spaceBelow = screenHeight - itemRect.bottom;
+
+    if (spaceBelow < dropdownHeight) {
+      // Not enough space below, show above the button
+      dropdownMenu.style.top = `${myTop - dropdownHeight}px`;
+    }
   }
-  
+
   DropdowndisplayToggle(event) {
+    // Toggle dropdown visibility
     this._DropdownDisplay = this._DropdownDisplay == 'none' ? 'block' : 'none';
     DropdownMenuFilterComponent.LastDropdownMenuFilterId = this.MyDropdownMenuFilterId;
 
-    this.MenuPosition(event); // this is the position of the dropdown menu
+    // Position the dropdown menu relative to the button
+    this.MenuPosition(event);
 
-    //         if (this._DropdownDisplay == 'none') {
-    //             var item = document.getElementById(this._DropdownMenuFilterComponentId);
-    //             var itemRect = item.getBoundingClientRect();
-    //             let myTop = itemRect.top;
-    //             let myleft = itemRect.left;
-    //             if (!AppTool.IsNullOrEmpty(event)) {
-    //                 myleft = event.clientX;//: 19
-    //                 myTop = event.clientY;//: 19
-    //                 // event.stopPropagation();
-    //             }
+    // if (this._DropdownDisplay == 'none') {
+    //   var item = document.getElementById(this._DropdownMenuFilterComponentId);
+    //   var itemRect = item.getBoundingClientRect();
+    //   let myTop = itemRect.top;
+    //   let myleft = itemRect.left;
+    //   if (!AppTool.IsNullOrEmpty(event)) {
+    //     myleft = event.clientX;//: 19
+    //     myTop = event.clientY;//: 19
+    //     // event.stopPropagation();
+    //   }
 
-    //             //document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
-    //             //    (myTop/*itemRect.top*/ /*+ 27*/ /*-5*/) + 'px';
+    //   //document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
+    //   //    (myTop/*itemRect.top*/ /*+ 27*/ /*-5*/) + 'px';
 
-    //             let DDLHeight = 65+70;//    height: 22px; * 3 +30 
-    //             let Extra = 22 + 1 + 1; //    height: 22px; +1 UP +1 DOWN
-    //             let ExtraTop = 150;
-    //             document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top = myTop + 'px';
-    //             document.getElementById(this._DropdownMenuFilterComponentMenuId).style.left = (myleft -100) + 'px';
+    //   let DDLHeight = 65 + 70;//    height: 22px; * 3 +30 
+    //   let Extra = 22 + 1 + 1; //    height: 22px; +1 UP +1 DOWN
+    //   let ExtraTop = 150;
+    //   document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top = myTop + 'px';
+    //   document.getElementById(this._DropdownMenuFilterComponentMenuId).style.left = (myleft - 100) + 'px';
 
-    //             if (this.DivHight != -9999) {
-    //                 if (itemRect.bottom + DDLHeight + Extra > this.getScreenHeight()) {
-    //                     document.getElementById(this._DropdownMenuFilterComponentMenuId).style.marginTop =
-    //                         -1 * (this.DivHight) + 'px';
-    //                 }
+    //   if (this.DivHight != -9999) {
+    //     if (itemRect.bottom + DDLHeight + Extra > this.getScreenHeight()) {
+    //       document.getElementById(this._DropdownMenuFilterComponentMenuId).style.marginTop =
+    //         -1 * (this.DivHight) + 'px';
+    //     }
 
-    //             } else {
+    //   } else {
 
-    //                 if (itemRect.bottom + DDLHeight + Extra > this.getScreenHeight()) {
-    //                     document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
-    //                         (itemRect.top - DDLHeight - Extra) + 'px';
-    //                 }
-    //                 if (itemRect.bottom + this.DivTop > this.getScreenHeight() && this.DivTop != -9999) {//this.PaintTop = true                
-    //                     document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
-    //                         (itemRect.top - this.DivTop - ExtraTop) + 'px';
-    //                 }
-    //             }
+    //     if (itemRect.bottom + DDLHeight + Extra > this.getScreenHeight()) {
+    //       document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
+    //         (itemRect.top - DDLHeight - Extra) + 'px';
+    //     }
+    //     if (itemRect.bottom + this.DivTop > this.getScreenHeight() && this.DivTop != -9999) {//this.PaintTop = true                
+    //       document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
+    //         (itemRect.top - this.DivTop - ExtraTop) + 'px';
+    //     }
+    //   }
 
-    //             if (this.DivLeft != -9999) {
-    //                // document.getElementById(this._DropdownMenuFilterComponentMenuId).style.left =
-    // //(myleft + this.DivLeft)+ 'px';
-    //             } else {
-    //                 document.getElementById(this._DropdownMenuFilterComponentMenuId).style.left =
-    //                     (myleft/*itemRect.left*/ /*- 50*/ - 100 /*+5*/) + 'px';//min-width: 80px
-    //             }
-    //             this._DropdownDisplay = 'block';
-    //         } else {
-    //             this._DropdownDisplay = 'none';
-    //       }
+    //   if (this.DivLeft != -9999) {
+    //     // document.getElementById(this._DropdownMenuFilterComponentMenuId).style.left =
+    //     //(myleft + this.DivLeft)+ 'px';
+    //   } else {
+    //     document.getElementById(this._DropdownMenuFilterComponentMenuId).style.left =
+    //       (myleft/*itemRect.left*/ /*- 50*/ - 100 /*+5*/) + 'px';//min-width: 80px
+    //   }
+    //   this._DropdownDisplay = 'block';
+    // } else {
+    //   this._DropdownDisplay = 'none';
+    // }
     this._CD.detectChanges();
   }
   getScreenHeight() {
