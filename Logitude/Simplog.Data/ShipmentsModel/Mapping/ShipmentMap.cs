@@ -288,7 +288,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ConsolidatorReference).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.AccountManagerUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.IssuingCarrierReference1).HasMaxLength(50).IsUnicode(false);
-            this.Property(t => t.ShipperName).HasMaxLength(70).IsUnicode(false);
+            this.Property(t => t.ShipperName).HasMaxLength(140).IsUnicode(true);
             this.Property(t => t.ConsigneeName).HasMaxLength(70).IsUnicode(false);
             this.Property(t => t.ShippingAgent).HasMaxLength(70).IsUnicode(false);
             this.Property(t => t.ForwarderShipmentNumber).HasMaxLength(20).IsUnicode(false);

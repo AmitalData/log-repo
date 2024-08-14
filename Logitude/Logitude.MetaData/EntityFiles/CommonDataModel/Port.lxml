@@ -3233,7 +3233,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;Port&quot;"
-    FieldsDataType="&quot;nText&quot;"
+    FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="40"
     IsRequired="false"
