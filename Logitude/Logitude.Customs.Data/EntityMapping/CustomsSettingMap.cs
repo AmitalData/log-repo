@@ -90,6 +90,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.MaxItemsSendInteractive).HasColumnName("MaxItemsSendInteractive");
 
             this.Property(t => t.MaxSISendInteractive).HasColumnName("MaxSISendInteractive");
+
+            this.Property(t => t.CourierDocToken).HasColumnName("CourierDocToken").HasMaxLength(1024).IsUnicode(false);
         }
     }
 }

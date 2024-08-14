@@ -55,7 +55,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         StandAlone, 
 	         OcrToken, 
 	         MaxItemsSendInteractive, 
-	         MaxSISendInteractive,
+	         MaxSISendInteractive, 
+	         CourierDocToken,
 	      }
 
 
@@ -98,7 +99,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         StandAlone, 
 	         OcrToken, 
 	         MaxItemsSendInteractive, 
-	         MaxSISendInteractive,
+	         MaxSISendInteractive, 
+	         CourierDocToken,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -270,6 +272,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MaxSISendInteractive))
             {
 				entityPOCO.MaxSISendInteractive = entityPM.MaxSISendInteractive;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocToken))
+            {
+				entityPOCO.CourierDocToken = entityPM.CourierDocToken;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -448,6 +455,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.MaxSISendInteractive = entityPOCO.MaxSISendInteractive;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CourierDocToken))
+            {
+					entityPM.CourierDocToken = entityPOCO.CourierDocToken;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsSettingPM entityPM, CustomsSettingPM oldEntityPM)
@@ -617,6 +629,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MaxSISendInteractive))
             {
                 oldEntityPM.MaxSISendInteractive = entityPM.MaxSISendInteractive;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocToken))
+            {
+                oldEntityPM.CourierDocToken = entityPM.CourierDocToken;
             }
 			
 		}
