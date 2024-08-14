@@ -543,7 +543,6 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         },
     };
 
-    private cardExtendedPMService:CardExtendedPMService=new CardExtendedPMService()
     //tenent 0
     getRows2(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
         //if (filters == null) {
