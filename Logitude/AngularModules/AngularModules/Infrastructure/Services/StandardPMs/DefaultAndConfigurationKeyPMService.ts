@@ -32,12 +32,12 @@ export class DefaultAndConfigurationKeyPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/defaultandconfigurationkeys';      
     }
 
-	get(tenant: number, setkey: string) {       
+	get(setkey: string) {       
 
 		var callTime = new Date();		
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle?' + 'tenant=' + tenant+'&'+'setkey=' + setkey, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle?' + 'setkey=' + setkey, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
@@ -51,7 +51,7 @@ export class DefaultAndConfigurationKeyPMService {
 						serviceResponse.Result = entity;
               
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DefaultAndConfigurationKey", "GetSinglePM", 'tenant=' + tenant+'&'+'setkey=' + setkey);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DefaultAndConfigurationKey", "GetSinglePM", 'setkey=' + setkey);
 				 
 						return serviceResponse;
 

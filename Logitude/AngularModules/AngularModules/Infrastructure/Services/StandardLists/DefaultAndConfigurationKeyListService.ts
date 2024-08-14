@@ -32,12 +32,12 @@ export class DefaultAndConfigurationKeyListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/defaultandconfigurationkeyviews';  
     }
 
-	getSingle(tenant: number, setkey: string) {
+	getSingle(setkey: string) {
 	   
 		var callTime = new Date();
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle/?' + 'tenant=' + tenant+'&'+'setkey=' + setkey, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle/?' + 'setkey=' + setkey, ServiceHelper.GetHttpFullHeaders())
 				.pipe(			
 					map((response: HttpResponse<any>) => {
 
@@ -52,7 +52,7 @@ export class DefaultAndConfigurationKeyListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DefaultAndConfigurationKey", "GetSingleList", 'tenant=' + tenant+'&'+'setkey=' + setkey); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DefaultAndConfigurationKey", "GetSingleList", 'setkey=' + setkey); 
 
 						return serviceResponse;
 					}),

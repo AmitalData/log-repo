@@ -9,7 +9,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
 {
     public class DefaultAndConfigurationKeyList
     {
-        [Key]
         public int Tenant { get; set; }
         public DateTime CreateDate { get; set; }        
         public string SetType1 { get; set; }

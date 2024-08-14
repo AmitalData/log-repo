@@ -103,6 +103,14 @@ export class MessageWindow {
 
         this.InstanceComponent = null;
     }
+
+    public static showErrorMessage(msg: string): MessageWindow {
+        const msgWin: MessageWindow = new MessageWindow();
+        msgWin.ShowErrorIcon = true;
+        msgWin.Title = TextCodeTranslator.Translate('General.B.Erroroccured');
+        msgWin.Show(msg);
+        return msgWin;
+    }
 }
 
 @Component({

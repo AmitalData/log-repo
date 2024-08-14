@@ -28,9 +28,9 @@ export class AmitalAPIAddWindowService {
     chekFormValidation(fields: TextBoxField[], data: any): boolean {        
         let hasError = false;
         fields.filter(f => data[f.name] === undefined).forEach(field => { data[field.name] = ''; });
-        fields.forEach(field => (<UIProperties>data.UIProperties).SetRequired(field.name, null, true));
+        fields.forEach(field => (<UIProperties>data.UIProperties).SetRequired(field.name, null, field.type != 'boolean'));
         fields.forEach(field => {
-            const required = data[field.name] === undefined || data[field.name] === '' || data[field.name] === null;
+            const required = field.type != 'boolean' && (data[field.name] === undefined || data[field.name] === '' || data[field.name] === null);
             (<UIProperties>data.UIProperties).SetRequired(field.name, null, required);
             field.error = required;
             hasError = hasError || required;
