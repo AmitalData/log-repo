@@ -4,15 +4,11 @@
   ObjectTableName="&quot;APInvoiceTransferStatus&quot;"
   IsNew="false"
   DBTableName="&quot;APInvoiceTransferStatus&quot;"
-  DBTableOldNames="APInvoiceTransferStatus"
+  OldDBTableName="&quot;APInvoiceTransferStatus&quot;"
   ObjectTableSingular="&quot;A/P Invoice Transfer Status&quot;"
   ObjectTablePlural="&quot;A/P Invoice Transfer Status&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
-  AvailableInCustomization="false"
-  SupportSubEntity="false"
-  ApplyGenericCustomFields="false"
-  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -41,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;A/P Invoice Transfer Status&quot;"
-  Code="&quot;4b64&quot;"
+  Code="&quot;006c&quot;"
   Name="&quot;APInvoiceTransferStatus&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -57,8 +53,6 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
-  IsBusinessUnitEnabled="false"
-  TenantZeroData="false"
   Code1="&quot;8bbe&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -72,7 +66,7 @@
   <field
     Id="&quot;0bc17fc8-f80e-4c8e-b43c-451393f2c07d&quot;"
     FieldName="&quot;Code&quot;"
-    OldNames="Code"
+    OldFieldName="&quot;Code&quot;"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -91,7 +85,6 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
-    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -124,7 +117,6 @@
     ListLableDefaultText="&quot;Code&quot;"
     IsNullable="false"
     IsForeignKey="false"
-    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -138,7 +130,6 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
-    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Code&quot;"
@@ -150,14 +141,14 @@
   <field
     Id="&quot;cabd1cc9-36c3-49fe-b0ce-49a9cba38e93&quot;"
     FieldName="&quot;Name&quot;"
-    OldNames="Name"
+    OldFieldName="&quot;Name&quot;"
     IsNew="false"
-    IsChecked="true"
+    IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;APInvoiceTransferStatus&quot;"
-    FieldsDataType="&quot;nText&quot;"
+    FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="40"
+    MaxLength="20"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="true"
@@ -169,7 +160,6 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
-    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -202,7 +192,6 @@
     ListLableDefaultText="&quot;Name&quot;"
     IsNullable="false"
     IsForeignKey="false"
-    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -216,7 +205,6 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
-    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Name&quot;"
@@ -228,7 +216,7 @@
   <field
     Id="&quot;cb8597f7-8fec-4503-aa02-f9fc6fc9d9e4&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldNames="SearchFields"
+    OldFieldName="&quot;SearchFields&quot;"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -247,7 +235,6 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
-    IsListFilter="false"
     Operator="&quot;Contains&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -276,7 +263,6 @@
     DefaultText="&quot;Search..&quot;"
     IsNullable="false"
     IsForeignKey="false"
-    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -290,7 +276,6 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
-    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;SearchFields&quot;"
@@ -299,15 +284,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-  <Screen
-    Name="&quot;APInvoiceTransferStatusHeaderScreen&quot;"
-    ObjectTableName="&quot;APInvoiceTransferStatus&quot;"
-    IsReadOnly="true"
-    IsHeaderScreen="true"
-    NumberOfColumns="2"
-    NumberOfRows="1">
-    <ScreenFields />
-  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -365,8 +341,7 @@
   <DataContracts>
     <DataContract
       Name="&quot;APInvoiceTransferStatus&quot;"
-      Version="&quot;ApiV1&quot;"
-      IncludeTenant0Data="false">
+      Version="&quot;ApiV1&quot;">
       <DCField
         DCFieldName="&quot;Code&quot;"
         FieldName="&quot;Code&quot;"
@@ -380,8 +355,7 @@
         IsAttribute="true"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;Name&quot;"
         FieldName="&quot;Name&quot;"
@@ -395,8 +369,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes />
