@@ -19,7 +19,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.FWBNotifyContacts).HasMaxLength(4000).IsUnicode(false);
             this.Property(t => t.FHLNotifyContacts).HasMaxLength(4000).IsUnicode(false);
             this.Property(t => t.FFRNotifyContacts).HasMaxLength(4000).IsUnicode(false);
-            this.Property(t => t.PrimaryContactName).HasMaxLength(120).IsUnicode(true);
+            this.Property(t => t.PrimaryContactName).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.PrimaryContactEmail).HasMaxLength(70).IsUnicode(false);
             this.Property(t => t.PrimaryContactPhone).HasMaxLength(25).IsUnicode(false);
 

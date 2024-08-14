@@ -20,8 +20,8 @@
   </Column>
   <Column
     Name="MoveTypeEnglishName"
-    Type="nvarchar"
-    Size="80">
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="false" />
   </Column>

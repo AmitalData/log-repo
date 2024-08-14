@@ -5,6 +5,7 @@
   DBType="CargoTracking"
   Module="CargoTracking">
   <Column
+    
     Name="Code"
     Type="varchar"
     Size="2">
@@ -14,8 +15,8 @@
   </Column>
   <Column
     Name="EnglishName"
-    Type="nvarchar"
-    Size="60">
+    Type="varchar"
+    Size="30">
     <Constraints
       Nullable="true" />
   </Column>

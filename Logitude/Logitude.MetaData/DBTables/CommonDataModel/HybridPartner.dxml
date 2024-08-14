@@ -13,6 +13,27 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="Name"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PartnerTenant"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="LogoId"
     Type="varchar"
     Size="15">
@@ -34,29 +55,14 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="InActive"
+    Name="IsMislakaActivated"
     Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="Name"
-    Type="nvarchar"
-    Size="50">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="LocalName"
-    Type="nvarchar"
-    Size="25">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PartnerTenant"
-    Type="int"
-    DefaultValue="0">
+    Name="InActive"
+    Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
@@ -74,12 +80,6 @@
   </Column>
   <Column
     Name="AllowSendingDocsToAgent"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsMislakaActivated"
     Type="bit">
     <Constraints
       Nullable="false" />

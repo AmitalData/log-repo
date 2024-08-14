@@ -16,7 +16,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.HasKey(t => t.Code);
             this.Property(t => t.Code).IsRequired().HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.Name).IsRequired().HasMaxLength(100).IsUnicode(true);
+            this.Property(t => t.Name).IsRequired().HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.TypeCode).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.DefaultFilterBy).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.DataViewName).HasMaxLength(200).IsUnicode(true);
@@ -27,11 +27,11 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             this.Property(t => t.ParentFactCode).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.RecordType).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.DisplayName).HasMaxLength(200).IsUnicode(true);
+            this.Property(t => t.DisplayName).HasMaxLength(100).IsUnicode(false);
            
             this.Property(t => t.IndexesXml).IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.ObjectTableName).HasMaxLength(100).IsUnicode(true);
+            this.Property(t => t.ObjectTableName).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.AdditionalFactRelationType).HasMaxLength(100).IsUnicode(false);
 
             this.Property(t => t.AdditionalConditions).HasMaxLength(200).IsUnicode(false);

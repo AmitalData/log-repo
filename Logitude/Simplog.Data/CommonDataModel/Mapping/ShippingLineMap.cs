@@ -14,7 +14,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ShippingAgentId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.SCACCode).IsRequired().HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.INTTRARegistrationNotes).HasMaxLength(250).IsUnicode(true);
-            this.Property(t => t.PrimaryContactName).HasMaxLength(120).IsUnicode(true);
+            this.Property(t => t.PrimaryContactName).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.PrimaryContactEmail).HasMaxLength(70).IsUnicode(false);
             this.Property(t => t.PrimaryContactPhone).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.CBSA).HasMaxLength(5).IsUnicode(false);

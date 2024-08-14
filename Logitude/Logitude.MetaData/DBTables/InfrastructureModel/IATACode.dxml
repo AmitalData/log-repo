@@ -22,10 +22,17 @@
   </Column>
   <Column
     Name="Name"
-    Type="nvarchar"
-    Size="80">
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="DueTypeCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Column
     Name="MeasurementCode"
@@ -35,9 +42,9 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="DueTypeCode"
-    Type="varchar"
-    Size="2">
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>
@@ -57,13 +64,6 @@
     Name="AirlineId"
     Type="varchar"
     Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>

@@ -86,8 +86,8 @@
   </Column>
   <Column
     Name="NameTextCodeCode"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="false" />
   </Column> 

@@ -99,8 +99,8 @@
   </Column>
   <Column
     Name="FromPortName"
-    Type="nvarchar"
-    Size="80">
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="true" />
   </Column>
@@ -113,8 +113,8 @@
   </Column>
   <Column
     Name="ToPortName"
-    Type="nvarchar"
-    Size="80">
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="true" />
   </Column>

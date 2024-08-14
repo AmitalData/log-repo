@@ -2,14 +2,8 @@
 <Table
   Name="MarkUpTypes"
   Schema="dbo"
-  DBType="Main">
-  <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
-    <Constraints
-      Nullable="true" />
-  </Column>
+  DBType="Main"
+  Module="Quote">
   <Column
     Name="Code"
     Type="varchar"
@@ -20,9 +14,16 @@
   </Column>
   <Column
     Name="Name"
-    Type="nvarchar"
-    Size="80">
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
 </Table>

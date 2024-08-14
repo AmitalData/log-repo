@@ -181,8 +181,8 @@
   </Column>
   <Column
     Name="LookUpControlName"
-    Type="nvarchar"
-    Size="100">
+    Type="varchar"
+    Size="50">
     <Constraints
       Nullable="true" />
   </Column>
@@ -451,22 +451,22 @@
   </Column>
   <Column
     Name="ConverterName"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="DataTemplateName"
-    Type="nvarchar"
-    Size="100">
+    Type="varchar"
+    Size="50">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="ColumnHeaderTemplateName"
-    Type="nvarchar"
-    Size="100">
+    Type="varchar"
+    Size="50">
     <Constraints
       Nullable="true" />
   </Column>
@@ -492,15 +492,15 @@
   </Column>
   <Column
     Name="HtmlHeaderComponentName"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="HtmlListComponentName"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
@@ -532,8 +532,8 @@
   </Column>
   <Column
     Name="FullNameTextCodeCode"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
@@ -546,8 +546,8 @@
   </Column>
   <Column
     Name="ShortNameTextCodeCode"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
@@ -632,8 +632,8 @@
   </Column>
   <Column
     Name="NavigationPropertyName"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
@@ -717,7 +717,7 @@
   <Index
     Columns="FieldCode" />
   <Index
-    Columns="Tenant,ObjectTableId,IsCustom,InActive" />
+	Columns="Tenant,ObjectTableId,IsCustom,InActive" />
   <UniqueConstraint
     Columns="FieldName,ObjectTableId,Tenant" />
   <UniqueConstraint

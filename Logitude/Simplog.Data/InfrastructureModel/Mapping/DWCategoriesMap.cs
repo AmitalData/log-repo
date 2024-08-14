@@ -15,7 +15,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
         {
             this.HasKey(t => t.Code);
             this.Property(t => t.Code).IsRequired().HasMaxLength(50).IsUnicode(false); 
-            this.Property(t => t.Name).IsRequired().HasMaxLength(100).IsUnicode(true);
+            this.Property(t => t.Name).IsRequired().HasMaxLength(50).IsUnicode(false);
            
 
             this.ToTable("DWCategories");

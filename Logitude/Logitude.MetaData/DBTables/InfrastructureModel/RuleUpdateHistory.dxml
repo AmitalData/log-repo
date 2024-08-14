@@ -2,7 +2,8 @@
 <Table
   Name="RuleUpdateHistories"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Infrastructure">
   <Column
     Name="Id"
     Type="varchar"
@@ -24,22 +25,8 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="CreatedByUserId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="UpdateDate"
     Type="datetime">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="UpdatedByUserId"
-    Type="varchar"
-    Size="15">
     <Constraints
       Nullable="false" />
   </Column>
@@ -52,8 +39,22 @@
   </Column>
   <Column
     Name="EventName"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CreatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="UpdatedByUserId"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="false" />
   </Column>

@@ -25,7 +25,7 @@ namespace Logitude.DashboardModule.Data.EntityMapping
 	 
             this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(100).IsUnicode(false);
 
-            this.Property(t => t.DisplayName).HasColumnName("DisplayName").IsRequired().HasMaxLength(300).IsUnicode(true);
+            this.Property(t => t.DisplayName).HasColumnName("DisplayName").IsRequired().HasMaxLength(150).IsUnicode(false);
 
             this.Property(t => t.DataTypeCode).HasColumnName("DataTypeCode").IsRequired().HasMaxLength(10).IsUnicode(false);
 
@@ -33,7 +33,7 @@ namespace Logitude.DashboardModule.Data.EntityMapping
 
             this.Property(t => t.IsMultiSelect).HasColumnName("IsMultiSelect");
 
-            this.Property(t => t.JoinedTableName).HasColumnName("JoinedTableName").HasMaxLength(200).IsUnicode(true);
+            this.Property(t => t.JoinedTableName).HasColumnName("JoinedTableName").HasMaxLength(100).IsUnicode(false);
 
             this.Property(t => t.Sort).HasColumnName("Sort");
 

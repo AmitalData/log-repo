@@ -9,10 +9,6 @@
   ObjectTablePlural="&quot;WorkerRoleNames&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
-  AvailableInCustomization="false"
-  SupportSubEntity="false"
-  ApplyGenericCustomFields="false"
-  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -41,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Worker Role Name&quot;"
-  Code="&quot;8bdd&quot;"
+  Code="&quot;d39a&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Infrastructure&quot;"
@@ -55,8 +51,6 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
-  IsBusinessUnitEnabled="false"
-  TenantZeroData="false"
   Code1="&quot;c232&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -88,7 +82,6 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
-    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -144,12 +137,12 @@
     FieldName="&quot;Name&quot;"
     OldNames="Name"
     IsNew="true"
-    IsChecked="true"
+    IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;WorkerRoleName&quot;"
-    FieldsDataType="&quot;nText&quot;"
+    FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="200"
+    MaxLength="100"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -158,10 +151,9 @@
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
-    SystemMaxLength="200"
+    SystemMaxLength="100"
     DisplayInList="false"
     IsCustomFilter="false"
-    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -234,7 +226,6 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
-    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -285,43 +276,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-  <Screen
-    Name="&quot;WorkerRoleNameHeaderScreen&quot;"
-    ObjectTableName="&quot;WorkerRoleName&quot;"
-    IsReadOnly="true"
-    IsHeaderScreen="true"
-    NumberOfColumns="2"
-    NumberOfRows="1">
-    <ScreenFields />
-  </Screen>
-  <EventTypes>
-    <EventType
-      Code="&quot;CREV&quot;"
-      ObjectTableName="&quot;WorkerRoleName&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
-      IsManualEntry="false"
-      ShortView="true"
-      IsAgentView="false"
-      IsCustomerView="false"
-      IsSharedLogisticsEnabled="false"
-      AllowedInAutomation="false"
-      ManualActivatedFollowUp="false"
-      IsFollowUp="false" />
-    <EventType
-      Code="&quot;UPEV&quot;"
-      ObjectTableName="&quot;WorkerRoleName&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
-      IsManualEntry="false"
-      ShortView="false"
-      IsAgentView="false"
-      IsCustomerView="false"
-      IsSharedLogisticsEnabled="false"
-      AllowedInAutomation="false"
-      ManualActivatedFollowUp="false"
-      IsFollowUp="false" />
-  </EventTypes>
+  <EventTypes />
   <Records />
   <DataContracts />
   <AdditionalTextCodes />

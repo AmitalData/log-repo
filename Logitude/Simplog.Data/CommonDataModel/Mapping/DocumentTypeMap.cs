@@ -140,19 +140,19 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
 
             this.Property(t => t.OnSendPopulateDateFieldName)
-                .HasMaxLength(200)
-                .IsUnicode(true);
+                .HasMaxLength(100)
+                .IsUnicode(false);
 
 
 
             this.Property(t => t.OnUploadPopulateDateFieldName)
-                .HasMaxLength(200)
-                .IsUnicode(true);
+                .HasMaxLength(100)
+                .IsUnicode(false);
 
 
             this.Property(t => t.OnPrintPopulateDateFieldName)
-                .HasMaxLength(200)
-                .IsUnicode(true);
+                .HasMaxLength(100)
+                .IsUnicode(false);
 
 
 

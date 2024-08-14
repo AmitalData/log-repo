@@ -14,7 +14,7 @@ namespace Simplog.Data.QuoteModel.Mapping
         {
             this.HasKey(t => t.Code);
             this.Property(t => t.Code).IsRequired().HasMaxLength(1).IsUnicode(false);
-            this.Property(t => t.Name).IsRequired().HasMaxLength(120).IsUnicode(true);
+            this.Property(t => t.Name).IsRequired().HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
 
             this.ToTable("QuoteRatings");

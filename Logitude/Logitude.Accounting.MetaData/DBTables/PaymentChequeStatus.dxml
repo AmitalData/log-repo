@@ -2,7 +2,8 @@
 <Table
   Name="PaymentChequeStatuses"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Accounting">
   <Column
     Name="Code"
     Type="varchar"
@@ -13,8 +14,8 @@
   </Column>
   <Column
     Name="EnglishName"
-    Type="nvarchar"
-    Size="120">
+    Type="varchar"
+    Size="60">
     <Constraints
       Nullable="true" />
   </Column>

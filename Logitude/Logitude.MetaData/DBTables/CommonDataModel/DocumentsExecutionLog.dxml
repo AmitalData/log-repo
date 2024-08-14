@@ -100,11 +100,16 @@
   </Column>
   <Column
     Name="ExecutedByServerName"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
+
+  <Index
+    Columns="ExecutedByServerName,StatusCode" />
+  <Index
+	Columns="CreateDate" />
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
@@ -115,8 +120,4 @@
     ReferencedTable="CommunicationStatusTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
-  <Index
-    Columns="ExecutedByServerName,StatusCode" />
-  <Index
-    Columns="CreateDate" />
 </Table>

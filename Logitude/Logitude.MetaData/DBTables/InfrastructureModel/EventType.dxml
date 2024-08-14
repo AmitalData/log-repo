@@ -85,8 +85,8 @@
   </Column>
   <Column
     Name="EnglishName"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="false" />
   </Column>
@@ -119,8 +119,8 @@
   </Column>
   <Column
     Name="FollowUpEnglishName"
-    Type="nvarchar"
-    Size="80">
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="true" />
   </Column>

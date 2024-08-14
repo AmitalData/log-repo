@@ -229,8 +229,8 @@
   </Column>
   <Column
     Name="EnglishName"
-    Type="nvarchar"
-    Size="140">
+    Type="varchar"
+    Size="70">
     <Constraints
       Nullable="false" />
   </Column>
@@ -284,8 +284,8 @@
   </Column>
   <Column
     Name="CountryName"
-    Type="nvarchar"
-    Size="240">
+    Type="varchar"
+    Size="120">
     <Constraints
       Nullable="true" />
   </Column>
@@ -387,8 +387,8 @@
   </Column>
   <Column
     Name="StateName"
-    Type="nvarchar"
-    Size="80">
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="true" />
   </Column>

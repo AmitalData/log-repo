@@ -16,7 +16,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ObjectTableId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ComputingPartnerId).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.PartnerCode).IsRequired().HasMaxLength(100).IsUnicode(true);
+            this.Property(t => t.PartnerCode).IsRequired().HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.PartnerName).IsRequired().HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.CreatedByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.UpdatedByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);

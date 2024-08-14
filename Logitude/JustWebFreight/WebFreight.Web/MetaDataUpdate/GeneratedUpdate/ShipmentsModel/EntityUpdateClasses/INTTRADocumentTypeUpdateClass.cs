@@ -214,10 +214,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 
 					 						FieldName =  "Name",
 					  						ObjectTableName =  "INTTRADocumentType",
-					  						FieldsDataType =  "nText",
+					  						FieldsDataType =  "Text",
 					  						FieldCode =  "INTTRADocumentType.Name",
 					  						Code =  "Name",
-					  						MaxLength =  80,
+					  						MaxLength =  40,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  true,

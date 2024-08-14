@@ -103,8 +103,8 @@
   </Column>
   <Column
     Name="UserName"
-    Type="nvarchar"
-    Size="140">
+    Type="varchar"
+    Size="70">
     <Constraints
       Nullable="true" />
   </Column>
@@ -175,8 +175,8 @@
   </Column>
   <Column
     Name="DescriptionOfGoods"
-    Type="nvarchar"
-    Size="4000">
+    Type="varchar"
+    Size="2000">
     <Constraints
       Nullable="true" />
   </Column>

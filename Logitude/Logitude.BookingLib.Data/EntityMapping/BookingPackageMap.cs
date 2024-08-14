@@ -73,7 +73,7 @@ namespace Logitude.BookingLib.Data.EntityMapping
 
             this.Property(t => t.Harmonize).HasColumnName("Harmonize").HasMaxLength(60).IsUnicode(false);
 
-            this.Property(t => t.MaterialDescription).HasColumnName("MaterialDescription").HasMaxLength(60).IsUnicode(true);
+            this.Property(t => t.MaterialDescription).HasColumnName("MaterialDescription").HasMaxLength(30).IsUnicode(false);
 
             this.Property(t => t.IsDangerous).HasColumnName("IsDangerous").IsRequired();
 
