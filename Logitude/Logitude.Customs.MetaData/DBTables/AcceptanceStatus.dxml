@@ -13,7 +13,7 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Name"
+    Name="EnglishName"
     Type="nvarchar"
     Size="100">
     <Constraints
