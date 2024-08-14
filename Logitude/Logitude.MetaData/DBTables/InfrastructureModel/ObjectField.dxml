@@ -20,8 +20,8 @@
   </Column>
   <Column
     Name="FullNameTextCodeId"
-    Type="nvarchar"
-    Size="60">
+    Type="varchar"
+    Size="30">
     <Constraints
       Nullable="true" />
   </Column>
@@ -206,8 +206,8 @@
   </Column>
   <Column
     Name="ShortNameTextCodeId"
-    Type="nvarchar"
-    Size="60">
+    Type="varchar"
+    Size="30">
     <Constraints
       Nullable="true" />
   </Column>
@@ -717,7 +717,7 @@
   <Index
     Columns="FieldCode" />
   <Index
-	Columns="Tenant,ObjectTableId,IsCustom,InActive" />
+    Columns="Tenant,ObjectTableId,IsCustom,InActive" />
   <UniqueConstraint
     Columns="FieldName,ObjectTableId,Tenant" />
   <UniqueConstraint
