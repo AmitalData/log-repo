@@ -871,6 +871,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string courierDocToken ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CourierDocToken  
+	   {
+	    
+	     get
+		{
+		   return courierDocToken;
+		 }
+		 set
+		 {
+		   if(courierDocToken != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourierDocToken",OldValue=courierDocToken,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   courierDocToken=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

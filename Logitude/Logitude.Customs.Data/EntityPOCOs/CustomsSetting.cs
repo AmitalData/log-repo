@@ -93,6 +93,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public int? MaxItemsSendInteractive { get; set; }
         [Column("MaxSISendInteractive")]
 	    public int? MaxSISendInteractive { get; set; }
+        [Column("CourierDocToken")]
+	    public string CourierDocToken { get; set; }
     }
 }
 	 

@@ -33,7 +33,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         HSMActiveCertUrl, 
 	         HSMSignServiceUrl, 
 	         OcrToken, 
-	         UpdateDocOcrServiceUrl,
+	         UpdateDocOcrServiceUrl, 
+	         CourierDocURL, 
+	         CourierDocKey,
 	      }
 
 
@@ -51,7 +53,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         HSMActiveCertUrl, 
 	         HSMSignServiceUrl, 
 	         OcrToken, 
-	         UpdateDocOcrServiceUrl,
+	         UpdateDocOcrServiceUrl, 
+	         CourierDocURL, 
+	         CourierDocKey,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -108,6 +112,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDocOcrServiceUrl))
             {
 				entityPOCO.UpdateDocOcrServiceUrl = entityPM.UpdateDocOcrServiceUrl;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocURL))
+            {
+				entityPOCO.CourierDocURL = entityPM.CourierDocURL;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocKey))
+            {
+				entityPOCO.CourierDocKey = entityPM.CourierDocKey;
 			}
 			}
 
@@ -174,6 +188,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.UpdateDocOcrServiceUrl = entityPOCO.UpdateDocOcrServiceUrl;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CourierDocURL))
+            {
+					entityPM.CourierDocURL = entityPOCO.CourierDocURL;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CourierDocKey))
+            {
+					entityPM.CourierDocKey = entityPOCO.CourierDocKey;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsEnvironmentSettingPM entityPM, CustomsEnvironmentSettingPM oldEntityPM)
@@ -228,6 +252,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDocOcrServiceUrl))
             {
                 oldEntityPM.UpdateDocOcrServiceUrl = entityPM.UpdateDocOcrServiceUrl;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocURL))
+            {
+                oldEntityPM.CourierDocURL = entityPM.CourierDocURL;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocKey))
+            {
+                oldEntityPM.CourierDocKey = entityPM.CourierDocKey;
             }
 			
 		}

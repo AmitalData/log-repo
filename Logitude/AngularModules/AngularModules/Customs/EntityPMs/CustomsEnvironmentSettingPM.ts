@@ -84,6 +84,16 @@ export class CustomsEnvironmentSettingPM {
     public set UpdateDocOcrServiceUrl(newValue: string) { if (this.updateDocOcrServiceUrl != newValue) { this.updateDocOcrServiceUrl = newValue; this.MarkAsDirty("UpdateDocOcrServiceUrl"); } }
        
 	 
+    private courierDocURL: string;
+    public get CourierDocURL() { return this.courierDocURL; }
+    public set CourierDocURL(newValue: string) { if (this.courierDocURL != newValue) { this.courierDocURL = newValue; this.MarkAsDirty("CourierDocURL"); } }
+       
+	 
+    private courierDocKey: string;
+    public get CourierDocKey() { return this.courierDocKey; }
+    public set CourierDocKey(newValue: string) { if (this.courierDocKey != newValue) { this.courierDocKey = newValue; this.MarkAsDirty("CourierDocKey"); } }
+       
+	 
 
     public OldEntityPM: CustomsEnvironmentSettingPM;
 		
