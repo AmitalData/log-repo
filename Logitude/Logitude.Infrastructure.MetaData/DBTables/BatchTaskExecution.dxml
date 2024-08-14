@@ -40,8 +40,8 @@
   </Column>
   <Column
     Name="ClassName"
-    Type="nvarchar"
-    Size="240">
+    Type="varchar"
+    Size="120">
     <Constraints
       Nullable="true" />
   </Column>

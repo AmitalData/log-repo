@@ -45,8 +45,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .IsUnicode(false);
 
             this.Property(t => t.PartnerName)
-           .HasMaxLength(200)
-           .IsUnicode(true);
+           .HasMaxLength(100)
+           .IsUnicode(false);
 
             this.Property(t => t.Refrence)
                 .HasMaxLength(40)

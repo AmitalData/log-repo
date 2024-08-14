@@ -5,13 +5,6 @@
   DBType="Main"
   Module="Common">
   <Column
-    Name="ViewOrder"
-    Type="int"
-    DefaultValue="0">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="Code"
     Type="varchar"
     Size="3">
@@ -21,8 +14,15 @@
   </Column>
   <Column
     Name="Name"
-    Type="nvarchar"
-    Size="80">
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ViewOrder"
+    Type="int"
+    DefaultValue="0">
     <Constraints
       Nullable="false" />
   </Column>

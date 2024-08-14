@@ -106,8 +106,8 @@
   </Column>
   <Column
     Name="AirlineName"
-    Type="nvarchar"
-    Size="120">
+    Type="varchar"
+    Size="60">
     <Constraints
       Nullable="true" />
   </Column>

@@ -14,8 +14,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             // Properties
             this.Property(t => t.TableName)
                 .IsRequired()
-                .HasMaxLength(80)
-                .IsUnicode(true);
+                .HasMaxLength(40)
+                .IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("CounterLastNumbers");

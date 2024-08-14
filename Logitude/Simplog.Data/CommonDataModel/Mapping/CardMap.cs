@@ -10,7 +10,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
         {
             this.HasKey(t => t.Id);
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.EnglishName).IsRequired().HasMaxLength(140).IsUnicode(true);
+            this.Property(t => t.EnglishName).IsRequired().HasMaxLength(70).IsUnicode(false);
             this.Property(t => t.VatNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.LocalName).HasMaxLength(100).IsUnicode(true);
             this.Property(t => t.PaymentTermId).HasMaxLength(15).IsUnicode(false);
@@ -43,7 +43,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.UpdatedByUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CountryId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CountryCode).HasMaxLength(2).IsUnicode(false);
-            this.Property(t => t.CountryName).HasMaxLength(240).IsUnicode(true);
+            this.Property(t => t.CountryName).HasMaxLength(120).IsUnicode(false);
             this.Property(t => t.SalesmanUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.IRSPlace).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.IRSNumber).HasMaxLength(60).IsUnicode(false);
@@ -59,7 +59,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Address2).HasMaxLength(65).IsUnicode(true);
             this.Property(t => t.ZipCode).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Phone).HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.StateName).HasMaxLength(80).IsUnicode(true);
+            this.Property(t => t.StateName).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.CreatedByPartner).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.GLAccountDisplayNumber).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.SATCustomerName).HasMaxLength(200).IsUnicode(true);

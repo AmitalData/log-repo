@@ -27,8 +27,8 @@
   </Column>
   <Column
     Name="EnglishName"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="false" />
   </Column>
@@ -55,8 +55,8 @@
   </Column>
   <Column
     Name="OriginalEnglishName"
-    Type="nvarchar"
-    Size="200"
+    Type="varchar"
+    Size="100"
     DefaultValue="''">
     <Constraints
       Nullable="false" />

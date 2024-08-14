@@ -27,7 +27,7 @@ namespace Logitude.TimeManagement.Data.EntityMapping
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.ReleaseName).HasColumnName("ReleaseName").IsRequired().HasMaxLength(80).IsUnicode(true);
+            this.Property(t => t.ReleaseName).HasColumnName("ReleaseName").IsRequired().HasMaxLength(40).IsUnicode(false);
 
             this.Property(t => t.FromDate).HasColumnName("FromDate").IsRequired();
 

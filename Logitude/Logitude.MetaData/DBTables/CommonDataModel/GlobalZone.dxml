@@ -13,19 +13,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Tenant"
-    Type="int">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Notes"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="Code"
     Type="varchar"
     Size="8">
@@ -33,9 +20,15 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="EnglishName"
-    Type="nvarchar"
-    Size="80">
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="false" />
   </Column>
@@ -43,6 +36,13 @@
     Name="LocalName"
     Type="nvarchar"
     Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Notes"
+    Type="nvarchar"
+    Size="250">
     <Constraints
       Nullable="true" />
   </Column>

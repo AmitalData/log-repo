@@ -22,26 +22,13 @@
   </Column>
   <Column
     Name="Name"
-    Type="nvarchar"
-    Size="400">
+    Type="varchar"
+    Size="200">
     <Constraints
       Nullable="false" />
-  </Column>
-  <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
-    <Constraints
-      Nullable="true" />
   </Column>
   <Column
     Name="IsIATA"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="InActive"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -52,6 +39,19 @@
     Size="15">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="AirlineId"

@@ -19,8 +19,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             this.Property(t => t.Name)
                 .IsRequired()
-                .HasMaxLength(80)
-                .IsUnicode(true);
+                .HasMaxLength(40)
+                .IsUnicode(false);
 
             this.Property(t => t.ObjectTableId)
                 .IsRequired()
@@ -39,8 +39,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             this.Property(t => t.DisplayName)
                 .IsRequired()
-                .HasMaxLength(80)
-                .IsUnicode(true);
+                .HasMaxLength(40)
+                .IsUnicode(false);
 
             this.Property(t => t.EntityStatusTypeCode)
                 .HasMaxLength(3)

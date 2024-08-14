@@ -203,9 +203,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "Name",
 					  						ObjectTableName =  "FeatureAccessLevel",
-					  						FieldsDataType =  "nText",
+					  						FieldsDataType =  "Text",
 					  						Code =  "Name",
-					  						MaxLength =  100,
+					  						MaxLength =  50,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,

@@ -19,8 +19,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
 
             this.Property(t => t.Name)
                 .IsRequired()
-                .HasMaxLength(80)
-                .IsUnicode(true);
+                .HasMaxLength(40)
+                .IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("NextLegs");

@@ -10,7 +10,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
         {
             this.HasKey(t => t.Code);
             this.Property(t => t.Code).IsRequired().HasMaxLength(4).IsUnicode(false);
-            this.Property(t => t.Name).IsRequired().HasMaxLength(80).IsUnicode(true);
+            this.Property(t => t.Name).IsRequired().HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
 
             // Table & Column Mappings

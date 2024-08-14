@@ -310,22 +310,22 @@
   <Column
     Name="OnSendPopulateDateFieldName"
     OldNames="OnSendPolpulateDateFieldName"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="OnUploadPopulateDateFieldName"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="OnPrintPopulateDateFieldName"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>

@@ -111,8 +111,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
               .IsUnicode(false);
 
             this.Property(t => t.ExternalEntityName)
-              .HasMaxLength(24)
-              .IsUnicode(true);
+              .HasMaxLength(12)
+              .IsUnicode(false);
 
             this.Property(t => t.ExternalEntityReference)
             .HasMaxLength(35)

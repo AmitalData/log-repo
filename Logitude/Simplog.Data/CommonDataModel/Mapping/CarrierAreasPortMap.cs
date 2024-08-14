@@ -10,7 +10,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
         {
             this.HasKey(t => t.Id);
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.Name).IsRequired().HasMaxLength(200).IsUnicode(true);
+            this.Property(t => t.Name).IsRequired().HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.AddedByUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CarrierAreaId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.PortId).HasMaxLength(15).IsUnicode(false);

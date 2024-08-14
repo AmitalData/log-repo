@@ -14,8 +14,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             // Properties
             this.Property(t => t.TableName)
                 .IsRequired()
-                .HasMaxLength(50)
-                .IsUnicode(false);
+                .HasMaxLength(100)
+                .IsUnicode(true);
 
             // Table & Column Mappings
             this.ToTable("DBIdCounters");

@@ -19,8 +19,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             this.Property(t => t.SpecialServiceEnglishName)
                 .IsRequired()
-                .HasMaxLength(80)
-                .IsUnicode(true);
+                .HasMaxLength(40)
+                .IsUnicode(false);
 
             this.Property(t => t.SpecialServiceLocalName)
                 .IsRequired()

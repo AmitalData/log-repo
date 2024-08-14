@@ -72,8 +72,8 @@
   </Column>
   <Column
     Name="VersionName"
-    Type="nvarchar"
-    Size="40">
+    Type="varchar"
+    Size="20">
     <Constraints
       Nullable="false" />
   </Column>

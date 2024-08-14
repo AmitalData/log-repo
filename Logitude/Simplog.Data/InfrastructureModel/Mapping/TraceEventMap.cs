@@ -20,7 +20,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.ExternalId).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.CustomerCareUserEmail).HasMaxLength(70).IsUnicode(false);
             this.Property(t => t.Location).HasMaxLength(40).IsUnicode(true);
-            this.Property(t => t.PartnerName).HasMaxLength(140).IsUnicode(true);
+            this.Property(t => t.PartnerName).HasMaxLength(70).IsUnicode(false);
             this.Property(t => t.ChildEntityId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ChildObjectTableId).HasMaxLength(15).IsUnicode(false);
 

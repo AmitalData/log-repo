@@ -14,7 +14,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
         {
             this.HasKey(t => t.Code);
             this.Property(t => t.Code).IsRequired().HasMaxLength(2).IsUnicode(false);
-            this.Property(t => t.Name).IsRequired().HasMaxLength(40).IsUnicode(true);
+            this.Property(t => t.Name).IsRequired().HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
 
             // Table & Column Mappings

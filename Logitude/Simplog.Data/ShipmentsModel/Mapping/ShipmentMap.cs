@@ -154,7 +154,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.DangerousUnNumber).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.DangerousClassNumber).HasMaxLength(10).IsUnicode(false);
             this.Property(t => t.DangerousPackagingGroup).HasMaxLength(10).IsUnicode(false);
-            this.Property(t => t.DangerousMaterialDescription).HasMaxLength(200).IsUnicode(true);            
+            this.Property(t => t.DangerousMaterialDescription).HasMaxLength(100).IsUnicode(false);            
             this.Property(t => t.QuoteId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.QuoteNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.BookingId).HasMaxLength(15).IsUnicode(false);            
@@ -258,9 +258,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.OtherParticipantInformationPortCode1).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.OtherParticipantInformationPortCode2).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.OtherParticipantInformationPortCode3).HasMaxLength(3).IsUnicode(false);
-            this.Property(t => t.OtherParticipantInformationName1).HasMaxLength(70).IsUnicode(true);
-            this.Property(t => t.OtherParticipantInformationName2).HasMaxLength(70).IsUnicode(true);
-            this.Property(t => t.OtherParticipantInformationName3).HasMaxLength(70).IsUnicode(true);
+            this.Property(t => t.OtherParticipantInformationName1).HasMaxLength(35).IsUnicode(false);
+            this.Property(t => t.OtherParticipantInformationName2).HasMaxLength(35).IsUnicode(false);
+            this.Property(t => t.OtherParticipantInformationName3).HasMaxLength(35).IsUnicode(false);
             this.Property(t => t.OtherParticipantInformationReference1).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.OtherParticipantInformationReference2).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.OtherParticipantInformationReference3).HasMaxLength(15).IsUnicode(false);
@@ -288,7 +288,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ConsolidatorReference).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.AccountManagerUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.IssuingCarrierReference1).HasMaxLength(50).IsUnicode(false);
-            this.Property(t => t.ShipperName).HasMaxLength(70).IsUnicode(false);
+            this.Property(t => t.ShipperName).HasMaxLength(140).IsUnicode(true);
             this.Property(t => t.ConsigneeName).HasMaxLength(70).IsUnicode(false);
             this.Property(t => t.ShippingAgent).HasMaxLength(70).IsUnicode(false);
             this.Property(t => t.ForwarderShipmentNumber).HasMaxLength(20).IsUnicode(false);
@@ -394,11 +394,11 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.OperationalStatusId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.BillingStatusId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.DestinationWarehouseId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.PreForwardingVesselName).HasMaxLength(80).IsUnicode(true);
-            this.Property(t => t.OnForwardingVesselName).HasMaxLength(80).IsUnicode(true);
+            this.Property(t => t.PreForwardingVesselName).HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.OnForwardingVesselName).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.LastDeliveryFullAddress).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.FirstPickupFullAddress).HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.PrivateLabelAgentName).HasMaxLength(140).IsUnicode(true);
+            this.Property(t => t.PrivateLabelAgentName).HasMaxLength(70).IsUnicode(false);
             this.Property(t => t.ShippingLine).HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.PlaceOfDelivery).HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.PickupPlace).HasMaxLength(30).IsUnicode(false);

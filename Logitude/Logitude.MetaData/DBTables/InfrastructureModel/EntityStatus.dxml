@@ -40,8 +40,8 @@
   </Column>
   <Column
     Name="Name"
-    Type="nvarchar"
-    Size="80">
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="false" />
   </Column>
@@ -60,8 +60,8 @@
   </Column>
   <Column
     Name="DisplayName"
-    Type="nvarchar"
-    Size="80"
+    Type="varchar"
+    Size="40"
     DefaultValue="''">
     <Constraints
       Nullable="false" />
@@ -112,5 +112,5 @@
   <Index
     Columns="Tenant,ObjectTableId" />
   <Index
-    Columns="Tenant,Code" />
+	Columns="Tenant,Code" />
 </Table>

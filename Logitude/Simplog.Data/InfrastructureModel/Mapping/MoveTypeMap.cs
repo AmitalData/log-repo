@@ -24,8 +24,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             this.Property(t => t.MoveTypeEnglishName)
                 .IsRequired()
-                .HasMaxLength(80)
-                .IsUnicode(true);
+                .HasMaxLength(40)
+                .IsUnicode(false);
 
             this.Property(t => t.MoveTypeLocalName)
                 .IsRequired()

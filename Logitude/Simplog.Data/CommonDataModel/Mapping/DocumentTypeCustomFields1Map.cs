@@ -38,8 +38,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
             this.Property(t => t.Name)
                 .IsRequired()
-                .HasMaxLength(120)
-                .IsUnicode(true);
+                .HasMaxLength(60)
+                .IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("DocumentTypeCustomFields1");

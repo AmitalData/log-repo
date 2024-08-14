@@ -11,7 +11,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasKey(t => t.Id);
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Code).IsRequired().HasMaxLength(4).IsUnicode(false);
-            this.Property(t => t.Name).IsRequired().HasMaxLength(400).IsUnicode(false);
+            this.Property(t => t.Name).IsRequired().HasMaxLength(200).IsUnicode(false);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
             this.Property(t => t.IsIATA).IsRequired();
             this.Property(t => t.InActive).IsRequired();

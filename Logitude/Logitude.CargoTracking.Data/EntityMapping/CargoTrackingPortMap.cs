@@ -27,7 +27,7 @@ namespace Logitude.CargoTracking.Data.EntityMapping
 
             this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(3).IsUnicode(false);
 
-            this.Property(t => t.EnglishName).HasColumnName("EnglishName").HasMaxLength(80).IsUnicode(true);
+            this.Property(t => t.EnglishName).HasColumnName("EnglishName").HasMaxLength(40).IsUnicode(false);
 
             this.Property(t => t.CountryId).HasColumnName("CountryId").IsRequired().HasMaxLength(15).IsUnicode(false);
 

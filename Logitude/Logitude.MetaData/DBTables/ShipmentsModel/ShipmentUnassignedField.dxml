@@ -27,8 +27,8 @@
   </Column>
   <Column
     Name="FieldName"
-    Type="nvarchar"
-    Size="70">
+    Type="varchar"
+    Size="35">
     <Constraints
       Nullable="true" />
   </Column>
