@@ -487,8 +487,8 @@
   </Column>
   <Column
     Name="FullNameTextCodeId"
-    Type="varchar"
-    Size="30">
+    Type="nvarchar"
+    Size="60">
     <Constraints
       Nullable="true" />
   </Column>

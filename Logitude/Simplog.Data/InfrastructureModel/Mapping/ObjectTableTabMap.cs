@@ -24,8 +24,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             this.Property(t => t.TabNameTextCodeId)
                 .IsRequired()
-                .HasMaxLength(30)
-                .IsUnicode(false);
+                .HasMaxLength(60)
+                .IsUnicode(true);
 
             this.Property(t => t.ObjectTableId)
                 .IsRequired()
