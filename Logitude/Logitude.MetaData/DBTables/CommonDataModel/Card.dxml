@@ -630,22 +630,8 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-  ForeignKeyColumn="SingleInvoiceTemplateId"
-     ReferencedTable="DocumentTypeTemplates"
-     ReferencedColumn="Id"
-     ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="CustomsInvoiceTemplateId"
+    ForeignKeyColumn="SingleInvoiceTemplateId,CustomsInvoiceTemplateId,ConsolidationInvoiceTemplateId,ManifestInvoiceTemplateId"
     ReferencedTable="DocumentTypeTemplates"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ConsolidationInvoiceTemplateId"
-    ReferencedTable="DocumentTypeTemplates"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ManifestInvoiceTemplateId"    ReferencedTable="DocumentTypeTemplates"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
