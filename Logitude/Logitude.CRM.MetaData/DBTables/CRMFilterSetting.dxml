@@ -2,7 +2,8 @@
 <Table
   Name="CRMFilterSettings"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="CRM">
   <Column
     Name="Id"
     Type="varchar"
@@ -26,15 +27,15 @@
   </Column>
   <Column
     Name="ControlNameSpace"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
     Name="FilterName"
-    Type="nvarchar"
-    Size="100">
+    Type="varchar"
+    Size="50">
     <Constraints
       Nullable="false" />
   </Column>

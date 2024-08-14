@@ -153,9 +153,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 
 					 						FieldName =  "Name",
 					  						ObjectTableName =  "ShipmentLevel",
-					  						FieldsDataType =  "nText",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  80,
+					  						MaxLength =  40,
 					  						IsRequired =  true,
 					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  true,

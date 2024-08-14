@@ -5,6 +5,14 @@
   DBType="Main"
   Module="Accounting">
   <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
     Name="Code"
     Type="varchar"
     Size="3">
@@ -13,8 +21,8 @@
   </Column>
   <Column
     Name="Name"
-    Type="nvarchar"
-    Size="120">
+    Type="varchar"
+    Size="60">
     <Constraints
       Nullable="false" />
   </Column>
@@ -30,14 +38,6 @@
     Type="nvarchar"
     Size="100">
     <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Id"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column

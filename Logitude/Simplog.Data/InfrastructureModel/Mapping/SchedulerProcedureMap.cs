@@ -22,13 +22,13 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                  .IsUnicode(false);
 
             this.Property(t => t.Name)
-                 .HasMaxLength(200)
-                .IsUnicode(true);
+                 .HasMaxLength(100)
+                .IsUnicode(false);
 
             this.Property(t => t.Description)
                 .IsOptional()
-                .HasMaxLength(2000)
-                .IsUnicode(true);
+                .HasMaxLength(1000)
+                .IsUnicode(false);
             this.Property(t => t.SearchFields)
                .IsOptional()
                .HasMaxLength(1000)

@@ -4,15 +4,11 @@
   ObjectTableName="&quot;PrepaidCollect&quot;"
   IsNew="false"
   DBTableName="&quot;PrepaidCollects&quot;"
-  DBTableOldNames="PrepaidCollects"
+  OldDBTableName="&quot;PrepaidCollects&quot;"
   ObjectTableSingular="&quot;Prepaid Collect&quot;"
   ObjectTablePlural="&quot;PrepaidCollects&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
-  AvailableInCustomization="false"
-  SupportSubEntity="false"
-  ApplyGenericCustomFields="false"
-  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -42,7 +38,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Prepaid Collect&quot;"
-  Code="&quot;045e&quot;"
+  Code="&quot;4d08&quot;"
   Name="&quot;PrepaidCollect&quot;"
   CloseTableCode="&quot;Id&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -58,8 +54,6 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
-  IsBusinessUnitEnabled="false"
-  TenantZeroData="false"
   Code1="&quot;1e78&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -73,7 +67,7 @@
   <field
     Id="&quot;beff139c-7e64-4ebb-b61e-01a88afe1ccb&quot;"
     FieldName="&quot;Id&quot;"
-    OldNames="Id"
+    OldFieldName="&quot;Id&quot;"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -92,7 +86,6 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
-    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -124,7 +117,6 @@
     ListLableDefaultText="&quot;ID&quot;"
     IsNullable="false"
     IsForeignKey="false"
-    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -150,14 +142,14 @@
   <field
     Id="&quot;cd726ac5-2cd0-4d39-8652-f66b02928aa1&quot;"
     FieldName="&quot;Name&quot;"
-    OldNames="Name"
+    OldFieldName="&quot;Name&quot;"
     IsNew="false"
-    IsChecked="true"
+    IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;PrepaidCollect&quot;"
-    FieldsDataType="&quot;nText&quot;"
+    FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="20"
+    MaxLength="10"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="true"
@@ -169,7 +161,6 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
-    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -201,7 +192,6 @@
     ListLableDefaultText="&quot;Name&quot;"
     IsNullable="false"
     IsForeignKey="false"
-    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -227,7 +217,7 @@
   <field
     Id="&quot;15259b31-5397-4205-9bb1-b96f6e3aae9f&quot;"
     FieldName="&quot;DisplayInLOV&quot;"
-    OldNames="DisplayInLOV"
+    OldFieldName="&quot;DisplayInLOV&quot;"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -246,7 +236,6 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
-    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -276,7 +265,6 @@
     DefaultText="&quot;Display In LOV&quot;"
     IsNullable="false"
     IsForeignKey="false"
-    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -302,7 +290,7 @@
   <field
     Id="&quot;67ec2738-77ee-4f3c-9e3b-b21088e4536d&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldNames="SearchFields"
+    OldFieldName="&quot;SearchFields&quot;"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -321,7 +309,6 @@
     SystemMaxLength="1000"
     DisplayInList="false"
     IsCustomFilter="false"
-    IsListFilter="false"
     Operator="&quot;Contains&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -353,7 +340,6 @@
     HelpTextDefaultText="&quot;Searching by :&#xA;1: code&#xA;2: name&quot;"
     IsNullable="false"
     IsForeignKey="false"
-    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -432,8 +418,7 @@
   <DataContracts>
     <DataContract
       Name="&quot;PrepaidCollect&quot;"
-      Version="&quot;ApiV1&quot;"
-      IncludeTenant0Data="false">
+      Version="&quot;ApiV1&quot;">
       <DCField
         DCFieldName="&quot;Code&quot;"
         FieldName="&quot;Id&quot;"
@@ -447,8 +432,7 @@
         IsAttribute="true"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;Name&quot;"
         FieldName="&quot;Name&quot;"
@@ -462,8 +446,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>

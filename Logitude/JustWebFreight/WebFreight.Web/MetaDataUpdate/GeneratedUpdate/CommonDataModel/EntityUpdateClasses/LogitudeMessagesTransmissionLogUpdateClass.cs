@@ -1153,9 +1153,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "UserName",
 					  						ObjectTableName =  "LogitudeMessagesTransmissionLog",
-					  						FieldsDataType =  "nText",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength = 140,
+					  						MaxLength =  70,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1817,9 +1817,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "DescriptionOfGoods",
 					  						ObjectTableName =  "LogitudeMessagesTransmissionLog",
-					  						FieldsDataType =  "nText",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  4000,
+					  						MaxLength =  2000,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,

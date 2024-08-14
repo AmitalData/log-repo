@@ -19,8 +19,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             this.Property(t => t.Name)
                 .IsRequired()
-                .HasMaxLength(40)
-                .IsUnicode(true);
+                .HasMaxLength(20)
+                .IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("TextCodeTypes");

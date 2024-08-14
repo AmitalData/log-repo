@@ -15,7 +15,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ShipmentPackageId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.PackageTypeId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.Description).HasMaxLength(4000).IsUnicode(true);
+            this.Property(t => t.Description).HasMaxLength(2000).IsUnicode(false);
             this.Property(t => t.OriginalShipmentPackageId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.OriginalInsideShipmentPackageId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Reference1).HasMaxLength(2000).IsUnicode(false);
@@ -23,7 +23,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Reference3).HasMaxLength(2000).IsUnicode(false);
             this.Property(t => t.Reference4).HasMaxLength(2000).IsUnicode(false);
             this.Property(t => t.CommodityNumber).HasMaxLength(20).IsUnicode(false);
-            this.Property(t => t.CommodityName).HasMaxLength(500).IsUnicode(true);
+            this.Property(t => t.CommodityName).HasMaxLength(250).IsUnicode(false);
             this.Property(t => t.Make).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.Model).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.Year).HasMaxLength(100).IsUnicode(false);

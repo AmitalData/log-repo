@@ -108,9 +108,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Booking", "Booking", "{15D4CCF2-9680-467A-BAEC-CED8AD2C86B0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServerOthers", "ServerOthers", "{58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}"
-	ProjectSection(SolutionItems) = preProject
-		Logitude.Customs.MetaData\EntityFiles\LeadDocumentType.lxml = Logitude.Customs.MetaData\EntityFiles\LeadDocumentType.lxml
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{EA704120-33C4-4C09-8831-B640B652A926}"
 EndProject

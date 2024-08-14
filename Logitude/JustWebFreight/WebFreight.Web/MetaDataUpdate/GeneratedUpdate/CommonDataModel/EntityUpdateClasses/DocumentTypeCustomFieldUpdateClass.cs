@@ -319,9 +319,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "Name",
 					  						ObjectTableName =  "DocumentTypeCustomField",
-					  						FieldsDataType =  "nText",
-					  						DataTypeCode =  "nText",
-					  						MaxLength =  120,
+					  						FieldsDataType =  "Text",
+					  						DataTypeCode =  "Text",
+					  						MaxLength =  60,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,

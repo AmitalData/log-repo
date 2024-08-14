@@ -218,9 +218,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 
 					 						FieldName =  "Name",
 					  						ObjectTableName =  "PickUpDeliveryTransportMode",
-					  						FieldsDataType =  "nText",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  120,
+					  						MaxLength =  60,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,

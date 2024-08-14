@@ -54,8 +54,8 @@
   </Column>
   <Column
     Name="UserControlName"
-    Type="nvarchar"
-    Size="240">
+    Type="varchar"
+    Size="120">
     <Constraints
       Nullable="true" />
   </Column>

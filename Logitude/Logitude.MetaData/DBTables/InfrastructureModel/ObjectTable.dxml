@@ -26,8 +26,8 @@
   </Column>
   <Column
     Name="NewWizardControlName"
-    Type="nvarchar"
-    Size="500">
+    Type="varchar"
+    Size="250">
     <Constraints
       Nullable="true" />
   </Column>
@@ -167,8 +167,8 @@
   </Column>
   <Column
     Name="DBTableName"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
@@ -295,15 +295,15 @@
   </Column>
   <Column
     Name="ClientModuleName"
-    Type="nvarchar"
-    Size="120">
+    Type="varchar"
+    Size="60">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="ServerModuleName"
-    Type="nvarchar"
-    Size="120">
+    Type="varchar"
+    Size="60">
     <Constraints
       Nullable="true" />
   </Column>
@@ -380,8 +380,8 @@
   </Column>
   <Column
     Name="Name"
-    Type="nvarchar"
-    Size="100">
+    Type="varchar"
+    Size="50">
     <Constraints
       Nullable="false" />
   </Column>
@@ -394,8 +394,8 @@
   </Column>
   <Column
     Name="DescriptionTextCodeCode"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
@@ -408,8 +408,8 @@
   </Column>
   <Column
     Name="NameField"
-    Type="nvarchar"
-    Size="120">
+    Type="varchar"
+    Size="60">
     <Constraints
       Nullable="true" />
   </Column>
@@ -448,8 +448,8 @@
   </Column>
   <Column
     Name="ParentObjectTableName"
-    Type="nvarchar"
-    Size="100">
+    Type="varchar"
+    Size="50">
     <Constraints
       Nullable="true" />
   </Column>
@@ -487,15 +487,15 @@
   </Column>
   <Column
     Name="FullNameTextCodeId"
-    Type="varchar"
-    Size="30">
+    Type="nvarchar"
+    Size="60">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="FullNameTextCodeCode"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>

@@ -19,18 +19,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="IsContainer"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsContainerMeasurement"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="Code"
     Type="varchar"
     Size="4">
@@ -39,15 +27,8 @@
   </Column>
   <Column
     Name="Name"
-    Type="nvarchar"
-    Size="80">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="ShortName"
-    Type="nvarchar"
-    Size="80">
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="false" />
   </Column>
@@ -59,7 +40,26 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="ShortName"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsContainerMeasurement"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsContainer"
     Type="bit">
     <Constraints
       Nullable="false" />

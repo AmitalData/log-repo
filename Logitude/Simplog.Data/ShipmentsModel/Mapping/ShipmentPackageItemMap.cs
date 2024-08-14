@@ -16,7 +16,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
 
             this.Property(t => t.PackageId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.LineNumber).HasDatabaseGeneratedOption(null);
-            this.Property(t => t.Description).IsRequired().HasMaxLength(200).IsUnicode(true);
+            this.Property(t => t.Description).IsRequired().HasMaxLength(100).IsUnicode(false);
 
             this.ToTable("ShipmentPackageItems");
             this.Property(t => t.PackageId).HasColumnName("PackageId");

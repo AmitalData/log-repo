@@ -24,8 +24,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             this.Property(t => t.TabNameTextCodeId)
                 .IsRequired()
-                .HasMaxLength(30)
-                .IsUnicode(false);
+                .HasMaxLength(60)
+                .IsUnicode(true);
 
             this.Property(t => t.ObjectTableId)
                 .IsRequired()
@@ -42,8 +42,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .IsUnicode(false);
 
             this.Property(t => t.TabNameTextCodeCode)
-                .HasMaxLength(200)
-                .IsUnicode(true);
+                .HasMaxLength(100)
+                .IsUnicode(false);
             this.Property(t => t.FeatureUniqeCode)
                .HasMaxLength(120)
                .IsUnicode(false);
@@ -75,8 +75,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             //    .HasForeignKey(d => d.TabNameTextCodeId);
 
             this.Property(t => t.HtmlComponentName)
-                .HasMaxLength(200)
-                .IsUnicode(true);
+                .HasMaxLength(100)
+                .IsUnicode(false);
 
             this.Property(t => t.HtmlComponentUrl)
                 .HasMaxLength(256)

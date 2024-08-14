@@ -3,7 +3,7 @@
   Name="TariffSurchargesUpdateMethods"
   Schema="dbo"
   DBType="Main"
-  Module="TariffModule">
+  Module="Tariff">
   <Column
     Name="Code"
     Type="varchar"
@@ -14,8 +14,8 @@
   </Column>
   <Column
     Name="Name"
-    Type="nvarchar"
-    Size="80">
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="true" />
   </Column>

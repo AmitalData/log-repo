@@ -15,7 +15,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasKey(t => t.Code);
 
             this.Property(t => t.Code).IsRequired().HasMaxLength(3).IsUnicode(false);
-            this.Property(t => t.Name).IsRequired().HasMaxLength(200).IsUnicode(true);
+            this.Property(t => t.Name).IsRequired().HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
 //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

@@ -665,15 +665,15 @@
   </Column>
   <Column
     Name="ShipperName"
-    Type="varchar"
-    Size="70">
+    Type="nvarchar"
+    Size="140">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="ConsigneeName"
-    Type="varchar"
-    Size="70">
+    Type="nvarchar"
+    Size="140">
     <Constraints
       Nullable="true" />
   </Column>
@@ -867,8 +867,8 @@
   </Column>
   <Column
     Name="DangerousMaterialDescription"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
@@ -1649,24 +1649,24 @@
   <Column
     Name="OtherParticipantInformationName1"
     ShortName="OtherParticipantInfoName1"
-    Type="nvarchar"
-    Size="70">
+    Type="varchar"
+    Size="35">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="OtherParticipantInformationName2"
     ShortName="OtherParticipantInfoName2"
-    Type="nvarchar"
-    Size="70">
+    Type="varchar"
+    Size="35">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="OtherParticipantInformationName3"
     ShortName="OtherParticipantInfoName3"
-    Type="nvarchar"
-    Size="70">
+    Type="varchar"
+    Size="35">
     <Constraints
       Nullable="true" />
   </Column>
@@ -3061,8 +3061,8 @@
   </Column>
   <Column
     Name="PreForwardingVesselName"
-    Type="nvarchar"
-    Size="80">
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="true" />
   </Column>
@@ -3134,8 +3134,8 @@
   </Column>
   <Column
     Name="OnForwardingVesselName"
-    Type="nvarchar"
-    Size="80">
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="true" />
   </Column>
@@ -3343,8 +3343,8 @@
   </Column>
   <Column
     Name="PrivateLabelAgentName"
-    Type="nvarchar"
-    Size="140">
+    Type="varchar"
+    Size="70">
     <Constraints
       Nullable="true" />
   </Column>

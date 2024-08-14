@@ -169,8 +169,8 @@
   </Column>
   <Column
     Name="LeadDescription"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
@@ -197,8 +197,8 @@
   </Column>
   <Column
     Name="PrimaryContactName"
-    Type="nvarchar"
-    Size="120">
+    Type="varchar"
+    Size="60">
     <Constraints
       Nullable="true" />
   </Column>

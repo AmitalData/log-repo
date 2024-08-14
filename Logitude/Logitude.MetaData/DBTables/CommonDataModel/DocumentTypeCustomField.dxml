@@ -2,7 +2,8 @@
 <Table
   Name="DocumentTypeCustomFields1"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -18,12 +19,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="IndexOrder"
-    Type="int">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="DocumentTypeId"
     Type="varchar"
     Size="15">
@@ -34,13 +29,6 @@
     Name="FieldCode"
     Type="varchar"
     Size="30">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Name"
-    Type="nvarchar"
-    Size="120">
     <Constraints
       Nullable="false" />
   </Column>
@@ -64,17 +52,30 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="DefaultValue"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="MultiLine"
     Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="DefaultValue"
-    Type="nvarchar"
-    Size="250">
+    Name="Name"
+    Type="varchar"
+    Size="60">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IndexOrder"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="DocumentTypeId"
@@ -87,5 +88,5 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Index
-    Columns="DocumentTypeId,Tenant" />
+	Columns="DocumentTypeId,Tenant" />
 </Table>

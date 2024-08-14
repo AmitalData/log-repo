@@ -83,8 +83,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                .IsUnicode(true);
 
             this.Property(t => t.ExecutedByServerName)
-                .HasMaxLength(200)
-                .IsUnicode(true);
+                .HasMaxLength(100)
+                .IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("TasksScheduler");

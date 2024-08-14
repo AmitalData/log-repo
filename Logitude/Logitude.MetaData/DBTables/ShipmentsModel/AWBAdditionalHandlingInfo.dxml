@@ -27,15 +27,15 @@
   </Column>
   <Column
     Name="Name"
-    Type="nvarchar"
-    Size="120">
+    Type="varchar"
+    Size="60">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
     Name="PrintDescription"
-    Type="nvarchar"
-    Size="120">
+    Type="varchar"
+    Size="60">
     <Constraints
       Nullable="false" />
   </Column>

@@ -39,7 +39,7 @@ namespace Logitude.Workflow.Data.EntityMapping
 
             this.Property(t => t.VersionNumber).HasColumnName("VersionNumber").IsRequired();
 
-            this.Property(t => t.Description).HasColumnName("Description").HasMaxLength(2000).IsUnicode(true);
+            this.Property(t => t.Description).HasColumnName("Description").HasMaxLength(1000).IsUnicode(false);
 
             this.Property(t => t.StatusCode).HasColumnName("StatusCode").IsRequired().HasMaxLength(4).IsUnicode(false);
 

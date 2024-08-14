@@ -360,9 +360,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 
 					 						FieldName =  "DescriptionOfGoods",
 					  						ObjectTableName =  "ShipmentCommodity",
-					  						FieldsDataType =  "nText",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  4000,
+					  						MaxLength =  2000,
 					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  false,

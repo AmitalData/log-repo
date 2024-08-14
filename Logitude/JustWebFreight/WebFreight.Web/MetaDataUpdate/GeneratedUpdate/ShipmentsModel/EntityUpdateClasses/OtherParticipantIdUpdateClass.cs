@@ -202,9 +202,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 
 					 						FieldName =  "Name",
 					  						ObjectTableName =  "OtherParticipantId",
-					  						FieldsDataType =  "nText",
-					  						DataTypeCode =  "nText",
-					  						MaxLength =  100,
+					  						FieldsDataType =  "Text",
+					  						DataTypeCode =  "Text",
+					  						MaxLength =  50,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  true,

@@ -2,7 +2,8 @@
 <Table
   Name="ProductPeriods"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Code"
     Type="varchar"
@@ -13,8 +14,8 @@
   </Column>
   <Column
     Name="Name"
-    Type="nvarchar"
-    Size="120">
+    Type="varchar"
+    Size="60">
     <Constraints
       Nullable="false" />
   </Column>

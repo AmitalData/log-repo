@@ -49,7 +49,7 @@ namespace Logitude.BookingLib.Data.EntityMapping
 
             this.Property(t => t.OtherServicesInformation).HasColumnName("OtherServicesInformation").HasMaxLength(250).IsUnicode(false);
 
-            this.Property(t => t.DescriptionOfGoods).HasColumnName("DescriptionOfGoods").HasMaxLength(1024).IsUnicode(true);
+            this.Property(t => t.DescriptionOfGoods).HasColumnName("DescriptionOfGoods").HasMaxLength(512).IsUnicode(false);
 
             this.Property(t => t.NumberOfPieces).HasColumnName("NumberOfPieces");
 

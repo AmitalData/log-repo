@@ -915,43 +915,43 @@
   </Column>
   <Column
    Name="MainCarriageVesselName"
-   Type="nvarchar"
-   Size="80">
+   Type="varchar"
+   Size="40">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
    Name="Transshipment1VesselName"
-   Type="nvarchar"
-   Size="80">
+   Type="varchar"
+   Size="40">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
    Name="Transshipment2VesselName"
-   Type="nvarchar"
-   Size="80">
+   Type="varchar"
+   Size="40">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
    Name="Transshipment3VesselName"
-   Type="nvarchar"
-   Size="80">
+   Type="varchar"
+   Size="40">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
    Name="PreCarriageVesselName"
-   Type="nvarchar"
-   Size="80">
+   Type="varchar"
+   Size="40">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
    Name="OnCarriageVesselName"
-   Type="nvarchar"
-   Size="80">
+   Type="varchar"
+   Size="40">
     <Constraints
       Nullable="true" />
   </Column>

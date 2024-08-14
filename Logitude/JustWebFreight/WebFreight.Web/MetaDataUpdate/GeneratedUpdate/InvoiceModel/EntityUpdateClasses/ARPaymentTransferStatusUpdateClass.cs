@@ -212,10 +212,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 
 					 						FieldName =  "Name",
 					  						ObjectTableName =  "ARPaymentTransferStatus",
-					  						FieldsDataType =  "nText",
+					  						FieldsDataType =  "Text",
 					  						FieldCode =  "ARPaymentTransferStatus.Name",
 					  						Code =  "Name",
-					  						MaxLength =  40,
+					  						MaxLength =  20,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  true,

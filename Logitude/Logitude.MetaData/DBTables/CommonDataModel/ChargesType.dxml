@@ -97,8 +97,8 @@
   </Column>
   <Column
     Name="EnglishName"
-    Type="nvarchar"
-    Size="160">
+    Type="varchar"
+    Size="80">
     <Constraints
       Nullable="false" />
   </Column>

@@ -27,8 +27,8 @@
   </Column>
   <Column
     Name="EnglishName"
-    Type="nvarchar"
-    Size="80">
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="false" />
   </Column>
@@ -46,16 +46,16 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
+    Name="ParentFolderId"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="ParentFolderId"
-    Type="varchar"
-    Size="15">
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>

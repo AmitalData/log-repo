@@ -98,8 +98,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
              .IsUnicode(false);
 
             this.Property(t => t.QueueName)
-          .HasMaxLength(200)
-          .IsUnicode(true);
+          .HasMaxLength(100)
+          .IsUnicode(false);
 
             this.Property(t => t.MessageLockId)
          .HasMaxLength(40)

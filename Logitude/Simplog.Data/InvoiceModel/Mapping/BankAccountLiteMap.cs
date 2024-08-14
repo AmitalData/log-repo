@@ -20,7 +20,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
             this.Property(t => t.LocalName).HasColumnName("LocalName").HasMaxLength(30).IsUnicode(true);
-            this.Property(t => t.EnglishName).HasColumnName("EnglishName").HasMaxLength(60).IsUnicode(true);
+            this.Property(t => t.EnglishName).HasColumnName("EnglishName").HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.BranchNumber).HasColumnName("BranchNumber").HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.AccountNumber).HasColumnName("AccountNumber").IsRequired().HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.IBAN).HasColumnName("IBAN").HasMaxLength(40).IsUnicode(false);

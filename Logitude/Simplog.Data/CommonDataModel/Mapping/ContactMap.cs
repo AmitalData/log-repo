@@ -9,7 +9,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
         public ContactMap()
         {
             this.HasKey(t => t.Id);
-            this.Property(t => t.EnglishName).IsRequired().HasMaxLength(120).IsUnicode(true);
+            this.Property(t => t.EnglishName).IsRequired().HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.Email).HasMaxLength(70).IsUnicode(false);
             this.Property(t => t.BusinessPhone).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.Mobile).HasMaxLength(25).IsUnicode(false);
@@ -26,7 +26,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.IndexColor);
             this.Property(t => t.Position).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.ComputedKey).HasMaxLength(70).IsUnicode(false);
-            this.Property(t => t.CompanyName).HasMaxLength(2000).IsUnicode(true);
+            this.Property(t => t.CompanyName).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.ExternalId).HasMaxLength(20).IsUnicode(false);
 
             // Table & Column Mappings

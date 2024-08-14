@@ -2,7 +2,8 @@
 <Table
   Name="TarrifTypes"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Code"
     Type="varchar"
@@ -13,8 +14,8 @@
   </Column>
   <Column
     Name="Name"
-    Type="nvarchar"
-    Size="80">
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="false" />
   </Column>

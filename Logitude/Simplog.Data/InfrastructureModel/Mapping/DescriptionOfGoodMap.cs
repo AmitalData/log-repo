@@ -19,13 +19,13 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             this.Property(t => t.Name)
                 .IsRequired()
-                .HasMaxLength(80)
-                .IsUnicode(true);
+                .HasMaxLength(40)
+                .IsUnicode(false);
 
             this.Property(t => t.DescriptionOfGood)
                 .IsRequired()
-                .HasMaxLength(1000)
-                .IsUnicode(true);
+                .HasMaxLength(500)
+                .IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("DescriptionOfGoods");
