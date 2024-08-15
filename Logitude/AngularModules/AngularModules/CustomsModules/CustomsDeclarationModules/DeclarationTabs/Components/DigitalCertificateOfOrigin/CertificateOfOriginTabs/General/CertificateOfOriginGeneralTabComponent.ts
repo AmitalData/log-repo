@@ -98,11 +98,11 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.SetPropertiesEnabled();
         this.SetWarning();
         this.SetWarningByCooTypeCode(EntityPM.CooTypeCode);
-        this.initSelectionValueFields();    
+        this.initSelectionValueFields();
         this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true : false;
     }
 
-    initSelectionValueFields(){
+    initSelectionValueFields() {
         this.selectedValueOriginCountry = this.entityPM.OriginGroupOfCountry && !this.entityPM.OriginCountry ? this.fieldNameOriginGroupOfCountry : this.fieldNameOriginCountry;
         this.selectedValueDestinationCountry = this.entityPM.DestinationGroupOfCountries && !this.entityPM.DestinationCountry ? this.fieldNameDestinationGroupOfCountries : this.fieldNameDestinationCountry;
         this.selectedValueTradeAgreement = this.entityPM.TradeAgreementGroupOfCountries && !this.entityPM.TradeAgreementCountry2 ? this.fieldNameTradeAgreementGroupOfCountries : this.fieldNameTradeAgreementCountry2;
@@ -305,31 +305,30 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("IsInvoicesForPrint", "Customs.CertificateOriginInvoice", enabled);
         this.UIProperties.SetEnabled("Observations", this.ObjectTableName, enabled);
 
-        this.disableElementById("selectedValueTradeAgreementBox", enabled);
-        this.disableElementById("selectedValueOriginCountryBox", enabled);
-        this.disableElementById("selectedValueDestinationCountryBox", enabled);
+        // this.disableElementById("selectedValueTradeAgreementBox", enabled);
+        // this.disableElementById("selectedValueOriginCountryBox", enabled);
+        // this.disableElementById("selectedValueDestinationCountryBox", enabled);
     }
 
-
-    disableElementById(elementId: string, enabled: boolean): void {
-        const selectElement = document.getElementById(elementId) as HTMLSelectElement;
-        if (selectElement) {
-            selectElement.disabled = !enabled;
-        }
-    }
+    // disableElementById(elementId: string, enabled: boolean): void {
+        // const selectElement = document.getElementById(elementId) as HTMLSelectElement;
+        // if (selectElement) {
+        //     selectElement.disabled = !enabled;
+        // }
+    // }
 
     SetWarning() {
         this.UIProperties.SetWarning("CooTypeCode", this.ObjectTableName, true);
         this.UIProperties.SetWarning("RequestReasonCode", this.ObjectTableName, true);
     }
 
-    SetDisableByCooTypeCode(enabled: boolean) { // if CooTypeCode = 1 or 2
+    SetDisableByCooTypeCodeEuro(enabled: boolean) { // if CooTypeCode = 1 or 2
         this.UIProperties.SetEnabled("TradeAgreementCountry1", this.ObjectTableName, enabled);
         this.UIProperties.SetEnabled("TradeAgreementCountry2", this.ObjectTableName, enabled);
         this.UIProperties.SetEnabled("TradeAgreementGroupOfCountries", this.ObjectTableName, enabled);
         this.UIProperties.SetEnabled("PlaceOfManufacture", this.ObjectTableName, enabled);
         this.UIProperties.SetEnabled("ZipCodeOfManufacture", this.ObjectTableName, enabled);
-        this.disableElementById("selectedValueTradeAgreementBox", enabled);
+        // this.disableElementById("selectedValueTradeAgreementBox", enabled);
     }
 
     mandatoryFielsList = [];
@@ -339,7 +338,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     formSectionsCouples: FormSectionsCouples;
     //certificateOfOriginMandatoryCouples = [];
     SetWarningByCooTypeCode(CooTypeCode) {
-
         if (!CooTypeCode) {
             this.tempCertificateOfOriginMandatoryFieldsList.forEach(i => {
                 this.UIProperties.SetWarning(i.MappedCertificateFieldsName, this.ObjectTableName, false);
@@ -356,10 +354,10 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             this.IsDisplayOnly = false;
             this.SetPropertiesEnabledAllFields(!this.IsDisplayOnly);
             if (this.entityPM.CooTypeCode != "1" && this.entityPM.CooTypeCode != "2") {
-                this.SetDisableByCooTypeCode(this.IsDisplayOnly);
+                this.SetDisableByCooTypeCodeEuro(this.IsDisplayOnly);
             }
         }
-        
+
         this.certificateOfOriginWebService.GetMandatoryFieldsByCooTypeCode(CooTypeCode, this.entityPM.Tenant).subscribe((myResponse: any) => {
             if (!myResponse.HasError) {
                 if (this.tempCertificateOfOriginMandatoryFieldsList.length > 0) {
