@@ -11,6 +11,8 @@ namespace Logitude.Accounting.Def.EntityUpdateServicesExt
     public interface IInterestReportsConnectedInvoiceUpdateServiceExt
     {
         void UpdateInterestLastBatchService(string ReportId, int Tenant, IAccountingContext MainContext, string ARInvoiceId);
+        bool CheckInterestReportsConnected(string ReportId, int Tenant, IAccountingContext MainContext);
+
     }
 
 }
