@@ -59,7 +59,7 @@ public class WarmService
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result Length: {1}",null,"GetObjectPMsByTenant",result.Count);
             }),
             ()=>RunWithExceptionHandling("GetAllFieldsTranslations", () => {
-                var result = generalDomainService.GetAllFieldsTranslations(tenant, "EN", 0, 220000).ToList();
+                var result = generalDomainService.GetAllFieldsTranslations(tenant, "EN", 0, 1).ToList();
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WarmService - action: {0}, result Length: {1}", null, "GetAllFieldsTranslations", result.Count);
             }),
             ()=>RunWithExceptionHandling("GetSystemMetadataLastUpdatesCacheHandle", () => {
