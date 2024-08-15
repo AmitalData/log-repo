@@ -25,6 +25,7 @@ using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Server.Tools.QueueService;
 using System.Xml.Serialization;
+using Simplog.Data.Helpers;
 
 namespace Logitude.Accounting.BL.InterestService
 {
@@ -77,6 +78,25 @@ namespace Logitude.Accounting.BL.InterestService
             return interestReportPM;
         }
 
+       public void UpdateInterestReportsStatues(string Statues, InterestReportPM interestReportPM, int Tenant, IAccountingContext MainContext, string ARInvoiceId = null, string InvoiceNumber = null, double? AmountInLocalCurrency = null, string InvoiceEntitiId = null,string CreatedByUserId = null)
+        {
+            if (MainContext == null)
+            {
+                MainContext = AccountingContext.GetContext(Tenant);
+            }
+            interestReportPM = GetSingleInterestReportPM(MainContext, Tenant, InvoiceEntitiId, AmountInLocalCurrency, null, InvoiceNumber);
+
+            var accountingContext = AccountingContext.GetContext(Tenant);
+
+            interestReportPM.InterestReportStatusCode = Statues;
+            interestReportPM.UpdatedByUserId = CreatedByUserId;
+            interestReportPM.UpdateDateTime = TenantServerConfigration.GetCurrentDateTime(Tenant);
+           
+            interestReportPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+            InterestReportUpdateService service = new InterestReportUpdateService(accountingContext, new Dictionary<string, IContext>(), Tenant);
+             service.Update(interestReportPM, true);
+
+        }
         public InterestLastBatchServicePM GetInterestLastBatchServiceByTenant(int tenant)
         {
             InterestLastBatchServiceQueryService interestLastBatchServiceQueryService = new InterestLastBatchServiceQueryService(tenant);

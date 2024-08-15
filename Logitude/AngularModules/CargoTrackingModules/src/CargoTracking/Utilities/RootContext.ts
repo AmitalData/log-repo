@@ -21,6 +21,10 @@ export class RootContext
     {
         RootContext.StartBusyIndicator('Loading');
     }
+    public static StartBusyIndicatorDynamic(text:string)
+    {
+        RootContext.StartBusyIndicator(text);
+    }
     public static StartBusyIndicatorCreating()
     {
         RootContext.StartBusyIndicator("Creating");

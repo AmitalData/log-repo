@@ -10,6 +10,7 @@ import { AgentSharedManifestPM } from '../../../Common/EntityPMs/AgentSharedMani
 import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
 import { HttpClient, HttpEvent, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
+import { AppTool } from 'Infrastructure/Tools';
 
 @Injectable()
 
@@ -129,8 +130,14 @@ export class ShipmentAdditionalCloudDataService {
 
 
         var callTime = new Date();
+        var url = this._apiUrl + '/GetSingleWithoutToken?' + 'securityId=' + id;
+
+        if (!AppTool.IsNullOrUndefined(Tenant)) {
+            url += '&tenant=' + Tenant;
+        }
+
         return defer(() => {
-            return this._httpClient.get(this._apiUrl + '/GetSingleWithoutToken?' + 'securityId=' + id + '&tenant=' + Tenant).pipe(
+            return this._httpClient.get(url).pipe(
                 map((response) => {
                     //if (response instanceof HttpResponse) {
                         var pm = response;

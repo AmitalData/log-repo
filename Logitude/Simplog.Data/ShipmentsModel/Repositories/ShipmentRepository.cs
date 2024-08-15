@@ -365,7 +365,20 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             IQueryable<ShipmentDataView> result = (from f in dataViewEntities.ShipmentDataViews where f.Tenant == tenant select f);
             return result;
         }
-
+        public IQueryable<LogBoxShipmentDataView> GetLogBoxShipmentViewsByTenant(int tenant)
+        {
+            ILogBoxShipmentDataViewContext dataViewEntities = LogBoxShipmentDataViewContext.GetContext(tenant);
+            if (useSecondaryDB)
+            {
+                dataViewEntities = LogBoxShipmentDataViewContext.GetSecContext(tenant);
+            }
+            if (tenant == 0)
+            {
+                return (from f in dataViewEntities.LogBoxShipmentDataView select f);
+            }
+            IQueryable<LogBoxShipmentDataView> result = (from f in dataViewEntities.LogBoxShipmentDataView where f.Tenant == tenant select f);
+            return result;
+        }
         public IQueryable<DigitalShipmentsDataView> GetDigitalShipmentViewsByTenant(int tenant)
         {
             return context.ShipmentDigitalDataViews.Where(f => f.Tenant == tenant);
@@ -845,7 +858,14 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
             return result;
         }
+        public LogBoxShipmentDataView GetSingleLogBoxShipmentDataView(string shipmentId, int tenant)
+        {
+            ILogBoxShipmentDataViewContext dataViewEntities = LogBoxShipmentDataViewContext.GetContext(tenant);
 
+            LogBoxShipmentDataView result = (from f in dataViewEntities.LogBoxShipmentDataView where f.Id == shipmentId && f.Tenant == tenant select f).FirstOrDefault();
+
+            return result;
+        }
         public ShipmentFollowUpDataView GetSingleShipmentFollowupDataView(string shipmentId, int tenant)
         {
             IShipmentFollowUpDataViewContext dataViewEntities = ShipmentFollowUpDataViewContext.GetContext(tenant);

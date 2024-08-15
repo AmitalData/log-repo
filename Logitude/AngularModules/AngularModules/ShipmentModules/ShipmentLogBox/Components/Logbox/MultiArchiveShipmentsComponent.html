@@ -108,7 +108,7 @@
                     </td>
 
                     <td style="width: 142px; vertical-align: middle; position:relative;">
-                        <TransportsFilter  (SelectedValueChanged)="SelectedTransportFilter = $event"></TransportsFilter>
+                        <TransportsFilter  [SelectedValue]="SelectedTransportFilter" (SelectedValueChanged)="SelectedTransportFilter = $event"></TransportsFilter>
                     </td>
 
                     <td style="width: 3px;">

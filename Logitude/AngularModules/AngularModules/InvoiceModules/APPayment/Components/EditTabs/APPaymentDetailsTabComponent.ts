@@ -72,9 +72,9 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     public TabWarnings: string[] = [];
     _JournalExtendedPMService: JournalExtendedPMService = new JournalExtendedPMService();
     public FilterInvoiceByAPPayment:boolean= false
-    public GLAccountsFilterItems: ApiQueryFilters;
+     public GLAccountsFilterItems: ApiQueryFilters;
     isLoad:boolean = false;
-    constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
+     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
 
         if (ObjectsLocator.GlobalSetting) {
@@ -120,8 +120,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private InitializeBillToLov() {
         if (this.IsFullAccounting) {
 
-            this.DisplayFieldsFromList = "Code,GLAccountDisplayNumber,CalculatedEnglishName,CalculatedLocalName,PartnerTypeName,CountryCode";
-            this.DisplayLocalFieldsFromList = "Code,GLAccountDisplayNumber,CalculatedLocalName,PartnerTypeName,CountryCode";
+            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,CalculatedLocalName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
+            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
 
             this.VendorLovSizeForFullAccounting = 550;
         }
@@ -643,18 +643,20 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private ConnectedList: APInvoiceList[] = [];
     private IsMatchedList: APInvoiceList[] = [];
     private ReconcileInvoiceList: APInvoiceList[] = [];
+    private InvoiceNumbers="";
+
     LoadData() {
         this.ItemsSource.Clear();
-        if (this.EntityPM.ReconcileInternalTrans.length > 0) {
-            var invoiceNumbers = "";
-            this.EntityPM.ReconcileInternalTrans.forEach(element => {
-                invoiceNumbers = invoiceNumbers + element.SourceNumber + ",";
 
+        if(this.EntityPM.ReconcileInternalTrans.length > 0) {
+            this.InvoiceNumbers = "";
+            this.EntityPM.ReconcileInternalTrans.forEach(element => {
+                this.InvoiceNumbers =  this.InvoiceNumbers + element.SourceId + ",";
             });
-            invoiceNumbers = invoiceNumbers.substring(0, invoiceNumbers.length - 1)
-            this.LoadPaymentInvoices(invoiceNumbers);
+            this.InvoiceNumbers =  this.InvoiceNumbers.substring(0,  this.InvoiceNumbers.length - 1)
+            this.LoadPaymentInvoices( this.InvoiceNumbers);
         }
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.VendorId) && this.EntityPM.StatusCode != "VD") {
+        else   if (!AppTool.IsNullOrEmpty(this.EntityPM.VendorId) && this.EntityPM.StatusCode != "VD") {
             if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
                 this.LoadPaymentInvoices_IsMatched();
             }
@@ -695,7 +697,12 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 }
 
                 else {
-                    this.LoadPaymentInvoices_IsMatched();
+                    if( this.InvoiceNumbers != "")
+                        this.LoadPaymentInvoices(this.InvoiceNumbers);
+                     
+                     else{
+                         this.LoadPaymentInvoices_IsMatched();
+                     }
                 }
             }
         });
@@ -850,7 +857,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         filters.SortDirection = "Descending";
 
         //filters.addAdditionalFilter("VendorId", this.EntityPM.VendorId, null, null, "Equals", false, false, false, "string");
-        filters.addAdditionalFilter("InvoiceNumber", invoiceNumbers, null, null, "InList", false, true, false, "string");
+        filters.addAdditionalFilter("Id", invoiceNumbers, null, null, "InListExact", false, true, false, "string");
 
 
 

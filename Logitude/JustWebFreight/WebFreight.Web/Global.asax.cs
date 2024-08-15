@@ -61,6 +61,7 @@ namespace WebFreight.Web
         System.Timers.Timer aTimer = new System.Timers.Timer();
         protected void Application_Start(object sender, EventArgs e)
         {
+            NetCommonHelper.Logger.DevLog.Instance.SetProcessName("website", true); //Set process name and is webApp
             LogitudeAppSettings.StartDateTime = DateTime.Now;
             //if ((DateTime.Now - LogitudeAppSettings.EndDateTime).TotalMinutes <= 5)
             //{
@@ -573,7 +574,7 @@ namespace WebFreight.Web
             LogitudeSettings.System2RedirectFraction = setting.System2RedirectFraction;
 			LogitudeSettings.WindWardSettings = setting.WindWardSettings;
 			LogitudeSettings.LogitudeIISURL = setting.LogitudeIISURL;
-
+            LogitudeSettings.TempStorageConnection = setting.TempStorageConnection;
 		}
 
 		private void StartSignalRTopicThread()

@@ -230,13 +230,13 @@ namespace CommunicationWorkerRole
         private static EmailCommunicationParams GetLogboxEmailCommunicationParams(SignUpInfoClass signUpInfo, string emailbody)
         {
             string additionalCCEmails = signUpInfo.IsCreateLogboxTenantFromCloud ? signUpInfo.AdditionalEmail : "";
-            //string additionalBCCEmails = signUpInfo.IsCreateLogboxTenantFromCloud ? "" : "boazelkana@gmail.com";
+           string additionalBCCEmails = signUpInfo.IsCreateLogboxTenantFromCloud ? "" : "boazelkana@gmail.com";
             return new EmailCommunicationParams()
             {
                 From = "admin@fnarsoft.com",
                 To = "anatl@AMITAL.CO.IL",
-                CC = "Simon@amital.co.il; ohad@AMITAL.CO.IL; chana@amital.co.il; badir@AMITAL.CO.IL; sana@AMITAL.CO.IL; elisheva@AMITAL.CO.IL",
-                BCC = "",
+                CC = "Simon@amital.co.il;chana@amital.co.il;badir@AMITAL.CO.IL;sana@AMITAL.CO.IL;elisheva@AMITAL.CO.IL;eyal@AMITAL.CO.IL ",
+                BCC = additionalBCCEmails,
                 Subject = LogitudeSettings.DeploymentStage + " - SignUp complete successfully for " + signUpInfo.Company,
                 EmailBody = emailbody,
                 Tenant = 0,

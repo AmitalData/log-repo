@@ -12,6 +12,9 @@ namespace Logitude.Accounting.Def.EntityUpdateServicesExt
     {
         void CancelledInterestTransactionsByARPayment(string EntityId, int Tenant);
         void UpdateConfirmCreateInvoice(InterestReportPM interestReportPM, int Tenant, IAccountingContext MainContext,string ARInvoiceId=null, string InvoiceNumber=null, double? AmountInLocalCurrency=null, string InvoiceEntitiId=null);
+
+        void UpdateInterestReportStatus(string Statues, InterestReportPM interestReportPM, int Tenant, IAccountingContext MainContext, string ARInvoiceId = null, string InvoiceNumber = null, double? AmountInLocalCurrency = null, string InvoiceEntitiId = null,string CreatedByUserId=null);
+
     }
 
 }

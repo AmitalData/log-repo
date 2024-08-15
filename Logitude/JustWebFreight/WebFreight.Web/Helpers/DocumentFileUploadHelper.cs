@@ -12,6 +12,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Azure;
 using Simplog.Server.Infrastructure.LogitudeCacheManager;
 using System;
@@ -41,6 +42,63 @@ namespace WebFreight.Web.Helpers
             // TODO: Complete member initialization
             this._CallFrom = callFrom;
         }
+
+        public static string GetTempStorageSasWrite(int tenant) =>
+            AzureStorage.GetFromCache(LogitudeSettings.TempStorageConnection, GetTempStorageContainerName(tenant))
+            .CreateSaSWrite().ToString().Replace("&amp;", "&");
+
+        public static string GetStorageEncryptionKey(int tenant) => 
+            new TenantQuery(tenant).GetSinglePM(tenant).StorageEncryptionKey;
+
+        private static string GetTempStorageContainerName(int tenant) => "hybrid-upload-tenant" + tenant.ToString();
+
+        public static Response AddDocumentAndSendToInternalStorage(int tenant, string blobname, string DocumentId)
+        {
+            Response response = new Response();
+
+            try
+            {                
+                if (string.IsNullOrEmpty(blobname))
+                    throw new ArgumentException("Invalid file name!");
+
+                string[] mfileParams = blobname.Split('.');
+                string finalFileName = blobname.Substring(0, blobname.LastIndexOf('.'));
+                string fileextension = mfileParams[mfileParams.Length - 1];
+
+                if (string.IsNullOrEmpty(fileextension))
+                    throw new ArgumentException("Invalid file extension!");
+
+                if (string.IsNullOrEmpty(finalFileName))
+                    throw new ArgumentException("Invalid file name!");
+
+                string fileName = new DocumentFileUploadHelper().BuidDocument(tenant, finalFileName, fileextension, 0, DocumentId, true);
+                string filePath = "tenant" + tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(fileName.ToLower(), "docsin");
+                string[] fileParams = fileName.Split('.');
+                BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = fileParams[0],
+                    FolderName = "docsin",
+                    Extension = fileParams[1],
+                    Tenant = tenant,
+                    FileSize = 0,
+                };
+                
+                string containerSASURI = AzureStorage.GetFromCache(LogitudeSettings.TempStorageConnection, GetTempStorageContainerName(tenant)).CreateSaSReadDelete().ToString();
+                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                storageservice.MoveFromAnotherStorage(containerSASURI, blobname, fileInfo);
+
+                response.Result = fileName.Split('.')[0].ToString();
+            }
+            catch (Exception e)
+            {
+                response.ErrorMessage = "Error while copying file to internal storage!, Error: " + e.Message;
+            }
+
+            response.HasError = !string.IsNullOrEmpty(response.ErrorMessage);
+
+            return response;
+        }
+
         public Response UploadDocumentFileData(byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string FileNameWithExtention, string DocumentId, DocumentsFilingPM documentsFilingPM = null)
         {
             Response response = new Response();
@@ -204,8 +262,7 @@ namespace WebFreight.Web.Helpers
 
         }
 
-
-        private string BuidDocument(int tenant, string fileName, string fileExtention, long fileSize, string DocId, bool hasfile)
+        public string BuidDocument(int tenant, string fileName, string fileExtention, long fileSize, string DocId, bool hasfile)
         {
             // try
             //{
