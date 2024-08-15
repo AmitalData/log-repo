@@ -2,7 +2,8 @@
 <Table
   Name="ShipmentCommodities"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Shipment">
   <Column
     Name="Id"
     Type="varchar"
@@ -18,37 +19,11 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="IsFirstLine"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="ShipmentId"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="false" />
-  </Column>
-  <Column
-    Name="DescriptionOfGoods"
-    Type="nvarchar"
-    Size="4000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="RateClassCode"
-    Type="varchar"
-    Size="3">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ChargeableWeight"
-    Type="float">
-    <Constraints
-      Nullable="true" />
   </Column>
   <Column
     Name="ChargeRate"
@@ -63,6 +38,13 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="RateClassCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="CommodityNumber"
     Type="varchar"
     Size="15">
@@ -70,16 +52,17 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="NumberOfPackages"
-    Type="int">
+    Name="DescriptionOfGoods"
+    Type="nvarchar"
+    Size="4000">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="GrossWeight"
-    Type="float">
+    Name="IsFirstLine"
+    Type="bit">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="Volume"
@@ -90,6 +73,24 @@
   <Column
     Name="VolumetricWeight"
     Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="GrossWeight"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ChargeableWeight"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NumberOfPackages"
+    Type="int">
     <Constraints
       Nullable="true" />
   </Column>
