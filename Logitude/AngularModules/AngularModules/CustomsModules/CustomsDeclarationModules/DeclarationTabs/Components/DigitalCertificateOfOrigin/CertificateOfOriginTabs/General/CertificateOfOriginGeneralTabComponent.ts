@@ -257,14 +257,24 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                this._declarationPMService.get(this.currentDeclaration.Id).subscribe(myResult => {
-                    var myResponse: ServiceResponse = myResult;
-                    if (!myResponse.HasError && myResponse.Result) {
-                        this.currentDeclaration = myResponse.Result;
-                        this.entityPM.IsChange = true;
+                // this._declarationPMService.get(this.currentDeclaration.Id).subscribe(myResult => {
+                //     var myResponse: ServiceResponse = myResult;
+                //     if (!myResponse.HasError && myResponse.Result) {
+                //         this.currentDeclaration = myResponse.Result;
+                //     }
+                    this.supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclaration(this.currentDeclaration.Id).subscribe((response: any) => {
+                        if (!response.HasError && response.Result) {
+                            this.currentDeclaration.SupplierInvoices = response.Result;
+                        }
+                        const oldItems = this.entityPM.CertificateOriginItemItems;
                         this.InitilizeNewCertificateWithConsignments(this.entityPM);
-                    }
-                });
+                        oldItems.forEach(item => {
+                            item.ChangeSetOp = "Delete";
+                            this.entityPM.CertificateOriginItemItems.push(item);
+                        });
+                        this.entityPM.IsChange = true;
+                    });
+                // });
             }
         });
     }
@@ -282,14 +292,21 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                this._declarationPMService.get(this.currentDeclaration.Id).subscribe(myResult => {
-                    var myResponse: ServiceResponse = myResult;
-                    if (!myResponse.HasError && myResponse.Result) {
-                        this.currentDeclaration = myResponse.Result;
-                        this.entityPM.IsChange = true;
+                // this._declarationPMService.get(this.currentDeclaration.Id).subscribe(myResult => {
+                //     var myResponse: ServiceResponse = myResult;
+                //     if (!myResponse.HasError && myResponse.Result) {
+                //         this.currentDeclaration = myResponse.Result;
+                        // this.entityPM.CertificateOriginInvoiceItems.forEach(item => this.entityPM.DeletedCertificateOriginInvoiceItems.push(item));
+                        const oldItems = this.entityPM.CertificateOriginInvoiceItems;
+
                         this.InitilizeNewCertificateWithSupplierInvoices(this.entityPM);
-                    }
-                });
+                        oldItems.forEach(item => {
+                            item.ChangeSetOp = "Delete";
+                            this.entityPM.CertificateOriginInvoiceItems.push(item);
+                        });
+                        this.entityPM.IsChange = true;
+                //     }
+                // });
             }
         });
     }
