@@ -251,6 +251,12 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
     exportStorageWebService = new ExportStorageWebService();
     getContainerTypeWCOData(consignment: ConsignmentPM, mappedConsignments: CertificateOfOriginItemPM) {
+        // Validate consignment data:
+        consignment.ManifestNumber = consignment.ManifestNumber ? consignment.ManifestNumber : '';
+        consignment.SecondCargoID = consignment.SecondCargoID ? consignment.SecondCargoID : '';
+        consignment.ThirdCargoID = consignment.ThirdCargoID ? consignment.ThirdCargoID : '';
+        consignment.CargoTypeCode = consignment.CargoTypeCode ? consignment.CargoTypeCode : '';
+        
         // ContainerTypeWCO
         // find by: CARGOTYPECODE,FIRSTCARGOID,SECONDCARGOID, THIRDCARGOID
         this.exportStorageWebService.GetByCargoKeys(consignment.ManifestNumber, consignment.SecondCargoID, consignment.ThirdCargoID, consignment.CargoTypeCode, this.entityPM.Tenant).subscribe((myResponse: ServiceResponse) => {

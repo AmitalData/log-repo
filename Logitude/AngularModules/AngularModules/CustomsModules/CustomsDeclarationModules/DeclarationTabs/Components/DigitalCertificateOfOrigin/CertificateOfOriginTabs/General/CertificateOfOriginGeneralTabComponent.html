@@ -123,7 +123,7 @@
                         </td>
                     </tr>
 
-                    <!-- Third Row A -->
+                    <!-- Third Row  -->
                     <tr class="FieldRow">
                         <!-- --------- selection between OriginGroupOfCountry/OriginCountry  ------------------------ -->
                         <td style="width: 130px;" rowspan="1">
@@ -136,8 +136,7 @@
                                     <div style="width: 7px;"></div>
                                 </ng-template>
                                 <select id="selectedValueOriginCountryBox"
-                                    class="LogLovContainer LogLOVControl LogLovInputDiv"
-                                    [disabled]="!CooTypeCode"
+                                    class="LogLovContainer LogLOVControl LogLovInputDiv" [disabled]="!CooTypeCode"
                                     style="width: 115px;height: 100%;margin-right: 4px; margin-left: 4px; cursor:pointer;"
                                     [(ngModel)]="selectedValueOriginCountry"
                                     (change)="updateSelectedValueChange(selectedValueOriginCountry)">
@@ -176,8 +175,7 @@
                                     <div style="width: 7px;"></div>
                                 </ng-template>
                                 <select id="selectedValueDestinationCountryBox"
-                                    class="LogLovContainer LogLOVControl LogLovInputDiv"
-                                    [disabled]="!CooTypeCode"
+                                    class="LogLovContainer LogLOVControl LogLovInputDiv" [disabled]="!CooTypeCode"
                                     style="width: 115px;height: 100%;margin-right: 4px; margin-left: 4px; cursor:pointer;"
                                     [(ngModel)]="selectedValueDestinationCountry"
                                     (change)="updateSelectedValueChange(selectedValueDestinationCountry)">
@@ -217,7 +215,7 @@
                         </td>
                     </tr>
 
-                    <!-- Fifth Row -->
+                    <!-- Forth Row -->
                     <tr class="FieldRow">
                         <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'PlaceOfManufacture'" [ObjectTableName]="ObjectTableName"
@@ -250,7 +248,8 @@
                                 [CustomizedWidth]="180"></LogLov>
                         </td>
                     </tr>
-                    <!-- Fifth Row B -->
+
+                    <!-- Fifth Row -->
                     <tr class="FieldRow">
                         <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'Observations'" [ObjectTableName]="ObjectTableName"
@@ -282,10 +281,7 @@
                         </td>
                     </tr>
 
-
-
-
-                    <!-- Seventh Row -->
+                    <!-- Six Row -->
                     <tr class="FieldRow">
                         <td class="TabTitleRow" style="width:130px">
                             <!-- PART 2- headline -->
@@ -323,99 +319,75 @@
                         </td>
                     </tr>
 
-                    <!-- Eighth Row -->
+                    <!-- Seventh Row -->
                     <tr class="FieldRow">
-                        <td style="width:130px"></td>
-                        <td style="width:180px"></td>
-                        <td></td>
-                        <td></td>
-                        <td style="width: 30px;"></td>
+                        <td colspan="5">
+                            <!-- Part 2: -->
+                            <table style="width:580px">
+                                <tr class="FieldRow" style="width: 600px ; height : 120px">
+                                    <div class="GeneratedGridContainer" style="width: 100% ; height : 100%;">
+                                        <logitude-edit-grid style="min-width: 500px;" GridWidth="500px"
+                                            GridHeight="100%" [ItemSource]="CertificateOriginInvoiceItems">
+                                            <log-column
+                                                [header]="'Customs.CertificateOfOrigin.O.number' | TextCodeTranslationPipe"
+                                                [binding]="'InvoicesIdUry'" [width]="'35'" [Alignment]="'right'">
+                                                <ng-template let-item>
+                                                    <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
+                                                        #logcelltemplate>
+                                                        <div style="text-align:right">
+                                                            <span>{{item.InvoicesIdUry}}</span>
+                                                        </div>
 
-                        <td style="width:130px;">
-                            <LogLabel [ObjectFieldName]="'ConsigneeCountry'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
-                        </td>
-                        <td style="width:180px">
-                            <div>
-                                <div>
-                                    <div style="height: 9px;"></div>
-                                    <LogLov [ObjectFieldName]="'ConsigneeCountry'" [ObjectTableName]="ObjectTableName"
-                                        [SelectedValue]="ConsigneeCountry" [DataContext]="DataContext"
-                                        [LookUpTableName]="'Customs.CustomsCountry'" [HideColumns]="true"
-                                        [CustomizedWidth]="180"></LogLov>
-                                </div>
-                                <div style="height: 5px; "></div>
+                                                    </log-cell-template>
+                                                </ng-template>
+                                            </log-column>
 
-                            </div>
-                        </td>
-                    </tr>
-                </table>
+                                            <log-column
+                                                [header]="'Customs.CertificateOfOrigin.O.InvoiceNumber' | TextCodeTranslationPipe"
+                                                [binding]="'InvoiceNumber'" [width]="'90'" [Alignment]="'right'">
+                                                <ng-template let-item>
+                                                    <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
+                                                        #logcelltemplate>
+                                                        <div style="text-align:right">
+                                                            <span>{{item.InvoiceNumber}}</span>
+                                                        </div>
 
-                <!-- Part 2: -->
-                <table style="width:583.7px">
-                    <tr class="FieldRow" style="width: 600px ; height : 120px">
-                        <div class="GeneratedGridContainer" style="width: 100% ; height : 100%;">
-                            <logitude-edit-grid style="min-width: 500px;" GridWidth="500px" GridHeight="100%"
-                                [ItemSource]="CertificateOriginInvoiceItems">
-                                <log-column [header]="'Customs.CertificateOfOrigin.O.number' | TextCodeTranslationPipe"
-                                    [binding]="'InvoicesIdUry'" [width]="'35'" [Alignment]="'right'">
-                                    <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
-                                            #logcelltemplate>
-                                            <div style="text-align:right">
-                                                <span>{{item.InvoicesIdUry}}</span>
-                                            </div>
+                                                    </log-cell-template>
+                                                </ng-template>
+                                            </log-column>
 
-                                        </log-cell-template>
-                                    </ng-template>
-                                </log-column>
+                                            <log-column
+                                                [header]="'Customs.CertificateOfOrigin.O.InvoiceDate' | TextCodeTranslationPipe"
+                                                [binding]="'InvoiceDate'" [width]="'100'" [Alignment]="'right'">
+                                                <ng-template let-item>
+                                                    <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
+                                                        #logcelltemplate>
+                                                        <div style="text-align:right">
+                                                            <span>{{item.InvoiceDate | DateTimeToDatePipe}}</span>
+                                                        </div>
 
-                                <log-column
-                                    [header]="'Customs.CertificateOfOrigin.O.InvoiceNumber' | TextCodeTranslationPipe"
-                                    [binding]="'InvoiceNumber'" [width]="'90'" [Alignment]="'right'">
-                                    <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
-                                            #logcelltemplate>
-                                            <div style="text-align:right">
-                                                <span>{{item.InvoiceNumber}}</span>
-                                            </div>
+                                                    </log-cell-template>
+                                                </ng-template>
+                                            </log-column>
 
-                                        </log-cell-template>
-                                    </ng-template>
-                                </log-column>
+                                            <log-column
+                                                [header]="'Customs.CertificateOfOrigin.O.InvoiceSum' | TextCodeTranslationPipe"
+                                                [binding]="'InvoiceSum'" [width]="'280'" [Alignment]="'right'">
+                                                <!-- [binding]="'InvoiceSum'" [width]="'120'" [Alignment]="'right'"> -->
+                                                <ng-template let-item>
+                                                    <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
+                                                        #logcelltemplate>
+                                                        <div style="text-align:right">
+                                                            <span style="padding-right:5px">{{item.InvoiceSum |
+                                                                NumbersPipe:'n2'}}</span>
+                                                            <span style="float: right;">{{item.CurrencyTypeCode}}</span>
+                                                        </div>
 
-                                <log-column
-                                    [header]="'Customs.CertificateOfOrigin.O.InvoiceDate' | TextCodeTranslationPipe"
-                                    [binding]="'InvoiceDate'" [width]="'100'" [Alignment]="'right'">
-                                    <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
-                                            #logcelltemplate>
-                                            <div style="text-align:right">
-                                                <span>{{item.InvoiceDate | DateTimeToDatePipe}}</span>
-                                            </div>
-
-                                        </log-cell-template>
-                                    </ng-template>
-                                </log-column>
-
-                                <log-column
-                                    [header]="'Customs.CertificateOfOrigin.O.InvoiceSum' | TextCodeTranslationPipe"
-                                    [binding]="'InvoiceSum'" [width]="'280'" [Alignment]="'right'">
-                                    <!-- [binding]="'InvoiceSum'" [width]="'120'" [Alignment]="'right'"> -->
-                                    <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
-                                            #logcelltemplate>
-                                            <div style="text-align:right">
-                                                <span style="padding-right:5px">{{item.InvoiceSum |
-                                                    NumbersPipe:'n2'}}</span>
-                                                <span style="float: right;">{{item.CurrencyTypeCode}}</span>
-                                            </div>
-
-                                        </log-cell-template>
-                                    </ng-template>
-                                </log-column>
-                                <!-- remove from ui -->
-                                <!-- <log-column
+                                                    </log-cell-template>
+                                                </ng-template>
+                                            </log-column>
+                                            <!-- remove from ui -->
+                                            <!-- <log-column
                                     [header]="'Customs.CertificateOfOrigin.O.ItemDescription' | TextCodeTranslationPipe"
                                     [binding]="'DescriptionOfInvoice'" [width]="'175'" [Alignment]="'right'"
                                     [Editable]="true">
@@ -441,24 +413,45 @@
                                     </ng-template>
                                 </log-column> -->
 
-                                <log-column
-                                    [header]="'Customs.CertificateOfOrigin.O.IsInvoicesForPrint' | TextCodeTranslationPipe"
-                                    [binding]="'IsInvoicesForPrint'" [width]="'40'" [Alignment]="'right'">
-                                    <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
-                                            #logcelltemplate>
-                                            <div style="text-align:right">
-                                                <LogCheckBox [ObjectFieldName]="'IsInvoicesForPrint'"
-                                                    [Checked]="item.IsInvoicesForPrint"
-                                                    [ObjectTableName]="'Customs.CertificateOriginInvoice'"
-                                                    [DataContext]="DataContext" (Changed)="OnChanged($event,item)"
-                                                    [Value]="item.IsInvoicesForPrint"></LogCheckBox>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
-                                </log-column>
-                            </logitude-edit-grid>
-                        </div>
+                                            <log-column
+                                                [header]="'Customs.CertificateOfOrigin.O.IsInvoicesForPrint' | TextCodeTranslationPipe"
+                                                [binding]="'IsInvoicesForPrint'" [width]="'40'" [Alignment]="'right'">
+                                                <ng-template let-item>
+                                                    <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
+                                                        #logcelltemplate>
+                                                        <div style="text-align:right">
+                                                            <LogCheckBox [ObjectFieldName]="'IsInvoicesForPrint'"
+                                                                [Checked]="item.IsInvoicesForPrint"
+                                                                [ObjectTableName]="'Customs.CertificateOriginInvoice'"
+                                                                [DataContext]="DataContext"
+                                                                (Changed)="OnChanged($event,item)"
+                                                                [Value]="item.IsInvoicesForPrint"></LogCheckBox>
+                                                        </div>
+                                                    </log-cell-template>
+                                                </ng-template>
+                                            </log-column>
+                                        </logitude-edit-grid>
+                                    </div>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width:130px; padding-bottom: 80px;">
+                            <LogLabel [ObjectFieldName]="'ConsigneeCountry'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px; padding-bottom: 80px;">
+                            <div>
+                                <div>
+                                    <div style="height: 9px;"></div>
+                                    <LogLov [ObjectFieldName]="'ConsigneeCountry'" [ObjectTableName]="ObjectTableName"
+                                        [SelectedValue]="ConsigneeCountry" [DataContext]="DataContext"
+                                        [LookUpTableName]="'Customs.CustomsCountry'" [HideColumns]="true"
+                                        [CustomizedWidth]="180"></LogLov>
+                                </div>
+                                <div style="height: 5px; "></div>
+
+                            </div>
+                        </td>
                     </tr>
                 </table>
 
