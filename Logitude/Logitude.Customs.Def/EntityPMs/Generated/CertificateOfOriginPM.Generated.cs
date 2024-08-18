@@ -1917,7 +1917,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
- 	  private DateTime? openDate ;
+	  private DateTime? openDate ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
@@ -1940,7 +1940,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-   }
-    
+	    }
+   
 }
 	 

@@ -208,7 +208,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     InitilizeNewCertificateWithConsignments(EntityPM: CertificateOfOriginPM) {
         // Consignments for CertificateOriginItemItems:
         // #108953 -init from unifreight
-        this.operationalDataFromUnifreight();
+       // this.operationalDataFromUnifreight();
 
         // else init from Declaration.Consignments
         this.initCertificateOriginItemItems(EntityPM);
@@ -586,7 +586,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         }
 
         this.certificateOfOriginWebService.GetMandatoryFieldsByCooTypeCode(CooTypeCode, this.entityPM.Tenant).subscribe((myResponse: any) => {
-            if (!myResponse.HasError) {
+             if (!myResponse.HasError) {
                 if (this.tempCertificateOfOriginMandatoryFieldsList.length > 0) {
                     this.tempCertificateOfOriginMandatoryFieldsList.forEach(i => {
                         this.UIProperties.SetWarning(i.MappedCertificateFieldsName, this.ObjectTableName, false);
@@ -979,12 +979,13 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                     args.SelectionCompletedMethod(comp);
                 }
             });
-                logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/General/UpdateCertificateOfOriginGeneralFieldComponent');
-
+        
         // handle couples error messages:
         // ValidationErrors = this.checkCouplesErrorMessages(ValidationErrors);
         // return ValidationErrors;
-        });
+        }); 
+               logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/General/UpdateCertificateOfOriginGeneralFieldComponent');
+
     }
     //#endregion
     checkCouplesErrorMessages(ValidationErrors) {

@@ -368,8 +368,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         this.ValidationErrors = [];
         this.GeneralValidationErrors = [];
         this.MoreDataValidationErrors = [];
-
-        if (this.EntityPM.RequestReasonCode != "10" && this.EntityPM.RequestReasonCode != "13" && this.EntityPM.RequestReasonCode != "14") {
+         if (this.EntityPM.RequestReasonCode != "10" && this.EntityPM.RequestReasonCode != "13" && this.EntityPM.RequestReasonCode != "14") {
             this.checkRequestReasonCode();
             if (this.SelectedTabCode == "GENERAL"){
                 this.GeneralValidationErrors = this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);            

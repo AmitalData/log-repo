@@ -88,8 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginMandatoryFieldsUpdateClass
    {  		
-
-		public const string HashString = "a61b09b57bc49722e2f55e3f61aa391c";
+		public const string HashString = "d40b3634d03ba29633a6b034e5f11a3d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -395,10 +394,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "English Name",
-					  						FullLocalDefaultText =  "שם םנגלית",
+					  						FullLocalDefaultText =  "שם אנגלית",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultText =  "שם םנגלית",
+					  						ListLocalDefaultText =  "שם אנגלית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -460,10 +459,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Inactive",
 					  						DefaultText =  "Inactive",
-					  						FullLocalDefaultText =  "לם פּעיל",
+					  						FullLocalDefaultText =  "לא פּעיל",
 					  						ListFieldLable =  "InactiveListLable",
 					  						ListLableDefaultText =  "Inactive",
-					  						ListLocalDefaultText =  "לם פּעיל",
+					  						ListLocalDefaultText =  "לא פּעיל",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -525,10 +524,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsMandatory",
 					  						DefaultText =  "Is Mandatory",
-					  						FullLocalDefaultText =  "הםם חובה",
+					  						FullLocalDefaultText =  "האם חובה",
 					  						ListFieldLable =  "IsMandatoryListLable",
 					  						ListLableDefaultText =  "Is Mandatory",
-					  						ListLocalDefaultText =  "הםם חובה",
+					  						ListLocalDefaultText =  "האם חובה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -655,10 +654,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastUpdatedDate",
 					  						DefaultText =  "Last Updated Date",
-					  						FullLocalDefaultText =  "תםריך עדכון םחרון",
+					  						FullLocalDefaultText =  "תאריך עדכון אחרון",
 					  						ListFieldLable =  "LastUpdatedDateListLable",
 					  						ListLableDefaultText =  "Last Updated Date",
-					  						ListLocalDefaultText =  "תםריך עדכון םחרון",
+					  						ListLocalDefaultText =  "תאריך עדכון אחרון",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
