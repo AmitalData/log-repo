@@ -334,7 +334,7 @@ export class CertificateOfOriginWebService {
                     if (jItem.IsDirty)
                         newCertificateOfOriginInvoicePM.ChangeSetOp = "Update";
                 }
-                else {
+                else if (newCertificateOfOriginInvoicePM.ChangeSetOp != "Delete") {
                     newCertificateOfOriginInvoicePM.ChangeSetOp = "Insert";
                 }
 
@@ -429,7 +429,7 @@ export class CertificateOfOriginWebService {
                     if (jItem.IsDirty)
                         newCertificateOfOriginItemPM.ChangeSetOp = "Update";
                 }
-                else {
+                else if (newCertificateOfOriginItemPM.ChangeSetOp != "Delete") {
                     newCertificateOfOriginItemPM.ChangeSetOp = "Insert";
                 }
 
