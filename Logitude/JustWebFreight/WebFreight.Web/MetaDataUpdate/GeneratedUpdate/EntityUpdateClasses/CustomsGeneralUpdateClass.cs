@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "7016ba50aab83def8c095e6dc6cd2640";
+		public const string HashString = "7016ba50aab83def8c095e6dc6cd2641";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -324,6 +324,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature CustomsGeneralFeature_EXPORTTENANT0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXPORTTENANT0", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsGeneral.Features.EXPORTTENANT0", NameTextCodeDefaultText = @"Export Tenant 0" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsGeneralObjectTable);
 
 		   Feature CustomsGeneralFeature_AmitalAPI = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AmitalAPI", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsGeneral.Features.AmitalAPI", NameTextCodeDefaultText = @"Amital API" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsGeneralObjectTable);
+		   
+           Feature CustomsGeneralFeature_CustomsCloud = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsCloud", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsGeneral.Features.CustomsCloud", NameTextCodeDefaultText = @"Customs Cloud" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsGeneralObjectTable);
 
    
 	    
