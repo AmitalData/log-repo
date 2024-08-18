@@ -32,6 +32,7 @@ import { CertificateOfOriginWebService } from 'Customs/Services/WebServices/Cert
 import { AmitalGatewayUtil, UnifreightMessageM } from 'Infrastructure/Utilities/AmitalGatewayUtil';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import * as xmlbuilder from 'xmlbuilder';
+import { parseString } from 'xml2js';
 
 
 
@@ -170,11 +171,11 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         });
 
 
-        
+
         // Consignments for CertificateOriginItemItems:
         // #108953 -init from unifreight
         this.operationalDataFromUnifreight();
-        
+
         // else init from Declaration.Consignments
         this.initCertificateOriginItemItems(EntityPM);
     }
@@ -185,19 +186,19 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
             .subscribe(
                 (mess: UnifreightMessageM) => {
-                    debugger
+                    
 
                     var IsMatchUnifreightCallbackCommand = (
                         mess.LogitudeEntityNumber == this.currentDeclaration.Id &&
                         mess.LogitudeViewModel == "CertificateOfOriginGeneralTabComponent.ts");
-                    // alert();
+
                     if (IsMatchUnifreightCallbackCommand) {
 
                         sub.unsubscribe();
                         SessionLocator.SelectedSession.StopBusyIndicator();
                         let XMLOfConsignmentsDetailsToCertificateOfOriginOut = UnifreightMessageM.GetStringValue(mess, "XMLOfConsignmentsDetailsToCertificateOfOriginOut");
                         console.log(XMLOfConsignmentsDetailsToCertificateOfOriginOut);
-                        alert(XMLOfConsignmentsDetailsToCertificateOfOriginOut);
+
                     }
                 }
             );
@@ -208,7 +209,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 DeclarationMessaging.GetMessage(this.currentDeclaration.CustomFileNo, this.currentDeclaration.Id, "CertificateOfOriginGeneralTabComponent.ts", "BFIFILE");
         unifreightMessageM.Requset.push(["XMLOfConsignmentsDetailsToCertificateOfOrigin", this.buildXmlCertificateOfOriginPM(this.entityPM)]);
 
-        debugger
+
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
             "AmitalGatewayUtil.ConsignmentsDetailsToCertificateOfOrigin",
             "BFIHMAIN.LogitudeTask",
@@ -236,8 +237,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         };
         const xmlDataString = this.convertToXML(data);
         console.log(xmlDataString);
-        alert(this.currentDeclaration.CustomFileNo);
-        alert(xmlDataString);
 
         return this.convertToXML(data);
     }
@@ -266,6 +265,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         const xmlString = root.end({ pretty: true });
         return xmlString;
     }
+
+
 
     initCertificateOriginItemItems(EntityPM: CertificateOfOriginPM) {
         this.CertificateOriginItemItems.Clear();
@@ -307,7 +308,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         consignment.SecondCargoID = consignment.SecondCargoID ? consignment.SecondCargoID : '';
         consignment.ThirdCargoID = consignment.ThirdCargoID ? consignment.ThirdCargoID : '';
         consignment.CargoTypeCode = consignment.CargoTypeCode ? consignment.CargoTypeCode : '';
-        
+
         // ContainerTypeWCO
         // find by: CARGOTYPECODE,FIRSTCARGOID,SECONDCARGOID, THIRDCARGOID
         this.exportStorageWebService.GetByCargoKeys(consignment.ManifestNumber, consignment.SecondCargoID, consignment.ThirdCargoID, consignment.CargoTypeCode, this.entityPM.Tenant).subscribe((myResponse: ServiceResponse) => {
@@ -460,6 +461,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         else {
             this.IsDisplayOnly = false;
             this.SetPropertiesEnabledAllFields(!this.IsDisplayOnly);
+
             if (this.entityPM.CooTypeCode != "1" && this.entityPM.CooTypeCode != "2") {
                 this.SetDisableByCooTypeCodeEuro(this.IsDisplayOnly);
             }
@@ -669,7 +671,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
 
     OnChanged($event, item) {
-
+        
         this.ErrorsList = [];
         var prevIsInvoicesForPrint = item.IsInvoicesForPrint;
         item.IsInvoicesForPrint = !item.IsInvoicesForPrint;
