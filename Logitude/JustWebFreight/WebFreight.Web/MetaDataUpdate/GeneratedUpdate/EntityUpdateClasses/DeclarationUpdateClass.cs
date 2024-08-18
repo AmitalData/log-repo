@@ -21514,9 +21514,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
              			   Feature DeclarationFeature_MB618 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UpdateMehesAutonmy", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.UpdateMehesAutonmy", NameTextCodeDefaultText = "Update Mehes Autonmy", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
              			   Feature DeclarationFeature_MB619 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelPayment", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.CancelPayment", NameTextCodeDefaultText = "Cancel Payment", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
              			   Feature DeclarationFeature_MB620 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelPointersOnCustomsItems", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.Cancellationofpointersoncustomsitems", NameTextCodeDefaultText = "Cancellation of pointers on customs items", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
-                   
-    
-			   Feature DeclarationFeature_MB7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCUMENTSPANEL", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.DocumentsPanel", NameTextCodeDefaultText = "Declaration Documents Panel", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+						   Feature DeclarationFeature_MB621 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GatePassRequest", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.GatePassRequest", NameTextCodeDefaultText = "Gate Pass Request", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes, DeclarationObjectTable);
+
+
+            Feature DeclarationFeature_MB7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCUMENTSPANEL", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.DocumentsPanel", NameTextCodeDefaultText = "Declaration Documents Panel", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
 
  
 
@@ -22168,9 +22169,29 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB620.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
-	          
-   
-			   MenuButton DeclarationMenuButton7 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+
+            MenuButton DeclarationMenuButton621 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+            {
+                EventCode = "GatePassRequest",
+                Index = 22,
+                IsActive = true,
+                LabelTextCodeCode = "Declaration.B.GatePassRequest",
+                LabelTextCodeDefaultText = "Gate Pass Request",
+                Tenant = 0,
+                MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
+                ParentMenuButtonId = DeclarationMenuButton6.Id,
+                ObjectTableId = DeclarationObjectTable.Id,
+                MenuButtonType = "menuitem",
+                FeatureId = DeclarationFeature_MB621.Id,
+                Style = null,
+                LocalDefaultText = "גייטפס העברות",
+                HtmlComponentPath = null,
+                Width = 0,
+                FeatureUniqeCode = DeclarationFeature_MB621.FeatureUniqeCode,
+            }, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+
+
+            MenuButton DeclarationMenuButton7 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "DocumentsPanel",
 						Index = 99, 
