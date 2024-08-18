@@ -370,11 +370,8 @@
                             {{'Customs.Declaration.O.ConsignmentPackages' | TextCodeTranslationPipe}} 
                             <IconButton [Name]="'Refresh'" (click)="RefreshCertificateOriginItemItemsClicked()" style="margin-left: 5px;"></IconButton>
                         </td>
-                    </tr>
 
-                    <tr style="height:5px"></tr>
-                    <tr style="padding-top:5px" *ngIf="currentDeclaration.Direction == 'E' && currentDeclaration.TransportModeId == 'O'">
-                        <td tabindex="-1">
+                        <td *ngIf="currentDeclaration.Direction == 'E' && currentDeclaration.TransportModeId == 'O'" tabindex="-1" style="float: right; margin-right: 5px;">
                             <div tabindex="-1" class="ToggleButton" style="float:right; width: 80px;" id="toggleButton">
                                 <label style="float:right; left:45px">{{'Customs.Declaration.B.Actions' | TextCodeTranslationPipe}}</label>
                                 <img src="./Images/ToggleIcon.png" style="right:65px" />
@@ -384,9 +381,7 @@
                             </div>
                         </td>
     
-                        <td></td>
-
-                        <td style="width:120px">
+                        <td *ngIf="currentDeclaration.Direction == 'E' && currentDeclaration.TransportModeId == 'O'" style="width:120px">
                             <SearchTextBox [PlaceHolder]="'Customs.CertificateOfOriginItem.O.SearchItems' | TextCodeTranslationPipe" [ObjectTableName]="'Customs.CertificateOfOriginItem'" (SearchTextChangeEvent)="Search($event)"></SearchTextBox>
                         </td>
                     </tr>
