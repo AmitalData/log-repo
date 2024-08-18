@@ -978,13 +978,13 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 if (s) {
                     args.SelectionCompletedMethod(comp);
                 }
-            }
-        
+            });
+                logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/General/UpdateCertificateOfOriginGeneralFieldComponent');
+
         // handle couples error messages:
-        ValidationErrors = this.checkCouplesErrorMessages(ValidationErrors);
-        return ValidationErrors;
+        // ValidationErrors = this.checkCouplesErrorMessages(ValidationErrors);
+        // return ValidationErrors;
         });
-        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/General/UpdateCertificateOfOriginGeneralFieldComponent');
     }
     //#endregion
     checkCouplesErrorMessages(ValidationErrors) {

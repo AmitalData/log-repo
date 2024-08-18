@@ -109,6 +109,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     @Input() ForceShowLanguageFilter: boolean = false;
     @Input() ForceShowLocalAndEnglishColumns: boolean = false;
     ObjectFieldCode: string;
+    cardExtendedPMService:CardExtendedPMService = new CardExtendedPMService();
     public get ShowLanguageFilter(): boolean
     {
         return  SessionLocator?.LoggedUserPM?.ShowLocalNameInLOV
