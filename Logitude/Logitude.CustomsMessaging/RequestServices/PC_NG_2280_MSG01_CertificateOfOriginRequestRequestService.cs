@@ -168,7 +168,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				{
 					InvoiceNum = item.InvoiceNumber,
 					InvoiceDate = Convert.ToDateTime(item.InvoiceDate),
-					InvoiceSum = Convert.ToInt32(item.InvoiceSum),
+					InvoiceSum = item.InvoiceSum != null ? decimal.Parse(item.InvoiceSum) : 0,
 					InvoiceSumSpecified = true,
 					CurrencyType = item.CurrencyTypeCode,
 					DescriptionOfInvoice = item.DescriptionOfInvoice,
