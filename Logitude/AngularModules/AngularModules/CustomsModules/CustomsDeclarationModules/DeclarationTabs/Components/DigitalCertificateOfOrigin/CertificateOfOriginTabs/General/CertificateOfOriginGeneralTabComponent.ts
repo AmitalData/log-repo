@@ -190,9 +190,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                     var IsMatchUnifreightCallbackCommand = (
                         mess.LogitudeEntityNumber == this.currentDeclaration.Id &&
                         mess.LogitudeViewModel == "CertificateOfOriginGeneralTabComponent.ts");
-                    alert(IsMatchUnifreightCallbackCommand);
+                    // alert();
                     if (IsMatchUnifreightCallbackCommand) {
-                        alert("1");
 
                         sub.unsubscribe();
                         SessionLocator.SelectedSession.StopBusyIndicator();
