@@ -47,6 +47,7 @@ import { ListComponentArgs } from 'Infrastructure/Args';
 import { MainMenuItem } from 'Infrastructure/Components/MainMenuComponent/MainMenuComponent';
 import { List } from 'Infrastructure/DataContracts/Dashboard/List';
 import { SupplierInvoiceExtendedPMService } from 'Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
+import { GatepassRequestComponent } from 'CustomsModules/CustomsCourier/Components/GatepassRequest/GatepassRequestComponent';
 
 
 export class DeclarationMenuButtonsHandler implements OnDestroy {
@@ -829,6 +830,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         this.OpenMehesUpdateAutonmyWindow();
                         break;
                     }
+                case "GatePassRequest":
+                    {
+                        this.OpenGatePassRequest();
+                        break;
+                    }
             }
 
         }
@@ -905,6 +911,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });*/
     }
+
+    OpenGatePassRequest() {
+        GatepassRequestComponent.showWindow({});
+    }
+
     OpenDeclarationCancellationWindow_() {
         var args: any = {
             Declaration: this.EntityPM,

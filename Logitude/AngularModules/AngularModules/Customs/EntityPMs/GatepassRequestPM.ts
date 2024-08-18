@@ -89,6 +89,16 @@ export class GatepassRequestPM {
     public set TransportationTypeName(newValue: string) { if (this.transportationTypeName != newValue) { this.transportationTypeName = newValue; this.MarkAsDirty("TransportationTypeName"); } }
        
 	 
+    private id: string;
+    public get Id() { return this.id; }
+    public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
+       
+	 
+    private declarationId: string;
+    public get DeclarationId() { return this.declarationId; }
+    public set DeclarationId(newValue: string) { if (this.declarationId != newValue) { this.declarationId = newValue; this.MarkAsDirty("DeclarationId"); } }
+       
+	 
 
     public OldEntityPM: GatepassRequestPM;
 		

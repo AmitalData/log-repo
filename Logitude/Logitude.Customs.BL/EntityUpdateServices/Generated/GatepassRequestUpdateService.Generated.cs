@@ -50,7 +50,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 		
 		protected override EntityKeyFields GetKeys(GatepassRequestPM entityPM)
         {
-            GatepassRequestKeys entityKeys = new GatepassRequestKeys() { MasterCourierId = entityPM.MasterCourierId };
+            GatepassRequestKeys entityKeys = new GatepassRequestKeys() { Id = entityPM.Id };
             return entityKeys;
         }
 

@@ -32,12 +32,12 @@ export class GatepassRequestListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/gatepassrequestviews';  
     }
 
-	getSingle(mastercourierid: string) {
+	getSingle(id: string) {
 	   
 		var callTime = new Date();
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle/?' + 'mastercourierid=' + mastercourierid, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
 				.pipe(			
 					map((response: HttpResponse<any>) => {
 
@@ -52,7 +52,7 @@ export class GatepassRequestListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "GatepassRequest", "GetSingleList", 'mastercourierid=' + mastercourierid); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "GatepassRequest", "GetSingleList", 'id=' + id); 
 
 						return serviceResponse;
 					}),

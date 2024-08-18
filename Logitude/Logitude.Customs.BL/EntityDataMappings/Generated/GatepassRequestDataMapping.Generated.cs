@@ -30,7 +30,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         DesignateSiteCode, 
 	         TransportationTypeCode, 
 	         GatepassRequestStatus, 
-	         CustomsUpdateDateTime,
+	         CustomsUpdateDateTime, 
+	         Id, 
+	         DeclarationId,
 	      }
 
 
@@ -49,7 +51,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         OriginSiteName, 
 	         UpdateCodeName, 
 	         DesignateSiteName, 
-	         TransportationTypeName,
+	         TransportationTypeName, 
+	         Id, 
+	         DeclarationId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -58,6 +62,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	    public void PMToPOCO(GatepassRequestPM entityPM, GatepassRequest entityPOCO)
         {
 			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MasterCourierId))
+            {
+				entityPOCO.MasterCourierId = entityPM.MasterCourierId;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
 				entityPOCO.Tenant = entityPM.Tenant;
@@ -96,6 +105,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsUpdateDateTime))
             {
 				entityPOCO.CustomsUpdateDateTime = entityPM.CustomsUpdateDateTime;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationId))
+            {
+				entityPOCO.DeclarationId = entityPM.DeclarationId;
 			}
 			}
 
@@ -147,12 +161,27 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CustomsUpdateDateTime = entityPOCO.CustomsUpdateDateTime;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationId))
+            {
+					entityPM.DeclarationId = entityPOCO.DeclarationId;
+            }
+
 		}
 
 		public void PMToOldPM(GatepassRequestPM entityPM, GatepassRequestPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MasterCourierId))
+            {
+                oldEntityPM.MasterCourierId = entityPM.MasterCourierId;
+            }
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
                 oldEntityPM.Tenant = entityPM.Tenant;
@@ -191,6 +220,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsUpdateDateTime))
             {
                 oldEntityPM.CustomsUpdateDateTime = entityPM.CustomsUpdateDateTime;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationId))
+            {
+                oldEntityPM.DeclarationId = entityPM.DeclarationId;
             }
 			
 		}
