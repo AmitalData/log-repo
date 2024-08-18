@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Script DBType="Main" Module="Customs">
+<Script DBType="Main" Module="Customs" Pre="true">
   <Sql Version="1">
+    <![CDATA[
+exec ('
+  ALTER TABLE customs.GATEPASSREQUESTS DROP CONSTRAINT PK_GATEPASSREQUESTS;
+  ALTER TABLE customs.GATEPASSREQUESTS ADD Id VARCHAR(15) not null DEFAULT '''';
+  ALTER TABLE customs.GATEPASSREQUESTS ADD DeclarationId VARCHAR(15);
+')
+
+exec ('UPDATE customs.GATEPASSREQUESTS SET  Id = MASTERCOURIERID;')
+exec ('ALTER TABLE customs.GATEPASSREQUESTS ADD CONSTRAINT PK_GATEPASSREQUESTS2 PRIMARY KEY (Id);')
+        ]]>
   </Sql>
 
   <Oracle Version="1">
