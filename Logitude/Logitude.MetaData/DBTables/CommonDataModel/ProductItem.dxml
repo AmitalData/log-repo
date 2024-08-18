@@ -48,8 +48,8 @@
   <Column
     Name="Name"
     OldNames="ItemCode"
-    Type="nvarchar"
-    Size="80">
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="false" />
   </Column>

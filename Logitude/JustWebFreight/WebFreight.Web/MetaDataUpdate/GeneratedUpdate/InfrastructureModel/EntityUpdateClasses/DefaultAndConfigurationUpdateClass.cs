@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class DefaultAndConfigurationUpdateClass
    {  		
-		public const string HashString = "4bccc15e9b19320874c4ec82cf566f4c";
+		public const string HashString = "923a901cbdb405348588621c32da7d5e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1086,9 +1086,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 			 QueryColumn DefaultAndConfigurationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "DefaultAndConfiguration.SetKey" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DefaultAndConfigurationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "DefaultAndConfiguration.SetValueType1" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DefaultAndConfigurationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "DefaultAndConfiguration.SetValueType1" , ColumnWidth = 125 }, addedQueryColumns);
 
-			 QueryColumn DefaultAndConfigurationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "DefaultAndConfiguration.Value1" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DefaultAndConfigurationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "DefaultAndConfiguration.Value1" , ColumnWidth = 125 }, addedQueryColumns);
 
 			 QueryColumn DefaultAndConfigurationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "DefaultAndConfiguration.SetValueType2" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -1102,7 +1102,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 			 QueryColumn DefaultAndConfigurationQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "DefaultAndConfiguration.StoreInCache" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DefaultAndConfigurationQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "DefaultAndConfiguration.AllowInheritance" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DefaultAndConfigurationQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "DefaultAndConfiguration.AllowInheritance" , ColumnWidth = 110 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

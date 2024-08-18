@@ -20,7 +20,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.UpdateDate).IsRequired();
             this.Property(t => t.UpdatedBy).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.Name).IsRequired().HasMaxLength(200).IsUnicode(true);
+            this.Property(t => t.Name).IsRequired().HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.Code).IsRequired().HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.Description).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.DirectionId).IsRequired().HasMaxLength(1).IsUnicode(false);

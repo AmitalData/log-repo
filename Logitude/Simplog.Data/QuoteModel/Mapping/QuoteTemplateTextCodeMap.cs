@@ -31,8 +31,8 @@ namespace Simplog.Data.QuoteModel.Mapping
 
           this.Property(t => t.EnglishName)
                .IsRequired()
-           .HasMaxLength(200)
-           .IsUnicode(true);
+           .HasMaxLength(100)
+           .IsUnicode(false);
 
           this.Property(t => t.LocalName)
           .IsRequired()
@@ -41,8 +41,8 @@ namespace Simplog.Data.QuoteModel.Mapping
 
           this.Property(t => t.OriginalEnglishName)
           .IsRequired()
-          .HasMaxLength(200)
-          .IsUnicode(true);
+          .HasMaxLength(100)
+          .IsUnicode(false);
 
             this.Property(t => t.OriginalLocalName)
             .IsRequired()

@@ -159,8 +159,8 @@
   </Column>
   <Column
     Name="EditWizardName"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
@@ -217,8 +217,8 @@
   </Column>
   <Column
     Name="NameTextCodeCode"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>

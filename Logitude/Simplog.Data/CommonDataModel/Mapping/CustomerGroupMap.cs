@@ -26,7 +26,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(80).IsUnicode(true);
+            this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(40).IsUnicode(false);
 
             this.Property(t => t.Description).HasColumnName("Description").IsMaxLength().IsUnicode(true);
 

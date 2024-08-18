@@ -436,7 +436,7 @@ export class DeclarationSupplierInvoiceTabComponent
         });
     }
 
-    ViewInitCompleted() {
+    ViewInitCompleted($event: any = null) {
         this.SelectedRow = this.ItemsSource.Collection[0];
         this.OnRowSelected(this.SelectedRow);
     }

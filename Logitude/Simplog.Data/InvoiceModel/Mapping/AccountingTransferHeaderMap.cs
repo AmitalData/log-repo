@@ -18,7 +18,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.TransferNumber).IsRequired().HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.AccountingTransferTypeCode).IsRequired().HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.TransferDate).IsOptional();
-            this.Property(t => t.FileName).HasMaxLength(80).IsRequired().IsUnicode(true);
+            this.Property(t => t.FileName).HasMaxLength(40).IsRequired().IsUnicode(false);
             this.Property(t => t.UserId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsOptional().IsUnicode(true);
             this.Property(t => t.Notes).HasMaxLength(250).IsOptional().IsUnicode(true);

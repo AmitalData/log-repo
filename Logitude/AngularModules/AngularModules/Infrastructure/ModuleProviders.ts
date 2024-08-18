@@ -130,6 +130,7 @@ import { DeploymentPackageExecutionLogListExtendedService } from './Services/Ext
 import { SchedulerReportMessageTemplateService } from './Components/StimulsoftComponent/Services/SchedulerReportMessageTemplateService';
 import { DefaultAndConfigurationListService } from './Services/StandardLists/DefaultAndConfigurationListService';
 import { DefaultAndConfigurationPMService } from './Services/StandardPMs/DefaultAndConfigurationPMService';
+import { DefaultAndConfigurationKeyListService } from './Services/StandardLists/DefaultAndConfigurationKeyListService';
 
 export class ModuleProviders {
 
@@ -262,6 +263,7 @@ export class ModuleProviders {
             case "SchedulerReportMessageTemplateService": { myResult = new SchedulerReportMessageTemplateService(); break;}
             case "DefaultAndConfigurationListService": { myResult = new DefaultAndConfigurationListService(); break; }
             case "DefaultAndConfigurationPMService": { myResult = new DefaultAndConfigurationPMService(); break; }
+            case "DefaultAndConfigurationKeyListService": { myResult = new DefaultAndConfigurationKeyListService(); break; }
         }
 
         return myResult;

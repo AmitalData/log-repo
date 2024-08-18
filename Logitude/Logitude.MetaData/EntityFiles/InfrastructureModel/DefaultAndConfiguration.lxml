@@ -1145,12 +1145,12 @@
         QueryCode="&quot;DefaultAndConfiguration&quot;"
         IndexOrder="2"
         ObjectFieldName="&quot;SetValueType1&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="125" />
       <QueryColumn
         QueryCode="&quot;DefaultAndConfiguration&quot;"
         IndexOrder="3"
         ObjectFieldName="&quot;Value1&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="125" />
       <QueryColumn
         QueryCode="&quot;DefaultAndConfiguration&quot;"
         IndexOrder="4"
@@ -1185,7 +1185,7 @@
         QueryCode="&quot;DefaultAndConfiguration&quot;"
         IndexOrder="10"
         ObjectFieldName="&quot;AllowInheritance&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="110" />
     </QueryColumns>
     <QueryFilters />
   </Query>

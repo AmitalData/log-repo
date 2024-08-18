@@ -19,17 +19,10 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="RegistrationUpdatedBy"
-    Type="varchar"
-    Size="60">
+    Name="ForwarderTenant"
+    Type="int">
     <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="RegistrationDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="TTY"
@@ -51,16 +44,23 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="ForwarderTenant"
-    Type="int">
+    Name="RegistrationUpdatedBy"
+    Type="varchar"
+    Size="60">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="IsDirect"
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="RegistrationDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Column
     Name="FWBNotifyContacts"
@@ -85,8 +85,8 @@
   </Column>
   <Column
     Name="PrimaryContactName"
-    Type="nvarchar"
-    Size="120">
+    Type="varchar"
+    Size="60">
     <Constraints
       Nullable="true" />
   </Column>

@@ -14,15 +14,15 @@
   </Column>
   <Column
     Name="Name"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="TableName"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
@@ -48,8 +48,8 @@
   </Column>
   <Column
     Name="ObjectTableName"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>

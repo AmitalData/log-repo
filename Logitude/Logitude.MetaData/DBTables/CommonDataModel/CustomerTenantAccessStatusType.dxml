@@ -14,8 +14,8 @@
   </Column>
   <Column
     Name="EnglishName"
-    Type="nvarchar"
-    Size="50">
+    Type="varchar"
+    Size="25">
     <Constraints
       Nullable="true" />
   </Column>

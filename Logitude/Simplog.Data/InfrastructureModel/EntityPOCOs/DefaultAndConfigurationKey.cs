@@ -9,12 +9,11 @@ using System.Threading.Tasks;
 namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 {
     public class DefaultAndConfigurationKey
-    {
-        [Key, Column(Order = 0)]
+    {        
         public int Tenant { get; set; }
         public DateTime CreateDate { get; set; }        
         public string SetType1 { get; set; }
-        [Key, Column(Order = 1)]
+        [Key]
         public string SetKey { get; set; }
         public string ShortDescription { get; set; }
         public string FullDesctiption { get; set; }

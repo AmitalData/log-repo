@@ -19,8 +19,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             this.Property(t => t.ClassName)
                 .IsRequired()
-                .HasMaxLength(80)
-                .IsUnicode(true);
+                .HasMaxLength(40)
+                .IsUnicode(false);
 
             this.Property(t => t.Field)
                 .IsRequired()
@@ -29,8 +29,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             this.Property(t => t.Name)
                 .IsRequired()
-                .HasMaxLength(80)
-                .IsUnicode(true);
+                .HasMaxLength(40)
+                .IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ValidationTypes");

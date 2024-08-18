@@ -95,8 +95,8 @@
   </Column>
   <Column
     Name="VesselName"
-    Type="nvarchar"
-    Size="80">
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="true" />
   </Column>

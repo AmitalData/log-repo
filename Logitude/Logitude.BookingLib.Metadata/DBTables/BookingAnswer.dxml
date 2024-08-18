@@ -96,8 +96,8 @@
   </Column>
   <Column
     Name="DescriptionOfGoods"
-    Type="nvarchar"
-    Size="1024">
+    Type="varchar"
+    Size="512">
     <Constraints
       Nullable="true" />
   </Column>

@@ -2,7 +2,8 @@
 <Table
   Name="ComputingPartnerCodes"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -18,9 +19,23 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ComputingPartnerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="PartnerCode"
-    Type="nvarchar"
-    Size="100">
+    Type="varchar"
+    Size="50">
     <Constraints
       Nullable="false" />
   </Column>
@@ -57,30 +72,6 @@
     <Constraints
       Nullable="false" />
   </Column>
-  <Column
-    Name="ObjectTableId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="ComputingPartnerId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Relation
-    ForeignKeyColumn="CreatedByUserId"
-    ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="UpdatedByUserId"
-    ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="ObjectTableId"
     ReferencedTable="ObjectTables"
@@ -89,6 +80,16 @@
   <Relation
     ForeignKeyColumn="ComputingPartnerId"
     ReferencedTable="ComputingPartners"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CreatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="UpdatedByUserId"
+    ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

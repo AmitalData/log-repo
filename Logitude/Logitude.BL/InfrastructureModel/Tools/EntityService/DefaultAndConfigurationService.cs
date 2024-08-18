@@ -5,6 +5,7 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Logitude.BL.Helpers;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -38,7 +39,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             DefaultAndConfigurationMapping.MapEntity(theEntityPm, Poco, true);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
-
+            DefaultService.Instance.ClearCache(entityPM.Tenant, entityPM.SetKey);
         }
 
         public void Update(DefaultAndConfigurationPM theEntityPm)
@@ -49,6 +50,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             DefaultAndConfigurationMapping.MapEntity(theEntityPm, Poco, false);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
+            DefaultService.Instance.ClearCache(entityPM.Tenant, entityPM.SetKey, entityPM.AdditionalKey);
         }
 
         public void Delete(string Id)
@@ -56,6 +58,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.Poco = entityRepository.GetSingleDefaultAndConfiguration(Id); 
             entityRepository.Remove(Poco);
             entityRepository.SubmitChanges();
+            DefaultService.Instance.ClearCache(Poco.Tenant, entityPM.SetKey, entityPM.AdditionalKey);
+
         }
 
     }

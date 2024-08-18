@@ -27,8 +27,8 @@
   </Column>
   <Column
     Name="EnglishName"
-    Type="nvarchar"
-    Size="80">
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="false" />
   </Column>
@@ -90,7 +90,6 @@
     ReferencedTable="Countries"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-  <UniqueConstraint
-    Env="cloud"
-    Columns="Tenant,Code" />
+  <UniqueConstraint Env="cloud"
+   Columns="Tenant,Code" />
 </Table>

@@ -27,8 +27,8 @@
   </Column>
   <Column
     Name="Name"
-    Type="nvarchar"
-    Size="80">
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="false" />
   </Column>
@@ -52,6 +52,7 @@
     <Constraints
       Nullable="true" />
   </Column>
+	
   <UniqueConstraint
-    Columns="Tenant,Code" />
+		Columns="Tenant,Code" />
 </Table>

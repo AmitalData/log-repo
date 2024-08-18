@@ -14,7 +14,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
         public DefaultAndConfigurationKeyMap()
         {
             // Primary Key
-            this.HasKey(t => new { t.SetKey, t.Tenant });
+            this.HasKey(t => new { t.SetKey });
 
             // Properties
 

@@ -15,8 +15,8 @@
   </Column>
   <Column
     Name="DisplayName"
-    Type="nvarchar"
-    Size="300">
+    Type="varchar"
+    Size="150">
     <Constraints
       Nullable="false" />
   </Column>
@@ -41,8 +41,8 @@
   </Column>
   <Column
     Name="JoinedTableName"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>

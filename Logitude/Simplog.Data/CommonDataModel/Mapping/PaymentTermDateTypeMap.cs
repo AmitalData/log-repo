@@ -14,7 +14,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
         {
             this.HasKey(t => t.Code);
             this.Property(t => t.Code).IsRequired().HasMaxLength(5).IsUnicode(false);
-            this.Property(t => t.Name).IsRequired().HasMaxLength(120).IsUnicode(true);
+            this.Property(t => t.Name).IsRequired().HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
 
             this.ToTable("PaymentTermDateTypes");

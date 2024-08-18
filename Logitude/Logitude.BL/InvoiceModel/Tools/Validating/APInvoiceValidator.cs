@@ -288,11 +288,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 string msg = TranslateTextsClass.Translate("APInvoice.O.CheckInvoiceDate", entityPM.Tenant, !(GetLoggedContact(entityPM.Tenant).DontShowLocal));//.t "nvoice Date cant be bigger the the Accounting Date"; // TranslateTextsClass.Translate("APInvoice.M.CantReceiveFutureDateInvoice", entityPM.Tenant);
                 throw new ApplicationException(msg);
             }
-            if (!string.IsNullOrEmpty(entityPM.ConfirmationNumber) && (entityPM.ConfirmationNumber.Length < 9 || entityPM.ConfirmationNumber.Length > 30))
-            {
-                string msg = TranslateTextsClass.Translate("APInvoice.O.ConfirmationNumberLength", entityPM.Tenant);
-                throw new ApplicationException(msg);
-            }
         }
 
         private static void ValidateUnUpdateFields(APInvoicePM entityPM, APInvoice entityPOCO, bool isNew)

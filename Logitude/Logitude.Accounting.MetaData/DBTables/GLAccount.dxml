@@ -48,8 +48,8 @@
   </Column>
   <Column
     Name="EnglishName"
-    Type="nvarchar"
-    Size="150">
+    Type="varchar"
+    Size="75">
     <Constraints
       Nullable="true" />
   </Column>
@@ -129,8 +129,8 @@
   </Column>
   <Column
     Name="PreviousEnglishName"
-    Type="nvarchar"
-    Size="150">
+    Type="varchar"
+    Size="75">
     <Constraints
       Nullable="true" />
   </Column>

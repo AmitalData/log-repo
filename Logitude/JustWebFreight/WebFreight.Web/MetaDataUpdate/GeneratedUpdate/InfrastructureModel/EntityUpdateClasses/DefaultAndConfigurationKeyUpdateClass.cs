@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class DefaultAndConfigurationKeyUpdateClass
    {  		
-		public const string HashString = "a4a15f8f1ebf64fc2e96a15ff353c32b";
+		public const string HashString = "1eedc02d9138aca18238fea50382b9dd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -111,7 +111,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  true,
 			      				    IsNewWizard =  false,
-			      				    AutoCompleteSearchWindow =  true,
+			      				    LookUp1 =  "SetKey",
+			      				    LovDisplayMemberPath =  "SetKey",
+			      				    LovDisplayMemberPathLocal =  "SetKey",
+			      				    KeyPropertyPath =  "SetKey",
+			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
@@ -119,7 +123,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  true,
-			      				    IsAutoComplete =  true,
+			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
@@ -130,7 +134,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Default And Configuration Key",
-			      				    Code =  "2878",
+			      				    Code =  "13df",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
@@ -349,7 +353,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						MaxLength =  36,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
@@ -552,6 +556,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SetType2",
 					  						ListPropertyPath =  "SetType2",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

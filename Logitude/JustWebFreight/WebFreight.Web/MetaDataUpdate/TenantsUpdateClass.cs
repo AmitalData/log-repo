@@ -1959,78 +1959,75 @@ namespace WebFreight.Web.MetaDataUpdate
                     {
                         if (objectTable.DBTableName.Contains("LeadDocumentType"))
                         {
+                        }
+                        List<string> tableNames = new List<string>();
+                        Dictionary<string, byte[]> dataList = new Dictionary<string, byte[]>();
+                        //Object Field
+                        byte[] bytejosn = GetByteDataByKey(cachedObjectFieldsJosnByte, objectTable.Name);
+                        if (bytejosn != null) dataList.Add(objectTable.Name + "_" + "ObjectFields", CompressionFileData(objectTable.Name + "_" + "Fields", bytejosn));
+
+                        //Text Code
+                        bytejosn = GetByteDataByKey(cachedTextCodesJosnByte, objectTable.Name);
+                        if (bytejosn != null) dataList.Add(objectTable.Name + "_" + "TextCodes", CompressionFileData(objectTable.Name + "_" + "Codes", bytejosn));
+
+                        tableNames.Add(objectTable.Name);
+                        List<ObjectFieldPM> fieldsList = objectFieldLists.Where(d => d.ObjectTableId == objectTable.Id && (d.DataTypeCode == "LookUp" || d.IsMulti)).ToList();
+
+                        foreach (ObjectFieldPM field in fieldsList)
+                        {
+                            string tablename = field.IsMulti ? field.ObjectTable_MultiTableName : field.ObjectTable_LookUpTableName;
+                            if (!tableNames.Contains(tablename))
                             {
+                                //Object Field
+                                bytejosn = GetByteDataByKey(cachedObjectFieldsJosnByte, tablename);
+                                if (bytejosn != null) dataList.Add(tablename + "_" + "ObjectFields", CompressionFileData(tablename + "_" + "Fields", bytejosn));
 
-                            }
-                            List<string> tableNames = new List<string>();
-                            Dictionary<string, byte[]> dataList = new Dictionary<string, byte[]>();
-                            //Object Field
-                            byte[] bytejosn = GetByteDataByKey(cachedObjectFieldsJosnByte, objectTable.Name);
-                            if (bytejosn != null) dataList.Add(objectTable.Name + "_" + "ObjectFields", CompressionFileData(objectTable.Name + "_" + "Fields", bytejosn));
+                                //Text Code
+                                bytejosn = GetByteDataByKey(cachedTextCodesJosnByte, tablename);
+                                if (bytejosn != null) dataList.Add(tablename + "_" + "TextCodes", CompressionFileData(tablename + "_" + "Codes", bytejosn));
 
-                            //Text Code
-                            bytejosn = GetByteDataByKey(cachedTextCodesJosnByte, objectTable.Name);
-                            if (bytejosn != null) dataList.Add(objectTable.Name + "_" + "TextCodes", CompressionFileData(objectTable.Name + "_" + "Codes", bytejosn));
-
-                            tableNames.Add(objectTable.Name);
-                            List<ObjectFieldPM> fieldsList = objectFieldLists.Where(d => d.ObjectTableId == objectTable.Id && (d.DataTypeCode == "LookUp" || d.IsMulti)).ToList();
-
-                            foreach (ObjectFieldPM field in fieldsList)
-                            {
-                                string tablename = field.IsMulti ? field.ObjectTable_MultiTableName : field.ObjectTable_LookUpTableName;
-                                if (!tableNames.Contains(tablename))
+                                //CloseTable
+                                if (field.DataTypeCode == "LookUp")
                                 {
-                                    //Object Field
-                                    bytejosn = GetByteDataByKey(cachedObjectFieldsJosnByte, tablename);
-                                    if (bytejosn != null) dataList.Add(tablename + "_" + "ObjectFields", CompressionFileData(tablename + "_" + "Fields", bytejosn));
-
-                                    //Text Code
-                                    bytejosn = GetByteDataByKey(cachedTextCodesJosnByte, tablename);
-                                    if (bytejosn != null) dataList.Add(tablename + "_" + "TextCodes", CompressionFileData(tablename + "_" + "Codes", bytejosn));
-
-                                    //CloseTable
-                                    if (field.DataTypeCode == "LookUp")
+                                    ObjectTable table = ObjectTableList.Where(d => d.Id == field.LookUpTableId).FirstOrDefault();
+                                    if (table != null && table.IsClosed)
                                     {
-                                        ObjectTable table = ObjectTableList.Where(d => d.Id == field.LookUpTableId).FirstOrDefault();
-                                        if (table != null && table.IsClosed)
-                                        {
-                                            bytejosn = GetByteDataByKey(cachedCloseTableJosnByte, table.Name);
-                                            if (bytejosn != null) dataList.Add(table.Name + "_" + "ClosedData", CompressionFileData(table.Name + "_" + "Closed", bytejosn));//+ "_" + "Closed"
-                                        }
+                                        bytejosn = GetByteDataByKey(cachedCloseTableJosnByte, table.Name);
+                                        if (bytejosn != null) dataList.Add(table.Name + "_" + "ClosedData", CompressionFileData(table.Name + "_" + "Closed", bytejosn));//+ "_" + "Closed"
                                     }
-                                    tableNames.Add(tablename);
                                 }
+                                tableNames.Add(tablename);
                             }
-
-
-                            if (objectTable.IsClosed)
-                            {
-                                bytejosn = GetByteDataByKey(cachedCloseTableJosnByte, objectTable.Name);
-                                //if (bytejosn == null)
-                                //{
-                                //    var data = TenantsUpdateClass.GetDataFromCloseTable(objectTable.Name);
-                                //    if (data != null)
-                                //    {
-                                //        var josn = LogitudeXmlSerializer.SerializeObjectToJosnString(data);
-                                //        bytejosn = System.Text.Encoding.UTF8.GetBytes(josn);
-                                //        cachedCloseTableJosnByte.Add(objectTable.Name, bytejosn);
-                                //    }
-                                //}
-
-
-                                if (bytejosn != null) dataList.Add(objectTable.Name + "_" + "ClosedData", CompressionFileData(objectTable.Name + "_" + "Closed", bytejosn));
-                            }
-
-
-                            objectTable.EntityResource = CompressionData(objectTable.Name, dataList, savetodisk);
-                            objectTable.EntityResourceLastUpdate = DateTime.UtcNow;
-                            objectTabelRepository.Update(objectTable);
                         }
 
-                        objectTabelRepository.SubmitChanges();
-                        TableLastUpdateClass.UpdateSystemMetaDataHistory();
 
+                        if (objectTable.IsClosed)
+                        {
+                            bytejosn = GetByteDataByKey(cachedCloseTableJosnByte, objectTable.Name);
+                            //if (bytejosn == null)
+                            //{
+                            //    var data = TenantsUpdateClass.GetDataFromCloseTable(objectTable.Name);
+                            //    if (data != null)
+                            //    {
+                            //        var josn = LogitudeXmlSerializer.SerializeObjectToJosnString(data);
+                            //        bytejosn = System.Text.Encoding.UTF8.GetBytes(josn);
+                            //        cachedCloseTableJosnByte.Add(objectTable.Name, bytejosn);
+                            //    }
+                            //}
+
+
+                            if (bytejosn != null) dataList.Add(objectTable.Name + "_" + "ClosedData", CompressionFileData(objectTable.Name + "_" + "Closed", bytejosn));
+                        }
+
+
+                        objectTable.EntityResource = CompressionData(objectTable.Name, dataList, savetodisk);
+                        objectTable.EntityResourceLastUpdate = DateTime.UtcNow;
+                        objectTabelRepository.Update(objectTable);
                     }
+                
+                    objectTabelRepository.SubmitChanges();
+                    TableLastUpdateClass.UpdateSystemMetaDataHistory();
+
                 }
                 catch (Exception ex)
                 {

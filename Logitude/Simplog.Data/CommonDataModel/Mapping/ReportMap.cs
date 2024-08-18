@@ -16,10 +16,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.HasKey(t => t.Id);
             this.Property(t => t.Id).IsRequired().IsUnicode(false).HasMaxLength(15);
             this.Property(t => t.Code).IsUnicode(false).HasMaxLength(4);
-            this.Property(t => t.Name).IsUnicode(true).HasMaxLength(80);
+            this.Property(t => t.Name).IsUnicode(false).HasMaxLength(40);
             this.Property(t => t.LocalName).IsUnicode(true).HasMaxLength(60);
             this.Property(t => t.Description).IsUnicode(true).HasMaxLength(250);
-            this.Property(t => t.FilterControlName).IsUnicode(true).HasMaxLength( 200);
+            this.Property(t => t.FilterControlName).IsUnicode(false).HasMaxLength(100);
             this.Property(t => t.SearchFields).IsUnicode(true).HasMaxLength(1000);
             this.Property(t => t.ReportGroupId).IsUnicode(false).HasMaxLength(15);
             this.Property(t => t.FeatureId).HasMaxLength(15).IsUnicode(false);

@@ -39,7 +39,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
                  .HasMaxLength(15)
                  .IsUnicode(false).IsRequired();
 
-            this.Property(t => t.ObjectTableName).IsRequired().HasMaxLength(100).IsUnicode(true);
+            this.Property(t => t.ObjectTableName).IsRequired().HasMaxLength(50).IsUnicode(false);
 
             this.Property(t => t.CreatedByUserId)
                .HasMaxLength(15)

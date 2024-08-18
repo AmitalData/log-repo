@@ -1159,9 +1159,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "EnglishName",
 					  						ObjectTableName =  "Country",
-					  						FieldsDataType =  "nText",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  240,
+					  						MaxLength =  120,
 					  						IsRequired =  true,
 					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  true,

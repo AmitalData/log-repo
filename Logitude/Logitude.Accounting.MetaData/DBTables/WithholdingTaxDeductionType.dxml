@@ -22,8 +22,8 @@
   </Column>
   <Column
     Name="EnglishName"
-    Type="nvarchar"
-    Size="120">
+    Type="varchar"
+    Size="60">
     <Constraints
       Nullable="true" />
   </Column>
@@ -34,7 +34,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-
   <Column
     Name="LocalName"
     Type="nvarchar"

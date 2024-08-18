@@ -265,8 +265,8 @@
   </Column>
   <Column
     Name="ExecutedByServerName"
-    Type="nvarchar"
-    Size="200">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>

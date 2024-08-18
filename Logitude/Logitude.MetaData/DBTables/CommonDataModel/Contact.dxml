@@ -133,8 +133,8 @@
   </Column>
   <Column
     Name="EnglishName"
-    Type="nvarchar"
-    Size="120">
+    Type="varchar"
+    Size="60">
     <Constraints
       Nullable="false" />
   </Column>
@@ -200,8 +200,8 @@
   </Column>
   <Column
     Name="CompanyName"
-    Type="nvarchar"
-    Size="2000">
+    Type="varchar"
+    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>

@@ -106,7 +106,7 @@ namespace Logitude.BL.Helpers
                     CacheManager.ClearCacheItems(k => k == key);
         }
 
-        public void ClearCache(int tenant, string setKey, string additionalKey)
+        public void ClearCache(int tenant, string setKey = null, string additionalKey = null)
         {
             string cacheKey = GetCacheKey(tenant);
             CacheManager.ClearCacheItems(key => key == cacheKey);
