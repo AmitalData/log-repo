@@ -1346,6 +1346,12 @@ namespace WebFreight.Web.Helpers
                         dataProvider = myDataManager.GetData();
                         break;
                     }
+                case "SHTO":
+                    {
+                        ShipmentFormLoader myDataManager = new ShipmentFormLoader(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+                        break;
+                    }
                 case "ECCR":
                     {
                         CustomsCollateralLoader myDataManager = new CustomsCollateralLoader(filters, reportFliter.tenant);
@@ -1857,6 +1863,14 @@ namespace WebFreight.Web.Helpers
                 case "MBBR":
                     {
                         dataProviderName = "Logitude.Accounting.BL.DataContract.MonthlyBalancesReportDataProvider";
+
+
+                        break;
+                    }
+
+                case "SHTO":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.ShipmentFormDataProvider";
 
 
                         break;
@@ -2673,6 +2687,19 @@ namespace WebFreight.Web.Helpers
 
                             break;
                         }
+
+                case "SHTO":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(ShipmentFormDataProvider));
+                        ShipmentFormDataProvider reportDataProvider = (ShipmentFormDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        //reportDataProvider.CompanyName = DataProviders.General.GetCompanyName(stimulReportDataProviderDetails.Tenant);
+                        //reportDataProvider.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "SHTO", Name = "ShipmentFormDataProvider", BusinessObjectValue = reportDataProvider };
+
+                        break;
+                    }
+
                 case "ECCR":
                     {
                         XmlSerializer serializer = new XmlSerializer(typeof(CustomsCollateralDataProvider));

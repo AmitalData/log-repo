@@ -28,11 +28,26 @@ import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureTo
 import { ShipmentContainersWebService } from 'Shipment/Services/ShipmentContainersWebService';
 import { $ } from 'protractor';
 import { GeneralContainerTrackingArgs } from 'Shipment/DataContract/GeneralContainerTrackingArgs';
+import { ReportFliter } from 'Report/Components/Filters/ReportFliter';
+import { ReportsPreviewComponent } from 'Report/Components/ReportsPreviewComponent';
+import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
+import { ReportService } from 'Common/Services/ExtendedLists/ReportService';
+import { ReportGroupList } from 'Report/EntityLists/ReportGroupList';
+import { ReportsTemplateListExtendedService } from 'Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
+import { ReportList } from 'Report/EntityLists/ReportList';
 
 export class ShipmentMenuButtonsHandler implements OnDestroy {
     public EntityPM: ShipmentPM;
     public entityArgs: EntityArgs
     private CurrentSession = SessionLocator.SelectedSession;
+    public ReportsPreview: ReportsPreviewComponent;
+    private reportsTemplateListExtendedService: ReportsTemplateListExtendedService;
+    private reportService: ReportService;
+
+    constructor() {
+        this.reportsTemplateListExtendedService = new ReportsTemplateListExtendedService();
+        this.reportService = new ReportService();
+    }
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
@@ -57,6 +72,12 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
                     if (button.EventCode == "ShowAWB") {
                         button.IsDisabled = buttonEnabled ? (this.EntityPM.TransportModeId != "A") : true;
+                    }
+
+                    if (button.EventCode == "ShipmentForm" || button.EventCode == "Forms") {
+                        button.IsHidden = !this.EntityPM.IsCustomShipment;
+                        // button.IsHidden = (this.entityArgs.EditComponent["SelectedQueryCode"] != "CustomsShipments");
+                        // button.IsDisabled = true;
                     }
 
                     if (button.EventCode == "CopyShipment") {
@@ -521,6 +542,11 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             break;
                         }
 
+                    case "ShipmentForm": {
+                        this.ShipmentFormClicked();
+                        break;
+                    }
+    
                     default: {
                         this.isButtonClicked = false;
                         break;
@@ -529,6 +555,76 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
             }
         }
     }
+
+    ShipmentFormClicked() {
+        this.ResetButtonClicked();
+
+        let reportList =     {
+            "$id": "2",
+            "Id": "1-10846",
+            "Tenant": 6,
+            "Name": "Shipment Tofes",
+            "LocalName": "טופס",
+            "Code": "SHTO",
+            "Description": "Export Declaration",
+            "SearchFields": "6,Export Declaration,Export Declaration",
+            "FilterControlName": "",
+            "ReportGroupId": "",
+            "FeatureId": null,
+            "FeatureCode": "ExportDeclarationReport",
+            "ReportDocumentId": null,
+            "InActive": false,
+            "FilterHtmlComponentUrl": "",
+            "DefaultTemplateId": "1-4",
+            "DefaultMessageTemplateId": null,
+            "FeatureUniqeCode": null,
+            "AvailableForScheduling": false,
+            "DisablePreview": false,
+            "DefaultExcelTemplateId": null,
+            "IsExcelReportAllowed": false
+        };
+
+        // todo: GetReportByCode
+        // this.reportService.GetDataProviderProperties("SHTO").subscribe((myResponse: ServiceResponse) => {
+        //     reportList = myResponse.Data;
+            this.LoadReportTemplate(reportList);
+        // });
+    }
+
+    ReportTemplates: any[] = [];
+    LoadReportTemplate(reportList: ReportList) {
+     
+        this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(reportList.Id,"R").subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.ReportTemplates = myResponse.Result;
+            }
+
+            SessionLocator.DynamicLoader.Load("./Report/Components/ReportsPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                // ?
+                // cmpRef.instance.ReportsPreview(groupList, reportList, this.ReportTemplates);
+                this.ReportsPreview = cmpRef.instance;
+                this.ReportsPreview.Report = reportList;
+
+                this.BuildReport();
+            });
+        });
+    }
+
+    BuildReport() {
+        let reportFliter = new ReportFliter();
+        reportFliter.Tenant = SessionInfo.LoggedUserTenant;
+        // reportFliter.QueryFilterItemLists = this.queryFilterItems;
+        reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
+        reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
+        reportFliter.ReportCode = this.ReportsPreview.Report.Code;
+        reportFliter.NumberOfPage = 1;
+        reportFliter.ProcessType = "GenerateReport";
+
+        this.ReportsPreview.GenerateReport(reportFliter, true);
+    }
+
     ViziionUnsubscribe() {
         var shipmentContainersWebService = new ShipmentContainersWebService();
         this.CurrentSession.StartBusyIndicator("Unsubscribe...");
