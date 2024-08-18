@@ -425,7 +425,8 @@
                                                                 [ObjectTableName]="'Customs.CertificateOriginInvoice'"
                                                                 [DataContext]="DataContext"
                                                                 (Changed)="OnChanged($event,item)"
-                                                                [Value]="item.IsInvoicesForPrint"></LogCheckBox>
+                                                                [Value]="item.IsInvoicesForPrint"
+                                                                [IsDisabled]="IsDisplayOnly"></LogCheckBox>
                                                         </div>
                                                     </log-cell-template>
                                                 </ng-template>
