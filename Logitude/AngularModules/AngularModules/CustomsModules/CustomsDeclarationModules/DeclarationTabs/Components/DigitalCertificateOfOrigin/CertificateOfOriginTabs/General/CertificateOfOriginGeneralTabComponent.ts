@@ -29,10 +29,8 @@ import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { EventEmitter } from '@angular/core';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { CertificateOfOriginWebService } from 'Customs/Services/WebServices/CertificateOfOriginWebService';
-import { GroupByClass } from 'Infrastructure/DataContracts/Dashboard/GroupByClass';
 import { AmitalGatewayUtil, UnifreightMessageM } from 'Infrastructure/Utilities/AmitalGatewayUtil';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
-import { log } from 'console';
 import * as xmlbuilder from 'xmlbuilder';
 
 
@@ -172,11 +170,11 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         });
 
 
-        //this.operationalDataFromUnifreight();
-
+        
         // Consignments for CertificateOriginItemItems:
         // #108953 -init from unifreight
-        // this.initCertificateOriginItemItemsFromUnifreight(EntityPM);
+        this.operationalDataFromUnifreight();
+        
         // else init from Declaration.Consignments
         this.initCertificateOriginItemItems(EntityPM);
     }
@@ -220,7 +218,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             "תקשורת של תעודת מקור לקבלת נתוני משגור");
 
     }
-    //initCertificateOriginItemItemsFromUnifreight(EntityPM: CertificateOfOriginPM) {
 
     buildXmlCertificateOfOriginPM(EntityPM: CertificateOfOriginPM) {
         const data = {
