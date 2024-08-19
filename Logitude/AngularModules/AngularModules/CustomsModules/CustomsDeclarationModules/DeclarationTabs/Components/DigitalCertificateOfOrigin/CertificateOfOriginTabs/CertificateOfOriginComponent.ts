@@ -376,14 +376,14 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
             else if(this.SelectedTabCode == "MOREDATA"){
                 this.MOREDATA.CheckMandatoryCustomsFields(this.MoreDataValidationErrors);
             }
-            this.GeneralValidationErrors.forEach(i => {
+            this.GeneralValidationErrors?.forEach(i => {
                 const isUniqueElement = !this.MoreDataValidationErrors.includes(i);
                 if (isUniqueElement && i != "" ) {
                     this.ValidationErrors.push(i);
                 }
             });
     
-            this.MoreDataValidationErrors.forEach(j => {
+            this.MoreDataValidationErrors?.forEach(j => {
                 const isUniqueElement = !this.GeneralValidationErrors.includes(j);
                 if (isUniqueElement && j != "") {
                     this.ValidationErrors.push(j);
