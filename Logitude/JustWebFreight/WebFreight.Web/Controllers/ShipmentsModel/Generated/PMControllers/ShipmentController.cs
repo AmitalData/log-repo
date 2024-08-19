@@ -697,8 +697,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 {
                    
                      AddWhatsAppMessagingPhoneNumberToResponseHeader(tenant.Value);
-                    TenantAdditionalDataRepository TADR = new TenantAdditionalDataRepository(tenant.Value);
-                    var MyAdditionalData = TADR.GetSingleTenantAdditionalData(tenant.Value);
+                     var MyAdditionalData = TADR.GetSingleTenantAdditionalData(tenant.Value);
  
                     if (MyAdditionalData != null)
                     {
@@ -762,16 +761,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
         // Other methods...
 
-         private static void AddWhatsAppMessagingPhoneNumberToResponseHeader(int tenant)
-        {
-            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
-            TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(tenant);
-            if (tenantManagementPM != null && !string.IsNullOrEmpty(tenantManagementPM.WhatsAppMessagingPhoneNumber))
-            {
-                HttpContext.Current.Response.Headers.Add("WhatsAppMessagingPhoneNumber", tenantManagementPM.WhatsAppMessagingPhoneNumber);
-                HttpContext.Current.Response.Headers.Add("Access-Control-Expose-Headers", "WhatsAppMessagingPhoneNumber");
-            }
-        }
+  
 
          public HttpResponseMessage GetTenantBySecurityKeyWithoutToken(string securityKey)
         {
@@ -971,35 +961,27 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 ShipmentQuery shipmentQuery;
                 ShipmentPM RequestedShipment;
                 const string testKey = "d5e6d15f4cb24f12a8ac9c5e8c54a06d";
-                if (key == testKey)
-                {
-                    shipmentQuery = new ShipmentQuery(0);
-                    RequestedShipment = shipmentQuery.GetSingleShipmentPMBySecurityKeyTenantTest();
-                }
-                else
-                {
-                 ShipmentQuery shipmentQuery;
-                ShipmentPM RequestedShipment;
-                const string testKey = "d5e6d15f4cb24f12a8ac9c5e8c54a06d";
-                if (key == testKey)
-                {
-                    shipmentQuery = new ShipmentQuery(0);
-                    RequestedShipment = shipmentQuery.GetSingleShipmentPMBySecurityKeyTenantTest();
-                }
-                else
-                {
+             
+                    if (key == testKey)
+                    {
+                        shipmentQuery = new ShipmentQuery(0);
+                        RequestedShipment = shipmentQuery.GetSingleShipmentPMBySecurityKeyTenantTest();
+                    }
+                    else
+                    {
 
-               
-                    shipmentQuery = new ShipmentQuery(tenant.Value);
-                    RequestedShipment = shipmentQuery.GetSingleShipmentPMBySecurityKeyTenant(key, tenant.Value);
-                }
- 
-                var MyData = LogitudeXmlSerializer.DeserializeObject<UserIdNumberRequestPM>(RequestedShipment.UserIdNumberXMLData);
-                MyData.Id = RequestedShipment.Id;
-                MyData.IsUserIDNumberRequired = RequestedShipment.IsUserIDNumberRequired;
-                MyData.UserIdNumberUpdateDate = RequestedShipment.UserIdNumberUpdateDate;
-                MyData.UserIdNumber = RequestedShipment.UserIdNumber;
-                return Request.CreateResponse(HttpStatusCode.OK, MyData);
+
+                        shipmentQuery = new ShipmentQuery(tenant.Value);
+                        RequestedShipment = shipmentQuery.GetSingleShipmentPMBySecurityKeyTenant(key, tenant.Value);
+                    }
+
+                    var MyData = LogitudeXmlSerializer.DeserializeObject<UserIdNumberRequestPM>(RequestedShipment.UserIdNumberXMLData);
+                    MyData.Id = RequestedShipment.Id;
+                    MyData.IsUserIDNumberRequired = RequestedShipment.IsUserIDNumberRequired;
+                    MyData.UserIdNumberUpdateDate = RequestedShipment.UserIdNumberUpdateDate;
+                    MyData.UserIdNumber = RequestedShipment.UserIdNumber;
+                    return Request.CreateResponse(HttpStatusCode.OK, MyData);
+                 
             }
             catch (Exception ex)
             {
