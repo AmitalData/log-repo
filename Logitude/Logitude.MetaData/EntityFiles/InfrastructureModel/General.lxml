@@ -41,7 +41,7 @@
   DefaultText="&quot;General&quot;"
     Code="&quot;c589&quot;"
       Name="&quot;General&quot;"
-   GenerateDomainService="false"
+    GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
   ServerModuleName="&quot;Generals&quot;"
   NoViewController="true"
@@ -4989,6 +4989,12 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
+      Code="&quot;Accounting.General.O.VendorWithCustomerGLAccount&quot;"
+      DefaultText="&quot;The selected operational card is connected to a client-type account and therefore will not be included in the tax withholding report&quot;"
+      LocalDefaultText="&quot;הכרטיס התפעולי שנבחר מחובר לחשבון מסוג לקוח ולכן לא ייכלל בדוח ניכוי מס במקור&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
       Code="&quot;Accounting.General.O.Cheques&quot;"
       DefaultText="&quot;Cheques&quot;"
       LocalDefaultText="&quot;שקים&quot;"
@@ -6000,7 +6006,7 @@
       LocalDefaultText="&quot;שלי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-     <TextCode
+      <TextCode
       Code="&quot;Accounting.O.Year&quot;"
       DefaultText="&quot;Year&quot;"
       LocalDefaultText="&quot;שנה&quot;"
@@ -6026,7 +6032,7 @@
       IsSpellChecked="false" />
 
    </AdditionalTextCodes>
-  <AdditionalFeatures>
+   <AdditionalFeatures>
     <Feature
       Code="&quot;DASHBOARD&quot;"
       FeatureTypeCode="&quot;MENU&quot;"

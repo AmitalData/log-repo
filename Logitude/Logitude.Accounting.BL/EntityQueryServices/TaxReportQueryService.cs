@@ -301,7 +301,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
     }
     
 
-
     public class DuplicateRows
     {
         public string Reference { get;set; }

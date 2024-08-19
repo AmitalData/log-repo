@@ -7,8 +7,7 @@ using Simplog.Data.InvoiceModel.Repositories;
 using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Simplog.Server.Infrastructure.Helpers;
-using Intuit.Ipp.Data;
-using CWXSD;
+ 
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {

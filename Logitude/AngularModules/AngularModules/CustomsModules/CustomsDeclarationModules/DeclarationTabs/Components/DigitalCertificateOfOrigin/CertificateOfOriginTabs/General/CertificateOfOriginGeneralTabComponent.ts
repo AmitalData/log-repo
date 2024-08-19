@@ -36,6 +36,12 @@ import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPM
 import { AmitalGatewayUtil, UnifreightMessageM } from 'Infrastructure/Utilities/AmitalGatewayUtil';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import * as xmlbuilder from 'xmlbuilder';
+import { parseString } from 'xml2js';
+import { QueryFilterItem } from 'Report/Components/Filters/QueryFilterItem';
+import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
+import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPMService';
+
+
 class UpdateGeneralArgsParams {
     public UpdateField: string;
     public LookUpTableName: string;
@@ -53,7 +59,7 @@ class UpdateGeneralParams {
     public Title: string;
     public Arguments: UpdateGeneralArgsParams;
 }
-
+ 
 @Component({
     styleUrls: ['./CertificateOfOriginGeneralTabComponent.scss'],
     templateUrl: './CertificateOfOriginGeneralTabComponent.html',
@@ -76,19 +82,19 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     public isReady: boolean;
     controlEnabled: boolean;
     IsDisplayOnly: boolean = false;
-    public IsActionButtonsEnabled: boolean = true;
+     public IsActionButtonsEnabled: boolean = true;
     public originalItemSource: ObservableCollection = new ObservableCollection([]);
     public updateOptionsMap = new Map<string, UpdateGeneralParams>();
     public UpdateOptionParams = {
-        ContainerIsoCode: { validate: null},
+        ContainerIsoCode: { validate: null },
         ItemId: null,
-        OriginCriterionCode: { LookUpTableName: 'Customs.OriginCriterion', ObjectTableName: 'Customs.CertificateOfOriginItem', QueryFilterItems: null},
+        OriginCriterionCode: { LookUpTableName: 'Customs.OriginCriterion', ObjectTableName: 'Customs.CertificateOfOriginItem', QueryFilterItems: null },
         ItemDescription: { IsMultiline: true },
     }
-    public ErrorsList: string[];
-    public StatusCode:string = "4";
+     public ErrorsList: string[];
+     public StatusCode:string = "4";
     private _declarationPMService: DeclarationPMService = new DeclarationPMService();
-
+ 
     constructor() {
         super();
         this.BuildUpdateParams();
@@ -145,9 +151,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
 
     }
-
-    initSelectionValueFields(){
-        this.selectedValueOriginCountry = this.entityPM.OriginGroupOfCountry && !this.entityPM.OriginCountry ? this.fieldNameOriginGroupOfCountry : this.fieldNameOriginCountry;
+    initSelectionValueFields() {
+         this.selectedValueOriginCountry = this.entityPM.OriginGroupOfCountry && !this.entityPM.OriginCountry ? this.fieldNameOriginGroupOfCountry : this.fieldNameOriginCountry;
         this.selectedValueDestinationCountry = this.entityPM.DestinationGroupOfCountries && !this.entityPM.DestinationCountry ? this.fieldNameDestinationGroupOfCountries : this.fieldNameDestinationCountry;
         this.selectedValueTradeAgreement = this.entityPM.TradeAgreementGroupOfCountries && !this.entityPM.TradeAgreementCountry2 ? this.fieldNameTradeAgreementGroupOfCountries : this.fieldNameTradeAgreementCountry2;
     }
@@ -189,8 +194,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.InitilizeNewCertificateWithSupplierInvoices(EntityPM);
         this.InitilizeNewCertificateWithConsignments(EntityPM);
     }
- 
-    InitilizeNewCertificateWithSupplierInvoices(EntityPM: CertificateOfOriginPM) {
+     InitilizeNewCertificateWithSupplierInvoices(EntityPM: CertificateOfOriginPM) {
         // SupplierInvoices for CertificateOriginInvoiceItems:
         this.CertificateOriginInvoiceItems.Clear();
         this.entityPM.CertificateOriginInvoiceItems = [];
@@ -215,11 +219,9 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
 
     InitilizeNewCertificateWithConsignments(EntityPM: CertificateOfOriginPM) {
-        
-
-        // Consignments for CertificateOriginItemItems:
+         // Consignments for CertificateOriginItemItems:
         // #108953 -init from unifreight
-        this.operationalDataFromUnifreight();
+        // this.operationalDataFromUnifreight();
 
         // else init from Declaration.Consignments
         this.initCertificateOriginItemItems(EntityPM);
@@ -231,7 +233,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
             .subscribe(
                 (mess: UnifreightMessageM) => {
-                    
+
 
                     var IsMatchUnifreightCallbackCommand = (
                         mess.LogitudeEntityNumber == this.currentDeclaration.Id &&
@@ -394,7 +396,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             this.getPackageTypeNameFromCache(item.PackageType, item);
             this.getOriginCriterionCodeNameFromCache(item.OriginCriterionCode, true, item);
 
-            const certificateOfOriginItemLine = new CertificateOfOriginItemLine(item, this);
+
+             const certificateOfOriginItemLine = new CertificateOfOriginItemLine(item, this);
             this.CertificateOriginItemItems.Insert(certificateOfOriginItemLine);
             this.originalItemSource.Insert(certificateOfOriginItemLine);
         });
@@ -418,18 +421,18 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 //     if (!myResponse.HasError && myResponse.Result) {
                 //         this.currentDeclaration = myResponse.Result;
                 //     }
-                    this.supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclaration(this.currentDeclaration.Id).subscribe((response: any) => {
-                        if (!response.HasError && response.Result) {
-                            this.currentDeclaration.SupplierInvoices = response.Result;
-                        }
-                        const oldItems = this.entityPM.CertificateOriginItemItems;
-                        this.InitilizeNewCertificateWithConsignments(this.entityPM);
-                        oldItems.forEach(item => {
-                            item.ChangeSetOp = "Delete";
-                            this.entityPM.CertificateOriginItemItems.push(item);
-                        });
-                        this.entityPM.IsChange = true;
+                this.supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclaration(this.currentDeclaration.Id).subscribe((response: any) => {
+                    if (!response.HasError && response.Result) {
+                        this.currentDeclaration.SupplierInvoices = response.Result;
+                    }
+                    const oldItems = this.entityPM.CertificateOriginItemItems;
+                    this.InitilizeNewCertificateWithConsignments(this.entityPM);
+                    oldItems.forEach(item => {
+                        item.ChangeSetOp = "Delete";
+                        this.entityPM.CertificateOriginItemItems.push(item);
                     });
+                    this.entityPM.IsChange = true;
+                });
                 // });
             }
         });
@@ -452,19 +455,19 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 //     var myResponse: ServiceResponse = myResult;
                 //     if (!myResponse.HasError && myResponse.Result) {
                 //         this.currentDeclaration = myResponse.Result;
-                        // this.entityPM.CertificateOriginInvoiceItems.forEach(item => this.entityPM.DeletedCertificateOriginInvoiceItems.push(item));
-                        const oldItems = this.entityPM.CertificateOriginInvoiceItems;
+                // this.entityPM.CertificateOriginInvoiceItems.forEach(item => this.entityPM.DeletedCertificateOriginInvoiceItems.push(item));
+                const oldItems = this.entityPM.CertificateOriginInvoiceItems;
 
-                        this.InitilizeNewCertificateWithSupplierInvoices(this.entityPM);
-                        oldItems.forEach(item => {
-                            item.ChangeSetOp = "Delete";
-                            this.entityPM.CertificateOriginInvoiceItems.push(item);
-                        });
-                        this.entityPM.IsChange = true;
+                this.InitilizeNewCertificateWithSupplierInvoices(this.entityPM);
+                oldItems.forEach(item => {
+                    item.ChangeSetOp = "Delete";
+                    this.entityPM.CertificateOriginInvoiceItems.push(item);
+                });
+                this.entityPM.IsChange = true;
                 //     }
                 // });
             }
-        });
+         });
     }
 
     updateEntity(EntityPM: CertificateOfOriginPM) {
@@ -697,13 +700,13 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 this.updateSelectCouplesWarning("TradeAgreementCountryCouple", true);
             }
         }
-        else {
+         else {
             this.setWarningFalseForCouples();
-        }
+         }
     }
 
 
-    private setWarningFalseForCouples() {
+     private setWarningFalseForCouples() {
         this.UIProperties.SetWarning(this.formSectionsCouples.originCountryCouple.fields[0], this.ObjectTableName, false);
         this.UIProperties.SetWarning(this.formSectionsCouples.originCountryCouple.fields[1], this.ObjectTableName, false);
         this.UIProperties.SetWarning(this.formSectionsCouples.destinationCountryCouple.fields[0], this.ObjectTableName, false);
@@ -711,6 +714,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetWarning(this.formSectionsCouples.tradeAgreementCountryCouple.fields[0], this.ObjectTableName, false);
         this.UIProperties.SetWarning(this.formSectionsCouples.tradeAgreementCountryCouple.fields[1], this.ObjectTableName, false);
         this.updateSelectCouplesWarning("all", false);
+ 
     }
 
     private getCardById(id: string) {
@@ -801,7 +805,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
 
     OnChanged($event, item) {
-        
+
         this.ErrorsList = [];
         var prevIsInvoicesForPrint = item.IsInvoicesForPrint;
         item.IsInvoicesForPrint = !item.IsInvoicesForPrint;
@@ -861,20 +865,150 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 let field = this.entityPM[item.MappedCertificateFieldsName];
                 if (!field) {
                     var fieldName = TextCodeTranslator.Translate('Customs.CertificateOfOrigin.F.' + item.MappedCertificateFieldsName);
-                    if (fieldName != "" &&
+                     if (fieldName != "" &&
                         this.formSectionsCouples.originCountryCouple.fields.indexOf(item.MappedCertificateFieldsName) == -1 &&
                         this.formSectionsCouples.destinationCountryCouple.fields.indexOf(item.MappedCertificateFieldsName) == -1 &&
                         this.formSectionsCouples.tradeAgreementCountryCouple.fields.indexOf(item.MappedCertificateFieldsName) == -1) {
-                        ValidationErrors.push(fieldName);
+                         ValidationErrors.push(fieldName);
                     }
                 }
             }
         });
+               
         // handle couples error messages:
         ValidationErrors = this.checkCouplesErrorMessages(ValidationErrors);
         return ValidationErrors;
     }
 
+    Search(text: string) {
+        var itemsSource: any = this.originalItemSource;
+        if (AppTool.IsNullOrEmpty(text)) {
+            this.CertificateOriginItemItems.InsertCollection(itemsSource.Collection);
+        }
+        else {
+
+            var TempItemSource: CertificateOfOriginItemLine[] = [];
+            if (text.length <= 2) {
+                TempItemSource = itemsSource.Collection.filter(f => f.ItemSerial.toString().includes(text));
+            }
+            else {
+                TempItemSource = itemsSource.Collection.filter(f => f.MarksAndNumbers.toUpperCase().includes(text.toUpperCase()));
+            }
+            this.CertificateOriginItemItems.InsertCollection(TempItemSource);
+        }
+    }
+
+    // #region actions button
+    private BuildUpdateParams() {
+
+        for (var option in this.UpdateOptionParams) {
+            let params = new UpdateGeneralParams();
+            let fieldName = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O." + option);
+            params.Title = TextCodeTranslator.Translate("Customs.Declaration.O.Update") + " " + fieldName;
+            params.Arguments = new UpdateGeneralArgsParams();
+            params.Arguments.UpdateField = option;
+            params.Arguments.Title = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.MultiUpdate");
+
+            if (this.UpdateOptionParams[option]?.LookUpTableName && this.UpdateOptionParams[option]?.ObjectTableName) {
+                params.Arguments.LookUpTableName = this.UpdateOptionParams[option].LookUpTableName;
+                params.Arguments.ObjectTableName = this.UpdateOptionParams[option].ObjectTableName;
+            }
+            // if (this.UpdateOptionParams[option]?.Validate) {
+            //     params.Arguments.Validate = SupplierInvoiceItemLine.validateClassificationCode;
+            // }
+            if (this.UpdateOptionParams[option]?.QueryFilterItems) {
+                params.Arguments.QueryFilterItems = this.UpdateOptionParams[option].QueryFilterItems;
+            }
+            if (this.UpdateOptionParams[option]?.IsMultiline) {
+                params.Arguments.IsMultiline = this.UpdateOptionParams[option].IsMultiline;
+            }
+            params.Arguments.ItemsWithNoValueTitle = TextCodeTranslator.Translate("Customs.CertificateOfOriginItem.O.ItemsWithNoValueTitle").replace("{field}", fieldName);
+            params.Arguments.IsItemsWithNoValue = true;
+            params.Arguments.SelectionCompletedMethod = (comp) => {
+                this.SelectionOriginCompleted(comp);
+            };
+            params.Arguments.ObjectTableName = 'Customs.CertificateOfOriginItem';
+
+            this.updateOptionsMap[option] = params;
+        }
+    }
+
+    SelectionOriginCompleted(args) {
+        if (args.ItemsSource != null) {
+            if (args.UpdateAll) {
+                for (let item of this.entityPM.CertificateOriginItemItems) {
+                    if (item[args.UpdateField] != args) {
+                        this.updateProcess(item, args);
+                    }
+                }
+            } else {
+                if (args.UpdateItemsWithNoValue) {
+                    for (let item of this.entityPM.CertificateOriginItemItems) {
+                        if (item[args.UpdateField] == "" || item[args.UpdateField] == null) {
+                            this.updateProcess(item, args);
+                        }
+                    }
+                } else {
+                    if (args.ItemsSource) {
+                        for (let item of this.entityPM.CertificateOriginItemItems) {
+                            var number = args.ItemsSource.Collection.filter(d => d.Number == item.ItemSerial)[0];
+                            if (number) {
+                                this.updateProcess(item, args);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    updateProcess(item: CertificateOfOriginItemPM, args) {
+        var updateField = args.UpdateField;
+
+        switch (updateField) {
+            case 'OriginCriterionCode': {
+                item.OriginCriterionCode = args.FinalValue.Code;
+                item.OriginCriterionCodeName = args.FinalValue.OriginCriterionCode;
+                break;
+            }
+
+            default:
+                item[updateField] = args.FinalValue;
+        }
+
+ 
+     }
+ 
+     UpdateClicked(type) {
+        let selectedOptionsSettings = this.updateOptionsMap[type];
+
+        let title = selectedOptionsSettings.Title;
+        var args = selectedOptionsSettings.Arguments;
+        this.UpdateCertificateOfOriginGeneralField(args, title);
+             }
+ 
+     UpdateCertificateOfOriginGeneralField(args: UpdateGeneralArgsParams, title) {
+        var windowArgs: any = {};
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 700;
+        logWindow.Height = 500;
+        logWindow.ShowCloseButton = true;
+        windowArgs.CertificateOfOriginPM = this.entityPM;
+        windowArgs = Object.assign(windowArgs, args);
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Title = title;
+        logWindow.ComponentLoaded.subscribe(comp => {
+            logWindow.WindowClosed.subscribe(s => {
+                if (s) {
+                    args.SelectionCompletedMethod(comp);
+ 
+            }
+             });
+
+        });
+         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/General/UpdateCertificateOfOriginGeneralFieldComponent');
+
+    }
+    //#endregion
     checkCouplesErrorMessages(ValidationErrors) {
         if (this.isMandatorySelectedOriginCountry) {
             let originCountry = this.entityPM[this.formSectionsCouples.originCountryCouple.fields[0]];

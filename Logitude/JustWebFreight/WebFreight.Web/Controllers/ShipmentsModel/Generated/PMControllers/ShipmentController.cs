@@ -43,12 +43,12 @@ using Marvin.JsonPatch;
 using Marvin.JsonPatch.Exceptions;
 using static Dropbox.Api.Sharing.ListFileMembersIndividualResult;
 using WebFreight.Web.WebServices;
-using Simplog.Server.Infrastructure;
+ using Simplog.Server.Infrastructure;
  using Logitude.CustomsMessaging.Common.RequestParams;
  
 using System.Runtime.Remoting.Messaging;
 using Logitude.Customs.Def.EntityPMs;
- 
+  
 
 namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 {
@@ -669,11 +669,11 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
         {
             try
             {
-                TenantAdditionalDataRepository TADR = new TenantAdditionalDataRepository(0);
+                 TenantAdditionalDataRepository TADR = new TenantAdditionalDataRepository(0);
                 ShipmentQuery shipmentQuery;
                 ShipmentAdditionalCloudCustomData CustomData;
                 const string testKey = "d5e6d15f4cb24f12a8ac9c5e8c54a06d";
-                //string logKey = PerformanceLogger.LogCurrentTime();
+                 //string logKey = PerformanceLogger.LogCurrentTime();
 
                 //string token = HttpContext.Current.Request.Headers["Token"];
                 //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
@@ -681,7 +681,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
                 //SecurityUtility.AuthenticationOnTenant(tenant);
                 //SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
-                if (key == testKey)
+                 if (key == testKey)
                 {
                     shipmentQuery = new ShipmentQuery(0);
                     var listOfTenantsWithAdditionalData = TADR.All().Select(x=>x.Tenant).Distinct().ToList();
@@ -693,12 +693,13 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                     shipmentQuery = new ShipmentQuery(tenant.Value);
                     CustomData = shipmentQuery.GetSingleShipmentAdditionalCloudCustomData(key, tenant.Value);//GetSingleShipmentPMBySecurityKeyTenant(key,tenant); // Check the 0
                 }
-                if (CustomData != null && !string.IsNullOrEmpty(CustomData.PaymentRequestXML))
+                 if (CustomData != null && !string.IsNullOrEmpty(CustomData.PaymentRequestXML))
                 {
                    
-                    AddDataToResponseHeader(tenant.Value);
+                     AddWhatsAppMessagingPhoneNumberToResponseHeader(tenant.Value);
+                    TenantAdditionalDataRepository TADR = new TenantAdditionalDataRepository(tenant.Value);
                     var MyAdditionalData = TADR.GetSingleTenantAdditionalData(tenant.Value);
-
+ 
                     if (MyAdditionalData != null)
                     {
                         var MyPaymentData = LogitudeXmlSerializer.DeserializeObject<RequestPayment>(CustomData.PaymentRequestXML);
@@ -745,6 +746,17 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        private static void AddWhatsAppMessagingPhoneNumberToResponseHeader(int tenant)
+        {
+            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
+            TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(tenant);
+            if (tenantManagementPM != null && !string.IsNullOrEmpty(tenantManagementPM.WhatsAppMessagingPhoneNumber))
+            {
+                HttpContext.Current.Response.Headers.Add("WhatsAppMessagingPhoneNumber", tenantManagementPM.WhatsAppMessagingPhoneNumber);
+                HttpContext.Current.Response.Headers.Add("Access-Control-Expose-Headers", "WhatsAppMessagingPhoneNumber");
             }
         }
 
@@ -966,10 +978,22 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 }
                 else
                 {
+                 ShipmentQuery shipmentQuery;
+                ShipmentPM RequestedShipment;
+                const string testKey = "d5e6d15f4cb24f12a8ac9c5e8c54a06d";
+                if (key == testKey)
+                {
+                    shipmentQuery = new ShipmentQuery(0);
+                    RequestedShipment = shipmentQuery.GetSingleShipmentPMBySecurityKeyTenantTest();
+                }
+                else
+                {
+
+               
                     shipmentQuery = new ShipmentQuery(tenant.Value);
                     RequestedShipment = shipmentQuery.GetSingleShipmentPMBySecurityKeyTenant(key, tenant.Value);
                 }
-
+ 
                 var MyData = LogitudeXmlSerializer.DeserializeObject<UserIdNumberRequestPM>(RequestedShipment.UserIdNumberXMLData);
                 MyData.Id = RequestedShipment.Id;
                 MyData.IsUserIDNumberRequired = RequestedShipment.IsUserIDNumberRequired;

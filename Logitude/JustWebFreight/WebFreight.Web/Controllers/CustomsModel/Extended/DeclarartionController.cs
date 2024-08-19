@@ -52,8 +52,10 @@ using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.RequestServices;
 using System.Xml;
-using Newtonsoft.Json;
-
+ using Newtonsoft.Json;
+ using System.Globalization;
+using System.Configuration;
+ 
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
@@ -474,8 +476,19 @@ new XElement("FileStreamError",
 
         public HttpResponseMessage GetLast2755ResponseDataAsFileStream(string customFileNo, int tenant)//AMI-66312 - שליחת מסר תשובה של מסר הגשה במקום של טיוטה אחרונה
         {
-            //http://192.116.221.103:572/NextProd572/api/Declarartion/GetLast2755ResponseDataAsFileStream?customFileNo=51340159&tenant=1
-            string responseDataDocumentId = "NaN";
+			DateTime stopLogAt = DateTime.MinValue;//DateTime stopLogAt = new DateTime(2020, 09, 01);
+			string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20240818T155633.LogUntilDateyyyyMMdd"];
+			if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+			{
+				stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+													"yyyyMMdd",
+													CultureInfo.InvariantCulture,
+													DateTimeStyles.None);
+			}
+
+
+			//http://192.116.221.103:572/NextProd572/api/Declarartion/GetLast2755ResponseDataAsFileStream?customFileNo=51340159&tenant=1
+			string responseDataDocumentId = "NaN";
             string declarationVersionId = "NaN";
             string Status = "Error";
             HttpResponseMessage httpResponse = null;
@@ -492,13 +505,16 @@ new XElement("FileStreamError",
                 {
                     throw new BusinessErrorException("Declaration !exist ");
                 }
+				LogitudeSettings.HandleLogMe(customFileNo+ "Declaration exist", false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
 
-                declarationVersionId = decPoco.VersionId;
+				declarationVersionId = decPoco.VersionId;
                 if (String.IsNullOrWhiteSpace(declarationVersionId))
                 {
                     throw new BusinessErrorException("declarationVersionId !exist ");
                 }
-                var crsAnalyzeStatus = "30";
+				LogitudeSettings.HandleLogMe(customFileNo + "declarationVersionId exist", false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
+
+				var crsAnalyzeStatus = "30";
                 string interfaceTypeCode = "2755";
                 var crsRepo = new CustomsRequestsSheetRepository(customContext);
                 var crsPoco = crsRepo.GetLastCRSByCustomfileStatusInterfaceFirstOrDefault(decPoco.CustomFileNo, crsAnalyzeStatus, interfaceTypeCode, tenant);
@@ -506,8 +522,9 @@ new XElement("FileStreamError",
                 {
                     throw new BusinessErrorException(/*"CustomsRequestsSheet !exist "*/ $"Message '{interfaceTypeCode}' didn't send yet  to customs!!!.");
                 }
+				LogitudeSettings.HandleLogMe(customFileNo + "Message send yet  to customs", false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
 
-                var stepRepo = new CommunicationLogStepRepository(tenant);
+				var stepRepo = new CommunicationLogStepRepository(tenant);
                 int stepReceivedCustomResponseCorrelation = 20;
                 var stepPoco = stepRepo.CommunicationLogStep(crsPoco.RequestComminicationId, stepReceivedCustomResponseCorrelation, tenant);
                 responseDataDocumentId = stepPoco.DocumentId;
@@ -515,15 +532,20 @@ new XElement("FileStreamError",
                 {
                     throw new BusinessErrorException("ResponseDataDocumentId !exist ");
                 }
+				LogitudeSettings.HandleLogMe(customFileNo + "ResponseDataDocumentId exist" + responseDataDocumentId, false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
 
 
-                string blobId = tenant + "_" + responseDataDocumentId;
+				string blobId = tenant + "_" + responseDataDocumentId;
                 httpResponse = Uploader.GetFileStream(blobId);
                 Status = "OK";
-            }
-            catch (BusinessErrorException businessErrorException)
+				LogitudeSettings.HandleLogMe(customFileNo + "ResponseDataDocumentId exist" + responseDataDocumentId, false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
+
+			}
+			catch (BusinessErrorException businessErrorException)
             {
-                XElement myXml =
+				LogitudeSettings.HandleLogMe(customFileNo + "businessErrorException", false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
+
+				XElement myXml =
 new XElement("FileStreamError",
     new XElement("Error", businessErrorException.Message
         ));
@@ -531,8 +553,9 @@ new XElement("FileStreamError",
             }
             catch (Exception ee)
             {
+				LogitudeSettings.HandleLogMe(customFileNo + "Exception12" + ee.Message.ToString(), false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
 
-                XElement myXml =
+				XElement myXml =
 new XElement("FileStreamError",
     new XElement("Error", ee.ToString()
 
@@ -542,14 +565,17 @@ new XElement("FileStreamError",
             }
             finally
             {
-                var fileName = httpResponse.Content.Headers.ContentDisposition.FileName;
+				LogitudeSettings.HandleLogMe(customFileNo + "finally ", false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
+
+				var fileName = httpResponse.Content.Headers.ContentDisposition.FileName;
                 var FileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
                 var Extension = Path.GetExtension(fileName);
                 var newFileName = $"DocumentId={responseDataDocumentId};DeclarationVersionId={declarationVersionId};Status={Status}" + Extension;
                 httpResponse.Content.Headers.ContentDisposition.FileName = newFileName;
+				LogitudeSettings.HandleLogMe(customFileNo + "finally fileName: " + newFileName, false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
 
-            }
-            return httpResponse;
+			}
+			return httpResponse;
 
 
         }

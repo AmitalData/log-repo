@@ -368,8 +368,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         this.ValidationErrors = [];
         this.GeneralValidationErrors = [];
         this.MoreDataValidationErrors = [];
-
-        if (this.EntityPM.RequestReasonCode != "10" && this.EntityPM.RequestReasonCode != "13" && this.EntityPM.RequestReasonCode != "14") {
+         if (this.EntityPM.RequestReasonCode != "10" && this.EntityPM.RequestReasonCode != "13" && this.EntityPM.RequestReasonCode != "14") {
             this.checkRequestReasonCode();
             if (this.SelectedTabCode == "GENERAL"){
                 this.GeneralValidationErrors = this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);            
@@ -377,14 +376,14 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
             else if(this.SelectedTabCode == "MOREDATA"){
                 this.MOREDATA.CheckMandatoryCustomsFields(this.MoreDataValidationErrors);
             }
-            this.GeneralValidationErrors.forEach(i => {
+            this.GeneralValidationErrors?.forEach(i => {
                 const isUniqueElement = !this.MoreDataValidationErrors.includes(i);
                 if (isUniqueElement && i != "" ) {
                     this.ValidationErrors.push(i);
                 }
             });
     
-            this.MoreDataValidationErrors.forEach(j => {
+            this.MoreDataValidationErrors?.forEach(j => {
                 const isUniqueElement = !this.GeneralValidationErrors.includes(j);
                 if (isUniqueElement && j != "") {
                     this.ValidationErrors.push(j);

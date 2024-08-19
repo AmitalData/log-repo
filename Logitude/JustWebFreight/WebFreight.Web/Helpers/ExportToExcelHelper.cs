@@ -1321,8 +1321,10 @@ namespace WebFreight.Web.Helpers
                             {
 
 
-                                value = ((DateTime)value).ToString("dd/MM/yyyy");
+                                // value = value.ToString("dd/MM/yyyy");
 
+                                value = ((DateTime)value).ToString("dd/MM/yyyy");
+ 
                             }
 
                             cell.SetCellType(GetCellType(column.ObjectFieldDataTypeCode));
@@ -1344,7 +1346,7 @@ namespace WebFreight.Web.Helpers
                                 {
                                     if (value == "") value = "0";
                                     cell.SetCellValue(bool.Parse(value));
-
+ 
                                 }
                                 else
                                     SetCellValueWithMaxLength(cell, value.ToString());

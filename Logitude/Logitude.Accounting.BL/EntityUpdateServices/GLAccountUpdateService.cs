@@ -83,6 +83,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
 
             }
+            AddAcitivityLog(entityPM, "N");
 
             FillSearchFields(entityPM);
 
@@ -394,7 +395,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
             base.OnCreating(entityPM, entityParentPM);
-            AddAcitivityLog(entityPM, "N");
+
         }
 
         private void SetDisplayNumber(GLAccountPM entityPM)
@@ -2622,7 +2623,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             }, false);
         }
-
         public class CsvModel
         {
             public int Tenant { get; set; }
@@ -2647,10 +2647,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             List<CsvModel> records = new List<CsvModel>();
             string decodedString = Encoding.UTF8.GetString(fileUploaded);
             var textReader = new StringReader(decodedString);
-            //using (var csv = new CsvHelper.CsvReader(textReader, CultureInfo.InvariantCulture))
-            //{
-            //    records = csv.GetRecords<CsvModel>().ToList();
-            //}
+            using (var csv = new CsvHelper.CsvReader(textReader, CultureInfo.InvariantCulture))
+            {
+                records = csv.GetRecords<CsvModel>().ToList();
+            }
             return records;
         }
         public UpdateFromCsvResult UpdateFromCsv(byte[] fileUploader, int tenant)

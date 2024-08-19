@@ -322,7 +322,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         DocumentHelper documentHelper = new DocumentHelper();
       
 
-        public void createDocumentInterestReport(int tenant,string arinvocieId)
+         public void createDocumentInterestReport(int tenant,string arinvocieId)
         {
             ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
             DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
@@ -367,14 +367,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             });
 
         }
-
-     
-
-      
-
-     
-
-    
+ 
         private static void Authentication()
         {
             string token = HttpContext.Current.Request.Headers["Token"];

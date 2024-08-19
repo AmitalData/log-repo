@@ -31,7 +31,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
- using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
+  using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
 using Logitude.Accounting.BL.CoreBL.Reports;
 using Simplog.Data.CommonDataModel;
 using Logitude.Accounting.Data.EntityMapping;
@@ -42,7 +42,7 @@ using Simplog.Data.InvoiceModel.Repositories;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Utils;
 using System.Linq;
- 
+  
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
     public partial class ReconciliationUpdateService : EntityUpdateService<Reconciliation, ReconciliationPM, EntityPM>
@@ -543,8 +543,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                     ledgerTransactionPM.IsReconciled = !reconciliationLine.IsPartial;
                 }
-             // if (FeatureToggleHelper.HasFeatureToggle("ILO", ledgerTransactionPM.Tenant) && ledgerTransactionPM.SourceTypeCode == "4")
-                if (ledgerTransactionPM.SourceTypeCode == "4")
+                if (FeatureToggleHelper.HasFeatureToggle("ILO", ledgerTransactionPM.Tenant) && ledgerTransactionPM.SourceTypeCode == "4")
                 {
                     IInvoiceContext invoiceContext = InvoiceContext.GetContext(ledgerTransactionPM.Tenant);
                     var invoiceRepository = new APInvoiceRepository(invoiceContext);
@@ -555,13 +554,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     var transactionAmount = account.ReconcileMethodCode == ReconcileMethodValues.LocalCurrency ? ledgerTransactionPM.LocalAmountCredit : ledgerTransactionPM.ForeignAmountCredit;
                     if (ledgerTransactionPM.OpenAmount == 0)
                     {
-                        //***102417/
+                         //***102417/
                         NetCommonHelper.Logger.DevLog.Instance.WriteInfo("APINV_PD:ReconciliationUpdateService.UpdateLedgerTransaction: APInvoice status 'Paid' Inv No. " + invoice.InvoiceNumber.ToString()
                          //   + ", HasFeatureToggle 'ILO'"
                             + ", old status= " + invoice.StatusCode
                             + ", ledgerTransactionPM.Id= " + ledgerTransactionPM.Id.ToString()
                             + ", reconciliationLine.ReconciliationId= " + reconciliationLine.ReconciliationId.ToString());
-                        invoice.IsClosed = true;
+                         invoice.IsClosed = true;
                         invoice.StatusCode = "PD";
                     }
                     else if (Math.Abs(ledgerTransactionPM.OpenAmount) < transactionAmount)
