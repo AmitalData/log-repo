@@ -30,28 +30,28 @@
     Type="varchar"
     Size="2">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="BranchCode"
     Type="varchar"
     Size="3">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="AccountNumber"
     Type="varchar"
     Size="11">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="LocalName"
     Type="nvarchar"
     Size="30">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="EnglishName"
@@ -71,7 +71,7 @@
     Type="varchar"
     Size="2">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="BankAddress"
