@@ -171,10 +171,12 @@ namespace Logitude.Accounting.BL.DataContract
           
             List<LedgerTransaction> transactions = (from a in accountingContext.LedgerTransactions
                     join j in accountingContext.Journals on a.JournalId equals j.Id
-                    where (EntityFunctions.TruncateTime(a.AccountingDate) >= startDate.Date && EntityFunctions.TruncateTime(a.AccountingDate) <= endDate.Date)
+                    join g in accountingContext.GLAccounts on a.OppositeAccountId equals g.Id
+                                                    where (EntityFunctions.TruncateTime(a.AccountingDate) >= startDate.Date && EntityFunctions.TruncateTime(a.AccountingDate) <= endDate.Date)
                     && a.Tenant == Tenant &&  a.AccountId == setting.TaxWithholdingGLAccountId
                     && j.ExternalSystem != null && a.LocalAmountDebit == 0
-                   select a).ToList();
+                    &&  g.AccountTypeCode == "3"
+                                                    select a).ToList();
             List<string> journalIds = transactions.Select(d => d.JournalId).ToList();
             journalLines = GetJournalLinesByJournalds(journalIds);
             List<string> accountsIds = transactions.Where(d=> d.OppositeAccountId != null).Select(d => d.OppositeAccountId ).ToList(); 
