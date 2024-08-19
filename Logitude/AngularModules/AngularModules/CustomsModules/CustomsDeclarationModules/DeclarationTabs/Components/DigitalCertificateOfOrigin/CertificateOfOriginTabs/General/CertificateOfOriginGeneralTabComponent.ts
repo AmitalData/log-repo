@@ -37,9 +37,7 @@ import { AmitalGatewayUtil, UnifreightMessageM } from 'Infrastructure/Utilities/
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import * as xmlbuilder from 'xmlbuilder';
 import { parseString } from 'xml2js';
-import { QueryFilterItem } from 'Report/Components/Filters/QueryFilterItem';
-import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
-import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPMService';
+ 
 
 
 class UpdateGeneralArgsParams {
@@ -880,134 +878,105 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         return ValidationErrors;
     }
 
-    Search(text: string) {
-        var itemsSource: any = this.originalItemSource;
-        if (AppTool.IsNullOrEmpty(text)) {
-            this.CertificateOriginItemItems.InsertCollection(itemsSource.Collection);
-        }
-        else {
+    // Search(text: string) {
+    //     var itemsSource: any = this.originalItemSource;
+    //     if (AppTool.IsNullOrEmpty(text)) {
+    //         this.CertificateOriginItemItems.InsertCollection(itemsSource.Collection);
+    //     }
+    //     else {
 
-            var TempItemSource: CertificateOfOriginItemLine[] = [];
-            if (text.length <= 2) {
-                TempItemSource = itemsSource.Collection.filter(f => f.ItemSerial.toString().includes(text));
-            }
-            else {
-                TempItemSource = itemsSource.Collection.filter(f => f.MarksAndNumbers.toUpperCase().includes(text.toUpperCase()));
-            }
-            this.CertificateOriginItemItems.InsertCollection(TempItemSource);
-        }
-    }
+    //         var TempItemSource: CertificateOfOriginItemLine[] = [];
+    //         if (text.length <= 2) {
+    //             TempItemSource = itemsSource.Collection.filter(f => f.ItemSerial.toString().includes(text));
+    //         }
+    //         else {
+    //             TempItemSource = itemsSource.Collection.filter(f => f.MarksAndNumbers.toUpperCase().includes(text.toUpperCase()));
+    //         }
+    //         this.CertificateOriginItemItems.InsertCollection(TempItemSource);
+    //     }
+    // }
 
     // #region actions button
-    private BuildUpdateParams() {
+    // private BuildUpdateParams() {
 
-        for (var option in this.UpdateOptionParams) {
-            let params = new UpdateGeneralParams();
-            let fieldName = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O." + option);
-            params.Title = TextCodeTranslator.Translate("Customs.Declaration.O.Update") + " " + fieldName;
-            params.Arguments = new UpdateGeneralArgsParams();
-            params.Arguments.UpdateField = option;
-            params.Arguments.Title = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.MultiUpdate");
+    //     for (var option in this.UpdateOptionParams) {
+    //         let params = new UpdateGeneralParams();
+    //         let fieldName = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O." + option);
+    //         params.Title = TextCodeTranslator.Translate("Customs.Declaration.O.Update") + " " + fieldName;
+    //         params.Arguments = new UpdateGeneralArgsParams();
+    //         params.Arguments.UpdateField = option;
+    //         params.Arguments.Title = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.MultiUpdate");
 
-            if (this.UpdateOptionParams[option]?.LookUpTableName && this.UpdateOptionParams[option]?.ObjectTableName) {
-                params.Arguments.LookUpTableName = this.UpdateOptionParams[option].LookUpTableName;
-                params.Arguments.ObjectTableName = this.UpdateOptionParams[option].ObjectTableName;
-            }
-            // if (this.UpdateOptionParams[option]?.Validate) {
-            //     params.Arguments.Validate = SupplierInvoiceItemLine.validateClassificationCode;
-            // }
-            if (this.UpdateOptionParams[option]?.QueryFilterItems) {
-                params.Arguments.QueryFilterItems = this.UpdateOptionParams[option].QueryFilterItems;
-            }
-            if (this.UpdateOptionParams[option]?.IsMultiline) {
-                params.Arguments.IsMultiline = this.UpdateOptionParams[option].IsMultiline;
-            }
-            params.Arguments.ItemsWithNoValueTitle = TextCodeTranslator.Translate("Customs.CertificateOfOriginItem.O.ItemsWithNoValueTitle").replace("{field}", fieldName);
-            params.Arguments.IsItemsWithNoValue = true;
-            params.Arguments.SelectionCompletedMethod = (comp) => {
-                this.SelectionOriginCompleted(comp);
-            };
-            params.Arguments.ObjectTableName = 'Customs.CertificateOfOriginItem';
+    //         if (this.UpdateOptionParams[option]?.LookUpTableName && this.UpdateOptionParams[option]?.ObjectTableName) {
+    //             params.Arguments.LookUpTableName = this.UpdateOptionParams[option].LookUpTableName;
+    //             params.Arguments.ObjectTableName = this.UpdateOptionParams[option].ObjectTableName;
+    //         }
+    //         // if (this.UpdateOptionParams[option]?.Validate) {
+    //         //     params.Arguments.Validate = SupplierInvoiceItemLine.validateClassificationCode;
+    //         // }
+    //         if (this.UpdateOptionParams[option]?.QueryFilterItems) {
+    //             params.Arguments.QueryFilterItems = this.UpdateOptionParams[option].QueryFilterItems;
+    //         }
+    //         if (this.UpdateOptionParams[option]?.IsMultiline) {
+    //             params.Arguments.IsMultiline = this.UpdateOptionParams[option].IsMultiline;
+    //         }
+    //         params.Arguments.ItemsWithNoValueTitle = TextCodeTranslator.Translate("Customs.CertificateOfOriginItem.O.ItemsWithNoValueTitle").replace("{field}", fieldName);
+    //         params.Arguments.IsItemsWithNoValue = true;
+    //         params.Arguments.SelectionCompletedMethod = (comp) => {
+    //             this.SelectionOriginCompleted(comp);
+    //         };
+    //         params.Arguments.ObjectTableName = 'Customs.CertificateOfOriginItem';
 
-            this.updateOptionsMap[option] = params;
-        }
-    }
+    //         this.updateOptionsMap[option] = params;
+    //     }
+    // }
 
-    SelectionOriginCompleted(args) {
-        if (args.ItemsSource != null) {
-            if (args.UpdateAll) {
-                for (let item of this.entityPM.CertificateOriginItemItems) {
-                    if (item[args.UpdateField] != args) {
-                        this.updateProcess(item, args);
-                    }
-                }
-            } else {
-                if (args.UpdateItemsWithNoValue) {
-                    for (let item of this.entityPM.CertificateOriginItemItems) {
-                        if (item[args.UpdateField] == "" || item[args.UpdateField] == null) {
-                            this.updateProcess(item, args);
-                        }
-                    }
-                } else {
-                    if (args.ItemsSource) {
-                        for (let item of this.entityPM.CertificateOriginItemItems) {
-                            var number = args.ItemsSource.Collection.filter(d => d.Number == item.ItemSerial)[0];
-                            if (number) {
-                                this.updateProcess(item, args);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    updateProcess(item: CertificateOfOriginItemPM, args) {
-        var updateField = args.UpdateField;
+    // SelectionOriginCompleted(args) {
+    //     if (args.ItemsSource != null) {
+    //         if (args.UpdateAll) {
+    //             for (let item of this.entityPM.CertificateOriginItemItems) {
+    //                 if (item[args.UpdateField] != args) {
+    //                     this.updateProcess(item, args);
+    //                 }
+    //             }
+    //         } else {
+    //             if (args.UpdateItemsWithNoValue) {
+    //                 for (let item of this.entityPM.CertificateOriginItemItems) {
+    //                     if (item[args.UpdateField] == "" || item[args.UpdateField] == null) {
+    //                         this.updateProcess(item, args);
+    //                     }
+    //                 }
+    //             } else {
+    //                 if (args.ItemsSource) {
+    //                     for (let item of this.entityPM.CertificateOriginItemItems) {
+    //                         var number = args.ItemsSource.Collection.filter(d => d.Number == item.ItemSerial)[0];
+    //                         if (number) {
+    //                             this.updateProcess(item, args);
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+    // updateProcess(item: CertificateOfOriginItemPM, args) {
+    //     var updateField = args.UpdateField;
 
-        switch (updateField) {
-            case 'OriginCriterionCode': {
-                item.OriginCriterionCode = args.FinalValue.Code;
-                item.OriginCriterionCodeName = args.FinalValue.OriginCriterionCode;
-                break;
-            }
+    //     switch (updateField) {
+    //         case 'OriginCriterionCode': {
+    //             item.OriginCriterionCode = args.FinalValue.Code;
+    //             item.OriginCriterionCodeName = args.FinalValue.OriginCriterionCode;
+    //             break;
+    //         }
 
-            default:
-                item[updateField] = args.FinalValue;
-        }
+    //         default:
+    //             item[updateField] = args.FinalValue;
+    //     }
 
  
-     }
+    //  }
  
-     UpdateClicked(type) {
-        let selectedOptionsSettings = this.updateOptionsMap[type];
-
-        let title = selectedOptionsSettings.Title;
-        var args = selectedOptionsSettings.Arguments;
-        this.UpdateCertificateOfOriginGeneralField(args, title);
-             }
  
-     UpdateCertificateOfOriginGeneralField(args: UpdateGeneralArgsParams, title) {
-        var windowArgs: any = {};
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 700;
-        logWindow.Height = 500;
-        logWindow.ShowCloseButton = true;
-        windowArgs.CertificateOfOriginPM = this.entityPM;
-        windowArgs = Object.assign(windowArgs, args);
-        logWindow.WindowArgs = windowArgs;
-        logWindow.Title = title;
-        logWindow.ComponentLoaded.subscribe(comp => {
-            logWindow.WindowClosed.subscribe(s => {
-                if (s) {
-                    args.SelectionCompletedMethod(comp);
- 
-            }
-             });
-
-        });
-         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/General/UpdateCertificateOfOriginGeneralFieldComponent');
-
-    }
     //#endregion
     checkCouplesErrorMessages(ValidationErrors) {
         if (this.isMandatorySelectedOriginCountry) {
