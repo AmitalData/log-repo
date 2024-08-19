@@ -29,19 +29,19 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.InternalCode).HasColumnName("InternalCode").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.BankCode).HasColumnName("BankCode").HasMaxLength(2).IsUnicode(false);
+            this.Property(t => t.BankCode).HasColumnName("BankCode").IsRequired().HasMaxLength(2).IsUnicode(false);
 
-            this.Property(t => t.BranchCode).HasColumnName("BranchCode").HasMaxLength(3).IsUnicode(false);
+            this.Property(t => t.BranchCode).HasColumnName("BranchCode").IsRequired().HasMaxLength(3).IsUnicode(false);
 
-            this.Property(t => t.AccountNumber).HasColumnName("AccountNumber").HasMaxLength(11).IsUnicode(false);
+            this.Property(t => t.AccountNumber).HasColumnName("AccountNumber").IsRequired().HasMaxLength(11).IsUnicode(false);
 
-            this.Property(t => t.LocalName).HasColumnName("LocalName").HasMaxLength(30).IsUnicode(true);
+            this.Property(t => t.LocalName).HasColumnName("LocalName").IsRequired().HasMaxLength(30).IsUnicode(true);
 
             this.Property(t => t.EnglishName).HasColumnName("EnglishName").HasMaxLength(30).IsUnicode(false);
 
             this.Property(t => t.InActive).HasColumnName("InActive");
 
-            this.Property(t => t.PayerTypeCode).HasColumnName("PayerTypeCode").HasMaxLength(2).IsUnicode(false);
+            this.Property(t => t.PayerTypeCode).HasColumnName("PayerTypeCode").IsRequired().HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.BankAddress).HasColumnName("BankAddress").HasMaxLength(1024).IsUnicode(true);
 
