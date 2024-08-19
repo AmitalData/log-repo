@@ -280,8 +280,8 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         if (AppTool.IsNullOrEmpty(this.EntityPM.CityOfDeclaration)) {
             this.certificateOfOriginWebService.GetCityOfDeclarationByImporterID(this.DecalarationData.ImporterId, this.EntityPM.Tenant).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
-                if (!myResult.HasError && myResult.Result) {
-                    this.EntityPM.CityOfDeclaration = myResponse.Result;
+                if (!myResult.HasError && myResult.Result != null) {
+                    this.EntityPM.CityOfDeclaration = myResponse.Result.LocalCityCode;
                 }
             });
         }
