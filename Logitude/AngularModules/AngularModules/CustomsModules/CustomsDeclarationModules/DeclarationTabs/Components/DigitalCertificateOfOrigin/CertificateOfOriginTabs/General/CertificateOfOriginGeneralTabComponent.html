@@ -474,7 +474,7 @@
                             </div>
                         </td>
     
-                        <td *ngIf="currentDeclaration.Direction == 'E' && currentDeclaration.TransportModeId == 'O'" style="width:120px">
+                        <td *ngIf="currentDeclaration.Direction == 'E' && currentDeclaration.TransportModeId == 'O'" style="width:130px">
                             <SearchTextBox [PlaceHolder]="'Customs.CertificateOfOriginItem.O.SearchItems' | TextCodeTranslationPipe" [ObjectTableName]="'Customs.CertificateOfOriginItem'" (SearchTextChangeEvent)="Search($event)"></SearchTextBox>
                         </td>
                     </tr>
