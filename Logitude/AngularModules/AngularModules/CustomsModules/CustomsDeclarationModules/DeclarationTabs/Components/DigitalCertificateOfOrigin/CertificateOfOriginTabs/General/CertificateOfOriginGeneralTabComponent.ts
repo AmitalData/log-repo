@@ -36,7 +36,8 @@ import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPM
 import { AmitalGatewayUtil, UnifreightMessageM } from 'Infrastructure/Utilities/AmitalGatewayUtil';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import * as xmlbuilder from 'xmlbuilder';
-import { parseString } from 'xml2js';
+import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
+import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPMService';
  
 
 
@@ -192,8 +193,9 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.InitilizeNewCertificateWithSupplierInvoices(EntityPM);
         this.InitilizeNewCertificateWithConsignments(EntityPM);
     }
-     InitilizeNewCertificateWithSupplierInvoices(EntityPM: CertificateOfOriginPM) {
-        // SupplierInvoices for CertificateOriginInvoiceItems:
+
+    // SupplierInvoices for CertificateOriginInvoiceItems:
+    InitilizeNewCertificateWithSupplierInvoices(EntityPM: CertificateOfOriginPM) {
         this.CertificateOriginInvoiceItems.Clear();
         this.entityPM.CertificateOriginInvoiceItems = [];
         this.currentDeclaration.SupplierInvoices.forEach((supplierInvoice) => {
@@ -204,46 +206,47 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             mappedInvoice.InvoiceDate = supplierInvoice.IssueDate;
             mappedInvoice.InvoiceSum = supplierInvoice.InvoiceAmount?.toString();
             mappedInvoice.CurrencyTypeCode = supplierInvoice.InvoiceCurrencyTypeCode;
-
             mappedInvoice.DescriptionOfInvoice = !AppTool.IsNullOrEmpty(this.cargoDescription) ? this.cargoDescription : "";
             mappedInvoice.IsInvoicesForPrint = true;
 
             // add to collection
             this.CertificateOriginInvoiceItems.Insert(new CertificateOfOriginInvoiceLine(mappedInvoice, this));
             this.entityPM.CertificateOriginInvoiceItems.push(mappedInvoice);
-
         });
-
     }
 
+    // Consignments for CertificateOriginItemItems:
     InitilizeNewCertificateWithConsignments(EntityPM: CertificateOfOriginPM) {
-         // Consignments for CertificateOriginItemItems:
         // #108953 -init from unifreight
-        // this.operationalDataFromUnifreight();
-
-        // else init from Declaration.Consignments
-        this.initCertificateOriginItemItems(EntityPM);
+        if (!this.currentDeclaration.IsConnectedToUnifreight && AmitalGatewayUtil.Instance.AmitalBrowserInUse)
+            this.operationalDataFromUnifreight(EntityPM);
+        else // init from Declaration.Consignments
+            this.initCertificateOriginItemItems(EntityPM);
     }
 
-    operationalDataFromUnifreight() {
 
+
+    operationalDataFromUnifreight(EntityPM: CertificateOfOriginPM) {
         SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
             .subscribe(
                 (mess: UnifreightMessageM) => {
-
-
                     var IsMatchUnifreightCallbackCommand = (
                         mess.LogitudeEntityNumber == this.currentDeclaration.Id &&
                         mess.LogitudeViewModel == "CertificateOfOriginGeneralTabComponent.ts");
-
                     if (IsMatchUnifreightCallbackCommand) {
-
                         sub.unsubscribe();
                         SessionLocator.SelectedSession.StopBusyIndicator();
                         let XMLOfConsignmentsDetailsToCertificateOfOriginOut = UnifreightMessageM.GetStringValue(mess, "XMLOfConsignmentsDetailsToCertificateOfOriginOut");
-                        console.log(XMLOfConsignmentsDetailsToCertificateOfOriginOut);
+                        const xmlData = (xml: string) => xml.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+                        const result = this.parseXml(xmlData(XMLOfConsignmentsDetailsToCertificateOfOriginOut));
 
+                        if (AppTool.IsNullOrEmpty(result) || AppTool.IsNullOrEmpty(result?.certificateOfOriginItems) || result?.certificateOfOriginItems == 0) {
+                            this.initCertificateOriginItemItems(EntityPM);
+                        }
+                        else { 
+                            this.initCertificateOriginItemsFromUnifreight(result, EntityPM);
+                        }
                     }
                 }
             );
@@ -254,14 +257,125 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 DeclarationMessaging.GetMessage(this.currentDeclaration.CustomFileNo, this.currentDeclaration.Id, "CertificateOfOriginGeneralTabComponent.ts", "BFIFILE");
         unifreightMessageM.Requset.push(["XMLOfConsignmentsDetailsToCertificateOfOrigin", this.buildXmlCertificateOfOriginPM(this.entityPM)]);
 
-
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
             "AmitalGatewayUtil.ConsignmentsDetailsToCertificateOfOrigin",
             "BFIHMAIN.LogitudeTask",
             "ConsignmentsDetailsToCertificateOfOrigin",
             unifreightMessageM,
             "תקשורת של תעודת מקור לקבלת נתוני משגור");
+    }
 
+    initCertificateOriginItemsFromUnifreight(result, EntityPM: CertificateOfOriginPM) {
+        this.CertificateOriginItemItems.Clear();
+        this.originalItemSource.Clear();
+        this.entityPM.CertificateOriginItemItems = [];
+        result?.certificateOfOriginItems?.forEach((unifreightItem) => {
+            const mappedConsignments = new CertificateOfOriginItemPM(EntityPM);
+            mappedConsignments.Tenant = EntityPM.Tenant;
+
+            // Initialize from Unifreight data if available
+            mappedConsignments.ItemSerial = unifreightItem.itemSerial || '';
+            mappedConsignments.MarksAndNumbers = unifreightItem.marksAndNumbers || '';
+            mappedConsignments.Weight = unifreightItem.weight || '';
+            mappedConsignments.ContainerIsoCode = unifreightItem.isoContainerType || '';
+
+            // Find corresponding consignment item by serial or other identifier
+            let consignment = this.currentDeclaration.Consignments.filter(c => c.SequenceNumeric == unifreightItem.itemSerial)[0];
+
+            if (consignment) {
+                const consignmentPackage = consignment.ConsignmentPackages[0];
+                // Update fields if not set by Unifreight data:
+                mappedConsignments.MarksAndNumbers = mappedConsignments.MarksAndNumbers || consignmentPackage?.MarksNumbers || '';
+                mappedConsignments.PackageQuantity = consignmentPackage?.PackageQuantity || 0;
+                mappedConsignments.Weight = mappedConsignments.Weight || consignmentPackage?.GrossMassMeasure || 0;
+                mappedConsignments.MeasureType = consignmentPackage?.GrossMassMeasureTypeCode || '';
+                mappedConsignments.PackageType = consignmentPackage?.PackageTypeCode || '';
+                mappedConsignments.PackingTypeName = consignmentPackage?.PackageTypeName || '';
+                mappedConsignments.MeasureTypeName = consignmentPackage?.GrossMassMeasureTypeName || '';
+                mappedConsignments.ItemDescription = consignment.CargoDescription || '';
+                mappedConsignments.ItemId = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.ClassificationCode.substring(0, 6) || '';
+                // Initialize ContainerTypeWCO field:
+                this.getContainerTypeWCOData(consignment, mappedConsignments, unifreightItem.manifestNumber);
+            }
+
+            // Add to collections
+            const certificateOfOriginItemLine = new CertificateOfOriginItemLine(mappedConsignments, this);
+            this.CertificateOriginItemItems.Insert(certificateOfOriginItemLine);
+            this.originalItemSource.Insert(certificateOfOriginItemLine);
+            this.entityPM.CertificateOriginItemItems.push(mappedConsignments);
+        });
+
+        // add the items from this.currentDeclaration.Consignments are not exist in unifreight and exist in the currentDeclaration.Consignments
+        // TODO: CHECK if needed with tzuri
+        // this.currentDeclaration.Consignments.forEach((consignment) => {
+        //     if (!result.certificateOfOriginItems.some(i => i.itemSerial == consignment.SequenceNumeric)) {
+        //         const mappedConsignments = new CertificateOfOriginItemPM(EntityPM);
+        //         mappedConsignments.Tenant = EntityPM.Tenant;
+
+        //         const consignmentPackage = consignment.ConsignmentPackages[0];
+        //         if (consignmentPackage) {
+        //             mappedConsignments.MarksAndNumbers = consignmentPackage.MarksNumbers;
+        //             mappedConsignments.PackageQuantity = consignmentPackage.PackageQuantity;
+        //             mappedConsignments.Weight = consignmentPackage.GrossMassMeasure;
+        //             mappedConsignments.MeasureType = consignmentPackage.GrossMassMeasureTypeCode;
+        //             mappedConsignments.PackageType = !AppTool.IsNullOrEmpty(consignmentPackage.PackageTypeCode) ? consignmentPackage.PackageTypeCode : "";
+        //             mappedConsignments.PackingTypeName = consignmentPackage.PackageTypeName ? consignmentPackage.PackageTypeName : "";
+        //             mappedConsignments.MeasureTypeName = consignmentPackage.GrossMassMeasureTypeName;
+        //         }
+        //         mappedConsignments.ItemDescription = consignment.CargoDescription;
+        //         mappedConsignments.ItemId = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.ClassificationCode.substring(0, 6);
+
+        //         // #101498 after this task is finish- add this field initilize - field ContainerTypeWCO
+        //         this.getContainerTypeWCOData(consignment, mappedConsignments);
+
+        //         // add to collection    
+        //         const certificateOfOriginItemLine = new CertificateOfOriginItemLine(mappedConsignments, this);
+        //         this.CertificateOriginItemItems.Insert(certificateOfOriginItemLine);
+        //         this.originalItemSource.Insert(certificateOfOriginItemLine);
+        //         this.entityPM.CertificateOriginItemItems.push(mappedConsignments);
+        //     }
+        // });
+    }
+
+    parseXml(xmlString: string): any {
+        // Parse the XML string into a DOM Document
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlString, 'application/xml');
+
+        // Extract values from the XML
+        const customsFile = xmlDoc.getElementsByTagName('LogitudeCustomsFileCertificate')[0];
+        const customFileNo = customsFile.getElementsByTagName('CustomFileNo')[0]?.textContent || '';
+        const id = customsFile.getElementsByTagName('Id')[0]?.textContent || '';
+        const certificateType = customsFile.getElementsByTagName('CertificateType')[0]?.textContent || '';
+
+        const items = customsFile.getElementsByTagName('CertificateOfOriginItem');
+        const certificateOfOriginItems: any[] = [];
+
+        for (let i = 0; i < items.length; i++) {
+            const item = items[i];
+            const itemSerial = item.getElementsByTagName('ItemSerial')[0]?.textContent || '';
+            const manifestNumber = item.getElementsByTagName('ManifestNumber')[0]?.textContent || '';
+            const description = item.getElementsByTagName('Description')[0]?.textContent || '';
+            const marksAndNumbers = item.getElementsByTagName('MarksAndNumbers')[0]?.textContent || '';
+            const weight = item.getElementsByTagName('Weight')[0]?.textContent || '';
+            const isoContainerType = item.getElementsByTagName('IsoContainerType')[0]?.textContent || '';
+
+            certificateOfOriginItems.push({
+                itemSerial,
+                manifestNumber,
+                description,
+                marksAndNumbers,
+                weight,
+                isoContainerType,
+            });
+        }
+
+        return {
+            customFileNo,
+            id,
+            certificateType,
+            certificateOfOriginItems,
+        };
     }
 
     buildXmlCertificateOfOriginPM(EntityPM: CertificateOfOriginPM) {
@@ -350,9 +464,11 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
 
     exportStorageWebService = new ExportStorageWebService();
-    getContainerTypeWCOData(consignment: ConsignmentPM, mappedConsignments: CertificateOfOriginItemPM) {
+    getContainerTypeWCOData(consignment: ConsignmentPM, mappedConsignments: CertificateOfOriginItemPM, ManifestNumberFromUnifreight = null) {
         // Validate consignment data:
-        consignment.ManifestNumber = consignment.ManifestNumber ? consignment.ManifestNumber : '';
+        if (!ManifestNumberFromUnifreight) consignment.ManifestNumber = consignment.ManifestNumber ? consignment.ManifestNumber : '';
+        else consignment.ManifestNumber = ManifestNumberFromUnifreight;
+
         consignment.SecondCargoID = consignment.SecondCargoID ? consignment.SecondCargoID : '';
         consignment.ThirdCargoID = consignment.ThirdCargoID ? consignment.ThirdCargoID : '';
         consignment.CargoTypeCode = consignment.CargoTypeCode ? consignment.CargoTypeCode : '';
@@ -872,7 +988,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 }
             }
         });
-               
+
         // handle couples error messages:
         ValidationErrors = this.checkCouplesErrorMessages(ValidationErrors);
         return ValidationErrors;
