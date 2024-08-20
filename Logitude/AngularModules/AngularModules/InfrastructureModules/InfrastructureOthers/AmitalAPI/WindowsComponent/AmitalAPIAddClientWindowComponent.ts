@@ -90,6 +90,7 @@ export class AmitalAPIAddClientWindowComponent {
         if (params.isUpdate) {
             params.row.SecretExpired = new Date(params.row.SecretExpired) as any;
             this.data = { ...this.data, ...params.row };
+            this.fields.forEach(field => field.value = this.data[field.name]);
             this.clientSchemasCollection.InsertCollection(params.schemas.filter(schema => schema.Tenants?.includes(params.row?.Tenant)));            
         }
 

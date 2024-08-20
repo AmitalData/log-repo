@@ -125,8 +125,7 @@ export class AmitalAPIAddApiWindowComponent {
                 .filter(x => x.schemaId === this.data.SchemaId)
                 .map(x => ({ name: x.name, label: x.label })));
         
-                console.log(this.fields)
-                console.log(this.data)
+        this.fields.forEach(field => field.value = this.data[field.name]);
         this.fieldsReady = true
         this.cdr.detectChanges();
     }
