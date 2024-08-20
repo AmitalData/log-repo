@@ -306,35 +306,34 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         });
 
         // add the items from this.currentDeclaration.Consignments are not exist in unifreight and exist in the currentDeclaration.Consignments
-        // TODO: CHECK if needed with tzuri
-        // this.currentDeclaration.Consignments.forEach((consignment) => {
-        //     if (!result.certificateOfOriginItems.some(i => i.itemSerial == consignment.SequenceNumeric)) {
-        //         const mappedConsignments = new CertificateOfOriginItemPM(EntityPM);
-        //         mappedConsignments.Tenant = EntityPM.Tenant;
+        this.currentDeclaration.Consignments.forEach((consignment) => {
+            if (!result.certificateOfOriginItems.some(i => i.itemSerial == consignment.SequenceNumeric)) {
+                const mappedConsignments = new CertificateOfOriginItemPM(EntityPM);
+                mappedConsignments.Tenant = EntityPM.Tenant;
 
-        //         const consignmentPackage = consignment.ConsignmentPackages[0];
-        //         if (consignmentPackage) {
-        //             mappedConsignments.MarksAndNumbers = consignmentPackage.MarksNumbers;
-        //             mappedConsignments.PackageQuantity = consignmentPackage.PackageQuantity;
-        //             mappedConsignments.Weight = consignmentPackage.GrossMassMeasure;
-        //             mappedConsignments.MeasureType = consignmentPackage.GrossMassMeasureTypeCode;
-        //             mappedConsignments.PackageType = !AppTool.IsNullOrEmpty(consignmentPackage.PackageTypeCode) ? consignmentPackage.PackageTypeCode : "";
-        //             mappedConsignments.PackingTypeName = consignmentPackage.PackageTypeName ? consignmentPackage.PackageTypeName : "";
-        //             mappedConsignments.MeasureTypeName = consignmentPackage.GrossMassMeasureTypeName;
-        //         }
-        //         mappedConsignments.ItemDescription = consignment.CargoDescription;
-        //         mappedConsignments.ItemId = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.ClassificationCode.substring(0, 6);
+                const consignmentPackage = consignment.ConsignmentPackages[0];
+                if (consignmentPackage) {
+                    mappedConsignments.MarksAndNumbers = consignmentPackage.MarksNumbers;
+                    mappedConsignments.PackageQuantity = consignmentPackage.PackageQuantity;
+                    mappedConsignments.Weight = consignmentPackage.GrossMassMeasure;
+                    mappedConsignments.MeasureType = consignmentPackage.GrossMassMeasureTypeCode;
+                    mappedConsignments.PackageType = !AppTool.IsNullOrEmpty(consignmentPackage.PackageTypeCode) ? consignmentPackage.PackageTypeCode : "";
+                    mappedConsignments.PackingTypeName = consignmentPackage.PackageTypeName ? consignmentPackage.PackageTypeName : "";
+                    mappedConsignments.MeasureTypeName = consignmentPackage.GrossMassMeasureTypeName;
+                }
+                mappedConsignments.ItemDescription = consignment.CargoDescription;
+                mappedConsignments.ItemId = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.ClassificationCode.substring(0, 6);
 
-        //         // #101498 after this task is finish- add this field initilize - field ContainerTypeWCO
-        //         this.getContainerTypeWCOData(consignment, mappedConsignments);
+                // #101498 after this task is finish- add this field initilize - field ContainerTypeWCO
+                this.getContainerTypeWCOData(consignment, mappedConsignments);
 
-        //         // add to collection    
-        //         const certificateOfOriginItemLine = new CertificateOfOriginItemLine(mappedConsignments, this);
-        //         this.CertificateOriginItemItems.Insert(certificateOfOriginItemLine);
-        //         this.originalItemSource.Insert(certificateOfOriginItemLine);
-        //         this.entityPM.CertificateOriginItemItems.push(mappedConsignments);
-        //     }
-        // });
+                // add to collection    
+                const certificateOfOriginItemLine = new CertificateOfOriginItemLine(mappedConsignments, this);
+                this.CertificateOriginItemItems.Insert(certificateOfOriginItemLine);
+                this.originalItemSource.Insert(certificateOfOriginItemLine);
+                this.entityPM.CertificateOriginItemItems.push(mappedConsignments);
+            }
+        });
     }
 
     parseXml(xmlString: string): any {
