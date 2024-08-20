@@ -54,6 +54,27 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetReportByCode(string code)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                List<ReportList> result = new List<ReportList>();
+                ReportRepository reportRepository = new ReportRepository(authToken.Tenant);
+                ReportQuery reportQuery = new ReportQuery(reportRepository);
+                ReportList reportLists = reportQuery.GetReportByCode(code, authToken.Tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, reportLists);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         public HttpResponseMessage PutBuildStimulReport(ReportFliter reportFliter)
         {
             try

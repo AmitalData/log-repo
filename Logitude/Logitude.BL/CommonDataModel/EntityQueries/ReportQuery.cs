@@ -262,7 +262,48 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
             return result;
         }
-        
+
+        public ReportList GetReportByCode(string code, int tenant)
+        {
+            ReportModificationRepository reportModificationRep = new ReportModificationRepository(tenant);
+            IQueryable<Report> reports = repository.GetReports(tenant);
+            List<ReportModification> modifications = reportModificationRep.GetReportModifications(tenant).ToList();
+
+            ReportList result = (from report in reports.Include("Feature")
+                                       where report.Code == code
+                                       select new ReportList()
+                                       {
+                                           Id = report.Id,
+                                           Name = report.Name,
+                                           LocalName = report.LocalName,
+                                           FilterControlName = report.FilterControlName,
+                                           Description = report.Description,
+                                           SearchFields = report.SearchFields,
+                                           Code = report.Code,
+                                           ReportGroupId = report.ReportGroupId,
+                                           FeatureId = report.FeatureId,
+                                           FeatureCode = report.Feature != null ? report.Feature.Code : null,
+                                           ReportDocumentId = report.ReportDocumentId,
+                                           InActive = report.InActive,
+                                           Tenant = report.Tenant,
+                                           FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
+                                           DefaultTemplateId = report.DefaultTemplateId,
+                                           DefaultMessageTemplateId = report.DefaultMessageTemplateId,
+                                           FeatureUniqeCode = report.FeatureUniqeCode,
+                                           AvailableForScheduling = report.AvailableForScheduling,
+                                           DisablePreview = report.DisablePreview,
+                                           DefaultExcelTemplateId = report.DefaultExcelTemplateId,
+                                           IsExcelReportAllowed = report.IsExcelReportAllowed,
+                                       }).FirstOrDefault();
+
+            ReportModification modification = modifications.Where(d => d.ReportId == result.Id).FirstOrDefault();
+            if (modification != null)
+            {
+                result.ReportDocumentId = modification.ReportDocumentId;
+            }
+            return result;
+        }
+
         public List<ReportList> GetReportListsByGroupIdAndTenant(string groupId, int tenant)
         {
  
