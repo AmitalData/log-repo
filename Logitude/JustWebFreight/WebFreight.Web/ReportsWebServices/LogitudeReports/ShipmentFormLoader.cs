@@ -18,9 +18,8 @@ using System.Runtime.Remoting.Contexts;
 using Logitude.Customs.Data;
 using System.Data.Entity;
 using Simplog.Data.ShipmentsModel;
-using Logitude.BL.ShipmentsModel.EntityPMs;
 using System.Linq.Dynamic.Core;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
 {
@@ -58,37 +57,29 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
 
         public void SetShipmentForm(int tenant, QueryOperations queryOperations)
         {
+            // get shipment id from filter
+            QueryFilterItem ShipmentIdFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Id").FirstOrDefault();
+            if (ShipmentIdFilter == null)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteError($"missing shipment id from filter, can not create form");
+                throw new Exception("missing shipment id");
+            }
+            string shipmentId = ShipmentIdFilter.FieldValue.ToString();
+
             // ICustomContext context = CustomContext.GetContext(tenant);
             IShipmentsContext context = ShipmentsContext.GetContext(tenant);
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
 
             ICustomContext customContext = CustomContext.GetContext(tenant);
 
-            var declarations = (from a in context.Shipments
-                                            // .Include("Declarations")
+            var shipments = (from a in context.Shipments
                                             .Include("UserId").Include("UserId.Contact") // for ReferentUserId
                                             .Include("CustomerCard")
                                             .Include("Department")
-
-
-                                join d in customContext.Declarations.Include(a => a.DeclarationOffice)
-                                .Select(x => new {
-                                    x.CustomFileNo,
-                                    x.Id,
-                                    x.CargoDescription,
-                                    DeclarationOfficeName = x.DeclarationOffice.LocalName 
-                                })
-                                on a.ShipmentNumber equals d.CustomFileNo into dJoin
-                                from declaration in dJoin.DefaultIfEmpty()
-
-                                join drd in customContext.DeclarationReferantDatas
-                                .Select(x => new {x.DeclarationId, x.CarrierCode, x.EstimatedArrivalDate, x.Vessel, x.Mawb })
-                                on declaration.Id equals drd.DeclarationId into drdJoin
-                                from declarationReferentData in drdJoin.DefaultIfEmpty()
-
                                 where a.Tenant == tenant
                                 select new
                                 {
+                                    a.Id,
                                     a.ShipmentNumber,
                                     a.House,
                                     a.NumberOfPackages,
@@ -98,89 +89,61 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                     CustomerName = a.CustomerCard != null ? a.CustomerCard.LocalName: null,
                                     ReferantUserName = a.UserId != null && a.UserId.Contact != null? a.UserId.Contact.LocalName: null,
                                     DepartmentName = a.Department != null? a.Department.LocalName : null,
-
-                                    DeclarationOfficeName = declaration != null? declaration.DeclarationOfficeName: null,
-                                    DescriptionOfGoods = declaration != null ? declaration.CargoDescription: null,
-
-                                    CarrierCode = declarationReferentData != null ? declarationReferentData.CarrierCode : null,
-                                    EstimatedArrivalDate = declarationReferentData != null ? declarationReferentData.EstimatedArrivalDate : null,
-                                    Vessel = declarationReferentData != null ? declarationReferentData.Vessel : null,
-                                    Mawb = declarationReferentData != null ? declarationReferentData.Mawb : null,
                                 });
 
-            #region  ApplyCustomFilters
-
-            /*
-            QueryFilterItem CreateDateFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDate").FirstOrDefault();
-            if (CreateDateFilter != null)
+            var shipmentData = shipments.Where(x => x.Id == shipmentId).FirstOrDefault();
+            if (shipmentData == null)
             {
-                DateTime startDate = ((DateTime)CreateDateFilter.FieldValue).Date;
-                DateTime endDate = ((DateTime)CreateDateFilter.FieldValue2).Date.AddDays(1);
-                declarations = declarations.Where(x => x.CreateDateTime >= startDate && x.CreateDateTime < endDate);
-
+                throw new Exception($"shipment not found with id: {shipmentId}");
             }
-
-            QueryFilterItem TransportModeIdFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "TransportModeId").FirstOrDefault();
-            if (TransportModeIdFilter != null)
-            {
-                declarations = declarations.Where(x => x.TransportModeId == TransportModeIdFilter.FieldValue.ToString());
-            }
-
-            QueryFilterItem DeclarationStatusFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DeclarationStatusTypeCode").FirstOrDefault();
-            if (DeclarationStatusFilter != null)
-            {
-                declarations = declarations.Where(x => x.DeclarationStatusTypeCode == DeclarationStatusFilter.FieldValue.ToString());
-            }
-
-            QueryFilterItem DeclarationTypeFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DeclarationTypeCode").FirstOrDefault();
-            if (DeclarationTypeFilter != null)
-            {
-                declarations = declarations.Where(x => x.DeclarationTypeCode == DeclarationTypeFilter.FieldValue.ToString());
-            }
-
-            QueryFilterItem ReferentUserIdFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ReferentUserId").FirstOrDefault();
-            if (ReferentUserIdFilter != null)
-            {
-                declarations = declarations.Where(x => x.ReferentUserId == ReferentUserIdFilter.FieldValue.ToString());
-            }
-
-            QueryFilterItem DestinationCountryCodeFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DestinationCountryCode").FirstOrDefault();
-            if (DestinationCountryCodeFilter != null)
-            {
-                declarations = declarations.Where(x => x.DestinationCountryCode == DestinationCountryCodeFilter.FieldValue.ToString());
-            }
-
-            QueryFilterItem CustomerFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Customer").FirstOrDefault();
-            if (CustomerFilter != null)
-            {
-                declarations = declarations.Where(x => x.CustomerId == CustomerFilter.FieldValue.ToString());
-            }
-
-            */
-            #endregion
 
             #region map to data provider
 
-            dataProvider.ShipmentForm = declarations.Select(g => new ShipmentForm()
+            var shipmentFormProvider = new ShipmentForm()
             {
-                ShipmentNumber = g.ShipmentNumber,
-                ShipmentNumberTenant = g.ShipmentNumber + " " + tenant,
-                ReferentUserName = g.ReferantUserName,
-                DepartmentName = g.DepartmentName,
-                DeclarationOfficeName = g.DeclarationOfficeName,
-                IskaNumber = g.IskaNumber,
-                CustomerName = g.CustomerName,
-                CarrierCode = g.CarrierCode,
-                Mawb = g.Mawb,
-                House = g.House,
-                NumberOfPackages = g.NumberOfPackages,
-                GrossWeight = g.GrossWeight,
-                EstimatedArrivalDate = g.EstimatedArrivalDate,
-                Vessel = g.Vessel,
-                FreightForwarderId = g.FreightForwarderId,
-                DescriptionOfGoods = g.DescriptionOfGoods,
+                ShipmentNumber = shipmentData.ShipmentNumber,
+                ShipmentNumberTenant = shipmentData.ShipmentNumber + " " + tenant,
+                ReferentUserName = shipmentData.ReferantUserName,
+                DepartmentName = shipmentData.DepartmentName,
+                IskaNumber = shipmentData.IskaNumber,
+                CustomerName = shipmentData.CustomerName,
+                House = shipmentData.House,
+                NumberOfPackages = shipmentData.NumberOfPackages,
+                GrossWeight = shipmentData.GrossWeight,
+                FreightForwarderId = shipmentData.FreightForwarderId,
+            };
 
-            }).ToList();
+            // get declaration and referant data by shipment number
+            if (!string.IsNullOrEmpty(shipmentData.ShipmentNumber))
+            {
+                DeclarationQueryService declarationQueryService = new DeclarationQueryService(tenant);
+                DeclarationPM declarationPM = declarationQueryService.GetSingleByCustomFileNo(shipmentData.ShipmentNumber, tenant);
+
+                shipmentFormProvider.DescriptionOfGoods = declarationPM?.CargoDescription;
+                shipmentFormProvider.DeclarationOfficeName = declarationPM?.DeclarationOfficeName;
+
+                if (declarationPM != null)
+                {
+                    DeclarationReferantDataQueryService declarationReferantDataQueryService = new DeclarationReferantDataQueryService(tenant);
+                    DeclarationReferantDataPM declarationReferantDataPM = declarationReferantDataQueryService.GetSingle(declarationPM.Id, false, true);
+
+                    shipmentFormProvider.CarrierCode = declarationReferantDataPM?.CarrierCode;
+                    shipmentFormProvider.Mawb = declarationReferantDataPM?.Mawb;
+                    shipmentFormProvider.EstimatedArrivalDate = declarationReferantDataPM?.EstimatedArrivalDate;
+                    shipmentFormProvider.Vessel = declarationReferantDataPM?.Vessel;
+                }
+                else
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"failed to retrieved declaration by shipment number: {shipmentData.ShipmentNumber}");
+                }
+            }
+            else
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"missing ShipmentNumber from shipment: {shipmentId}");
+            }
+
+            dataProvider.ShipmentForm = new List<ShipmentForm> { shipmentFormProvider };
+
             #endregion
         }
 

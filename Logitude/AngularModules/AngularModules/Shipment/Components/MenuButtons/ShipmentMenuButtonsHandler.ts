@@ -35,6 +35,7 @@ import { ReportService } from 'Common/Services/ExtendedLists/ReportService';
 import { ReportGroupList } from 'Report/EntityLists/ReportGroupList';
 import { ReportsTemplateListExtendedService } from 'Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
 import { ReportList } from 'Report/EntityLists/ReportList';
+import { QueryFilterItem } from 'Report/Components/Filters/QueryFilterItem';
 
 export class ShipmentMenuButtonsHandler implements OnDestroy {
     public EntityPM: ShipmentPM;
@@ -559,36 +560,9 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
     ShipmentFormClicked() {
         this.ResetButtonClicked();
 
-        let reportList =     {
-            "$id": "2",
-            "Id": "1-10846",
-            "Tenant": 6,
-            "Name": "Shipment Tofes",
-            "LocalName": "טופס",
-            "Code": "SHTO",
-            "Description": "Export Declaration",
-            "SearchFields": "6,Export Declaration,Export Declaration",
-            "FilterControlName": "",
-            "ReportGroupId": "",
-            "FeatureId": null,
-            "FeatureCode": "ExportDeclarationReport",
-            "ReportDocumentId": null,
-            "InActive": false,
-            "FilterHtmlComponentUrl": "",
-            "DefaultTemplateId": "1-4",
-            "DefaultMessageTemplateId": null,
-            "FeatureUniqeCode": null,
-            "AvailableForScheduling": false,
-            "DisablePreview": false,
-            "DefaultExcelTemplateId": null,
-            "IsExcelReportAllowed": false
-        };
-
-        // todo: GetReportByCode
-        // this.reportService.GetDataProviderProperties("SHTO").subscribe((myResponse: ServiceResponse) => {
-        //     reportList = myResponse.Data;
-            this.LoadReportTemplate(reportList);
-        // });
+        this.reportService.GetReportByCode("SHTO").subscribe((myResponse: ServiceResponse) => {
+            this.LoadReportTemplate(myResponse.Result);
+        });
     }
 
     ReportTemplates: any[] = [];
@@ -602,8 +576,6 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
             SessionLocator.DynamicLoader.Load("./Report/Components/ReportsPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
-                // ?
-                // cmpRef.instance.ReportsPreview(groupList, reportList, this.ReportTemplates);
                 this.ReportsPreview = cmpRef.instance;
                 this.ReportsPreview.Report = reportList;
 
@@ -612,10 +584,26 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         });
     }
 
+    GetNewQueryFilterItem(FieldName: string, FieldValue: any, FieldValue2: any = null, FieldDataType: string = null, Operator: string = "Equals") {
+        var queryFilterItem = new QueryFilterItem();
+        queryFilterItem.DisplayInList = false;
+        queryFilterItem.FieldName = FieldName;
+        queryFilterItem.FieldValue = FieldValue;
+        queryFilterItem.FieldValue2 = FieldValue2;
+        queryFilterItem.Operator = Operator;
+        queryFilterItem.FieldDataType = FieldDataType;
+
+        return queryFilterItem;
+    }
+
     BuildReport() {
+
+        let queryFilterItems = new Array<QueryFilterItem>();
+        queryFilterItems.push(this.GetNewQueryFilterItem("Id", this.EntityPM.Id, null, "string"));
+
         let reportFliter = new ReportFliter();
         reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-        // reportFliter.QueryFilterItemLists = this.queryFilterItems;
+        reportFliter.QueryFilterItemLists = queryFilterItems;
         reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
         reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
         reportFliter.ReportCode = this.ReportsPreview.Report.Code;
