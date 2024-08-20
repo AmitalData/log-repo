@@ -49,9 +49,10 @@ export class AmitalAPIAddSchemaWindowComponent {
     ];
 
     SetWindowArgs(params: AmitalAPIAddSchemaWindowParams) {
-        if (params.row)
+        if (params.row){
             this.data = { ...this.data, ...params.row };
-        else
+            this.fields.forEach(field => field.value = this.data[field.name]);
+        } else
             this.fields = this.fields.concat(this.fieldsForCreate);
 
         this.windowParams = params;

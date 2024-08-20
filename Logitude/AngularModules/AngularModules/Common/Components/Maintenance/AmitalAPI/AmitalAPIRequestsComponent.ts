@@ -57,7 +57,7 @@ export class AmitalAPIRequestsComponent {
         { name: 'minItems', label: 'Min Items', type: 'integer' },
     ];
     columns: GridColumn[] = [
-        { Display: 'Id', FieldName: 'Id', Styles: { width: '280px' } },
+        { Display: 'Id', FieldName: 'Id', Styles: { width: '140px' } },
         { Display: 'Base Com', FieldName: 'IsParent', Styles: { width: '70px' } },
         { Display: 'Req Type', FieldName: 'TaskName', Styles: { width: '70px' } },
         { Display: 'Partner', FieldName: 'PartnerName', Styles: { width: '125px' } },
@@ -69,7 +69,7 @@ export class AmitalAPIRequestsComponent {
         { Display: 'Total Chunks', FieldName: 'TotalChunks', Styles: { width: '85px' } },
         { Display: 'Chunk Idx', FieldName: 'ChunkIdx', Styles: { width: '70px' } },
         { Display: 'Create Date', FieldName: 'CreateDate', Styles: { width: '140px' }, isTemplate: true },
-        { Display: 'Blob', FieldName: 'StorageBlob', Styles: { width: '425px' } },
+        { Display: 'Blob', FieldName: 'StorageBlob', Styles: { width: '300px' } },
         { Display: 'Success', FieldName: 'HasError', Styles: { width: '60px' }, isTemplate: true },
         { Display: '', FieldName: 'Buttons', Styles: { width: '60px' }, isTemplate: true },
     ]
