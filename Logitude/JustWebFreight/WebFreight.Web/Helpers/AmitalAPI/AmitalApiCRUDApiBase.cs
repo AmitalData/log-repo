@@ -41,17 +41,10 @@ namespace WebFreight.Web.Helpers.AmitalAPI
             return schema;
         }
 
-        public virtual bool Delete(string token, string id, string user)
-        {
-            HttpClienResponse res = AmitalAPIHelper.SendRequest(token, $"{baseUrl}/{id}", HttpMethod.Delete, null, user);
-            return res.Res.IsSuccessStatusCode;
-        }
+        public virtual HttpClienResponse Delete(string token, string id, string user) =>
+            AmitalAPIHelper.SendRequest(token, $"{baseUrl}/{id}", HttpMethod.Delete, null, user);
 
-
-        public virtual bool Update(string token, string id, T body, string user)
-        {
-            HttpClienResponse res = AmitalAPIHelper.SendRequest(token, $"{baseUrl}/{id}", HttpMethod.Put, body, user);
-            return res.Res.IsSuccessStatusCode;
-        }
+        public virtual HttpClienResponse Update(string token, string id, T body, string user) =>
+            AmitalAPIHelper.SendRequest(token, $"{baseUrl}/{id}", HttpMethod.Put, body, user);
     }
 }
