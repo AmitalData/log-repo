@@ -36,8 +36,6 @@ import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPM
 import { AmitalGatewayUtil, UnifreightMessageM } from 'Infrastructure/Utilities/AmitalGatewayUtil';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import * as xmlbuilder from 'xmlbuilder';
-import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
-import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPMService';
  
 
 
@@ -1188,7 +1186,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         for (var option in this.UpdateOptionParams) {
             let params = new UpdateGeneralParams();
-            params.Title = TextCodeTranslator.Translate("Customs.Declaration.O.Update") + " " + TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O." + option);
+            let fieldName = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O." + option);
+            params.Title = TextCodeTranslator.Translate("Customs.Declaration.O.Update") + " " + fieldName;
             params.Arguments = new UpdateGeneralArgsParams();
             params.Arguments.UpdateField = option;
             params.Arguments.Title = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.MultiUpdate");
@@ -1206,7 +1205,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             if (this.UpdateOptionParams[option]?.IsMultiline) {
                 params.Arguments.IsMultiline = this.UpdateOptionParams[option].IsMultiline;
             }
-            params.Arguments.ItemsWithNoValueTitle = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.ItemsWithNoValueTitle");
+            params.Arguments.ItemsWithNoValueTitle = TextCodeTranslator.Translate("Customs.CertificateOfOriginItem.O.ItemsWithNoValueTitle").replace("{field}", fieldName);
             params.Arguments.IsItemsWithNoValue = true;
             params.Arguments.SelectionCompletedMethod = (comp) => {
                 this.SelectionOriginCompleted(comp);
