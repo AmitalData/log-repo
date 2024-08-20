@@ -78,7 +78,7 @@ namespace Logitude.BL.InfrastructureModel.DataContracts
         [DataMember]
         public string MessageTemplateId { get; set; }
 		[DataMember]
-		public string ProcedureName { get; set; }
+		public string ProcedureName { get; set; }  
 	}
 
     [DataContract(Namespace = "")]

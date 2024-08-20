@@ -106,7 +106,14 @@ export class NewRevaluationComponent extends BaseComponent {
             this.EntityPM.ChartOfAccountsId = value;
         }
     }
-    
+
+    get DefaultGLAccountId() { return this.EntityPM.ChartOfAccountsId; }
+    set DefaultGLAccountId(value: string) {
+        if (this.EntityPM.ChartOfAccountsId != value) {
+            this.EntityPM.ChartOfAccountsId = value;
+        }
+    }
+  
     chartOfAccount: boolean;
     get ChartOfAccount() { return this.chartOfAccount; }
     set ChartOfAccount(value: boolean) {
@@ -115,7 +122,10 @@ export class NewRevaluationComponent extends BaseComponent {
         if (value) {
             this.DefaultGLAccount = false;
             this.GLAccount = false;
+            this.UIProperties.SetEnabled("DefaultGLAccountId", this.ObjectTableName, false);
+            this.DefaultGLAccountId=null;
             this.UIProperties.SetEnabled("GLAccountId", this.ObjectTableName, false);
+            this.GLAccountId=null;
             this.UIProperties.SetEnabled("ChartOfAccountsId", this.ObjectTableName, true);
             this.EntityPM.RevaluationEnabled = false;
         }
@@ -132,9 +142,11 @@ export class NewRevaluationComponent extends BaseComponent {
         if (value) {
             this.ChartOfAccount = false;
             this.GLAccount = false;
+            this.UIProperties.SetEnabled("DefaultGLAccountId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("GLAccountId", this.ObjectTableName, false);
+            this.GLAccountId=null;
             this.UIProperties.SetEnabled("ChartOfAccountsId", this.ObjectTableName, false);
-          
+            this.ChartOfAccountsId=null;
             this.EntityPM.RevaluationEnabled = true;
            
         }
@@ -150,9 +162,11 @@ export class NewRevaluationComponent extends BaseComponent {
         if (value) {
             this.DefaultGLAccount = false;
             this.ChartOfAccount = false;
-
+            this.UIProperties.SetEnabled("DefaultGLAccountId", this.ObjectTableName, false);
+             this.DefaultGLAccountId=null;
             this.UIProperties.SetEnabled("GLAccountId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("ChartOfAccountsId", this.ObjectTableName, false);
+        this.ChartOfAccountsId=null;
             this.EntityPM.RevaluationEnabled = false;
         }
         //    this.SetGLAccount(value);

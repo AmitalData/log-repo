@@ -454,7 +454,7 @@ var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();
         let file = new Blob([mm.Result], { type: 'application/pdf' });
         let url =  URL.createObjectURL(file);       
 
-        this.ShowBtatchPrintConfirmComponent(url);
+        this.ShowBtatchPrintConfirmComponent(url,interestReportArgs);
        
       }
       else {
@@ -546,13 +546,14 @@ GetNumberOfDocumentNotPrinted(isReportsAttached: boolean) {
   })
 }
 
-ShowBtatchPrintConfirmComponent(URL) {
+ShowBtatchPrintConfirmComponent(URL,interestReportArgs: InterestReportArguments) {
   var logWindow = new LogitudeWindow();
   logWindow.Title = TextCodeTranslator.Translate("InterestReport.O.BatchPrint");
   var myPath = "./Accounting/Components/Packages/Others/BtatchPrintConfirmComponent";
   logWindow.Width = 560;
   logWindow.Height = 160;
   logWindow.DataContext = URL;
+  logWindow.WindowArgs = { interestReportArgs: interestReportArgs };
   logWindow.Show(myPath);
   logWindow.IsShowCloseButton = true;
   logWindow.WindowClosed.subscribe(s => {

@@ -30,7 +30,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("Inactive")]
 	    public bool Inactive { get; set; }
         [Column("IsMandatory")]
-	    public bool IsMandatory { get; set; }
+	    public string IsMandatory { get; set; }
         [Column("Location")]
 	    public int? Location { get; set; }
         [Column("LastUpdatedDate")]

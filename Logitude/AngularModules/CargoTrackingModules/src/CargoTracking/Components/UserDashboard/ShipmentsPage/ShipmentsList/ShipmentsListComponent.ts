@@ -8,34 +8,35 @@ import {
     OnInit,
     HostListener
 } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
-import {Router, ActivatedRoute, NavigationStart, NavigationEnd} from '@angular/router';
-import {FormBuilder} from '@angular/forms';
-import {CargoTrackingSearchService} from '../../../../Services/Others/CargoTrackingSearchService';
-import {CargoTrackingShipmentList} from '../../../../EntityLists/CargoTrackingShipmentList';
-import {SessionInfo} from '../../../../../Infrastructure/Utilities/SessionInfo';
-import {CdkScrollable, CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
-import {Customer, ShipmentDataSource} from '../../../../DataContracts/CargoTrackingShipmentDataSource';
-import {CargoTrackingShipmentSearchInput, MoreFilter} from '../../../../DataContracts/CargoTrackingShipmentFilters';
-import {CargoTrackingBrandingData} from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
-import {CargoTrackingPortService} from '../../../../Services/Others/CargoTrackingPortService';
-import {CargoTrackingShipmentService} from '../../../../Services/Others/CargoTrackingShipmentService';
-import {MessageWindowComponent} from '../../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
-import {MatDialog} from '@angular/material/dialog';
-import {RootContext} from 'src/CargoTracking/Utilities/RootContext';
-import {CargoTrackingMilestoneService} from 'src/CargoTracking/Services/Others/CargoTrackingMilestoneService';
-import {MultipleSelectionComponent} from 'src/Infrastructure/Components/MultipleSelection/MultipleSelectionComponent';
-import {filter} from 'rxjs/operators';
-import {ShipmentDirections} from '../ShipmentDetails/ShipmentDetailsComponent';
-import {SharedService} from 'src/CargoTracking/Services/Others/SharedService';
-import {QueryColumnPM} from 'src/CargoTracking/Services/Others/QueryColumnPM';
-import {ApiQueryFilters} from 'src/CargoTracking/Services/Others/ApiQueryFilters';
-import {LogitudeGridExportToExcelService} from 'src/CargoTracking/Services/Others/LogitudeGridExportToExcelComponent';
+import { Router, ActivatedRoute, NavigationStart, NavigationEnd } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
+import { CargoTrackingSearchService } from '../../../../Services/Others/CargoTrackingSearchService';
+import { CargoTrackingShipmentList } from '../../../../EntityLists/CargoTrackingShipmentList';
+import { SessionInfo } from '../../../../../Infrastructure/Utilities/SessionInfo';
+import { CdkScrollable, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { Customer, ShipmentDataSource } from '../../../../DataContracts/CargoTrackingShipmentDataSource';
+import { CargoTrackingShipmentSearchInput, MoreFilter } from '../../../../DataContracts/CargoTrackingShipmentFilters';
+import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
+import { CargoTrackingPortService } from '../../../../Services/Others/CargoTrackingPortService';
+import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoTrackingShipmentService';
+import { MessageWindowComponent } from '../../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
+import { MatDialog } from '@angular/material/dialog';
+import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
+import { CargoTrackingMilestoneService } from 'src/CargoTracking/Services/Others/CargoTrackingMilestoneService';
+import { MultipleSelectionComponent } from 'src/Infrastructure/Components/MultipleSelection/MultipleSelectionComponent';
+import { filter } from 'rxjs/operators';
+import { ShipmentDirections } from '../ShipmentDetails/ShipmentDetailsComponent';
+import { SharedService } from 'src/CargoTracking/Services/Others/SharedService';
+import { QueryColumnPM } from 'src/CargoTracking/Services/Others/QueryColumnPM';
+import { ApiQueryFilters } from 'src/CargoTracking/Services/Others/ApiQueryFilters';
+import { LogitudeGridExportToExcelService } from 'src/CargoTracking/Services/Others/LogitudeGridExportToExcelComponent';
 import { TenantManagementService } from 'src/CargoTracking/Services/Others/TenantManagementService';
 import { TenantManagementPM } from 'src/CargoTracking/Services/Others/TenantManagementPM';
 import { DateTimeFormatPipe } from 'src/Infrastructure/Pipes/DateTimeFormatPipe';
+import { NgZone } from '@angular/core';
 
 @Component({
     selector: 'ShipmentsListComponent',
@@ -143,7 +144,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         public sharedService: SharedService,
         private logitudeGridExportToExcelService: LogitudeGridExportToExcelService,
         private tenantManagementService: TenantManagementService,
-        ) {
+    ) {
+        
         this.InitComponent();
         this.SetDefaultBackgroundColor();
 
@@ -197,23 +199,25 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         return false;
     }
 
-    public FilterByOpenDateDataGreaterThan:string = "";
-    public FilterByClearanceDateDataGreaterThan:string = "";
-    public FilterByATADateDataGreaterThan:string = "";
-    public FilterByOpenDateDataLessThan:string = "";
-    public FilterByClearanceDateDataLessThan:string = "";
-    public FilterByATADateDataLessThan:string = "";
+    public FilterByOpenDateDataGreaterThan: string = "";
+    public FilterByClearanceDateDataGreaterThan: string = "";
+    public FilterByATADateDataGreaterThan: string = "";
+    public FilterByOpenDateDataLessThan: string = "";
+    public FilterByClearanceDateDataLessThan: string = "";
+    public FilterByATADateDataLessThan: string = "";
 
     ngOnInit(): void {
+       
         this.setMaxNumberOfCarachter(window.innerWidth);
         this.setDefaultSort();
+        this.setDefaultDates()
         this.GetMilstones();
         this.getPreviousScroll();
         this.GetCompanyLoginsFromCache();
         this.fillFeltersDictionary();
         this.setViews();
     }
-
+   
     OnRouteChanged(event) {
         if (event instanceof NavigationEnd) {
             this.RerenderVirtualScroll();
@@ -228,7 +232,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
     private buildFilterArgs() {
-        debugger
+
         this.filterAgrs = new ApiQueryFilters();
         this.filterAgrs.addAdditionalFilter("Tenant", this.ShipmentSearchInput.Tenant, null, null, "Equals", false, false, false, "string");
         this.filterAgrs.addAdditionalFilter("HasException", this.ShipmentSearchInput.HasException, null, null, "Equals", true, false, false, "boolean");
@@ -258,17 +262,17 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         }
         if (this.ShipmentSearchInput.ClearanceDateGreaterThan) {
             this.filterAgrs.addAdditionalFilter("ClearanceDateGreaterThan", this.ShipmentSearchInput.ClearanceDateGreaterThan, null, null, "LargerThan", false, false, false, "string");
-        }        
+        }
         if (this.ShipmentSearchInput.ClearanceDateLessThan) {
             this.filterAgrs.addAdditionalFilter("ClearanceDateLessThan", this.ShipmentSearchInput.ClearanceDateLessThan, null, null, "LessThan", false, false, false, "string");
-        }        
+        }
         if (this.ShipmentSearchInput.ATADateGreaterThan) {
             this.filterAgrs.addAdditionalFilter("ATADateGreaterThan", this.ShipmentSearchInput.ATADateGreaterThan, null, null, "LargerThan", false, false, false, "string");
         }
         if (this.ShipmentSearchInput.ATADateLessThan) {
             this.filterAgrs.addAdditionalFilter("ATADateLessThan", this.ShipmentSearchInput.ATADateLessThan, null, null, "LessThan", false, false, false, "string");
         }
-       
+
 
         if (this.ShipmentSearchInput.TransportModeCodes.length > 0) {
             this.filterAgrs.addAdditionalFilter("TransportModeCodes", this.ShipmentSearchInput.TransportModeCodes.join("_"), null, null, "Equals", false, false, false, "string");
@@ -310,7 +314,15 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.ShipmentSearchInput.SortFieldName = SortOptions.CMD;
         this.ShipmentSearchInput.SortType = SortOptions.DESC;
     }
-
+    private setDefaultDates() {
+        const fromDate = new Date();
+        fromDate.setMonth(fromDate.getMonth() - 6);
+        this.FilterByOpenDateDataGreaterThan = fromDate.toISOString().slice(0, 10);
+        this.FilterByOpenDateDataLessThan = new Date().toISOString().slice(0, 10);
+        this.ApplyFilterButtonClicked(true)  
+              
+    }
+    
     private selectDefaultSortFields() {
         this.sortByMultipleSelection.select.options.filter(d =>
             [SortOptions.CMD, SortOptions.DESC].includes(d.value.Code))
@@ -332,6 +344,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
     ngAfterViewInit(): void {
+        
         this.selectDefaultSortFields();
         this.SetShipmentsScrollPosition();
         this.LoadScreenData();
@@ -389,7 +402,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
     private timerToken: any;
     onSearchChange() {
-
+        
         this.timerToken = setTimeout(() => this.LoadScreenData(), 500);
         this.ShipmentSearchInput;
     }
@@ -501,25 +514,25 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.LoadScreenData();
     }
 
-    resetFilterOpenDate(){
+    resetFilterOpenDate() {
         this.FilterByOpenDateDataGreaterThan = "";
         this.ShipmentSearchInput.OpenDateGreaterThan = this.FilterByOpenDateDataGreaterThan;
         this.FilterByOpenDateDataLessThan = "";
         this.ShipmentSearchInput.OpenDateLessThan = this.FilterByOpenDateDataLessThan;
     }
 
-    resetFilterClearanceDate(){
+    resetFilterClearanceDate() {
         this.FilterByClearanceDateDataGreaterThan = "";
         this.ShipmentSearchInput.ClearanceDateGreaterThan = this.FilterByClearanceDateDataGreaterThan;
         this.FilterByClearanceDateDataLessThan = "";
         this.ShipmentSearchInput.ClearanceDateLessThan = this.FilterByClearanceDateDataLessThan;
-    } 
+    }
 
-    resetFilterATADate(){
+    resetFilterATADate() {
         this.FilterByATADateDataGreaterThan = "";
         this.ShipmentSearchInput.ATADateGreaterThan = this.FilterByATADateDataGreaterThan;
         this.FilterByATADateDataLessThan = "";
-        this.ShipmentSearchInput.ATADateLessThan= this.FilterByATADateDataLessThan;
+        this.ShipmentSearchInput.ATADateLessThan = this.FilterByATADateDataLessThan;
     }
 
     // Milestones filter
@@ -603,8 +616,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         }
     }
 
-   
-    
+
+
     onSearchShipmentDirectionFiltersChange(searchInput) {
         if (searchInput) {
             var size = this.tempShipmentDirectionFilters.length;
@@ -807,9 +820,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
     ShipmentsCounter: CargoTrackingShipmentsCounter = new CargoTrackingShipmentsCounter();
-
+    
     LoadScreenData() {
-
         if (this.tenant) {
             this.ShipmentSearchInput.Tenant = this.tenant;
             var shipmentFilters = this.BuildShipmentFilters();
@@ -820,30 +832,47 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
     references: string[];
 
-    private LoadShipments() {
+    private async LoadShipments() {
+        
         if (this.ShipmentsDataSource) {
             this.ReloadShipments();
         } else {
-            this.InitiateShipmentDataSource();
+           await this.InitiateShipmentDataSource();
+           this.WaitShipment();
         }
+        
     }
 
+    private WaitShipment() {
+        this.ShipmentsDataSource.$fetchData.subscribe(isReload => {
+            if (isReload) {
+                RootContext.StartBusyIndicatorDynamic("Searching for data...");
+            } else {
+                RootContext.StopBusyIndicator();
+            }
+        })
+    }
     private async filterWithAllCustomersWhenCustomersNotSelected() {
         let filter: CargoTrackingShipmentSearchInput = Object.assign({}, this.ShipmentSearchInput);
-        if(!SessionInfo.IsAdmin) {filter.CustomersIds =filter.CustomersIds.length == 0 ? this.InvitedCustomers.map(d => d.CardId) : filter.CustomersIds};
+        filter.CustomersIds = filter.CustomersIds.length == 0 ? this.InvitedCustomers.map(d => d.CardId) : filter.CustomersIds;
         filter.FromDate = await this.getFromDate();
         return filter;
     }
 
     private async getFromDate() {
-        const fromDate = new Date();
-        this.backMonths = this.backMonths || await this.tenantManagementService.getShipmentBuildMonth();
+       
+        const fromDate = new Date(this.FilterByOpenDateDataGreaterThan);
+        if (this.FilterByOpenDateDataGreaterThan=="") {
+            this.backMonths = this.backMonths || await this.tenantManagementService.getShipmentBuildMonth();
+            fromDate.setMonth(fromDate.getMonth() - this.backMonths);
+        }
         
-        fromDate.setMonth(fromDate.getMonth() - this.backMonths);
         return fromDate;
     }
+
     private async InitiateShipmentDataSource() {
         let filter = await this.filterWithAllCustomersWhenCustomersNotSelected();
+
         this.ShipmentsDataSource = new ShipmentDataSource(this.changeDetector, this.searchService, filter, this);
         let s = SessionInfo.LoggedUserCompanyLogins.filter(a => a.Tenant == this.tenant)[0];
         if (SessionInfo.LoggedUserCompanyLogins.filter(a => a.Tenant == this.tenant)[0].IsUser === true) {
@@ -852,9 +881,11 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
     private async ReloadShipments() {
+
         let filter = await this.filterWithAllCustomersWhenCustomersNotSelected();
         this.ShipmentsDataSource.ReloadData(filter);
         this.ResetShipmentsScrollbarPosition();
+
     }
 
 
@@ -959,7 +990,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         references = references.filter((el, i, a) => i === a.indexOf(el));
         this.dialog.open(MessageWindowComponent, {
             data: {
-               
+
                 title: 'References',
                 description: isMobile ? references.join("\n") : references.slice(3, references.length + 1).join("\n"),
             },
@@ -1124,39 +1155,39 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         if (val) {
             const dateObj = new Date(val);
             const day = dateObj.getDate();
-            const month = dateObj.getMonth() + 1; 
+            const month = dateObj.getMonth() + 1;
             const year = dateObj.getFullYear();
-            return `${day}/${month}/${year}`;
-        } 
+            return `${year}/${month}/${day}`;
+        }
         else {
             return "";
         }
-      }
+    }
 
     isFirstDateLater(firstDateString, secondDateString) {
         // Convert the string to Date objects
         var firstDate = new Date(firstDateString);
         var secondDate = new Date(secondDateString);
-    
+
         // Compare the two dates
         return firstDate > secondDate;
     }
     // public tempArr:any;
 
-    ApplyFilterButtonClicked() {
-        
+    ApplyFilterButtonClicked(loaded:boolean=false) {
+
         this.ShipmentSearchInput.OpenDateGreaterThan = this.formatDate(this.FilterByOpenDateDataGreaterThan);
         this.ShipmentSearchInput.ClearanceDateGreaterThan = this.formatDate(this.FilterByClearanceDateDataGreaterThan);
         this.ShipmentSearchInput.ATADateGreaterThan = this.formatDate(this.FilterByATADateDataGreaterThan);
         this.ShipmentSearchInput.OpenDateLessThan = this.formatDate(this.FilterByOpenDateDataLessThan);
         this.ShipmentSearchInput.ClearanceDateLessThan = this.formatDate(this.FilterByClearanceDateDataLessThan);
         this.ShipmentSearchInput.ATADateLessThan = this.formatDate(this.FilterByATADateDataLessThan);
-   
+
         this.sharedService.updateValue(false);
         this.ShipmentSearchInput.CustomersIds = this.InvitedCustomers.filter(e => e.IsSelected).map(d => d.CardId);
 
         this.ShipmentSearchInput.MilestonesCodes = this.MilestonesStatus.filter(e => e.IsSelected).map(state => state.Code);
-        
+
         if (this.isMobileView) {
             this.ShipmentSearchInput.DirectionCodes = this.ShipmentDirectionFilters.filter(e => e.IsSelected).map(e => e.Code);
             this.ShipmentSearchInput.TransportModeCodes = this.ShipmentTypeFilters.filter(e => e.IsSelected).map(e => e.Code);
@@ -1164,7 +1195,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         }
 
         RootContext.ShipmentsScrollPosition = 0;
-        this.LoadScreenData();
+        if(!loaded)
+            this.LoadScreenData();
     }
 
     MapMoreMobileFilter() {

@@ -1,32 +1,32 @@
-import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
-import {AppTool, DateTool, ArrayTool} from '../../Infrastructure/Tools';
-import {Validator} from '../../Infrastructure/Validators/Validator';
-import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
-import {InvoiceTool} from "../Tools";
-import {CurrencyList} from '../../Common/EntityLists/CurrencyList';
-import {VatTypeList} from '../../Common/EntityLists/VatTypeList';
-import {AccountingSystemList} from '../../Common/EntityLists/AccountingSystemList';
-import {ARInvoiceLinePM} from '../EntityPMs/ARInvoiceLinePM';
-import {InvoiceTotalsClass} from '../Args';
-import {AccountingSystemListService} from '../../Common/Services/StandardLists/AccountingSystemListService';
-import {CurrencyListService} from '../../Common/Services/StandardLists/CurrencyListService';
-import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
-import {GroupByPipe} from '../../Infrastructure/Pipes/GroupByPipe';
-import {APInvoicePM} from '../EntityPMs/APInvoicePM';
-import {VATTypesGroupPM} from '../../Common/EntityPMs/VATTypesGroupPM';
-import {VatTypesValidator} from '../../Infrastructure/Validators/VatTypesValidator';
+import { TextCodeTranslator } from '../../Infrastructure/Utilities/TextCodeTranslator';
+import { AppTool, DateTool, ArrayTool } from '../../Infrastructure/Tools';
+import { Validator } from '../../Infrastructure/Validators/Validator';
+import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
+import { InvoiceTool } from "../Tools";
+import { CurrencyList } from '../../Common/EntityLists/CurrencyList';
+import { VatTypeList } from '../../Common/EntityLists/VatTypeList';
+import { AccountingSystemList } from '../../Common/EntityLists/AccountingSystemList';
+import { ARInvoiceLinePM } from '../EntityPMs/ARInvoiceLinePM';
+import { InvoiceTotalsClass } from '../Args';
+import { AccountingSystemListService } from '../../Common/Services/StandardLists/AccountingSystemListService';
+import { CurrencyListService } from '../../Common/Services/StandardLists/CurrencyListService';
+import { ServiceResponse } from '../../Infrastructure/DataContracts/ServiceResponse';
+import { GroupByPipe } from '../../Infrastructure/Pipes/GroupByPipe';
+import { APInvoicePM } from '../EntityPMs/APInvoicePM';
+import { VATTypesGroupPM } from '../../Common/EntityPMs/VATTypesGroupPM';
+import { VatTypesValidator } from '../../Infrastructure/Validators/VatTypesValidator';
 import { FeatureLocator } from '../../Infrastructure/Utilities/FeatureLocator';
 
 export class APInvoiceValidator {
     private Errors: string[] = [];
     private EntityPM: APInvoicePM;
     private message: string;
-    private accountingActivated: boolean= false;
+    private accountingActivated: boolean = false;
     constructor() {
         this.Errors = [];
         this.message = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         this.accountingActivated = SessionLocator.TenantPM.AccountingActivated;
-        
+
     }
 
     public Validate(entityPM: APInvoicePM) {
@@ -39,8 +39,10 @@ export class APInvoiceValidator {
 
         if (DateTool.GetDateParts(this.EntityPM.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation(SessionLocator.TenantPM.TimeZoneOffset).valueOf()) {
             this.Errors.push(TextCodeTranslator.Translate("APInvoice.M.CantReceiveFutureDateInvoice"));
-        }   
-
+        }
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.ConfirmationNumber) && (this.EntityPM.ConfirmationNumber.length < 9 || this.EntityPM.ConfirmationNumber.length > 30)) {
+            this.Errors.push(TextCodeTranslator.Translate("APInvoice.O.ConfirmationNumberLength"));
+        }
         if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
             if (AppTool.IsNullOrEmpty(entityPM.VATNumber)) {
                 this.Errors.push(this.message.replace("%FieldName", "Vat Number"));
@@ -48,19 +50,19 @@ export class APInvoiceValidator {
         }
 
         if (entityPM.IsMultipleEntities) {
-            
+
         }
 
         else {
             if (entityPM.InvoiceLines.length == 0) {
                 this.Errors.push(TextCodeTranslator.Translate("APInvoice.M.YouShouldHaveOneLineAtLeast"));
-            }           
+            }
 
             if (entityPM.InvoiceExpectedAmount == null) {
                 this.Errors.push(this.message.replace("%FieldName", "Invoice Amount"));
             }
 
-            
+
             if (this.accountingActivated && entityPM.AccountingDate == null) {
                 this.Errors.push(this.message.replace("%FieldName", "Accounting Date"));
             }
@@ -97,7 +99,7 @@ export class APInvoiceValidator {
                 if (this.EntityPM.AmountInInvoiceCurrency != this.EntityPM.AmountInInvoiceCurrency_Summary) {
                     this.Errors.push(TextCodeTranslator.Translate("APInvoice.M.InvoiceAmountNotMatched"));
                 }
-            }            
+            }
         }
         this.CheckSpecialCharacters();
 

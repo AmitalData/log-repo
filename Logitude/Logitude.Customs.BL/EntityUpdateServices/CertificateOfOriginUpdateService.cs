@@ -76,8 +76,33 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             if(entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
-                entityPM.CertificateOriginInvoiceItems.ForEach(item => item.ChangeSetOp = ChangeSetOperation.Update);
-                entityPM.CertificateOriginItemItems.ForEach(item => item.ChangeSetOp = ChangeSetOperation.Update);
+                for (int i = entityPM.CertificateOriginInvoiceItems.Count - 1; i >= 0; i--)
+                {
+                    var item = entityPM.CertificateOriginInvoiceItems[i];
+                    if (item.ChangeSetOp == ChangeSetOperation.Delete)
+                    {
+                        entityPM.DeletedCertificateOriginInvoiceItems.Add(item);
+                        entityPM.CertificateOriginInvoiceItems.RemoveAt(i);
+                    }
+                    else if (!string.IsNullOrEmpty(item.Id))
+                    {
+                        item.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                }
+
+                for (int i = entityPM.CertificateOriginItemItems.Count - 1; i >= 0; i--)
+                {
+                    var item = entityPM.CertificateOriginItemItems[i];
+                    if (item.ChangeSetOp == ChangeSetOperation.Delete)
+                    {
+                        entityPM.DeletedCertificateOriginItemItems.Add(item);
+                        entityPM.CertificateOriginItemItems.RemoveAt(i);
+                    }
+                    else if (!string.IsNullOrEmpty(item.Id))
+                    {
+                        item.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                }
             }
             CertificateOfOriginInvoiceUpdateService consignmentUpdateService = new CertificateOfOriginInvoiceUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             consignmentUpdateService.UpdateMulti(entityPM.CertificateOriginInvoiceItems, entityPM.DeletedCertificateOriginInvoiceItems, entityPM, false);

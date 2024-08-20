@@ -215,6 +215,20 @@ export class InvoiceDomainService {
 
 
     }
+    ValidateConfirmationNumber(localVATAmount: string,invoiceDate: Date) {
+
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetValidateConfirmationNumber?localVATAmount=' + localVATAmount+ "&invoiceDateString=" + ServiceHelper.GetDateString(invoiceDate), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
+                var myResponse: ServiceResponse;
+                myResponse = new ServiceResponse();
+                myResponse.Result = result;
+                return myResponse;
+            }),catchError(ServiceHelper.HandleServiceError));
+        });
+
+
+    }
     ValidateInvoiceNumber(invoiceNumber: string) {
 
         return defer(() => {

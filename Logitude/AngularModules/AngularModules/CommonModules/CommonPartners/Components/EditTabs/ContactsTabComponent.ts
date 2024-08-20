@@ -247,9 +247,9 @@ export class   ContactItemClass extends BaseComponent{
         this.CheckContactForAccounting();
         if(fatherComponent != null) {
             
-             this.CheckEmailForSending(this.fatherComponent.EntityPM['EmailForSendingSingArinvoice'])
-             if(this.fatherComponent.EntityPM['SendingInterestReport'])
-               this.CheckSendingInterestReport(this.fatherComponent.EntityPM['EmailForSendingSingArinvoice']);
+             this.CheckEmailForSending(this.fatherComponent.EntityPM['Card']['EmailForSendingSingArinvoice'])
+             if(this.fatherComponent.EntityPM['Card']['SendingInterestReport'])
+               this.CheckSendingInterestReport(this.fatherComponent.EntityPM['Card']['EmailForSendingSingArinvoice']);
 
         }
       
@@ -336,8 +336,11 @@ export class   ContactItemClass extends BaseComponent{
 
 
     SetEmailForSendingSingArinvoices() {
-        this.fatherComponent.EntityPM['SendingInterestReport'] = false;
-        this.fatherComponent.EntityPM['EmailForSendingSingArinvoice'] = this.Id;
+        
+        this.fatherComponent.EntityPM['Card']['SendingInterestReport'] = false;
+        this.fatherComponent.EntityPM['IsDirty'] = true;
+        this.fatherComponent.EntityPM['Card']['EmailForSendingSingArinvoice'] = this.Id;
+        this.fatherComponent.EntityPM['IsDirty'] = true;
         var myCardContactId = this.Id;
         this.fatherComponent.ItemsSource.forEach(item => {
             item.CheckEmailForSending(myCardContactId);
@@ -346,7 +349,8 @@ export class   ContactItemClass extends BaseComponent{
 
     SetSendingInterestReport() {
         
-        this.fatherComponent.EntityPM['SendingInterestReport'] = true;
+        this.fatherComponent.EntityPM['Card']['SendingInterestReport'] = true;
+        this.fatherComponent.EntityPM['IsDirty'] = true;
         var myCardContactId = this.Id;
         this.fatherComponent.ItemsSource.forEach(item => {
            item.CheckSendingInterestReport(myCardContactId);

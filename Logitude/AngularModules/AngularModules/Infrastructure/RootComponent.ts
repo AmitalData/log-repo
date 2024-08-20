@@ -169,6 +169,8 @@ export class RootComponent implements AfterViewInit {
                 './Infrastructure/Components/SatisfactionSurvey/SatisfactionSurveyComponent',
                 this.Child.Location
             ).then();
+        else if(SessionLocator?.ExternalParams?.Menu?.startsWith("IdentityShaamLandingPage"))
+                SessionLocator.DynamicLoader.Load("./Infrastructure/Components/IdentityShaamLandingPageComponent/IdentityShaamLandingPageComponent", this.Child.Location).then()          
         else {
             SessionLocator.DynamicLoader.Load(
                 './Infrastructure/Components/LoginComponent/LoginComponent',

@@ -71,11 +71,12 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public BillToFilter: ApiQueryFilters;
     public PartnerTypeComboBoxIsDisabled: boolean = true;
  public GLAccountsFilterItems: ApiQueryFilters;
+
     constructor(private entityArgs: EntityArgs, private cdRef: ChangeDetectorRef) {
    
 
 
-        super();
+      super();
         // this.CurrentSession.StartBusyIndicatorLoading();
         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");

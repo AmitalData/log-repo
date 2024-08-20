@@ -25,6 +25,7 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.BL.Resolvers;
 using WebFreight.Web.Helpers;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Configuration;
 
 namespace WebFreight.Web.Security
 {
@@ -1126,11 +1127,21 @@ namespace WebFreight.Web.Security
 
         public static string getLoggedDomain()
         {
-            HttpContext context = HttpContext.Current;
-            string Url = context.Request.Url.ToString().Split('/')[2];//("http://", "");
-            Url = Url.Split(':')[0];
+                HttpContext context = HttpContext.Current;
+                string Url = context.Request.Url.ToString().Split('/')[2];//("http://", "");
+                Url = Url.Split(':')[0];
 
-            return Url;
+                var isAppServiceENV = Environment.GetEnvironmentVariable("IsAppService") == "true";
+                bool isAppService = ConfigurationManager.AppSettings["IsAppService"] == "true";
+
+                if (isAppServiceENV || isAppService)
+                {
+                     if (!string.IsNullOrEmpty(context.Request.Headers["X-ORIGINAL-HOST"]))
+                          Url = context.Request.Headers["X-ORIGINAL-HOST"];
+
+                }
+
+                return Url;
         }
 
         private static bool ContinueRedirectToHttps()

@@ -170,6 +170,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string UpdateDeclaration  { get; set; }
        [DataMember]
        public bool IsChange  { get; set; }
+       [DataMember]
+       public DateTime? OpenDate  { get; set; }
    }
 
 }

@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginMandatoryFieldsUpdateClass
    {  		
-		public const string HashString = "9e871fceb59af1b523408a0987227c0f";
+		public const string HashString = "d40b3634d03ba29633a6b034e5f11a3d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -485,9 +485,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "IsMandatory",
 					  						ObjectTableName =  "Customs.CertificateOfOriginMandatoryFields",
-					  						FieldsDataType =  "Boolean",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
-					  						MaxLength =  0,
+					  						MaxLength =  40,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -495,7 +495,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
+					  						SystemMaxLength =  40,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,

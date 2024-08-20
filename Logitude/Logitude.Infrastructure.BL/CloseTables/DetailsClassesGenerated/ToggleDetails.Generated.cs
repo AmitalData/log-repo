@@ -1,4 +1,4 @@
-﻿
+
    
 using System;
 using System.Collections.Generic;
@@ -948,7 +948,15 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "RE2, Reports Execution WR Version 2", 
                 Description = "Reports Execution WR Version 2", 
 			});
-			 
+
+            all.Add(new ToggleDetails()
+            {
+                Code = "VPI",
+                Name = "Get Tax Report VAT from A/P Invoice",
+                SearchFields = "VPI, Get Tax Report VAT from A/P Invoice",
+                Description = "Get Tax Report VAT from A/P Invoice",
+            });
+
             all.Add(new ToggleDetails()
             {    
                 Code = "JAM", 
@@ -978,7 +986,7 @@ namespace Logitude.Infrastructure.BL
                 Code = "MC1", 
                 Name = "IsMulti With ReconcileMethodCode Equal One", 
                 SearchFields = "MC1", 
-                Description = "×œ×�×¤×©×¨ ×”×’×“×¨×ª ×›×¨×˜×™×¡ ×ž×•×œ×˜×™ ×›×›×¨×˜×™×¡ ×©×ž×•×ª×�×� ×‘×ž×˜×–", 
+                Description = "לםפשר הגדרת כרטיס מולטי ככרטיס שמותםם במטז", 
 			});
 			 
             all.Add(new ToggleDetails()

@@ -223,7 +223,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
         private void UpdateGLAccount()
         {
-            UpdateGLAccountWithAdditionalData(Poco.GLAccountId, Poco.Tenant, Poco.Id);
+            if (entityPM.IsExcludeCard)
+            {
+                UpdateGLAccountWithAdditionalData(Poco.GLAccountId, Poco.Tenant, Poco.Id);
+            }
+            else
+            {
+                UpdateGLAccountWithAdditionalData(Poco.GLAccountId, Poco.Tenant,null);
+            }
         }
 
 

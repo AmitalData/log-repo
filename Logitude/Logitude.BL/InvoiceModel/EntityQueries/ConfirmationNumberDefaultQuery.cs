@@ -39,6 +39,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         FromDate = a.FromDate,
                         AmountForConfirmationNumber = a.AmountForConfirmationNumber,
                         Id = a.Id,
+                        InActive = a.InActive
                     }).FirstOrDefault();
         }
 
@@ -51,19 +52,21 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                          Id = entity.Id,
                                                          FromDate = entity.FromDate,
                                                          AmountForConfirmationNumber=entity.AmountForConfirmationNumber,
+                                                         InActive = entity.InActive,
                                                      };
             return result;
         }
         public IQueryable<ConfirmationNumberDefaultList> GetIQueryableEntityListByTenant(int tenant)
         {
             IQueryable<ConfirmationNumberDefaultList> result = from entity in repository.context.ConfirmationNumberDefaults
-                                                               where entity.Tenant== tenant
+                                                               where entity.Tenant== tenant && entity.InActive==false  orderby entity.FromDate descending
                                                                select new ConfirmationNumberDefaultList()
                                                                {
                                                                    Tenant = entity.Tenant,
                                                                    Id = entity.Id,
                                                                    FromDate = entity.FromDate,
                                                                    AmountForConfirmationNumber = entity.AmountForConfirmationNumber,
+                                                                   InActive = entity.InActive
                                                                };
             return result;
         }

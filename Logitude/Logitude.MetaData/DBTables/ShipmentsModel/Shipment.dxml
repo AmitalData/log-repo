@@ -2,8 +2,9 @@
 <Table
   Name="Shipments"
   Schema="dbo"
+  
   DBType="Main"
-  Module="Shipment">
+  Module="Shipment"> 
   <Column
     Name="Id"
     Type="varchar"

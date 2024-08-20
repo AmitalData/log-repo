@@ -321,18 +321,15 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
 
                 }
             }
+            AppendLogLine("start DocumentUpdate:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
 
             if (this._LogitudeReleaseFile.CustomsDocuments != null && this._LogitudeReleaseFile.CustomsDocuments.Where(d => d.Blocked != "1").Count() > 0) // moran 2.6.16 - AMI-56624
             {
                 var myCustomsDocumentQueryService = new CustomsDocumentQueryService(dbContext);
-                //var myCustomsDocumentPointerQueryService = new CustomsDocumentPointerQueryService(dbContext);
-                var myCustomsDocumentPointerUpdateService = new CustomsDocumentPointerUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                //var myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(dbContext);
-                var myCustomsDocumentsTicketUpdateService = new CustomsDocumentsTicketUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                 var myCustomsDocumentPointerUpdateService = new CustomsDocumentPointerUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                 var myCustomsDocumentsTicketUpdateService = new CustomsDocumentsTicketUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
 
-                //CustomsDocumentPointerPM customsDocumentPointerPM = new CustomsDocumentPointerPM();
-                //CustomsDocumentsTicketPM customsDocumentsTicketPM = new CustomsDocumentsTicketPM();
-
+              
 
                 foreach (var customsDocument in this._LogitudeReleaseFile.CustomsDocuments)
                 {
@@ -347,7 +344,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                             customsDocumentsTicketPM.Tenant = _MyDeclarationPM.Tenant;
                             customsDocumentsTicketPM.DocumentsFilingId = customsDocument.COM_ID;
                             customsDocumentsTicketPM.DocumentTypeCode = customsDocument.DocumentTypeCode;
+                            AppendLogLine("start myCustomsDocumentsTicketUpdateService:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
                             myCustomsDocumentsTicketUpdateService.Update(customsDocumentsTicketPM, true);
+                            AppendLogLine("END myCustomsDocumentsTicketUpdateService:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
 
                             CustomsDocumentPointerPM customsDocumentPointerPM = new CustomsDocumentPointerPM();
                             customsDocumentPointerPM.ChangeSetOp = ChangeSetOperation.Insert;
@@ -368,9 +368,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                                 customsDocumentPointerPM.Child2EntityCode = "SupplierInvoiceItem";
                                 customsDocumentPointerPM.Child2EntityId = "1"; //customsDocument.Key_3;
                             }
-                            //customsDocumentPointerPM.DocumentStatusCode = "3";
-                            customsDocumentPointerPM.DocumentTypeCode = customsDocumentsTicketPM.DocumentTypeCode;
+                             customsDocumentPointerPM.DocumentTypeCode = customsDocumentsTicketPM.DocumentTypeCode;
+                            AppendLogLine("start myCustomsDocumentPointerUpdateService:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
                             myCustomsDocumentPointerUpdateService.Update(customsDocumentPointerPM, true);
+                            AppendLogLine("END myCustomsDocumentPointerUpdateService:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
 
                             var myDocumentId = myCustomsDocumentQueryService.GetSingle(customsDocument.COM_ID, true, false);
                             if (myDocumentId == null)
@@ -386,101 +388,20 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                                 {
                                     value.ChangeSetOp = ChangeSetOperation.Insert;
                                 }
+                                AppendLogLine("start myCustomsDocumentUpdateService:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
 
                                 myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
+                                AppendLogLine("DONE myCustomsDocumentUpdateService:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
+                                AppendLogLine("start myCustomsDocumentsTicketUpdateService:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
                             }
                         }
                     }
                 }
             }
-            /*
-            if (this._MyDeclarationPM.Consignments.Count == 1)
-            {
-                if (this._MyDeclarationPM.Consignments[0].ChangeSetOp != ChangeSetOperation.Insert)
-                {
-                    this._MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
-                }
+             AppendLogLine("DocumentUpdate:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
 
-                if (this._MyDeclarationPM.TransportModeId == "A")
-                {
-                    //this._MyDeclarationPM.Consignments[0].SecondCargoID = _LogitudeReleaseFile.MAWB; // moran 24.3.16 - AMI-56039 - commented
-                    //this._MyDeclarationPM.Consignments[0].ThirdCargoID = _LogitudeReleaseFile.HAWB; // moran 24.3.16 - AMI-56039 - commented
-                }
-                else
-                {
-                    //this._MyDeclarationPM.Consignments[0].SecondCargoID = _LogitudeReleaseFile.DealId; // moran 24.3.16 - AMI-56039 - commented
-                }
-                if (!String.IsNullOrWhiteSpace(_LogitudeReleaseFile.ManifestNumber)) 
-                {
-                this._MyDeclarationPM.Consignments[0].ManifestNumber = _LogitudeReleaseFile.ManifestNumber;
-                }
-                else
-                {
-                    if (this._MyEntryDeclarationPM != null) this._MyDeclarationPM.Consignments[0].ManifestNumber = this._MyEntryDeclarationPM.DeclarationNumber; // moran 24.3.16 - AMI-56039 - change to Declaration Number
-                }
-                this._MyDeclarationPM.Consignments[0].LoadingPortCode = _LogitudeReleaseFile.LoadingPortCode;
-                if (!String.IsNullOrWhiteSpace(_LogitudeReleaseFile.OriginCountryCode))
-                {
-                    string countryCode = "";
-                    if(_LogitudeReleaseFile.OriginCountryCode.Length > 2)
-                    {
-                        countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _LogitudeReleaseFile.OriginCountryCode);
-                    }
-                    else
-                    {
-                        countryCode = _LogitudeReleaseFile.OriginCountryCode;
-                    }
-                    if (!string.IsNullOrWhiteSpace(countryCode)) this._MyDeclarationPM.Consignments[0].OriginCountryCode = countryCode;
-                }
-                else
-                {
-                    this._MyDeclarationPM.Consignments[0].OriginCountryCode = null;
-                }
-
-                this._MyDeclarationPM.Consignments[0].CargoDescription = _LogitudeReleaseFile.CargoDescription;
-                this._MyDeclarationPM.Consignments[0].ManifestDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeReleaseFile.ManifestDate, "LogitudeReleaseFile.ManifestDate");
-                this._MyDeclarationPM.Consignments[0].UnloadDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeReleaseFile.ArrivalDateTime, "LogitudeReleaseFile.ArrivalDateTime");
-
-                this._MyDeclarationPM.Consignments[0].CargoTypeCode = "8";
-                if (this._MyEntryDeclarationPM != null && this._MyEntryDeclarationPM.Consignments != null && this._MyEntryDeclarationPM.Consignments.Count > 0)
-                {
-                    //this._MyDeclarationPM.Consignments[0].ManifestNumber = this._MyEntryDeclarationPM.DeclarationNumber; //Consignments[0].ManifestNumber; // moran 3.3.16 - AMI-56039 - change to Declaration Number // moran 24.3.16 - AMI-56039 - commented
-                    if (this._MyEntryDeclarationPM.Consignments[0].UnloadDate != null) this._MyDeclarationPM.Consignments[0].UnloadDate = this._MyEntryDeclarationPM.Consignments[0].UnloadDate;
-                    if (this._MyEntryDeclarationPM.Consignments[0].UnloadPortCode != null) this._MyDeclarationPM.Consignments[0].UnloadPortCode = this._MyEntryDeclarationPM.Consignments[0].UnloadPortCode;
-                    if (this._MyEntryDeclarationPM.Consignments[0].LoadingPortCode != null) this._MyDeclarationPM.Consignments[0].LoadingPortCode = this._MyEntryDeclarationPM.Consignments[0].LoadingPortCode;
-                }
-                this._MyDeclarationPM.Consignments[0].IsLastReleaseFromWarehous = _LogitudeReleaseFile.ISLASTRELEASEFROMWAREHOUS;
-                if (!String.IsNullOrWhiteSpace(_LogitudeReleaseFile.OriginCountryId))
-                {
-                    //this._MyDeclarationPM.Consignments[0].OriginCountryCode = _LogitudeReleaseFile.OriginCountryId;
-                    string countryCode = "";
-                    if (_LogitudeReleaseFile.OriginCountryId.Length > 2)
-                    {
-                        countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _LogitudeReleaseFile.OriginCountryId);
-                    }
-                    else
-                    {
-                        countryCode = _LogitudeReleaseFile.OriginCountryId;
-                    }
-                    if (!string.IsNullOrWhiteSpace(countryCode)) this._MyDeclarationPM.Consignments[0].OriginCountryCode = countryCode;
-                }
-                this._MyDeclarationPM.Consignments[0].StorageSiteCode = TranslateDeliverySite(_LogitudeReleaseFile.WarehouseId);
-
-
-                if (this._LogitudeReleaseFile.PACKAGES != null && this._LogitudeReleaseFile.PACKAGES.Count() > 0) 
-                {
-                    var myConsignmentPackageUpdateService = new ConsignmentPackageUpdateService(_context, new Dictionary<string, IContext>(), ResolvedTenant());
-                    DeleteConsignmentPackages(myConsignmentPackageUpdateService);
-                    this._MyDeclarationPM.Consignments[0].ConsignmentPackages = GetConsignmentPackages(this._LogitudeReleaseFile.PACKAGES);
-                }
-                
-            }
-            else 
-            {
-                MyGenericResponseObj.Message = "Declaration has multiple Consignments(" + this._MyDeclarationPM.Consignments.Count.ToString() + ") and Consignment details didn't update";
-                AppendLogLine("Declaration has multiple Consignments(" + this._MyDeclarationPM.Consignments.Count.ToString() + ") and Consignment details didn't update");
-            }
-             */
             _MyDeclarationPM.CurrentContextTag = UpsertActionConst; // moran 28.7.16 - Task 22249
             declarationUpdateService.Update(this._MyDeclarationPM, true);
             AppendLogLine("declarationUpdat:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();

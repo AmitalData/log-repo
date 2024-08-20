@@ -17,8 +17,8 @@ namespace WebFreight.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            //http://localhost:9996/LinksGateway.aspx?Menu=PREQ&SecurityKey=cfeb18b0f2044ccab43bb1d2cc67048e&Tenant=203
+            bool isFromLocal = Request.Url.Host.ToLower().Contains("localhost");
+            //http://localhost:9996/LinksGateway.aspx?Menu=PREQ&SecurityKey=d5e6d15f4cb24f12a8ac9c5e8c54a06d
             var Menu = Request.QueryString["Menu"];
             if (Menu == null) { return; }
             if (Menu == "PREQ" || Menu == "UID")
@@ -26,20 +26,31 @@ namespace WebFreight.Web
                 var Tenant = Request.QueryString["Tenant"];
                 var SecurityKey = Request.QueryString["SecurityKey"];
                 var htmlVersion = GetHTMLVersion();
-
-                string RedirectUrl = "Angular" + htmlVersion + "/index.html?Menu=" + Menu + "&SecurityKey=" + SecurityKey + "&Tenant=" + Tenant;
-                Response.Redirect("~/" + RedirectUrl);
+                string RedirectUrl = "";
+                if (isFromLocal)
+                {
+                    RedirectUrl = "http://localhost:4200/index.html?Menu=" + Menu + "&SecurityKey=" + SecurityKey ;
+                }
+                else
+                {
+                    RedirectUrl = "~/Angular" + htmlVersion + "/index.html?Menu=" + Menu + "&SecurityKey=" + SecurityKey;
+                }
+                if(!string.IsNullOrWhiteSpace(Tenant)){
+                    RedirectUrl += "&Tenant=" + Tenant;
+                } 
+                Response.Redirect(RedirectUrl);
             }
-            else if(Menu.ToUpper().StartsWith("URL_"))  {
+            else if (Menu.ToUpper().StartsWith("URL_"))
+            {
                 var htmlVersion = GetHTMLVersion();
-                Menu = Menu.Substring("URL_".Length)+"&";
+                Menu = Menu.Substring("URL_".Length) + "&";
                 StringBuilder queryStringBuilder = getQueryStringBuilder("Menu");
-                string RedirectUrl = "Angular" + htmlVersion + "/index.html?Menu="+Menu + queryStringBuilder.ToString();
+                string RedirectUrl = "Angular" + htmlVersion + "/index.html?Menu=" + Menu + queryStringBuilder.ToString();
                 Response.Redirect("~/" + RedirectUrl);
 
             }
 
-     
+
         }
 
         private StringBuilder getQueryStringBuilder(string excludeKey)
@@ -47,7 +58,7 @@ namespace WebFreight.Web
             StringBuilder queryStringBuilder = new StringBuilder();
             foreach (string key in Request.QueryString.AllKeys)
             {
-                if (!string.IsNullOrEmpty(key) && key.ToLower()!=excludeKey.ToLower())
+                if (!string.IsNullOrEmpty(key) && key.ToLower() != excludeKey.ToLower())
                 {
                     if (queryStringBuilder.Length > 0)
                     {
@@ -64,12 +75,12 @@ namespace WebFreight.Web
         private string GetHTMLVersion()
         {
             string htmlVersion = GetHTMLVersionFromFile();
-            if(string.IsNullOrEmpty(htmlVersion)) htmlVersion = GetHtmlVersionFromSetting();
+            if (string.IsNullOrEmpty(htmlVersion)) htmlVersion = GetHtmlVersionFromSetting();
             return htmlVersion;
         }
 
-        
-        private  string GetHtmlVersionFromSetting()
+
+        private string GetHtmlVersionFromSetting()
         {
             IGlobalContext objectContext = GlobalContext.GetContext();
             SettingRepository MySettingRepository = new SettingRepository(objectContext);

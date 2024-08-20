@@ -24,7 +24,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             var testNow = false;// (new DateTime(2016, 12, 30) > DateTime.Now);
 
 
-
+            if (_TrailReportParam.Suppress_ControlAccount)
+            {
+                QBaseAllCardsAndDetailsAccType = QBaseAllCardsAndDetailsAccType.Where(coa => coa.IsControlAccount == false);
+            }
 
             IQueryable<TrailReportTemp> qAccumulate_TotalStart_JoinAccounts_GroupByAccountCurrencyId = Init_TotalStart_JoinAccounts_GroupByAccountCurrencyId();
 
@@ -35,19 +38,23 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             IQueryable<TrailReportTemp> qAccumulate_TransStart_Join_ALL_GroupByAccountCurrencyId = qAccumulate_TransStart_JoinAccountsNotControlAccount_GroupByAccountCurrencyId;
             if (!base.NotUsingControlAccount())
             {
-                IQueryable<TrailReportTemp> qAccumulate_TransStart_JoinAccountsWhereIscontrolAccount_GroupByAccountCurrencyId = Init_TransStart_JoinAccountsWhereIscontrolAccount_GroupByAccountCurrencyId();
+                //IQueryable<TrailReportTemp> qAccumulate_TransStart_JoinAccountsWhereIscontrolAccount_GroupByAccountCurrencyId = Init_TransStart_JoinAccountsWhereIscontrolAccount_GroupByAccountCurrencyId();
+                //qAccumulate_TransStart_Join_ALL_GroupByAccountCurrencyId =
+                //    qAccumulate_TransStart_JoinAccountsNotControlAccount_GroupByAccountCurrencyId.Union(
+                //qAccumulate_TransStart_JoinAccountsWhereIscontrolAccount_GroupByAccountCurrencyId);
                 qAccumulate_TransStart_Join_ALL_GroupByAccountCurrencyId =
-                    qAccumulate_TransStart_JoinAccountsNotControlAccount_GroupByAccountCurrencyId.Union(
-                qAccumulate_TransStart_JoinAccountsWhereIscontrolAccount_GroupByAccountCurrencyId);
+                    qAccumulate_TransStart_JoinAccountsNotControlAccount_GroupByAccountCurrencyId;
             }
 
             IQueryable<TrailReportTemp> qAccumulate_TransEnd__JoinAccountsNotControlAccount_GroupByAccountCurrencyId = Init_TransEnd__JoinAccountsNotControlAccount_GroupByAccountCurrencyId();
             IQueryable<TrailReportTemp> qAccumulate_TransEnd__JoinAccounts_ALL_GroupByAccountCurrencyId = qAccumulate_TransEnd__JoinAccountsNotControlAccount_GroupByAccountCurrencyId;
             if (!base.NotUsingControlAccount())
             {
-                IQueryable<TrailReportTemp> qAccumulate_TransEnd__JoinAccountsWhereIsControlAccount_GroupByAccountCurrencyId = Init_TransEnd__JoinAccountsWhereIsControlAccount_GroupByAccountCurrencyId();
+                //IQueryable<TrailReportTemp> qAccumulate_TransEnd__JoinAccountsWhereIsControlAccount_GroupByAccountCurrencyId = Init_TransEnd__JoinAccountsWhereIsControlAccount_GroupByAccountCurrencyId();
+                //qAccumulate_TransEnd__JoinAccounts_ALL_GroupByAccountCurrencyId =
+                //    qAccumulate_TransEnd__JoinAccountsNotControlAccount_GroupByAccountCurrencyId.Union(qAccumulate_TransEnd__JoinAccountsWhereIsControlAccount_GroupByAccountCurrencyId);
                 qAccumulate_TransEnd__JoinAccounts_ALL_GroupByAccountCurrencyId =
-                    qAccumulate_TransEnd__JoinAccountsNotControlAccount_GroupByAccountCurrencyId.Union(qAccumulate_TransEnd__JoinAccountsWhereIsControlAccount_GroupByAccountCurrencyId);
+                    qAccumulate_TransEnd__JoinAccountsNotControlAccount_GroupByAccountCurrencyId;
             }
             IQueryable<TrailReportTemp> _QUnionAllMoneyData = qAccumulate_TotalStart_JoinAccounts_GroupByAccountCurrencyId.Union(qAccumulate_TransStart_Join_ALL_GroupByAccountCurrencyId).Union(qAccumulate_TotalDelta2End_JoinAccounts_GroupByAccountCurrencyId).Union(qAccumulate_TransEnd__JoinAccounts_ALL_GroupByAccountCurrencyId);
 

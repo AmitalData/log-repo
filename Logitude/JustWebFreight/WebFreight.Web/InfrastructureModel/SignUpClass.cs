@@ -367,7 +367,7 @@ namespace WebFreight.Web.InfrastructureModel
                 //using (TransactionScope scope = TransactionFactory.GetTransaction())
                 //{
                 // globalTenantRepository = new GlobalTenantRepository();
-                TariffSetting zeroTariffSetting=null;
+                TariffSetting zeroTariffSetting = null;
                 AccountingSetting zeroAccountingSettings;
                 SATInterfaceSetting tenantZeroSATInterfaceSetting;
                 CustomsInterfaceSetting zeroCustomsInterfaceSetting;
@@ -385,7 +385,7 @@ namespace WebFreight.Web.InfrastructureModel
                 List<ChargesGroupPM> tenantZeroChargesGroups;
                 List<QuoteChargesGroupPM> tenantZeroQuoteChargesGroups;
                 List<AccountingCompanyTypePM> tenantZeroAccountingCompanyTypes;
-                 List<PackageTypePM> tenantZeroPackageTypes;
+                List<PackageTypePM> tenantZeroPackageTypes;
                 List<DocumentTypeCustomField> tenantZeroCustomFields;
                 List<CreditCardTypePM> tenantZeroCreditCardTypes;
                 List<MoveTypePM> tenantZeroMoveTypes;
@@ -399,11 +399,11 @@ namespace WebFreight.Web.InfrastructureModel
                 List<CustomsRequiredField> tenantZeroCustomsRequiredFields = null;
                 List<DocumentTypeCustomsData> tenantZeroDocumentTypeCustomsDatas = null;
                 List<DocumentsMetaDataType> tenantZeroDocumentsMetaDataType = null;
-                List<Simplog.Data.InvoiceModel.EntityPOCOs.AccountingPaymentMethod> tenantZeroPaymentMethods=null;
+                List<Simplog.Data.InvoiceModel.EntityPOCOs.AccountingPaymentMethod> tenantZeroPaymentMethods = null;
                 List<BankCode> tenantZeroBankCodes = null;
                 List<TaxWithholdingAssessOffice> tenantZeroTaxWithholdingAssessOffices = null;
-                List<QuoteClosingReason> tenantZeroQuoteClosingReasons= null;
-                List<ShipmentSubType> tenantZeroShipmentSubTypes= null;
+                List<QuoteClosingReason> tenantZeroQuoteClosingReasons = null;
+                List<ShipmentSubType> tenantZeroShipmentSubTypes = null;
 
                 //Tickets
                 List<TicketType> tenantZeroTicketTypes = null;
@@ -441,7 +441,7 @@ namespace WebFreight.Web.InfrastructureModel
                     tenantZeroPackageTypes = packageTypeQuery.GetPackageTypePMsByTenant(0).ToList();
                     tenantZeroCustomFields = documentTypeCustomFieldRepository.GetDocumentTypeCustomFields(0).ToList();
 
-                    ITariffModuleContext iTariffContext= TariffModuleContext.GetContext(0);
+                    ITariffModuleContext iTariffContext = TariffModuleContext.GetContext(0);
                     if (setting.WorkEnvironment != "customs") zeroTariffSetting = (from d in iTariffContext.TariffSettings where d.Tenant == 0 select d).FirstOrDefault();
 
                     zeroAccountingSettings = accountingSettingsRepository.GetSingleAccountSetting(0);
@@ -458,7 +458,7 @@ namespace WebFreight.Web.InfrastructureModel
                     tenantZeroOpportunityTypes = opportunityTypeRepository.GetAll(0).ToList();
                     tenantZeroDocumentsMetaDataType = documentsMetaDataTypeRepository.GetDocumentsMetaDataTypes(0).ToList();
                     if (setting.WorkEnvironment != "customs") tenantZeroPaymentMethods = PaymentMethodRepository.GetAccountingPaymentMethods(0).ToList();
-                    tenantZeroBankCodes = bankCodeRepository.GetAll(0).ToList();
+                    if (setting.WorkEnvironment != "customs") tenantZeroBankCodes = bankCodeRepository.GetAll(0).ToList();
                     if (setting.WorkEnvironment != "customs") tenantZeroQuoteClosingReasons = quoteClosingReasonRepository.GetQuoteClosingReasons(0).ToList();
                     if (setting.WorkEnvironment != "customs") tenantZeroShipmentSubTypes = shipmentSubTypeRepository.GetShipmentSubTypes(0).ToList();
 
@@ -468,8 +468,8 @@ namespace WebFreight.Web.InfrastructureModel
                     tenantZeroTicketSeverities = ticketSeverityRepository.GetAll(0).ToList();
 
                     //Task
-                    tenantZeroTaskPriorities = taskPriorityRepository.GetAll(0).ToList();
-                    tenantZeroTaskStatuses = taskStatusRepository.GetAll(0).ToList();
+                    if (setting.WorkEnvironment != "customs") tenantZeroTaskPriorities = taskPriorityRepository.GetAll(0).ToList();
+                    if (setting.WorkEnvironment != "customs") tenantZeroTaskStatuses = taskStatusRepository.GetAll(0).ToList();
 
                     //SLA 
                     tenantZeroBusinessHours = businessHourRepository.GetBusinessHours(0).ToList();
@@ -492,11 +492,11 @@ namespace WebFreight.Web.InfrastructureModel
                 InitializeRepositories(tenant);
                 AddDefaultSATInterfaceSettings(tenant, sATInterfaceSettingRepository, tenantZeroSATInterfaceSetting);// Temporerly Commented By Rabaia So Create Tenant Continue until Islam Check it            
                 if (setting.WorkEnvironment != "customs") AddDefaultTariffSettings(tenant, tariffSettingRepository, zeroTariffSetting);
-                if (setting.WorkEnvironment != "customs") 
+                if (setting.WorkEnvironment != "customs")
                     AddDefaultTariffProducts(tenant);
-                   
-                
-              
+
+
+
                 AddDefaultAccountingSettings(tenant, accountingSettingsRepository, zeroAccountingSettings);
                 AddDefaultCustomsInterfaceSettings(tenant, customsInterfaceSettingRepository, zeroCustomsInterfaceSetting);
                 AddDefaultSharedLogisticsSettings(tenant, sharedLogisticsSettingRepository, zeroSharedLogisticsSetting);
@@ -539,7 +539,7 @@ namespace WebFreight.Web.InfrastructureModel
                 AddVatTypes(tenant, vatTypeRepository, tenantZeroVatTypes, vatTypePercentageRepository);
                 List<VatType> currentTenantVatTypes = vatTypeRepository.GetVatTypes(tenant).ToList();
 
-                 
+
                 AddLeadSources(tenant, leadSourceRepository, tenantZeroLeadSources);
                 AddStages(tenant, stageRepository, tenantZeroStages);
                 AddIndustries(tenant, industryRepository, tenantZeroIndustries);
@@ -555,17 +555,17 @@ namespace WebFreight.Web.InfrastructureModel
                 AddPackageTypes(tenant, packageTypeRepository, measurementRepository, tenantZeroPackageTypes);
                 AddOpportunityTypes(tenant, opportunityTypeRepository, tenantZeroOpportunityTypes);
                 AddDocumentsMetaDataTypes(tenant, documentsMetaDataTypeRepository, tenantZeroDocumentsMetaDataType);
-                if (setting.WorkEnvironment != "customs")  AddPaymentMethods(tenant, PaymentMethodRepository, tenantZeroPaymentMethods);
+                if (setting.WorkEnvironment != "customs") AddPaymentMethods(tenant, PaymentMethodRepository, tenantZeroPaymentMethods);
                 AddTicketTypes(tenant, ticketTypeRepository, tenantZeroTicketTypes);
                 AddTicketStages(tenant, ticketStageRepository, tenantZeroTicketStages);
                 AddTicketSeverities(tenant, ticketSeverityRepository, tenantZeroTicketSeverities);
-                if (setting.WorkEnvironment != "customs")  AddQuoteClosingReasons(tenant, quoteClosingReasonRepository, tenantZeroQuoteClosingReasons);
+                if (setting.WorkEnvironment != "customs") AddQuoteClosingReasons(tenant, quoteClosingReasonRepository, tenantZeroQuoteClosingReasons);
                 if (setting.WorkEnvironment != "customs") AddShipmentSubTypes(tenant, shipmentSubTypeRepository, tenantZeroShipmentSubTypes);
                 AddBusinessHours(tenant, businessHourRepository, tenantZeroBusinessHours);
                 if (setting.WorkEnvironment != "customs") AddSLAHeaders(tenant, slaHeaderRepository, tenantZeroSLAHeaders);
                 AddWithholdingTaxDeductionTypes(tenant, withholdingTaxDeductionTypeRepository, tenantZeroWithholdingTaxDeductionType);
                 //AddSLALines(tenant, slaLineRepository, tenantZeroSLALines);
-                AddBankCodes(tenant, bankCodeRepository, tenantZeroBankCodes);
+                if (setting.WorkEnvironment != "customs") AddBankCodes(tenant, bankCodeRepository, tenantZeroBankCodes);
                 AddTaxWithholdingAssessOffice(tenant, taxWithholdingAssessOfficeRepository, tenantZeroTaxWithholdingAssessOffices);
                 //AddJournalActionTypes(tenant);
 
@@ -592,7 +592,8 @@ namespace WebFreight.Web.InfrastructureModel
                 };
                 string systemPassword = AddUser(systemUserShortDetails, userRepository, branchRepository, departmentRepository, roleRepository);
 
-                if (setting.WorkEnvironment != "customs") { 
+                if (setting.WorkEnvironment != "customs")
+                {
                     AddDefaultFullAccountingSettings(tenant, fullAccountingSettingsRepository);
                     AddDefaultTenantIdleStatuses(tenant, tenantIdleStatusRepository);
 
@@ -604,12 +605,13 @@ namespace WebFreight.Web.InfrastructureModel
 
                 AddTenantLoginPolicy(tenant);
 
-                AddAutomationFromTenantZero(tenant , tenantZeroDocumentTypes);
+                AddAutomationFromTenantZero(tenant, tenantZeroDocumentTypes);
 
+                if (setting.WorkEnvironment != "customs") { 
                 //Task
                 AddTaskPriorities(tenant, taskPriorityRepository, tenantZeroTaskPriorities);
                 AddTaskStatuses(tenant, taskStatusRepository, tenantZeroTaskStatuses);
-          
+            }
                 new TruckerSignUpService(signUpInfo, tenant).CopyFromTenantZero();
                 #endregion
                 scop.Complete();
@@ -3259,7 +3261,8 @@ namespace WebFreight.Web.InfrastructureModel
             {
                 Id = theTenant.ToString(),
                 Tenant = theTenant,
-            };
+				TenantForConfirmationNumberApi = "-1"
+			};
 
             theFullAccountingSettingsRepository.Add(settings);
             theFullAccountingSettingsRepository.SubmitChanges();

@@ -200,7 +200,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
 
     public get IsDeclaredByManufacture(): boolean {
-        if (!this.entityPM.IsDeclaredByManufacture) {
+        if (AppTool.IsNullOrEmpty(this.entityPM.IsDeclaredByManufacture)) {
             this.entityPM.IsDeclaredByManufacture = false;
         }
         return this.entityPM.IsDeclaredByManufacture;

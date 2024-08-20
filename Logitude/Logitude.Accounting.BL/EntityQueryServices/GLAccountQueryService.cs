@@ -1358,7 +1358,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             }
         }
 
-        public void ConnectCardToGLAccount(CardGLAccountConnectionArgs args)
+        public void ConnectCardToGLAccount(CardGLAccountConnectionArgs args, bool afterConvert = false)
         {
             //  CardPM cardPM = GetCardById(args.CardId, args.Tenant);
             IAccountingContext context = MainContext as AccountingContext;
@@ -1380,8 +1380,15 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             //SubmitCard(cardPM);
             if (!String.IsNullOrEmpty(args.CardId) && !String.IsNullOrEmpty(args.AccountId) && args.Tenant > 0)
             {
-                Update_ConnectCardToGLAccount(args.CardId, args.Tenant, args.AccountId, displayNumber);
-                gLAccountUpdateService.UpdateCardDisplayNumber(args.Tenant, args.CardId, displayNumber, args.AccountId, false);
+                if (afterConvert)
+                {
+                    int res = Update_ConnectCardToGLAccount(args.CardId, args.Tenant, args.AccountId, displayNumber);
+                }
+                else
+                {
+                    gLAccountUpdateService.UpdateCardDisplayNumber(args.Tenant, args.CardId, displayNumber, args.AccountId, false);
+                }
+
             }
 
             //ICommonDataContext context = CommonDataContext.GetContext(args.Tenant);

@@ -87,6 +87,7 @@ using WebFreight.Web.WebServices;
 using WebFreight.Web.Services;
 using System.Threading.Tasks;
 using NLog;
+using System.Windows.Media;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -11109,6 +11110,7 @@ namespace WebFreight.Web.ReportsWebServices
                 Category5 = category5,
                 DoNotShowCardWithLocalCloseBalanceEqualZero = dontShowCardsWith0Balance,
                 IsRevenueExpenseReport = false,
+                Suppress_ControlAccount = true,
                 //  Skip = true
                 Suppress_DoNotShowCardWithoutActivity = false,
 
@@ -11156,6 +11158,7 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.DetailedControlJob = true;
                 trailReportParam.DetailedControlFile = true;
                 trailReportParam.CurrenciesDetailed = false;
+                trailReportParam.Suppress_ControlAccount = true;
                 trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
                 trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = false;
                 trailReportParam.Category1 = null;
@@ -11248,6 +11251,7 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.DetailedControlJob = true;
                 trailReportParam.DetailedControlFile = true;
                 trailReportParam.CurrenciesDetailed = false;
+                trailReportParam.Suppress_ControlAccount = true;
                 trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
                 trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = false;
                 trailReportParam.Category1 = null;
@@ -11758,7 +11762,9 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.Category4 = category4;
                 trailReportParam.Category5 = category5;
                 trailReportParam.MyTrailReportLevel = ReportLevel.GLAccount;
-                trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
+                trailReportParam.Suppress_ControlAccount = true;
+                trailReportParam.Suppress_DoNotShowCardWithoutActivity = false; // may it be 'true' sometimes? 
+
                 trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = dontShowCardsWith0Balance;
 
                 var servce = TrailReportFactory.CreateNew(trailReportParam);
@@ -11818,7 +11824,10 @@ namespace WebFreight.Web.ReportsWebServices
                             EnglishName = item.GLAccountEnglish,
                         };
 
-                        GLAccountParents.Add(record.ParentId);
+                        lock (_locker)
+                        {
+                            GLAccountParents.Add(record.ParentId);
+                        }
                         if (!string.IsNullOrEmpty(record.Id))
                         {
                             lock (_locker)
@@ -11842,7 +11851,77 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 });
 
-              
+
+                string logtext = "LogitudeReportsWebService.GetTrailBalanceDataProvider(), Point 3, level == GLAccount, Count=" + totalData.ResultList.Count.ToString() + ", T=" + tenant.ToString();
+
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+                List<ResultList> cliVenWorksCharts = totalData.ResultList.Where(res => res.Type == "ChartOfAccount"
+                                && (res.ParentId == "3" || res.ParentId == "4" || res.ParentId == "6")).ToList();
+
+                if (cliVenWorksCharts != null && cliVenWorksCharts.Count > 0)
+                {
+                    foreach (ResultList chartLine in cliVenWorksCharts)
+                    {
+                        bool glaccExists = totalData.ResultList.Where(res => (res.Type != "ChartOfAccount" || res.Type == null)
+                                        && res.ChartofAccountTypeCode == chartLine.ParentId && res.ParentId == chartLine.Id).Any();
+                        string logtext4 = "LogitudeReportsWebService.GetTrailBalanceDataProvider(), Point 4, chartLine=" + chartLine.Name + ", Id=" + chartLine.Id + ", glaccExists=" + glaccExists.ToString();
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext4);
+
+                        bool test = true;
+                        test = false;
+                        if (test)
+                        {
+                            var glacc = totalData.ResultList.Where(res => (res.Type != "ChartOfAccount" || res.Type == null)
+                                        && res.ChartofAccountTypeCode == chartLine.ParentId && res.ParentId == chartLine.Id).FirstOrDefault();
+                        }
+                        if (!glaccExists)
+                        {
+
+                            ChartOfAccountsTypePM chartType = chartOfAccountTypes.Where(type => type.Code == chartLine.ParentId).FirstOrDefault();
+                            ChartOfAccount chart = ChartOfAccountsList.FirstOrDefault(ch => ch.Id == chartLine.Id);
+
+                            ResultList fictiveGLAccountRecord = new ResultList()
+                            {
+                                Id = chartLine.Id + chartLine.Id.Substring(1),  //  '1-567' => '1-567-567'
+                                Name = chart != null ? chart.LocalName : null,
+                                Number = chart != null ? chart.Code.PadLeft(8, '0') : null,
+                                ParentId = chartLine.Id,                        // fictiveGLaccountRecord is a child of chartLine
+                                LocalCloseBalance = chartLine.LocalCloseBalance != null ? chartLine.LocalCloseBalance : 0,
+                                LocalCredit = chartLine.LocalCredit != null ? chartLine.LocalCredit : 0,
+                                LocalDebit = chartLine.LocalDebit != null ? chartLine.LocalDebit : 0,
+                                LocalOpenBalance = chartLine.LocalOpenBalance != null ? chartLine.LocalOpenBalance : 0,
+
+
+                                ForeignCloseBalance = chartLine.ForeignCloseBalance != null ? chartLine.ForeignCloseBalance : 0,
+                                ForeignCredit = chartLine.ForeignCredit != null ? chartLine.ForeignCredit : 0,
+                                ForeignDebit = chartLine.ForeignDebit != null ? chartLine.ForeignDebit : 0,
+                                ForeignOpenBalance = chartLine.ForeignOpenBalance != null ? chartLine.ForeignOpenBalance : 0,
+                                EnglishName = chartLine.EnglishName,
+                                Error = chartLine.Error,
+
+                                ChartOfAccountTypeOrder = chartLine.ChartOfAccountTypeOrder,
+                                ChartOfAccountsEnglish = chart != null ? chart.EnglishName : null,
+                                ChartOfAccountsTypeEnglish = chartType != null ? chartType.EnglishName : null,
+
+                                ChartofAccountCode = chart != null ? chart.Code : null,
+                                ChartofAccountLocalName = chart != null ? chart.LocalName : null,
+                                ChartofAccountTypeCode = chartLine.ParentId,
+
+                                ChartofAccountTypeLocalName = chartType != null ? chartType.LocalName : null,
+                                CurrencyCode = "Multi",
+                                GLAccountEnglish = chart != null ? chart.EnglishName : null,
+                            };
+
+                            totalData.ResultList.Add(fictiveGLAccountRecord);
+
+                        }
+                    
+                    }
+                }
+
+                string logtext6 = "LogitudeReportsWebService.GetTrailBalanceDataProvider(), Point 6, Count=" + totalData.ResultList.Count.ToString() + ", T=" + tenant.ToString();
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext6);
+
                 RecalculateParentTotals(totalData);
 
             }

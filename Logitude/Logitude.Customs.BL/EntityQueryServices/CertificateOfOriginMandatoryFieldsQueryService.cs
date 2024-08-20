@@ -30,7 +30,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 foreach (var item in mandatoryFieldslist)
                 {
-                    if (item.IsMandatory)
+                    if (item != null && item.IsMandatory == "Mandatory" || item.IsMandatory == "Optional" || item.IsMandatory == "Condition")
                     {
                         var mandatoryFieldPM = this.GetEntityPM(item, false, new CertificateOfOriginMandatoryFieldsKeys { Code = item.Code.ToString() });
                         mandatoryFieldslistPM.Add(mandatoryFieldPM);

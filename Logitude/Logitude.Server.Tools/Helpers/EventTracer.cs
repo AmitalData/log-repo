@@ -117,9 +117,9 @@ namespace Logitude.Server.Tools.Helpers
                     #endregion
 
                     string myNotes = args.Notes;
+                    string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
                     if (myNotes != null)
                     {
-                        string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
                         if (dbms == "oracle")
                         {
                             if (myNotes.Length > 2000)
@@ -157,7 +157,7 @@ namespace Logitude.Server.Tools.Helpers
                     };
 
                     if ((Transaction.Current != null && Transaction.Current.IsolationLevel == System.Transactions.IsolationLevel.Snapshot)
-                        || Transaction.Current == null)
+                        || (Transaction.Current == null && dbms != "oracle"))
                     {
                         using (var scope = objectContext.GetSnapshotTransaction())
                         {

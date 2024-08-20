@@ -53,6 +53,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                  card = GetCardById(Id);
                 if (card.GLAccountId != null)
                 {
+                    card.IsExcludeCard = true;
                     GLAccountPM glaccount = UpdateGLAccountFields(card);
                     SendHybridTask(glaccount);
                     UpdateCard(card);
@@ -461,7 +462,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     ParentEntity = filters.ParentEntity
                 };
 
-                QueryFilterItem item = queryOperations.QueryFilterItems.Where(f => f.FieldName == "CompactSearchField" || f.FieldName == "CardSearchField").FirstOrDefault();
+                QueryFilterItem item = queryOperations.QueryFilterItems.Where(f => f.FieldName == "CompactSearchField" || f.FieldName == "CardSearchField").FirstOrDefault(); 
 
                 queryOperations.QueryFilterItems.Remove(item);
                 object compactSeachvalue = item != null ? item.FieldValue : null;
