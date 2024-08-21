@@ -386,19 +386,19 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           x.IsCourierMissingClassification,
                                                           x.TerminalReleaseDate
                                                       })
-                                                      on a.Id equals dcs.DeclarationId
-                                                                   
+                                                     on a.Id equals dcs.DeclarationId
 
-
-                                                      join recConsignment in context.Consignments.Include("CargoType")
-                                                      .Select(x => new { x.DeclarationId, x.ConsignmentNumber, x.CargoDescription, x.CargoType.LocalName, x.SecondCargoID, x.ThirdCargoID, x.ManifestNumber })
-                                                      on a.Id equals recConsignment.DeclarationId into qjoinConsignments
-                                                      from myJoinConsignment in qjoinConsignments.DefaultIfEmpty()
 
                                                       join c in qConsignmentNumber
                                                       .Select(x => new { x.DeclarationId, x.ConsignmentNumber })
                                                       on a.Id equals c.DeclarationId into leftJoin
                                                       from leftJoinResult in leftJoin.DefaultIfEmpty()
+
+                                                      join recConsignment in context.Consignments.Include("CargoType")
+                                                      .Select(x => new { x.DeclarationId, x.ConsignmentNumber, x.CargoDescription, x.CargoType.LocalName, x.SecondCargoID, x.ThirdCargoID, x.ManifestNumber })
+                                                      on new { leftJoinResult.DeclarationId, leftJoinResult.ConsignmentNumber } equals new { recConsignment.DeclarationId, recConsignment.ConsignmentNumber }
+                                                      into qjoinConsignments
+                                                      from myJoinConsignment in qjoinConsignments.DefaultIfEmpty()
 
 
                                                       join recOriginalDeclarations in context.Declarations.Where(x => x.IsAmendment != true)
