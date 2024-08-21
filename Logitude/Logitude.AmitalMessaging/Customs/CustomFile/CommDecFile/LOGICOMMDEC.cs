@@ -122,6 +122,8 @@
 
         private string warehouseIdField;
 
+        private string unloadportIdField;
+
         private string transferImporterIdField;
 
         private string importerEntitlementTypeCodeField;
@@ -593,6 +595,18 @@
             set
             {
                 this.warehouseIdField = value;
+            }
+        }
+
+        public string UnloadportId
+        {
+            get
+            {
+                return this.unloadportIdField;
+            }
+            set
+            {
+                this.unloadportIdField = value;
             }
         }
 
