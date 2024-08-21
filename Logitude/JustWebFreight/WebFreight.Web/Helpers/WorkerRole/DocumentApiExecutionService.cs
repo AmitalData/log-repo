@@ -41,9 +41,9 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
 			Address = courierDocURL;
 			x_functions_key = courierDocKey;		
 		}
-		public async static Task<(bool success, string filepath, string message)> DownloadFile(AzureQueueMessageApi queueMessage)
+		public async static Task<(bool success, string filepath, string message)> DownloadFile(AzureQueueMessageApi queueMessage,int tenant)
 		{
-			Token = CustomsSettingQueryService.GetSettingByTenant(Convert.ToInt32(queueMessage.Tenant)).CourierDocToken;
+			Token = CustomsSettingQueryService.GetSettingByTenant(tenant).CourierDocToken;
 			string filepath = "";
 			try
 			{
@@ -131,16 +131,16 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
 				return threadtempfolder;
 			}
 		}
-		public static string AddCommunicationLog(AzureQueueMessageApi queueMessage,string queueId)
+		public static string AddCommunicationLog(AzureQueueMessageApi queueMessage,string queueId,int tenant)
 		{   
-			int tenant = Convert.ToInt32(queueMessage.Tenant);
+			
 			byte[] logXML = Encoding.UTF8.GetBytes(queueId);// LogitudeXmlSerializer.SerializeObject(queueMessage);
-			ObjectTableQuery tablesQuery = new ObjectTableQuery(Convert.ToInt32(queueMessage.Tenant));
+			ObjectTableQuery tablesQuery = new ObjectTableQuery(tenant);
 			string hawb = queueMessage.BlobFilename?.Split('_')[2]?.Split('.')[0];
 
 			CommunicationsParams logParams = new CommunicationsParams()
 			{
-				Tenant = Convert.ToInt32(queueMessage.Tenant),
+				Tenant = tenant,
 				From = queueMessage.PartnerName,
 				To = "amital",
 				CommunicationLogTypeCode = "A",
@@ -155,7 +155,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
 			string communicationLogId = Communications.AddCommunicationLog(logParams);
 			return communicationLogId;
 		}
-		public void UpdateCommunicationLog(string communicationLogId, int tenant, string logs,string entityId)
+		public void UpdateCommunicationLog(string communicationLogId, int tenant, string logs,string entityId,string communicationStatusTypeCode)
 		{
 			ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
 			CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);
@@ -164,7 +164,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
 			ObjectTableQuery tablesQuery = new ObjectTableQuery(tenant);
 			CommunicationLogService communicationLogService = new CommunicationLogService(commonContext, tenant);
 			commLog.Logs += logs;
-			commLog.CommunicationStatusTypeCode = "D";
+			commLog.CommunicationStatusTypeCode = communicationStatusTypeCode;
 			commLog.EntityId = entityId;
 			commLog.ObjectTableId = tablesQuery.GetObjectTableIdByName("DocumentsFiling");
 			communicationLogRepository.Update(commLog);

@@ -20,6 +20,7 @@ using WebFreight.Web.WcfApi;
 using Logitude.Customs.Def.EntityPMs;
 
 using System.Diagnostics;
+using Simplog.Global.Data.GlobalModel.Repositories;
 
 
 namespace CustomsWorkerRole
@@ -125,13 +126,13 @@ namespace CustomsWorkerRole
 					#region  get data from queue           
 					string queueId = args.Message.Body.ToString();
 					AzureQueueMessageApi = JsonConvert.DeserializeObject<AzureQueueMessageApi>(queueId);
-					//AzureQueueMessageApi.Tenant = "3";
-					tenant = Convert.ToInt32(AzureQueueMessageApi.Tenant);
+					TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();				
+					tenant = tenantManagementRepository.GetTenantManagementByExportTenant(Convert.ToInt32(AzureQueueMessageApi.Tenant)).Id;
 					#endregion
 
-					communicationLogId = DocumentApiExecutionService.AddCommunicationLog(AzureQueueMessageApi, queueId);
+					communicationLogId = DocumentApiExecutionService.AddCommunicationLog(AzureQueueMessageApi, queueId, tenant);
 					#region Download file
-					Task<(bool success, string filepath, string message)> res = DocumentApiExecutionService.DownloadFile(AzureQueueMessageApi);
+					Task<(bool success, string filepath, string message)> res = DocumentApiExecutionService.DownloadFile(AzureQueueMessageApi,tenant);
 					logs += "download file Result.success: " + res?.Result.success + " message: "+ res?.Result.message + DateTime.Now.ToString();
 					#endregion
 					if (res.Result.success)
@@ -164,16 +165,26 @@ namespace CustomsWorkerRole
 							   var r =  DocumentApiExecutionService.UpdateParcelStatus(AzureQueueMessageApi, res.Result.success, res.Result.message);
 							    logs += "after UpdateParcelStatus" + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
 								#endregion
+								DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId, tenant, logs, response?.Result, "D");
 								await args.CompleteMessageAsync(args.Message);
 							}
-
+							else
+							{
+								logs += " dont success SaveDocument";
+								DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId, tenant, logs, response?.Result, "F");
+							}
+						}
+						else
+						{
+							logs += " dont success CreateNewFiling";
+							DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId, tenant, logs, response?.Result, "F");
 						}
 					}
-					if (!string.IsNullOrEmpty(communicationLogId))
+					else
 					{
-						DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId, tenant, logs, response?.Result);
-					}	
-					
+						logs += " dont success DownloadFile";
+						DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId, tenant, logs, response?.Result, "F");
+					}								
 				}
 				catch (Exception e)
 				{
