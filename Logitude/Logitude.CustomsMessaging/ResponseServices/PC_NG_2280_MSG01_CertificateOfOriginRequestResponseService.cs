@@ -110,8 +110,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				this.MyResponseData.HasException = true;
 				// return;
 			}
-			else certificateOfOriginPM.ErrXml = null;	
-			certificateOfOriginPM.COONumber = customResponse.CertificateOfOriginRequestFeedback.certificateID;
+			else certificateOfOriginPM.ErrXml = null;
+			if (customResponse.CertificateOfOriginRequestFeedback.certificateID != null)
+				certificateOfOriginPM.COONumber = customResponse.CertificateOfOriginRequestFeedback.certificateID;
+			
 			certificateOfOriginPM.CooStatusCode = customResponse.CertificateOfOriginRequestFeedback.certificateOfOriginStatusCode.ToString();
 			certificateOfOriginPM.FeedbackRemark = customResponse.CertificateOfOriginRequestFeedback.FeedbackRemark;
 			certificateOfOriginPM.RejectCancelReason = customResponse.CertificateOfOriginRequestFeedback.rejectCancelReason;
