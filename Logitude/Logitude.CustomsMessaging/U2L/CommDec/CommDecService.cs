@@ -533,6 +533,11 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                         }
 
+                        if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.Consignments[0].UnloadPortCode) &&  !string.IsNullOrWhiteSpace(_LogitudeCommDecFile.UnloadportId))
+                        {
+                            this._MyDeclarationPM.Consignments[0].UnloadPortCode = _LogitudeCommDecFile.UnloadportId;
+                        }
+
                     }
                     if (this._LogitudeCommDecFile.PACKAGES != null && this._LogitudeCommDecFile.PACKAGES.Count() > 0)
                     {
