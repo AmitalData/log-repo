@@ -35,7 +35,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         OcrToken, 
 	         UpdateDocOcrServiceUrl, 
 	         CourierDocURL, 
-	         CourierDocKey,
+	         CourierDocKey, 
+	         CourierDocQueueName, 
+	         CourierDocQueueConn,
 	      }
 
 
@@ -55,7 +57,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         OcrToken, 
 	         UpdateDocOcrServiceUrl, 
 	         CourierDocURL, 
-	         CourierDocKey,
+	         CourierDocKey, 
+	         CourierDocQueueName, 
+	         CourierDocQueueConn,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -122,6 +126,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocKey))
             {
 				entityPOCO.CourierDocKey = entityPM.CourierDocKey;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocQueueName))
+            {
+				entityPOCO.CourierDocQueueName = entityPM.CourierDocQueueName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocQueueConn))
+            {
+				entityPOCO.CourierDocQueueConn = entityPM.CourierDocQueueConn;
 			}
 			}
 
@@ -198,6 +212,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CourierDocKey = entityPOCO.CourierDocKey;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CourierDocQueueName))
+            {
+					entityPM.CourierDocQueueName = entityPOCO.CourierDocQueueName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CourierDocQueueConn))
+            {
+					entityPM.CourierDocQueueConn = entityPOCO.CourierDocQueueConn;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsEnvironmentSettingPM entityPM, CustomsEnvironmentSettingPM oldEntityPM)
@@ -262,6 +286,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocKey))
             {
                 oldEntityPM.CourierDocKey = entityPM.CourierDocKey;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocQueueName))
+            {
+                oldEntityPM.CourierDocQueueName = entityPM.CourierDocQueueName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocQueueConn))
+            {
+                oldEntityPM.CourierDocQueueConn = entityPM.CourierDocQueueConn;
             }
 			
 		}

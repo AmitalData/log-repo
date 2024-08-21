@@ -308,6 +308,8 @@ export class CustomsSettingsComponent
     get OcrToken() { return this.entityPM != null ? this.entityPM.OcrToken : null; }
     set OcrToken(value) { this.entityPM.OcrToken = value; }
 
+    get CourierDocToken() { return this.entityPM != null ? this.entityPM.CourierDocToken : null; }
+    set CourierDocToken(value) { this.entityPM.CourierDocToken = value; }
     //#endregion
     ClearCache(){
 

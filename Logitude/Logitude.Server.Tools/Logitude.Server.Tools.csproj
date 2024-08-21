@@ -231,7 +231,6 @@
       <HintPath>..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
       <Private>True</Private>
       <Private>True</Private>
-
     </Reference>
     <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Numerics" />
@@ -503,6 +502,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\FilingManagerSplitServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="SignalRHubs\LogitudeHubChannelEvent.cs" />
     <Compile Include="SignalRHubs\SignalRHubEventPublisher.cs" />
     <Compile Include="SignalRHubs\SignalRHubMessageSender.cs" />
@@ -567,6 +571,9 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\DataSources\Amital.UpDown.Common.AmitalUpDownBlobChunks.datasource" />
+    <None Include="Properties\DataSources\Amital.UpDown.Common.DownloadServiceResponseData.datasource" />
+    <None Include="Properties\DataSources\Amital.UpDown.Common.ServerUpload.ResultCreateUploadBlob.datasource" />
     <None Include="Service References\BlobServiceReference\BlobService.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -579,6 +586,28 @@
     </None>
     <None Include="Service References\BlobServiceReference\Logitude.Server.Tools.BlobServiceReference.Response.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\FilingManagerSplitServiceReference\FilingManagerService.wsdl" />
+    <None Include="Service References\FilingManagerSplitServiceReference\FilingManagerSplit.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FilingManagerSplitServiceReference\FilingManagerSplit1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FilingManagerSplitServiceReference\FilingManagerSplit2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FilingManagerSplitServiceReference\FilingManagerSplit3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FilingManagerSplitServiceReference\FilingManagerSplit4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FilingManagerSplitServiceReference\FilingManagerSplit5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FilingManagerSplitServiceReference\FilingManagerSplit6.xsd">
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -620,6 +649,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\BlobServiceReference\" />
+    <WCFMetadataStorage Include="Service References\FilingManagerSplitServiceReference\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\BlobServiceReference\configuration91.svcinfo" />
@@ -639,6 +669,61 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="LICENSE.txt" />
+    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.CreateFolderResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.CreateNewFilingResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.DeleteDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.GetBase64StringByFolderTenantComIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.GetBase64StringByTenantComIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.GetBase64StringResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.GetDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.GetPageTiffAsB64FromTarByTenantComIdPageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.GetStreamResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.GetStreamVer201404Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.LikeBool.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.PutDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.PutStreamByTenantComIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.PutStreamDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.PutStreamResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.SetSecurityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\FilingManagerSplitServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\FilingManagerSplitServiceReference\configuration.svcinfo" />
+    <None Include="Service References\FilingManagerSplitServiceReference\configuration91.svcinfo" />
+    <None Include="Service References\FilingManagerSplitServiceReference\FilingManagerSplit.disco" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />

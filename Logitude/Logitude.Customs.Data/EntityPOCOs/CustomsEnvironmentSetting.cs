@@ -48,6 +48,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CourierDocURL { get; set; }
         [Column("CourierDocKey")]
 	    public string CourierDocKey { get; set; }
+        [Column("CourierDocQueueName")]
+	    public string CourierDocQueueName { get; set; }
+        [Column("CourierDocQueueConn")]
+	    public string CourierDocQueueConn { get; set; }
     }
 }
 	 

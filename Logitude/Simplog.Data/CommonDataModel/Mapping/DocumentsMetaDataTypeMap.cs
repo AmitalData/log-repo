@@ -24,7 +24,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             
             this.Property(t => t.Code)
                 .IsRequired()
-                .HasMaxLength(5)
+                .HasMaxLength(7)
                 .IsUnicode(false);
 
             this.Property(t => t.EnglishName)

@@ -1664,10 +1664,21 @@ namespace Logitude.Customs.Data.Repsitories
             return declaration;
         }
 
-        
-        
+		public Declaration GetDeclarationsByHawbAndIntegratore(int tenant, string hawb, string IntegratorCode)
+		{
+			(context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
 
-    }
+			Declaration declaration = (from d in context.Declarations
+                                       join cd in context.CourierDeclarations on d.Id equals cd.DeclarationId
+									   join cm in context.CourierMasters on cd.CourierMasterId equals cm.Id
+									   where d.Tenant == tenant && d.CourierHAWB == hawb && cm.IntegratorCode == IntegratorCode
+									   select d).FirstOrDefault();
+
+			return declaration;
+		}
+
+
+	}
 
 
     public class ExportReport1

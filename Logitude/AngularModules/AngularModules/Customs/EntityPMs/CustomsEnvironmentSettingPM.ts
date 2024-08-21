@@ -94,6 +94,16 @@ export class CustomsEnvironmentSettingPM {
     public set CourierDocKey(newValue: string) { if (this.courierDocKey != newValue) { this.courierDocKey = newValue; this.MarkAsDirty("CourierDocKey"); } }
        
 	 
+    private courierDocQueueName: string;
+    public get CourierDocQueueName() { return this.courierDocQueueName; }
+    public set CourierDocQueueName(newValue: string) { if (this.courierDocQueueName != newValue) { this.courierDocQueueName = newValue; this.MarkAsDirty("CourierDocQueueName"); } }
+       
+	 
+    private courierDocQueueConn: string;
+    public get CourierDocQueueConn() { return this.courierDocQueueConn; }
+    public set CourierDocQueueConn(newValue: string) { if (this.courierDocQueueConn != newValue) { this.courierDocQueueConn = newValue; this.MarkAsDirty("CourierDocQueueConn"); } }
+       
+	 
 
     public OldEntityPM: CustomsEnvironmentSettingPM;
 		

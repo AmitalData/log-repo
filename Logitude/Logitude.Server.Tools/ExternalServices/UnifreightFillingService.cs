@@ -12,6 +12,8 @@ using Amital.UpDown.Common.Client;
 using Logitude.Server.Tools.Helpers;
 using System.Diagnostics;
 using System.Configuration;
+using System.ServiceModel;
+using Logitude.Server.Tools.FilingManagerSplitServiceReference;
 
 namespace Logitude.Server.Tools.ExternalServices
 {
@@ -223,5 +225,36 @@ namespace Logitude.Server.Tools.ExternalServices
 
             return AllDataCalcOnClient;
         }
-    }
+		public static void CreateNewFiling(Dictionary<string, string> inParams, string file_data, int Tenant,out Dictionary<string, string> outParams, out bool fatal_error, out string message)
+		{
+			outParams = null;
+			fatal_error = false;
+			message = string.Empty;
+			EndpointAddress address = null;
+			try
+			{
+				BasicHttpBinding binding = new BasicHttpBinding(BasicHttpSecurityMode.None);
+				binding.MaxBufferSize = 2147483647;
+				binding.MaxReceivedMessageSize = 2147483647;
+				binding.ReaderQuotas.MaxStringContentLength = 2147483647;
+				binding.ReaderQuotas.MaxArrayLength = 2147483647;
+                if(LogitudeSettings.GetLogitudeCustomsSettingsMInject(Tenant).OnPremiseFillingService == null)
+				{
+					throw new Exception("OnPremiseFillingService is null");
+				}
+		        address = (new EndpointAddress(new Uri(LogitudeSettings.GetLogitudeCustomsSettingsMInject(Tenant).OnPremiseFillingService)));
+				//address = new EndpointAddress(new Uri(@"http://univ511:5057/Unifreight511/FilingManagerSplit/Basic"));
+				FilingManagerClient FilingManager = new FilingManagerClient(binding, address);
+
+               
+
+				outParams = FilingManager.CreateNewFiling(inParams, file_data, Tenant,  out fatal_error, out message);							
+			}
+			catch (Exception ex)
+			{
+				fatal_error = true;
+				message = ex.Message;
+			}
+		}
+	}
 }
