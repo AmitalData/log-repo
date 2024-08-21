@@ -362,6 +362,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                      .Include("Importer").Include("ImporterType").Include("FreightPaymentMethod")
                                      .Include("CustomsCountry")
 
+
                                                       join cdJoin in context.CourierDeclarations.Include("CourierMaster").Include("Card")
                                                       .Select(x => new
                                                       {
@@ -370,11 +371,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           x.CourierMaster.Card.LocalName,
                                                           x.CourierMaster.MAWB
                                                       })
-                                                                   on a.Id equals cdJoin.DeclarationId
+                                                                    on a.Id equals cdJoin.DeclarationId
                                                                    into cdJoin_
                                                       from cd in cdJoin_.DefaultIfEmpty()
 
-                                                      join dcsJoin in context.DeclarationCourierStatuses
+                                                      join dcs in context.DeclarationCourierStatuses
                                                       .Select(x => new
                                                       {
                                                           x.DeclarationId,
@@ -385,9 +386,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           x.IsCourierMissingClassification,
                                                           x.TerminalReleaseDate
                                                       })
-                                                                   on a.Id equals dcsJoin.DeclarationId
-                                                                   into dcsJoin_
-                                                      from dcs in dcsJoin_.DefaultIfEmpty()
+                                                      on a.Id equals dcs.DeclarationId
+                                                                   
 
 
                                                       join recConsignment in context.Consignments.Include("CargoType")
@@ -397,7 +397,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                       join c in qConsignmentNumber
                                                       .Select(x => new { x.DeclarationId, x.ConsignmentNumber })
-                                                      on new { myJoinConsignment.DeclarationId, myJoinConsignment.ConsignmentNumber } equals new { c.DeclarationId, c.ConsignmentNumber }
+                                                      on a.Id equals c.DeclarationId into leftJoin
+                                                      from leftJoinResult in leftJoin.DefaultIfEmpty()
 
 
                                                       join recOriginalDeclarations in context.Declarations.Where(x => x.IsAmendment != true)
@@ -434,7 +435,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           CustomFileNo = a.CustomFileNo,
                                                           DealValue = a.DealValue,
                                                           DeclarationNumber = !string.IsNullOrEmpty(a.DeclarationNumber) ? a.DeclarationNumber : (!string.IsNullOrEmpty(myJoinOriginalDeclaration.DeclarationNumber) ? myJoinOriginalDeclaration.DeclarationNumber : myJoinDisplayDeclarations.DeclarationNumber),
-                                                          ExportFlightDate = a.ExportFlightDate,
 
                                                           ExternalDeclarationNumber = a.ExternalDeclarationNumber,
                                                           HatraDate = a.HatraDate,
@@ -447,7 +447,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           IsSubmitDeclaration = a.IsSubmitDeclaration,
                                                           ProcedureCurrentName = a.GovernmentProcedureCurrent.LocalName,
                                                           TaxationDateTime = a.TaxationDateTime,
-                                                          ExportTaxationDateTime = a.TaxationDateTime,
                                                           Tenant = a.Tenant,
                                                           TotalTax = a.TotalTax,
                                                           DeclarationVersionId = a.VersionId,
@@ -469,9 +468,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           DeclarationStatusTypeCode = a.DeclarationStatusTypeCode,
                                                           DeclarationOfficeCode = a.DeclarationOfficeCode,
                                                           DeclarationOfficeNameForExport = a.DeclarationOffice == null ? null : a.DeclarationOffice.LocalName,
-                                                          ExportDeclarationOfficeCode = a.ExportDeclarationOfficeCode,
 
-                                                          ExportAutonomyRegionTypeCode = a.ExportAutonomyRegionTypeCode,
 
                                                           DepartmentId = a.DepartmentId,
                                                           DepartmentName = a.Department.LocalName,
