@@ -80,6 +80,7 @@ import { WorkFlowPM } from 'Workflow/EntityPMs/WorkFlowPM';
 import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTranslationPipe';
 import { QueryPM } from '../../EntityPMs/QueryPM';
 import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
+import { log } from 'console';
 
 @Component({
     templateUrl: './ListComponent.html',
@@ -108,8 +109,8 @@ export class ListComponent implements OnInit, AfterViewInit {
         ObjectsLocator.GlobalSetting == undefined
             ? false
             : ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl'
-            ? true
-            : false;
+                ? true
+                : false;
     public SeachBoxIsDisabled: boolean = false;
     //@Output() ShowTipEvent = new EventEmitter();
     public IsNavigateButtonVisible: boolean = false;
@@ -178,7 +179,6 @@ export class ListComponent implements OnInit, AfterViewInit {
         windowArgs.queryId = this.SelectedQueryId;
         windowArgs.queryCode =
             /*this.ObjectTableName + '.' +*/ this.SelectedQueryCode;
-        console.log(windowArgs.queryCode);
         windowArgs.isNewQueryMode = false;
         windowArgs.currentObjectTable = this.ObjectTableName;
         var logitudeWindow = new LogitudeWindow();
@@ -211,7 +211,6 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     onSearchTextChangeEvent(searchtext) {
-        console.log('Search');
         if (
             this.searchFields != searchtext &&
             !(searchtext == null && this.searchFields == '')
@@ -278,10 +277,10 @@ export class ListComponent implements OnInit, AfterViewInit {
         return methodName;
     }
     ApplyPreDefinedFilters() {
+        console.log(this.SelectedQuery.Id);
         if (this.SelectedQuery != null) {
             this.MethodName = this.GetMethodName();
             this.SelectedQueryCode = this.SelectedQuery.UniqueCode;
-            console.log(this.SelectedQueryCode);
             this.SelectedQueryId = this.SelectedQuery.Id;
 
             if (
@@ -305,7 +304,6 @@ export class ListComponent implements OnInit, AfterViewInit {
                 this.dataSource.sortingDir =
                     this.SelectedQuery.DefaultSortDirection;
             }
-
             //this.GetQueryColumns(this.SelectedQuery.Id, this.UserId);
         }
         this.CurrentQueryFilters = new ApiQueryFilters();
@@ -1024,7 +1022,6 @@ export class ListComponent implements OnInit, AfterViewInit {
         if (this.ObjectTable.ClientModuleName == 'Customs') {
             this.HasCustomsFilterMenu = true;
         }
-
         if (this.ObjectTableName == 'Customs.PhysicalCheck') {
             this.IsPhysicalCheckObjectTable = true;
         } else if (this.ObjectTableName == 'ReportExecutionLog') {
@@ -1038,6 +1035,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                 'Customs.DeclarationReferantData',
                 'Customs.DeclarationCargoSplit',
                 'Customs.LogisticActionRequest',
+                 'Customs.CustomBank',
             ].includes(this.ObjectTableName)
         ) {
             this.HasCustomsFilterMenu = true;
@@ -1077,6 +1075,13 @@ export class ListComponent implements OnInit, AfterViewInit {
         //            });
         //    }
         //}
+        console.warn('ngAfterViewInit');
+        console.log(this.ObjectTableName) ;
+        console.log(this.onQueryChangeEvent) ;
+        console.log(this.SelectedQueryId) ;
+        console.log(this.SelectedQueryCode) ;
+        console.log(this.Filterchangeevent) ;
+        console.warn('ngAfterViewInit');
     }
 
     public CheckPermissions(
@@ -1294,7 +1299,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     if (
                         this.ObjectTable.Name == 'Customs.PhysicalCheck' ||
                         this.ObjectTable.Name ==
-                            'Customs.LogisticActionRequest' ||
+                        'Customs.LogisticActionRequest' ||
                         this.ObjectTable.Name == 'ReportExecutionLog'
                     ) {
                         this.LoadedActionBar('MNO', 'ListActionBar');
@@ -1335,34 +1340,34 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 myComponentPath = './CustomsModules';
                                 myComponentPath =
                                     myObjectTableName ==
-                                    'DeclarationReferantData'
+                                        'DeclarationReferantData'
                                         ? (myComponentPath +=
-                                              '/CustomsReferant')
+                                            '/CustomsReferant')
                                         : myComponentPath;
                                 myComponentPath =
                                     myObjectTableName == 'DeclarationCargoSplit'
                                         ? (myComponentPath +=
-                                              '/CustomsDeclarationCargoSplit')
+                                            '/CustomsDeclarationCargoSplit')
                                         : myComponentPath;
                                 myComponentPath =
                                     myObjectTableName == 'LogisticActionRequest'
                                         ? (myComponentPath +=
-                                              '/CustomsLogisticActionRequest')
+                                            '/CustomsLogisticActionRequest')
                                         : myComponentPath;
                                 myComponentPath =
                                     myObjectTableName == 'PhysicalCheck'
                                         ? (myComponentPath +=
-                                              '/CustomsPhysicalCheck')
+                                            '/CustomsPhysicalCheck')
                                         : myComponentPath;
                                 myComponentPath =
                                     myObjectTableName == 'Declaration'
                                         ? (myComponentPath +=
-                                              '/CustomsDeclarationModules/DeclarationOthers')
+                                            '/CustomsDeclarationModules/DeclarationOthers')
                                         : myComponentPath;
                                 myComponentPath =
                                     myObjectTableName == 'Containerization'
                                         ? (myComponentPath +=
-                                              '/CustomsContainerization/')
+                                            '/CustomsContainerization/')
                                         : myComponentPath;
                                 myComponentPath +=
                                     '/Components/FiltersMenu/' +
@@ -1433,6 +1438,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.CurrentSession.AddMenuReference(this.ComponentRef);
         this.CurrentSession.AddListComponent(this);
         this.listArgs = args;
+        console.log(this.listArgs);
         if (!this.IsDemoTenant) {
             if (!AppTool.IsNullOrEmpty(this.listArgs.DisplayTitle)) {
                 this.Title = this.listArgs.DisplayTitle;
@@ -1693,9 +1699,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                         (f) =>
                             f.UniqueCode ==
                             this.ObjectTableName +
-                                (f.UserId != undefined ? '.' + f.UserId : '') +
-                                '.' +
-                                this.QueryCode
+                            (f.UserId != undefined ? '.' + f.UserId : '') +
+                            '.' +
+                            this.QueryCode
                     )[0];
                 }
             } else {
@@ -1703,9 +1709,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                     (f) =>
                         f.UniqueCode ==
                         this.ObjectTableName +
-                            (f.UserId != undefined ? '.' + f.UserId : '') +
-                            '.' +
-                            this.QueryCode
+                        (f.UserId != undefined ? '.' + f.UserId : '') +
+                        '.' +
+                        this.QueryCode
                 )[0];
             }
             this.Queries = allQueries.filter(
@@ -1735,9 +1741,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                         (f) =>
                             f.UniqueCode ==
                             this.ObjectTableName +
-                                (f.UserId != undefined ? '.' + f.UserId : '') +
-                                '.' +
-                                this.QueryCode
+                            (f.UserId != undefined ? '.' + f.UserId : '') +
+                            '.' +
+                            this.QueryCode
                     )[0];
                 }
             } else {
@@ -1745,9 +1751,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                     (f) =>
                         f.UniqueCode ==
                         this.ObjectTableName +
-                            (f.UserId != undefined ? '.' + f.UserId : '') +
-                            '.' +
-                            this.QueryCode
+                        (f.UserId != undefined ? '.' + f.UserId : '') +
+                        '.' +
+                        this.QueryCode
                 )[0];
             }
         } else {
@@ -1875,15 +1881,15 @@ export class ListComponent implements OnInit, AfterViewInit {
         this._http
             .get(
                 ServiceHelper.GetLogitudeURL() +
-                    'api/ngMetaData?tenant=' +
-                    this.Tenant +
-                    '&queryCode=' +
-                    queryCode +
-                    '&objecttableid=' +
-                    this.ObjectTable.Id +
-                    '&userid=' +
-                    userId +
-                    '&getfromsystemlevel=false'
+                'api/ngMetaData?tenant=' +
+                this.Tenant +
+                '&queryCode=' +
+                queryCode +
+                '&objecttableid=' +
+                this.ObjectTable.Id +
+                '&userid=' +
+                userId +
+                '&getfromsystemlevel=false'
             )
             .subscribe((response: any) => {
                 this.QueryColumns = response;
@@ -1891,8 +1897,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                     return a.IndexOrder > b.IndexOrder
                         ? 1
                         : a.IndexOrder < b.IndexOrder
-                        ? -1
-                        : 0;
+                            ? -1
+                            : 0;
                 });
 
                 this.QueryColumns.forEach((value, key) => {
@@ -2316,17 +2322,17 @@ export class ListComponent implements OnInit, AfterViewInit {
                     (x) => x.UniqueCode === this.QueryCode
                 )[0] != null
                     ? this.Queries.filter(
-                          (x) => x.UniqueCode === this.QueryCode
-                      )[0]
+                        (x) => x.UniqueCode === this.QueryCode
+                    )[0]
                     : this.UserQueries.filter(
-                          (x) => x.UniqueCode === this.QueryCode
-                      )[0];
+                        (x) => x.UniqueCode === this.QueryCode
+                    )[0];
         } else {
             SelectedQuery =
                 this.Queries.filter((x) => x.IndexOrder === 0)[0] != null
                     ? this.Queries.filter((x) => x.IndexOrder === 0)[0] != null
                     : this.UserQueries.filter((x) => x.IndexOrder === 0)[0] !=
-                      null;
+                    null;
         }
         if (SelectedQuery) {
             if (
@@ -2584,6 +2590,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             //};
             //this.FiltersMenu = new ApiQueryFilters();
 
+            console.log(this.dataSource)
+
             if (this.listArgs.SelectedTransportMode != 'All') {
                 filterAgrs.addAdditionalFilter(
                     'TransportModeId',
@@ -2796,11 +2804,35 @@ export class ListComponent implements OnInit, AfterViewInit {
                     case 'Customs.ExternalFieldMapping':
                         selectedEntityId = $event.rowData.Id;
                         break;
+                    case 'Customs.CustomBank':
+                        selectedEntityId = $event.selectedId;
+                        break;
 
                     default: {
                         break;
                     }
                 }
+
+                if (myObjectTableName == 'Customs.CustomBank') {
+                    let logWindow = new LogitudeWindow();
+                    logWindow.ShowHeaderButtons = false;
+                    logWindow.ShowFooterButtons = false;
+
+                    logWindow.Title = 'פתיחת בנק';
+                    logWindow.WindowArgs = selectedEntityId;
+                    logWindow.Show('./CustomsModules/CustomsMaintenance/Components/AddEditCustomsBanksComponent')
+                    logWindow.WindowClosed.subscribe(($event1: any) => {
+                        alert('Closed');
+                        this.OnBackFromEdit(selectedEntityId, $event);
+                        // this.RefreshBookings()
+                        this.DoRefresh();
+                        // this.ReloadAllListEvent.emit(true);
+                        logWindow.WindowArgs = null;
+                    });
+
+                    return
+                }
+
 
                 if (myObjectTableName != 'TicketEscalation') {
                     this.isEditControlOpened = true;
@@ -2808,6 +2840,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                     var myCodes: string[] = [];
                     myCodes.push('EAWB');
                     myCodes.push('BUBK');
+
+
 
                     if (
                         FeatureLocator.IsPackageOneOf(myCodes) &&
@@ -2913,6 +2947,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 logWindow.Width = 850;
                                 break;
                             }
+
+
                         }
 
                         logWindow.Title = windowTitle;
@@ -2920,7 +2956,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
                         logWindow.Show(
                             this.SelectedQuery.EditWizardComponentPath
-                        );
+                        )
                         logWindow.WindowClosed.subscribe(($event1: any) => {
                             this.isEditControlOpened = false;
                             this.OnBackFromEdit(selectedEntityId, $event);
@@ -2985,7 +3021,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                             logWindow.Width = 960;
                             logWindow.Height = 600;
                             logWindow.Title = windowTitle;
-                            logWindow.WindowArgs = selectedEntityId;
+                            logWindow.WindowArgs.EntityId = selectedEntityId;
                             logWindow.Show(
                                 './ShipmentModules/ShipmentAWB/Components/AWBWizard/AWBWizardLoadComponent'
                             );
@@ -3896,13 +3932,13 @@ export class ListComponent implements OnInit, AfterViewInit {
                                     (mess: UnifreightMessageM) => {
                                         var IsMatchUnifreightCallbackCommand =
                                             mess.LogitudeEntity ==
-                                                AmitalGatewayUtil.Instance
-                                                    .DeclarationMessaging
-                                                    .LogitudeEntityDeclaration &&
+                                            AmitalGatewayUtil.Instance
+                                                .DeclarationMessaging
+                                                .LogitudeEntityDeclaration &&
                                             mess.LogitudeEntityNumber ==
-                                                selectedEntityId &&
+                                            selectedEntityId &&
                                             mess.LogitudeViewModel ==
-                                                myViewModelName;
+                                            myViewModelName;
                                         if (IsMatchUnifreightCallbackCommand) {
                                             sub.unsubscribe();
                                             SessionLocator.SelectedSession.StopBusyIndicator();
@@ -3944,6 +3980,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 unifreightMessageM,
                                 ' הצגת מסך :הזנת תיק כללי עמילות מכס'
                             );
+                            console.log("myObjectTableName", myObjectTableName)
                         } else {
                             alert('ShowCustomFileOPCFromDeclaration');
                             this.isEditControlOpened = false;
@@ -3986,13 +4023,13 @@ export class ListComponent implements OnInit, AfterViewInit {
                                     (mess: UnifreightMessageM) => {
                                         var IsMatchUnifreightCallbackCommand =
                                             mess.LogitudeEntity ==
-                                                AmitalGatewayUtil.Instance
-                                                    .DeclarationMessaging
-                                                    .LogitudeEntityDeclaration &&
+                                            AmitalGatewayUtil.Instance
+                                                .DeclarationMessaging
+                                                .LogitudeEntityDeclaration &&
                                             mess.LogitudeEntityNumber ==
-                                                selectedEntityId &&
+                                            selectedEntityId &&
                                             mess.LogitudeViewModel ==
-                                                myViewModelName;
+                                            myViewModelName;
                                         if (IsMatchUnifreightCallbackCommand) {
                                             sub.unsubscribe();
                                             SessionLocator.SelectedSession.StopBusyIndicator();
@@ -4117,7 +4154,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     }
                 }
             }
-            //this.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         }
     }
 
@@ -4626,9 +4663,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 var query = window.Queries.filter(
                                     (q) =>
                                         q.ObjectTableId ==
-                                            this.ObjectTable.Id &&
+                                        this.ObjectTable.Id &&
                                         q.UniqueCode ==
-                                            this.SelectedQuery.OriginalQueryCode
+                                        this.SelectedQuery.OriginalQueryCode
                                 )[0];
                                 if (
                                     query.Code == 'Masters' ||
@@ -4659,7 +4696,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                             'ADDNEWDECLARATION'
                                         ) &&
                                         this.MenuTableQuerySection ==
-                                            'Customs.Declaration'
+                                        'Customs.Declaration'
                                     ) {
                                         this.RunNewDeclaration();
                                     }
@@ -4676,6 +4713,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                     ) {
                                         this.RunNewContainerization();
                                     } else {
+
                                         this.RunNewEntityWizard(
                                             this.SelectedQuery
                                                 .ObjectTableNewWizardControlName
@@ -4725,10 +4763,10 @@ export class ListComponent implements OnInit, AfterViewInit {
         messageWindow.Height = 190;
         messageWindow.Show(
             'You can define the "New ' +
-                this.ObjectTableDisplayName +
-                '" screen by selecting a one from the Views tab of the ' +
-                this.ObjectTableDisplayName +
-                ' object in the Customization'
+            this.ObjectTableDisplayName +
+            '" screen by selecting a one from the Views tab of the ' +
+            this.ObjectTableDisplayName +
+            ' object in the Customization'
         );
     }
     RunNewExportDeclaration() {
@@ -4810,11 +4848,13 @@ export class ListComponent implements OnInit, AfterViewInit {
     private RunNewEntityWizard(wizardControlName: string) {
         var componentPath: string = this.ObjectTable.NewWizardComponentPath;
 
+
         if (componentPath != null) {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 960;
             logWindow.Height = 570;
             logWindow.NewWizardArgs = { IsNewEntity: true };
+
 
             switch (this.ObjectTableName) {
                 case 'BIReport': {
@@ -4828,6 +4868,12 @@ export class ListComponent implements OnInit, AfterViewInit {
                     logWindow.Height = 650;
                     logWindow.ShowCloseButton = true;
                     break;
+                }
+
+                case 'Customs.CustomBank': {
+                    logWindow.Width = 400;
+                    logWindow.Height = 450;
+                    logWindow.ShowCloseButton = true;
                 }
 
                 case 'Customs.Client': {
@@ -5092,7 +5138,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                             (q) =>
                                 q.ObjectTableId == this.ObjectTable.Id &&
                                 q.UniqueCode ==
-                                    this.SelectedQuery.OriginalQueryCode
+                                this.SelectedQuery.OriginalQueryCode
                         )[0];
                         QueryCodeOriginal = query.UniqueCode;
                     }
@@ -5641,15 +5687,15 @@ export class ListComponent implements OnInit, AfterViewInit {
         this._http
             .get(
                 ServiceHelper.GetLogitudeURL() +
-                    'api/ngMetaData?tenant=' +
-                    this.Tenant +
-                    '&queryCode=' +
-                    Param.QueryCode +
-                    '&objecttableid=' +
-                    this.ObjectTable.Id +
-                    '&userid=' +
-                    SessionLocator.LoggedUserId +
-                    '&getfromsystemlevel=false'
+                'api/ngMetaData?tenant=' +
+                this.Tenant +
+                '&queryCode=' +
+                Param.QueryCode +
+                '&objecttableid=' +
+                this.ObjectTable.Id +
+                '&userid=' +
+                SessionLocator.LoggedUserId +
+                '&getfromsystemlevel=false'
             )
             .subscribe((response: any) => {
                 QColumns = response;
@@ -5717,7 +5763,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         myGeneralService.setServiceArgs(this.serviceArgs);
                         myGeneralService
                             .update(this.GeneralEntitiesArgs)
-                            .subscribe((myResult: any) => {});
+                            .subscribe((myResult: any) => { });
                     } else {
                         QColumns.forEach((querycolumn, key) => {
                             //if (Param.Width > 0 && Param.FieldName == querycolumn.ObjectFieldName) {
@@ -5754,7 +5800,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         myGeneralService.setServiceArgs(this.serviceArgs);
                         myGeneralService
                             .insert(this.GeneralEntitiesArgs)
-                            .subscribe((myResult: any) => {});
+                            .subscribe((myResult: any) => { });
                         // });
                     }
                 }
@@ -5987,13 +6033,11 @@ export class ListComponent implements OnInit, AfterViewInit {
             )
             .then((observable: Observable<any>) => {
                 observable.subscribe((response: ServiceResponse) => {
-                    console.log(response);
 
                     response.Result.forEach((item) => {
                         ids.push(item.Id);
                     });
 
-                    console.log(ids);
 
                     var selectedEntityId = ids[0];
                     SessionLocator.DynamicLoader.Load(
@@ -6116,3 +6160,4 @@ export class ListComponent implements OnInit, AfterViewInit {
         });
     }
 }
+

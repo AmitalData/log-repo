@@ -763,8 +763,8 @@ export class MaintenanceComponent {
                     (d) => d.Name == 'WebhookKeys'
                 )[0]
                     ? window.ObjectTables.filter(
-                          (d) => d.Name == 'WebhookKeys'
-                      )[0].Id
+                        (d) => d.Name == 'WebhookKeys'
+                    )[0].Id
                     : null;
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
@@ -1038,12 +1038,14 @@ export class MaintenanceComponent {
                 });
 
             this._entityResourceService
-                .getEntityResourceByTableName('Customs.CustomBank', 0)
+                .getEntityResourceByTableName('Customs.CustomBank')
                 .subscribe((response: any) => {
                     var item = new MenusTablePM();
+                    item.Tenant = SessionLocator.Tenant;
                     item.CategoryTypeCode = 'CSM';
                     item.Icon = 'Table';
-                    item.Code = 'CBNK';
+                    item.Code = 'CSBK';
+                    item.FeatureUniqeCode = '   ';
                     item.TranslatedName = 'בנקים מול המכס';
                     item.ObjectTableName = 'Customs.CustomBank';
                     item.ObjectTableId = window.ObjectTables.filter(
@@ -1474,8 +1476,8 @@ export class MaintenanceComponent {
             objectTable.Description != null
                 ? objectTable.Description
                 : TextCodeTranslator.Translate(
-                      objectTable.DescriptionTextCodeCode
-                  );
+                    objectTable.DescriptionTextCodeCode
+                );
         this.AllMaintenanceMenu.push(maintenanceMenuItem);
     }
 
@@ -1584,7 +1586,7 @@ export class MaintenanceComponent {
         this.ItemsSource = itemsSource.sort((a, b) =>
             a.TranslatedName.toLowerCase() !== b.TranslatedName.toLowerCase()
                 ? a.TranslatedName.toLowerCase() <
-                  b.TranslatedName.toLowerCase()
+                    b.TranslatedName.toLowerCase()
                     ? -1
                     : 1
                 : 0
@@ -1849,8 +1851,8 @@ export class MaintenanceComponent {
                     let allowed = false;
                     allowed =
                         SessionLocator.LoggedUserPM.IsCustomerCare ||
-                        LoggedUserPMCode == 'amital' ||
-                        LoggedUserPMCode.startsWith('amital.')
+                            LoggedUserPMCode == 'amital' ||
+                            LoggedUserPMCode.startsWith('amital.')
                             ? true
                             : false;
                     if (!allowed) {
@@ -2857,9 +2859,13 @@ export class MaintenanceComponent {
                     break;
                 }
 
-                case 'CBNK': {
-                    this.ShowCustomObject(item);
+                case 'CSBK': {
+                    let args = new ListComponentArgs();
+                    args.NewButtonLabel = TextCodeTranslator.Translate( 'Customs.General.B.New');
+                    this.ShowCustomObject(item,args);
+
                     break;
+
                 }
 
                 case 'CUMM': {
@@ -2935,17 +2941,17 @@ export class MaintenanceComponent {
                                                 ((f.UserId ==
                                                     SessionLocator.LoggedUserId &&
                                                     f.Tenant ==
-                                                        SessionLocator.Tenant) ||
+                                                    SessionLocator.Tenant) ||
                                                     f.Tenant == 0) &&
                                                 f.Perspective ==
-                                                    listArgs.Perspective
+                                                listArgs.Perspective
                                         )
                                         .sort((a, b) => {
                                             return a.IndexOrder === b.IndexOrder
                                                 ? 0
                                                 : a.IndexOrder < b.IndexOrder
-                                                ? -1
-                                                : 1;
+                                                    ? -1
+                                                    : 1;
                                         })[0];
                                 } else {
                                     SelectedQuery = allQueries.filter(
@@ -2953,10 +2959,10 @@ export class MaintenanceComponent {
                                             ((f.UserId ==
                                                 SessionLocator.LoggedUserId &&
                                                 f.Tenant ==
-                                                    SessionLocator.Tenant) ||
+                                                SessionLocator.Tenant) ||
                                                 f.Tenant == 0) &&
                                             f.Perspective ==
-                                                listArgs.Perspective
+                                            listArgs.Perspective
                                     )[0];
                                 }
                             } else {
@@ -2971,15 +2977,15 @@ export class MaintenanceComponent {
                                                 (f.UserId ==
                                                     SessionLocator.LoggedUserId &&
                                                     f.Tenant ==
-                                                        SessionLocator.Tenant) ||
+                                                    SessionLocator.Tenant) ||
                                                 f.Tenant == 0
                                         )
                                         .sort((a, b) => {
                                             return a.IndexOrder === b.IndexOrder
                                                 ? 0
                                                 : a.IndexOrder < b.IndexOrder
-                                                ? -1
-                                                : 1;
+                                                    ? -1
+                                                    : 1;
                                         })[0];
                                 } else {
                                     SelectedQuery = allQueries.filter(
@@ -2987,7 +2993,7 @@ export class MaintenanceComponent {
                                             (f.UserId ==
                                                 SessionLocator.LoggedUserId &&
                                                 f.Tenant ==
-                                                    SessionLocator.Tenant) ||
+                                                SessionLocator.Tenant) ||
                                             f.Tenant == 0
                                     )[0];
                                 }
@@ -3005,7 +3011,7 @@ export class MaintenanceComponent {
                                                 'CalculatedChartsOfAccountsLine',
                                                 0
                                             )
-                                            .subscribe((response: any) => {});
+                                            .subscribe((response: any) => { });
                                     });
                             }
                             //var SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Perspective == listArgs.Perspective)[0];
@@ -3018,6 +3024,7 @@ export class MaintenanceComponent {
                             listArgs.ObjectTableName = objectTablePM.Name;
 
                             listArgs.BackButtonTitle = 'Maintenance';
+
                             this._entityResourceService
                                 .getEntityResourceByTableName(
                                     listArgs.ObjectTableName,
@@ -3081,32 +3088,39 @@ export class MaintenanceComponent {
         );
     }
 
-    private ShowCustomObject(item: any) {
+    private ShowCustomObject(item: any, args?: any) {
         let objectTable = window.ObjectTables.filter(
             (d) => d.Id == item.ObjectTableId
         )[0];
-
         let listArgs = new ListComponentArgs();
+
         listArgs.ObjectTableName = objectTable.Name;
         listArgs.BackButtonTitle = 'Maintenance';
-        listArgs.ShowViews = true;
+        listArgs.ShowViews = false;
+
         listArgs.DisplayTitle = this.textCodeTranslationPipe.transform(
             objectTable.Name
         );
-        listArgs.QueryCode = 'CustomerActivityType';
-        listArgs.DontCheckQueryFeature = true;
+
+        listArgs.NewButtonLabel = args?.NewButtonLabel || 'New ' + objectTable.Name;
+        listArgs.QueryCode = this.GetQueryCode(item);
+        listArgs.Filters= args?.Filters || null;
+
         SessionLocator.DynamicLoader.Load(
             './Infrastructure/Components/ListComponent/ListComponent',
             this.CurrentSession.SessionMenuLocation.viewContainerRef
         ).then((cmpRef) => {
+
             cmpRef.instance.ComponentRef = cmpRef;
-            cmpRef.instance.IsCustomEntity = true;
+            cmpRef.instance.IsCustomEntity = false;
             cmpRef.instance.Run(listArgs);
         });
+
+        
     }
 
     private GetQueryCode(item: any) {
-        console.log(window.Queries);
+
         let allQueries: any[] = window.Queries.filter(
             (x) => x.ObjectTableId === item.ObjectTableId
         ).sort((a, b) => {
@@ -3116,6 +3130,9 @@ export class MaintenanceComponent {
         if (allQueries.length > 0 && !SelectedQuery) {
             SelectedQuery = allQueries[0];
         }
+
+        console.log(SelectedQuery);
+
         return SelectedQuery?.Code;
     }
 
@@ -3491,7 +3508,8 @@ class MaintenanceMenuItem {
             myResult = TextCodeTranslator.TranslateTable(this.item.TextCode);
         } else if (this.ObjectTableId == null) {
             myResult = this.item.ObjectTableName;
-        } else {
+        }
+        else {
             var ObjectTable = window.ObjectTables.filter(
                 (d) => d.Id == this.ObjectTableId
             )[0];
@@ -3500,10 +3518,6 @@ class MaintenanceMenuItem {
                 ObjectTable.ClientModuleName == 'Accounting'
             ) {
                 myResult = TextCodeTranslator.TranslateTable(
-                    this.item.ObjectTableName
-                );
-            } else {
-                myResult = TextCodeTranslator.TranslateTablePlural(
                     this.item.ObjectTableName
                 );
             }
@@ -3519,6 +3533,7 @@ class MaintenanceMenuItem {
         if (!AppTool.IsNullOrEmpty(this.item.TranslatedName)) {
             this.TranslatedName = this.item.TranslatedName;
         }
+
     }
     private SetDescriptionText() {
         var myResult = '';

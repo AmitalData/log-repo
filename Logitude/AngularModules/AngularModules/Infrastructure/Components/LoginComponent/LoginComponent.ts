@@ -43,14 +43,14 @@ import { ObjectsUpdater } from '../../Locators/ObjectsUpdater';
 //import { DWObjectFieldExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/DWObjectFieldExtendedPMService';
 import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 import { GeneralDomainService } from '../../../Infrastructure/Services/GeneralDomainService';
- 
+
 import {
     AuthenticateService,
     LogitudeTokensService,
     AuthorizedUser,
 } from 'collaboration-tool-core';
 import { SessionInfo as CToolSessionInfo } from 'collaboration-tool-core';
-  
+
 @Component({
     templateUrl: './LoginComponent.html',
     providers: [
@@ -195,10 +195,10 @@ export class LoginComponent implements OnInit {
                 });
         } else {
             this.StartLoginProcess();
-         }     
-        
-        // if (isDevMode())
-        //     this.developerLogin();           
+        }
+
+        if (isDevMode())
+            this.developerLogin();
     }
 
     async developerLogin() {
@@ -206,25 +206,25 @@ export class LoginComponent implements OnInit {
         this.Password = 'xhx@word3';
         this.LoginClicked();
 
-        while(!this.TenantList?.length)
+        while (!this.TenantList?.length)
             await new Promise<void>(resolve => setTimeout(() => resolve(), 100))
 
-        this.SelectedCompany = this.TenantList.find(d => d.Tenant == 1);
+        this.SelectedCompany = this.TenantList.find(d => d.Tenant == 102);
 
         this.ContinueClicked()
     }
- 
-     
+
+
 
 
     IsShowLoginForm: boolean = false;
 
     StartLoginProcess() {
         var url = window.location.href;
- 
-             if (url.indexOf('AmitalSSOAngular') < 1 && url.indexOf('localhost') > -1 && !AppTool.IsNullOrEmpty(url.split('?')[1])) {
-              if (url.indexOf('?Menu') == -1) {
-                 this.isLocalPrivateLable = true;
+
+        if (url.indexOf('AmitalSSOAngular') < 1 && url.indexOf('localhost') > -1 && !AppTool.IsNullOrEmpty(url.split('?')[1])) {
+            if (url.indexOf('?Menu') == -1) {
+                this.isLocalPrivateLable = true;
                 let isDSV = url.indexOf('?D') > -1;
                 window.sessionStorage.setItem(
                     'userdata',
@@ -232,15 +232,15 @@ export class LoginComponent implements OnInit {
                 );
                 SessionLocator.IsExternalParams = false;
             }
- 
+
         }
         if (url && url.indexOf('localhost') > -1 && !this.isLocalPrivateLable) {
-                  this.Email = "angular@fnarsoft.com";
-                this.Password = "1";
-                 this.IsShowLoginForm = true;
-            }
+            this.Email = "angular@fnarsoft.com";
+            this.Password = "1";
+            this.IsShowLoginForm = true;
+        }
 
-         
+
         this.authHeader = new Headers();
         this.authHeader.append('Content-Type', 'application/json');
         this.authHeader.append('Accept', 'application/json');
@@ -378,11 +378,11 @@ export class LoginComponent implements OnInit {
 
                             if (
                                 ObjectsLocator.LoggedUserPM.ExpirationDate !=
-                                    null &&
+                                null &&
                                 DateTool.GetDateParts(
                                     ObjectsLocator.LoggedUserPM.ExpirationDate
                                 ).DateTicks <
-                                    DateTool.GetCurrentDateAsUtc().valueOf()
+                                DateTool.GetCurrentDateAsUtc().valueOf()
                             ) {
                                 SessionLocator.BlockType = 'user';
                             }
@@ -846,7 +846,7 @@ export class LoginComponent implements OnInit {
                                 ) &&
                                 ObjectsLocator.GlobalSetting &&
                                 ObjectsLocator.GlobalSetting.WorkEnvironment !=
-                                    'customs'
+                                'customs'
                             ) {
                                 var myCreditLimitSettingPMService =
                                     new CreditLimitSettingPMService();
@@ -1321,8 +1321,8 @@ export class LoginComponent implements OnInit {
     IncreaseProgressBar(loadOPName: string = '') {
         console.log(
             loadOPName +
-                '==>Completed Login Loads Count: ' +
-                this.CompletedLoadsCount
+            '==>Completed Login Loads Count: ' +
+            this.CompletedLoadsCount
         );
         if (this.TotalNumberOfLoads == 0) {
             this.TotalNumberOfLoads = 38;
@@ -1379,8 +1379,8 @@ export class LoginComponent implements OnInit {
                 .LayoutDirection
                 ? SessionInfo.LoggedUserPM.LayoutDirection.toLowerCase()
                 : InfraSettings.TenantPM.LayoutDirection
-                ? InfraSettings.TenantPM.LayoutDirection.toLowerCase()
-                : InfraSettings.TenantPM.LayoutDirection;
+                    ? InfraSettings.TenantPM.LayoutDirection.toLowerCase()
+                    : InfraSettings.TenantPM.LayoutDirection;
         }
         ObjectsLocator.SetLayoutDirection(this.GlobalSettings.LayoutDirection);
     }
