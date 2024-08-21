@@ -240,6 +240,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
 
     if (!AppTool.IsNullOrEmpty(this.SearchFilter))
       filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter.toLowerCase(), null, null, "Contains", false, false, false, "string");
+    filters.addAdditionalFilter("IsXslxFormat", true, null, null, "Equal", true, false, false, "string");
 
     return filters;
   }
@@ -360,6 +361,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
     windowArgs.currentObjectTable = this.ObjectTableName;
     windowArgs.tenant = SessionInfo.LoggedUserTenant;
     windowArgs.userid = SessionInfo.LoggedUserId;
+    windowArgs.Type = "SaveToMicrosoftExcel2007";
     windowArgs.Filters = this.getFilter();
     var logitudeWindow = new LogitudeWindow();
     logitudeWindow.Width = 500;
