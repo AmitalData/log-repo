@@ -211,7 +211,7 @@ namespace CustomsWorkerRole
 			string fileExtension = Path.GetExtension(fileName).Substring(1);
 			string customsDocumentTypeCode = fileName?.Split('_')[1];
 			string hawb = fileName?.Split('_')[2].Split('.')[0];
-			string PartnerCode = AzureQueueMessageApi.PartnerName?.ToUpper();
+			string PartnerCode = AzureQueueMessageApi.PartnerName;
 			string code = CodeCounter.GetNumber("DocumentsFiling", tenant, false).ToString();//> CUS - 26043 </ Code >  //TODO 
 
 			var guid = Guid.NewGuid();
