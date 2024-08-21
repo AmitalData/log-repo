@@ -22,6 +22,8 @@ using Logitude.Accounting.Data.EntityListQueryServices;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Runtime.InteropServices;
+using Logitude.Server.Tools;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -699,6 +701,9 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
         public IQueryable<LedgerTransaction> GetYearTransferLedgerTransaction(string gLAccountId, int year, int tenant)
         {
 
+            FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
+            FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
+
             var qYearTransferJournals =
                 (from j in context.Journals
                  where j.Tenant == tenant
@@ -743,7 +748,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
                 qLedgerTransaction = qLedgerTransaction.Where(record => record.AccountId == gLAccountId);
             }
 
-            var qYeartransferLedgerTransaction =
+            var qYeartransferLedgerTransactionAll =
                 (from record in qLedgerTransaction
 
                      //context.LedgerTransactions
@@ -751,9 +756,19 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
                      //where EntityFunctions.TruncateTime(record.AccountingDate) == beginOfYear
 
                  join j in qYearTransferJournals
-on record.JournalId equals j.Id
+                        on record.JournalId equals j.Id
 
                  select record);
+
+
+            var qYeartransferLedgerTransaction =
+                (from record in qYeartransferLedgerTransactionAll
+
+            join acc in context.GLAccounts.Where(glac => glac.ChartOfAccountsTypeCode == "1" || glac.ChartOfAccountsTypeCode == "2" || glac.Id == setting.RevenueExpenseGLAccountId) // Revenues or Expenses
+                        on record.AccountId equals acc.Id
+
+                select record);
+
             return qYeartransferLedgerTransaction;
         }
 
@@ -1401,12 +1416,130 @@ on record.JournalId equals j.Id
             return ledgerTransactionPOCOs;
         }
 
+        public List<LedgerTransactionJournalLineLT> GetAPInvoiceLedgerTransactionsByIdList(List<String> ledgerTransactionIds, int tenant)
+        {
+
+            var lt_query1 =
+                from a in context.LedgerTransactions
+                 where ledgerTransactionIds.Contains(a.Id) 
+                 && a.Tenant == tenant
+                 select a;
+
+            bool testing = false;
+            if (testing)
+            {
+                List<LedgerTransaction> testList1 = lt_query1.ToList();
+            }
+
+
+            JournalRepository journalRepository = new JournalRepository(tenant);
+            JournalLineRepository journalLineRepository = new JournalLineRepository(tenant);
+            var lt_query2 = from jl in journalLineRepository.GetAll(tenant).Where(rec => rec.ActionCode == "1")
+                            join j in journalRepository.GetAll(tenant)
+                            on jl.JournalId equals j.Id
+                            join
+                           trans in lt_query1
+                           on new { jl.JournalId, jl.Line }
+                           equals new { trans.JournalId, Line = trans.JournalLineNumber }
+                           select new LedgerTransactionJournalLineLT
+                           {
+                               Id = trans.Id,
+                               Tenant = tenant,
+                               AccountId = trans.AccountId,
+                               ActionCode = jl.ActionCode,
+                               JournalId = trans.JournalId,
+                               JournalLineNumber = trans.JournalLineNumber,
+                               LocalAmountDebit = trans.LocalAmountDebit,
+                               LocalAmountCredit = trans.LocalAmountCredit,
+                               ForeignAmountDebit = trans.ForeignAmountDebit,
+                               ForeignAmountCredit = trans.ForeignAmountCredit,
+                               CurrencyId = trans.CurrencyId,
+                               OpenAmount = trans.OpenAmount,
+                               SourceTypeCode = j.AccountingEntityCode,
+                               SourceId = j.AccountingEntityId,
+                               SourceNumber = j.AccountingEntityReference,
+                               OriginalJournalId = j.OriginalJournalId,
+                               InReconcileProgress = trans.InReconcileProgress,
+                               IsReconciled = trans.IsReconciled,
+                               OpenAmountCurrencyId = trans.OpenAmountCurrencyId,
+                               ChangeSetOp = ChangeSetOperation.None,
+                           };
+
+
+
+            List<LedgerTransactionJournalLineLT> rv = lt_query2.ToList();
+
+
+            return rv;
+        }
+
+
+        public List<LedgerTransactionJournalLineLT> GetLedgerTransactionJournalLineLTsByIdList(List<String> ledgerTransactionIds, int tenant)
+        {
+
+            var lt_query1 =
+                from a in context.LedgerTransactions
+                where ledgerTransactionIds.Contains(a.Id)
+                && a.Tenant == tenant
+                select a;
+
+            bool testing = false;
+            if (testing)
+            {
+                List<LedgerTransaction> testList1 = lt_query1.ToList();
+            }
+
+
+            JournalRepository journalRepository = new JournalRepository(context);
+            JournalLineRepository journalLineRepository = new JournalLineRepository(context);
+            var lt_query2 = from jl in journalLineRepository.GetAll(tenant)
+                            join j in journalRepository.GetAll(tenant)
+                            on jl.JournalId equals j.Id
+                            join
+                           trans in lt_query1
+                           on new { jl.JournalId, jl.Line }
+                           equals new { trans.JournalId, Line = trans.JournalLineNumber }
+                            select new LedgerTransactionJournalLineLT
+                            {
+                                Id = trans.Id,
+                                Tenant = tenant,
+                                AccountId = trans.AccountId,
+                                ActionCode = jl.ActionCode,
+                                JournalId = trans.JournalId,
+                                JournalLineNumber = trans.JournalLineNumber,
+                                LocalAmountDebit = trans.LocalAmountDebit,
+                                LocalAmountCredit = trans.LocalAmountCredit,
+                                ForeignAmountDebit = trans.ForeignAmountDebit,
+                                ForeignAmountCredit = trans.ForeignAmountCredit,
+                                CurrencyId = trans.CurrencyId,
+                                OpenAmount = trans.OpenAmount,
+                                SourceTypeCode = j.AccountingEntityCode,
+                                SourceId = j.AccountingEntityId,
+                                SourceNumber = j.AccountingEntityReference,
+                                OriginalJournalId = j.OriginalJournalId,
+                                InReconcileProgress = trans.InReconcileProgress,
+                                IsReconciled = trans.IsReconciled,
+                                OpenAmountCurrencyId = trans.OpenAmountCurrencyId,
+                                ChangeSetOp = ChangeSetOperation.None,
+                            };
+
+
+
+            List<LedgerTransactionJournalLineLT> rv = lt_query2.ToList();
+
+
+            return rv;
+        }
+
+
+
         public bool CheckAnyLedgerTransactionReconciledByIdList(List<String> idList, int tenant)
         {
-            return
+            var query =
                 (from a in context.LedgerTransactions
                  where idList.Contains(a.Id) && a.Tenant == tenant && a.IsReconciled == true
-                 select a).Any();
+                 select a.Id);
+            return query.Any();
         }
 
         public bool CheckTransactionsInReconcileProgress(List<String> idList, int tenant)

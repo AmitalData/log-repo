@@ -265,6 +265,7 @@
     <Compile Include="EntityLists\Generated\TenantIdleStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\UserDefinedReportList.Generated.cs" />
     <Compile Include="EntityLists\Generated\VatReportStatusList.Generated.cs" />
+    <Compile Include="EntityLists\LedgerTransactionJournalLineLT.cs" />
     <Compile Include="EntityMapping\AccountingEntityJournalMap.cs" />
     <Compile Include="EntityMapping\AccountingIntegrityCheckMap.cs" />
     <Compile Include="EntityMapping\AccountingNoteMap.cs" />

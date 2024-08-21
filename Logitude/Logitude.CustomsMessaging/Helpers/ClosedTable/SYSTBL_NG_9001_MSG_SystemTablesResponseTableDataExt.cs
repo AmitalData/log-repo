@@ -140,7 +140,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         public string MappedCertificateFields { get; set; }
         public string CertificateOfOriginTypeName { get; set; }
         public int CertificateOfOriginTypeCodeID { get; set; }
-        public bool IsMandatory { get; set; }
+        public string IsMandatory { get; set; }
         public int Location { get; set; }
         public DateTime LastUpdatedDate { get; set; }
 

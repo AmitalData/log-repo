@@ -38,6 +38,7 @@ import { CertificateOfOriginComponent } from './Components/DigitalCertificateOfO
 import { CertificateOfOriginGeneralTabComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/General/CertificateOfOriginGeneralTabComponent';
 import { CertificateOfOriginMoreDetailsTabComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/MoreData/CertificateOfOriginMoreDetailsTabComponent';
 import { CertificateAnswersComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateAnswers/CertificateAnswersComponent';
+import { UpdateCertificateOfOriginGeneralFieldComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/General/UpdateCertificateOfOriginGeneralFieldComponent';
 
 
 export const Components =
@@ -80,6 +81,7 @@ export const Components =
         DigitalCertificateOfOriginTabComponent,
         CertificateOfOriginComponent,
         CertificateOfOriginGeneralTabComponent,
+        UpdateCertificateOfOriginGeneralFieldComponent,
         CertificateOfOriginMoreDetailsTabComponent,
         CertificateAnswersComponent
 
@@ -130,6 +132,7 @@ export class ModuleDeclarations {
             case "DigitalCertificateOfOriginTabComponent": { myResult = DigitalCertificateOfOriginTabComponent; break; }
             case "CertificateOfOriginComponent": { myResult = CertificateOfOriginComponent; break; }
             case "CertificateOfOriginGeneralTabComponent": { myResult = CertificateOfOriginGeneralTabComponent; break; }
+            case "UpdateCertificateOfOriginGeneralFieldComponent": { myResult = UpdateCertificateOfOriginGeneralFieldComponent; break; }
             case "CertificateOfOriginMoreDetailsTabComponent": { myResult = CertificateOfOriginMoreDetailsTabComponent; break; }
             case "CreateEditTicketComponent": { myResult = CreateEditTicketComponent; break; }
             case "CertificateAnswersComponent": { myResult = CertificateAnswersComponent; break; }

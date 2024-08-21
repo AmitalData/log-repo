@@ -103,7 +103,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				ExporterName = certificateOfOrigin.ExporterName,
 				ExporterAddress = certificateOfOrigin.ExporterAddress,
 				ExporterCountry = certificateOfOrigin.ExporterCountry,
-				TradeAgreementCountry1 = CooTypeCodeList.Contains(certificateOfOrigin.CooTypeCode) ? "IL" : certificateOfOrigin.TradeAgreementCountry1,
+				TradeAgreementCountry1 = !string.IsNullOrEmpty(certificateOfOrigin.TradeAgreementCountry1) ? certificateOfOrigin.TradeAgreementCountry1 : CooTypeCodeList.Contains(certificateOfOrigin.CooTypeCode) ? "IL" : certificateOfOrigin.TradeAgreementCountry1,
+				//TradeAgreementCountry1 = CooTypeCodeList.Contains(certificateOfOrigin.CooTypeCode) ? "IL" : certificateOfOrigin.TradeAgreementCountry1,
 				TradeAgreementCountry2 = certificateOfOrigin.TradeAgreementCountry2,
 				TradeAgreementGroupOfCountries = string.IsNullOrEmpty(certificateOfOrigin.TradeAgreementGroupOfCountries) ? null : (int?)Convert.ToInt32(certificateOfOrigin.TradeAgreementGroupOfCountries),
 				TradeAgreementGroupOfCountriesSpecified = true,
@@ -167,7 +168,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				{
 					InvoiceNum = item.InvoiceNumber,
 					InvoiceDate = Convert.ToDateTime(item.InvoiceDate),
-					InvoiceSum = Convert.ToInt32(item.InvoiceSum),
+					InvoiceSum = item.InvoiceSum != null ? decimal.Parse(item.InvoiceSum) : 0,
 					InvoiceSumSpecified = true,
 					CurrencyType = item.CurrencyTypeCode,
 					DescriptionOfInvoice = item.DescriptionOfInvoice,

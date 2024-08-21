@@ -606,6 +606,26 @@ export class CardPM extends ObjectCustomFieldPM {
     public set ManifestInvoiceTemplateId(newValue: string) { if (this.manifestInvoiceTemplateId != newValue) { this.manifestInvoiceTemplateId = newValue; this.MarkAsDirty("ManifestInvoiceTemplateId"); } }
        
 	 
+    private emailForSendingSingArinvoice: string;
+    public get EmailForSendingSingArinvoice() { return this.emailForSendingSingArinvoice; }
+    public set EmailForSendingSingArinvoice(newValue: string) { if (this.emailForSendingSingArinvoice != newValue) { this.emailForSendingSingArinvoice = newValue; this.MarkAsDirty("EmailForSendingSingArinvoice"); } }
+       
+	 
+    private sendingInterestReport: boolean;
+    public get SendingInterestReport() { return this.sendingInterestReport; }
+    public set SendingInterestReport(newValue: boolean) { if (this.sendingInterestReport != newValue) { this.sendingInterestReport = newValue; this.MarkAsDirty("SendingInterestReport"); } }
+       
+	 
+    private isFromGlaAccountUpdate: boolean;
+    public get IsFromGlaAccountUpdate() { return this.isFromGlaAccountUpdate; }
+    public set IsFromGlaAccountUpdate(newValue: boolean) { if (this.isFromGlaAccountUpdate != newValue) { this.isFromGlaAccountUpdate = newValue; this.MarkAsDirty("IsFromGlaAccountUpdate"); } }
+       
+	 
+    private isExcludeCard: boolean;
+    public get IsExcludeCard() { return this.isExcludeCard; }
+    public set IsExcludeCard(newValue: boolean) { if (this.isExcludeCard != newValue) { this.isExcludeCard = newValue; this.MarkAsDirty("IsExcludeCard"); } }
+       
+	 
 
     public OldEntityPM: CardPM;
 		

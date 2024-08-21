@@ -73,6 +73,8 @@ import { CloseSaveButtonsComponent } from './Components/Maintenance/AmitalAPI/co
 
   import { TariffsTabComponent } from './Components/TariffsTab/TariffsTabComponent';
  import { HostScreenComponent } from './Components/HostScreen/HostScreenComponent';
+import { AmitalAPIRequestsComponent } from './Components/Maintenance/AmitalAPI/AmitalAPIRequestsComponent';
+import { LogitudeGridSimpleComponent } from './Components/Maintenance/AmitalAPI/components/LogitudeGridSimpleComponent';
 
   export const Components =
     [
@@ -136,7 +138,7 @@ import { CloseSaveButtonsComponent } from './Components/Maintenance/AmitalAPI/co
         TransmissionLogAuditTabComponent,
         NewHorseComponent,
         HorseGeneralTabComponent,
-         CodeListHeaderTemplate,
+        CodeListHeaderTemplate,
         CityNameListHeaderTemplate,
         EnglishNameListHeaderTemplate,
         StartWorkingListHeaderTemplate,
@@ -146,10 +148,12 @@ import { CloseSaveButtonsComponent } from './Components/Maintenance/AmitalAPI/co
         AmitalAPIAddClientWindowComponent,
         AmitalAPIAddSchemaWindowComponent,
         AmitalAPISchemaTable,
-         TariffsTabComponent,
-         HostScreenComponent,
+        TariffsTabComponent,
+        HostScreenComponent,
         LogTexBoxFormComponent,
         CloseSaveButtonsComponent,
+        AmitalAPIRequestsComponent,
+        LogitudeGridSimpleComponent,
     ];
   
 export class ModuleDeclarations {
@@ -221,7 +225,7 @@ export class ModuleDeclarations {
             case "TransmissionLogAuditTabComponent": { myResult = TransmissionLogAuditTabComponent; break; }
             case "NewHorseComponent": { myResult = NewHorseComponent; break; }
             case "HorseGeneralTabComponent": { myResult = HorseGeneralTabComponent; break; }
-             case "CodeListHeaderTemplate": { myResult = CodeListHeaderTemplate; break; }
+            case "CodeListHeaderTemplate": { myResult = CodeListHeaderTemplate; break; }
             case "CityNameListHeaderTemplate": { myResult = CityNameListHeaderTemplate; break; }
             case "EnglishNameListHeaderTemplate": { myResult = EnglishNameListHeaderTemplate; break; }
             case "StartWorkingListHeaderTemplate": { myResult = StartWorkingListHeaderTemplate; break; }
@@ -231,12 +235,12 @@ export class ModuleDeclarations {
             case "AmitalAPIAddClientWindowComponent": { myResult = AmitalAPIAddClientWindowComponent; break; }
             case "AmitalAPIAddSchemaWindowComponent": { myResult = AmitalAPIAddSchemaWindowComponent; break; }
             case "AmitalAPISchemaTable": { myResult = AmitalAPISchemaTable; break; }
-
-
-             case "TariffsTabComponent": { myResult = TariffsTabComponent; break; }
-             case "HostScreenComponent": { myResult = HostScreenComponent; break; }
+            case "AmitalAPIRequestsComponent": { myResult = AmitalAPIRequestsComponent; break; }
+            case "TariffsTabComponent": { myResult = TariffsTabComponent; break; }
+            case "HostScreenComponent": { myResult = HostScreenComponent; break; }
             case "LogTexBoxFormComponent": { myResult = LogTexBoxFormComponent; break; }
             case "CloseSaveButtonsComponent": { myResult = CloseSaveButtonsComponent; break; }
+            case "LogitudeGridSimpleComponent": { myResult = LogitudeGridSimpleComponent; break; }
         }
  
         return myResult;

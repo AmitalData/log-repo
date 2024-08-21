@@ -34,6 +34,7 @@ namespace WebFreight.Web.WebPages
             queryName = Request["qname"] ?? "";
             fileType = Request["fileType"] ?? "";
             SecurityDocumentResult securityDocumentResult = GetSecurityDocumentResult();
+             
             if (securityDocumentResult.IsValid)
             {
                 tenant = securityDocumentResult.Tenant;

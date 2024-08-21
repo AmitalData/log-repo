@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginInvoiceUpdateClass
    {  		
-		public const string HashString = "6e44673b9c7b5ca6da7bd18b90e6941b";
+		public const string HashString = "9ebf5f82e014ff363fd69e5b64191051";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -952,7 +952,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable CertificateOfOriginInvoiceObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CertificateOfOriginInvoice" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode CertificateOfOriginInvoiceTextCode_CustomsCertificateOfOriginInvoiceORefreshConfirmationQuestion = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOriginInvoice.O.RefreshConfirmationQuestion", DefaultText = "Are you sure to update the items ?",LocalDefaultText = @"האם לבצע בנייה מחדש של כלל החשבונות לתעודה ?", ObjectTableId = CertificateOfOriginInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

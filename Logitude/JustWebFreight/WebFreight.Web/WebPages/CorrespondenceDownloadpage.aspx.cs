@@ -12,6 +12,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -28,7 +29,7 @@ namespace WebFreight.Web.WebPages
     {
         int tenant;
         public byte[] _DatainByte;
-     
+
 
 
         protected void Page_Load(object sender, EventArgs e)
@@ -55,7 +56,7 @@ namespace WebFreight.Web.WebPages
                     if (filestrings.Length >= 5 && filestrings[4].ToString() == "DigitalPortal")
                     {
                         domainName = filestrings[4].ToString();
-                    }                    
+                    }
                     else if (filestrings.Length >= 5 && filestrings[4].ToString() != "DigitalPortal")
                     {
                         forwardingShipmentEntityId = filestrings[4].ToString();
@@ -82,22 +83,30 @@ namespace WebFreight.Web.WebPages
                     string copyId = filestrings.Length > 2 ? filestrings[2].ToString() : null;
 
                     bool isDigitalPortal = false;
-                    if (filestrings.Length > 3) {
+                    if (filestrings.Length > 3)
+                    {
                         Boolean.TryParse(filestrings[3].ToString(), out isDigitalPortal);
                     }
 
                     Uploader up = new Uploader();
 
                     Document myDoc = up.GetFileExtensionBySecurityIdAndCopyId(securityId, copyId, tenant);
-                    if ((string.IsNullOrEmpty(copyId) || copyId == "null")  && myDoc == null)
+                    if ((string.IsNullOrEmpty(copyId) || copyId == "null") && myDoc == null)
                     {
                         myDoc = up.GetFileExtensionBySecurityId(securityId, tenant);
                     }
-                    DateTime dateTime = new DateTime(2022, 01, 01);
-                    if(myDoc?.CreateDate != null && myDoc?.CreateDate.Value.Date < dateTime.Date)
-					{
-						throw new Exception("The document is not allowed.");
-					}
+
+                    string dt = Environment.GetEnvironmentVariable("AllowDownloadFilesDate") ?? ConfigurationManager.AppSettings["AllowDownloadFilesDate"];// new DateTime(2022, 01, 01);
+                    if (string.IsNullOrEmpty(dt))
+                    {
+                        dt = "2022-01-01";
+                    }
+                    DateTime dateTime = DateTime.ParseExact(dt, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+
+                    if (myDoc?.CreateDate != null && myDoc?.CreateDate.Value.Date < dateTime.Date)
+                    {
+                        throw new Exception("The document is not allowed.");
+                    }
                     documentExtension = myDoc.Extension;
                     filename = myDoc.FileName;
                     var documentType = string.Empty;
@@ -112,7 +121,7 @@ namespace WebFreight.Web.WebPages
                             documentType = documentsFilingPM.DocumentTypeName;
                         }
                     }
-                    
+
                     if (filestrings.Length >= 4 && !isDigitalPortal)
                     {
                         filename = filestrings[3] != null ? filestrings[3] : filename;
@@ -249,15 +258,15 @@ namespace WebFreight.Web.WebPages
                 {
                     HttpContext.Current.Response.Write("Sorry you’re not authenticated to view this document");
                 }
-             else  if (ErrorMessage.Contains("Sorry, your download link has expired."))
+                else if (ErrorMessage.Contains("Sorry, your download link has expired."))
                 {
                     HttpContext.Current.Response.Write("Sorry, your download link has expired.");
                 }
-				else if (ErrorMessage.Contains("The document is not allowed."))
-				{
-					HttpContext.Current.Response.Write("The document is not allowed.");
-				}
-				else
+                else if (ErrorMessage.Contains("The document is not allowed."))
+                {
+                    HttpContext.Current.Response.Write("The document is not allowed.");
+                }
+                else
                 {
                     HttpContext.Current.Response.Write("Invalid Document Security Id!");
                 }
@@ -311,22 +320,22 @@ namespace WebFreight.Web.WebPages
         {
             try
             {
-                ShipmentRepository rep = new ShipmentRepository(tenant);                
+                ShipmentRepository rep = new ShipmentRepository(tenant);
                 Uploader up = new Uploader();
                 Shipment shipment = rep.getSingleShipmentBySecurityIdAndId(EntityId, SecurityKey, tenant);
                 string compressedFileName = "Documents";
                 string shipmentNumber = null;
 
-                if (domainName == "cargo" || domainName == "DigitalPortal") 
+                if (domainName == "cargo" || domainName == "DigitalPortal")
                 {
                     compressedFileName = $"{shipment.ShipmentNumber}_Documents";
                     shipmentNumber = shipment.ShipmentNumber;
                 }
-                
+
                 if (shipment != null)
                 {
                     var documents = up.GetDocumentByEntityAndTenant(EntityId, tenant);
-                    
+
                     if (!string.IsNullOrWhiteSpace(forwardingShipmentEntityId))
                     {
                         var customsForwardingShipmentdocuments = up.GetDocumentByEntityAndTenant(forwardingShipmentEntityId, tenant);
@@ -341,20 +350,26 @@ namespace WebFreight.Web.WebPages
                     {
                         documents = documents.Where(d => d.IsCustomerView).ToList();
                     }
-					DateTime dateTime = new DateTime(2022, 01, 01);
-					documents = documents.Where(d => d.CreateDate.Date >= dateTime.Date).ToList();
+                    string dt = Environment.GetEnvironmentVariable("AllowDownloadFilesDate") ?? ConfigurationManager.AppSettings["AllowDownloadFilesDate"];// new DateTime(2022, 01, 01);
+                    if (string.IsNullOrEmpty(dt))
+                    {
+                        dt = "2022-01-01";
+                    }
+                    DateTime dateTime = DateTime.ParseExact(dt, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
 
-					var CompressedArray = new Dictionary<string, byte[]>();
+                    documents = documents.Where(d => d.CreateDate.Date >= dateTime.Date).ToList();
+
+                    var CompressedArray = new Dictionary<string, byte[]>();
                     bool DocumentsExistance = false;
                     var ItemNum = 0;
                     var documentsListWithoutDuplications = new List<DocumentsFilingPM>();
-				
-					foreach (DocumentsFilingPM document in documents)
+
+                    foreach (DocumentsFilingPM document in documents)
                     {
-                        if (domainName == "cargo" 
-                            && documentsListWithoutDuplications.Any(x => x.DocumentTypeCode == document.DocumentTypeCode 
+                        if (domainName == "cargo"
+                            && documentsListWithoutDuplications.Any(x => x.DocumentTypeCode == document.DocumentTypeCode
                                                                          && x.CalculatedFileName == document.CalculatedFileName
-                                                                         && x.FileSize == document.FileSize)) 
+                                                                         && x.FileSize == document.FileSize))
                         {
                             continue;
                         }
@@ -368,9 +383,9 @@ namespace WebFreight.Web.WebPages
 
                         var digitalFileName = !string.IsNullOrEmpty(document.CalculatedFileName) ? document.CalculatedFileName : document.FileName;
 
-                        document.CalculatedFileName = domainName == "cargo" 
+                        document.CalculatedFileName = domainName == "cargo"
                                                       ? shipmentNumber + '_' + document.DocumentTypeName
-                                                      : domainName == "DigitalPortal" 
+                                                      : domainName == "DigitalPortal"
                                                         ? $"{document.DocumentTypeName} - {digitalFileName}"
                                                         : document.CalculatedFileName;
 
@@ -384,13 +399,13 @@ namespace WebFreight.Web.WebPages
                             string fileName = !string.IsNullOrEmpty(document.CalculatedFileName) ? document.CalculatedFileName : document.FileName;
                             fileName = fileName.Replace('/', ' ');
                             fileName += ("." + document.FileExtension);
-                            
-                            while (CompressedArray.ContainsKey(document.FileExtension + "@"+fileName))
+
+                            while (CompressedArray.ContainsKey(document.FileExtension + "@" + fileName))
                             {
                                 ItemNum += 1;
-                                fileName = !string.IsNullOrEmpty(document.CalculatedFileName) 
-                                           ? document.CalculatedFileName + " (" + ItemNum + ")" 
-                                           : document.FileName+" ("+ItemNum+")";
+                                fileName = !string.IsNullOrEmpty(document.CalculatedFileName)
+                                           ? document.CalculatedFileName + " (" + ItemNum + ")"
+                                           : document.FileName + " (" + ItemNum + ")";
                                 fileName = fileName.Replace('/', ' ');
                                 fileName += ("." + document.FileExtension);
                             }

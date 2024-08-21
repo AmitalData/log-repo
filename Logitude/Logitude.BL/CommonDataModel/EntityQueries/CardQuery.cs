@@ -136,6 +136,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  CustomsInvoiceTemplateId = card.CustomsInvoiceTemplateId,
                                                  ConsolidationInvoiceTemplateId = card.ConsolidationInvoiceTemplateId,
                                                  ManifestInvoiceTemplateId = card.ManifestInvoiceTemplateId,
+                                                 EmailForSendingSingArinvoice = card.EmailForSendingSingArinvoice,
+                                                 SendingInterestReport = card.SendingInterestReport,
                                              });
 
 
@@ -284,6 +286,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       CustomsInvoiceTemplateId = a.CustomsInvoiceTemplateId,
                                       ConsolidationInvoiceTemplateId = a.ConsolidationInvoiceTemplateId,
                                       ManifestInvoiceTemplateId = a.ManifestInvoiceTemplateId,
+                                      EmailForSendingSingArinvoice=a.EmailForSendingSingArinvoice,
+                                      SendingInterestReport=a.SendingInterestReport,
                                   }).FirstOrDefault();
 
 
@@ -404,6 +408,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CustomsInvoiceTemplateId = a.CustomsInvoiceTemplateId,
                                   ConsolidationInvoiceTemplateId = a.ConsolidationInvoiceTemplateId,
                                   ManifestInvoiceTemplateId = a.ManifestInvoiceTemplateId,
+                                  EmailForSendingSingArinvoice = a.EmailForSendingSingArinvoice,
+                                  SendingInterestReport = a.SendingInterestReport,
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -682,6 +688,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               CustomsInvoiceTemplateId = a.CustomsInvoiceTemplateId,
                                               ConsolidationInvoiceTemplateId = a.ConsolidationInvoiceTemplateId,
                                               ManifestInvoiceTemplateId = a.ManifestInvoiceTemplateId,
+                                              EmailForSendingSingArinvoice = a.EmailForSendingSingArinvoice,
+                                              SendingInterestReport = a.SendingInterestReport,
                                           });
             return cards;
         }
@@ -761,6 +769,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               CustomsInvoiceTemplateId = a.CustomsInvoiceTemplateId,
                                               ConsolidationInvoiceTemplateId = a.ConsolidationInvoiceTemplateId,
                                               ManifestInvoiceTemplateId = a.ManifestInvoiceTemplateId,
+                                              EmailForSendingSingArinvoice = a.EmailForSendingSingArinvoice,
+                                              SendingInterestReport = a.SendingInterestReport,
                                           });
             return cards;
         }
@@ -871,6 +881,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           CustomsInvoiceTemplateId = a.CustomsInvoiceTemplateId,
                                           ConsolidationInvoiceTemplateId = a.ConsolidationInvoiceTemplateId,
                                           ManifestInvoiceTemplateId = a.ManifestInvoiceTemplateId,
+                                          EmailForSendingSingArinvoice = a.EmailForSendingSingArinvoice,
+                                          SendingInterestReport = a.SendingInterestReport,
                                       }).FirstOrDefault();
 
                             if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
@@ -970,6 +982,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       CustomsInvoiceTemplateId = a.CustomsInvoiceTemplateId,
                                       ConsolidationInvoiceTemplateId = a.ConsolidationInvoiceTemplateId,
                                       ManifestInvoiceTemplateId = a.ManifestInvoiceTemplateId,
+                                      EmailForSendingSingArinvoice = a.EmailForSendingSingArinvoice,
+                                      SendingInterestReport = a.SendingInterestReport,
                                   }).FirstOrDefault();
                     }
                 }
@@ -1059,6 +1073,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CustomsInvoiceTemplateId = a.CustomsInvoiceTemplateId,
                                   ConsolidationInvoiceTemplateId = a.ConsolidationInvoiceTemplateId,
                                   ManifestInvoiceTemplateId = a.ManifestInvoiceTemplateId,
+                                  EmailForSendingSingArinvoice = a.EmailForSendingSingArinvoice,
+                                  SendingInterestReport = a.SendingInterestReport,
                               }).FirstOrDefault();
                 }
 
@@ -1144,6 +1160,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     CustomsInvoiceTemplateId = entityPOCO.CustomsInvoiceTemplateId,
                     ConsolidationInvoiceTemplateId = entityPOCO.ConsolidationInvoiceTemplateId,
                     ManifestInvoiceTemplateId = entityPOCO.ManifestInvoiceTemplateId,
+                    EmailForSendingSingArinvoice = entityPOCO.EmailForSendingSingArinvoice,
+                    SendingInterestReport = entityPOCO.SendingInterestReport,
                 };
 
                 if (entityPOCO.Customer != null)
@@ -1463,6 +1481,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 CustomsInvoiceTemplateId = card.CustomsInvoiceTemplateId,
                                                 ConsolidationInvoiceTemplateId = card.ConsolidationInvoiceTemplateId,
                                                 ManifestInvoiceTemplateId = card.ManifestInvoiceTemplateId,
+                                                EmailForSendingSingArinvoice = card.EmailForSendingSingArinvoice,
+                                                SendingInterestReport = card.SendingInterestReport,
 
                                             };
 
@@ -1596,6 +1616,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               CustomsInvoiceTemplateId = a.CustomsInvoiceTemplateId,
                                               ConsolidationInvoiceTemplateId = a.ConsolidationInvoiceTemplateId,
                                               ManifestInvoiceTemplateId = a.ManifestInvoiceTemplateId,
+                                              EmailForSendingSingArinvoice = a.EmailForSendingSingArinvoice,
+                                              SendingInterestReport = a.SendingInterestReport,
                                           });
             return cards;
         }

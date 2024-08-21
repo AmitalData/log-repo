@@ -170,15 +170,19 @@
                         </td>       
                     </tr>
                  
-                    <tr class="FieldRow">                        
-                        <td style="width:130px">
+                    <tr class="FieldRow">          
+                        <!-- remove  Observations-->                           
+                        <!-- <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'Observations'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:180px">
                             <LogTextBox [ObjectFieldName]="'Observations'" [DataContext]="DataContext"
-                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
-                        </td>
+                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td> -->
+                        <td style="width:130px"></td> 
+                        <td style="width:180px"></td>
+ 
 
                         <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'ConsigneeRemarks'" [ObjectTableName]="ObjectTableName"
@@ -186,7 +190,7 @@
                         </td>
                         <td style="width:180px">
                             <LogTextBox [ObjectFieldName]="'ConsigneeRemarks'" [DataContext]="DataContext"
-                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsMultiline]="true"></LogTextBox>
                         </td>
 
                         <td style="width:130px">
@@ -195,7 +199,7 @@
                         </td>
                         <td style="width:180px">
                             <LogTextBox [ObjectFieldName]="'ReplacementReason'" [DataContext]="DataContext"
-                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsMultiline]="true"></LogTextBox>
                         </td>       
                     </tr>
                 </table>

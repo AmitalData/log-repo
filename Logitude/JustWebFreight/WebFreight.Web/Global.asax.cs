@@ -61,6 +61,7 @@ namespace WebFreight.Web
         System.Timers.Timer aTimer = new System.Timers.Timer();
         protected void Application_Start(object sender, EventArgs e)
         {
+            NetCommonHelper.Logger.DevLog.Instance.SetProcessName("website", true); //Set process name and is webApp
             LogitudeAppSettings.StartDateTime = DateTime.Now;
             //if ((DateTime.Now - LogitudeAppSettings.EndDateTime).TotalMinutes <= 5)
             //{
@@ -212,7 +213,8 @@ namespace WebFreight.Web
             RouteTable.Routes.MapHttpRoute("Route2", "api/{controller}/getsinglepm/{id}/{tenant}", new { controller = "Shipments", action = "GetSingleShipmentPM" });
             RouteTable.Routes.MapHttpRoute("Route3", "api/{controller}/getsinglepmbykey/{securitykey}/{id}/{tenant}", new { controller = "Shipments", action = "GetSingleShipmentPMByKey" });
             RouteTable.Routes.MapHttpRoute("Route4", "api/{controller}/getsinglepmbykeyandtenant/{securitykey}/{tenant}", new { controller = "Shipments", action = "GetSingleShipmentPMByKeyAndTenant" });
-            RouteTable.Routes.MapHttpRoute("HybridTest", "api/WcfApi/Hybrid/Test/{action}", new { controller = "HybridTest", action = RouteParameter.Optional });
+            // RouteTable.Routes.MapHttpRoute("HybridTest", "api/WcfApi/Hybrid/Test/{action}", new { controller = "HybridTest", action = RouteParameter.Optional });
+            RouteTable.Routes.MapHttpRoute("HybridModel", "api/WebAPI/HybridModel/{controller}/{action}");
 
             RouteTable.Routes.Ignore("{resource}.axd/{*pathInfo}");
 
@@ -572,7 +574,7 @@ namespace WebFreight.Web
             LogitudeSettings.System2RedirectFraction = setting.System2RedirectFraction;
 			LogitudeSettings.WindWardSettings = setting.WindWardSettings;
 			LogitudeSettings.LogitudeIISURL = setting.LogitudeIISURL;
-
+            LogitudeSettings.TempStorageConnection = setting.TempStorageConnection;
 		}
 
 		private void StartSignalRTopicThread()

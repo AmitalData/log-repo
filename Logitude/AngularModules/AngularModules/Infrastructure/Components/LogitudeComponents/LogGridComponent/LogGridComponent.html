@@ -208,7 +208,7 @@
                          [attr.SIndex]="row.rowIndex" [class.Selected]="SelectedRow == row.rowData"
                          (ondblclick)="onRowSelected(1, 1, row.rowData, row.rowIndex)"
                          (mouseout)="onRowMouseOut('rowtemplate'+rowIndex,rowIndex,row)" (mouseover)="onRowMouseOver('rowtemplate'+rowIndex,rowIndex,row)"
-                         (click)="onRowSelected(1, 1, row.rowData, row.rowIndex)" [class.SelectedGradiant]="IsGradiantSelectedColor && (SelectedRow==row.rowData || row.rowData.IsSelected == true)"
+                         (click)="onRowSelected(1, 1, row.rowData, row.rowIndex)" [class.SelectedGradiant]="IsGradiantSelectedColor && (row.rowData.IsSelected == true)"
                          [ngStyle]="row.styles" [id]="LogGridId +'row'+rowIndex" style="position:absolute;display: flex;width:100%; border-bottom: 1px solid #A7A9AC; border-top: 1px solid transparent;">
                         <div *ngIf="IsSpotLight" class="row-cell" (click)="onSpotLightSelect(row)"
                              style="display: block;position: absolute;min-width:25px;width:25px"

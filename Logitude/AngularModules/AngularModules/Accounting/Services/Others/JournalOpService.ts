@@ -58,6 +58,23 @@ export class JournalOpService {
             }),catchError(ServiceHelper.HandleServiceError));
         });
     }
+    CreateInterestTransactions(date:string) {
+      
+        var url = this._apiUrl + '/putcreateinteresttransactions?date=' + date;
+
+        return defer(() => {
+            return this._http.put(url,null, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var result = response;
+                
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
+                return serviceResponse;
+
+            }),catchError(ServiceHelper.HandleServiceError));
+        });
+    }
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: JournalPM = null) {
 
 

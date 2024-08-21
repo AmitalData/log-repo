@@ -862,8 +862,17 @@ namespace WebFreight.Web.Helpers
             }
 
             ReportsTemplatesWebService reportsTemplatesWebService = new ReportsTemplatesWebService();
-            return reportsTemplatesWebService.GetReportTemplate(reportDocumentId, reportFliter.tenant, false);
+            try
+            {
+                return reportsTemplatesWebService.GetReportTemplate(reportDocumentId, reportFliter.tenant, false);
 
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        
         }
 
         public byte[] GetReportFilters(List<QueryFilterItem> queryFilterItemLists)
