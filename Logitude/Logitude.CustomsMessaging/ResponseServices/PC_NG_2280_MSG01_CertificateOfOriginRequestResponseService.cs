@@ -108,10 +108,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				this.MyResponseData.Succeeded = true;
 				this.MyResponseData.UserMessage = "התקבלו שגיאות במסר תעודת מקור";
 				this.MyResponseData.HasException = true;
-
-					return;
+				// return;
 			}
-			certificateOfOriginPM.ErrXml = null;
+			else certificateOfOriginPM.ErrXml = null;	
 			certificateOfOriginPM.COONumber = customResponse.CertificateOfOriginRequestFeedback.certificateID;
 			certificateOfOriginPM.CooStatusCode = customResponse.CertificateOfOriginRequestFeedback.certificateOfOriginStatusCode.ToString();
 			certificateOfOriginPM.FeedbackRemark = customResponse.CertificateOfOriginRequestFeedback.FeedbackRemark;
