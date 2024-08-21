@@ -148,7 +148,7 @@ namespace CustomsWorkerRole
 						inParams.Add("base64data", "true");
 						var filedata = Convert.ToBase64String(File.ReadAllBytes(filePath));
 						logs += "before CreateNewFiling " + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
-						UnifreightFillingService.CreateNewFiling(inParams, filedata, 1, out outParams, out fatal_error, out message);
+						UnifreightFillingService.CreateNewFiling(inParams, filedata, tenant, out outParams, out fatal_error, out message);
 						logs += "after CreateNewFiling  fatal_error: " + fatal_error.ToString() + " message: " + message + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
                         #endregion
 						if (!fatal_error) 
@@ -169,9 +169,11 @@ namespace CustomsWorkerRole
 
 						}
 					}
-
-					DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId,tenant,logs, response?.Result);
-					stopwatch.Stop();
+					if (!string.IsNullOrEmpty(communicationLogId))
+					{
+						DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId, tenant, logs, response?.Result);
+					}	
+					
 				}
 				catch (Exception e)
 				{
@@ -180,6 +182,10 @@ namespace CustomsWorkerRole
 						logs += "exption" + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
 						Communications.UpdateCommunicationLogStatus(communicationLogId, tenant, null, "F", logs, e.Message.ToString());
 					}
+				}
+				finally
+				{
+					stopwatch.Stop();
 				}
 			};
 			processor.ProcessErrorAsync += (args) =>
