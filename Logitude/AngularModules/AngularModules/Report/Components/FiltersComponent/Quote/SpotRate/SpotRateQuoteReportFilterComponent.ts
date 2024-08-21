@@ -5,7 +5,11 @@ import { QueryFilterItem } from '../../../../Components/Filters/QueryFilterItem'
 import { ReportsPreviewComponent } from 'Report/Components/ReportsPreviewComponent';
 import { TenantPM } from 'Common/EntityPMs/TenantPM';
 import { ReportFliter } from 'Report/Components/Filters/ReportFliter';
-import { DateTool } from 'Infrastructure/Tools';
+import { AppTool, DateTool } from 'Infrastructure/Tools';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
+import { CardExtendedPMService } from 'Common/Services/ExtendedPMs/CardExtendedPMService';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
 
@@ -20,14 +24,21 @@ export class SpotRateQuoteReportFilterComponent extends BaseComponent {
     queryFilterItems: QueryFilterItem[];
     queryFilterItem: QueryFilterItem;
     public DataContext: SpotRateQuoteReportFilterComponent = this;
+    entityResourceService: EntityResourceService = new EntityResourceService();
 
-    public OpenDate: Date;
+    isReady: boolean = false;
+    public RunReportTitle: string;
+    public OpenDateGraterThan: Date;
     public ExpirationDate: Date;
     public CustomerId: string = null;
     public SalesmanId: string = null;
-    
+    public IsSchedulerReport: boolean;
+    GLAccountChanged: boolean;
+
     constructor() {
         super();
+        this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe(response => { this.isReady = true; this.SetRunReportTitle(); });
+
     }
 
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
@@ -38,8 +49,11 @@ export class SpotRateQuoteReportFilterComponent extends BaseComponent {
 
 
     private SetDates() {
-        this.OpenDate = DateTool.GetCurrentDateAsUtc();
-        this.OpenDate.setMonth(this.OpenDate.getMonth() - 1);
+        if (this.OpenDateGraterThan == null) {
+            this.OpenDateGraterThan = DateTool.GetCurrentDateAsUtc();
+            this.OpenDateGraterThan.setMonth(this.OpenDateGraterThan.getMonth() - 1);
+        }
+
     }
 
     RunReport(isloading: boolean) {
@@ -51,19 +65,112 @@ export class SpotRateQuoteReportFilterComponent extends BaseComponent {
         reportFliter.ReportCode = this.ReportsPreview.Report.Code;
         reportFliter.NumberOfPage = 1;
         reportFliter.ProcessType = "GenerateReport";
-        reportFliter.QueryFilterItemLists = this.BuildQueryFilterItems();
+        reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
 
         this.ReportsPreview.GenerateReport(reportFliter, isloading);
 
     }
 
 
-    private BuildQueryFilterItems() {
+    private GetQueryFilterItems() {
         var myFilterItems: QueryFilterItem[] = [];
         myFilterItems.push(new QueryFilterItem("CustomerId", this.CustomerId));
         myFilterItems.push(new QueryFilterItem("SalesmanId", this.SalesmanId));
-        myFilterItems.push(new QueryFilterItem("OpenDateGraterThan", this.OpenDate));
-        myFilterItems.push(new QueryFilterItem("ExpirationDateLessThan", this.ExpirationDate));
+        myFilterItems.push(new QueryFilterItem("OpenDateGraterThan", this.OpenDateGraterThan, null, 'Date'));
+        myFilterItems.push(new QueryFilterItem("ExpirationDateLessThan", this.ExpirationDate, null, 'Date'));
         return myFilterItems;
+    }
+
+    SetCustomerIdFilter(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "CustomerId") {
+            this.CustomerId = queryFilterItem.FieldValue;
+            this.GLAccountChanged = true;
+        }
+    }
+    SetSalesmanIdFilter(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "SalesmanId") {
+            this.SalesmanId = queryFilterItem.FieldValue;
+        }
+    }
+    SetOpenDateFilter(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "OpenDateGraterThan") {
+            this.OpenDateGraterThan = queryFilterItem.FieldValue;
+        }
+    }
+    SetExpirationDateLessThanFilter(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "ExpirationDateLessThan") {
+            this.ExpirationDate = queryFilterItem.FieldValue;
+        }
+    }
+
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>) { //For Scheduler Report
+        this.IsSchedulerReport = true;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            this.SetExpirationDateLessThanFilter(queryFilterItem);
+            this.SetOpenDateFilter(queryFilterItem);
+            this.SetSalesmanIdFilter(queryFilterItem);
+            this.SetCustomerIdFilter(queryFilterItem);
+
+        }
+
+    }
+    SetRunReportTitle() {
+        if (this.isReady) {
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+
+        }
+
+
+    }
+    ValidateSelectedFilters() {
+        return true;
+    }
+    IsPartnersChanged(SelectedTab) {
+        return false;
+    }
+
+    PrepareContactList() {
+
+        //var glAccountId = this.GetLookUpFieldValue(this.Customer);
+        if (this.CustomerId != null) {
+            this.GLAccountCardContacts(this.CustomerId);
+
+        }
+    }
+    GetLookUpFieldValue(field) {
+        if (field) {
+            if (field[0]["@nil"] != "true")
+                return field;
+        }
+        return null
+    }
+    GLAccountCardContacts(glAccountId: string) {
+        var cardExtendedPMService = new CardExtendedPMService();
+        cardExtendedPMService.GetAllConnectedPartnersByGLAccountId(glAccountId).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                var allContacts = response.Result;
+                if (allContacts != null && allContacts.length > 0) {
+                    allContacts.forEach(contact => {
+                        if (!AppTool.IsNullOrEmpty(contact)) this.ReportsPreview.AddPartner(contact.PartnerName, contact.PartnerId);
+                    });
+                    this.ReportsPreview.PartnersObslist.reverse();
+                }
+            }
+        });
+    }
+    GetMainCustomerFieldName() {
+        return 'CustomerId';
     }
 }

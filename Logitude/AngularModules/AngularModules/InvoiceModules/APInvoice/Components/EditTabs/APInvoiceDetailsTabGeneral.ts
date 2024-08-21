@@ -1,39 +1,39 @@
-import {Component, OnDestroy}  from '@angular/core';
-import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
-import {APInvoicePM} from '../../../../Invoice/EntityPMs/APInvoicePM';
-import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {APInvoiceLinePM} from '../../../../Invoice/EntityPMs/APInvoiceLinePM';
-import {APInvoiceTotalVATPM} from '../../../../Invoice/EntityPMs/APInvoiceTotalVATPM';
-import {AppTool, DateTool, FontTool, ArrayTool} from '../../../../Infrastructure/Tools';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {InvoiceTool} from '../../../../Invoice/Tools';
-import {SummaryItem, InvoiceTotalsClass} from '../../../../Invoice/Args';
-import {CurrencyRatesService, LastRate} from '../../../../Common/Services/CurrencyRatesService';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {VatTypePercentagePM} from '../../../../Common/EntityPMs/VatTypePercentagePM';
-import {VATTypesGroupPM} from '../../../../Common/EntityPMs/VATTypesGroupPM';
-import {NumbersPipe} from '../../../../Infrastructure/Pipes/NumbersPipe';
-import {CommonDomainService} from '../../../../Common/Services/CommonDomainService';
-import {CardListService} from '../../../../Common/Services/StandardLists/CardListService';
-import {CardList} from '../../../../Common/EntityLists/CardList';
-import {PaymentTermListService} from '../../../../Common/Services/StandardLists/PaymentTermListService';
-import {PaymentTermList} from '../../../../Common/EntityLists/PaymentTermList';
-import {CurrencyListService} from '../../../../Common/Services/StandardLists/CurrencyListService';
-import {CurrencyList} from '../../../../Common/EntityLists/CurrencyList';
-import {UpdateCurrencyRateComponent} from '../../../../CommonModules/CommonOthers/Components/UpdateCurrencyRate/UpdateCurrencyRateComponent';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {VatTypeList} from '../../../../Common/EntityLists/VatTypeList';
-import {VatTypeListService} from '../../../../Common/Services/StandardLists/VatTypeListService';
-import {ChargesTypeList} from '../../../../Common/EntityLists/ChargesTypeList';
-import {ChargesTypeListService} from '../../../../Common/Services/StandardLists/ChargesTypeListService';
-import {UserList} from '../../../../Common/EntityLists/UserList';
-import {UserListService} from '../../../../Common/Services/StandardLists/UserListService';
-import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
-import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
-import {GLAccountPMService} from '../../../../Accounting/Services/StandardPMs/GLAccountPMService';
-import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
-import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { Component, OnDestroy } from '@angular/core';
+import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
+import { APInvoicePM } from '../../../../Invoice/EntityPMs/APInvoicePM';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { APInvoiceLinePM } from '../../../../Invoice/EntityPMs/APInvoiceLinePM';
+import { APInvoiceTotalVATPM } from '../../../../Invoice/EntityPMs/APInvoiceTotalVATPM';
+import { AppTool, DateTool, FontTool, ArrayTool } from '../../../../Infrastructure/Tools';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { InvoiceTool } from '../../../../Invoice/Tools';
+import { SummaryItem, InvoiceTotalsClass } from '../../../../Invoice/Args';
+import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { VatTypePercentagePM } from '../../../../Common/EntityPMs/VatTypePercentagePM';
+import { VATTypesGroupPM } from '../../../../Common/EntityPMs/VATTypesGroupPM';
+import { NumbersPipe } from '../../../../Infrastructure/Pipes/NumbersPipe';
+import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
+import { CardListService } from '../../../../Common/Services/StandardLists/CardListService';
+import { CardList } from '../../../../Common/EntityLists/CardList';
+import { PaymentTermListService } from '../../../../Common/Services/StandardLists/PaymentTermListService';
+import { PaymentTermList } from '../../../../Common/EntityLists/PaymentTermList';
+import { CurrencyListService } from '../../../../Common/Services/StandardLists/CurrencyListService';
+import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
+import { UpdateCurrencyRateComponent } from '../../../../CommonModules/CommonOthers/Components/UpdateCurrencyRate/UpdateCurrencyRateComponent';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { VatTypeList } from '../../../../Common/EntityLists/VatTypeList';
+import { VatTypeListService } from '../../../../Common/Services/StandardLists/VatTypeListService';
+import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList';
+import { ChargesTypeListService } from '../../../../Common/Services/StandardLists/ChargesTypeListService';
+import { UserList } from '../../../../Common/EntityLists/UserList';
+import { UserListService } from '../../../../Common/Services/StandardLists/UserListService';
+import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { GLAccountPMService } from '../../../../Accounting/Services/StandardPMs/GLAccountPMService';
+import { GLAccountPM } from '../../../../Accounting/EntityPMs/GLAccountPM';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { GLAccountList } from 'Accounting/EntityLists/GLAccountList';
 import { GLAccountListService } from 'Accounting/Services/StandardLists/GLAccountListService';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
@@ -57,9 +57,9 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public IsFullAccounting: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     InvoiceLineHeader: string;
-    accountingActivated: boolean= false;
-    DisplayFieldsFromList:string;
-    DisplayLocalFieldsFromList:string;
+    accountingActivated: boolean = false;
+    DisplayFieldsFromList: string;
+    DisplayLocalFieldsFromList: string;
     VendorLovSizeForFullAccounting: number;
     forceShowLocalAndEnglishColumns = false;
     public AllowVatTypes: boolean = true;
@@ -90,17 +90,16 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
         else {
             this.InvoiceLineHeader = TextCodeTranslator.Translate("APInvoiceLine.O.Name");
-         }
+        }
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
         this.InitializeVendorLov();
-        
-        if (this.EntityPM.StatusCode == null)
-        {
+
+        if (this.EntityPM.StatusCode == null) {
             this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, true);
         }
-  
+
     }
     InitLOVFilters() {
         this.GLAccountsFilterItems = new ApiQueryFilters();
@@ -125,8 +124,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
 
 
-    FillLOVColumnsWidths()
-    {
+    FillLOVColumnsWidths() {
         this.ColumnsWidths = [
             { ColumnName: 'Code', Width: 120 },
             { ColumnName: 'CalculatedEnglishName', Width: 120 },
@@ -657,7 +655,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                         myQroupItem.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
                         myQroupItem.ExternalVatCard = SessionLocator.AccountingSettingPM.PayableVATCard;
                         myQroupItem.ExternalTAXItemId = lineVatType.ExternalTAXItemId;
-                       // myQroupItem.VatRecognizedPercentage = lineVatType.RecognizedPercentage;
+                        // myQroupItem.VatRecognizedPercentage = lineVatType.RecognizedPercentage;
                         group_Source.push(myQroupItem);
                     }
 
@@ -677,7 +675,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                             var vatType = this.AllVatTypes.filter(f => f.Id == itemGroup.SingleVATTypeId)[0];
                             if (vatType) {
                                 myQroupItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
-                              //  myQroupItem.VatRecognizedPercentage = vatType.RecognizedPercentage;
+                                //  myQroupItem.VatRecognizedPercentage = vatType.RecognizedPercentage;
                                 myQroupItem.VatTypePercentage = this.GetVatTypePercentage(vatType.Id);
                             }
 
@@ -732,7 +730,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 itemTotalVAT.InvoiceCurrencyVATAmount = AppTool.Round((itemTotalVAT.InvoiceCurrencyVatableAmount * itemTotalVAT.VatPercent / 100), 2);
                 itemTotalVAT.ProfitCurrencyVATAmount = AppTool.Round((itemTotalVAT.ProfitVatableAmount * itemTotalVAT.VatPercent / 100), 2);
                 itemTotalVAT.VatTypeCell = itemTotalVAT.VatTypeName + " (" + pipe.transform(itemTotalVAT.VatPercent, "N3") + "%)";
-                itemTotalVAT.VatRecognizedPercentage = itemVatType.RecognizedPercentage/100;
+                itemTotalVAT.VatRecognizedPercentage = itemVatType.RecognizedPercentage / 100;
                 this.EntityPM.AddAPInvoiceTotalVATPM(itemTotalVAT);
             });
         }
@@ -923,7 +921,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 var list: CardList = myResponse.Result;
                 if (list == null) {
                     this.GLAccountId = null;
-                    this.BillToId =null;
+                    this.BillToId = null;
                     this.VATNumber = null;
                     this.InvoiceCurrencyId = SessionLocator.TenantPM.CurrencyId;
                     this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
@@ -947,8 +945,8 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                         this.myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
                             if (!myResponse.HasError) {
                                 this.glaccount = myResponse.Result;
-                                
-                                if(this.glaccount.PaymentTerms)
+
+                                if (this.glaccount.PaymentTerms)
                                     this.PaymentTermId = this.glaccount.PaymentTerms;
                                 else
                                     this.PaymentTermId = this.glaccount.PaymentTermId;
@@ -967,31 +965,30 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     if (!AppTool.IsNullOrEmpty(list.VatTypeId)) {
 
                     }
-                   
+
                 }
-                if(this.IsFullAccounting)
-                this.GetConnectedGLAccount();
-                else 
-                this.GetConnectedBillTo();
-                
+                if (this.IsFullAccounting)
+                    this.GetConnectedGLAccount();
+                else
+                    this.GetConnectedBillTo();
+
 
             }
         });
     }
 
     GetConnectedBillTo() {
-        if (this.BillToId)
-        {
+        if (this.BillToId) {
 
             this.CurrentSession.StartBusyIndicatorLoading();
-            this.myCardListService.getSingle(this.BillToId).subscribe((myResult:any) => {
+            this.myCardListService.getSingle(this.BillToId).subscribe((myResult: any) => {
                 var myResponse: ServiceResponse = myResult;
                 this.CurrentSession.StopBusyIndicator();
                 if (!myResponse.HasError) {
                     var cardList: CardList = myResponse.Result;
                     if (!AppTool.IsNullOrEmpty(cardList.InvoiceCurrencyId)) {
                         this.InvoiceCurrencyId = cardList.InvoiceCurrencyId;
-                        
+
                     }
 
                 }
@@ -1001,10 +998,9 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     vendorGLAccount: GLAccountList;
     _GLAccountListService: GLAccountListService = new GLAccountListService();
     GetConnectedGLAccount() {
-        if (this.GLAccountId)
-        {
+        if (this.GLAccountId) {
             this.CurrentSession.StartBusyIndicatorLoading();
-            this._GLAccountListService.getSingle(this.GLAccountId).subscribe((myResult:any) => {
+            this._GLAccountListService.getSingle(this.GLAccountId).subscribe((myResult: any) => {
                 console.log("[_GLAccountListService.getSingle]", myResult);
                 this.CurrentSession.StopBusyIndicator();
 
@@ -1015,13 +1011,13 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     this.EntityPM.VendorGLAccountId = gla.Id;
                     if (!gla.IsMultiCurrency) {
                         this.InvoiceCurrencyId = gla.CurrencyId;
-                        
+
                     }
                 }
             });
-        }else{
+        } else {
             this.vendorGLAccount = null;
-              this.EntityPM.VendorGLAccountId = null;
+            this.EntityPM.VendorGLAccountId = null;
         }
     }
 
@@ -1115,9 +1111,14 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     set ConfirmationNumber(newValue: string) {
         if (this.EntityPM.ConfirmationNumber != newValue) {
             this.EntityPM.ConfirmationNumber = newValue;
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.ConfirmationNumber) && (this.EntityPM.ConfirmationNumber.length < 9 || this.EntityPM.ConfirmationNumber.length > 30)) {
+                this.UIProperties.SetValidity("ConfirmationNumber", this.ObjectTableName, false, TextCodeTranslator.Translate("APInvoice.O.ConfirmationNumberLength"));
+            } else {
+                this.UIProperties.SetValidity("ConfirmationNumber", this.ObjectTableName, true, "");
+            }
         }
     }
-   
+
     get AccountingDate() { return this.EntityPM.AccountingDate; }
     set AccountingDate(value: Date) {
         if (this.EntityPM.AccountingDate != value) {
@@ -1271,7 +1272,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         line.ForiegnExchangeRate = this.InvoiceCurrencyExchangeRate;
 
         var myService: CardListService = new CardListService();
-        myService.getSingle(this.VendorId).subscribe((myResult:any) => {
+        myService.getSingle(this.VendorId).subscribe((myResult: any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 var card: CardList = myResponse.Result;
@@ -1315,7 +1316,7 @@ export class APInvoiceLineItem extends BaseComponent {
         this.SetUIProperties();
         this.GetUserName();
         this.setColors();
-        this.ReadVatTypeData();     
+        this.ReadVatTypeData();
     }
 
     private GetUserName() {
@@ -1480,10 +1481,10 @@ export class APInvoiceLineItem extends BaseComponent {
     }
     private SetUIProperties_VAT() {
         this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, this.IsScreenEnabled);
-          
+
         //if (this.VatIsMultiPercentage) {
-            this.UIProperties.SetEnabled("VatPercentage", this.ObjectTableName, false);
-       // }
+        this.UIProperties.SetEnabled("VatPercentage", this.ObjectTableName, false);
+        // }
 
         var isVatPercentageRequired = false;
 
@@ -1698,7 +1699,7 @@ export class APInvoiceLineItem extends BaseComponent {
             chargesTypeService.getSingle(this.ChargesTypeId).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
                     this.chargesTypeList = myResponse.Result;
-                    if (this.chargesTypeList  != null) {
+                    if (this.chargesTypeList != null) {
                         this.ChargesTypeCode = this.chargesTypeList.Code;
                         this.ChargesTypeName = this.chargesTypeList.EnglishName;
                         this.VatTypeId = this.chargesTypeList.VatTypeId;
@@ -1787,7 +1788,7 @@ export class APInvoiceLineItem extends BaseComponent {
                         this.invoiceLinePM.ExternalTAXItemId = list.ExternalTAXItemId;
                         if (list.RecognizedPercentage != null) {
                             this.invoiceLinePM.VatRecognizedPercentage = list.RecognizedPercentage / 100;
-                        } else { this.invoiceLinePM.VatRecognizedPercentage =  null;}
+                        } else { this.invoiceLinePM.VatRecognizedPercentage = null; }
 
 
                         if (list.IsMultiPercentage) {

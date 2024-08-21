@@ -2179,7 +2179,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             Reference1 = theEntityPm.InvoiceNumber,
                                                             Reference2 = theEntityPm.MainEntityReference,
                                                             Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
-                                                            Notes = d.Notes!=null?d.Notes:theEntityPm.InternalNotes,
+                                                            Notes =!string.IsNullOrEmpty(d.Notes) && !string.IsNullOrWhiteSpace(d.Notes) ? d.Notes:theEntityPm.InternalNotes,
                                                         }).ToList();
 
                     journalDebitLines.AddRange(journalLines);
@@ -2199,7 +2199,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                     foreach (APInvoiceTotalVATPM vat in totalVats)
                     {
-                        vat.LocalVatAmountWithVatRecognized = Math.Round((vat.VatRecognizedPercentage != null) ? (((decimal)vat.VatRecognizedPercentage / 100) * (decimal)vat.LocalVATAmount) : (decimal)vat.LocalVATAmount, 2);
+                        //     Moved into aPInvoiceTotalVATQuery.GetInvoiceTotalVatsForInvoiceWithoutZeroVATPercent()
+                        //     vat.LocalVatAmountWithVatRecognized = Math.Round((vat.VatRecognizedPercentage != null) ? (((decimal)vat.VatRecognizedPercentage / 100) * (decimal)vat.LocalVATAmount) : (decimal)vat.LocalVATAmount, 2);
+
                         journalLine = new JournalLinePM()
                         {
                             Tenant = tenant,

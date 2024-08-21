@@ -1174,6 +1174,136 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             return listQuery.AsQueryable();
             //}
         }
+        [Query(HasSideEffects = true)]
+        public IQueryable<LogBoxShipmentList> GetLogBoxShipmentFilters(byte[] xmlFilters, int tenant)
+        {
+
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
+            shipmentRepository = new ShipmentRepository(tenant);
+            shipmentRepository.SetSecondDBforContext(tenant);
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            #region Restrictions region
+            AddRestrictionFilters(queryOperations, "Shipment", tenant);
+            BranchPermitionsFilter.AddUserBranchRestrictionFilters(queryOperations, tenant);
+
+            if (SecurityUtility.CheckTableContactFeature("User", "PRODUCTS", tenant))
+            {
+                ProductPermitionsFilter.AddUserProductRestrictionFilters(queryOperations, tenant);
+            }
+            #endregion
+
+            LogBoxShipmentCustomFilter customfilters = new LogBoxShipmentCustomFilter(tenant);
+            IQueryable<LogBoxShipmentDataView> shipments = shipmentRepository.GetLogBoxShipmentViewsByTenant(tenant);
+            var MySearchFilter = queryOperations.QueryFilterItems.Where(a => a.FieldName == "SearchFields").FirstOrDefault();
+
+            if (MySearchFilter != null)
+            {
+                var SearchTerm = MySearchFilter.FieldValue.ToString();
+                shipments = shipments.Where(a => a.SearchFields.Contains(SearchTerm));
+                queryOperations.QueryFilterItems.Remove(MySearchFilter);
+            }
+            shipments = customfilters.GetFilteredQuery(queryOperations, shipments);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            var dddddd = Thread.CurrentPrincipal;
+
+            shipments = filter.GetFilteredQuery<LogBoxShipmentDataView>(nonListQueryOperation, shipments);
+            int skippedShipments = queryOperations.PageIndex;
+
+            ShipmentQuery myShipmentQuery = new ShipmentQuery(shipmentRepository);
+
+            var query2 = myShipmentQuery.GetIQueryableLogBoxShipmentList(shipments, tenant);
+
+            query2 = filter.GetFilteredQuery<LogBoxShipmentList>(listQueryOperation, query2);
+
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                PropertyInfo propInfo = typeof(LogBoxShipmentList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> shipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", tenant).ToList();
+
+                ObjectField objectField = (from a in shipmentObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
+
+                if (objectField != null)
+                {
+                    if (!objectField.IsCustom)
+                    {
+                        switch (objectField.DataTypeCode.ToLower())
+                        {
+                            case "text":
+                                {
+                                    query2 = sortClass.GetSorterQuery<LogBoxShipmentList, string>(queryOperations, query2);
+                                    break;
+                                }
+                            case "double":
+                                {
+                                    query2 = sortClass.GetSorterQuery<LogBoxShipmentList, double>(queryOperations, query2);
+                                    break;
+                                }
+                            case "datetime":
+                                {
+                                    query2 = sortClass.GetSorterQuery<LogBoxShipmentList, DateTime>(queryOperations, query2);
+                                    break;
+                                }
+                            case "integer":
+                                {
+                                    query2 = sortClass.GetSorterQuery<LogBoxShipmentList, int>(queryOperations, query2);
+                                    break;
+                                }
+                            case "lookup":
+                                {
+                                    query2 = sortClass.GetSorterQuery<LogBoxShipmentList, string>(queryOperations, query2);
+                                    break;
+                                }
+                            case "boolean":
+                                {
+                                    query2 = sortClass.GetSorterQuery<LogBoxShipmentList, bool>(queryOperations, query2);
+                                    break;
+                                }
+                            default:
+                                {
+                                    query2 = query2.OrderByDescending(d => d.CreateDateTime);
+                                    break;
+                                }
+                        }
+                    }
+                    else
+                    {
+                        query2 = sortClass.GetSorterQuery<LogBoxShipmentList, string>(queryOperations, query2);
+                    }
+                }
+            }
+            else
+            {
+                query2 = query2.OrderByDescending(d => d.CreateDateTime);
+            }
+
+            query2 = System.Data.Entity.QueryableExtensions.Skip(query2, () => skippedShipments);
+            query2 = System.Data.Entity.QueryableExtensions.Take(query2, () => queryOperations.PageSize);
+            //query2 = query2.Skip(skippedShipments);
+            //query2 = query2.Take(queryOperations.PageSize);
+
+            List<LogBoxShipmentList> listQuery = query2.ToList();
+
+            FillContainerNumbersLogBox(listQuery);
+
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            customFieldResolver.SetCustomFieldsValues("Shipment", tenant, listQuery.Cast<object>().ToList());
+
+            return listQuery.AsQueryable();
+            //}
+        }
 
         private void FillContainerNumbers(List<ShipmentList> listQuery)
         {
@@ -1186,7 +1316,17 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                 }
             });
         }
-
+        private void FillContainerNumbersLogBox(List<LogBoxShipmentList> listQuery)
+        {
+            listQuery.ForEach(shipment =>
+            {
+                bool isInlandDomesticShipment = (shipment.DirectionId == "D" && shipment.TransportModeId == "I");
+                if (shipment.TransportModeId != "O" || !string.IsNullOrEmpty(shipment.ContainersNumbersandTypesArray))
+                {
+                    shipment.TruckContainerNumber = shipment.TransportModeId == "O" ? Regex.Replace(shipment.ContainersNumbersandTypesArray, "(\\[.*?\\])", "") : isInlandDomesticShipment ? shipment.TruckNumber : shipment.CarrierNumber;
+                }
+            });
+        }
         public List<ShipmentList> GetRecentActivityShipments(int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
@@ -1215,6 +1355,59 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             shipmentQuery = new ShipmentQuery(tenant);
             InvoiceEntityFields result = shipmentQuery.GetInvoiceEntityFields(entityId, tenant);
             return result;
+        }
+        public int GetLogBoxShipmentFiltersCount(byte[] xmlFilters, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
+
+            shipmentRepository = new ShipmentRepository(tenant);
+            shipmentRepository.SetSecondDBforContext(tenant);
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            #region Restrictions region
+            AddRestrictionFilters(queryOperations, "Shipment", tenant);
+            BranchPermitionsFilter.AddUserBranchRestrictionFilters(queryOperations, tenant);
+
+            if (SecurityUtility.CheckTableContactFeature("User", "PRODUCTS", tenant))
+            {
+                ProductPermitionsFilter.AddUserProductRestrictionFilters(queryOperations, tenant);
+            }
+            #endregion
+
+            GenericFilter filter = new GenericFilter();
+            LogBoxShipmentCustomFilter customfilters = new LogBoxShipmentCustomFilter(tenant);
+            IQueryable<LogBoxShipmentDataView> shipments = shipmentRepository.GetLogBoxShipmentViewsByTenant(tenant);
+            shipments = customfilters.GetFilteredQuery(queryOperations, shipments);
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            shipments = filter.GetFilteredQuery<LogBoxShipmentDataView>(nonListQueryOperation, shipments);
+            int skippedShipments = queryOperations.PageIndex;
+
+
+            ShipmentQuery myShipmentQuery = new ShipmentQuery(shipmentRepository);
+
+            var query2 = myShipmentQuery.GetIQueryableLogBoxShipmentList(shipments, tenant);
+
+            query2 = filter.GetFilteredQuery<LogBoxShipmentList>(listQueryOperation, query2);
+
+            int count;
+            if (queryOperations.GetAll)
+            {
+                count = query2.Count();
+            }
+            else
+            {
+                count = query2.Take(1001).Count();
+            }
+
+            return count;
         }
 
         public int GetShipmentFiltersCount(byte[] xmlFilters, int tenant)

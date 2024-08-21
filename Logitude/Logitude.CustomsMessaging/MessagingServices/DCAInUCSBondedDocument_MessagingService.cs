@@ -474,9 +474,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 DocumentTypeQueryService documentTypeQueryService = new DocumentTypeQueryService(_DocumentsFilingPM.Tenant);
                 DocumentTypePM documentTypePM = documentTypeQueryService.GetDocumentTypeCodeById(_DocumentsFilingPM.DocumentTypeId, _DocumentsFilingPM.Tenant);
-
-                var declarationQueryService = new Logitude.Customs.BL.EntityQueryServices.DeclarationQueryService(_DocumentsFilingPM.Tenant);
-                DeclarationPM declartionPM = declarationQueryService.GetDeclarationByExportFile(_DocumentsFilingPM.Tenant, _DocumentsFilingPM.ExternalEntityReference);
+                DeclarationPM declartionPM = null;
+                if (_DocumentsFilingPM.ExternalEntityName == "EFIFILEM")
+                {
+                    var declarationQueryService = new Logitude.Customs.BL.EntityQueryServices.DeclarationQueryService(_DocumentsFilingPM.Tenant);
+                    declartionPM = declarationQueryService.GetDeclarationByExportFile(_DocumentsFilingPM.Tenant, _DocumentsFilingPM.ExternalEntityReference);
+                }
                 if (documentTypePM != null && !String.IsNullOrWhiteSpace(documentTypePM.Code))
                 {
                     LogitudeSettings.HandleLogMe("  if (documentTypePM != null && !String.IsNullOrWhiteSpace(documentTypePM.Code))" + documentTypePM?.Code, false, "SendBondedCustomDocument", stopLogAt);

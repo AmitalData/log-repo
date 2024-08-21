@@ -179,6 +179,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.UpdateDeclaration).HasColumnName("UpdateDeclaration").HasMaxLength(1).IsUnicode(false);
 
             this.Property(t => t.IsChange).HasColumnName("IsChange");
+
+            this.Property(t => t.OpenDate).HasColumnName("OpenDate");
         }
     }
 }

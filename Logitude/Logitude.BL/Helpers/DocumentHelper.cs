@@ -314,10 +314,13 @@ namespace Logitude.BL.Helpers
                 DocumentRepository documentRepository = new DocumentRepository(commoncontext);
                 DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(commoncontext);
                 DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
-                TenantRepository tenantRepository = new TenantRepository(tenant);
+                DocumentOutCopyQuery DocumentOutCopyQuery = new DocumentOutCopyQuery(tenant);
 
+
+               TenantRepository tenantRepository = new TenantRepository(tenant);
                 DocumentsFilingPM myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(invocie.Id, tenant).FirstOrDefault();
-                Document document = documentRepository.GetSingleDocument(tenant, myDocumentFilings?.DocumentId);
+                DocumentOutCopyPM documentOutCopyPM = DocumentOutCopyQuery.GetDocumentOutCopiesForDocumentOutAndType(myDocumentFilings.Id, tenant, "999G");
+                Document document = documentRepository.GetSingleDocument(tenant, documentOutCopyPM?.DocumentId);
                 ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
                   var vatNumber = tenantRepository.GetSingleByTenant(tenant).VatNumber;
 
@@ -798,19 +801,19 @@ namespace Logitude.BL.Helpers
             ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
 
             if (string.IsNullOrEmpty(Billto)) return "";
-            Customer myCustomer = (from customer in objectContext.Customers
-                                   where customer.Id == Billto
+            Simplog.Data.CommonDataModel.EntityPOCOs.Card myCard = (from card in objectContext.Cards
+                                   where card.Id == Billto
                                    // join cardContact in objectContext.CardContacts on card.Id equals cardContact.CardId
-                                   select customer).FirstOrDefault();
+                                   select card).FirstOrDefault();
             string email = "";
-            if (myCustomer != null && !string.IsNullOrEmpty(myCustomer.EmailForSendingSingArinvoice))
+            if (myCard != null && !string.IsNullOrEmpty(myCard.EmailForSendingSingArinvoice))
             {
-                email = objectContext.Contacts.Where(contact => contact.Id == myCustomer.EmailForSendingSingArinvoice).FirstOrDefault().Email;
-                if (!string.IsNullOrEmpty(email))
-                {
-                    this.isInterestReport = myCustomer.SendingInterestReport != null ? true : false;
-                    return email;
-                }
+               email = objectContext.Contacts.Where(contact => contact.Id == myCard.EmailForSendingSingArinvoice).FirstOrDefault().Email;
+            if (!string.IsNullOrEmpty(email))
+               {
+                    this.isInterestReport = myCard.SendingInterestReport != null ? true : false;
+                   return email;
+              }
 
             }
             return email;

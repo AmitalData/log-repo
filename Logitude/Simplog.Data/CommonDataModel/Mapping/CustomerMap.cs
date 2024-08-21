@@ -51,7 +51,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ActivationRequestedByUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.LastOpportunitySubject).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.LastOpportunityStatus).HasMaxLength(60).IsUnicode(false);
-            this.Property(t => t.EmailForSendingSingArinvoice).HasMaxLength(40).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Customers");
@@ -115,7 +114,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.PrimaryContactName).HasColumnName("PrimaryContactName");
             this.Property(t => t.PrimaryContactEmail).HasColumnName("PrimaryContactEmail");
             this.Property(t => t.PrimaryContactPhone).HasColumnName("PrimaryContactPhone");
-            this.Property(t => t.EmailForSendingSingArinvoice).HasColumnName("EmailForSendingSingArinvoice");
             this.Property(t => t.ActivationDate).HasColumnName("ActivationDate");
             this.Property(t => t.InactiveDate).HasColumnName("InactiveDate");
             this.Property(t => t.ActivationRequestDate).HasColumnName("ActivationRequestDate");

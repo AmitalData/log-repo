@@ -568,15 +568,10 @@ export class CustomerPM extends ObjectCustomFieldPM {
     public set PrimaryContactPhone(newValue: string) { if (this.primaryContactPhone != newValue) { this.primaryContactPhone = newValue; this.MarkAsDirty("PrimaryContactPhone"); } }
        
 	 
-    private emailForSendingSingArinvoice: string;
-    public get EmailForSendingSingArinvoice() { return this.emailForSendingSingArinvoice; }
-    public set EmailForSendingSingArinvoice(newValue: string) { if (this.emailForSendingSingArinvoice != newValue) { this.emailForSendingSingArinvoice = newValue; this.MarkAsDirty("EmailForSendingSingArinvoice"); } }
+  
        
 	 
-    private sendingInterestReport: boolean;
-    public get SendingInterestReport() { return this.sendingInterestReport; }
-    public set SendingInterestReport(newValue: boolean) { if (this.sendingInterestReport != newValue) { this.sendingInterestReport = newValue; this.MarkAsDirty("SendingInterestReport"); } }
-       
+   
 	 
     private customerStatusName: string;
     public get CustomerStatusName() { return this.customerStatusName; }
@@ -1483,4 +1478,4 @@ export class CustomerPM extends ObjectCustomFieldPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

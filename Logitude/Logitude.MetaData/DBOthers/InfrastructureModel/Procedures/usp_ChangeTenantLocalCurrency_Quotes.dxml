@@ -3,7 +3,7 @@
   DBType="Main"
   Name="usp_ChangeTenantLocalCurrency_Quotes"
   Schema="dbo"
-  Module="Infrastructure">
+  Module="Quote">
   <SqlScript>
     <![CDATA[
 

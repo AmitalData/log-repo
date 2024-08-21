@@ -119,7 +119,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			certificateOfOriginPM.QueryUrl = customResponse.CertificateOfOriginRequestFeedback.QueryURL;
 			certificateOfOriginPM.IssueDateIfReleased = customResponse.CertificateOfOriginRequestFeedback.IssueDateIfReleased;
 
-			if(requestParams.RequestReasonCode == 1)
+			if(requestParams.RequestReasonCode == 10 && certificateOfOriginPM.COONumber != null)
+				certificateOfOriginPM.RequestReasonCode = "12";
+
+
+            if (requestParams.RequestReasonCode == 1)
 			  certificateOfOriginPM.IsSubmitted = true;
 
 			DeclarationQueryService declarationQueryService = new DeclarationQueryService(certificateOfOriginPM.Tenant);
@@ -317,9 +321,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				{
 					certificateOfOriginPM.UpdateDeclaration = "A";
 
-					if (declarationPM.IsSubmitDeclaration != true) {
+					/*if (declarationPM.IsSubmitDeclaration != true) {
 						SendDeclaration(declarationPM, certificateOfOriginPM.Id);
-					}
+					}*/
 				}
 			}
 		}
@@ -341,7 +345,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				{
 					foreach (var supplierInvoiceItem in supplierInvoice.SupplierInvoiceItems)
 					{
-						if (supplierInvoiceItem.PreferenceDocumentNumber != certificateOfOriginPM.COONumber && (string.IsNullOrEmpty(supplierInvoiceItem.OriginCountryCode) || supplierInvoiceItem.OriginCountryCode == "IL"))
+						if (supplierInvoiceItem.PreferenceDocumentNumber != certificateOfOriginPM.COONumber && (string.IsNullOrEmpty(supplierInvoiceItem.OriginCountryCode) || supplierInvoiceItem.OriginCountryCode == "IL") && supplierInvoiceItem.TradeAgreementCode == supplierInvoice.PreferenceDocumentTypeCode)
 						{
 							if (!IsSubmitDeclaration) 
 							{

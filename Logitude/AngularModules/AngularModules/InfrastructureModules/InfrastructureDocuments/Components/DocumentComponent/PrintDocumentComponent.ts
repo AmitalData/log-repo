@@ -94,6 +94,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     private CurrentSession = SessionLocator.SelectedSession;
     private documentsExecutionLogListExtendedService: DocumentsExecutionLogListExtendedService;
     IsTemplateDisabled: boolean = false;
+    public EntityPM: any = null;
     constructor(public _documentTypeCustomFieldService: DocumentTypeCustomFieldService, public _documentOutPMService: DocumentOutPMService, public _documentTypePMService: DocumentTypePMExtendedService, public _exportDocumentService: ExportDocumentService, public _documentTypeTemplateListExtendedService: DocumentTypeTemplateListExtendedService, public _htmlEditorService: HtmlEditorService) {
         super();
 
@@ -107,11 +108,11 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
     ngOnInit() {
         
-        var entityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
         var IsFromInterestBatchInvoice = false;
 
-        this.Signed=entityPM?.IsSigned!=null && entityPM?.IsSigned!=2?true:false;
-        if( entityPM.IsFromInterestBatchInvoice) {
+        this.Signed=this.EntityPM?.IsSigned!=null && this.EntityPM?.IsSigned!=2?true:false;
+        if( this.EntityPM.IsFromInterestBatchInvoice) {
             IsFromInterestBatchInvoice = true;
         }
         if (ObjectsLocator.GlobalSetting.WorkEnvironment === 'cloud' && IsFromInterestBatchInvoice == false && SessionLocator.TenantPM.AccountingActivated && this.DataContext.invoiceType != "IT") {
@@ -703,6 +704,8 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                     }
                 } 
             }
+            if(this.ObjectTableName == "ARInvoice" && this.EntityPM?.IsSigned)
+                   this.Items = this.Items.filter(x => x.IsOriginal == true)
             this.Items = this.Items.sort(d => d.IndexOrder);
         }
     }

@@ -21,13 +21,22 @@ namespace Logitude.Server.Tools.Helpers
                 {
 
                     string plaintext = null;
-                    byte[] result = null;
+                    byte[] result;
 
                     using (Aes aesAlg = Aes.Create())
                     {
                         aesAlg.Key = GetAesKey(tenant, aesKey);
 
-                        byte[] IV = new byte[aesAlg.BlockSize / 8];
+                        // Validate key size
+                        if (aesAlg.Key.Length != 32)
+                            throw new Exception("Invalid AES key size. Key must be 32 bytes.");
+
+                        // Validate data length
+                        if (data.Length < aesAlg.BlockSize / 8)
+                            throw new Exception("Invalid data length. Data too short to contain IV.");
+
+                        // Separate IV and ciphertext
+                        byte[] IV = new byte[aesAlg.BlockSize / 8]; // 16 bytes for AES
                         byte[] cipherText = new byte[data.Length - IV.Length];
 
                         Array.Copy(data, IV, IV.Length);
@@ -50,17 +59,21 @@ namespace Logitude.Server.Tools.Helpers
                                     plaintext = srDecrypt.ReadToEnd();
                                 }
                             }
-                        }
+                        } 
 
                     }
 
                     result = System.Convert.FromBase64String(plaintext);
                     return result;
                 }
+                catch (CryptographicException ex)
+                {
+                    throw new CryptographicException("Cryptographic error: " + ex.Message);
+                }
                 catch (Exception ex)
                 {
-                   
-                    throw new Exception(ex.Message);
+
+                    throw new Exception("Decryption error: " + ex.Message);
                 }
 
             }
@@ -130,7 +143,7 @@ namespace Logitude.Server.Tools.Helpers
                 Tenant currentTenant = tenantRepository.GetSingleTenantByIdAndTenant(tenant, true);
                 if (currentTenant != null) aesKey = currentTenant.StorageEncryptionKey;
             }
-          
+
             if (!string.IsNullOrEmpty(aesKey))
             {
                 if (aesKey.Length < 32) throw new Exception("In Valid Aes key");

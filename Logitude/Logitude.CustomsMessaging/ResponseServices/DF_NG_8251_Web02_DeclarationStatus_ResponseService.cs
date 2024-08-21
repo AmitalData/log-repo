@@ -26,6 +26,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Customs.BL.Messaging.Customs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -385,34 +386,41 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 								if (!string.IsNullOrEmpty(declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode) && (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "13" || declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "14") && (ResVersionId >= DecVersionId))
                                 {
-
+                                    
                                     if (declarationPM.PaymentDate.HasValue && !declarationPM.HatraDate.HasValue)
                                     {
-                                        declarationPM.DeclarationStatusTypeCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
-                                        declarationPM.PaymentDate = null;
-                                        declarationPM.PaymentOrderNumber = null;
-                                        declarationPM.PaymentStatusCode = null;
-                                        declarationPM.CourierCustomStatusCode = null;
-                                        declarationPM.CourierSuspentionCode = null;
-                                        declarationPM.CourierSuspentionReasonCode = null;
-
-                                        //Delete 
-                                        var mydeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
-                                        var declarationPaymentPM = mydeclarationPaymentQueryService.GetSingle(declarationPM.Id, true, false);
-                                        if (declarationPaymentPM != null)
+                                        ObjectTableRepository objectTableRepository = new ObjectTableRepository(declarationPM.Tenant);
+                                        var declarationObjectTable = objectTableRepository.GetObjectTableByName("Customs.Declaration", declarationPM.Tenant,true);
+                                        var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(declarationPM.Tenant);
+                                        var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(declarationPM.Tenant, "2755", declarationObjectTable?.Id, declarationPM.Id, null, null, null, true, null);
+                                        if (RequestInProgressList == null || RequestInProgressList.Count == 0)
                                         {
-                                            declarationPaymentPM.ChangeSetOp = ChangeSetOperation.Delete;
-                                            if (declarationPaymentPM.DeclarationPaymentMethods.Any())
+                                            declarationPM.DeclarationStatusTypeCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
+                                            declarationPM.PaymentDate = null;
+                                            declarationPM.PaymentOrderNumber = null;
+                                            declarationPM.PaymentStatusCode = null;
+                                            declarationPM.CourierCustomStatusCode = null;
+                                            declarationPM.CourierSuspentionCode = null;
+                                            declarationPM.CourierSuspentionReasonCode = null;
+
+                                            //Delete 
+                                            var mydeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
+                                            var declarationPaymentPM = mydeclarationPaymentQueryService.GetSingle(declarationPM.Id, true, false);
+                                            if (declarationPaymentPM != null)
                                             {
-                                                foreach (var item in declarationPaymentPM.DeclarationPaymentMethods)
+                                                declarationPaymentPM.ChangeSetOp = ChangeSetOperation.Delete;
+                                                if (declarationPaymentPM.DeclarationPaymentMethods.Any())
                                                 {
-                                                    item.ChangeSetOp = ChangeSetOperation.Delete;
+                                                    foreach (var item in declarationPaymentPM.DeclarationPaymentMethods)
+                                                    {
+                                                        item.ChangeSetOp = ChangeSetOperation.Delete;
+                                                    }
                                                 }
+                                                DeclarationPaymentUpdateService declarationPaymentUpdateService = new DeclarationPaymentUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
+                                                declarationPaymentUpdateService.Update(declarationPaymentPM, true);
                                             }
-                                            DeclarationPaymentUpdateService declarationPaymentUpdateService = new DeclarationPaymentUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
-                                            declarationPaymentUpdateService.Update(declarationPaymentPM, true);
+                                            courierStatusUpdated = true;
                                         }
-                                        courierStatusUpdated = true;
                                     }
                                 }
 

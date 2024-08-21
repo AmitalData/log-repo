@@ -135,12 +135,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private bool isMandatory ;
+	  private string isMandatory ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public bool IsMandatory  
+       public string IsMandatory  
 	   {
 	    
 	     get
@@ -151,7 +151,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(isMandatory != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsMandatory",OldValue=isMandatory,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsMandatory",OldValue=isMandatory,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   isMandatory=value;
 		   }

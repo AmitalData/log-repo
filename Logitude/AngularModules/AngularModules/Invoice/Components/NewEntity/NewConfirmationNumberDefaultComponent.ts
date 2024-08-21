@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {Validator} from '../../../Infrastructure/Validators/Validator';
-import {BankAccountLitePM} from '../../EntityPMs/BankAccountLitePM';
-import {BankAccountLitePMService} from '../../Services/StandardPMs/BankAccountLitePMService';
-import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { Component, OnInit } from '@angular/core';
+import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { Validator } from '../../../Infrastructure/Validators/Validator';
+import { BankAccountLitePM } from '../../EntityPMs/BankAccountLitePM';
+import { BankAccountLitePMService } from '../../Services/StandardPMs/BankAccountLitePMService';
+import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ConfirmationNumberStatusPM } from 'Invoice/EntityPMs/ConfirmationNumberStatusPM';
 import { ConfirmationNumberDefaultPM } from 'Invoice/EntityPMs/ConfirmationNumberDefaultPM';
 import { Data } from '@angular/router';
@@ -13,7 +13,7 @@ import { ConfirmationNumberDefaultPMService } from 'Invoice/Services/StandardPMs
 
 
 @Component({
-    
+
     templateUrl: './NewConfirmationNumberDefaultComponent.html',
 })
 
@@ -47,7 +47,13 @@ export class NewConfirmationNumberDefaultComponent extends BaseComponent impleme
         }
     }
 
-   
+    get InActive() { return this.EntityPM.InActive; }
+    set InActive(newValue: boolean) {
+        if (this.EntityPM.InActive !== newValue) {
+            this.EntityPM.InActive = newValue;
+        }
+    }
+
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();

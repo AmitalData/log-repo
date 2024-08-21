@@ -351,12 +351,14 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
             {
                 try
                 {
+                    
                     string p_more1 = ""; string p_status1; string p_message1;
                     if (!String.IsNullOrWhiteSpace(System.Configuration.ConfigurationManager.AppSettings["SFTPLogoff"]))
                     {
                         Debug.WriteLine("sftpService.Logoff");
                         sftpService.Logoff(ref p_more1, out p_status1, out p_message1);
                     }
+                    sftpService.Dispose();
 
                 }
                 catch //(Exception)
