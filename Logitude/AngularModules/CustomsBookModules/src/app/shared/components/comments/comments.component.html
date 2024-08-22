@@ -24,7 +24,7 @@
                     <div class="commentSection">{{currentItem.CIH_GoodsDescription}}</div>
                 </div>
                 <div class="commentOptions">
-                    <a href="#" role="button" class="commentOptions_toggle">
+                    <a href="#" role="button" class="commentOptions_toggle" (click)="$event.preventDefault()">
                         <i role="img" aria-hidden="true" class="icon-dots"></i></a>
                     <div class="commentOptions_pop">
                         <ul>
@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div class="commentText">
-                    <p>{{ comment.RemarkDescription }}</p>
+                    <p class="commentSection">{{ comment.RemarkDescription }}</p>
                 </div>
             </div>
         </div>

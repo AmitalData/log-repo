@@ -49,14 +49,15 @@ export class DataRowComponent implements OnInit {
 	TariffList1: CB_TariffList;
 	TariffList2: CB_TariffList;
 	TariffListCount: number = 0;
+	TariffListData: CB_TariffList[] = [];
 	getCustomsBookAgreementLevelData() {
 		if (!this.showTaxData || !this.data.CustomsItemID || !this.data?.PH_MeasurementUnitID) return;
 		this.API_MainService.GetCustomsBookAgreementLevelData(this.data?.CustomsItemID, this.data?.PH_MeasurementUnitID).subscribe((data: any) => {
-			const result: CB_TariffList[] = data.body;
-			if (!result) return;
-			this.TariffList1 = result.find(x => x.TradeAgreementName == 'מכס כללי');
-			this.TariffList2 = result.find(x => x.TradeAgreementName == 'מס קניה');
-			this.TariffListCount = result.filter(x => x.TradeAgreementName != 'מס קניה').length;
+			this.TariffListData = data.body;
+			if (!this.TariffListData) return;
+			this.TariffList1 = this.TariffListData.find(x => x.TradeAgreementName == 'מכס כללי');
+			this.TariffList2 = this.TariffListData.find(x => x.TradeAgreementName == 'מס קניה');
+			this.TariffListCount = this.TariffListData.filter(x => x.TradeAgreementName != 'מס קניה').length;
 		});
 	}
 
@@ -88,13 +89,13 @@ export class DataRowComponent implements OnInit {
 	}
 
 	ClassificationNoDisplay(item, value: string): string {
-		if (item.IsLeaf ||  !this.fullClassificationLengthCharToDisplay || this.fullClassificationLengthCharToDisplay > 5) return value;
+		if (item.IsLeaf || !this.fullClassificationLengthCharToDisplay || this.fullClassificationLengthCharToDisplay > 5) return value;
 		if (value.length >= this.fullClassificationLengthCharToDisplay) {
 			return value.substring(0, this.fullClassificationLengthCharToDisplay);
 		}
 		return '';
 	}
-	
+
 	// ClassificationNoDisplay(item, value): string {
 	// 	debugger
 	// 	if (item.IsLeaf) return value;
@@ -107,15 +108,19 @@ export class DataRowComponent implements OnInit {
 	// }
 
 
-	isShowDetailsOpen:boolean = false;
+	isShowDetailsOpen: boolean = false;
 	@ViewChild('dynamicDiv') dynamicDiv: ElementRef;
 	ngAfterViewInit(): void {
 		this.showDetailsOpen.subscribe((value) => {
 			this.isShowDetailsOpen = value;
-			if (value) this.dynamicDivClick();
+			if (value) this.dynamicDivClick(); // when window open
 			else {
 				if (!this.showTaxData) this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "90%");
-				else {
+				else { // if close display window tax
+					if (!this.isShowDetailsOpen && this.TariffListData?.length == 0) {// if display close and not exist data in tax list
+						this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "90%")
+						return;
+					}
 					this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "27%");
 					this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'white-space', 'nowrap');
 					this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'text-overflow', 'ellipsis');
