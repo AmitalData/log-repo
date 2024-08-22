@@ -148,6 +148,7 @@
     <None Include="DBScripts\Post\202308060942_AddINTERFACETENANTDEFINITIONS.sxml" />
     <None Include="DBScripts\Post\202422051020_UpdateCustomsEnvironmentSettings.sxml" />
     <None Include="DBScripts\Post\20241006_UpdateTransportModeInTables.sxml" />
+    <None Include="DBScripts\Post\202408150924_AddDocumentsMetaDataType.sxml" />
     <None Include="DBScripts\Post\202414041313_AddClientItemsSearchFields.sxml" />
     <None Include="DBScripts\Post\202208281500_UpdateLoadingOfDeclaration.sxml" />
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />

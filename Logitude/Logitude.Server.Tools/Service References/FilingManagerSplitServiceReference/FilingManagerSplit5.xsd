@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Unifreight.FilingManager.Common" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Unifreight.FilingManager.Common" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="FolderType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="BLOB" />
+      <xs:enumeration value="TIFF" />
+      <xs:enumeration value="OCR" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FolderType" nillable="true" type="tns:FolderType" />
+</xs:schema>

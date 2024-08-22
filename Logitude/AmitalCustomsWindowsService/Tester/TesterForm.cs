@@ -58,6 +58,7 @@ namespace AmitalCustomsWindowsService.Tester
             _CBWorkerRole.Items.Add("RabbitMQReceiveWR");
             _CBWorkerRole.Items.Add("CustomsHSMSignWR");
             _CBWorkerRole.Items.Add("ReportExecutionLogWR");
+			_CBWorkerRole.Items.Add("DocumentAzureQueueWR");
 
            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Env:");
            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(LogitudeSettings.LogitudeURL);
@@ -280,7 +281,14 @@ namespace AmitalCustomsWindowsService.Tester
                         { ServiceStarted = true, };
                     }
                     break;
-                default:
+				case "DocumentAzureQueueWR":
+					{
+						d = new AmitalCustomsWindowsService.BL.WorkerOnce<DocumentAzureQueueWR>(
+				10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
+						{ ServiceStarted = true, };
+					}
+					break;
+				default:
                     return;
             }
 
@@ -751,8 +759,14 @@ namespace AmitalCustomsWindowsService.Tester
 
                     }
                     break;
+				case "DocumentAzureQueueWR":
+					{
+						var documentAzureQueueWR = new DocumentAzureQueueWR();
+						documentAzureQueueWR.DebugStep();
 
-                default:
+					}
+					break;
+				default:
                     CustomsWorkerRole.Test.clsTester.DebugRQStep(
                 _CBInterfaceID.Text, GetTenant(), _TBID.Text,
                 _CBWorkerRole.Text);

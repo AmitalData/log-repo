@@ -103,4 +103,18 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CourierDocQueueName"
+    Type="varchar"
+    Size="1024">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CourierDocQueueConn"
+    Type="varchar"
+    Size="1024">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

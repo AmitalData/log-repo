@@ -155,8 +155,9 @@ namespace AmitalCustomsWindowsService
                 AddWorkerFromAppSetting<RabbitMQReceiveWR>();
                 AddWorkerFromAppSetting<CustomsHSMSignWR>();
                 AddWorkerFromAppSetting<ReportExecutionLogWR>();
+				AddWorkerFromAppSetting<DocumentAzureQueueWR>();
 
-                bool courierFeaturePackageExist = true;
+				bool courierFeaturePackageExist = true;
                 if (courierFeaturePackageExist)
                 {
                     AddWorkerFromAppSetting<SendWEBAPIMessage2MamanWR>();

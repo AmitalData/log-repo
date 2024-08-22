@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://univ511:5057/Unifreight511/FilingManagerSplit?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Unifreight.FilingManager.Common" />
+  <xs:import schemaLocation="http://univ511:5057/Unifreight511/FilingManagerSplit?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://univ511:5057/Unifreight511/FilingManagerSplit?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://univ511:5057/Unifreight511/FilingManagerSplit?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Amital.UpDown.Common" />
+  <xs:import schemaLocation="http://univ511:5057/Unifreight511/FilingManagerSplit?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Amital.UpDown.Common.ServerUpload" />
+  <xs:import schemaLocation="http://univ511:5057/Unifreight511/FilingManagerSplit?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Unifreight.FilingManager.WindowsService.BL" />
+  <xs:element name="GetBase64StringByTenantComId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ComId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="CustomsTenant" type="xs:int" />
+        <xs:element minOccurs="0" name="strMoreParams" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strMsg" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBase64StringByTenantComIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetBase64StringByTenantComIdResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strMoreParams" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strMsg" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBase64StringByFolderTenantComId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ComId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="CustomsTenant" type="xs:int" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Unifreight.FilingManager.Common" minOccurs="0" name="myFolderType" type="q1:FolderType" />
+        <xs:element minOccurs="0" name="strMoreParams" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strMsg" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBase64StringByFolderTenantComIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetBase64StringByFolderTenantComIdResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strMoreParams" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strMsg" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPageTiffAsB64FromTarByTenantComIdPage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ComId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="CustomsTenant" type="xs:int" />
+        <xs:element minOccurs="0" name="currPage" nillable="true" type="xs:int" />
+        <xs:element minOccurs="0" name="strMoreParams" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strMsg" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPageTiffAsB64FromTarByTenantComIdPageResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetPageTiffAsB64FromTarByTenantComIdPageResult" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="NoTiffVersion" type="xs:boolean" />
+        <xs:element minOccurs="0" name="TiffPageLines" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strMoreParams" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strMsg" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PutStreamByTenantComId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="myBytes" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="CustomsTenant" type="xs:int" />
+        <xs:element minOccurs="0" name="ComId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Version" type="xs:int" />
+        <xs:element minOccurs="0" name="ExtensionWithoutPoint" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="CreateDate" type="xs:dateTime" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Unifreight.FilingManager.Common" minOccurs="0" name="folderType" type="q2:FolderType" />
+        <xs:element minOccurs="0" name="strMoreParams" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PutStreamByTenantComIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ServerFilePath" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strMoreParams" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateNewFiling">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="inParams" nillable="true" type="q3:ArrayOfKeyValueOfstringstring" />
+        <xs:element minOccurs="0" name="file_data" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Tenant" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateNewFilingResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="outParams" nillable="true" type="q4:ArrayOfKeyValueOfstringstring" />
+        <xs:element minOccurs="0" name="fatal_error" type="xs:boolean" />
+        <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DownloadBlobChunk">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="BlobFileId" type="q5:guid" />
+        <xs:element minOccurs="0" name="ChunkId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DownloadBlobChunkResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Amital.UpDown.Common" minOccurs="0" name="DownloadBlobChunkResult" nillable="true" type="q6:AmitalUpDownBlobChunks" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RegisterDownloadChunkOfBlob">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Amital.UpDown.Common" minOccurs="0" name="reqData" nillable="true" type="q7:DownloadServiceRequestDataParam" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RegisterDownloadChunkOfBlobResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Amital.UpDown.Common" minOccurs="0" name="RegisterDownloadChunkOfBlobResult" nillable="true" type="q8:DownloadServiceResponseData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateUploadBlob">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Amital.UpDown.Common.ServerUpload" minOccurs="0" name="CreateUploadBlobRequest" nillable="true" type="q9:CreateUploadBlobRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateUploadBlobResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Amital.UpDown.Common.ServerUpload" minOccurs="0" name="CreateUploadBlobResult" nillable="true" type="q10:ResultCreateUploadBlob" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddUploadBlobFileChunkAsync">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="blobFileId" type="q11:guid" />
+        <xs:element minOccurs="0" name="chunkId" type="xs:int" />
+        <xs:element minOccurs="0" name="data" nillable="true" type="xs:base64Binary" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddUploadBlobFileChunkAsyncResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FinishUploadFile">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="blobFileId" type="q12:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FinishUploadFileResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Amital.UpDown.Common.ServerUpload" minOccurs="0" name="FinishUploadFileResult" nillable="true" type="q13:ResultCreateUploadBlob" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetStream">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="strFilePath" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strUser" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strPassword" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strMoreParams" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetStreamResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetStreamResult" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="strMoreParams" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetStreamVer201404">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="strFilePath" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strUser" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strPassword" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strMoreParams" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strMsg" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetStreamVer201404Response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetStreamVer201404Result" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="strMoreParams" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strMsg" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBase64String">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="strFilePath" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strUser" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strPassword" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strMoreParams" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strMsg" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBase64StringResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetBase64StringResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strMoreParams" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strMsg" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PutStream">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Stream" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="strFilePath" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strUser" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strPassword" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strMoreParams" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PutStreamResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="strMoreParams" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateFolder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CompanyID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strFolder" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strUSER" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strMESSAGE" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateFolderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Unifreight.FilingManager.WindowsService.BL" minOccurs="0" name="CreateFolderResult" type="q14:LikeBool" />
+        <xs:element minOccurs="0" name="strMESSAGE" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteDocument">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CompanyID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strPassword" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strServerFile" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strMsg" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteDocumentResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Unifreight.FilingManager.WindowsService.BL" minOccurs="0" name="DeleteDocumentResult" type="q15:LikeBool" />
+        <xs:element minOccurs="0" name="strMsg" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDocument">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CompanyID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strPassword" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strUser" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strServerFile" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strClientFile" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strMsg" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDocumentResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Unifreight.FilingManager.WindowsService.BL" minOccurs="0" name="GetDocumentResult" type="q16:LikeBool" />
+        <xs:element minOccurs="0" name="strMsg" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PutDocument">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CompanyID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strPassword" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strServerFile" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strClientFile" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strMsg" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PutDocumentResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/Unifreight.FilingManager.WindowsService.BL" minOccurs="0" name="PutDocumentResult" type="q17:LikeBool" />
+        <xs:element minOccurs="0" name="strMsg" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PutStreamDocument">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="strPassword" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strServerFile" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="comid" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="tenant" type="xs:int" />
+        <xs:element minOccurs="0" name="sid" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="OpenDate" type="xs:dateTime" />
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Unifreight.FilingManager.Common" minOccurs="0" name="myFolderType" type="q18:FolderType" />
+        <xs:element minOccurs="0" name="Stream" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="strMESSAGE" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PutStreamDocumentResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/Unifreight.FilingManager.WindowsService.BL" minOccurs="0" name="PutStreamDocumentResult" type="q19:LikeBool" />
+        <xs:element minOccurs="0" name="strMESSAGE" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetSecurity">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CompanyID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strDomainUser" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strPath" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="strMsg" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetSecurityResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Unifreight.FilingManager.WindowsService.BL" minOccurs="0" name="SetSecurityResult" type="q20:LikeBool" />
+        <xs:element minOccurs="0" name="strMsg" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WakeUp">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WakeUpResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveFileFromPreview">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveFileFromPreviewResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="RemoveFileFromPreviewResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetState">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetStateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetStateResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFeatureList">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFeatureListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetFeatureListResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
