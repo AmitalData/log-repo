@@ -108,14 +108,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				this.MyResponseData.Succeeded = true;
 				this.MyResponseData.UserMessage = "התקבלו שגיאות במסר תעודת מקור";
 				this.MyResponseData.HasException = true;
-
-					return;
+				// return;
 			}
-			certificateOfOriginPM.ErrXml = null;
-			certificateOfOriginPM.COONumber = customResponse.CertificateOfOriginRequestFeedback.certificateID;
+			else certificateOfOriginPM.ErrXml = null;
+            if (customResponse.CertificateOfOriginRequestFeedback == null)
+			{
+                this.MyResponseData.Succeeded = true;
+                this.MyResponseData.UserMessage = "לא התקבלו נתוני תעודה";
+                this.MyResponseData.HasException = true;
+                return;
+			}
+
+			if (customResponse.CertificateOfOriginRequestFeedback.certificateID != null)
+				certificateOfOriginPM.COONumber = customResponse.CertificateOfOriginRequestFeedback.certificateID;
 			certificateOfOriginPM.CooStatusCode = customResponse.CertificateOfOriginRequestFeedback.certificateOfOriginStatusCode.ToString();
-			certificateOfOriginPM.FeedbackRemark = customResponse.CertificateOfOriginRequestFeedback.FeedbackRemark;
-			certificateOfOriginPM.RejectCancelReason = customResponse.CertificateOfOriginRequestFeedback.rejectCancelReason;
+            certificateOfOriginPM.FeedbackRemark = customResponse.CertificateOfOriginRequestFeedback.FeedbackRemark;
+            certificateOfOriginPM.RejectCancelReason = customResponse.CertificateOfOriginRequestFeedback.rejectCancelReason;
 			certificateOfOriginPM.QueryUrl = customResponse.CertificateOfOriginRequestFeedback.QueryURL;
 			certificateOfOriginPM.IssueDateIfReleased = customResponse.CertificateOfOriginRequestFeedback.IssueDateIfReleased;
 
