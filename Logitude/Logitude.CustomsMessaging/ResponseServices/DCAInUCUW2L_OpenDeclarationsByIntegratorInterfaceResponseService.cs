@@ -163,7 +163,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			}
             foreach (string documentsFilingId in documentsFilingIds)
             {
-                UpdatePaymentDocument(documentsFilingId, DeclarationId, requestParams.Tenant, requestParams.LoggingUserId, customFile);
+				UpdateDocumentsFiling(documentsFilingId, DeclarationId, requestParams.Tenant, requestParams.LoggingUserId, customFile);
             }
 
 
@@ -197,7 +197,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			return documentsFilingIds;
         }
 
-        private void UpdatePaymentDocument(string documentsFilingId, string DeclarationId, int Tenant, string LoggedUserId,string CustomFileNo = null)
+        private void UpdateDocumentsFiling(string documentsFilingId, string DeclarationId, int Tenant, string LoggedUserId,string CustomFileNo = null)
         {
             try
             {
