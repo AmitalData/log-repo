@@ -213,6 +213,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             throw new System.Exception("Error in the URouter service , VPA cannot be check(תקלה בUROUTER , לא ניתן לבדוק סטטוס VPA)");
                         }
                     }
+                    else if(isCollectActive && !_MyDeclarationPM.IsConnectedToUnifreight)
+					{
+						DeclarationCourierStatusPM dcapm = new DeclarationCourierStatusQueryService(context)
+				   .GetByDeclarationIdList(requestParams.Tenant, new List<string>() { _MyDeclarationPM.Id }).FirstOrDefault();
+                        if (dcapm != null)
+                        {
+                            isStatusVPA = dcapm.IsNotSendVPE;
+                        }
+					}
+               
                 }
               
 

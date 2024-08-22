@@ -100,6 +100,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string NotApprovedPendingList { get; set; }
         [Column("ClassificationApproved")]
 	    public bool ClassificationApproved { get; set; }
+        [Column("IsNotSendVPE")]
+	    public bool IsNotSendVPE { get; set; }
     }
 }
 	 
