@@ -52,15 +52,23 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                     {
                         queueService.Complete();
                         if (reportExecutionLog != null && reportExecutionLog.RetryNumber >= 2 && (reportExecutionLog.StatusCode == "W" || reportExecutionLog.StatusCode == "P"))
-                            UpdateReportExecutionLog(new ReportExecutionLogArgs() { Exception = new Exception(reportExecutionLog.ExceptionMessage + 
+                            UpdateReportExecutionLog(new ReportExecutionLogArgs() { Exception = new Exception(reportExecutionLog.ExceptionMessage +
                                 " Report Exc failed - Removed from queue and mark as failed the exc"), DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
                     }
                 }
             }
             catch (Exception ex)
             {
-                DatabaseInitializer.RunOnSeconderyDB = false;
-                HandleReportExecutionException(ex);
+                NetCommonHelper.Logger.DevLog.Instance.WriteError($"Failed to build stimula report for: {reportExecutionLog.Id}, error: {ex.Message}");
+                try
+                {
+                    DatabaseInitializer.RunOnSeconderyDB = false;
+                    HandleReportExecutionException(ex);
+                }
+                catch (Exception exception)
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError($"failed to handle report execution exception: {exception.Message}");
+                }
             }
         }
 

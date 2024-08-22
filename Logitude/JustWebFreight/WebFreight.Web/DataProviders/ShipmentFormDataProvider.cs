@@ -9,7 +9,7 @@ namespace WebFreight.Web.DataProviders
 {
     public class ShipmentFormDataProvider : BaseDataProvider
     {
-        public List<ShipmentForm> ShipmentForm { get; set; }
+        public ShipmentForm ShipmentForm { get; set; }
     }
     public class ShipmentForm
     {

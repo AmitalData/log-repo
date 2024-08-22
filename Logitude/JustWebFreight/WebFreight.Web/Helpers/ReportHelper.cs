@@ -822,6 +822,8 @@ namespace WebFreight.Web.Helpers
                 byte[] filters = GetReportFilters(reportFliter.QueryFilterItemLists);
                 byte[] reportDataProvider = BuildReportDataProvider(reportFliter, filters);
                 if (reportDataProvider == null && reportFliter.IsSchedulerReport) return report;
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"reportDataProvider length: {reportDataProvider.Length}");
+
                 byte[] template = GetReportByteByType(reportFliter);
                 if (template == null) throw new Exception("Report Template is missing");
                 else
@@ -1872,14 +1874,6 @@ namespace WebFreight.Web.Helpers
                 case "MBBR":
                     {
                         dataProviderName = "Logitude.Accounting.BL.DataContract.MonthlyBalancesReportDataProvider";
-
-
-                        break;
-                    }
-
-                case "SHTO":
-                    {
-                        dataProviderName = "WebFreight.Web.DataProviders.ShipmentFormDataProvider";
 
 
                         break;
