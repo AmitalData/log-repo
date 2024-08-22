@@ -111,9 +111,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				// return;
 			}
 			else certificateOfOriginPM.ErrXml = null;
-            if (customResponse.CertificateOfOriginRequestFeedback.FeedbackRemark != null)
+            if (customResponse.CertificateOfOriginRequestFeedback == null)
 			{
-				certificateOfOriginPM.FeedbackRemark = customResponse.CertificateOfOriginRequestFeedback.FeedbackRemark;
                 this.MyResponseData.Succeeded = true;
                 this.MyResponseData.UserMessage = "לא התקבלו נתוני תעודה";
                 this.MyResponseData.HasException = true;
@@ -123,7 +122,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			if (customResponse.CertificateOfOriginRequestFeedback.certificateID != null)
 				certificateOfOriginPM.COONumber = customResponse.CertificateOfOriginRequestFeedback.certificateID;
 			certificateOfOriginPM.CooStatusCode = customResponse.CertificateOfOriginRequestFeedback.certificateOfOriginStatusCode.ToString();
-			certificateOfOriginPM.RejectCancelReason = customResponse.CertificateOfOriginRequestFeedback.rejectCancelReason;
+            certificateOfOriginPM.FeedbackRemark = customResponse.CertificateOfOriginRequestFeedback.FeedbackRemark;
+            certificateOfOriginPM.RejectCancelReason = customResponse.CertificateOfOriginRequestFeedback.rejectCancelReason;
 			certificateOfOriginPM.QueryUrl = customResponse.CertificateOfOriginRequestFeedback.QueryURL;
 			certificateOfOriginPM.IssueDateIfReleased = customResponse.CertificateOfOriginRequestFeedback.IssueDateIfReleased;
 
