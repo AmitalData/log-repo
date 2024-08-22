@@ -277,7 +277,6 @@ export class ListComponent implements OnInit, AfterViewInit {
         return methodName;
     }
     ApplyPreDefinedFilters() {
-        console.log(this.SelectedQuery.Id);
         if (this.SelectedQuery != null) {
             this.MethodName = this.GetMethodName();
             this.SelectedQueryCode = this.SelectedQuery.UniqueCode;
@@ -1035,7 +1034,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                 'Customs.DeclarationReferantData',
                 'Customs.DeclarationCargoSplit',
                 'Customs.LogisticActionRequest',
-                 'Customs.CustomBank',
+                'Customs.CustomBank',
             ].includes(this.ObjectTableName)
         ) {
             this.HasCustomsFilterMenu = true;
@@ -1075,13 +1074,6 @@ export class ListComponent implements OnInit, AfterViewInit {
         //            });
         //    }
         //}
-        console.warn('ngAfterViewInit');
-        console.log(this.ObjectTableName) ;
-        console.log(this.onQueryChangeEvent) ;
-        console.log(this.SelectedQueryId) ;
-        console.log(this.SelectedQueryCode) ;
-        console.log(this.Filterchangeevent) ;
-        console.warn('ngAfterViewInit');
     }
 
     public CheckPermissions(
@@ -1438,7 +1430,6 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.CurrentSession.AddMenuReference(this.ComponentRef);
         this.CurrentSession.AddListComponent(this);
         this.listArgs = args;
-        console.log(this.listArgs);
         if (!this.IsDemoTenant) {
             if (!AppTool.IsNullOrEmpty(this.listArgs.DisplayTitle)) {
                 this.Title = this.listArgs.DisplayTitle;
@@ -2590,7 +2581,6 @@ export class ListComponent implements OnInit, AfterViewInit {
             //};
             //this.FiltersMenu = new ApiQueryFilters();
 
-            console.log(this.dataSource)
 
             if (this.listArgs.SelectedTransportMode != 'All') {
                 filterAgrs.addAdditionalFilter(
@@ -2805,7 +2795,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         selectedEntityId = $event.rowData.Id;
                         break;
                     case 'Customs.CustomBank':
-                        selectedEntityId = $event.selectedId;
+                        selectedEntityId = $event.rowData.Id;
                         break;
 
                     default: {
@@ -2822,14 +2812,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                     logWindow.WindowArgs = selectedEntityId;
                     logWindow.Show('./CustomsModules/CustomsMaintenance/Components/AddEditCustomsBanksComponent')
                     logWindow.WindowClosed.subscribe(($event1: any) => {
-                        alert('Closed');
                         this.OnBackFromEdit(selectedEntityId, $event);
-                        // this.RefreshBookings()
                         this.DoRefresh();
-                        // this.ReloadAllListEvent.emit(true);
-                        logWindow.WindowArgs = null;
                     });
-
                     return
                 }
 
@@ -4744,6 +4729,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                             } else if (this.ObjectTable?.IsCustom) {
                                 this.RunNewCustomObjectWizard();
                                 return;
+
                             } else {
                                 this.RunNewGenaricEntity();
                             }
@@ -4847,6 +4833,10 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
     private RunNewEntityWizard(wizardControlName: string) {
         var componentPath: string = this.ObjectTable.NewWizardComponentPath;
+
+        if (this.ObjectTableName === 'Customs.CustomBank') {
+            componentPath === './CustomsModules/CustomsMaintenance/Components/AddEditCustomsBanksComponent';
+        }
 
 
         if (componentPath != null) {

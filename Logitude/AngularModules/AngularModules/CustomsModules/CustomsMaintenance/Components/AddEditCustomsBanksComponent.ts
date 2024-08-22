@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ChangeDetectorRef, ViewChildren, QueryList } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { LocationDirective } from '../../../Infrastructure/Utilities/LocationDirective';
 import { ApiQueryFilters, FilterItem } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -14,18 +14,29 @@ import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { CustomSendOptionsArgs, SendRequestVIA } from '../../../Customs/DataContract/RequestParams/RequestParamsBase';
 
 import { CustomBankPM } from '../../../Customs/EntityPMs/CustomBankPM';
+
 import { CustomBankPMService } from '../../../Customs/Services/StandardPMs/CustomBankPMService';
 import { CustomBankList } from '../../../Customs/EntityLists/CustomBankList';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
-import { CustomBankListService } from '../../../Customs/Services/StandardLists/CustomBankListService';
-import { WindowArgs } from 'Infrastructure/DataContracts/WindowArgs';
-import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
+
+import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
+import { EntityListService } from 'Infrastructure/Services/EntityListService';
+import { AmitalAPIRequestsComponent } from 'InfrastructureModules/InfrastructureOthers/AmitalAPI/AmitalAPIRequestsComponent';
+import { CustomBankCardExtendedPMService } from '../../../Customs/Services/ExtendedPMs/CustomBankCardExtendedPMService';
+import { ngModuleJitUrl } from '@angular/compiler';
+import { CardListService } from 'Common/Services/StandardLists/CardListService';
+import { get } from 'cypress/types/lodash';
+
+
 
 
 @Component({
 
     templateUrl: './AddEditCustomsBanksComponent.html',
+    providers: [AmitalAPIRequestsComponent]
 })
+
+
 
 export class AddEditCustomsBanksComponent extends BaseComponent {
     public DataContext: any = this;
@@ -36,12 +47,14 @@ export class AddEditCustomsBanksComponent extends BaseComponent {
     isWindowMode: boolean = true;
     ValidationErrorsList: any[] = [];
     _CustomBankPMService: CustomBankPMService = new CustomBankPMService();
-    private _CustomBankListService: CustomBankListService = new CustomBankListService();
+    private _CustomBankListService = new CustomBankPMService();
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     _CustomBankList: CustomBankList;
     private CurrentSession = SessionLocator.SelectedSession;
+    public AmitalAPIRequestsComponent: AmitalAPIRequestsComponent = new AmitalAPIRequestsComponent();
 
-
+    CustomBankCardExtendedPMService: CustomBankCardExtendedPMService = new CustomBankCardExtendedPMService();
+    CustomBankCardItems = new ObservableCollection([]);
 
 
     constructor(public entityArgs: EntityArgs) {
@@ -66,7 +79,6 @@ export class AddEditCustomsBanksComponent extends BaseComponent {
             });
             this._isNew = true;
 
-
         });
 
     }
@@ -77,29 +89,42 @@ export class AddEditCustomsBanksComponent extends BaseComponent {
             this.isWindowMode = true;
         }
         this.CurrentSession.StartBusyIndicatorLoading();
-
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response: any) => {
             this._entityResourceService.getEntityResourceByTableName("Customs.CustomBank").subscribe((response: any) => {
                 this._CustomBankListService
-                    .getSingle
+                    .get
                     (_WindowArgs)
                     .subscribe((rsp: any) => {
                         this._isNew = false;
                         this.EntityPM = rsp.Result;
-                        this.CurrentSession.StopBusyIndicator();
+                        this.EntityPM.CustomBanksCards.forEach((card, index) => {
+
+                            var filters = new ApiQueryFilters(true);
+                            filters.addAdditionalFilter('Id', card.CardId, null, null, "InListExact", false, false, false, "string");
+
+                            new CardListService().getByFilters(filters).subscribe((response: any) => {
+                                this.EntityPM.CustomBanksCards[index].CardName = response.Result[index].ENGLISHNAME;
+                                this.EntityPM.CustomBanksCards[index].CardId = response.Result[index].VATNUMBER;
+                            }
+                            );
+
+                            this.EntityPM.CustomBanksCards ? this.CustomBankCardItems = new ObservableCollection(this.EntityPM.CustomBanksCards) : this.CustomBankCardItems = new ObservableCollection([]);
+                            this.CurrentSession.StopBusyIndicator();
+                        });
                     });
-
             });
-        });
 
+        }
+        )
     }
+
+
+
 
     onInputChange(event, ObjectFieldName) {
-        this.EntityPM[ObjectFieldName] = event;        
+        this.EntityPM[ObjectFieldName] = event;
     }
 
-
-    //#region Properties
 
     public get BankId() { return this.EntityPM.Id; }
     public set BankId(newValue: string) {
@@ -152,20 +177,26 @@ export class AddEditCustomsBanksComponent extends BaseComponent {
     public set payerTypeCode(newValue: string) {
         this.EntityPM.PayerTypeCode = newValue;
     }
-    
-    
+
+    public get customBanksCards() { return this.EntityPM.CustomBanksCards; }
+    public set customBanksCards(newValue: any) {
+        console.log(newValue)
+        this.EntityPM.CustomBanksCards = newValue;
+    }
+
+
     valid = new ClassLevelValidator();
-    
-    
-    
+
+    onCellSelected(event) {
+        console.log(event)
+    }
+    IsDisplayOnly = false;
+
     OkButtonClicked() {
-        
+
 
         var errors = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
-
-
-
 
         if (errors.length > 0) {
             this.ValidationErrorsList = [];

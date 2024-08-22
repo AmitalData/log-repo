@@ -189,43 +189,52 @@
 
                     <td></td>
 
-                </tr>
-                <tr>
-                    <td>
-                        <LogLabel [ObjectFieldName]="'PayerTypeCode1'" [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td>
-                        <LogTextBox [ObjectFieldName]="'PayerTypeCode2'" [ObjectTableName]="ObjectTableName"
-                            [Placeholder]="this.EntityPM.PayerTypeCode || ''" [DataContext]="DataContext"
-                            [HideColumns]="true" [InputType]="'Text'"
-                            (ValueChanged)="onInputChange($event,'PayerTypeCode')">
-                        </LogTextBox>
-                    </td>
-
-                    <td></td>
-
-                    <td>
-                        <LogLabel [ObjectFieldName]="'PayerTypeCode2'" [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td>
-                        <LogTextBox [ObjectFieldName]="'PayerTypeCode1'" [ObjectTableName]="ObjectTableName"
-                            [Placeholder]="this.EntityPM.PayerTypeCode || ''" [DataContext]="DataContext"
-                            [HideColumns]="true" [InputType]="'Text'"
-                            (ValueChanged)="onInputChange($event,'PayerTypeCode')">
-                        </LogTextBox>
-                    </td>
-
                     <td></td>
                 </tr>
+                <table style="width:500px">
+                    <tr class="FieldRow" style="height : 120px">
+                        <td colspan="2">
+                            <div class="GeneratedGridContainer" style="height : 100%;">
+                                <logitude-edit-grid GridWidth="30%" GridHeight="100%"
+                                    [ItemSource]="CustomBankCardItems">
+                                    <log-column
+                                        [header]="'Customs.CertificateOfOrigin.O.number' | TextCodeTranslationPipe"
+                                        [binding]="'ItemSerial'" [width]="'150'" [Alignment]="'right'">
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
+                                                #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.CardId}}</span>
+                                                </div>
+
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+                                    <log-column
+                                        [header]="'Customs.CertificateOfOrigin.O.number' | TextCodeTranslationPipe"
+                                        [binding]="'ItemSerial'" [width]="'150'" [Alignment]="'right'">
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
+                                                #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.CardName}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+                                </logitude-edit-grid>
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
             </table>
 
         </td>
 
     </tr>
 
-    <tr *ngIf="isWindowMode" style="height: 40px;">
+    <tr *ngIf="isWindowMode" style="height: 20px;">
         <td>
             <div></div>
         </td>
