@@ -580,6 +580,19 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                 this.ReportsPreview.Report = reportList;
 
                 this.BuildReport();
+
+                this.ReportsPreview.OnDone.subscribe(response => {
+                    
+                    // close report page
+                    cmpRef.instance.ComponentRef.destroy();
+
+                    if (!response.HasError) {
+                        // download report
+                        const templateDescription = this.ReportTemplates.filter(d => d.Id == this.ReportsPreview.Report.DefaultTemplateId)[0].Description;
+                        var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadReportPage.aspx?fileName=" + response.Result.ReportKey + "@" + templateDescription + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&type=PrintToPDF";
+                        window.open(url);
+                    }
+                });
             });
         });
     }
@@ -608,6 +621,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
         reportFliter.ReportCode = this.ReportsPreview.Report.Code;
         reportFliter.NumberOfPage = 1;
+        reportFliter.DisablePreview = true;
         reportFliter.ProcessType = "GenerateReport";
 
         this.ReportsPreview.GenerateReport(reportFliter, true);

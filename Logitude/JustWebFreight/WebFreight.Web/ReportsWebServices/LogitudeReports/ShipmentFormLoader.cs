@@ -20,6 +20,7 @@ using System.Data.Entity;
 using Simplog.Data.ShipmentsModel;
 using System.Linq.Dynamic.Core;
 using Logitude.Customs.Def.EntityPMs;
+using WebFreight.Web.Services;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
 {
@@ -38,15 +39,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
         public byte[] GetData()
         {
             BuildDataProvider();
-            
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ShipmentFormDataProvider));
-            MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, dataProvider);
-            memoryStream.Seek(0, SeekOrigin.Begin);
-            StreamReader streamReader = new StreamReader(memoryStream);
-            string content = streamReader.ReadToEnd();
-            byte[] bytearray = memoryStream.ToArray();
-            return bytearray;
+            return new ReportMemoryStreamService().Convert(dataProvider, typeof(ShipmentFormDataProvider), tenant);
         }
         private void BuildDataProvider()
         {
@@ -66,11 +59,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
             }
             string shipmentId = ShipmentIdFilter.FieldValue.ToString();
 
-            // ICustomContext context = CustomContext.GetContext(tenant);
+            // get shipment by id from db
             IShipmentsContext context = ShipmentsContext.GetContext(tenant);
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
-
-            ICustomContext customContext = CustomContext.GetContext(tenant);
 
             var shipments = (from a in context.Shipments
                                             .Include("UserId").Include("UserId.Contact") // for ReferentUserId
@@ -142,7 +133,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                 NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"missing ShipmentNumber from shipment: {shipmentId}");
             }
 
-            dataProvider.ShipmentForm = new List<ShipmentForm> { shipmentFormProvider };
+            dataProvider.ShipmentForm = shipmentFormProvider;
 
             #endregion
         }
