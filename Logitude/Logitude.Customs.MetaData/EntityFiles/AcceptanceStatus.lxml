@@ -107,7 +107,7 @@
     IsCustom="false" />
   <field
     Id="&quot;5dd14b86-3538-4d1a-aa58-97fc9c944359&quot;"
-    FieldName="&quot;Name&quot;"
+    FieldName="&quot;EnglishName&quot;"
     ObjectTableName="&quot;Customs.AcceptanceStatus&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
