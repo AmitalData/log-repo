@@ -402,6 +402,7 @@
     <Compile Include="Contracts\ICustomsDeleteNotToCustomCommunication.cs" />
     <Compile Include="Contracts\IUpdateOpenDeclarationInCourierMasterService.cs" />
     <Compile Include="FTP\SFTPDeleteTempFilesService.cs" />
+    <Compile Include="Helpers\MetadataUpdateUtility.cs" />
     <Compile Include="Helpers\SqlBulkInsert.cs" />
     <Compile Include="Helpers\TableCounter.Customs.cs" />
     <Compile Include="CustomFields\ChildEntitiesCustomFieldService.cs" />
