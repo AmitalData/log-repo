@@ -9,6 +9,7 @@
                     {{'Customs.CertificateOfOrigin.O.DisplayOnly'| TextCodeTranslationPipe}}
                 </div>
             </div>
+           
         </td>
         <td *ngIf="entityPM.IsChange && entityPM.COONumber != null || ErrorsList?.length > 0">
             <div *ngIf="ErrorsList?.length > 0">
@@ -17,6 +18,13 @@
             <div *ngIf="entityPM.IsChange && entityPM.COONumber != null" style="width:90%;text-align:center">
                 <div class="DisbleBox">
                     {{'Customs.CertificateOfOrigin.O.IsChange'| TextCodeTranslationPipe}}
+                </div>
+            </div>
+        </td>
+        <td *ngIf="IsDisplayMessage && !(entityPM.IsChange && entityPM.COONumber != null) && !IsDisplayOnly">
+            <div style="width: 100%;text-align:center">
+                <div class="DisbleBox">
+                    {{DisplayOnlyMessage}}
                 </div>
             </div>
         </td>
