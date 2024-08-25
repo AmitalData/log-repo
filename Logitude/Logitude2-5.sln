@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.6.33829.357
+VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebFreight.Web", "JustWebFreight\WebFreight.Web\WebFreight.Web.csproj", "{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -364,6 +364,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WWApi", "WWApi", "{6CC2AFEC-B2FC-4066-A2BD-78602017A493}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WWApi", "WWApi\WWApi.csproj", "{97DC0030-FF94-4879-9E2A-EFCCC541D914}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomsBook", "CustomsBook\CustomsBook.csproj", "{EE680D47-847E-4C7C-ADC8-F575C56E15E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -5780,6 +5782,48 @@ Global
 		{97DC0030-FF94-4879-9E2A-EFCCC541D914}.SingleImage|Mixed Platforms.Build.0 = Debug|Any CPU
 		{97DC0030-FF94-4879-9E2A-EFCCC541D914}.SingleImage|x86.ActiveCfg = Debug|Any CPU
 		{97DC0030-FF94-4879-9E2A-EFCCC541D914}.SingleImage|x86.Build.0 = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.All Projects|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.All Projects|Any CPU.Build.0 = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.All Projects|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.All Projects|Mixed Platforms.Build.0 = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.All Projects|x86.ActiveCfg = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.All Projects|x86.Build.0 = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.CD_ROM|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.CD_ROM|Any CPU.Build.0 = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.CD_ROM|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.CD_ROM|Mixed Platforms.Build.0 = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.CD_ROM|x86.ActiveCfg = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.CD_ROM|x86.Build.0 = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.Debug|x86.Build.0 = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.DVD-5|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.DVD-5|Mixed Platforms.Build.0 = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.DVD-5|x86.ActiveCfg = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.DVD-5|x86.Build.0 = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.None|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.None|Any CPU.Build.0 = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.None|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.None|Mixed Platforms.Build.0 = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.None|x86.ActiveCfg = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.None|x86.Build.0 = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.Release|x86.ActiveCfg = Release|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.Release|x86.Build.0 = Release|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.SingleImage|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.SingleImage|Any CPU.Build.0 = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.SingleImage|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.SingleImage|Mixed Platforms.Build.0 = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.SingleImage|x86.ActiveCfg = Debug|Any CPU
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1}.SingleImage|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -5927,6 +5971,7 @@ Global
 		{2713ADC3-641F-4CA4-AC94-E91DD2E498BB} = {EA704120-33C4-4C09-8831-B640B652A926}
 		{DF7D6BF3-C07E-471C-A8ED-526C431FD294} = {58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}
 		{97DC0030-FF94-4879-9E2A-EFCCC541D914} = {6CC2AFEC-B2FC-4066-A2BD-78602017A493}
+		{EE680D47-847E-4C7C-ADC8-F575C56E15E1} = {6D91C0BC-03CB-44BA-90AF-7457DAE3E7CD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {200673A7-D16A-4B01-A6B6-BEE63415EBD0}

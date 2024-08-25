@@ -58,6 +58,8 @@ export class DataRowComponent implements OnInit {
 			this.TariffList1 = this.TariffListData.find(x => x.TradeAgreementName == 'מכס כללי');
 			this.TariffList2 = this.TariffListData.find(x => x.TradeAgreementName == 'מס קניה');
 			this.TariffListCount = this.TariffListData.filter(x => x.TradeAgreementName != 'מס קניה').length;
+  
+			this.contentWidth();
 		});
 	}
 
@@ -111,6 +113,10 @@ export class DataRowComponent implements OnInit {
 	isShowDetailsOpen: boolean = false;
 	@ViewChild('dynamicDiv') dynamicDiv: ElementRef;
 	ngAfterViewInit(): void {
+		this.contentWidth();
+	}
+
+	contentWidth(): void {
 		this.showDetailsOpen.subscribe((value) => {
 			this.isShowDetailsOpen = value;
 			if (value) this.dynamicDivClick(); // when window open
