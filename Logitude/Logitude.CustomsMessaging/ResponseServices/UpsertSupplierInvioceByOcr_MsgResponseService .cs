@@ -64,8 +64,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return this.MyResponseData;
         }
 
-        public override void Update(DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader customResponse, GenericRequestParams requestParams)
-        {
+        public override void Update(DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader customResponse, GenericRequestParams requestParams){
 
             ICustomContext context = CustomContext.GetContext(customResponse.tenant);
 
@@ -96,7 +95,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(customResponse.tenant);
                 CustomsDocumentPM customsDocument = customsDocumentQueryService.GetSingle(myOcrDocument?.DocId, false, false);
 
-                if (customsDocument != null && customsDocument.DocumentStatusCode == "7")
+                if (customsDocument != null && customsDocument.DocumentStatusCode == "7") 
                 {
                     throw new Exception("Customs Document Send In Progress !!!");
                 }
@@ -116,23 +115,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             foreach (var prediction in page.prediction)
                             {
                                 if (prediction.label.ToUpper() != label && !dic.ContainsKey(prediction.label) && !string.IsNullOrEmpty(prediction.ocr_text))
-                                {  
+                                {
                                     dic.Add(prediction.label, prediction.ocr_text);
                                 }
                             }
                         }
 
                         List<Dictionary<string, string>> supplierInvoiceItemsList = new List<Dictionary<string, string>>();
-                        List<Dictionary<string, int>> ocrPositionItems = new List<Dictionary<string, int>>();
                         Dictionary<string, string> dicItems = new Dictionary<string, string>();
-                        for (int i = 0; i < convertJson.pages.Count(); i++)
+                        for(int i = 0; i < convertJson.pages.Count(); i++)
                         {
-                            var ocrDataPositionCell = new Dictionary<string, int>();
                             var tables = convertJson.pages[i].prediction.Where(x => x.label.ToUpper() == label);
                             if (tables.Any())
                             {
-                                foreach (var table in tables)
-                                {
+                                foreach(var table in tables)
+                                {  
                                     int row = 0;
                                     dicItems = new Dictionary<string, string>();
                                     foreach (var cell in table?.cells)
@@ -140,44 +137,32 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                         if (cell != null && cell.row != row && dicItems.Count > 0)
                                         {
                                             supplierInvoiceItemsList.Add(dicItems);
-                                            ocrPositionItems.Add(ocrDataPositionCell);
                                             dicItems = new Dictionary<string, string>();
-                                            ocrDataPositionCell = new Dictionary<string, int>();
                                         }
                                         if (!dicItems.ContainsKey(cell.label) && !string.IsNullOrEmpty(cell.text) && cell.label != ExpensesAmount && cell.label != ExpensesName)
-                                        {
                                             dicItems.Add(cell.label, cell.text);
-                                            if(ocrDataPositionCell.Count() == 0)
-                                            {
-                                                ocrDataPositionCell.Add("ymin", cell.ymin);
-                                                ocrDataPositionCell.Add("ymax", cell.ymax);
-                                                ocrDataPositionCell.Add("page_no", table.page_no);
-                                            }
-                                        }
                                         row = cell.row;
                                     }
 
                                     if (dicItems.Count > 0)
                                     {
                                         supplierInvoiceItemsList.Add(dicItems);
-                                        ocrPositionItems.Add(ocrDataPositionCell);
-
                                     }
 
                                 }
 
 
                             }
-
+                            
                         }
-
+                        
 
                         //insert or update supplierInvoice
                         try
                         {
-                            UpsertSupplierInvoiceResult Result = UpsertSupplierInvoiceByOcr(customResponse, myOcrDocument.Reference, dic, supplierInvoiceItemsList, ocrPositionItems);
-
-                            if (Result.isNewInvoice)// update CustomsDocumentPointer
+                            UpsertSupplierInvoiceResult Result = UpsertSupplierInvoiceByOcr(customResponse, myOcrDocument.Reference, dic, supplierInvoiceItemsList);
+                            
+                            if(Result.isNewInvoice)// update CustomsDocumentPointer
                             {
                                 LogMessagingUtil.Instance.Clear();
                                 LogMessagingUtil.Instance.AppendLine("Is New Invoice: " + myOcrDocument.Reference);
@@ -190,7 +175,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 LogMessagingUtil.Instance.AppendLine("is find: " + customsDocumentsTicketPM == null ? "NO" : "YES");
                                 SupplierInvoiceQueryService supplierInvoiceQueryService = new SupplierInvoiceQueryService(customResponse.tenant);
                                 var invoiceCounterKey = supplierInvoiceQueryService.GetInvoicesForDeclarationByInvoiceNum(customResponse.Declarationid, myOcrDocument.Reference, customResponse.tenant, false)?[0]?.InvoiceCounterKey;
-                                LogMessagingUtil.Instance.AppendLine("find invoiceCounterKey by DeclarationId and InvoiceNumber: " + customResponse.Declarationid + " , " + myOcrDocument.Reference);
+                                LogMessagingUtil.Instance.AppendLine("find invoiceCounterKey by DeclarationId and InvoiceNumber: " + customResponse.Declarationid +" , "+ myOcrDocument.Reference);
                                 LogMessagingUtil.Instance.AppendLine("find invoiceCounterKey: " + invoiceCounterKey);
                                 if (customsDocumentsTicketPM != null && invoiceCounterKey != null)
                                 {
@@ -205,36 +190,35 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                         CustomsDocumentPointer.Child1EntityCode = "SupplierInvoice";
                                         CustomsDocumentPointer.Child1EntityId = invoiceCounterKey.ToString();
                                     }
-                                    customsDocumentsTicketUpdateService.Update(customsDocumentsTicketPM, true);
+                                customsDocumentsTicketUpdateService.Update(customsDocumentsTicketPM, true);
                                 }
-
+                                
                             }
                             myOcrDocument.NotConnect = true;
-                            OcrDocumentUpdateService ocrDocumentUpdateService = new OcrDocumentUpdateService(context, new Dictionary<string, IContext>(), customResponse.tenant);
+                            OcrDocumentUpdateService ocrDocumentUpdateService = new OcrDocumentUpdateService(context, new Dictionary<string, IContext>(), customResponse.tenant);      
                             OcrDocumentPM myOcrDocumentPM = ocrDocumentService.GetEntityPM(myOcrDocument, false);
                             myOcrDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
                             ocrDocumentUpdateService.Update(myOcrDocumentPM, true);
 
                             this.MyResponseData.Succeeded = true;
                             this.MyResponseData.HasException = false;
- 
-                            string InvoiceSuccess = Result.isNewInvoice ? "Customs.OcrDocument.O.InvoiceSuccessfullyOpened" : "Customs.OcrDocument.O.InvoiceUpdatedSuccessfully"; this.MyResponseData.UserMessage =
-                             this.MyResponseData.UserMessage = TranslateTextsClass.Translate(InvoiceSuccess, customResponse.tenant, true);
+                            string InvoiceSuccess = Result.isNewInvoice ? "Customs.OcrDocument.O.InvoiceSuccessfullyOpened" : "Customs.OcrDocument.O.InvoiceUpdatedSuccessfully";                            this.MyResponseData.UserMessage =
+                            this.MyResponseData.UserMessage = TranslateTextsClass.Translate(InvoiceSuccess, customResponse.tenant, true);
                             if (Result.invalidValuesRemarks != null)
                                 this.MyResponseData.Remarks = "Invalid value, not exist in table - " + Result.invalidValuesRemarks;
                             CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(context);
                             CustomsRequestsSheetPM requestsSheetPM = customsRequestsSheetQueryService.GetRequestInProgress(customResponse.tenant, "DCAOCR", ObjectTableRepository.GetObjectTableByName("Customs.Declaration"), customResponse.Declarationid, null, null, null, false, requestParams.CustomsRequestsSheetId).FirstOrDefault();
-                            if (requestsSheetPM != null)
+                            if(requestsSheetPM != null)
                             {
                                 MessagingServiceFactoryHelper.ResolveAndReQueue("DCAOCR", requestParams.Tenant, requestsSheetPM.Id, null, futureSendDateTime: DateTime.Now.AddMinutes(0.5));
                             }
-
+                            
                         }
                         catch (System.Exception ex)
                         {
                             this.MyResponseData.Succeeded = false;
                             this.MyResponseData.HasException = true;
-                            this.MyResponseData.UserMessage = ex.Message + " : " + " " + TranslateTextsClass.Translate("Customs.OcrDocument.O.ErrorCreatingInvoice", customResponse.tenant, true) + " ";
+                            this.MyResponseData.UserMessage = ex.Message + " : " + " "+ TranslateTextsClass.Translate("Customs.OcrDocument.O.ErrorCreatingInvoice", customResponse.tenant, true) +" ";
                             CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(context);
                             CustomsRequestsSheetPM requestsSheetPM = customsRequestsSheetQueryService.GetRequestInProgress(customResponse.tenant, "DCAOCR", ObjectTableRepository.GetObjectTableByName("Customs.Declaration"), customResponse.Declarationid, null, null, null, false, requestParams.CustomsRequestsSheetId).FirstOrDefault();
                             if (requestsSheetPM != null)
@@ -251,7 +235,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     this.MyResponseData.Succeeded = false;
                     this.MyResponseData.HasException = true;
-                    this.MyResponseData.UserMessage = ex.Message + " : " + " " + TranslateTextsClass.Translate("Customs.OcrDocument.O.ErrorInReceivingData", customResponse.tenant, true) + " ";
+                    this.MyResponseData.UserMessage = ex.Message + " : " + " "+ TranslateTextsClass.Translate("Customs.OcrDocument.O.ErrorInReceivingData", customResponse.tenant, true) + " ";
                     CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(context);
                     CustomsRequestsSheetPM requestsSheetPM = customsRequestsSheetQueryService.GetRequestInProgress(customResponse.tenant, "DCAOCR", ObjectTableRepository.GetObjectTableByName("Customs.Declaration"), customResponse.Declarationid, null, null, null, false, requestParams.CustomsRequestsSheetId).FirstOrDefault();
                     if (requestsSheetPM != null)
@@ -293,20 +277,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
-        public UpsertSupplierInvoiceResult UpsertSupplierInvoiceByOcr(DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader customResponse, string invoiceNumber, Dictionary<string, string> dic, List<Dictionary<string, string>> supplierInvoiceItemsList, List<Dictionary<string, int>> ocrPosition)
+        public UpsertSupplierInvoiceResult UpsertSupplierInvoiceByOcr(DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader customResponse, string invoiceNumber, Dictionary<string, string> dic, List<Dictionary<string, string>> supplierInvoiceItemsList)
         {
             int tenant = customResponse.tenant;
             string originCountryField = "";
             ICustomContext context = CustomContext.GetContext(customResponse.tenant);
             SupplierInvoiceQueryService supplierInvoiceQueryService = new SupplierInvoiceQueryService(customResponse.tenant);
             List<SupplierInvoicePM> mySupplierInvoices = supplierInvoiceQueryService.GetInvoicesForDeclarationByInvoiceNum(customResponse.Declarationid, invoiceNumber, customResponse.tenant, true);
-            SupplierInvoicePM mySupplierInvoice =
+            SupplierInvoicePM mySupplierInvoice = 
                                     mySupplierInvoices.FirstOrDefault(x => x.InvoiceNumber == invoiceNumber)
                                     ?? mySupplierInvoices.FirstOrDefault(x => x.InvoiceNumber == null)
                                     ?? null;
             bool isNewInvoice = false;
             string invalidValuesRemarks = null;
-            if (mySupplierInvoice == null)
+             if (mySupplierInvoice == null)
             {
                 isNewInvoice = true;
                 mySupplierInvoice = new SupplierInvoicePM()
@@ -325,20 +309,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     mySupplierInvoice.InvoiceNumber = invoiceNumber;
                     isNewInvoice = true;
                 }
-
+               
             }
 
             //mapping supplierInvoice from json
 
             if (dic.TryGetValue("buyer_name", out string buyerName))
             {
-                if (buyerName.Length > 35)
+                if(buyerName.Length > 35)
                     buyerName = buyerName.Substring(0, 35);
                 mySupplierInvoice.BuyerName = buyerName;
             }
             else if (dic.TryGetValue("shipto_name", out string shiptoName))
             {
-                if (shiptoName.Length > 35)
+                if(shiptoName.Length > 35)
                     shiptoName = shiptoName.Substring(0, 35);
                 mySupplierInvoice.BuyerName = shiptoName;
 
@@ -346,7 +330,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (dic.TryGetValue("buyer_address", out string buyerAddress))
             {
-                if (buyerAddress.Length > 35)
+                if(buyerAddress.Length > 35)
                     buyerAddress = buyerAddress.Substring(0, 35);
                 mySupplierInvoice.BuyerAddress = buyerAddress;
             }
@@ -425,19 +409,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 mySupplierInvoice.AccountTypeCode = myInvoiceDefaults.AccountTypeCode;
                 mySupplierInvoice.PartyRelationshipCode = myInvoiceDefaults.PartyRelationshipCode;
                 mySupplierInvoice.BuyerRoleCode = myInvoiceDefaults.BuyerRoleCode;
-
-                if(isNewInvoice && myInvoiceDefaults.TransactionNatureCode == "2")
-                {
-                    var mySupplierInvoicePayment = new SupplierInvoicePaymentPM()
-                    {
-                        Tenant = tenant,
-                        PaymentTypeCode = "2",
-                        PaymentAmount = mySupplierInvoice.InvoiceAmount ?? 0,
-                        SequenceNumeric = 1,
-                        ChangeSetOp = ChangeSetOperation.Insert
-                    };
-                    mySupplierInvoice.SupplierInvoicePayments.Add(mySupplierInvoicePayment);
-                }
             }
 
 
@@ -459,7 +430,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (supplierInvoiceItemsList.Count > 0)
             {
-                int counter = 0;
                 foreach (var supplierInvoiceItem in supplierInvoiceItemsList)
                 {
                     SupplierInvoiceItemPM supplierInvoiceItemPM = new SupplierInvoiceItemPM();
@@ -469,8 +439,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     if (supplierInvoiceItem.TryGetValue("Product_Code", out string productCode))
                     {
-                        if (productCode.Length > 30)
-                            supplierInvoiceItemPM.ItemCode = productCode.Substring(0, 30);
+                        if(productCode.Length > 30)
+                            supplierInvoiceItemPM.ItemCode = productCode.Substring(0,30);
                         else
                             supplierInvoiceItemPM.ItemCode = productCode;
                     }
@@ -480,7 +450,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     if (supplierInvoiceItem.TryGetValue("Description", out string description))
                     {
-                        if (description.Length > 256)
+                        if(description.Length > 256)
                             supplierInvoiceItemPM.ItemDescription = description.Substring(0, 256);
                         else
                             supplierInvoiceItemPM.ItemDescription = description;
@@ -500,15 +470,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         if (CustomsCountry == null)
                             invalidValuesRemarks += $" FieldJson: Item_country_of_origin, FieldName: OriginCountryCode, InvalidValueReceived: {itemCountryOfOrigin};";
                         else
-
                             supplierInvoiceItemPM.OriginCountryCode = CustomsCountry.Code;
                     }
+
+                    SupplierInvoiceItemQueryService supplierInvoiceItemQueryService = new SupplierInvoiceItemQueryService(context);
                     if (supplierInvoiceItem.TryGetValue("ITEM_HS_CODE", out string itemCode))
                     {
                         itemCode = new string(itemCode.Where(char.IsDigit).ToArray());
                         if (itemCode.Length > 7)
                         {
-                            var validate = ValidateClassificationCode(itemCode.Length > 10? itemCode.Substring(0, 10) : itemCode);
+                            var validate = supplierInvoiceItemQueryService.ValidateClassificationCode(itemCode);
                             if (validate != null)
                             {
                                 supplierInvoiceItemPM.ClassificationCode = validate;
@@ -522,14 +493,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             invalidValuesRemarks += $" FieldJson: ITEM_HS_CODE, FieldName: ClassificationCode, InvalidValueReceived: {itemCode};";
                         }
-
                     }
-                    else if (dic.TryGetValue("HS_CODE", out string classificationCode))
+                    else if(dic.TryGetValue("HS_CODE", out string classificationCode))
                     {
                         classificationCode = new string(classificationCode.Where(char.IsDigit).ToArray());
                         if (classificationCode.Length > 7)
                         {
-                            var validate = ValidateClassificationCode(classificationCode.Length > 10 ? classificationCode.Substring(0, 10) : classificationCode);
+                            var validate = supplierInvoiceItemQueryService.ValidateClassificationCode(classificationCode);
                             if (validate != null)
                             {
                                 supplierInvoiceItemPM.ClassificationCode = validate;
@@ -549,8 +519,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         supplierInvoiceItemPM.OriginCountryCode = originCountryField;
                     }
-
-                    if (myInvoiceDefaults != null)
+                    
+                    if(myInvoiceDefaults != null)
                     {
                         //mapping supplierInvoiceItem from SupplierInvioceExportDefaults
                         supplierInvoiceItemPM.TransactionNatureCode = myInvoiceDefaults.TransactionNatureCode;
@@ -569,28 +539,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             supplierInvoiceItemPM.ItemAdditionalStatus = true;
                         }
                     }
-                    // update ocr column position: page_no, ymin, ymax - #94509
-                    if(ocrPosition.Count > counter)
-                    {
-                        if (ocrPosition[counter].TryGetValue("page_no", out int ocrPageNumber))
-                        {
-                            supplierInvoiceItemPM.OcrPageNumber = ocrPageNumber + 1;
-                        }
-                        if (ocrPosition[counter].TryGetValue("ymin", out int ymin))
-                        {
-                            supplierInvoiceItemPM.OcrTop = ymin; ;
-                            if (ocrPosition[counter].TryGetValue("ymax", out int ymax))
-                            {
-                                supplierInvoiceItemPM.OcrHeight = ymax - ymin;
-                            }
-                        }
-                    }
-
-
+                    
 
                     //add supplierInvoiceItem
                     mySupplierInvoice.SupplierInvoiceItems.Add(supplierInvoiceItemPM);
-                    counter++;
+
+
+
                 }
             }
 
@@ -599,39 +554,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             supplierInvoiceUpdateService.Update(mySupplierInvoice, true);
 
-            UpsertSupplierInvoiceResult upsertSupplierInvoiceResult = new UpsertSupplierInvoiceResult()
-            {
-                isNewInvoice = isNewInvoice,
-                invalidValuesRemarks = invalidValuesRemarks
-            };
+            UpsertSupplierInvoiceResult upsertSupplierInvoiceResult =  new UpsertSupplierInvoiceResult() 
+            { 
+                isNewInvoice = isNewInvoice, 
+                invalidValuesRemarks = invalidValuesRemarks 
+            };             
             return upsertSupplierInvoiceResult;
 
 
 
-        }
-
-        private string ValidateClassificationCode(string newValue)
-        {
-
-            if (newValue.Length == 8)
-            {
-                newValue += "00";
-                newValue += LuhnAlgorithm.CalculateLuhnAlgorithm(newValue);
-            }
-            else if (newValue.Length == 9)
-            {
-                string lastDigit = newValue.Substring(8, 1);
-                string modifiedValue = $"{newValue.Substring(0, 8)}00{lastDigit}";
-                bool isValid = LuhnAlgorithm.CalculateLuhnAlgorithm(modifiedValue.Substring(0, modifiedValue.Length - 1)) == int.Parse(lastDigit);
-                newValue = isValid ? modifiedValue : null;
-            }
-            else if (newValue.Length == 10)
-            {
-                newValue += LuhnAlgorithm.CalculateLuhnAlgorithm(newValue);
-            }
-            
-
-            return newValue;
         }
 
 
@@ -648,6 +579,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
-
+    
 
 }
