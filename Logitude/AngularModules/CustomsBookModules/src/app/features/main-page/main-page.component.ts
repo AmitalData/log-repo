@@ -23,6 +23,7 @@ export class MainPageComponent {
 	showAddComment: boolean = false;
 	filterService = new FilterPopupService();
 	itemsData: BehaviorSubject<CB_CustomsItemComputedDataList[]> = new BehaviorSubject<CB_CustomsItemComputedDataList[]>([]);
+	isLoadingMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);;
 	private _filters;
 	selectSearchBy: string;
 
@@ -46,6 +47,8 @@ export class MainPageComponent {
 
 		if (filters.SearchFields === "") return;
 		if (SearchBy.searchBy_form01 == this.selectSearchBy) {
+			this.isLoadingMode.next(true); // update loading mode
+
 			this.API_MainService.GetCustomsBookMainViewSearchByClassification(filters).subscribe((data: any) => {
 				const result: CB_CustomsItemComputedDataList[] = data.body;
 				if (!result) return; // TODO: add error message
@@ -53,6 +56,10 @@ export class MainPageComponent {
 			});
 		}
 		else if (SearchBy.pageSearch_form02 == this.selectSearchBy) {
+			// build base  object data:CB_CustomsItemComputedDataList
+			this.isLoadingMode.next(true); // update loading mode
+			
+
 			this.API_MainService.GetCustomsBookMainViewSearchByText(filters).subscribe((data: any) => {
 				const result: CB_CustomsItemComputedDataList[] = data.body;
 				if (!result) return; // TODO: add error message

@@ -36,6 +36,7 @@ import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo'
 export class MainDisplayComponent implements OnInit {
 	@Input() showChiledren: boolean = false;
 	@Input() itemsData: BehaviorSubject<CB_CustomsItemComputedDataList[]>;
+	@Input() isLoadingMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	showDetails: boolean = false;
 	showAddComment: boolean = false;
 	showCommentSidebar: boolean = false;
@@ -88,6 +89,11 @@ export class MainDisplayComponent implements OnInit {
 			if (searchText === "") this.handleClearResults();
 		});
 
+		// listen to loading mode changes:
+		this.isLoadingMode.subscribe((isLoading) => {
+			if (isLoading) this.data = [];
+		});
+		
 		// listen to itemsData changes:
 		this.itemsData.subscribe((data: CB_CustomsItemComputedDataList[] = []) => {
 			if (data.length == 0 && this.searchService.GetSearchText() !== "") {
@@ -110,7 +116,7 @@ export class MainDisplayComponent implements OnInit {
 
 				this.searchMode = TableTopState.Search;
 				this.searchValue = this.searchService.GetSearchText();
-				if(this.showDetails) {
+				if (this.showDetails) {
 					this.selectedItemId = null;
 					this.updateShowDetailsClick();
 				}
