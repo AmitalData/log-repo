@@ -242,7 +242,7 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 	handleClearResults() {
-		if (this.searchMode === TableTopState.ViewAll) return;
+		// if (this.searchMode === TableTopState.ViewAll) return;
 		this.searchMode = TableTopState.ViewAll;
 		this.selectedItemId = null;
 		this.showDetails = false;
@@ -251,7 +251,6 @@ export class MainDisplayComponent implements OnInit {
 		this.data = [];
 		this.searchValue = "";
 		this.countSearchResult = 0;
-		// this.InitData();
 		this.data = this.fullData;
 		this.searchToggleAllChildren(false);
 		this.isExpand.next(false);
