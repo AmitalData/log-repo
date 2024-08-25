@@ -60,7 +60,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LastMileServiceType, 
 	         MissedDocumentStatusCode, 
 	         NotApprovedPendingList, 
-	         ClassificationApproved,
+	         ClassificationApproved, 
+	         IsNotSendVPE,
 	      }
 
 
@@ -142,7 +143,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ApprovedCourierPendingList, 
 	         NotApprovedPendingList, 
 	         IntegratorName, 
-	         ClassificationApproved,
+	         ClassificationApproved, 
+	         IsNotSendVPE,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -309,6 +311,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClassificationApproved))
             {
 				entityPOCO.ClassificationApproved = entityPM.ClassificationApproved;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsNotSendVPE))
+            {
+				entityPOCO.IsNotSendVPE = entityPM.IsNotSendVPE;
 			}
 			}
 
@@ -480,6 +487,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ClassificationApproved = entityPOCO.ClassificationApproved;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsNotSendVPE))
+            {
+					entityPM.IsNotSendVPE = entityPOCO.IsNotSendVPE;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationCourierStatusPM entityPM, DeclarationCourierStatusPM oldEntityPM)
@@ -644,6 +656,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClassificationApproved))
             {
                 oldEntityPM.ClassificationApproved = entityPM.ClassificationApproved;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsNotSendVPE))
+            {
+                oldEntityPM.IsNotSendVPE = entityPM.IsNotSendVPE;
             }
 			
 		}

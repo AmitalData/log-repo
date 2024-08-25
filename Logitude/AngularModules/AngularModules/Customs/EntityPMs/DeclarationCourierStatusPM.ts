@@ -439,6 +439,11 @@ export class DeclarationCourierStatusPM {
     public set ClassificationApproved(newValue: boolean) { if (this.classificationApproved != newValue) { this.classificationApproved = newValue; this.MarkAsDirty("ClassificationApproved"); } }
        
 	 
+    private isNotSendVPE: boolean;
+    public get IsNotSendVPE() { return this.isNotSendVPE; }
+    public set IsNotSendVPE(newValue: boolean) { if (this.isNotSendVPE != newValue) { this.isNotSendVPE = newValue; this.MarkAsDirty("IsNotSendVPE"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		
