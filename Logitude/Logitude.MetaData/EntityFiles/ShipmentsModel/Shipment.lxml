@@ -108830,6 +108830,14 @@
         Operator="&quot;Equal&quot;"
         IndexOrder="0"
         CustomPredefined="false" />
+      <QueryFilter
+        QueryCode="&quot;OpenCommissionCases &quot;"
+        PredefinedValue="&quot;C&quot;"
+        ObjectFieldName="&quot;DirectionId&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -108856,6 +108864,14 @@
         Operator="&quot;Equal&quot;"
         IndexOrder="0"
         CustomPredefined="false" />
+      <QueryFilter
+        QueryCode="&quot;CloseCommissionCases&quot;"
+        PredefinedValue="&quot;C&quot;"
+        ObjectFieldName="&quot;DirectionId&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -108873,7 +108889,16 @@
     DefaultSortDirection="&quot;Ascending&quot;"
     IsSpellChecked="false">
     <QueryColumns />
-    <QueryFilters />
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;AllCommissionCases&quot;"
+        PredefinedValue="&quot;C&quot;"
+        ObjectFieldName="&quot;DirectionId&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0"
+        CustomPredefined="false" />
+    </QueryFilters>
   </Query>
   <Screen
     Name="&quot;Header Screen&quot;"
