@@ -74,6 +74,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     public CertificateOriginItemItems: ObservableCollection // type <CertificateOfOriginItemPM[]>;
     public IsNewOrEdit: StatusCertificateOfOrigin;
     public IsDisplayMode: boolean = true;
+    public IsDisplayMessage: boolean = false;
+    public DisplayOnlyMessage: string = "";
     public IsEditMode: boolean = true;
     public isReady: boolean;
     controlEnabled: boolean;
@@ -136,6 +138,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.SetWarningByCooTypeCode(EntityPM.CooTypeCode);
         this.initSelectionValueFields();
         this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true : false;
+        this.setDisplayMessage();
     }
     InitMoreDataScreenValues() {
         this.certificateOfOriginWebService.GetCityOfDeclarationByImporterID(this.currentDeclaration.ImporterId, this.currentDeclaration.Tenant).subscribe(myResult => {
@@ -146,6 +149,14 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         });
 
 
+    }
+
+
+    setDisplayMessage() {
+        if(this.entityPM.UpdateDeclaration == "A"){
+            this.DisplayOnlyMessage = TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.DecNotSubmitted');
+            this.IsDisplayMessage = true;
+        }
     }
     initSelectionValueFields() {
         this.selectedValueOriginCountry = this.entityPM.OriginGroupOfCountry && !this.entityPM.OriginCountry ? this.fieldNameOriginGroupOfCountry : this.fieldNameOriginCountry;
