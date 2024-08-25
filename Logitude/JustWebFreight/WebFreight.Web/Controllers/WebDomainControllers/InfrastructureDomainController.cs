@@ -279,7 +279,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 List<string> allowedPackages = new List<string>();
                 string email = HttpContext.Current.User.Identity.Name;
-                ContactInfo inf = SecurityUtility.GetContactInfo(email, tenant);
+                Logitude.BL.Security.ContactInfo inf = SecurityUtility.GetContactInfo(email, tenant);
                 if (inf != null)
                 {
                     allowedPackages = inf.PackagesCodes;
@@ -383,7 +383,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 List<string> allowedPackages = new List<string>();
-                ContactInfo inf = SecurityUtility.GetContactInfo(authToken.Email, tenant);
+                Logitude.BL.Security.ContactInfo inf = SecurityUtility.GetContactInfo(authToken.Email, tenant);
                 if (inf != null)
                 {
                     allowedPackages = inf.PackagesCodes;
