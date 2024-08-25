@@ -36,6 +36,7 @@ import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo'
 export class MainDisplayComponent implements OnInit {
 	@Input() showChiledren: boolean = false;
 	@Input() itemsData: BehaviorSubject<CB_CustomsItemComputedDataList[]>;
+	@Input() isLoadingMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	showDetails: boolean = false;
 	showAddComment: boolean = false;
 	showCommentSidebar: boolean = false;
@@ -80,12 +81,18 @@ export class MainDisplayComponent implements OnInit {
 		});
 	}
 
+	isLoading: boolean = false;
 	searchValue: string = '';
 	countSearchResult: number = 0;
 	ListenToItemsSearched() {
 		// listen to search text changes:
 		this.searchService.searchText$.subscribe((searchText) => {
 			if (searchText === "") this.handleClearResults();
+		});
+
+		// listen to loading mode changes:
+		this.isLoadingMode.subscribe((isLoading) => {
+			this.isLoading = isLoading;
 		});
 
 		// listen to itemsData changes:
@@ -102,7 +109,7 @@ export class MainDisplayComponent implements OnInit {
 				// remove duplicates customsItemID:
 				data = data.filter((v, i, a) => a.findIndex(t => (t.CustomsItemID === v.CustomsItemID)) === i);
 
-				this.countSearchResult = data.length;				
+				this.countSearchResult = data.length;
 				// update list:
 				this.data = this.orderedDataForSearch(data);
 				this.searchToggleAllChildren(true); // expand all 
@@ -110,6 +117,10 @@ export class MainDisplayComponent implements OnInit {
 
 				this.searchMode = TableTopState.Search;
 				this.searchValue = this.searchService.GetSearchText();
+				if (this.showDetails) {
+					this.selectedItemId = null;
+					this.updateShowDetailsClick();
+				}
 			}
 			else this.countSearchResult = 0;
 		});
@@ -151,13 +162,15 @@ export class MainDisplayComponent implements OnInit {
 	showDetailsClick(CustomsItemID: number, item: CB_CustomsItemComputedDataList) {
 		this.selectedItemId = CustomsItemID;
 		if (this.currentItem.getValue()?.CustomsItemID == CustomsItemID) {
-			this.showDetails = !this.showDetails;
-			this.showDetailsOpen.next(this.showDetails);
+			// this.showDetails = !this.showDetails;
+			// this.showDetailsOpen.next(this.showDetails);
+			this.updateShowDetailsClick();
 			return;
 		}
 		else if (!this.showDetails) {
-			this.showDetails = !this.showDetails;
-			this.showDetailsOpen.next(this.showDetails);
+			// this.showDetails = !this.showDetails;
+			// this.showDetailsOpen.next(this.showDetails);
+			this.updateShowDetailsClick();
 		}
 		this.currentItem.next(item);
 		return this.showDetails;
@@ -203,7 +216,6 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 	filtersSearchClick(filtersSearch: FiltersSearch) {
-		console.log(filtersSearch);
 		let filters: Filters = {
 			SearchFields: this.searchService.GetSearchText(),
 			CustomsBookType: this.searchState,
@@ -230,7 +242,7 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 	handleClearResults() {
-		if (this.searchMode === TableTopState.ViewAll) return;
+		// if (this.searchMode === TableTopState.ViewAll) return;
 		this.searchMode = TableTopState.ViewAll;
 		this.selectedItemId = null;
 		this.showDetails = false;
@@ -239,7 +251,6 @@ export class MainDisplayComponent implements OnInit {
 		this.data = [];
 		this.searchValue = "";
 		this.countSearchResult = 0;
-		// this.InitData();
 		this.data = this.fullData;
 		this.searchToggleAllChildren(false);
 		this.isExpand.next(false);
