@@ -102,7 +102,7 @@ export class MainDisplayComponent implements OnInit {
 				// remove duplicates customsItemID:
 				data = data.filter((v, i, a) => a.findIndex(t => (t.CustomsItemID === v.CustomsItemID)) === i);
 
-				this.countSearchResult = data.length;				
+				this.countSearchResult = data.length;
 				// update list:
 				this.data = this.orderedDataForSearch(data);
 				this.searchToggleAllChildren(true); // expand all 
@@ -110,6 +110,10 @@ export class MainDisplayComponent implements OnInit {
 
 				this.searchMode = TableTopState.Search;
 				this.searchValue = this.searchService.GetSearchText();
+				if(this.showDetails) {
+					this.selectedItemId = null;
+					this.updateShowDetailsClick();
+				}
 			}
 			else this.countSearchResult = 0;
 		});
@@ -151,13 +155,15 @@ export class MainDisplayComponent implements OnInit {
 	showDetailsClick(CustomsItemID: number, item: CB_CustomsItemComputedDataList) {
 		this.selectedItemId = CustomsItemID;
 		if (this.currentItem.getValue()?.CustomsItemID == CustomsItemID) {
-			this.showDetails = !this.showDetails;
-			this.showDetailsOpen.next(this.showDetails);
+			// this.showDetails = !this.showDetails;
+			// this.showDetailsOpen.next(this.showDetails);
+			this.updateShowDetailsClick();
 			return;
 		}
 		else if (!this.showDetails) {
-			this.showDetails = !this.showDetails;
-			this.showDetailsOpen.next(this.showDetails);
+			// this.showDetails = !this.showDetails;
+			// this.showDetailsOpen.next(this.showDetails);
+			this.updateShowDetailsClick();
 		}
 		this.currentItem.next(item);
 		return this.showDetails;
@@ -203,7 +209,6 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 	filtersSearchClick(filtersSearch: FiltersSearch) {
-		console.log(filtersSearch);
 		let filters: Filters = {
 			SearchFields: this.searchService.GetSearchText(),
 			CustomsBookType: this.searchState,
