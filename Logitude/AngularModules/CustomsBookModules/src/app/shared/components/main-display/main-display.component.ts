@@ -81,6 +81,7 @@ export class MainDisplayComponent implements OnInit {
 		});
 	}
 
+	isLoading: boolean = false;
 	searchValue: string = '';
 	countSearchResult: number = 0;
 	ListenToItemsSearched() {
@@ -91,9 +92,9 @@ export class MainDisplayComponent implements OnInit {
 
 		// listen to loading mode changes:
 		this.isLoadingMode.subscribe((isLoading) => {
-			if (isLoading) this.data = [];
+			this.isLoading = isLoading;
 		});
-		
+
 		// listen to itemsData changes:
 		this.itemsData.subscribe((data: CB_CustomsItemComputedDataList[] = []) => {
 			if (data.length == 0 && this.searchService.GetSearchText() !== "") {

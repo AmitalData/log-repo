@@ -30,7 +30,7 @@ export class MainPageComponent {
 	constructor(private API_MainService: API_MainService, private headerService: HeaderService, private searchService: SearchService) {
 		this._filters = this.filterService.getFilters();
 	}
-
+	
 	SearchByText(searchBy: any) {
 		this.selectSearchBy = searchBy;
 
@@ -44,6 +44,10 @@ export class MainPageComponent {
 			PageSize: 0,
 			Tenant: SessionInfo.LoggedUserTenant
 		};
+		// add prevent another search while loading
+		if (this.isLoadingMode.getValue()){
+			return;
+		}
 
 		if (filters.SearchFields === "") return;
 		if (SearchBy.searchBy_form01 == this.selectSearchBy) {
@@ -53,17 +57,19 @@ export class MainPageComponent {
 				const result: CB_CustomsItemComputedDataList[] = data.body;
 				if (!result) return; // TODO: add error message
 				this.itemsData.next(result);
+				this.isLoadingMode.next(false); // update loading mode
+
 			});
 		}
 		else if (SearchBy.pageSearch_form02 == this.selectSearchBy) {
-			// build base  object data:CB_CustomsItemComputedDataList
 			this.isLoadingMode.next(true); // update loading mode
 			
-
+			// build base  object data:CB_CustomsItemComputedDataList
 			this.API_MainService.GetCustomsBookMainViewSearchByText(filters).subscribe((data: any) => {
 				const result: CB_CustomsItemComputedDataList[] = data.body;
 				if (!result) return; // TODO: add error message
 				this.itemsData.next(result);
+				this.isLoadingMode.next(false); // update loading mode
 			});
 		}
 	}
