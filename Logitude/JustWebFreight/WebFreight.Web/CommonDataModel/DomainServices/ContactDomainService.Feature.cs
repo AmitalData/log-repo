@@ -35,7 +35,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
             List<string> allowedPackages = new List<string>();
             string email = HttpContext.Current.User.Identity.Name;
-            ContactInfo inf = SecurityUtility.GetContactInfo(email, tenant);
+            Logitude.BL.Security.ContactInfo inf = SecurityUtility.GetContactInfo(email, tenant);
             if (inf != null)
             {
                 allowedPackages = inf.PackagesCodes;

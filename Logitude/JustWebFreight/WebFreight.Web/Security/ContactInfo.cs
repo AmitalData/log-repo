@@ -1,52 +1,52 @@
-using System.Collections.Generic;
+//using System.Collections.Generic;
 
-namespace WebFreight.Web.Security
-{
-    public class ContactInfo
-    {
-        public int Tenant { get; set; }
-        public string ContactEmail { get; set; }               
-        public bool IsLogitudeAdmin { get; set; }
-        public string AccessLevelCode { get; set; }
-        //public string ComputingPartnerCode { get; set; }
-        private List<string> myRolesIds;
-        public List<string> RolesIds
-        {
-            get
-            {
-                if (myRolesIds == null)
-                {
-                    myRolesIds = new List<string>();
-                }
+//namespace WebFreight.Web.Security
+//{
+//    public class ContactInfo
+//    {
+//        public int Tenant { get; set; }
+//        public string ContactEmail { get; set; }
+//        public bool IsLogitudeAdmin { get; set; }
+//        public string AccessLevelCode { get; set; }
+//        //public string ComputingPartnerCode { get; set; }
+//        private List<string> myRolesIds;
+//        public List<string> RolesIds
+//        {
+//            get
+//            {
+//                if (myRolesIds == null)
+//                {
+//                    myRolesIds = new List<string>();
+//                }
 
-                return myRolesIds;
-            }
+//                return myRolesIds;
+//            }
 
-            set
-            {
-                myRolesIds = value;
-            }
-        }
+//            set
+//            {
+//                myRolesIds = value;
+//            }
+//        }
 
-        private List<string> myPackagesCodes;
-        public List<string> PackagesCodes
-        {
-            get
-            {
-                if (myPackagesCodes == null)
-                {
-                    myPackagesCodes = new List<string>();
-                }
+//        private List<string> myPackagesCodes;
+//        public List<string> PackagesCodes
+//        {
+//            get
+//            {
+//                if (myPackagesCodes == null)
+//                {
+//                    myPackagesCodes = new List<string>();
+//                }
 
-                return myPackagesCodes;
-            }
+//                return myPackagesCodes;
+//            }
 
-            set
-            {
-                myPackagesCodes = value;
-            }
-        }
+//            set
+//            {
+//                myPackagesCodes = value;
+//            }
+//        }
 
-        public bool IsApi { get; set; }
-    }
-}
+//        public bool IsApi { get; set; }
+//    }
+//}

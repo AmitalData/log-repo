@@ -98,7 +98,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     SecurityUtility.AuthenticateAccessibleAPI("House", authToken.Tenant);
 
                     IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
-                    ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
+                    Logitude.BL.Security.ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
                     string computingPartnerCode = "";
                     if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
                     {
