@@ -36,7 +36,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ScreenFieldsRepository = new ScreenFieldsRepository(ObjectContext);
             ScreensRepository = new ScreensRepository(ObjectContext);
             ObjectTable DocumentsFilingObject = ObjectContext.ObjectTables.Where(d => d.Name == "DocumentsFiling" && d.Tenant == 0).FirstOrDefault();
-            Dictionary<string, Screen> tenantScreens = ScreensRepository.GetScreensByTenant(0).Where(a => a.ObjectTableId == DocumentsFilingObject.Id).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+            Dictionary<string, Screen> tenantScreens = ScreensRepository.GetScreensByTenant(0).Where(a => a.ObjectTableId == DocumentsFilingObject.Id).GroupBy(d => d.Code + d.ObjectTableId).ToDictionary(g => g.Key, a => a.FirstOrDefault());
             Dictionary<string, ScreenField> tenantScreenField = new Dictionary<string, ScreenField>();//ScreenFieldsRepository.GetScreenFieldsByTenant(0).Where(a => a.ObjectTableId == DocumentsFilingObject.Id).ToDictionary(d => d.ScreenId + d.ObjectFieldId);
 
             BuildDocumentsFilingScreens(tenantScreens, tenantScreenField);
@@ -109,9 +109,9 @@ namespace WebFreight.Web.MetaDataUpdate
         public void LoadObjectTablesToTenantZero(IWebFreightContext context)
         {
             InitializeService(context);
-            Dictionary<string, ObjectTable> objectTables = ObjectTableRepository.GetObjectsByTenant(0).ToDictionary(d => d.Name, a => a);
+            Dictionary<string, ObjectTable> objectTables = ObjectTableRepository.GetObjectsByTenant(0).GroupBy(d => d.Name).ToDictionary(g => g.Key, a => a.FirstOrDefault());
             textCodes = new Dictionary<string, TextCode>();
-            textCodes = TextCodeRepository.GetTextCodesByTenant(0).ToDictionary(d => d.Code + d.Tenant.ToString() + d.ObjectTableId, a => a, StringComparer.OrdinalIgnoreCase);
+            textCodes = TextCodeRepository.GetTextCodesByTenant(0).GroupBy(d => d.Code + d.Tenant.ToString() + d.ObjectTableId).ToDictionary(d => d.Key, a => a.FirstOrDefault(), StringComparer.OrdinalIgnoreCase);
             //TextCodeRepository.GetTextCodesByTenant(0).ToList().ForEach(d =>
             //{
             //    textCodes.Add(d.Code + d.Tenant.ToString() + d.ObjectTableId, d);
@@ -141,9 +141,9 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             InitializeService(context);
 
-            Dictionary<string, ObjectTable> objectTables = ObjectTableRepository.GetObjectsByTenant(0).ToDictionary(d => d.Name, a => a);
+            Dictionary<string, ObjectTable> objectTables = ObjectTableRepository.GetObjectsByTenant(0).GroupBy(d => d.Name).ToDictionary(g => g.Key, a => a.FirstOrDefault());
             //Dictionary<string, ObjectField> objectFields = ObjectFieldsRepository.GetObjectFieldsByTenant(0).ToDictionary(d => d.FieldName + d.ObjectTableId, a => a);
-            Dictionary<string, Tip> tips = TipRepository.GetTips(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, Tip> tips = TipRepository.GetTips(0).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
             if (textCodes == null)
             {
                 if (true)
@@ -60021,7 +60021,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectContext = context;//WebFreightContext.GetContext(0);
             TextCodeRepository = new TextCodeRepository(ObjectContext);
 
-            Dictionary<string, TextCode> textcodes = TextCodeRepository.GetTextCodesByTenant(0).ToDictionary(d => d.Code + d.Tenant.ToString() + d.ObjectTableId, a => a);
+            Dictionary<string, TextCode> textcodes = TextCodeRepository.GetTextCodesByTenant(0).GroupBy(d => d.Code + d.Tenant.ToString() + d.ObjectTableId).ToDictionary(g => g.Key, a => a.FirstOrDefault());
 
             if (LogitudeSettings.WorkEnvironment == "customs")
             {
@@ -65837,7 +65837,7 @@ namespace WebFreight.Web.MetaDataUpdate
             List<ObjectTable> TenantZeroObjectTables = ObjectTableRepository.GetObjectsByTenant(0).ToList();
             List<ObjectTable> CurrentTenantObjectTables = ObjectTableRepository.GetObjectsByTenant(tenant).ToList();
             List<TextCode> TenantZeroTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
-            Dictionary<string, TextCode> CurrentTenantTextCodes = TextCodeRepository.GetTextCodesByTenant(tenant).ToDictionary(d => d.Code + d.Tenant + d.ObjectTableId, a => a);
+            Dictionary<string, TextCode> CurrentTenantTextCodes = TextCodeRepository.GetTextCodesByTenant(tenant).GroupBy(d => d.Code + d.Tenant + d.ObjectTableId).ToDictionary(g => g.Key, a => a.FirstOrDefault());
 
             foreach (ObjectFieldPM zeroObject in TenantZeroObjectFields)
             {
