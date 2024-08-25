@@ -130,11 +130,11 @@ export class ShipmentPackageItemLine extends BaseComponent {
         var error = FormatTool.ValidateContainerNumber(this.ContainerNumber);
         if (!AppTool.IsNullOrEmpty(error)) {
             this.UIProperties.SetValidity("ContainerNumber", "ShipmentPackages", false, error);
-            SessionLocator.SustainFocusOnCell = true;
+            //SessionLocator.SustainFocusOnCell = true;
             SessionLocator.SelectedSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: containerNumberTextBox.InputId });
         } else {
             this.UIProperties.SetValidity("ContainerNumber", "ShipmentPackages", true, '');
-            SessionLocator.SustainFocusOnCell = false;
+           // SessionLocator.SustainFocusOnCell = false;
         }
     }
 
