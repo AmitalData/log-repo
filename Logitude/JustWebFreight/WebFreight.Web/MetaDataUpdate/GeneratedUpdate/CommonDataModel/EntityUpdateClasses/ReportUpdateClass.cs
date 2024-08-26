@@ -84,17 +84,11 @@ using Logitude.DashboardModule.BL;
 
 
 
-
-
-
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class ReportUpdateClass
    {  		
-
-
-
-		public const string HashString = "ebf6668dfca8f656d694b703296aaf90";
+		public const string HashString = "b9f1f3f5ac3ef1412418481cd5e79e22";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2005,11 +1999,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   Feature ReportFeature_ARinvoiceSequences = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARinvoiceSequences", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.ARinvoiceSequences", NameTextCodeDefaultText = @"ARinvoice sequences" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportObjectTable);
 
 		   Feature ReportFeature_ControlInvoiceLines = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ControlInvoiceLines", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.ControlInvoiceLines", NameTextCodeDefaultText = @"Control Invoice Lines" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportObjectTable);
+
 		   Feature ReportFeature_ExportDeclarationReport = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportDeclarationReport", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.ExportDeclarationReport", NameTextCodeDefaultText = @"Export declaration report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportObjectTable);
 
 		   Feature ReportFeature_LoanReportsByEmail = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LoanReportsByEmail", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.LoanReportsByEmail", NameTextCodeDefaultText = @"Loan Reports By Email" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportObjectTable);
+
 		   Feature ReportFeature_MonthlyBalancesReport = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MonthlyBalancesReport", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.MonthlyBalancesReport", NameTextCodeDefaultText = @"Monthly Balances Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportObjectTable);
+
 		   Feature ReportFeature_CustomsCollateralReport = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsCollateralReport", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.CustomsCollateralReport", NameTextCodeDefaultText = @"Customs Collateral Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportObjectTable);
+
+		   Feature ReportFeature_ShipmentFormReport = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShipmentFormReport", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.ShipmentFormReport", NameTextCodeDefaultText = @"Shipment Form Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportObjectTable);
 
    
 	    

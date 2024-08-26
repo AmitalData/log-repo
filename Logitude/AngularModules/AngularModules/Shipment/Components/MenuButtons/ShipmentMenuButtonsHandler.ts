@@ -588,8 +588,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
                     if (!response.HasError) {
                         // download report
-                        const templateDescription = this.ReportTemplates.filter(d => d.Id == this.ReportsPreview.Report.DefaultTemplateId)[0].Description;
-                        var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadReportPage.aspx?fileName=" + response.Result.ReportKey + "@" + templateDescription + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&type=PrintToPDF";
+                        var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadReportPage.aspx?fileName=" + response.Result.ReportKey + "@&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&type=PrintToPDF";
                         window.open(url);
                     }
                 });

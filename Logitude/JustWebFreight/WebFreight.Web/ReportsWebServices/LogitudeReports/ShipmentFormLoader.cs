@@ -21,6 +21,9 @@ using Simplog.Data.ShipmentsModel;
 using System.Linq.Dynamic.Core;
 using Logitude.Customs.Def.EntityPMs;
 using WebFreight.Web.Services;
+using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityPMs;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
 {
@@ -90,7 +93,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
 
             #region map to data provider
 
-            var shipmentFormProvider = new ShipmentForm()
+            var shipmentFormProvider = new ShipmentFormDataProvider()
             {
                 ShipmentNumber = shipmentData.ShipmentNumber,
                 ShipmentNumberTenant = shipmentData.ShipmentNumber + " " + tenant,
@@ -116,12 +119,23 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                 if (declarationPM != null)
                 {
                     DeclarationReferantDataQueryService declarationReferantDataQueryService = new DeclarationReferantDataQueryService(tenant);
-                    DeclarationReferantDataPM declarationReferantDataPM = declarationReferantDataQueryService.GetSingle(declarationPM.Id, false, true);
-
-                    shipmentFormProvider.CarrierCode = declarationReferantDataPM?.CarrierCode;
+                    DeclarationReferantDataPM declarationReferantDataPM = declarationReferantDataQueryService.GetSingle(declarationPM.Id, true, true);
                     shipmentFormProvider.Mawb = declarationReferantDataPM?.Mawb;
                     shipmentFormProvider.EstimatedArrivalDate = declarationReferantDataPM?.EstimatedArrivalDate;
-                    shipmentFormProvider.Vessel = declarationReferantDataPM?.Vessel;
+
+                    if (!string.IsNullOrEmpty(declarationReferantDataPM?.CarrierCode))
+                    {
+                        AirlineQuery airlineQuery = new AirlineQuery(tenant);
+                        AirlinePM airlinePM = airlineQuery.GetSinglePM(declarationReferantDataPM.CarrierCode, tenant);
+                        shipmentFormProvider.CarrierCode = airlinePM?.LocalName;
+                    }
+
+                    if (!string.IsNullOrEmpty(declarationReferantDataPM?.Vessel))
+                    {
+                        VesselQuery vesselQuery = new VesselQuery(tenant);
+                        VesselPM vesselPM = vesselQuery.GetSinglePM(declarationReferantDataPM?.Vessel, tenant);
+                        shipmentFormProvider.Vessel = vesselPM?.LocalName;
+                    }
                 }
                 else
                 {
@@ -133,7 +147,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                 NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"missing ShipmentNumber from shipment: {shipmentId}");
             }
 
-            dataProvider.ShipmentForm = shipmentFormProvider;
+            // get shipment references
+            ShipmentReferanceQuery shipmentReferanceQuery = new ShipmentReferanceQuery(tenant);
+            shipmentFormProvider.ShipmentReferances = shipmentReferanceQuery.GetShipmentReferances(shipmentId, tenant).Select(x => new DataProviders.ShipmentReferance
+            {
+                LineNumber = x.LineNumber,
+                ReferanceType = x.ReferenceType,
+                ReferanceValue = x.ReferenceValue,
+            }).ToList();
+
+            dataProvider = shipmentFormProvider;
 
             #endregion
         }

@@ -1242,9 +1242,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
         private static void MapTotalsOfPackages(ShipmentPM entityPM, Shipment entityPoco)
         {
-            if (IsLogboxEnvironment()) return;
+            if (IsLogboxEnvironment() || entityPM.IsCustomShipment) return;
+
             List<ShipmentPackagePM> shipmentPackages = entityPM.ShipmentPackages.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
-            if ((shipmentPackages == null || (shipmentPackages != null && shipmentPackages.Count == 0)) && !entityPM.IsCustomShipment)
+            if ((shipmentPackages == null || (shipmentPackages != null && shipmentPackages.Count == 0)))
             {
                 entityPoco.NumberOfPackages = entityPM.NumberOfPackages = null;
                 entityPoco.NumberOfContainers = entityPM.NumberOfContainers = null;

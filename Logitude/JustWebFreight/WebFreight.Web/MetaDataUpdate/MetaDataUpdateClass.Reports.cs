@@ -42,6 +42,7 @@ namespace WebFreight.Web.MetaDataUpdate
             this.LoadReports_TFS(TFSGroup, tenantFeatures, reportRepository, TenantReports);
             this.LoadReports_Administrative(AdminGroup, tenantFeatures, reportRepository, TenantReports);
             this.LoadReports_ExportCustoms(ExportCustomGroup, tenantFeatures, reportRepository, TenantReports);
+            this.LoadReports_CustomShipment(tenantFeatures, reportRepository, TenantReports);
 
 
             reportRepository.SubmitChanges();
@@ -241,5 +242,10 @@ namespace WebFreight.Web.MetaDataUpdate
         
         }
 
+        private void LoadReports_CustomShipment(List<Feature> tenantFeatures, ReportRepository reportRepository, Dictionary<string, Report> tenantReports)
+        {
+            Feature ShipmentFormFeature = tenantFeatures.Where(d => d.Code == "ShipmentFormReport" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            AddReports.AddReport(new ReportDetails() { Code = "SHTO", Description = "Shipment Form", Name = "Shipment Form", LocalName = "טופס תיק", FilterControlName = "ShipmentFormFilterComponent", Tenant = 0, FeatureId = ShipmentFormFeature.Id, FeatureUniqeCode = ShipmentFormFeature.FeatureUniqeCode }, reportRepository, tenantReports);
+        }
     }
 }
