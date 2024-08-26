@@ -7474,6 +7474,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;CustomsShipments&quot;"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;ShipmentNumber&quot;"
@@ -8778,6 +8779,7 @@
     FullLocalDefaultText="&quot;שטר מטען פנימי&quot;"
     ListFieldLable="&quot;HouseListLable&quot;"
     ListLableDefaultText="&quot;HWB&quot;"
+    ListLocalDefaultText="&quot;שטר מטען פנימי&quot;"
     ShortFieldLable="&quot;House&quot;"
     ShortFieldLableDefaultText="&quot;House&quot;"
     ShortLocalDefaultText="&quot;ש.מ.פ&quot;"
@@ -8798,6 +8800,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;CustomsShipments&quot;"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;House&quot;"
@@ -9210,6 +9213,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;CustomsShipments&quot;"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;CreateDateTime&quot;"
@@ -9486,7 +9490,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     IsListFilter="false"
     Operator="&quot;Equals&quot;"
@@ -9518,6 +9522,9 @@
     FullFieldLable="&quot;CustomerId&quot;"
     DefaultText="&quot;Customer&quot;"
     FullLocalDefaultText="&quot;קוד לקוח&quot;"
+    ListFieldLable="&quot;CustomerIdListLable&quot;"
+    ListLableDefaultText="&quot;Customer&quot;"
+    ListLocalDefaultText="&quot;לקוח&quot;"
     HelpTextCode="&quot;CustomerId&quot;"
     HelpTextDefaultText="&quot;Indicates who the customer is, so that Logitude knows to refer to the relevant partner for statistics, billing and shared logistics. For Export, the Shipper is selected automatically. For Import, the Consignee is selected automatically.&quot;"
     HelpLocalDefaultText="&quot;מציין מי הלקוח, כך ש-Logitude תדע לפנות לשותף הרלוונטי לסטטיסטיקה, חיוב ולוגיסטיקה משותפת. עבור ייצוא, השולח נבחר באופן אוטומטי. עבור ייבוא, הנמען נבחר באופן אוטומטי.&quot;"
@@ -9541,6 +9548,7 @@
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="true"
     RecordType="&quot;Shipment&quot;"
+    AdditionalQuerySections="&quot;CustomsShipments&quot;"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="true"
@@ -12584,6 +12592,7 @@
     FullLocalDefaultText="&quot;תאור טובין&quot;"
     ListFieldLable="&quot;DescriptionOfGoodsListLable&quot;"
     ListLableDefaultText="&quot;Description of Goods&quot;"
+    ListLocalDefaultText="&quot;תאור טובין&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -12601,6 +12610,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;CustomsShipments&quot;"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;DescriptionOfGoods&quot;"
@@ -29096,6 +29106,7 @@
     FullLocalDefaultText="&quot;משקל בק&quot;ג&quot;"
     ListFieldLable="&quot;GrossWeightListLable&quot;"
     ListLableDefaultText="&quot;Gross Weight&quot;"
+    ListLocalDefaultText="&quot;משקל&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -29113,6 +29124,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;CustomsShipments&quot;"
     HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;GrossWeight&quot;"
@@ -29141,7 +29153,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     IsListFilter="false"
     Operator="&quot;Equals&quot;"
@@ -29158,7 +29170,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;&quot;"
+    ValidForQuerySection1="&quot;CustomsShipments&quot;"
     ValidForQuerySection2="&quot;&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="true"
@@ -29174,6 +29186,9 @@
     FullFieldLable="&quot;NumberOfPackages&quot;"
     DefaultText="&quot;Packages&quot;"
     FullLocalDefaultText="&quot;כמות&quot;"
+    ListFieldLable="&quot;NumberOfPackagesListLable&quot;"
+    ListLableDefaultText="&quot;Number Of Packages&quot;"
+    ListLocalDefaultText="&quot;כמות&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -105303,7 +105318,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="17"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     IsListFilter="false"
     MultiLine="false"
@@ -105319,6 +105334,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection2="&quot;CustomsShipments&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -105330,6 +105346,9 @@
     FullFieldLable="&quot;DeclarationOfficeCode&quot;"
     DefaultText="&quot;Declaration Office Code&quot;"
     FullLocalDefaultText="&quot;בית מכס&quot;"
+    ListFieldLable="&quot;DeclarationOfficeCodeListLable&quot;"
+    ListLableDefaultText="&quot;Declaration Office Code&quot;"
+    ListLocalDefaultText="&quot;תחנת מכס&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -105942,7 +105961,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="20"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     IsListFilter="false"
     MultiLine="false"
@@ -105958,6 +105977,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;CustomsShipments&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -105969,6 +105989,9 @@
     FullFieldLable="&quot;Mawb&quot;"
     DefaultText="&quot;Mawb&quot;"
     FullLocalDefaultText="&quot;שטר מטען ראשי&quot;"
+    ListFieldLable="&quot;MawbListLable&quot;"
+    ListLableDefaultText="&quot;Mawb&quot;"
+    ListLocalDefaultText="&quot;שטר מטען ראשי&quot;"
     ShortFieldLable="&quot;Mawb&quot;"
     ShortFieldLableDefaultText="&quot;Mawb&quot;"
     ShortLocalDefaultText="&quot;ש.מ.ר&quot;"
@@ -105981,7 +106004,7 @@
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
-    GenerateInList="false"
+    GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"
     IncludeInSearchField="false"
@@ -106513,7 +106536,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     IsListFilter="false"
     MultiLine="false"
@@ -106530,6 +106553,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;CustomsShipments&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -106540,6 +106564,9 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ShipmentReferances&quot;"
     DefaultText="&quot;Shipment Referances&quot;"
+    ListFieldLable="&quot;ShipmentReferancesListLable&quot;"
+    ListLableDefaultText="&quot;Shipment Referances&quot;"
+    ListLocalDefaultText="&quot;הזמנת לקוח&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -106552,7 +106579,7 @@
     IsComposition="true"
     IsMaxLength="false"
     NoMetaDataField="false"
-    GenerateInList="false"
+    GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"
     IncludeInSearchField="false"
@@ -108813,14 +108840,65 @@
     QueryGroupCode="&quot;SHIP&quot;"
     IndexOrder="23"
     ObjectTableName="&quot;Shipment&quot;"
-    QuerySection="&quot;Shipment&quot;"
+    QuerySection="&quot;CustomsShipments&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
     IsPackagable="true"
     DefaultSortName="&quot;Id&quot;"
     DefaultSortDirection="&quot;Ascending&quot;"
     IsSpellChecked="false">
-    <QueryColumns />
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;OpenCommissionCases &quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;ShipmentNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenCommissionCases &quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;CreateDateTime&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenCommissionCases &quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;CustomerId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenCommissionCases &quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;ShipmentReferances&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenCommissionCases &quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;DeclarationOfficeCode&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenCommissionCases &quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;Mawb&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenCommissionCases &quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;House&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenCommissionCases &quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;DescriptionOfGoods&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenCommissionCases &quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;GrossWeight&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenCommissionCases &quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;NumberOfPackages&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;OpenCommissionCases &quot;"
@@ -108847,14 +108925,65 @@
     QueryGroupCode="&quot;SHIP&quot;"
     IndexOrder="24"
     ObjectTableName="&quot;Shipment&quot;"
-    QuerySection="&quot;Shipment&quot;"
+    QuerySection="&quot;CustomsShipments&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
     IsPackagable="true"
     DefaultSortName="&quot;Id&quot;"
     DefaultSortDirection="&quot;Ascending&quot;"
     IsSpellChecked="false">
-    <QueryColumns />
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;CloseCommissionCases&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;ShipmentNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CloseCommissionCases&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;CreateDateTime&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CloseCommissionCases&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;CustomerId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CloseCommissionCases&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;ShipmentReferances&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CloseCommissionCases&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;DeclarationOfficeCode&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CloseCommissionCases&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;Mawb&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CloseCommissionCases&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;House&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CloseCommissionCases&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;DescriptionOfGoods&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CloseCommissionCases&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;GrossWeight&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CloseCommissionCases&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;NumberOfPackages&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;CloseCommissionCases&quot;"
@@ -108881,14 +109010,65 @@
     QueryGroupCode="&quot;SHIP&quot;"
     IndexOrder="25"
     ObjectTableName="&quot;Shipment&quot;"
-    QuerySection="&quot;Shipment&quot;"
+    QuerySection="&quot;CustomsShipments&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
     IsPackagable="true"
     DefaultSortName="&quot;Id&quot;"
     DefaultSortDirection="&quot;Ascending&quot;"
     IsSpellChecked="false">
-    <QueryColumns />
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;AllCommissionCases&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;ShipmentNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllCommissionCases&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;CreateDateTime&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllCommissionCases&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;CustomerId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllCommissionCases&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;ShipmentReferances&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllCommissionCases&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;DeclarationOfficeCode&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllCommissionCases&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;Mawb&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllCommissionCases&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;House&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllCommissionCases&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;DescriptionOfGoods&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllCommissionCases&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;GrossWeight&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllCommissionCases&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;NumberOfPackages&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;AllCommissionCases&quot;"
