@@ -155,6 +155,7 @@
                     </td>
                     <td>
                         <LogLov 
+                            [IsDisabled]="TransportModeId==='A'"
                             [ObjectFieldName]="'Vessel'" 
                             [SelectedValue]="Vessel"
                             [ObjectTableName]="ObjectTableName"
@@ -222,6 +223,7 @@
                     </td>
                     <td>
                         <LogTextBox 
+                            [ForceDisable]="TransportModeId==='A'"
                             [ObjectFieldName]="'IskaNumber'" 
                             [Text]="IskaNumber"
                             [ObjectTableName]="ObjectTableName"
