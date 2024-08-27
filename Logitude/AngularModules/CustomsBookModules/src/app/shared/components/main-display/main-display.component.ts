@@ -69,6 +69,7 @@ export class MainDisplayComponent implements OnInit {
 			Tenant: SessionInfo.LoggedUserTenant,
 			SearchFields: ''
 		};
+		this.isLoadingMode.next(true);
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: any) => {
 			const result: CB_CustomsItemComputedDataList[] = data.body;
 			if (!result) return; // TODO: add error message
@@ -78,6 +79,12 @@ export class MainDisplayComponent implements OnInit {
 			this.data = this.fullData;
 			this.searchMode = TableTopState.ViewAll;
 			this.isExpand.next(false);
+			this.isLoadingMode.next(false);
+		});
+
+		// listen to loading mode changes:
+		this.isLoadingMode.subscribe((isLoading) => {
+			this.isLoading = isLoading;
 		});
 	}
 
@@ -90,10 +97,6 @@ export class MainDisplayComponent implements OnInit {
 			if (searchText === "") this.handleClearResults();
 		});
 
-		// listen to loading mode changes:
-		this.isLoadingMode.subscribe((isLoading) => {
-			this.isLoading = isLoading;
-		});
 
 		// listen to itemsData changes:
 		this.itemsData.subscribe((data: CB_CustomsItemComputedDataList[] = []) => {
