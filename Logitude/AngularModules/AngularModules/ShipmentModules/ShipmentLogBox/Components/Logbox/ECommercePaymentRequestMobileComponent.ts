@@ -385,6 +385,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
 
          this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe(res=>{
+            debugger
             this.MapFieldsFromResponseData(res);
             if (res.Result) {
                 const form = document.createElement('form');
@@ -393,13 +394,13 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
               
                 // Data to be sent
                 const formData = {
-                  sum: res.Result.sum,
-                  currency: res.Result.currency,
-                  u71: res.Result.u71,
-                  op: res.Result.op,
-                  DCdisable: res.Result.DCdisable,
-                  DclickTK: res.Result.dclickTK,
-                  thtk: res.Result.thtk
+                  sum: res.Result.PaymentData.sum,
+                  currency: res.Result.PaymentData.currency,
+                  u71: res.Result.PaymentData.u71,
+                  op: res.Result.PaymentData.op,
+                  DCdisable: res.Result.PaymentData.DCdisable,
+                  DclickTK: res.Result.PaymentData.DclickTK,
+                  thtk: res.Result.PaymentData.thtk
                 };
               
                 Object.entries(formData).forEach(([key, value]) => {
