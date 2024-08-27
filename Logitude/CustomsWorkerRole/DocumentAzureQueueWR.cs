@@ -90,18 +90,16 @@ namespace CustomsWorkerRole
 
 		public override void WorkOnce()
 		{
-			while (!WorkerRoleServiceLocator.PleaseShutDown)
+			OnStart();
+			try
 			{
-				try
-				{
-					ExecuteQueue();
-				}
-				catch (Exception exception)
-				{
-					Thread.Sleep(new TimeSpan(0, 0, 1));
-				}
-
+				ExecuteQueue();
 			}
+			catch (Exception exception)
+			{
+				Thread.Sleep(new TimeSpan(0, 0, 1));
+			}
+
 		}
 		public  ServiceBusProcessor ExecuteQueue()
 		{
