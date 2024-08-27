@@ -373,6 +373,7 @@
     <None Include="DBTables\ConverterType.dxml" />
     <None Include="DBTables\CoolingReportingMethod.dxml" />
     <None Include="DBTables\CountryCurrency.dxml" />
+    <None Include="DBTables\FreightForwarderReference.dxml" />
     <None Include="DBTables\NUnicloud.dxml" />
     <None Include="DBTables\CountryGroup.dxml" />
     <None Include="DBTables\CourierCustomStatus.dxml" />
