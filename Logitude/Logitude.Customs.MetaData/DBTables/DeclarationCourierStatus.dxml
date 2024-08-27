@@ -230,6 +230,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="IsNotSendVPE"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="DeclarationId"
     ReferencedTable="Declarations"

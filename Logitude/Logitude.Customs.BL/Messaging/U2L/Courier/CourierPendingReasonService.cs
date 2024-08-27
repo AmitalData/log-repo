@@ -132,7 +132,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.Courier
 
                     if (_MyDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
                     {
-                        declarationCourierStatusUpdateService.Update(_MyDeclarationCourierStatusPM, true);
+						_MyDeclarationCourierStatusPM.IsNotSendVPE = true;
+						declarationCourierStatusUpdateService.Update(_MyDeclarationCourierStatusPM, true);
                     }
                     LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code 900 as Solved");
                     AppendLogLine("Set Courier Pending Reason Code 900 as Solved" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();

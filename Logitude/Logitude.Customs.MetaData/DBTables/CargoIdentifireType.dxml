@@ -86,7 +86,6 @@
   </Column>
   <Column
     Name="CargoIdentifierKey3Name"
-    OldNames="CargoIdentifierKey2Name"
     Type="nvarchar"
     Size="40">
     <Constraints

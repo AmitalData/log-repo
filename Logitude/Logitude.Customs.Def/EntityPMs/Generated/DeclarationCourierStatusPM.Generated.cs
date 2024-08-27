@@ -1810,6 +1810,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isNotSendVPE ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsNotSendVPE  
+	   {
+	    
+	     get
+		{
+		   return isNotSendVPE;
+		 }
+		 set
+		 {
+		   if(isNotSendVPE != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsNotSendVPE",OldValue=isNotSendVPE,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isNotSendVPE=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

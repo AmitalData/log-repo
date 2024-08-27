@@ -8,6 +8,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.Security;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Threading;
 using Simplog.Data.CommonDataModel;
@@ -1127,21 +1128,21 @@ namespace WebFreight.Web.Security
 
         public static string getLoggedDomain()
         {
-                HttpContext context = HttpContext.Current;
-                string Url = context.Request.Url.ToString().Split('/')[2];//("http://", "");
-                Url = Url.Split(':')[0];
+            HttpContext context = HttpContext.Current;
+            string Url = context.Request.Url.ToString().Split('/')[2];//("http://", "");
+            Url = Url.Split(':')[0];
 
-                var isAppServiceENV = Environment.GetEnvironmentVariable("IsAppService") == "true";
-                bool isAppService = ConfigurationManager.AppSettings["IsAppService"] == "true";
+            var isAppServiceENV = Environment.GetEnvironmentVariable("IsAppService") == "true";
+            bool isAppService = ConfigurationManager.AppSettings["IsAppService"] == "true";
 
-                if (isAppServiceENV || isAppService)
-                {
-                     if (!string.IsNullOrEmpty(context.Request.Headers["X-ORIGINAL-HOST"]))
-                          Url = context.Request.Headers["X-ORIGINAL-HOST"];
+            if (isAppServiceENV || isAppService)
+            {
+                if (!string.IsNullOrEmpty(context.Request.Headers["X-ORIGINAL-HOST"]))
+                    Url = context.Request.Headers["X-ORIGINAL-HOST"];
 
-                }
+            }
 
-                return Url;
+            return Url;
         }
 
         private static bool ContinueRedirectToHttps()
@@ -1330,10 +1331,10 @@ namespace WebFreight.Web.Security
         {
 
             IGlobalContext globalObjectContext = GlobalContext.GetContext();
-            GlobalContact contact = globalObjectContext.GlobalContacts.Where(m => m.Email == email && m.GlobalTenant.IsActive == true && m.InActive == false && (m.IsUser == true || m.InternetAccess == true) 
+            GlobalContact contact = globalObjectContext.GlobalContacts.Where(m => m.Email == email && m.GlobalTenant.IsActive == true && m.InActive == false && (m.IsUser == true || m.InternetAccess == true)
             && m.GlobalTenant.Id == tenant).FirstOrDefault();
-            
-            if(contact != null)
+
+            if (contact != null)
                 return contact.IsUser;
 
             return false;
@@ -1343,13 +1344,14 @@ namespace WebFreight.Web.Security
         {
             UserRepository userRepository = new UserRepository(tenant);
             User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, email, tenant, false);
-            if(loggedUser!=null && loggedUser.UserRoles!=null) {
+            if (loggedUser != null && loggedUser.UserRoles != null)
+            {
                 if (loggedUser.UserRoles.Contains("Administrator"))
                 {
                     return true;
                 }
             }
-           
+
             return false;
 
         }

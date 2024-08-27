@@ -326,7 +326,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          //ThirdCargoID = myJoinConsignment != null ? myJoinConsignment.ThirdCargoID : null,
                                                          //ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber : null,
                                                          PhysicalCheck = a.PhysicalCheck,
-                                                         PhysicalCheckName = a.PhysicalCheck == null ? "ללא בדיקה" : a.PhysicalCheckCode.Name,
+                                                         PhysicalCheckName = a.PhysicalCheck == null ? "ללם בדיקה" : a.PhysicalCheckCode.Name,
                                                          DeclarationTypeCode = a.DeclarationTypeCode,
                                                          DeclarationTypeName = a.DeclarationType.LocalName,
                                                          IsExportDeclarationAmendments = arrAmentmentStatus.Contains(a.AmendmentStatus),
@@ -362,6 +362,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                      .Include("Importer").Include("ImporterType").Include("FreightPaymentMethod")
                                      .Include("CustomsCountry").Include("TransportMode")
 
+
                                                       join cdJoin in context.CourierDeclarations.Include("CourierMaster").Include("Card")
                                                       .Select(x => new
                                                       {
@@ -370,7 +371,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           x.CourierMaster.Card.LocalName,
                                                           x.CourierMaster.MAWB
                                                       })
-                                                                   on a.Id equals cdJoin.DeclarationId
+                                                                    on a.Id equals cdJoin.DeclarationId
                                                                    into cdJoin_
                                                       from cd in cdJoin_.DefaultIfEmpty()
 
@@ -435,7 +436,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           CustomFileNo = a.CustomFileNo,
                                                           DealValue = a.DealValue,
                                                           DeclarationNumber = !string.IsNullOrEmpty(a.DeclarationNumber) ? a.DeclarationNumber : (!string.IsNullOrEmpty(myJoinOriginalDeclaration.DeclarationNumber) ? myJoinOriginalDeclaration.DeclarationNumber : myJoinDisplayDeclarations.DeclarationNumber),
-                                                          ExportFlightDate = a.ExportFlightDate,
 
                                                           ExternalDeclarationNumber = a.ExternalDeclarationNumber,
                                                           HatraDate = a.HatraDate,
@@ -448,7 +448,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           IsSubmitDeclaration = a.IsSubmitDeclaration,
                                                           ProcedureCurrentName = a.GovernmentProcedureCurrent.LocalName,
                                                           TaxationDateTime = a.TaxationDateTime,
-                                                          ExportTaxationDateTime = a.TaxationDateTime,
                                                           Tenant = a.Tenant,
                                                           TotalTax = a.TotalTax,
                                                           DeclarationVersionId = a.VersionId,
@@ -470,9 +469,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           DeclarationStatusTypeCode = a.DeclarationStatusTypeCode,
                                                           DeclarationOfficeCode = a.DeclarationOfficeCode,
                                                           DeclarationOfficeNameForExport = a.DeclarationOffice == null ? null : a.DeclarationOffice.LocalName,
-                                                          ExportDeclarationOfficeCode = a.ExportDeclarationOfficeCode,
 
-                                                          ExportAutonomyRegionTypeCode = a.ExportAutonomyRegionTypeCode,
 
                                                           DepartmentId = a.DepartmentId,
                                                           DepartmentName = a.Department == null ? null : a.Department.LocalName,

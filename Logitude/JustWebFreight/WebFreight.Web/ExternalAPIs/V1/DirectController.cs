@@ -91,7 +91,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         SecurityUtility.AuthenticateAPICall(authToken.Tenant);
                         SecurityUtility.AuthenticateAccessibleAPI("Direct", authToken.Tenant);
 
-                        ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
+                        Logitude.BL.Security.ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
 
                         string computingPartnerCode = "";
                         if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))

@@ -152,7 +152,7 @@ namespace WebFreight.Web.Security
                                     }
                                 }
 
-                                ContactInfo myContactInfo = new ContactInfo()
+                                Logitude.BL.Security.ContactInfo myContactInfo = new Logitude.BL.Security.ContactInfo()
                                 {
                                     Tenant = contact.GlobalTenantId,
                                     ContactEmail = contact.Email,

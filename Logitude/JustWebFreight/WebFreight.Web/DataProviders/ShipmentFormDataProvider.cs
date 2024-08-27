@@ -9,10 +9,6 @@ namespace WebFreight.Web.DataProviders
 {
     public class ShipmentFormDataProvider : BaseDataProvider
     {
-        public ShipmentForm ShipmentForm { get; set; }
-    }
-    public class ShipmentForm
-    {
         public string ShipmentNumber { get; set; }
         public string ShipmentNumberTenant { get; set; } // ברקוד (מס' תיק + TENANT) 
         // public DateTime? TaxationDateTime { get; set; }//תאריך חישוב מיסים
@@ -30,9 +26,14 @@ namespace WebFreight.Web.DataProviders
         public DateTime? EstimatedArrivalDate { get; set; }
         public string Vessel { get; set; }
         public string FreightForwarderId { get; set; }
-        public string DescriptionOfGoods { get; set; } // CargoDescription.Declaration ???
+        public string DescriptionOfGoods { get; set; }
+        public List<ShipmentReferance> ShipmentReferances { get; set; }
+    }
 
-        // todo: מס הזמנה, גובה, מוביל יבשתי, תיק שילוח
-        // todo: VendorId.SupplierInvoice { get; set; } ?
+    public class ShipmentReferance
+    {
+        public int LineNumber { get; set; }
+        public string ReferanceType { get; set; }
+        public string ReferanceValue { get; set; }
     }
 }
