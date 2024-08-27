@@ -289,6 +289,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<FacilitationType> FacilitationTypes { get; }
 		 IDbSet<FaultInspectionType> FaultInspectionTypes { get; }
 		 IDbSet<FclLclCode> FclLclCodes { get; }
+		 IDbSet<FreightForwarderReference> FreightForwarderReferences { get; }
 		 IDbSet<FreightPaymentMethod> FreightPaymentMethods { get; }
 		 IDbSet<FuelType> FuelTypes { get; }
 		 IDbSet<FullnessCode> FullnessCodes { get; }
