@@ -1,4 +1,6 @@
-﻿namespace Logitude.Server.Tools.StorageService
+﻿using System.Collections.Generic;
+
+namespace Logitude.Server.Tools.StorageService
 {
     public interface IBlobService
     {
@@ -10,5 +12,7 @@
         void AppendText(string text, BlobFileInfo fileInfo);
         void Dispose();
         void MoveFromAnotherStorage(string containerSASURI, string fileNameSource, BlobFileInfo destinationFileInfo);
-    }
+
+        Dictionary<string, byte[]> ReadAllFilesInFolder(string containerName, string folderName);
+    }   
 }
