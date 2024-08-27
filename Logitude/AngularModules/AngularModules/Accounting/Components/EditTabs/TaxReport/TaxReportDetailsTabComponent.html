@@ -1,4 +1,3 @@
-
 <style>
     .tab-footer {
         background: #f7f7f7;
@@ -7,12 +6,13 @@
         border-bottom-left-radius: unset;
         margin-right: -1px;
         padding: 7px 10px;
-        -webkit-box-shadow: 0px -3px 4px -1px rgba(0,0,0,0.31);
-        -moz-box-shadow: 0px -3px 4px -1px rgba(0,0,0,0.31);
-        box-shadow: 0px -3px 4px -1px rgba(0,0,0,0.31);
+        -webkit-box-shadow: 0px -3px 4px -1px rgba(0, 0, 0, 0.31);
+        -moz-box-shadow: 0px -3px 4px -1px rgba(0, 0, 0, 0.31);
+        box-shadow: 0px -3px 4px -1px rgba(0, 0, 0, 0.31);
     }
 
-    .SimpleGridHeaderRow td, .CellStretched {
+    .SimpleGridHeaderRow td,
+    .CellStretched {
         text-overflow: ellipsis;
         overflow: hidden;
         padding: 0px 5px;
@@ -41,7 +41,8 @@
         overflow: auto;
     }
 
-    .footer-summery::before, .footer-summery::after {
+    .footer-summery::before,
+    .footer-summery::after {
         clear: both;
     }
 
@@ -53,7 +54,8 @@
         border-left: 1px solid #dadada;
     }
 
-    .SimpleGridHeaderRow td, .CellStretched {
+    .SimpleGridHeaderRow td,
+    .CellStretched {
         text-overflow: ellipsis;
         overflow: hidden;
         padding: 0px 5px;
@@ -137,14 +139,21 @@
     }
 
     .noselect {
-        -webkit-touch-callout: none; /* iOS Safari */
-        -webkit-user-select: none; /* Chrome/Safari/Opera */
-        -khtml-user-select: none; /* Konqueror */
-        -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-        user-select: none; /* Non-prefixed version, currently
+        -webkit-touch-callout: none;
+        /* iOS Safari */
+        -webkit-user-select: none;
+        /* Chrome/Safari/Opera */
+        -khtml-user-select: none;
+        /* Konqueror */
+        -moz-user-select: none;
+        /* Firefox */
+        -ms-user-select: none;
+        /* Internet Explorer/Edge */
+        user-select: none;
+        /* Non-prefixed version, currently
                                 not supported by any browser */
     }
+
     .DisbleBox {
         display: inline-block;
         border: 1px solid #ffd800;
@@ -155,9 +164,7 @@
         color: gray;
         font-family: sans-serif;
     }
-
 </style>
-
 
 <table>
     <tr>
@@ -170,7 +177,8 @@
                         <td colspan="3">
                             {{ 'Accounting.General.O.Details' | TextCodeTranslationPipe}}
                         </td>
-                        <div *ngIf="ShowErrorMsg" style="position: absolute;width: 100%;text-align: center;left: 0;right: 0;">
+                        <div *ngIf="ShowErrorMsg"
+                            style="position: absolute;width: 100%;text-align: center;left: 0;right: 0;">
                             <div class="DisbleBox" style="margin: 0 auto;">
                                 {{GetErrorMsg()}}
                                 <!--<span style="padding: 0px 16px;">-</span>
@@ -191,13 +199,16 @@
                                             <!-- TaxReportMonth -->
                                             <tr class="FormFieldRow">
                                                 <td style="width: 160px;">
-                                                    <LogLabel [ObjectFieldName]="'TaxReportMonth'" [ObjectTableName]="ObjectTableName"
-                                                              [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'TaxReportMonth'"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                    </LogLabel>
                                                 </td>
 
                                                 <td style="width: 120px;">
-                                                    <LogDatePicker [ObjectFieldName]="'TaxReportMonth'" [ObjectTableName]="ObjectTableName"
-                                                                   [DataContext]="DataContext" [HideColumns]="true" [IsDisabledWithColor]="true"></LogDatePicker>
+                                                    <LogDatePicker [ObjectFieldName]="'TaxReportMonth'"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                        [HideColumns]="true" [IsDisabledWithColor]="true">
+                                                    </LogDatePicker>
                                                 </td>
                                                 <td>
                                                     <div></div>
@@ -207,13 +218,18 @@
                                             <!-- ExemptTaxableOutput -->
                                             <tr class="FormFieldRow">
                                                 <td>
-                                                    <LogLabel [ObjectFieldName]="'ExemptTaxableOutput'" [ObjectTableName]="ObjectTableName"
-                                                              [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'ExemptTaxableOutput'"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                    </LogLabel>
                                                 </td>
 
-                                                <td style="width: 120px;" (dblclick)="FilterItemClicked('ExemptTransactions')">
-                                                    <LogTextBox [ObjectFieldName]="'ExemptTaxableOutput'" [AddCommasToNumbers]="true" [InputType]="'number'" [DataContext]="DataContext"
-                                                                [Text]="ExemptTaxableOutput" [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsDisabledWithColor]="true"></LogTextBox>
+                                                <td style="width: 120px;"
+                                                    (dblclick)="FilterItemClicked('ExemptTransactions')">
+                                                    <LogTextBox [ObjectFieldName]="'ExemptTaxableOutput'"
+                                                        [AddCommasToNumbers]="true" [InputType]="'number'"
+                                                        [DataContext]="DataContext" [Text]="ExemptTaxableOutput"
+                                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+                                                        [IsDisabledWithColor]="true"></LogTextBox>
                                                 </td>
 
                                                 <td>
@@ -239,13 +255,16 @@
                                             <!-- LastUpdateDate -->
                                             <tr class="FormFieldRow">
                                                 <td style="width: 160px;">
-                                                    <LogLabel [ObjectFieldName]="'LastUpdateDate'" [ObjectTableName]="ObjectTableName"
-                                                              [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'LastUpdateDate'"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                    </LogLabel>
                                                 </td>
 
                                                 <td style="width: 120px;">
-                                                    <LogDatePicker [ObjectFieldName]="'LastUpdateDate'" [ObjectTableName]="ObjectTableName"
-                                                                   [DataContext]="DataContext" [HideColumns]="true" [IsDisabledWithColor]="true"></LogDatePicker>
+                                                    <LogDatePicker [ObjectFieldName]="'LastUpdateDate'"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                        [HideColumns]="true" [IsDisabledWithColor]="true">
+                                                    </LogDatePicker>
                                                 </td>
                                                 <td>
                                                     <div></div>
@@ -255,13 +274,18 @@
                                             <!-- TaxableOutputAmount -->
                                             <tr class="FormFieldRow">
                                                 <td>
-                                                    <LogLabel [ObjectFieldName]="'TaxableOutputAmount'" [ObjectTableName]="ObjectTableName"
-                                                              [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'TaxableOutputAmount'"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                    </LogLabel>
                                                 </td>
 
-                                                <td style="width: 120px;" (dblclick)="FilterItemClicked('TaxableTransactions')">
-                                                    <LogTextBox [ObjectFieldName]="'TaxableOutputAmount'" [AddCommasToNumbers]="true" [InputType]="'number'" [DataContext]="DataContext"
-                                                                [Text]="TaxableOutputAmount"  [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsDisabledWithColor]="true"></LogTextBox>
+                                                <td style="width: 120px;"
+                                                    (dblclick)="FilterItemClicked('TaxableTransactions')">
+                                                    <LogTextBox [ObjectFieldName]="'TaxableOutputAmount'"
+                                                        [AddCommasToNumbers]="true" [InputType]="'number'"
+                                                        [DataContext]="DataContext" [Text]="TaxableOutputAmount"
+                                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+                                                        [IsDisabledWithColor]="true"></LogTextBox>
                                                 </td>
 
                                                 <td>
@@ -288,13 +312,15 @@
                                             <!-- VatNumber -->
                                             <tr class="FormFieldRow">
                                                 <td style="width: 185px;">
-                                                    <LogLabel [ObjectFieldName]="'VatNumber'" [ObjectTableName]="ObjectTableName"
-                                                              [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'VatNumber'"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                    </LogLabel>
                                                 </td>
 
                                                 <td style="width: 120px;">
-                                                    <LogTextBox [ObjectFieldName]="'VatNumber'" [InputType]="'text'" [DataContext]="DataContext"
-                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsDisabledWithColor]="true"></LogTextBox>
+                                                    <LogTextBox [ObjectFieldName]="'VatNumber'" [InputType]="'text'"
+                                                        [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                        [HideColumns]="true" [IsDisabledWithColor]="true"></LogTextBox>
                                                 </td>
                                                 <td>
                                                     <div></div>
@@ -304,13 +330,17 @@
                                             <!-- OutputTaxAmount -->
                                             <tr class="FormFieldRow">
                                                 <td>
-                                                    <LogLabel [ObjectFieldName]="'OutputTaxAmount'" [ObjectTableName]="ObjectTableName"
-                                                              [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'OutputTaxAmount'"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                    </LogLabel>
                                                 </td>
 
                                                 <td (dblclick)="FilterItemClicked('TaxableTransactions')">
-                                                    <LogTextBox [ObjectFieldName]="'OutputTaxAmount'" [AddCommasToNumbers]="true" [InputType]="'number'" [DataContext]="DataContext"
-                                                    [Text]="OutputTaxAmount"  [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsDisabledWithColor]="true"></LogTextBox>
+                                                    <LogTextBox [ObjectFieldName]="'OutputTaxAmount'"
+                                                        [AddCommasToNumbers]="true" [InputType]="'number'"
+                                                        [DataContext]="DataContext" [Text]="OutputTaxAmount"
+                                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+                                                        [IsDisabledWithColor]="true"></LogTextBox>
                                                 </td>
                                                 <td>
                                                     <div></div>
@@ -320,30 +350,38 @@
                                             <!-- EquipmentInputsTaxAmount -->
                                             <tr class="FormFieldRow">
                                                 <td>
-                                                    <LogLabel [ObjectFieldName]="'EquipmentInputsTaxAmount'" [ObjectTableName]="ObjectTableName"
-                                                              [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'EquipmentInputsTaxAmount'"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                    </LogLabel>
                                                 </td>
 
                                                 <td (dblclick)="FilterItemClicked('InputsEquipments')">
-                                                    <LogTextBox [ObjectFieldName]="'EquipmentInputsTaxAmount'" [AddCommasToNumbers]="true" [InputType]="'number'" [DataContext]="DataContext"
-                                                    [Text]="EquipmentInputsTaxAmount"  [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsDisabledWithColor]="true"></LogTextBox>
+                                                    <LogTextBox [ObjectFieldName]="'EquipmentInputsTaxAmount'"
+                                                        [AddCommasToNumbers]="true" [InputType]="'number'"
+                                                        [DataContext]="DataContext" [Text]="EquipmentInputsTaxAmount"
+                                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+                                                        [IsDisabledWithColor]="true"></LogTextBox>
                                                 </td>
                                                 <td>
-                                                  <div>
-                                                  </div>
+                                                    <div>
+                                                    </div>
                                                 </td>
                                             </tr>
 
                                             <!-- OtherInputsTaxAmount -->
                                             <tr class="FormFieldRow">
                                                 <td>
-                                                    <LogLabel [ObjectFieldName]="'OtherInputsTaxAmount'" [ObjectTableName]="ObjectTableName"
-                                                              [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'OtherInputsTaxAmount'"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                    </LogLabel>
                                                 </td>
 
                                                 <td (dblclick)="FilterItemClicked('InputsOther')">
-                                                    <LogTextBox [ObjectFieldName]="'OtherInputsTaxAmount'" [AddCommasToNumbers]="true" [InputType]="'number'" [DataContext]="DataContext"
-                                                    [Text]="OtherInputsTaxAmount"  [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsDisabledWithColor]="true"></LogTextBox>
+                                                    <LogTextBox [ObjectFieldName]="'OtherInputsTaxAmount'"
+                                                        [AddCommasToNumbers]="true" [InputType]="'number'"
+                                                        [DataContext]="DataContext" [Text]="OtherInputsTaxAmount"
+                                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+                                                        [IsDisabledWithColor]="true"></LogTextBox>
                                                 </td>
                                                 <td>
                                                     <div></div>
@@ -353,13 +391,17 @@
                                             <!-- AmountForPayRefund -->
                                             <tr class="FormFieldRow">
                                                 <td>
-                                                    <LogLabel [ObjectFieldName]="'AmountForPayRefund'" [ObjectTableName]="ObjectTableName"
-                                                              [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'AmountForPayRefund'"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                    </LogLabel>
                                                 </td>
 
                                                 <td (dblclick)="FilterItemClicked('All')">
-                                                    <LogTextBox [ObjectFieldName]="'AmountForPayRefund'" [AddCommasToNumbers]="true" [InputType]="'number'" [DataContext]="DataContext"
-                                                    [Text]="AmountForPayRefund"  [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsDisabledWithColor]="true"></LogTextBox>
+                                                    <LogTextBox [ObjectFieldName]="'AmountForPayRefund'"
+                                                        [AddCommasToNumbers]="true" [InputType]="'number'"
+                                                        [DataContext]="DataContext" [Text]="AmountForPayRefund"
+                                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+                                                        [IsDisabledWithColor]="true"></LogTextBox>
                                                 </td>
                                                 <td>
                                                     <div></div>
@@ -370,7 +412,7 @@
                                             <tr>
                                                 <td>
 
-                                                   <div></div>
+                                                    <div></div>
 
                                                 </td>
                                             </tr>
@@ -389,160 +431,182 @@
 
                     <tr style="height: 30px;">
                         <td>
-                          <div>
-                            <div *ngIf="IsTesterButtonVisibile">
-                              <IconButton [Name]="'Add'" (click)="NewLineButtonClicked()" [disabled]="false"></IconButton>
+                            <div>
+                                <div *ngIf="IsTesterButtonVisibile">
+                                    <IconButton [Name]="'Add'" (click)="NewLineButtonClicked()" [disabled]="false">
+                                    </IconButton>
+                                </div>
                             </div>
-                          </div>
                         </td>
                     </tr>
 
                     <!-- Toolbar -->
                     <tr style="height: 20px;">
-                      <td>
+                        <td>
 
-                         <!-- TransmitStatus filter  -->
-                         <div float-start style="padding: 0 15px;" class="noselect">
-                            <dropdown-button [Dropdownbutton_TextCode]="'TaxReportLine.F.TransmitStatusCode'">
-                              <div class="class-dropdown-content">
-                                <div style="width:250px;">
-                                  <table>
-                                    <tr style="height:5px;">
-                                      <td>
-                                        <div></div>
-                                      </td>
-                                    </tr>
+                            <!-- TransmitStatus filter  -->
+                            <div float-start style="padding: 0 15px;" class="noselect">
+                                <dropdown-button [Dropdownbutton_TextCode]="'TaxReportLine.F.TransmitStatusCode'">
+                                    <div class="class-dropdown-content">
+                                        <div style="width:250px;">
+                                            <table>
+                                                <tr style="height:5px;">
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
 
-                                    <tr style="height: 25px;"
-                                        *ngFor="let status of TransmitStatuses; let i=index;">
-                                      <td>
-                                        <div style="margin-right:5px;">
+                                                <tr style="height: 25px;"
+                                                    *ngFor="let status of TransmitStatuses; let i=index;">
+                                                    <td>
+                                                        <div style="margin-right:5px;">
 
-                                          <CheckBox style="margin-right:5px;float:right;"
-                                                    (Checked)="$event == true ? PushTransmitStatus(status) : PopTransmitStatus(status)">
-                                          </CheckBox>
+                                                            <CheckBox style="margin-right:5px;float:right;"
+                                                                (Checked)="$event == true ? PushTransmitStatus(status) : PopTransmitStatus(status)">
+                                                            </CheckBox>
 
-                                          <span [title]="showLocals ? status.LocalName : status.EnglishName"
-                                                style="margin-right:5px;float:right; width: 200px;text-overflow: ellipsis;overflow: hidden;">
-                                            {{showLocals ? status.LocalName : status.EnglishName}}
-                                          </span>
+                                                            <span
+                                                                [title]="showLocals ? status.LocalName : status.EnglishName"
+                                                                style="margin-right:5px;float:right; width: 200px;text-overflow: ellipsis;overflow: hidden;">
+                                                                {{showLocals ? status.LocalName : status.EnglishName}}
+                                                            </span>
 
+                                                        </div>
+                                                    </td>
+
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </div>
-                                      </td>
+                                    </div>
+                                </dropdown-button>
+                            </div>
 
+                            <!-- Filters -->
+                            <div *ngIf="reportCounters" float-start class="noselect" style="min-width: 653px;">
 
+                                <ul class="FiltersMenu">
 
-                                    </tr>
-                                    <tr>
-                                      <td>
-                                        <div></div>
-                                      </td>
-                                    </tr>
-                                  </table>
-                                </div>
-                              </div>
-                            </dropdown-button>
-                          </div>
+                                    <li id="TaxableTransactions" (click)="FilterItemClicked('TaxableTransactions')"
+                                        class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
+                                        [class.SelectedFilter]="FilterSelectedValue === 'TaxableTransactions'">
+                                        {{'Accounting.O.TaxableTransactions' | TextCodeTranslationPipe}}
+                                        ({{reportCounters.TaxableTransactions}})
+                                    </li>
 
-                        <!-- Filters -->
-                        <div *ngIf="reportCounters" float-start class="noselect" style="min-width: 653px;">
+                                    <li id="ExemptTransactions" (click)="FilterItemClicked('ExemptTransactions')"
+                                        class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
+                                        [class.SelectedFilter]="FilterSelectedValue === 'ExemptTransactions'">
+                                        {{'Accounting.O.ExemptTransactions' | TextCodeTranslationPipe}}
+                                        ({{reportCounters.ExcemptTransactions}})
+                                    </li>
 
-                          <ul class="FiltersMenu">
+                                    <li id="AllTransactions" (click)="FilterItemClicked('AllTransactions')"
+                                        class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
+                                        [class.SelectedFilter]="FilterSelectedValue === 'AllTransactions'">
+                                        {{'Accounting.O.AllTransactions' | TextCodeTranslationPipe}}
+                                        ({{reportCounters.AllTransaxtions}})
+                                    </li>
 
-                            <li id="TaxableTransactions" (click)="FilterItemClicked('TaxableTransactions')" class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
-                                [class.SelectedFilter]="FilterSelectedValue === 'TaxableTransactions'">
-                              {{'Accounting.O.TaxableTransactions' | TextCodeTranslationPipe}} ({{reportCounters.TaxableTransactions}})
-                            </li>
+                                    <li id="InputsEquipments" (click)="FilterItemClicked('InputsEquipments')"
+                                        class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
+                                        [class.SelectedFilter]="FilterSelectedValue === 'InputsEquipments'">
+                                        {{'Accounting.O.InputsEquipments' | TextCodeTranslationPipe}}
+                                        ({{reportCounters.InputEquipments}})
+                                    </li>
 
-                            <li id="ExemptTransactions" (click)="FilterItemClicked('ExemptTransactions')" class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
-                                [class.SelectedFilter]="FilterSelectedValue === 'ExemptTransactions'">
-                              {{'Accounting.O.ExemptTransactions' | TextCodeTranslationPipe}} ({{reportCounters.ExcemptTransactions}})
-                            </li>
+                                    <li id="InputsOther" (click)="FilterItemClicked('InputsOther')" class="MyFilterItem"
+                                        [style.float]="isRTL ? 'right' : 'left'"
+                                        [class.SelectedFilter]="FilterSelectedValue === 'InputsOther'">
+                                        {{'Accounting.O.InputsOther' | TextCodeTranslationPipe}}
+                                        ({{reportCounters.InputOthers}})
+                                    </li>
 
-                            <li id="AllTransactions" (click)="FilterItemClicked('AllTransactions')" class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
-                                [class.SelectedFilter]="FilterSelectedValue === 'AllTransactions'">
-                              {{'Accounting.O.AllTransactions' | TextCodeTranslationPipe}} ({{reportCounters.AllTransaxtions}})
-                            </li>
+                                    <li id="All" (click)="FilterItemClicked('All')" class="MyFilterItem"
+                                        [style.float]="isRTL ? 'right' : 'left'"
+                                        [class.SelectedFilter]="FilterSelectedValue === 'All'">
+                                        {{'Accounting.General.O.All' | TextCodeTranslationPipe}}
+                                        ({{reportCounters.All}})
+                                    </li>
 
-                            <li id="InputsEquipments" (click)="FilterItemClicked('InputsEquipments')" class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
-                                [class.SelectedFilter]="FilterSelectedValue === 'InputsEquipments'">
-                              {{'Accounting.O.InputsEquipments' | TextCodeTranslationPipe}} ({{reportCounters.InputEquipments}})
-                            </li>
+                                </ul>
 
-                            <li id="InputsOther" (click)="FilterItemClicked('InputsOther')" class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
-                                [class.SelectedFilter]="FilterSelectedValue === 'InputsOther'">
-                              {{'Accounting.O.InputsOther' | TextCodeTranslationPipe}} ({{reportCounters.InputOthers}})
-                            </li>
+                            </div>
 
-                            <li id="All" (click)="FilterItemClicked('All')" class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
-                                [class.SelectedFilter]="FilterSelectedValue === 'All'">
-                              {{'Accounting.General.O.All' | TextCodeTranslationPipe}} ({{reportCounters.All}})
-                            </li>
+                            <!-- DDL -->
+                            <div float-start style="padding: 0 15px;" class="noselect">
+                                <dropdown-button [Dropdownbutton_TextCode]="'TaxReportLine.F.StatusCode'">
+                                    <div class="class-dropdown-content">
+                                        <div style="width:350px;">
+                                            <table>
+                                                <tr style="height:5px;">
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
 
-                          </ul>
-
-                        </div>
-
-                        <!-- DDL -->
-                        <div float-start style="padding: 0 15px;" class="noselect">
-                          <dropdown-button [Dropdownbutton_TextCode]="'TaxReportLine.F.StatusCode'">
-                            <div class="class-dropdown-content">
-                              <div style="width:350px;">
-                                <table>
-                                  <tr style="height:5px;">
-                                    <td>
-                                      <div></div>
-                                    </td>
-                                  </tr>
-
-                                  <tr style="height: 25px;"
-                                      *ngFor="let item of StatusItems; let i=index;">
-                                    <td>
-                                      <div style="margin-right:5px;">
+                                                <tr style="height: 25px;"
+                                                    *ngFor="let item of StatusItems; let i=index;">
+                                                    <td>
+                                                        <div style="margin-right:5px;">
 
                                         <CheckBox 
                                          [IsChecked]="CheckSelectedStatusItems(item)"  
 
                                          style="margin-right:5px;float:right;"
                                          (Checked)="$event == true ? PushStatus(item) : PopStatus(item)">
-                                        </CheckBox>
+                                                            </CheckBox>
 
-                                        <span [title]="showLocals ? item.LocalName : item.EnglishName"
-                                              style="margin-right:5px;float:right; width: 300px;text-overflow: ellipsis;overflow: hidden;">
-                                          {{showLocals ? item.LocalName : item.EnglishName}}
-                                        </span>
+                                                            <span
+                                                                [title]="showLocals ? item.LocalName : item.EnglishName"
+                                                                style="margin-right:5px;float:right; width: 300px;text-overflow: ellipsis;overflow: hidden;">
+                                                                {{showLocals ? item.LocalName : item.EnglishName}}
+                                                            </span>
 
-                                      </div>
-                                    </td>
+                                                        </div>
+                                                    </td>
 
 
 
-                                  </tr>
-                                  <tr>
-                                    <td>
-                                      <div></div>
-                                    </td>
-                                  </tr>
-                                </table>
-                              </div>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </dropdown-button>
                             </div>
-                          </dropdown-button>
-                        </div>
 
-                        <!-- Search -->
-                        <div [style.float]="isRTL ? 'left' : 'right'" style="padding: 4px; width: 250px;">
-                          <SearchTextBox [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
-                        </div>
+                            <!-- Search -->
+                            <div [style.float]="isRTL ? 'left' : 'right'" style="padding: 4px; width: 250px;">
+                                <SearchTextBox [ObjectTableName]="ObjectTableName"
+                                    (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
+                            </div>
 
-                        <!-- Buttons -->
-                        <div style="width: 30px;margin-top: 4px;margin-left: 10px;" [style.float]="isRTL ? 'left' : 'right'">
-                          <IconButton [Name]="'Excel'" (click)="Export2ExcelClicked()" [disabled]="false"></IconButton>
-                        </div>
-                        <div style="width: 30px;margin-top: 4px;" [style.float]="isRTL ? 'left' : 'right'">
-                          <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
-                        </div>
-
-                      </td>
+                            <!-- Buttons -->
+                            <div style="width: 30px;margin-top: 4px;margin-left: 10px;"
+                                [style.float]="isRTL ? 'left' : 'right'">
+                                <IconButton [Name]="'Excel'" (click)="Export2ExcelClicked()" [disabled]="false">
+                                </IconButton>
+                            </div>
+                            <div style="width: 30px;margin-top: 4px;" [style.float]="isRTL ? 'left' : 'right'">
+                                <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                            </div>
+                            <div style="padding: 4px;width: 128px;" [style.float]="isRTL ? 'left' : 'right'">
+                                <button class="Button" (click)="DownloadPa()">
+                                    {{'TaxReport.O.DownloadPa' | TextCodeTranslationPipe}}
+                                </button>
+                            </div>
+                        </td>
                     </tr>
 
                     <tr>
@@ -550,16 +614,10 @@
                         <td style="">
 
                             <div class="GeneratedGridContainer">
-                                <logitude-grid GridWidth="100%" GridHeight="100%"
-                                    [ObjectTable]="'TaxReportLine'"
-                                    [dataSource]="DataSource"
-                                    [MenuHeaderchangeevent]="MenuHeaderchangeevent"
-                                    [columns]="columns"
-                                    [autoLoad]="true"
-                                    [QueryChangeEvent]="onQueryChangeEvent"
-                                    [IsCustomTemplate]="true"
-
-                                    [CustomColumnsReady]="TaxReportColumnsReady">
+                                <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'TaxReportLine'"
+                                    [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent"
+                                    [columns]="columns" [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent"
+                                    [IsCustomTemplate]="true" [CustomColumnsReady]="TaxReportColumnsReady">
                                 </logitude-grid>
                             </div>
 
@@ -707,6 +765,3 @@
 
     </div>
 </div>-->
-
-
-

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ContactUpdateClass
    {  		
-		public const string HashString = "4f2688b67854cb64414612956c9fe8456";
+		public const string HashString = "0e56c170872ce9c4bc4c4396a82cea7a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2048,10 +2048,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search names/ emails/ phone.#",
-                                            FullLocalDefaultText = "����� ���� / ���� / ��' �����",
-
-
-                                              HelpTextCode =  "SearchFields",
+					  						FullLocalDefaultText =  "חיפוש שמות / דוא\"ל / מס' טלפון",
+					  						HelpTextCode =  "SearchFields",
 					  						HelpTextDefaultText =  "Searching by :\n1: english and local names\n2: email\n3: From or to ports\n4: phone, fax and mobile numbers",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -5044,7 +5042,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContactForAccounting",
 					  						DefaultText =  "Contact For Accounting",
-					  						FullLocalDefaultText =  "םיש קשר להנהלת חשבונות",
+					  						FullLocalDefaultText =  "איש קשר להנהלת חשבונות",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
