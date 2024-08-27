@@ -605,6 +605,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new FclLclCodeMap());
 	
+            modelBuilder.Configurations.Add(new FreightForwarderReferenceMap());
+	
             modelBuilder.Configurations.Add(new FreightPaymentMethodMap());
 	
             modelBuilder.Configurations.Add(new FuelTypeMap());
@@ -3129,6 +3131,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<FclLclCode> FclLclCodes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<FreightForwarderReference> FreightForwarderReferences 
 	 {
 	      get; set;
 	 
