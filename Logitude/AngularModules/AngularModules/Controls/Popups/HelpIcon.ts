@@ -5,7 +5,7 @@ import { ObjectsLocator } from '../../Infrastructure/Locators/ObjectsLocator';
 @Component({
 
     selector: "HelpIcon",
-    inputs: ['Header', 'Text', 'HideHeader', 'IconSize', 'IconPath', 'V2Grid', 'Position', 'Height'],
+    inputs: ['Header', 'Text', 'HideHeader', 'IconSize', 'IconPath', 'V2Grid', 'Position', 'Height','BackgroundImage'],
     templateUrl: './HelpIcon.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -52,6 +52,21 @@ export class HelpIcon implements OnInit {
             this.header = newValue;
         }
     }
+    private backgroundImage: string = "";
+    get BackgroundImage() { return this.backgroundImage; }
+    set BackgroundImage(newValue: string) {
+        if (this.backgroundImage != newValue) {
+            this.backgroundImage = newValue;
+            this.Text="";
+        }
+        if (this.text == null && this.backgroundImage==null) {
+            this.IsVisible = false;
+        }
+
+        else {
+            this.IsVisible = true;
+        }
+    }
 
     private text: string = "Help";
     get Text() { return this.text; }
@@ -59,7 +74,7 @@ export class HelpIcon implements OnInit {
         if (this.text != newValue) {
             this.text = newValue;
 
-            if (this.text == null) {
+            if (this.text == null && this.BackgroundImage==null) {
                 this.IsVisible = false;
             }
 

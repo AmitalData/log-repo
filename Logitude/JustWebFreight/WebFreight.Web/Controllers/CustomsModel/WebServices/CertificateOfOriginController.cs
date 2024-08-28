@@ -187,6 +187,21 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
-		
-	}
+
+
+        public HttpResponseMessage GetToolTipImagesFromStorage()
+        {
+            try
+            {
+                CertificateOfOriginQueryService certificateOfOriginQueryService = new CertificateOfOriginQueryService(0);
+               Dictionary<string, byte[]> filesContent = certificateOfOriginQueryService.GetToolTipFromStorage();
+                return Request.CreateResponse(HttpStatusCode.OK, filesContent);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+    }
 }

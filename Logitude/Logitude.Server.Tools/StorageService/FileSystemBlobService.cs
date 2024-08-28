@@ -30,7 +30,10 @@ namespace Logitude.Server.Tools.StorageService
             return result;
 
         }
-
+        public Dictionary<string, byte[]> ReadAllFilesInFolder(string containerName, string folderName)
+        {
+            throw new NotImplementedException();
+        }
         public void Write(byte[] data, BlobFileInfo fileInfo)
         {
          

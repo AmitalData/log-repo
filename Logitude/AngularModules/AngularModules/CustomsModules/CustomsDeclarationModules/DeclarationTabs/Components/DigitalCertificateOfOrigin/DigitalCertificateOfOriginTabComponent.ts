@@ -104,13 +104,14 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
                         this.certificateOfOriginPMService = new CertificateOfOriginPMService();
                         this.ObjectTableName = this.entityArgs.ObjectTableName;
                         this.ReloadMyScreen();
+                      
                     });
                 });
             });
         });
     }
 
-
+    
     public CurrentEditComponentId: string;
     private Listen() {
 
