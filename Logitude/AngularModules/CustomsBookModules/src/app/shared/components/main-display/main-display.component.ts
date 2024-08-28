@@ -40,7 +40,7 @@ export class MainDisplayComponent implements OnInit {
 	showDetails: boolean = false;
 	showAddComment: boolean = false;
 	showCommentSidebar: boolean = false;
-	childrenToDesplay: string[] = [];
+	childrenToDesplay: number[] = [];
 	private _filters;
 	//data: any | never | undefined = {};
 	data: CB_CustomsItemComputedDataList[] = [];
@@ -69,6 +69,7 @@ export class MainDisplayComponent implements OnInit {
 			Tenant: SessionInfo.LoggedUserTenant,
 			SearchFields: ''
 		};
+		this.isLoadingMode.next(true);
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: any) => {
 			const result: CB_CustomsItemComputedDataList[] = data.body;
 			if (!result) return; // TODO: add error message
@@ -78,6 +79,12 @@ export class MainDisplayComponent implements OnInit {
 			this.data = this.fullData;
 			this.searchMode = TableTopState.ViewAll;
 			this.isExpand.next(false);
+			this.isLoadingMode.next(false);
+		});
+
+		// listen to loading mode changes:
+		this.isLoadingMode.subscribe((isLoading) => {
+			this.isLoading = isLoading;
 		});
 	}
 
@@ -90,10 +97,6 @@ export class MainDisplayComponent implements OnInit {
 			if (searchText === "") this.handleClearResults();
 		});
 
-		// listen to loading mode changes:
-		this.isLoadingMode.subscribe((isLoading) => {
-			this.isLoading = isLoading;
-		});
 
 		// listen to itemsData changes:
 		this.itemsData.subscribe((data: CB_CustomsItemComputedDataList[] = []) => {
@@ -133,8 +136,8 @@ export class MainDisplayComponent implements OnInit {
 
 
 	searchToggleAllChildren(expend: boolean) {
-		this.toggleVisibility(expend, this.data); // Assuming this.data is your main data array
-
+		this.toggleVisibilitySearch(expend, this.data); // Assuming this.data is your main data array
+		
 		// Find all child checkboxes using class selector and update their checked state class name-.mainTable_itemChkAllCheckBox
 		setTimeout(() => {
 			const childCheckboxes: HTMLCollection = document.getElementsByClassName('mainTable_itemChkAllCheckBox');
@@ -144,6 +147,35 @@ export class MainDisplayComponent implements OnInit {
 		}, 0);
 	}
 
+	toggleVisibilitySearch(expend: boolean, data: CB_CustomsItemComputedDataList[], isFirstCall: boolean = true): boolean {
+		if (isFirstCall) {
+			this.childrenToDesplay = []; // Initialize array after search
+		}
+	
+		let shouldExpandParent = false;
+	
+		data.forEach(item => {
+			// Check if the current item's FullClassification contains the search text
+			const searchText = this.searchService.GetSearchText();
+			const containsSearchText = item.FullClassification.includes(searchText);
+	
+			// Recursively check if any children should be expanded
+			let shouldExpandChildren = false;
+			if (item.children && item.children.length > 0) {
+				shouldExpandChildren = this.toggleVisibilitySearch(expend, item.children, false); // Subsequent calls with isFirstCall = false
+			}
+	
+			// Determine if the current item should be expanded
+			if (containsSearchText || shouldExpandChildren) {
+				this.showChildern(expend, item);
+				shouldExpandParent = true;
+			}
+		});
+	
+		// Return whether this branch should be expanded to the parent call
+		return shouldExpandParent;
+	}
+	
 	toggleVisibility(expend: boolean, data: CB_CustomsItemComputedDataList[]) {
 		data.forEach(item => {
 			this.showChildern(expend, item);
@@ -194,9 +226,9 @@ export class MainDisplayComponent implements OnInit {
 
 
 	showChildern(openAction: any, item: CB_CustomsItemComputedDataList) {
-		const isShown = this.childrenToDesplay.indexOf(item.CIH_GoodsDescription);
+		const isShown = this.childrenToDesplay.indexOf(item.CustomsItemID);
 		if (openAction && isShown === -1) {
-			this.childrenToDesplay.push(item.CIH_GoodsDescription);
+			this.childrenToDesplay.push(item.CustomsItemID);
 		}
 		else if (!openAction && isShown !== -1) {
 			this.childrenToDesplay.splice(isShown);

@@ -1,99 +1,131 @@
 ﻿<Procedure DBType="Main" Name="usp_NEWCustomsBookMainViewSearchByClassification" Schema="dbo" Module="Customs">
   <SqlScript>
 	  <![CDATA[
-
 CREATE OR ALTER PROCEDURE [dbo].[usp_NEWCustomsBookMainViewSearchByClassification]
-    @CustomsBookType VARCHAR(2),
-    @FullClassification VARCHAR(13),
-	@Tenant INT = 0
+				@CustomsBookType VARCHAR(2),
+				@FullClassification VARCHAR(13),
+		@Tenant INT = 0
 AS
 BEGIN
-    IF @FullClassification IS NOT NULL AND @FullClassification != ''
+		-- If @FullClassification is null or empty, execute the main view procedure
+		IF @FullClassification IS NULL OR @FullClassification = ''
 		BEGIN
-			WITH RecursiveAncestors AS (
-			SELECT --top 1
-				CustomsItemId,
-				Parent_CustomsItemId ,
-				ItemHierarchicLocationID,
-				Fullclassification,
-				BaseFullClassification,
-				ComputedCheckDigit,
-				IsLeaf,
-				GoodsDescription,--תאור טובין
-				Rules,--האם קיימים כללים
-				Agreements,-- הסכמים
-				CustomsRate, --'שיעור המכס',
-				PurchaseTax, --'מס קניה',
-				OptionalTaxAddition,  --'שיעור התוספת',
-				MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
-        MALAMID as MeasurementUnitID -- יחידה סטטיסטית 
-			FROM [dbo].[NewCustomsBookMainView]
-			WHERE CASE WHEN CHARINDEX('/', @FullClassification) = 0 THEN REPLACE(FullClassification, '/', '')  ELSE FullClassification END like @FullClassification + '%' 
+			EXEC usp_CustomsBookMainView @CustomsBookType, @Tenant;
+			RETURN;
+		END
 
-			and CI_CustomsBookTypeIDNum = @CustomsBookType-- Specify the grandson's ChildID here
-    --order by ItemHierarchicLocationID 
+		-- Declare a variable to hold the adjusted classification
+		DECLARE @AdjustedClassification VARCHAR(13);
+
+		-- Remove any '/' characters from @FullClassification
+		SET @FullClassification = REPLACE(@FullClassification, '/', '');
+
+		-- Adjust @FullClassification by removing trailing zeros
+		SET @AdjustedClassification = RTRIM(@FullClassification);
+
+		-- Find the position of the first non-zero digit from the right
+		IF PATINDEX('%[1-9]%', REVERSE(@AdjustedClassification)) > 0
+		BEGIN
+			SET @AdjustedClassification = LEFT(@AdjustedClassification, LEN(@AdjustedClassification) - PATINDEX('%[1-9]%', REVERSE(@AdjustedClassification)) + 1);
+		END;
+
+		-- ---- without to remove zeros if needed ----------- 
+		--SET @AdjustedClassification = @FullClassification;
+
+		-- Recursive CTE to find ancestors
+		WITH RecursiveAncestors AS (
+			SELECT
+				CustomsItemId,
+				CI_Parent_CustomsItemIDNum AS Parent_CustomsItemId
+			FROM customs.cb_CustomsItemComputedDatas
+			WHERE 
+				CI_CustomsItemCategoryIDNum = '1'
+				AND CustomsItemEntityStatusIDNum = '2'
+				AND StartDate <= GETDATE()
+				AND EndDate >= GETDATE()
+				AND REPLACE(Fullclassification, '/', '') LIKE @AdjustedClassification + '%'
+				AND CI_CustomsBookTypeIDNum = @CustomsBookType
+
 			UNION ALL
-    
+
 			SELECT 
 				ft.CustomsItemId,
-				ft.Parent_CustomsItemId ,
-				ft.ItemHierarchicLocationID,
-				ft.Fullclassification,
-				ft.BaseFullClassification,
-				ft.ComputedCheckDigit,
-				ft.IsLeaf,
-				ft.GoodsDescription,--תאור טובין
-				ft.Rules,--האם קיימים כללים
-				ft.Agreements,-- הסכמים
-				ft.CustomsRate, --'שיעור המכס',
-				ft.PurchaseTax, --'מס קניה',
-				ft.OptionalTaxAddition,  --'שיעור התוספת',
-				ft.MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
-        ft.MALAMID as MeasurementUnitID -- יחידה סטטיסטית 
-			FROM [dbo].[NewCustomsBookMainView] ft
-			
-			INNER JOIN RecursiveAncestors ra ON ft.CustomsItemId = ra.Parent_CustomsItemID
-			)
+				ft.CI_Parent_CustomsItemIDNum AS Parent_CustomsItemId
+			FROM customs.cb_CustomsItemComputedDatas ft
+			INNER JOIN RecursiveAncestors ra ON ft.CustomsItemId = ra.Parent_CustomsItemId
+			WHERE 
+				ft.CI_CustomsItemCategoryIDNum = '1'
+				AND ft.CustomsItemEntityStatusIDNum = '2'
+				AND ft.StartDate <= GETDATE()
+				AND ft.EndDate >= GETDATE()
+		)
 
-			-- Query to select ancestors of the specified ChildID
-			SELECT distinct
-				CustomsItemId,
-				Parent_CustomsItemId ,
-				ItemHierarchicLocationID,
-				Fullclassification,
-				BaseFullClassification,
-				ComputedCheckDigit,
-				IsLeaf,
-				GoodsDescription,--תאור טובין
-				Rules,--האם קיימים כללים
-				Agreements,-- הסכמים
-				CustomsRate, --'שיעור המכס',
-				PurchaseTax, --'מס קניה',
-				OptionalTaxAddition,  --'שיעור התוספת',
-				MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
-        MeasurementUnitID,
-				r.Id AS Remarks 
-			FROM RecursiveAncestors ra
-			LEFT JOIN 
-			  (
-				SELECT Id,CustomsItemsID
-				FROM customs.RemarksClassifications
-				WHERE Tenant = @Tenant
-			  )AS r ON ra.CustomsItemId = r.CustomsItemsID
-			order by ItemHierarchicLocationID,FullClassification
-		END
+		-- This is for performance. Without this temporary table, it takes around 9 seconds, but with it, it takes around 2 seconds.
+		-- Create a temporary table for RecursiveAncestors
+		SELECT CustomsItemId
+		INTO #TempRecursiveAncestors
+		FROM RecursiveAncestors;
 
-	ELSE
+		-- Create an index on the temporary table
+		CREATE INDEX idx_CustomsItemId ON #TempRecursiveAncestors(CustomsItemId);
 
-		BEGIN
+		-- Insert the base case into the temporary table
+		SELECT
+			CustomsItemId,
+			Parent_CustomsItemId,
+			ItemHierarchicLocationID,
+			Fullclassification,
+			BaseFullClassification,
+			ComputedCheckDigit,
+			IsLeaf,
+			GoodsDescription, -- תאור טובין
+			Rules, -- האם קיימים כללים
+			Agreements, -- הסכמים
+			CustomsRate, -- שיעור המכס
+			PurchaseTax, -- מס קניה
+			OptionalTaxAddition, -- שיעור התוספת
+			MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+			MALAMID AS MeasurementUnitID -- יחידה סטטיסטית
+		INTO #TempAncestors
+		FROM [dbo].[NewCustomsBookMainView] AS mainView
+		WHERE EXISTS (
+			SELECT 1
+			FROM #TempRecursiveAncestors AS ra
+			WHERE ra.CustomsItemId = mainView.CustomsItemId
+		);
 
-		EXEC usp_CustomsBookMainView @CustomsBookType, @Tenant 
+		-- Drop the temporary table
+		DROP TABLE #TempRecursiveAncestors;
 
-		END
+		-- Query to select ancestors of the specified ChildID
+		SELECT
+			CustomsItemId,
+			Parent_CustomsItemId,
+			ItemHierarchicLocationID,
+			Fullclassification,
+			BaseFullClassification,
+			ComputedCheckDigit,
+			IsLeaf,
+			GoodsDescription, -- תאור טובין
+			Rules, -- האם קיימים כללים
+			Agreements, -- הסכמים
+			CustomsRate, -- שיעור המכס
+			PurchaseTax, -- מס קניה
+			OptionalTaxAddition, -- שיעור התוספת
+			MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+			MeasurementUnitID,
+			r.Id AS Remarks 
+		FROM #TempAncestors ra
+		LEFT JOIN (
+			SELECT Id, CustomsItemsID
+			FROM customs.RemarksClassifications
+			WHERE Tenant = @Tenant
+		) AS r ON ra.CustomsItemId = r.CustomsItemsID
+		ORDER BY ItemHierarchicLocationID, FullClassification;
 
-END
+		DROP TABLE #TempAncestors;
 
-   
+END  
     ]]>
   </SqlScript>
 

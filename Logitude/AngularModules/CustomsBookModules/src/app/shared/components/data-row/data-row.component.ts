@@ -142,7 +142,7 @@ export class DataRowComponent implements OnInit {
 		let totalSpanWidth = (Array.from(spans).reduce((total: number, span) => total + (span as HTMLElement).offsetWidth, 0)) as number;
 		if (containerWidth - 100 < totalSpanWidth || this.data.CustomsItemID) {
 			let calculatedWidth = (containerWidth - 100) + "px";
-			let width = Math.min(parseInt(calculatedWidth), 40) + "%";
+			let width = Math.min(parseInt(calculatedWidth), 75) + "%";
 
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', width);
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'white-space', 'nowrap');
