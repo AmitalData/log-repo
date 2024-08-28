@@ -199,10 +199,8 @@
                                                                                     
                                
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [Disabled]="this.EntityPM.PayerTypeCode === '3'"
-                                    [ItemSource]="CustomBankCardItems" [Disabled]="this.EntityPM.PayerTypeCode === '3'" 
-                               >
+                                    [ItemSource]="CustomBankCardItems" [Disabled]="this.EntityPM.PayerTypeCode === '3'">
 
-                                    <!-- PackageMeasureQualifierCode -->
                                     <log-column
                                         [header]="('Customs.CustomBank.O.CustomerNumber' | TextCodeTranslationPipe) || 'מספר לקוח'"
                                         [width]="'200'" [Alignment]="'right'" [binding]="'ItemSerial'">
@@ -219,15 +217,12 @@
                                                         [HideColumns]="true"
                                                         [InputType]="'nText'"
                                                         >
-                                                        
                                                     </LogTextBox>
-
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
 
-                                    <!-- PackageTypeCode -->
                                     <log-column [header]="('CustomerName' | TextCodeTranslationPipe) || 'שם לקוח'"
                                         [width]="'200'" [Alignment]="'right' " [binding]="'CardName'">
                                         <ng-template let-item>
@@ -242,16 +237,12 @@
                                                         [HideColumns]="true"
                                                         (ValueChanged)="onCardChange($event,item, 'LocalName')"
                                                         [InputType]="'nText'">
-                                                        >
-                                                        
                                                     </LogTextBox>
-
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
 
-                                    <!-- Buttons -->
                                     <log-column [width]="'20'" [visibility]="'visibile'" [Alignment]="'center'"
                                         [IgnoreColumn]="true" [Editable]="true">
                                         <ng-template let-item>
