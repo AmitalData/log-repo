@@ -1,0 +1,106 @@
+﻿<Procedure DBType="Main" Name="usp_NEWCustomsBookMainViewSearchByClassification" Schema="dbo" Module="Customs">
+  <SqlScript>
+	  <![CDATA[
+
+CREATE OR ALTER PROCEDURE [dbo].[usp_NEWCustomsBookMainViewSearchByClassification]
+    @CustomsBookType VARCHAR(2),
+    @FullClassification VARCHAR(13),
+	@Tenant INT = 0
+AS
+BEGIN
+    IF @FullClassification IS NOT NULL AND @FullClassification != ''
+		BEGIN
+			WITH RecursiveAncestors AS (
+			SELECT --top 1
+				CustomsItemId,
+				Parent_CustomsItemId ,
+				ItemHierarchicLocationID,
+				Fullclassification,
+				BaseFullClassification,
+				ComputedCheckDigit,
+				IsLeaf,
+				GoodsDescription,--תאור טובין
+				Rules,--האם קיימים כללים
+				Agreements,-- הסכמים
+				CustomsRate, --'שיעור המכס',
+				PurchaseTax, --'מס קניה',
+				OptionalTaxAddition,  --'שיעור התוספת',
+				MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+        MALAMID as MeasurementUnitID -- יחידה סטטיסטית 
+			FROM [dbo].[NewCustomsBookMainView]
+			WHERE CASE WHEN CHARINDEX('/', @FullClassification) = 0 THEN REPLACE(FullClassification, '/', '')  ELSE FullClassification END like @FullClassification + '%' 
+
+			and CI_CustomsBookTypeIDNum = @CustomsBookType-- Specify the grandson's ChildID here
+    --order by ItemHierarchicLocationID 
+			UNION ALL
+    
+			SELECT 
+				ft.CustomsItemId,
+				ft.Parent_CustomsItemId ,
+				ft.ItemHierarchicLocationID,
+				ft.Fullclassification,
+				ft.BaseFullClassification,
+				ft.ComputedCheckDigit,
+				ft.IsLeaf,
+				ft.GoodsDescription,--תאור טובין
+				ft.Rules,--האם קיימים כללים
+				ft.Agreements,-- הסכמים
+				ft.CustomsRate, --'שיעור המכס',
+				ft.PurchaseTax, --'מס קניה',
+				ft.OptionalTaxAddition,  --'שיעור התוספת',
+				ft.MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+        ft.MALAMID as MeasurementUnitID -- יחידה סטטיסטית 
+			FROM [dbo].[NewCustomsBookMainView] ft
+			
+			INNER JOIN RecursiveAncestors ra ON ft.CustomsItemId = ra.Parent_CustomsItemID
+			)
+
+			-- Query to select ancestors of the specified ChildID
+			SELECT distinct
+				CustomsItemId,
+				Parent_CustomsItemId ,
+				ItemHierarchicLocationID,
+				Fullclassification,
+				BaseFullClassification,
+				ComputedCheckDigit,
+				IsLeaf,
+				GoodsDescription,--תאור טובין
+				Rules,--האם קיימים כללים
+				Agreements,-- הסכמים
+				CustomsRate, --'שיעור המכס',
+				PurchaseTax, --'מס קניה',
+				OptionalTaxAddition,  --'שיעור התוספת',
+				MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+        MeasurementUnitID,
+				r.Id AS Remarks 
+			FROM RecursiveAncestors ra
+			LEFT JOIN 
+			  (
+				SELECT Id,CustomsItemsID
+				FROM customs.RemarksClassifications
+				WHERE Tenant = @Tenant
+			  )AS r ON ra.CustomsItemId = r.CustomsItemsID
+			order by ItemHierarchicLocationID,FullClassification
+		END
+
+	ELSE
+
+		BEGIN
+
+		EXEC usp_CustomsBookMainView @CustomsBookType, @Tenant 
+
+		END
+
+END
+
+   
+    ]]>
+  </SqlScript>
+
+  <OracleScript>
+    <![CDATA[
+ 	
+	
+    ]]>
+  </OracleScript>
+</Procedure>
