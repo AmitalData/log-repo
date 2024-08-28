@@ -59,6 +59,22 @@ export class CustomBankCardExtendedPMService {
         return entityPM;
     }
 
+    setCustomBanksCard(customBanksCardPM: CustomBanksCardPM) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        return defer(() => {
+            return this._http.post(this._apiUrl + '/SetCustomBanksCard', customBanksCardPM, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = response;
+                return serviceResponse;
+
+            }),catchError(ServiceHelper.HandleServiceError));
+        });
+
+    }
 
 
 }

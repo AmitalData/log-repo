@@ -32,7 +32,7 @@ import {
 } from 'Common/Components/HostScreen/HostScreenComponent';
 import { filter } from 'rxjs/operators';
 import { TaxesWebService } from 'Customs/Services/WebServices/TaxesWebService';
-import { CustomBankPMService } from 'Customs/Services/StandardPMs/CustomBankPMService';
+
 
 @Component({
     templateUrl: './MaintenanceComponent.html',
@@ -42,9 +42,6 @@ export class MaintenanceComponent {
     LayoutDirection: string = 'ltr';
     private _entityResourceService: EntityResourceService =
         new EntityResourceService();
-
-    private _customBankPMService: CustomBankPMService =
-        new CustomBankPMService();
 
     private CurrentSession = SessionLocator.SelectedSession;
     private readonly invoiceConfirmationNumber = 'SHAAM';
@@ -2861,7 +2858,10 @@ export class MaintenanceComponent {
 
                 case 'CSBK': {
                     let args = new ListComponentArgs();
-                    args.NewButtonLabel = TextCodeTranslator.Translate( 'Customs.General.B.New');
+                    args.DisplayTitle = 'Bank';
+                    args.NewButtonLabel = 'הוספת בנק';
+                    
+                   
                     this.ShowCustomObject(item,args);
 
                     break;

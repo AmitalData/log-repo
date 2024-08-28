@@ -80,7 +80,7 @@ import { WorkFlowPM } from 'Workflow/EntityPMs/WorkFlowPM';
 import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTranslationPipe';
 import { QueryPM } from '../../EntityPMs/QueryPM';
 import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
-import { log } from 'console';
+// import { event } from 'cypress/types/jquery';
 
 @Component({
     templateUrl: './ListComponent.html',
@@ -2723,8 +2723,11 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     onRowSelected($event) {
+
+
         if (this.ObjectTableName == 'Customs.ConfirmationNumberTokenLog')
             return;
+
 
         if (this.listArgs.SuppressOnRowSelected == true) {
             console.log('SuppressOnRowSelected');
@@ -2803,11 +2806,13 @@ export class ListComponent implements OnInit, AfterViewInit {
                     }
                 }
 
+
                 if (myObjectTableName == 'Customs.CustomBank') {
                     let logWindow = new LogitudeWindow();
                     logWindow.ShowHeaderButtons = false;
                     logWindow.ShowFooterButtons = false;
-
+                    logWindow.Height = 600;
+                    logWindow.Width = 475;
                     logWindow.Title = 'פתיחת בנק';
                     logWindow.WindowArgs = selectedEntityId;
                     logWindow.Show('./CustomsModules/CustomsMaintenance/Components/AddEditCustomsBanksComponent')
@@ -4581,6 +4586,11 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     AddNewEntity() {
+
+        if (this.ObjectTable?.Name === 'Customs.CustomBank' && this.ObjectTable?.NewWizardComponentPath === null) {
+            this.ObjectTable.NewWizardComponentPath = './CustomsModules/CustomsMaintenance/Components/AddEditCustomsBanksComponent';
+        }
+
         if (
             this.ObjectTable?.IsCustom &&
             AppTool.IsNullOrEmpty(this.ObjectTable.ParentObjectTableId) &&
@@ -4861,9 +4871,11 @@ export class ListComponent implements OnInit, AfterViewInit {
                 }
 
                 case 'Customs.CustomBank': {
-                    logWindow.Width = 400;
-                    logWindow.Height = 450;
+                    logWindow.Height = 600;
+                    logWindow.Width = 475;
+                    logWindow.Title = 'פתיחת בנק';
                     logWindow.ShowCloseButton = true;
+                    break;
                 }
 
                 case 'Customs.Client': {
@@ -4958,13 +4970,11 @@ export class ListComponent implements OnInit, AfterViewInit {
                     logWindow.Height = 400;
                     break;
                 }
-
                 case 'TaxReport': {
                     logWindow.Width = 400;
                     logWindow.Height = 200;
                     break;
                 }
-
                 case 'TaxDeductionReport': {
                     logWindow.Width = 400;
                     logWindow.Height = 280;
@@ -5073,6 +5083,10 @@ export class ListComponent implements OnInit, AfterViewInit {
             if (this.ObjectTableName == 'DefaultAndConfiguration') {
                 str = 'Add Default And Configuration';
             }
+            if(this.ObjectTableName == 'Customs.CustomBank'){
+                str = 'פתיחת בנק';
+            }
+                
 
             if (this.ObjectTableName == 'Shipment') {
                 var args = new NewEntityArgs();

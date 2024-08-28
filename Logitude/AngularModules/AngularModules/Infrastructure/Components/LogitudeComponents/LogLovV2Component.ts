@@ -197,9 +197,13 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     private selectedValue: any;
     @Input()
     public get SelectedValue() {
+
         return this.selectedValue;
     }
     public set SelectedValue(newValue: any) {
+
+        if(newValue === null)  return;
+
         if (this.selectedValue != newValue) {
             if (this.ShowInActivePopUpWindow && this.SelectedItem?.InActive) {
                 this.ShowInactivePopUpConfirmWindow(newValue);
@@ -287,7 +291,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             this.GetSingle(lookup);
             this.isSelectedFromList = false;
         }
-
         this.isSelectedFromList = false;
     }
 

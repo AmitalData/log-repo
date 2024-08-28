@@ -1,4 +1,8 @@
 <style>
+    *{
+        user-select: none
+    }
+ 
     .subTitle {
         color: #1b90cb;
         font-size: 15px;
@@ -33,8 +37,9 @@
         height: 32px;
     }
 </style>
-<table>
 
+
+<table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td colspan="10">
             <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
@@ -44,16 +49,12 @@
     <!-- Filters Fields-->
     <tr>
         <td colspan="10" style="">
-
-            <table style="table-layout: fixed;" *ngIf="EntityPM">
-
+            <table style="table-layout: fixed; user-select: none ; " *ngIf="EntityPM" >
                 <tr style="height: 20px;">
                     <td style="width: 130px;"></td>
                     <td style="width: 170px;"></td>
                     <td></td>
                 </tr>
-
-
                 <tr class="FormFieldRow">
                     <td>
                         <LogLabel [ObjectFieldName]="'InternalCode'" [ObjectTableName]="ObjectTableName"
@@ -72,13 +73,13 @@
                             [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <LogTextBox [ObjectFieldName]="'BankCode'" [ObjectTableName]="ObjectTableName"
-                            [Placeholder]="this.EntityPM.BankCode || ''" [DataContext]="DataContext"
-                            [HideColumns]="true" [InputType]="'nText'"
-                            (ValueChanged)="onInputChange($event ,'BankCode')"></LogTextBox>
+                        <LogLov [ObjectFieldName]="'BankCode'" [ObjectTableName]="ObjectTableName"
+                            [DataContext]="DataContext" [LookUpTableName]="'Customs.Bank'" [HideColumns]="true"
+                            [SelectedValue]="'this.EntityPM.BankCode'"
+                            (SelectedItemChanged)="onInputChange($event ,'BankCode')">
+                        </LogLov>
                     </td>
                     <td></td>
-
                 </tr>
                 <tr class="FormFieldRow">
                     <td>
@@ -86,15 +87,17 @@
                             [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <LogTextBox [ObjectFieldName]="'BranchCode'" [ObjectTableName]="ObjectTableName"
-                            [Placeholder]="this.EntityPM.BranchCode || ''" [DataContext]="DataContext"
-                            [HideColumns]="true" [InputType]="'Text'"
-                            (ValueChanged)="onInputChange($event, 'BranchCode')"></LogTextBox>
+                        <LogLov [ObjectFieldName]="'BranchCode'" [ObjectTableName]="ObjectTableName"
+                            [DataContext]="DataContext" [LookUpTableName]="'Customs.CustomsBranch'"
+                            [DependencyFilter1Value]="this.EntityPM.BankCode" [HideColumns]="true"
+                            [SelectedItemObject]="this.EntityPM.BranchCode"
+                            [SelectedValue]="'0'"
+                            (SelectedItemChanged)="onInputChange($event?.Id,'BranchCode')">
+                        </LogLov>
                     </td>
                     <td></td>
                 </tr>
                 <tr class="FormFieldRow">
-
                     <td>
                         <LogLabel [ObjectFieldName]="'AccountNumber'" [ObjectTableName]="ObjectTableName"
                             [DataContext]="DataContext"></LogLabel>
@@ -102,15 +105,12 @@
                     <td>
                         <LogTextBox [ObjectFieldName]="'AccountNumber'" [ObjectTableName]="ObjectTableName"
                             [Placeholder]="this.EntityPM.AccountNumber || ''" [DataContext]="DataContext"
-                            [HideColumns]="true" [InputType]="'Text'"
+                            [HideColumns]="true" [InputType]="'nText'"
                             (ValueChanged)="onInputChange($event,'AccountNumber')"></LogTextBox>
                     </td>
-
                     <td></td>
-
                 </tr>
                 <tr class="FormFieldRow">
-
                     <td>
                         <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName"
                             [DataContext]="DataContext"></LogLabel>
@@ -118,15 +118,12 @@
                     <td>
                         <LogTextBox [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName "
                             [Placeholder]="this.EntityPM.LocalName || ''" [DataContext]="DataContext"
-                            [HideColumns]="true" [InputType]="'Text'"
+                            [HideColumns]="true" [InputType]="'nText'"
                             (ValueChanged)="onInputChange($event ,'LocalName')"></LogTextBox>
                     </td>
-
                     <td></td>
-
                 </tr>
                 <tr class="FormFieldRow">
-
                     <td>
                         <LogLabel [ObjectFieldName]="'EnglishName'" [ObjectTableName]="ObjectTableName"
                             [DataContext]="DataContext"></LogLabel>
@@ -139,10 +136,8 @@
                     </td>
 
                     <td></td>
-
                 </tr>
                 <tr class="FormFieldRow">
-
                     <td>
                         <LogLabel [ObjectFieldName]="'BankAddress'" [ObjectTableName]="ObjectTableName"
                             [DataContext]="DataContext"></LogLabel>
@@ -150,32 +145,30 @@
                     <td>
                         <LogTextBox [ObjectFieldName]="'BankAddress'" [ObjectTableName]="ObjectTableName "
                             [Placeholder]="this.EntityPM.BankAddress || ''" [DataContext]="DataContext"
-                            [HideColumns]="true" [InputType]="'Text'"
+                            [HideColumns]="true" [InputType]="'nText'"
                             (ValueChanged)="onInputChange($event ,'BankAddress')"></LogTextBox>
                     </td>
-
                     <td></td>
 
                 </tr>
                 <tr class="FormFieldRow">
-
                     <td>
                         <LogLabel [ObjectFieldName]="'PayerTypeCode'" [ObjectTableName]="ObjectTableName"
                             [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <LogTextBox [ObjectFieldName]="'PayerTypeCode'" [ObjectTableName]="ObjectTableName"
-                            [Placeholder]="this.EntityPM.PayerTypeCode || ''" [DataContext]="DataContext"
-                            [HideColumns]="true" [InputType]="'Text'"
-                            (ValueChanged)="onInputChange($event,'PayerTypeCode')">
-                        </LogTextBox>
+                        <LogLov [ObjectFieldName]="'PayerTypeCode'" [ObjectTableName]="ObjectTableName"
+                            [DataContext]="DataContext" [LookUpTableName]="'Customs.CustomerActivityType'"
+                            [HideColumns]="true" [UseDefaultPosition]="true"
+                            [SelectedValue]="this.EntityPM.PayerTypeCode"
+                            (ValueChanged)="onInputChange($event ,'PayerTypeCode')">
+                        </LogLov>
                     </td>
 
                     <td></td>
 
                 </tr>
                 <tr class="FormFieldRow">
-
                     <!-- InActive -->
                     <td>
                         <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName"
@@ -186,38 +179,88 @@
                             [DataContext]="DataContext" [Checked]="this.EntityPM.InActive"
                             (ValueChanged)="onInputChange($event,'InActive')"></LogCheckBox>
                     </td>
-
                     <td></td>
-
                     <td></td>
                 </tr>
-                <table style="width:500px">
-                    <tr class="FieldRow" style="height : 120px">
-                        <td colspan="2">
-                            <div class="GeneratedGridContainer" style="height : 100%;">
-                                <logitude-edit-grid GridWidth="30%" GridHeight="100%"
-                                    [ItemSource]="CustomBankCardItems">
-                                    <log-column
-                                        [header]="'Customs.CertificateOfOrigin.O.number' | TextCodeTranslationPipe"
-                                        [binding]="'ItemSerial'" [width]="'150'" [Alignment]="'right'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
-                                                #logcelltemplate>
-                                                <div style="text-align:right">
-                                                    <span>{{item.CardId}}</span>
-                                                </div>
+                <table style="width:444px; margin-top: 15px;">
+                    <tr style="height: 28px; padding-top: 10px;">
 
+                        <td style="width: 30px; float: left;">
+                            <IconButton [Name]="'Add'" (click)="AddBankCardLine()"
+                                [IsEnabled]="this.EntityPM.PayerTypeCode !== '3'">
+                            </IconButton>
+                        </td>
+                    </tr>
+
+                    <!-- Edit Grid -->
+                    <tr>
+                        <td colspan="3" style="height: 100%;">
+                            <div class="CellContent">
+                                                                                    
+                               
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [Disabled]="this.EntityPM.PayerTypeCode === '3'"
+                                    [ItemSource]="CustomBankCardItems" [Disabled]="this.EntityPM.PayerTypeCode === '3'" 
+                               >
+
+                                    <!-- PackageMeasureQualifierCode -->
+                                    <log-column
+                                        [header]="('Customs.CustomBank.O.CustomerNumber' | TextCodeTranslationPipe) || 'מספר לקוח'"
+                                        [width]="'200'" [Alignment]="'right'" [binding]="'ItemSerial'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate>
+                                                <div style="text-align: right;" class="TextTrimming"
+                                                    *ngIf="logcelltemplate.IsDisplayMode">
+                                                    <span>{{this.cardTempData[item.CardId]}}</span>
+                                                </div>
+                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                    <LogTextBox [ObjectFieldName]="'Code'" [ObjectTableName]="'Card'"
+                                                        [DataContext]="DataContext"
+                                                        (ValueChanged)="onCardChange($event,item, 'Code')"
+                                                        [HideColumns]="true"
+                                                        [InputType]="'nText'"
+                                                        >
+                                                        
+                                                    </LogTextBox>
+
+                                                </div>
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
-                                    <log-column
-                                        [header]="'Customs.CertificateOfOrigin.O.number' | TextCodeTranslationPipe"
-                                        [binding]="'ItemSerial'" [width]="'150'" [Alignment]="'right'">
+
+                                    <!-- PackageTypeCode -->
+                                    <log-column [header]="('CustomerName' | TextCodeTranslationPipe) || 'שם לקוח'"
+                                        [width]="'200'" [Alignment]="'right' " [binding]="'CardName'">
                                         <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
-                                                #logcelltemplate>
-                                                <div style="text-align:right">
-                                                    <span>{{item.CardName}}</span>
+                                            <log-cell-template #logcelltemplate>
+                                                <div style="text-align: right;" class="TextTrimming"
+                                                    *ngIf="logcelltemplate.IsDisplayMode">
+                                                    <span>{{item.cardName}}</span>
+                                                </div>
+                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                    <LogTextBox [ObjectFieldName]="'LocalName'"
+                                                        [ObjectTableName]="'Card'" [DataContext]="item"
+                                                        [HideColumns]="true"
+                                                        (ValueChanged)="onCardChange($event,item, 'LocalName')"
+                                                        [InputType]="'nText'">
+                                                        >
+                                                        
+                                                    </LogTextBox>
+
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <!-- Buttons -->
+                                    <log-column [width]="'20'" [visibility]="'visibile'" [Alignment]="'center'"
+                                        [IgnoreColumn]="true" [Editable]="true">
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" [TabIndex]="-1">
+                                                <div style="width: 02px; float: center; height:20px; padding-top: 2px; display:block"
+                                                    class="removePackageButton">
+                                                    <IconButton [Name]="'Delete'" [IsSmall]="true" [IsIconOnly]="true"
+                                                        style="display: block; float: center; margin: 3px;"
+                                                        (click)="RemoveBankCardLine(item)"></IconButton>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
@@ -226,12 +269,9 @@
                             </div>
                         </td>
                     </tr>
-
                 </table>
             </table>
-
         </td>
-
     </tr>
 
     <tr *ngIf="isWindowMode" style="height: 20px;">
