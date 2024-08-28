@@ -5,8 +5,10 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -27,6 +29,34 @@ namespace WindowsFormsApplication1
         private void button1_Click(object sender, EventArgs e)
         {
             button1.Enabled = false;
+            if (!string.IsNullOrEmpty(txtWorkerRoleName.Text) && 
+                !string.IsNullOrEmpty(txtStatusCode.Text))
+            {
+                DirectoryInfo directoryInfo = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+                
+                string filePath = Path.Combine(directoryInfo.FullName, "WorkerRoleName.xml");
+                string oldFilePath = Path.Combine(directoryInfo.FullName, "WorkerRoleName" + DateTime.Now.ToString("yyyyMMdd") + ".xml");
+                if (File.Exists(filePath) && !File.Exists(oldFilePath))
+                { 
+                    File.Move(filePath, Path.Combine(directoryInfo.FullName, "WorkerRoleName" + DateTime.Now.ToString("yyyyMMdd") + ".xml"));
+                    Thread.Sleep(20);
+                }
+
+                var sb=new StringBuilder();
+                sb.Append("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
+                sb.Append("<root>");
+                sb.Append("<WorkerName>");
+                sb.Append(txtStatusCode.Text);
+                sb.Append("</WorkerName>");
+                sb.Append("<ActiveWorkers>");
+                sb.Append(txtWorkerRoleName.Text);
+                sb.Append("</ActiveWorkers>");
+              
+                sb.Append("</root>");
+                File.WriteAllText(filePath, sb.ToString());
+                Thread.Sleep(20);
+
+            }
             var worker = new BackgroundWorker();
             worker.DoWork += new DoWorkEventHandler(worker_DoWork);
             worker.RunWorkerAsync();
