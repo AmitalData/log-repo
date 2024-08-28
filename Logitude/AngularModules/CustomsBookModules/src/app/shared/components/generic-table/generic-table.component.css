@@ -13,8 +13,9 @@ th, td {
 .detailsSlide_table {
     border-radius: 10px;
     border: 1px solid var(--greyRO);
-    overflow: auto;
-    max-height: 450px;
+    /* #109216 cancel overflow */
+    /* overflow: auto;
+    max-height: 450px; */
 }
 
 .detailsSlide_table table {
