@@ -12,7 +12,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CasualTypeCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.ObjectTableId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.LocalName).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.LocalName).HasMaxLength(200).IsUnicode(true);
             this.Property(t => t.EnglishName).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.City).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.ZipCode).HasMaxLength(100).IsUnicode(false);

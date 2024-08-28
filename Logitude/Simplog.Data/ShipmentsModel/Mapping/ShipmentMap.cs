@@ -154,7 +154,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.DangerousUnNumber).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.DangerousClassNumber).HasMaxLength(10).IsUnicode(false);
             this.Property(t => t.DangerousPackagingGroup).HasMaxLength(10).IsUnicode(false);
-            this.Property(t => t.DangerousMaterialDescription).HasMaxLength(100).IsUnicode(false);            
+            this.Property(t => t.DangerousMaterialDescription).HasMaxLength(200).IsUnicode(true);            
             this.Property(t => t.QuoteId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.QuoteNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.BookingId).HasMaxLength(15).IsUnicode(false);            

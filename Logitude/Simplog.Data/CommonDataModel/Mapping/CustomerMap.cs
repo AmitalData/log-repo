@@ -29,7 +29,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Field10).HasMaxLength(2000).IsUnicode(true);
             this.Property(t => t.IndustryId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.LeadSourceId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.LeadDescription).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.LeadDescription).HasMaxLength(200).IsUnicode(true);
             this.Property(t => t.CustomerStatusCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.ClassifierId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CollectorId).HasMaxLength(15).IsUnicode(false);

@@ -32,7 +32,7 @@ namespace Logitude.Customs.Data.EntityMapping
 	 
             this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(1).IsUnicode(false);
 
-            this.Property(t => t.LocalName).HasColumnName("LocalName").HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.LocalName).HasColumnName("LocalName").HasMaxLength(200).IsUnicode(true);
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsMaxLength().IsUnicode(true);
 
