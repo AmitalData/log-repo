@@ -4548,6 +4548,8 @@
   <Index
     Columns="Tenant,ShipmentNumber" />
   <Index
+	Columns="ShipmentNumber" />
+  <Index
     Columns="AutomaticLastUpdateDate" />
   <Index
     Columns="Tenant,ComputedStatusDate" />
