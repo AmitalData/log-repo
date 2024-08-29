@@ -708,6 +708,7 @@
     <None Include="EntityFiles\CB_TariffComputedData.lxml" />
     <None Include="EntityFiles\CB_TradeLevy.lxml" />
     <None Include="EntityFiles\CB_Vendor.lxml" />
+    <None Include="EntityFiles\FreightForwarderReference.lxml" />
     <None Include="EntityFiles\NUnicloud.lxml" />
     <None Include="EntityFiles\DiscountTypeRegulation.lxml" />
     <None Include="EntityFiles\CustomsItemGroup.lxml" />

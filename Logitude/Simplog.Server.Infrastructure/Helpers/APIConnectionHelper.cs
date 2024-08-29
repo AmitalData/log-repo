@@ -15,8 +15,6 @@ namespace Simplog.Server.Infrastructure.Helpers
         {
             client = new HttpClient();
             client.BaseAddress = new Uri(baseuri);
-
-
         }
 
         public APIConnectionHelper()
@@ -38,14 +36,14 @@ namespace Simplog.Server.Infrastructure.Helpers
             if (response.IsSuccessStatusCode)
             {
                 string retstr = response.Content.ReadAsStringAsync().Result;
-                res = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(retstr);
+                res = JsonConvert.DeserializeObject<T>(retstr);
                 return res;
             }
             return res;
         }
         private StringContent API_SerializeObject(object paramArray)
         {
-            return new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(paramArray, Newtonsoft.Json.Formatting.None,
+            return new StringContent(JsonConvert.SerializeObject(paramArray, Formatting.None,
                            new JsonSerializerSettings
                            {
                                NullValueHandling = NullValueHandling.Ignore

@@ -1,13 +1,24 @@
-﻿using Logitude.BL.CommonDataModel.DataContracts;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Transactions;
+using System.Web;
+using Logitude.BL.AnalyticTableServices;
+using Logitude.BL.CommonDataModel.DataContracts;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.CommonDataModel.Helpers;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.BL.Security;
 using Logitude.BL.ShipmentsModel.EntityOtherServices;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
@@ -20,13 +31,18 @@ using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 using Logitude.BL.ShipmentsModel.Tools.Validating;
 using Logitude.BL.Workfkow;
 using Logitude.BL.Workfkow.Constants;
+using Logitude.BL.Workflow;
 using Logitude.BookingLib.Data.EntityPOCOs;
 using Logitude.BookingLib.Data.Repositories;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
-
+using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.Models.AuditLog;
+using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.CToolWorkflows;
@@ -37,6 +53,8 @@ using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.Repositories;
+using Logitude.WarehouseLib.Data;
+using Logitude.WarehouseLib.Data.Repositories;
 using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
@@ -53,28 +71,6 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Azure;
 using Simplog.Server.Infrastructure.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Transactions;
-using System.Web;
-using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.BL.Security;
-using Logitude.BL.AnalyticTableServices;
-using System.Data.SqlClient;
-using Logitude.BL.Workflow;
-using Logitude.Customs.Data;
-using Logitude.Customs.BL.EntityQueryServices;
-using Logitude.WarehouseLib.Data.Repositories;
-using Logitude.WarehouseLib.Data;
-using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Customs.Data.Repsitories;
-using System.Net.Http;
-using Logitude.Customs.Def.EntityPMs;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -448,110 +444,112 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 scope.Complete();
 
-            }			
-		}
+            }
+        }
 
-		public void CreateCustomShipment()
-		{
-			using (TransactionScope scope = TransactionFactory.GetTransaction())
-			{
-				this.isNewEntity = true;
+        public void CreateCustomShipment()
+        {
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            {
+                this.isNewEntity = true;
 
-				this.InitializeComponent();
+                this.InitializeComponent();
 
-				ShipmentValidating.ValidateCustomShipment(entityPM, true);
+                ShipmentValidating.ValidateCustomShipment(entityPM, true);
 
-				// generate shipment number
-				this.entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "SHIP", entityPM.DirectionId, entityPM.TransportModeId);
+                // generate shipment number
+                this.entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "SHIP", entityPM.DirectionId, entityPM.TransportModeId);
 
-				// todo: add AIR to AddShipmentTypes and execute it
-				entityPM.ShipmentTypeId = null;
+                // todo: add AIR to AddShipmentTypes and execute it
+                entityPM.ShipmentTypeId = null;
 
-				// todo: get default values
-				this.entityPM.SalesmanUserId = "1-421340";
-				this.entityPM.ReferantUserId = "1-421335";
+                // todo: get default values
+                this.entityPM.SalesmanUserId = "1-421340";
+                this.entityPM.ReferantUserId = "1-421335";
 
-				this.entityPM.CreatedByUserId = loggedContact.Id;
-				this.entityPM.UpdatedByUserId = loggedContact.Id;
+                this.entityPM.CreatedByUserId = loggedContact.Id;
+                this.entityPM.UpdatedByUserId = loggedContact.Id;
 
-				ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, entityPM.ShipmentPackages, objectContext, FieldChanges);
+                ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, entityPM.ShipmentPackages, objectContext, FieldChanges);
 
-				entityRepository.Add(entityPoco);
-				entityRepository.SubmitChanges();
+                entityRepository.Add(entityPoco);
+                entityRepository.SubmitChanges();
 
-				entityPM.IsConnectToMasterShipment = entityMasterData != null ? true : false;
-				shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
-				shipmentBehaviourFacade.Handle(FieldChanges);
-				shipmentBehaviourFacade.HandleShipmentDigitalFields(shipmentDigitalFields);
-				shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
+                entityPM.IsConnectToMasterShipment = entityMasterData != null ? true : false;
+                shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
+                shipmentBehaviourFacade.Handle(FieldChanges);
+                shipmentBehaviourFacade.HandleShipmentDigitalFields(shipmentDigitalFields);
+                shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
 
-				AuditLog auditLog = null;
-				if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant))
-				{
-					auditLog = AddShipmentAuditLogChanges(entityPoco);
-					AuditLogRepository.Add(auditLog);
-					AuditLogRepository.SubmitChanges();
-				}
+                AuditLog auditLog = null;
+                if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant))
+                {
+                    auditLog = AddShipmentAuditLogChanges(entityPoco);
+                    AuditLogRepository.Add(auditLog);
+                    AuditLogRepository.SubmitChanges();
+                }
 
-				new WorkflowEntityQueueMessage()
-				{
-					Entity = WorkflowEntities.Shipment,
-					EntityId = entityPM.Id,
-					AuditLogId = auditLog?.Id,
-					Tenant = entityPM.Tenant,
-					Type = QueueMessagesTypes.Create,
-					IsCustom = false
-				}.Produce();
+                new WorkflowEntityQueueMessage()
+                {
+                    Entity = WorkflowEntities.Shipment,
+                    EntityId = entityPM.Id,
+                    AuditLogId = auditLog?.Id,
+                    Tenant = entityPM.Tenant,
+                    Type = QueueMessagesTypes.Create,
+                    IsCustom = false
+                }.Produce();
 
-				new TaskDoneQueueMessage()
-				{
-					Entity = WorkflowEntities.Shipment,
-					EntityId = entityPM.Id,
-					Tenant = entityPM.Tenant,
-					Type = QueueMessagesTypes.Create
-				}.Produce();
+                new TaskDoneQueueMessage()
+                {
+                    Entity = WorkflowEntities.Shipment,
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    Type = QueueMessagesTypes.Create
+                }.Produce();
 
-				CreateDeclaration(entityPM, "NEW");
+                CreateDeclaration(entityPM, "NEW");
 
-				scope.Complete();
-			}
-		}
-		public  void CreateDeclaration(ShipmentPM shipmentPM, string mode)
-		{
-			int tenant = shipmentPM.Tenant;
-			var myAmitalCustom = new LogitudeCustomsFile();
-			CustomsSettingRepository customsSettingQueryService = new CustomsSettingRepository(tenant);
-			var customsSettingPM = customsSettingQueryService.GetSettingByTenant(tenant);
-			
-			myAmitalCustom.CustomFileNo = shipmentPM.ShipmentNumber;
+                scope.Complete();
+            }
+        }
+        public void CreateDeclaration(ShipmentPM shipmentPM, string mode)
+        {
+            int tenant = shipmentPM.Tenant;
+            var myAmitalCustom = new LogitudeCustomsFile();
+            CustomsSettingRepository customsSettingQueryService = new CustomsSettingRepository(tenant);
+            var customsSettingPM = customsSettingQueryService.GetSettingByTenant(tenant);
+
+            myAmitalCustom.CustomFileNo = shipmentPM.ShipmentNumber;
             myAmitalCustom.DeclarationOfficeCode = shipmentPM.DeclarationOfficeCode;
-			myAmitalCustom.CustomerId = shipmentPM.CustomerId;
+            myAmitalCustom.CustomerId = shipmentPM.CustomerId;
             myAmitalCustom.AgentId = customsSettingPM?.CustomsAgentId;
             myAmitalCustom.CreatedByUserId = shipmentPM.CreatedByUserId;
-			myAmitalCustom.DepartmentId = shipmentPM.DepartmentId;
-			myAmitalCustom.TransportModeId = shipmentPM.TransportModeId;
+            myAmitalCustom.DepartmentId = shipmentPM.DepartmentId;
+            myAmitalCustom.TransportModeId = shipmentPM.TransportModeId;
             myAmitalCustom.ReferentUserId = shipmentPM.ReferantUserId;
-			myAmitalCustom.SystemConnection = "N";
+            myAmitalCustom.SystemConnection = "N";
             //DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
             var objDefult = "";//defaultValueQueryService.GetDefault("ISRAEL", "CGG_PAYHAND_FIL", "NON", "NON", tenant);//ביטול הזרמת ח.פ להצהרה
-			if (!string.IsNullOrEmpty(objDefult)) {
-			   CardRepository cardRep = new CardRepository(tenant);
-			   Card card = cardRep.GetSingleCard(shipmentPM.CustomerId, tenant);
-               if (card != null && !string.IsNullOrEmpty(card.VatNumber))
-               {
-                   if (card.VatNumber != null) { 
-                      myAmitalCustom.ImporterId = card.Id;                     
-                   }
-			   }
+            if (!string.IsNullOrEmpty(objDefult))
+            {
+                CardRepository cardRep = new CardRepository(tenant);
+                Card card = cardRep.GetSingleCard(shipmentPM.CustomerId, tenant);
+                if (card != null && !string.IsNullOrEmpty(card.VatNumber))
+                {
+                    if (card.VatNumber != null)
+                    {
+                        myAmitalCustom.ImporterId = card.Id;
+                    }
+                }
             }
-			myAmitalCustom.Direction = "I";
-			myAmitalCustom.Mode = mode;
-			myAmitalCustom.Tenant = shipmentPM.Tenant.ToString();
-            
-			var respnse = APIConnectionHelper.Instance.PostViaWebAPI<Response, LogitudeCustomsFile>("/api/Declarartion/UpdateDeclarationInU2L", myAmitalCustom);
-		}
-				
-		private void InsertInShipmnetUpdateLog(int StartOrEnd, string errorMessage = null)
+            myAmitalCustom.Direction = "I";
+            myAmitalCustom.Mode = mode;
+            myAmitalCustom.Tenant = shipmentPM.Tenant.ToString();
+
+            var respnse = APIConnectionHelper.Instance.PostViaWebAPI<Response, LogitudeCustomsFile>("/api/Declarartion/UpdateDeclarationInU2L", myAmitalCustom);
+        }
+
+        private void InsertInShipmnetUpdateLog(int StartOrEnd, string errorMessage = null)
         {
             string mySubError = errorMessage;
             if (errorMessage != null && errorMessage.Length > 4000)
@@ -591,7 +589,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
 
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                 }
                 scope.Complete();
@@ -643,7 +641,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         #region
 
-                    string myOldCustomerId = "";
+                        string myOldCustomerId = "";
                         string oldEntityStatusId = entityPoco.StatusId;
                         if (entityPM.CustomerId != entityPoco.CustomerId)
                         {
@@ -719,7 +717,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             isEntityStatusUpdated = oldEntityStatusId != entityPM.StatusId ? true : false;
                         }
 
-                        if(!entityPM.ShipmentUpdatedFromContainer)
+                        if (!entityPM.ShipmentUpdatedFromContainer)
                             ShipmentContainersEntityBehaviour.UpdateConatinarStatus(this.entityPM, isEntityStatusUpdated, objectContext);
 
                         if (string.IsNullOrEmpty(entityPM.CustomFileId) && !string.IsNullOrEmpty(entityPoco.CustomFileId))
@@ -748,7 +746,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         if (ShipmentDocsFieldFromWorkerRole != null)
                         {
-                            shipmentBehaviourFacade.HandleShipmentDocsFields(ShipmentDocsFieldFromWorkerRole);                        
+                            shipmentBehaviourFacade.HandleShipmentDocsFields(ShipmentDocsFieldFromWorkerRole);
                         }
 
                         if (shipmentBehaviourFacade.ReceivablePricingUpdated_CrossDoc)
@@ -896,7 +894,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     #endregion
                 }
                 InsertInShipmnetUpdateLog(1);
-			}
+            }
             catch (Exception ex)
             {
 
@@ -971,10 +969,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         Type = QueueMessagesTypes.Update
                     }.Produce();
 
-                    if(!entityPM.IsHybrid)
-					UpdateDeclaration(entityPM, "UPDATE");
+                    if (!entityPM.IsHybrid)
+                        UpdateDeclaration(entityPM, "UPDATE");
 
-					scope.Complete();
+                    scope.Complete();
                 }
                 InsertInShipmnetUpdateLog(1);
             }
@@ -997,74 +995,74 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         }
 
-		public void UpdateDeclaration(ShipmentPM shipmentPM, string mode)
-		{
-			int tenant = shipmentPM.Tenant;
-			ICustomContext customContext = CustomContext.GetContext(tenant);
-			IWarehouseContext warehouseContext = WarehouseContext.GetContext(tenant);
+        public void UpdateDeclaration(ShipmentPM shipmentPM, string mode)
+        {
+            int tenant = shipmentPM.Tenant;
+            ICustomContext customContext = CustomContext.GetContext(tenant);
+            IWarehouseContext warehouseContext = WarehouseContext.GetContext(tenant);
 
-			CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
-			DeclarationQueryService declarationQueryService = new DeclarationQueryService(customContext);
-			WarehouseEntryRepository warehouseEntryRepository = new WarehouseEntryRepository(warehouseContext);
-			DeclarationReferantDataRepository declarationReferantDataRepository = new DeclarationReferantDataRepository(tenant);
+            CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(customContext);
+            WarehouseEntryRepository warehouseEntryRepository = new WarehouseEntryRepository(warehouseContext);
+            DeclarationReferantDataRepository declarationReferantDataRepository = new DeclarationReferantDataRepository(tenant);
 
-		
-			string decId = declarationQueryService.GetIdByCustomFileNo(shipmentPM.ShipmentNumber, tenant);
-			DeclarationReferantData declarationReferantDataPM = declarationReferantDataRepository.GetSingle(decId, tenant);
 
-			var myAmitalCustom = new LogitudeCustomsFile();
+            string decId = declarationQueryService.GetIdByCustomFileNo(shipmentPM.ShipmentNumber, tenant);
+            DeclarationReferantData declarationReferantDataPM = declarationReferantDataRepository.GetSingle(decId, tenant);
 
-			myAmitalCustom.CustomFileNo = shipmentPM.ShipmentNumber;
-			myAmitalCustom.Id = decId;
-			myAmitalCustom.TransportModeId = shipmentPM.TransportModeId;
-			myAmitalCustom.DepartmentId = shipmentPM.DepartmentId;
-			myAmitalCustom.CustomerId = shipmentPM.CustomerId;
-			if (shipmentPM.TransportModeId == "A")
-			{
-				myAmitalCustom.CargoTypeCode = "1";
-				myAmitalCustom.SecondCargoID = declarationReferantDataPM != null ? declarationReferantDataPM.CarrierCode + "-" + declarationReferantDataPM.Mawb : null;
-				myAmitalCustom.ThirdCargoID = shipmentPM.House;
-			}
-			if (shipmentPM.TransportModeId == "O")
-			{
-				myAmitalCustom.CargoTypeCode = "11";
-                myAmitalCustom.ManifestNumber = shipmentPM.IskaNumber?.Length >= 7 ? shipmentPM.IskaNumber.Substring(1, 7): shipmentPM.IskaNumber;
-				myAmitalCustom.SecondCargoID = shipmentPM.IskaNumber?.Length >= 7 ? shipmentPM.IskaNumber.Substring(7) : "";
+            var myAmitalCustom = new LogitudeCustomsFile();
+
+            myAmitalCustom.CustomFileNo = shipmentPM.ShipmentNumber;
+            myAmitalCustom.Id = decId;
+            myAmitalCustom.TransportModeId = shipmentPM.TransportModeId;
+            myAmitalCustom.DepartmentId = shipmentPM.DepartmentId;
+            myAmitalCustom.CustomerId = shipmentPM.CustomerId;
+            if (shipmentPM.TransportModeId == "A")
+            {
+                myAmitalCustom.CargoTypeCode = "1";
+                myAmitalCustom.SecondCargoID = declarationReferantDataPM != null ? declarationReferantDataPM.CarrierCode + "-" + declarationReferantDataPM.Mawb : null;
+                myAmitalCustom.ThirdCargoID = shipmentPM.House;
             }
-			if (shipmentPM.TransportModeId == "L")
-			{
-				myAmitalCustom.CargoTypeCode = "20";
-				myAmitalCustom.ManifestNumber = shipmentPM.IskaNumber;
-			}
-			myAmitalCustom.UnloadDate = declarationReferantDataPM?.ArrivalDate?.ToString();
-			myAmitalCustom.ManifestDate = shipmentPM.HAWBDate != null ? shipmentPM.HAWBDate?.ToString() : declarationReferantDataPM.MawbDate?.ToString();
-			myAmitalCustom.PackageTypeCode = declarationReferantDataPM?.PackageTypeCode;
-			myAmitalCustom.PackageMeasureQualifierCode = "2";
-			myAmitalCustom.PackageQuantity = shipmentPM.NumberOfPackages?.ToString();
-			myAmitalCustom.GrossMassMeasure = shipmentPM.GrossWeight?.ToString();
-			//myAmitalCustom.GrossMassMeasureTypeCode = "KGM";
-			myAmitalCustom.CargoDescription = shipmentPM.DescriptionOfGoods;
+            if (shipmentPM.TransportModeId == "O")
+            {
+                myAmitalCustom.CargoTypeCode = "11";
+                myAmitalCustom.ManifestNumber = shipmentPM.IskaNumber?.Length >= 7 ? shipmentPM.IskaNumber.Substring(1, 7) : shipmentPM.IskaNumber;
+                myAmitalCustom.SecondCargoID = shipmentPM.IskaNumber?.Length >= 7 ? shipmentPM.IskaNumber.Substring(7) : "";
+            }
+            if (shipmentPM.TransportModeId == "L")
+            {
+                myAmitalCustom.CargoTypeCode = "20";
+                myAmitalCustom.ManifestNumber = shipmentPM.IskaNumber;
+            }
+            myAmitalCustom.UnloadDate = declarationReferantDataPM?.ArrivalDate?.ToString();
+            myAmitalCustom.ManifestDate = shipmentPM.HAWBDate != null ? shipmentPM.HAWBDate?.ToString() : declarationReferantDataPM.MawbDate?.ToString();
+            myAmitalCustom.PackageTypeCode = declarationReferantDataPM?.PackageTypeCode;
+            myAmitalCustom.PackageMeasureQualifierCode = "2";
+            myAmitalCustom.PackageQuantity = shipmentPM.NumberOfPackages?.ToString();
+            myAmitalCustom.GrossMassMeasure = shipmentPM.GrossWeight?.ToString();
+            //myAmitalCustom.GrossMassMeasureTypeCode = "KGM";
+            myAmitalCustom.CargoDescription = shipmentPM.DescriptionOfGoods;
 
-			myAmitalCustom.Direction = "I";
-			myAmitalCustom.SystemConnection = "N";
-			myAmitalCustom.Mode = mode;
-			myAmitalCustom.Tenant = shipmentPM.Tenant.ToString();
+            myAmitalCustom.Direction = "I";
+            myAmitalCustom.SystemConnection = "N";
+            myAmitalCustom.Mode = mode;
+            myAmitalCustom.Tenant = shipmentPM.Tenant.ToString();
 
-			#region declaration referant data fields
+            #region declaration referant data fields
             myAmitalCustom.MAWB = shipmentPM.Mawb;
-			myAmitalCustom.MawbDate = shipmentPM.MawbDate?.ToString();
-			myAmitalCustom.EstimatedArrivalDate = shipmentPM.EstimatedArrivalDate?.ToString();
-			myAmitalCustom.PackageTypeCode = shipmentPM.PackageTypeCode;
-			myAmitalCustom.ArrivalDate = shipmentPM.ArrivalDate?.ToString();
-			myAmitalCustom.Commodity = shipmentPM.Commodity;
-			myAmitalCustom.Vessel = shipmentPM.Vessel;
-			myAmitalCustom.FlightVoyageNumber = shipmentPM.FlightVoyageNumber;
-			myAmitalCustom.CarrierCode = shipmentPM.CarrierCode;
-			#endregion
+            myAmitalCustom.MawbDate = shipmentPM.MawbDate?.ToString();
+            myAmitalCustom.EstimatedArrivalDate = shipmentPM.EstimatedArrivalDate?.ToString();
+            myAmitalCustom.PackageTypeCode = shipmentPM.PackageTypeCode;
+            myAmitalCustom.ArrivalDate = shipmentPM.ArrivalDate?.ToString();
+            myAmitalCustom.Commodity = shipmentPM.Commodity;
+            myAmitalCustom.Vessel = shipmentPM.Vessel;
+            myAmitalCustom.FlightVoyageNumber = shipmentPM.FlightVoyageNumber;
+            myAmitalCustom.CarrierCode = shipmentPM.CarrierCode;
+            #endregion
 
-			var respnse = APIConnectionHelper.Instance.PostViaWebAPI<Response, LogitudeCustomsFile>("/api/Declarartion/UpdateDeclarationInU2L", myAmitalCustom);
-		}
-		private AuditLog AddShipmentAuditLogChanges(Shipment entityPoco)
+            var respnse = APIConnectionHelper.Instance.PostViaWebAPI<Response, LogitudeCustomsFile>("/api/Declarartion/UpdateDeclarationInU2L", myAmitalCustom);
+        }
+        private AuditLog AddShipmentAuditLogChanges(Shipment entityPoco)
         {
             ObjectTableRepository objecttableRepository = new ObjectTableRepository(entityPoco.Tenant);
             ObjectTable objecttable = objecttableRepository.GetObjectTableByName("Shipment", 0, true);
@@ -1909,7 +1907,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 Customer customer = customerRepository.GetSingleCustomer(entityPM.CustomerId, tenant, true);
                 if (customer != null && (customer.LogBoxActivated || customer.IsPrivateLabelCustomer))
                     return true;
-                if(!string.IsNullOrEmpty(entityPoco.CustomerShipmentNumber) && !string.IsNullOrEmpty(OldCustomerId) && CustomerChanged == "true")
+                if (!string.IsNullOrEmpty(entityPoco.CustomerShipmentNumber) && !string.IsNullOrEmpty(OldCustomerId) && CustomerChanged == "true")
                     return true;
             }
 
@@ -3222,7 +3220,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityPM.IsAddingStackEvents = false;
             entityPM.IsRemovingStackEvents = false;
             entityPM.CalculateStatus = false;
-
+            entityPM.CreateDateTime = DateTime.Now;
+            entityPM.SearchFields = entityPM.ShipmentNumber + "," + entityPM.House + "," + entityPM.IskaNumber + "," + entityPM.DeclarationNumber + "," + entityPM.Mawb;
             this.ComputeShipmentStatus();
 
             if (isNewEntity)
@@ -3710,7 +3709,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void AddPaymentReceivedToQueue()
         {
-            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner) )
+            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner))
             {
                 //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 //{
