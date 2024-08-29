@@ -1,0 +1,54 @@
+<View DBType="Main" Name="CustomsShipmentDataView" Schema="dbo" Module="Shipment">
+  <SqlScript>
+    <![CDATA[
+      CREATE VIEW [dbo].[CustomsShipmentDataView]
+      AS
+        SELECT 
+            -- from definitions document
+            s.SHIPMENTNUMBER, 
+            s.CREATEDATETIME,
+            s.CUSTOMERID,
+            sr.ReferenceValue,
+            d.DECLARATIONOFFICECODE,
+            drd.MAWB,
+            s.HOUSE,
+            --DeclarationReferantData.OriginCountryCode 
+            s.DESCRIPTIONOFGOODS,
+            s.GROSSWEIGHT,
+            s.NUMBEROFPACKAGES,
+
+	        -- from portfolio data page
+	        s.DEPARTMENTID,
+            drd.CarrierCode,
+            drd.MawbDate,
+            s.IskaNumber,
+            s.FREIGHTFORWARDERID,
+            s.ESTIMATEDFINALARRIVALDATE,
+            drd.PACKAGETYPECODE,
+            s.CHARGEABLEWEIGHT,
+            s.ReferantUserId,
+            sr.ReferenceType,
+            sr.ReferenceValue,
+            s.TRANSPORTMODEID,
+            drd.Vessel,
+            s.HAWBDATE,
+            drd.FlightVoyageNumber,
+            s.INCOTERMID,
+            s.FINALARRIVALDATE,
+            -- Shipment_MainCarriageFromPortId
+            s.VOLUMETRICWEIGHT,
+            s.VOLUME,
+            drd.COMMODITY,
+            s.SALESMANUSERID
+        FROM [dbo].[SHIPMENTS] s
+        LEFT JOIN [dbo].[ShipmentReferances] sr
+	        ON  s.ID = sr.ShipmentId
+        LEFT JOIN [Customs].[DECLARATIONS] d
+	        ON s.SHIPMENTNUMBER = d.CUSTOMFILENO
+        LEFT JOIN [Customs].DECLARATIONREFERANTDATAS drd
+	        ON d.ID = drd.DECLARATIONID;   
+    ]]>
+  </SqlScript>
+  <OracleScript>
+  </OracleScript>
+</View>

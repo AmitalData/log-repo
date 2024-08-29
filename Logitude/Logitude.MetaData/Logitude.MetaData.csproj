@@ -139,6 +139,7 @@
     <None Include="DBOthers\InvoiceModel\Views\ControlForInvoiceLinesDataView.dxml" />
     <None Include="DBOthers\InvoiceModel\Views\DigitalInvoicesCounterDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdatePayablesData.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Views\CustomsShipmentDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\DigitalShipmentDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\LogBoxShipmentDataView.dxml" />
     <None Include="DBScripts\CommonModel\202007051540_UpdateCardGlaAccountDisplayNumber.sxml" />
