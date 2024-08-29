@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;c589&quot;"
+  Code="&quot;a26e&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5950,7 +5950,12 @@
       LocalDefaultText="&quot;עבור חשבונית ספק נדרש מספר הקצאה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-
+    <TextCode
+      Code="&quot;Accounting.General.O.VatNumberExisted&quot;"
+      DefaultText="&quot;VatNumber existed in code&quot;"
+      LocalDefaultText="&quot;ח&quot;פ קיים בקוד&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

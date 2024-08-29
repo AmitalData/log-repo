@@ -24,6 +24,7 @@ using Logitude.Server.Tools.QueueService;
 using System.Collections.Generic;
 using System;
 using Logitude.Server.Tools.CustomFields;
+using System.IO.Packaging;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -211,6 +212,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 return false;
             }
             else return true;
+        }
+        public string CheckIfVatNumberExists(string partnerTypeId, string vatNumber, int tenant)
+        {
+           return entityRepository.CheckIfVatNumberExists(partnerTypeId, vatNumber, tenant);
         }
         public void RunStoredProcedures()
         {
