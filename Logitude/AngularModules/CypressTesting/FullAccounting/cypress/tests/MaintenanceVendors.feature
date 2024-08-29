@@ -10,8 +10,8 @@ Feature: Vendor Create, Search, activate and Edit from Maintenance
             | Phone       | 9999999999              |
             | Vat No      | 9999999999              |
             | Address1    | 15 Vendor Street        |
-            | City        | NEW BABILON             |
-            | Country     | United States           |
+            | City        | London                  |
+            | Country     | United Kingdom           |
             | State       | Alaska                  |  
         When create vendor
         Then the vendor should create successfully
