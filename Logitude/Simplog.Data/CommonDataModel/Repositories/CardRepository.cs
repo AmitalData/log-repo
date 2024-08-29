@@ -757,6 +757,16 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return billToIds;
         }
 
+        public string CheckIfVatNumberExists(string partnerTypeId, string vatNumber, int tenant)
+        {
+           var code = context.Cards
+                                   .Where(a =>
+                                               a.Tenant == tenant
+                                               && a.VatNumber == vatNumber
+                                               && a.PartnerTypeId == partnerTypeId).FirstOrDefault()?.Code;
+
+            return code;
+        }
 
 
     }
