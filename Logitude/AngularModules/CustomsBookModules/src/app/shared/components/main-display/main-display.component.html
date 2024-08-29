@@ -27,7 +27,7 @@
 						</app-data-row>
 						<ul class="wtree" [@inOutAnimation]>
 							<ng-container
-								*ngIf="childrenToDesplay.includes(item.CustomsItemID)">
+								*ngIf="item.IsShowChildren">
 								<ng-container *ngFor="let key2 of Object.keys(item.children)">
 									<li [@inOutAnimation]>
 										<app-data-row [fullClassificationLengthCharToDisplay]="2" [showTaxData]="false"
@@ -39,7 +39,7 @@
 											(showDetails)="showDetailsClick(item.children[key2]?.CustomsItemID , item.children[key2])">
 										</app-data-row>
 										<ng-container
-											*ngIf="childrenToDesplay.includes(item.children[key2]?.CustomsItemID)">
+											*ngIf="item.children[key2]?.IsShowChildren">
 											<ul [@inOutAnimation]>
 												<li [@inOutAnimation] class="mainTable_itemChkAll"
 													*ngIf="item.children[key2]?.children.length > 0">
@@ -63,7 +63,7 @@
 															(showDetails)="showDetailsClick(item.children[key2].children[key3]?.CustomsItemID , item.children[key2].children[key3])">
 														</app-data-row>
 														<ng-container
-															*ngIf="childrenToDesplay.includes(item.children[key2].children[key3]?.CustomsItemID)">
+															*ngIf="item.children[key2].children[key3]?.IsShowChildren">
 
 															<ul [@inOutAnimation]>
 																<ng-container
@@ -83,7 +83,7 @@
 																			(showDetails)="showDetailsClick(item.children[key2].children[key3].children[key4]?.CustomsItemID, item.children[key2].children[key3].children[key4])">
 																		</app-data-row>
 																		<ng-container
-																			*ngIf="childrenToDesplay.includes(item.children[key2].children[key3].children[key4]?.CustomsItemID)">
+																			*ngIf="item.children[key2].children[key3].children[key4]?.IsShowChildren">
 																			<ul [@inOutAnimation]>
 																				<ng-container
 																					*ngFor="let key5 of Object.keys(item.children[key2].children[key3].children[key4].children)">
@@ -102,7 +102,7 @@
 																							(showDetails)="showDetailsClick(item.children[key2].children[key3].children[key4].children[key5]?.CustomsItemID, item.children[key2].children[key3].children[key4].children[key5])">
 																						</app-data-row>
 																						<ng-container
-																							*ngIf="childrenToDesplay.includes(item.children[key2].children[key3].children[key4].children[key5]?.CustomsItemID)">
+																							*ngIf="item.children[key2].children[key3].children[key4].children[key5]?.IsShowChildren">
 																							<ul [@inOutAnimation]>
 																								<ng-container
 																									*ngFor="let key6 of Object.keys(item.children[key2].children[key3].children[key4].children[key5].children)">
