@@ -54,6 +54,7 @@ using WebFreight.Web.Helpers.AutomationModel;
 using Microsoft.VisualStudio.Services.Common;
 using WebFreight.Web.Helpers.QuoteTemplate;
 using Logitude.BL.CommonDataModel.ExternalService;
+using MetadataUpdateUtility = WebFreight.Web.Helpers.MetadataUpdateUtility;
 
 namespace WebFreight.Web.MetaDataUpdate
 {
