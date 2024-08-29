@@ -148,7 +148,7 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 	toggleVisibilitySearch(expend: boolean, data: CB_CustomsItemComputedDataList[]): boolean {
-		
+
 		let shouldExpandParent = false;
 
 		data.forEach(item => {
@@ -223,8 +223,8 @@ export class MainDisplayComponent implements OnInit {
 
 
 	showChildern(openAction: any, item: CB_CustomsItemComputedDataList) {
-    item.IsShowChildren = openAction; // #109074- fix open children display
-	
+		item.IsShowChildren = openAction; // #109074- fix open children display
+
 		// const isShown = this.childrenToDesplay.indexOf(item.CustomsItemID);
 		// if (openAction && isShown === -1) {
 		// 	this.childrenToDesplay.push(item.CustomsItemID);
@@ -232,7 +232,7 @@ export class MainDisplayComponent implements OnInit {
 		// else if (!openAction && isShown !== -1) {
 		// 	this.childrenToDesplay.splice(isShown);
 		// }
-  }
+	}
 
 	getCustomsItemHierarchic(filtersSearch: FiltersSearch): string {
 		const selectedFilters = [];
@@ -416,7 +416,7 @@ export interface CB_CustomsItemComputedDataList {
 	Remarks: string;
 	SearchByTextResult: string;
 	children: CB_CustomsItemComputedDataList[];
-  IsShowChildren: boolean;
+	IsShowChildren: boolean;
 }
 
 export interface CB_RequirementComputedDataList {
