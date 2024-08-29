@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;c589&quot;"
+  Code="&quot;6e82&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5938,7 +5938,6 @@
       LocalDefaultText="&quot;עבור חשבונית ספק נדרש מספר הקצאה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -8341,6 +8340,15 @@
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.CONFIRMATIONNUMBERDEFAULTS&quot;"
       FeatureDefaultText="&quot;Confirmation number defaults&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;GeneralSearchMenu&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.GeneralSearchMenu&quot;"
+      FeatureDefaultText="&quot;General Search&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
