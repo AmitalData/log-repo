@@ -54,6 +54,7 @@ using WebFreight.Web.Helpers.AutomationModel;
 using Microsoft.VisualStudio.Services.Common;
 using WebFreight.Web.Helpers.QuoteTemplate;
 using Logitude.BL.CommonDataModel.ExternalService;
+using MetadataUpdateUtility = WebFreight.Web.Helpers.MetadataUpdateUtility;
 
 namespace WebFreight.Web.MetaDataUpdate
 {
@@ -2018,8 +2019,8 @@ namespace WebFreight.Web.MetaDataUpdate
 
         public static byte[] CompressionFileData(string fileName, byte[] fileData)
         {
-            if (ICSharpCode.SharpZipLib.Zip.ZipConstants.DefaultCodePage == 1)
-                ICSharpCode.SharpZipLib.Zip.ZipConstants.DefaultCodePage = 437;
+            if (ICSharpCode.SharpZipLib.Zip.ZipStrings.CodePage == 1)
+                ICSharpCode.SharpZipLib.Zip.ZipStrings.CodePage = 437;
             MemoryStream outputMemStream = new MemoryStream();
             ZipOutputStream zipStream = new ZipOutputStream(outputMemStream);
 
@@ -2028,7 +2029,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             var newEntry = new ZipEntry(fileName + ".json");
             newEntry.DateTime = DateTime.Now;
-            ICSharpCode.SharpZipLib.Zip.ZipConstants.DefaultCodePage = 437;
+            ICSharpCode.SharpZipLib.Zip.ZipStrings.CodePage = 437;
 
             zipStream.PutNextEntry(newEntry);
 
