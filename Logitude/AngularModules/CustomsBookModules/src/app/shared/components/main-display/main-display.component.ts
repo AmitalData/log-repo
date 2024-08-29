@@ -78,7 +78,6 @@ export class MainDisplayComponent implements OnInit {
 			this.fullData = this.orderedData(result);
 			this.data = this.fullData;
 			this.searchMode = TableTopState.ViewAll;
-			this.isExpand.next(false);
 			this.isLoadingMode.next(false);
 		});
 
@@ -116,7 +115,6 @@ export class MainDisplayComponent implements OnInit {
 				// update list:
 				this.data = this.orderedDataForSearch(data);
 				this.searchToggleAllChildren(true); // expand all 
-				this.isExpand.next(true);
 
 				this.searchMode = TableTopState.Search;
 				this.searchValue = this.searchService.GetSearchText();
@@ -282,7 +280,6 @@ export class MainDisplayComponent implements OnInit {
 		this.countSearchResult = 0;
 		this.data = this.fullData;
 		this.searchToggleAllChildren(false);
-		this.isExpand.next(false);
 	}
 
 	public orderedDataForSearch = (data) => {
