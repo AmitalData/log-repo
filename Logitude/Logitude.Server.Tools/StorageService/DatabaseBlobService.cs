@@ -68,7 +68,10 @@ namespace Logitude.Server.Tools.StorageService
 
 
         }
-
+        public Dictionary<string, byte[]> ReadAllFilesInFolder(string containerName, string folderName)
+        {
+            throw new NotImplementedException();
+        }
         public void WriteBlock(byte[] buffer, long sentBytes, string[] blockIdsList, int bufferNumber, BlobFileInfo fileInfo)
         {
             if (fileInfo.UnifreightFillingUploadBlock(buffer))

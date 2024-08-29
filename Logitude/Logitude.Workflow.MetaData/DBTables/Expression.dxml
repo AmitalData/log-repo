@@ -35,7 +35,7 @@
   </Column>
   <Column
     Name="Description"
-    Type="varchar"
+    Type="nvarchar"
     Size="-1">
     <Constraints
       Nullable="true" />

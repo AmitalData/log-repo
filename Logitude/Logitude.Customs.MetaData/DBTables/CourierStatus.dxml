@@ -1,42 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="SchedulerProcedure"
-  Schema="dbo"
+  Name="CourierStatuses"
+  Schema="Customs"
   DBType="Main"
-  Module="Infrastructure">
+  Module="Customs">
   <Column
     Name="Code"
     Type="varchar"
-    Size="100">
+    Size="1">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
-    Name="Name"
-    Type="varchar"
-    Size="100">
+    Name="LocalName"
+    Type="nvarchar"
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="SearchFields"
-    Type="varchar"
-    Size="1000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Description"
     Type="nvarchar"
-    Size="2000">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="IsInternallyDefined"
+    Name="EnglishName"
+    Type="nvarchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Inactive"
     Type="bit">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
 </Table>

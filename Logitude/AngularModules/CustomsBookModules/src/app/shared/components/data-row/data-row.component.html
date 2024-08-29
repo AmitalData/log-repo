@@ -1,11 +1,12 @@
 <div class="mainTable_item" [ngClass]="{'selected': isSelected}">
-	<div class="mainTable_itemToggle" [class.active]="selected" (click)="expandClick()">
+	<div class="mainTable_itemToggle" [class.active]="data?.IsShowChildren" (click)="expandClick(data?.IsShowChildren)">
 		<button *ngIf="data?.children.length > 0">
 			<i role="img" aria-hidden="true"> <fa-icon [icon]="faArrowAltCircleLeft"></fa-icon> </i>
 		</button>
 	</div>
 	<div class="mainTable_itemName" (click)="showDetails.emit()" #dynamicDiv>
-		<a href="#" role="button" [ngClass]="{'selectedLink': isSelected}" [title]="data.CIH_GoodsDescription" (click)="$event.preventDefault()">
+		<a href="#" role="button" [ngClass]="{'selectedLink': isSelected}" [title]="data.CIH_GoodsDescription"
+			(click)="$event.preventDefault()">
 			<span class="full_classification" *ngIf="data?.CI_Parent_CustomsItemIDNum"
 				[innerHTML]="highlight(ClassificationNoDisplay(data,data?.FullClassification), searchItem)"
 				[title]="data.CIH_GoodsDescription">
@@ -16,8 +17,7 @@
 				[innerHTML]="highlight(data.CIH_GoodsDescription, searchItem)">
 				{{ data.CIH_GoodsDescription }}
 			</span>
-			<div
-				*ngIf="!isShowDetailsOpen && ( TariffListCount > 0 && data?.CI_Parent_CustomsItemIDNum && ClassificationNoDisplay(data,data?.FullClassification).length > 2 && state === 'search')"
+			<div *ngIf="!isShowDetailsOpen && ( TariffListCount > 0 && data?.CI_Parent_CustomsItemIDNum && ClassificationNoDisplay(data,data?.FullClassification).length > 2 && state === 'search')"
 				class="item_details">
 				<a> {{TariffListCount }} </a>
 				<a> {{ TariffList1?.CustomsRate }} </a>
@@ -28,7 +28,7 @@
 		</a>
 	</div>
 	<div></div>
-	<div class="mainTable_itemActions">
+	<div class="mainTable_itemActions" *ngIf="!this.showDetailsOpen.getValue()">
 		<ul>
 			<li>
 				<div class="mainTable_itemDocument">

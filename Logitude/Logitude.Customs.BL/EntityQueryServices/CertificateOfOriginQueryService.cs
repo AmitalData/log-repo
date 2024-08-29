@@ -10,6 +10,8 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Microsoft.Practices.Unity;
+using System.IO;
 
 
 
@@ -76,6 +78,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 certificateOfOriginPM = this.GetEntityPM(certificateOfOrigin, true, new CertificateOfOriginKeys { Id = certificateOfOrigin.Id });
             }
             return certificateOfOriginPM;
+        }
+
+        public Dictionary<string, byte[]> GetToolTipFromStorage()
+        {
+           
+            Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
+            Dictionary<string, byte[]> ArryByte = storageservice.ReadAllFilesInFolder("tenant0", "CertificateOfOrigin");
+			return ArryByte ;
         }
 
     }

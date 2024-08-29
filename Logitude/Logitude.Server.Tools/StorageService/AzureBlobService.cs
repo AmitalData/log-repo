@@ -47,6 +47,31 @@ namespace Logitude.Server.Tools.StorageService
             return result;
         }
 
+
+
+        public Dictionary<string, byte[]> ReadAllFilesInFolder(string containerName, string folderName)
+        {
+            Dictionary<string,byte[]> filesContent = new Dictionary<string, byte[]>();
+            CloudBlobContainer container = StorageAcountDetails.GetCurrentContainer(containerName);
+
+            BlobContinuationToken continuationToken = null;
+            do
+            {
+                var resultSegment = container.ListBlobsSegmented(folderName, true, BlobListingDetails.None, null, continuationToken, null, null);
+                continuationToken = resultSegment.ContinuationToken;
+
+                foreach (IListBlobItem item in resultSegment.Results)
+                {
+                    if (item is CloudBlockBlob blob)
+                    {
+                        byte[] fileContent = DownloadCloudBlob(blob);
+                        filesContent.Add(blob.Name, fileContent);
+                    }
+                }
+            } while (continuationToken != null);
+
+            return filesContent;
+        }
         private byte[] DownloadCloudBlob(CloudBlob blobfile)
         {
             byte[] result = null;

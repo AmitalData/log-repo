@@ -115,6 +115,7 @@
     <None Include="DBOthers\Procedures\usp_CB_AgreementLevelData.dxml" />
     <None Include="DBOthers\Procedures\usp_CB_RegularityRequirementData.dxml" />
     <None Include="DBOthers\Procedures\QueueEnqueue_succeedRequestsheets.dxml" />
+    <None Include="DBOthers\Procedures\usp_NEWCustomsBookMainViewSearchByClassification_OLD.dxml" />
     <None Include="DBOthers\Procedures\usp_NewCustomsBookMainViewSearchByText.dxml" />
     <None Include="DBOthers\Procedures\usp_NEWCustomsBookMainViewSearchByClassification.dxml" />
     <None Include="DBOthers\Procedures\Usp_DeleteCustomsRequestSheets.dxml" />
@@ -373,6 +374,7 @@
     <None Include="DBTables\ConverterType.dxml" />
     <None Include="DBTables\CoolingReportingMethod.dxml" />
     <None Include="DBTables\CountryCurrency.dxml" />
+    <None Include="DBTables\FreightForwarderReference.dxml" />
     <None Include="DBTables\NUnicloud.dxml" />
     <None Include="DBTables\CountryGroup.dxml" />
     <None Include="DBTables\CourierCustomStatus.dxml" />

@@ -139,6 +139,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>OldEntityDetailsGenerator.tt</DependentUpon>
     </Compile>
+    <Compile Include="AutoGeneratorsMetaData\OLDMetadataClassesGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OLDMetadataClassesGenerator.tt</DependentUpon>
+    </Compile>
     <Compile Include="AutoGeneratorsMetaData\RepsitoriesGenerator.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -281,6 +286,10 @@
     <Content Include="AutoGeneratorsMetaData\OldEntityDetailsGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>OldEntityDetailsGenerator.cs</LastGenOutput>
+    </Content>
+    <Content Include="AutoGeneratorsMetaData\OLDMetadataClassesGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>OLDMetadataClassesGenerator.cs</LastGenOutput>
     </Content>
     <Content Include="AutoGeneratorsMetaData\TypedScriptGenerators\EntityListGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

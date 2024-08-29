@@ -20,7 +20,6 @@ export class DataRowComponent implements OnInit {
 	@Output() showChildern: EventEmitter<boolean> = new EventEmitter<boolean>();
 	@Input() data: CB_CustomsItemComputedDataList;
 	@Input() isSelected?: boolean = true;
-	@Input() isExpand: BehaviorSubject<boolean>;
 
 	@Input() showTaxData: boolean = false;
 	@Input() showDetailsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -42,7 +41,6 @@ export class DataRowComponent implements OnInit {
 	constructor(private addCommentService: AddCommentService, private renderer: Renderer2, private API_MainService: API_MainService) { }
 
 	ngOnInit() {
-		this.listerUpdates();
 		this.getCustomsBookAgreementLevelData();
 	}
 
@@ -58,14 +56,8 @@ export class DataRowComponent implements OnInit {
 			this.TariffList1 = this.TariffListData.find(x => x.TradeAgreementName == 'מכס כללי');
 			this.TariffList2 = this.TariffListData.find(x => x.TradeAgreementName == 'מס קניה');
 			this.TariffListCount = this.TariffListData.filter(x => x.TradeAgreementName != 'מס קניה').length;
-  
-			this.contentWidth();
-		});
-	}
 
-	listerUpdates() {
-		this.isExpand.subscribe((value) => {
-			this.selected = value;
+			this.contentWidth();
 		});
 	}
 
@@ -77,9 +69,8 @@ export class DataRowComponent implements OnInit {
 		return text.replace(regex, `<mark>$1</mark>`);
 	}
 
-	expandClick() {
-		this.selected = !this.selected;
-		this.showChildern.emit(this.selected);
+	expandClick(isShowChildren: boolean) {
+		this.showChildern.emit(!isShowChildren);
 	}
 
 	showAddCommentSidebar(data: CB_CustomsItemComputedDataList) {
@@ -97,18 +88,6 @@ export class DataRowComponent implements OnInit {
 		}
 		return '';
 	}
-
-	// ClassificationNoDisplay(item, value): string {
-	// 	debugger
-	// 	if (item.IsLeaf) return value;
-	// 	const regex = /^(\d*[^0])\d*$/;
-	// 	const match = value.match(regex);
-	// 	if (match && match[1]) {
-	// 		return match[1];
-	// 	}
-	// 	return '';
-	// }
-
 
 	isShowDetailsOpen: boolean = false;
 	@ViewChild('dynamicDiv') dynamicDiv: ElementRef;
@@ -142,7 +121,7 @@ export class DataRowComponent implements OnInit {
 		let totalSpanWidth = (Array.from(spans).reduce((total: number, span) => total + (span as HTMLElement).offsetWidth, 0)) as number;
 		if (containerWidth - 100 < totalSpanWidth || this.data.CustomsItemID) {
 			let calculatedWidth = (containerWidth - 100) + "px";
-			let width = Math.min(parseInt(calculatedWidth), 40) + "%";
+			let width = Math.min(parseInt(calculatedWidth), 75) + "%";
 
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', width);
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'white-space', 'nowrap');

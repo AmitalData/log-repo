@@ -30,7 +30,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.VolumeUnitCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.OriginCode).IsRequired().HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.DestinationCode).IsRequired().HasMaxLength(3).IsUnicode(false);
-            this.Property(t => t.DescriptionOfGoods).HasMaxLength(512).IsUnicode(false);
+            this.Property(t => t.DescriptionOfGoods).HasMaxLength(1024).IsUnicode(true);
             this.Property(t => t.ShipperName).HasMaxLength(70).IsUnicode(false);
             this.Property(t => t.ConsigneeName).HasMaxLength(70).IsUnicode(false);
             this.Property(t => t.Flight1).HasMaxLength(15).IsUnicode(false);

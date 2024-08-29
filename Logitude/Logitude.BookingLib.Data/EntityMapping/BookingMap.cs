@@ -199,9 +199,9 @@ namespace Logitude.BookingLib.Data.EntityMapping
 
             this.Property(t => t.AWBCarrierTarrifReference).HasColumnName("AWBCarrierTarrifReference").HasMaxLength(25).IsUnicode(false);
 
-            this.Property(t => t.DescriptionOfGoods).HasColumnName("DescriptionOfGoods").HasMaxLength(512).IsUnicode(false);
+            this.Property(t => t.DescriptionOfGoods).HasColumnName("DescriptionOfGoods").HasMaxLength(1024).IsUnicode(true);
 
-            this.Property(t => t.Notes).HasColumnName("Notes").HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.Notes).HasColumnName("Notes").HasMaxLength(2000).IsUnicode(true);
 
             this.Property(t => t.SpecialServicesRequest).HasColumnName("SpecialServicesRequest").HasMaxLength(250).IsUnicode(false);
 
@@ -268,7 +268,7 @@ namespace Logitude.BookingLib.Data.EntityMapping
 
             this.Property(t => t.DangerousFlashPoint).HasColumnName("DangerousFlashPoint").HasMaxLength(8).IsUnicode(false);
 
-            this.Property(t => t.DangerousMaterialDescription).HasColumnName("DangerousMaterialDescription").HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.DangerousMaterialDescription).HasColumnName("DangerousMaterialDescription").HasMaxLength(200).IsUnicode(true);
 
             this.Property(t => t.MainHarmonize).HasColumnName("MainHarmonize").HasMaxLength(9).IsUnicode(false);
 
