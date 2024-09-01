@@ -40,7 +40,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Customs Document&quot;"
-  Code="&quot;1c81&quot;"
+  Code="&quot;1d6b&quot;"
   Name="&quot;Customs.CustomsDocument Query Group&quot;"
   GenerateDomainService="false"
   NoViewController="false"
@@ -2773,6 +2773,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;OcrId&quot;"
     ListPropertyPath="&quot;OcrId&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -2866,6 +2867,12 @@
       Code="&quot;Customs.CustomsDocument.O.CustomFile&quot;"
       DefaultText="&quot;Custom File&quot;"
       LocalDefaultText="&quot;תיק מכס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CustomsDocument.O.RequestedCustomsDocId&quot;"
+      DefaultText="&quot;The document already has a reference, should I create a new version and link to the required document? , yes / no (confirmation / cancellation)&quot;"
+      LocalDefaultText="&quot;למסמך קיים כבר סימוכין , האם ליצור גרסה חדשה ולקשר למסמך הנדרש ? , כן / לא  ( אישור / ביטול ) &quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
