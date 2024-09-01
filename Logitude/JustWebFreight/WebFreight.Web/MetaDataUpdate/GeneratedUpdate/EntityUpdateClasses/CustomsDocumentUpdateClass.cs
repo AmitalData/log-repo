@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsDocumentUpdateClass
    {  		
-		public const string HashString = "7cae0ab54dba0f513696dc89eafc9800";
+		public const string HashString = "b664c9676010f22dbea3abba53a840ba";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -132,7 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customs Document",
-			      				    Code =  "1c81",
+			      				    Code =  "1d6b",
 			      				    Name =  "Customs.CustomsDocument Query Group",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  false,
@@ -2448,6 +2448,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "OcrId",
 					  						ListPropertyPath =  "OcrId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2582,6 +2583,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsDocumentTextCode_CustomsCustomsDocumentOExportFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.O.ExportFile", DefaultText = "Export File",LocalDefaultText = @"תיק יצוא", ObjectTableId = CustomsDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsDocumentTextCode_CustomsCustomsDocumentOCustomFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.O.CustomFile", DefaultText = "Custom File",LocalDefaultText = @"תיק מכס", ObjectTableId = CustomsDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsDocumentTextCode_CustomsCustomsDocumentORequestedCustomsDocId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.O.RequestedCustomsDocId", DefaultText = "The document already has a reference, should I create a new version and link to the required document? , yes / no (confirmation / cancellation)",LocalDefaultText = @"למסמך קיים כבר סימוכין , האם ליצור גרסה חדשה ולקשר למסמך הנדרש ? , כן / לא  ( אישור / ביטול ) ", ObjectTableId = CustomsDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
