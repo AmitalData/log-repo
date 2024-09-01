@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsDocumentUpdateClass
    {  		
-		public const string HashString = "b664c9676010f22dbea3abba53a840ba";
+		public const string HashString = "47304dc6efafb5edf4ac13ad11005a94";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -132,7 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customs Document",
-			      				    Code =  "1d6b",
+			      				    Code =  "6e62",
 			      				    Name =  "Customs.CustomsDocument Query Group",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  false,
@@ -2584,7 +2584,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode CustomsDocumentTextCode_CustomsCustomsDocumentOCustomFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.O.CustomFile", DefaultText = "Custom File",LocalDefaultText = @"תיק מכס", ObjectTableId = CustomsDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode CustomsDocumentTextCode_CustomsCustomsDocumentORequestedCustomsDocId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.O.RequestedCustomsDocId", DefaultText = "The document already has a reference, should I create a new version and link to the required document? , yes / no (confirmation / cancellation)",LocalDefaultText = @"למסמך קיים כבר סימוכין , האם ליצור גרסה חדשה ולקשר למסמך הנדרש ? , כן / לא  ( אישור / ביטול ) ", ObjectTableId = CustomsDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomsDocumentTextCode_CustomsCustomsDocumentORequestedCustomsDocId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.O.RequestedCustomsDocId", DefaultText = "The document already has a reference, should I create a new version and link to the required document? , yes / no (confirmation / cancellation)",LocalDefaultText = @"למסמך קיים כבר סימוכין , האם ליצור גרסה חדשה ולקשר למסמך הנדרש ? ", ObjectTableId = CustomsDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
