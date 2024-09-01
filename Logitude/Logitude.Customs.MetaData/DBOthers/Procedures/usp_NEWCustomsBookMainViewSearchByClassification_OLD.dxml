@@ -1,8 +1,8 @@
-﻿<Procedure DBType="Main" Name="usp_NEWCustomsBookMainViewSearchByClassification" Schema="dbo" Module="Customs">
+﻿<Procedure DBType="Main" Name="usp_NEWCustomsBookMainViewSearchByClassification_OLD" Schema="dbo" Module="Customs">
   <SqlScript>
 	  <![CDATA[
 
---CREATE OR ALTER PROCEDURE [dbo].[usp_NEWCustomsBookMainViewSearchByClassification]
+--CREATE OR ALTER PROCEDURE [dbo].[usp_NEWCustomsBookMainViewSearchByClassification_OLD]
 --    @CustomsBookType VARCHAR(2),
 --    @FullClassification VARCHAR(13),
 --	@Tenant INT = 0
