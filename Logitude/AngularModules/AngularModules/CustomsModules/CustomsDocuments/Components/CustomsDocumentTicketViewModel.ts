@@ -616,6 +616,7 @@ export class CustomsDocumentTicketViewModel {
             });
         }*/
         if (!AppTool.IsNullOrEmpty(relatedDocumentViewModel.CustomDocument.CustomsDocId) && !AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId)) {
+            SessionLocator.SelectedSession.StopBusyIndicator();
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 400;
             confirmWindow.Height = 200;
