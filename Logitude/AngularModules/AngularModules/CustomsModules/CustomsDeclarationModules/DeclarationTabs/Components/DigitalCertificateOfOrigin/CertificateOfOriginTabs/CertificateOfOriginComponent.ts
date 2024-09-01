@@ -93,7 +93,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         this.isListenToChangeInCertificate(args.logWindow);
 
         this.InitMoreDataScreenValues();
-       
+        this.InitToolTipImages();
         this.BuildTabs();
         this.RunComponent();
         this.entityArgs.EntityPM = this.EntityPM;
