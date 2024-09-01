@@ -88,6 +88,7 @@ using WebFreight.Web.Services;
 using System.Threading.Tasks;
 using NLog;
 using System.Windows.Media;
+using Microsoft.Azure.Management.ResourceManager.Models;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -10928,7 +10929,8 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_DetailedVendor = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DetailedForVendors").FirstOrDefault();
             QueryFilterItem filterItem_DetailedJobs = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DetailedForJobs").FirstOrDefault();
             QueryFilterItem filterItem_DetailedFiles = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DetailedForFiles").FirstOrDefault();
-
+            QueryFilterItem filterItem_ChartOfAccountsTypeCodeList = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountsTypeCodeList").FirstOrDefault();
+            QueryFilterItem filterItem_ChartOfAccountsIdList = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountsIdList").FirstOrDefault();
 
             //ChartOfAccountId
             string ChartOfAccountId = null;
@@ -11077,6 +11079,28 @@ namespace WebFreight.Web.ReportsWebServices
 
                 }
             }
+
+            //ChartOfAccountsTypeCodeList
+            List<string> chartOfAccountsTypeCodeList = null;
+            if (filterItem_ChartOfAccountsTypeCodeList != null)
+            {
+                if (filterItem_ChartOfAccountsTypeCodeList.FieldValue != null)
+                {
+                    string fvalue = (string)filterItem_ChartOfAccountsTypeCodeList.FieldValue;
+                    if (!String.IsNullOrEmpty(fvalue)) chartOfAccountsTypeCodeList = fvalue.Split(',').ToList();
+                }
+            }
+
+            //ChartOfAccountsIdList
+            List<string> chartOfAccountsIdList = null;
+            if (filterItem_ChartOfAccountsIdList != null)
+            {
+                if (filterItem_ChartOfAccountsIdList.FieldValue != null)
+                {
+                    string fvalue = (string)filterItem_ChartOfAccountsIdList.FieldValue;
+                    if (!String.IsNullOrEmpty(fvalue)) chartOfAccountsIdList = fvalue.Split(',').ToList();
+                }
+            }
             #endregion
 
 
@@ -11167,6 +11191,11 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.Category4 = null;
                 trailReportParam.Category5 = null;
                 trailReportParam.MyTrailReportLevel = ReportLevel.ChartofaccountType;
+                if (level == "GLAccount")
+                {
+                    if (chartOfAccountsTypeCodeList != null && chartOfAccountsTypeCodeList.Count > 0) trailReportParam.ChartOfAccountsTypeCodeList = chartOfAccountsTypeCodeList;
+                    if (chartOfAccountsIdList != null && chartOfAccountsIdList.Count > 0) trailReportParam.ChartOfAccountsIdList = chartOfAccountsIdList;
+                }
                 var typeservice = TrailReportFactory.CreateNew(trailReportParam);
                 List<TrailReportM> res1;
                 try
@@ -11259,6 +11288,11 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.Category3 = null;
                 trailReportParam.Category4 = null;
                 trailReportParam.Category5 = null;
+                if (level == "GLAccount")
+                {
+                    if (chartOfAccountsTypeCodeList != null && chartOfAccountsTypeCodeList.Count > 0) trailReportParam.ChartOfAccountsTypeCodeList = chartOfAccountsTypeCodeList;
+                    if (chartOfAccountsIdList != null && chartOfAccountsIdList.Count > 0) trailReportParam.ChartOfAccountsIdList = chartOfAccountsIdList;
+                }
                 trailReportParam.MyTrailReportLevel = ReportLevel.Chartofaccount;
                 var service = TrailReportFactory.CreateNew(trailReportParam);
                 List<TrailReportM> res;
@@ -11761,6 +11795,8 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.Category3 = category3;
                 trailReportParam.Category4 = category4;
                 trailReportParam.Category5 = category5;
+                if (chartOfAccountsTypeCodeList != null && chartOfAccountsTypeCodeList.Count > 0) trailReportParam.ChartOfAccountsTypeCodeList = chartOfAccountsTypeCodeList;
+                if (chartOfAccountsIdList != null && chartOfAccountsIdList.Count > 0) trailReportParam.ChartOfAccountsIdList = chartOfAccountsIdList;
                 trailReportParam.MyTrailReportLevel = ReportLevel.GLAccount;
                 trailReportParam.Suppress_ControlAccount = true;
                 trailReportParam.Suppress_DoNotShowCardWithoutActivity = false; // may it be 'true' sometimes? 
