@@ -5,8 +5,13 @@
 
   <Oracle Version="1">
     <![CDATA[
-      ALTER TABLE "CERTIFICATEOFORIGINMANDATORYS"
-		  DROP COLUMN "ISMANDATORY";
+    
+     BEGIN
+        EXECUTE IMMEDIATE 
+        'ALTER TABLE "CERTIFICATEOFORIGINMANDATORYS"
+         DROP COLUMN "ISMANDATORY"';
+      END;
+      
   ]]>
   </Oracle>
 </Script>
