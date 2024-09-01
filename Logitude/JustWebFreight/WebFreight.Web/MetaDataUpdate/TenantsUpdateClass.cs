@@ -756,6 +756,8 @@ namespace WebFreight.Web.MetaDataUpdate
 
             }
 
+ 
+
             AzureLog.SaveLogsInStorage(message, "L", DateTime.Now, "", "", 0, null, null, null);
 
             try
