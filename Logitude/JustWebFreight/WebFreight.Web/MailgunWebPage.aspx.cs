@@ -46,15 +46,55 @@ namespace WebFreight.Web
         InboundEmailGeneralHelperMethods helper;
         string jasonMailgun = "", attachs = "";
 
+
+        private string LogForOrit()
+        {
+            var retval = string.Empty;
+            try
+            {
+                using (var reader = new StreamReader(Request.InputStream))
+                {
+                    retval = reader.ReadToEnd();
+                }
+
+                string folderpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data");
+                if (!Directory.Exists(folderpath))
+                {
+                    Directory.CreateDirectory(folderpath);
+                }
+
+
+                var sb = new StringBuilder();
+                Request.Headers.AllKeys.ToList().ForEach(k => sb.AppendLine($"{k} : {Request.Headers[k]}"));
+                sb.AppendLine("Request.Files count : " + Request.Files?.Count.ToString());
+
+                string filename = Guid.NewGuid().ToString();
+                File.WriteAllText($"{folderpath}\\ORITLOG_BODY_{filename}.log", retval);
+                File.WriteAllText($"{folderpath}\\ORITLOG_HEADERS_{filename}.log", sb.ToString());
+                File.WriteAllText($"{folderpath}\\ORITLOG_QUERYSTR_{filename}.log", Request.Url.OriginalString);
+
+            }
+
+            catch (Exception ex)
+            {
+
+            }
+
+            return retval;
+
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            string reqStreamString = LogForOrit();
+
             try
             {
                 string values = "";
-                using (var reader = new StreamReader(Request.InputStream))
-                {
-                    values = reader.ReadToEnd();
-                }
+                //using (var reader = new StreamReader(Request.InputStream))
+                //{
+                //    values = reader.ReadToEnd();
+                //}
 
                 if (!string.IsNullOrEmpty(values))
                 {
