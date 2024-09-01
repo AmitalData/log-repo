@@ -38,6 +38,8 @@ export class MainDisplayComponent implements OnInit {
 	@Input() itemsData: BehaviorSubject<CB_CustomsItemComputedDataList[]>;
 	@Input() isLoadingMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	showDetails: boolean = false;
+	showCommentsIsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
 	showAddComment: boolean = false;
 	showCommentSidebar: boolean = false;
 	// childrenToDesplay: number[] = [];
@@ -127,6 +129,10 @@ export class MainDisplayComponent implements OnInit {
 		});
 	}
 
+	showCommentsOpen(isOpenComment: boolean) {
+		this.showCommentsIsOpen.next(isOpenComment);
+	}
+
 	onToggleAll(event: Event, item: CB_CustomsItemComputedDataList): void {
 		const checked = (event.target as HTMLInputElement)?.checked;
 		this.toggleVisibility(checked, item.children);
@@ -206,13 +212,14 @@ export class MainDisplayComponent implements OnInit {
 	updateShowDetailsClick() {
 		this.showDetails = !this.showDetails;
 		this.showDetailsOpen.next(this.showDetails);
+		if (!this.showDetails) this.showCommentsIsOpen.next(false);
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes['showDetails']) {
 			this.showDetails = changes['showDetails'].currentValue;
 			this.showDetailsOpen.next(this.showDetails);
-
+			if (!this.showDetails) this.showCommentsIsOpen.next(false);
 		}
 		if (changes['itemsData']) {
 			this.itemsData = changes['itemsData'].currentValue;
@@ -274,7 +281,7 @@ export class MainDisplayComponent implements OnInit {
 		this.selectedItemId = null;
 		this.showDetails = false;
 		this.showDetailsOpen.next(this.showDetails);
-
+		this.showCommentsIsOpen.next(false);
 		this.data = [];
 		this.searchValue = "";
 		this.countSearchResult = 0;

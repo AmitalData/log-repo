@@ -42,5 +42,23 @@ export class CommentsComponent implements OnInit, OnChanges {
 
     }
   }
+  showMenuOpen: boolean = false;
+  showMenu() {
+    this.showMenuOpen = !this.showMenuOpen;
+  }
+
+  editComment(event: any) {
+    
+    this.addCommentService.setIsOpened(true, this.currentItem);
+    console.log('edit comment');
+    event.preventDefault();
+  }
+  // add event.preventDefault();
+  
+  deleteComment(event: any) {
+    
+    event.preventDefault();
+    console.log('delete comment');
+  }
 }
 

@@ -5,8 +5,9 @@ import { faStar, faCommentDots, faSquareCaretRight, faFileText } from '@fortawes
 import { AddCommentService } from '../add-comment/service/add-comment.service';
 import { NgIf, NgClass } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
-import { CB_CustomsItemComputedDataList, CB_TariffList } from '../main-display/main-display.component';
+import { CB_CustomsItemComputedDataList, CB_TariffList, RemarksClassificationList } from '../main-display/main-display.component';
 import { API_MainService } from '../../../core/API_MainService';
+import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 
 @Component({
 	selector: 'app-data-row',
@@ -16,6 +17,7 @@ import { API_MainService } from '../../../core/API_MainService';
 	styleUrl: './data-row.component.css',
 })
 export class DataRowComponent implements OnInit {
+	@Output() showCommentsOpen: EventEmitter<boolean> = new EventEmitter<boolean>();
 	@Output() showDetails: EventEmitter<boolean> = new EventEmitter<boolean>();
 	@Output() showChildern: EventEmitter<boolean> = new EventEmitter<boolean>();
 	@Input() data: CB_CustomsItemComputedDataList;
@@ -42,6 +44,9 @@ export class DataRowComponent implements OnInit {
 
 	ngOnInit() {
 		this.getCustomsBookAgreementLevelData();
+		// this.addCommentService.allComments.subscribe(() => {
+		// });
+		this.showCommentsByClick();
 	}
 
 	TariffList1: CB_TariffList;
@@ -56,9 +61,9 @@ export class DataRowComponent implements OnInit {
 			this.TariffList1 = this.TariffListData.find(x => x.TradeAgreementName == 'מכס כללי');
 			this.TariffList2 = this.TariffListData.find(x => x.TradeAgreementName == 'מס קניה');
 			this.TariffListCount = this.TariffListData.filter(x => x.TradeAgreementName != 'מס קניה').length;
-
 			this.contentWidth();
 		});
+
 	}
 
 	highlight(text: string, search: string): string {
@@ -127,6 +132,25 @@ export class DataRowComponent implements OnInit {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'white-space', 'nowrap');
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'text-overflow', 'ellipsis');
 		}
+	}
+
+	showComments: boolean = false;
+
+	countOfComments: number;
+	showCommentsByClick() {
+		this.API_MainService.GetAllCommentsByCustomsItemId(this.data.CustomsItemID, SessionInfo.LoggedUserTenant).subscribe((data: any) => {
+			const result: RemarksClassificationList[] = data.body;
+
+			if (!result) return; // TODO: add error message
+
+			this.countOfComments = result?.length > 0 ? result.length : 0;
+			this.addCommentService.allComments.next(result);
+		});
+	}
+
+	showCommentsClick() {
+		this.showComments = !this.showComments;
+		this.showCommentsOpen.emit(true);
 	}
 }
 

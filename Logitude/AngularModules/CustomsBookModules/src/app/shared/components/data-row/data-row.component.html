@@ -40,11 +40,22 @@
 					<a class="icon"><i role="img" class="icon-popup"></i> </a>
 				</div>
 			</li> -->
-			<li>
-				<div class="mainTable_itemComment" (click)="showAddCommentSidebar(data)">
-					<a class="icon"> <i role="img" class="icon-comment_plus"></i></a>
+			<li *ngIf="countOfComments > 0; else newComment">
+				<div class="mainTable_itemComment" (click)="showCommentsClick()" (click)="showDetails.emit()">
+					<a class="icon" aria-expanded="true">
+						<i role="img"
+							[ngClass]="{'icon-comment': !isSelected, 'icon-comment_full': isSelected}"></i>
+					</a>
+					<span class="countOfComments">{{ countOfComments }}</span>
 				</div>
 			</li>
+			<ng-template #newComment>
+				<li>
+					<div class="mainTable_itemComment" (click)="showAddCommentSidebar(data)">
+						<a class="icon"> <i role="img" class="icon-comment_plus"></i></a>
+					</div>
+				</li>
+			</ng-template>
 			<!-- <li>
 				<div class="mainTable_itemStarred" (click)="checked = !checked">
 					<a class="icon"><i role="img" [class]="checked ? ' icon-star_full' : 'icon-star'"> </i></a>
