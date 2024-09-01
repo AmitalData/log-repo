@@ -1663,7 +1663,16 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
             supplierInvoiceItem.ItemCode = invoiceItem?.ItemNo;
             supplierInvoiceItem.ItemDescription = invoiceItem?.ItemDescription;
-            supplierInvoiceItem.ClassificationCode = invoiceItem.ItemHScode;
+
+			if (!string.IsNullOrEmpty(invoiceItem.ItemHScode))
+			{
+                SupplierInvoiceItemQueryService supplierInvoiceItemQueryService = new SupplierInvoiceItemQueryService(_context);
+                var validate = supplierInvoiceItemQueryService.ValidateClassificationCode(invoiceItem.ItemHScode);
+				if (validate != null)
+				{
+                    supplierInvoiceItem.ClassificationCode = validate;
+                }
+            }
             decimal invoiceQuantity;
             if (decimal.TryParse(invoiceItem.ItemQuantity, out invoiceQuantity))
             {

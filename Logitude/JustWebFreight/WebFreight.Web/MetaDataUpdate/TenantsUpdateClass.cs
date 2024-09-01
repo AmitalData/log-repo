@@ -52,6 +52,7 @@ using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel;
 using WebFreight.Web.Helpers.AutomationModel;
 using Microsoft.VisualStudio.Services.Common;
+using Simplog.Global.Data.GlobalModel.Helpers;
 using WebFreight.Web.Helpers.QuoteTemplate;
 using Logitude.BL.CommonDataModel.ExternalService;
 using MetadataUpdateUtility = WebFreight.Web.Helpers.MetadataUpdateUtility;
@@ -325,6 +326,7 @@ namespace WebFreight.Web.MetaDataUpdate
                                 UpdateQuoteModule(context, true);
                                 break;
                             }
+            
                         case "invoice":
                             {
                                 UpdateInvoiceModule(context, true);
@@ -712,8 +714,51 @@ namespace WebFreight.Web.MetaDataUpdate
 
         }
 
-        private static void UpdateCustomsRelatedModels(IWebFreightContext context)
+        static string RunGitCommand(string arguments)
         {
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.FileName = "git";
+            startInfo.Arguments = arguments;
+            startInfo.RedirectStandardOutput = true;
+            startInfo.UseShellExecute = false;
+            startInfo.CreateNoWindow = true;
+
+            using (Process process = Process.Start(startInfo))
+            {
+                using (var reader = process.StandardOutput)
+                {
+                    return reader.ReadToEnd();
+                }
+           }
+        }
+        static string GetCurrentGitBranch()
+        {
+            string output = RunGitCommand("rev-parse --abbrev-ref HEAD");
+            return output.Trim();
+        }
+        static string GetCurrentGitUser()
+        {
+            string output = RunGitCommand("config user.name");
+            return output.Trim();
+        }//
+       private static void UpdateCustomsRelatedModels(IWebFreightContext context)
+        {
+            string message = "";
+            try
+            {
+                string user = GetCurrentGitUser();
+                string branch = GetCurrentGitBranch();
+                message = $"Starting Customs Related Modules Update from machine: {Environment.MachineName} by {user} into branch: {branch}";
+
+            }
+            catch (Exception)
+            {
+
+            }
+
+            WriteLogMessage(message);
+            AzureLog.SaveLogsInStorage(message, "L", DateTime.Now, "", "", 0, null, null, null);
+
             try
             {
                 NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Starting Customs Related Modules Update ...");
@@ -832,6 +877,22 @@ namespace WebFreight.Web.MetaDataUpdate
                 updateClass.FillMamanSpecialActionTable();
                 updateClass.FillMamanSpecialActionStatusTable();
                 updateClass.FillCourierPendingReasonTable();
+            updateClass.FillContainerizationStatusCodeTable();
+            updateClass.FillAmedmentTypeTable();
+            updateClass.FillCustomsDocumentUploadTable();
+           
+            updateClass.FillPointerLevel();
+
+           
+            updateClass.FillStorageStatusTable();
+
+            updateClass.FillPhysicalCheckCode();
+            updateClass.FillToggle();
+            updateClass.FillFacilitationType();
+            updateClass.FillContainerizationHataraStatus();
+            updateClass.FillOcrStatusTable();
+
+
             }
             catch (Exception ex)
             {
@@ -885,6 +946,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Dictionary<string, Measurement> tenantZeroMeasurements = TenantZeroMeasurements;
                 Dictionary<string, Measurement> currentTenantMeasurements = measurementsRepository.GetMeasurementsByTenant(tenant).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
                 Dictionary<string, EntityStatus> tenantZeroEntityStatus = TenantZeroEntityStatus;
+
                 Dictionary<string, EntityStatus> currentTenantEntityStatus = entityStatusRepository.GetEntityStatusByTenant(tenant).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
 
                 Dictionary<string, EventType> tenantZeroEventTypes;
@@ -1148,8 +1210,7 @@ namespace WebFreight.Web.MetaDataUpdate
             }
 
         }
-
-        private static void UpdateShipmentAndMasterModules(IWebFreightContext context, bool runPostDeleteProcedure)
+         private static void UpdateShipmentAndMasterModules(IWebFreightContext context, bool runPostDeleteProcedure)
         {
             try
             {
@@ -1683,12 +1744,13 @@ namespace WebFreight.Web.MetaDataUpdate
 
         }
         private static void ForCourier()
-        {
+        {            
             try
             {
                 GlobalDBRepository globalDbRep = new GlobalDBRepository();
                 var db = globalDbRep.GetGlobalDBs().First();
                 var commonDataContext = new CommonDataContext(DatabaseInitializer.GetConnection(db.DBConnection));
+
                 MetaDataUpdateClass.CustomsInterfaces(commonDataContext);//courier
                                                                          //
             }
@@ -1831,9 +1893,11 @@ namespace WebFreight.Web.MetaDataUpdate
 
                 foreach (ObjectTable objectTable in ObjectTableList)
                 {
+                    if(objectTable.DBTableName == "CustomerTenantAccessStatusTypes")
+                    {
+                    }
                     if (objectTable.DBTableName == "ShipmentStoragePricings")
                     {
-
                     }
                     // if(objectTable.HashString == )
                     List<ObjectFieldPM> fieldsList = objectFieldLists.Where(d => d.ObjectTableId == objectTable.Id).ToList();
@@ -1890,6 +1954,9 @@ namespace WebFreight.Web.MetaDataUpdate
 
                 foreach (ObjectTable objectTable in ObjectTableList)//Where(d => d.IsClosed == false && d.IsComposition == false)// 
                 {
+                    if (objectTable.DBTableName.Contains("LeadDocumentType"))
+                    {
+                    }
                     List<string> tableNames = new List<string>();
                     Dictionary<string, byte[]> dataList = new Dictionary<string, byte[]>();
                     //Object Field
@@ -2906,6 +2973,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             continue;
                     }
 
+
                 if (currentTenantEntityStatus.Keys.Contains(entityStatus.Code + entityStatus.ObjectTableId))
                     {
                         //EntityStatus updatedEntityStatus = currentTenantEntityStatus[entityStatus.Code];
@@ -2966,6 +3034,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
                     if (tenantZeroEntityStatu != null)
                     {
+
 					if (currentTenantEntityStatus.Keys.Contains(tenantZeroEntityStatu.Code + tenantZeroEntityStatu.ObjectTableId))
 						currentTenantEntityStatu = currentTenantEntityStatus[tenantZeroEntityStatu.Code+ tenantZeroEntityStatu.ObjectTableId];
                     }
