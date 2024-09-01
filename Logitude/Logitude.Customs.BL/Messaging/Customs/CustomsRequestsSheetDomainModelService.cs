@@ -585,13 +585,13 @@ namespace Logitude.Customs.BL.Messaging.Customs
             //}
 
             //im+eitan : in worker role no need to check 
-            if (Environment.CommandLine.ToLower().Contains("AmitalCustomsWindowsService.exe".ToLower())  && RequestParams.InterfaceTypeCode!="8235" && RequestParams.InterfaceTypeCode != "2751" && RequestParams.InterfaceTypeCode != "2755E")
-            {
-                //2715 build from  UCBUD2LT --if (RequestParams.InterfaceTypeCode == "UCBUD2LT")
-                {
-                    return;
-                }
-            }
+            //if (Environment.CommandLine.ToLower().Contains("AmitalCustomsWindowsService.exe".ToLower())  && RequestParams.InterfaceTypeCode!="8235" && RequestParams.InterfaceTypeCode != "2751" && RequestParams.InterfaceTypeCode != "2755E")
+            //{
+            //    //2715 build from  UCBUD2LT --if (RequestParams.InterfaceTypeCode == "UCBUD2LT")
+            //    {
+            //        return;
+            //    }
+            //}
 
             if (!SignQueue.Instance.IsPasiveSignMode())
             {
