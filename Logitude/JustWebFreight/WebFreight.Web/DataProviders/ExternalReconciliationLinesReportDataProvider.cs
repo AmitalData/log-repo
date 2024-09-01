@@ -41,6 +41,8 @@ namespace WebFreight.Web.DataProviders
         public string Ref1 { get; set; }
         public string Ref2 { get; set; }
         public DateTime? ReferenceDate {get;set;}
+        public DateTime? AcoouningDate { get; set; }
+
         public string BankAccountId { get; set; }
         public bool IsDuplicated { get; set; }
         public string ExternalPageLineId { get; set; }

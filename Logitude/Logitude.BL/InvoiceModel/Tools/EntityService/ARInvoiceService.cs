@@ -290,10 +290,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             ARInvoiceValidator.Validate(entityPM, this.invoice, this.objectContext, this.myCommonContext, this.isNewEntity);
             ARInvoiceTracing.Trace(entityPM, invoice, isNewEntity, loggedContactId);
-            if (entityPM.ARInvoiceTypeCode == "IT")
-            {
-                UpdateInterestReportStatus(entityPM,"8");
-            }
+            
                 if (entityPM.IsConsolidationInvoice)
             {
                 this.UpdateConsolidationLines();
@@ -366,9 +363,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (entityPM.InvoiceEntities != null && entityPM.InvoiceEntities.Count > 0) logtext += ", Interest Report Id" + entityPM.InvoiceEntities[0].EntityId;
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(stacklines));
+               if (CheckIfReportConnectedToInvoice(entityPM))
+                {
+                    UpdateInterestReportStatus(entityPM, "2");
 
-
-                this.UpdateInterestReportFields(entityPM);
+                    invoiceRepository.Remove(invoice);
+                    invoiceRepository.SubmitChanges();
+                    return;
+                }
+                    
+               this.UpdateInterestReportFields(entityPM);
                 this.UpdateInterestReportsConnectedInvoice(entityPM);
             }
 
@@ -377,7 +381,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
 
         }
+        private bool CheckIfReportConnectedToInvoice(ARInvoicePM theEntityPM)
+        {
 
+            IInterestReportsConnectedInvoiceUpdateServiceExt InterestReportsConnectedInvoiceUpdate = ContainerAccessor.Container.Resolve(typeof(IInterestReportsConnectedInvoiceUpdateServiceExt), "InterestReportsConnectedInvoiceUpdateServiceExt", new ParameterOverride("", 1)) as IInterestReportsConnectedInvoiceUpdateServiceExt;
+            return  InterestReportsConnectedInvoiceUpdate.CheckInterestReportsConnected(theEntityPM.InvoiceEntities[0].EntityId, tenant, null);
+
+        }
         private void InitializeSalesmanField()
         {
             if (this.isNewEntity)

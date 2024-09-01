@@ -48,7 +48,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
         private Dictionary<string, AnalyticsFactsMetaData> GetAnalyticsFactsMetaDatasFromDataBase()
         {
-            return DashboardContext.AnalyticsFactsMetaDatas.AsNoTracking().ToDictionary(d => d.Name, a => a);
+            return DashboardContext.AnalyticsFactsMetaDatas.AsNoTracking().GroupBy(d => d.Name).ToDictionary(g => g.Key, a => a.FirstOrDefault());
         }
 
         private void UpdateAnalyticsFactsMetaData(Logitude.DashboardModule.MetaDataTool.Models.AnalyticsFactsMetaData jsonTable, AnalyticsFactsMetaData sqlTable)
@@ -64,7 +64,7 @@ namespace WebFreight.Web.MetaDataUpdate
             table.SearchFields = BuildTableFieldSearchField(table);
             AnalyticsFactsMetaDataRepository.Update(table);
 
-            var sqlFields = DashboardContext.AnalyticsFactsFieldsMetaDatas.AsNoTracking().Where(e=>e.AnalyticsFactsMetaDataId == table.Id).ToDictionary(d => d.FieldCode, a => a);
+            var sqlFields = DashboardContext.AnalyticsFactsFieldsMetaDatas.AsNoTracking().Where(e=>e.AnalyticsFactsMetaDataId == table.Id).GroupBy(d => d.FieldCode).ToDictionary(g => g.Key, a => a.FirstOrDefault());
             foreach (var jsonField in jsonTable.AnalyticsFactsFieldsMetaDatas)
             {
                 UpdateField(jsonField, sqlFields.ContainsKey(jsonField.FieldCode) ? sqlFields[jsonField.FieldCode] : null, table.Id);
@@ -75,7 +75,7 @@ namespace WebFreight.Web.MetaDataUpdate
         private void RemoveDeletedFields(List<Logitude.DashboardModule.MetaDataTool.Models.FieldModels.AnalyticsFactsFieldsMetaData> analyticsFactsFieldsMetaDatas, Dictionary<string, AnalyticsFactsFieldsMetaData> sqlFields)
         {
 
-            var fieldDictionary = analyticsFactsFieldsMetaDatas.ToDictionary(d => d.FieldCode, a => a);
+            var fieldDictionary = analyticsFactsFieldsMetaDatas.GroupBy(d => d.FieldCode).ToDictionary(g => g.Key, a => a.FirstOrDefault());
             foreach (var item in sqlFields)
             {
                 if (!fieldDictionary.ContainsKey(item.Key)) AnalyticsFactsFieldsMetaDataRepository.Remove(item.Value);
