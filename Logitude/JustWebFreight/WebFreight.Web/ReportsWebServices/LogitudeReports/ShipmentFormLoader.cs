@@ -70,6 +70,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                             .Include("UserId").Include("UserId.Contact") // for ReferentUserId
                                             .Include("CustomerCard")
                                             .Include("Department")
+                                            .Include("FreightForwarderCard")
+
+                             join s in context.ShipmentPickUpDeliveries.Include("CarrierCard")
+                                on a.Id equals s.ShipmentId into shipmentPickUpDelivery
+                                from spd in shipmentPickUpDelivery.DefaultIfEmpty().Take(1)
+
                                 where a.Tenant == tenant
                                 select new
                                 {
@@ -78,11 +84,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                     a.House,
                                     a.NumberOfPackages,
                                     a.GrossWeight,
-                                    a.FreightForwarderId,
+                                    FreightForwarderName = a.FreightForwarderCard != null ? a.FreightForwarderCard.LocalName : null,
                                     a.IskaNumber,
-                                    CustomerName = a.CustomerCard != null ? a.CustomerCard.LocalName: null,
+                                    a.DescriptionOfGoods,
+                                    CustomerName = a.CustomerCard != null ? a.CustomerCard.Code + " " + a.CustomerCard.LocalName : null,
                                     ReferantUserName = a.UserId != null && a.UserId.Contact != null? a.UserId.Contact.LocalName: null,
                                     DepartmentName = a.Department != null? a.Department.LocalName : null,
+                                    CarrierName = spd.CarrierCard != null ? spd.CarrierCard.LocalName : null,
                                 });
 
             var shipmentData = shipments.Where(x => x.Id == shipmentId).FirstOrDefault();
@@ -104,22 +112,24 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                 House = shipmentData.House,
                 NumberOfPackages = shipmentData.NumberOfPackages,
                 GrossWeight = shipmentData.GrossWeight,
-                FreightForwarderId = shipmentData.FreightForwarderId,
+                FreightForwarderName = shipmentData.FreightForwarderName,
+                DescriptionOfGoods = shipmentData.DescriptionOfGoods,
+                CarrierName = shipmentData.CarrierName,
             };
 
             // get declaration and referant data by shipment number
             if (!string.IsNullOrEmpty(shipmentData.ShipmentNumber))
             {
                 DeclarationQueryService declarationQueryService = new DeclarationQueryService(tenant);
-                DeclarationPM declarationPM = declarationQueryService.GetSingleByCustomFileNo(shipmentData.ShipmentNumber, tenant);
-
-                shipmentFormProvider.DescriptionOfGoods = declarationPM?.CargoDescription;
+                string declarationId = declarationQueryService.GetIdByCustomFileNo(shipmentData.ShipmentNumber, tenant);
+                DeclarationPM declarationPM = declarationQueryService.GetSingle(declarationId, true, true);
                 shipmentFormProvider.DeclarationOfficeName = declarationPM?.DeclarationOfficeName;
+                shipmentFormProvider.VendorName = declarationPM.SupplierInvoices.Find(a => a.IsPrimarySupplierInvoice)?.VendorName;
 
                 if (declarationPM != null)
                 {
                     DeclarationReferantDataQueryService declarationReferantDataQueryService = new DeclarationReferantDataQueryService(tenant);
-                    DeclarationReferantDataPM declarationReferantDataPM = declarationReferantDataQueryService.GetSingle(declarationPM.Id, true, true);
+                    DeclarationReferantDataPM declarationReferantDataPM = declarationReferantDataQueryService.GetSingle(declarationPM.Id, false, true);
                     shipmentFormProvider.Mawb = declarationReferantDataPM?.Mawb;
                     shipmentFormProvider.EstimatedArrivalDate = declarationReferantDataPM?.EstimatedArrivalDate;
 
@@ -147,14 +157,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                 NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"missing ShipmentNumber from shipment: {shipmentId}");
             }
 
-            // get shipment references
+            // get first shipment reference of type ORD
             ShipmentReferanceQuery shipmentReferanceQuery = new ShipmentReferanceQuery(tenant);
-            shipmentFormProvider.ShipmentReferances = shipmentReferanceQuery.GetShipmentReferances(shipmentId, tenant).Select(x => new DataProviders.ShipmentReferance
-            {
-                LineNumber = x.LineNumber,
-                ReferanceType = x.ReferenceType,
-                ReferanceValue = x.ReferenceValue,
-            }).ToList();
+            shipmentFormProvider.ReferanceValue = shipmentReferanceQuery.GetShipmentReferances(shipmentId, tenant)
+                .Where(s => s.ReferenceType == "ORD")
+                .OrderBy(s => s.LineNumber)
+                .Select(s => s.ReferenceValue).FirstOrDefault();
 
             dataProvider = shipmentFormProvider;
 
