@@ -157,9 +157,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //CustomFileCreditRequestParams requestParamsCredit = (CustomFileCreditRequestParams)serializer.Deserialize(memorystream);
             GenericResponse responseData = new GenericResponse();
 
-            var setting = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
-            if (setting.IsConnectedToUniFreight)
-            {
+       
                 //try
                 //{
                     var myCustomsAGTService = new CustomsAGTService(requestParams, customResponse.MasavSentDate.masavSentDate, this.MyResponseData);
@@ -202,7 +200,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this.MyResponseData.UserMessage = this.MyResponseData.UserMessage + Environment.NewLine + e.ToString();
                     throw e;
                 }*/
-            }
+           
             // moran 1.11.15 - Task 16978 <--
 
             this.MyRequestSheetParam = new RequestSheetParam();

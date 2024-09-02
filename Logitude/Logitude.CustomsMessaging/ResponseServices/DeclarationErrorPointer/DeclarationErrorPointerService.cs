@@ -565,7 +565,7 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
                 };
 
                 LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent: eventCode = " + eventCode + " CustomFileNo= " + _MyDeclarationPM.CustomFileNo + "   ");
-                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, true);
+                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, true,isExport: true);
 
             }
             catch (System.Exception)

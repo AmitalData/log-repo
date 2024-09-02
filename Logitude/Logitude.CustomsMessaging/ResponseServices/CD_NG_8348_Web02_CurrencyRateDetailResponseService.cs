@@ -49,16 +49,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
 
-
-            var setting = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
-            if (setting != null)
-            {
-                if (setting.IsConnectedToUniFreight)
-                {
-                    //Send the Table to Unifreight in order to update GRTRATE
-                    SendUpdateTableToUnifreight("GRTRATE", customResponse.CurrencyRateList.ToList(), requestParams.Tenant);
-                }
-            }
+       
+            //Send the Table to Unifreight in order to update GRTRATE
+            SendUpdateTableToUnifreight("GRTRATE", customResponse.CurrencyRateList.ToList(), requestParams.Tenant);            
         }
 
         private void UpdateCustomsExchangeRate(CD_NG_8348_Web02_CurrencyRateDetailCurrencyRateList customsExchangeRateItem, int tenant)

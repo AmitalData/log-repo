@@ -412,14 +412,11 @@ MoreParams:blockdata ~{1}~
             )
         {
             var mySetting = Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(curTenant);
-            if (pForceSendUnfConnection)
+            if (pForceSendUnfConnection)//יתקים רק בעדכון טבלאות מכס מתוך הרשימה
             {
                 if (String.IsNullOrWhiteSpace(mySetting.UnfConnectionString)) return null;
             }
-            else if (!mySetting.IsConnectedToUniFreight)
-            {
-                return null;
-            }
+          
 
             bool immediately = false;
             var myAmitalCommunicationModel = new AmitalCommunicationModelBase(

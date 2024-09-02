@@ -43,35 +43,27 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 additional.SearchFields = entityPM.Code + ','+ entityPM.EnglishName + ',' + entityPM.LocalName;
 
                 additionalRep.Add(additional);
-            }
-            var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
-            if (setting != null)
+            }  
+            if (HttpContextUtil.IsCustomDomainService())
             {
-                if (setting.IsConnectedToUniFreight)
+                var newTABLEDATA = new TABLEDATA()
                 {
-                    if (HttpContextUtil.IsCustomDomainService())
-                    {
-                        var newTABLEDATA = new TABLEDATA()
-                        {
-                            TABLEDATA_ID = entityPM.Code,
-                            TABLEDATA_NAME_ENG = entityPM.EnglishName,
-                            TABLEDATA_NAME_HEB = entityPM.LocalName,
-                            TABLEDATA_ADDITIONALCODE1 = entityPM.TransportModeId,
-                            TABLEDATA_BLOCKED = entityPM.Inactive == true ? "T": "F",
-                            //TABLEDATA_REMARKS = (recMehes.updateDate.HasValue ? recMehes.updateDate.Value.ToString() : "")
-                        };
+                    TABLEDATA_ID = entityPM.Code,
+                    TABLEDATA_NAME_ENG = entityPM.EnglishName,
+                    TABLEDATA_NAME_HEB = entityPM.LocalName,
+                    TABLEDATA_ADDITIONALCODE1 = entityPM.TransportModeId,
+                    TABLEDATA_BLOCKED = entityPM.Inactive == true ? "T": "F",
+                    //TABLEDATA_REMARKS = (recMehes.updateDate.HasValue ? recMehes.updateDate.Value.ToString() : "")
+                };
 
-                        var myCUSTOMS_TABLE = new CUSTOMS_TABLE();
-                        myCUSTOMS_TABLE.TABLECODE = new TABLECODE[] { new TABLECODE { TABLECODE_ID = "2011" } }; ;
-                        var myTABLEDATAList = new List<TABLEDATA>();
-                        myTABLEDATAList.Add(newTABLEDATA);
-                        myCUSTOMS_TABLE.TABLECODE[0].TABLEDATA = myTABLEDATAList.ToArray();
-               
-                        UServerCommunication.SendUpdateTableToUnifreight(entityPM.Tenant, "2011", myCUSTOMS_TABLE);
-                    }
-                }
-            }
+                var myCUSTOMS_TABLE = new CUSTOMS_TABLE();
+                myCUSTOMS_TABLE.TABLECODE = new TABLECODE[] { new TABLECODE { TABLECODE_ID = "2011" } }; ;
+                var myTABLEDATAList = new List<TABLEDATA>();
+                myTABLEDATAList.Add(newTABLEDATA);
+                myCUSTOMS_TABLE.TABLECODE[0].TABLEDATA = myTABLEDATAList.ToArray();
             
+                UServerCommunication.SendUpdateTableToUnifreight(entityPM.Tenant, "2011", myCUSTOMS_TABLE);
+            }          
         }
 
         private static void ForceDefault(CustomsHouseTypePM entityPM, CustomsHouseTypeAdditional additional)
