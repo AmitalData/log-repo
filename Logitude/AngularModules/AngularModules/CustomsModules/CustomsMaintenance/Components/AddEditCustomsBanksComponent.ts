@@ -11,22 +11,18 @@ import { ObservableCollection } from '../../../Infrastructure/Utilities/Observab
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
-
-
 import { CustomBankPM } from '../../../Customs/EntityPMs/CustomBankPM';
 import { CustomBanksCardPM } from '../../../Customs/EntityPMs/CustomBanksCardPM';
-
 import { CustomBankPMService } from '../../../Customs/Services/StandardPMs/CustomBankPMService';
 import { CustomBankList } from '../../../Customs/EntityLists/CustomBankList';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
-
 import { AmitalAPIRequestsComponent } from 'InfrastructureModules/InfrastructureOthers/AmitalAPI/AmitalAPIRequestsComponent';
 import { CustomBankCardExtendedPMService } from '../../../Customs/Services/ExtendedPMs/CustomBankCardExtendedPMService';
 
 import { CardListService } from 'Common/Services/StandardLists/CardListService';
-import { Session } from 'inspector';
-
-
+// import { CustomsBranchListService } from 'Customs/Services/StandardLists/CustomsBranchListService';
+import { CardPMService } from 'Common/Services/StandardPMs/CardPMService';
+// import { CardPM } from 'Common/EntityPMs/CardPM';
 
 
 @Component({
@@ -40,17 +36,17 @@ export class AddEditCustomsBanksComponent extends BaseComponent {
     public DataContext: any = this;
     public ObjectTableName: string = "Customs.CustomBank";
     public EntityPM: CustomBankPM;
-    private _isNew: boolean = true;
     isWindowMode: boolean = true;
     ValidationErrorsList: any[] = [];
     CustomBankPMService: CustomBankPMService = new CustomBankPMService();
-    private CustomBankListService = new CustomBankPMService();
+    public CustomBankListService = new CustomBankPMService();
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     CustomBankList: CustomBankList;
     private CurrentSession = SessionLocator.SelectedSession;
     public AmitalAPIRequestsComponent: AmitalAPIRequestsComponent = new AmitalAPIRequestsComponent();
     CustomBankCardExtendedPMService: CustomBankCardExtendedPMService = new CustomBankCardExtendedPMService();
     CustomBankCardItems = new ObservableCollection([]);
+    cardPMService: CardPMService = new CardPMService();
     cardTempData: any = {};
 
     constructor(public entityArgs: EntityArgs) {
@@ -62,11 +58,6 @@ export class AddEditCustomsBanksComponent extends BaseComponent {
         }
     }
 
-
-    ngOnInit() {
-        this._isNew = true;
-    }
-
     SetWindowArgs(_WindowArgs) {
 
         this._entityResourceService.getEntityResourceByTableName("Customs.CustomBank").subscribe((response: any) => {
@@ -76,8 +67,6 @@ export class AddEditCustomsBanksComponent extends BaseComponent {
                 (_WindowArgs)
                 .subscribe((rsp: any) => {
 
-                    this._isNew = false;
-
                     Object.keys(rsp.Result).forEach((key) => {
                         this.EntityPM[key] = rsp.Result[key];
                     });
@@ -86,15 +75,16 @@ export class AddEditCustomsBanksComponent extends BaseComponent {
 
                     if (this.EntityPM.CustomBanksCards.length > 0) {
                         this.EntityPM.CustomBanksCards.forEach((card, index) => {
-                     
+
                             let filters = new ApiQueryFilters(true);
                             filters.addAdditionalFilter('Id', card.CardId, null, null, "InListExact", false, false, false, "string");
 
-                            new CardListService().getByFilters(filters).subscribe((response: any) => {
 
+                            new CardListService().getByFilters(filters).subscribe((response: any) => {
                                 this.cardTempData[card.CardId] = response.Result[0]?.Code;
-                                this.EntityPM.CustomBanksCards[index].CardName = response.Result[0]?.LocalName || response.Result[0].EnglishName || "";
-                        
+                                this.EntityPM.CustomBanksCards[index].CardName ? this.EntityPM.CustomBanksCards[index].CardName : response.Result[0]?.LocalName || response.Result[0]?.LocalName || response.Result[0].EnglishName || "";
+                                this.EntityPM.CustomBanksCards[index].EntityParentPM = null;
+
                             },
                             );
                         });
@@ -103,44 +93,49 @@ export class AddEditCustomsBanksComponent extends BaseComponent {
                     this.CurrentSession.StopBusyIndicator();
                 });
         })
+
+        this.DataContext = this.EntityPM;
     }
 
     onInputChange(event, ObjectFieldName) {
 
-        console.log(this.CustomBankCardItems)
+        if (event === null) return;
 
-        if (ObjectFieldName == "BankCode") {
+        if (ObjectFieldName === "BankCode") {
             this.EntityPM.LocalName = event?.LocalName || null;
             this.EntityPM.EnglishName = event?.EnglishName || null;
             this.EntityPM.BankCode = event?.Code;
             return;
         }
+        if (ObjectFieldName === "BranchCode") {
+            this.EntityPM.BranchCode = event.Code;
+            this.EntityPM.CustomsBranchId = event.Id;
+            this.EntityPM.BranchName = event.LocalName;
+            return;
+        }
 
         this.EntityPM[ObjectFieldName] = event;
+
     }
+
 
     onCardChange(event, item, ObjectFieldName) {
 
-        console.log(event , item, ObjectFieldName)
-        
         this.EntityPM.CustomBanksCards[this.EntityPM.CustomBanksCards.indexOf(item)][ObjectFieldName] = event;
- 
-        this._isNew = true;
     }
-
 
     OkButtonClicked() {
         var errors = [];
-        // Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
         if (errors.length > 0) {
             this.ValidationErrorsList = [];
             this.ValidationErrorsList = errors;
         } else {
-            if (this._isNew) {
-                this.CustomBankPMService.insert(this.EntityPM).subscribe((myResult: any) => {
 
-                    var mm: ServiceResponse = myResult;
+            if (this.CustomBankPMService.get(this.EntityPM.Id) == null) {
+                this.CustomBankPMService.insert(this.EntityPM).subscribe((myResult: any) => {
+                    let mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
                         this.CurrentSession.CloseCurrentWindowEmit("ok");
                     }
@@ -154,7 +149,7 @@ export class AddEditCustomsBanksComponent extends BaseComponent {
 
                 this.CustomBankPMService.update(this.EntityPM).subscribe((myResult: any) => {
 
-                    var mm: ServiceResponse = myResult;
+                    let mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
                         this.CurrentSession.CloseCurrentWindowEmit("ok");
                     }
@@ -163,49 +158,47 @@ export class AddEditCustomsBanksComponent extends BaseComponent {
                         this.CurrentSession.StopBusyIndicator();
                     }
                 });
+            }
 
+            if (this.CustomBankCardItems.Length > 0) {
+
+                this.EntityPM.CustomBanksCards = this.CustomBankCardItems.Collection;
+                this.EntityPM.CustomBanksCards.forEach((card: CustomBanksCardPM) => {
+                    this.EntityPM.AddCustomBanksCard(card);
+                });
             }
         }
-
-        // if(this.CustomBankCardItems.Length > 0){
-        //     this.EntityPM.CustomBanksCards = this.CustomBankCardItems.Collection;
-        //     this.EntityPM.CustomBanksCards.forEach((card, index) => {
-        //         this.CustomBankCardExtendedPMService.setCustomBanksCard(card).subscribe((response: any) => {
-        //             this.CurrentSession.StopBusyIndicator();
-        //     });
-        //     });
-        // }
     }
+
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
 
     public AddBankCardLine() {
-        var line = new CustomBanksCardPM(this.EntityPM);
-        // this.EntityPM.AddCustomBanksCard(line);
+        let line = new CustomBanksCardPM(this.EntityPM);
+        line.CustomBankId = this.EntityPM.Id;
+        line.CustomsBankName = this.EntityPM.LocalName;
+        line.CustomBankId = this.EntityPM.Id;
+
         this.CustomBankCardItems.Insert(line);
-        // var item = new CustomBanksCardPM(line);
-        var index = this.customBanksCards.indexOf(line);
+        let index = this.customBanksCards.indexOf(line);
+
         if (index == -1) {
             line.EntityParentPM = this;
             this.EntityPM.CustomBanksCards.push(line);
-
         }
-        this._isNew = true;
-
     }
 
 
     public AddCustomerCard(card: CustomBanksCardPM) {
         if (card != null) {
-            var index = this.customBanksCards.indexOf(card);
+            let index = this.customBanksCards.indexOf(card);
             if (index == -1) {
                 card.EntityParentPM = this;
                 this.EntityPM.CustomBanksCards.push(card);
             }
         }
-        this._isNew = true;
     }
 
     public RemoveBankCardLine(card: CustomBanksCardPM) {
@@ -215,12 +208,11 @@ export class AddEditCustomsBanksComponent extends BaseComponent {
             if (_ConfirmWindow.Yes) {
                 if (card != null) {
                     this.CustomBankCardItems.RemoveFromIndex(this.CustomBankCardItems.GetIndex(card));
-                    var index = this.customBanksCards.indexOf(card);
+                    let index = this.customBanksCards.indexOf(card);
                     if (index > -1) {
                         this.customBanksCards.splice(index, 1)
                     }
                 }
-                this._isNew = true;
             }
         });
         window.focus();

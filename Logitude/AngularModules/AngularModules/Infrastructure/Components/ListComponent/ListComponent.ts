@@ -2813,7 +2813,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     logWindow.ShowFooterButtons = false;
                     logWindow.Height = 600;
                     logWindow.Width = 475;
-                    logWindow.Title = 'פתיחת בנק';
+                    logWindow.Title = 'הוספת בנק';
                     logWindow.WindowArgs = selectedEntityId;
                     logWindow.Show('./CustomsModules/CustomsMaintenance/Components/AddEditCustomsBanksComponent')
                     logWindow.WindowClosed.subscribe(($event1: any) => {
@@ -4873,7 +4873,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                 case 'Customs.CustomBank': {
                     logWindow.Height = 600;
                     logWindow.Width = 475;
-                    logWindow.Title = 'פתיחת בנק';
+                    logWindow.Title = 'הוספת בנק';
                     logWindow.ShowCloseButton = true;
                     break;
                 }
@@ -5084,7 +5084,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                 str = 'Add Default And Configuration';
             }
             if(this.ObjectTableName == 'Customs.CustomBank'){
-                str = 'פתיחת בנק';
+                str = 'הוספת בנק';
             }
                 
 

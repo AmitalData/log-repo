@@ -1,8 +1,8 @@
 <style>
-    *{
+    * {
         user-select: none
     }
- 
+
     .subTitle {
         color: #1b90cb;
         font-size: 15px;
@@ -45,11 +45,9 @@
             <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
         </td>
     </tr>
-
-    <!-- Filters Fields-->
     <tr>
-        <td colspan="10" style="">
-            <table style="table-layout: fixed; user-select: none ; " *ngIf="EntityPM" >
+        <td colspan="10">
+            <table style="table-layout: fixed; user-select: none ; " *ngIf="EntityPM">
                 <tr style="height: 20px;">
                     <td style="width: 130px;"></td>
                     <td style="width: 170px;"></td>
@@ -62,8 +60,8 @@
                     </td>
                     <td>
                         <LogTextBox [ObjectFieldName]="'InternalCode'" [ObjectTableName]="ObjectTableName"
-                            [Placeholder]="this.EntityPM.InternalCode || ''" [DataContext]="DataContext"
-                            [HideColumns]="true" (ValueChanged)="onInputChange($event, 'InternalCode')"></LogTextBox>
+                            [Text]="this.EntityPM.InternalCode " [DataContext]="DataContext" [HideColumns]="true"
+                            (ValueChanged)="onInputChange($event, 'InternalCode')"></LogTextBox>
                     </td>
                     <td></td>
                 </tr>
@@ -75,7 +73,8 @@
                     <td>
                         <LogLov [ObjectFieldName]="'BankCode'" [ObjectTableName]="ObjectTableName"
                             [DataContext]="DataContext" [LookUpTableName]="'Customs.Bank'" [HideColumns]="true"
-                            [SelectedValue]="'this.EntityPM.BankCode'"
+                            [SelectedValuePath]="'Code'" [SelectedValue]="this.EntityPM.BankCode"
+                            [PlaceHolder]="this.EntityPM.BankName"
                             (SelectedItemChanged)="onInputChange($event ,'BankCode')">
                         </LogLov>
                     </td>
@@ -88,11 +87,10 @@
                     </td>
                     <td>
                         <LogLov [ObjectFieldName]="'BranchCode'" [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext" [LookUpTableName]="'Customs.CustomsBranch'"
-                            [DependencyFilter1Value]="this.EntityPM.BankCode" [HideColumns]="true"
-                            [SelectedItemObject]="this.EntityPM.BranchCode"
-                            [SelectedValue]="'0'"
-                            (SelectedItemChanged)="onInputChange($event?.Id,'BranchCode')">
+                            [DataContext]="DataContext" [LookUpTableName]="'Customs.CustomsBranch'" [HideColumns]="true"
+                            [DependencyFilter1Value]="this.EntityPM.BankCode" [SelectedValue]="this.EntityPM.BranchCode"
+                            [SelectedValuePath]="'Code'" [PlaceHolder]="this.EntityPM.BranchName"
+                            (SelectedItemChanged)="onInputChange($event ,'BranchCode')">
                         </LogLov>
                     </td>
                     <td></td>
@@ -104,9 +102,8 @@
                     </td>
                     <td>
                         <LogTextBox [ObjectFieldName]="'AccountNumber'" [ObjectTableName]="ObjectTableName"
-                            [Placeholder]="this.EntityPM.AccountNumber || ''" [DataContext]="DataContext"
-                            [HideColumns]="true" [InputType]="'nText'"
-                            (ValueChanged)="onInputChange($event,'AccountNumber')"></LogTextBox>
+                            [DataContext]="DataContext" [Text]="this.EntityPM.AccountNumber" [HideColumns]="true"
+                            [InputType]="'nText'" (ValueChanged)="onInputChange($event,'AccountNumber')"></LogTextBox>
                     </td>
                     <td></td>
                 </tr>
@@ -117,9 +114,8 @@
                     </td>
                     <td>
                         <LogTextBox [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName "
-                            [Placeholder]="this.EntityPM.LocalName || ''" [DataContext]="DataContext"
-                            [HideColumns]="true" [InputType]="'nText'"
-                            (ValueChanged)="onInputChange($event ,'LocalName')"></LogTextBox>
+                            [Text]="this.EntityPM.LocalName " [DataContext]="DataContext" [HideColumns]="true"
+                            [InputType]="'nText'" (ValueChanged)="onInputChange($event ,'LocalName')"></LogTextBox>
                     </td>
                     <td></td>
                 </tr>
@@ -130,11 +126,9 @@
                     </td>
                     <td>
                         <LogTextBox [ObjectFieldName]="'EnglishName'" [ObjectTableName]="ObjectTableName "
-                            [Placeholder]="this.EntityPM.EnglishName || ''" [DataContext]="DataContext"
-                            [HideColumns]="true" [InputType]="'Text'"
-                            (ValueChanged)="onInputChange($event ,'EnglishName')"></LogTextBox>
+                            [Text]="this.EntityPM.EnglishName " [DataContext]="DataContext" [HideColumns]="true"
+                            [InputType]="'Text'" (ValueChanged)="onInputChange($event ,'EnglishName')"></LogTextBox>
                     </td>
-
                     <td></td>
                 </tr>
                 <tr class="FormFieldRow">
@@ -144,12 +138,10 @@
                     </td>
                     <td>
                         <LogTextBox [ObjectFieldName]="'BankAddress'" [ObjectTableName]="ObjectTableName "
-                            [Placeholder]="this.EntityPM.BankAddress || ''" [DataContext]="DataContext"
-                            [HideColumns]="true" [InputType]="'nText'"
-                            (ValueChanged)="onInputChange($event ,'BankAddress')"></LogTextBox>
+                            [Text]="this.EntityPM.BankAddress " [DataContext]="DataContext" [HideColumns]="true"
+                            [InputType]="'nText'" (ValueChanged)="onInputChange($event ,'BankAddress')"></LogTextBox>
                     </td>
                     <td></td>
-
                 </tr>
                 <tr class="FormFieldRow">
                     <td>
@@ -159,14 +151,12 @@
                     <td>
                         <LogLov [ObjectFieldName]="'PayerTypeCode'" [ObjectTableName]="ObjectTableName"
                             [DataContext]="DataContext" [LookUpTableName]="'Customs.CustomerActivityType'"
-                            [HideColumns]="true" [UseDefaultPosition]="true"
-                            [SelectedValue]="this.EntityPM.PayerTypeCode"
+                            [HideColumns]="true" [SelectedValue]="this.EntityPM.PayerTypeCode"
+                            [PlaceHolder]="this.EntityPM.PayerTypeName" [SelectedValuePath]="'Code'"
                             (ValueChanged)="onInputChange($event ,'PayerTypeCode')">
                         </LogLov>
                     </td>
-
                     <td></td>
-
                 </tr>
                 <tr class="FormFieldRow">
                     <!-- InActive -->
@@ -191,16 +181,13 @@
                             </IconButton>
                         </td>
                     </tr>
-
                     <!-- Edit Grid -->
                     <tr>
                         <td colspan="3" style="height: 100%;">
                             <div class="CellContent">
-                                                                                    
-                               
-                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [Disabled]="this.EntityPM.PayerTypeCode === '3'"
-                                    [ItemSource]="CustomBankCardItems" [Disabled]="this.EntityPM.PayerTypeCode === '3'">
-
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                                    [Disabled]="this.EntityPM.PayerTypeCode === '3'" [ItemSource]="CustomBankCardItems"
+                                    [Disabled]="this.EntityPM.PayerTypeCode === '3'">
                                     <log-column
                                         [header]="('Customs.CustomBank.O.CustomerNumber' | TextCodeTranslationPipe) || 'מספר לקוח'"
                                         [width]="'200'" [Alignment]="'right'" [binding]="'ItemSerial'">
@@ -214,9 +201,7 @@
                                                     <LogTextBox [ObjectFieldName]="'Code'" [ObjectTableName]="'Card'"
                                                         [DataContext]="DataContext"
                                                         (ValueChanged)="onCardChange($event,item, 'Code')"
-                                                        [HideColumns]="true"
-                                                        [InputType]="'nText'"
-                                                        >
+                                                        [HideColumns]="true" [InputType]="'nText'">
                                                     </LogTextBox>
                                                 </div>
                                             </log-cell-template>
@@ -235,7 +220,7 @@
                                                     <LogTextBox [ObjectFieldName]="'LocalName'"
                                                         [ObjectTableName]="'Card'" [DataContext]="item"
                                                         [HideColumns]="true"
-                                                        (ValueChanged)="onCardChange($event,item, 'LocalName')"
+                                                        (ValueChanged)="onCardChange($event,item, 'CardName')"
                                                         [InputType]="'nText'">
                                                     </LogTextBox>
                                                 </div>

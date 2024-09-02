@@ -43,8 +43,8 @@ import { GLAccountExtendedListService } from 'Accounting/Services/ExtendedLists/
 import { CardExtendedPMService } from 'Common/Services/ExtendedPMs/CardExtendedPMService';
 
 @Component({
+    
     selector: 'LogLov',
-
     templateUrl: './LogLovV2Component.html',
     providers: [EntityListService, ServiceArgs, EntityResourceService],
     inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', 'LookUpTableName', 'DisplayMemberPath', 'SelectedValuePath', 'IsDisabled',
@@ -242,6 +242,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             });
         });
     }
+
 
     GetTableName(): string {
         var tablename = this.GetObjectTableName(this.LookUpTableName);
@@ -1404,6 +1405,10 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     OnSelected(item: any) {
+
+        console.log(this.SelectedValue)
+        console.log(this.SelectedValuePath)
+        
         this.isSelectedFromList = true;
         this.SelectedItem = item;
         var value = this.DataContext[this.ObjectFieldName];
@@ -2419,6 +2424,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             //this.IsDropDownVisible = false;
             //this.IsOpen = false;
         }
+        console.log(this.SelectedValue)
+        console.log(this.SelectedValuePath)
     }
 
     ValidateField(emitPropertyChanged: boolean = true) {
