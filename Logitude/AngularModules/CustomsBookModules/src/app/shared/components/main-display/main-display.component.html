@@ -7,7 +7,7 @@
 					(clearResults)="handleClearResultsClick()" (filterClick)="filtersSearchClick($event)"
 					[countSearchResult]="countSearchResult" [searchMode]="searchMode" />
 
-				<div class="loadingBox" *ngIf="data?.length == 0 && this.searchMode == 'search'; else loading">
+				<div class="loadingBox" *ngIf="data?.length == 0 && this.searchMode == 'search' && !isLoading; else loading">
 					<span>לא נמצאות תוצאות לחיפוש</span>
 				</div>
 				<ng-template #loading>
