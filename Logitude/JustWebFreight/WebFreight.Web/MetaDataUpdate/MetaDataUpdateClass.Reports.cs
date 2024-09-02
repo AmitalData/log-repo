@@ -14,7 +14,7 @@ namespace WebFreight.Web.MetaDataUpdate
         public void LoadDefaultReports()
         {
             ReportGroupRepository reportGroupRepository = new ReportGroupRepository(0);
-            Dictionary<string, ReportGroup> TenantReportGroups = reportGroupRepository.GetReportGroups(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, ReportGroup> TenantReportGroups = reportGroupRepository.GetReportGroups(0).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
 
             ReportGroup statisticsGroup = AddReports.AddReportGroup(new ReportGroupDetails() { Code = "RSTA", EnglishName = "Statistics", LocalName = "Statistics", Tenant = 0, OrderNumber = 0 }, reportGroupRepository, TenantReportGroups);
             ReportGroup operationalGroup = AddReports.AddReportGroup(new ReportGroupDetails() { Code = "ROPR", EnglishName = "Operational", LocalName = "Operational", Tenant = 0, OrderNumber = 1 }, reportGroupRepository, TenantReportGroups);
@@ -31,7 +31,7 @@ namespace WebFreight.Web.MetaDataUpdate
             List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
 
             ReportRepository reportRepository = new ReportRepository(0);
-            Dictionary<string, Report> TenantReports = reportRepository.GetReports(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, Report> TenantReports = reportRepository.GetReports(0).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
 
             // Statistics Reports
             this.LoadReports_Statistics(statisticsGroup, tenantFeatures, reportRepository, TenantReports);

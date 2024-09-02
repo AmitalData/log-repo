@@ -20,7 +20,7 @@ namespace WebFreight.Web.MetaDataUpdate
             EntityStatusRepository = new EntityStatusRepository(ObjectContext);
             EventTypeRepository = new EventTypeRepository(ObjectContext);
             List<EntityStatus> tenantEntityStatus = EntityStatusRepository.GetEntityStatusByTenant(0).ToList();
-            Dictionary<string, EventType> tenantEventTypes = EventTypeRepository.GetEventTypesByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+            Dictionary<string, EventType> tenantEventTypes = EventTypeRepository.GetEventTypesByTenant(0).GroupBy(d => d.Code+d.ObjectTableId).ToDictionary(g => g.Key, a => a.FirstOrDefault());
 
             #region objecrtTables
             ObjectTablePM shipmentObject = ObjectTableQuery.GetObjectTableByCode("Shipment", 0);
