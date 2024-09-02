@@ -179,6 +179,45 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
+    [HttpPost]
+
+    public HttpResponseMessage DeleteRemarksClassification(RemarksClassificationPM entityPM)
+    {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string logKey = PerformanceLogger.LogCurrentTime();
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+
+                        ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
+                        RemarksClassificationUpdateService service = new RemarksClassificationUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
+                        service.Update(entityPM, true);
+
+                        scope.Complete();
+                        PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
         public HttpResponseMessage GetAllCommentsByCustomsItemId(int customsItemId, int tenant)
         {
             try

@@ -33,6 +33,16 @@ export class API_MainService extends BaseService {
 		return this.Post(url, data);
 	}
 
+	EditRemarksClassification(data) {
+		const url = `${this._apiUrl}CB_CustomsItemExtended/EditRemarksClassification`;
+		return this.Post(url, data);
+  }
+
+	DeleteRemarksClassification(data) {
+		const url = `${this._apiUrl}CB_CustomsItemExtended/DeleteRemarksClassification`;
+		return this.Post(url, data);
+	}
+	
 	GetCustomsBookMainView(filters: Filters) {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomsBookMainView?customsBookType=${filters.CustomsBookType}&Tenant=${filters.Tenant ? filters.Tenant : 0}`;
 		return this.Get(url);

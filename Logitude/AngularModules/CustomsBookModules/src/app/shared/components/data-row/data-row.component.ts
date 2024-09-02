@@ -44,9 +44,9 @@ export class DataRowComponent implements OnInit {
 
 	ngOnInit() {
 		this.getCustomsBookAgreementLevelData();
-		// this.addCommentService.allComments.subscribe(() => {
-		// });
-		this.showCommentsByClick();
+		this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {
+			this.showCommentsByClick();
+		});
 	}
 
 	TariffList1: CB_TariffList;
@@ -144,7 +144,6 @@ export class DataRowComponent implements OnInit {
 			if (!result) return; // TODO: add error message
 
 			this.countOfComments = result?.length > 0 ? result.length : 0;
-			this.addCommentService.allComments.next(result);
 		});
 	}
 

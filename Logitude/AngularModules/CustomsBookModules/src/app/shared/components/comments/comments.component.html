@@ -20,9 +20,9 @@
                         <i role="img" aria-hidden="true" class="icon-dots"></i></a>
                     <div class="commentOptions_pop" *ngIf="showMenuOpen">
                         <ul style="padding: 5px;">
-                            <li><a href="#" role="button" (click)="editComment($event)" ><i role="img" aria-hidden="true"
+                            <li><a href="#" role="button" (click)="editComment($event,comment)" ><i role="img" aria-hidden="true"
                                         class="icon-pencil"></i><span>עריכה</span></a></li>
-                            <li><a href="#" role="button" (click)="deleteComment($event)"><i role="img" aria-hidden="true"
+                            <li><a href="#" role="button" (click)="deleteComment($event, comment)"><i role="img" aria-hidden="true"
                                         class="icon-trash"></i><span>מחיקה</span></a></li>
                         </ul>
                         <div class="commentOptions_trapFocus" (click)="$event.preventDefault()" ><a href="#" role="button">חזור לתחילת הפאנל</a></div>
