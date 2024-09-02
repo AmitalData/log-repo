@@ -27,6 +27,7 @@ using System.Linq;
 using System.IO;
 using WebFreight.Web.DataProviders;
 using Logitude.BL.ShipmentsModel.EntityPMs;
+using static WebFreight.Web.Helpers.ReportHelper;
 
 namespace WebFreight.Web.Stimulsoft
 {
@@ -119,8 +120,9 @@ namespace WebFreight.Web.Stimulsoft
                     }
                     #endregion
 
-                LogitudeStiWebDesigner.Report = report;
+                    ReFillBusinessObjects(report.Dictionary.BusinessObjects, processType, tenant, reportTemplateId);
 
+                    LogitudeStiWebDesigner.Report = report;
                 }
                 
    
@@ -141,6 +143,60 @@ namespace WebFreight.Web.Stimulsoft
             }
         }
 
+        private void ReFillBusinessObjects(StiBusinessObjectsCollection bo, string processType, int tenant, string reportTemplateId)
+        {
+            if (processType == "ReportPreview" || bo == null || tenant == null || string.IsNullOrEmpty(reportTemplateId))
+                return;
+            
+            ReportsTemplatesVersionQuery reportsTemplatesVersionQuery = new ReportsTemplatesVersionQuery(tenant);
+            ReportsTemplatesVersionPM reportsTemplatesVersionPM = reportsTemplatesVersionQuery.GetLastReportsTemplatesVersionPMByReportsTemplateId(reportTemplateId, tenant);
+            if(reportsTemplatesVersionPM == null)
+                return;
+
+            string code = new ReportQuery(tenant).GetReportCodeById(reportsTemplatesVersionPM.ReportId, tenant);
+            if (string.IsNullOrEmpty(code))
+                return;
+            
+            ReportHelper reportHelper = new ReportHelper();
+            new List<ISlvLeaf>();
+            string dpName = reportHelper.GetDataProviderName(code);
+            if (string.IsNullOrEmpty(dpName))
+                return;
+
+            List<ISlvLeaf> variablesList = reportHelper.GetPropertyNames(dpName, new List<ISlvLeaf>());
+            StiBusinessObject businessObject = null;
+
+            if (bo.Count == 0)
+            {
+                string dpNameLastPart = dpName.Substring(dpName.LastIndexOf('.') + 1);
+                businessObject = new StiBusinessObject(code, dpNameLastPart, dpNameLastPart, Guid.NewGuid().ToString("N"));
+                bo.Add(businessObject);
+            }
+            else
+                businessObject = bo[0];
+            
+            CreateBusinessObject(businessObject, variablesList);
+        }   
+
+        private void CreateBusinessObject(StiBusinessObject businessObject, List<ISlvLeaf> variablesList)
+        {
+            variablesList.ForEach(variable =>
+            {
+                if (variable.expanded)
+                {
+                    if (businessObject.BusinessObjects.ToList().Any(child => child.Name == variable.content))
+                        return;
+
+                    var child = new StiBusinessObject("", variable.content, variable.content, Guid.NewGuid().ToString("N"));
+                    businessObject.BusinessObjects.Add(child);
+                    CreateBusinessObject(child, variable.children);
+                }
+                else if (businessObject.Columns.ToList().Any(col => col.Name == variable.content))
+                    return;
+                else
+                    businessObject.Columns.Add(new StiDataColumn(variable.content, variable.type));
+            });            
+        }
 
         public bool ByteArrayToFile(string fileName, byte[] byteArray)
         {
