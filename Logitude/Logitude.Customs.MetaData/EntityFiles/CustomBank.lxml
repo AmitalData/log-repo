@@ -1669,48 +1669,83 @@
       <QueryColumn
         QueryCode="&quot;CustomBanks&quot;"
         IndexOrder="0"
-        ObjectFieldName="&quot;InternalCode&quot;"
-        ColumnWidth="130" />
+        ObjectFieldName="&quot;Id&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CustomBanks&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;BankName&quot;"
-        ColumnWidth="130" />
+        ObjectFieldName="&quot;Tenant&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CustomBanks&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;BranchName&quot;"
-        ColumnWidth="130" />
+        ObjectFieldName="&quot;InternalCode&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CustomBanks&quot;"
         IndexOrder="3"
-        ObjectFieldName="&quot;AccountNumber&quot;"
-        ColumnWidth="130" />
+        ObjectFieldName="&quot;BankCode&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CustomBanks&quot;"
         IndexOrder="4"
-        ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="130" />
+        ObjectFieldName="&quot;BranchCode&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CustomBanks&quot;"
         IndexOrder="5"
-        ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="130" />
+        ObjectFieldName="&quot;AccountNumber&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CustomBanks&quot;"
         IndexOrder="6"
-        ObjectFieldName="&quot;PayerTypeName&quot;"
-        ColumnWidth="130" />
+        ObjectFieldName="&quot;LocalName&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CustomBanks&quot;"
         IndexOrder="7"
-        ObjectFieldName="&quot;BankAddress&quot;"
-        ColumnWidth="130" />
+        ObjectFieldName="&quot;EnglishName&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CustomBanks&quot;"
         IndexOrder="8"
+        ObjectFieldName="&quot;InActive&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CustomBanks&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;PayerTypeCode&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CustomBanks&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;BankAddress&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CustomBanks&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;PayerTypeName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CustomBanks&quot;"
+        IndexOrder="12"
         ObjectFieldName="&quot;ClientBank&quot;"
-        ColumnWidth="130" />
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CustomBanks&quot;"
+        IndexOrder="13"
+        ObjectFieldName="&quot;BankName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CustomBanks&quot;"
+        IndexOrder="14"
+        ObjectFieldName="&quot;BranchName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CustomBanks&quot;"
+        IndexOrder="15"
+        ObjectFieldName="&quot;Name&quot;"
+        ColumnWidth="100" />
     </QueryColumns>
     <QueryFilters />
   </Query>
