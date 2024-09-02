@@ -21,6 +21,12 @@ using Logitude.Customs.Def.EntityPMs;
 
 using System.Diagnostics;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.CommonDataModel.Tools.HybridMapping;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel;
+using WebFreight.Web.Security;
 
 
 namespace CustomsWorkerRole
@@ -154,7 +160,7 @@ namespace CustomsWorkerRole
 						{
 							#region Save document and metadata
 							logs += "before SaveDocument" + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
-							response = SaveDocument(filePath);
+							response = SaveDocument(filePath, outParams["COM_ID"]);
 							logs += "after SaveDocument HasError: " + response?.HasError + "ErrorMessage: " + response.ErrorMessage + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
 							#endregion
 							if (!response.HasError) {
@@ -213,7 +219,7 @@ namespace CustomsWorkerRole
 			ExecuteQueue();
 		}
 
-		private  Response SaveDocument(string filePath)
+		private  Response SaveDocument(string filePath,string commId)
 		{
 			string fileName = Path.GetFileName(filePath);
 			long fileSize = new System.IO.FileInfo(filePath).Length;
@@ -223,11 +229,6 @@ namespace CustomsWorkerRole
 			string PartnerCode = AzureQueueMessageApi.PartnerName;
 			string code = CodeCounter.GetNumber("DocumentsFiling", tenant, false).ToString();//> CUS - 26043 </ Code >  //TODO 
 
-			var guid = Guid.NewGuid();
-			var documentsFilingId = Convert.ToBase64String(guid.ToByteArray()).ToLower();
-			documentsFilingId = documentsFilingId.Substring(0, 22);
-			documentsFilingId = documentsFilingId.Replace("/", "_");
-			documentsFilingId = documentsFilingId.Replace("+", "-");
 
 			UserQuery userQuery = new UserQuery(tenant);
 			CardRepository cardRepository = new CardRepository(tenant);
@@ -283,7 +284,7 @@ namespace CustomsWorkerRole
 			documentsFilingPM.HasCopies = false;
 			documentsFilingPM.HasFile = true;
 			documentsFilingPM.HasFollowUp = false;
-			documentsFilingPM.Id = documentsFilingId;
+			documentsFilingPM.Id = commId;
 			documentsFilingPM.IsAgentSharedInDirect = false;
 			documentsFilingPM.IsAgentSharedInHouse = false;
 			documentsFilingPM.IsAgentSharedInMaster = false;
@@ -327,11 +328,95 @@ namespace CustomsWorkerRole
 			documentsFilingPM.UpdateDate = null;
 			documentsFilingPM.UpdatedByUserCode = user.Code;
 			documentsFilingPM.UpdatedByUserId = user.Code;
-			
-			DocumentInWcfService documentInWcfService = new DocumentInWcfService();
-		    var res = documentInWcfService.Upsert(documentsFilingPM, false);
+
+			var res = UpsertDocumentData(documentsFilingPM);
 			return res;
 		}
+		public Response UpsertDocumentData(DocumentsFilingPM entityPM)
+		{
+			Response response = new Response();
+
+			try
+			{
+
+				ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
+				IWebFreightContext webFreightContext = WebFreightContext.GetContext(entityPM.Tenant);
+				DocumentsFilingService service = new DocumentsFilingService(commonContext, entityPM.Tenant);
+				DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(commonContext);
+				DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(documentsFilingRepository);		
+
+				entityPM.IsHybrid = true;		
+				if (string.IsNullOrEmpty(entityPM.FileExtension))
+				{
+					response.HasError = true;
+					response.ErrorMessage += "FileExtension field is required" + Environment.NewLine;
+
+				}
+				response = DocumentsFilingHybridMapping.MapEntityToLogitude(entityPM);
+
+				if (!response.HasError)
+				{
+					if (string.IsNullOrEmpty(entityPM.Folder))
+					{
+						entityPM.Folder = "docsin";
+					}
+
+					entityPM.HasFile = true;
+					entityPM.ReceivedDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+					entityPM.Received = true;
+
+					DocumentsFilingPM documentInPM = documentsFilingQuery.GetSinglePM(entityPM.Id, entityPM.Tenant);
+
+					if (documentInPM == null)
+					{
+						service.SetChangeSet(entityPM.DocumentsFilingMetaDataValues);
+						service.Create(entityPM, entityPM.FileData, null, entityPM.FileData == null ? true : false);
+						commonContext.SaveChanges();
+					}				
+					response.Result = entityPM.Id;
+					response.Result2 = entityPM.SecurityId;
+				}
+				return response;
+			}
+
+			catch (System.Data.Entity.Validation.DbEntityValidationException e)
+			{
+				string Error = "";
+				foreach (var eve in e.EntityValidationErrors)
+				{
+					Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+						eve.Entry.Entity.GetType().Name, eve.Entry.State);
+					foreach (var ve in eve.ValidationErrors)
+					{
+						Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+							ve.PropertyName, ve.ErrorMessage);
+
+						Error += "- Property:" + ve.PropertyName + ", Error:" + ve.ErrorMessage + Environment.NewLine;
+					}
+				}
+
+				response.HasError = true;
+				response.ErrorMessage = Error;
+
+				return response;
+			}
+			catch (Exception ex)
+			{
+				response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
+				response.HasError = true;
+				response.ErrorMessage = ex.Message;
+				response.InnerErrorMessage = (ex.InnerException != null ? (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) : null);
+				if (!string.IsNullOrEmpty(ex.StackTrace))
+				{
+					response.ErrorMessage += Environment.NewLine + ex.StackTrace;
+				}
+				return response;
+			}
+
+		}
+
+
+
 		public static List<DocumentsFilingMetaDataValuePM> GetMapDocumentsFilingMetaDataValue(int tenant, string hawb,string IntegratorCode)
 		{
 			List<DocumentsFilingMetaDataValuePM> DocumentsFilingMetaDataValuelist = new List<DocumentsFilingMetaDataValuePM>();
