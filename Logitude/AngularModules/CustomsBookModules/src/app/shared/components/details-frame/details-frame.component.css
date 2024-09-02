@@ -132,9 +132,9 @@
 }
 
 .countOfComments {
-    position: relative;
-    left: 12px;
-    bottom: 36px;
+	position: absolute;
+    right: 0px;
+    top: 0px;
     width: 16px !important; 
     height: 16px;
     background-color: var(--blue);

@@ -1,6 +1,7 @@
 <div class="detailsSlide active" aria-hidden="false">
     <div class="detailsSlideFrame">
-        <div class="detailsSlide_close"><a href="#" role="button" (click)="showDetails.emit(false)" (click)="$event.preventDefault()">
+        <div class="detailsSlide_close"><a href="#" role="button" (click)="showDetails.emit(false)"
+                (click)="$event.preventDefault()">
                 &#10005;</a></div>
         <div class="detailsSlide_top">
             <div class="detailsSlide_title">
@@ -25,15 +26,23 @@
                                 <span class="countOfComments">{{countOfComments}}</span>
                         </div>
                     </li> -->
-                    <li>
+
+                    <li *ngIf="countOfComments > 0; else newComment">
                         <div class="mainTable_itemComment" (click)="showComments = !showComments">
                             <a class="icon" aria-expanded="true">
-                                <i role="img" [ngClass]="{'icon-comment': !showComments, 'icon-comment_full': showComments}"></i>
+                                <i role="img"
+                                    [ngClass]="{'icon-comment': !showComments, 'icon-comment_full': showComments}"></i>
                             </a>
                             <span class="countOfComments">{{ countOfComments }}</span>
                         </div>
                     </li>
-
+                    <ng-template #newComment>
+                        <li>
+                            <div class="mainTable_itemComment" (click)="showAddCommentSidebar()">
+                                <a class="icon"> <i role="img" class="icon-comment_plus"></i></a>
+                            </div>
+                        </li>
+                    </ng-template>
                     <!-- <li>
                         <div class="mainTable_itemStarred" (click)="checked = !checked"><a class="icon"><i role="img"
                                     [class]="checked? ' icon-star_full' :'icon-star' ">

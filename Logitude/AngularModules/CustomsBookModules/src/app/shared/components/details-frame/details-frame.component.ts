@@ -9,14 +9,14 @@ import { CB_CustomsItemComputedDataList, ItemData, RemarksClassificationList } f
 import { BehaviorSubject } from 'rxjs';
 import { API_MainService } from '../../../core/API_MainService';
 import { AddCommentService } from '../add-comment/service/add-comment.service';
-import { NgClass } from '@angular/common';
+import { NgClass, NgFor, NgForOf, NgIf } from '@angular/common';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 
 
 @Component({
   selector: 'app-details-frame',
   standalone: true,
-  imports: [NgClass, FontAwesomeModule, AccordionComponent, CommentsComponent],
+  imports: [NgClass, FontAwesomeModule, AccordionComponent, CommentsComponent, NgFor, NgForOf, NgIf],
   templateUrl: './details-frame.component.html',
   styleUrl: './details-frame.component.css'
 })
@@ -25,6 +25,7 @@ import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo'
 export class DetailsFrameComponent implements OnInit {
   @Output() showDetails = new EventEmitter<boolean>();
   @Input() showAddComment: boolean = false;
+  @Input() showCommentsIsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   // @Input() itemData: BehaviorSubject<ItemData> = new BehaviorSubject<ItemData>(null);
   @Input() currentItem: BehaviorSubject<CB_CustomsItemComputedDataList>;
   item: CB_CustomsItemComputedDataList;
@@ -49,6 +50,9 @@ export class DetailsFrameComponent implements OnInit {
       if (data?.CustomsItemID != null) {
         this.item = data
         this.showCommentsByClick();
+        this.showCommentsIsOpen.subscribe((isOpen: boolean) => {
+          this.showComments = isOpen;
+        });
       }
     });
   }
@@ -66,6 +70,10 @@ export class DetailsFrameComponent implements OnInit {
     this.addCommentService.allComments.subscribe((result: RemarksClassificationList[]) => {
       this.countOfComments = result?.length > 0 ? result.length : 0;
     });
+  }
+
+  showAddCommentSidebar() {
+    this.addCommentService.setIsOpened(true, this.item);
   }
 }
 

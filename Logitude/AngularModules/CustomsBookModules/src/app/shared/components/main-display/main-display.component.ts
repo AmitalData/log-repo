@@ -8,7 +8,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
 import { mockData } from '../../../../../mock_data';
 import { API_MainService, Filters } from '../../../core/API_MainService';
 import { BehaviorSubject, filter } from 'rxjs';
-import { SearchService } from '../page-top/service/top-page.service';
+import { SearchBy, SearchService } from '../page-top/service/top-page.service';
 import { FormsModule } from '@angular/forms';
 import { HeaderService, searchState } from '../app-header/service/header.service';
 import { FiltersSearch } from '../filter-popup/service/filter-popup.service';
@@ -37,7 +37,10 @@ export class MainDisplayComponent implements OnInit {
 	@Input() showChiledren: boolean = false;
 	@Input() itemsData: BehaviorSubject<CB_CustomsItemComputedDataList[]>;
 	@Input() isLoadingMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	selectSearchBy: string = SearchBy.searchBy_form01;
 	showDetails: boolean = false;
+	showCommentsIsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
 	showAddComment: boolean = false;
 	showCommentSidebar: boolean = false;
 	// childrenToDesplay: number[] = [];
@@ -127,6 +130,10 @@ export class MainDisplayComponent implements OnInit {
 		});
 	}
 
+	showCommentsOpen(isOpenComment: boolean) {
+		this.showCommentsIsOpen.next(isOpenComment);
+	}
+
 	onToggleAll(event: Event, item: CB_CustomsItemComputedDataList): void {
 		const checked = (event.target as HTMLInputElement)?.checked;
 		this.toggleVisibility(checked, item.children);
@@ -206,13 +213,14 @@ export class MainDisplayComponent implements OnInit {
 	updateShowDetailsClick() {
 		this.showDetails = !this.showDetails;
 		this.showDetailsOpen.next(this.showDetails);
+		if (!this.showDetails) this.showCommentsIsOpen.next(false);
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes['showDetails']) {
 			this.showDetails = changes['showDetails'].currentValue;
 			this.showDetailsOpen.next(this.showDetails);
-
+			if (!this.showDetails) this.showCommentsIsOpen.next(false);
 		}
 		if (changes['itemsData']) {
 			this.itemsData = changes['itemsData'].currentValue;
@@ -254,13 +262,28 @@ export class MainDisplayComponent implements OnInit {
 			Tenant: SessionInfo.LoggedUserTenant
 		};
 
-		if (filters.CustomsItemHierarchic === '') filters.CustomsItemHierarchic = '1,2,3,4';
+		this.selectSearchBy = this.searchService.selectSearchBy;
 
-		this.API_MainService.GetCustomsBookMainViewSearchByText(filters).subscribe((data: any) => {
-			const result: CB_CustomsItemComputedDataList[] = data.body;
-			if (!result) return; // TODO: add error message
-			this.itemsData.next(result);
-		});
+		if (SearchBy.searchBy_form01 == this.selectSearchBy) {
+			this.isLoadingMode.next(true); // update loading mode
+			filters.CustomsItemHierarchic = '1,2,3,4';
+			this.API_MainService.GetCustomsBookMainViewSearchByClassification(filters).subscribe((data: any) => {
+				const result: CB_CustomsItemComputedDataList[] = data.body;
+				if (!result) return; // TODO: add error message
+				this.itemsData.next(result);
+				this.isLoadingMode.next(false); // update loading mode
+			});
+		}
+		else if (SearchBy.pageSearch_form02 == this.selectSearchBy) {// spacial search by text
+			this.isLoadingMode.next(true); // update loading mode
+			if (filters.CustomsItemHierarchic === '') filters.CustomsItemHierarchic = '1,2,3,4';
+			this.API_MainService.GetCustomsBookMainViewSearchByText(filters).subscribe((data: any) => {
+				const result: CB_CustomsItemComputedDataList[] = data.body;
+				if (!result) return; // TODO: add error message
+				this.itemsData.next(result);
+				this.isLoadingMode.next(false); // update loading mode
+			});
+		}
 	}
 
 	handleClearResultsClick() {
@@ -274,7 +297,7 @@ export class MainDisplayComponent implements OnInit {
 		this.selectedItemId = null;
 		this.showDetails = false;
 		this.showDetailsOpen.next(this.showDetails);
-
+		this.showCommentsIsOpen.next(false);
 		this.data = [];
 		this.searchValue = "";
 		this.countSearchResult = 0;

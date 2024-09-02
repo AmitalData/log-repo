@@ -21,7 +21,7 @@
                     placeholder="הקלידו תיאור/ שמות פריטים/ מידע עבור פרט מכס זה..."></textarea>
             </div>
             <div class="addComment_submit" (click)="sendComment()">
-                <button [class.disabled]="commentText.length < 1">שמירת הערה</button>
+                <button [class.disabled]="commentText?.length < 1 || allCommentCount > 1">שמירת הערה</button>
             </div>
         </div>
         <div class="sidePanel_trapFocus"><a href="#" role="button">חזור לתחילת הפאנל</a></div>
