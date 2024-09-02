@@ -153,7 +153,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 					SecurityUtility.AuthenticateAPICall(authToken.Tenant);
                     SecurityUtility.AuthenticateAccessibleAPI("Customer", authToken.Tenant);
 
-                    ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
+                    Logitude.BL.Security.ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
                     ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
                     CardRepository cardRepository = new CardRepository(MyContext);
 

@@ -40,7 +40,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
 
 
-    public partial class AccountingNoteViewsController
+    public partial class AccountingNoteViewsController : ApiController
     {
         public HttpResponseMessage GetNotesByCard(string cardId)
         {

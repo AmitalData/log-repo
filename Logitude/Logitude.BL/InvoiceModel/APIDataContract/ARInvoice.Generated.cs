@@ -104,6 +104,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
         public ConfirmationNumberStatus ConfirmationNumberStatus { get; set; }
     public string MasterNumber { get; set; }
 
+    public string InternalNotes { get; set; }
+
 
     }
 } 

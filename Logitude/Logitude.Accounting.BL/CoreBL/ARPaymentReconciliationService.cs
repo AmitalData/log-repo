@@ -436,7 +436,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     invoice.StatusCode = ARInvoiceStatusValues.Paid;
                 }
                 else if (transaction.OpenAmount < transactionAmount)
-                {
+                 {
                     invoice.IsClosed = false;
                     invoice.StatusCode = ARInvoiceStatusValues.PartiallyPaid;
                 }
@@ -466,7 +466,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 }
             }
-
+ 
+ 
 
         }
 

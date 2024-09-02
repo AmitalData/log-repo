@@ -432,15 +432,15 @@
   </Column>
   <Column
     Name="DescriptionOfGoods"
-    Type="varchar"
-    Size="512">
+    Type="nvarchar"
+    Size="1024">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="Notes"
-    Type="varchar"
-    Size="1000">
+    Type="nvarchar"
+    Size="2000">
     <Constraints
       Nullable="true" />
   </Column>
@@ -647,8 +647,8 @@
   </Column>
   <Column
     Name="DangerousMaterialDescription"
-    Type="varchar"
-    Size="100">
+    Type="nvarchar"
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>

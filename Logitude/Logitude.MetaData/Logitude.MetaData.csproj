@@ -140,6 +140,9 @@
     <None Include="DBOthers\InvoiceModel\Views\DigitalInvoicesCounterDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdatePayablesData.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\DigitalShipmentDataView.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Views\LogBoxShipmentDataView.dxml" />
+    <None Include="DBScripts\CommonModel\202007051540_UpdateCardGlaAccountDisplayNumber.sxml" />
+    <None Include="DBOthers\ShipmentsModel\Views\LogBoxShipmentDataView.dxml" />
     <None Include="DBScripts\CommonModel\202304051240_MarkDuplicatedDocumentsAsDeletedLogbox2Ignore.Ignoresxml" />
     <None Include="DBScripts\CommonModel\202304051240_MarkDuplicatedDocumentsAsDeletedCloud2Ignore.Ignoresxml" />
     <None Include="DBScripts\CommonModel\202208160224_AddBinaryTypeToFieldDataTypes.sxml" />
@@ -158,7 +161,7 @@
     <None Include="DBScripts\GlobalModel\202209271124_AddQboBaseUrl.sxml" />
     <None Include="DBScripts\GlobalModel\202305281050_AddImporterEntityStatusesWorkerRole.sxml" />
     <None Include="DBScripts\GlobalModel\202305251050_AddImporterEventTypesWorkerRole.sxml" />
-    <None Include="DBScripts\GlobalModel\202304151630_AddReportsLogsExecutionV2WorkerRole.sxml" />
+    <None Include="DBScripts\GlobalModel\202408261140_AddReportsLogsExecutionWorkerRole.sxml" />
     <None Include="DBScripts\GlobalModel\202315031845_AddDocumentsExecutionV2WorkerRole.sxml" />
     <None Include="DBScripts\GlobalModel\202303141233_AddImporterPortsWorkerRole.sxml" />
     <None Include="DBScripts\GlobalModel\AddInProgressStatusToAnalyzeQueue.sxml" />

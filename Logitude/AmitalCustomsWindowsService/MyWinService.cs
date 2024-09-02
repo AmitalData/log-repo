@@ -155,8 +155,9 @@ namespace AmitalCustomsWindowsService
                 AddWorkerFromAppSetting<RabbitMQReceiveWR>();
                 AddWorkerFromAppSetting<CustomsHSMSignWR>();
                 AddWorkerFromAppSetting<ReportExecutionLogWR>();
+				AddWorkerFromAppSetting<DocumentAzureQueueWR>();
 
-                bool courierFeaturePackageExist = true;
+				bool courierFeaturePackageExist = true;
                 if (courierFeaturePackageExist)
                 {
                     AddWorkerFromAppSetting<SendWEBAPIMessage2MamanWR>();
@@ -251,7 +252,8 @@ namespace AmitalCustomsWindowsService
             listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
             listOfWorkerEntryPoint.Add(new RabbitMQReceiveWR());
             listOfWorkerEntryPoint.Add(new CustomsAnalyzeQueueWR());
-            bool testCustomsSchedularWR = false;
+			listOfWorkerEntryPoint.Add(new DocumentAzureQueueWR());
+			bool testCustomsSchedularWR = false;
             if (testCustomsSchedularWR)
             {
                 listOfWorkerEntryPoint = new List<Logitude.Server.Tools.WorkerEntryPoint>();

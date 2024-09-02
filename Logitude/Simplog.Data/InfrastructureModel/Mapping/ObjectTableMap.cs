@@ -21,10 +21,10 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.HeaderScreenCode).HasMaxLength(100).IsUnicode(false);
 
             this.Property(t => t.SortingByObjectField).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.DBTableName).HasMaxLength(100).IsUnicode(false);
+             this.Property(t => t.DBTableName).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.DBTableShortName).HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.DescriptionTextCodeId).HasMaxLength(30).IsUnicode(false);
-            this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
+             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
             this.Property(t => t.MainTipCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.ObjectTableTypeCode).IsRequired().HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.NewWizardControlName).HasMaxLength(250).IsUnicode(false);

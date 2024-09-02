@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelper;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -26,7 +27,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
         {
             InitializeDataTables(dxmlStructure);
         }
- 
+
 
         private void InitializeDataTables(string dxmlStructure)
         {
@@ -71,7 +72,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 if (tableCoulmns.Columns.Contains("Size"))
                     tableStructure += GetCoulmnSize(tableCoulmns.Rows[i]["Size"]);
                 if (tableCoulmns.Columns.Contains("Identity"))
-                {   string identityText = GetIsCoulmnIdentity(tableCoulmns.Rows[i]["Identity"]);
+                {
+                    string identityText = GetIsCoulmnIdentity(tableCoulmns.Rows[i]["Identity"]);
                     tableStructure += identityText;
                     if (string.IsNullOrEmpty(identityText))
                         TableCoulmnsNameWithoutIDentity.Add((string)tableCoulmns.Rows[i]["Name"]);
@@ -87,13 +89,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             return tableStructure;
         }
 
-     
+
         public string GetTableName()
-        {           
+        {
             string tableName = (string)table.Rows[0]["Name"];
             return tableName;
         }
- 
+
 
         private string GetCoulmnSize(object coulmnnSize)
         {
@@ -102,14 +104,14 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             try { size = double.Parse((string)coulmnnSize); }
             catch (Exception e) { size = 0; }
             if (size != null && size != 0)
-                if(size==-1)
-                    tableCoulmnnSize =  " (Max) ";
+                if (size == -1)
+                    tableCoulmnnSize = " (Max) ";
                 else
                     tableCoulmnnSize = " (" + size + ") ";
 
             return tableCoulmnnSize;
         }
-        private string GetIsCoulmnNullable( object  coulmnnNullable)
+        private string GetIsCoulmnNullable(object coulmnnNullable)
         {
             string tableIsCoulmnNullable = null;
             bool? nullable = true;
@@ -132,7 +134,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             return tableIsCoulmnIdentity;
         }
 
-        private  void SetPrimartKeyCoulmn(object coulmnnPrimarykey,string columnName)
+        private void SetPrimartKeyCoulmn(object coulmnnPrimarykey, string columnName)
         {
             bool? isPrimartKey = false;
             var isNull = coulmnnPrimarykey.GetType().Name == "DBNull";
@@ -147,7 +149,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             if (!string.IsNullOrEmpty(PrimarykeyColumn))
             {
-                tablePrimaryKey  = "CONSTRAINT[PK_" + tableName + "] PRIMARY KEY([" + PrimarykeyColumn + "]) )\n";
+                tablePrimaryKey = "CONSTRAINT[PK_" + tableName + "] PRIMARY KEY([" + PrimarykeyColumn + "]) )\n";
             }
 
             return tablePrimaryKey;
@@ -156,7 +158,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
         public string GetTableStructureIndexs(string tableName)
         {
             string tableIndexsCommand = "";
-            if (tableIndexs!=null)
+            if (tableIndexs != null)
             {
                 for (int j = 0; j < tableIndexs.Rows.Count; j++)
                 {
@@ -167,11 +169,21 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                         tableIndexsCommand += "ALTER INDEX [IX_" + tableName + "_" + coulmnIndexs.Replace(',', '_') + "] ON [dbo].[" + tableName + "] DISABLE \n";
 
                     }
-               
                 }
             }
-            tableIndexsCommand += "IF NOT EXISTS (SELECT name FROM sysindexes WHERE name = 'IX_CargoTrackingShipments_EntityType_ForwardingShipmentHeaderId') CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipments_EntityType_ForwardingShipmentHeaderId] ON [dbo].[CargoTrackingShipments] ([EntityType], [ForwardingShipmentHeaderId]) INCLUDE ([ArrivalDate], [ArrivalDone], [ArrivalEstimationDate], [BookingDate], [CreateDate], [CreatedDone], [DepartureDate], [DepartureDone], [DepartureEstimationDate], [FromWarehouseDate], [FromWarehouseDone], [FromWarehouseEstimationDate], [FromWarehouseNotes], [PickupDate], [PickupDone], [PickupEstimationDate])";
-            tableIndexsCommand += "IF NOT EXISTS (SELECT name FROM sysindexes WHERE name = 'IX_CargoTrackingShipmentSearches_Tenant') CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipmentSearches_Tenant] ON [dbo].[CargoTrackingShipmentSearches] ([Tenant]) INCLUDE ([SearchFields], [ShipmentId])";
+
+            if (tableName == "Pre_CargoTrackingShipments")
+            {
+                tableIndexsCommand += "IF NOT EXISTS (SELECT name FROM sysindexes WHERE name = 'IX_CargoTrackingShipments_EntityType_ForwardingShipmentHeaderId') CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipments_EntityType_ForwardingShipmentHeaderId] ON [dbo].[Pre_CargoTrackingShipments] ([EntityType], [ForwardingShipmentHeaderId]) INCLUDE ([CurrentMilestoneCode],[CurrentMilestoneDate],[PickupDone],[PickupDate],[CreateDate],[FromWarehouseDate],[DepartureDone],[DepartureDate],[ArrivalDone],[ArrivalDate],[ToWarehouseDone],[ToWarehouseDate],[CustomsPaymentDone],[CustomsPaymentDate],[ClearanceDone],[ClearanceDate],[DeliveredDone],[DeliveredDate],[FromWarehouseDone],[AssignedTruckerDone],[AssignedTruckerDate],[AssignedCustomsAgentDone],[AssignedCustomsAgentDate],[DeliveryDone],[DeliveryDate],[GoodsClassificationDate],[DocumentInspectionDate],[DocumentInspectionDone],[GoodsClassificationDone],[GatepassArrivedDate],[GatepassArrivedDone],[CreatedDone],[BookingDone],[BookingDate],[PaymentRequiredDone],[PaymentRequiredDate],[PaymentReceivedDone],[PaymentReceivedDate],[InvoicedDate],[InvoicedDone],[PickupEstimationDate],[FromWarehouseEstimationDate],[FromWarehouseNotes],[DepartureEstimationDate],[ArrivalEstimationDate])";
+                tableIndexsCommand += "IF NOT EXISTS (SELECT name FROM sysindexes WHERE name = 'IX_CargoTrackingShipments_Tenant_CustomerId_IsMainRecord') CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipments_Tenant_CustomerId_IsMainRecord] ON [dbo].[Pre_CargoTrackingShipments] ([Tenant],[CustomerId],[IsMainRecord]) INCLUDE ([EntityId],[ForwardingShipmentHeaderId],[EntityType],[CurrentMilestoneCode],[CurrentMilestoneDate],[TransportModeId],[Master],[House],[ShipmentNumber],[FromPortId],[ToPortId],[GrossWeight],[CreateDate],[SecurityKey],[ConsigneeName],[ShipperName],[CustomerReference],[DepartureDate],[DepartureEstimationDate],[ArrivalDate],[ArrivalEstimationDate],[PackagesQuantity],[DirectionId],[ShipmentLevelCode],[GrossWeightUnitCode],[CurrentMilestoneExceptions],[ForwardingHouse],[ForwardingMaster],[ForwardingShipmentLevelCode],[BookingNotes],[PoNumber],[IsOperationalClosed],[ChargeableWeightInKG],[ChargeableWeight],[ChargeableWeightUnitCode])";
+            }
+            if (tableName == "Pre_CargoTrackingShipmentSearches")
+            {
+                tableIndexsCommand += "IF NOT EXISTS (SELECT name FROM sysindexes WHERE name = 'IX_CargoTrackingShipmentSearches_Tenant') CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipmentSearches_Tenant] ON [dbo].[Pre_CargoTrackingShipmentSearches] ([Tenant]) INCLUDE ([SearchFields], [ShipmentId])";
+                tableIndexsCommand += "IF NOT EXISTS (SELECT name FROM sysindexes WHERE name = 'IX_CargoTrackingShipmentSearches_ReferenceFromShipmentId') CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipmentSearches_ReferenceFromShipmentId] ON [dbo].[Pre_CargoTrackingShipmentSearches] ([ReferenceFromShipmentId]) INCLUDE ([ShipmentId])";
+                tableIndexsCommand += "IF NOT EXISTS (SELECT name FROM sysindexes WHERE name = 'IX_CargoTrackingShipmentSearches_ShipmentId_ReferenceType') CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipmentSearches_ShipmentId_ReferenceType] ON [dbo].[Pre_CargoTrackingShipmentSearches] ([ShipmentId],[ReferenceType]) INCLUDE ([Tenant],[SearchFields],[ShipmentDate],[IsPublic],[ReferenceFromShipmentId])";
+            }
+
             tableIndexsCommand += " End \n";
             return tableIndexsCommand;
         }
@@ -179,7 +191,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
         public string GetTableStructureReBuildIndexs(string tableName)
         {
             string tableIndexs = "";
-            if (this.tableIndexs!=null)
+            if (this.tableIndexs != null)
             {
                 for (int j = 0; j < this.tableIndexs.Rows.Count; j++)
                 {
@@ -189,18 +201,18 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                         tableIndexs += "ALTER INDEX [IX_" + tableName + "_" + coulmnIndexs.Replace(',', '_') + "] ON [dbo].[" + tableName + "] REBUILD \n";
 
                     }
-                        
+
                 }
 
             }
-           
+
             return tableIndexs;
         }
 
         public string GetTableStructureRelations(string tableName)
         {
             string tableStructureRelations = "";
-            if (tableCoulmnsRelation!=null)
+            if (tableCoulmnsRelation != null)
             {
                 for (int j = 0; j < tableCoulmnsRelation.Rows.Count; j++)
                 {
@@ -217,7 +229,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 }
 
             }
-            
+
             return tableStructureRelations;
         }
 
@@ -234,12 +246,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
         }
         private string GetTableStructureChaneNameScriptFromUniqueConstraints(string oldTableName, string newTableName)
         {
-            string tableStructureChaneNameScriptFromUniqueConstraints= "";
+            string tableStructureChaneNameScriptFromUniqueConstraints = "";
             if (tableUniqueConstraints != null && tableUniqueConstraints.Rows != null && tableUniqueConstraints.Rows.Count > 0)
             {
                 for (int j = 0; j < tableUniqueConstraints.Rows.Count; j++)
                 {
-                    if (tableUniqueConstraints.Columns.Contains("Columns")){
+                    if (tableUniqueConstraints.Columns.Contains("Columns"))
+                    {
                         string uniqeConstraintFields = (string)tableUniqueConstraints.Rows[j]["Columns"];
                         tableStructureChaneNameScriptFromUniqueConstraints += " exec sp_rename 'UQ_" + oldTableName + "_" + uniqeConstraintFields.Replace(',', '_') + "', 'UQ_" + newTableName + "_" + uniqeConstraintFields.Replace(',', '_') + "', 'object' \n ";
 
@@ -266,7 +279,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                         string referencedTable = (string)tableCoulmnsRelation.Rows[j]["ReferencedTable"];
                         tableStructureChaneNameScriptFromRelations += " exec sp_rename 'FK_" + oldTableName + "_" + referencedTable + "_" + foreignKeyColumn + "', 'FK_" + newTableName + "_" + referencedTable + "_" + foreignKeyColumn + "', 'object' \n ";
                     }
-                     
+
                 }
             }
 
@@ -276,7 +289,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
         public string GetTableStructureUniqueConstraints(string tableName)
         {
             string uniqueConstraints = "";
-            if (tableUniqueConstraints!=null)
+            if (tableUniqueConstraints != null)
             {
                 for (int j = 0; j < tableUniqueConstraints.Rows.Count; j++)
                 {
@@ -285,10 +298,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                         string uniqeConstraintFields = (string)tableUniqueConstraints.Rows[j]["Columns"];
                         uniqueConstraints += "ALTER TABLE [dbo].[" + tableName + "] ADD CONSTRAINT [UQ_" + tableName + "_" + uniqeConstraintFields.Replace(',', '_') + "] UNIQUE(" + uniqeConstraintFields + ")\n";
                     }
-                 
+
                 }
             }
-           
+
             return uniqueConstraints;
         }
 

@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectTablePM customerObject = ObjectTableQuery.GetObjectTableByCode("Customer", 0);
             ObjectTablePM containerObject = ObjectTableQuery.GetObjectTableByCode("Container", 0);
 
-            Dictionary<string, EntityStatus> tenantEntityStatus = EntityStatusRepository.GetEntityStatusByTenant(0).ToDictionary(d => d.Code + d.Id, a => a);
+           Dictionary<string, EntityStatus> tenantEntityStatus = EntityStatusRepository.GetEntityStatusByTenant(0).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
 
             #region Shipment Status
             AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "SHOR", StatusWeight = 0, Name = "Order", ObjectTableId = shipmentObject.Id, Tenant = 0, DisplayName = "Order" , EntityStatusTypeCode = "P" }, EntityStatusRepository, tenantEntityStatus);

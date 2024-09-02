@@ -1535,8 +1535,8 @@ namespace Logitude.Server.Tools.QueueService
                         {
                             SqlCommand cmd = new SqlCommand("[dbo].[Queue_DelayMessageandChangeStatusTozero]", cn);
                             cmd.CommandType = CommandType.StoredProcedure;
-                            SqlParameter messageIdPar = new SqlParameter("@V_MessageId", SqlDbType.BigInt);
-                            SqlParameter delayPar = new SqlParameter("@V_DelaySeconds", SqlDbType.Int);
+                            SqlParameter messageIdPar = new SqlParameter("@MessageId", SqlDbType.BigInt);
+                            SqlParameter delayPar = new SqlParameter("@DelaySeconds", SqlDbType.Int);
 
 
                             messageIdPar.Direction = ParameterDirection.Input;

@@ -33,7 +33,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServiceExt
             InterestReportsConnectInvoiceUpdateService interestLastBatchServiceUpdateService = new InterestReportsConnectInvoiceUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             interestLastBatchServiceUpdateService.Update(InterestReportsConnectInvoicePM,true);
         }
+        public bool CheckInterestReportsConnected(string ReportId, int Tenant, IAccountingContext MainContext)
+        {
+            if (MainContext == null)
+            {
+                MainContext = AccountingContext.GetContext(Tenant);
+            }
+            var InterestReportsConnectInvoice = (from a in MainContext.InterestReportsConnectInvoices where a.ReportId==ReportId && a.Tenant==Tenant select a).FirstOrDefault();
 
+            return InterestReportsConnectInvoice!=null;
+        }
 
     }
 }

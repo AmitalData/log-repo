@@ -179,7 +179,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                             BankAccountLocalName = a.LocalName,
                                             BankAccountEnglishName = a.EnglishName,
                                             BankAccountId = a.Id,
-
+                                            
                                             TotalClosed = externalReconciliationsPeriods == null ? null : externalReconciliationsPeriods.Where(s => s.BankAccountId == a.Id && s.IsRecomncile == true).Sum(b => b.Amount),
                                             TotalOpen = externalReconciliationsPeriods == null ? null : externalReconciliationsPeriods.Where(s => s.BankAccountId == a.Id && s.IsRecomncile == false).Sum(b => b.Amount),
                                             ExternalReconciliationPeriods = externalReconciliationsPeriods == null ? null : externalReconciliationsPeriods.Where(s => s.BankAccountId == a.Id).ToList(),
@@ -422,6 +422,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                               BankAccountId = BK.Id,
                                                               Amount = a.ForeignAmountDebit == 0 ? a.ForeignAmountCredit * -1 : a.ForeignAmountDebit,
                                                               ReferenceDate = a.DocumentDate,
+                                                              AcoouningDate=a.AccountingDate,
                                                               EntitySource = a.SourceTypeCode,
                                                               EntityType = a.SourceNumber,
                                                               IsRecomncile = a.IsExternalReconcile,

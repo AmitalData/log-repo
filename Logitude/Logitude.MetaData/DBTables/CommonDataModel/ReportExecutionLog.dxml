@@ -105,6 +105,8 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Index
+	Columns="CreateDate" />
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
@@ -125,6 +127,4 @@
     ReferencedTable="ReportsTemplates"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-  <Index
-    Columns="CreateDate" />
 </Table>

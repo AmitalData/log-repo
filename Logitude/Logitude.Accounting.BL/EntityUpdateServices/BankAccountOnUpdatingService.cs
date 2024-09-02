@@ -60,8 +60,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             else
             {
-                var currentSerial = entityPM.ChequeCounterSerials.FirstOrDefault(c => c.SeriesId == entityPM.ChequeCounterSeriesID);
-                if (currentSerial.Inactive)
+                var currentSerial = entityPM.ChequeCounterSerials?.FirstOrDefault(c => c.SeriesId == entityPM.ChequeCounterSeriesID);
+                if (currentSerial!=null &&currentSerial.Inactive)
                 {
                     var nextSerial = entityPM.ChequeCounterSerials.FirstOrDefault(c => !c.Inactive && c.SeriesId > entityPM.ChequeCounterSeriesID);
                     if (nextSerial != null)
@@ -72,7 +72,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
                 else
                 {
-                    if (entityPM.ChequeCounter > currentSerial.ChequeCounterEnd)
+                    if (entityPM.ChequeCounter > currentSerial?.ChequeCounterEnd)
                     {
                         var nextSerial = entityPM.ChequeCounterSerials.FirstOrDefault(c => !c.Inactive && c.SeriesId > entityPM.ChequeCounterSeriesID);
                         if (nextSerial != null)

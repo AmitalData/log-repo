@@ -103,6 +103,14 @@ export class ShipmentDataTabComponent extends BaseComponent {
     public set IskaNumber(newValue: string) {
         if (this.EntityPM.IskaNumber != newValue) {
             this.EntityPM.IskaNumber = newValue;
+
+            if(newValue.startsWith("I") || newValue.startsWith("i")){
+                this.UIProperties.SetValidity("IskaNumber", this.ObjectTableName, true, "");
+            }else{
+                
+                this.UIProperties.SetValidity("IskaNumber", this.ObjectTableName, false, TextCodeTranslator.Translate('Shipment.O.InvalidIskaNumber'));
+            }
+            
             this.OnChanged();
         }
     }
@@ -227,6 +235,7 @@ export class ShipmentDataTabComponent extends BaseComponent {
                 if (!this.ShipmentReferances[index].ChangeSetOp) {
                     this.ShipmentReferances[index].ChangeSetOp = "Update";
                 }
+                this.EntityPM.MarkAsDirty("ShipmentReferances");
                 this.OnChanged();
             }
         }
@@ -259,6 +268,7 @@ export class ShipmentDataTabComponent extends BaseComponent {
                 if (!this.ShipmentReferances[index].ChangeSetOp) {
                     this.ShipmentReferances[index].ChangeSetOp = "Update";
                 }
+                this.EntityPM.MarkAsDirty("ShipmentReferances");
                 this.OnChanged();
             }
         }

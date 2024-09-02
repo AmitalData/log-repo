@@ -92,10 +92,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public PartnerTypes: PartnerTypeList[] = [];
     private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
     public BillToFilter:ApiQueryFilters;
-    public GLAccountsFilterItems: ApiQueryFilters;
+  
 
-    get TextStore()
-    {
+   get TextStore()
+     {
         return TextStore;
     }
 
@@ -108,6 +108,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     DisplayFieldsFromList:string;
     DisplayLocalFieldsFromList:string;
     BillToLovSizeForFullAccounting:number;
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, public entityListService: EntityListService)
     {
         super();
@@ -200,7 +202,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         this.GLAccountsFilterItems = new ApiQueryFilters();
         this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
     }
-    GetFullAccountingSettings() {
+  GetFullAccountingSettings() {
         this.CurrentSession.StartBusyIndicatorLoading();
         this.entityListService.getSingle(SessionLocator.TenantPM.Id.toString(), "FullAccountingSetting").then((res: any) => {
         this.CurrentSession.StopBusyIndicator();
@@ -218,7 +220,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     get IsRateDisabled (){
         return (this.isFullAccounting && !this.FullAccountingSetting.AllowEditingExchangeRate);
     }
-
+    
     CreateARPayment() {
         //this.EntityPM = new ARPaymentPM();
         this.EntityPM.Tenant =  SessionLocator.TenantPM.Id;

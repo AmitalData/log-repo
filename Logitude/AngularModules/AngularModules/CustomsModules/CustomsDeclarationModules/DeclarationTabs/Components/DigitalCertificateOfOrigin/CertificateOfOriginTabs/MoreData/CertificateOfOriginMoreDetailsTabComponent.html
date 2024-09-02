@@ -48,6 +48,10 @@
                             <LogLabel [ObjectFieldName]="'IsCumulation'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['IsCumulation']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['IsCumulation']"></HelpIcon>
+                        </td>
                         <td style="width:180px">
                             <LogCheckBox [ObjectFieldName]="'IsCumulation'"
                                                     [Checked]="IsCumulation" [ObjectTableName]="ObjectTableName"
@@ -58,6 +62,10 @@
                             <LogLabel [ObjectFieldName]="'CumulationCountry'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['CumulationCountry']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['CumulationCountry']"></HelpIcon>
+                        </td>
                         <td style="width:180px">
                             <LogLov [ObjectFieldName]="'CumulationCountry'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext" [LookUpTableName]="'Customs.CustomsCountry'"
@@ -67,6 +75,10 @@
                         <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'CumulationGroupOfCountries'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['CumulationGroupOfCountries']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['CumulationGroupOfCountries']"></HelpIcon>
                         </td>
                         <td style="width:180px">
                             <LogLov [ObjectFieldName]="'CumulationGroupOfCountries'" [ObjectTableName]="ObjectTableName"
@@ -81,6 +93,10 @@
                             <LogLabel [ObjectFieldName]="'CityOfDeclaration'" [ObjectTableName]="ObjectTableName"
                             [DataContext]="DataContext"></LogLabel>
                         </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['CityOfDeclaration']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['CityOfDeclaration']"></HelpIcon>
+                        </td>
                         <td style="width:180px">
                             <LogLov [ObjectFieldName]="'CityOfDeclaration'" [ObjectTableName]="ObjectTableName"
                             [DataContext]="DataContext" [LookUpTableName]="'Customs.City'"
@@ -91,6 +107,10 @@
                             <LogLabel [ObjectFieldName]="'IsDeclaredByExporter'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['IsDeclaredByExporter']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['IsDeclaredByExporter']"></HelpIcon>
+                        </td>
                         <td style="width:180px">
                             <LogCheckBox [ObjectFieldName]="'IsDeclaredByExporter'"
                                                     [Checked]="IsDeclaredByExporter" [ObjectTableName]="ObjectTableName"
@@ -100,6 +120,10 @@
                         <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'IsDeclaredByManufacture'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['IsDeclaredByManufacture']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['IsDeclaredByManufacture']"></HelpIcon>
                         </td>
                         <td style="width:180px">
                             <LogCheckBox [ObjectFieldName]="'IsDeclaredByManufacture'"
@@ -113,6 +137,10 @@
                             <LogLabel [ObjectFieldName]="'IsExportDecForPrint'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['IsExportDecForPrint']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['IsExportDecForPrint']"></HelpIcon>
+                        </td>
                         <td style="width:180px">
                             <LogCheckBox [ObjectFieldName]="'IsExportDecForPrint'"
                                                     [Checked]="IsExportDecForPrint" [ObjectTableName]="ObjectTableName"
@@ -123,6 +151,10 @@
                             <LogLabel [ObjectFieldName]="'InsufficentWorkingInd'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['InsufficentWorkingInd']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['InsufficentWorkingInd']"></HelpIcon>
+                        </td>
                         <td style="width:180px">
                             <LogCheckBox [ObjectFieldName]="'InsufficentWorkingInd'"
                                                     [Checked]="InsufficentWorkingInd" [ObjectTableName]="ObjectTableName"
@@ -132,6 +164,10 @@
                         <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'IsConsigneeForPrint'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['IsConsigneeForPrint']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['IsConsigneeForPrint']"></HelpIcon>
                         </td>
                         <td style="width:180px">
                             <LogCheckBox [ObjectFieldName]="'IsConsigneeForPrint'"
@@ -145,6 +181,10 @@
                             <LogLabel [ObjectFieldName]="'IsAttachedList'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['IsAttachedList']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['IsAttachedList']"></HelpIcon>
+                        </td>
                         <td style="width:180px">
                             <LogCheckBox [ObjectFieldName]="'IsAttachedList'"
                                                     [Checked]="IsAttachedList" [ObjectTableName]="ObjectTableName"
@@ -155,6 +195,10 @@
                             <LogLabel [ObjectFieldName]="'InsufficentWorkingText'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['InsufficentWorkingText']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['InsufficentWorkingText']"></HelpIcon>
+                        </td>
                         <td style="width:180px">
                             <LogTextBox [ObjectFieldName]="'InsufficentWorkingText'" [DataContext]="DataContext"
                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
@@ -164,25 +208,40 @@
                             <LogLabel [ObjectFieldName]="'COONumberToCancel'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['COONumberToCancel']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['COONumberToCancel']"></HelpIcon>
+                        </td>
                         <td style="width:180px">
                             <LogTextBox [ObjectFieldName]="'COONumberToCancel'" [DataContext]="DataContext"
                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                         </td>       
                     </tr>
                  
-                    <tr class="FieldRow">                        
-                        <td style="width:130px">
+                    <tr class="FieldRow">          
+                        <!-- remove  Observations-->                           
+                        <!-- <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'Observations'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:180px">
                             <LogTextBox [ObjectFieldName]="'Observations'" [DataContext]="DataContext"
-                                [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsMultiline]="true"></LogTextBox>
+                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td> -->
+                        <td style="width:130px"></td> 
+                        <td style="width: 22px;">
+                            
                         </td>
+                        <td style="width:180px"></td>
+ 
 
                         <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'ConsigneeRemarks'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['ConsigneeRemarks']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['ConsigneeRemarks']"></HelpIcon>
                         </td>
                         <td style="width:180px">
                             <LogTextBox [ObjectFieldName]="'ConsigneeRemarks'" [DataContext]="DataContext"
@@ -192,6 +251,10 @@
                         <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'ReplacementReason'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['ReplacementReason']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['ReplacementReason']"></HelpIcon>
                         </td>
                         <td style="width:180px">
                             <LogTextBox [ObjectFieldName]="'ReplacementReason'" [DataContext]="DataContext"
@@ -217,6 +280,10 @@
                             <LogLabel [ObjectFieldName]="'NonExportPort'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['NonExportPort']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['NonExportPort']"></HelpIcon>
+                        </td>
                         <td style="width:180px">
                             <LogLov [ObjectFieldName]="'NonExportPort'" [ObjectTableName]="ObjectTableName"
                             [DataContext]="DataContext" [LookUpTableName]="'Customs.InternationalSite'"
@@ -227,6 +294,10 @@
                             <LogLabel [ObjectFieldName]="'NonExportCountry'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['LookUpTableName']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['LookUpTableName']"></HelpIcon>
+                        </td>
                         <td style="width:180px">
                             <LogLov [ObjectFieldName]="'NonExportCountry'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext" [LookUpTableName]="'Customs.CustomsCountry'"
@@ -236,6 +307,10 @@
                         <td style="width:180px">
                             <LogLabel [ObjectFieldName]="'NonExportDate'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['NonExportDate']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['NonExportDate']"></HelpIcon>
                         </td>
                         <td style="width:180px">
                             <LogDatePicker [ObjectFieldName]="'NonExportDate'" [ObjectTableName]="ObjectTableName"
@@ -248,6 +323,10 @@
                             <LogLabel [ObjectFieldName]="'NonPortOfEntrance'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['NonPortOfEntrance']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['NonPortOfEntrance']"></HelpIcon>
+                        </td>
                         <td style="width:180px">
                             <LogLov [ObjectFieldName]="'NonPortOfEntrance'" [ObjectTableName]="ObjectTableName"
                             [DataContext]="DataContext" [LookUpTableName]="'Customs.InternationalSite'"
@@ -258,6 +337,10 @@
                             <LogLabel [ObjectFieldName]="'NonImportBillOfLadingNum'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['NonImportBillOfLadingNum']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['NonImportBillOfLadingNum']"></HelpIcon>
+                        </td>
                         <td style="width:180px">
                             <LogTextBox [ObjectFieldName]="'NonImportBillOfLadingNum'" [DataContext]="DataContext"
                             [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
@@ -266,6 +349,10 @@
                         <td style="width:180px">
                             <LogLabel [ObjectFieldName]="'NonImportDate'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['NonImportDate']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['NonImportDate']"></HelpIcon>
                         </td>
                         <td style="width:180px">
                             <LogDatePicker [ObjectFieldName]="'NonImportDate'" [ObjectTableName]="ObjectTableName"
@@ -278,6 +365,10 @@
                             <LogLabel [ObjectFieldName]="'NonExitPort'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['NonExitPort']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['NonExitPort']"></HelpIcon>
+                        </td>
                         <td style="width:180px">
                             <LogLov [ObjectFieldName]="'NonExitPort'" [ObjectTableName]="ObjectTableName"
                             [DataContext]="DataContext" [LookUpTableName]="'Customs.InternationalSite'"
@@ -288,6 +379,10 @@
                             <LogLabel [ObjectFieldName]="'NonExportBillOfLadingNum'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['NonExportBillOfLadingNum']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['NonExportBillOfLadingNum']"></HelpIcon>
+                        </td>
                         <td style="width:180px">
                             <LogTextBox [ObjectFieldName]="'NonExportBillOfLadingNum'" [DataContext]="DataContext"
                             [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
@@ -296,6 +391,10 @@
                         <td style="width:180px">
                             <LogLabel [ObjectFieldName]="'NonExpectedExitDate'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['NonExpectedExitDate']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['NonExpectedExitDate']"></HelpIcon>
                         </td>
                         <td style="width:180px">
                             <LogDatePicker [ObjectFieldName]="'NonExpectedExitDate'" [ObjectTableName]="ObjectTableName"
@@ -308,6 +407,10 @@
                             <LogLabel [ObjectFieldName]="'NonDeclaringCompany'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['NonDeclaringCompany']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['NonDeclaringCompany']"></HelpIcon>
+                        </td>
                         <td style="width:180px">
                             <LogTextBox [ObjectFieldName]="'NonDeclaringCompany'" [DataContext]="DataContext"
                             [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
@@ -317,6 +420,10 @@
                             <LogLabel [ObjectFieldName]="'NonDeclaringPerson'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['NonDeclaringPerson']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['NonDeclaringPerson']"></HelpIcon>
+                        </td>
                         <td style="width:180px">
                             <LogTextBox [ObjectFieldName]="'NonDeclaringPerson'" [DataContext]="DataContext"
                             [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
@@ -325,6 +432,10 @@
                         <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'NonDeclaringPosition'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['NonDeclaringPosition']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['NonDeclaringPosition']"></HelpIcon>
                         </td>
                         <td style="width:180px">
                             <LogTextBox [ObjectFieldName]="'NonDeclaringPosition'" [DataContext]="DataContext"
@@ -337,6 +448,10 @@
                             <LogLabel [ObjectFieldName]="'NonGoodsDescription'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['NonGoodsDescription']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['NonGoodsDescription']"></HelpIcon>
+                        </td>
                         <td style="width:180px">
                             <LogTextBox [ObjectFieldName]="'NonGoodsDescription'" [DataContext]="DataContext"
                             [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
@@ -346,12 +461,19 @@
                             <LogLabel [ObjectFieldName]="'NonManifestNum'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
+                        <td style="width: 22px;">
+                            <HelpIcon *ngIf="myDictionary['NonManifestNum']!=null" [HideHeader]="true" [Text]=""
+                                [BackgroundImage]="myDictionary['NonManifestNum']"></HelpIcon>
+                        </td>
                         <td style="width:180px">
                             <LogTextBox [ObjectFieldName]="'NonManifestNum'" [DataContext]="DataContext"
                             [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                         </td>
                        
                         <td style="width:130px"></td>
+                        <td style="width: 22px;">
+                           
+                        </td>
                         <td style="width:180px"></td>
                     </tr>
                 </table>

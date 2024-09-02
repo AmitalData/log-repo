@@ -2019,19 +2019,6 @@
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
-    TabName="&quot;Variables&quot;"
-    TabLocalName="&quot;משתנים&quot;"
-    ObjectTableName="&quot;Report&quot;"
-    Code="&quot;VR&quot;"
-    ControlPath="&quot;Logitude.Reports.ReportTemplateControl&quot;"
-    TextCode="&quot;Report.TH.Variables&quot;"
-    IsPackagable="true"
-    IndexOrder="0"
-    HtmlComponentURL="&quot;./Report/Components/ReportVariablesComponent&quot;"
-    HtmlComponentName="&quot;ReportVariablesComponent&quot;"
-    IsSpellChecked="false"
-    HasGeneralFeature="false" />
-  <Tab
     TabName="&quot;Report Template&quot;"
     ObjectTableName="&quot;Report&quot;"
     Code="&quot;RPTP&quot;"
@@ -2057,6 +2044,19 @@
     FeatureCode="&quot;EVENTS&quot;"
     FeatureTextCodeCode="&quot;ReportObjectTable.Features.Events&quot;"
     FeatureDefaultText="&quot;Events&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Variables&quot;"
+    TabLocalName="&quot;משתנים&quot;"
+    ObjectTableName="&quot;Report&quot;"
+    Code="&quot;VR&quot;"
+    ControlPath="&quot;Logitude.Reports.ReportTemplateControl&quot;"
+    TextCode="&quot;Report.TH.Variables&quot;"
+    IsPackagable="true"
+    IndexOrder="0"
+    HtmlComponentURL="&quot;./Report/Components/ReportVariablesComponent&quot;"
+    HtmlComponentName="&quot;ReportVariablesComponent&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <EventTypes>
@@ -2814,6 +2814,15 @@
       FeatureTypeCode="&quot;AREA&quot;"
       FeatureTextCodeCode="&quot;Report.Features.CustomsCollateralReport&quot;"
       FeatureDefaultText="&quot;Customs Collateral Report&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;ShipmentFormReport&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Report.Features.ShipmentFormReport&quot;"
+      FeatureDefaultText="&quot;Shipment Form Report&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

@@ -55,6 +55,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
     @ViewChild('CustomerChild', { read: ViewContainerRef, static: false }) customerViewContainerRef: ViewContainerRef;
     ReportsRunUsingWR: boolean = false;
     IsUsedReportsRunUsingWR: boolean = false;
+    @Output() OnDone: EventEmitter<any> = new EventEmitter();
 
     NumberOfRequests: number = 0;
     public isRTL: boolean = false;
@@ -406,6 +407,10 @@ export class ReportsPreviewComponent implements AfterViewInit {
         var isSetStimualData = false;
         this.IsRunReportFailed = false;
         this.IsRunReportSucceeded = false;
+
+        if (!this.StimulsoftArg) {
+            this.StimulsoftArg = new StimulsoftArg();
+        }
         this.StimulsoftArg.NumberOfPage = this.ReportFliter.NumberOfPage;
         this.StimulsoftArg.PartnersObslist = this.PartnersObslist;
         this.StimulsoftArg.ReportFliter = this.ReportFliter;
@@ -421,6 +426,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 this.StimulsoftArg.BuildStimulReportResult = myResponse.Result;
                 isSetStimualData = true;
             }
+            this.OnDone.emit(myResponse);
+
         } else isSetStimualData = true;
 
 

@@ -5,7 +5,11 @@ import { catchError, map } from 'rxjs/operators';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
+import { HomeComponent } from 'src/CargoTracking/Components/PublicSite/HomeComponent/HomeComponent';
+import { Router } from '@angular/router';
+import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
 declare var window: any;
+
 
 
 @Injectable()
@@ -13,14 +17,25 @@ export class DocumentDownloadService {
     private  _apiUrl: string;
     private  token: string;
 
-    constructor(@Inject('BASE_URL') private baseUrl: string, private  _http: HttpClient) {
+    constructor(@Inject('BASE_URL') private baseUrl: string, private  _http: HttpClient, private router: Router) {
 
     }
 
     public ExternalDownloadAllDocuments(securityId: string, forwardingShipmentId: string, tenant: number)
     {
+        var pre_link = ServiceHelper.GetAppURL(this.baseUrl)
+            + `api/CorrespondenceDownload/PreValidateAndDownloadDocument?DA=1&securitykey=${securityId}::CS:${tenant}:${forwardingShipmentId ? forwardingShipmentId : ""}:cargo`;
+
+        let _http = ServiceHelper.HttpClient;
+            _http.get(pre_link, ServiceHelper.GetHeadersWithToken())
+                .subscribe(
+                    r => {  },
+                    e => { this.OnSignoutClicked(); },
+                    () => {  }
+                );
+
         var link = ServiceHelper.GetAppURL(this.baseUrl)
-            + `WebPages/CorrespondenceDownloadpage.aspx?DA=1&securitykey=${securityId}::CS:${tenant}:${forwardingShipmentId ? forwardingShipmentId : ""}:cargo`;
+            + `api/CorrespondenceDownload/ValidateAndDownloadDocument?DA=1&securitykey=${securityId}::CS:${tenant}:${forwardingShipmentId ? forwardingShipmentId : ""}:cargo`;
         var win = window.open(link, '_blank');
 
         if (win) {
@@ -30,8 +45,21 @@ export class DocumentDownloadService {
     }
     public ExternalDownloadPage(securityId: string, tenant: number, fileName: string)
     {
+        var pre_link = ServiceHelper.GetAppURL(this.baseUrl)
+            + `api/CorrespondenceDownload/PreValidateAndDownloadDocument?Id=${securityId}~${tenant}~${null}~${fileName}`;
+
+
+            let _http = ServiceHelper.HttpClient;
+            _http.get(pre_link, ServiceHelper.GetHeadersWithToken())
+                .subscribe(
+                    r => {  },
+                    e => { this.OnSignoutClicked(); },
+                    () => {  }
+                );
+
         var link = ServiceHelper.GetAppURL(this.baseUrl)
-            + `WebPages/CorrespondenceDownloadpage.aspx?Id=${securityId}~${tenant}~${null}~${fileName}`;
+                + `api/CorrespondenceDownload/ValidateAndDownloadDocument?Id=${securityId}~${tenant}~${null}~${fileName}`;
+
         var win = window.open(link, '_blank');
 
         if (win) {
@@ -39,6 +67,27 @@ export class DocumentDownloadService {
         }
 
     }
+
+    OnSignoutClicked() {
+
+        CargoTrackingBrandingData.Tenant = +sessionStorage.getItem("LoggedUserTenant");
+
+        sessionStorage.clear();
+
+        if (CargoTrackingBrandingData.Tenant)
+
+
+
+
+            this.router.navigate(["cargo-tracking/login"]);//,{ queryParams: {tenant: this.tenant}}
+
+        else
+
+            this.router.navigate(["cargo-tracking/login"]);    
+
+    }
+
+
 
     public  DownloadPage(id: string, documentName: string) {
         var url: string = "id=" + id;

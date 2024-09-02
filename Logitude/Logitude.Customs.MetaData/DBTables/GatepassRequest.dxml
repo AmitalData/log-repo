@@ -9,8 +9,7 @@
     Type="varchar"
     Size="15">
     <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="Tenant"
@@ -65,6 +64,21 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DeclarationId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="OriginSiteCode"
     ReferencedTable="SiteLookups"
@@ -84,5 +98,10 @@
     ForeignKeyColumn="TransportationTypeCode"
     ReferencedTable="TransferCargoMethodTypes"
     ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="DeclarationId"
+    ReferencedTable="Declarations"
+    ReferencedColumn="Id"
     ReferencedTableSchema="Customs" />
 </Table>

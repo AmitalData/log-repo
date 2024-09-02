@@ -116,10 +116,13 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 {
                     case "0001":
                         {
+                         
+                            Update0001(theDecId, mySTBMessage.EventQty);
+                            this._DeclarationPM.AvailabilityDate = mySTBMessage.EventTime;
+
                             if (!hasAvailabilityDate) // if true, wont rais SMG event
                             {
-                            Update0001(theDecId, mySTBMessage.EventQty);
-                            unifreightFUStatusTaskService.UpsertFUStatusLE2U(_CommunicationLog.Tenant, loggedContactId, new UnifreightFUStatusParam()
+                                unifreightFUStatusTaskService.UpsertFUStatusLE2U(_CommunicationLog.Tenant, loggedContactId, new UnifreightFUStatusParam()
                             {
                                 Entname = "CFIFILEM",
                                 PrimaryNum = _DeclarationPM.CustomFileNo,
@@ -128,7 +131,6 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                                 EventDateTime = mySTBMessage.EventTime,
                                 OwnerUnifreightUserCode = myOwnerUnifreightUserCode
                             });
-                            this._DeclarationPM.AvailabilityDate = mySTBMessage.EventTime;
                             }
                         }
                         break;
@@ -189,8 +191,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
         void Update0001(string theDecId, int EventQty)
         {
-            if(!_DeclarationPM.AvailabilityDate.HasValue)
-            {
+             
             string AcceptanceStatusCode = "";
             var totPackageQuantity = _DeclarationPM.Consignments.SelectMany(r => r.ConsignmentPackages).Sum(p => p.PackageQuantity);
             if (EventQty == totPackageQuantity)
@@ -224,7 +225,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
                 LogMessagingUtil.Instance.AppendLine("Update Declaration Courier Status CourierPaymentStatusCode=" + currentDeclarationCourierStatusPM.CourierPaymentStatusCode);
             }
-            }
+             
         }
 
 

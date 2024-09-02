@@ -32,21 +32,23 @@ export class AddEditMultipleAPInvoiceLineComponent {
         this.GLAccountsFilterItems = new ApiQueryFilters();
         this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
     }
-     public ChargeTypesQueryFilters: ApiQueryFilters;
-    private BuildQueryFilters() {
+        public ChargeTypesQueryFilters: ApiQueryFilters;
+     private BuildQueryFilters() {
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
         this.ChargeTypesQueryFilters.addAdditionalFilter("IsPayable", true, null, null, "Equals", false, false, false, "boolean");
         this.ChargeTypesQueryFilters.addAdditionalFilter("PayableDebitGLAcountId", true, null, null, "IsNotNull", false, false, false, "Text");
     }
+ 
     
      
+ 
     SetDataContext(dataContext: APInvoiceLineShortItem) {
         this.EntityPM = dataContext.EntityPM;
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;
         this.Clone();
-        this.BuildQueryFilters();
+      //  this.BuildQueryFilters();
     }
 
     CancelButtonClicked() {

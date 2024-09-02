@@ -901,6 +901,7 @@ namespace WebFreight.Web.Helpers
             TextCodeRepository textCodeRepoitory = new TextCodeRepository(tenant);
             TenantRepository tenantRepoitory = new TenantRepository(tenant);
             var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
+
             string queryName = !string.IsNullOrEmpty(query.DisplayText) ? query.DisplayText : TranslateTextsClass.Translate(query.NameTextCodeCode, tenant).Replace(" ", "_") + "_" + query.ObjectTableName + "s";
 
             queryName = ExportToExcelHelper.GetValidFileName(queryName);//queryName.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "").Replace("'", "");
@@ -910,6 +911,7 @@ namespace WebFreight.Web.Helpers
             //    queryName = queryName.Substring(0, 31);
 
             System.Xml.Linq.XElement entities = new System.Xml.Linq.XElement(queryName);
+            //System.Xml.Linq.XElement entities = new System.Xml.Linq.XElement(query.ObjectTableName + "s");
             try
             {
                 int datacount = 0;
@@ -1091,6 +1093,13 @@ namespace WebFreight.Web.Helpers
             MethodInfo getCountMethodInfo = null;
             switch (query.QuerySection)
             {
+                case "ShipmentLogBox":
+                    {
+                        getListMethodInfo = context.GetType().GetMethod("GetLogBoxShipmentFilters");
+                        getCountMethodInfo = context.GetType().GetMethod("GetLogBoxShipmentFiltersCount");
+
+                        break;
+                    }
                 case "ShipmentFollowUp":
                     {
                         getListMethodInfo = context.GetType().GetMethod("GetFollowUpsByShipmentsFilter");
@@ -1241,13 +1250,13 @@ namespace WebFreight.Web.Helpers
                     foreach (QueryColumnPM column in queryColumns)
                     {
 
-                        string text = !string.IsNullOrWhiteSpace(column.ObjectFieldFieldLableTextCodeDefaultText)
-                                      ? column.ObjectFieldFieldLableTextCodeDefaultText
-                                     : column.ObjectFieldListLabelTextCodeCode;
+                      //  string text = !string.IsNullOrWhiteSpace(column.ObjectFieldFieldLableTextCodeDefaultText)
+                      //                ? column.ObjectFieldFieldLableTextCodeDefaultText
+                      //               : column.ObjectFieldListLabelTextCodeCode;
 
-                       // string text = !string.IsNullOrWhiteSpace(column.ObjectFieldListLabelTextCodeCode)
-                                 //     ? column.ObjectFieldListLabelTextCodeCode
-                                  //   : column.ObjectFieldFullNameTextCodeCode;
+                        string text = !string.IsNullOrWhiteSpace(column.ObjectFieldListLabelTextCodeCode)
+                                      ? column.ObjectFieldListLabelTextCodeCode
+                                     : column.ObjectFieldFullNameTextCodeCode;
 
 
                         if (!string.IsNullOrEmpty(column.DisplayText))
@@ -1310,10 +1319,12 @@ namespace WebFreight.Web.Helpers
 
                             if (column.ObjectFieldDataTypeCode == "DateTime" && value != null)
                             {
-                                //value = value.ToString("dd/MM/yyyy");
+
+
+                                // value = value.ToString("dd/MM/yyyy");
 
                                 value = ((DateTime)value).ToString("dd/MM/yyyy");
-
+ 
                             }
 
                             cell.SetCellType(GetCellType(column.ObjectFieldDataTypeCode));
@@ -1335,7 +1346,7 @@ namespace WebFreight.Web.Helpers
                                 {
                                     if (value == "") value = "0";
                                     cell.SetCellValue(bool.Parse(value));
-                                    
+ 
                                 }
                                 else
                                     SetCellValueWithMaxLength(cell, value.ToString());

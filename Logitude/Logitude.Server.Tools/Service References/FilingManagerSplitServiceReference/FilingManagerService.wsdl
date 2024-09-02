@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="FilingManagerService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://univ511:5057/Unifreight511/FilingManagerSplit?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://univ511:5057/Unifreight511/FilingManagerSplit?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://univ511:5057/Unifreight511/FilingManagerSplit?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Unifreight.FilingManager.Common" />
+      <xsd:import schemaLocation="http://univ511:5057/Unifreight511/FilingManagerSplit?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://univ511:5057/Unifreight511/FilingManagerSplit?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Amital.UpDown.Common" />
+      <xsd:import schemaLocation="http://univ511:5057/Unifreight511/FilingManagerSplit?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Amital.UpDown.Common.ServerUpload" />
+      <xsd:import schemaLocation="http://univ511:5057/Unifreight511/FilingManagerSplit?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Unifreight.FilingManager.WindowsService.BL" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IFilingManager_GetBase64StringByTenantComId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBase64StringByTenantComId" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_GetBase64StringByTenantComId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBase64StringByTenantComIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_GetBase64StringByFolderTenantComId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBase64StringByFolderTenantComId" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_GetBase64StringByFolderTenantComId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBase64StringByFolderTenantComIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_GetPageTiffAsB64FromTarByTenantComIdPage_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPageTiffAsB64FromTarByTenantComIdPage" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_GetPageTiffAsB64FromTarByTenantComIdPage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPageTiffAsB64FromTarByTenantComIdPageResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_PutStreamByTenantComId_InputMessage">
+    <wsdl:part name="parameters" element="tns:PutStreamByTenantComId" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_PutStreamByTenantComId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PutStreamByTenantComIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_CreateNewFiling_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateNewFiling" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_CreateNewFiling_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateNewFilingResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_DownloadBlobChunk_InputMessage">
+    <wsdl:part name="parameters" element="tns:DownloadBlobChunk" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_DownloadBlobChunk_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DownloadBlobChunkResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_RegisterDownloadChunkOfBlob_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterDownloadChunkOfBlob" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_RegisterDownloadChunkOfBlob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterDownloadChunkOfBlobResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_CreateUploadBlob_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateUploadBlob" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_CreateUploadBlob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateUploadBlobResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_AddUploadBlobFileChunkAsync_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddUploadBlobFileChunkAsync" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_AddUploadBlobFileChunkAsync_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddUploadBlobFileChunkAsyncResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_FinishUploadFile_InputMessage">
+    <wsdl:part name="parameters" element="tns:FinishUploadFile" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_FinishUploadFile_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FinishUploadFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_GetStream_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetStream" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_GetStream_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetStreamResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_GetStreamVer201404_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetStreamVer201404" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_GetStreamVer201404_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetStreamVer201404Response" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_GetBase64String_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBase64String" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_GetBase64String_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBase64StringResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_PutStream_InputMessage">
+    <wsdl:part name="parameters" element="tns:PutStream" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_PutStream_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PutStreamResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_CreateFolder_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateFolder" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_CreateFolder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateFolderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_DeleteDocument_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteDocument" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_DeleteDocument_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteDocumentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_GetDocument_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDocument" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_GetDocument_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDocumentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_PutDocument_InputMessage">
+    <wsdl:part name="parameters" element="tns:PutDocument" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_PutDocument_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PutDocumentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_PutStreamDocument_InputMessage">
+    <wsdl:part name="parameters" element="tns:PutStreamDocument" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_PutStreamDocument_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PutStreamDocumentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_SetSecurity_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetSecurity" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_SetSecurity_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetSecurityResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_WakeUp_InputMessage">
+    <wsdl:part name="parameters" element="tns:WakeUp" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_WakeUp_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WakeUpResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_RemoveFileFromPreview_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveFileFromPreview" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_RemoveFileFromPreview_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveFileFromPreviewResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_GetState_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetState" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_GetState_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_GetFeatureList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFeatureList" />
+  </wsdl:message>
+  <wsdl:message name="IFilingManager_GetFeatureList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFeatureListResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IFilingManager">
+    <wsdl:operation name="GetBase64StringByTenantComId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFilingManager/GetBase64StringByTenantComId" message="tns:IFilingManager_GetBase64StringByTenantComId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFilingManager/GetBase64StringByTenantComIdResponse" message="tns:IFilingManager_GetBase64StringByTenantComId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBase64StringByFolderTenantComId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFilingManager/GetBase64StringByFolderTenantComId" message="tns:IFilingManager_GetBase64StringByFolderTenantComId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFilingManager/GetBase64StringByFolderTenantComIdResponse" message="tns:IFilingManager_GetBase64StringByFolderTenantComId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPageTiffAsB64FromTarByTenantComIdPage">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFilingManager/GetPageTiffAsB64FromTarByTenantComIdPage" message="tns:IFilingManager_GetPageTiffAsB64FromTarByTenantComIdPage_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFilingManager/GetPageTiffAsB64FromTarByTenantComIdPageResponse" message="tns:IFilingManager_GetPageTiffAsB64FromTarByTenantComIdPage_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PutStreamByTenantComId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFilingManager/PutStreamByTenantComId" message="tns:IFilingManager_PutStreamByTenantComId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFilingManager/PutStreamByTenantComIdResponse" message="tns:IFilingManager_PutStreamByTenantComId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateNewFiling">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFilingManager/CreateNewFiling" message="tns:IFilingManager_CreateNewFiling_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFilingManager/CreateNewFilingResponse" message="tns:IFilingManager_CreateNewFiling_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DownloadBlobChunk">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDownloaderChunkServer/DownloadBlobChunk" message="tns:IFilingManager_DownloadBlobChunk_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDownloaderChunkServer/DownloadBlobChunkResponse" message="tns:IFilingManager_DownloadBlobChunk_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegisterDownloadChunkOfBlob">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDownloaderChunkServer/RegisterDownloadChunkOfBlob" message="tns:IFilingManager_RegisterDownloadChunkOfBlob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDownloaderChunkServer/RegisterDownloadChunkOfBlobResponse" message="tns:IFilingManager_RegisterDownloadChunkOfBlob_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateUploadBlob">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUploaderChunkServer/CreateUploadBlob" message="tns:IFilingManager_CreateUploadBlob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUploaderChunkServer/CreateUploadBlobResponse" message="tns:IFilingManager_CreateUploadBlob_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddUploadBlobFileChunkAsync">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUploaderChunkServer/AddUploadBlobFileChunkAsync" message="tns:IFilingManager_AddUploadBlobFileChunkAsync_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUploaderChunkServer/AddUploadBlobFileChunkAsyncResponse" message="tns:IFilingManager_AddUploadBlobFileChunkAsync_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FinishUploadFile">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUploaderChunkServer/FinishUploadFile" message="tns:IFilingManager_FinishUploadFile_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUploaderChunkServer/FinishUploadFileResponse" message="tns:IFilingManager_FinishUploadFile_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStream">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFilingManager/GetStream" message="tns:IFilingManager_GetStream_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFilingManager/GetStreamResponse" message="tns:IFilingManager_GetStream_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStreamVer201404">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFilingManager/GetStreamVer201404" message="tns:IFilingManager_GetStreamVer201404_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFilingManager/GetStreamVer201404Response" message="tns:IFilingManager_GetStreamVer201404_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBase64String">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFilingManager/GetBase64String" message="tns:IFilingManager_GetBase64String_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFilingManager/GetBase64StringResponse" message="tns:IFilingManager_GetBase64String_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PutStream">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFilingManager/PutStream" message="tns:IFilingManager_PutStream_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFilingManager/PutStreamResponse" message="tns:IFilingManager_PutStream_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateFolder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFilingManager/CreateFolder" message="tns:IFilingManager_CreateFolder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFilingManager/CreateFolderResponse" message="tns:IFilingManager_CreateFolder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteDocument">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFilingManager/DeleteDocument" message="tns:IFilingManager_DeleteDocument_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFilingManager/DeleteDocumentResponse" message="tns:IFilingManager_DeleteDocument_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDocument">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFilingManager/GetDocument" message="tns:IFilingManager_GetDocument_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFilingManager/GetDocumentResponse" message="tns:IFilingManager_GetDocument_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PutDocument">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFilingManager/PutDocument" message="tns:IFilingManager_PutDocument_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFilingManager/PutDocumentResponse" message="tns:IFilingManager_PutDocument_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PutStreamDocument">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFilingManager/PutStreamDocument" message="tns:IFilingManager_PutStreamDocument_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFilingManager/PutStreamDocumentResponse" message="tns:IFilingManager_PutStreamDocument_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetSecurity">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFilingManager/SetSecurity" message="tns:IFilingManager_SetSecurity_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFilingManager/SetSecurityResponse" message="tns:IFilingManager_SetSecurity_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WakeUp">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFilingManager/WakeUp" message="tns:IFilingManager_WakeUp_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFilingManager/WakeUpResponse" message="tns:IFilingManager_WakeUp_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveFileFromPreview">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFilingManager/RemoveFileFromPreview" message="tns:IFilingManager_RemoveFileFromPreview_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFilingManager/RemoveFileFromPreviewResponse" message="tns:IFilingManager_RemoveFileFromPreview_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetState">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFilingManager/GetState" message="tns:IFilingManager_GetState_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFilingManager/GetStateResponse" message="tns:IFilingManager_GetState_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFeatureList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFilingManager/GetFeatureList" message="tns:IFilingManager_GetFeatureList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFilingManager/GetFeatureListResponse" message="tns:IFilingManager_GetFeatureList_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttp" type="tns:IFilingManager">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetBase64StringByTenantComId">
+      <soap:operation soapAction="http://tempuri.org/IFilingManager/GetBase64StringByTenantComId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBase64StringByFolderTenantComId">
+      <soap:operation soapAction="http://tempuri.org/IFilingManager/GetBase64StringByFolderTenantComId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPageTiffAsB64FromTarByTenantComIdPage">
+      <soap:operation soapAction="http://tempuri.org/IFilingManager/GetPageTiffAsB64FromTarByTenantComIdPage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PutStreamByTenantComId">
+      <soap:operation soapAction="http://tempuri.org/IFilingManager/PutStreamByTenantComId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateNewFiling">
+      <soap:operation soapAction="http://tempuri.org/IFilingManager/CreateNewFiling" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DownloadBlobChunk">
+      <soap:operation soapAction="http://tempuri.org/IDownloaderChunkServer/DownloadBlobChunk" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterDownloadChunkOfBlob">
+      <soap:operation soapAction="http://tempuri.org/IDownloaderChunkServer/RegisterDownloadChunkOfBlob" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateUploadBlob">
+      <soap:operation soapAction="http://tempuri.org/IUploaderChunkServer/CreateUploadBlob" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddUploadBlobFileChunkAsync">
+      <soap:operation soapAction="http://tempuri.org/IUploaderChunkServer/AddUploadBlobFileChunkAsync" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FinishUploadFile">
+      <soap:operation soapAction="http://tempuri.org/IUploaderChunkServer/FinishUploadFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStream">
+      <soap:operation soapAction="http://tempuri.org/IFilingManager/GetStream" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStreamVer201404">
+      <soap:operation soapAction="http://tempuri.org/IFilingManager/GetStreamVer201404" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBase64String">
+      <soap:operation soapAction="http://tempuri.org/IFilingManager/GetBase64String" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PutStream">
+      <soap:operation soapAction="http://tempuri.org/IFilingManager/PutStream" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateFolder">
+      <soap:operation soapAction="http://tempuri.org/IFilingManager/CreateFolder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteDocument">
+      <soap:operation soapAction="http://tempuri.org/IFilingManager/DeleteDocument" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocument">
+      <soap:operation soapAction="http://tempuri.org/IFilingManager/GetDocument" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PutDocument">
+      <soap:operation soapAction="http://tempuri.org/IFilingManager/PutDocument" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PutStreamDocument">
+      <soap:operation soapAction="http://tempuri.org/IFilingManager/PutStreamDocument" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetSecurity">
+      <soap:operation soapAction="http://tempuri.org/IFilingManager/SetSecurity" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WakeUp">
+      <soap:operation soapAction="http://tempuri.org/IFilingManager/WakeUp" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveFileFromPreview">
+      <soap:operation soapAction="http://tempuri.org/IFilingManager/RemoveFileFromPreview" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetState">
+      <soap:operation soapAction="http://tempuri.org/IFilingManager/GetState" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFeatureList">
+      <soap:operation soapAction="http://tempuri.org/IFilingManager/GetFeatureList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="FilingManagerService">
+    <wsdl:port name="BasicHttp" binding="tns:BasicHttp">
+      <soap:address location="http://univ511:5057/Unifreight511/FilingManagerSplit/Basic" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

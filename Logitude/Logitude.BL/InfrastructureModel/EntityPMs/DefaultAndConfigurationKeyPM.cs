@@ -9,7 +9,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
 {
     public class DefaultAndConfigurationKeyPM
     {
-        [Key]
         public int Tenant { get; set; }
         public DateTime CreateDate { get; set; }
         public string SetType1 { get; set; }

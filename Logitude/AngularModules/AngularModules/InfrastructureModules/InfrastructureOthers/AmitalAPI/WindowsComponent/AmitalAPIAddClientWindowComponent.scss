@@ -1,5 +1,9 @@
-:host ::ng-deep .form-data-field div LogLabel {
-    width: 170px !important;
+:host ::ng-deep .form-data-field div {
+    flex: 0 0 470px;
+
+    LogLabel {
+        width: 170px !important;
+    }
 }
 
 :host ::ng-deep .schema-section LogLabel td.TextTrimming {

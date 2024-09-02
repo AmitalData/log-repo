@@ -15,7 +15,7 @@ export class PrivateLabelsBrandingDataService {
 
     }
 
-    private static GetImageFromBytes(ImageByte: any) {
+    public static GetImageFromBytes(ImageByte: any) {
         return "data:image/png;base64," + ImageByte;
     }
 

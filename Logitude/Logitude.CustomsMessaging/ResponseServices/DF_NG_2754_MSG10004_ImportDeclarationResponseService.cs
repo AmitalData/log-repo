@@ -125,8 +125,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             string defIsCollectActive = "";
             //var mySupplierInvioceItemCertificatUpdateService = new SupplierInvioceItemCertificatUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant); 
             bool isStatusVPA = false;
-            bool isCollectActive =false;
-            CourierMasterPM courierMaster=null;
+            bool isCollectActive = false;
+            CourierMasterPM courierMaster = null;
             this.MyResponseData = new INF_MSG_GenericResponseData();
 
             if (string.IsNullOrWhiteSpace(requestParams.AppicationId))
@@ -165,25 +165,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
 
 
-
-            if (_MyDeclarationPM.IsCourierDeclaration && customResponse.Response != null && customResponse.Response.Status != null && (customResponse.Response.Status.NameCode.Value == "13" ||   customResponse.Response.Status.NameCode.Value == "14"))
+            if (_MyDeclarationPM.IsCourierDeclaration) 
             {
-                // update payment status code
-                DeclarationCourierStatusPM dcapm = new DeclarationCourierStatusQueryService(context)
-                    .GetByDeclarationIdList(requestParams.Tenant, new List<string>() { _MyDeclarationPM.Id }).FirstOrDefault();
-                if (dcapm != null)
+				DeclarationCourierStatusPM dcapm = new DeclarationCourierStatusQueryService(context)
+					   .GetByDeclarationIdList(requestParams.Tenant, new List<string>() { _MyDeclarationPM.Id }).FirstOrDefault();
+
+				if (customResponse.Response != null && customResponse.Response.Status != null && (customResponse.Response.Status.NameCode.Value == "13" ||   customResponse.Response.Status.NameCode.Value == "14"))
                 {
-                    dcapm.CourierPaymentStatusCode = "R";
-                    dcapm.ChangeSetOp = ChangeSetOperation.Update;
-
-                    new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant)
-                        .Update(dcapm, true);
-                }
-            }
-
-            
-            if (_MyDeclarationPM.IsCourierDeclaration)
-            {
+                    // update payment status code
+                    if (dcapm != null)
+                    {
+                        dcapm.CourierPaymentStatusCode = "R";
+                        dcapm.ChangeSetOp = ChangeSetOperation.Update;
+                
+                        new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant)
+                            .Update(dcapm, true);
+                    }
+                }          
                 CourierMasterQueryService courierMasterService = new CourierMasterQueryService(requestParams.Tenant);
                   courierMaster = courierMasterService.GetSingle(_MyDeclarationPM.CourierMasterId, false, false);
 
@@ -195,24 +193,35 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     defIsCollectActive = defaultValueQueryService.GetDefault("ISRAEL", "CGO_ACT_COLLECT", "NON", courierMaster.IntegratorNumber, _MyDeclarationPM.Tenant);
 
                     isCollectActive = defIsCollectActive == "Y";
-                    if (isCollectActive && _MyDeclarationPM.IsConnectedToUnifreight)
+                    if (isCollectActive)
                     {
-                        try
+                        if (_MyDeclarationPM.IsConnectedToUnifreight) 
+                        { 
+                           try
+                           {
+                               isStatusVPA = myDeclarationUpdateService.CheckFileStatus(_MyDeclarationPM, requestParams.LoggingUserId, "VPA");
+                           }
+                           catch (Exception e)
+                           {
+                               this.MyResponseData.ApplicationID = requestParams.AppicationId;
+                               this.MyResponseData.Succeeded = false;
+                               this.MyResponseData.UserMessage = "Error in the URouter service , VPA cannot be check(תקלה בUROUTER , לא ניתן לבדוק סטטוס VPA)";
+                               this.MyResponseData.HasException = true;
+                               
+                               LogMessagingUtil.Instance.AppendLine("Exception was thrown while checking if VPA exist in the file " + _MyDeclarationPM.CustomFileNo + Environment.NewLine + e.Message);
+                              
+                               throw new System.Exception("Error in the URouter service , VPA cannot be check(תקלה בUROUTER , לא ניתן לבדוק סטטוס VPA)");
+                           }
+						}
+                        else
                         {
-                            isStatusVPA = myDeclarationUpdateService.CheckFileStatus(_MyDeclarationPM, requestParams.LoggingUserId, "VPA");
-                        }
-                        catch (Exception e)
-                        {
-                            this.MyResponseData.ApplicationID = requestParams.AppicationId;
-                            this.MyResponseData.Succeeded = false;
-                            this.MyResponseData.UserMessage = "Error in the URouter service , VPA cannot be check(תקלה בUROUTER , לא ניתן לבדוק סטטוס VPA)";
-                            this.MyResponseData.HasException = true;
-                            
-                            LogMessagingUtil.Instance.AppendLine("Exception was thrown while checking if VPA exist in the file " + _MyDeclarationPM.CustomFileNo + Environment.NewLine + e.Message);
-                           
-                            throw new System.Exception("Error in the URouter service , VPA cannot be check(תקלה בUROUTER , לא ניתן לבדוק סטטוס VPA)");
-                        }
-                    }
+							if (dcapm != null)
+							{
+								isStatusVPA = dcapm.IsNotSendVPE;
+							}
+
+						}
+					}                                
                 }
               
 

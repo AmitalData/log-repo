@@ -166,9 +166,6 @@
     <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.5.3.2\lib\net46\NLog.dll</HintPath>
     </Reference>
-    <Reference Include="NLog.Loki, Version=0.0.0.0, Culture=neutral, PublicKeyToken=8dab11a1448ce9d0, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.Targets.Loki.2.2.0\lib\netstandard2.0\NLog.Loki.dll</HintPath>
-    </Reference>
     <Reference Include="Stimulsoft.Report, Version=2015.1.0.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>StimulsoftDll\Stimulsoft.Report.dll</HintPath>
@@ -384,6 +381,7 @@
     <Compile Include="CoreBL\Batch\BatchClosingTaxReportJournalTask.cs" />
     <Compile Include="CoreBL\Batch\BatchGLAccountInterestDeactivationBalanceTask.cs" />
     <Compile Include="CoreBL\Batch\BatchGLAccountMultiToCurrencyTask.cs" />
+    <Compile Include="CoreBL\Batch\BatchGLAccountRecalculateTask.cs" />
     <Compile Include="CoreBL\Batch\BatchYearlyFIXService.cs" />
     <Compile Include="CoreBL\Batch\GLAccountInterestActivationBalanceTask.cs" />
     <Compile Include="CoreBL\BuildTenant\MumpsOpenReconcile\OpenRecoDataValidationService.cs" />
@@ -1029,12 +1027,14 @@
     <Compile Include="Utils\GLAccountInterestActivationBalanceBatch.cs" />
     <Compile Include="Utils\GLAccountInterestDeactivationBalanceBatch.cs" />
     <Compile Include="Utils\GLAccountMultiToCurrencyBatch.cs" />
+    <Compile Include="Utils\GLAccountRecalculateBatch.cs" />
     <Compile Include="Utils\InterestTransactionsCheckARun.cs" />
     <Compile Include="Utils\InterestTransactionsCheckBRun.cs" />
     <Compile Include="Utils\PostDatedChequesRedemptionBatch.cs" />
     <Compile Include="Utils\ReconciliationAfterConversionBatch.cs" />
     <Compile Include="Utils\ReconciliationStageBBatch.cs" />
     <Compile Include="Utils\ReconciliationStageCBatch.cs" />
+    <Compile Include="Utils\Redempt_a_ChequeBatch.cs" />
     <Compile Include="Validators\UserDefinedReportValidator.cs" />
     <Compile Include="Validators\InterestReportValidator.cs" />
     <Compile Include="Validators\AccountingPeriodValidator.cs" />
@@ -1194,6 +1194,7 @@
   <ItemGroup>
     <Content Include="CoreBL\BuildTenant\LedgerTransactionsType.txt" />
     <Content Include="CoreBL\BuildTenant\usp_AccountingStreaming.txt" />
+    <Content Include="readme.txt" />
     <Content Include="StimulsoftDll\Stimulsoft.Report.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

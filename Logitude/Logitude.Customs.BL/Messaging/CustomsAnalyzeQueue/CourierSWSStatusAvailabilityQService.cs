@@ -118,9 +118,12 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 {
                     case "AVA":
                         {
+                           
+                                UpdateAVA(theDecId, mySTBMessage.PackageQuantity);
+                            this._DeclarationPM.AvailabilityDate = mySTBMessage.StatusDate;
+
                             if (!hasAvailabilityDate) // if true, wont rais SMG event
                             {
-                                UpdateAVA(theDecId, mySTBMessage.PackageQuantity);
                                 unifreightFUStatusTaskService.UpsertFUStatusLE2U(_CommunicationLog.Tenant, loggedContactId, new UnifreightFUStatusParam()
                                 {
                                     Entname = "CFIFILEM",
@@ -130,7 +133,6 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                                     EventDateTime = mySTBMessage.StatusDate,
                                     OwnerUnifreightUserCode = myOwnerUnifreightUserCode//FUOwnerUnifreightUserCode.SWISS
                                 });
-                                this._DeclarationPM.AvailabilityDate = mySTBMessage.StatusDate;
                             }
                         }
                         break;
@@ -176,9 +178,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
         void UpdateAVA(string theDecId, int EventQty)
         {
 
-            if (!_DeclarationPM.AvailabilityDate.HasValue)
-            {
-     
+            
             string AcceptanceStatusCode = "";
             var totPackageQuantity = _DeclarationPM.Consignments.SelectMany(r => r.ConsignmentPackages).Sum(p => p.PackageQuantity);
             if (EventQty == totPackageQuantity)
@@ -213,7 +213,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
                 LogMessagingUtil.Instance.AppendLine("Update Declaration Courier Status CourierPaymentStatusCode=" + currentDeclarationCourierStatusPM.CourierPaymentStatusCode);
             }
-            }
+             
         }
 
         private void UpadteTerminalReleaseDate(CourierHawbStatus mySTBMessage, string theDecId)

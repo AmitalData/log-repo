@@ -46,6 +46,8 @@ using Logitude.BL.ShipmentsModel.EntityQueries;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Logitude.Server.Tools.QueueService;
 using WebFreight.Web.Helpers.Documents;
+using System.Globalization;
+using System.Configuration;
 
 namespace WebFreight.Web.WebServices
 {
@@ -1511,7 +1513,7 @@ namespace WebFreight.Web.WebServices
             {
 
 
-                if (!string.IsNullOrEmpty(copyid))
+                if (!string.IsNullOrEmpty(copyid) && copyid != "null")
                 {
                     var docoutcopy = context.DocumentOutCopies.Where(d => d.DocumentOutId == documentFiling.Id && d.Id == copyid && d.Tenant == tenant).FirstOrDefault();
                     if (docoutcopy != null)
@@ -1543,8 +1545,17 @@ namespace WebFreight.Web.WebServices
 
         public static HttpResponseMessage GetFileStream(string id)//THIS CODE USED  FROM  AmitalChromWinForm!!
         {
-            //Uploader.GetFileStream(id);
-            string result = "";
+			DateTime stopLogAt = DateTime.MinValue;//DateTime stopLogAt = new DateTime(2020, 09, 01);
+			string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20240818T155633.LogUntilDateyyyyMMdd"];
+			if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+			{
+				stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+													"yyyyMMdd",
+													CultureInfo.InvariantCulture,
+													DateTimeStyles.None);
+			}
+			//Uploader.GetFileStream(id);
+			string result = "";
             Uploader uploader = new Uploader();
             var filestrings = id.Split('_');
             string documentId = filestrings[1];
@@ -1555,19 +1566,27 @@ namespace WebFreight.Web.WebServices
                 LogitudeSettings.IsCostomsDeploy
                 )
             {
-                var setting = CustomsSettingQueryService.GetSettingByTenant(tenant) ?? new CustomsSettingPM();
+				LogitudeSettings.HandleLogMe(id + "LogitudeSettings.IsCostomsDeploy " + overrideSecDueIsConnectedToUniFreight, false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
+
+				var setting = CustomsSettingQueryService.GetSettingByTenant(tenant) ?? new CustomsSettingPM();
                 overrideSecDueIsConnectedToUniFreight = setting.IsConnectedToUniFreight;
                 if (!overrideSecDueIsConnectedToUniFreight)//semi a like Connected  == not cloud !!
                 {
-                    if (//!String.IsNullOrWhiteSpace( setting.UnfConnectionString)  && 
+					LogitudeSettings.HandleLogMe(id + "!overrideSecDueIsConnectedToUniFreight " + overrideSecDueIsConnectedToUniFreight, false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
+
+					if (//!String.IsNullOrWhiteSpace( setting.UnfConnectionString)  && 
                         !String.IsNullOrWhiteSpace(setting.OnPremiseFillingService))
                     {
-                        overrideSecDueIsConnectedToUniFreight = true;
+						LogitudeSettings.HandleLogMe(id + "!String.IsNullOrWhiteSpace(setting.OnPremiseFillingService)) " + overrideSecDueIsConnectedToUniFreight, false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
+
+						overrideSecDueIsConnectedToUniFreight = true;
                     }
 
                 }
             }
-            if (!overrideSecDueIsConnectedToUniFreight)
+			LogitudeSettings.HandleLogMe(id + "overrideSecDueIsConnectedToUniFreight " + overrideSecDueIsConnectedToUniFreight, false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
+
+			if (!overrideSecDueIsConnectedToUniFreight)
             {
                 throw new Exception("using File Stream only @ onpremise");
             }
@@ -1578,10 +1597,14 @@ namespace WebFreight.Web.WebServices
 
             try
             {
-                data = uploader.DownloadFile(documentId, documentExtension, "", tenant);
+				LogitudeSettings.HandleLogMe(id + "before DownloadFile", false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
+
+				data = uploader.DownloadFile(documentId, documentExtension, "", tenant);
                 fileName = documentId + "." + documentExtension;
-            }
-            catch (ExceptionInErrorLog ee)
+				LogitudeSettings.HandleLogMe(id + "after DownloadFile" + fileName , false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
+
+			}
+			catch (ExceptionInErrorLog ee)
             {
 
                 XElement myXml =
@@ -1593,13 +1616,15 @@ new XElement("Error", ee.ToString()
                 data = System.Text.UTF8Encoding.UTF8.GetBytes(myXml.ToString());
                 fileName = documentId + ".xml";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+				LogitudeSettings.HandleLogMe(id + "catch (Exception)" + ex.Message.ToString() , false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
 
-                throw;
+				throw;
             }
+			LogitudeSettings.HandleLogMe(id + "suscsess ", false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
 
-            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+			HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
 
             using (MemoryStream dataMemoryStream = new MemoryStream(data))
             {

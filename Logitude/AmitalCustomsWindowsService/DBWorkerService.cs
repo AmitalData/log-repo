@@ -247,8 +247,9 @@ namespace AmitalCustomsWindowsService
             listOfWorkerEntryPoint.Add(new CustomsHSMSignWR());
             listOfWorkerEntryPoint.Add(new ReportExecutionLogWR());
             listOfWorkerEntryPoint.Add(new SyncRecordsCCUTableWR());
+			listOfWorkerEntryPoint.Add(new DocumentAzureQueueWR());      
 
-            bool testCustomsSchedularWR = false;
+			bool testCustomsSchedularWR = false;
             if (testCustomsSchedularWR)
             {
                 listOfWorkerEntryPoint = new List<Logitude.Server.Tools.WorkerEntryPoint>();

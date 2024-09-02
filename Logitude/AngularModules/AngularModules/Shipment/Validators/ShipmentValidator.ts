@@ -185,6 +185,14 @@ export class ShipmentValidator implements IShipmentValidator {
     }
 
     private ValidatePackages() {
+        if(this.entityPM.IsCustomShipment){
+            this.entityPM.ShipmentPackages.forEach(item => {
+                if(this.entityPM.ShipmentTypeId == "FCLD" && this.entityPM.DirectionId == "C"){
+                    this.Errors.push(this.ValidateContainerNumber(item.ContainerNumber));
+                }
+            });
+            return;
+        }
         if (this.IsFCLEntity) {
             for (var i = 1; i <= 5; i++) {
                 if (!AppTool.IsNullOrEmpty(this.entityPM["Quantity" + i]) && AppTool.IsNullOrEmpty(this.entityPM["PackageTypeId" + i])) {
@@ -196,26 +204,24 @@ export class ShipmentValidator implements IShipmentValidator {
 
         this.entityPM.ShipmentPackages.forEach(item => {
             Validator.TryValidateObject(item, "ShipmentPackage", this.Errors);
-
+       
             if (this.entityPM.TransportModeId != 'A') {
                 if (AppTool.IsNullOrEmpty(item.PackageTypeId)) {
-
+       
                     if (this.IsLCLEntity) {
                         this.Errors.push("Package Type is required");
                     }
-
+       
                     else {
                         this.Errors.push("Container Type is required");
                     }
                 }
-
+       
                 if (AppTool.IsNullOrEmpty(item.Weight)) {
                     this.Errors.push("Gross Weight is required");
                 }
             }
-            if(this.entityPM.ShipmentTypeId == "FCLD" && this.entityPM.DirectionId == "C"){
-                this.Errors.push(this.ValidateContainerNumber(item.ContainerNumber));
-            }
+           
             
         });
     }

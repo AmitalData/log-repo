@@ -5689,7 +5689,6 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;DigitalPortalLanguage&quot;"
     ListPropertyPath="&quot;DigitalPortalLanguage&quot;"
-    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"

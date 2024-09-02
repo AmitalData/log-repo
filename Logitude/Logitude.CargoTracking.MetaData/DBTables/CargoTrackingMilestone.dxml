@@ -5,6 +5,7 @@
   DBType="CargoTracking"
   Module="CargoTracking">
   <Column
+    
     Name="Code"
     Type="varchar"
     Size="2">

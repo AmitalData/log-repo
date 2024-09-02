@@ -28,7 +28,7 @@ export class SpotRateQuoteReportFilterComponent extends BaseComponent {
 
     isReady: boolean = false;
     public RunReportTitle: string;
-    public OpenDate: Date;
+    public OpenDateGraterThan: Date;
     public ExpirationDate: Date;
     public CustomerId: string = null;
     public SalesmanId: string = null;
@@ -49,8 +49,11 @@ export class SpotRateQuoteReportFilterComponent extends BaseComponent {
 
 
     private SetDates() {
-        this.OpenDate = DateTool.GetCurrentDateAsUtc();
-        this.OpenDate.setMonth(this.OpenDate.getMonth() - 1);
+        if (this.OpenDateGraterThan == null) {
+            this.OpenDateGraterThan = DateTool.GetCurrentDateAsUtc();
+            this.OpenDateGraterThan.setMonth(this.OpenDateGraterThan.getMonth() - 1);
+        }
+
     }
 
     RunReport(isloading: boolean) {
@@ -62,19 +65,19 @@ export class SpotRateQuoteReportFilterComponent extends BaseComponent {
         reportFliter.ReportCode = this.ReportsPreview.Report.Code;
         reportFliter.NumberOfPage = 1;
         reportFliter.ProcessType = "GenerateReport";
-        reportFliter.QueryFilterItemLists = this.GetQueryFilterItems ();
+        reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
 
         this.ReportsPreview.GenerateReport(reportFliter, isloading);
 
     }
 
 
-    private GetQueryFilterItems () {
+    private GetQueryFilterItems() {
         var myFilterItems: QueryFilterItem[] = [];
         myFilterItems.push(new QueryFilterItem("CustomerId", this.CustomerId));
         myFilterItems.push(new QueryFilterItem("SalesmanId", this.SalesmanId));
-        myFilterItems.push(new QueryFilterItem("OpenDateGraterThan", this.OpenDate,null, 'Date'));
-        myFilterItems.push(new QueryFilterItem("ExpirationDateLessThan", this.ExpirationDate,null, 'Date'));
+        myFilterItems.push(new QueryFilterItem("OpenDateGraterThan", this.OpenDateGraterThan, null, 'Date'));
+        myFilterItems.push(new QueryFilterItem("ExpirationDateLessThan", this.ExpirationDate, null, 'Date'));
         return myFilterItems;
     }
 
@@ -91,7 +94,7 @@ export class SpotRateQuoteReportFilterComponent extends BaseComponent {
     }
     SetOpenDateFilter(queryFilterItem: QueryFilterItem) {
         if (queryFilterItem.FieldName == "OpenDateGraterThan") {
-            this.OpenDate = queryFilterItem.FieldValue;
+            this.OpenDateGraterThan = queryFilterItem.FieldValue;
         }
     }
     SetExpirationDateLessThanFilter(queryFilterItem: QueryFilterItem) {
@@ -131,13 +134,11 @@ export class SpotRateQuoteReportFilterComponent extends BaseComponent {
 
 
     }
-    ValidateSelectedFilters (){
+    ValidateSelectedFilters() {
         return true;
     }
     IsPartnersChanged(SelectedTab) {
-        if (SelectedTab == '2')
-            this.GLAccountChanged = false;
-        return this.GLAccountChanged;
+        return false;
     }
 
     PrepareContactList() {
@@ -155,7 +156,7 @@ export class SpotRateQuoteReportFilterComponent extends BaseComponent {
         }
         return null
     }
-    GLAccountCardContacts(glAccountId:string) {
+    GLAccountCardContacts(glAccountId: string) {
         var cardExtendedPMService = new CardExtendedPMService();
         cardExtendedPMService.GetAllConnectedPartnersByGLAccountId(glAccountId).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {

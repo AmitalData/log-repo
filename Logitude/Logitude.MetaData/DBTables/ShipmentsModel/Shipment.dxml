@@ -2,9 +2,8 @@
 <Table
   Name="Shipments"
   Schema="dbo"
-  
   DBType="Main"
-  Module="Shipment"> 
+  Module="Shipment">
   <Column
     Name="Id"
     Type="varchar"
@@ -666,15 +665,15 @@
   </Column>
   <Column
     Name="ShipperName"
-    Type="varchar"
-    Size="70">
+    Type="nvarchar"
+    Size="140">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="ConsigneeName"
-    Type="varchar"
-    Size="70">
+    Type="nvarchar"
+    Size="140">
     <Constraints
       Nullable="true" />
   </Column>
@@ -868,8 +867,8 @@
   </Column>
   <Column
     Name="DangerousMaterialDescription"
-    Type="varchar"
-    Size="100">
+    Type="nvarchar"
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>

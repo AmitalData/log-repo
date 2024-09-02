@@ -444,7 +444,9 @@ namespace CommunicationWorkerRole.Services
         {
             string documentId = String.Empty;
             MemoryStream memoryStream = new MemoryStream();
-            if (reportFilter.ReportCode == "LTRP" && schedulerDetails?.ReportDetails?.ReportTemplateType == "E")
+            string schedulerFormat = (string.IsNullOrEmpty(reportTask.Format) || reportTask.Format == "PDF") ? "pdf" : "Excel";
+
+            if ((reportFilter.ReportCode == "LTRP" && schedulerDetails?.ReportDetails?.ReportTemplateType == "E") || schedulerFormat== "Excel")
             {
                 reportTask.Format = "Excel";
                 memoryStream = GetMemoryStreamAfterExportDocument(reportTask, reportFilter);
@@ -460,7 +462,7 @@ namespace CommunicationWorkerRole.Services
                 return documentId;
             }
             //LogitudeSettings.WorkEnvironment == "cloud" &&
-            if (reportFilter.ReportCode == "LTRP" && schedulerDetails?.ReportDetails?.ReportTemplateType == "E")
+            if ((reportFilter.ReportCode == "LTRP" && schedulerDetails?.ReportDetails?.ReportTemplateType == "E")|| schedulerFormat == "Excel")
             {
                 documentId = CreateDocument(new ReportScedulerDocumentArgs { Name = reportName, Format = "xlsx", Tenant = tenant, ByteData = memoryStream.ToArray() });
             }

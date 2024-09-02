@@ -822,6 +822,8 @@ namespace WebFreight.Web.Helpers
                 byte[] filters = GetReportFilters(reportFliter.QueryFilterItemLists);
                 byte[] reportDataProvider = BuildReportDataProvider(reportFliter, filters);
                 if (reportDataProvider == null && reportFliter.IsSchedulerReport) return report;
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"reportDataProvider length: {reportDataProvider.Length}");
+
                 byte[] template = GetReportByteByType(reportFliter);
                 if (template == null) throw new Exception("Report Template is missing");
                 else
@@ -862,8 +864,17 @@ namespace WebFreight.Web.Helpers
             }
 
             ReportsTemplatesWebService reportsTemplatesWebService = new ReportsTemplatesWebService();
-            return reportsTemplatesWebService.GetReportTemplate(reportDocumentId, reportFliter.tenant, false);
+            try
+            {
+                return reportsTemplatesWebService.GetReportTemplate(reportDocumentId, reportFliter.tenant, false);
 
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        
         }
 
         public byte[] GetReportFilters(List<QueryFilterItem> queryFilterItemLists)
@@ -1343,6 +1354,12 @@ namespace WebFreight.Web.Helpers
                 case "EXDE":
                     {
                         ExportDeclarationLoader myDataManager = new ExportDeclarationLoader(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+                        break;
+                    }
+                case "SHTO":
+                    {
+                        ShipmentFormLoader myDataManager = new ShipmentFormLoader(filters, reportFliter.tenant);
                         dataProvider = myDataManager.GetData();
                         break;
                     }
@@ -2673,6 +2690,19 @@ namespace WebFreight.Web.Helpers
 
                             break;
                         }
+
+                case "SHTO":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(ShipmentFormDataProvider));
+                        ShipmentFormDataProvider reportDataProvider = (ShipmentFormDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        //reportDataProvider.CompanyName = DataProviders.General.GetCompanyName(stimulReportDataProviderDetails.Tenant);
+                        //reportDataProvider.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "SHTO", Name = "ShipmentFormDataProvider", BusinessObjectValue = reportDataProvider };
+
+                        break;
+                    }
+
                 case "ECCR":
                     {
                         XmlSerializer serializer = new XmlSerializer(typeof(CustomsCollateralDataProvider));

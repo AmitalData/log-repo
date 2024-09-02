@@ -28,8 +28,8 @@
   </Column>
   <Column
     Name="Description"
-    Type="varchar"
-    Size="1000">
+    Type="nvarchar"
+    Size="2000">
     <Constraints
       Nullable="true" />
   </Column>

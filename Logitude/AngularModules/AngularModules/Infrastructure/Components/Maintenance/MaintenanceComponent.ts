@@ -32,6 +32,7 @@ import {
 } from 'Common/Components/HostScreen/HostScreenComponent';
 import { filter } from 'rxjs/operators';
 import { TaxesWebService } from 'Customs/Services/WebServices/TaxesWebService';
+import { CustomEntityArgs } from '../LogitudeComponents/LogSearchWindowComponent';
 
 
 @Component({
@@ -2715,6 +2716,28 @@ export class MaintenanceComponent {
                         './Infrastructure/Components/Maintenance/CacheLogComponent'
                     );
                     break;
+                }
+                case "SEE": {
+                    this._entityResourceService.getEntityResourceByTableName("Card").subscribe((res: any) => {
+                        var logitudeWindow = new LogitudeWindow();
+                        logitudeWindow.Width = 800;
+                        logitudeWindow.Height = 600;
+                        logitudeWindow.Title = 'General Search';
+                        var args = new CustomEntityArgs();
+                        args.ObjectTableId = window.ObjectTables.filter(d => d.Name === "Card")[0]?.Id;
+                        args.ObjectTableName = "Card";
+                        args.IsEditDisabled=false
+                        args.HideEdit=false
+                      
+                        args.DisplayFieldsFromList="Code,GLAccountDisplayNumber,CalculatedEnglishName,CalculatedLocalName,PartnerTypeName,CountryCode"
+                        args.DisplayLocalFieldsFromList="Code,GLAccountDisplayNumber,CalculatedLocalName,CalculatedEnglishName,PartnerTypeName,CountryCode"
+                        logitudeWindow.WindowArgs=args;
+                   
+                        logitudeWindow.Show('./Infrastructure/Components/LogitudeComponents/LogSearchWindowComponent');
+                        
+                    })
+                    break;
+                    
                 }
 
                 case 'SUPM': {

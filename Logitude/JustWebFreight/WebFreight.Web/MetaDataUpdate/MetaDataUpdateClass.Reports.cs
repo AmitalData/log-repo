@@ -14,7 +14,7 @@ namespace WebFreight.Web.MetaDataUpdate
         public void LoadDefaultReports()
         {
             ReportGroupRepository reportGroupRepository = new ReportGroupRepository(0);
-            Dictionary<string, ReportGroup> TenantReportGroups = reportGroupRepository.GetReportGroups(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, ReportGroup> TenantReportGroups = reportGroupRepository.GetReportGroups(0).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
 
             ReportGroup statisticsGroup = AddReports.AddReportGroup(new ReportGroupDetails() { Code = "RSTA", EnglishName = "Statistics", LocalName = "Statistics", Tenant = 0, OrderNumber = 0 }, reportGroupRepository, TenantReportGroups);
             ReportGroup operationalGroup = AddReports.AddReportGroup(new ReportGroupDetails() { Code = "ROPR", EnglishName = "Operational", LocalName = "Operational", Tenant = 0, OrderNumber = 1 }, reportGroupRepository, TenantReportGroups);
@@ -31,7 +31,7 @@ namespace WebFreight.Web.MetaDataUpdate
             List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
 
             ReportRepository reportRepository = new ReportRepository(0);
-            Dictionary<string, Report> TenantReports = reportRepository.GetReports(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, Report> TenantReports = reportRepository.GetReports(0).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
 
             // Statistics Reports
             this.LoadReports_Statistics(statisticsGroup, tenantFeatures, reportRepository, TenantReports);
@@ -42,6 +42,7 @@ namespace WebFreight.Web.MetaDataUpdate
             this.LoadReports_TFS(TFSGroup, tenantFeatures, reportRepository, TenantReports);
             this.LoadReports_Administrative(AdminGroup, tenantFeatures, reportRepository, TenantReports);
             this.LoadReports_ExportCustoms(ExportCustomGroup, tenantFeatures, reportRepository, TenantReports);
+            this.LoadReports_CustomShipment(tenantFeatures, reportRepository, TenantReports);
 
 
             reportRepository.SubmitChanges();
@@ -241,5 +242,10 @@ namespace WebFreight.Web.MetaDataUpdate
         
         }
 
+        private void LoadReports_CustomShipment(List<Feature> tenantFeatures, ReportRepository reportRepository, Dictionary<string, Report> tenantReports)
+        {
+            Feature ShipmentFormFeature = tenantFeatures.Where(d => d.Code == "ShipmentFormReport" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            AddReports.AddReport(new ReportDetails() { Code = "SHTO", Description = "Shipment Form", Name = "Shipment Form", LocalName = "טופס תיק", FilterControlName = "ShipmentFormFilterComponent", Tenant = 0, FeatureId = ShipmentFormFeature.Id, FeatureUniqeCode = ShipmentFormFeature.FeatureUniqeCode }, reportRepository, tenantReports);
+        }
     }
 }

@@ -24,6 +24,8 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -257,17 +259,22 @@ namespace Logitude.Accounting.BL.CoreBL
                 GLAccountPM account = GetAccountByLedgerTransaction(transaction);
                 card = GetGLAccountCard(account);
 
-                if (transaction.AccountingEntity == AccountingEntityValues.APInvoice)
+                string aPInvoiceVatNumber = "";
+                string aPInvoiceVatNumberNormalized = "";
+                if (FeatureToggleHelper.HasFeatureToggle("VPI", transaction.Tenant) && transaction.AccountingEntity == AccountingEntityValues.APInvoice)
                 {
                     var aPInvoice = allAPInvoices.Where(d => d.Id == transaction.AccountingEntityId).FirstOrDefault();
 
-                    if (aPInvoice != null)
+                    if (aPInvoice != null && !String.IsNullOrWhiteSpace(aPInvoice.VATNumber))
                     {
-                        VatNumber = aPInvoice.VATNumber;
+                        aPInvoiceVatNumber = aPInvoice.VATNumber;
+                        aPInvoiceVatNumberNormalized = CheckVATValidation(aPInvoice.VATNumber);
+                        if (aPInvoice.VATNumber != "999999999" && aPInvoice.VATNumber != "999999998" && aPInvoice.VATNumber == aPInvoiceVatNumberNormalized)
+                            VatNumber = aPInvoice.VATNumber;
                     }
 
                 }
-                else if (account != null)
+                if (String.IsNullOrWhiteSpace(VatNumber) && account != null)
                 {
                     if (account.AccountTypeCode == "3" || account.AccountTypeCode == "2" || account.AccountTypeCode == "1")
                     {
@@ -275,6 +282,13 @@ namespace Logitude.Accounting.BL.CoreBL
                         VatNumber = ModifyVatNumber(VatNumber);
                     }
                 }
+
+                if (String.IsNullOrWhiteSpace(VatNumber) && !String.IsNullOrWhiteSpace(aPInvoiceVatNumber)
+                                                         && aPInvoiceVatNumber != "999999999"
+                                                         && aPInvoiceVatNumber != "999999998"
+                                                         && aPInvoiceVatNumber == aPInvoiceVatNumberNormalized) // matter of precedence   
+                    VatNumber = aPInvoiceVatNumber;
+
                 VatNumber = VatNumber == null ? "000000000" : VatNumber;
                 SetVatAmounts(transaction);
 
@@ -317,23 +331,37 @@ namespace Logitude.Accounting.BL.CoreBL
                     ConfirmationNumber = aPInvoicePM != null ? aPInvoicePM.ConfirmationNumber : null,
 
                 };
+                if (aPInvoicePM != null)
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("APInvoice " + aPInvoicePM.InvoiceNumber
+                       + ", Invoice VAT No. " + aPInvoicePM.VATNumber
+                       + ", aPInvoiceVatNumber=" + aPInvoiceVatNumber
+                       + ", aPInvoiceVatNumberNormalized=" + aPInvoiceVatNumberNormalized
+                       + ", inputReportLine.VatNumber=" + inputReportLine.VatNumber
+                        );
+                }
+                else
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("APInvoice is null"
+                       + ", inputReportLine.VatNumber=" + inputReportLine.VatNumber
+                        );
+                }
+
 
                 JournalPM journal = journalPMs.Where(d => d.Id == transaction.JournalId && d.TaxReportJournalLineNumber == transaction.JournalLineNumber).FirstOrDefault();
                 if (inputReportLine.ConfirmationNumber == null && journal.ConfirmationNumber != null)
                 {
                     inputReportLine.ConfirmationNumber = journal.ConfirmationNumber;
                 }
-                if (aPInvoicePM != null)
+
+                if (aPInvoicePM != null && CheckLastNineAreNine(aPInvoicePM.ConfirmationNumber))
                 {
-                    if (CheckLastNineAreNine(aPInvoicePM.ConfirmationNumber))
-                    {
-                        inputReportLine.LineTypeCode = "H";
-                        inputReportLine.ConfirmationNumber = null;
-                    }
-                    else if (aPInvoicePM.VATNumber == tenantPM.VatNumber)
-                    {
-                        inputReportLine.LineTypeCode = "C";
-                    }
+                    inputReportLine.LineTypeCode = "H";
+                    inputReportLine.ConfirmationNumber = null;
+                }
+                else if (aPInvoicePM != null && inputReportLine.VatNumber == tenantPM.VatNumber)
+                {
+                    inputReportLine.LineTypeCode = "C";
                 }
                 else if (journal.LineCounter > 0 && journal.LineCreditAccountId != null && journal.LineCreditAccountId == setting.CustomsGLAccountId)
                 {
@@ -395,6 +423,64 @@ namespace Logitude.Accounting.BL.CoreBL
                 CreateEventForRecalculatingData(taxReport);
             }
             return reportLinesList;
+        }
+
+
+        private static string CheckVATValidation(string vat)
+        {
+            //for each VAT number that contains letters replace with 999999998
+            //for each one that contains no letters make the following validation :
+            //1- separate the 9 numbers to an array
+            //2- multiply 1 2 1 2 1 2 1 2 1 to the VAT number array cells
+            //3- go by the cells one by one , if the number is greater from 9, add both of its digits (check the link in the example)
+            //4- sum all the cells
+            //5- if the sum MOD 10 = 0 , write as is , else replace with 999999998
+            vat = vat.Trim();
+            string result = string.Empty;
+            double Num;
+            bool isVatNum = double.TryParse(vat, out Num);
+
+            if (isVatNum)
+            {
+                int[] add = { 1, 2, 1, 2, 1, 2, 1, 2, 1 };
+                char[] array = vat.ToCharArray();
+                int[] res = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                int parse = 0;
+                int sumRes = 0;
+
+                for (int i = 0; i < array.Length; i++)
+                {
+                    parse = int.Parse(array[i].ToString());
+                    res[i] = add[i] * parse;
+                }
+
+                for (int i = 0; i < res.Length; i++)
+                {
+                    if (res[i] > 9)
+                    {
+                        int one = 1;
+                        int two = res[i] % 10;
+                        res[i] = one + two;
+                    }
+                    sumRes += res[i];
+                }
+
+                if (sumRes % 10 == 0)
+                {
+                    result = vat;
+                }
+                else
+                {
+                    result = "999999998";
+                }
+
+            }
+            else
+            {
+                result = "999999998";
+            }
+
+            return result;
         }
 
         private static void ULog(string text, DateTime stopLogAt)
@@ -486,6 +572,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         all_dup_line_nos.AddRange(item.LineNumbers);
                     }
+
 
                     List<string> all_dup_line_jIds = new List<string>();
                     foreach (var item in duplicates)
@@ -1037,8 +1124,8 @@ namespace Logitude.Accounting.BL.CoreBL
                         //TotalInvoiceAmount
                         myStringBuilder.Append(FormatDecimal(lineList.TotalInvoiceAmount, 10, showLocalError: showLocal, includeSign: true, truncateDecimal: true));
 
+                        myStringBuilder.Append(FormatStringEnd(lineList.ConfirmationNumber, 9, paddingDigit: '0'));
 
-                        myStringBuilder.Append("000000000");
 
                         myStringBuilder.AppendLine();
 
@@ -1050,7 +1137,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     //
                     string lastLine = "";
                     lastLine += "X";
-                    lastLine += taxReport.VatNumber.PadLeft(9, '0');
+                    lastLine += taxReport.VatNumber?.PadLeft(9, '0');
                     myStringBuilder.Append(lastLine);
 
 
@@ -1359,6 +1446,33 @@ namespace Logitude.Accounting.BL.CoreBL
 
             return result;
         }
+
+
+
+
+        private static string FormatStringEnd(string str, int wordSize, char paddingDigit = ' ')
+        {
+            string result = "";
+
+            //catch nulls
+            if (string.IsNullOrEmpty(str))
+            {
+                str = paddingDigit.ToString();
+            }
+
+            //big size
+            if (str.Length > wordSize)
+            {
+                str = str.Substring(str.Length - wordSize);
+                //throw new ApplicationException("There is a string with big value!");
+            }
+
+            //padding left
+            result += str.PadLeft(wordSize, paddingDigit);
+
+            return result;
+        }
+
 
 
         public static BatchTaskExecutionPM CreateTaxReportFileInBatch(string taxReportId, int tenant, bool RecalculateData = false)

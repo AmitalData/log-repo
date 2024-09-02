@@ -24,24 +24,36 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     public currentDeclaration: DeclarationPM;
     IsNewOrEdit: StatusCertificateOfOrigin;
     IsDisplayOnly: boolean = false;
+    myDictionary: Record<string, string> = {};
     public ErrorsList: string[];
 
     controlEnabled: boolean;
     constructor() {
         super();
+     
+
     }
 
     InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin, IsDisplayOnly: boolean) {
+
+       
         this.entityPM = EntityPM;        
         this.currentDeclaration = currentDeclaration;
         this.IsDisplayOnly = IsDisplayOnly;
         this.IsNewOrEdit = IsNewOrEdit;
         this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true : false;
+        this.InitUrls();
         this.SetPropertiesEnabled();
         this.SetWarningByCooTypeCode(this.entityPM.CooTypeCode);
     }
-
+    InitUrls() {
+        
+        for (const paramName in this.entityPM) {
+            this.myDictionary[paramName]=localStorage.getItem(paramName+"_"+this.entityPM.CooTypeCode+".png");
+        }
+    }
     SetPropertiesEnabled() {
+        debugger
 
         var enabled = !this.IsDisplayOnly;
         // Fields in the First table
@@ -82,9 +94,13 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
 
     updateEntity(EntityPM: CertificateOfOriginPM) {
         this.entityPM = EntityPM;
+        this.InitUrls();
+
     }
     
     CheckMandatoryFields() {
+        
+
         if (!this.entityPM.CooTypeCode && !this.entityPM.RequestReasonCode) {
             this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.MandatoryFields')];
         }
@@ -200,7 +216,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
 
     public get IsDeclaredByManufacture(): boolean {
-        if (!this.entityPM.IsDeclaredByManufacture) {
+        if (AppTool.IsNullOrEmpty(this.entityPM.IsDeclaredByManufacture)) {
             this.entityPM.IsDeclaredByManufacture = false;
         }
         return this.entityPM.IsDeclaredByManufacture;

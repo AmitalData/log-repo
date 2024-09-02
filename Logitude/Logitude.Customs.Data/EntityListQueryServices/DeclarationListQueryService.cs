@@ -159,7 +159,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 IQueryable<DeclarationList> query = (from a in iQueryable.Include("DeclarationOffice").Include("AutonomyRegionType").Include("CustomerCard").Include("EntitleImporterCountry").Include("ImporterEntitlementType").Include("ImporterPassCountry").Include("ProcedureCurrent").Include("TransferImporterCountry").Include("Department").Include("DeclarationStatusType")
                                                      //.Include("CreatedByUser.Contact")
                                                      .Include("Importer").Include("EntitleImporter").Include("TransferImporter").Include("ImporterType").Include("TransferImporterType").Include("EntitleImporterType").Include("StorageStatus").Include("FreightPaymentMethod")
-                                                     .Include("CustomsCountry").Include("CustomsShip")
+                                                     .Include("CustomsCountry").Include("CustomsShip").Include("TransportMode")
                                                      //join recConsignment in context.Consignments.Include("CargoType")
                                                      //.Select(x => new { x.DeclarationId, x.ConsignmentNumber, x.CargoDescription, x.CargoType.LocalName, x.SecondCargoID, x.ThirdCargoID, x.ManifestNumber })
                                                      //on a.Id equals recConsignment.DeclarationId into qjoinConsignments
@@ -242,8 +242,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          ExportDeclarationOfficeCode = a.ExportDeclarationOfficeCode,
                                                          ExportAutonomyRegionTypeCode = a.ExportAutonomyRegionTypeCode,
                                                          DepartmentId = a.DepartmentId,
-                                                         DepartmentName = a.Department.LocalName,
-                                                         TransportModeName = a.TransportMode == null ? null : a.TransportMode.LocalName,
+                                                         DepartmentName = a.Department == null ? null : a.Department.LocalName,
+                                                         TransportModeName = a.TransportMode != null ? a.TransportMode.LocalName : null,
                                                          EntitleImporterCode = a.EntitleImporterCode,
                                                          CreatedByUserName =
 
@@ -326,7 +326,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          //ThirdCargoID = myJoinConsignment != null ? myJoinConsignment.ThirdCargoID : null,
                                                          //ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber : null,
                                                          PhysicalCheck = a.PhysicalCheck,
-                                                         PhysicalCheckName = a.PhysicalCheck == null ? "ללא בדיקה" : a.PhysicalCheckCode.Name,
+                                                         PhysicalCheckName = a.PhysicalCheck == null ? "ללם בדיקה" : a.PhysicalCheckCode.Name,
                                                          DeclarationTypeCode = a.DeclarationTypeCode,
                                                          DeclarationTypeName = a.DeclarationType.LocalName,
                                                          IsExportDeclarationAmendments = arrAmentmentStatus.Contains(a.AmendmentStatus),
@@ -360,7 +360,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                 IQueryable<DeclarationList> query2 = (from a in iQueryable.Include("DeclarationOffice").Include("AutonomyRegionType").Include("CustomerCard").Include("EntitleImporterCountry").Include("ImporterEntitlementType").Include("ImporterPassCountry").Include("ProcedureCurrent").Include("TransferImporterCountry").Include("Department").Include("DeclarationStatusType")
                                      .Include("Importer").Include("ImporterType").Include("FreightPaymentMethod")
-                                     .Include("CustomsCountry")
+                                     .Include("CustomsCountry").Include("TransportMode")
+
 
                                                       join cdJoin in context.CourierDeclarations.Include("CourierMaster").Include("Card")
                                                       .Select(x => new
@@ -370,7 +371,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           x.CourierMaster.Card.LocalName,
                                                           x.CourierMaster.MAWB
                                                       })
-                                                                   on a.Id equals cdJoin.DeclarationId
+                                                                    on a.Id equals cdJoin.DeclarationId
                                                                    into cdJoin_
                                                       from cd in cdJoin_.DefaultIfEmpty()
 
@@ -435,7 +436,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           CustomFileNo = a.CustomFileNo,
                                                           DealValue = a.DealValue,
                                                           DeclarationNumber = !string.IsNullOrEmpty(a.DeclarationNumber) ? a.DeclarationNumber : (!string.IsNullOrEmpty(myJoinOriginalDeclaration.DeclarationNumber) ? myJoinOriginalDeclaration.DeclarationNumber : myJoinDisplayDeclarations.DeclarationNumber),
-                                                          ExportFlightDate = a.ExportFlightDate,
 
                                                           ExternalDeclarationNumber = a.ExternalDeclarationNumber,
                                                           HatraDate = a.HatraDate,
@@ -448,7 +448,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           IsSubmitDeclaration = a.IsSubmitDeclaration,
                                                           ProcedureCurrentName = a.GovernmentProcedureCurrent.LocalName,
                                                           TaxationDateTime = a.TaxationDateTime,
-                                                          ExportTaxationDateTime = a.TaxationDateTime,
                                                           Tenant = a.Tenant,
                                                           TotalTax = a.TotalTax,
                                                           DeclarationVersionId = a.VersionId,
@@ -470,12 +469,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           DeclarationStatusTypeCode = a.DeclarationStatusTypeCode,
                                                           DeclarationOfficeCode = a.DeclarationOfficeCode,
                                                           DeclarationOfficeNameForExport = a.DeclarationOffice == null ? null : a.DeclarationOffice.LocalName,
-                                                          ExportDeclarationOfficeCode = a.ExportDeclarationOfficeCode,
 
-                                                          ExportAutonomyRegionTypeCode = a.ExportAutonomyRegionTypeCode,
 
                                                           DepartmentId = a.DepartmentId,
-                                                          DepartmentName = a.Department.LocalName,
+                                                          DepartmentName = a.Department == null ? null : a.Department.LocalName,
                                                           TransportModeName = a.TransportMode == null ? null : a.TransportMode.LocalName,
                                                           CreatedByUserName =
 

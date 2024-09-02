@@ -9,10 +9,6 @@
   ObjectTablePlural="&quot;TransportModes&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
-  AvailableInCustomization="false"
-  SupportSubEntity="false"
-  ApplyGenericCustomFields="false"
-  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -40,8 +36,8 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Transport Mode&quot;"
-  Code="&quot;d37f&quot;"
-  Name="&quot;TransportMode&quot;"
+   Code="&quot;d37f&quot;"
+   Name="&quot;TransportMode&quot;"
   CloseTableName="&quot;Name&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Infrastructure&quot;"
@@ -55,8 +51,6 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
-  IsBusinessUnitEnabled="false"
-  TenantZeroData="false"
   Code1="&quot;cd07&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -89,7 +83,6 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
-    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -165,7 +158,6 @@
     SystemMaxLength="40"
     DisplayInList="false"
     IsCustomFilter="false"
-    IsListFilter="false"
     Operator="&quot;Contains&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -241,7 +233,6 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
-    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="true"
@@ -315,7 +306,6 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
-    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -490,8 +480,7 @@
   <DataContracts>
     <DataContract
       Name="&quot;TransportMode&quot;"
-      Version="&quot;ApiV1&quot;"
-      IncludeTenant0Data="false">
+      Version="&quot;ApiV1&quot;">
       <DCField
         DCFieldName="&quot;Code&quot;"
         DCVersion="&quot;&quot;"
@@ -506,8 +495,7 @@
         IsAttribute="true"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;Name&quot;"
         DCVersion="&quot;&quot;"
@@ -522,8 +510,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes />

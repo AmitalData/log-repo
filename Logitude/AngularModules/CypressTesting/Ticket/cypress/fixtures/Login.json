@@ -1,8 +1,8 @@
 {
-  "url": "https://amitaltest.logitudeworld.com/test/",
-  "email": "specflowtest@logitudeworld.com",
-  "password": "Spec_Flow21",
-  "tenant": null
+    "url": "https://customs.amital.co.il/accounting/",
+  "email": "SmokeStagingCloud2@mail.com",
+  "password": "!Cypress1",
+    "tenant": null
 }
 
 

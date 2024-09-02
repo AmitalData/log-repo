@@ -20,7 +20,6 @@ export class DataRowComponent implements OnInit {
 	@Output() showChildern: EventEmitter<boolean> = new EventEmitter<boolean>();
 	@Input() data: CB_CustomsItemComputedDataList;
 	@Input() isSelected?: boolean = true;
-	@Input() isExpand: BehaviorSubject<boolean>;
 
 	@Input() showTaxData: boolean = false;
 	@Input() showDetailsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -42,27 +41,23 @@ export class DataRowComponent implements OnInit {
 	constructor(private addCommentService: AddCommentService, private renderer: Renderer2, private API_MainService: API_MainService) { }
 
 	ngOnInit() {
-		this.listerUpdates();
 		this.getCustomsBookAgreementLevelData();
 	}
 
 	TariffList1: CB_TariffList;
 	TariffList2: CB_TariffList;
 	TariffListCount: number = 0;
+	TariffListData: CB_TariffList[] = [];
 	getCustomsBookAgreementLevelData() {
 		if (!this.showTaxData || !this.data.CustomsItemID || !this.data?.PH_MeasurementUnitID) return;
 		this.API_MainService.GetCustomsBookAgreementLevelData(this.data?.CustomsItemID, this.data?.PH_MeasurementUnitID).subscribe((data: any) => {
-			const result: CB_TariffList[] = data.body;
-			if (!result) return;
-			this.TariffList1 = result.find(x => x.TradeAgreementName == 'מכס כללי');
-			this.TariffList2 = result.find(x => x.TradeAgreementName == 'מס קניה');
-			this.TariffListCount = result.filter(x => x.TradeAgreementName != 'מס קניה').length;
-		});
-	}
+			this.TariffListData = data.body;
+			if (!this.TariffListData) return;
+			this.TariffList1 = this.TariffListData.find(x => x.TradeAgreementName == 'מכס כללי');
+			this.TariffList2 = this.TariffListData.find(x => x.TradeAgreementName == 'מס קניה');
+			this.TariffListCount = this.TariffListData.filter(x => x.TradeAgreementName != 'מס קניה').length;
 
-	listerUpdates() {
-		this.isExpand.subscribe((value) => {
-			this.selected = value;
+			this.contentWidth();
 		});
 	}
 
@@ -74,9 +69,8 @@ export class DataRowComponent implements OnInit {
 		return text.replace(regex, `<mark>$1</mark>`);
 	}
 
-	expandClick() {
-		this.selected = !this.selected;
-		this.showChildern.emit(this.selected);
+	expandClick(isShowChildren: boolean) {
+		this.showChildern.emit(!isShowChildren);
 	}
 
 	showAddCommentSidebar(data: CB_CustomsItemComputedDataList) {
@@ -88,34 +82,30 @@ export class DataRowComponent implements OnInit {
 	}
 
 	ClassificationNoDisplay(item, value: string): string {
-		if (item.IsLeaf ||  !this.fullClassificationLengthCharToDisplay || this.fullClassificationLengthCharToDisplay > 5) return value;
+		if (item.IsLeaf || !this.fullClassificationLengthCharToDisplay || this.fullClassificationLengthCharToDisplay > 5) return value;
 		if (value.length >= this.fullClassificationLengthCharToDisplay) {
 			return value.substring(0, this.fullClassificationLengthCharToDisplay);
 		}
 		return '';
 	}
-	
-	// ClassificationNoDisplay(item, value): string {
-	// 	debugger
-	// 	if (item.IsLeaf) return value;
-	// 	const regex = /^(\d*[^0])\d*$/;
-	// 	const match = value.match(regex);
-	// 	if (match && match[1]) {
-	// 		return match[1];
-	// 	}
-	// 	return '';
-	// }
 
-
-	isShowDetailsOpen:boolean = false;
+	isShowDetailsOpen: boolean = false;
 	@ViewChild('dynamicDiv') dynamicDiv: ElementRef;
 	ngAfterViewInit(): void {
+		this.contentWidth();
+	}
+
+	contentWidth(): void {
 		this.showDetailsOpen.subscribe((value) => {
 			this.isShowDetailsOpen = value;
-			if (value) this.dynamicDivClick();
+			if (value) this.dynamicDivClick(); // when window open
 			else {
 				if (!this.showTaxData) this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "90%");
-				else {
+				else { // if close display window tax
+					if (!this.isShowDetailsOpen && this.TariffListData?.length == 0) {// if display close and not exist data in tax list
+						this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "90%")
+						return;
+					}
 					this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "27%");
 					this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'white-space', 'nowrap');
 					this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'text-overflow', 'ellipsis');
@@ -131,7 +121,7 @@ export class DataRowComponent implements OnInit {
 		let totalSpanWidth = (Array.from(spans).reduce((total: number, span) => total + (span as HTMLElement).offsetWidth, 0)) as number;
 		if (containerWidth - 100 < totalSpanWidth || this.data.CustomsItemID) {
 			let calculatedWidth = (containerWidth - 100) + "px";
-			let width = Math.min(parseInt(calculatedWidth), 40) + "%";
+			let width = Math.min(parseInt(calculatedWidth), 75) + "%";
 
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', width);
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'white-space', 'nowrap');

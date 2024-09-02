@@ -102,7 +102,8 @@ namespace CommunicationWorkerRole.Services
 				{
 					command.CommandType = CommandType.StoredProcedure;
 					command.Parameters.AddWithValue("@tenant", tenant);
-					using (SqlDataReader reader = command.ExecuteReader())
+                    command.CommandTimeout = 200;
+                    using (SqlDataReader reader = command.ExecuteReader())
 					{
 						// Load the reader data into the DataTable
 						dataTable.Load(reader);

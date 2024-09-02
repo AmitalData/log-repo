@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .TooltipText {
         /*white-space: normal;*/
@@ -12,6 +12,8 @@
     .Tooltip:hover .TooltipContent {
         visibility: visible;
     }
+
+    
 
     .Tooltip .TooltipContent {
         /*padding: 10px 14px 17px 16px;*/
@@ -100,7 +102,10 @@
                                               autocorrect="off"
                                               autocapitalize="off"
                                               spellcheck="false"
-                                              [readonly]="true"></textarea>
+                                              [readonly]="true"
+                                              [style.background-image]="'url(' + BackgroundImage + ')'"
+                                              
+                                              [style.background-repeat]="'no-repeat'"></textarea>
                                 </div>
                             </td>
                         </tr>

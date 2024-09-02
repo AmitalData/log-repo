@@ -12,7 +12,8 @@ import { AmitalAPIAddWindowService } from "../WindowsComponent/AmitalAPIAddWindo
             <ng-container *ngIf='showFields'>
                 <div *ngFor='let field of _fields' class='form-data-field-field'>
                     <LogLabel [DataContext]="DataContext" [Text]="field.label" [LayoutDirection]="dir"></LogLabel>
-                    <wrapper-log-field [DataContext]='DataContext' [dir]='dir' [name]='field.name' [type]='field.type' [error]='field.error' [values]='field.values' (change)='valueChange.emit({field: field.name, value: DataContext[field.name]})'></wrapper-log-field>
+                    <wrapper-log-field [DataContext]='DataContext' [dir]='dir' [name]='field.name' [type]='field.type' [error]='field.error' [values]='field.values' [disabled]='field.disabled' [params]='field.params' [value]='field.value' 
+                    (change)='valueChange.emit({field: field.name, value: DataContext[field.name]})' (changeEvent)='changeEvent.emit({field: field.name, value: $event})'></wrapper-log-field>
                 </div>
             </ng-container>
 
@@ -32,8 +33,13 @@ export class LogTexBoxFormComponent {
     @Input() DataContext?: any = { UIProperties: new UIProperties() };
     @Input() dir: string = 'rtl';
     @Output() valueChange: EventEmitter<ValueChange> = new EventEmitter<ValueChange>();
-    _fields: TextBoxField[] = [];
-    
+    @Output() changeEvent: EventEmitter<ValueChange> = new EventEmitter<ValueChange>();
+    _fields: TextBoxField[] = [];    
+
+    public Set(field: string, value: any) {
+        this._fields.find(f => f.name === field).value = value;
+    }
+
     public get values(): any {
         return this._fields.reduce((acc, field) => {
             acc[field.name] = field.type === 'boolean' ? !!this.DataContext[field.name] : this.DataContext[field.name];
@@ -50,7 +56,7 @@ export class LogTexBoxFormComponent {
 }
 
 export type ValueChange = { field: string, value: any };
-export type FieldType = 'boolean' | 'selectCustom' | 'date' | 'number' | 'text';
+export type FieldType = 'boolean' | 'selectCustom' | 'date' | 'number' | 'text' | 'logLov';
 
 export type TextBoxField = FieldData & {
     type?: FieldType;
@@ -58,4 +64,6 @@ export type TextBoxField = FieldData & {
     error?: boolean;
     required?: boolean;
     value?: any;
+    params?: any;
+    disabled?: boolean;
 };

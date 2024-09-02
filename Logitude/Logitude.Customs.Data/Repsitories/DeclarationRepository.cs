@@ -1030,15 +1030,17 @@ namespace Logitude.Customs.Data.Repsitories
                  from rec in context.Declarations
                  where rec.AmendmentOriginalDeclartation == id && rec.Tenant == tenant && ((IsDCA == true && (rec.AmendmentStatus == "6" || rec.AmendmentStatus == null)) ||(IsDCA == false && rec.AmendmentStatus == null))
                  select rec
-                 ).OrderByDescending(x => x.CreateDateTime)
-                 .FirstOrDefault();
+                 ).OrderBy(x => x.AmendmentStatus == "6" ? 0 : 1)
+				  .ThenByDescending(x => x.CreateDateTime)
+				 .FirstOrDefault();
             }
             return
                   (
                   from rec in context.Declarations
                   where rec.AmendmentOriginalDeclartation == id && rec.Tenant == tenant && ((IsDCA == true && (rec.AmendmentStatus == "1" || rec.AmendmentStatus == null)) || (IsDCA == false))
 				  select rec
-                  ).OrderByDescending(x => x.CreateDateTime)
+                  ).OrderBy(x => x.AmendmentStatus == "1" ? 0 : 1)
+                  .ThenByDescending(x => x.CreateDateTime)
                   .FirstOrDefault();
         }
 
@@ -1664,10 +1666,21 @@ namespace Logitude.Customs.Data.Repsitories
             return declaration;
         }
 
-        
-        
+		public Declaration GetDeclarationsByHawbAndIntegratore(int tenant, string hawb, string IntegratorCode)
+		{
+			(context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
 
-    }
+			Declaration declaration = (from d in context.Declarations
+                                       join cd in context.CourierDeclarations on d.Id equals cd.DeclarationId
+									   join cm in context.CourierMasters on cd.CourierMasterId equals cm.Id
+									   where d.Tenant == tenant && d.CourierHAWB == hawb && cm.IntegratorCode == IntegratorCode
+									   select d).FirstOrDefault();
+
+			return declaration;
+		}
+
+
+	}
 
 
     public class ExportReport1

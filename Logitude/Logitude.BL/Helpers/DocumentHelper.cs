@@ -397,7 +397,7 @@ namespace Logitude.BL.Helpers
             invocie.IsSigned = "1";
             repository.Update(invocie);
             repository.SubmitChanges();
-            this.CreateEvent("HSMS", invocie, "החשבונית נחתמה בהצלחה");
+            this.CreateEvent("HSMS", invocie, DocumentFilingId + "החשבונית נחתמה בהצלחה :");
          //   this.SendEmailAlert("libby@amital.co.il", "  חתימה בHSM נכשלה", " חתימת החשבונית נכשלה &ensp;&ensp;&ensp; חשבונית מספר" + invocie.InvoiceNumber + "<br /><br />מצורפת השגיאה " );
             this.SendToEmailContact(contactEmail, invocie, document, DocumentFilingId, repository, invocie.Tenant);
 

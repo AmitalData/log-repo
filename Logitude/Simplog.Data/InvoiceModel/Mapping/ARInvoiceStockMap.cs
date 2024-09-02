@@ -15,11 +15,11 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.HasKey(t => t.Id);
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Name).IsRequired().HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.Description).HasMaxLength(250).IsUnicode(false);
+            this.Property(t => t.Description).HasMaxLength(500).IsUnicode(true);
             this.Property(t => t.CreatedByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.UpdatedByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.StatusCode).IsRequired().HasMaxLength(2).IsUnicode(false);
-            this.Property(t => t.Notes).HasMaxLength(250).IsUnicode(false);
+            this.Property(t => t.Notes).HasMaxLength(500).IsUnicode(true);
 
             this.ToTable("ARInvoiceStocks");
             this.Property(t => t.Id).HasColumnName("Id");

@@ -25,13 +25,13 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             webFreightContext = WebFreightContext.GetContext(tenant);
         }
-        public DefaultAndConfigurationKey GetSingleDefaultAndConfigurationKey(string SetKey)
+        public DefaultAndConfigurationKey GetSingleDefaultAndConfigurationKey(string SetKey, int? tenant = null)
         {
             return (from a in context.DefaultAndConfigurationKey
                     where a.SetKey == SetKey
                     select a).FirstOrDefault();
         }
-
+        
         public void Add(DefaultAndConfigurationKey entity)
         {
             context.DefaultAndConfigurationKey.Add(entity);
@@ -75,10 +75,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<DefaultAndConfigurationKey> GetDefaultAndConfigurationKeys(int tenant)
-        {
-            throw new NotImplementedException();
-        }
+        public IQueryable<DefaultAndConfigurationKey> GetDefaultAndConfigurationKeys(int tenant) =>
+            context.DefaultAndConfigurationKey.AsQueryable();
 
         public DefaultAndConfigurationKey GetSingleDefaultAndConfigurationKey(int tenant1, string setkey, int tenant)
         {

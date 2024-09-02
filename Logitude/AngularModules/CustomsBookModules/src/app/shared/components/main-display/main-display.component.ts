@@ -36,10 +36,11 @@ import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo'
 export class MainDisplayComponent implements OnInit {
 	@Input() showChiledren: boolean = false;
 	@Input() itemsData: BehaviorSubject<CB_CustomsItemComputedDataList[]>;
+	@Input() isLoadingMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	showDetails: boolean = false;
 	showAddComment: boolean = false;
 	showCommentSidebar: boolean = false;
-	childrenToDesplay: string[] = [];
+	// childrenToDesplay: number[] = [];
 	private _filters;
 	//data: any | never | undefined = {};
 	data: CB_CustomsItemComputedDataList[] = [];
@@ -68,6 +69,7 @@ export class MainDisplayComponent implements OnInit {
 			Tenant: SessionInfo.LoggedUserTenant,
 			SearchFields: ''
 		};
+		this.isLoadingMode.next(true);
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: any) => {
 			const result: CB_CustomsItemComputedDataList[] = data.body;
 			if (!result) return; // TODO: add error message
@@ -76,10 +78,16 @@ export class MainDisplayComponent implements OnInit {
 			this.fullData = this.orderedData(result);
 			this.data = this.fullData;
 			this.searchMode = TableTopState.ViewAll;
-			this.isExpand.next(false);
+			this.isLoadingMode.next(false);
+		});
+
+		// listen to loading mode changes:
+		this.isLoadingMode.subscribe((isLoading) => {
+			this.isLoading = isLoading;
 		});
 	}
 
+	isLoading: boolean = false;
 	searchValue: string = '';
 	countSearchResult: number = 0;
 	ListenToItemsSearched() {
@@ -87,6 +95,7 @@ export class MainDisplayComponent implements OnInit {
 		this.searchService.searchText$.subscribe((searchText) => {
 			if (searchText === "") this.handleClearResults();
 		});
+
 
 		// listen to itemsData changes:
 		this.itemsData.subscribe((data: CB_CustomsItemComputedDataList[] = []) => {
@@ -102,14 +111,17 @@ export class MainDisplayComponent implements OnInit {
 				// remove duplicates customsItemID:
 				data = data.filter((v, i, a) => a.findIndex(t => (t.CustomsItemID === v.CustomsItemID)) === i);
 
-				this.countSearchResult = data.length;				
+				this.countSearchResult = data.length;
 				// update list:
 				this.data = this.orderedDataForSearch(data);
 				this.searchToggleAllChildren(true); // expand all 
-				this.isExpand.next(true);
 
 				this.searchMode = TableTopState.Search;
 				this.searchValue = this.searchService.GetSearchText();
+				if (this.showDetails) {
+					this.selectedItemId = null;
+					this.updateShowDetailsClick();
+				}
 			}
 			else this.countSearchResult = 0;
 		});
@@ -122,7 +134,7 @@ export class MainDisplayComponent implements OnInit {
 
 
 	searchToggleAllChildren(expend: boolean) {
-		this.toggleVisibility(expend, this.data); // Assuming this.data is your main data array
+		this.toggleVisibilitySearch(expend, this.data); // Assuming this.data is your main data array
 
 		// Find all child checkboxes using class selector and update their checked state class name-.mainTable_itemChkAllCheckBox
 		setTimeout(() => {
@@ -131,6 +143,32 @@ export class MainDisplayComponent implements OnInit {
 				(childCheckboxes[i] as HTMLInputElement).checked = expend;
 			}
 		}, 0);
+	}
+
+	toggleVisibilitySearch(expend: boolean, data: CB_CustomsItemComputedDataList[]): boolean {
+
+		let shouldExpandParent = false;
+
+		data.forEach(item => {
+			// Check if the current item's FullClassification contains the search text
+			const searchText = this.searchService.GetSearchText();
+			const containsSearchText = item.FullClassification.includes(searchText);
+
+			// Recursively check if any children should be expanded
+			let shouldExpandChildren = false;
+			if (item.children && item.children.length > 0) {
+				shouldExpandChildren = this.toggleVisibilitySearch(expend, item.children);
+			}
+
+			// Determine if the current item should be expanded
+			if (containsSearchText || shouldExpandChildren) {
+				this.showChildern(expend, item);
+				shouldExpandParent = true;
+			}
+		});
+
+		// Return whether this branch should be expanded to the parent call
+		return shouldExpandParent;
 	}
 
 	toggleVisibility(expend: boolean, data: CB_CustomsItemComputedDataList[]) {
@@ -151,13 +189,15 @@ export class MainDisplayComponent implements OnInit {
 	showDetailsClick(CustomsItemID: number, item: CB_CustomsItemComputedDataList) {
 		this.selectedItemId = CustomsItemID;
 		if (this.currentItem.getValue()?.CustomsItemID == CustomsItemID) {
-			this.showDetails = !this.showDetails;
-			this.showDetailsOpen.next(this.showDetails);
+			// this.showDetails = !this.showDetails;
+			// this.showDetailsOpen.next(this.showDetails);
+			this.updateShowDetailsClick();
 			return;
 		}
 		else if (!this.showDetails) {
-			this.showDetails = !this.showDetails;
-			this.showDetailsOpen.next(this.showDetails);
+			// this.showDetails = !this.showDetails;
+			// this.showDetailsOpen.next(this.showDetails);
+			this.updateShowDetailsClick();
 		}
 		this.currentItem.next(item);
 		return this.showDetails;
@@ -181,15 +221,15 @@ export class MainDisplayComponent implements OnInit {
 
 
 	showChildern(openAction: any, item: CB_CustomsItemComputedDataList) {
-		const isShown = this.childrenToDesplay.indexOf(item.CIH_GoodsDescription);
-		if (openAction && isShown === -1) {
-			this.childrenToDesplay.push(item.CIH_GoodsDescription);
-		}
-		else if (!openAction && isShown !== -1) {
-			this.childrenToDesplay.splice(isShown);
-		}
-		// isShown === -1 ? this.childrenToDesplay.push(id) : this.childrenToDesplay.splice(isShown);
-		// return Boolean(isShown >= 0);
+		item.IsShowChildren = openAction; // #109074- fix open children display
+
+		// const isShown = this.childrenToDesplay.indexOf(item.CustomsItemID);
+		// if (openAction && isShown === -1) {
+		// 	this.childrenToDesplay.push(item.CustomsItemID);
+		// }
+		// else if (!openAction && isShown !== -1) {
+		// 	this.childrenToDesplay.splice(isShown);
+		// }
 	}
 
 	getCustomsItemHierarchic(filtersSearch: FiltersSearch): string {
@@ -203,7 +243,6 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 	filtersSearchClick(filtersSearch: FiltersSearch) {
-		console.log(filtersSearch);
 		let filters: Filters = {
 			SearchFields: this.searchService.GetSearchText(),
 			CustomsBookType: this.searchState,
@@ -230,7 +269,7 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 	handleClearResults() {
-		if (this.searchMode === TableTopState.ViewAll) return;
+		// if (this.searchMode === TableTopState.ViewAll) return;
 		this.searchMode = TableTopState.ViewAll;
 		this.selectedItemId = null;
 		this.showDetails = false;
@@ -239,10 +278,8 @@ export class MainDisplayComponent implements OnInit {
 		this.data = [];
 		this.searchValue = "";
 		this.countSearchResult = 0;
-		// this.InitData();
 		this.data = this.fullData;
 		this.searchToggleAllChildren(false);
-		this.isExpand.next(false);
 	}
 
 	public orderedDataForSearch = (data) => {
@@ -376,6 +413,7 @@ export interface CB_CustomsItemComputedDataList {
 	Remarks: string;
 	SearchByTextResult: string;
 	children: CB_CustomsItemComputedDataList[];
+	IsShowChildren: boolean;
 }
 
 export interface CB_RequirementComputedDataList {

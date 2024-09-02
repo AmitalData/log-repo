@@ -73,7 +73,8 @@ i[role='img'][aria-hidden='true'] {
 
 .mainTable_itemName a {
 	display: block;
-	width: 90%;
+	/* width: 90%; */
+	width: 125px;
 	height: 100%;
 	padding-top: 15px;
 	font-size: 14px;
@@ -85,7 +86,7 @@ i[role='img'][aria-hidden='true'] {
 
 .mainTable_itemActions {
 	position: absolute;
-	left: 1%;
+	left: 0;
 }
 
 .item_details {

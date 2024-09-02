@@ -62,6 +62,8 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     public TenantPM: TenantPM;
     public items: any[] = [];
     public Args: CustomEntityArgs = new CustomEntityArgs();
+    public cardExtendedPMService: CardExtendedPMService = new CardExtendedPMService();
+
     public DependencyFilter1Value: Object;
     public DependencyFilter2Value: Object;
     public DependencyFilter3Value: Object;
@@ -109,7 +111,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     @Input() ForceShowLanguageFilter: boolean = false;
     @Input() ForceShowLocalAndEnglishColumns: boolean = false;
     ObjectFieldCode: string;
-    public get ShowLanguageFilter(): boolean
+     public get ShowLanguageFilter(): boolean
     {
         return  SessionLocator?.LoggedUserPM?.ShowLocalNameInLOV
             && SessionLocator?.TenantPM?.AccountingActivated;
@@ -540,7 +542,6 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
             return tempo;
         },
     };
-    private cardExtendedPMService:CardExtendedPMService=new CardExtendedPMService()
 
     //tenent 0
     getRows2(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {

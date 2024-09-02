@@ -153,6 +153,23 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
 
         }
+        [HttpPut]
+        public HttpResponseMessage PrintDocuments(InterestReportArguments interestReportArgs)
+        {
+            try
+            {
+                int tenant = AuthinticateTenant();
+                string email = HttpContext.Current.User.Identity.Name;
+                InteretInvoiceBatchPrint interetInvoiceBatchPrint = new InteretInvoiceBatchPrint();
+                bool success = interetInvoiceBatchPrint.PrintDocuments(interestReportArgs, tenant, email);
+                return Request.CreateResponse(HttpStatusCode.OK,success);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
 
 
         public HttpResponseMessage PutNumberOfDocumentNotPrinted(InterestReportArguments interestReportArgs)

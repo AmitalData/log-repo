@@ -61,8 +61,9 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     constructor(
         public entityArgs: EntityArgs,
     ) {
+        
         super();
-
+        
     }
 
     private CertificateChanges = new BehaviorSubject<boolean>(false);
@@ -83,14 +84,16 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     }
 
     SetWindowArgs(args: any) {
+        
         this.EntityPM = args.CertificateOfOrigin;
         this.DecalarationData = args.Decalaration;
         this.IsNewOrEdit = args.IsNewOrEdit;
         this.isAllowChange = args.isAllowChange;
-        
+       
         this.isListenToChangeInCertificate(args.logWindow);
 
         this.InitMoreDataScreenValues();
+        this.InitToolTipImages();
         this.BuildTabs();
         this.RunComponent();
         this.entityArgs.EntityPM = this.EntityPM;
@@ -273,9 +276,9 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         if (AppTool.IsNullOrEmpty(this.EntityPM.IsConsigneeForPrint)) {
             this.EntityPM.IsConsigneeForPrint = true;
         }
-        if (AppTool.IsNullOrEmpty(this.EntityPM.IsDeclaredByManufacture)) {
-            this.EntityPM.IsDeclaredByManufacture = true;
-        }
+        // if (AppTool.IsNullOrEmpty(this.EntityPM.IsDeclaredByManufacture)) {
+        //     this.EntityPM.IsDeclaredByManufacture = true;
+        // }
         
         if (AppTool.IsNullOrEmpty(this.EntityPM.CityOfDeclaration)) {
             this.certificateOfOriginWebService.GetCityOfDeclarationByImporterID(this.DecalarationData.ImporterId, this.EntityPM.Tenant).subscribe(myResult => {
@@ -286,7 +289,14 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
             });
         }
     }
-
+    InitToolTipImages(){
+        if(!AppTool.IsNullOrEmpty(this.EntityPM?.CooTypeCode)){
+            this.certificateOfOriginWebService.GetToolTipImagesFromStorage().subscribe(myResult => {
+                var myResponse = myResult;
+               
+            });
+        }
+    }
     SaveAndSendClick(customSendOptionsArgs: any = null) {
         if ((!this.EntityPM.CooTypeCode || !this.EntityPM.RequestReasonCode) && ((this.EntityPM.RequestReasonCode != "10" && this.EntityPM.RequestReasonCode != "13" && this.EntityPM.RequestReasonCode != "14") )){// manddatory fields
             this.GENERAL.CheckMandatoryFields();
@@ -353,6 +363,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         this.EntityPM.CertificateOriginInvoiceItems.forEach(invoice =>{
             if(AppTool.IsNullOrEmpty(invoice.DescriptionOfInvoice)){
                 invoice.DescriptionOfInvoice = !AppTool.IsNullOrEmpty(this.DecalarationData.Consignments[0].CargoDescription) ? this.DecalarationData.Consignments[0].CargoDescription : ""; 
+                invoice.DescriptionOfInvoice = AppTool.IsNullOrEmpty(invoice.DescriptionOfInvoice) ? invoice.InvoiceNumber : "";  // if not exist CargoDescription- use InvoiceNumber
             }
         })
     }
@@ -367,8 +378,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         this.ValidationErrors = [];
         this.GeneralValidationErrors = [];
         this.MoreDataValidationErrors = [];
-
-        if (this.EntityPM.RequestReasonCode != "10" && this.EntityPM.RequestReasonCode != "13" && this.EntityPM.RequestReasonCode != "14") {
+         if (this.EntityPM.RequestReasonCode != "10" && this.EntityPM.RequestReasonCode != "13" && this.EntityPM.RequestReasonCode != "14") {
             this.checkRequestReasonCode();
             if (this.SelectedTabCode == "GENERAL"){
                 this.GeneralValidationErrors = this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);            
@@ -376,14 +386,14 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
             else if(this.SelectedTabCode == "MOREDATA"){
                 this.MOREDATA.CheckMandatoryCustomsFields(this.MoreDataValidationErrors);
             }
-            this.GeneralValidationErrors.forEach(i => {
+            this.GeneralValidationErrors?.forEach(i => {
                 const isUniqueElement = !this.MoreDataValidationErrors.includes(i);
                 if (isUniqueElement && i != "" ) {
                     this.ValidationErrors.push(i);
                 }
             });
     
-            this.MoreDataValidationErrors.forEach(j => {
+            this.MoreDataValidationErrors?.forEach(j => {
                 const isUniqueElement = !this.GeneralValidationErrors.includes(j);
                 if (isUniqueElement && j != "") {
                     this.ValidationErrors.push(j);
@@ -518,6 +528,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         if (this.ResponseData == null) {
             return;
         }
+       
         this.certificateOfOriginWebService.GetCertificateOfOriginByIDIncludeChildrens(this.ResponseData.ApplicationID, this.DecalarationData.Id, this.EntityPM.Tenant).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResult.HasError && myResult.Result) {
@@ -535,12 +546,16 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
                     this.UpdateIsChange(false);//#103474
             }
         });
+        
+
+
 
     }
-
+  
     UpdateIsChange(isChange: boolean) {//#103474
+        
         this.EntityPM.IsChange = isChange;
-
+        
         this.certificateOfOriginWebService.update(this.EntityPM).subscribe((response: any) => {
             if (!response.HasError) {
                 var result = response.Result;

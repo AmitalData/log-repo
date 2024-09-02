@@ -152,16 +152,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var documentsFilingIds = documentsFilingIdsList
             .Where(r => r.EntityId == null || r.EntityId.Trim() == string.Empty)
             .Select(r => r.Id).ToList();
+            string customFile = string.Empty;
             if (documentsFilingIds.Count==0)
             {
                 LogMessagingUtil.Instance.AppendLine($"ConnectDocumentsfilingService.Connect:GetByexternalentityreference:{customFileNo}.Where(r => r.EntityId == null || r.EntityId.Trim() == string.Empty) not found any !!");
 
                 documentsFilingIds = GetByCourierRef(DeclarationId, requestParams.Tenant, courierMasterID);
+                customFile = customFileNo;
 
-            }
+			}
             foreach (string documentsFilingId in documentsFilingIds)
             {
-                UpdatePaymentDocument(documentsFilingId, DeclarationId, requestParams.Tenant, requestParams.LoggingUserId);
+				UpdateDocumentsFiling(documentsFilingId, DeclarationId, requestParams.Tenant, requestParams.LoggingUserId, customFile);
             }
 
 
@@ -195,7 +197,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			return documentsFilingIds;
         }
 
-        private void UpdatePaymentDocument(string documentsFilingId, string DeclarationId, int Tenant, string LoggedUserId)
+        private void UpdateDocumentsFiling(string documentsFilingId, string DeclarationId, int Tenant, string LoggedUserId,string CustomFileNo = null)
         {
             try
             {
@@ -215,7 +217,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                    //documentsFilingPM.ChildObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
                    //documentsFilingPM.ExternalEntityReference = _PaymentOrderPM.AccountingCustomFile;
                    documentsFilingPM.IsHybrid = true;//this is as substituteto hybrid !!!!
-                   documentsFilingService.Update(documentsFilingPM, null, LoggedUserId);
+                    if (!string.IsNullOrEmpty(CustomFileNo)) 
+                    {
+                        documentsFilingPM.EntityId = DeclarationId;
+                        documentsFilingPM.EntityNumber = CustomFileNo;
+                        documentsFilingPM.ExternalEntityName = "CFIFILEM";
+                        documentsFilingPM.ExternalEntityReference = CustomFileNo;
+					}
+					documentsFilingService.Update(documentsFilingPM, null, LoggedUserId);
                    LogMessagingUtil.Instance.AppendLine("UpdatePaymentDocument:Connect  document " + documentsFilingPM.Code + " to DeclarationId:" + DeclarationId);
                }
                else

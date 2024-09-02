@@ -22163,9 +22163,7 @@
         Operator="&quot;Equal&quot;"
         IndexOrder="0"
         CustomPredefined="false" />
-        IndexOrder="0"
-        CustomPredefined="false" />
-     </QueryFilter>
+    </QueryFilters>
   </Query>
   <Query
     Code="&quot;CourierMasterOpenIndividual&quot;"
@@ -22374,8 +22372,6 @@
         Operator="&quot;Equal&quot;"
         IndexOrder="0"
         CustomPredefined="false" />
-        IndexOrder="0"
-        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -22567,8 +22563,6 @@
         Operator="&quot;Equal&quot;"
         IndexOrder="0"
         CustomPredefined="false" />
-        IndexOrder="0"
-        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -22660,8 +22654,6 @@
         ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0"
-        CustomPredefined="false" />
         IndexOrder="0"
         CustomPredefined="false" />
     </QueryFilters>
@@ -25867,6 +25859,13 @@
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="21"
         LocalDefaultText="&quot;ביטול הצבעות בפרטי מכס&quot;"
+        IsPackagable="true" />
+      <MenuItem
+        EventCode="&quot;GatePassRequest&quot;"
+        DefaultText="&quot;Gate Pass Request&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="22"
+        LocalDefaultText="&quot;גייטפס העברות&quot;"
         IsPackagable="true" />
     </MenuButton>
     <MenuButton

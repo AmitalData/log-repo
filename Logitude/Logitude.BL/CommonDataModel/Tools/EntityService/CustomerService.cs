@@ -1265,6 +1265,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
             repository.SubmitChanges();
+            if (string.IsNullOrEmpty(entityPM.Card.GLAccountId))
+                entityPM.Card.GLAccountId = cardRepository.GetSingleCard(entityPM.Card.Id, tenant)?.GLAccountId;
 
             this.UpdateGLAccountWithOldAndNewContactForAccounting(oldContactForAccounting, newContactForAccounting);
 

@@ -51,8 +51,8 @@ namespace WebFreight.Web.Controllers.WebServices
                 return Request.CreateResponse(HttpStatusCode.Unauthorized);
 
             string token = GetAmitalApiToken(tokenData.Tenant);
-            var res = amitalApiCRUDApi.Delete(token, id, tokenData.Email);
-            return Request.CreateResponse(HttpStatusCode.OK, res);
+            HttpClienResponse res = amitalApiCRUDApi.Delete(token, id, tokenData.Email);
+            return Request.CreateResponse(res.Res.StatusCode, res.Content);
         }
 
         [HttpPut]
@@ -63,8 +63,8 @@ namespace WebFreight.Web.Controllers.WebServices
                 return Request.CreateResponse(HttpStatusCode.Unauthorized);
 
             string token = GetAmitalApiToken(tokenData.Tenant);
-            var res = amitalApiCRUDApi.Update(token, id, body, tokenData.Email);
-            return Request.CreateResponse(HttpStatusCode.OK, res);
+            HttpClienResponse res = amitalApiCRUDApi.Update(token, id, body, tokenData.Email);
+            return Request.CreateResponse(res.Res.StatusCode, res.Content);
         }
 
         protected string GetAmitalApiToken(int tenant) => tenantManagementQuery.GetSinglePM(tenant).AmitalApiToken;

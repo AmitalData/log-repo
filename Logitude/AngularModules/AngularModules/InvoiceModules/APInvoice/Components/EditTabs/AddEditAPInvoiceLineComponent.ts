@@ -36,7 +36,7 @@ export class AddEditAPInvoiceLineComponent {
         this.GLAccountsFilterItems = new ApiQueryFilters();
         this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
     }
-    
+ 
     public ChargeTypesQueryFilters: ApiQueryFilters;
     private BuildQueryFilters() {
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
@@ -44,6 +44,8 @@ export class AddEditAPInvoiceLineComponent {
         this.ChargeTypesQueryFilters.addAdditionalFilter("IsPayable", true, null, null, "Equals", false, false, false, "boolean");
         this.ChargeTypesQueryFilters.addAdditionalFilter("PayableDebitGLAcountId", true, null, null, "IsNotNull", false, false, false, "Text");
     }
+ 
+     
     public TotalVATOnly: boolean = false;
     SetDataContext(dataContext: APInvoiceLineItem) {
         this.EntityPM = dataContext.EntityPM;
@@ -51,7 +53,7 @@ export class AddEditAPInvoiceLineComponent {
         this.EntityPM = dataContext.invoiceLinePM;
         this.TotalVATOnly = this.DataContext.fatherComponent.EntityPM.TotalVATOnly;
         this.Clone();
-        this.BuildQueryFilters();
+       // this.BuildQueryFilters();
     }
 
     CancelButtonClicked() {

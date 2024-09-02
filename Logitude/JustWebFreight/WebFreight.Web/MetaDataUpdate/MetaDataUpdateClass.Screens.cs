@@ -17,8 +17,8 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectContext = WebFreightContext.GetContext(0);
             ScreenFieldsRepository = new ScreenFieldsRepository(ObjectContext);
             ScreensRepository = new ScreensRepository(ObjectContext);
-            Dictionary<string, Screen> tenantScreens = ScreensRepository.GetScreensByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
-            Dictionary<string, ScreenField> tenantScreenField = ScreenFieldsRepository.GetScreenFieldsByTenant(0).ToDictionary(d => d.ScreenId + d.ObjectFieldId);
+            Dictionary<string, Screen> tenantScreens = ScreensRepository.GetScreensByTenant(0).GroupBy(d => d.Code + d.ObjectTableId).ToDictionary(g => g.Key, a => a.FirstOrDefault());
+            Dictionary<string, ScreenField> tenantScreenField = ScreenFieldsRepository.GetScreenFieldsByTenant(0).GroupBy(d => d.ScreenId + d.ObjectFieldId).ToDictionary(g => g.Key, a => a.FirstOrDefault());
 
             BuildShipmentScreens(tenantScreens, tenantScreenField);
             BuildMasterScreens(tenantScreens, tenantScreenField);

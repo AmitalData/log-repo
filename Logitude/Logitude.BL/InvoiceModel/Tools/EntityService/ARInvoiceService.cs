@@ -290,10 +290,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             ARInvoiceValidator.Validate(entityPM, this.invoice, this.objectContext, this.myCommonContext, this.isNewEntity);
             ARInvoiceTracing.Trace(entityPM, invoice, isNewEntity, loggedContactId);
-            if (entityPM.ARInvoiceTypeCode == "IT")
-            {
-                UpdateInterestReportStatus(entityPM,"8");
-            }
+            
                 if (entityPM.IsConsolidationInvoice)
             {
                 this.UpdateConsolidationLines();
@@ -323,7 +320,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             SetSatStatus();
             if (entityPM.SetApproved)
             {
-                if (entityPM.ConfirmationNumberStatus == null)
+                if (entityPM.ConfirmationNumberStatus == null &&! (entityPM.ConfirmationNumber!=null && entityPM.IsExternalEntity))
                 {
                     SetConfirmationNumberStatus();
                 }
@@ -357,7 +354,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.GetForeignFields();
             this.RunStoredProcedures();
-            this.AfterServiceFinished();
+           
             if (entityPM.ARInvoiceTypeCode == "IT")
             {
 
@@ -366,18 +363,35 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (entityPM.InvoiceEntities != null && entityPM.InvoiceEntities.Count > 0) logtext += ", Interest Report Id" + entityPM.InvoiceEntities[0].EntityId;
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(stacklines));
+               if (CheckIfReportConnectedToInvoice(entityPM))
+                {
+                    UpdateInterestReportStatus(entityPM, "2");
 
-
-                this.UpdateInterestReportFields(entityPM);
+                    invoiceRepository.Remove(invoice);
+                    invoiceRepository.SubmitChanges();
+                    return;
+                }
+                    
+               this.UpdateInterestReportFields(entityPM);
                 this.UpdateInterestReportsConnectedInvoice(entityPM);
             }
-
+            this.GenerateInvoiceNumber();
+            this.AfterServiceFinished();
+            ARInvoiceMapping.MapEntity(entityPM, invoice, false, loggedContactId);
+            invoiceRepository.Update(invoice);
+            invoiceRepository.SubmitChanges();
             new ARInvoiceAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(invoice, tenant);
 
             entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
 
         }
+        private bool CheckIfReportConnectedToInvoice(ARInvoicePM theEntityPM)
+        {
 
+            IInterestReportsConnectedInvoiceUpdateServiceExt InterestReportsConnectedInvoiceUpdate = ContainerAccessor.Container.Resolve(typeof(IInterestReportsConnectedInvoiceUpdateServiceExt), "InterestReportsConnectedInvoiceUpdateServiceExt", new ParameterOverride("", 1)) as IInterestReportsConnectedInvoiceUpdateServiceExt;
+            return  InterestReportsConnectedInvoiceUpdate.CheckInterestReportsConnected(theEntityPM.InvoiceEntities[0].EntityId, tenant, null);
+
+        }
         private void InitializeSalesmanField()
         {
             if (this.isNewEntity)
@@ -450,7 +464,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void SetConfirmationNumberStatus()
         {
             var confirmationNumberDefault = (from a in objectContext.ConfirmationNumberDefaults
-                                             where a.Tenant == entityPM.Tenant && a.FromDate <= entityPM.InvoiceDate
+                                             where a.Tenant == entityPM.Tenant && a.FromDate <= entityPM.InvoiceDate && a.InActive == false
                                              orderby a.FromDate descending
                                              select a
                                            ).FirstOrDefault();
@@ -1314,7 +1328,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     if (!entityPM.IsInvoiceNumberManuallySet)
                     {
-                        this.GenerateInvoiceNumber();
+                       // this.GenerateInvoiceNumber();
                     }
                 }
 
@@ -1386,7 +1400,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 if (!entityPM.IsInvoiceNumberManuallySet)
                 {
-                    this.GenerateInvoiceNumber();
+                   // this.GenerateInvoiceNumber();
                 }
 
                 this.UpdateNeedRebuild();
@@ -1431,7 +1445,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 entityPM.StatusCode = "AC";
 
-                this.GenerateInvoiceNumber();
+               // this.GenerateInvoiceNumber();
             }
 
             if (!entityPM.IsConstituentInvoice)
@@ -4184,7 +4198,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             Reference1 = theEntityPm.CustomerRef != null ? theEntityPm.CustomerRef : theEntityPm.InvoiceNumber,
                                                             Reference2 = theEntityPm.MainEntityReference,
                                                             Reference3 = !string.IsNullOrEmpty(theEntityPm.MasterNumber) ? theEntityPm.MasterNumber : (!string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber),
-                                                            Notes = d.Notes,
+                                                            Notes = !string.IsNullOrWhiteSpace(d.Notes) ? d.Notes : (!string.IsNullOrWhiteSpace(theEntityPm.PrintNotes) ? theEntityPm.PrintNotes : theEntityPm.InternalNotes),
                                                         }).ToList();
 
                     UpdateJournalLinesDebitAccounts(journalLines);

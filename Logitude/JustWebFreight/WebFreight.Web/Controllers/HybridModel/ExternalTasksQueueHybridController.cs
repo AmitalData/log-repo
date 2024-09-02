@@ -95,6 +95,7 @@ namespace WebFreight.Web.Controllers.HybridModel
 
 
             ExternalTasksQueueWcfService ExternalTasksQueueWcfService = new ExternalTasksQueueWcfService();
+
             string response = ExternalTasksQueueWcfService.GetTaskFromQueue(tenant, priority);
             return response; 
         }
