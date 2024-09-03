@@ -184,11 +184,13 @@ namespace WebFreight.Web.Stimulsoft
             {
                 if (variable.expanded)
                 {
-                    if (businessObject.BusinessObjects.ToList().Any(child => child.Name == variable.content))
-                        return;
+                    StiBusinessObject child = businessObject.BusinessObjects.ToList().FirstOrDefault(childBo => childBo.Name == variable.content);
+                    if (child == null)
+                    {
+                        new StiBusinessObject("", variable.content, variable.content, Guid.NewGuid().ToString("N"));
+                        businessObject.BusinessObjects.Add(child);
+                    }
 
-                    var child = new StiBusinessObject("", variable.content, variable.content, Guid.NewGuid().ToString("N"));
-                    businessObject.BusinessObjects.Add(child);
                     CreateBusinessObject(child, variable.children);
                 }
                 else if (businessObject.Columns.ToList().Any(col => col.Name == variable.content))
