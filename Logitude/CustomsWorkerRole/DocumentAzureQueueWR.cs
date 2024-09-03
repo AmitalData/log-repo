@@ -27,6 +27,11 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using WebFreight.Web.Security;
+using System.Transactions;
+using Logitude.Server.Tools.Utils;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
 
 
 namespace CustomsWorkerRole
@@ -107,7 +112,7 @@ namespace CustomsWorkerRole
 			}
 
 		}
-		public  ServiceBusProcessor ExecuteQueue()
+		public ServiceBusProcessor ExecuteQueue()
 		{
 
 			ServiceBusProcessor processor = new ServiceBusClient(connectionString).CreateProcessor(queueName, new ServiceBusProcessorOptions()
@@ -130,22 +135,22 @@ namespace CustomsWorkerRole
 					#region  get data from queue           
 					string queueId = args.Message.Body.ToString();
 					AzureQueueMessageApi = JsonConvert.DeserializeObject<AzureQueueMessageApi>(queueId);
-					TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();				
+					TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
 					tenant = tenantManagementRepository.GetTenantManagementByExportTenant(Convert.ToInt32(AzureQueueMessageApi.Tenant)).Id;
 					#endregion
 
 					communicationLogId = DocumentApiExecutionService.AddCommunicationLog(AzureQueueMessageApi, queueId, tenant);
 					#region Download file
-					Task<(bool success, string filepath, string message)> res = DocumentApiExecutionService.DownloadFile(AzureQueueMessageApi,tenant);
-					logs += "download file Result.success: " + res?.Result.success + " message: "+ res?.Result.message + DateTime.Now.ToString();
+					Task<(bool success, string filepath, string message)> res = DocumentApiExecutionService.DownloadFile(AzureQueueMessageApi, tenant);
+					logs += "download file Result.success: " + res?.Result.success + " message: " + res?.Result.message + DateTime.Now.ToString();
 					#endregion
 					if (res.Result.success)
 					{
-						
+
 						#region Filing the document in the filing system by CreateNewFiling
 						string filePath = res.Result.filepath;
-						Dictionary<string, string> outParams; 
-		                bool fatal_error = false;
+						Dictionary<string, string> outParams;
+						bool fatal_error = false;
 						string message = string.Empty;
 
 						Dictionary<string, string> inParams = new Dictionary<string, string>();
@@ -155,19 +160,20 @@ namespace CustomsWorkerRole
 						logs += "before CreateNewFiling " + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
 						UnifreightFillingService.CreateNewFiling(inParams, filedata, tenant, out outParams, out fatal_error, out message);
 						logs += "after CreateNewFiling  fatal_error: " + fatal_error.ToString() + " message: " + message + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
-                        #endregion
-						if (!fatal_error) 
+						#endregion
+						if (!fatal_error)
 						{
 							#region Save document and metadata
 							logs += "before SaveDocument" + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
 							response = SaveDocument(filePath, outParams["COM_ID"]);
 							logs += "after SaveDocument HasError: " + response?.HasError + "ErrorMessage: " + response.ErrorMessage + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
 							#endregion
-							if (!response.HasError) {
-							    #region Update on the receipt and filing of the document
-							    logs += "before UpdateParcelStatus" + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
-							   var r =  DocumentApiExecutionService.UpdateParcelStatus(AzureQueueMessageApi, res.Result.success, res.Result.message);
-							    logs += "after UpdateParcelStatus" + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
+							if (!response.HasError)
+							{
+								#region Update on the receipt and filing of the document
+								logs += "before UpdateParcelStatus" + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
+								var r = DocumentApiExecutionService.UpdateParcelStatus(AzureQueueMessageApi, res.Result.success, res.Result.message);
+								logs += "after UpdateParcelStatus" + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
 								#endregion
 								DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId, tenant, logs, response?.Result, "D");
 								await args.CompleteMessageAsync(args.Message);
@@ -188,11 +194,11 @@ namespace CustomsWorkerRole
 					{
 						logs += " dont success DownloadFile";
 						DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId, tenant, logs, response?.Result, "F");
-					}								
+					}
 				}
 				catch (Exception e)
 				{
-					if(!string.IsNullOrEmpty(communicationLogId))
+					if (!string.IsNullOrEmpty(communicationLogId))
 					{
 						logs += "exption" + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
 						Communications.UpdateCommunicationLogStatus(communicationLogId, tenant, null, "F", logs, e.Message.ToString());
@@ -214,12 +220,12 @@ namespace CustomsWorkerRole
 		}
 
 		public void DebugStep()
-		{		
+		{
 			ConnectClient();
 			ExecuteQueue();
 		}
 
-		private  Response SaveDocument(string filePath,string commId)
+		private Response SaveDocument(string filePath, string commId)
 		{
 			string fileName = Path.GetFileName(filePath);
 			long fileSize = new System.IO.FileInfo(filePath).Length;
@@ -243,12 +249,12 @@ namespace CustomsWorkerRole
 			UserPM user = userQuery.GetSingleUserPMByEmail(userEmail, tenant, true);
 			Card card = cardRepository.GetSingleCardByCodeAndType(cardCode, "CS", tenant, true);
 			DocumentType documentType = documentTypeQuery.GetDocumentTypeByCode(customsDocumentTypeCode, tenant);
-			DeclarationPM declaration = declarationQuery.GetDeclarationsByHawbAndIntegratore(tenant,hawb, card?.Id);
+			DeclarationPM declaration = declarationQuery.GetDeclarationsByHawbAndIntegratore(tenant, hawb, card?.Id);
 
 			DocumentsFilingPM documentsFilingPM = new DocumentsFilingPM();
 
 			documentsFilingPM.BackedupExternally = false;
-			documentsFilingPM.BranchId = branchRepository.GetSingleBranch(user?.BranchId,tenant)?.Code;
+			documentsFilingPM.BranchId = branchRepository.GetSingleBranch(user?.BranchId, tenant)?.Code;
 			documentsFilingPM.BufferNumber = 0;
 			documentsFilingPM.CancellSignRequest = false;
 			documentsFilingPM.Code = code;
@@ -321,7 +327,7 @@ namespace CustomsWorkerRole
 			documentsFilingPM.Received = true;
 			documentsFilingPM.ReceivedDate = null;
 			documentsFilingPM.SearchFields = code + "," + declaration?.CustomFileNo + "," + documentType?.Code + "," + documentType?.Name + "," + user?.EnglishName + "," + user?.LocalName;//add DESCREPTION
-		    documentsFilingPM.SecurityId = "";//ask tomer
+			documentsFilingPM.SecurityId = "";//ask tomer
 			documentsFilingPM.SentSize = 0;
 			documentsFilingPM.SignDueDate = null;
 			documentsFilingPM.Tenant = tenant;
@@ -334,90 +340,121 @@ namespace CustomsWorkerRole
 		}
 		public Response UpsertDocumentData(DocumentsFilingPM entityPM)
 		{
-			Response response = new Response();
-
-			try
+			CheckLock(entityPM.Id);
+			using (TransactionScope scope = new TransactionScope())
 			{
 
-				ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
-				IWebFreightContext webFreightContext = WebFreightContext.GetContext(entityPM.Tenant);
-				DocumentsFilingService service = new DocumentsFilingService(commonContext, entityPM.Tenant);
-				DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(commonContext);
-				DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(documentsFilingRepository);		
+				Response response = new Response();
 
-				entityPM.IsHybrid = true;		
-				if (string.IsNullOrEmpty(entityPM.FileExtension))
+				try
 				{
+
+					ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
+					IWebFreightContext webFreightContext = WebFreightContext.GetContext(entityPM.Tenant);
+					DocumentsFilingService service = new DocumentsFilingService(commonContext, entityPM.Tenant);
+					DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(commonContext);
+					DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(documentsFilingRepository);
+
+					entityPM.IsHybrid = true;
+					if (string.IsNullOrEmpty(entityPM.FileExtension))
+					{
+						response.HasError = true;
+						response.ErrorMessage += "FileExtension field is required" + Environment.NewLine;
+
+					}
+					response = DocumentsFilingHybridMapping.MapEntityToLogitude(entityPM);
+
+					if (!response.HasError)
+					{
+						if (string.IsNullOrEmpty(entityPM.Folder))
+						{
+							entityPM.Folder = "docsin";
+						}
+
+						entityPM.HasFile = true;
+						entityPM.ReceivedDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+						entityPM.Received = true;
+
+						DocumentsFilingPM documentInPM = documentsFilingQuery.GetSinglePM(entityPM.Id, entityPM.Tenant);
+
+						if (documentInPM == null)
+						{
+							service.SetChangeSet(entityPM.DocumentsFilingMetaDataValues);
+							service.Create(entityPM, entityPM.FileData, null, entityPM.FileData == null ? true : false);
+							commonContext.SaveChanges();
+						}
+						response.Result = entityPM.Id;
+						response.Result2 = entityPM.SecurityId;
+					}
+					return response;
+				}
+
+				catch (System.Data.Entity.Validation.DbEntityValidationException e)
+				{
+					string Error = "";
+					foreach (var eve in e.EntityValidationErrors)
+					{
+						Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+							eve.Entry.Entity.GetType().Name, eve.Entry.State);
+						foreach (var ve in eve.ValidationErrors)
+						{
+							Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+								ve.PropertyName, ve.ErrorMessage);
+
+							Error += "- Property:" + ve.PropertyName + ", Error:" + ve.ErrorMessage + Environment.NewLine;
+						}
+					}
+
 					response.HasError = true;
-					response.ErrorMessage += "FileExtension field is required" + Environment.NewLine;
+					response.ErrorMessage = Error;
 
+					return response;
 				}
-				response = DocumentsFilingHybridMapping.MapEntityToLogitude(entityPM);
-
-				if (!response.HasError)
+				catch (Exception ex)
 				{
-					if (string.IsNullOrEmpty(entityPM.Folder))
+					response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
+					response.HasError = true;
+					response.ErrorMessage = ex.Message;
+					response.InnerErrorMessage = (ex.InnerException != null ? (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) : null);
+					if (!string.IsNullOrEmpty(ex.StackTrace))
 					{
-						entityPM.Folder = "docsin";
+						response.ErrorMessage += Environment.NewLine + ex.StackTrace;
 					}
-
-					entityPM.HasFile = true;
-					entityPM.ReceivedDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-					entityPM.Received = true;
-
-					DocumentsFilingPM documentInPM = documentsFilingQuery.GetSinglePM(entityPM.Id, entityPM.Tenant);
-
-					if (documentInPM == null)
-					{
-						service.SetChangeSet(entityPM.DocumentsFilingMetaDataValues);
-						service.Create(entityPM, entityPM.FileData, null, entityPM.FileData == null ? true : false);
-						commonContext.SaveChanges();
-					}				
-					response.Result = entityPM.Id;
-					response.Result2 = entityPM.SecurityId;
+					return response;
 				}
-				return response;
-			}
-
-			catch (System.Data.Entity.Validation.DbEntityValidationException e)
-			{
-				string Error = "";
-				foreach (var eve in e.EntityValidationErrors)
+				finally
 				{
-					Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-						eve.Entry.Entity.GetType().Name, eve.Entry.State);
-					foreach (var ve in eve.ValidationErrors)
-					{
-						Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-							ve.PropertyName, ve.ErrorMessage);
-
-						Error += "- Property:" + ve.PropertyName + ", Error:" + ve.ErrorMessage + Environment.NewLine;
-					}
+					scope.Complete();
 				}
 
-				response.HasError = true;
-				response.ErrorMessage = Error;
-
-				return response;
 			}
-			catch (Exception ex)
+		}
+		public void CheckLock(string id)
+		{
+			string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(id, tenant);
+			var repo = new GeneralLockRepository(tenant);
+			var lockPoco = repo.GetSingleGeneralLockNOWAIT(key, tenant);
+			if (lockPoco == null)
 			{
-				response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
-				response.HasError = true;
-				response.ErrorMessage = ex.Message;
-				response.InnerErrorMessage = (ex.InnerException != null ? (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) : null);
-				if (!string.IsNullOrEmpty(ex.StackTrace))
+				using (var scope = TransactionFactory.GetNewTransaction())
 				{
-					response.ErrorMessage += Environment.NewLine + ex.StackTrace;
+					repo.Add(new GeneralLock()
+					{
+						Tenant = tenant,
+						GeneralKey = key,
+						CreatedAt = TenantServerConfigration.GetCurrentDateTime(tenant)
+					});
+					repo.SubmitChanges();
+					scope.Complete();
 				}
-				return response;
-			}
 
+
+			}
 		}
 
 
 
-		public static List<DocumentsFilingMetaDataValuePM> GetMapDocumentsFilingMetaDataValue(int tenant, string hawb,string IntegratorCode)
+		public static List<DocumentsFilingMetaDataValuePM> GetMapDocumentsFilingMetaDataValue(int tenant, string hawb, string IntegratorCode)
 		{
 			List<DocumentsFilingMetaDataValuePM> DocumentsFilingMetaDataValuelist = new List<DocumentsFilingMetaDataValuePM>();
 
