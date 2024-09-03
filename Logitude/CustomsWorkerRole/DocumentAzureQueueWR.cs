@@ -47,13 +47,14 @@ namespace CustomsWorkerRole
 		static string queueName;
 		static string logs;
 		int tenant = 0;
+		bool _OnStartDone = false;
 		public DocumentAzureQueueWR()
 		{
 
 		}
 
 		public override bool OnStart()
-		{
+		{			
 			ThreadId = Guid.NewGuid().ToString();
 			DoneItemsInRange = new Dictionary<DateTime, int>();
 			ConnectClient();
@@ -101,14 +102,18 @@ namespace CustomsWorkerRole
 
 		public override void WorkOnce()
 		{
-			OnStart();
 			try
 			{
+				if (_OnStartDone) return ;
+				_OnStartDone = true;
+				OnStart();
 				ExecuteQueue();
 			}
 			catch (Exception exception)
 			{
 				Thread.Sleep(new TimeSpan(0, 0, 1));
+				_OnStartDone = false;
+
 			}
 
 		}
