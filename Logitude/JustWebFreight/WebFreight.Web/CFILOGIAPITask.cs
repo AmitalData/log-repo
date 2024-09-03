@@ -155,6 +155,15 @@ customs.Declarations d on p.PARENTENTITYID = d.id where t.DOCUMENTSFILINGID=@DOC
 <DAT name=""EXAMPLE_RESULT"">111,3333</DAT>
 <DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
 <OCC>
+<DAT name=""CODE"">A77</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>select count(*) from SupplierInvioceItemCertificats</DAT>
+<DAT name=""REFERENCE"">CFIFFORMS</DAT>
+<DAT name=""PARAMETERS"">DeclarationId=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select count(*) from SupplierInvioceItemCertificats where(1=1) and Tenant='1' and DeclarationId='45345' and CertificateExemptionTypeCode in ('60','61','62','63')</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select count(*) from SupplierInvioceItemCertificats where(1=1) and Tenant=@Tenant and DeclarationId=@DeclarationId and CertificateExemptionTypeCode in ('60','61','62','63')</DAT>
+<DAT name=""EXAMPLE_RESULT"">4</DAT>
+<DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
+<OCC>
 <DAT name=""CODE"">A1</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>SELECT LoadingFactor</DAT>
 <DAT name=""REFERENCE"">CFIFFORMS.Lp_LogiDeclarationsDB</DAT>
