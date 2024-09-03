@@ -441,7 +441,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 logData = LogMessagingUtil.Instance.ToString();
                 LogitudeSettings.HandleLogMe(E.ToString() + logData + _DocumentsFilingPM.Code, true, "SendBondedCustomDocument", stopLogAt);
                 LogitudeSettings.HandleLogMe(E.ToString() + logData + _DocumentsFilingPM.Code, true, "sendOcrDocumentError", stopLogAt);
-				LogitudeSettings.HandleLogMe(Environment.NewLine + "1 Took: " + _Stopwatch.Elapsed.ToString(), false, "CheckLogTime-SendMeces", stopLogAt); _Stopwatch.Restart();
+				LogitudeSettings.HandleLogMe(Environment.NewLine + "1 Took: " + _Stopwatch?.Elapsed.ToString(), false, "CheckLogTime-SendMeces", stopLogAt); _Stopwatch?.Restart();
 
 				throw;
             }
