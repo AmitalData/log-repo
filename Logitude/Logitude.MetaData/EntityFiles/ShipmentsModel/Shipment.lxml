@@ -106656,14 +106656,15 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
     DisplayInList="false"
-    IsCustomFilter="false"
+    IsCustomFilter="true"
     IsListFilter="false"
+    Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -108878,6 +108879,13 @@
         Operator="&quot;Equal&quot;"
         IndexOrder="0"
         CustomPredefined="false" />
+      <QueryFilter
+        QueryCode="&quot;CustomsShipments&quot;"
+        PredefinedValue="&quot;1&quot;"
+        ObjectFieldName="&quot;IsCustomShipment&quot;"
+        IsPredefined="true"
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -108961,6 +108969,13 @@
         ObjectFieldName="&quot;DirectionId&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
+        IndexOrder="0"
+        CustomPredefined="false" />
+      <QueryFilter
+        QueryCode="&quot;OpenCommissionCases &quot;"
+        PredefinedValue="&quot;1&quot;"
+        ObjectFieldName="&quot;IsCustomShipment&quot;"
+        IsPredefined="true"
         IndexOrder="0"
         CustomPredefined="false" />
     </QueryFilters>
@@ -109048,6 +109063,13 @@
         Operator="&quot;Equal&quot;"
         IndexOrder="0"
         CustomPredefined="false" />
+      <QueryFilter
+        QueryCode="&quot;CloseCommissionCases&quot;"
+        PredefinedValue="&quot;1&quot;"
+        ObjectFieldName="&quot;IsCustomShipment&quot;"
+        IsPredefined="true"
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -109123,6 +109145,13 @@
         ObjectFieldName="&quot;DirectionId&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
+        IndexOrder="0"
+        CustomPredefined="false" />
+      <QueryFilter
+        QueryCode="&quot;AllCommissionCases&quot;"
+        PredefinedValue="&quot;1&quot;"
+        ObjectFieldName="&quot;IsCustomShipment&quot;"
+        IsPredefined="true"
         IndexOrder="0"
         CustomPredefined="false" />
     </QueryFilters>
