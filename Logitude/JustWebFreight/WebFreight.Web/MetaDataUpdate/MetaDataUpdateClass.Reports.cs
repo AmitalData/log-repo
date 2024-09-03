@@ -42,7 +42,7 @@ namespace WebFreight.Web.MetaDataUpdate
             this.LoadReports_TFS(TFSGroup, tenantFeatures, reportRepository, TenantReports);
             this.LoadReports_Administrative(AdminGroup, tenantFeatures, reportRepository, TenantReports);
             this.LoadReports_ExportCustoms(ExportCustomGroup, tenantFeatures, reportRepository, TenantReports);
-
+            
 
             reportRepository.SubmitChanges();
         }
@@ -235,6 +235,10 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             Feature licenseManagementFeature = tenantFeatures.Where(d => d.Code == "ExportDeclarationReport" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             AddReports.AddReport(new ReportDetails() { Code = "EXDE", Description = "Export Declaration", Name = "Export Declaration", FilterControlName = "ExportDeclarationReportFilterComponent", Tenant = 0, ReportGroupId = ExportCustomGroup.Id, FeatureId = licenseManagementFeature.Id, FeatureUniqeCode = licenseManagementFeature.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/ExportCustoms/ExportDeclarationReportFilterComponent" }, reportRepository, tenantReports);
+
+            Feature CertificateOfOriginFeature = tenantFeatures.Where(d => d.Code == "Declaration.Tab.DigitalCertificateOfOrigin").FirstOrDefault();
+            AddReports.AddReport(new ReportDetails() { Code = "COO", Description = "Certificate Of Origin", Name = "Certificate Of Origin", LocalName = "דוח תעודות מקור דיגיטליות", FilterControlName = "CertificateOfOriginReportFilterComponent", Tenant = 0, ReportGroupId = ExportCustomGroup.Id, FeatureId = CertificateOfOriginFeature.Id, FeatureUniqeCode = CertificateOfOriginFeature.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/ExportCustoms/CertificateOfOriginReportFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "COOC", Description = "Certificate Of Origin Count", Name = "Certificate Of Origin Count", LocalName = "ספירת תעודות מקור דיגיטליות", FilterControlName = "CertificateOfOriginCountReportFilterComponent", Tenant = 0, ReportGroupId = ExportCustomGroup.Id, FeatureId = CertificateOfOriginFeature.Id, FeatureUniqeCode = CertificateOfOriginFeature.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/ExportCustoms/CertificateOfOriginCountReportFilterComponent" }, reportRepository, tenantReports);
         }
 
     }

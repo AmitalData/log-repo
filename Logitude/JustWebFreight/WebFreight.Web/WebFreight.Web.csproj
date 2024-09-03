@@ -2036,6 +2036,8 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferantTeamController.Generated.cs" />
     <Compile Include="DataContracts\PrivateLabelsBrandingData.cs" />
     <Compile Include="DataContracts\PrivateLabelsBrandingDataRequest.cs" />
+    <Compile Include="DataProviders\CertificateOfOriginCountDataProvider.cs" />
+    <Compile Include="DataProviders\CertificateOfOriginDataProvider.cs" />
     <Compile Include="DataProviders\MonthlyBalancesReportDataProvider.cs" />
     <Compile Include="DataProviders\CustomFieldDataProviedr.cs" />
     <Compile Include="DataProviders\ControlForInvoiceLinesDataProvider.cs" />
@@ -6834,6 +6836,8 @@
     <Compile Include="ReportsWebServices\LogitudeReports\CRM\MonthlyConversionManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\CRM\RacingQuoteManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\CRM\BluesnapPaymentsReportManager.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\Customs\CertificateOfOriginCountLoader.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\Customs\CertificateOfOriginLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Customs\ExportDeclarationLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\ShipperReturnsManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\FlightBookingsManifestManager.cs" />
