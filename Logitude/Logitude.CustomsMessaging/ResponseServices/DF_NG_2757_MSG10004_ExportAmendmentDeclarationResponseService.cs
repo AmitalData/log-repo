@@ -696,7 +696,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
                     consignmentPM.SequenceNumeric = Convert.ToInt32(consignment.SequenceNumeric);
-
+                    consignmentPM.IsDangerousGoods = consignment.DMExtensions?.DangerousGoodsIndicator?.Value == true;
                     
                     if (consignment.TransportContractDocument != null)
                     {
