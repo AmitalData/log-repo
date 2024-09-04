@@ -2499,18 +2499,23 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         for (var row = 0; row <= sheet.LastRowNum; row++)
                         {
                             var cell = sheet.GetRow(row)?.GetCell(0);
-                            if (cell != null && cell.CellType == CellType.String)
+                            if (cell != null)
                             {
-                                var cellValue = cell.StringCellValue;
+                                string cellValue = null;
+
+                                if (cell.CellType == CellType.String)
+                                {
+                                    cellValue = cell.StringCellValue;
+                                }
+                                else if (cell.CellType == CellType.Numeric)
+                                {
+                                    cellValue = cell.NumericCellValue.ToString();
+                                }
+
                                 if (!string.IsNullOrEmpty(cellValue))
                                 {
-                                    values.Add(cellValue);
+                                    values.Add(cellValue.TrimEnd());
                                 }
-                            }
-                            if (cell != null && cell.CellType == CellType.Numeric)
-                            {
-                                var cellValue = cell.NumericCellValue;
-                                values.Add(cellValue.ToString());
                             }
                         }
                         var errorWithMawbs=new List<CourierHawbFromExcel>();
