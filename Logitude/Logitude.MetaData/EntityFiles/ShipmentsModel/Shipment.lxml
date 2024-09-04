@@ -108881,9 +108881,10 @@
         CustomPredefined="false" />
       <QueryFilter
         QueryCode="&quot;CustomsShipments&quot;"
-        PredefinedValue="&quot;1&quot;"
+        PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsCustomShipment&quot;"
         IsPredefined="true"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0"
         CustomPredefined="false" />
     </QueryFilters>
@@ -108973,9 +108974,10 @@
         CustomPredefined="false" />
       <QueryFilter
         QueryCode="&quot;OpenCommissionCases &quot;"
-        PredefinedValue="&quot;1&quot;"
+        PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsCustomShipment&quot;"
         IsPredefined="true"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0"
         CustomPredefined="false" />
     </QueryFilters>
@@ -109065,9 +109067,10 @@
         CustomPredefined="false" />
       <QueryFilter
         QueryCode="&quot;CloseCommissionCases&quot;"
-        PredefinedValue="&quot;1&quot;"
+        PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsCustomShipment&quot;"
         IsPredefined="true"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0"
         CustomPredefined="false" />
     </QueryFilters>
@@ -109149,9 +109152,10 @@
         CustomPredefined="false" />
       <QueryFilter
         QueryCode="&quot;AllCommissionCases&quot;"
-        PredefinedValue="&quot;1&quot;"
+        PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsCustomShipment&quot;"
         IsPredefined="true"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0"
         CustomPredefined="false" />
     </QueryFilters>
