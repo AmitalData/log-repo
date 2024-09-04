@@ -20,7 +20,7 @@ export class LoginExtendedService {
 				.pipe(
                     
 					map((response: HttpResponse<any>) => {
-                        debugger
+                        
 
 						let userData = response;
 
