@@ -1245,12 +1245,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			var loggedUserId = string.Empty;
 
 			var objecttableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-			if (signQueueHSMService.IsHSMSign_IsOn(decPm.Tenant))
-			{
-				loggedUserId = !string.IsNullOrEmpty(LoggingUserId) ? LoggingUserId : AuthenticationUtil.ResolveUserId(decPm.Tenant);
-			}
-			else
-			{
+
                 if(!string.IsNullOrEmpty(decPm.SignedByUserId))
                 {
 					loggedUserId = decPm.SignedByUserId;
@@ -1259,7 +1254,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
 					loggedUserId  =  declarationQueryService.GetSignedByUserIdByCustomFileNo(decPm.Tenant, decPm.CustomFileNo);
 				}
-			}
+			
 			LogitudeSettings.HandleLogMe("loggedUserId" + loggedUserId, false, "sendClosing", stopLogAt);
 
 			requestParamsData.Tenant = decPm.Tenant;
