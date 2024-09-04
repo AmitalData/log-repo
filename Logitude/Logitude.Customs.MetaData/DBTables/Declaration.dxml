@@ -1364,6 +1364,8 @@
   <Index
     Columns="Direction" />
   <Index
+    Columns="CustomFileNo" />
+  <Index
     Columns="Tenant,AmendmentOriginalDeclartation" />
   <Index
     Columns="Tenant,PaymentDate" />

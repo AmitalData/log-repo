@@ -843,6 +843,7 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\ContainerStatus.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ContainerStatusSource.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ContainerTrackingProvider.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\CustomsShipmentDataView.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferHeader.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferLine.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferType.cs" />

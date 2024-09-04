@@ -1,11 +1,15 @@
+using System;
 using System.Data;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
+using System.Linq;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Mapping;
 using Simplog.Data.InfrastructureModel.Mapping;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Mapping;
 using Simplog.Data.QuoteModel.Mapping;
 using Simplog.Data.ShipmentModel.Mapping;
@@ -14,10 +18,6 @@ using Simplog.Data.ShipmentsModel.Mapping;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Helpers;
 using Simplog.Server.Infrastructure;
-using System;
-using System.Linq;
-using System.Data.Entity.Infrastructure;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
 
 namespace Simplog.Data.ShipmentsModel
 {
@@ -26,10 +26,10 @@ namespace Simplog.Data.ShipmentsModel
         public ShipmentsContext() : base("LogitudeStr")
         {
             Database.SetInitializer<ShipmentsContext>(null);
-            Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();     
+            Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
         }
 
-        public ShipmentsContext(DbConnection conn) : base(conn,true)
+        public ShipmentsContext(DbConnection conn) : base(conn, true)
         {
             Configuration.LazyLoadingEnabled = false;
             Configuration.AutoDetectChangesEnabled = false;
@@ -167,7 +167,7 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new IATACodeMap());
             modelBuilder.Configurations.Add(new ImageDetailMap());
             modelBuilder.Configurations.Add(new IncotermMap());
-            modelBuilder.Configurations.Add(new InsideShipmentPackageMap());        
+            modelBuilder.Configurations.Add(new InsideShipmentPackageMap());
             modelBuilder.Configurations.Add(new MarkUpTypeMap());
             modelBuilder.Configurations.Add(new MAWBStackMap());
             modelBuilder.Configurations.Add(new MeasurementMap());
@@ -348,15 +348,17 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new ShipmentUnassignedFieldMap());
             modelBuilder.Configurations.Add(new ShipmentDocsFieldMap());
             modelBuilder.Configurations.Add(new ShipmentAnalyticMap());
-			modelBuilder.Configurations.Add(new OceanInsightsStatusLogMap());
+            modelBuilder.Configurations.Add(new OceanInsightsStatusLogMap());
 
-			base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
         }
 
         public IDbSet<DigitalShipmentsDataView> ShipmentDigitalDataViews
         {
-            get;set;
+            get; set;
         }
+
+        public IDbSet<CustomsShipmentDataView> CustomsShipmentDataView { get; set; }
 
         public IDbSet<Shipment> Shipments { get; set; }
         public IDbSet<ShipmentType> ShipmentTypes { get; set; }
@@ -433,14 +435,14 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<ShipmentAnalytic> ShipmentAnalytics { get; set; }
         public IDbSet<ContainerAnalytic> ContainerAnalytics { get; set; }
         public IDbSet<ContainerDiscrepancy> ContainerDiscrepancies { get; set; }
-		public IDbSet<OceanInsightsStatusLog> OceanInsightsStatusLogs { get; set; }
+        public IDbSet<OceanInsightsStatusLog> OceanInsightsStatusLogs { get; set; }
 
 
-		[DbFunction("ShipmentsContext", "udf_ShipmentSearch")]
+        [DbFunction("ShipmentsContext", "udf_ShipmentSearch")]
         public IQueryable<ShipmentDataView> ShipmentSearch(string SearchFields)
         {
-            var result = Database.SqlQuery<ShipmentDataView>("Select * from [dbo].[udf_ShipmentSearch](" + SearchFields + ")").AsQueryable(); 
-            return result; 
+            var result = Database.SqlQuery<ShipmentDataView>("Select * from [dbo].[udf_ShipmentSearch](" + SearchFields + ")").AsQueryable();
+            return result;
         }
         public IQueryable<TOutput> FunctionTableValue<TOutput>(string functionName, SqlParameter[] parameters)
         {
@@ -523,6 +525,6 @@ namespace Simplog.Data.ShipmentsModel
         }
 
 
-       
+
     }
 }

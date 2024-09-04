@@ -1,32 +1,33 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Data.Entity;
 using System.Linq;
-
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Mocks;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Mocks;
-using System.Data.Entity;
-using Simplog.Server.Infrastructure.Helpers;
-using System.Data.Common;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Simplog.Data.ShipmentsModel.Mocks
 {
-    public class  MockShipmentContext: IShipmentsContext
+    public class MockShipmentContext : IShipmentsContext
     {
         public IDbSet<Shipment> Shipments
         {
-            get {
+            get
+            {
 
                 MockWebFreightContext webcontext = new MockWebFreightContext();
                 MockCommonContext commonContext = new MockCommonContext();
-                return new MockObjectSet<Shipment>(new List<Shipment>() { 
-                  
-                new Shipment() {Tenant=1, Id = "1-1", IsAccountingClosed = false , FromPort=Ports.Where(d=>d.Id=="1-1").FirstOrDefault() , FromPortId="1-1" , ToPort=Ports.Where(d=>d.Id=="1-2").FirstOrDefault() , ToPortId="1-2" , TransportMode=webcontext.TransportModes.Where(d=>d.Id=="111").FirstOrDefault() , TransportModeId="111", ShipmentLevel=ShipmentLevels.Where(d=>d.Code=="SL").FirstOrDefault(), ShipmentLevelCode="SL"  , EntityStatus=webcontext.EntityStatus.Where(d=>d.Id=="111").FirstOrDefault() , StatusId="111"}, 
-                new Shipment() { Id = Guid.NewGuid().ToString(), IsAccountingClosed = true }, 
-                new Shipment() { Id = Guid.NewGuid().ToString(), IsAccountingClosed = false }, }); }
+                return new MockObjectSet<Shipment>(new List<Shipment>() {
+
+                new Shipment() {Tenant=1, Id = "1-1", IsAccountingClosed = false , FromPort=Ports.Where(d=>d.Id=="1-1").FirstOrDefault() , FromPortId="1-1" , ToPort=Ports.Where(d=>d.Id=="1-2").FirstOrDefault() , ToPortId="1-2" , TransportMode=webcontext.TransportModes.Where(d=>d.Id=="111").FirstOrDefault() , TransportModeId="111", ShipmentLevel=ShipmentLevels.Where(d=>d.Code=="SL").FirstOrDefault(), ShipmentLevelCode="SL"  , EntityStatus=webcontext.EntityStatus.Where(d=>d.Id=="111").FirstOrDefault() , StatusId="111"},
+                new Shipment() { Id = Guid.NewGuid().ToString(), IsAccountingClosed = true },
+                new Shipment() { Id = Guid.NewGuid().ToString(), IsAccountingClosed = false }, });
+            }
         }
 
         public List<Shipment> GetShipmentData()
@@ -168,7 +169,7 @@ namespace Simplog.Data.ShipmentsModel.Mocks
                         DueTypeCode = "AG",
                         CreatedByUserId = "1-1",
                         ARInvoiceLineId = "1-1",
-                       
+
                     }
 
                 });
@@ -376,7 +377,7 @@ namespace Simplog.Data.ShipmentsModel.Mocks
 
                 return shipmentCustomerTypeObjectSet;
             }
-            
+
         }
 
         MockObjectSet<PickUpDeliveryType> pickUpDeliveryTypeObjectSet;
@@ -495,7 +496,7 @@ namespace Simplog.Data.ShipmentsModel.Mocks
 
         public void SetAsModified(object entity)
         {
-            
+
         }
 
         public void DetectChanges()
@@ -512,7 +513,8 @@ namespace Simplog.Data.ShipmentsModel.Mocks
         List<AWBChargesCode> aWBChargeCodes;
         public IDbSet<AWBChargesCode> AWBChargeCodes
         {
-            get {
+            get
+            {
                 if (aWBChargeCodes == null)
                 {
                     aWBChargeCodes = new List<AWBChargesCode>()
@@ -520,12 +522,12 @@ namespace Simplog.Data.ShipmentsModel.Mocks
                         new AWBChargesCode(){ Code="AWB" , Name="Charge Code"}};
 
                     aWBChargeCodeObjectSet = new MockObjectSet<AWBChargesCode>(aWBChargeCodes);
-                    }
+                }
 
                 return aWBChargeCodeObjectSet;
-                }
-            
             }
+
+        }
 
 
         MockObjectSet<AWBSpecialHandlingCode> aWBSpecialHandlingCodeObjectSet;
@@ -545,8 +547,8 @@ namespace Simplog.Data.ShipmentsModel.Mocks
 
                 return aWBSpecialHandlingCodeObjectSet;
             }
-            
-            
+
+
         }
 
 
@@ -960,9 +962,12 @@ namespace Simplog.Data.ShipmentsModel.Mocks
 
         IDbSet<DigitalShipmentsDataView> IShipmentsContext.ShipmentDigitalDataViews => throw new NotImplementedException();
 
+        public IDbSet<CustomsShipmentDataView> CustomsShipmentDataViews => throw new NotImplementedException();
+        IDbSet<CustomsShipmentDataView> IShipmentsContext.CustomsShipmentDataView => throw new NotImplementedException();
+
         public IDbSet<ContainerDiscrepancy> ContainerDiscrepancies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IDbSet<ContainerAnalytic> ContainerAnalytics { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		public IDbSet<OceanInsightsStatusLog> OceanInsightsStatusLogs { get =>  throw new NotImplementedException(); set => throw new NotImplementedException();}
+        public IDbSet<OceanInsightsStatusLog> OceanInsightsStatusLogs { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public IDbSet<ReferenceType> ReferenceTypes => throw new NotImplementedException();
 

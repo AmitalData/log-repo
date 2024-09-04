@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "e63a1ba4947e11afb7b61f339193138a";
+		public const string HashString = "5618543f49af0e044002b1a8b0959fe1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -6516,6 +6516,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						AdditionalQuerySections =  "CustomsShipments",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ShipmentNumber",
@@ -7640,6 +7641,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullLocalDefaultText =  "שטר מטען פנימי",
 					  						ListFieldLable =  "HouseListLable",
 					  						ListLableDefaultText =  "HWB",
+					  						ListLocalDefaultText =  "שטר מטען פנימי",
 					  						ShortFieldLable =  "House",
 					  						ShortFieldLableDefaultText =  "House",
 					  						ShortLocalDefaultText =  "ש.מ.פ",
@@ -7653,6 +7655,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						AdditionalQuerySections =  "CustomsShipments",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "House",
@@ -7799,6 +7802,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						RecordType =  "Shipment",
+					  						AdditionalQuerySections =  "CustomsShipments",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7823,7 +7827,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						Operator =  "Equals",
@@ -7858,6 +7862,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "SalesmanUserId",
 					  						DefaultText =  "Salesman",
 					  						FullLocalDefaultText =  "איש מכירות",
+					  						ListFieldLable =  "SalesmanUserIdListLable",
+					  						ListLableDefaultText =  "Salesman User Id",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "SalesmanUser",
@@ -7871,6 +7877,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						RecordType =  "Shipment",
+					  						AdditionalQuerySections =  "CustomsShipments",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "SalesmanUserId",
@@ -8010,6 +8017,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						AdditionalQuerySections =  "CustomsShipments",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CreateDateTime",
@@ -8035,7 +8043,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						Operator =  "Equals",
@@ -8083,6 +8091,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						AdditionalQuerySections =  "CustomsShipments",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "DepartmentId",
@@ -8249,7 +8258,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						Operator =  "Equals",
@@ -8281,6 +8290,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "CustomerId",
 					  						DefaultText =  "Customer",
 					  						FullLocalDefaultText =  "קוד לקוח",
+					  						ListFieldLable =  "CustomerIdListLable",
+					  						ListLableDefaultText =  "Customer",
+					  						ListLocalDefaultText =  "לקוח",
 					  						HelpTextCode =  "CustomerId",
 					  						HelpTextDefaultText =  "Indicates who the customer is, so that Logitude knows to refer to the relevant partner for statistics, billing and shared logistics. For Export, the Shipper is selected automatically. For Import, the Consignee is selected automatically.",
 					  						HelpLocalDefaultText =  "מציין מי הלקוח, כך ש-Logitude תדע לפנות לשותף הרלוונטי לסטטיסטיקה, חיוב ולוגיסטיקה משותפת. עבור ייצוא, השולח נבחר באופן אוטומטי. עבור ייבוא, הנמען נבחר באופן אוטומטי.",
@@ -8297,6 +8309,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  true,
 					  						RecordType =  "Shipment",
+					  						AdditionalQuerySections =  "CustomsShipments",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -9471,6 +9484,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						AdditionalQuerySections =  "CustomsShipments",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "FreightForwarderId",
@@ -10890,7 +10904,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
@@ -10929,6 +10943,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullLocalDefaultText =  "תאור טובין",
 					  						ListFieldLable =  "DescriptionOfGoodsListLable",
 					  						ListLableDefaultText =  "Description of Goods",
+					  						ListLocalDefaultText =  "תאור טובין",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -10939,6 +10954,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						AdditionalQuerySections =  "CustomsShipments",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "DescriptionOfGoods",
@@ -10963,7 +10979,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						Operator =  "Equals",
@@ -10996,6 +11012,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "HAWBDate",
 					  						DefaultText =  "HAWB Date",
 					  						FullLocalDefaultText =  "תאריך שטר מטען פנימי",
+					  						ListFieldLable =  "HAWBDateListLable",
+					  						ListLableDefaultText =  "HAWB Date",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11006,6 +11024,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						AdditionalQuerySections =  "CustomsShipments",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "HAWBDate",
@@ -11293,6 +11312,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						AdditionalQuerySections =  "CustomsShipments",
 					  						HtmlListComponentName =  "TransportModeCellDisplayListTemplate",
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
@@ -16939,7 +16959,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						Operator =  "Equals",
@@ -16971,6 +16991,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VolumetricWeight",
 					  						DefaultText =  "Volumetric weight (%ChargWeightCode)",
+					  						ListFieldLable =  "VolumetricWeightListLable",
+					  						ListLableDefaultText =  "Volumetric Weight",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -16981,6 +17003,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						AdditionalQuerySections =  "CustomsShipments",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "VolumetricWeight",
@@ -17206,7 +17229,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
@@ -17254,6 +17277,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						AdditionalQuerySections =  "CustomsShipments",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Volume",
@@ -25072,6 +25096,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						AdditionalQuerySections =  "CustomsShipments",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "FinalArrivalDate",
@@ -25131,6 +25156,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullLocalDefaultText =  "משקל בק\"ג",
 					  						ListFieldLable =  "GrossWeightListLable",
 					  						ListLableDefaultText =  "Gross Weight",
+					  						ListLocalDefaultText =  "משקל",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -25141,6 +25167,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						AdditionalQuerySections =  "CustomsShipments",
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "GrossWeight",
@@ -25161,11 +25188,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						Operator =  "Equals",
@@ -25182,6 +25209,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomsShipments",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						Code =  "NumberOfPackages",
@@ -25196,6 +25224,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "NumberOfPackages",
 					  						DefaultText =  "Packages",
 					  						FullLocalDefaultText =  "כמות",
+					  						ListFieldLable =  "NumberOfPackagesListLable",
+					  						ListLableDefaultText =  "Number Of Packages",
+					  						ListLocalDefaultText =  "כמות",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -25610,6 +25641,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						AdditionalQuerySections =  "CustomsShipments",
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ChargeableWeight",
@@ -61587,6 +61619,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						RecordType =  "Shipment",
+					  						AdditionalQuerySections =  "CustomsShipments",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "EstimatedFinalArrivalDate",
@@ -90086,6 +90119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						AdditionalQuerySections =  "CustomsShipments",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -90151,6 +90185,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						AdditionalQuerySections =  "CustomsShipments",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -90170,13 +90205,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  17,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -90190,6 +90226,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection2 =  "CustomsShipments",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -90201,6 +90238,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "DeclarationOfficeCode",
 					  						DefaultText =  "Declaration Office Code",
 					  						FullLocalDefaultText =  "בית מכס",
+					  						ListFieldLable =  "DeclarationOfficeCodeListLable",
+					  						ListLableDefaultText =  "Declaration Office Code",
+					  						ListLocalDefaultText =  "תחנת מכס",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -90650,13 +90690,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -90670,6 +90711,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomsShipments",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -90681,6 +90723,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "CarrierCode",
 					  						DefaultText =  "Carrier Code",
 					  						FullLocalDefaultText =  "חב' תעופה/ספנות",
+					  						ListFieldLable =  "CarrierCodeListLable",
+					  						ListLableDefaultText =  "Carrier Code",
+					  						ListLocalDefaultText =  "קוד ספק",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -90710,13 +90755,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  20,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -90730,6 +90776,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomsShipments",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -90741,6 +90788,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "Mawb",
 					  						DefaultText =  "Mawb",
 					  						FullLocalDefaultText =  "שטר מטען ראשי",
+					  						ListFieldLable =  "MawbListLable",
+					  						ListLableDefaultText =  "Mawb",
+					  						ListLocalDefaultText =  "שטר מטען ראשי",
 					  						ShortFieldLable =  "Mawb",
 					  						ShortFieldLableDefaultText =  "Mawb",
 					  						ShortLocalDefaultText =  "ש.מ.ר",
@@ -90773,13 +90823,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -90793,6 +90844,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomsShipments",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -90804,6 +90856,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "MawbDate",
 					  						DefaultText =  "Mawb Date",
 					  						FullLocalDefaultText =  "תאריך שטר מטען ראשי",
+					  						ListFieldLable =  "MawbDateListLable",
+					  						ListLableDefaultText =  "Mawb Date",
+					  						ListLocalDefaultText =  "תאריף שטר מטען ראשי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -90953,13 +91008,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  4,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -90973,6 +91029,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomsShipments",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -90984,6 +91041,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "PackageTypeCode",
 					  						DefaultText =  "Package Type Code",
 					  						FullLocalDefaultText =  "סוג אריזה",
+					  						ListFieldLable =  "PackageTypeCodeListLable",
+					  						ListLableDefaultText =  "Package Type Code",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -91013,13 +91072,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -91033,6 +91093,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomsShipments",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -91044,6 +91105,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "Vessel",
 					  						DefaultText =  "Vessel",
 					  						FullLocalDefaultText =  "אוניה",
+					  						ListFieldLable =  "VesselListLable",
+					  						ListLableDefaultText =  "Vessel",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -91073,13 +91136,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  9,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
+					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -91093,6 +91157,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomsShipments",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -91104,6 +91169,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "FlightVoyageNumber",
 					  						DefaultText =  "Flight Voyage Number",
 					  						FullLocalDefaultText =  "מס' טיסה/הפלגה",
+					  						ListFieldLable =  "FlightVoyageNumberListLable",
+					  						ListLableDefaultText =  "Flight Voyage Number",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -91133,13 +91200,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  5,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -91153,6 +91221,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomsShipments",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -91164,6 +91233,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "Commodity",
 					  						DefaultText =  "Commodity",
 					  						FullLocalDefaultText =  "סוג סחורה",
+					  						ListFieldLable =  "CommodityListLable",
+					  						ListLableDefaultText =  "Commodity",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -91197,7 +91268,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						MultiLine =  false,
@@ -91214,6 +91285,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomsShipments",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -91224,6 +91296,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShipmentReferances",
 					  						DefaultText =  "Shipment Referances",
+					  						ListFieldLable =  "ShipmentReferancesListLable",
+					  						ListLableDefaultText =  "Shipment Referances",
+					  						ListLocalDefaultText =  "הזמנת לקוח",
 					  						IsForeignKey =  false,
 					  						ThisKey =  "Id",
 					  						OtherKey =  "ShipmentId",
@@ -91255,13 +91330,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
+					  						IsCustomFilter =  true,
 					  						IsListFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -91536,6 +91612,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			   TextCode ShipmentTextCode_22 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.CustomsShipments", DefaultText = @"Customs Shipments",LocalDefaultText = "עמילות מכס", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ShipmentFeature_22 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Q.CustomsShipments", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentFeatures.CustomsShipments", NameTextCodeDefaultText = "CustomsShipments", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ShipmentObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode ShipmentTextCode_23 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.OpenCommissionCases", DefaultText = @"Open Commission Cases ",LocalDefaultText = "תיקי עמילות פתוחים", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ShipmentFeature_23 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Q.OpenCommissionCases", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentFeatures.OpenCommissionCases", NameTextCodeDefaultText = "OpenCommissionCases ", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ShipmentObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode ShipmentTextCode_24 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.CloseCommissionCases", DefaultText = @"Close Commission Cases",LocalDefaultText = "תיקי עמילות סגורים", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ShipmentFeature_24 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Q.CloseCommissionCases", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentFeatures.CloseCommissionCases", NameTextCodeDefaultText = "CloseCommissionCases", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ShipmentObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode ShipmentTextCode_25 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.AllCommissionCases", DefaultText = @"All Commission Cases",LocalDefaultText = "הכל", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ShipmentFeature_25 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Q.AllCommissionCases", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentFeatures.AllCommissionCases", NameTextCodeDefaultText = "AllCommissionCases", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ShipmentObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -92248,6 +92336,105 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			 QueryColumn CustomsShipmentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsShipmentsQuery.Id,QueryCode = CustomsShipmentsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Shipment.CustomerName" , ColumnWidth = 100 }, addedQueryColumns);
 
              AdvancedQueryFilter CustomsShipmentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.DirectionId", PredefinedValue = "C",PredefinedValue2 = null, CustomPredefined = false, QueryId = CustomsShipmentsQuery.Id,QueryCode = CustomsShipmentsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter CustomsShipmentsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.IsCustomShipment", PredefinedValue = "1",PredefinedValue2 = null, CustomPredefined = false, QueryId = CustomsShipmentsQuery.Id,QueryCode = CustomsShipmentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+  
+	      
+
+			  Query OpenCommissionCasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_23.Id, NameTextCodeCode = ShipmentTextCode_23.Code, ObjectTableName = "Shipment", Code = "OpenCommissionCases ",  QueryGroupCode = "SHIP", IndexOrder = 23, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "CustomsShipments", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_23.Id,FeatureUniqeCode= ShipmentFeature_23.FeatureUniqeCode, DefaultSortName = "Id", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+	
+			 QueryColumn OpenCommissionCasesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCommissionCasesQuery.Id,QueryCode = OpenCommissionCasesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Shipment.ShipmentNumber" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn OpenCommissionCasesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCommissionCasesQuery.Id,QueryCode = OpenCommissionCasesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Shipment.CreateDateTime" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn OpenCommissionCasesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCommissionCasesQuery.Id,QueryCode = OpenCommissionCasesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Shipment.CustomerId" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn OpenCommissionCasesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCommissionCasesQuery.Id,QueryCode = OpenCommissionCasesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Shipment.ShipmentReferances" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn OpenCommissionCasesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCommissionCasesQuery.Id,QueryCode = OpenCommissionCasesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Shipment.DeclarationOfficeCode" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn OpenCommissionCasesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCommissionCasesQuery.Id,QueryCode = OpenCommissionCasesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Shipment.Mawb" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn OpenCommissionCasesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCommissionCasesQuery.Id,QueryCode = OpenCommissionCasesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Shipment.House" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn OpenCommissionCasesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCommissionCasesQuery.Id,QueryCode = OpenCommissionCasesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Shipment.DescriptionOfGoods" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn OpenCommissionCasesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCommissionCasesQuery.Id,QueryCode = OpenCommissionCasesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Shipment.GrossWeight" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn OpenCommissionCasesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCommissionCasesQuery.Id,QueryCode = OpenCommissionCasesQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Shipment.NumberOfPackages" , ColumnWidth = 100 }, addedQueryColumns);
+
+             AdvancedQueryFilter OpenCommissionCasesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.IsOperationalClosed", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = OpenCommissionCasesQuery.Id,QueryCode = OpenCommissionCasesQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter OpenCommissionCasesQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.DirectionId", PredefinedValue = "C",PredefinedValue2 = null, CustomPredefined = false, QueryId = OpenCommissionCasesQuery.Id,QueryCode = OpenCommissionCasesQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter OpenCommissionCasesQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.IsCustomShipment", PredefinedValue = "1",PredefinedValue2 = null, CustomPredefined = false, QueryId = OpenCommissionCasesQuery.Id,QueryCode = OpenCommissionCasesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+  
+	      
+
+			  Query CloseCommissionCasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_24.Id, NameTextCodeCode = ShipmentTextCode_24.Code, ObjectTableName = "Shipment", Code = "CloseCommissionCases",  QueryGroupCode = "SHIP", IndexOrder = 24, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "CustomsShipments", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_24.Id,FeatureUniqeCode= ShipmentFeature_24.FeatureUniqeCode, DefaultSortName = "Id", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+	
+			 QueryColumn CloseCommissionCasesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseCommissionCasesQuery.Id,QueryCode = CloseCommissionCasesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Shipment.ShipmentNumber" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CloseCommissionCasesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseCommissionCasesQuery.Id,QueryCode = CloseCommissionCasesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Shipment.CreateDateTime" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CloseCommissionCasesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseCommissionCasesQuery.Id,QueryCode = CloseCommissionCasesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Shipment.CustomerId" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CloseCommissionCasesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseCommissionCasesQuery.Id,QueryCode = CloseCommissionCasesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Shipment.ShipmentReferances" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CloseCommissionCasesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseCommissionCasesQuery.Id,QueryCode = CloseCommissionCasesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Shipment.DeclarationOfficeCode" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CloseCommissionCasesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseCommissionCasesQuery.Id,QueryCode = CloseCommissionCasesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Shipment.Mawb" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CloseCommissionCasesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseCommissionCasesQuery.Id,QueryCode = CloseCommissionCasesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Shipment.House" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CloseCommissionCasesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseCommissionCasesQuery.Id,QueryCode = CloseCommissionCasesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Shipment.DescriptionOfGoods" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CloseCommissionCasesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseCommissionCasesQuery.Id,QueryCode = CloseCommissionCasesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Shipment.GrossWeight" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CloseCommissionCasesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseCommissionCasesQuery.Id,QueryCode = CloseCommissionCasesQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Shipment.NumberOfPackages" , ColumnWidth = 100 }, addedQueryColumns);
+
+             AdvancedQueryFilter CloseCommissionCasesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.IsOperationalClosed", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = CloseCommissionCasesQuery.Id,QueryCode = CloseCommissionCasesQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter CloseCommissionCasesQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.DirectionId", PredefinedValue = "C",PredefinedValue2 = null, CustomPredefined = false, QueryId = CloseCommissionCasesQuery.Id,QueryCode = CloseCommissionCasesQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter CloseCommissionCasesQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.IsCustomShipment", PredefinedValue = "1",PredefinedValue2 = null, CustomPredefined = false, QueryId = CloseCommissionCasesQuery.Id,QueryCode = CloseCommissionCasesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+  
+	      
+
+			  Query AllCommissionCasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_25.Id, NameTextCodeCode = ShipmentTextCode_25.Code, ObjectTableName = "Shipment", Code = "AllCommissionCases",  QueryGroupCode = "SHIP", IndexOrder = 25, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "CustomsShipments", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_25.Id,FeatureUniqeCode= ShipmentFeature_25.FeatureUniqeCode, DefaultSortName = "Id", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+	
+			 QueryColumn AllCommissionCasesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommissionCasesQuery.Id,QueryCode = AllCommissionCasesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Shipment.ShipmentNumber" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllCommissionCasesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommissionCasesQuery.Id,QueryCode = AllCommissionCasesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Shipment.CreateDateTime" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllCommissionCasesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommissionCasesQuery.Id,QueryCode = AllCommissionCasesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Shipment.CustomerId" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllCommissionCasesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommissionCasesQuery.Id,QueryCode = AllCommissionCasesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Shipment.ShipmentReferances" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllCommissionCasesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommissionCasesQuery.Id,QueryCode = AllCommissionCasesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Shipment.DeclarationOfficeCode" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllCommissionCasesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommissionCasesQuery.Id,QueryCode = AllCommissionCasesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Shipment.Mawb" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllCommissionCasesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommissionCasesQuery.Id,QueryCode = AllCommissionCasesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Shipment.House" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllCommissionCasesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommissionCasesQuery.Id,QueryCode = AllCommissionCasesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Shipment.DescriptionOfGoods" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllCommissionCasesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommissionCasesQuery.Id,QueryCode = AllCommissionCasesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Shipment.GrossWeight" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllCommissionCasesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommissionCasesQuery.Id,QueryCode = AllCommissionCasesQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Shipment.NumberOfPackages" , ColumnWidth = 100 }, addedQueryColumns);
+
+             AdvancedQueryFilter AllCommissionCasesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.DirectionId", PredefinedValue = "C",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllCommissionCasesQuery.Id,QueryCode = AllCommissionCasesQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter AllCommissionCasesQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.IsCustomShipment", PredefinedValue = "1",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllCommissionCasesQuery.Id,QueryCode = AllCommissionCasesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
