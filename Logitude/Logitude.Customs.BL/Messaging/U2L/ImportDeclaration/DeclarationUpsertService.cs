@@ -173,7 +173,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				{
 					amitalContext = AmitalContext.GetContext(ResolvedTenant());
 				}
-
+				
 
 				if (String.IsNullOrWhiteSpace(_AmitalCustomsFile.Id))
 				{
@@ -1101,7 +1101,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 			    		AppendLogLine("Before Send8235");
 			    
 			    		ICustomsAutoDecClosing CustomsAutoDecClosing = ContainerAccessor.Container.Resolve(typeof(ICustomsAutoDecClosing), "CustomsAutoDecClosing", new ParameterOverride("", 1)) as ICustomsAutoDecClosing;
-			    	   CustomsAutoDecClosing.Send8235(_MyDeclarationPM);
+			    	   CustomsAutoDecClosing.Send8235(_MyDeclarationPM,TranslateUser(_AmitalCustomsFile?.CreatedByUserId));
 			    		AppendLogLine("After Send8235");
 			    
 			    	}
