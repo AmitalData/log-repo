@@ -132,9 +132,8 @@ import { ReportExecutionLogListActionBarComponent } from './Components/ListActio
         CodeListHeaderTemplate,
         CityNameListHeaderTemplate,
         EnglishNameListHeaderTemplate,
-        StartWorkingListHeaderTemplate,
+        StartWorkingListHeaderTemplate,         
         HostScreenComponent,
-
         ReportExecutionLogListActionBarComponent
     ];
   
