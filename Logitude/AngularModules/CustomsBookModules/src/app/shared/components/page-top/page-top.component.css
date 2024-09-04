@@ -17,7 +17,8 @@ ul {
 	align-items: start;
 	justify-content: space-between;
 	flex-direction: column;
-	height: 152px;
+	/* height: 152px; */
+	height: 100px;
 	background-color: white;
 	border-bottom: 1px solid var(--greyRO);
 	padding-top: 35px;

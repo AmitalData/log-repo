@@ -22,8 +22,10 @@
 }
 
 .mainTable_top {
-	position: absolute;
-	top: 220px;
+	position: relative;
+	top: 0px;
+	/* position: absolute; */
+	/* top: 220px; */
 	right: 100px;
 	width: 100%;
 	display: flex;
