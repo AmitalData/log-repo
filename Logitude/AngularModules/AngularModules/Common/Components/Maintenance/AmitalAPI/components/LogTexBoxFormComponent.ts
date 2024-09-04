@@ -59,4 +59,5 @@ export type TextBoxField = FieldData & {
     values?: any[];
     error?: boolean;
     required?: boolean;
+    value?: any;
 };

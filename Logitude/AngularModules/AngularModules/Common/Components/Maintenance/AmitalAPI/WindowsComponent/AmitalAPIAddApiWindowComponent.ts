@@ -73,8 +73,7 @@ export class AmitalAPIAddApiWindowComponent {
         if (pramas.isUpdate) {
             this.data = { ...this.data, ...pramas.row };
             this.SchemaSelected = pramas.schemas.find(x => x.Id === pramas.row.SchemaId)?.Id;
-        } else
-            this.basicFields.push({ name: 'PartnerToken', label: 'Token' });
+        }
 
         this.windowParams = pramas;
         this.updateFields();
