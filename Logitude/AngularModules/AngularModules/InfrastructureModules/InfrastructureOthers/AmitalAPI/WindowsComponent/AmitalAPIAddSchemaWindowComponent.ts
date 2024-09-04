@@ -88,7 +88,7 @@ export class AmitalAPIAddSchemaWindowComponent {
         logWindow.Height = 345;
         logWindow.Title = "Schema";
         logWindow.WindowArgs = windowArgs as AmitalAPIAddSchemaWindowParams;
-        logWindow.Show('./Common/Components/Maintenance/AmitalAPI/AmitalAPIAddSchemaWindowComponent');
+        logWindow.Show('./InfrastructureModules/InfrastructureOthers/AmitalAPI/AmitalAPIAddSchemaWindowComponent');
         return new Promise<AmitalApiSchema>(resolve =>
             logWindow.WindowClosed.subscribe(async (row?: AmitalApiSchema) => resolve(row)));
     }

@@ -149,7 +149,7 @@ export class AmitalAPIAddClientWindowComponent {
         logWindow.Height = 550;
         logWindow.Title = TextCodeTranslator.Translate('Accounting.General.O.Receivables');
         logWindow.WindowArgs = windowArgs as AmitalAPIAddClientWindowParams;
-        logWindow.Show('./Common/Components/Maintenance/AmitalAPI/WindowsComponent/AmitalAPIAddClientWindowComponent');
+        logWindow.Show('./InfrastructureModules/InfrastructureOthers/AmitalAPI/WindowsComponent/AmitalAPIAddClientWindowComponent');
         return new Promise<AmitalApiClient>(resolve =>
             logWindow.WindowClosed.subscribe(async (row?: AmitalApiClient) => resolve(row)));
     }

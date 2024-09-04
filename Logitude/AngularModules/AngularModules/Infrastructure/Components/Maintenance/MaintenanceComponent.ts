@@ -1100,7 +1100,7 @@ export class MaintenanceComponent {
                         logWindow.Height = window.outerHeight;
                         logWindow.Title = TextCodeTranslator.Translate("Customs.MC.General.AmitalAPISettings");
                         logWindow.IsShowCloseButton = true;
-                        logWindow.Show('./Common/Components/Maintenance/AmitalAPI/AmitalAPISettingsComponent');
+                        logWindow.Show('./InfrastructureModules/InfrastructureOthers/AmitalAPI/AmitalAPISettingsComponent');                        
                     break;
                 }
 
@@ -1110,7 +1110,7 @@ export class MaintenanceComponent {
                         logWindow.Height = window.outerHeight;
                         logWindow.Title = TextCodeTranslator.Translate("Customs.MC.General.APISettings");
                         logWindow.IsShowCloseButton = true;
-                        logWindow.Show('./Common/Components/Maintenance/AmitalAPI/APISettingsComponent');
+                        logWindow.Show('./InfrastructureModules/InfrastructureOthers/AmitalAPI/APISettingsComponent');
                     break;
                 }
 
@@ -1120,7 +1120,7 @@ export class MaintenanceComponent {
                         logWindow.Height = window.outerHeight;
                         logWindow.Title = TextCodeTranslator.Translate("Customs.MC.General.API_Requests");
                         logWindow.IsShowCloseButton = true;
-                        logWindow.Show('./Common/Components/Maintenance/AmitalAPI/AmitalAPIRequestsComponent');
+                        logWindow.Show('./InfrastructureModules/InfrastructureOthers/AmitalAPI/AmitalAPIRequestsComponent');
                     break;
                 }
 

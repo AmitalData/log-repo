@@ -151,7 +151,7 @@ export class AmitalAPIAddApiWindowComponent {
         logWindow.Height = 340;
         logWindow.Title = "Client API";
         logWindow.WindowArgs = windowArgs as AmitalAPIAddApiWindowPararms;
-        logWindow.Show('./Common/Components/Maintenance/AmitalAPI/WindowsComponent/AmitalAPIAddApiWindowComponent');
+        logWindow.Show('./InfrastructureModules/InfrastructureOthers/AmitalAPI/WindowsComponent/AmitalAPIAddApiWindowComponent');
         return new Promise<any>(resolve => logWindow.WindowClosed.subscribe(async (row?: any) => resolve(row)));
     }
 }
