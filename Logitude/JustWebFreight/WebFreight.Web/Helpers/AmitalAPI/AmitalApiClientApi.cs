@@ -11,8 +11,8 @@ namespace WebFreight.Web.Helpers.AmitalAPI
     public class AmitalApiClientApi : AmitalApiCRUDApiBase<AmitalApiClient>
     {
         private static readonly string baseUrl = "clients";
-        TenantManagementService tenantManagementService = new TenantManagementService(GlobalContext.GetContext());
-        TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
+        TenantManagementService tenantManagementService => new TenantManagementService(GlobalContext.GetContext());
+        TenantManagementQuery tenantManagementQuery => new TenantManagementQuery();
 
         public AmitalApiClientApi() : base(baseUrl) { }
 
