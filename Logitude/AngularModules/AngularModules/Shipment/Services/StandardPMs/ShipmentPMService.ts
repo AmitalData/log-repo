@@ -204,7 +204,7 @@ export class ShipmentPMService {
             })
         */
     }
-
+   
     getLogoAndUrlWithoutToken(securityKey: string): Promise<UrlAndLogo> {
         const url = (location.href.indexOf('localhost') > -1 || location.href.indexOf('test') > -1) ? this._apiUrl : "https://systemwr.amital.co.il/api/shipment";
         return this._http.get(url + '/GetLogoAndUrlWithoutToken', { params: { securityKey: securityKey } }).toPromise() as Promise<UrlAndLogo>;
