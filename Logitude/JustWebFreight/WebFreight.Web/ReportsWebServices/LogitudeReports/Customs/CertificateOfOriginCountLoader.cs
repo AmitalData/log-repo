@@ -34,14 +34,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
         }
 
         public byte[] GetData()
-        {
-            CertificateOfOriginCountDataProvider myDataProvider = new CertificateOfOriginCountDataProvider();
-           
+        {          
             BuildDataProvider();
             
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(CertificateOfOriginCountDataProvider));
             MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, myDataProvider);
+            xmlSerializer.Serialize(memoryStream, dataProvider);
             memoryStream.Seek(0, SeekOrigin.Begin);
             StreamReader streamReader = new StreamReader(memoryStream);
             string content = streamReader.ReadToEnd();
@@ -69,17 +67,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                               on a.DeclarationId equals de.Id into deJoin
                                               from der in deJoin.DefaultIfEmpty().Take(1)
 
-                                              join gt in globalContext.GlobalTenants
-                                              .Select(x => new { x.Id, x.CompanyName })
-                                              on a.Tenant equals gt.Id into gtJoin
-                                              from gtr in gtJoin.DefaultIfEmpty().Take(1)
-
                                               select new
                                               {
                                                   a.Id,
                                                   a.Tenant,
                                                   a.COONumber,
-                                                  gtr.CompanyName,
                                                   der.CreateDateTime,
                                                   der.TransportModeId,
                                               });
@@ -111,15 +103,27 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
 
             #region map to data provider
 
-            dataProvider.CertificateOfOriginCount = certificateOfOriginsCounts
+            var certificateOfOriginCount = certificateOfOriginsCounts
                 .Where(x => !string.IsNullOrEmpty(x.COONumber))
-                .GroupBy(d => new { d.Tenant, d.CompanyName })
+                .GroupBy(d => new { d.Tenant })
                 .Select(g => new CertificateOfOriginCount()
                 {
                     Tenant = g.Key.Tenant,
-                    TenantName = g.Key.CompanyName,
+                    // TenantName = tenants.ToString(), //.ContainsKey(g.Key.Tenant) ? tenants[g.Key.Tenant]: null,
                     Count = g.Count(),
                 }).ToList();
+
+            // add the tenant name
+            var tenants = (from t in globalContext.GlobalTenants
+                           select new
+                           {
+                               t.Id,
+                               t.CompanyName,
+                           })
+                          .ToList().ToDictionary(x => x.Id, x => x.CompanyName);
+            certificateOfOriginCount.ForEach(x => x.TenantName = tenants.GetValueOrNull(x.Tenant));
+
+            dataProvider.CertificateOfOriginCount = certificateOfOriginCount;
             #endregion
         }
 

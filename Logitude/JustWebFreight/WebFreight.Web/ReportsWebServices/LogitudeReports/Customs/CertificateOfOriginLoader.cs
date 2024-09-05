@@ -37,10 +37,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
             CertificateOfOriginDataProvider myDataProvider = new CertificateOfOriginDataProvider();
            
             BuildDataProvider();
-            
+
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(CertificateOfOriginDataProvider));
             MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, myDataProvider);
+            xmlSerializer.Serialize(memoryStream, dataProvider);
             memoryStream.Seek(0, SeekOrigin.Begin);
             StreamReader streamReader = new StreamReader(memoryStream);
             string content = streamReader.ReadToEnd();
@@ -136,7 +136,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
 
             #region map to data provider
 
-            dataProvider.CertificateOfOrigin = certificateOfOrigins.Select(g => new CertificateOfOrigin()
+            var certificateOfOrigin = certificateOfOrigins.Select(g => new CertificateOfOrigin()
             {
                 CustomFileNo = g.CustomFileNo,
                 COONumber = g.COONumber,
@@ -144,6 +144,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                 CooTypeCodeName = g.CooTypeCodeName,
             }).ToList();
 
+            dataProvider.CertificateOfOrigin = certificateOfOrigin;
             #endregion
         }
 
