@@ -310,7 +310,45 @@ export class PartnersDomainService {
         });
     }
     private CurrentSession = SessionLocator.SelectedSession;
+    
+    CheckDuplicate(entityPM:any){
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
 
+        var mappedEntity: PartnerServicePM = this.MapJsonToPartnerAddress(entityPM, false);
+        return defer(() => {
+            return this._http.put(this._apiUrl + '/CheckDuplicate/', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(
+                flatMap(response => {
+                    if (!AppTool.IsNullOrEmpty(response)) {
+                        return new Promise((resolve, reject) => {
+                            this.CurrentSession.StopBusyIndicator();
+                            var confirmWindow = new ConfirmWindow();
+                            confirmWindow.Title = "Warning";
+                            confirmWindow.Width = 450;
+                            confirmWindow.Height = 190;
+                            confirmWindow.YesButtonText =TextCodeTranslator.Translate("General.B.Ok");;
+                            confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.Cancel");;
+                            confirmWindow.ShowCancelButton = false;
+                           
+                            confirmWindow.Show(TextCodeTranslator.Translate("Accounting.General.O.VatNumberExisted")+": "+response);
+                            confirmWindow.WindowClosed.subscribe(c => {
+                                if (confirmWindow.Yes) {
+                                    this.CurrentSession.StartBusyIndicatorSaving();
+                                    resolve(false);
+                                } else {
+                                    resolve(true);
+                                }
+                            });
+                        });
+                    } else {
+                        return of(false);
+                    }
+                }),
+                catchError(ServiceHelper.HandleServiceError)
+            );
+        });
+    }
     PostPartnerAddress(entityPM: PartnerServicePM) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
