@@ -260,7 +260,7 @@ namespace CommunicationWorkerRole
             OpportunityTypeRepository opportunityTypeRepository = new OpportunityTypeRepository(crmContext);
 
             string ownerEmail = "pool@logitudeworld.com";
-            if (LogitudeSettings.DeploymentStage == "logboxwe1" || LogitudeSettings.DeploymentStage == "Dev")
+            if (SettingUtil.DeploymentStage.IsDBStage( SettingUtil.DeploymentStage.Logbox) || SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development))
             {
                 ownerEmail = "system@tenant" + crmTenant + ".com";
             }
@@ -276,9 +276,9 @@ namespace CommunicationWorkerRole
 
             string toEmail = lead.Email;
 
-            if (LogitudeSettings.DeploymentStage == "Dev")
+            if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development))
             {
-                toEmail = "islam@logitudeworld.com;jalal@logitudeworld.com";
+                toEmail =  SettingUtil.Emails.DevTeamManagers;
             }
 
 
@@ -296,53 +296,38 @@ namespace CommunicationWorkerRole
                     HtmlTemplate.Append("<div style='text-align:left'>");
                     HtmlTemplate.Append("Dear " + leadContact.EnglishName);
                     HtmlTemplate.Append("<br /><br />");
-                    HtmlTemplate.Append("Thank you for your interest in Logitude World, the first Freight Forwarding solution built in the cloud.");
+                    HtmlTemplate.Append("Thank you for your interest in AmitalData, the first solution built in the cloud.");
                     HtmlTemplate.Append("<br /><br />");
                     HtmlTemplate.Append("We value your inquiry to get new access to our demo environment. Your details are currently available in our database and one of our dedicated team members will get in touch with you shortly.");
                     HtmlTemplate.Append("<br /><br />");
                     HtmlTemplate.Append("If you have any questions or inquiries please, feel free to contact us at");
                     HtmlTemplate.Append("<br />");
-                    HtmlTemplate.Append("<a href='mailto:info@logitudeworld.com'>info@logitudeworld.com</a>");
+                    HtmlTemplate.Append("<a href='mailto:info@amital.co.il'>info@amital.co.il</a>");
                     HtmlTemplate.Append("<br /><br />");
                     HtmlTemplate.Append("Best Regards,");
                     HtmlTemplate.Append("<br />");
                     HtmlTemplate.Append("<div style='text-align:left;font-weight:bold;color:#1F497D'>The Logitude Team</div>");
-                    HtmlTemplate.Append("<a href='http://www.Logitudeworld.com'>www.Logitudeworld.com</a>");
+                    HtmlTemplate.Append("<a href='http://www.amital.co.il'>www.amital.co.il</a>");
                     HtmlTemplate.Append("<br />");
                     HtmlTemplate.Append("<img width='258' height='150' src='cid:logo0' />");
                     HtmlTemplate.Append("</div>");
                     string emailbody = HtmlTemplate.ToString();
 
                     EmailCommunicationParams emailParams = new EmailCommunicationParams();
-                    if (LogitudeSettings.DeploymentStage == "Simplog")
-                    {
-
-                        emailParams = new EmailCommunicationParams()
-                        {
-                            From = "info@logitudeworld.com",
-                            To = leadContact.Email,
-                            CC = "info@logitudeworld.com",
-                            Subject = "Your inquiry re Logitude World demo",
-                            EmailBody = emailbody,
-                            Tenant = crmTenant,
-                            LoggingUserId = GetCrmUserId(crmTenant),
-                        };
-                    }
-                    else
-                    {
+                   
 
 
                         emailParams = new EmailCommunicationParams()
                         {
-                            From = "admin@fnarsoft.com",
-                            To = "islam@logitudeworld.com;jalal@logitudeworld.com",
-                            Subject = "Your inquiry re Logitude World demo",
+                            From =SettingUtil.Emails.FromNoReply,
+                            To =  SettingUtil.Emails.CrmManagers,
+                            Subject = "Your inquiry re Amital demo",
                             EmailBody = emailbody,
                             Tenant = crmTenant,
                         };
 
 
-                    }
+                 
 
 
                     Communications.AddEmailCommunicationLogQueue(emailParams, crmTenant);
@@ -428,7 +413,7 @@ namespace CommunicationWorkerRole
 
                         // 
                     }
-                    else if (LogitudeSettings.DeploymentStage == "Simplog" && logitudeReseller != null)
+                    else if ( SettingUtil.DeploymentStage.IsDBStage( SettingUtil.DeploymentStage.Simplog ) && logitudeReseller != null)
                     {
                         customerPM.Field2 = new Simplog.Server.Infrastructure.DataContracts.CustomFieldClass() { FieldName = "Field2", TableName = "Customer", Value = logitudeReseller.Id };
                     }
@@ -491,7 +476,7 @@ namespace CommunicationWorkerRole
                     {
                         opportunity.Field1 = resellerId;
                     }
-                    else if (LogitudeSettings.DeploymentStage == "Simplog" && logitudeReseller != null)
+                    else if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Simplog) && logitudeReseller != null)
                     {
                         opportunity.Field1 = logitudeReseller.Id;
                     }
@@ -573,8 +558,6 @@ namespace CommunicationWorkerRole
                     {
                         From = "registration@logitudeworld.com",
                         To = Emails,
-                        Cc = "",
-                        Bcc = "",
                         Subject = subject,
                         Body = emailbody,
                         IsBodyHtml = true,
@@ -599,27 +582,27 @@ namespace CommunicationWorkerRole
                     HtmlTemplate.Append("<br />");
                     HtmlTemplate.Append("<a href='" + path + "'>" + path + "</a>");
                     HtmlTemplate.Append("<br /><br />");
-                    HtmlTemplate.Append("As a result, we will send you an email with a username and password for Logitude's demo environment and a Quick Tour Guide.");
+                    HtmlTemplate.Append("As a result, we will send you an email with a username and password for Amital's demo environment and a Quick Tour Guide.");
                     HtmlTemplate.Append("<br /><br />");
                     HtmlTemplate.Append("If you have any questions or inquiries. Please, feel free to contact us at");
                     HtmlTemplate.Append("<br />");
-                    HtmlTemplate.Append("<a href='mailto:info@logitudeworld.com'>info@logitudeworld.com</a>");
+                    HtmlTemplate.Append("<a href='mailto:info@amital.co.il'>info@amital.co.il</a>");
                     HtmlTemplate.Append("<br /><br />");
                     HtmlTemplate.Append("Best Regards,");
                     HtmlTemplate.Append("<br />");
                     HtmlTemplate.Append("<div style='text-align:left;font-weight:bold;color:#4472C4'>The Logitude Team</div>");
-                    HtmlTemplate.Append("<a href='http://www.Logitudeworld.com'>www.Logitudeworld.com</a>");
+                    HtmlTemplate.Append("<a href='http://www.amital.co.il'>www.amital.co.il</a>");
                     HtmlTemplate.Append("<br />");
                     HtmlTemplate.Append("<img width='258' height='150' src='cid:logo0' />");
                     HtmlTemplate.Append("</div>");
                     string emailbody = HtmlTemplate.ToString();
                     EmailParameters parameters = new EmailParameters();
-                    if (LogitudeSettings.DeploymentStage == "Dev")
+                    if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development))
                     {
                         parameters = new EmailParameters()
                         {
-                            From = "info@logitudeworld.com",
-                            To = toEmail,
+                            From = SettingUtil.Emails.FromNoReply,
+                            To = SettingUtil.Emails.DevTeamManagers,
                             Cc = "",
                             Bcc = "",
                             Subject = "Complete the Signup Request with Logitude World",
@@ -634,10 +617,9 @@ namespace CommunicationWorkerRole
                     {
                         parameters = new EmailParameters()
                         {
-                            From = "info@logitudeworld.com",
+                            From = SettingUtil.Emails.FromNoReply,
                             To = toEmail,
-                            Cc = "info@logitudeworld.com",
-                            Bcc = "jalal@logitudeworld.com",
+                            Cc = SettingUtil.Emails.CrmManagers,
                             Subject = "Complete the Signup Request with Logitude World",
                             Body = emailbody,
                             IsBodyHtml = true,
@@ -828,37 +810,19 @@ namespace CommunicationWorkerRole
             string emailbody = HtmlTemplate.ToString();
             EmailCommunicationParams emailParams = new EmailCommunicationParams();
 
-            if (LogitudeSettings.DeploymentStage == "Simplog")
-            {
+           
                 emailParams = new EmailCommunicationParams()
                 {
-                    From = "info@logitudeworld.com",
-                    To = lead.Email,
-                    CC = "info@logitudeworld.com",
-                    Subject = "Welcome to Logitude's Demo Environment!",
-                    EmailBody = emailbody,
-                    Tenant = demoTenant,
-                    IsBodySecured = true,
-                    LoggingUserId = GetCrmUserId(crmTenant),
-                };
-            }
-            else
-            {
-
-                emailParams = new EmailCommunicationParams()
-                {
-                    From = "info@logitudeworld.com",
-                    To = "islam@logitudeWorld.com;jalal@logitudeworld.com",
-                    CC = "",
-                    BCC = "",
-                    Subject = "Welcome to Logitude's Demo Environment!",
+                    From = SettingUtil.Emails.FromNoReply,
+                    To = SettingUtil.Emails.CrmManagers,
+                     Subject = "Welcome to AmitalData Demo Environment!",
                     EmailBody = emailbody,
                     Tenant = demoTenant,
                     IsBodySecured = true,
                 };
 
 
-            }
+           
 
             Communications.AddEmailCommunicationLogQueue(emailParams, demoTenant);
 
@@ -1184,8 +1148,8 @@ namespace CommunicationWorkerRole
                 demoTenant = 2279;
             }
 
-            if (LogitudeSettings.DeploymentStage == "Dev") demoTenant = 1;
-            else if (LogitudeSettings.DeploymentStage == "logboxwe1") demoTenant = LogitudeSettings.LogitudeCRMTenantNumber;
+            if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development)) demoTenant = 1;
+            else if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox)) demoTenant = LogitudeSettings.LogitudeCRMTenantNumber;
 
             return demoTenant;
         }
@@ -1221,7 +1185,7 @@ namespace CommunicationWorkerRole
 
         private string GetCrmUserId(int crmTenant)
         {
-            if (LogitudeSettings.DeploymentStage != "Simplog") return null;
+            if (!SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Simplog)) return null;
             var crmUserEmail = "info@logitudeworld.com";
             return userRepository.GetSingleUserByEmail(crmUserEmail, crmTenant, false)?.Id;
         }

@@ -1863,17 +1863,10 @@ namespace WebFreight.Web.WcfApi
                 string Where = " Where Shipments.Tenant = @Tenant and Shipments.IsOperationalClosed = @IsOperationalClosed and Shipments.IsCancelled = @IsCancelled";
                 if (!string.IsNullOrEmpty(filters.SearchFields))
                 { 
-                    if (LogitudeSettings.DeploymentStage == "Simplog")
-                    {
-                        parameters.Add(new SqlParameter("@SearchFields", "%" + filters.SearchFields + "%"));
-                        Where += " and Shipments.SearchFields like @SearchFields";
-                    }
-                    else
-                    {
+                   
                         parameters.Add(new SqlParameter("@SearchFields", "\"" + filters.SearchFields + "*\""));
                         Where += " and Contains(Shipments.SearchFields,@SearchFields)";
-                    }
-
+                   
                 }
                 if (filters.MyShipments && !string.IsNullOrEmpty(filters.Email))
                 {

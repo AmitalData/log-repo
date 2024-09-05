@@ -668,10 +668,9 @@ namespace WebFreight.Web
             {
                 TenantManagmentPrivateLabelsPM privatelabel = null;
                 var url = SecurityUtility.getLoggedDomain();
-                //if (LogitudeSettings.DeploymentStage.ToLower() == "test2")
-                //{
+                
                 url = url.Split(':')[0];
-                //}
+                
                 if (!loginParameters.IsFromPLSignApp && !url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
                 {
                     TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(0);
@@ -1989,7 +1988,7 @@ namespace WebFreight.Web
 
         private bool IsLogBoxEnvironment()
         {
-            return LogitudeSettings.DeploymentStage != null && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2");
+            return SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox);
         }
 
         private string GetContactMaskedMobileNumber(Contact loggedContact)
@@ -2230,7 +2229,7 @@ namespace WebFreight.Web
             if (contact != null)
             {
                 bool isIpAuthenticated = true;
-                if (customerCare)//(contact.Email == "customercare@logitudeworld.com")
+                if (customerCare)
                 {
                     if (CustomerCareEmails.Contains(contact.Email))
                     {
@@ -2496,8 +2495,7 @@ namespace WebFreight.Web
                         }
                     }
 
-                    //contact.Email != "customercare@logitudeworld.com" && customercare to be replaced with tenant 0 users that are not distributors
-
+                  
                     if (logitudeUser != null)
                     {
                         distributor = logitudeUser.IsDistributor;
@@ -2604,7 +2602,7 @@ namespace WebFreight.Web
         }
 
         PasswordCheckService passwordChkService = new PasswordCheckService();
-        List<string> CustomerCareEmails = new List<string>();// {"fajr@logitudeworld.com", "eman@logitudeworld.com", "azhar@logitudeworld.com", "balqees@logitudeworld.com", "isra@logitudeworld.com", "mujahed@logitudeworld.com", "maram@logitudeworld.com", "diaa@logitudeworld.com", "zaki@logitudeworld.com", "ahmada@logitudeworld.com", "ihab@logitudeworld.com" };
+        List<string> CustomerCareEmails = new List<string>();
         private UserData CheckUserState(string email, string password, ref ContactPassword contactPassword, bool byToken, string clientType)
         {
 

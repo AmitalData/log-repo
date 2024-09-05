@@ -6,6 +6,7 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System; 
 using WebFreight.Web.InfrastructureModel;
 
@@ -94,7 +95,7 @@ namespace WebFreight.Web.Helpers.SignUp
 
         private bool IsAllowCopyTrucker()
         {
-            return LogitudeSettings.DeploymentStage == "amitalstorage" || LogitudeSettings.DeploymentStage == "Dev" || LogitudeSettings.DeploymentStage == "Test2" || LogitudeSettings.DeploymentStage == "logboxwe1";
+            return SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development) || SettingUtil.DeploymentStage.IsDBStage( SettingUtil.DeploymentStage.LogboxAndAccountingProduction );
         }
           
     }

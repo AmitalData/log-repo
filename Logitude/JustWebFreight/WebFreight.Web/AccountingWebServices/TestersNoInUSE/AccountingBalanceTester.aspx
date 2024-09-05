@@ -275,7 +275,6 @@
         var _ARPaymentChequeUrl = urlBase + '/api/ARPaymentChequeOp';
 
 
-        //var loginParameterJson = '{ "Email": "admin@fnarsoft.com", "Password": "!J123456.0", "IsUser": true, "CardId": null, "CardType": null, "ByToken": false, "IsMobileLogin": false, "GetToken": true }';
         var _ResponseToken = "";
         function getToken() {
             //var loginParameterJson = JSON.stringify(loginParameter)

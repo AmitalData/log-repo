@@ -436,7 +436,7 @@ namespace WebFreight.Web.Helpers
         private CommunicationLog CreateNotExistMailboxEmailCommunicationLog(string id, ICommonDataContext commonContext)
         {
             CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);
-            string fromemail = "no-reply@LogitudeWorld.com";
+            string fromemail = SettingUtil.Emails.FromNoReply;
             string subject = "Wrong Mailbox";
 
             ObjectTableQuery query = new ObjectTableQuery(Tenant);

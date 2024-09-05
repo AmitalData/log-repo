@@ -26,6 +26,7 @@ using WebFreight.Web.ReportsWebServices;
 using WebFreight.Web.TaxesApprovalModel;
 using Logitude.Server.Tools;
 using ICSharpCode.SharpZipLib.Checksum;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace CommunicationWorkerRole
 {
@@ -234,11 +235,9 @@ namespace CommunicationWorkerRole
 
                 EmailParameters parameters = new EmailParameters()
                 {
-                    From = "no-reply@LogitudeWorld.com",
+                    From = SettingUtil.Emails.FromNoReply,
                     To = email,
-                    Cc = "",
-                    Bcc = "",
-                    Subject = "Open Format Files / Logitude World",
+                     Subject = "Open Format Files / Amital Data",
                     Body = HtmlTemplate.ToString(),
                     IsBodyHtml = true,
                     Attachments = new List<Attachment>() { att1, att2 },
@@ -250,9 +249,9 @@ namespace CommunicationWorkerRole
 
                 EmailCommunicationParams emailParams = new EmailCommunicationParams()
                 {
-                    From = "no-reply@LogitudeWorld.com",
+                    From = SettingUtil.Emails.FromNoReply,
                     To = email,
-                    Subject = "Open Format Files / Logitude World",
+                    Subject = "Open Format Files / Amital Data",
                     Tenant = tenant,
                     EmailBody = HtmlTemplate.ToString(),
                     IsBodySecured = true,

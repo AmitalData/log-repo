@@ -580,7 +580,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
                     //Update version will be done by script : Jalal
 
-                    if (LogitudeSettings.DeploymentStage == "Dev" || LogitudeSettings.IsCostomsDeploy)
+                    if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development) || LogitudeSettings.IsCostomsDeploy)
                     {
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
                         {

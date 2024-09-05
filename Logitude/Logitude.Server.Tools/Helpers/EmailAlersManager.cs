@@ -54,16 +54,13 @@ namespace Logitude.Server.Tools.Helpers
                     {
                         Contact contact = contactRepository.GetSingleContactByEmail(toEmail, tenant);
                         string toContactName = contact != null ? " " + contact.EnglishName : "";
-                        string From = "no-reply@amital.co.il";
+                        string From = SettingUtil.Emails.FromNoReply;
 
-                        if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "simplog")
-                        {
-                            From = "no-reply@logitudeworld.com";
-                        }
+                       
 
                         TenantManagmentPrivateLabels privatelabel = null;
                         string PLURL = null;
-                        if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2"))
+                        if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox))
                         {
                             
                             HttpContext context = HttpContext.Current;
@@ -95,7 +92,7 @@ namespace Logitude.Server.Tools.Helpers
                             }
                             else
                             {
-                                From = "no-reply@logbox.co.il";
+                                From = SettingUtil.Emails.FromNoReplyLogbox;
                             } 
                         }
                         string notificationMail = BuildAlertEmailEnvelope(toContactName, tenant, loginMessage, PLURL);
@@ -105,8 +102,6 @@ namespace Logitude.Server.Tools.Helpers
                             Subject = subject,
                             From = From,
                             To = toEmail,
-                            CC = null,
-                            BCC = null,
                             EmailBody = notificationMail,
                             Tenant = tenant,
                             LoggingUserId = loggedContact.Id,
@@ -130,15 +125,12 @@ namespace Logitude.Server.Tools.Helpers
                 string toContactName = contact != null ? " " + contact.EnglishName : "";
 
                 string notificationMail = BuildAlertEmailEnvelope(toContactName, tenant, loginMessage);
-                //emailService.InsertCommunicationLog(tenant, contact.Id, contact.Email, TenantServerConfigration.GetCurrentDateTime(tenant), "no-reply@logitudeworld.com", email, subject, notificationMail, true);
-
+               
                 EmailCommunicationParams emailParams = new EmailCommunicationParams()
                 {
                     Subject = subject,
-                    From = "no-reply@logitudeworld.com",
+                    From = SettingUtil.Emails.FromNoReply,
                     To = email,
-                    CC = null,
-                    BCC = null,
                     EmailBody = HtmlTemplate.ToString(),
                     Tenant = tenant,
                     LoggingUserId = contact.Id,
@@ -192,7 +184,7 @@ namespace Logitude.Server.Tools.Helpers
             {
                 TenantManagmentPrivateLabels privatelabel = null;
                 string PLSign = LogitudeSettings.EmailAlertSignature;
-                if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2"))
+                if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox) || SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development))
                 {
 
                     HttpContext context = HttpContext.Current;

@@ -9,6 +9,7 @@ using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -49,9 +50,7 @@ namespace WebFreight.Web.Helpers
             string LogitudeURL = LogitudeSettings.LogitudeURL;
             string path = GetFogotPasswordPagePath(resetPasswordParameters, LogitudeURL, reqNumber);
 
-            if (LogitudeSettings.DeploymentStage != null &&
-                (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2" || LogitudeSettings.DeploymentStage.ToLower() == "logboxpre")
-                && !IsCargoTrackingDomain())
+            if (IsLogboxEnvironment() && !IsCargoTrackingDomain())
             {
                 privatelabel = GetPrivateLabelByLoggedDomain();
                 BuildEmailMessageParams(emailMessageParams, privatelabel);
@@ -111,7 +110,7 @@ namespace WebFreight.Web.Helpers
             {
                 emailMessageParams.TeamName = "LogBox Team";
                 emailMessageParams.SiteUri = "system.logbox.co.il";
-                emailMessageParams.SenderEmail = "no-reply@logbox.co.il";
+                emailMessageParams.SenderEmail = SettingUtil.Emails.FromNoReplyLogbox;
                 emailMessageParams.Environment = "Logbox";
                 emailMessageParams.IsLogBox = true;
             }
@@ -235,8 +234,6 @@ namespace WebFreight.Web.Helpers
                 Subject = emailParameters.Subject,
                 From = emailParameters.From,
                 To = emailCommunicationLogBuilderArgs.ResetPasswordParameters.Email,
-                CC = null,
-                BCC = null,
                 EmailBody = HtmlTemplate.ToString(),
                 Tenant = callContact.GlobalTenantId,
                 LoggingUserId = callContact.Id,
@@ -256,7 +253,7 @@ namespace WebFreight.Web.Helpers
 
             return path;
         }
-        private string GetFogotPasswordPagePath(ResetPasswordParameters resetPasswordParameters,string reqNumber)
+        private string GetFogotPasswordPagePath(ResetPasswordParameters resetPasswordParameters, string reqNumber)
         {
             string pageName = string.IsNullOrEmpty(resetPasswordParameters.PageName) ? "PasswordChangePage.aspx" : resetPasswordParameters.PageName;
             string path = @"/" + pageName + "?email=" + resetPasswordParameters.Email + "&reset_request_number=" + reqNumber + "&ischamplogin=" + resetPasswordParameters.IsChampLogin;
@@ -276,19 +273,19 @@ namespace WebFreight.Web.Helpers
 
         private EmailParameters BuildEmailCommunicationLog(EmailCommunicationLogBuilderArgs emailCommunicationLogBuilderArgs, TenantManagmentPrivateLabelsPM privatelabel)
         {
-            string fromemail = LogitudeSettings.WorkEnvironment == "cloud" ? "no-reply@amital.co.il" : "no-reply@LogitudeWorld.com";
-            string subject = LogitudeSettings.WorkEnvironment == "cloud" ? "Your Cloud Password!" : "Your Logitude Password! ";
+            string fromemail = SettingUtil.Emails.FromNoReply;
+            string subject = LogitudeSettings.WorkEnvironment == "cloud" ? "Your Cloud Password!" : "Your Password! ";
 
             if (emailCommunicationLogBuilderArgs.ResetPasswordParameters.IsMobile)
             {
                 subject = emailCommunicationLogBuilderArgs.AppMobileEnvironment + " Mobile Password";
-                fromemail = emailCommunicationLogBuilderArgs.AppMobileEnvironment == "Unifreight" ? "no-reply@amital.co.il" : "no-reply@LogitudeWorld.com";
+                fromemail = SettingUtil.Emails.FromNoReply;
             }
 
             if (IsLogboxEnvironment())
             {
                 string envir = privatelabel == null ? "Logbox" : privatelabel.PrivateLabelShortName;
-                string Email = privatelabel == null ? "no-reply@logbox.co.il" : "no-reply@" + privatelabel.PrivateLabelDomain;
+                string Email = privatelabel == null ? SettingUtil.Emails.FromNoReplyLogbox : "no-reply@" + privatelabel.PrivateLabelDomain;
                 subject = "Your " + envir + " Password";
                 fromemail = Email;
             }
@@ -317,7 +314,7 @@ namespace WebFreight.Web.Helpers
 
         private static bool IsLogboxEnvironment()
         {
-            return LogitudeSettings.DeploymentStage != null && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2" || LogitudeSettings.DeploymentStage.ToLower() == "logboxpre");
+            return SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox);
         }
 
         private bool IsCargoTrackingDomain()
@@ -406,5 +403,5 @@ namespace WebFreight.Web.Helpers
             else return null;
         }
 
-    } 
+    }
 }

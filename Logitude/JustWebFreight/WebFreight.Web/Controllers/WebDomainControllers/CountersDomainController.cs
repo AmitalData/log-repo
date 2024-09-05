@@ -122,7 +122,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (LogitudeSettings.DeploymentStage == "Dev")
+                if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development))
                 {
                     myResult.IsCounterUsed = false;
                 }

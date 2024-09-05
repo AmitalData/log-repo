@@ -173,6 +173,10 @@
       <Project>{74fbc07e-5cbf-44c5-85c8-f86facaa06b6}</Project>
       <Name>Logitude.Base</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{ACC2EA9E-E150-4099-8AA1-66326AB14BE8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\SpecFlow.3.5.14\build\SpecFlow.targets" Condition="Exists('..\packages\SpecFlow.3.5.14\build\SpecFlow.targets')" />

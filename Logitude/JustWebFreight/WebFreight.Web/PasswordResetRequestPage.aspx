@@ -162,13 +162,9 @@
                                                              <td >
                                                                   <p id="HavingtroubleId" style="font-family:Arial; font-size:12px;height:12px; color:#4B4A4A" class="column1"> 
                                                                          Having trouble logging in? 
-                                                                         <a id="DefaultContactUs" href="mailto:info@logitudeworld.com" >Contact us</a>  
+                                                                         <a id="DefaultContactUs" href="mailto:support@amital.co.il" >Contact us</a>  
                                                                          <a id="LogBoxContactUs" style="display:none" href="mailto:sales@logbox.co.il" >Contact us</a>  
-                                                                         <a id="AerolineasContactUs"  style="display:none" href="mailto:Leandro.Martinez@aerolineas.com.ar"  >Contact us</a> 
-                                                                         <a id="AtlasContactUs"  style="display:none" href="mailto:Mirjam.Schubert@champ.aero"  >Contact us</a> 
-                                                                         <a id="BrandingContactUs"  style="display:none"   >Contact us</a> 
-                                                                        <a id="ConnectaContactUs"  style="display:none" href="mailto:admin@pangea-network.com" >Contact us</a> 
-                                                                        <a id="PangeaContactUs"  style="display:none" href="mailto:admin@pangea-network.com"  >Contact us</a> 
+                                                                        <a id="BrandingContactUs"  style="display:none"   >Contact us</a> 
                                                                         <a id="CloudContactUs"  style="display:none" href="mailto:support@amital.co.il"  >Contact us</a> 
  
                                                                      
@@ -623,29 +619,12 @@
 
             var myCode = document.getElementById('PartnerEnvironmentInput').value;
            
-            $("#AerolineasContactUs").css("display", "none");
+          
             $("#DefaultContactUs").css("display", "none");
             $("#LogBoxContactUs").css("display", "none");
             $("#BrandingContactUs").css("display", "none");
-            $("#AtlasContactUs").css("display", "none");
-            
-            if (myCode == "aerolineas") {
-                $("#AerolineasContactUs").css("display", "inline");
-                $("#Image2Link").attr("href", "http://www.aerolineas.com.ar/Welcome");
-            }
-            else if (myCode == "atlas") {
-                $("#AtlasContactUs").css("display", "inline");
-                $("#Image2Link").attr("href", "http://www.atlas.com/Welcome");
-            }
-            else if (myCode == "connecta") {
-                $("#ConnectaContactUs").css("display", "inline");
-                $("#Image2Link").attr("href", "https://www.logitudeworld.com/demo-evn/");
-            }
-
-            else if (myCode == "pangea") {
-                $("#PangeaContactUs").css("display", "inline");
-                $("#Image3Link").attr("href", "https://www.logitudeworld.com/demo-evn/");
-            } else if (myCode == "cloud") {
+        
+            if (myCode == "cloud") {
                 $("#CloudContactUs").css("display", "inline");
             }
             if (myCode != "pangea" && myCode != "connecta" && myCode != "aerolineas" && myCode != "atlas")

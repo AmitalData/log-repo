@@ -52,15 +52,10 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.UpdateDate = entityPM.UpdateDate;
             entityPOCO.DigitalPortalLanguage = entityPM.DigitalPortalLanguage;
            
-            if (LogitudeSettings.DeploymentStage == "Simplog")
-            {
-                entityPOCO.DontShowLocalLabels = true;
-            }
-            else
-            {
+            
                 entityPOCO.DontShowLocalLabels = !isNewState ? entityPM.DontShowLocalLabels : entityPOCO.DontShowLocalLabels;
 
-            }
+           
 
             //entityPOCO.DontShowLocalLabels = LogitudeSettings.WorkEnvironment == "customs" ? false : true; //bug 44449
             if (entityPM.CompanyName != null)

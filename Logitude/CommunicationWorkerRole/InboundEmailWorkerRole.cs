@@ -348,13 +348,7 @@ namespace CommunicationWorkerRole
         }
         private void SetEmailFooterMessage()
         {
-            var logitudeFooterMessage = "This email is a service from Logitude!";
-            var cloudFooterMessage = "This email is a service from Unifreight Cloud Generation!";
-            
-            if (LogitudeSettings.DeploymentStage == "Simplog")
-                this.EmailFooterMessage = logitudeFooterMessage;
-            else
-                this.EmailFooterMessage = cloudFooterMessage;
+                this.EmailFooterMessage = "This email is a service from Unifreight Cloud Generation!";
         }
 
         Ticket Ticket;

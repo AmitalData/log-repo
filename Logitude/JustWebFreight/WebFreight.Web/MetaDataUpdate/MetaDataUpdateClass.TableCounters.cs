@@ -3,6 +3,7 @@ using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -521,7 +522,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 CounterDefinitionRepository.Add(myCounterDefinition_10);
 
 
-                if ( LogitudeSettings.DeploymentStage == "amitalstorage" )
+                if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Cloud))
                 {
                     CounterDefinition myCounterDefinition_08 = new CounterDefinition()
                     {

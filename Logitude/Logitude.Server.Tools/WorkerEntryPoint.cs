@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Caching;
 using System.Threading;
 using System.Globalization;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Server.Tools
 {
@@ -89,7 +90,7 @@ namespace Logitude.Server.Tools
         /// </summary>
         public void ProtectedRun()
         {
-            if (LogitudeSettings.DeploymentStage != "Dev")
+            if (!SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development))
             {
                 try
                 {

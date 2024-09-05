@@ -73,15 +73,15 @@ namespace Simplog.Server.Infrastructure
         public static string GetQueueByEnviroment(string queueName)
         {
             var savequeueName = queueName;   
-            if (LogitudeSettings.DeploymentStage == "Dev")
+            if ( SettingUtil.DeploymentStage.IsDBStage( SettingUtil.DeploymentStage.Development))
             {
                 queueName = Environment.MachineName + "_" + queueName;
             }
-            else if (LogitudeSettings.DeploymentStage == "customs")
+            else if (SettingUtil.DeploymentStage.IsDBStage( SettingUtil.DeploymentStage.Customs))
             {
                 queueName = "customs" + "_" + queueName;
             }
-            else if (LogitudeSettings.DeploymentStage == "Simplog" || LogitudeSettings.DeploymentStage == "amitalstorage")
+            else if (SettingUtil.DeploymentStage.IsDBStage( SettingUtil.DeploymentStage.Cloud))
             {
                 queueName = "Production" + "_" + queueName;
             }
@@ -97,27 +97,7 @@ namespace Simplog.Server.Infrastructure
                         //customsDeploymentStage.ToString() + 
                         branch + "_" + savequeueName;
             }
-            /*
-            var customsDeploymentStage = SettingUtil.GetCustomsDeploymentStage();
-            switch (customsDeploymentStage)
-            {
-                case SettingUtil.CustomsDeploymentStage.Test:
-                case SettingUtil.CustomsDeploymentStage.Pilot:
-
-                    var uri = new Uri(LogitudeSettings.LogitudeURL);
-                    var branch = uri.LocalPath.Trim(@"\"[0]).Trim(@"/"[0]);
-                    queueName = LogitudeSettings.StorageAccountName + "_Customs" + customsDeploymentStage.ToString() + branch + "_" + savequeueName;
-                    break;
-                case SettingUtil.CustomsDeploymentStage.Production:
-                                                         //queueName = "Customs" + customsDeploymentStage.ToString() + "_" + savequeueName;
-                    queueName = LogitudeSettings.StorageAccountName + "_Customs" + customsDeploymentStage.ToString() + "_" + savequeueName;
-                    break;
-
-                default:
-                    break;
-            }
-             */ 
-
+           
             return queueName;
 
         }

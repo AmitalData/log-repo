@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.DocumentTests.Services
 {
@@ -35,7 +36,7 @@ namespace Logitude.DocumentTests.Services
             {
                 Htmlstring = "<html><head><meta http- equiv='Content- Type' content= 'text/html; charset = iso-8859-1' > <style type='text/css' style= 'display: none; '></style></head><body><p style=\"font-size: 16px; overflow-wrap: break-word;\">Integration Test</p></body></html>",
                 InternalDocumentId = documentOut.Id,
-                ToEmail = "ahmadb@logitudeworld.com",
+                ToEmail = SettingUtil.Emails.DevTeamManagers,
                 Tenant = UserTenant.Tenant,
                 UserId = UserTenant.UserId,
                 ObjectTableId = documentOut.ObjectTableId,

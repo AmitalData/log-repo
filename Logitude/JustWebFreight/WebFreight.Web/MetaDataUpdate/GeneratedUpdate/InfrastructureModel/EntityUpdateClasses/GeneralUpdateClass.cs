@@ -903,7 +903,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralMContainerNumberCheckDigitiswrong = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.ContainerNumberCheckDigitiswrong", DefaultText = "Container Number Check Digit is wrong <Must be %CheckDigit>",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_GeneralMAddingIsNotAvailable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.AddingIsNotAvailable", DefaultText = "Adding new %Entity is not available at this moment please send the requested %Entity by email to: support@logitudeworld.com",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_GeneralMAddingIsNotAvailable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.AddingIsNotAvailable", DefaultText = "Adding new %Entity is not available at this moment please send the requested %Entity by email to: support@amital.co.il",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMSaving = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.Saving", DefaultText = "Saving...",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

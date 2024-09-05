@@ -30,12 +30,7 @@ namespace Logitude.HybridTest.ServicesTest
                 ServiceFilterType = null,
             };
 
-            //Response serviceResponse = new Response();
-            //object[] serviceParameters = new object[] { "Hybrid@fnarsoft.com", EnvironmentGlobalParams.MainTenant, serviceResponse };
-            //ActivityPM[] activities = (ActivityPM[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            //Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceOutcome.Response.ErrorMessage);
-            //Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
-            //Assert.AreEqual(activities[0].Subject, HybridData.ContactCode, "Get Hybrid Contact From Contacts Failed!");
+           
         }
 
         [TestMethod]
@@ -80,11 +75,7 @@ namespace Logitude.HybridTest.ServicesTest
                     ServiceType = null,
                     ServiceFilterType = null,
                 };
-                //Response serviceResponse = new Response();
-                //object[] serviceParameters = new object[] { HybridData.ActivityId, "Hybrid@fnarsoft.com", EnvironmentGlobalParams.MainTenant };
-                //serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-                //Assert.IsFalse(serviceResponse.HasError, "Set As Synchronized Failed! " + serviceOutcome.Response.ErrorMessage);
-                //Assert.IsNull(serviceResponse.Result, "Set As Synchronized Failed! " + serviceResponse.Result);
+                
             }
             else
                 Assert.IsTrue(false, "Upsert Activity Failed!");

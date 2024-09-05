@@ -390,7 +390,7 @@ namespace WebFreight.Web.Helpers
             if (!string.IsNullOrEmpty(systemUrl))
                 return "no-reply@" + systemUrl;
 
-            return LogitudeSettings.WorkEnvironment == "cloud" ? "no-reply@amital.co.il" : "no-reply@LogitudeWorld.com";
+            return SettingUtil.Emails.FromNoReply;
         }
 
         private string GetSystemURL(int tenant)

@@ -17,6 +17,7 @@ using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -167,7 +168,7 @@ namespace WebFreight.Web.App_Code
                                 var subject = "New Request From "+ env + " - " + entityPM.CompanyName;
                                 EmailCommunicationParams emailParams = new EmailCommunicationParams()
                                 {
-                                    From = "no-reply@amital.co.il",
+                                    From = SettingUtil.Emails.FromNoReply,
                                     To = Contact.Email,
                                     Subject = subject,
                                     EmailBody = emailMessage,

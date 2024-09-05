@@ -172,7 +172,7 @@ namespace WebFreight.Web.Helpers
 
         public static void AddContactActivityWithTotango(string organizationId, string orgDisplayName, string userName, string module, string activity, string contactId, int tenant, bool isSharedLogisticsContact, string cardId, string partnerTypeId, string via)
         {
-            if (LogitudeSettings.DeploymentStage != "Dev" && !LogitudeSettings.IsCostomsDeploy)
+            if (!SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development) && !LogitudeSettings.IsCostomsDeploy)
             {
                 try
                 {
