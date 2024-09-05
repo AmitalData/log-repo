@@ -86,12 +86,11 @@ using Logitude.DashboardModule.BL;
 
 
 
-
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses
 {
    public class EventTypeUpdateClass
    {  		
-		public const string HashString = "1ba3ecbb8ef8b151a088f14d6d1b3213";
+		public const string HashString = "d03eb1a23d3dd5981b68e911df30da17";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2527,6 +2526,70 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Weight",
+					  						ObjectTableName =  "EventType",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Weight",
+					  						ListPropertyPath =  "Weight",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "EventType",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Weight",
+					  						DefaultText =  "Weight",
+					  						FullLocalDefaultText =  "Weight",
+					  						ListFieldLable =  "WeightListLable",
+					  						ListLableDefaultText =  "Weight",
+					  						ListLocalDefaultText =  "Weight",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -2563,21 +2626,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	
 			 QueryColumn EventtypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EventtypesQuery.Id,QueryCode = EventtypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "EventType.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn EventtypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EventtypesQuery.Id,QueryCode = EventtypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "EventType.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn EventtypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EventtypesQuery.Id,QueryCode = EventtypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "EventType.Weight" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn EventtypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EventtypesQuery.Id,QueryCode = EventtypesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "EventType.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn EventtypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EventtypesQuery.Id,QueryCode = EventtypesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "EventType.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn EventtypesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EventtypesQuery.Id,QueryCode = EventtypesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "EventType.EntityStatusName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn EventtypesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EventtypesQuery.Id,QueryCode = EventtypesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "EventType.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn EventtypesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EventtypesQuery.Id,QueryCode = EventtypesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "EventType.IsFollowUp" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn EventtypesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EventtypesQuery.Id,QueryCode = EventtypesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "EventType.EntityStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn EventtypesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EventtypesQuery.Id,QueryCode = EventtypesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "EventType.FollowUpEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn EventtypesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EventtypesQuery.Id,QueryCode = EventtypesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "EventType.IsFollowUp" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn EventtypesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EventtypesQuery.Id,QueryCode = EventtypesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "EventType.FollowUpLocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn EventtypesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EventtypesQuery.Id,QueryCode = EventtypesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "EventType.FollowUpEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn EventtypesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EventtypesQuery.Id,QueryCode = EventtypesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "EventType.AddedManually" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn EventtypesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EventtypesQuery.Id,QueryCode = EventtypesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "EventType.FollowUpLocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn EventtypesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EventtypesQuery.Id,QueryCode = EventtypesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "EventType.InActive" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn EventtypesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EventtypesQuery.Id,QueryCode = EventtypesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "EventType.AddedManually" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn EventtypesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EventtypesQuery.Id,QueryCode = EventtypesQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "EventType.InActive" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -2612,15 +2677,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	          
              ScreenField EventTypeEventTypeGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.IsFollowUp", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField EventTypeEventTypeGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.FollowUpEnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField EventTypeEventTypeGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.Weight", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField EventTypeEventTypeGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.FollowUpLocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField EventTypeEventTypeGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.FollowUpEnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField EventTypeEventTypeGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.IsCustomerView", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField EventTypeEventTypeGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.FollowUpLocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField EventTypeEventTypeGeneralTabScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.IsAgentView", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField EventTypeEventTypeGeneralTabScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.IsCustomerView", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField EventTypeEventTypeGeneralTabScreenScreenField12 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField EventTypeEventTypeGeneralTabScreenScreenField12 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.IsAgentView", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField EventTypeEventTypeGeneralTabScreenScreenField13 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 6, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	            
 	      
 

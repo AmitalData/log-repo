@@ -55,6 +55,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.AllowedInAutomation).HasColumnName("AllowedInAutomation");
             this.Property(t => t.CustomField).HasColumnName("CustomField");
             this.Property(t => t.EventTrigger).HasColumnName("EventTrigger");
+            this.Property(t => t.Weight).HasColumnName("Weight");
 
             this.HasOptional(t => t.AgentRole).WithMany().HasForeignKey(d => d.AgentRoleId);
             this.HasOptional(t => t.CustomerRole).WithMany().HasForeignKey(d => d.CustomerRoleId);

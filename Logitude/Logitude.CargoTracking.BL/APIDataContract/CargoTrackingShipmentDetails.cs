@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Logitude.BL.CommonDataModel.APIDataContract;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Logitude.BL.ShipmentsModel.APIDataContract;
 namespace Logitude.CargoTracking.BL.APIDataContract
 {
     public class CargoTrackingShipmentDetails
@@ -21,6 +22,8 @@ namespace Logitude.CargoTracking.BL.APIDataContract
         public bool IsCustomerIDNumberRequired { get; set; }
         public LastMileDetails LastMileDetails { get; set; }
         public List<MilestoneData> ShipmentMilestones { get; set;}
+        public List<StatusDetails> StatusDetails { get; set; }
+
         public ShipmentExceptions ShipmentExceptions { get; set; }
 
     }
