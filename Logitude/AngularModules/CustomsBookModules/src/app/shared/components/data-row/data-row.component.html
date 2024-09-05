@@ -43,8 +43,7 @@
 			<li *ngIf="countOfComments > 0; else newComment">
 				<div class="mainTable_itemComment" (click)="showCommentsClick()" (click)="showDetails.emit()">
 					<a class="icon" aria-expanded="true">
-						<i role="img"
-							[ngClass]="{'icon-comment': !isSelected, 'icon-comment_full': isSelected}"></i>
+						<i role="img" [ngClass]="{'icon-comment': !isSelected, 'icon-comment_full': isSelected}"></i>
 					</a>
 					<span class="countOfComments">{{ countOfComments }}</span>
 				</div>

@@ -2,7 +2,7 @@
 	<h2>{{ service?.getTableTop(searchMode) }}
 		<span *ngIf="searchMode == 'search'">({{countSearchResult}}) </span>
 	</h2>
-	<ul>
+	<ul class="CategoriesTable">
 		<li *ngFor="let item of service?.getCategories()">
 			{{ item }}
 		</li>
@@ -14,6 +14,6 @@
 				<span>ניקוי תוצאות</span>
 			</a>
 		</div>
-		<app-filter-popup (filterClick)="filterClickEvent($event)"/>
+		<app-filter-popup (filterClick)="filterClickEvent($event)" />
 	</div>
 </div>

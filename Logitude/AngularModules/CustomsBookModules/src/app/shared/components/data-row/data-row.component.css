@@ -1,6 +1,7 @@
 .mainTable_item {
 	position: relative;
-	height: 44px;
+	/* height: 44px; */
+	height: 30px;
 	/* margin-right: 20px; */
 	display: flex;
 	width: 100%;
@@ -76,7 +77,8 @@ i[role='img'][aria-hidden='true'] {
 	/* width: 90%; */
 	width: 125px;
 	height: 100%;
-	padding-top: 15px;
+	/* padding-top: 15px; */
+	padding: 8px 0;
 	font-size: 14px;
 	text-decoration: none;
 	overflow: hidden;
@@ -93,9 +95,11 @@ i[role='img'][aria-hidden='true'] {
 	display: flex;
 	justify-content: space-evenly;
 	position: absolute;
-    bottom: 13px;
-    left: 36vh;
-    width: 82vh;
+	bottom: 13px;
+	left: 38vh;
+	/* left: 36vh; */
+	width: 82vh;
+	height: 22px;
 }
 
 .item_details a::before {
@@ -157,22 +161,23 @@ i[role='img'][aria-hidden='true'] {
 }
 
 .mainTable_itemComment {
-    position: relative;
-    cursor: pointer;
+	position: relative;
+	cursor: pointer;
 }
+
 .countOfComments {
 	position: absolute;
-    right: 0px;
-    top: 0px;
-    width: 16px !important; 
-    height: 16px;
-    background-color: var(--blue);
-    border: 1px solid #f0f2f5;
-    border-radius: 50%;
-    color: white;
-    text-align: center;
-    font-weight: 300;
-    font-size: 11px;
-    line-height: 14px;
-    display: inline-block;
+	right: 0px;
+	top: 0px;
+	width: 16px !important;
+	height: 16px;
+	background-color: var(--blue);
+	border: 1px solid #f0f2f5;
+	border-radius: 50%;
+	color: white;
+	text-align: center;
+	font-weight: 300;
+	font-size: 11px;
+	line-height: 14px;
+	display: inline-block;
 }

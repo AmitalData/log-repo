@@ -30,7 +30,7 @@ export class MainPageComponent {
 	constructor(private API_MainService: API_MainService, private headerService: HeaderService, private searchService: SearchService) {
 		this._filters = this.filterService.getFilters();
 	}
-	
+
 	SearchByText(searchBy: any) {
 		this.selectSearchBy = searchBy;
 
@@ -45,7 +45,7 @@ export class MainPageComponent {
 			Tenant: SessionInfo.LoggedUserTenant
 		};
 		// add prevent another search while loading
-		if (this.isLoadingMode.getValue()){
+		if (this.isLoadingMode.getValue()) {
 			return;
 		}
 
@@ -63,7 +63,7 @@ export class MainPageComponent {
 		}
 		else if (SearchBy.pageSearch_form02 == this.selectSearchBy) {
 			this.isLoadingMode.next(true); // update loading mode
-			
+
 			// build base  object data:CB_CustomsItemComputedDataList
 			this.API_MainService.GetCustomsBookMainViewSearchByText(filters).subscribe((data: any) => {
 				const result: CB_CustomsItemComputedDataList[] = data.body;
