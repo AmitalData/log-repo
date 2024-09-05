@@ -1797,7 +1797,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         if (searchText) {
             this.LocalFilterServerSearchTxtLength = searchText.length;
         }
-        this.QueryFilterItems=null
+        //this.QueryFilterItems=null
         //reset counters
         this.bufferData = [];
         this.callCount = 0;
