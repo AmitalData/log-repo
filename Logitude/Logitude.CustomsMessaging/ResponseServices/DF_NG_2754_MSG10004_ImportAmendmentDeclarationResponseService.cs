@@ -577,7 +577,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             catch (System.Exception ex)
 
             {
-                error = ex.Message;
+                error = ex.Message + ex.StackTrace;
                 return null;
             }
         }
