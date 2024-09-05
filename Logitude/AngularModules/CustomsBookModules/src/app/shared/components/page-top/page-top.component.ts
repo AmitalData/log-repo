@@ -43,7 +43,6 @@ export class PageTopComponent {
 
 	clickSearch() {
 		this.searchClick.emit(this.searchService.selectSearchBy);
-
 		this.searchService.searchText$.subscribe((searchText) => {
 			// reset search input in html:
 			if (searchText === "") this.textToSearch = "";
