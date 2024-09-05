@@ -153,12 +153,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (syncUnifreight)
             {
                 var list = customResponse.TableData.OrderBy(rec => rec.id).ToList();
-                SystemTables.Send2Amital(requestParams.TableId, list, requestParams.Tenant);
+                var isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant).IsConnectedToUniFreight;
+                if (isConnectedToUniFreight)
+                {
+                    SystemTables.Send2Amital(requestParams.TableId, list, requestParams.Tenant);
+                }
+                else
+                {
+                    UpdateSyncRecord(customResponse, requestParams);
+                }
             }
 
 
-            UpdateSyncRecord(customResponse, requestParams);
- 
+
         }
         void UpdateSyncRecord(SYSTBL_NG_9001_MSG_SystemTablesResponse customResponse, SystemTableRequestParams requestParams)
         {

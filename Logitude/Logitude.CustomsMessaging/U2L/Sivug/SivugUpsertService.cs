@@ -1040,8 +1040,10 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 {
                     SupplierInvoiceItemPM.ItemPrice = null;
                 }
-
-                SupplierInvoiceItemPM.OriginCountryCode = invoiceItem.ITEMORIGINCOUNTRY;
+                if (invoiceItem.ITEMORIGINCOUNTRY != null && !String.IsNullOrWhiteSpace(invoiceItem.ITEMORIGINCOUNTRY))
+                {
+                    SupplierInvoiceItemPM.OriginCountryCode = invoiceItem.ITEMORIGINCOUNTRY;
+                }
 
                 if (SupplierInvoiceItemPM.OriginCountryCode == "")
                     SupplierInvoiceItemPM.OriginCountryCode = null;
