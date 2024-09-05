@@ -38,7 +38,7 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Microsoft.TeamFoundation.Common;
 using CWXSD;
 
-namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
+namespace JustWebFreight.WebFreight.Web.Controllers.CustomsModel.Generated.ListControllers
 {
     public partial class DeclarationCourierStatusViewsController : ApiController
     {
