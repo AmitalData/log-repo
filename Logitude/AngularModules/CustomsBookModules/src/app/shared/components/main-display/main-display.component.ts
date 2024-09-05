@@ -267,22 +267,36 @@ export class MainDisplayComponent implements OnInit {
 		if (SearchBy.searchBy_form01 == this.selectSearchBy) {
 			this.isLoadingMode.next(true); // update loading mode
 			filters.CustomsItemHierarchic = '1,2,3,4';
-			this.API_MainService.GetCustomsBookMainViewSearchByClassification(filters).subscribe((data: any) => {
-				const result: CB_CustomsItemComputedDataList[] = data.body;
-				if (!result) return; // TODO: add error message
-				this.itemsData.next(result);
-				this.isLoadingMode.next(false); // update loading mode
-			});
+			this.API_MainService.GetCustomsBookMainViewSearchByClassification(filters).subscribe(
+				(data: any) => {
+					const result: CB_CustomsItemComputedDataList[] = data.body;
+					if (!result) return; // TODO: add error message
+					this.itemsData.next(result);
+					this.isLoadingMode.next(false); // update loading mode
+				},
+				(error) => {
+					this.isLoadingMode.next(false); // update loading mode
+					this.itemsData.next([]);
+					console.log(error.message);
+				}
+			);
 		}
 		else if (SearchBy.pageSearch_form02 == this.selectSearchBy) {// spacial search by text
 			this.isLoadingMode.next(true); // update loading mode
 			if (filters.CustomsItemHierarchic === '') filters.CustomsItemHierarchic = '1,2,3,4';
-			this.API_MainService.GetCustomsBookMainViewSearchByText(filters).subscribe((data: any) => {
-				const result: CB_CustomsItemComputedDataList[] = data.body;
-				if (!result) return; // TODO: add error message
-				this.itemsData.next(result);
-				this.isLoadingMode.next(false); // update loading mode
-			});
+			this.API_MainService.GetCustomsBookMainViewSearchByText(filters).subscribe(
+				(data: any) => {
+					const result: CB_CustomsItemComputedDataList[] = data.body;
+					if (!result) return; // TODO: add error message
+					this.itemsData.next(result);
+					this.isLoadingMode.next(false); // update loading mode
+				},
+				(error) => {
+					this.isLoadingMode.next(false); // update loading mode
+					this.itemsData.next([]);
+					console.log(error.message);
+				}
+			);
 		}
 	}
 
