@@ -35,6 +35,7 @@ import { TenantPMService } from '../../../../Common/Services/StandardPMs/TenantP
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
 import { DatePipe } from '@angular/common';
 import { TenantManagementPM } from 'Infrastructure/EntityPMs/TenantManagementPM';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -69,7 +70,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     logoUrl: string = '';
     serviceAgreementURL: string = '';
 
-    constructor(private cd: ChangeDetectorRef) {
+    constructor(private cd: ChangeDetectorRef,private http: HttpClient) {
         super();
         this._documentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
         this._ShipmentAdditionalCloudDataService = new ShipmentAdditionalCloudDataService();
@@ -333,6 +334,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public set thtk(newValue: string) { this.AdditionalData.PaymentData.thtk = newValue; }
 
     public get TargetEnv() {
+        debugger
         let directTranzilaLink = this.GetDirectTranzilaLink();
         var Env = directTranzilaLink + this.AdditionalData.PaymentData?.TargetEnv + "/";//amitaltest
         return Env;
@@ -380,9 +382,46 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     MyAdditionalData: any = null;
 
     OnPayClick() {
-        //alert("Yes");
-        document.forms["form"].action = this.TargetEnv
-        document.forms["form"].submit();
+
+
+         this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe(res=>{
+            debugger
+            this.MapFieldsFromResponseData(res);
+            if (res.Result) {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = this.TargetEnv; // Assuming this.TargetEnv is your target URL
+              
+                // Data to be sent
+                const formData = {
+                  sum: res.Result.PaymentData.sum,
+                  currency: res.Result.PaymentData.currency,
+                  u71: res.Result.PaymentData.u71,
+                  op: res.Result.PaymentData.op,
+                  DCdisable: res.Result.PaymentData.DCdisable,
+                  DclickTK: res.Result.PaymentData.DclickTK,
+                  thtk: res.Result.PaymentData.thtk
+                };
+              
+                Object.entries(formData).forEach(([key, value]) => {
+                  const input = document.createElement('input');
+                  input.type = 'hidden';
+                  input.name = key;
+                  input.value = value;
+                  form.appendChild(input);
+                });
+                document.body.appendChild(form);
+                form.submit();              
+                document.body.removeChild(form);
+              
+
+            }
+         });
+
+         
+        
+        
+
     }
     IsAgreed: boolean = false;
     IsAggreeChicked(isAgreed) {
