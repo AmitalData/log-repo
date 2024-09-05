@@ -580,6 +580,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     updateEntity(EntityPM: CertificateOfOriginPM) {
         this.entityPM = EntityPM;
         this.InitilizeListsFromCertificateOfOrigin(EntityPM);
+        this.setDisplayMessage();
     }
 
     private measurmentUnitListService: MeasurmentUnitListService = new MeasurmentUnitListService();
