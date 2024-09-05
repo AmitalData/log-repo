@@ -1369,6 +1369,18 @@ namespace WebFreight.Web.Helpers
                         dataProvider = myDataManager.GetData();
                         break;
                     }
+                case "COO":
+                    {
+                        CertificateOfOriginLoader myDataManager = new CertificateOfOriginLoader(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+                        break;
+                    }
+                case "COOC":
+                    {
+                        CertificateOfOriginCountLoader myDataManager = new CertificateOfOriginCountLoader(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+                        break;
+                    }
                     #endregion
             }
             return dataProvider;
@@ -2711,9 +2723,27 @@ namespace WebFreight.Web.Helpers
                         //reportDataProvider.CompanyName = DataProviders.General.GetCompanyName(stimulReportDataProviderDetails.Tenant);
                         //reportDataProvider.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "ECCR", Name = "CustomsCollateralDataProvider", BusinessObjectValue = reportDataProvider };
-
                             break;
                         }
+
+                case "COO":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(CertificateOfOriginDataProvider));
+                        CertificateOfOriginDataProvider reportDataProvider = (CertificateOfOriginDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "COO", Name = "CertificateOfOriginDataProvider", BusinessObjectValue = reportDataProvider };
+                        break;
+                    }
+
+                case "COOC":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(CertificateOfOriginCountDataProvider));
+                        CertificateOfOriginCountDataProvider reportDataProvider = (CertificateOfOriginCountDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "COOC", Name = "CertificateOfOriginCountDataProvider", BusinessObjectValue = reportDataProvider };
+
+                        break;
+                    }
             }
             return stimulReportDataProviderDetails;
         }

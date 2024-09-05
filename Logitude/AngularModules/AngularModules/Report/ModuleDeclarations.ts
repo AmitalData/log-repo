@@ -104,6 +104,8 @@ import { ReportVariablesComponent } from './Components/ReportVariablesComponent'
 //Export Customs
 import { ExportDeclarationReportFilterComponent } from './Components/FiltersComponent/ExportCustoms/ExportDeclarationReportFilterComponent';
 import { CustomsCollateralFilterComponent } from './Components/FiltersComponent/ExportCustoms/CustomsCollateralFilterComponent';
+import { CertificateOfOriginReportFilterComponent } from './Components/FiltersComponent/ExportCustoms/CertificateOfOriginReportFilterComponent';
+import { CertificateOfOriginCountReportFilterComponent } from './Components/FiltersComponent/ExportCustoms/CertificateOfOriginCountReportFilterComponent';
 
 
 export const Components =
@@ -191,7 +193,8 @@ export const Components =
         SpotRateQuoteReportFilterComponent,
         ControlInvoiceLinesReportFilterComponent,
         ExportDeclarationReportFilterComponent,
-
+        CertificateOfOriginReportFilterComponent,
+        CertificateOfOriginCountReportFilterComponent,
         MonthlyBalancesReportFilterComponent,
         CustomsCollateralFilterComponent,
 
@@ -288,6 +291,8 @@ export class ModuleDeclarations {
             case "ExportDeclarationReportFilterComponent": { myResult = ExportDeclarationReportFilterComponent; break; }
             case "MonthlyBalancesReportFilterComponent": { myResult = MonthlyBalancesReportFilterComponent; break; }
             case "CustomsCollateralFilterComponent": { myResult = CustomsCollateralFilterComponent; break; }
+            case "CertificateOfOriginReportFilterComponent": { myResult = CertificateOfOriginReportFilterComponent; break; }
+            case "CertificateOfOriginCountReportFilterComponent": { myResult = CertificateOfOriginCountReportFilterComponent; break; }
 
         }
 

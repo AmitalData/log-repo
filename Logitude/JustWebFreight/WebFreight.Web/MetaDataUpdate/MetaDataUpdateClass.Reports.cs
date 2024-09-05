@@ -44,7 +44,6 @@ namespace WebFreight.Web.MetaDataUpdate
             this.LoadReports_ExportCustoms(ExportCustomGroup, tenantFeatures, reportRepository, TenantReports);
             this.LoadReports_CustomShipment(tenantFeatures, reportRepository, TenantReports);
 
-
             reportRepository.SubmitChanges();
         }
 
@@ -246,6 +245,10 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             Feature ShipmentFormFeature = tenantFeatures.Where(d => d.Code == "ShipmentFormReport" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             AddReports.AddReport(new ReportDetails() { Code = "SHTO", Description = "Shipment Form", Name = "Shipment Form", LocalName = "טופס תיק", FilterControlName = "ShipmentFormFilterComponent", Tenant = 0, FeatureId = ShipmentFormFeature.Id, FeatureUniqeCode = ShipmentFormFeature.FeatureUniqeCode }, reportRepository, tenantReports);
+
+            Feature CertificateOfOriginFeature = tenantFeatures.Where(d => d.Code == "Declaration.Tab.DigitalCertificateOfOrigin").FirstOrDefault();
+            AddReports.AddReport(new ReportDetails() { Code = "COO", Description = "Certificate Of Origin", Name = "Certificate Of Origin", LocalName = "דוח תעודות מקור דיגיטליות", FilterControlName = "CertificateOfOriginReportFilterComponent", Tenant = 0, ReportGroupId = ExportCustomGroup.Id, FeatureId = CertificateOfOriginFeature.Id, FeatureUniqeCode = CertificateOfOriginFeature.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/ExportCustoms/CertificateOfOriginReportFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "COOC", Description = "Certificate Of Origin Count", Name = "Certificate Of Origin Count", LocalName = "ספירת תעודות מקור דיגיטליות", FilterControlName = "CertificateOfOriginCountReportFilterComponent", Tenant = 0, ReportGroupId = ExportCustomGroup.Id, FeatureId = CertificateOfOriginFeature.Id, FeatureUniqeCode = CertificateOfOriginFeature.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/ExportCustoms/CertificateOfOriginCountReportFilterComponent" }, reportRepository, tenantReports);
         }
     }
 }
