@@ -16,6 +16,7 @@ import { AmitalAPIRequestsComponent } from 'InfrastructureModules/Infrastructure
 import { CustomBankCardExtendedPMService } from '../../../Customs/Services/ExtendedPMs/CustomBankCardExtendedPMService';
 import { CardListService } from 'Common/Services/StandardLists/CardListService';
 import { CardPMService } from 'Common/Services/StandardPMs/CardPMService';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { CardPM } from 'Common/EntityPMs/CardPM';
 
 
@@ -135,7 +136,7 @@ export class AddEditCustomsBanksComponent extends BaseComponent {
                             this.CurrentSession.StopBusyIndicator();
                         }
                     });
-                    
+
                 } else {
                     this.CustomBankPMService.update(this.EntityPM).subscribe((myResult: any) => {
                         let mm: ServiceResponse = myResult;
@@ -196,7 +197,7 @@ export class AddEditCustomsBanksComponent extends BaseComponent {
 
     RemoveBankCardLine(card: CustomBanksCardPM) {
         const confirmWindow = new ConfirmWindow();
-        confirmWindow.Show("האם למחוק את השורה?");
+        confirmWindow.Show(TextCodeTranslator.Translate("General.O.UnSavedChanges"));
         confirmWindow.WindowClosed.subscribe(() => {
             if (confirmWindow.Yes) {
                 if (card != null) {

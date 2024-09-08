@@ -3154,8 +3154,6 @@ export class MaintenanceComponent {
             SelectedQuery = allQueries[0];
         }
 
-        console.log(SelectedQuery);
-
         return SelectedQuery?.Code;
     }
 

@@ -202,8 +202,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
     public set SelectedValue(newValue: any) {
 
-        if (newValue === null) return;
-
         if (this.selectedValue != newValue) {
             if (this.ShowInActivePopUpWindow && this.SelectedItem?.InActive) {
                 this.ShowInactivePopUpConfirmWindow(newValue);
