@@ -219,7 +219,7 @@ export class GLAccountMenuButtonsHandler {
                         break;
                     }
 
-                case "Reconcile":
+                case "GLAccountRecalculate":
                     {
                         this.RecalculateButtonClicked();
     
