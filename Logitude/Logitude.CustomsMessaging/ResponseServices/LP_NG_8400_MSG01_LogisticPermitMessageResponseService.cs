@@ -156,7 +156,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (_MyDeclarationPM.IsDiamondDeclaration)
                 {
                     var code = new int?[] { 4, 6, 8 }.Contains(customResponse?.GeneralDetails?.actionCode) ? "90":"";
-                    var statusSoyRemarks = $"CODE-{code}-היתר לוגיסטי-";
+                    var statusSoyRemarks = $"CODE-{code}-היתר לוגיסטי-{_MyDeclarationPM.DeclarationNumber}";
                     RaiseEvent(_MyDeclarationPM, requestParams.LoggingUserId, "SOY", statusSoyRemarks);
 
                 }

@@ -317,7 +317,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             RaiseEvent(myDeclarationPM, user?.Id, status_id: "CHK");
                             if (myDeclarationPM.IsDiamondDeclaration)
                             {
-                                var statusSoyRemarks = $"CODE-80-בדיקה-" + "\n" + NoticeToClient.checkId+" ,"+ NoticeToClient.checkSiteNumber + " ,"+ NoticeToClient.storageSiteNumber;
+                                var statusSoyRemarks = $"CODE-80-בדיקה-{myDeclarationPM.DeclarationNumber}" + "\n" + NoticeToClient.checkId+" ,"+ NoticeToClient.checkSiteNumber + " ,"+ NoticeToClient.storageSiteNumber;
                                 RaiseEvent(myDeclarationPM, user?.Id, status_id: "SOY",comments: statusSoyRemarks);
                             }
                         }
