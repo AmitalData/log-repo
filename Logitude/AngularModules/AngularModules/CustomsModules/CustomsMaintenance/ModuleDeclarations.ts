@@ -19,14 +19,16 @@ import { CustomsPartnerFtpListComponent } from './Components/CustomsPartnerFtpLi
 import { DeclarationRemarksComponent } from './Components/DeclarationRemarksComponent'
 import { InterfaceTenantPriorityComponent } from './Components/InterfaceTenantPriorityComponent';
 import { ExportRequiredFieldsComponent } from './Components/RequiredFields/ExportRequiredFieldsComponent';
+import { AddEditCustomsBanksComponent } from './Components/AddEditCustomsBanksComponent';
 import { AddEditExportRequiredFieldsComponent } from './Components/RequiredFields/AddEditExportRequiredFieldsComponent';
 import { OcrDefaultsSettingsComponent } from 'Common/Components/Maintenance/OcrDefaultsSettingsComponent';
 import { ShaamSettingsComponent } from './Components/ShaamSettings/ShaamSettingsComponent';
 //import { CustomsPartnerFtpEditComponent } from './Components/CustomsPartnerFtpEditComponent';
- 
+
 
 export const Components =
     [
+        AddEditCustomsBanksComponent,
         AddEditRequiredFieldsComponent,
         AddEditExportRequiredFieldsComponent,
         CustomsClosedTablesComponent,
@@ -58,6 +60,7 @@ export class ModuleDeclarations {
 
         switch (name) {
             case "AddEditRequiredFieldsComponent": { myResult = AddEditRequiredFieldsComponent; break; }
+            case "AddEditCustomsBanksComponent": { myResult = AddEditCustomsBanksComponent; break; }
             case "AddEditExportRequiredFieldsComponent": { myResult = AddEditExportRequiredFieldsComponent; break; }
             case "CustomsClosedTablesComponent": { myResult = CustomsClosedTablesComponent; break; }
             case "ClosedTableNotExistedComponent": { myResult = ClosedTableNotExistedComponent; break; }
@@ -68,13 +71,13 @@ export class ModuleDeclarations {
             case "InterfaceManagementComponent": { myResult = InterfaceManagementComponent; break; }
             case "AddEditInterfaceManagementComponent": { myResult = AddEditInterfaceManagementComponent; break; }
             case "InterfaceTenantPriorityComponent": { myResult = InterfaceTenantPriorityComponent; break; }
-                
+
             case "LoadTestComponent": { myResult = LoadTestComponent; break; }
             case "SignStationsComponent": { myResult = SignStationsComponent; break; }
             case "CourierSendStatusComponent": { myResult = CourierSendStatusComponent; break; }
             case "DocumentTypeCustomsDataComponent": { myResult = DocumentTypeCustomsDataComponent; break; }
             case "GeneralLOVComponent": { myResult = GeneralLOVComponent; break; }
-                
+
             case "CustomsDocumentsDefinitionComponent": { myResult = CustomsDocumentsDefinitionComponent; break; }
             case "AddEditCustomsAirlineComponent": { myResult = AddEditCustomsAirlineComponent; break; }
             case "CustomsPartnerFtpListComponent": { myResult = CustomsPartnerFtpListComponent; break; }
@@ -82,7 +85,7 @@ export class ModuleDeclarations {
             //case "CustomsPartnerFtpEditComponent": { myResult = CustomsPartnerFtpEditComponent; break; }
             case "DeclarationRemarksComponent": { myResult = DeclarationRemarksComponent; break; }
             case "ShaamSettingsComponent": { myResult = ShaamSettingsComponent; break; }
-          
+
 
 
         }

@@ -26,7 +26,7 @@ namespace Logitude.Customs.Def.EntityPMs
    public partial class CustomBanksCardPM : EntityPM
    {
    	  private string id ;
-	  
+	   
        [Key]
 	  
        
