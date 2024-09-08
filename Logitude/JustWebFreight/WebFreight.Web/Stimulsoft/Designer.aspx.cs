@@ -187,7 +187,7 @@ namespace WebFreight.Web.Stimulsoft
                     StiBusinessObject child = businessObject.BusinessObjects.ToList().FirstOrDefault(childBo => childBo.Name == variable.content);
                     if (child == null)
                     {
-                        new StiBusinessObject("", variable.content, variable.content, Guid.NewGuid().ToString("N"));
+                        child = new StiBusinessObject("", variable.content, variable.content, Guid.NewGuid().ToString("N"));
                         businessObject.BusinessObjects.Add(child);
                     }
 
