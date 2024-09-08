@@ -56,11 +56,11 @@
                 <tr class="FormFieldRow">
                     <td>
                         <LogLabel [ObjectFieldName]="'InternalCode'" [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext"> </LogLabel>
+                            [DataContext]="this.EntityPM"> </LogLabel>
                     </td>
                     <td>
                         <LogTextBox [ObjectFieldName]="'InternalCode'" [ObjectTableName]="ObjectTableName"
-                            [Text]="this.EntityPM.InternalCode " [DataContext]="DataContext" [HideColumns]="true"
+                            [Text]="this.EntityPM.InternalCode " [DataContext]="this.EntityPM" [HideColumns]="true"
                             (ValueChanged)="onInputChange($event, 'InternalCode')"></LogTextBox>
                     </td>
                     <td></td>
@@ -68,11 +68,11 @@
                 <tr class="FormFieldRow">
                     <td>
                         <LogLabel [ObjectFieldName]="'BankCode'" [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext"></LogLabel>
+                            [DataContext]="this.EntityPM"></LogLabel>
                     </td>
                     <td>
                         <LogLov [ObjectFieldName]="'BankCode'" [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext" [LookUpTableName]="'Customs.Bank'" [HideColumns]="true"
+                            [DataContext]="this.EntityPM" [LookUpTableName]="'Customs.Bank'" [HideColumns]="true"
                             [SelectedValuePath]="'Code'" [SelectedValue]="this.EntityPM.BankCode"
                             [PlaceHolder]="this.EntityPM.BankName"
                             (SelectedItemChanged)="onInputChange($event ,'BankCode')">
@@ -83,11 +83,11 @@
                 <tr class="FormFieldRow">
                     <td>
                         <LogLabel [ObjectFieldName]="'BranchCode'" [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext"></LogLabel>
+                            [DataContext]="this.EntityPM"></LogLabel>
                     </td>
                     <td>
                         <LogLov [ObjectFieldName]="'BranchCode'" [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext" [LookUpTableName]="'Customs.CustomsBranch'" [HideColumns]="true"
+                            [DataContext]="this.EntityPM" [LookUpTableName]="'Customs.CustomsBranch'" [HideColumns]="true"
                             [DependencyFilter1Value]="this.EntityPM.BankCode" [SelectedValue]="this.EntityPM.BranchCode"
                             [SelectedValuePath]="'Code'" [PlaceHolder]="this.EntityPM.BranchName"
                             (SelectedItemChanged)="onInputChange($event ,'BranchCode')">
@@ -98,11 +98,11 @@
                 <tr class="FormFieldRow">
                     <td>
                         <LogLabel [ObjectFieldName]="'AccountNumber'" [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext"></LogLabel>
+                            [DataContext]="this.EntityPM"></LogLabel>
                     </td>
                     <td>
                         <LogTextBox [ObjectFieldName]="'AccountNumber'" [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext" [Text]="this.EntityPM.AccountNumber" [HideColumns]="true"
+                            [DataContext]="this.EntityPM" [Text]="this.EntityPM.AccountNumber" [HideColumns]="true"
                             [InputType]="'nText'" (ValueChanged)="onInputChange($event,'AccountNumber')"></LogTextBox>
                     </td>
                     <td></td>
@@ -110,11 +110,11 @@
                 <tr class="FormFieldRow">
                     <td>
                         <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext"></LogLabel>
+                            [DataContext]="this.EntityPM"></LogLabel>
                     </td>
                     <td>
                         <LogTextBox [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName "
-                            [Text]="this.EntityPM.LocalName " [DataContext]="DataContext" [HideColumns]="true"
+                            [Text]="this.EntityPM.LocalName " [DataContext]="this.EntityPM" [HideColumns]="true"
                             [InputType]="'nText'" (ValueChanged)="onInputChange($event ,'LocalName')"></LogTextBox>
                     </td>
                     <td></td>
@@ -122,11 +122,11 @@
                 <tr class="FormFieldRow">
                     <td>
                         <LogLabel [ObjectFieldName]="'EnglishName'" [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext"></LogLabel>
+                            [DataContext]="this.EntityPM"></LogLabel>
                     </td>
                     <td>
                         <LogTextBox [ObjectFieldName]="'EnglishName'" [ObjectTableName]="ObjectTableName "
-                            [Text]="this.EntityPM.EnglishName " [DataContext]="DataContext" [HideColumns]="true"
+                            [Text]="this.EntityPM.EnglishName " [DataContext]="this.EntityPM" [HideColumns]="true"
                             [InputType]="'Text'" (ValueChanged)="onInputChange($event ,'EnglishName')"></LogTextBox>
                     </td>
                     <td></td>
@@ -134,11 +134,11 @@
                 <tr class="FormFieldRow">
                     <td>
                         <LogLabel [ObjectFieldName]="'BankAddress'" [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext"></LogLabel>
+                            [DataContext]="this.EntityPM"></LogLabel>
                     </td>
                     <td>
                         <LogTextBox [ObjectFieldName]="'BankAddress'" [ObjectTableName]="ObjectTableName "
-                            [Text]="this.EntityPM.BankAddress " [DataContext]="DataContext" [HideColumns]="true"
+                            [Text]="this.EntityPM.BankAddress " [DataContext]="this.EntityPM" [HideColumns]="true"
                             [InputType]="'nText'" (ValueChanged)="onInputChange($event ,'BankAddress')"></LogTextBox>
                     </td>
                     <td></td>
@@ -146,11 +146,11 @@
                 <tr class="FormFieldRow">
                     <td>
                         <LogLabel [ObjectFieldName]="'PayerTypeCode'" [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext"></LogLabel>
+                            [DataContext]="this.EntityPM"></LogLabel>
                     </td>
                     <td>
                         <LogLov [ObjectFieldName]="'PayerTypeCode'" [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext" [LookUpTableName]="'Customs.CustomerActivityType'"
+                            [DataContext]="this.EntityPM" [LookUpTableName]="'Customs.CustomerActivityType'"
                             [HideColumns]="true" [SelectedValue]="this.EntityPM.PayerTypeCode"
                             [PlaceHolder]="this.EntityPM.PayerTypeName" [SelectedValuePath]="'Code'"
                             (ValueChanged)="onInputChange($event ,'PayerTypeCode')">
@@ -159,14 +159,13 @@
                     <td></td>
                 </tr>
                 <tr class="FormFieldRow">
-                    <!-- InActive -->
                     <td>
                         <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext"></LogLabel>
+                            [DataContext]="this.EntityPM"></LogLabel>
                     </td>
                     <td>
                         <LogCheckBox [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext" [Checked]="this.EntityPM.InActive"
+                            [DataContext]="this.EntityPM" [Checked]="this.EntityPM.InActive"
                             (ValueChanged)="onInputChange($event,'InActive')"></LogCheckBox>
                     </td>
                     <td></td>
@@ -184,25 +183,26 @@
                     <!-- Edit Grid -->
                     <tr>
                         <td colspan="3" style="height: 100%;">
-                            <div class="CellContent">
-                                <logitude-edit-grid GridWidth="100%" GridHeight="100%"
-                                    [Disabled]="this.EntityPM.PayerTypeCode === '3'" [ItemSource]="CustomBankCardItems"
-                                    [Disabled]="this.EntityPM.PayerTypeCode === '3'">
+                            <div class="CellContent" >
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" 
+                                    [Disabled]="this.EntityPM.PayerTypeCode === '3'" [ItemSource]="CustomBankCardItems">
                                     <log-column
                                         [header]="('Customs.CustomBank.O.CustomerNumber' | TextCodeTranslationPipe) || 'מספר לקוח'"
-                                        [width]="'200'" [Alignment]="'right'" [binding]="'ItemSerial'">
-                                        <ng-template let-item>
+                                        [width]="'200'" [Alignment]="'right'" [binding]="'Code'">
+                                        <ng-template  let-item> 
                                             <log-cell-template #logcelltemplate>
                                                 <div style="text-align: right;" class="TextTrimming"
                                                     *ngIf="logcelltemplate.IsDisplayMode">
-                                                    <span>{{this.cardTempData[item.CardId]}}</span>
+                                                    <span>{{this.currentCardList[item.CardId] }}</span>
                                                 </div>
                                                 <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [ObjectFieldName]="'Code'" [ObjectTableName]="'Card'"
-                                                        [DataContext]="DataContext"
-                                                        (ValueChanged)="onCardChange($event,item, 'Code')"
-                                                        [HideColumns]="true" [InputType]="'nText'">
-                                                    </LogTextBox>
+                                                    <LogLov [ObjectFieldName]="'Code'"
+                                                        [ObjectTableName]="'CustomBankCard'" [DataContext]="item"
+                                                        [LookUpTableName]="'Card'" [HideColumns]="true"
+                                                        [SelectedValuePath]="'Code'" [SelectedValue]="item.Code "
+                                                        [DisplayMemberPath]="'Code'" [HideMaintenanceIcon]="true"
+                                                        [FocusOnMe]="'false'"
+                                                        (SelectedItemChanged)="onCardChange($event,item)"> </LogLov>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
@@ -210,19 +210,10 @@
 
                                     <log-column [header]="('CustomerName' | TextCodeTranslationPipe) || 'שם לקוח'"
                                         [width]="'200'" [Alignment]="'right' " [binding]="'CardName'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate>
-                                                <div style="text-align: right;" class="TextTrimming"
-                                                    *ngIf="logcelltemplate.IsDisplayMode">
-                                                    <span>{{item.cardName}}</span>
-                                                </div>
-                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [ObjectFieldName]="'LocalName'"
-                                                        [ObjectTableName]="'Card'" [DataContext]="item"
-                                                        [HideColumns]="true"
-                                                        (ValueChanged)="onCardChange($event,item, 'CardName')"
-                                                        [InputType]="'nText'">
-                                                    </LogTextBox>
+                                        <ng-template  let-item >
+                                            <log-cell-template #logcelltemplate style="pointer-events: none;">
+                                                <div style="text-align: right; " class="TextTrimming">
+                                                    <span  >{{item.CardName}}</span>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>

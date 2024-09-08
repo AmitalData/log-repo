@@ -1,11 +1,7 @@
-import { Component, NgModule } from '@angular/core';
+import { Component, } from '@angular/core';
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
-import { LocationDirective } from '../../../Infrastructure/Utilities/LocationDirective';
-import { ApiQueryFilters, FilterItem } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { AppTool, ArrayTool } from '../../../Infrastructure/Tools';
-import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
+import { AppTool } from '../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
@@ -18,36 +14,37 @@ import { CustomBankList } from '../../../Customs/EntityLists/CustomBankList';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { AmitalAPIRequestsComponent } from 'InfrastructureModules/InfrastructureOthers/AmitalAPI/AmitalAPIRequestsComponent';
 import { CustomBankCardExtendedPMService } from '../../../Customs/Services/ExtendedPMs/CustomBankCardExtendedPMService';
-
 import { CardListService } from 'Common/Services/StandardLists/CardListService';
-// import { CustomsBranchListService } from 'Customs/Services/StandardLists/CustomsBranchListService';
 import { CardPMService } from 'Common/Services/StandardPMs/CardPMService';
-// import { CardPM } from 'Common/EntityPMs/CardPM';
+import { CardPM } from 'Common/EntityPMs/CardPM';
 
 
 @Component({
-
     templateUrl: './AddEditCustomsBanksComponent.html',
     providers: [AmitalAPIRequestsComponent],
 })
 
 
 export class AddEditCustomsBanksComponent extends BaseComponent {
-    public DataContext: any = this;
     public ObjectTableName: string = "Customs.CustomBank";
     public EntityPM: CustomBankPM;
+    public CustomBankListService = new CustomBankPMService();
+    public AmitalAPIRequestsComponent: AmitalAPIRequestsComponent = new AmitalAPIRequestsComponent();
+    private _requiredFields: string[] = ["BankCode", "BranchCode", "AccountNumber", "LocalName", "PayerTypeCode"];
+
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
+
     isWindowMode: boolean = true;
     ValidationErrorsList: any[] = [];
     CustomBankPMService: CustomBankPMService = new CustomBankPMService();
-    public CustomBankListService = new CustomBankPMService();
-    private _entityResourceService: EntityResourceService = new EntityResourceService();
     CustomBankList: CustomBankList;
-    private CurrentSession = SessionLocator.SelectedSession;
-    public AmitalAPIRequestsComponent: AmitalAPIRequestsComponent = new AmitalAPIRequestsComponent();
     CustomBankCardExtendedPMService: CustomBankCardExtendedPMService = new CustomBankCardExtendedPMService();
     CustomBankCardItems = new ObservableCollection([]);
     cardPMService: CardPMService = new CardPMService();
-    cardTempData: any = {};
+    cardsList = [];
+    currentCardList: any = [];
+
 
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -56,7 +53,12 @@ export class AddEditCustomsBanksComponent extends BaseComponent {
             this.EntityPM.Tenant = SessionLocator.Tenant;
             this.isWindowMode = true;
         }
+        this._requiredFields.forEach((field) => {
+            this.UIProperties.SetRequired(field, this.ObjectTableName);
+        });
+
     }
+
 
     SetWindowArgs(_WindowArgs) {
 
@@ -66,44 +68,34 @@ export class AddEditCustomsBanksComponent extends BaseComponent {
                 .get
                 (_WindowArgs)
                 .subscribe((rsp: any) => {
-
                     Object.keys(rsp.Result).forEach((key) => {
-                        this.EntityPM[key] = rsp.Result[key];
+                        this.EntityPM[key] = rsp.Result[key]
+                    });
+                    new CardListService().getAll().subscribe((response: any) => {
+                        this.cardsList = response.Result;
+
+                        const cardMap = new Map();
+                        this.cardsList.forEach((card) => {
+                            cardMap.set(card.Id, card);
+                        });
+
+                        this.EntityPM.CustomBanksCards.forEach((Bcard: CustomBanksCardPM) => {
+                            const card = cardMap.get(Bcard.CardId);
+                            this.currentCardList[Bcard.CardId] = card?.Code;
+                            Bcard.CardName = card?.LocalName || card?.EnglishName;
+                        });
+
+                        this.CurrentSession.StopBusyIndicator();
                     });
 
-                    this.EntityPM.LocalName = rsp.Result.BankName;
-
-                    if (this.EntityPM.CustomBanksCards.length > 0) {
-                        this.EntityPM.CustomBanksCards.forEach((card, index) => {
-
-                            let filters = new ApiQueryFilters(true);
-                            filters.addAdditionalFilter('Id', card.CardId, null, null, "InListExact", false, false, false, "string");
-
-
-                            new CardListService().getByFilters(filters).subscribe((response: any) => {
-                                this.cardTempData[card.CardId] = response.Result[0]?.Code;
-                                this.EntityPM.CustomBanksCards[index].CardName ? this.EntityPM.CustomBanksCards[index].CardName : response.Result[0]?.LocalName || response.Result[0]?.LocalName || response.Result[0].EnglishName || "";
-                                this.EntityPM.CustomBanksCards[index].EntityParentPM = null;
-
-                            },
-                            );
-                        });
-                    }
-                    this.EntityPM.CustomBanksCards ? this.CustomBankCardItems = new ObservableCollection(this.EntityPM.CustomBanksCards) : this.CustomBankCardItems = new ObservableCollection([]);
-                    this.CurrentSession.StopBusyIndicator();
+                    this.CustomBankCardItems = new ObservableCollection(this.EntityPM.CustomBanksCards || [])
                 });
         })
-
-        this.DataContext = this.EntityPM;
     }
 
     onInputChange(event, ObjectFieldName) {
-
         if (event === null) return;
-
         if (ObjectFieldName === "BankCode") {
-            this.EntityPM.LocalName = event?.LocalName || null;
-            this.EntityPM.EnglishName = event?.EnglishName || null;
             this.EntityPM.BankCode = event?.Code;
             return;
         }
@@ -113,16 +105,9 @@ export class AddEditCustomsBanksComponent extends BaseComponent {
             this.EntityPM.BranchName = event.LocalName;
             return;
         }
-
         this.EntityPM[ObjectFieldName] = event;
-
     }
 
-
-    onCardChange(event, item, ObjectFieldName) {
-
-        this.EntityPM.CustomBanksCards[this.EntityPM.CustomBanksCards.indexOf(item)][ObjectFieldName] = event;
-    }
 
     OkButtonClicked() {
         var errors = [];
@@ -132,80 +117,88 @@ export class AddEditCustomsBanksComponent extends BaseComponent {
             this.ValidationErrorsList = [];
             this.ValidationErrorsList = errors;
         } else {
-
-            if (this.CustomBankPMService.get(this.EntityPM.Id) == null) {
-                this.CustomBankPMService.insert(this.EntityPM).subscribe((myResult: any) => {
-                    let mm: ServiceResponse = myResult;
-                    if (!mm.HasError) {
-                        this.CurrentSession.CloseCurrentWindowEmit("ok");
-                    }
-                    else {
-                        this.ValidationErrorsList = mm.ErrorsArray;
-                        this.CurrentSession.StopBusyIndicator();
-                    }
-                });
-
-            } else {
-
-                this.CustomBankPMService.update(this.EntityPM).subscribe((myResult: any) => {
-
-                    let mm: ServiceResponse = myResult;
-                    if (!mm.HasError) {
-                        this.CurrentSession.CloseCurrentWindowEmit("ok");
-                    }
-                    else {
-                        this.ValidationErrorsList = mm.ErrorsArray;
-                        this.CurrentSession.StopBusyIndicator();
-                    }
-                });
-            }
-
-            if (this.CustomBankCardItems.Length > 0) {
-
-                this.EntityPM.CustomBanksCards = this.CustomBankCardItems.Collection;
+            if (this.CustomBankCardItems.Length > 0 && this.EntityPM.PayerTypeCode !== "3") {
                 this.EntityPM.CustomBanksCards.forEach((card: CustomBanksCardPM) => {
                     this.EntityPM.AddCustomBanksCard(card);
                 });
             }
+
+            this.CustomBankPMService.get(this.EntityPM.Id).subscribe((response: any) => {
+                if (response.Result === null || response.Result === undefined) {
+                    this.CustomBankPMService.insert(this.EntityPM).subscribe((myResult: any) => {
+                        let mm: ServiceResponse = myResult;
+                        if (!mm.HasError) {
+                            this.CurrentSession.CloseCurrentWindowEmit("ok");
+                        }
+                        else {
+                            this.ValidationErrorsList = mm.ErrorsArray;
+                            this.CurrentSession.StopBusyIndicator();
+                        }
+                    });
+                    
+                } else {
+                    this.CustomBankPMService.update(this.EntityPM).subscribe((myResult: any) => {
+                        let mm: ServiceResponse = myResult;
+                        if (!mm.HasError) {
+                            this.CurrentSession.CloseCurrentWindowEmit("ok");
+                        }
+                        else {
+                            this.ValidationErrorsList = mm.ErrorsArray;
+                            this.CurrentSession.StopBusyIndicator();
+                        }
+                    });
+                }
+            });
         }
     }
-
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
 
-    public AddBankCardLine() {
-        let line = new CustomBanksCardPM(this.EntityPM);
-        line.CustomBankId = this.EntityPM.Id;
-        line.CustomsBankName = this.EntityPM.LocalName;
-        line.CustomBankId = this.EntityPM.Id;
 
-        this.CustomBankCardItems.Insert(line);
-        let index = this.customBanksCards.indexOf(line);
+    //Grid logic
+    getCardDetails(cardId): CardPM {
 
+        console.log(this.cardsList.find(card => card.Id === cardId))
+        return this.cardsList.find(card => card.Id === cardId);
+    }
+
+    onCardChange(event, item) {
+
+        if (event === null) return;
+
+        this.EntityPM?.CustomBanksCards.filter(card => card.CardId === item.CardId).forEach(card => {
+            card.CardName = event.LocalName || event.EnglishName;
+            card.CardId = event.Id;
+            this.currentCardList[card.CardId] = event.Code;
+        })
+        this.CustomBankCardItems = new ObservableCollection(this.EntityPM.CustomBanksCards || [])
+
+        return;
+
+    }
+
+    AddBankCardLine() {
+        let row = new CustomBanksCardPM(this.EntityPM);
+        row.CustomBankId = this.EntityPM.Id;
+        row.CustomsBankName = this.EntityPM.LocalName;
+        this.EntityPM.CustomBanksCards.push(row);
+        this.CustomBankCardItems = new ObservableCollection(this.EntityPM.CustomBanksCards || [])
+
+        let index = this.customBanksCards.indexOf(row);
         if (index == -1) {
-            line.EntityParentPM = this;
-            this.EntityPM.CustomBanksCards.push(line);
+            row.EntityParentPM = this;
+            this.EntityPM.CustomBanksCards.push(row);
         }
+
     }
 
-
-    public AddCustomerCard(card: CustomBanksCardPM) {
-        if (card != null) {
-            let index = this.customBanksCards.indexOf(card);
-            if (index == -1) {
-                card.EntityParentPM = this;
-                this.EntityPM.CustomBanksCards.push(card);
-            }
-        }
-    }
-
-    public RemoveBankCardLine(card: CustomBanksCardPM) {
-        const _ConfirmWindow = new ConfirmWindow();
-        _ConfirmWindow.Show("האם למחוק את השורה?");
-        _ConfirmWindow.WindowClosed.subscribe(() => {
-            if (_ConfirmWindow.Yes) {
+    RemoveBankCardLine(card: CustomBanksCardPM) {
+        const confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("האם למחוק את השורה?");
+        confirmWindow.WindowClosed.subscribe(() => {
+            if (confirmWindow.Yes) {
                 if (card != null) {
                     this.CustomBankCardItems.RemoveFromIndex(this.CustomBankCardItems.GetIndex(card));
                     let index = this.customBanksCards.indexOf(card);
@@ -215,9 +208,8 @@ export class AddEditCustomsBanksComponent extends BaseComponent {
                 }
             }
         });
-        window.focus();
     }
-
+    //// End of Grid logic
 
     public get BankId() { return this.EntityPM.Id; }
     public set BankId(newValue: string) {

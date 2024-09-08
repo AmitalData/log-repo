@@ -187,7 +187,6 @@ export class AdvanceSearchComponent implements OnInit {
         //    this.temp.push(new FilterField(item, "", false));
         //});
 
-        console.log(this.ObjectTable)
         this.Run();
     }
 
