@@ -42,6 +42,8 @@ using System.Text;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using System.IdentityModel.Metadata;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Logitude.Customs.BL.StimulReport;
+using Logitude.Customs.Data.EntityMapping;
 
 namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 {
@@ -1506,11 +1508,16 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				{
 					this._MyDeclarationPM.Consignments[0].ExportUnloadingPortCode = _AmitalCustomsFile.ExportUnloadingPortCode;
 				}
-				if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.StorageSiteCode))
-				{
-					this._MyDeclarationPM.Consignments[0].StorageSiteCode = _AmitalCustomsFile.StorageSiteCode;
+				if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.StorageSiteCode) )
+                {
+					this._MyDeclarationPM.Consignments[0].StorageSiteCode =_AmitalCustomsFile.StorageSiteCode;
 				}
-				if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.ShipCode))
+                if ( !String.IsNullOrWhiteSpace(_AmitalCustomsFile.DeliverySiteCode) && this._MyDeclarationPM.IsDiamondDeclaration)
+                {
+                    this._MyDeclarationPM.Consignments[0].StorageSiteCode = _AmitalCustomsFile.DeliverySiteCode;
+                }
+
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.ShipCode))
 				{
 					this._MyDeclarationPM.Consignments[0].ShipCode = _AmitalCustomsFile.ShipCode;
 				}
@@ -1725,7 +1732,21 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     supplierInvoiceItem.SupplierInvioceItemCertificats = new List<SupplierInvioceItemCertificatPM>() { supplierInvioceItemCertificatPM };
                 }
             }
+            if (invoiceItem.ConnectedDeclarations != null &&_MyDeclarationPM.IsDiamondDeclaration)
+            {
+				supplierInvoiceItem.SupplierInvoiceItemsConDeclars = new List<SupplierInvoiceItemsConDeclarPM>();
+                foreach (var item in invoiceItem.ConnectedDeclarations)
+                {
+                    SupplierInvoiceItemsConDeclarPM supplierInvoiceItemsConDeclarPM = InitSupplierInvoiceItemConnectedDeclarations(invoiceItem.ConnectedDeclarations[0]);
+                    if (supplierInvoiceItemsConDeclarPM != null)
+                    {
+                        AppendLogLine("add supplierInvoiceItemsConDeclarPM");
+						supplierInvoiceItem.SupplierInvoiceItemsConDeclars.Add(supplierInvoiceItemsConDeclarPM);
+                    }
 
+                }
+              
+            }
             return supplierInvoiceItem;
         }
 
@@ -1784,6 +1805,32 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 			}
             
 			return supplierInvioceItemCertificatPM;
+        }
+
+
+        private SupplierInvoiceItemsConDeclarPM InitSupplierInvoiceItemConnectedDeclarations(ConnectedDeclarations invoiceItemConnectedDeclaration)
+        {
+           
+
+            AppendLogLine("DeclarationNo: " + invoiceItemConnectedDeclaration.DeclarationNo);
+            AppendLogLine("InvoiceLine: " + invoiceItemConnectedDeclaration.InvoiceLine);
+
+            SupplierInvoiceItemsConDeclarPM supplierInvoiceItemsConDeclarPM = new SupplierInvoiceItemsConDeclarPM()
+            {
+                ChangeSetOp = ChangeSetOperation.Insert,
+                Tenant = ResolvedTenant()
+            };
+
+            supplierInvoiceItemsConDeclarPM.DeclarationTypeCode = invoiceItemConnectedDeclaration.DeclarationType;
+            supplierInvoiceItemsConDeclarPM.DeclarationNumber = invoiceItemConnectedDeclaration.DeclarationNo;
+            supplierInvoiceItemsConDeclarPM.InvoiceNumber = int.Parse(invoiceItemConnectedDeclaration.InvoiceLine);
+			supplierInvoiceItemsConDeclarPM.InvoiceItemLineNumber = int.Parse(invoiceItemConnectedDeclaration.ItemLine);
+            supplierInvoiceItemsConDeclarPM.Quantity = int.Parse(invoiceItemConnectedDeclaration.Quantity);
+            supplierInvoiceItemsConDeclarPM.QuantityTypeCode = invoiceItemConnectedDeclaration.QuantityType;
+
+
+
+            return supplierInvoiceItemsConDeclarPM;
         }
 
         private string TranslateMeasurmentUnit(string amitalMeasurmentUnitCode)

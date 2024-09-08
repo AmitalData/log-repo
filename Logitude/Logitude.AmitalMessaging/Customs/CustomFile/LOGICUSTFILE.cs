@@ -207,6 +207,8 @@ public partial class LogitudeCustomsFile
 
     private ExportClosing closingField;
 
+
+
     private string receiverNameField;
     private string receiverAddressField;
     private string receiverCountryCodeField;
@@ -733,6 +735,8 @@ public partial class LogitudeCustomsFile
 
     public string StorageSiteCode { get; set; }
     /// <remarks/>
+    /// 
+    public string DeliverySiteCode { get; set; }
     public string UnloadDate
     {
         get
@@ -1341,6 +1345,8 @@ public partial class LogitudeCustomsFile
 			this.closingField = value;
 		}
 	}
+
+   
 }
 
 
@@ -1543,6 +1549,7 @@ public class ExportInvoiceItem
     private string classificationDealTypeField;
     private string processTypeField;
     private ExportInvoiceItemCertificats certificatsField;
+    private ConnectedDeclarations[] connectedDeclarationsField;
 
     public string ItemNo
     {
@@ -1666,6 +1673,17 @@ public class ExportInvoiceItem
         set
         {
             this.certificatsField = value;
+        }
+    }
+    public ConnectedDeclarations[] ConnectedDeclarations
+    {
+        get
+        {
+            return this.connectedDeclarationsField;
+        }
+        set
+        {
+            this.connectedDeclarationsField = value;
         }
     }
 }
@@ -1870,6 +1888,98 @@ public class ExportClosing
 			this.freightAmountField = value;
 		}
 	}
+
+}
+
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGICUSTFILE")]
+[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGICUSTFILE", IsNullable = false)]
+public class ConnectedDeclarations
+{
+    [System.Xml.Serialization.XmlElementAttribute("ConnectedDeclarations")]
+
+    private string declarationType;
+
+    private string declarationNo;
+
+    private string invoiceLine;
+
+    private string itemLine;
+
+    private string quantity;
+
+    private string quantityType;
+
+    public string DeclarationType
+    {
+        get
+        {
+            return this.declarationType;
+        }
+        set
+        {
+            this.declarationType = value;
+        }
+    }
+    public string DeclarationNo
+    {
+        get
+        {
+            return this.declarationNo;
+        }
+        set
+        {
+            this.declarationNo = value;
+        }
+    }
+
+    public string InvoiceLine
+    {
+        get
+        {
+            return this.invoiceLine;
+        }
+        set
+        {
+            this.invoiceLine = value;
+        }
+    }
+    public string ItemLine
+    {
+        get
+        {
+            return this.itemLine;
+        }
+        set
+        {
+            this.itemLine = value;
+        }
+    }
+    public string Quantity
+    {
+        get
+        {
+            return this.quantity;
+        }
+        set
+        {
+            this.quantity = value;
+        }
+    }
+    public string QuantityType
+    {
+        get
+        {
+            return this.quantityType;
+        }
+        set
+        {
+            this.quantityType = value;
+        }
+    }
 
 }
 
