@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, Output, EventEmitter, ChangeDetectorRef}  from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, ChangeDetectorRef}  from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -27,6 +27,8 @@ export class CertificateOfOriginCountReportFilterComponent extends BaseComponent
     TransportFilter_I: string;
     errors: any[];
     isReady: boolean = false;
+    public IsSchedulerReport: boolean = false;
+    public RunReportTitle: string;
 
     constructor(private EntityResourceService: EntityResourceService, private CD: ChangeDetectorRef) {
         super();
@@ -34,6 +36,7 @@ export class CertificateOfOriginCountReportFilterComponent extends BaseComponent
         this.EntityResourceService.getEntityResourceByTableName("Customs.CertificateOfOrigin").subscribe((response: any) => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
                 this.isReady = true;
+                this.SetRunReportTitle();
             });
         });
 
@@ -83,9 +86,9 @@ export class CertificateOfOriginCountReportFilterComponent extends BaseComponent
         }
     }
 
-    private tenant: string;
+    private tenant: number;
     public get Tenant() { return this.tenant; }
-    public set Tenant(value: string) {
+    public set Tenant(value: number) {
         if (this.tenant != value) {
             this.tenant = value;
         }
@@ -190,34 +193,132 @@ export class CertificateOfOriginCountReportFilterComponent extends BaseComponent
     queryFilterItems: QueryFilterItem[];
     queryFilterItem: QueryFilterItem;
     RunReport() {
-        this.ValidationErrorsList = [];
 
+        this.ValidateSelectedFilters();
+
+        if (this.ValidationErrorsList.length == 0) {
+            this.BuildReport();
+        }
+    }
+
+    // this function must exist for Report Scheduler
+    ValidateSelectedFilters() {
+        this.ValidationErrorsList = [];
 
         var FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         
-            if (this.FromDate == null) {
-                var FromDateValidation: string = FIELD_IS_REQUIERD.replace("%FieldName", "מתאריך");
-                this.ValidationErrorsList.push(FromDateValidation);
-            }
-
-            if (this.ToDate == null) {
-                var ToDateValidation: string = FIELD_IS_REQUIERD.replace("%FieldName", "עד תאריך");
-                this.ValidationErrorsList.push(ToDateValidation);
-            }
-
-            if (this.FromDate != null && this.ToDate != null) {
-                var FromDate = new Date(this.FromDate.getUTCFullYear(), this.FromDate.getUTCMonth(), this.FromDate.getUTCDate(), 0, 0, 0, 0);
-                var ToDate = new Date(this.ToDate.getUTCFullYear(), this.ToDate.getUTCMonth(), this.ToDate.getUTCDate(), 0, 0, 0, 0);
-                if (FromDate > ToDate) {
-                    this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
-                }
-            
+        if (this.FromDate == null) {
+            var FromDateValidation: string = FIELD_IS_REQUIERD.replace("%FieldName", "מתאריך");
+            this.ValidationErrorsList.push(FromDateValidation);
         }
-        if (this.ValidationErrorsList.length == 0) {
 
-            this.BuildReport();
-
+        if (this.ToDate == null) {
+            var ToDateValidation: string = FIELD_IS_REQUIERD.replace("%FieldName", "עד תאריך");
+            this.ValidationErrorsList.push(ToDateValidation);
         }
+
+        if (this.FromDate != null && this.ToDate != null) {
+            var FromDate = new Date(this.FromDate.getUTCFullYear(), this.FromDate.getUTCMonth(), this.FromDate.getUTCDate(), 0, 0, 0, 0);
+            var ToDate = new Date(this.ToDate.getUTCFullYear(), this.ToDate.getUTCMonth(), this.ToDate.getUTCDate(), 0, 0, 0, 0);
+            if (FromDate > ToDate) {
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
+            }
+        }
+
+        return this.ValidationErrorsList.length == 0;
+    }
+
+    // this function must exist for Report Scheduler
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>) {
+        this.IsSchedulerReport = true;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "FromDate":
+                    this.FromDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "ToDate":
+                    this.ToDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "TransportModeId":
+                    this.SelectedTransportModeId = queryFilterItem.FieldValue;
+                    break;
+                case "Tenant":
+                    if (typeof(queryFilterItem.FieldValue) == "number") {
+                        this.Tenant = queryFilterItem.FieldValue;
+                    }
+                    break;
+            }
+        }
+    }
+
+    // this function must exist for Report Scheduler
+    SetRunReportTitle() {
+        if (this.isReady) {
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = "Preview";
+            }
+            else {
+                this.RunReportTitle = "Run Report";
+            }
+        }
+    }
+
+    // this function must exist for Report Scheduler
+    IsPartnersChanged(SelectedTab) {
+        let changed;
+        if (SelectedTab == '2')
+            changed = false;
+        return changed;
+    }
+
+    // this function must exist for Report Scheduler. since we are not preparing a contact list, all contacts will be shown
+    PrepareContactList() {
+    }
+
+    // this function must exist for Report Scheduler
+    GetMainCustomerFieldName() {
+        return null;
+    }
+
+    // this function must exist for Report Scheduler
+    GetQueryFilterItems() {
+        var queryFilterItems = new Array<QueryFilterItem>();
+        var queryFilterItem: QueryFilterItem;
+
+        queryFilterItem = new QueryFilterItem();
+        queryFilterItem.FieldName = "FromDate";
+        queryFilterItem.FieldDataType = 'Date';
+        queryFilterItem.FieldValue = this.FromDate ? this.FromDate : null;
+        queryFilterItem.Operator = "Equals";
+        queryFilterItems.push(queryFilterItem);
+
+        queryFilterItem = new QueryFilterItem();
+        queryFilterItem.FieldName = "ToDate";
+        queryFilterItem.FieldDataType = 'Date';
+        queryFilterItem.FieldValue = this.ToDate ? this.ToDate : null;
+        queryFilterItem.Operator = "Equals";
+        queryFilterItems.push(queryFilterItem);
+
+        queryFilterItem = new QueryFilterItem();
+        queryFilterItem.FieldName = "TransportModeId";
+        queryFilterItem.FieldValue = this.SelectedTransportModeId
+        queryFilterItem.Operator = "Equals";
+        queryFilterItems.push(queryFilterItem);
+
+        queryFilterItem = new QueryFilterItem();
+        queryFilterItem.FieldName = "Tenant";
+        queryFilterItem.FieldValue = this.Tenant
+        queryFilterItem.Operator = "Equals";
+        queryFilterItems.push(queryFilterItem);
+
+        return queryFilterItems;
     }
 
     BuildReport() {
