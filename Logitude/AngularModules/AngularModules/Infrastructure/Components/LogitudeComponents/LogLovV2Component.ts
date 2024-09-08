@@ -2422,8 +2422,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             //this.IsDropDownVisible = false;
             //this.IsOpen = false;
         }
-        console.log(this.SelectedValue)
-        console.log(this.SelectedValuePath)
     }
 
     ValidateField(emitPropertyChanged: boolean = true) {
