@@ -186,7 +186,6 @@ export class AdvanceSearchComponent implements OnInit {
         //this.ObjectFields.forEach((item, key) => {
         //    this.temp.push(new FilterField(item, "", false));
         //});
-
         this.Run();
     }
 
