@@ -13273,7 +13273,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<SyncRecord>()
             .Property(p => p.Entname)
                 .HasColumnName(@"Entname")
-                .HasMaxLength(30)
+                .HasMaxLength(60)
                 .HasColumnType("nvarchar");
             modelBuilder.Entity<SyncRecord>()
                 .Property(p => p.KeyVal)
