@@ -49,6 +49,7 @@
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
   ServerModuleName="&quot;Customs&quot;"
+  NewWizardComponentPath="&quot;./CustomsModules/CustomsMaintenance/Components/AddEditCustomsBanksComponent&quot;"
   NoViewController="false"
   NoPMController="false"
   NoTS="false"
