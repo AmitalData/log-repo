@@ -143,6 +143,67 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return traceEvents;
         }
 
+        public IQueryable<TraceEventPM> GetTraceEventPMsByTenantByEntityIdByWeight(int tenant, string entityId, string objectTableId)
+        {
+            ObjectTableRepository objectTableRep = new ObjectTableRepository(tenant);
+            bool isShipment = objectTableRep.IsObjectTableShipment(objectTableId);
+            string masterId = null;
+
+            if (isShipment)
+            {
+
+                ShipmentRepository shipmentRep = new ShipmentRepository(tenant);
+                Shipment shipment = shipmentRep.GetSingleShipmentwithOutIncludes(entityId, tenant);
+                if (shipment != null)
+                {
+                    if (shipment.ShipmentLevelCode == "H") masterId = shipment.MasterShipmentDataId;
+                }
+
+            }
+
+            IQueryable<TraceEventPM> traceEvents = from a in repository.context.TraceEvent.Include("EventType")
+                              group a by new { a.Tenant, a.EntityId, a.ObjectTableId, a.Deleted } into g
+                              where g.Key.Tenant == tenant
+                                    && (g.Key.EntityId == entityId || g.Key.EntityId == masterId)
+                                    && g.Key.ObjectTableId == objectTableId
+                                    && !g.Key.Deleted
+                              from traceEvent in g
+                              where traceEvent.EventType.Weight == g.Max(a => a.EventType.Weight) && traceEvent.EventType.Weight!=null
+                                                   orderby traceEvent.LogDateTime descending
+
+                              select new TraceEventPM()
+                              {
+                                  EntityId = traceEvent.EntityId,
+                                  EventDateTime = traceEvent.EventDateTime,
+                                  EventTypeId = traceEvent.EventTypeId,
+                                  Id = traceEvent.Id,
+                                  LogDateTime = traceEvent.LogDateTime,
+                                  Notes = traceEvent.Notes,
+                                  ObjectTableId = traceEvent.ObjectTableId,
+                                  Tenant = traceEvent.Tenant,
+                                  UserId = traceEvent.UserId,
+                                  Deleted = traceEvent.Deleted,
+                                  ShortView = traceEvent.EventType.ShortView,
+                                  EventTypeEnglishName = traceEvent.EventType.EnglishName,
+                                  EventTypeLocalName = traceEvent.EventType.LocalName,
+                                  EventTypeCode = traceEvent.EventType.Code,
+                                  IsManualEntry = traceEvent.EventType.IsManualEntry,
+                                  IsAgentView = traceEvent.EventType.IsAgentView,
+                                  IsCustomerView = traceEvent.EventType.IsCustomerView,
+                                  ExternalId = traceEvent.ExternalId,
+                                  IsAddedManually = traceEvent.IsAddedManually,
+                                  CustomerCareUserEmail = traceEvent.CustomerCareUserEmail,
+                                  Location = traceEvent.Location,
+                                  PartnerName = traceEvent.PartnerName,
+                                  ChildEntityId = traceEvent.ChildEntityId,
+                                  ChildObjectTableId = traceEvent.ChildObjectTableId,
+                              };
+
+
+            List<TraceEventPM> list = traceEvents.ToList();
+            return traceEvents;
+        }
+
         public IQueryable<TraceEventPM> GetTraceEventPMsByTenantAndEntityId_WithSecurityKey(int tenant, string entityId, string objectTableId, string securitykey)
         {
             ObjectTableRepository objectTableRep = new ObjectTableRepository(tenant);

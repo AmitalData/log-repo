@@ -338,18 +338,7 @@ export class MainMenuComponent {
 
                         break;
                     }
-                     case "General.MH.QuotesOP": {
-                        this._entityResourceService.getEntityResourceByTableName("QuoteOP", 0).subscribe((response: any) => { });
-                        ServiceLocator.SendTotangoUserActivity("QuoteOP", "List View");
-                        myComponentPath = "./QuoteOPM/Components/Workspaces/QuotesComponent";
-
-                        if (FeatureLocator.HasFeaturePermession("QuoteOP", "Quote.Followups")) {
-                            this.FollowUpsTableId = this.SelectedMenu.ObjectTableId;
-                            this.ShowFollowUps = true;
-                        }
-
-                        break;
-                    }
+                 
                   
                      case "General.MH.ClassicDashboard": {
                          ServiceLocator.SendTotangoUserActivity("Dashboard", "Main View");

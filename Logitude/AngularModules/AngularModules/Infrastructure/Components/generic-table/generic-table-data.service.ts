@@ -3,7 +3,6 @@ import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { EntityListService } from 'Infrastructure/Services/EntityListService';
 import { DirectionListService } from 'Infrastructure/Services/StandardLists/DirectionListService';
-import { filterIsNotNull } from 'QuoteOPM/Components/NewEntity/Services/new-quote-data/new-quote-data.service';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 

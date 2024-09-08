@@ -65,9 +65,7 @@ import { MultiCertificateUpdateComponent } from '../../../../../CustomsModules/C
 import { TradeAgreementListService } from 'Customs/Services/StandardLists/TradeAgreementListService';
 import { TradeAgreementProtocolListService } from 'Customs/Services/StandardLists/TradeAgreementProtocolListService';
 import { IncotemrsFileValidationListService } from 'Customs/Services/StandardLists/IncotemrsFileValidationListService';
-// import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { IncotemrsFileValidationList } from 'Customs/EntityLists/IncotemrsFileValidationList';
-// import { customsItemsService } from 'QuoteOPM/Utilities/customsItems.service';
 import { SupplierInvoiceSharedService } from './Services/SupplierInvoiceSharedService';
 
 import { VendorCurrencyService } from 'Customs/Services/WebServices/VendorCurrencyService';

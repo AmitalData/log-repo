@@ -18,6 +18,11 @@ using Logitude.CargoTracking.Data.EntityLists;
 using Logitude.CargoTracking.Data.EntityPOCOs;
 using Logitude.CargoTracking.Def.EntityPMs;
 using Logitude.Server.Tools;
+using Logitude.BL.ShipmentsModel.APIDataContract;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+
 
 namespace WebFreight.Web.Helpers.APIHelpers
 {
@@ -77,6 +82,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 IsCustomerIDNumberRequired = shipment.IsUserIDNumberRequired,
                 LastMileDetails = GetCardConnectedToShipment(shipment),
                 ShipmentMilestones = GetShipmentMilestones(cargoTrackingShipment),
+                StatusDetails= GetStatusDetails(shipment),
                 ShipmentExceptions = cargoTrackingShipment.CurrentMilestoneExceptions != null ?  GetShipmentExceptions(cargoTrackingShipment) : null,
             };
         }
@@ -138,6 +144,14 @@ namespace WebFreight.Web.Helpers.APIHelpers
             return FillMilestoneDatasList(cargoTrackingShipment, allMilestones);
         }
 
+        private List<StatusDetails> GetStatusDetails(ShipmentPM shipment)
+        {
+            List<TraceEventPM> allEvent = GetAllShipmentEvents(shipment);
+            if (allEvent == null) { return null; }
+          
+            return FillStatusDetailsList(allEvent);
+        }
+
         private void BuildMileStoneCodesDictionary()
         {
             milestoneCodes = new Dictionary<string, string>(){
@@ -172,6 +186,15 @@ namespace WebFreight.Web.Helpers.APIHelpers
             var cargoTrackingMilestoneBuilder = new CargoTrackingMilestoneBuilder();
             return cargoTrackingMilestoneBuilder.BuildShipmentMilstones(cargoTrackingShipment, milestone);
         }
+
+        private List<TraceEventPM> GetAllShipmentEvents(ShipmentPM shipment)
+        {
+            string shipmentObjectTableId = ObjectTableRepository.GetObjectTableByName("Shipment");
+            TraceEventQuery traceEventQuery = new TraceEventQuery(shipment.Tenant);
+            EventTypeQuery eventTypeQuery=new EventTypeQuery(shipment.Tenant);
+            List<TraceEventPM> list = traceEventQuery.GetTraceEventPMsByTenantByEntityIdByWeight(shipment.Tenant, shipment.Id, shipmentObjectTableId)?.ToList();
+            return list;
+        }
         private List<MilestoneData> FillMilestoneDatasList(CargoTrackingShipmentList cargoTrackingShipment, List<Milestone> allMilestones)
         {
             AddNewMilestoneDataToMilestoneDatas(cargoTrackingShipment);
@@ -182,6 +205,19 @@ namespace WebFreight.Web.Helpers.APIHelpers
             }
 
             return milestoneDatas;
+        }
+
+
+        private List<StatusDetails> FillStatusDetailsList(List<TraceEventPM> allEvents)
+        {
+            List < StatusDetails > statusDetailsList=new List<StatusDetails> ();
+            foreach (TraceEventPM ev in allEvents.OrderBy(m => m.EventDateTime))
+            {
+                StatusDetails statusDetails = CreateStatusDetailsInstance(ev);
+                statusDetailsList.Add(statusDetails);
+            }
+
+            return statusDetailsList;
         }
         private void AddNewMilestoneDataToMilestoneDatas(CargoTrackingShipmentList cargoTrackingShipment)
         {
@@ -197,6 +233,17 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 Code = "OPN",
                 Date = cargoTrackingShipment.CreateDate?.ToString("dd/MM/yyyy"),
                 Time = cargoTrackingShipment.CreateDate?.ToString("HH:mm"),
+            };
+        }
+
+        private static StatusDetails CreateStatusDetailsInstance(TraceEventPM traceEventPM)
+        {
+            return new StatusDetails()
+            {
+                StatusCode = traceEventPM.EventTypeCode,
+                StatusName = traceEventPM.EventTypeEnglishName,
+               StatusDateTime=traceEventPM.EventDateTime,
+               StatusRemarks=traceEventPM.Notes
             };
         }
         private List<CargoTrackingMilestoneList> GetCargoTrackingMilestoneList()

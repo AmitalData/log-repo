@@ -606,8 +606,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                             });
 
                         tasklogParams.ByteData = LogitudeXmlSerializer.SerializeObject(queueTasks);
-                        if (!CustomsSettingsHelper.GetCache(tenant).StandAlone)
-                            Communications.AddCommunicationLog(tasklogParams);
+                             Communications.AddCommunicationLog(tasklogParams);
                     }
                     #endregion
                 }
@@ -640,8 +639,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 });
 
                 tasklogParams.ByteData = LogitudeXmlSerializer.SerializeObject(queue2Tasks);
-                if (!CustomsSettingsHelper.GetCache(tenant).StandAlone)
-                    Communications.AddCommunicationLog(tasklogParams);
+                     Communications.AddCommunicationLog(tasklogParams);
             }
         }
 

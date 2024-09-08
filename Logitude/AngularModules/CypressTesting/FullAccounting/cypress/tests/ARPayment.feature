@@ -5,9 +5,9 @@ Feature: AR Payment
     Scenario: Create new AR Payment
         Given the user logged in and navigates to Full Accounting workspace
         And an AR Payment with the following details
-            | Partner         | רונן ארז דולר  |
+            | Partner         | 10120221641813849845 |
             | RegisterDate    | 13/07/2023      |
-            | PaymentCurrency | USD             |
+            | PaymentCurrency | NIS             |
             | PaymentMethod   | Cash            |
             | PaymentAmount   | 1000            |  
             | PaymentBranch   | Main Office     |

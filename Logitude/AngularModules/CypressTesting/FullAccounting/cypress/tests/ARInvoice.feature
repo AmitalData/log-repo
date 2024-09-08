@@ -5,7 +5,7 @@ Feature: AR Invoice
     Scenario: Create new AR Invoice
         Given the user logged in and navigates to Full Accounting workspace
         And an AR Invoice with the following details
-            | BillTo          | רונן ארז דולר |
+            | BillTo          | 10120221641813849845|
             | InvoiceCurrency | USD            |
             | InvoiceDate     | Current Date   |
             | PaymentTerm     | Cash           |
@@ -16,7 +16,7 @@ Feature: AR Invoice
 
     Scenario: Add new Invoice Line
         Given Invoice line with the following details
-            | ChargesType      | Air Freight    |
+            | ChargesType      | BDDChargeType    |
             | LocalDescription | LocalDirection |
             | VatType          | Zero           |
             | ForiegnCurrency  | USD            |

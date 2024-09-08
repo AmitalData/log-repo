@@ -484,7 +484,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void AddVIRExternalTaskQueue()
         {
-            if (entityPM.IsHybrid && entityPM.ExternalStatuses == "VIR" && !CustomsSettingsHelper.GetCache(tenant).StandAlone)
+            if (entityPM.IsHybrid && entityPM.ExternalStatuses == "VIR")
             {
                 ExternalTasksQueueService externalTasksQueueService = new ExternalTasksQueueService(entityPM.Tenant, "User ID Link Received");
                 externalTasksQueueService.AddVIRExternalTaskQueue(entityPM);
@@ -3348,7 +3348,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void AddPaymentReceivedToQueue()
         {
-            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner) && !CustomsSettingsHelper.GetCache(tenant).StandAlone)
+            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner) )
             {
                 //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 //{

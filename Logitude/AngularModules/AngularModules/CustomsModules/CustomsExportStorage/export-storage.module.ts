@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExportStoragePMService } from 'Customs/Services/StandardPMs/ExportStoragePMService';
 import { ExportStorageGeneralTabComponent } from './components/edit/ExportStorageGeneralTabComponent/ExportStorageGeneralTabComponent';
-// import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { InfrastructureModule } from 'Infrastructure/Module_INFR';
 import { ModuleCustomsControls } from 'CustomsModules/CustomsControls/ModuleCustomsControls';
 import { FeedbackToStorageTabComponent } from './components/edit/FeedbackToStorageTabComponent/FeedbackToStorageTabComponent.component';
