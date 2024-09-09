@@ -18674,44 +18674,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-  <Query
-    Code="&quot;AllCustomers&quot;"
-    TextCode="&quot;AllCustomers&quot;"
-    QueryGroupCode="&quot;CLNT&quot;"
-    IndexOrder="0"
-    ObjectTableName="&quot;Customer&quot;"
-    QuerySection="&quot;Customer&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="true"
-    IsPackagable="true"
-    DefaultSortName="&quot;CreateDate&quot;"
-    DefaultSortDirection="&quot;Desending&quot;"
-    IsSpellChecked="false"
-    Perspective="&quot;customers&quot;">
-    <QueryColumns>
-      <QueryColumn
-        QueryCode="&quot;AllCustomers&quot;"
-        IndexOrder="0"
-        ObjectFieldName="&quot;CodeDataTemplate&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;AllCustomers&quot;"
-        IndexOrder="1"
-        ObjectFieldName="&quot;EnglishNameDataTemplate&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;AllCustomers&quot;"
-        IndexOrder="2"
-        ObjectFieldName="&quot;CityNameDataTemplate&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;AllCustomers&quot;"
-        IndexOrder="3"
-        ObjectFieldName="&quot;StartWorkingDataTemplate&quot;"
-        ColumnWidth="100" />
-    </QueryColumns>
-    <QueryFilters />
-  </Query>
+   
   <Query
     Code="&quot;By Last Shipment&quot;"
     TextCode="&quot;By Last Shipment&quot;"

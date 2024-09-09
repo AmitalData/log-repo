@@ -40,3 +40,37 @@ Then("the AR Payment should approve successfully", () => {
 });
 //#endregion
 
+
+//#region Create new Cheque Deposit
+Given("the user navigates to cheque deposit wizerd", () => {
+    ChequeDepositActions.NavigatesChequeDepositWizerd()
+});
+
+Given("a cheque deposit with the following details", (dataTable) => {
+    let chequeDepositDetails = Assists.CreateInstance<ChequeDepositDetails>(dataTable, true);
+    ChequeDepositActions.FillChequeDepositDetails(chequeDepositDetails)
+});
+
+When("create cheque deposit", () => {
+    ChequeDepositActions.CreateChequeDeposit()
+});
+
+Then("the cheque deposit should get successfully", () => {
+    ChequeDepositActions.AssertCreateChequeDeposit()
+});
+//#endregion
+
+//#region Approve the Cheque Deposit
+Given("select the all cheques in the cheque deposit", () => {
+    ChequeDepositActions.SelectAllCheques()
+});
+
+When("Approve the cheque deposit", () => {
+    ChequeDepositActions.ApproveChequeDeposit()
+});
+
+Then("the cheque deposit should approve successfully", () => {
+    ChequeDepositActions.AssertApproveChequeDeposit()
+});
+//#endregion
+

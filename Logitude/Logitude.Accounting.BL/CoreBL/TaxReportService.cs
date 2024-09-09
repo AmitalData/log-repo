@@ -727,7 +727,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 return InsertTaxReportLines(taxReport, taxReportLines, 0);
             }
         }
-        private static List<TaxReportLinePM> InsertTaxReportLines(TaxReportPM taxReport, List<TaxReportLinePM> taxReportLines, int startIndex)
+         private static List<TaxReportLinePM> InsertTaxReportLines(TaxReportPM taxReport, List<TaxReportLinePM> taxReportLines, int startIndex)
         {
             using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(60)))
             {

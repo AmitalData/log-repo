@@ -1005,9 +1005,10 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.IsNewEntityButtonDisabled = true;
         }
 
-        if (this.ObjectTableName != 'PortTimeZone') {
-            if (!this.CheckPermissions(this.ObjectTableName, 'READ', false)) {
-                this.HasPermition = false;
+ 
+        if (this.ObjectTableName != "PortTimeZone") {
+            if (!this.CheckPermissions(this.ObjectTableName, "READ", false)) { 
+                 this.HasPermition = false;
             }
         }
         this.Filterchangeevent = new LogEvents.EventManager();

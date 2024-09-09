@@ -660,30 +660,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             ////
         }
-#if notinuse
-        private string GetCustomsFileImportType(DeclarationPM entityPM)
-        {
-            if (entityPM == null || string.IsNullOrWhiteSpace(entityPM.CustomFileNo)) return null;
-
-            var openReaderSingleResult = new OpenReaderSingleResult(AmitalContext.GetContext(entityPM.Tenant));
-            string UserId = openReaderSingleResult.GetSchemaUserId();
-            string theResult = "";
-            var res1 = openReaderSingleResult.ExecuteReaderSingleResult<int>(
-                $"select IMPORT_TYPE from {UserId}.CFIFILEM where FILE_NO='{entityPM.CustomFileNo}'"
-                ,
-                (dataReader) =>
-                {
-                    theResult = dataReader.GetString(0);
-                    return 9999;
-
-                });
-
-            return theResult;
-        }
-
-
-#endif
-
+ 
 
         private bool TicketalreadyExistforthisDocument(DeclarationPM declarationPM)
         {
