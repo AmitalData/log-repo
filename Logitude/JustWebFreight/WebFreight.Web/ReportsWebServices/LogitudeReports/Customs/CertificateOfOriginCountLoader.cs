@@ -79,6 +79,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
             #region  ApplyCustomFilters
 
             QueryFilterItem CreateDateFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDate").FirstOrDefault();
+            if (CreateDateFilter == null)
+            {
+                QueryFilterItem FromDateFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+                QueryFilterItem ToDateFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+                if (FromDateFilter != null && ToDateFilter != null)
+                {
+                    CreateDateFilter = FromDateFilter;
+                    CreateDateFilter.FieldValue2 = ToDateFilter.FieldValue;
+                }
+            }
             if (CreateDateFilter != null)
             {
                 DateTime startDate = ((DateTime)CreateDateFilter.FieldValue).Date;
@@ -88,13 +98,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
             }
 
             QueryFilterItem TransportModeIdFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "TransportModeId").FirstOrDefault();
-            if (TransportModeIdFilter != null)
+            if (TransportModeIdFilter != null && TransportModeIdFilter.FieldValue.ToString().ToLower() != "all")
             {
                 certificateOfOriginsCounts = certificateOfOriginsCounts.Where(x => x.TransportModeId == TransportModeIdFilter.FieldValue.ToString());
             }
 
             QueryFilterItem TenantFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Tenant").FirstOrDefault();
-            if (TenantFilter != null)
+            if (TenantFilter != null && TenantFilter.FieldValue != null)
             {
                 certificateOfOriginsCounts = certificateOfOriginsCounts.Where(x => x.Tenant.ToString() == TenantFilter.FieldValue.ToString());
             }

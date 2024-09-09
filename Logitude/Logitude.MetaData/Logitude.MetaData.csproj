@@ -705,6 +705,7 @@
     <None Include="DBScripts\CommonModel\202006181218_DropCardCurrenciesAccountingsTable.sxml" />
     <None Include="DBScripts\CommonModel\FillCardSearchData._sxml_" />
     <None Include="DBScripts\GlobalModel\202006102217_FillSettingsDemoTenants.sxml" />
+    <None Include="DBScripts\GlobalModel\202409092209_AddSchedularWR.sxml" />
     <None Include="DBScripts\GlobalModel\202007061138_FillSettingsTMExpirationDate.sxml" />
     <None Include="DBScripts\InfrastructureModel\202006011050_UpdateAllowedInTicketFieldValueOfObjectTable.sxml" />
     <None Include="DBScripts\InfrastructureModel\202006171015_TruncateErrorLogs.sxml" />
