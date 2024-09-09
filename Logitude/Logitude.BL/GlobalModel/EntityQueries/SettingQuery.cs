@@ -118,11 +118,12 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                   DocumentFilingEmailDomain = a.DocumentFilingEmailDomain,
                                   System2RedirectFraction = a.System2RedirectFraction,
                                   ReportsRunUsingWR = a.ReportsRunUsingWR,
-                          AmitalTaxesUrl = a.AmitalTaxesUrl,
-                          PrivateKey = a.PrivateKey,
-                          TaxesRediractUrl = a.TaxesRediractUrl,
-                          AmitalApiAddress = a.AmitalApiAddress,
-                          AmitalApiXFunctionsKey = a.AmitalApiXFunctionsKey,
+                                  AmitalTaxesUrl = a.AmitalTaxesUrl,
+                                  MamanServiceUrl = a.MamanServiceUrl,
+                                  PrivateKey = a.PrivateKey,
+                                  TaxesRediractUrl = a.TaxesRediractUrl,
+                                  AmitalApiAddress = a.AmitalApiAddress,
+                                  AmitalApiXFunctionsKey = a.AmitalApiXFunctionsKey,
 
                                   ExportUrl = a.ExportUrl,
                               }).FirstOrDefault();

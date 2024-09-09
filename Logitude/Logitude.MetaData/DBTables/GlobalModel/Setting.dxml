@@ -540,6 +540,13 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="MamanServiceUrl"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
   Name="AmitalApiAddress"
   Type="nvarchar"
   Size="250">

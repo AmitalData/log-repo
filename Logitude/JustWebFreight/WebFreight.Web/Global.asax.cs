@@ -188,7 +188,7 @@ namespace WebFreight.Web
             //defaults: new { id = System.Web.Http.RouteParameter.Optional }
             //);
 
-            RouteTable.Routes.MapHttpRoute("Maman", "api/maman/{*path}", new { controller = "Maman", action = "Test" });
+            RouteTable.Routes.MapHttpRoute("Maman", "api/maman/{*path}", new { controller = "Maman", action = "Handler" });
 
             RouteTable.Routes.MapHttpRoute(
           name: "DefaultGetApi",
