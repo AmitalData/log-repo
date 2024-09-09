@@ -42,6 +42,7 @@ using System.Text;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using System.IdentityModel.Metadata;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Logitude.Customs.Data.EntityMapping;
 
 namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 {
@@ -719,7 +720,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                                 this._MyDeclarationPM.Consignments[0].ConsignmentPackages.Add(consignmentPackagePM);
                             }
                         }
-					else if(this._MyDeclarationPM.Consignments[0].ConsignmentPackages.Count > 0 && !this._MyDeclarationPM.IsCourierDeclaration)
+					  else if (this._MyDeclarationPM.Consignments[0].ConsignmentPackages.Count > 0 && this._MyDeclarationPM.IsCourierDeclaration)
+                    {
+                        this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].ChangeSetOp = ChangeSetOperation.Update;
+                        CalcGrossMassMeasure();
+
+                    }
+                    else if(this._MyDeclarationPM.Consignments[0].ConsignmentPackages.Count > 0 && !this._MyDeclarationPM.IsCourierDeclaration)
 					{
                         this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].ChangeSetOp = ChangeSetOperation.Update;
                         if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.PackageTypeCode))
@@ -1036,8 +1043,30 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 			}
 		}
 
+        private void CalcGrossMassMeasure()
+        {
+            decimal GrossMassMeasure = 0;
 
-		bool IsNew = false;
+            this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode = "KGM";
+            if (decimal.TryParse(_AmitalCustomsFile.GrossMassMeasure, out GrossMassMeasure) || string.IsNullOrWhiteSpace(_AmitalCustomsFile.GrossMassMeasure)) //Yuval Chalup 23.02.2016 TASK-20330 (Add  || string.IsNullOrWhiteSpace(_AmitalCustomsFile.GrossMassMeasure))
+            {
+
+                string isOverrideWeight = CustomsSettingQueryService.GetSettingByTenant(ResolvedTenant()).IsConnectedToUniFreight ?
+                    GetAmitalDefault("ISRAEL", "CIM_NO_OVR_WGT", "NON", _AmitalCustomsFile.CustomerId, ResolvedTenant()) :
+                    "N";
+
+                decimal weight = Math.Truncate(GrossMassMeasure);
+                if (weight > 99999999)
+                {
+                    GrossMassMeasure = GrossMassMeasure / 1000;
+                    this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode = "TNE";
+                }
+
+                this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasure = GrossMassMeasure;
+            }
+        }
+
+        bool IsNew = false;
 		StringBuilder FieldError = new StringBuilder();
 		bool IseatureClosingAutoExpDec = false;
 		DocumentsFilingPM documentsFilingPM = null;
