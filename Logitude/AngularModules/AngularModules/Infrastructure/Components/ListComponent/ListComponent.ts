@@ -727,7 +727,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
 
         if (this.ObjectTableName != "PortTimeZone") {
-            if (!this.CheckPermissions(this.ObjectTableName, "READ", false)) {
+            if (!this.CheckPermissions(this.ObjectTableName, "READ", false)) { 
                 this.HasPermition = false;
             }
         }
@@ -751,7 +751,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         if (["Customs.DeclarationReferantData", "Customs.DeclarationCargoSplit", "Customs.LogisticActionRequest"].includes(this.ObjectTableName)) {
             this.HasCustomsFilterMenu = true;
         }
-        if (this.ObjectTableName == "Customs.ExportStorge" || this.ObjectTableName == "QuoteOP") {
+        if (this.ObjectTableName == "Customs.ExportStorge") {
 
             this.LayoutDirection = "ltr";
             this.RTL = false;
@@ -3470,13 +3470,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         logWindow.Height = 200;
                         break;
                     }
-                case "QuoteOP":
-                    {
-                        logWindow.RTL = false;
-                        logWindow.Width = 1200;
-                        logWindow.Height = 800;
-                        break;
-                    }
+        
 
             }
 

@@ -2,7 +2,7 @@ import { BankDepositExtendedPMService } from './../../../Accounting/Services/Ext
 import { CashBookExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/CashBookExtendedPMService';
 import { ReconciliationExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
 declare var window: any;
-import { Component, Type, ComponentRef, ViewContainerRef, ViewChild, Output, EventEmitter, ViewChildren, QueryList, OnDestroy, ChangeDetectorRef,HostListener, AfterViewInit, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Type, ComponentRef, ViewContainerRef, ViewChild, Output, EventEmitter, ViewChildren, QueryList, OnDestroy, ChangeDetectorRef, HostListener, AfterViewInit, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
 import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
 import { ObjectFieldPM } from '../../EntityPMs/ObjectFieldPM';
 import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
@@ -25,7 +25,7 @@ import { Subscription, TeardownLogic } from 'rxjs';//itzik
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 import { HeaderScreenDataResult } from '../../Interface/IHeaderScreenService';
- import { AmitalGatewayUtil } from 'Infrastructure/Utilities/AmitalGatewayUtil';
+import { AmitalGatewayUtil } from 'Infrastructure/Utilities/AmitalGatewayUtil';
 import { DeclarationEventManager } from 'Customs/Utilities/DeclarationEventManager';
 
 import { CustomsSettingListService } from 'Customs/Services/StandardLists/CustomsSettingListService';
@@ -35,7 +35,7 @@ import { CustomsSettingList } from 'Customs/EntityLists/CustomsSettingList';
 import { CustomsClosedTablePM } from '../../../Customs/EntityPMs/CustomsClosedTablePM';
 import { CustomsSettingExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 
- import { TableTabService } from 'Infrastructure/Services/ExtendedPMs/TableTabService';
+import { TableTabService } from 'Infrastructure/Services/ExtendedPMs/TableTabService';
 import { ObjectTableTabPM } from 'Infrastructure/EntityPMs/ObjectTableTabPM';
 import { CloneDeep } from 'Infrastructure/Helpers/LodashClone';
 import { WorkFlowVersionPMService } from 'Workflow/Services/StandardPMs/WorkFlowVersionPMService';
@@ -46,7 +46,7 @@ import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 const InterestTransactionTabCode = 'GLIT';
 const CustomerGLAccountTypeCode = "2";
- 
+
 
 @Component({
     templateUrl: './EditComponent.html',
@@ -70,7 +70,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     public ClonedEntityPM: any = null;
     public EntityId: string = null;
     public JournalNumber: string = null;
-   
+
     public ObjectTable: ObjectTablePM;
     public ObjectTableId: string;
     public ObjectTableName: string;
@@ -111,12 +111,12 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public CurrentSession = SessionLocator.SelectedSession;
     public IsReloadNeeded: boolean = false;
-     public isEntityChange: boolean = false;
-    private static _CustomsSettingList:CustomsSettingList=null;
+    public isEntityChange: boolean = false;
+    private static _CustomsSettingList: CustomsSettingList = null;
     tabsService = new TableTabService();
     public IsDigitalAddsOn: boolean = false;
 
- 
+
     constructor(private entityPMService: EntityPMService, private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private _totangoService: TotangoService, private cd: ChangeDetectorRef) {
         this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
         this.ComponentIndex = this.CurrentSession.GetNewEditComponentIndex();
@@ -125,12 +125,14 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         this.EditComponentCellId = "EditComponentCellId_" + this.CurrentSession.SessionIndex + "_" + this.ComponentIndex;
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         this.WorkEnvironment = ObjectsLocator.GlobalSetting == undefined ? "logitude" : ObjectsLocator.GlobalSetting.WorkEnvironment;
-         this.FetchCustomsSetting();
-        
+        if (this.WorkEnvironment == "Customs") {
+            this.FetchCustomsSetting();
+        }
+
     }
 
-    
-    
+
+
     ngAfterViewInit(): void {
         if (this.WorkEnvironment.toLowerCase() == "customs") {
             setTimeout(() => {
@@ -145,22 +147,22 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                 }
             }, 3000);
         }
-        }
-    
+    }
+
 
     findParentWithNonZeroScrollTop(element) {
         while (element) {
-          if (element.scrollTop > 0) {
-            return element;
-          }
-          element = element.parentElement;
+            if (element.scrollTop > 0) {
+                return element;
+            }
+            element = element.parentElement;
         }
         return null;
-      }
-      
+    }
 
-    OnSaveAndCloseHotKey(){
-        if(!this.IsSaveBtnDisable){
+
+    OnSaveAndCloseHotKey() {
+        if (!this.IsSaveBtnDisable) {
 
             this.SaveChangesAndClose();
         }
@@ -197,7 +199,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     private QuerySection: string;
     private SelectedQueryCode: string;
     private EntityFields: any[] = null;
-    private _CustomsClosedTablePM: CustomsClosedTablePM =null; 
+    private _CustomsClosedTablePM: CustomsClosedTablePM = null;
     private _CustomsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
     public async Run(args: any) {
 
@@ -213,18 +215,18 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         this.BackButtonLabel = !AppTool.IsNullOrEmpty(args['BackButtonLabel']) ? args['BackButtonLabel'] : TextCodeTranslator.Translate("General.B.Back");  // "Back";
         this.ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
         this.ObjectTableId = this.ObjectTable.Id;
-        
+
         this.HasHelper = this.ObjectTable.HasHelper;
         this.HasShortTitle = this.ObjectTable.HasShortTitle;
         this.HasMenuButtons = this.ObjectTable.HasMenuButtons;
         this.IsTabsHidden = this.ObjectTable.IsTabsHidden;
         this.NavigationIds = args['NavigationIds'];
         this.EntityFields = args['EntityFields'];
- 
+
         this.IsFirstOpen = args['IsFirstOpen'];
         this.JournalNumber = args['JournalNumber']
- 
-        if (this.ObjectTableName == "Customs.ExportStorge" || this.ObjectTableName == "QuoteOP"  ) {
+
+        if (this.ObjectTableName == "Customs.ExportStorge") {
             this.LayoutDirection = 'ltr'
         }
         else {
@@ -244,88 +246,88 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         if (!AppTool.IsNullOrEmpty(this.ObjectTableId) && this.WorkEnvironment.toLowerCase() == "customs") {
             await new Promise<void>(resolve => {
 
-            this._CustomsSettingExtendedListService.GetCustomsClosedTablePMByObjectTableId(this.ObjectTableId)
-                .subscribe(
-                    res => {
-                        if (!AppTool.IsNullOrEmpty(res.Result)) {
-                            this._CustomsClosedTablePM = res.Result;
+                this._CustomsSettingExtendedListService.GetCustomsClosedTablePMByObjectTableId(this.ObjectTableId)
+                    .subscribe(
+                        res => {
+                            if (!AppTool.IsNullOrEmpty(res.Result)) {
+                                this._CustomsClosedTablePM = res.Result;
+                            }
+                            resolve()
                         }
-                        resolve()
-                    }
 
-                 );
+                    );
             })
         }
         await new Promise<void>(resolve => {
             this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response: any) => {
 
- 
-            if (this.EntityPM != null) {
 
-                this.entityArgs.EntityPM = this.EntityPM;
+                if (this.EntityPM != null) {
 
-                this.entityArgs.ObjectTableName = this.ObjectTableName;
+                    this.entityArgs.EntityPM = this.EntityPM;
 
-                this.entityArgs.EditComponent = this;
+                    this.entityArgs.ObjectTableName = this.ObjectTableName;
 
-                this.BuildComponent();
-                 }
- 
+                    this.entityArgs.EditComponent = this;
 
-                 else if (this.EntityId != null) {
- 
-                     this.LoadEntityPM();
- 
- 
-            }
-  
-            if (this.ObjectTableName != "Country" && this.ObjectTableName != "PackageType") {
- 
-                this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "View " + this.ObjectTableName);
- 
-            }
- 
-                 if (this.ObjectTableName == "CommunicationLog") {
- 
-                     this.IsSaveBtnDisable = true;
- 
-                 }
- 
+                    this.BuildComponent();
+                }
 
 
- 
-            this.IsSaveBtnVisible = this.ObjectTable.IsSaveButtonVisible || (this.ObjectTable.IsCustom && AppTool.IsNullOrEmpty(this.ObjectTable.ParentObjectTableId));
- 
-            var feature = FeatureLocator.Features.filter(d => d.Code == "SPLIT")[0];
-  
-            if (!AppTool.IsNullOrEmpty(feature)) { // granted
- 
-                if (!AppTool.IsNullOrEmpty(this.ObjectTable.SplitComponentPath)) {
- 
-                    this.IsSplitBtnVisible = true;
-                         this.ShowWindowsOverEditComponent = true;
- 
-                     }
- 
- 
-            }
- 
-            var isNewEntity = true;
- 
-            if (this.EntityId || (this.EntityId && this.EntityPM.Id))
- 
-                isNewEntity = false;
- 
-            if ((this.ObjectTableName == "ARPayment") && SessionLocator.TenantPM.AccountingActivated && isNewEntity) {
- 
-                this.IsSaveBtnVisible = false;
- 
-            }
+                else if (this.EntityId != null) {
+
+                    this.LoadEntityPM();
+
+
+                }
+
+                if (this.ObjectTableName != "Country" && this.ObjectTableName != "PackageType") {
+
+                    this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "View " + this.ObjectTableName);
+
+                }
+
+                if (this.ObjectTableName == "CommunicationLog") {
+
+                    this.IsSaveBtnDisable = true;
+
+                }
+
+
+
+
+                this.IsSaveBtnVisible = this.ObjectTable.IsSaveButtonVisible || (this.ObjectTable.IsCustom && AppTool.IsNullOrEmpty(this.ObjectTable.ParentObjectTableId));
+
+                var feature = FeatureLocator.Features.filter(d => d.Code == "SPLIT")[0];
+
+                if (!AppTool.IsNullOrEmpty(feature)) { // granted
+
+                    if (!AppTool.IsNullOrEmpty(this.ObjectTable.SplitComponentPath)) {
+
+                        this.IsSplitBtnVisible = true;
+                        this.ShowWindowsOverEditComponent = true;
+
+                    }
+
+
+                }
+
+                var isNewEntity = true;
+
+                if (this.EntityId || (this.EntityId && this.EntityPM.Id))
+
+                    isNewEntity = false;
+
+                if ((this.ObjectTableName == "ARPayment") && SessionLocator.TenantPM.AccountingActivated && isNewEntity) {
+
+                    this.IsSaveBtnVisible = false;
+
+                }
                 resolve();
 
- 
+
             });
-             
+
         });
 
     }
@@ -335,7 +337,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         if (this.ObjectTableName == "Reconciliation") {
             var service = new ReconciliationExtendedPMService();
             service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) => {
-                
+
                 console.log("[ReconciliationExtendedPMService.GetSingleWithoutLines] ", response);
 
                 if (!response.HasError) {
@@ -390,18 +392,18 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         }
 
     }
-    
+
     private SetEntityPMAfterLoadIt(result) {
-        
-        if (this.WorkEnvironment.toLowerCase() =="customs"  && !AppTool.IsNullOrEmpty(result["Tenant"])){
-            const entityTenant:number =result["Tenant"];
-            if (entityTenant!= SessionLocator.Tenant)//SessionLocator.LoggedUserPM.Tenant) 
+
+        if (this.WorkEnvironment.toLowerCase() == "customs" && !AppTool.IsNullOrEmpty(result["Tenant"])) {
+            const entityTenant: number = result["Tenant"];
+            if (entityTenant != SessionLocator.Tenant)//SessionLocator.LoggedUserPM.Tenant) 
             {
-                if (this._CustomsClosedTablePM?.ObjectTableId == this.ObjectTableId){
+                if (this._CustomsClosedTablePM?.ObjectTableId == this.ObjectTableId) {
                     console.warn(`_CustomsClosedTablePM={_CustomsClosedTablePM}`);
                 }
-                else   {
-                    this.ValidationErrorsList=[];
+                else {
+                    this.ValidationErrorsList = [];
                     this.ValidationErrorsList.push("You have no permission to view entities of this type. - Edit Component")
                     this.StopBusyIndicator();
                     throw new Error('You have no permission to view entities of this type. - Edit Component');
@@ -496,29 +498,29 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                                     this._SubEditComponentDefaultController == null;
                                 }
                             });
-                            let sync: boolean = true;
-                            if (sync) {
-                                this.BuildEditTabs(() => {
-                                    this.RunComponent();
-                                    this.cd.detectChanges(); // to let HTML read split component location
-                                    this.StopBusyIndicator();
-                                });
+                        let sync: boolean = true;
+                        if (sync) {
+                            this.BuildEditTabs(() => {
+                                this.RunComponent();
+                                this.cd.detectChanges(); // to let HTML read split component location
+                                this.StopBusyIndicator();
+                            });
 
-                            } else {
- 
-                                 this.BuildEditTabs(null);
- 
-                                 this.RunComponent();
- 
-                                 this.StopBusyIndicator();
- 
- 
+                        } else {
+
+                            this.BuildEditTabs(null);
+
+                            this.RunComponent();
+
+                            this.StopBusyIndicator();
+
+
+                        }
+
+
                     }
- 
+                });
 
-                         }
-                    });
- 
             });
         });
     }
@@ -551,7 +553,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                 this.BuildShortTitle();
                 this.BuildHeaderScreen();
                 this.SetSelectedTab();
-                this.SetSplitComponentState(); 
+                this.SetSplitComponentState();
                 this.SetNextPreviousButtonsEnablity();
             }
         }
@@ -924,14 +926,14 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     public TabsItemsSource: TabItem[] = [];
     private LoadedTabsList: LoadedTabItem[] = [];
     private SingleDetailsTab: any = null;
-    private BuildEditTabs(onCallBack: () => void ) {
+    private BuildEditTabs(onCallBack: () => void) {
 
         if (this.IsTabsHidden) {
             this.BuildSingleEditTab();
         }
 
         else {
-            
+
             this.BuildTabsItemsSource(onCallBack);
 
         }
@@ -981,15 +983,15 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                 }
 
             }
- 
+
 
             if (this.ObjectTableName == "PortTimeZone") {
                 myTabsSorted.push(tab);
-                 if (
-                    AmitalGatewayUtil.Instance.AmitalBrowserInUse && 
-                    (this.QuerySection === "Customs.ExportDeclaration" || this.BackButtonLabel.includes(TextCodeTranslator.Translate("Customs.Containerization.O.ExportFile"))) && 
+                if (
+                    AmitalGatewayUtil.Instance.AmitalBrowserInUse &&
+                    (this.QuerySection === "Customs.ExportDeclaration" || this.BackButtonLabel.includes(TextCodeTranslator.Translate("Customs.Containerization.O.ExportFile"))) &&
                     tab.ControlPath.includes(".DeclarationDocsInControl"))
-                    continue;                    
+                    continue;
             }
 
             else {
@@ -1065,10 +1067,10 @@ export class EditComponent implements OnDestroy, AfterViewInit {
             this.TabsItemsSource.push(itemTab);
         });
     }
-    
 
 
-    private BuildTabsItemsSource(onCallBack: () => void ) {
+
+    private BuildTabsItemsSource(onCallBack: () => void) {
 
         this.TabsItemsSource = [];
         var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/MetaDataServices/TabsServices/" + this.GetObjectTableName() + "TabsService";
@@ -1439,7 +1441,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     }
 
     private LoadTabComponent(loadedItem: LoadedTabItem) {
-        
+
         if (loadedItem != null) {
             if (loadedItem.ComponentPath != null) {
                 if (!loadedItem.IsLoaded) {
@@ -1565,27 +1567,27 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         var noAction = (): void => {
             this.Close();
         };
-        if(this.ObjectTableName == "Customs.Declaration"){
+        if (this.ObjectTableName == "Customs.Declaration") {
             this.ShowConfirmationMessage(new ConfirmationMessageArgs()
-            .Builder
-            .YesText(TextCodeTranslator.Translate('General.B.Save'))
-            .NoText(TextCodeTranslator.Translate('General.B.DontSave'))
-            .MessageText(TextCodeTranslator.Translate("Customs.Declaration.O.UnSavedDeclarations"))
-            .ShowCancelButton(true)
-            .YesAction(yesAction)
-            .NoAction(noAction)
-            .build());
+                .Builder
+                .YesText(TextCodeTranslator.Translate('General.B.Save'))
+                .NoText(TextCodeTranslator.Translate('General.B.DontSave'))
+                .MessageText(TextCodeTranslator.Translate("Customs.Declaration.O.UnSavedDeclarations"))
+                .ShowCancelButton(true)
+                .YesAction(yesAction)
+                .NoAction(noAction)
+                .build());
         }
-        else{
-        this.ShowConfirmationMessage(new ConfirmationMessageArgs()
-            .Builder
-            .YesText(TextCodeTranslator.Translate('General.B.Save'))
-            .NoText(TextCodeTranslator.Translate('General.B.DontSave'))
-            .MessageText(TextCodeTranslator.Translate("General.M.ThisEntityhasunsavedchanges").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName)))
-            .ShowCancelButton(true)
-            .YesAction(yesAction)
-            .NoAction(noAction)
-            .build());
+        else {
+            this.ShowConfirmationMessage(new ConfirmationMessageArgs()
+                .Builder
+                .YesText(TextCodeTranslator.Translate('General.B.Save'))
+                .NoText(TextCodeTranslator.Translate('General.B.DontSave'))
+                .MessageText(TextCodeTranslator.Translate("General.M.ThisEntityhasunsavedchanges").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName)))
+                .ShowCancelButton(true)
+                .YesAction(yesAction)
+                .NoAction(noAction)
+                .build());
         }
     }
 
@@ -1699,7 +1701,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                     res.subscribe((myResponse: ServiceResponse) => {
 
                         this.StopBusyIndicator();
-                       
+
                         if (myResponse.HasError) {
                             this.OnSavingFailed();
                             this.ValidationErrorsList = myResponse.ErrorsArray;
@@ -1707,20 +1709,20 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                         }
 
                         else {
-                            
-                            if(this.ObjectTableName == "ARInvoice" && myResponse.Result?.ConfirmationNumberStatus==5){
+
+                            if (this.ObjectTableName == "ARInvoice" && myResponse.Result?.ConfirmationNumberStatus == 5) {
                                 const messageWindow = new MessageWindow();
-                                messageWindow.Title=TextCodeTranslator.Translate("ARInvoice.O.ConfirmationNumberFailedTitle");
-                                messageWindow.RTL=true;
-                                messageWindow.Height=250;
-                                messageWindow.Width=420;
-                                messageWindow.IsMessageMultiLine=true
-                                messageWindow.LayoutDirection='rtl'
-                                var text=TextCodeTranslator.Translate("ARInvoice.O.ConfirmationNumberFailedText")+'\n'+TextCodeTranslator.Translate("ARInvoice.O.ConfirmationNumberErrorDetails")+
-                                 '\n'+ myResponse.Result?.APIResponseToConfirmation;
+                                messageWindow.Title = TextCodeTranslator.Translate("ARInvoice.O.ConfirmationNumberFailedTitle");
+                                messageWindow.RTL = true;
+                                messageWindow.Height = 250;
+                                messageWindow.Width = 420;
+                                messageWindow.IsMessageMultiLine = true
+                                messageWindow.LayoutDirection = 'rtl'
+                                var text = TextCodeTranslator.Translate("ARInvoice.O.ConfirmationNumberFailedText") + '\n' + TextCodeTranslator.Translate("ARInvoice.O.ConfirmationNumberErrorDetails") +
+                                    '\n' + myResponse.Result?.APIResponseToConfirmation;
                                 messageWindow.Show(text);
-                            } 
-                            
+                            }
+
                             this.EntityPM = myResponse.Result;
                             this.EntityId = this.EntityPM.Id;
                             this.entityArgs.EntityPM = this.EntityPM;
@@ -1739,7 +1741,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                                 this.OnEntityCreated();
                                 this.UpdateComponentMembers();
                                 this.FireSaveCompleted(true);
-                                
+
                                 // this is for navigation
                                 if (loadNextEntity) {
                                     this.CurrentNavigatedIndex = this.CurrentNavigatedIndex + 1;
@@ -1817,13 +1819,13 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                         }
 
                         else {
-                            if (this.SelectedTab.Code == "DCCF" ) {
+                            if (this.SelectedTab.Code == "DCCF") {
                                 DeclarationEventManager.SavePendingAfterDeclarationSaved.emit(null);;
                             }
                             this.EntityPM = myResponse.Result;
                             this.entityArgs.EntityPM = this.EntityPM;
                             this.isEntityChange = true;
-                            
+
                             if (this.ObjectTable.CacheOnClient) {
                                 CachedDataManager.RefreshTableData(this.ObjectTableName, true);
                             }
@@ -1858,20 +1860,20 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
                             }
                         }
- 
-                            this.ClonedEntityPM = CloneDeep(this.EntityPM);
-                        });
- 
-                    }, error => {
-                        this.OnSavingFailed();
-                        this.StopBusyIndicator();
-                        var myErrors: string[] = [];
-                        myErrors.push(error.message);
-                        this.ValidationErrorsList = myErrors;
-                        this.FireSaveCompleted(false);
+
+                        this.ClonedEntityPM = CloneDeep(this.EntityPM);
                     });
-                
-            
+
+                }, error => {
+                    this.OnSavingFailed();
+                    this.StopBusyIndicator();
+                    var myErrors: string[] = [];
+                    myErrors.push(error.message);
+                    this.ValidationErrorsList = myErrors;
+                    this.FireSaveCompleted(false);
+                });
+
+
             }
         }
 
@@ -2037,7 +2039,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                                 if (this.ObjectTableName == "Shipment") {
                                     this.CurrentSession.FireEvent("FollowupsChanged")
                                 }
-                         
+
 
                             });
                         }
@@ -2045,7 +2047,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                 });
             }
         }
-    
+
     }
 
     private UpdateComponentMembers() {
@@ -2080,7 +2082,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     }
     EditComponentController: IEditComponentController;
     GetControllerByTableName(objectTableName: string) {
-        var notDefault = ["Declaration", "Vehicle","PhysicalCheck"];
+        var notDefault = ["Declaration", "Vehicle", "PhysicalCheck"];
         var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
         if (objectTableName.indexOf('Customs.') > -1) {
             objectTableName = objectTableName.split('.')[1];
@@ -2192,9 +2194,12 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         //}
 
         // update opened/closed state
-        let entityId=this.EntityPM.Id
-        this.FetchCustomsSetting();
-        if ( EditComponent._CustomsSettingList?.CompanyType == "B") {
+        let entityId = this.EntityPM.Id
+        if (this.WorkEnvironment == "Customs") {
+            this.FetchCustomsSetting();
+        }
+
+        if (EditComponent._CustomsSettingList?.CompanyType == "B") {
             entityId = "CourierD";//Task =172895
         }
         LastFilterClass.UpdateFilter("DeclarationEditControl", entityId, this.IsSplitComponentOpened ? "true" : "false");
@@ -2224,17 +2229,17 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
 
     }
-    
-    async FetchCustomsSetting(){
-        if (AppTool.IsNullOrEmpty(EditComponent._CustomsSettingList)){
+
+    async FetchCustomsSetting() {
+        if (AppTool.IsNullOrEmpty(EditComponent._CustomsSettingList)) {
             const dCustomsSettingListService: CustomsSettingListService = new CustomsSettingListService;
             const response = await dCustomsSettingListService.getSingleFromCache(SessionLocator.Tenant.toString()).toPromise();
             EditComponent._CustomsSettingList = response.Result;
         }
-    
-    } 
-    
- 
+
+    }
+
+
     SetSplitComponentState() {
         if (this.IsSplitBtnVisible == false) {
             return;
@@ -2245,8 +2250,11 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
 
         let entityId = this.EntityPM.Id;
-        this.FetchCustomsSetting();
-        if ( EditComponent._CustomsSettingList?.CompanyType == "B") {
+        if (this.WorkEnvironment == "Customs") {
+
+            this.FetchCustomsSetting();
+        }
+        if (EditComponent._CustomsSettingList?.CompanyType == "B") {
             entityId = "CourierD";//Task =172895
         }
         // state: opened / closed
@@ -2270,7 +2278,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         if (!AppTool.IsNullOrEmpty(this.TextMoveToValue)) {
 
             let theSelectedIndex = this.TextMoveToValue;
-            this.TextMoveToValue=null
+            this.TextMoveToValue = null
             if (theSelectedIndex < 1) {
                 theSelectedIndex = 1;
             }
@@ -2281,7 +2289,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
             this.CurrentNavigatedIndex = theSelectedIndex;
             this.Previous();
 
-            
+
         }
 
     }
@@ -2367,9 +2375,9 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
 
     }
-    LoadNextPreviousEntity_AfterCloseEditControl(selectedTab:any) {
+    LoadNextPreviousEntity_AfterCloseEditControl(selectedTab: any) {
         this.CurrentSession.RemoveEditComponent(this);
- 
+
         this.ngOnDestroy();
         var args: any = {};
         args.EntityId = this.NavigationIds[this.CurrentNavigatedIndex];
@@ -2503,7 +2511,7 @@ export class EditComponentDefaultController implements IEditComponentController 
             resolve();
         });
     }
-    OnCloseEditControl(onCallBack?: () => void ) {
+    OnCloseEditControl(onCallBack?: () => void) {
         if (!AppTool.IsNullOrEmpty(onCallBack)) {
             onCallBack();
         }
@@ -2527,7 +2535,7 @@ export class EditComponentDefaultController implements IEditComponentController 
 export interface IEditComponentController {
     OnFirstTimeAfterSingleDataLoaded(CurrentEntity): Promise<boolean>;
     OnReloadEntityPM(): Promise<any>;
-    OnCloseEditControl(onCallBack?: () => void ): void;
+    OnCloseEditControl(onCallBack?: () => void): void;
     HaveSaved: boolean;
     InDisplayMode: boolean;
     ToCancell: boolean;

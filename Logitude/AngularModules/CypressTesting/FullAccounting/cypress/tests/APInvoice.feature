@@ -5,7 +5,7 @@ Feature: AP Invoice
     Scenario: Create new AP Invoice
         Given the user logged in and navigates to Full Accounting workspace
         And an AP Invoice with the following details
-            | Vendor         | קטרינג כהן ובניו     |
+            | Vendor         | KHTest    |
             | InvoiceNumber  | Random     |
             | InvoiceAmount  | 100        |
             | InvoiceDate    | 16/04/2023 |
@@ -16,7 +16,7 @@ Feature: AP Invoice
 
     Scenario: Add new Invoice Line
         Given Invoice line with the following details
-            | ChargesType      | עמלת עמילות   |
+            | ChargesType      | BDDChargeType  |
             | LocalDescription | LocalDirection |
             | VatType          | Zero           |
             | Amount           | 100            |

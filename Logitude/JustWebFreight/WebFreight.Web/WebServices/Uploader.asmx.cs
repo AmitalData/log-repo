@@ -1624,18 +1624,21 @@ new XElement("Error", ee.ToString()
             }
 			LogitudeSettings.HandleLogMe(id + "suscsess ", false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
 
-			HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
 
-            using (MemoryStream dataMemoryStream = new MemoryStream(data))
-            {
-                response.Content = new StreamContent(dataMemoryStream);
-                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-                response.Content.Headers.ContentDisposition.FileName = fileName;
-                return response;
-            }
+			var response = new HttpResponseMessage(HttpStatusCode.OK)
+			{
+				Content = new ByteArrayContent(data)
 
+			};
+			response.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment")
+			{
+				FileName = fileName
+			};
+			response.Content.Headers.ContentType =
+				new MediaTypeHeaderValue("application/octet-stream");
 
-        }
+			return response;
+
+		}
     }
 }

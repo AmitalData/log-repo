@@ -10,7 +10,7 @@
         "start": "node --max_old_space_size=8000 node_modules/@angular/cli/bin/ng serve",
         "build": "node --max_old_space_size=4000 node_modules/@angular/cli/bin/ng build --show-circular-dependencies=false",
         "start-aot": "node --max_old_space_size=9000 node_modules/@angular/cli/bin/ng serve --prod --aot --optimization=false",
-        "buildAOT": "node --max_old_space_size=9000 node_modules/@angular/cli/bin/ng build --prod --aot --optimization=true --show-circular-dependencies=false",
+        "buildAOT": "node --max_old_space_size=13000 node_modules/@angular/cli/bin/ng build --prod --aot --optimization=true --show-circular-dependencies=false",
         "do-e2e": "protractor e2e/protractor.conf.js",
         "start-e2e": "node --max_old_space_size=4000 node_modules/@angular/cli/bin/ng e2e",
         "cypressRun": "cypress run",

@@ -43,13 +43,13 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
             return res;
         }
-        private static XElement GetXElement(XElement myXElementSTBMessage, string field)
+        private static XElement GetXElement(XElement myXElementSTBMessage, string field,bool IsMandatory=false)
         {
 
             XElement ele = myXElementSTBMessage.Element(field);
-            if (ele == null)
+            if (ele == null && IsMandatory)
             {
-                throw new Exception($"XElement {field} not exist ");
+                throw new Exception($"XElement {field} not exist ");    
             }
 
             return ele;
@@ -62,9 +62,9 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             var mySWSHAWBResponse = new CourierSWSHAWBResponse();
             var myXElementSWSHAWBResponse = XElement.Parse(communicationsData);
 
-            mySWSHAWBResponse.CourierCompanyVat = (string)GetXElement(myXElementSWSHAWBResponse, "CourierCompanyVat");
-            mySWSHAWBResponse.CourierHawbNumber = (string)GetXElement(myXElementSWSHAWBResponse, "CourierHawbNumber");
-            mySWSHAWBResponse.StatusCode = (string)GetXElement(myXElementSWSHAWBResponse, "StatusCode");
+            mySWSHAWBResponse.CourierCompanyVat = (string)GetXElement(myXElementSWSHAWBResponse, "CourierCompanyVat",true);
+            mySWSHAWBResponse.CourierHawbNumber = (string)GetXElement(myXElementSWSHAWBResponse, "CourierHawbNumber",true);
+            mySWSHAWBResponse.StatusCode = (string)GetXElement(myXElementSWSHAWBResponse, "StatusCode", true);
             mySWSHAWBResponse.ErrorCode = (string)GetXElement(myXElementSWSHAWBResponse, "ErrorCode");
             mySWSHAWBResponse.ErrorDescription = (string)GetXElement(myXElementSWSHAWBResponse, "ErrorDescription");
 

@@ -2,7 +2,6 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { ServiceHelper } from "Infrastructure/Utilities/ServiceHelper";
-// import { LogtuideTableDataService } from "QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service";
 import { defer, Observable } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 import { ServiceResponse } from "../../../Infrastructure/DataContracts/ServiceResponse";
