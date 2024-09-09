@@ -34,7 +34,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         DateTime _FromBeginOfMonth;
 
-        DateTime _ToBeginOfMonth;
+        DateTime _ToBeginOfMonthByDays;
 
         protected IQueryable<GLAccountTotalByMonthsDTO>
             //מצטברים מתחילת חיי הכרטיסים עד תחילת החודש של FROMDATE לא כולל
@@ -69,70 +69,106 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             _TrailReportParam.ToDate = _TrailReportParam.ToDate.Date;
             _FromBeginOfMonth = new DateTime(_TrailReportParam.FromDate.Year, _TrailReportParam.FromDate.Month, 1);
 
-            _ToBeginOfMonth = new DateTime(_TrailReportParam.ToDate.Year, _TrailReportParam.ToDate.Month, 1);
-            using (var transactionScope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(__TimeOutInMinutes)) //snapshot isolation performance
-                )
+            _ToBeginOfMonthByDays = new DateTime(_TrailReportParam.ToDate.Year, _TrailReportParam.ToDate.Month, 1);
+             var dayCount=1;
+             DateTime endDateByDays = _ToBeginOfMonthByDays;
+            var myOutputReport= new List<TrailReportM>();
+            var myTotalRow = new TrailReportM
             {
+                LocalOpenBalance = 0,
+                LocalDebit = 0,
+                LocalCredit = 0,
+                LocalCloseBalance = 0,
 
 
+                ForeignOpenBalance =0,
+                ForeignDebit = 0,
+                ForeignCredit = 0,
+                ForeignCloseBalance = 0,
 
+            };
 
-                _AccountingContext = AccountingContext.GetContext(_TrailReportParam.Tenant);
-                //_DbLogger = (_AccountingContext as DbContextBase).CreateLogger();
+            _ToBeginOfMonthByDays = _FromBeginOfMonth.AddDays(dayCount);
+            while (_FromBeginOfMonth <= endDateByDays)
+            {
+                _ToBeginOfMonthByDays = _FromBeginOfMonth.AddDays(dayCount)> endDateByDays? endDateByDays : _FromBeginOfMonth.AddDays(dayCount);
 
-                _FullAccountingSetting = //Hope From Cache
-                    FullAccountingSettingQueryService
-                    .Get(_TrailReportParam.Tenant);
+            
 
-                _AccountingCurrencyId = (new AccountingSettingResolver()).ResolveAccountingCurrencyId(_TrailReportParam.Tenant);
-
-                var level = _TrailReportParam.MyTrailReportLevel;
-                if (level == ReportLevel.ChartofaccountType || level == ReportLevel.Chartofaccount)
+                using (var transactionScope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(__TimeOutInMinutes)) //snapshot isolation performance
+              )
                 {
-                    GetGLAccountCardPopulationByParam_Upper(); 
+
+
+
+
+                    _AccountingContext = AccountingContext.GetContext(_TrailReportParam.Tenant);
+                    //_DbLogger = (_AccountingContext as DbContextBase).CreateLogger();
+
+                    _FullAccountingSetting = //Hope From Cache
+                        FullAccountingSettingQueryService
+                        .Get(_TrailReportParam.Tenant);
+
+                    _AccountingCurrencyId = (new AccountingSettingResolver()).ResolveAccountingCurrencyId(_TrailReportParam.Tenant);
+
+                    var level = _TrailReportParam.MyTrailReportLevel;
+                    if (level == ReportLevel.ChartofaccountType || level == ReportLevel.Chartofaccount)
+                    {
+                        GetGLAccountCardPopulationByParam_Upper();
+                    }
+                    else
+                    {
+                        GetGLAccountCardPopulationByParam_Lower();
+                    }
+
+                    Create4MainQueriesPeriod();
+
+                    CreateQBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy();
+
+                    AdjustTrailReportFull();
+
+                    if (_QBaseTrailReportFull == null)
+                    {
+                        throw new Exception("(_QBaseTrailReportFull==null)");
+                    }
+                    myOutputReport.AddRange(_QBaseTrailReportFull.ToList());
+                                   
+                     myTotalRow =
+                        (from r in
+                             myOutputReport
+                         group r by 1 into g
+                         select new TrailReportM()
+                         {
+                             ChartOfAcount1 = "Total",
+                             LocalOpenBalance = myTotalRow?.LocalOpenBalance+ g.Sum(r => r.LocalOpenBalance),
+                             LocalDebit = myTotalRow?.LocalDebit + g.Sum(r => r.LocalDebit),
+                             LocalCredit = myTotalRow?.LocalCredit + g.Sum(r => r.LocalCredit),
+                             LocalCloseBalance = myTotalRow?.LocalCloseBalance + g.Sum(r => r.LocalCloseBalance),
+
+
+                             ForeignOpenBalance = myTotalRow?.ForeignOpenBalance + g.Sum(r => r.ForeignOpenBalance),
+                             ForeignDebit = myTotalRow?.ForeignDebit + g.Sum(r => r.ForeignDebit),
+                             ForeignCredit = myTotalRow?.ForeignCredit + g.Sum(r => r.ForeignCredit),
+                             ForeignCloseBalance = myTotalRow?.ForeignCloseBalance + g.Sum(r => r.ForeignCloseBalance),
+
+                         }).FirstOrDefault();
+
+                    
+
+
+                    DbLog = "";// _DbLogger.ToString();
+                    _FromBeginOfMonth = _FromBeginOfMonth.AddDays(dayCount);
+                  
                 }
-                else
-                {
-                    GetGLAccountCardPopulationByParam_Lower();
-                }
-
-                Create4MainQueriesPeriod();
-
-                CreateQBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy();
-
-                AdjustTrailReportFull();
-
-                if (_QBaseTrailReportFull == null)
-                {
-                    throw new Exception("(_QBaseTrailReportFull==null)");
-                }
-                var myOutputReport = _QBaseTrailReportFull.ToList();
-                var myTotalRow =
-                    (from r in
-                         myOutputReport
-                     group r by 1 into g
-                     select new TrailReportM()
-                     {
-                         ChartOfAcount1 = "Total",
-                         LocalOpenBalance = g.Sum(r => r.LocalOpenBalance),
-                         LocalDebit = g.Sum(r => r.LocalDebit),
-                         LocalCredit = g.Sum(r => r.LocalCredit),
-                         LocalCloseBalance = g.Sum(r => r.LocalCloseBalance),
-
-
-                         ForeignOpenBalance = g.Sum(r => r.ForeignOpenBalance),
-                         ForeignDebit = g.Sum(r => r.ForeignDebit),
-                         ForeignCredit = g.Sum(r => r.ForeignCredit),
-                         ForeignCloseBalance = g.Sum(r => r.ForeignCloseBalance),
-
-                     }).FirstOrDefault();
-
-                myOutputReport.Add(myTotalRow);
-
-
-                DbLog = "";// _DbLogger.ToString();
-                return myOutputReport;
+               
             }
+
+
+
+            myOutputReport.Add(myTotalRow);
+
+            return myOutputReport;
+
         }
         private void CreateQBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy()
         {
@@ -263,8 +299,8 @@ into groupBy_currency
              //(tot.Year == _FromBeginOfMonth.Year && tot.Month > _FromBeginOfMonth.Month)
              (tot.Year == _FromBeginOfMonth.Year && tot.Month >= _FromBeginOfMonth.Month)
 
-                 where tot.Year < _ToBeginOfMonth.Year ||
-                 (tot.Year == _ToBeginOfMonth.Year && tot.Month < _ToBeginOfMonth.Month)
+                 where tot.Year < _ToBeginOfMonthByDays.Year ||
+                 (tot.Year == _ToBeginOfMonthByDays.Year && tot.Month < _ToBeginOfMonthByDays.Month)
                  select
                  new GLAccountTotalByMonthsDTO()
                  {
@@ -361,7 +397,7 @@ into groupBy_currency
                 from trans in _AccountingContext.LedgerTransactions
                 where trans.Tenant == _TrailReportParam.Tenant
                 //toBeginOfMonth:20160201 until (InculdeAllTransOf)_TrailReportParam.ToDate:20160215
-                where trans.AccountingDate >= _ToBeginOfMonth  //20160201
+                where trans.AccountingDate >= _ToBeginOfMonthByDays  //20160201
                 where trans.AccountingDate <
                 toDateAdd1Day //_TrailReportParam.ToDate.AddDays(1)//INclude //==20160216 
                 select trans
