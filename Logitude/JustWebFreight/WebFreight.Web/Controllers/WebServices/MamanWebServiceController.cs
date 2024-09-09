@@ -6,9 +6,9 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Controllers.WebServices.Services;
 using NetCommonHelper.Logger;
 
-namespace WebFreight.Web.Controllers.Texas
+namespace WebFreight.Web.Controllers.WebServices
 {
-    public class MamanController : ApiController
+    public class MamanWebServiceController : ApiController
     {
         [TokenAutherize]
         [HttpGet]
