@@ -11,9 +11,7 @@ namespace WebFreight.Web.Controllers.WebServices.Services
 {
     public class MamanService
     {
-        //static string MamanServiceUrl = new SettingQuery().GetSinglePMFromCahche().MamanServiceUrl;        
-        static string MamanServiceUrl = "https://test-core-6-il-01-bgajc9hncvgjc4bp.israelcentral-01.azurewebsites.net/maman/api";
-
+        static string MamanServiceUrl = new SettingQuery().GetSinglePMFromCahche().MamanServiceUrl;
 
         public static HttpResponseMessage Send(string path, string body, int tenant, HttpMethod method)
         {
