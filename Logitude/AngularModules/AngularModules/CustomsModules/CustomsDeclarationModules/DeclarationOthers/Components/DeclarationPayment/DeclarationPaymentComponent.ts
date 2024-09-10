@@ -27,7 +27,7 @@ import { CustomBanksCardPM } from '../../../../../Customs/EntityPMs/CustomBanksC
 import { CustomerActivityTypePM } from '../../../../../Customs/EntityPMs/CustomerActivityTypePM';
 import { UserList } from '../../../../../Common/EntityLists/UserList';
 import { CustomBankList } from '../../../../../Customs/EntityLists/CustomBankList';
-import { AmitalGatewayUtil } from '../../../../../Infrastructure/Utilities/AmitalGatewayUtil';
+import { AmitalGatewayUtil, UnifreightMessageM } from '../../../../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { UnifreightController, UnifreightInstructionController } from '../../../../../Customs/Controller/UnifreightController';
 import { CustomMessageProgressHelper, CustomMessageProgressComponent, ShowProgressBarParams } from '../../../../CustomsControls/Components/CustomMessageProgressComponent';
 
@@ -93,7 +93,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     customerActivityTypeListService: CustomerActivityTypeListService = new CustomerActivityTypeListService();
     declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService();
     _CustomsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
-    supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
+    supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();    
     PaymentMethodsList: ObservableCollection;
     PaymentProtestsList: ObservableCollection;
     SelectedInvoiceItems: ObservableCollection;
@@ -113,28 +113,38 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     public IsLoadedGoldPaymentMethodes: boolean = false;
 
     private CurrentSession = SessionLocator.SelectedSession;
+    public isConnectToUnifreight: boolean = false;
+
     constructor(public declarationExtendedListService: DeclarationExtendedListService) {
         super();
         this.PaymentMethodsList = new ObservableCollection([]);
         this.PaymentProtestsList = new ObservableCollection([]);
         this.SelectedInvoiceItems = new ObservableCollection([]);
         this.SelectedInvoices = new ObservableCollection([]);
-        this._ErrorLogPMFileLoggerService = new ErrorLogPMFileLoggerService();
-        this._ErrorLogPMFileLoggerService.get(this.ClientBankListLogUntilDateyyyyMMdd)
-            .subscribe((response: ServiceResponse) => {
-
-                this._2LogBankList = response.Result.IsLogInOn;
-
-                this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_AVA_AUTOPAY", "NON", "NON", SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
-                    let obj = response.Result;
-                    if (obj) {
-                        let DefaultValue = obj['DefaultValue'];
-                        if (!AppTool.IsNullOrEmpty(DefaultValue) && DefaultValue == "Y") {
-                            this.IsAutomaticPayment = true;
-
-                        }
+      
+        this.customsSettingListService.getSingleFromCache(SessionLocator.Tenant.toString())
+            .subscribe((customsSettingList: ServiceResponse) => {
+                if (customsSettingList) {
+                   this.isConnectToUnifreight = customsSettingList.Result ? customsSettingList?.Result?.IsConnectedToUniFreight : false;
+                   
+                    this._ErrorLogPMFileLoggerService = new ErrorLogPMFileLoggerService();
+                    this._ErrorLogPMFileLoggerService.get(this.ClientBankListLogUntilDateyyyyMMdd)
+                        .subscribe((response: ServiceResponse) => {
+            
+                            this._2LogBankList = response.Result.IsLogInOn;
+            
+                            this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_AVA_AUTOPAY", "NON", "NON", SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
+                                let obj = response.Result;
+                                if (obj) {
+                                    let DefaultValue = obj['DefaultValue'];
+                                    if (!AppTool.IsNullOrEmpty(DefaultValue) && DefaultValue == "Y") {
+                                        this.IsAutomaticPayment = true;
+            
+                                    }
+                                }
+                            });
+                        });
                     }
-                });
             });
     }
 
@@ -739,59 +749,70 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         }
 
         searchParams.RequestVIA = SendRequestVIA.Default;
+         if(!this.isConnectToUnifreight) {
+            this.CheckCustomFileCreditFromUnifreight(searchParams);
+        }
+        else 
+        {
+
+       
         var myIIGGeneralMessagesService = new IIGGeneralMessagesService();
         SessionLocator.SelectedSession.StartBusyIndicator("");
-
+      
         myIIGGeneralMessagesService.PostCustomFileCredit(searchParams)
             .subscribe((myServiceResponse: ServiceResponse) => {
-
+      
                 let customFileCreditResponseData: CustomFileCreditResponseData = myServiceResponse.Result as CustomFileCreditResponseData;
-                var newDate = DateTool.GetCurrentDateTimeAsUtc();
-                var currentDate: Date = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), newDate.getHours(), newDate.getMinutes(), 0); // last of today
-                var paymentDate: Date = DateTool.GetDateFromDate(this.PaymentDate);
-
-                if (customFileCreditResponseData.PaymentDateTime == null) {
-                    customFileCreditResponseData.PaymentDateTime = currentDate;
-                }
-                var paymentDateTime: Date = DateTool.GetDateFromDate(customFileCreditResponseData.PaymentDateTime);
-
-                if (paymentDateTime <= currentDate) {
-                    if (paymentDate > currentDate) {
-                        this.PaymentDate = paymentDate;
-                    }
-                    else {
-                        this.PaymentDate = customFileCreditResponseData.PaymentDateTime;
-                    }
-                    this.FuturePaymentDateTime = null;
-                    this.FuturePaymentTime = null;
-                }
-                else {
-                    this.PaymentDate = currentDate;
-                    this.FuturePaymentDateTime = customFileCreditResponseData.PaymentDateTime;
-                    this.FuturePaymentTime = DateTool.GetDateParts(customFileCreditResponseData.PaymentDateTime).DateObject;
-                }
-                if (!AppTool.IsNullOrEmpty(customFileCreditResponseData.BankCode)) {
-                    var customBankListService: CustomBankListService = new CustomBankListService();
-                    customBankListService.getAll().subscribe((response: ServiceResponse) => {
-                        let allCustomBankList: CustomBankList[] = response.Result;
-                        let bank: CustomBankList = allCustomBankList.filter(d => d.InternalCode == customFileCreditResponseData.BankCode && !d.InActive)[0];
-                        if (!AppTool.IsNullOrEmpty(bank)) {
-                            this.GetCreditInternalBankId = bank.Id;
-                            //if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
-                            //    this.JustAutoFillPaymentScreen();
-                            //}
-                            if (AppTool.IsNullOrEmpty(this.paymentPM.DeclarationPaymentMethods) || this.paymentPM.DeclarationPaymentMethods.length == 0) {
-                                this.AutoFillPaymentScreenByDefault();
-                            }
-                        }
-                    });
-                }
-                else if (AppTool.IsNullOrEmpty(this.paymentPM.DeclarationPaymentMethods) || this.paymentPM.DeclarationPaymentMethods.length == 0) {
-                    this.AutoFillPaymentScreenByDefault();
-                }
-
-                SessionLocator.SelectedSession.StopBusyIndicator();
+                this.AnalyzeCustomFileCreditGetBanks(customFileCreditResponseData);
             });
+        }
+    }
+    AnalyzeCustomFileCreditGetBanks(customFileCreditResponseData: CustomFileCreditResponseData){
+        var newDate = DateTool.GetCurrentDateTimeAsUtc();
+        var currentDate: Date = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), newDate.getHours(), newDate.getMinutes(), 0); // last of today
+        var paymentDate: Date = DateTool.GetDateFromDate(this.PaymentDate);
+
+        if (customFileCreditResponseData.PaymentDateTime == null) {
+            customFileCreditResponseData.PaymentDateTime = currentDate;
+        }
+        var paymentDateTime: Date = DateTool.GetDateFromDate(customFileCreditResponseData.PaymentDateTime);
+
+        if (paymentDateTime <= currentDate) {
+            if (paymentDate > currentDate) {
+                this.PaymentDate = paymentDate;
+            }
+            else {
+                this.PaymentDate = customFileCreditResponseData.PaymentDateTime;
+            }
+            this.FuturePaymentDateTime = null;
+            this.FuturePaymentTime = null;
+        }
+        else {
+            this.PaymentDate = currentDate;
+            this.FuturePaymentDateTime = customFileCreditResponseData.PaymentDateTime;
+            this.FuturePaymentTime = DateTool.GetDateParts(customFileCreditResponseData.PaymentDateTime).DateObject;
+        }
+        if (!AppTool.IsNullOrEmpty(customFileCreditResponseData.BankCode)) {
+            var customBankListService: CustomBankListService = new CustomBankListService();
+            customBankListService.getAll().subscribe((response: ServiceResponse) => {
+                let allCustomBankList: CustomBankList[] = response.Result;
+                let bank: CustomBankList = allCustomBankList.filter(d => d.InternalCode == customFileCreditResponseData.BankCode && !d.InActive)[0];
+                if (!AppTool.IsNullOrEmpty(bank)) {
+                    this.GetCreditInternalBankId = bank.Id;
+                    //if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
+                    //    this.JustAutoFillPaymentScreen();
+                    //}
+                    if (AppTool.IsNullOrEmpty(this.paymentPM.DeclarationPaymentMethods) || this.paymentPM.DeclarationPaymentMethods.length == 0) {
+                        this.AutoFillPaymentScreenByDefault();
+                    }
+                }
+            });
+        }
+        else if (AppTool.IsNullOrEmpty(this.paymentPM.DeclarationPaymentMethods) || this.paymentPM.DeclarationPaymentMethods.length == 0) {
+            this.AutoFillPaymentScreenByDefault();
+        }
+
+        SessionLocator.SelectedSession.StopBusyIndicator();
     }
 
     FillSignData() {
@@ -2148,7 +2169,13 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 this.OnlySendPayment(params);
             }
             else {
-                this.CheckCustomFileCreditThenSendPayment(params);
+                if (!this.isConnectToUnifreight) {
+                    this.CheckCustomFileCreditFromUnifreight(params);   
+                }
+                else {
+                    this.CheckCustomFileCreditThenSendPayment(params)
+                }
+                  
             }
             return;
         }
@@ -2276,7 +2303,12 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 myCustomMessageProgressHelper.MessageArrived = true;
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 let customFileCreditResponseData: CustomFileCreditResponseData = myServiceResponse.Result;
+                this.AnalyzeCheckCustomFileCreditThenSendPayment(customFileCreditResponseData, params);    
+            });
 
+    }
+    AnalyzeCheckCustomFileCreditThenSendPayment(customFileCreditResponseData: CustomFileCreditResponseData, params: CustomFileCreditRequestParams) {
+       
                 if (!AppTool.IsNullOrEmpty(customFileCreditResponseData)) {
                     if (customFileCreditResponseData.IsTRansGove) {
                         var confirmWindow = new ConfirmWindow();
@@ -2338,12 +2370,192 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                     } else {
                         this.Send2755(params);
                     }
-
                 }
-            });
+              
 
     }
 
+    
+    CheckCustomFileCreditFromUnifreight(params: CustomFileCreditRequestParams) {
+        
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+        let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+            .subscribe(
+                (message: UnifreightMessageM) => {
+                    var IsMatchUnifreightCallbackCommand = (
+                        message.LogitudeEntityNumber == this.DeclarationPM.Id &&
+                        message.LogitudeViewModel == "DeclarationPaymentComponent.ts");
+                    if (IsMatchUnifreightCallbackCommand) {
+                        sub.unsubscribe();
+                        let XMLResponse = UnifreightMessageM.GetStringValue(message, "XMLResponse");
+                        const xmlData = (xml: string) => xml.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+                        const result = this.parseXml(xmlData(XMLResponse),params.Mode);
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+
+
+                        switch(params.Mode) { 
+                            case 'GetBank': { 
+                                this.AnalyzeCustomFileCreditGetBanks(result);
+                               break; 
+                            } 
+                            case 'Check': { 
+                                this.AnalyzeCheckCustomFileCreditThenSendPayment(result,params);
+                               break; 
+                            } 
+                            case 'Transfer': { 
+                                this.AnalyzeActualSendToTransfer(result);
+                                break; 
+                             } 
+                             case 'ReTransfer': { 
+                                this.AnalyzeActualSendToReTransfer(result);
+                               
+                                break; 
+                             } 
+                            default: { 
+                               //statements; 
+                               break; 
+                            } 
+                         } 
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+                    }
+                }
+            );
+
+        var unifreightMessageM =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage(this.DeclarationPM.CustomFileNo, this.DeclarationPM.Id, "DeclarationPaymentComponent.ts", AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
+        unifreightMessageM.Requset.push(["XMLRequest", this.convertToXML(params)]);
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "AmitalGatewayUtil.DeclarationCheckCredit",
+            "CFIFILEM.LogitudeTask",
+            "DeclarationCheckCredit",
+            unifreightMessageM,
+            "");
+    }
+
+
+    parseXml(xmlString: string,mode: string): any {
+
+        let customFileCreditResponseData: CustomFileCreditResponseData = new CustomFileCreditResponseData();
+        // Parse the XML string into a DOM Document
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlString, 'application/xml');
+
+        // Extract values from the XML
+        const CUSTOMCREDIT_UL = xmlDoc.getElementsByTagName('CUSTOMCREDIT_UL')[0];
+        const CustomFileCredit = CUSTOMCREDIT_UL.getElementsByTagName('CustomFileCredit')[0];
+
+        const LogitudeFile = CustomFileCredit.getElementsByTagName('LogitudeFile')[0].textContent || '';
+        const CreditStatus = CustomFileCredit.getElementsByTagName('CreditStatus')[0]?.textContent || '';
+        const ErrorMessage = CustomFileCredit.getElementsByTagName('ErrorMessage')[0]?.textContent || '';
+        const BankCode = CustomFileCredit.getElementsByTagName('BankCode')[0]?.textContent || '';
+        const PaymentDate = CustomFileCredit.getElementsByTagName('PaymentDate')[0].textContent || '';
+        const HasException = CustomFileCredit.getElementsByTagName('HasException')[0]?.textContent || '';
+        const Succeeded = CustomFileCredit.getElementsByTagName('Succeeded')[0]?.textContent || '';
+        const ExceptionMessage = CustomFileCredit.getElementsByTagName('ExceptionMessage')[0]?.textContent || '';
+        const BillingTaxAmount = CustomFileCredit.getElementsByTagName('BillingTaxAmount')[0]?.textContent || '';
+        const PaymentTime = CustomFileCredit.getElementsByTagName('PaymentTime')[0]?.textContent || '';
+        customFileCreditResponseData.CreditStatus = CreditStatus;
+        if (!AppTool.IsNullOrEmpty(ErrorMessage))
+        {
+            customFileCreditResponseData.UserMessage = ErrorMessage;
+            customFileCreditResponseData.HasException = true;
+        }
+        customFileCreditResponseData.Succeeded = true;
+        customFileCreditResponseData.PaymentDateTime = null;
+        customFileCreditResponseData.BankCode = BankCode;
+        customFileCreditResponseData.PaymentDate = PaymentDate;
+        customFileCreditResponseData.BillingTaxAmount = BillingTaxAmount;
+        customFileCreditResponseData.IsTRansGove = false;
+        if (mode = 'GetBank') {
+           if (!AppTool.IsNullOrEmpty(customFileCreditResponseData.PaymentTime) && PaymentTime.length >= 12)
+           {
+               customFileCreditResponseData.PaymentTime = PaymentTime != null ? PaymentTime.substring(8, 4) : null;
+           }
+           if (!AppTool.IsNullOrEmpty(customFileCreditResponseData.PaymentDate))
+           {
+               customFileCreditResponseData.PaymentDateTime = this.getUnifreightFormattedDate(PaymentDate, PaymentTime, "");
+           }
+        }
+        return customFileCreditResponseData;
+    }
+     getUnifreightFormattedDate(txt: string, time: string, dtdField: string): Date | null {
+        if (!txt || txt.trim().length === 0) return null;
+    
+        const formats = [
+            "yyyyMMddHHmm",   // 202305011230
+            "dd.MM.yy",       // 01.05.23
+            "yyyyMMdd",       // 20230501
+            "yyyyMMddHHmmffff" // 2023050112301234
+        ];
+    
+        for (const format of formats) {
+            const date = this.parseDate(txt, format);
+            if (date) {
+                return date;
+            }
+        }
+        return null;
+    }
+    
+     parseDate(txt: string, format: string): Date | null {        
+        const date = new Date(txt);   
+        return isNaN(date.getTime()) ? null : date;
+    }
+    convertToXML(params: CustomFileCreditRequestParams) {      
+
+        const xmlDocument = document.implementation.createDocument('', '', null);
+    
+        const arrayOfEntry = xmlDocument.createElement('ArrayOfEntry');
+    
+        const entries = [
+          { key: '$$GSC_USER_ID', value: 'ITZIK' },
+          { key: 'GWSFLOGITUDE:componentname', value: 'CWSFCREDITFILE' },
+          { key: 'GWSFLOGITUDE:operation', value: 'DeclarationCheckCredit' },
+          { key: 'componentname', value: 'GWSFLOGITUDE' },
+          { key: 'Subject', value: 'Logitude Declaration check File Credit' },
+          { key: 'Operation', value: 'DataAccess' },
+          {
+            key: 'GWSFLOGITUDE:Xml',
+            value: `
+              <CustomFileCreditRequest>
+                <CustomsFile>
+                  <FileNo>${this.DeclarationPM.CustomFileNo}</FileNo>
+                  <Mode>${params.Mode}</Mode>
+                  <TotalTax>${this.DeclarationPM.TotalTax}</TotalTax>
+                  <UpdatedByUser>${params.LoggingUserId}</UpdatedByUser>
+                </CustomsFile>
+              </CustomFileCreditRequest>
+            `
+          }
+        ];
+    
+        entries.forEach(entry => {
+          const entryElement = xmlDocument.createElement('Entry');
+          
+          const keyElement = xmlDocument.createElement('Key');
+          keyElement.textContent = entry.key;
+          entryElement.appendChild(keyElement);
+          
+          const valueElement = xmlDocument.createElement('Value');
+          valueElement.textContent = entry.value.trim();
+          entryElement.appendChild(valueElement);
+          
+          arrayOfEntry.appendChild(entryElement);
+        });
+    
+        xmlDocument.appendChild(arrayOfEntry);
+    
+        // המרת המסמך ל-XML
+        const xmlString = new XMLSerializer().serializeToString(xmlDocument);
+        
+
+
+        console.log(xmlString);
+        return xmlString;
+    }
+   
     OnlySendPayment(params: CustomFileCreditRequestParams) {
 
         if (AmitalGatewayUtil.Instance.IsDeclarationInUse(this.DeclarationPM.CustomFileNo, this.DeclarationPM.IsConvertedDeclaration, this.DeclarationPM.IsConnectedToUnifreight)) {
@@ -2457,36 +2669,36 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         params.LoggingObjectTableId = ObjectTable.Id;
         params.LoggingUserId = SessionLocator.LoggedUserId;
         params.RequestName = "Send Transfer Request",
-            params.ResponseName = "Get Transfer Response",
-            params.Mode = "Transfer",
-            params.RequestVIA = this.customSendOptions.RequestVIA;
+        params.ResponseName = "Get Transfer Response",
+        params.Mode = "Transfer",
+        params.RequestVIA = this.customSendOptions.RequestVIA;
         params.ForcePersonalSign = this.customSendOptions.ForcePersonalSign;
 
-        //CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession,params.PBId, "שליחת בקשת העברה לגובה", false).then((res) => {
-        //    console.log("[Send] Response/ShowProgressBar : ", res);
+        if (!this.isConnectToUnifreight) 
+        {
+            this.CheckCustomFileCreditFromUnifreight(params);
+        }
+        else{
+            var myCustomMessageProgressHelper = new CustomMessageProgressHelper(this.CurrentSession);
+            myCustomMessageProgressHelper.BasicResponse = true;
+            myCustomMessageProgressHelper.StartProgress(params.PBId, 5, true);
+           
+           
+            this.declarationMessagesService.PostSendTransferRequest(params)
+                .subscribe((myServiceResponse: ServiceResponse) => {
+                    myCustomMessageProgressHelper.MessageArrived = true;
+                    SessionLocator.SelectedSession.StopBusyIndicator();
 
-        //}).catch((err) => {
-        //    this.ValidationErrorsList = [];
-        //    this.ValidationErrorsList.push(err);
-        //});
-        var myCustomMessageProgressHelper = new CustomMessageProgressHelper(this.CurrentSession);
-        myCustomMessageProgressHelper.BasicResponse = true;
-        myCustomMessageProgressHelper.StartProgress(params.PBId, 5, true);
+                    var result: CustomFileCreditResponseData = myServiceResponse.Result;
+                    if (!AppTool.IsNullOrEmpty(CustomMessageProgressComponent.CurrCustomMessageProgressHelper)) {
+                        CustomMessageProgressComponent.CurrCustomMessageProgressHelper.MessageArrived = true;
+                    }
+                    SessionLocator.SelectedSession.StopBusyIndicator();
+                    this.AnalyzeActualSendToTransfer(result);
+                });
+        }
 
-
-        this.declarationMessagesService.PostSendTransferRequest(params)
-            .subscribe((myServiceResponse: ServiceResponse) => {
-                myCustomMessageProgressHelper.MessageArrived = true;
-                SessionLocator.SelectedSession.StopBusyIndicator();
-
-                var result: CustomFileCreditResponseData = myServiceResponse.Result;
-                if (!AppTool.IsNullOrEmpty(CustomMessageProgressComponent.CurrCustomMessageProgressHelper)) {
-                    CustomMessageProgressComponent.CurrCustomMessageProgressHelper.MessageArrived = true;
-                }
-                SessionLocator.SelectedSession.StopBusyIndicator();
-                this.AnalyzeActualSendToTransfer(result);
-            });
-
+        
     }
     AnalyzeActualSendToTransfer(result: CustomFileCreditResponseData) {
         if (!AppTool.IsNullOrEmpty(result)) {
@@ -2541,40 +2753,47 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         params.Mode = "ReTransfer";
         params.RequestVIA = this.customSendOptions.RequestVIA;
         params.ForcePersonalSign = this.customSendOptions.ForcePersonalSign;
+        if (!this.isConnectToUnifreight) 
+        {
+            this.CheckCustomFileCreditFromUnifreight(params);
+        }
+        else 
+        {
 
-        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession,params.PBId, "שליחת בקשת העברה חוזרת לגובה", true).then((res) => {
-            console.log("[Send] Response/ShowProgressBar : ", res);
-        }).catch((err) => {
-            this.ValidationErrorsList = [];
-            this.ValidationErrorsList.push(err);
-        });
-
-        this.declarationMessagesService.PostSendTransferRequest(params)
-            .subscribe((myServiceResponse: ServiceResponse) => {
-
-                var result: CustomFileCreditResponseData = myServiceResponse.Result;
-
-                if (!AppTool.IsNullOrEmpty(result)) {
-                    SessionLocator.SelectedSession.StopBusyIndicator();
-                    var mess = this.AnalyzeResponseMessageForsendToReTransfer(result);
-                    if (!AppTool.IsNullOrEmpty(mess)) {
-                        let messWindow = new MessageWindow();
-                        messWindow.Show(mess);
-                        messWindow.WindowClosed.subscribe((event: any) => {
-                            if (mess.toLowerCase().includes("succeeded") || mess.toLowerCase().includes("בהצלחה") || this._IsCloseScreen == true) {
-                                this.RefreshDeclaration();
-                                if (SessionLocator.SelectedSession.CurrentWindow != null) SessionLocator.SelectedSession.CloseCurrentWindow();
-                            }
-                        });
-                        //    _CustomMassagingProgressService.Dispose();
-                        //};
-                    }
-
-                }
+            CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession,params.PBId, "שליחת בקשת העברה חוזרת לגובה", true).then((res) => {
+                console.log("[Send] Response/ShowProgressBar : ", res);
+            }).catch((err) => {
+                this.ValidationErrorsList = [];
+                this.ValidationErrorsList.push(err);
             });
-
+    
+            this.declarationMessagesService.PostSendTransferRequest(params)
+                .subscribe((myServiceResponse: ServiceResponse) => {
+    
+                    var result: CustomFileCreditResponseData = myServiceResponse.Result;
+                    SessionLocator.SelectedSession.StopBusyIndicator();
+                    this.AnalyzeActualSendToReTransfer(result);
+                });
+    
+        }
     }
+    AnalyzeActualSendToReTransfer(result: CustomFileCreditResponseData) {
+        if (!AppTool.IsNullOrEmpty(result)) {
+            var mess = this.AnalyzeResponseMessageForsendToReTransfer(result);
+            if (!AppTool.IsNullOrEmpty(mess)) {
+                let messWindow = new MessageWindow();
+                messWindow.Show(mess);
+                messWindow.WindowClosed.subscribe((event: any) => {
+                    if (mess.toLowerCase().includes("succeeded") || mess.toLowerCase().includes("בהצלחה") || this._IsCloseScreen == true) {
+                        this.RefreshDeclaration();
+                        if (SessionLocator.SelectedSession.CurrentWindow != null) SessionLocator.SelectedSession.CloseCurrentWindow();
+                    }
+                });
+              
+            }
 
+        }
+    }
     // Response analyze
     FillValidationErrors(title: string, errors: CustomsRequiredFieldErrors) {
 
@@ -3074,18 +3293,64 @@ export class PaymentMethodModel extends BaseComponent {
         }
 
         searchParams.RequestVIA = SendRequestVIA.Default;
-        //searchParams.RequestVIA = SendRequestVIA.WebServiceInteractive;
-        //searchParams.RequestVIA = SendRequestVIA.WebServiceBatch;
-        var myIIGGeneralMessagesService = new IIGGeneralMessagesService();
-        SessionLocator.SelectedSession.StartBusyIndicator("");
-        this.customBankListService.getAllFromCache().subscribe((response: ServiceResponse) => {
-            let allCustomBankList: CustomBankList[] = response.Result;
+        if(!this.parent.isConnectToUnifreight){
+            this.CheckCustomFileCreditFromUnifreight(searchParams);      
+        }
+        else
+        {
+            var myIIGGeneralMessagesService = new IIGGeneralMessagesService();
+            SessionLocator.SelectedSession.StartBusyIndicator("");
 
             myIIGGeneralMessagesService.PostCustomFileCredit(searchParams)
                 .subscribe((myServiceResponse: ServiceResponse) => {
-                    this.InternalBankId = "";
 
                     let customFileCreditResponseData: CustomFileCreditResponseData = myServiceResponse.Result as CustomFileCreditResponseData;
+                    this.AnalyzeCustomFileCreditGetBank(customFileCreditResponseData);                                          
+
+                });
+        }
+        
+    }
+    CheckCustomFileCreditFromUnifreight(params: CustomFileCreditRequestParams) {
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+        let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+            .subscribe(
+                (message: UnifreightMessageM) => {
+                    var IsMatchUnifreightCallbackCommand = (
+                        message.LogitudeEntityNumber == this.parent.DeclarationPM.Id &&
+                        message.LogitudeViewModel == "DeclarationPaymentComponent.ts");
+                    if (IsMatchUnifreightCallbackCommand) {
+                        sub.unsubscribe();
+                        let XMLResponse = UnifreightMessageM.GetStringValue(message, "XMLResponse");
+                        const xmlData = (xml: string) => xml.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+                        const result = this.parent.parseXml(xmlData(XMLResponse),params.Mode);
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+
+                        this.AnalyzeCustomFileCreditGetBank(result);                                          
+                    }
+                }
+            );
+
+        SessionLocator.SelectedSession.StartBusyIndicator("");
+        var unifreightMessageM =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage(this.parent.DeclarationPM.CustomFileNo, this.parent.DeclarationPM.Id, "DeclarationPaymentComponent.ts", AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
+        unifreightMessageM.Requset.push(["XMLRequest", this.parent.convertToXML(params)]);
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "AmitalGatewayUtil.DeclarationCheckCredit",
+            "CFIFILEM.LogitudeTask",
+            "DeclarationCheckCredit",
+            unifreightMessageM,
+            "");
+    }
+
+    AnalyzeCustomFileCreditGetBank(customFileCreditResponseData: CustomFileCreditResponseData){
+        var myIIGGeneralMessagesService = new IIGGeneralMessagesService();
+        SessionLocator.SelectedSession.StartBusyIndicator("");
+        this.customBankListService.getAllFromCache().subscribe((response: ServiceResponse) => {
+            let allCustomBankList: CustomBankList[] = response.Result;       
+                    this.InternalBankId = "";                
                     let mess = this.AnalyzeResponseMessage(allCustomBankList, customFileCreditResponseData);
                     if (AppTool.IsNullOrEmpty(this.InternalBankId) && !AppTool.IsNullOrEmpty(this.parent.DeclarationPM.CustomerCode)) {
                         myIIGGeneralMessagesService.GetDefBankForCustomer(this.parent.DeclarationPM.CustomerCode, this.parent.DeclarationPM.Tenant)
@@ -3109,7 +3374,7 @@ export class PaymentMethodModel extends BaseComponent {
 
                     //this.ResponseData = myServiceResponse.Result;
                     //this.OnMassageDisplayMethod();
-                });
+             
         });
     }
     SetInternalBankId(allCustomBankList: CustomBankList[], BankCode: string) {
