@@ -105,7 +105,7 @@ namespace Logitude.HybridTest.WcfCallers
                 Code = HybridData.UserCodeHU,
                 EnglishName = "Hybrid User",
                 LocalName = "Hybrid User",
-                Email = "Hybrid@fnarsoft.com",
+                Email = "Hybrid@amital.co.il",
                 Password = "!H0",
                 BusinessUnitId = EnvironmentGlobalParams.MainTenant.ToString(),
                 BranchId = HybridData.BranchCodeHBRA,

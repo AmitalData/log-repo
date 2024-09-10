@@ -76,68 +76,9 @@ namespace WebFreight.Web
                 LogitudeSettings.DatabaseManagementSystem = dbms;
                 LogitudeSettings.DebugKey = System.Configuration.ConfigurationManager.AppSettings.Get("DebugKey");
                 FillAppSettings();
-                //Thread settingsThread = new Thread(HandleSettingsChanges);
-                //settingsThread.Start();
-
-
-                //SessionContextConfiguration conf = new SessionContextConfiguration();
-
-
-                ////SettingRepository settingRepository = new SettingRepository();
-                ////Setting setting = settingRepository.GetSingleSetting("1");
-                ////LogitudeSettings.Id = setting.Id;
-                ////LogitudeSettings.ChampEnv = setting.ChampEnv;
-                ////LogitudeSettings.ChampURL = setting.ChampURL;
-                ////LogitudeSettings.CustomerCareIP = setting.CustomerCareIP;
-                ////LogitudeSettings.DeploymentStage = setting.DeploymentStage;
-                ////LogitudeSettings.IsLogEnabled = setting.IsLogEnabled;
-                ////LogitudeSettings.LogitudeURL = setting.LogitudeURL;
-                ////LogitudeSettings.TotangoServiceId = setting.TotangoServiceId;
-                ////LogitudeSettings.UsingAzure = setting.UsingAzure;
-                ////LogitudeSettings.StorageAccountKey = setting.StorageAccountKey;
-                ////LogitudeSettings.StorageAccountName = setting.StorageAccountName;
-                ////LogitudeSettings.StorageType = setting.StorageType;
-                ////LogitudeSettings.LogitudeCRMTenantNumber = setting.LogitudeCRMTenantNumber;
-                ////LogitudeSettings.AutoSignupEmail = setting.AutoSignupEmail;
-                ////LogitudeSettings.AutoSignupPassword = setting.AutoSignupPassword;
-                ////LogitudeSettings.ForceHttps = setting.ForceHttps;
-                ////LogitudeSettings.CheckConnectionURL = setting.CheckConnectionURL;
-                ////LogitudeSettings.AndroidSharedAppMinimumVersion = setting.AndroidSharedAppMinimumVersion;
-                ////LogitudeSettings.IOSSharedAppMinimumVersion = setting.IOSSharedAppMinimumVersion;
-                ////LogitudeSettings.WorkEnvironment = setting.WorkEnvironment;
-                ////LogitudeSettings.LogoCode = setting.LogoCode;
-                ////LogitudeSettings.EnableHybridQueue = setting.EnableHybridQueue;
-                ////LogitudeSettings.EmailAlertSignature = setting.EmailAlertSignature;
-                ////LogitudeSettings.IOSAppLink = setting.IOSAppLink;
-                ////LogitudeSettings.AndroidAppLink = setting.AndroidAppLink;
-                ////LogitudeSettings.AndroidPodAppMinimumVersion = setting.AndroidPodAppMinimumVersion;
-                ////LogitudeSettings.IOSPodAppMinimumVersion = setting.IOSPodAppMinimumVersion;
-                ////LogitudeSettings.MinimumOutlookVersion = setting.MinimumOutlookVersion;
-                ////LogitudeSettings.ABMProductId = setting.ABMProductId;
-                ////LogitudeSettings.AzureFolderName = setting.AzureFolderName;
-                ////LogitudeSettings.SignAppVersion = setting.SignAppVersion;
-                ////LogitudeSettings.ReportsRunUsingWR = setting.ReportsRunUsingWR;
-                ////LogitudeSettings.SMSServiceUserId = setting.SMSServiceUserId;
-                ////LogitudeSettings.SMSServiceAuthToken = setting.SMSServiceAuthToken;
-                ////LogitudeSettings.SMSServicePhoneNumber = setting.SMSServicePhoneNumber;
-
-                //LogitudeSettings.IsCostomsDeploy = Logitude.Customs.BL.Utils.CustomsSettingUtil.ForceDownloadXapFromIIS();
+               
                 LogitudeSettings_AmitalInit();
-                ////LogitudeSettings.GLSHKEnv = setting.GLSHKEnv;
-                ////LogitudeSettings.GLSHKURL = setting.GLSHKURL;
-                ////LogitudeSettings.NotificationHubName = setting.NotificationHubName;
-                ////LogitudeSettings.NotificationHubConnectionString = setting.NotificationHubConnectionString;
-                ////LogitudeSettings.DomainName = setting.DomainName;
-                ////LogitudeSettings.ProductName = setting.ProductName;
-                ////LogitudeSettings.QueueServiceMode = setting.QueueServiceMode;
-                ////LogitudeSettings.StorageServiceMode = setting.StorageServiceMode;
-                ////LogitudeSettings.DropboxAppKey = setting.DropboxAppKey;
-                ////LogitudeSettings.DropboxAppSecret = setting.DropboxAppSecret;
-
-                //aTimer.Elapsed += new ElapsedEventHandler(OnSettingsCheckTimedEvent);
-                //aTimer.Interval = 60000;
-                //aTimer.Enabled = true;
-
+              
             }
 
             //string storageServiceMode = System.Configuration.ConfigurationManager.AppSettings.Get("StorageServiceMode");
@@ -160,7 +101,7 @@ namespace WebFreight.Web
             CustomsRegistrations.Register();
 
             CacheManager.CacheWrapper = new CacheWrapper(HttpContext.Current.Cache);
-            if (LogitudeSettings.DeploymentStage == "Test2" || LogitudeSettings.DeploymentStage == "logboxwe1" || LogitudeSettings.DeploymentStage == "logboxpre")
+            if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox))
             {
                 LogitudeCacheManager.ServerCache = new RedisCache();
             }
@@ -172,21 +113,7 @@ namespace WebFreight.Web
             InfraRegistrationHelper.Register();
 
 
-            //AreaRegistration.RegisterAllAreas();
-
-            // A route that enables RPC requests
-            //RouteTable.Routes.MapHttpRoute(
-            //    name: "RpcApi",
-            //    routeTemplate: "rpc/{controller}/{action}",
-            //    defaults: new { action = "Get" }
-            //);
-
-
-            //        RouteTable.Routes.MapHttpRoute(
-            //name: "DefaultApi",
-            //routeTemplate: "api/{controller}/{id}",
-            //defaults: new { id = System.Web.Http.RouteParameter.Optional }
-            //);
+           
 
             RouteTable.Routes.MapHttpRoute(
           name: "DefaultGetApi",
@@ -684,18 +611,13 @@ namespace WebFreight.Web
             //    }
             //}
             string clientmode = System.Configuration.ConfigurationManager.AppSettings.Get("clientMode");
-            if (clientmode == "angular" && LogitudeSettings.DeploymentStage == "Dev") //islam: please don't remark this !!!!!!!!!!!!!!
+            if (clientmode == "angular" && SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development)) //islam: please don't remark this !!!!!!!!!!!!!!
             {
                 HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", "http://localhost:4200");
                 HttpContext.Current.Response.AddHeader("Access-Control-Expose-Headers", "http://localhost:4200");
                 HttpContext.Current.Response.AddHeader("Access-Control-Allow-Credentials", "true");
             }
-            if (LogitudeSettings.DeploymentStage.ToLower() == "test2")
-            {
-                HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", "https://test.logitudeworld.com/");
-                HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", "http://test.logitudeworld.com/");
-
-            }
+           
             //   if (HttpContext.Current.Request.HttpMethod == "OPTIONS")
             //    {
             //These headers are handling the "pre-flight" OPTIONS call sent by the browser
@@ -709,7 +631,7 @@ namespace WebFreight.Web
 
 
             var systemUrl = SecurityUtility.getLoggedDomain();
-            if (!string.IsNullOrEmpty(systemUrl) && systemUrl.ToLower().Contains("staging") && LogitudeSettings.DeploymentStage != "amitalstorage")
+            if (!string.IsNullOrEmpty(systemUrl) && systemUrl.ToLower().Contains("staging") && !SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Production))
             {
                 HttpContext.Current.Items.Add("workerrolename", "staging");
                 return;

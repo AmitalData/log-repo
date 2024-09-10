@@ -1233,7 +1233,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
         private void UpdateContactForAccounting()
         {
-            if (LogitudeSettings.DeploymentStage != "amitalstorage") return;
+            if (!SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.LogboxAndAccountingProduction)) return;
             ContactQuery entityQuery = new ContactQuery(entityPM.Tenant);
             ContactRepository repository = new ContactRepository(objectContext);
             var myResult = entityQuery.GetContactsbyCardId(entityPM.Id, entityPM.Tenant).ToList();

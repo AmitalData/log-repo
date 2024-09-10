@@ -123,7 +123,7 @@ namespace CommunicationWorkerRole
 
 
                                         ShipmentWcfServiceReference.Response response = shipmentservice.Upsert(pm, false);
-                                        //var tenants = loginService.GetUserTenants("islam@fnarsoft.com", ref res2);
+                                       
                                     }
                                 }
                             }

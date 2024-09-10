@@ -198,11 +198,6 @@
 
 
 
-//      private void SetCredentials()
-//      {
-//          http.Credentials.UserName = "jalal@logitudeworld.com";
-//          http.Credentials.Password = "!J123456";
-//      }
 
 
 

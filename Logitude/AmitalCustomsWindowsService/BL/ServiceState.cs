@@ -2,6 +2,7 @@
 using CustomsWorkerRole.Test;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.Utils;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -166,11 +167,9 @@ LastError:{4}",
                             {
                                 var parameters = new CommunicationWorkerRole.EmailParameters()
                                 {
-                                    From = "admin@fnarsoft.com",
+                                    From = SettingUtil.Emails.FromNoReply,
                                     SwitchFromWithUserNameIfValid = true,
-                                    To = "itzik@amital.co.il;YaronC@AMITAL.CO.IL;bbwrweim@mailparser.io",
-                                    Cc = "",
-                                    Bcc = "",
+                                    To = SettingUtil.Emails.DevTeamManagers,
                                     Subject = subj,
                                     Body =
                                     "ReqSheetStatistic " + Environment.MachineName + "/ " + Environment.UserDomainName +

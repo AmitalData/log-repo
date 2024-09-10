@@ -12,6 +12,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -45,7 +46,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPm.Date = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             this.entityPm.Tenant = entityPM.Tenant; 
             this.entityPm.VersionNumber = GetLastVersionNumber() + 1;
-            this.entityPm.IsNew = (LogitudeSettings.DeploymentStage == "Simplog" || LogitudeSettings.DeploymentStage == "Test2" || LogitudeSettings.DeploymentStage == "Dev");
+            this.entityPm.IsNew = SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development);
             TermsofUseMapping.MapEntity(entityPM, Poco); 
             entityRepository.Add(Poco); 
             entityPM.Id = this.Poco.Id;

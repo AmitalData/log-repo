@@ -76,10 +76,8 @@ namespace CommunicationWorkerRole
                 DateTime currentTestDate = DateTime.UtcNow;
                 EmailParameters parameters = new EmailParameters()
                 {
-                    From = "mohammad@logitudeworld.com",
-                    To = "AutoSignup@logitudeworld.com",
-                    Cc = "",
-                    Bcc = "",
+                    From = SettingUtil.Emails.FromNoReply,
+                    To = SettingUtil.Emails.AutoSignupGroup,
                     Subject = currentTestDate.ToString(),
                     Body = currentTestDate.ToString(),
                     ProviderNumber = int.Parse(provider.ProviderNumber),

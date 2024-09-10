@@ -67,9 +67,7 @@ namespace CommunicationWorkerRole
         bool IgnoreServices = false;
         bool IsManagedProcess = false;
         const int HalfHourInSeconds= 1800;
-        //public static string DeploymentStage = "Dev";//Dev//Test1//Simplog//logitudetest3//amital//logitudetest2
-        //public static string ChampEnv = "TEST";//PROD//TEST
-        //
+       
 
         public ThreadedRoleEntryPoint()
         {
@@ -757,24 +755,7 @@ namespace CommunicationWorkerRole
         /// <returns></returns>
         public static string GetQueueByEnviroment(string queueName)
         {
-            if (LogitudeSettings.DeploymentStage == "Dev")
-            {
-                queueName = Environment.MachineName + "_" + queueName;
-            }
-            else if (LogitudeSettings.DeploymentStage == "customs")
-            {
-                queueName = "customs" + "_" + queueName;
-            }
-            else if (LogitudeSettings.DeploymentStage == "Simplog" || LogitudeSettings.DeploymentStage == "amitalstorage")
-            {
-                queueName = "Production" + "_" + queueName;
-            }
-            else
-            {
-                queueName = "Test" + "_" + queueName;
-            }
-
-            return queueName;
+            return Simplog.Server.Infrastructure.WebFreightEntryPoint.GetQueueByEnviroment(queueName);
         }
 
         public static void StartStatic()

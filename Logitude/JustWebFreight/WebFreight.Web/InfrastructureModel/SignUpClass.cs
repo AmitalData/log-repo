@@ -1449,7 +1449,7 @@ namespace WebFreight.Web.InfrastructureModel
             
             ICommonDataContext commonContext = CommonDataContext.GetContext(newTenant.Id);
             TenantService service = new TenantService(commonContext, newTenant.Id);
-            if (LogitudeSettings.WorkEnvironment == "cloud" || LogitudeSettings.DeploymentStage.ToLower() == "test2")
+            if (LogitudeSettings.WorkEnvironment == "cloud" || SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development))
                 newTenant.IsHybrid = true;
             service.Create(newTenant);
             newTenant = AddHybridPartner(signUpInfoClass, newTenant);
@@ -1458,7 +1458,7 @@ namespace WebFreight.Web.InfrastructureModel
 
         private static TenantPM AddHybridPartner(SignUpInfoClass signUpInfo,TenantPM newTenant)
         {
-            if (LogitudeSettings.WorkEnvironment != "cloud" && LogitudeSettings.DeploymentStage.ToLower() != "test2")
+            if (LogitudeSettings.WorkEnvironment != "cloud" && !SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development))
                 return newTenant;
             newTenant.IsHybrid = true;
             HybridPartnerPM entityPM = new HybridPartnerPM();
@@ -1540,7 +1540,7 @@ namespace WebFreight.Web.InfrastructureModel
 
         private static bool CheckIsDayLightSettingsRequiredForEnvironment()
         {
-            if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2" || LogitudeSettings.DeploymentStage.ToLower() == "amitalstorage"))
+            if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.LogboxAndAccountingProduction))
             {
                 return true;
             }

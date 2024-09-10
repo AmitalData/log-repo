@@ -789,8 +789,8 @@ namespace CommunicationWorkerRole
             if (string.IsNullOrEmpty(emailParameters.From) || !emailParameters.From.Contains('@')) return sentByUser;
             ContactRepository contactRepository = new ContactRepository(currentLog.Tenant);
             string contactMe = contactRepository.GetConactNameByemail(emailParameters.From, currentLog.Tenant);
-            if (contactMe == null && currentLog.From == "info@logitudeworld.com" && LogitudeSettings.DeploymentStage == "Simplog") 
-                contactMe = contactRepository.GetConactNameByemail(emailParameters.From, LogitudeSettings.LogitudeCRMTenantNumber);
+            //if (contactMe == null && currentLog.From == "info@logitudeworld.com" && SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Simplog)) 
+            //    contactMe = contactRepository.GetConactNameByemail(emailParameters.From, LogitudeSettings.LogitudeCRMTenantNumber);
 
             return string.IsNullOrEmpty(contactMe) ? sentByUser : contactMe;
         }

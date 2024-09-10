@@ -468,7 +468,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                         string apicreditionals = "API_15408257301181065689979";
                         var request = WebRequest.Create("https://ws.bluesnap.com/services/2/tools/auth-token?shopperId=" + VaultedShopperId + "&expirationInMinutes=120");
-                        if ((LogitudeSettings.DeploymentStage == "logitudepreproduction" || LogitudeSettings.DeploymentStage == "Dev") && countryname != "Israel")
+                        if ( SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development) && countryname != "Israel")
                         {
                             apicreditionals = "API_1516630314047705132569";
                             bluesnapParameters.ContractId = "2261197";
@@ -578,7 +578,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         new MediaTypeWithQualityHeaderValue("application/xml"));
                         string apicreditionals = "API_15408257301181065689979";
                         var request = WebRequest.Create("https://ws.bluesnap.com/services/2/tools/param-encryption");
-                        if ((LogitudeSettings.DeploymentStage == "logitudepreproduction" || LogitudeSettings.DeploymentStage == "Dev") && countryname != "Israel")
+                        if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development) && countryname != "Israel")
                         {
                             apicreditionals = "API_1516630314047705132569";
                             bluesnapParameters.ContractId = "2261197";
@@ -3187,8 +3187,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             var crmTenant = 341;
             var subject = "AWB/INTTRA Stock E-mail Notification";
-            var fromEmail = "admin@fnarsoft.com";
-            var toEmails = "info@logitudeworld.com";
+            var fromEmail = SettingUtil.Emails.FromNoReply;
+            var toEmails = "support@amital.co.il";
             var stockType = chargifyAWBStock.IsAWBStockChecked ? "AWB Stock" : "INTTRA Stock";
             StringBuilder HtmlTemplate = new StringBuilder();
             HtmlTemplate.Append(
@@ -3219,8 +3219,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 Subject = subject,
                 From = fromEmail,
                 To = toEmails,
-                CC = null,
-                BCC = null,
                 EmailBody = HtmlTemplate.ToString(),
                 Tenant = crmTenant,
                 LoggingUserId = chargifyAWBStock.UserId,

@@ -572,7 +572,6 @@
     </Compile>
     <Compile Include="SignalRHubs\LogitudeHubChannelEvent.cs" />
     <Compile Include="SignalRHubs\SignalRHubEventPublisher.cs" />
-    <Compile Include="SignalRHubs\SignalRHubMessageSender.cs" />
     <Compile Include="SQL\ExecuteStoredProcedures.cs" />
     <Compile Include="SQL\GetPrimaryKeyName.cs" />
     <Compile Include="StorageService\AzureBlobService.cs" />

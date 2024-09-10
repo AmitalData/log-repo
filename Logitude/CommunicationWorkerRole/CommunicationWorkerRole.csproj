@@ -852,7 +852,6 @@
     <Compile Include="SignUpWorkerRole.cs" />
     <Compile Include="SocialWorkerRole.cs" />
     <Compile Include="Tasks\DeleteOldAuthenticationTokensTask.cs" />
-    <Compile Include="Tasks\DeleteOldErrorLogsQueueMessagesTask.cs" />
     <Compile Include="Tasks\DeleteDoneQueueMessagesTask.cs" />
     <Compile Include="Tasks\DeleteOldFilingInboxes.cs" />
     <Compile Include="Tasks\DeleteQueueMessagesDetailsTask.cs" />

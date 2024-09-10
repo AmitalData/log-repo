@@ -136,7 +136,7 @@ namespace WebFreight.Web.WebServices
                 return str;
         }
 
-        private string BuidDocument(int tenant, string externalDocumentId, long fileSize , string fileName)
+        private string BuidDocument(int tenant, string externalDocumentId, long fileSize, string fileName)
         {
             try
             {
@@ -144,7 +144,7 @@ namespace WebFreight.Web.WebServices
                 DocumentRepository docRepository = new DocumentRepository(tenant);
                 DocumentsFiling externalDocument = externalDocumentRepository.GetSingleDocumentsFiling(externalDocumentId, tenant);
                 Document document = null;
-               
+
 
                 if (externalDocument != null)
                 {
@@ -173,7 +173,7 @@ namespace WebFreight.Web.WebServices
                             FileName = TruncateLongString(realFileName, 120),
                             CalculatedFileName = new DocumentTypeCalculateFileNameService(externalDocument, TruncateLongString(realFileName, 120)).Calculate(),
 
-                    };
+                        };
                         docRepository.Add(document);
                     }
                     else
@@ -311,7 +311,7 @@ namespace WebFreight.Web.WebServices
         public string UploadImage(string filename, byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string extension, string cardId, string contactId, string imageDetalId)
         {
             string filelocation = GetFileLocation("images");
-           string  fileName = filename.ToLower();
+            string fileName = filename.ToLower();
             string filePath = "tenant" + tenant.ToString() + "/";
             string imagedetailid = null;
             try
@@ -468,9 +468,9 @@ namespace WebFreight.Web.WebServices
 
 
 
-        private void UpdateImageDetails(ImageDetailPM imageDetailPM , ImageDetailRepository imageDetailRepository )
+        private void UpdateImageDetails(ImageDetailPM imageDetailPM, ImageDetailRepository imageDetailRepository)
         {
-            var imagedetail = imageDetailRepository.GetSingleImageDetail(imageDetailPM.Id , imageDetailPM.Tenant);
+            var imagedetail = imageDetailRepository.GetSingleImageDetail(imageDetailPM.Id, imageDetailPM.Tenant);
             if (imagedetail == null) return;
             imagedetail.Extension = imageDetailPM.Extension;
             imagedetail.Size = imageDetailPM.Size;
@@ -600,12 +600,12 @@ namespace WebFreight.Web.WebServices
             {
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("ShipmentDocsInUploaderQueue", documentsFiling.Tenant);
-                queueservice.Send(new Dictionary<string, string>() { 
-                    { "EntityId", documentsFiling.Id }, 
+                queueservice.Send(new Dictionary<string, string>() {
+                    { "EntityId", documentsFiling.Id },
                     { "Tenant", documentsFiling.Tenant.ToString() },
                     { "DocumentCode",  documentsFiling.DocumentTypeCode },
-                    { "IsDocumentUploaded", false.ToString() }, 
-                    { "IsDocumentDeleted", true.ToString() }, 
+                    { "IsDocumentUploaded", false.ToString() },
+                    { "IsDocumentDeleted", true.ToString() },
                     { "RecivedDate", documentsFiling.ReceivedDate.ToString() } },
                     documentsFiling.Tenant, null, null, null, null);
             }
@@ -748,7 +748,7 @@ namespace WebFreight.Web.WebServices
             DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
 
             List<DocumentsFilingPM> myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(entityId, tenant);
-            if(partnerType == "AG") myDocumentFilings = GetAgentDocuments(myDocumentFilings, "C", tenant);
+            if (partnerType == "AG") myDocumentFilings = GetAgentDocuments(myDocumentFilings, "C", tenant);
 
             List<DocumentsFilingPM> housesDocumentFilings = GetConnectedHousesDocumentsFilingPMs(entityId, tenant, myDocumentsFilingQuery, partnerType);
             myDocumentFilings = myDocumentFilings.Concat(housesDocumentFilings).ToList();
@@ -808,7 +808,7 @@ namespace WebFreight.Web.WebServices
                 {
 
 
-                  string  fileName = documentId + "." + documentExtension;
+                    string fileName = documentId + "." + documentExtension;
                     string filePath = "tenant" + tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(fileName.ToLower(), fileLocation);
                     IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
                     BlobFileInfo fileInfo = new BlobFileInfo()
@@ -865,7 +865,7 @@ namespace WebFreight.Web.WebServices
                     //string filelocation = GetFileLocation(FileLocation);
                     try
                     {
-                        string   fileName = document.Id + "." + document.Extension;
+                        string fileName = document.Id + "." + document.Extension;
 
                         BlobFileInfo fileInfo = new BlobFileInfo()
                         {
@@ -1060,7 +1060,7 @@ namespace WebFreight.Web.WebServices
         //}
 
 
-        public byte[] DownloadStaticFile(string filename, string containername,int tenant = 0)
+        public byte[] DownloadStaticFile(string filename, string containername, int tenant = 0)
         {
             byte[] theDatainByte = null;
 
@@ -1091,35 +1091,12 @@ namespace WebFreight.Web.WebServices
                 IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
                 theDatainByte = storageservice.Read(fileInfo);
 
-                //if (LogitudeSettings.DeploymentStage.ToLower() == "test2")
-                //{
-                //    IBlobService storageservice = new AzureBlobService();
-                //    theDatainByte = storageservice.Read(fileInfo);
-                //}
-                //else
-                //{
-                //    IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-                //    theDatainByte = storageservice.Read(fileInfo);
-                //}
+             
 
 
 
                 return theDatainByte;
-                //blobContainer = StorageAcountDetails.BlobClient.GetContainerReference(containername);
-                //var blobfile = blobContainer.GetBlockBlobReference(filename);
-
-                //if (blobfile.Exists())
-                //{
-                //    using (MemoryStream memstream = new MemoryStream())
-                //    {
-                //        blobfile.DownloadToStream(memstream);
-                //        theDatainByte = memstream.ToArray();
-
-                //        return theDatainByte;
-                //    }
-
-                //}
-                //else return null;
+                
 
             }
             catch (Exception e)
@@ -1211,7 +1188,7 @@ namespace WebFreight.Web.WebServices
             }
             string filelocation = GetFileLocation(fileLocation);
 
-           string fileName = !string.IsNullOrEmpty(filename) ? filename.ToLower() : generatedfilename;
+            string fileName = !string.IsNullOrEmpty(filename) ? filename.ToLower() : generatedfilename;
             string filePath = "tenant" + tenant.ToString() + "/";
 
             string storageServiceMode = System.Configuration.ConfigurationManager.AppSettings.Get("StorageServiceMode");
@@ -1234,10 +1211,10 @@ namespace WebFreight.Web.WebServices
             }
             else
             {
-                fileNameAndExtension = BuidDocument(tenant, externalDocumentId, fileSize , fileName);
+                fileNameAndExtension = BuidDocument(tenant, externalDocumentId, fileSize, fileName);
                 fileName = fileNameAndExtension;
             }
-                        
+
             //filePath = "tenant" + tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(fileNameAndExtension.ToLower(), filelocation);
             string[] fileparams = fileNameAndExtension.Split('.');
             string finalFileName = fileNameAndExtension.Substring(0, fileNameAndExtension.LastIndexOf('.'));
@@ -1253,7 +1230,7 @@ namespace WebFreight.Web.WebServices
                     DocumentId = documentId
                 });
 
-                fileNameAndExtension = finalFileName + "."+ fileparams[fileparams.Length - 1];
+                fileNameAndExtension = finalFileName + "." + fileparams[fileparams.Length - 1];
                 documentIdAndExtension = fileNameAndExtension;
             }
             BlobFileInfo fileInfo = new BlobFileInfo()
@@ -1323,41 +1300,7 @@ namespace WebFreight.Web.WebServices
                             }
                         }
 
-                        if (LogitudeSettings.DeploymentStage != "Simplog")
-                        {
-                            //Islam: three logs bug 30254
-
-                            //    string base64String = System.Convert.ToBase64String(filedata, 0, filedata.Length);
-
-                            //    DocumentsFilingPM mappedPM = DocumentsFilingHybridMapping.MapEntityToHybrid(extDocPM);
-
-                            //    List<QueueTask> tasks = new List<QueueTask> {
-                            //   new QueueTask(){ Action = "DocumentsFiling.UploadBinaryData", Parameters = new List<Parameter>()
-                            //   {new Parameter{ Name="DocumentMetaData", Order = 1,Value =  LogitudeXmlSerializer.SerializeObjectToXmlString(mappedPM)},
-                            //    new Parameter{ Name = "FileBinaryData",Order = 2,Value =  base64String},
-                            //   }},
-
-                            //};
-
-                            //CommunicationsParams logParams = new CommunicationsParams()
-                            //{
-                            //    Tenant = tenant,
-                            //    CommunicationLogTypeCode = "Q",
-                            //    QueueName = "externaltasksqueue" + tenant + 2,
-                            //    Priority = 2,
-                            //    InOut = "O",
-                            //    Status = "W",
-                            //    LoggingUserId = loggedUser.Id,
-                            //    LoggingObjectTableId = table.Id,
-                            //    LoggingEntityId = extDocPM.Id,
-                            //    Subject = "Documents Filing Uploading binary file",
-                            //    FolderName = "ExternalTasksQueue",
-                            //};
-
-
-                            //logParams.ByteData = LogitudeXmlSerializer.SerializeObject(tasks);
-                            //Communications.AddCommunicationLog(logParams);
-                        }
+                       
                     }
                     else
                     {
@@ -1526,7 +1469,7 @@ namespace WebFreight.Web.WebServices
 
                 if (document != null)
                 {
-                    document.CalculatedFileName =!string.IsNullOrEmpty(document.CalculatedFileName) ? document.CalculatedFileName : document.FileName;
+                    document.CalculatedFileName = !string.IsNullOrEmpty(document.CalculatedFileName) ? document.CalculatedFileName : document.FileName;
 
                     //document.DocumentType = documentFiling.DocumentType != null ? documentFiling.DocumentType.Name : "";
 
@@ -1545,48 +1488,46 @@ namespace WebFreight.Web.WebServices
 
         public static HttpResponseMessage GetFileStream(string id)//THIS CODE USED  FROM  AmitalChromWinForm!!
         {
-			DateTime stopLogAt = DateTime.MinValue;//DateTime stopLogAt = new DateTime(2020, 09, 01);
-			string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20240818T155633.LogUntilDateyyyyMMdd"];
-			if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
-			{
-				stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
-													"yyyyMMdd",
-													CultureInfo.InvariantCulture,
-													DateTimeStyles.None);
-			}
-			//Uploader.GetFileStream(id);
-			string result = "";
+            DateTime stopLogAt = DateTime.MinValue;//DateTime stopLogAt = new DateTime(2020, 09, 01);
+            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20240818T155633.LogUntilDateyyyyMMdd"];
+            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+            {
+                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+                                                    "yyyyMMdd",
+                                                    CultureInfo.InvariantCulture,
+                                                    DateTimeStyles.None);
+            }
+            //Uploader.GetFileStream(id);
+            string result = "";
             Uploader uploader = new Uploader();
             var filestrings = id.Split('_');
             string documentId = filestrings[1];
             var tenant = Convert.ToInt32(filestrings[0]);
 
             bool overrideSecDueIsConnectedToUniFreight = false;
-            if (//LogitudeSettings.WorkEnvironment == "customs"
-                LogitudeSettings.IsCostomsDeploy
-                )
+            if (LogitudeSettings.IsCostomsDeploy)
             {
-				LogitudeSettings.HandleLogMe(id + "LogitudeSettings.IsCostomsDeploy " + overrideSecDueIsConnectedToUniFreight, false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
+                LogitudeSettings.HandleLogMe(id + "LogitudeSettings.IsCostomsDeploy " + overrideSecDueIsConnectedToUniFreight, false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
 
-				var setting = CustomsSettingQueryService.GetSettingByTenant(tenant) ?? new CustomsSettingPM();
+                var setting = CustomsSettingQueryService.GetSettingByTenant(tenant) ?? new CustomsSettingPM();
                 overrideSecDueIsConnectedToUniFreight = setting.IsConnectedToUniFreight;
                 if (!overrideSecDueIsConnectedToUniFreight)//semi a like Connected  == not cloud !!
                 {
-					LogitudeSettings.HandleLogMe(id + "!overrideSecDueIsConnectedToUniFreight " + overrideSecDueIsConnectedToUniFreight, false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
+                    LogitudeSettings.HandleLogMe(id + "!overrideSecDueIsConnectedToUniFreight " + overrideSecDueIsConnectedToUniFreight, false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
 
-					if (//!String.IsNullOrWhiteSpace( setting.UnfConnectionString)  && 
+                    if (//!String.IsNullOrWhiteSpace( setting.UnfConnectionString)  && 
                         !String.IsNullOrWhiteSpace(setting.OnPremiseFillingService))
                     {
-						LogitudeSettings.HandleLogMe(id + "!String.IsNullOrWhiteSpace(setting.OnPremiseFillingService)) " + overrideSecDueIsConnectedToUniFreight, false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
+                        LogitudeSettings.HandleLogMe(id + "!String.IsNullOrWhiteSpace(setting.OnPremiseFillingService)) " + overrideSecDueIsConnectedToUniFreight, false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
 
-						overrideSecDueIsConnectedToUniFreight = true;
+                        overrideSecDueIsConnectedToUniFreight = true;
                     }
 
                 }
             }
-			LogitudeSettings.HandleLogMe(id + "overrideSecDueIsConnectedToUniFreight " + overrideSecDueIsConnectedToUniFreight, false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
+            LogitudeSettings.HandleLogMe(id + "overrideSecDueIsConnectedToUniFreight " + overrideSecDueIsConnectedToUniFreight, false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
 
-			if (!overrideSecDueIsConnectedToUniFreight)
+            if (!overrideSecDueIsConnectedToUniFreight)
             {
                 throw new Exception("using File Stream only @ onpremise");
             }
@@ -1597,14 +1538,14 @@ namespace WebFreight.Web.WebServices
 
             try
             {
-				LogitudeSettings.HandleLogMe(id + "before DownloadFile", false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
+                LogitudeSettings.HandleLogMe(id + "before DownloadFile", false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
 
-				data = uploader.DownloadFile(documentId, documentExtension, "", tenant);
+                data = uploader.DownloadFile(documentId, documentExtension, "", tenant);
                 fileName = documentId + "." + documentExtension;
-				LogitudeSettings.HandleLogMe(id + "after DownloadFile" + fileName , false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
+                LogitudeSettings.HandleLogMe(id + "after DownloadFile" + fileName, false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
 
-			}
-			catch (ExceptionInErrorLog ee)
+            }
+            catch (ExceptionInErrorLog ee)
             {
 
                 XElement myXml =
@@ -1618,15 +1559,15 @@ new XElement("Error", ee.ToString()
             }
             catch (Exception ex)
             {
-				LogitudeSettings.HandleLogMe(id + "catch (Exception)" + ex.Message.ToString() , false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
+                LogitudeSettings.HandleLogMe(id + "catch (Exception)" + ex.Message.ToString(), false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
 
-				throw;
+                throw;
             }
-			LogitudeSettings.HandleLogMe(id + "suscsess ", false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
+            LogitudeSettings.HandleLogMe(id + "suscsess ", false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
 
 
-			var response = new HttpResponseMessage(HttpStatusCode.OK)
-			{
+ 			var response = new HttpResponseMessage(HttpStatusCode.OK)
+ 			{
 				Content = new ByteArrayContent(data)
 
 			};

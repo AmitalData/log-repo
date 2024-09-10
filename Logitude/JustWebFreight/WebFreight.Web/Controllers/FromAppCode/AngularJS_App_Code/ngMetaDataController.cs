@@ -61,13 +61,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         }
 
-        //void AuthenticateTennatIfLogBoxOnly(int tenant)
-        //{
-        //	if (LogitudeSettings.DeploymentStage == "logboxwe1" || LogitudeSettings.DeploymentStage == "Test2" || LogitudeSettings.DeploymentStage == "Dev")
-        //	{
-        //		SecurityUtility.AuthenticationOnTenant(tenant);
-        //	}
-        //}
+      
         public UserPM GetAuthenticatedUserDetails(string userid, int tenant)
         {
 
@@ -176,58 +170,22 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         )]
         public List<FieldsTranslations> GetAllTextCodeTranslations(int tenant, string textcodetranslations)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
-            //HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity("angular@fnarsoft.com"), new string[0]);
-
-            string token = HttpContext.Current.Request.Headers["Token"];
-            //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
+             string token = HttpContext.Current.Request.Headers["Token"];
+           
             GeneralDomainService service = new GeneralDomainService();
             var textCodeList = service.GetAllFieldsTranslations(tenant, "EN", 0, 220000).ToList();
-            //TenantManagmentPrivateLablesPM privatelabel = null;
-            //var url = SecurityUtility.getLoggedDomain();
-            //if (!url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
-            //{
-            //    TenantManagmentPrivateLablesQuery query = new TenantManagmentPrivateLablesQuery(0);
-            //    privatelabel = query.GetSingleActivePMByUrl(url);
-            //}
-            //if (privatelabel != null)
-            //{
-            //    var TextCodeId = service.GetTextCodesByTenant(tenant).Where(a => a.Code == "General.MH.Importers").First().Id;
-            //    textCodeList.Where(a => a.TextCodeId == TextCodeId).First().DefaultText = privatelabel.PrivateLabelName;
-            //} 
-            //.Where(x => x.ObjectTableID == "1-1" || x.ObjectTableID == "1-4" || x.ObjectTableID == "1-5" || x.ObjectTableID == "1-14" || x.ObjectTableID == "1-11" || x.ObjectTableID == "1-6")
-            //.ToList();
+            
             return textCodeList;
         }
 
 
         public List<TextCodePM> GetTenantTextCodes(int tenant)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
-            //HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity("angular@fnarsoft.com"), new string[0]);
-
-            string token = HttpContext.Current.Request.Headers["Token"];
-            //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
+             string token = HttpContext.Current.Request.Headers["Token"];
+            
             GeneralDomainService service = new GeneralDomainService();
             var textCodeList = service.GetTextCodesByTenant(tenant).ToList();
-            //TenantManagmentPrivateLablesPM privatelabel = null;
-            //var url = SecurityUtility.getLoggedDomain();
-            //if (!url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
-            //{
-            //    TenantManagmentPrivateLablesQuery query = new TenantManagmentPrivateLablesQuery(0);
-            //    privatelabel = query.GetSingleActivePMByUrl(url);
-            //}
-            //if (privatelabel != null)
-            //{
-            //    //var TextCodeId = service.GetTextCodesByTenant(tenant).Where(a => a.Code == "General.MH.Importers").First().Id;
-            //    textCodeList.Where(a => a.Code == "General.MH.Importers").First().DefaultText = privatelabel.PrivateLabelName;
-            //} 
-            //.Where(x => x.ObjectTableID == "1-1" || x.ObjectTableID == "1-4" || x.ObjectTableID == "1-5" || x.ObjectTableID == "1-14" || x.ObjectTableID == "1-11" || x.ObjectTableID == "1-6")
-            //.ToList();
+           
             return textCodeList;
         }
 

@@ -165,8 +165,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 Subject = emailParameters.Subject,
                 From = emailParameters.From,
                 To = emailCommunicationLogBuilderArgs.ResetPasswordParameters.Email,
-                CC = null,
-                BCC = null,
                 EmailBody = HtmlTemplate.ToString(),
                 Tenant = callContact.GlobalTenantId,
                 LoggingUserId = callContact.Id,

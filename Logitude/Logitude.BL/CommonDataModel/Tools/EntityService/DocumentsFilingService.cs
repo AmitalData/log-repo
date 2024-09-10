@@ -385,7 +385,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             RunDocumentPopulateAutomaticDatesService(theEntityPm);
             RunAutomation(theEntityPm, "OnDocumentUpdate");
             ///move after adding (was Devart.Data.Oracle.OracleException: ORA-02291: אילוץ כלילות (AMINET_MAIN.FK_N1103284768) הופר - מפתח אב לא נמצא )
-            if (!tenantPM.IsDocumentsArchive && LogitudeSettings.DeploymentStage != "Simplog")
+            if (!tenantPM.IsDocumentsArchive)
             {
                 AddToTasksQueue(theEntityPm, isNewEntity, loggedUserId);
             }
@@ -834,7 +834,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.SubmitChanges();
 
             this.OpenKPIDocumentUploderQueue(theEntityPm);
-            if (!tenantPM.IsDocumentsArchive && LogitudeSettings.DeploymentStage != "Simplog")
+            if (!tenantPM.IsDocumentsArchive)
             {
                 AddToTasksQueue(theEntityPm, isNewEntity, loggedUserId);
             }
@@ -1130,7 +1130,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private bool IsLogboxEnvironment()
         {
-            return !string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && (LogitudeSettings.DeploymentStage.ToLower() == "logboxpre" || LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1");
+            return SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox);
         }
 
         private bool IsDocumentWillUpdateShipment(string documentTypeCode)
@@ -1513,7 +1513,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 (
                 (!extDocPM.IsHybrid   && LogitudeSettings.IsCostomsDeploy) ||
                 (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner) && (!extDocPM.IsHybrid || (extDocPM.IsAttachment))
-                && LogitudeSettings.DeploymentStage != "Simplog" && !extDocPM.NoAddToTasksQueue)
+
+                && !extDocPM.NoAddToTasksQueue) 
                 )
             {
                 ObjectTable docTable = ObjectTableRepository.GetObjectTableById(extDocPM.ObjectTableId, extDocPM.Tenant);

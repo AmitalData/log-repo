@@ -23,9 +23,9 @@ namespace Logitude.HybridTest.ServicesTest
                     ServiceFilterType = null,
                 };
                 Response serviceResponse = new Response();
-                object[] serviceParameters = new object[] { "Hybrid@fnarsoft.com", "!H0", "!H1" };
+                object[] serviceParameters = new object[] { "Hybrid@amital.co.il", "!H0", "!H1" };
                 ChangeContactPassword(serviceProperties, serviceParameters);
-                serviceParameters = new object[] { "Hybrid@fnarsoft.com", "!H1", "!H0" };
+                serviceParameters = new object[] { "Hybrid@amital.co.il", "!H1", "!H0" };
                 ChangeContactPassword(serviceProperties, serviceParameters);
             }
             catch (Exception ex)

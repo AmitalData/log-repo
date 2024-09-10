@@ -8,6 +8,7 @@ using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -57,7 +58,7 @@ namespace WebFreight.Web.Controller
                     communicationLogId = emailsList.Where(a => a != null).Select(a => a.CommunicationLogId).FirstOrDefault();
                     string deploymentStage = emailsList.Where(a => a != null).Select(a => a.DeploymentStage).FirstOrDefault();
 
-                    if (deploymentStage == LogitudeSettings.DeploymentStage)
+                    if (SettingUtil.DeploymentStage.IsDBStage(deploymentStage))
                     {
                         InsertNewAnalyzeQueue(emailsList, tenant);
                     }

@@ -291,49 +291,7 @@ namespace CustomsWorkerRole
         /// <returns></returns>
         public static string GetQueueByEnviroment(string queueName)
         {
-
             return Simplog.Server.Infrastructure.WebFreightEntryPoint.GetQueueByEnviroment(queueName);
-#if false
-               var save_queueName = queueName;
-            if (LogitudeSettings.DeploymentStage == "Dev")
-            {
-                queueName = Environment.MachineName + "_" + queueName;
-            }
-            else if (LogitudeSettings.DeploymentStage == "customs")
-            {
-                queueName = "customs" + "_" + queueName;
-            }
-            else if (LogitudeSettings.DeploymentStage == "Simplog")
-            {
-                queueName = "Production" + "_" + queueName;
-            }
-            else
-            {
-                queueName = "Test" + "_" + queueName;
-            }
-            var customsDeploymentStage = SettingUtil.GetCustomsDeploymentStage();
-            switch (customsDeploymentStage)
-            {
-                case SettingUtil.CustomsDeploymentStage.Test:
-                case SettingUtil.CustomsDeploymentStage.Pilot:
-
-                    var uri = new Uri(LogitudeSettings.LogitudeURL);
-                    var branch = uri.LocalPath.Trim(@"\"[0]).Trim(@"/"[0]);
-                    queueName = LogitudeSettings.StorageAccountName + "_Customs" + customsDeploymentStage.ToString() + branch + "_" + save_queueName;
-                    break;
-                case SettingUtil.CustomsDeploymentStage.Production:
-                    //queueName = "Customs" + customsDeploymentStage.ToString() + "_" + save_queueName;
-                    queueName = LogitudeSettings.StorageAccountName + "_Customs" + customsDeploymentStage.ToString() + "_" + save_queueName;
-                    break;
-             
-                default:
-                    break;
-            }
-
- 
-            return queueName;
-#endif
-
         }
     }
 

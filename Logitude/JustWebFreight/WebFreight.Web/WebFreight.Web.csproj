@@ -6953,7 +6953,6 @@
     <Compile Include="SendGridWebPage.aspx.designer.cs">
       <DependentUpon>SendGridWebPage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Services\LogitudeAuthenticationService.cs" />
     <Compile Include="Helpers\ReportMemoryStreamService.cs" />
     <Compile Include="Services\WarmService.cs" />
     <Compile Include="SharedDocuments.aspx.cs">

@@ -44,8 +44,6 @@ namespace CustomsWorkerRole.DCA
         //private readonly string _DownloadMoreParams;
         private readonly string _AppendToDownloadFolderName;
         private readonly bool _EnableLog;
-        //private readonly CustomsDeploymentStage _CustomsDeploymentStage;
-
         private List<InterfaceTenantDefinitionManagementPM> _AllInterface;
         private CustomsSettingPM _CustomsSettingPM;
 

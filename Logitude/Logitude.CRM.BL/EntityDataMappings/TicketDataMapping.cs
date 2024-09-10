@@ -419,16 +419,9 @@ namespace Logitude.CRM.BL.EntityDataMappings
 
         private string SetEmailFooterMessage()
         {
-            var emailFooterMessage = "";
-            var logitudeFooterMessage = "This email is a service from Logitude!";
-            var cloudFooterMessage = "This email is a service from Unifreight Cloud Generation!";
+           
+            return  "This email is a service from Unifreight Cloud Generation!";
 
-            if (LogitudeSettings.DeploymentStage == "Simplog")
-                emailFooterMessage = logitudeFooterMessage;
-            else
-                emailFooterMessage = cloudFooterMessage;
-
-            return emailFooterMessage;
         }
 
         private void BuildSearchFields(TicketPM entityPM, Ticket entityPOCO, bool isNewEntity)

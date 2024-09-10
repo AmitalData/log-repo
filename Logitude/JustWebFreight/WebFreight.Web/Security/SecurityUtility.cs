@@ -1072,7 +1072,7 @@ namespace WebFreight.Web.Security
         {
             bool redirect = false;
 
-            if (LogitudeSettings.DeploymentStage != "logboxwe1" && LogitudeSettings.DeploymentStage != "Dev")
+            if (!SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox) && !SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development))
             {
                 if (ContinueRedirectToHttps())
                 {

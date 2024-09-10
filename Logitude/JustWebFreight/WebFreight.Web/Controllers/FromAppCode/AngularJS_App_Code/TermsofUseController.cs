@@ -7,6 +7,7 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 SecurityUtility.AuthenticationOnTenant(tenant);
-                bool isLogbox = LogitudeSettings.DeploymentStage == "logboxwe1";
+                bool isLogbox = SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox);
                 bool isLogboxUrl = SecurityUtility.getLoggedDomain().IndexOf("logbox") > -1;  
 
                 TermsofUseArgs result = new TermsofUseArgs();

@@ -261,11 +261,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             catch (Exception ex)
             {
-                if (email == "maheera@logitudeworld.com" || email == "ahmada@logitudeworld.com")
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
-                }
-
+               
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
@@ -387,19 +383,21 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             try
             {
                 // Build the service credentials and DNS management client
-                var recordSetParams = new RecordSet
-                {
-                    TTL = 3600,
-                    CnameRecord = new CnameRecord()
-                    {
-                       Cname = GetDomainData()
-                    }
-                };
+                //var recordSetParams = new RecordSet
+                //{
+                //    TTL = 3600,
+                //    CnameRecord = new CnameRecord()
+                //    {
+                //       Cname = GetDomainData()
+                //    }
+                //};
 
-                var recordSet = dnsClient.RecordSets.CreateOrUpdateAsync(resourceGroupName, zoneName, customerURL, RecordType.CNAME, recordSetParams).Result;
+                //var recordSet = dnsClient.RecordSets.CreateOrUpdateAsync(resourceGroupName, zoneName, customerURL, RecordType.CNAME, recordSetParams).Result;
+                throw new Exception("Add new domain to DNS is not allowed now!!!!");
             }
             catch (Exception e)
             {
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
                 throw e;
             }
         }
@@ -421,16 +419,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        private static string GetDomainData()
-        {
-            return LogitudeSettings.DeploymentStage.ToLower() == "simplog"
-                   ? "digital.logitudeworld.com" 
-                    : LogitudeSettings.DeploymentStage.ToLower() == "preproduction"
-                     ? "simplogpre.logitudeworld.com"
-                     : LogitudeSettings.DeploymentStage.ToLower() == "test2"
-                        ? "digital951.logitudeworld.com"
-                        : "";
-        }
+       
 
         private static bool IsValidDomain(string subDomain)
         {

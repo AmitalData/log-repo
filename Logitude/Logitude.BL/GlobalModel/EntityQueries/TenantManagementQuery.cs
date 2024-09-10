@@ -1518,7 +1518,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
         public string GetSystemDomain(int id)
         {
             string fromEmail = "no-reply@";
-            fromEmail += IsCloudEnvironment() ? "amital.co.il" : (IsLogboxEnvironment() ? GetLogboxDomainByTenant(id) : "LogitudeWorld.com");
+            fromEmail +=(IsLogboxEnvironment() ? GetLogboxDomainByTenant(id) :"amital.co.il" );
 
             return fromEmail;
         }
@@ -1532,8 +1532,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
         private bool IsLogboxEnvironment()
         {
-            string deploymentStage = Simplog.Server.Infrastructure.LogitudeSettings.DeploymentStage;
-            bool isLogboxEnvironment = deploymentStage != null && (deploymentStage.ToLower() == "logboxwe1" || deploymentStage.ToLower() == "test2");
+            bool isLogboxEnvironment = SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox);
             return isLogboxEnvironment;
         }
 
