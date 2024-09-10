@@ -240,8 +240,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         if (string.IsNullOrEmpty(declarationPM.CasualImporterAddress1))
                         {
-                            CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(tenant);
-                            var courierMasterPM = courierMasterQueryService.GetByDeclarationId(declarationOrg.Id, tenant);
+                            var decId = !string.IsNullOrEmpty(declarationOrg.AmendmentOriginalDeclartation) ? declarationOrg.AmendmentOriginalDeclartation : declarationOrg.Id;
+                            var declarationAccept = myQueryService.GetAcceptDeclarationAmendment(decId, tenant);
+
+							CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(tenant);
+                            var courierMasterPM = courierMasterQueryService.GetByDeclarationId(declarationAccept.Id, tenant);
                             var repository = new CardRepository(tenant);
                             var myCard = repository.GetSingleCard(courierMasterPM.IntegratorCode, tenant);
                             if (myCard != null && !String.IsNullOrWhiteSpace(myCard.Code))
