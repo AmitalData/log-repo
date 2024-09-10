@@ -41,12 +41,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnUpdating(DeclarationCargoSplitPM entityPM)
         {
-            
-            var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
-            if (setting.IsConnectedToUniFreight)
-            {
-                UpdateUnifreight(entityPM);
-            }
+                   
+            UpdateUnifreight(entityPM);        
  
             var context = CustomContext.GetContext(entityPM.Tenant);
             DeclarationQueryService myDeclarationQueryService = new DeclarationQueryService(context);

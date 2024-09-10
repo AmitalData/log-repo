@@ -50,11 +50,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 declarationRep.SetIsChangedAndSubmitChanges(declaration);
 
                 //-----------------------------------------------------------------------------------------------------------------//
-                var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
-                if (setting.IsConnectedToUniFreight)
-                {
-                    UpdateUnifreight(entityPM, declaration);
-                }
+          
+                 UpdateUnifreight(entityPM, declaration);
+              
             }
 
             //CustomsDocumentsTicketId adjustment 16/10/2016 mohammad

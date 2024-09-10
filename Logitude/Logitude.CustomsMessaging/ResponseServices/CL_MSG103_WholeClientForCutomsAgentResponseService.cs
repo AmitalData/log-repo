@@ -252,7 +252,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 //if (setting.IsConnectedToUniFreight)
                 if (!string.IsNullOrWhiteSpace(setting.UnfConnectionString))
                 {
-                    SendClientToUnifreight(customResponse.GeneralCustomerData, requestParams.Tenant, requestParams.LoggingUserId);
+                    SendClientToUnifreight(customResponse.GeneralCustomerData, requestParams.Tenant);
                     userMessage = userMessage + "\n" + "נשלח מסר ליוניפרייט";
                 }
                 else
@@ -325,7 +325,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
         //<--- Yuval Chalup 22.06.2014 T-4035
-        private void SendClientToUnifreight(CL_MSG103_WholeClientForCustomsAgentGeneralCustomerData cL_MSG103_WholeClientForCustomsAgentGeneralCustomerData, int tanent, string userId)
+        private void SendClientToUnifreight(CL_MSG103_WholeClientForCustomsAgentGeneralCustomerData cL_MSG103_WholeClientForCustomsAgentGeneralCustomerData, int tanent)
         {
             var myCUSTOMS_TABLE = new CUSTOMS_TABLE();
             myCUSTOMS_TABLE.TABLECODE = new TABLECODE[] { new TABLECODE { TABLECODE_ID = "CTBIMPORT" } };
@@ -350,37 +350,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             LogMessagingUtil.Instance.AppendLine(":יצא ממשק ליוניפרייט");
             LogMessagingUtil.Instance.AppendLine("לקוח חדש: " + myTABLEDATA.TABLEDATA_ID + " - " + myTABLEDATA.TABLEDATA_NAME_ENG);
-            var setting = CustomsSettingQueryService.GetSettingByTenant(tanent);
-            if (setting != null && setting.IsConnectedToUniFreight)
-            {
-                var response = Logitude.Customs.BL.Messaging.Amital.UServerCommunication.SendUpdateTableToUnifreight(tanent, "CTBIMPORT", myCUSTOMS_TABLE, true);
-
-            }
-            else
-            {
-
-                var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                {
-
-                    Tenant = _MyClientSearchPM.Tenant,
-                    objectTableName = "Customs.Client",
-                    EventCode = null,
-                    notes = "",
-                    CommunicationLoggingEntityReference = _MyClientSearchPM.Code,
-                    EntityId = _MyClientSearchPM.Id,
-                    UserId = userId,
-
-                    CommunicationSubject = "CLIENT_UPDATE",
-
-                };
-                var amitalInsertToQueueService = new AmitalInsertToQueueService<CUSTOMS_TABLE>(myCUSTOMS_TABLE);
-                amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "CLIENT_UPDATE");
-
-            }
-            
-
-            
-        }
+			var response = Logitude.Customs.BL.Messaging.Amital.UServerCommunication.SendUpdateTableToUnifreight(tanent, "CTBIMPORT", myCUSTOMS_TABLE, true);
+			if (response != null)
+			{
+				var gnrRes = response.GetValueOrDefault().GenericResponseObj;
+			}
+		}
 
         private static string IsBlock(bool isActive)
         {

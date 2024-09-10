@@ -21,15 +21,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Unifreight.BL.EntityPMs;
+using Simplog.Server.Infrastructure;
+using Unifreight.Data.AmitalModel;
+using System.Transactions;
+using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Customs.Def.Messaging.Customs;
+using Simplog.Data.CommonDataModel.Repositories;
 namespace Logitude.Customs.BL.Messaging.Amital
 {
     public class SendMessageToUServerUtil
     {
         public static string SendMessageToUServer(int tenant, string urouterRequest, out string P_MESSAGE, out string UnifreightTester)
         {
-            //implement the code to send the xml file to amital;
+				//implement the code to send the xml file to amital;
 
-            string P_MOREPARAMS = "";
+				string P_MOREPARAMS = "";
             string P_XML_DATA = "";
             UnifreightTester =P_MESSAGE = "";
             if (String.IsNullOrWhiteSpace(urouterRequest))
@@ -37,23 +44,29 @@ namespace Logitude.Customs.BL.Messaging.Amital
                 throw new ArgumentNullException("SendFileToAmitalService():xmlfile is null");
             }
 
-            //myParams.Add("GWSFBLO:UnifreightUserID", p_user);
-            //var setting = UnifreightIIGCommonUtil.GetTenantSetting(tenant);
-            //if (setting == null)
-            //{
-            //    throw new Exception("SendFileToAmitalService():no setting for tenant");
-            //}
-            var myUServerDNS = "UNIV55";// setting.UServerDNS;
+			//myParams.Add("GWSFBLO:UnifreightUserID", p_user);
+			//var setting = UnifreightIIGCommonUtil.GetTenantSetting(tenant);
+			//if (setting == null)
+			//{
+			//    throw new Exception("SendFileToAmitalService():no setting for tenant");
+			//}
+			var myUServerDNS = "UNIV55";// setting.UServerDNS;
             var myUServerPort = "8055";// setting.UServerPort;
 
 
             var mySetting = Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(tenant);
-            //Removed by Yuval Chalup 13.04.2017 (Consulting with Itzik)
-            //if (!mySetting.IsConnectedToUniFreight)
-            //{
-            //    throw new Exception(string.Format("SendFileToAmitalService():Tenant {0} Is not Connected To UniFreight", tenant));
-            ///}
-            if (String.IsNullOrWhiteSpace(mySetting.UServerServiceAddress))
+			//Removed by Yuval Chalup 13.04.2017 (Consulting with Itzik)
+			//if (!mySetting.IsConnectedToUniFreight)
+			//{
+			//    throw new Exception(string.Format("SendFileToAmitalService():Tenant {0} Is not Connected To UniFreight", tenant));
+			///}
+		
+			if (!mySetting.IsConnectedToUniFreight)
+			{
+				P_MESSAGE = OpenUnifreighTask(tenant, urouterRequest, "Urouter", mySetting.IsConnectedToUniFreight);	
+				return null;
+			}
+			if (String.IsNullOrWhiteSpace(mySetting.UServerServiceAddress))
             {
                 throw new Exception(
                     string.Format("SendFileToAmitalService():Tenant {0} Is Connected To UniFreight but mySetting.UServerServiceAddress is null ", tenant));
@@ -106,5 +119,105 @@ namespace Logitude.Customs.BL.Messaging.Amital
             LogMessagingUtil.Instance.AppendLine("UrouterRequest:Took:" + stopwatch.Elapsed.ToString());
             return P_XML_DATA;
         }
-    }
+		private static string OpenUnifreighTask(int tenant, string urouterRequest,string taskType,bool isConnectedToUniFreight)
+		{			
+				var sw = Stopwatch.StartNew();
+				TransactionScope scope = null;
+				if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
+				{
+					scope = TransactionFactory.GetNewOracleReadCommittedTransaction();
+				}
+				try
+				{
+				  AmitalContext _AmitalContext = AmitalContext.GetContext(tenant);
+				  
+				  
+				  string unifreightUser = null;
+				  if (RequestSheetContext.Current != null)
+				  {
+					var loggingUserIdFromRS = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
+					if (!string.IsNullOrWhiteSpace(loggingUserIdFromRS))
+					{
+						UserRepository userRep = new UserRepository(tenant);
+						var user = userRep.GetSingleUser(loggingUserIdFromRS, tenant, true);
+						if (user != null)
+						{
+							if (!String.IsNullOrWhiteSpace(user.Code))
+							{
+								unifreightUser = user.Code;
+							}
+						}
+					}
+				  }
+				  if (String.IsNullOrWhiteSpace(unifreightUser))
+				  {
+				  	unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(tenant);
+				  }
+			
+				
+				var myYCULTASKPM = new YCULTASKPM()
+					{
+						ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+						STATUS = "W",
+						REQUESTDATA = urouterRequest,
+						ENTNAME = "CFIFILEM",
+						PRIMARYNUM = "",
+						PRIORITY = YCULTASKPM.calcPriority(taskType),
+						TYPE = taskType,
+						USRCODE = unifreightUser,
+						ARCHIVE = "F",
+					};
+					if (!isConnectedToUniFreight)
+					{
+						myYCULTASKPM.Tenant = tenant;
+					}
+					var myYCULTASKUpdateService = new Unifreight.BL.EntityUpdateServices.YCULTASKUpdateService(_AmitalContext);
+					myYCULTASKUpdateService.DontAddTransaction = true;
+					myYCULTASKUpdateService.Update(myYCULTASKPM, true);
+		
+					var myGGGQPM = new GGGQPM()
+					{
+						ChangeSetOp = ChangeSetOperation.Insert,
+						ORIGINQUE = "LGT",
+						STATUS = "1",
+						EXPTASKTIME = 5,
+						EXECDATE = DateTime.Now,
+						TRY = 9,
+						PRIORITY = 8,
+						ENTNAME = "CFIFILEM",
+						PRIMARYNUM = "",
+						FORMID = "LGT_UPDATE_FCI",
+						DEBUG = "F",
+						DONEOPERATION = "D",
+					};
+					if (!isConnectedToUniFreight)
+					{
+						myGGGQPM.Tenant = tenant;
+					}
+					var myGGGQUpdateService = new Unifreight.BL.EntityUpdateServices.GGGQUpdateService(_AmitalContext);
+					myGGGQUpdateService.DontAddTransaction = true;
+					myGGGQUpdateService.Update(myGGGQPM, true);
+		
+		
+					if (scope != null)
+					{
+						scope.Complete();
+					}
+					return "succeeded";
+				}
+		        catch(Exception e)
+				{
+					return "failed" + e?.Message?.ToString();
+				}
+				finally
+				{
+					if (scope != null)
+					{
+						scope.Dispose();
+					}
+				}		
+			}
+		
+
+	}
 }

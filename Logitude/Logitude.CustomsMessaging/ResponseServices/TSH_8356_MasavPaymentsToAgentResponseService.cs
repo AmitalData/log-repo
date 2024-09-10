@@ -156,17 +156,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //XmlSerializer serializer = new XmlSerializer(typeof(CustomFileCreditRequestParams));
             //CustomFileCreditRequestParams requestParamsCredit = (CustomFileCreditRequestParams)serializer.Deserialize(memorystream);
             GenericResponse responseData = new GenericResponse();
+             
+            var myCustomsAGTService = new CustomsAGTService(requestParams, customResponse.MasavSentDate.masavSentDate, this.MyResponseData);
+            responseData = myCustomsAGTService.CustomsAGT();
 
-            var setting = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
-            if (setting.IsConnectedToUniFreight)
+			var setting = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
+			if (setting.IsConnectedToUniFreight)
             {
-                //try
-                //{
-                    var myCustomsAGTService = new CustomsAGTService(requestParams, customResponse.MasavSentDate.masavSentDate, this.MyResponseData);
-                    responseData = myCustomsAGTService.CustomsAGT();
-
-                    var genericResponseObj = responseData.GenericResponseObj.FirstOrDefault();
-                    if (genericResponseObj == null)
+				    var genericResponseObj = responseData.GenericResponseObj.FirstOrDefault();					
+				    if (genericResponseObj == null)
                     {
                         throw new System.Exception("GenericResponse.GenericResponseObj is null ");
                     }
@@ -194,6 +192,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         LogMessagingUtil.Instance.AppendLine("CustomsAGTService>genericResponseObj>Message= " + genericResponseObj.Message);
                     }
+            }
                 //}
                 /*catch (System.Exception e)
                 {
@@ -202,7 +201,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this.MyResponseData.UserMessage = this.MyResponseData.UserMessage + Environment.NewLine + e.ToString();
                     throw e;
                 }*/
-            }
+           
             // moran 1.11.15 - Task 16978 <--
 
             this.MyRequestSheetParam = new RequestSheetParam();

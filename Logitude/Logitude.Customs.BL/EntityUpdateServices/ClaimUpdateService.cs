@@ -184,11 +184,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
-            var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
-            if (setting.IsConnectedToUniFreight)
-            {
-                UpdateUnifreight(entityPM);
-            }
+          
+            UpdateUnifreight(entityPM);
+           
         }
 
         protected override void AfterUpdating(ClaimPM entityPM, EntityPM entityParentPM)

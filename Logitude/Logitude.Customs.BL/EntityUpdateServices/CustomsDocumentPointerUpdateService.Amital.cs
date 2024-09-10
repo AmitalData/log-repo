@@ -85,7 +85,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
 
                     };
-                    AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, true);
+                    AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, true, isExport: true);
 
                 }
                 else
