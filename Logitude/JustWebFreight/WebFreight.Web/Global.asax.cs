@@ -631,7 +631,7 @@ namespace WebFreight.Web
 
 
             var systemUrl = SecurityUtility.getLoggedDomain();
-            if (!string.IsNullOrEmpty(systemUrl) && systemUrl.ToLower().Contains("staging") && !SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Production))
+            if (!string.IsNullOrEmpty(systemUrl) && systemUrl.ToLower().Contains("staging") && !SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.LogboxAndAccountingProduction))
             {
                 HttpContext.Current.Items.Add("workerrolename", "staging");
                 return;

@@ -1514,8 +1514,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 (!extDocPM.IsHybrid   && LogitudeSettings.IsCostomsDeploy) ||
                 (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner) && (!extDocPM.IsHybrid || (extDocPM.IsAttachment))
 
-                && !extDocPM.NoAddToTasksQueue) 
-                )
+                 && !extDocPM.NoAddToTasksQueue)  
+                 )
             {
                 ObjectTable docTable = ObjectTableRepository.GetObjectTableById(extDocPM.ObjectTableId, extDocPM.Tenant);
                 if (this.HaveENDOC_DocumentsFilingMetaDataValues ||
