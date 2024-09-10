@@ -19,6 +19,7 @@ using System.Diagnostics;
 using CommunicationWorkerRole.Services;
 using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace CommunicationWorkerRole
 {
@@ -81,7 +82,7 @@ namespace CommunicationWorkerRole
             {
                 if (parameters.From == "no-reply@")
                 {
-                    parameters.From += "logitudeworld.com";
+                    parameters.From = SettingUtil.Emails.FromNoReply;
                 }
                 myMessage.From = new MailAddress(parameters.From);
             }

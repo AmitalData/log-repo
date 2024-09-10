@@ -27,7 +27,7 @@ namespace Logitude.Server.Tools.Helpers
     {
         public static void SendUserActivity(string organizationId, string orgDisplayName, string userName, string module, string activity, string email, int tenant, bool isSharedLogisticsContact, string cardId, string partnerTypeId)
         {
-            if (LogitudeSettings.DeploymentStage != "Dev" && !LogitudeSettings.IsCostomsDeploy)
+            if (!SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development) && !LogitudeSettings.IsCostomsDeploy)
             {
                 ContactRepository contactRepository = new ContactRepository(tenant);
                 Contact contact = contactRepository.GetSingleContactByEmail(email, tenant);

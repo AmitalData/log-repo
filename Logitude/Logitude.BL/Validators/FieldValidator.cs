@@ -11,6 +11,7 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.BL.Validators
 {
@@ -30,7 +31,7 @@ namespace Logitude.BL.Validators
 
         public ValidationFieldResult ValidateField(ObjectField field, object fieldValue, object entity,int tenant)
         {
-            if (LogitudeSettings.DeploymentStage == "logboxwe1" || LogitudeSettings.DeploymentStage == "Test2" || LogitudeSettings.DeploymentStage == "Dev")
+            if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox) || SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development))
             {
                 return new ValidationFieldResult(true, "");
             }

@@ -25,6 +25,7 @@ using System.Web.Http;
 using System.Globalization;
 using WebFreight.Web.Helpers.APIHelpers;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace WebFreight.Web
 {
@@ -61,7 +62,7 @@ namespace WebFreight.Web
                     tenant = emailsList.Select(a => a.Tenant).FirstOrDefault();
                     communicationLogId = emailsList.Where(a => a != null).Select(a => a.CommunicationLogId).FirstOrDefault();
 					string deploymentStage = emailsList.Where(a => a != null).Select(a => a.DeploymentStage).FirstOrDefault();
-                    if(deploymentStage == LogitudeSettings.DeploymentStage) 
+                    if( SettingUtil.DeploymentStage.IsDBStage( deploymentStage)) 
                     { 
 					   InsertNewAnalyzeQueue(emailsList, tenant);
 					}

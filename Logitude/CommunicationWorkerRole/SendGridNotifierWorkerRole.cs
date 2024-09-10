@@ -8,6 +8,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -96,7 +97,7 @@ namespace CommunicationWorkerRole
             byte[] bytearray = enc.GetBytes(body);
            
             
-            string fromemail = "no-reply@" + (LogitudeSettings.WorkEnvironment == "cloud" ? "amital.co.il" : LogitudeSettings.DeploymentStage != null && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2") ? "logbox.co.il" : "LogitudeWorld.com");
+            string fromemail =  SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox) ? SettingUtil.Emails.FromNoReplyLogbox : SettingUtil.Emails.FromNoReply;
 
             CommunicationLog emailCommunication = communicationLogRepository.GetSingleCommunicationLog(CurrentLogId, Tenant);
             string emailLog = $"From0: {fromemail}";

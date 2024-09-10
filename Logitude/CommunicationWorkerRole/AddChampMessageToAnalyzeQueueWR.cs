@@ -114,27 +114,9 @@ namespace CommunicationWorkerRole
                 //string[] roleId = null;
 
                 string subscribtionName = "ChampSubScription";
-                //try
-                //{
-                //    roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
-                //}
-                //catch
-                //{
-                //    roleId = new string[] { "1", "2"};
- 
-                //}
+                
 
-                //if (LogitudeSettings.DeploymentStage == "Dev")
-                //{
-                //    subscribtionName = Environment.MachineName + "_" + roleId[roleId.Length - 1];
-                //}
-
-                //else
-                //{
-                //    subscribtionName = roleId[roleId.Length - 1];
-                //}
-
-                subscriptionClient = Microsoft.ServiceBus.Messaging.SubscriptionClient.CreateFromConnectionString(StorageAcountDetails.GetSettingByName(LogitudeSettings.DeploymentStage), "champmessageintopic", subscribtionName);
+                subscriptionClient = Microsoft.ServiceBus.Messaging.SubscriptionClient.CreateFromConnectionString(StorageAcountDetails.GetSettingByName(), "champmessageintopic", subscribtionName);
             }
 
             return base.OnStart();

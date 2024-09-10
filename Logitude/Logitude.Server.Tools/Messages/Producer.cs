@@ -19,18 +19,10 @@ namespace Logitude.Server.Tools.Messages
         {
             KafkaCredentials.SetEventHubConfigurations();
             ProducerBuilder = BuildProducer();
-            if (IsProductionEnvironment())
-            {
-                KafkaCredentials.SetTestingEventHubConfigurations();
-                TestingProducer = BuildTestingProducer();
-            }
+
         }
 
-        private bool IsProductionEnvironment()
-        {
-            return LogitudeSettings.DeploymentStage == "Simplog";
-        }
-
+        
         private IProducer<long, string> BuildProducer()
         {
             ProducerConfig config = GetProducerConfigurations();
@@ -77,17 +69,11 @@ namespace Logitude.Server.Tools.Messages
         {
             if (useSync)
             {
-                if (IsProductionEnvironment())
-                {
-                    TestingProducer.Produce(topic, new Message<long, string> { Key = key, Value = logitudeUpdateMessage });
-                }
+               
                 ProducerBuilder.Produce(topic, new Message<long, string> { Key = key, Value = logitudeUpdateMessage });
                 return new DeliveryResult<long, string>();
             }
-            if (IsProductionEnvironment())
-            {
-                TestingProducer.ProduceAsync(topic, new Message<long, string> { Key = key, Value = logitudeUpdateMessage }).GetAwaiter().GetResult();
-            }
+           
             return ProducerBuilder.ProduceAsync(topic, new Message<long, string> { Key = key, Value = logitudeUpdateMessage }).GetAwaiter().GetResult();
         }
 
@@ -95,17 +81,11 @@ namespace Logitude.Server.Tools.Messages
         {
             if (useSync)
             {
-                if (IsProductionEnvironment())
-                {
-                    TestingProducer.Produce(topicPartition, new Message<long, string> { Key = key, Value = logitudeUpdateMessage });
-                }
+                
                 ProducerBuilder.Produce(topicPartition, new Message<long, string> { Key = key, Value = logitudeUpdateMessage });
                 return new DeliveryResult<long, string>();
             }
-            if (IsProductionEnvironment())
-            {
-                TestingProducer.ProduceAsync(topicPartition, new Message<long, string> { Key = key, Value = logitudeUpdateMessage }).GetAwaiter().GetResult();
-            }
+           
             return ProducerBuilder.ProduceAsync(topicPartition, new Message<long, string> { Key = key, Value = logitudeUpdateMessage }).GetAwaiter().GetResult();
         }
 
@@ -113,11 +93,7 @@ namespace Logitude.Server.Tools.Messages
         {
             ProducerBuilder.Flush();
             ProducerBuilder.Dispose();
-            if (IsProductionEnvironment())
-            {
-                TestingProducer.Flush();
-                TestingProducer.Dispose();
-            }
+           
 
         }
     }

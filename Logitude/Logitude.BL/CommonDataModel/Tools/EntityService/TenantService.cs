@@ -50,7 +50,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.isNewEntity = true;
             this.entityPM = theEntityPm;
             this.entityPM.TenantVATManagement = true;
-            this.entityPM.UseNewTermsOfUse = (LogitudeSettings.DeploymentStage == "Simplog" || LogitudeSettings.DeploymentStage == "Test2" || LogitudeSettings.DeploymentStage == "Dev");
+            this.entityPM.UseNewTermsOfUse = SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development);
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 this.entityPM.Id = TenantCounter.GetNumber();

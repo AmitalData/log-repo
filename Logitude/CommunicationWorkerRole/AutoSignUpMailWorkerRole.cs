@@ -47,7 +47,7 @@ namespace CommunicationWorkerRole
 
                 while (IsRunning)
                 {
-                    if (!General.IsUpdating()) //&& LogitudeSettings.DeploymentStage != "Dev")
+                    if (!General.IsUpdating())
                     {
 
                         try

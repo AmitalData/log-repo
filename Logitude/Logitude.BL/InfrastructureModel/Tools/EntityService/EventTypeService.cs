@@ -130,7 +130,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         private void AddImporterQueueMessage()
         {
             if (tenant != 0) return;
-            if (!IsCloudEnvironment() && !IsTestEnvironment()) return;
+            if (!IsCloudEnvironment() && !SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development)) return;
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("ImporterEventTypesQueue", 0);
             Dictionary<string, string> importerQueueMessage = new Dictionary<string, string>() {
@@ -144,10 +144,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             return LogitudeSettings.WorkEnvironment?.ToLower() == "cloud";
         }
 
-        private bool IsTestEnvironment()
-        {
-            return LogitudeSettings.DeploymentStage?.ToLower() == "test2";
-        }
+        
 
     }
 }

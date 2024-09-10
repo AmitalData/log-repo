@@ -215,7 +215,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 string entityId = null;
                 string attachments = String.Join(",", attList.ToArray()); ;
                 string entityReference = null;
-                string from = "no-reply@LogitudeWorld.com";
+                string from = SettingUtil.Emails.FromNoReply;
                 string replyTo = "";
                 string res = /*htmlEditorHelper*/InjectionUtil.Instance.SendHtmlDocument(
                     bytePlainTextdata/*htmlData*/, internalDocumentId, externalDocumentId, tenant, Email, "subject", "", "", userId, entityId, objectTableId, attachments,

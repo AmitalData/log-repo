@@ -120,17 +120,12 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
 
 
-                //AuthenticationUtil.Impersonate(1, 
-                //    //"jalal@mail.com", "jalal"
-                //    "admin@fnarsoft.com", "admin@fnarsoft.com"
-                //    );
-
+            
                 if (ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString == "Logitude2-5_Global,sa,Saas256,.")
-                //if (Environment.MachineName.ToUpper().Contains("ITZIK"))
                 {
                     AuthenticationUtil.Impersonate(1,
                    //"jalal@mail.com", "jalal"
-                   "angular@fnarsoft.com", "angular@fnarsoft.com"
+                   "angular@amital.co.il", "angular@amital.co.il"
                    );
 
                 }
@@ -138,7 +133,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 {
                     AuthenticationUtil.Impersonate(989,
                         //"jalal@mail.com", "jalal"
-                        "basel@amital.co.il", "basel@amital.co.il"
+                        "test@amital.co.il", "test@amital.co.il"
                         );
 
                 }

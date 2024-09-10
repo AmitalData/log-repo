@@ -342,7 +342,7 @@ namespace Logitude.Server.Tools
 
             try
             {
-                if (!LogitudeSettings.IsCostomsDeploy &&   LogitudeSettings.DeploymentStage != "amitaloracletk1")//Islam //(LogitudeSettings.QueueServiceMode != "db")
+                if (!LogitudeSettings.IsCostomsDeploy && !SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.AmitalOracle) ) 
                 {
 
                     DbQueueService queueservice = new DbQueueService(queueName, tenant);
@@ -657,7 +657,7 @@ namespace Logitude.Server.Tools
                 CreateDateUTC = DateTime.UtcNow,
                 LastStatusDateUTC = DateTime.UtcNow,
                 QueueName = "emailqueue",
-                SearchFields = communicationParams.To + ',' + communicationParams.From + ',' + communicationParams.BCC + ',' + communicationParams.CC + ',' + communicationParams.Subject,
+                SearchFields =string.Join(",",new string[] { communicationParams.To, communicationParams.From, communicationParams.BCC, communicationParams.CC, communicationParams.Subject }),
                IsSecured = communicationParams.IsBodySecured,
             };
 

@@ -188,7 +188,7 @@ namespace WebFreight.Web.Helpers
             string emailBody = GetAutomationNotifyBackEmailBody(automation.Name, objectTableeName, notifyBackPartners);
             StringBuilder HtmlTemplate = BuildHtmlTemplateWithBody(emailBody);
 
-            string fromEmail = "no-reply@LogitudeWorld.com";
+            string fromEmail = SettingUtil.Emails.FromNoReply;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(automation.Tenant);
@@ -200,7 +200,7 @@ namespace WebFreight.Web.Helpers
             EmailCommunicationParams emailParams = new EmailCommunicationParams()
             {
                 From = fromEmail,
-                To = NotifyBackEmails, CC = "", BCC = "",
+                To = NotifyBackEmails, 
                 Subject = "Automation " + automation.Name + " Failed",
                 EmailBody = emailbody,
                 Tenant = automation.Tenant,
@@ -483,7 +483,7 @@ namespace WebFreight.Web.Helpers
                         OnUpdateAutomationOrder += 1;
                         automation.Order = OnUpdateAutomationOrder;
                     }
-                    if (LogitudeSettings.DeploymentStage != "logboxwe1") {
+                    if (!SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox)) {
                         newAutomationPM.Inactive = true;
                     }
                     service.Create(newAutomationPM);

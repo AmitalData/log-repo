@@ -1,4 +1,5 @@
 ﻿using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace Simplog.Data.Helpers
 
         public static bool IsLogBoxEnvironment()
         {
-            return (LogitudeSettings.DeploymentStage != null && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1") || LogitudeSettings.WorkEnvironment?.ToLower() == "logbox";
+            return SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox);
         }
 
         private static string GetLogboxWorkEnvironment()

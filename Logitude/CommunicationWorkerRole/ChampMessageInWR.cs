@@ -85,7 +85,7 @@ namespace CommunicationWorkerRole
                             {
                                 BrokeredMessage message = new BrokeredMessage();
                                 message.Properties["MessageData"] = messageData;
-                                TopicClient client = Microsoft.ServiceBus.Messaging.TopicClient.CreateFromConnectionString(StorageAcountDetails.GetSettingByName(LogitudeSettings.DeploymentStage), "champmessageintopic");
+                                TopicClient client = Microsoft.ServiceBus.Messaging.TopicClient.CreateFromConnectionString(StorageAcountDetails.GetSettingByName(), "champmessageintopic");
 
                                 client.Send(message);
                                 LogDoneItemInMemory();
@@ -185,17 +185,7 @@ namespace CommunicationWorkerRole
 
                 string subscribtionName = "ChampSubScription";
                 SubscriptionDescription myAgentSubscription;
-                //string[] roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
-
-                //if (LogitudeSettings.DeploymentStage == "Dev")
-                //{
-                //    subscribtionName = Environment.MachineName + "_" + roleId[roleId.Length - 1];
-                //}
-
-                //else
-                //{
-                //    subscribtionName = roleId[roleId.Length - 1];
-                //}
+               
 
                 if (!StorageAcountDetails.NameSpaceManager.SubscriptionExists(champMessageInTopic.Path, subscribtionName))
                 {

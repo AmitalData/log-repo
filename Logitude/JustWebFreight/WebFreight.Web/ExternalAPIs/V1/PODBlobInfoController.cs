@@ -111,7 +111,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 EntityId = shipmentId,
                                 DocumentTypeId = documentTypeId,
                                 ObjectTableId = objectTableId,
-                                CreatedByUserId = userId,  //System@logitudeworld.com
+                                CreatedByUserId = userId,  
                                 CreateDate = DateTime.Now,
                                 OwnerId = userId,
                                 UpdatedByUserId = userId,

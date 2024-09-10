@@ -28,6 +28,7 @@ using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.CommonDataModel;
 using Logitude.Infrastructure.Data.Models.AuditLog;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 {
@@ -4503,7 +4504,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
         
         private static bool IsLogboxEnvironment()
         {
-            return !string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && (LogitudeSettings.DeploymentStage.ToLower() == "logboxpre" || LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1");
+            return SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox);
         }
     }
 }

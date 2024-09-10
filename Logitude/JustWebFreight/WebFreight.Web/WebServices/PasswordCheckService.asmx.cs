@@ -223,7 +223,7 @@ namespace WebFreight.Web.WebServices
                 TeamName = (LogitudeSettings.WorkEnvironment == "cloud" ? "Amital" : LogitudeSettings.ProductName) + " Team",
                 SiteUri = LogitudeSettings.WorkEnvironment == "cloud" ? "https://cloud.amital.co.il/" : ("www." + LogitudeSettings.DomainName),
                 SiteLogin = LogitudeSettings.LogitudeURL,
-                FromEmail = "no-reply@" + (LogitudeSettings.WorkEnvironment == "cloud" ? "amital.co.il" : "LogitudeWorld.com")
+                FromEmail = SettingUtil.Emails.FromNoReply
             };
 
             return resetPasswordHtmlArgs;
@@ -236,8 +236,6 @@ namespace WebFreight.Web.WebServices
                 Subject = "Password reset",
                 From = resetPassswordEmailCommunicationArgs.FromEmail,
                 To = resetPassswordEmailCommunicationArgs.ToEmail,
-                CC = null,
-                BCC = null,
                 EmailBody = resetPassswordEmailCommunicationArgs.HtmlTemplate.ToString(),
                 Tenant = resetPassswordEmailCommunicationArgs.Tenant,
                 LoggingUserId = resetPassswordEmailCommunicationArgs.LoggedUserId,
@@ -262,7 +260,7 @@ namespace WebFreight.Web.WebServices
                     TeamName = "LogBox Team",
                     SiteUri = "system.logbox.co.il",
                     SiteLogin = "http://system.logbox.co.il",
-                    FromEmail = "no-reply@logbox.co.il"
+                    FromEmail = SettingUtil.Emails.FromNoReplyLogbox
                 };
             }
             return resetPasswordHtmlArgs;
@@ -317,7 +315,7 @@ namespace WebFreight.Web.WebServices
 
         private bool IsLogboxEnvironment()
         {
-            return LogitudeSettings.DeploymentStage != null && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2");
+            return SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox);
         }
 
         //public Document BuildHtmlDocument(int tenant, string body)

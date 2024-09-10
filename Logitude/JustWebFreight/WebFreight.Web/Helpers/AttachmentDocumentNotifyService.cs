@@ -48,8 +48,6 @@ namespace WebFreight.Web.Helpers
             {
                 From = fromEmail,
                 To = notifyBackEmails,
-                CC = "",
-                BCC = "",
                 Subject = emailSubject,
                 EmailBody = emailbody,
                 Tenant = tenant,
@@ -59,7 +57,7 @@ namespace WebFreight.Web.Helpers
 
         private string GetFromEmail()
         {
-            string fromEmail = "no-reply@LogitudeWorld.com";
+            string fromEmail = SettingUtil.Emails.FromNoReply;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);

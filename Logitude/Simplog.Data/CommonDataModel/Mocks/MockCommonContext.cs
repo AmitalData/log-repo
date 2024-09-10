@@ -189,10 +189,10 @@ namespace Simplog.Data.CommonDataModel.Mocks
                 {
                     contatcs = new List<Contact>() 
                 {
-                new Contact() { Id = "1-1", EnglishName = "user1", Email = "user1@fnarsoft.com", Tenant = 1, },
-                new Contact() { Id = "1-2", EnglishName = "user2", Email = "user2@fnarsoft.com", Tenant = 2, },
-                new Contact() { Id = "1-5", EnglishName = "user7", Email = "user7@fnarsoft.com", Tenant = 1, },
-                new Contact() { Id = "1-3", EnglishName = "user3", Email = "user3@fnarsoft.com", Tenant =3, }, };
+                new Contact() { Id = "1-1", EnglishName = "user1", Email = "user1@amital.co.il", Tenant = 1, },
+                new Contact() { Id = "1-2", EnglishName = "user2", Email = "user2@amital.co.il", Tenant = 2, },
+                new Contact() { Id = "1-5", EnglishName = "user7", Email = "user7@amital.co.il", Tenant = 1, },
+                new Contact() { Id = "1-3", EnglishName = "user3", Email = "user3@amital.co.il", Tenant =3, }, };
 
                     contactObjectSet = new MockObjectSet<Contact>(contatcs);
                 }

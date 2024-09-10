@@ -2565,21 +2565,21 @@ namespace WebFreight.Web.GlobalModel
         }
         #endregion
 
-        public void LoadDataBases()
-        {
-            if (LogitudeSettings.DeploymentStage != "Dev")
-            {
-                GlobalDB db1 = new GlobalDB() { Id = "0", DBConnection = "WebFreightBranch2,simplog@z0n0c08sao,Saas256!@" };
-                globalDBsRepository.Add(db1);
-            }
-            else
-            {
-                GlobalDB db1 = new GlobalDB() { Id = "0", DBConnection = "WebFreightBranch2,sa,Saas256" /*BuildConnectionString("WebFreight")*/ };
-                globalDBsRepository.Add(db1);
-            }
+        //public void LoadDataBases()
+        //{
+        //    if (!SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development))
+        //    {
+        //        GlobalDB db1 = new GlobalDB() { Id = "0", DBConnection = "WebFreightBranch2,simplog@z0n0c08sao,Saas256!@" };
+        //        globalDBsRepository.Add(db1);
+        //    }
+        //    else
+        //    {
+        //        GlobalDB db1 = new GlobalDB() { Id = "0", DBConnection = "WebFreightBranch2,sa,Saas256" /*BuildConnectionString("WebFreight")*/ };
+        //        globalDBsRepository.Add(db1);
+        //    }
 
-            globalDBsRepository.SubmitChanges();
-        }
+        //    globalDBsRepository.SubmitChanges();
+        //}
 
         private string BuildConnectionString(string dbName)
         {

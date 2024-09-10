@@ -48,7 +48,7 @@ namespace CommunicationWorkerRole
 
                 while (IsRunning)
                 {
-                    if (!General.IsUpdating()) //&& LogitudeSettings.DeploymentStage != "Dev")
+                    if (!General.IsUpdating()) 
                     {
 
                         try
@@ -78,7 +78,7 @@ namespace CommunicationWorkerRole
                                     return;
                                 }
 
-                               
+
 
                                 int crmTenant = LogitudeSettings.LogitudeCRMTenantNumber;
                                 SettingRepository settingRepository = new SettingRepository();
@@ -126,43 +126,28 @@ namespace CommunicationWorkerRole
 
 
                                         scope.Complete();
-                                        
+
                                     }
-                                    
+
 
                                 }
                                 else
                                 {
                                     string emailbody = "<div style='text-align:left;font-family:Verdana;font-weight:bold;font-size:14px'>The contact received is already found in the CRM tenant:</div>" + htmlString;
                                     EmailCommunicationParams emailParams = new EmailCommunicationParams();
-                                    if (LogitudeSettings.DeploymentStage == "Simplog")
+
+                                    emailParams = new EmailCommunicationParams()
                                     {
-                                        
-                                        emailParams = new EmailCommunicationParams()
-                                        {
-                                            From = "admin@fnarsoft.com",
-                                            To = "info@logitudeworld.com",
-                                            Subject = "The contact received is already found in the CRM tenant",
-                                            EmailBody = emailbody,
-                                            Tenant = crmTenant,
-                                            IsBodySecured = true,
-                                        };
-
-                                    }
-                                    else
-                                    {
-                                        emailParams = new EmailCommunicationParams()
-                                        {
-                                            From = "admin@fnarsoft.com",
-                                            To = "islam@logitudeworld.com;jalal@logitudeworld.com",
-                                            Subject = "The contact received is already found in the CRM tenant",
-                                            EmailBody = emailbody,
-                                            Tenant = crmTenant,
-                                            IsBodySecured = true,
-                                        };
+                                        From = SettingUtil.Emails.FromNoReply,
+                                        To = SettingUtil.Emails.CrmManagers ,
+                                        Subject = "The contact received is already found in the CRM tenant",
+                                        EmailBody = emailbody,
+                                        Tenant = crmTenant,
+                                        IsBodySecured = true,
+                                    };
 
 
-                                    }
+
 
                                     Communications.AddEmailCommunicationLogQueue(emailParams, crmTenant);
 
@@ -197,7 +182,7 @@ namespace CommunicationWorkerRole
 
                             if (autosignupEmail != null)
                             {
-                                if (autosignupEmail.Retries < 5)    
+                                if (autosignupEmail.Retries < 5)
                                 {
                                     autosignupEmail.Retries++;
                                     autosignupEmail.Status = "New";
@@ -258,7 +243,7 @@ namespace CommunicationWorkerRole
         }
 
 
-        private  void BuildSearchFields(LogitudeLead lead)
+        private void BuildSearchFields(LogitudeLead lead)
         {
             string mySearchFields = "";
 
@@ -303,7 +288,7 @@ namespace CommunicationWorkerRole
             }
 
             lead.SearchFields = mySearchFields;
-           
+
         }
 
         private void ParseHtmlString(HtmlStringParsingParams htmlParams, string htmlString)

@@ -177,7 +177,7 @@ namespace RabbitMQSRV
         /// </summary>
         public void ProtectedRun()
         {
-            if (LogitudeSettings.DeploymentStage != "Dev")
+            if (!SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development))
             {
                 try
                 {

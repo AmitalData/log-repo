@@ -10,6 +10,7 @@ using Logitude.Infrastructure.BL.ExtendedServices;
 using Logitude.Server.Tools;
 using Logitude.SystemLogs;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -206,8 +207,9 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
                 emailParams = new EmailCommunicationParams()
                 {
-                    From = "admin@fnarsoft.com",
-                    To = "eyal@amital.co.il;ohad@amital.co.il",
+                    From = SettingUtil.Emails.FromNoReply,
+                    To = SettingUtil.Emails.AccountingManagers,
+                    CC = SettingUtil.Emails.DevTeamManagers,
                     Subject = error,
                     EmailBody = emailbody,
                     Tenant = tenant,

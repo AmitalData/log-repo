@@ -85,8 +85,8 @@ namespace WebFreight.Web.WcfApi
                     {
                          
                         string subject = "The contact received is already found in the CRM tenant";
-                        string fromEmail = "admin@fnarsoft.com";
-                        string toEmails = LogitudeSettings.DeploymentStage == "Simplog" ? "info@logitudeworld.com" : "islam@logitudeworld.com;jalal@logitudeworld.com";
+                        string fromEmail = SettingUtil.Emails.FromNoReply;
+                        string toEmails = SettingUtil.Emails.CrmManagers;
                         
                         StringBuilder HtmlTemplate = new StringBuilder();
                         HtmlTemplate.Append("<div style='text-align:left;font-family:Verdana;font-weight:bold;font-size:14px'>The contact received is already found in the CRM tenant:</div>");
@@ -113,8 +113,6 @@ namespace WebFreight.Web.WcfApi
                             Subject = subject,
                             From = fromEmail,
                             To = toEmails,
-                            CC = null,
-                            BCC = null,
                             EmailBody = HtmlTemplate.ToString(),
                             Tenant = crmTenant,
                             LoggingUserId = contact.Id,

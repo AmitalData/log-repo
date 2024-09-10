@@ -16,6 +16,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -227,7 +228,7 @@ namespace CommunicationWorkerRole
             string body = BuildAlertEmailHTML(myCurrentTicket, myTicket);
             byte[] bytearray = enc.GetBytes(body);
 
-            string fromemail = "no-reply@LogitudeWorld.com";
+            string fromemail = SettingUtil.Emails.FromNoReply;
             string subject = "Ticket Alert";
 
             if (myCurrentTicket.EscalationFor == "FR")
