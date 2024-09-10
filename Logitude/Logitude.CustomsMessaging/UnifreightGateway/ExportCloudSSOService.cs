@@ -101,9 +101,13 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
             {
                 var userRepository = new UserRepository();
                 var user =userRepository.GetSingleUserByCode(unifreightUser, itenant, true);
-                if (!string.IsNullOrWhiteSpace(user?.Id))    
+                if (!string.IsNullOrWhiteSpace(user?.Id))
                 {
-                    contact = contactRep.GetSingleContactByIdAndTenant(user?.Id, itenant, true);
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(10)))
+                    {
+                        contact = contactRep.GetSingleContactByIdAndTenant(user?.Id, itenant, true);
+                        scope.Complete();
+                    }
                 }
                 
             }
