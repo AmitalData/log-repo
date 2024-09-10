@@ -58,4 +58,5 @@ export class MessagesData {
 export class GeneralDetails {
     Forwarder: string;
     TypeOfDelivery: string;
+    TransportResponsibility: string;
 }
