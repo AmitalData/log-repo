@@ -113,6 +113,7 @@ using WebFreight.Web.Helpers;
                     }
                 }
             }
+            InterestReportDP.FutureInterestTransactions = futureInterestTransactions;
 
             GetGLAccountDisplayNumber(tenant, InterestReportDP, InteerstReportPM);
 
