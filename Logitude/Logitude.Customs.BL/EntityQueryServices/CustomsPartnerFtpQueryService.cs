@@ -15,6 +15,7 @@ using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
+using Logitude.Customs.BL.BL;
 namespace Logitude.Customs.BL.EntityQueryServices
 {
     public partial class CustomsPartnerFtpQueryService : EntityQueryService<CustomsPartnerFtp, CustomsPartnerFtpKeys, CustomsPartnerFtpPM, object, CustomsPartnerFtpKeys>
@@ -59,6 +60,21 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             return listPM;
 
+        }
+
+        public CustomsPartnerFtpPM GetBy(int tenant, string InterfaceName, bool getFromCahce = true)
+        {
+            string key = "CustomsPartnerFtp" + tenant + ";" + InterfaceName;
+            
+            Func<CustomsPartnerFtpPM> f = ( ) =>
+            {
+                CustomsPartnerFtp poco = repository.GetAll(tenant).Where(r => r.InterfaceName == InterfaceName).FirstOrDefault();
+                return poco == null ? null : GetEntityPM(poco);
+            };
+
+            CustomsPartnerFtpPM res = getFromCahce ? CacheHelper.GetFromCache(key, f) : f();
+            
+            return res;
         }
     }
 }

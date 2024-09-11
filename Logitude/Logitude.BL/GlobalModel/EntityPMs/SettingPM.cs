@@ -50,7 +50,6 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public string PrivateKey { get; set; }
         public string AmitalTaxesUrl { get; set; }
         public string TaxesRediractUrl { get; set; }
-        public string MamanServiceUrl { get; set; }
         public string AmitalApiAddress { get; set; }
         public string AmitalApiXFunctionsKey { get; set; }
         public string ExportUrl { get; set; }

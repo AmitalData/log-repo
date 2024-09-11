@@ -1,4 +1,8 @@
 ﻿using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Server.Tools.Utils;
 using Newtonsoft.Json;
 using System;
 using System.Net;
@@ -11,19 +15,31 @@ namespace WebFreight.Web.Controllers.WebServices.Services
 {
     public class MamanService
     {
-        static string MamanServiceUrl = new SettingQuery().GetSinglePMFromCahche().MamanServiceUrl;
-
-        public static HttpResponseMessage Send(string path, string body, int tenant, HttpMethod method)
+        public static HttpResponseMessage Send(int tenant, string interfacename, object body)
         {
-            string url = MamanServiceUrl + path;
+            CustomsPartnerFtpPM cpftp = new CustomsPartnerFtpQueryService(tenant).GetBy(tenant, interfacename);
+            WebApiDefinitionDTO dtoWebApiDefinition = ProxyUtil.JsonConvertDeserializeTyped<WebApiDefinitionDTO>(cpftp.CommunicationDetails);
+            string bodyString = JsonConvert.SerializeObject(new 
+            {
+                Url = dtoWebApiDefinition.WEBAPIURL,
+                Username = dtoWebApiDefinition.User,
+                dtoWebApiDefinition.Password,
+                Body = body
+            });
 
+            HttpResponseMessage res = Send(dtoWebApiDefinition.ServiceUrl, bodyString, tenant, HttpMethod.Post);
+            return res;
+        }
+
+        public static HttpResponseMessage Send(string url, string body, int tenant, HttpMethod method)
+        {
             string jwt = new SettingQuery().GetJwtToken(tenant);
             var client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            StringContent stringContent = body != null ? new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json") : null;
+            StringContent stringContent = body != null ? new StringContent(body, Encoding.UTF8, "application/json") : null;
 
             Task<HttpResponseMessage> resTask;
 

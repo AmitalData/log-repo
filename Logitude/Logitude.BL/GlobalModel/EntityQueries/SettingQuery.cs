@@ -119,7 +119,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                   System2RedirectFraction = a.System2RedirectFraction,
                                   ReportsRunUsingWR = a.ReportsRunUsingWR,
                                   AmitalTaxesUrl = a.AmitalTaxesUrl,
-                                  MamanServiceUrl = a.MamanServiceUrl,
                                   PrivateKey = a.PrivateKey,
                                   TaxesRediractUrl = a.TaxesRediractUrl,
                                   AmitalApiAddress = a.AmitalApiAddress,
