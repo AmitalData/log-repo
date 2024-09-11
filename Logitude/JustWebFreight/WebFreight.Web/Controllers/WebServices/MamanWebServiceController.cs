@@ -10,25 +10,22 @@ namespace WebFreight.Web.Controllers.WebServices
 {
     public class MamanWebServiceController : ApiController
     {
-        [TokenAutherize]
-        [HttpGet]
-        [HttpPut]
-        [HttpDelete]
         [HttpPost]
-        public HttpResponseMessage Handler()
+        public HttpResponseMessage Send([FromBody] dynamic bodyDynamic, string interfacename)
         {
+            int tenant = HeaderHelper.Authenticate().Tenant;
+
             RelatedLogEntity entity = new RelatedLogEntity() { EntityID = "mamanApi", EntityType = "API" };
 
             try
             {
-                int tenant = HeaderHelper.Authenticate().Tenant;
-                string path = Request.RequestUri.AbsolutePath.Replace("api/maman/", "");
-                string body = Request.Content.ReadAsStringAsync().Result;
-                HttpMethod method = Request.Method;
+                string body = Convert.ToString(bodyDynamic);
+                DevLog.Instance.WriteDebug($"mamanApi request in, tenant: " + tenant + ", body: " + body, entity);
 
-                DevLog.Instance.WriteDebug($"mamanApi in, path: " + path + ", tenant: " + tenant + ", body: " + body + ", method: " + method, entity);
+                HttpResponseMessage res = MamanService.Send(tenant, interfacename, body);
 
-                HttpResponseMessage res = MamanService.Send(path, body, tenant, method);
+                DevLog.Instance.WriteDebug($"mamanApi response out, status: " + res.StatusCode + ", res: " + res.Content.ReadAsStringAsync().Result, entity);
+
                 return res;
             }
             catch (Exception e)
@@ -38,6 +35,14 @@ namespace WebFreight.Web.Controllers.WebServices
                 var res = new { Status = (int)HttpStatusCode.InternalServerError, Error = "Internal error", Success = false };
                 return Request.CreateResponse(HttpStatusCode.OK, res);
             }
+        }
+
+        public class MamanSendArgs
+        {
+            public string MamanUrl { get; set; }
+            public string ServiceUrl { get; set; }
+            public string Body { get; set; }
+            public string Data { get; set; }
         }
     }
 }
