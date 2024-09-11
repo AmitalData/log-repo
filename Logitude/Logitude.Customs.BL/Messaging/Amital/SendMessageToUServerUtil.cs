@@ -32,7 +32,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
 {
     public class SendMessageToUServerUtil
     {
-        public static string SendMessageToUServer(int tenant, string urouterRequest, out string P_MESSAGE, out string UnifreightTester)
+        public static string SendMessageToUServer(int tenant, string urouterRequest ,out string P_MESSAGE, out string UnifreightTester, CommunicationsParams communicationParam = null)
         {
 				//implement the code to send the xml file to amital;
 
@@ -63,7 +63,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
 		
 			if (!mySetting.IsConnectedToUniFreight)
 			{
-				P_MESSAGE = OpenUnifreighTask(tenant, urouterRequest, "Urouter", mySetting.IsConnectedToUniFreight);	
+				P_MESSAGE = OpenUnifreighTask(tenant, urouterRequest, "Urouter", mySetting.IsConnectedToUniFreight, communicationParam);	
 				return null;
 			}
 			if (String.IsNullOrWhiteSpace(mySetting.UServerServiceAddress))
@@ -119,103 +119,45 @@ namespace Logitude.Customs.BL.Messaging.Amital
             LogMessagingUtil.Instance.AppendLine("UrouterRequest:Took:" + stopwatch.Elapsed.ToString());
             return P_XML_DATA;
         }
-		private static string OpenUnifreighTask(int tenant, string urouterRequest,string taskType,bool isConnectedToUniFreight)
-		{			
-				var sw = Stopwatch.StartNew();
-				TransactionScope scope = null;
-				if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
-				{
-					scope = TransactionFactory.GetNewOracleReadCommittedTransaction();
-				}
-				try
-				{
-				  AmitalContext _AmitalContext = AmitalContext.GetContext(tenant);
-				  
-				  
-				  string unifreightUser = null;
-				  if (RequestSheetContext.Current != null)
-				  {
-					var loggingUserIdFromRS = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
-					if (!string.IsNullOrWhiteSpace(loggingUserIdFromRS))
-					{
-						UserRepository userRep = new UserRepository(tenant);
-						var user = userRep.GetSingleUser(loggingUserIdFromRS, tenant, true);
-						if (user != null)
-						{
-							if (!String.IsNullOrWhiteSpace(user.Code))
-							{
-								unifreightUser = user.Code;
-							}
-						}
-					}
-				  }
-				  if (String.IsNullOrWhiteSpace(unifreightUser))
-				  {
-				  	unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(tenant);
-				  }
-			
-				
-				var myYCULTASKPM = new YCULTASKPM()
-					{
-						ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-						STATUS = "W",
-						REQUESTDATA = urouterRequest,
-						ENTNAME = "CFIFILEM",
-						PRIMARYNUM = "",
-						PRIORITY = YCULTASKPM.calcPriority(taskType),
-						TYPE = taskType,
-						USRCODE = unifreightUser,
-						ARCHIVE = "F",
-					};
-					if (!isConnectedToUniFreight)
-					{
-						myYCULTASKPM.Tenant = tenant;
-					}
-					var myYCULTASKUpdateService = new Unifreight.BL.EntityUpdateServices.YCULTASKUpdateService(_AmitalContext);
-					myYCULTASKUpdateService.DontAddTransaction = true;
-					myYCULTASKUpdateService.Update(myYCULTASKPM, true);
-		
-					var myGGGQPM = new GGGQPM()
-					{
-						ChangeSetOp = ChangeSetOperation.Insert,
-						ORIGINQUE = "LGT",
-						STATUS = "1",
-						EXPTASKTIME = 5,
-						EXECDATE = DateTime.Now,
-						TRY = 9,
-						PRIORITY = 8,
-						ENTNAME = "CFIFILEM",
-						PRIMARYNUM = "",
-						FORMID = "LGT_UPDATE_FCI",
-						DEBUG = "F",
-						DONEOPERATION = "D",
-					};
-					if (!isConnectedToUniFreight)
-					{
-						myGGGQPM.Tenant = tenant;
-					}
-					var myGGGQUpdateService = new Unifreight.BL.EntityUpdateServices.GGGQUpdateService(_AmitalContext);
-					myGGGQUpdateService.DontAddTransaction = true;
-					myGGGQUpdateService.Update(myGGGQPM, true);
-		
-		
-					if (scope != null)
-					{
-						scope.Complete();
-					}
-					return "succeeded";
+		private static string OpenUnifreighTask(int tenant, string urouterRequest,string taskType,bool isConnectedToUniFreight, CommunicationsParams communicationParam = null)
+        {
+                try 
+			    {
+				    var loggedUserId = AuthenticationUtil.ResolveUserId(tenant, true);
+				   
+				    CommunicationsParams logParams = new CommunicationsParams()
+				    {
+				    	Tenant = tenant,
+				    	CommunicationLogTypeCode = "Q",
+				    	QueueName = "externaltasksqueue" + tenant + 1,
+				    	Priority = 1,
+				    	InOut = "O",
+				    	Status = "W",
+				    	LoggingUserId = loggedUserId,
+				    	LoggingObjectTableId = communicationParam?.LoggingObjectTableId,
+				    	LoggingEntityId = communicationParam?.LoggingEntityId,
+				    	Subject = string.IsNullOrEmpty(communicationParam?.Subject)? "Send To URouter" : communicationParam?.Subject,
+				    	FolderName = "ExternalTasksQueue",
+				    };
+
+				    List<QueueTask> queue1Tasks = new List<QueueTask>();
+				    queue1Tasks.Add(new QueueTask()
+				    {
+				    	Action = "GWSFINSRVEXE_DOIT",
+				    	Parameters = new List<Parameter>()
+				    							 {
+				    								new Parameter{ Name = "URouter", Order = 0, Value = urouterRequest }
+				    							 }
+				    });
+				    
+				    logParams.ByteData = LogitudeXmlSerializer.SerializeObject(queue1Tasks);
+				    Communications.AddCommunicationLog(logParams);
+				    return "succeeded";
 				}
 		        catch(Exception e)
 				{
 					return "failed" + e?.Message?.ToString();
-				}
-				finally
-				{
-					if (scope != null)
-					{
-						scope.Dispose();
-					}
-				}		
+				}	
 			}
 		
 
