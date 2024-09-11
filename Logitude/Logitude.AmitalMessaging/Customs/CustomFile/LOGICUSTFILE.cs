@@ -1549,7 +1549,7 @@ public class ExportInvoiceItem
     private string classificationDealTypeField;
     private string processTypeField;
     private ExportInvoiceItemCertificats certificatsField;
-    private ConnectedDeclarations[] connectedDeclarationsField;
+    private ConnectedDeclarations connectedDeclarationsField;
 
     public string ItemNo
     {
@@ -1675,7 +1675,8 @@ public class ExportInvoiceItem
             this.certificatsField = value;
         }
     }
-    public ConnectedDeclarations[] ConnectedDeclarations
+    [System.Xml.Serialization.XmlElementAttribute("ConnectedDeclarations")]
+    public ConnectedDeclarations ConnectedDeclarations
     {
         get
         {
@@ -1897,9 +1898,8 @@ public class ExportClosing
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGICUSTFILE")]
 [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGICUSTFILE", IsNullable = false)]
-public class ConnectedDeclarations
+public class ConnectedDeclaration
 {
-    [System.Xml.Serialization.XmlElementAttribute("ConnectedDeclarations")]
 
     private string declarationType;
 
@@ -1981,6 +1981,37 @@ public class ConnectedDeclarations
         }
     }
 
+}
+
+
+
+
+
+
+
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGICUSTFILE")]
+[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGICUSTFILE", IsNullable = false)]
+public class ConnectedDeclarations
+{
+    private ConnectedDeclaration[] connectedDeclarationField;
+
+    [System.Xml.Serialization.XmlElementAttribute("ConnectedDeclaration")]
+
+    public ConnectedDeclaration[] connectedDeclaration
+    {
+        get
+        {
+            return this.connectedDeclarationField;
+        }
+        set
+        {
+            this.connectedDeclarationField = value;
+        }
+    }
 }
 
 
