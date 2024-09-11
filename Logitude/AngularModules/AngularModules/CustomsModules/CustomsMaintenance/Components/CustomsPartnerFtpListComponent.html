@@ -347,6 +347,21 @@
                                                     </td>
                                                 </tr>
 
+                                                <tr class="FormFieldRow" *ngIf="_InterfaceDetail !=null && _InterfaceDetail.ViaMethod == 'WEBAPI' && serviceURL ">
+                                                    <td colspan="5">
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width: 130px;">
+                                                                    <LogLabel [ObjectFieldName]="'serviceURL'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'כתובת פרוקסי'"></LogLabel>
+                                                                </td>
+                                                                <td style="width: 417px;">
+                                                                    <LogTextBox [ObjectFieldName]="'serviceURL'" [ObjectTableName]="ObjectTableName"
+                                                                                [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
 
                                                 <tr class="FormFieldRow" *ngIf="_InterfaceDetail !=null && _InterfaceDetail.ViaMethod == 'WEBAPI' ">
 
