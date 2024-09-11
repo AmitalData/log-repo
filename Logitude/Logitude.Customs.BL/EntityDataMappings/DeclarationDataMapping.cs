@@ -59,7 +59,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.ConcurrencyGUID);
             entityPOCO.ConcurrencyGUID = entityPM.NewConcurrencyGUID;//Guid.NewGuid().ToString();
-            entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;            
+            entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;       
+            
+            if(entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+                entityPOCO.ShipmentId = entityPM.Id;
         }
 
         public void CustomPOCOToPM(DeclarationPM entityPM, Declaration entityPOCO)
