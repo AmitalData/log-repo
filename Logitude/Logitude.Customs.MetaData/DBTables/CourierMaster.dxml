@@ -252,6 +252,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="SentDeclarationStatus"
+    Type="bit">
+	  defaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
