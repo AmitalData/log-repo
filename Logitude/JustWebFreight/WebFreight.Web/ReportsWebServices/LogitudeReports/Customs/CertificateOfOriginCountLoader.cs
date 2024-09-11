@@ -18,6 +18,7 @@ using System.Runtime.Remoting.Contexts;
 using Logitude.Customs.Data;
 using System.Data.Entity;
 using Simplog.Global.Data.GlobalModel;
+using WebFreight.Web.Helpers;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
 {
@@ -91,6 +92,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
             }
             if (CreateDateFilter != null)
             {
+                AdvancedDateResolver advancedDateResolver = new AdvancedDateResolver();
+                CreateDateFilter.FieldValue = advancedDateResolver.GetDateValueByOptionCode(CreateDateFilter.FieldValue?.ToString());
+                CreateDateFilter.FieldValue2 = advancedDateResolver.GetDateValueByOptionCode(CreateDateFilter.FieldValue2?.ToString());
+
                 DateTime startDate = ((DateTime)CreateDateFilter.FieldValue).Date;
                 DateTime endDate = ((DateTime)CreateDateFilter.FieldValue2).Date.AddDays(1);
                 certificateOfOriginsCounts = certificateOfOriginsCounts.Where(x => x.CreateDateTime >= startDate && x.CreateDateTime < endDate);
