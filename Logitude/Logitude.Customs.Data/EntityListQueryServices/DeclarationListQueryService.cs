@@ -337,7 +337,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          LoadingPortName = a.ExportLoadingPort.LocalName,
                                                          ExcludeManifest = a.ExcludeManifest,
 														 AmendmentRejectionReason = a.AmendmentRejectionReason,
-
+                                                         ShipmentId = a.ShipmentId,
 													 });
 
                 return query;
