@@ -148,7 +148,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
             {
                 string P_MESSAGE = "";
                 string uniTester = "";
-                var response = SendMessageToUServerUtil.SendMessageToUServer(GetTenant(), myUrouterParam, out P_MESSAGE, out uniTester);
+                var response = SendMessageToUServerUtil.SendMessageToUServer(GetTenant(), myUrouterParam, out P_MESSAGE, out uniTester, _CommunicationsParams);
 
                 myInfo.GenericResponseObj = TryGetGenericResponseObj(response);
                 myInfo.ImmediatelyResponse = response;
