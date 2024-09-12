@@ -1851,9 +1851,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
             supplierInvoiceItemsConDeclarPM.DeclarationTypeCode = invoiceItemConnectedDeclaration.DeclarationType;
             supplierInvoiceItemsConDeclarPM.DeclarationNumber = invoiceItemConnectedDeclaration.DeclarationNo;
-            supplierInvoiceItemsConDeclarPM.InvoiceNumber = int.Parse(invoiceItemConnectedDeclaration.InvoiceLine);
+            supplierInvoiceItemsConDeclarPM.InvoiceNumber =  int.Parse(invoiceItemConnectedDeclaration.InvoiceLine);
 			supplierInvoiceItemsConDeclarPM.InvoiceItemLineNumber = int.Parse(invoiceItemConnectedDeclaration.ItemLine);
-            supplierInvoiceItemsConDeclarPM.Quantity = int.Parse(invoiceItemConnectedDeclaration.Quantity);
+            supplierInvoiceItemsConDeclarPM.Quantity = decimal.Parse(invoiceItemConnectedDeclaration.Quantity);
             supplierInvoiceItemsConDeclarPM.QuantityTypeCode = invoiceItemConnectedDeclaration.QuantityType;
 
 

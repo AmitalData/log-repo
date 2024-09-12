@@ -62,9 +62,10 @@
                     </td>
                     <td style="width:60px;">מתאריך: </td>
                     <td style="width: 110px;" >
-                        <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
-                                [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
-                                [HideColumns]="true" [SelectedDateValue]="FromDate"></LogDatePicker>
+                        <AdvancedDatePicker style="display: block;width: 110px;" float-start
+                            [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true"
+                            [DataContext]="DataContext" [InputType]="'date'" [TimeMode]="'12'"
+                            [SelectedDateValue]="FromDate" [ShowToolTip]="true"></AdvancedDatePicker>
                     </td>
 
                     <!-- תאריך יצירה / עד תאריך-->
@@ -77,9 +78,10 @@
                     <td style="width:60px;">עד תאריך: </td>
                     
                     <td style="width: 110px;" >
-                        <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
-                                   [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
-                                   [HideColumns]="true" [SelectedDateValue]="ToDate"></LogDatePicker>
+                        <AdvancedDatePicker style="display: block;width: 150px;" float-start
+                            [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true"
+                            [DataContext]="DataContext" [InputType]="'date'" [TimeMode]="'12'"
+                            [SelectedDateValue]="ToDate"></AdvancedDatePicker>
                     </td>
                     <td style="width:10px;">
                         <div></div>

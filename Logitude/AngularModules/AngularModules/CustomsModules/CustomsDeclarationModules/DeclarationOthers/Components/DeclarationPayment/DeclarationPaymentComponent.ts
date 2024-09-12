@@ -2377,14 +2377,14 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
     
     CheckCustomFileCreditFromUnifreight(params: CustomFileCreditRequestParams) {
-        
+
         SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
             .subscribe(
                 (message: UnifreightMessageM) => {
                     var IsMatchUnifreightCallbackCommand = (
                         message.LogitudeEntityNumber == this.DeclarationPM.Id &&
-                        message.LogitudeViewModel == "DeclarationPaymentComponent.ts");
+                        message.LogitudeViewModel == "DeclarationPaymentComponent.ts-DeclarationCheckCredit");
                     if (IsMatchUnifreightCallbackCommand) {
                         sub.unsubscribe();
                         let XMLResponse = UnifreightMessageM.GetStringValue(message, "XMLResponse");
@@ -2418,24 +2418,24 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                          } 
                         SessionLocator.SelectedSession.StopBusyIndicator();
                     }
-                }
+                } 
             );
 
         var unifreightMessageM =
             AmitalGatewayUtil.Instance.
-                DeclarationMessaging.GetMessage(this.DeclarationPM.CustomFileNo, this.DeclarationPM.Id, "DeclarationPaymentComponent.ts", AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
+                DeclarationMessaging.GetMessage(this.DeclarationPM.CustomFileNo, this.DeclarationPM.Id, "DeclarationPaymentComponent.ts-DeclarationCheckCredit", AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
         unifreightMessageM.Requset.push(["XMLRequest", this.convertToXML(params)]);
 
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
             "AmitalGatewayUtil.DeclarationCheckCredit",
-            "CFIFILEM.LogitudeTask",
+            "CFIHMAIN.LogitudeTask",
             "DeclarationCheckCredit",
             unifreightMessageM,
             "");
     }
 
 
-    parseXml(xmlString: string,mode: string): any {
+    parseXml(xmlString: string,mode: string): CustomFileCreditResponseData {
 
         let customFileCreditResponseData: CustomFileCreditResponseData = new CustomFileCreditResponseData();
         // Parse the XML string into a DOM Document
@@ -2503,8 +2503,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         const date = new Date(txt);   
         return isNaN(date.getTime()) ? null : date;
     }
-    convertToXML(params: CustomFileCreditRequestParams) {      
-
+    convertToXML(params: CustomFileCreditRequestParams) {
+        
         const xmlDocument = document.implementation.createDocument('', '', null);
     
         const arrayOfEntry = xmlDocument.createElement('ArrayOfEntry');
@@ -3339,7 +3339,7 @@ export class PaymentMethodModel extends BaseComponent {
 
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
             "AmitalGatewayUtil.DeclarationCheckCredit",
-            "CFIFILEM.LogitudeTask",
+            "CFIHMAIN.LogitudeTask",
             "DeclarationCheckCredit",
             unifreightMessageM,
             "");

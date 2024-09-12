@@ -344,6 +344,10 @@ export class CustomsPartnerFtpListComponent extends BaseComponent implements OnI
     public set WEBAPIAuthenticationURL(newValue: string) { if (this._WebApiDefinition.WEBAPIAuthenticationURL != newValue) { this._WebApiDefinition.WEBAPIAuthenticationURL= newValue; } }
 
     
+    public get serviceURL() { return this._WebApiDefinition.serviceURL; }
+    public set serviceURL(newValue: string) { if (this._WebApiDefinition.serviceURL != newValue) { this._WebApiDefinition.serviceURL= newValue; } }
+
+    
     public get User() { return this._WebApiDefinition.User; }
     public set User(newValue: string) { if (this._WebApiDefinition.User != newValue) { this._WebApiDefinition.User = newValue; } }
 
@@ -531,6 +535,7 @@ class InterfaceDetails {
 class WebApiDefinition {
     WEBAPIURL: string
     WEBAPIAuthenticationURL: string
+    serviceURL: string
     User: string
     Password: string
 }

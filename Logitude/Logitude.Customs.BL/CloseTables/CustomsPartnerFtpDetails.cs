@@ -43,6 +43,8 @@ namespace Logitude.Customs.BL.CloseTables
         public const string InterfaceName_Ftp2Maman2470 = "ECM2470";//EC = E-Commerce 2 maman 2470
         public const string InterfaceName_ECILSWSHAWB = "ECILSWSHAWB";//EC = E-Commerce
         public const string InterfaceName_ECILSWSHAWB_Splited = "ECILSWSHAWB+P";//EC = E-Commerce
+        public const string InterfaceName_ImportAddOwner = "IMPORT_ADD_OWNER";
+        public const string InterfaceName_ImportPrintTracking = "IMPORT_PRINT_TRACKING";
         public const string PartnerCode_Mamam = "MAMAN";
         public const string PartnerCode_ILOVS = "ILOVS";
         public const string PartnerCode_ILSWS = "ILSWS";
@@ -342,7 +344,7 @@ namespace Logitude.Customs.BL.CloseTables
                 Subject="CourierHawbFeedBack ILSWS",
                 ServerInternalDef= true
             },
-             new InterfaceDetails()
+            new InterfaceDetails()
             {
                 Code = InterfaceName_ECMMNTHR_REQUEST_New,
                 Name = "ש.מ.ב לממן לאתר החדש",
@@ -351,6 +353,22 @@ namespace Logitude.Customs.BL.CloseTables
                 ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
                  WEBAPICredentialType = CourierWEBAPICredentialType.Bearer,
                 ResponseCode = InterfaceName_ECMMNTHR_RESPONE
+            },
+            new InterfaceDetails()
+            {
+                Code = InterfaceName_ImportAddOwner,
+                Name = "בקשה להעברת אחריות - יצוא",
+                TypeCode = TypeCode_Out,
+                Partner = PartnerCode_Mamam,
+                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
+            },
+            new InterfaceDetails()
+            {
+                Code = InterfaceName_ImportPrintTracking,
+                Name = "קבלת טופס איתור - יצוא",
+                TypeCode = TypeCode_Out,
+                Partner = PartnerCode_Mamam,
+                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
             }
             };
             ///
@@ -524,6 +542,7 @@ namespace Logitude.Customs.BL.CloseTables
     {
         public string WEBAPIURL { get; set; }
         public string WEBAPIAuthenticationURL { get; set; }
+        public string ServiceUrl { get; set; }
         public string User { get; set; }
         public string Password { get; set; }
 
