@@ -17,7 +17,7 @@ namespace Logitude.Server.Tools.Utils
 {
     public static class TODELETE_Logger
     {
-      
+
         static Dictionary<string, string> suffixs = null;
 
 
@@ -32,22 +32,22 @@ namespace Logitude.Server.Tools.Utils
             dicStream = new Dictionary<string, Dictionary<string, StreamWriter>>();
             suffixs = new Dictionary<string, string>();
             cq = new ConcurrentQueue<Tuple<string, bool, string>>();
-            
+
         }
 
-      
-      
+
+
         private static StringBuilder _SBUIErrorBuffer = new StringBuilder();
         private static DateTime UIErrorBufferAt;
 
 
 
-      
+
 
         private delegate void LogMeDelegate(string mess, string suffix);
         private static DateTime LastDelOldAt = DateTime.MinValue;
 
-      
+
         private static int? _LoggerFileSizeLimitInMB = null;
         private static int GetLimitInMB()
         {
@@ -73,7 +73,7 @@ namespace Logitude.Server.Tools.Utils
             return _LoggerFileSizeLimitInMB.Value;
         }
 
-    
+
         internal static StreamWriter GetStreamWriter(bool error, string suffix)
         {
             string datestr = DateTime.Today.Year + "." + DateTime.Today.Month + "." + DateTime.Today.Day;
@@ -202,7 +202,7 @@ namespace Logitude.Server.Tools.Utils
             {
                 lock (typeof(TODELETE_Logger))
                 {
-                   
+
                     using (StreamWriter sw = File.CreateText(WorkingDir + ValidFileName(Application.ProductName) + "." + suffixFile))
                     {
                         sw.WriteLine(mess);
@@ -240,7 +240,7 @@ namespace Logitude.Server.Tools.Utils
                     }
                     catch (Exception ex)
                     {
-                       NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
+                        NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
                     }
                 }
                 dicStream.Remove(datestr);
@@ -289,21 +289,21 @@ namespace Logitude.Server.Tools.Utils
 
 
 
-       
 
-        
 
-        
-      
-     
 
-       
+
+
+
+
+
+
+        }
+
     }
 
+
 }
-
-
-
 //public static class IQueryableExtensions
 //{
 //    /// <summary>
