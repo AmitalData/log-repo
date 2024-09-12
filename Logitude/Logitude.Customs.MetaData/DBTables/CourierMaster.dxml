@@ -254,9 +254,9 @@
   </Column>
   <Column
     Name="SentDeclarationStatus"
-    Type="bit">
-	  defaultValue="0">
-    <Constraints
+    Type="bit"
+	  DefaultValue="0">
+	  <Constraints
       Nullable="false" />
   </Column>
   <Relation
