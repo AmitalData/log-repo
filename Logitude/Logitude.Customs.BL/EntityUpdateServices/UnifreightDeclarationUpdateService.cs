@@ -2437,7 +2437,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             _CCUFILEMPM.NOOFINVOICES = _DirtyDeclarationPM.SupplierInvoices.Count();
             _CCUFILEMPM.TOTALINVOICELINESNO = GetCountSupplierInvoicesItems();
-            LogitudeSettings.HandleLogMe(logData, false, "CUSTOMFILENO:" + _DirtyDeclarationPM.CustomFileNo + ", TOTALINVOICELINESNO:" + _CCUFILEMPM.TOTALINVOICELINESNO.ToString() + ",Stack:" + new StackTrace().ToString(), stopLogAt);
+            logData = "CUSTOMFILENO:" + _DirtyDeclarationPM.CustomFileNo + ", TOTALINVOICELINESNO:" + _CCUFILEMPM.TOTALINVOICELINESNO.ToString() + ",Stack:" + new StackTrace().ToString();
+            LogitudeSettings.HandleLogMe(logData, false,"CCU" , stopLogAt);
 
             _CCUFILEMPM.PRATMEHESLIST = GetAllPratMehesList(3);
             _CCUFILEMPM.ALLPRATMEHESLIST = GetAllPratMehesList();
