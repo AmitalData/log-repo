@@ -70,7 +70,7 @@ namespace AmitalCustomsWindowsService.BL
                 {
                     // if time to do something, do so
                     // exception handling omitted here for simplicity
-                    //Logger.LogMe("Multithreaded Service working; id = " + this._id.ToString(), false);
+                    
                     try
                     {
                         _TWorker.WorkOnce();
@@ -78,7 +78,7 @@ namespace AmitalCustomsWindowsService.BL
                     catch (Exception e)
                     {
                         //_TWorker.
-                        Logger.LogMe(this.GetType().FullName + ":" + e.ToString(), true);
+                        NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e,this.GetType().FullName );
                         Thread.Sleep(TimeSpan.FromMinutes(1));
                     }
 
@@ -88,20 +88,20 @@ namespace AmitalCustomsWindowsService.BL
                 }
                 if (_TWorker.DebugMode && (Environment.UserInteractive || this.MyType == "LoadTestWR"))
                 {
-                    Logger.LogMe("_TWorker.DebugMode && Environment.UserInteractive", false);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("_TWorker.DebugMode && Environment.UserInteractive");
                     return;
                 }
                 if (DateTime.Now.Subtract(_LastReprtAt) > TimeSpan.FromHours(1))
                 {
                     _LastReprtAt = DateTime.Now;
-                    Logger.LogMe(typeof(TWorker).FullName + ":Still Alive", false);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(typeof(TWorker).FullName + ":Still Alive");
                 }
                 Thread.Sleep(TimeSpan.FromSeconds(_intervalInSec));
 
             }
 
-            Logger.LogMe(typeof(TWorker).FullName + ":ServiceStarted=" + ServiceStarted.ToString() , false);
-            Logger.LogMe(typeof(TWorker).FullName + ":ExecuteTask:OUtOUtOUtOUtOUtOUtOUtOUt !!OUt !!", false);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(typeof(TWorker).FullName + ":ServiceStarted=" + ServiceStarted.ToString());
+           
             WhileServiceStarted_IsOut = true;
             if (_TWorker.DebugMode)
             {

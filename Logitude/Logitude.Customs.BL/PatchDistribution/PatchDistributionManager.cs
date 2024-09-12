@@ -131,24 +131,24 @@ namespace Logitude.Customs.BL.PatchDistribution
                 try
                 {
 
-                    Logger.LogMe($"Start ExecDBMigrationLine({myPatchDistribution.MajorVersionYYPRR}.{myPatchDistribution.PatchCounter_Minor}.{script.ScriptCounter})", false);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Start ExecDBMigrationLine({myPatchDistribution.MajorVersionYYPRR}.{myPatchDistribution.PatchCounter_Minor}.{script.ScriptCounter})");
 
                     var sqlDDL_NoNeedCommit = script.SqlScript;
-                    Logger.LogMe(sqlDDL_NoNeedCommit, false);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(sqlDDL_NoNeedCommit);
                     if (string.IsNullOrWhiteSpace(approveRemark))
                     {
                         (customContext as DbContextBase).ExecuteReaderSingleResult<int>(sqlDDL_NoNeedCommit,
         (dr) =>
         {
 
-            Logger.LogMe($"ExecuteReaderSingleResult: {dr.GetString(0)}", false);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"ExecuteReaderSingleResult: {dr.GetString(0)}");
             return 0;
         });
 
                     }
                     else
                     {
-                        Logger.LogMe($"approve patch !!", false);
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"approve patch !!");
                     }
 
 
@@ -197,11 +197,11 @@ namespace Logitude.Customs.BL.PatchDistribution
                     ///xxx
                     customContext.SaveChanges();
                     scope.Complete();
-                    Logger.LogMe($"DBMigrationLine:{myDBMigration.MajorVersion}.{myDBMigration.MinorVersion}.{dBMigrationLine.CounterKey }", false);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"DBMigrationLine:{myDBMigration.MajorVersion}.{myDBMigration.MinorVersion}.{dBMigrationLine.CounterKey }");
                 }
                 catch (Exception eee)
                 {
-                    Logger.LogMe(eee.ToString(), false);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee);
                     throw new PatchDistributionException("PatchDistributionException", eee,
                         myPatchDistribution, script, isLast);
                 }

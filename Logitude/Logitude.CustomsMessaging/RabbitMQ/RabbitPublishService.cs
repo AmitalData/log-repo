@@ -82,7 +82,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
                     using (var channel = connection.CreateModel())
                     {
                         BasicPublish(message, communicationLogId, InterfaceTypeCode, rabbitMQCode, messagePriority, channel);
-                        Logger.LogMe($"regelarRabbitMQPublisher", false, rabbitMQCode);
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"regelarRabbitMQPublisher");
                     }
                     Thread.Sleep(100);//better slowly dispose connection than crash!!
                 }
@@ -107,7 +107,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
             {
                 BasicPublish(message, communicationLogId, InterfaceTypeCode, rabbitMQCode, messagePriority, channel);
 
-                Logger.LogMe($"PooledRabbitMQPublisher:{PooledRabbitMQPolicy.GetCounter()}", false, rabbitMQCode);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"PooledRabbitMQPublisher:{PooledRabbitMQPolicy.GetCounter()}");
             }
             catch (Exception ex)
             {

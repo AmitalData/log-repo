@@ -1098,15 +1098,12 @@ namespace Logitude.Accounting.BL.CoreBL
                         catch (Exception eee2)
                         {
 
-                            //OnException(null, null, journalId, SeedTenant, eee);
-                            Logger.LogError(journalId.ToString() + " " + eee2.Message);
-                            //ExceptionHandler.HandleException(eee, DateTime.Now, 0, "", "JournalApproveWorkerRole", "approveJournalService.SubmitApprove", null);
-                            Logitude.SystemLogs.ExceptionHandler.HandleException(eee2, DateTime.Now, 0, "", "", "JournalApproveService.ReturnToQueue()" + eee2.Message, null);
+                             NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee2,journalId.ToString());
+                             Logitude.SystemLogs.ExceptionHandler.HandleException(eee2, DateTime.Now, 0, "", "", "JournalApproveService.ReturnToQueue()" + eee2.Message, null);
 
                             Thread.Sleep(100);
 
-                            //throw;
-                            //}
+                          
                         }
                         finally
                         {
@@ -1729,8 +1726,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (DateTime.UtcNow.Date > _NextDueDoneAt.Date)
                 {
-                    Logger.LogDebug("JornalApprove beforeAddBatchTask selected queue: {0}, workerRoleName: {1}  , time:{2} ",
-                        selectedQueue, LogitudeSettings.WorkerRoleName, DateTime.Now );
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("JornalApprove beforeAddBatchTask selected queue: {0}, workerRoleName: {1}  , time:{2} ",
+                        selectedQueue, LogitudeSettings.WorkerRoleName, DateTime.Now) );
 
                 }
 
@@ -1785,19 +1782,19 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         try
                         {
-                            Logger.LogDebug(String.Format("JournalApproveService, Point 1, tenant {0}", response.Tenant));
+                            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("JournalApproveService, Point 1, tenant {0}", response.Tenant));
                             if (_NextDueDoneDict == null) _NextDueDoneDict = new Dictionary<int, DateTime>();
                             if (!_NextDueDoneDict.ContainsKey(response.Tenant))
                                 _NextDueDoneDict.Add(response.Tenant, DateTime.MinValue);
 
                             if (DateTime.UtcNow.Date > _NextDueDoneDict[response.Tenant].Date)  
                             {
-                                Logger.LogDebug(String.Format("JournalApproveService, Point 2, tenant {0}, date {1} ", response.Tenant, _NextDueDoneDict[response.Tenant].Date));
+                                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("JournalApproveService, Point 2, tenant {0}, date {1} ", response.Tenant, _NextDueDoneDict[response.Tenant].Date));
 
                                 _NextDueDoneDict[response.Tenant] = DateTime.UtcNow.Date;
                                 var myDueLocalBalanceService = new DueLocalBalanceService();
                                 myDueLocalBalanceService.RunOneTenantFast(response.Tenant);
-                                Logger.LogDebug(String.Format("JournalApproveService, Point 3, tenant {0}", response.Tenant));
+                                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("JournalApproveService, Point 3, tenant {0}", response.Tenant));
                             }
                         }
                         catch (Exception)
@@ -1814,9 +1811,9 @@ namespace Logitude.Accounting.BL.CoreBL
                         string communicationLogId = response.MessageValues["communicationLogId"].ToString();
                         int tenant = 0;
                         int.TryParse(response.MessageValues["tenant"].ToString(), out tenant);
-                        Logger.LogDebug(String.Format("JournalApproveService, Point 4, tenant {0}", response.Tenant));
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("JournalApproveService, Point 4, tenant {0}", response.Tenant));
                         UpdateGLAccountAgingData(communicationLogId, queueservice, tenant);
-                        Logger.LogDebug(String.Format("JournalApproveService, Point 5, tenant {0}", response.Tenant));
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("JournalApproveService, Point 5, tenant {0}", response.Tenant));
                         SetTenantIdle(response.Tenant);
                     }
                     else
@@ -1837,7 +1834,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-                Logger.LogDebug("in selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR);");
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("in selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR);");
 
                 try
                 {
@@ -1846,17 +1843,17 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         workerRoleName = LogitudeSettings.WorkerRoleName;
                     }
-                    Logger.LogDebug(" if (DateTime.UtcNow.Date > _NextDueDoneAt.Date && workerRoleName != \"staging\")" + workerRoleName);
-                    Logger.LogDebug(" _NextDueDoneAt.Date" + _NextDueDoneAt.Date);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(" if (DateTime.UtcNow.Date > _NextDueDoneAt.Date && workerRoleName != \"staging\")" + workerRoleName);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(" _NextDueDoneAt.Date" + _NextDueDoneAt.Date);
 
                     if (DateTime.UtcNow.Date > _NextDueDoneAt.Date && workerRoleName != "staging")
                     {
 
-                        Logger.LogDebug(" _NextDueDoneAt.Date 2" + _NextDueDoneAt.Date);
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug(" _NextDueDoneAt.Date 2" + _NextDueDoneAt.Date);
 
                         if (DateTime.Now < new DateTime(2050, 06, 01))
                         {
-                            Logger.LogDebug("CreateBatchAccountingIntegrityCheck");
+                            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CreateBatchAccountingIntegrityCheck");
                             CreateBatchAccountingIntegrityCheck();
                         }
                         _NextDueDoneAt = DateTime.UtcNow.Date;

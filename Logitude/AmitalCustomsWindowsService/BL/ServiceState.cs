@@ -215,7 +215,7 @@ LastError:{4}",
             }
             catch (Exception e)
             {
-                Logger.LogMe(e.ToString(), true);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
             }
         }
 

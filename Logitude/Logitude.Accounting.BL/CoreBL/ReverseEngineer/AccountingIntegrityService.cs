@@ -75,27 +75,27 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
                 GLAccountBalanceCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
 
-                Logger.LogDebug(String.Format("AccountingIntegrityService, Point 1, tenant {0}", accountingIntegrityInParam.Tenant));
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("AccountingIntegrityService, Point 1, tenant {0}", accountingIntegrityInParam.Tenant));
                 var myDueLocalBalanceService = new DueLocalBalanceService();
                 myDueLocalBalanceService.ReBuild(accountingIntegrityInParam.Tenant, null, false); // fastRun=false 
-                Logger.LogDebug(String.Format("AccountingIntegrityService, Point 2, tenant {0}", accountingIntegrityInParam.Tenant));
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("AccountingIntegrityService, Point 2, tenant {0}", accountingIntegrityInParam.Tenant));
 
 
                 DueLocalBalanceCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
-                Logger.LogDebug(String.Format("AccountingIntegrityService, Point 3, tenant {0}", accountingIntegrityInParam.Tenant));
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("AccountingIntegrityService, Point 3, tenant {0}", accountingIntegrityInParam.Tenant));
 
 
                 LedgerOpenAmountDiffCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
-                Logger.LogDebug(String.Format("AccountingIntegrityService, Point 4, tenant {0}", accountingIntegrityInParam.Tenant));
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("AccountingIntegrityService, Point 4, tenant {0}", accountingIntegrityInParam.Tenant));
 
                 InterestReportDiffCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
-                Logger.LogDebug(String.Format("AccountingIntegrityService, Point 5, tenant {0}", accountingIntegrityInParam.Tenant));
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("AccountingIntegrityService, Point 5, tenant {0}", accountingIntegrityInParam.Tenant));
 
                 RebuildAgingDataByType(accountingIntegrityInParam, myAccountingIntegrityResult, "Customer2");
-                Logger.LogDebug(String.Format("AccountingIntegrityService, Point 6, tenant {0}", accountingIntegrityInParam.Tenant));
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("AccountingIntegrityService, Point 6, tenant {0}", accountingIntegrityInParam.Tenant));
 
                 RebuildAgingDataByType(accountingIntegrityInParam, myAccountingIntegrityResult, "Vendor3");
-                Logger.LogDebug(String.Format("AccountingIntegrityService, Point 7, tenant {0}", accountingIntegrityInParam.Tenant));
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("AccountingIntegrityService, Point 7, tenant {0}", accountingIntegrityInParam.Tenant));
 
 
             }
@@ -273,12 +273,12 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
             catch (Exception eee)
             {
 
-                sb.AppendLine(eee.ToString());
-                throw new Exception(eee.ToString(), eee);// Itzik the exceptions is not thrown so i threw them
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee, sb.ToString());
+                throw new Exception(eee.ToString(), eee);
             }
             finally
             {
-                Logger.LogMe(sb.ToString(), false, "AccountingIntegrityService");
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(sb.ToString());
             }
 
 

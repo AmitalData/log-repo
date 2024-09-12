@@ -129,7 +129,7 @@ namespace CustomsWorkerRole
         {
             string RabbitMQLogFILE = "RabbitMQLog" + currTenant.ToString();
 
-            Logger.LogMe("START", false, RabbitMQLogFILE);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("START");
             var customRabbitMQQueue = new CustomRabbitMQQueue();
             var allQueueDetails = customRabbitMQQueue.GetAllQueueDetails()
              .Where(r => r.AnalyzeQueueService != AnalyzeMQQueueServiceEnum.none)
@@ -158,7 +158,7 @@ namespace CustomsWorkerRole
 
                         connection.ConnectionShutdown += Connection_ConnectionShutdown;
 
-                        Logger.LogMe("CONNECTION", false, RabbitMQLogFILE);
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CONNECTION");
 
                         channel.BasicQos(0, 5, true);
 
@@ -181,8 +181,7 @@ namespace CustomsWorkerRole
                                 var body = ea.Body.ToArray();
                                 message = Encoding.UTF8.GetString(body);
                                 messageId = ea.BasicProperties.MessageId;
-                                Logger.LogMe("RUN", false, RabbitMQLogFILE);
-                                Logger.LogMe("START  Exec : " + messageId, false, RabbitMQLogFILE);
+                                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("START  Exec : " + messageId);
                                 string log = "";
                                 bool success = false;
                                 object oInterfaceTypeCode = "";
@@ -191,14 +190,14 @@ namespace CustomsWorkerRole
                                 string interfaceTypeCode = Encoding.UTF8.GetString(ea.BasicProperties.Headers["InterfaceTypeCode"] as byte[]);
                                 if (string.IsNullOrWhiteSpace(interfaceTypeCode))
                                 {
-                                    Logger.LogMe("No interfaceTypeCode in header " + messageId, true, RabbitMQLogFILE);
+                                    NetCommonHelper.Logger.DevLog.Instance.WriteError("No interfaceTypeCode in header " + messageId);
                                     channel.BasicAck(ea.DeliveryTag, false);
                                     return;
                                 }
                                 var myQueueDetails = allQueueDetails.FirstOrDefault(r => r.Code == interfaceTypeCode);
                                 if (myQueueDetails==null)
                                 {
-                                    Logger.LogMe($"messageId={messageId} header InterfaceTypeCode ={interfaceTypeCode}  but not exist in customRabbitMQQueue.GetAllQueueDetails " , true, RabbitMQLogFILE);
+                                    NetCommonHelper.Logger.DevLog.Instance.WriteError($"messageId={messageId} header InterfaceTypeCode ={interfaceTypeCode}  but not exist in customRabbitMQQueue.GetAllQueueDetails ");
                                     channel.BasicAck(ea.DeliveryTag, false);
                                     return;
                                 }
@@ -210,20 +209,19 @@ namespace CustomsWorkerRole
                                 }
                                 catch (Exception ex)
                                 {
-                                    Logger.LogMe (ex.ToString() + Environment.NewLine  + "message:" +  message, true, RabbitMQLogFILE +"_Exec");
-                                    success = false;
+                                    NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
+                                     success = false;
                                     // throw;
                                 }
-                                Logger.LogMe("END  Exec : " + messageId, false, RabbitMQLogFILE);
-                                Logger.LogMe("END  Exec : " + messageId + " , Log:" + log, false, RabbitMQLogFILE);
-
+                                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("END  Exec : " + messageId);
+                              
                                 LogDoneItemInMemory();
 
 
 
                                 if (success)
                                 {
-                                    Logger.LogMe("BasicAck : " + messageId, false, RabbitMQLogFILE);
+                                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("BasicAck : " + messageId);
 
                                     channel.BasicAck(ea.DeliveryTag, false);
                                 }
@@ -237,10 +235,8 @@ namespace CustomsWorkerRole
 
                             catch (Exception ex)
                             {
-                                Logger.LogMe(ex.ToString() + Environment.NewLine + "message:" + message, true, RabbitMQLogFILE + "_Outer");
-                                //Logger.LogMe(ex.Message, false, RabbitMQLogFILE);
-
-
+                                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "message:" + message);
+                                
                             }
 
                         };
@@ -249,7 +245,7 @@ namespace CustomsWorkerRole
                         consumer.Received += consumerEventArgs;
                         consumer.Shutdown += (sender, e) => {
                             isConnectionShutdown = true;
-                            Logger.LogMe("Connection broke!", false, RabbitMQLogFILE);
+                            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Connection broke!");
                         };
 
 
@@ -267,7 +263,7 @@ namespace CustomsWorkerRole
                         )
                             {
 
-                                Logger.LogMe("Connection broke!", false, RabbitMQLogFILE);
+                                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Connection broke!");
                                 break;
                             }
 
@@ -275,7 +271,7 @@ namespace CustomsWorkerRole
                             {
                                 QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), $"Sleep..");
                                 Thread.Sleep(1000);
-                                Logger.LogMe("No work (FromMinutes(10)) or connection fail ??! - dispose old create new one", false, RabbitMQLogFILE);
+                                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("No work (FromMinutes(10)) or connection fail ??! - dispose old create new one");
                                 break;
 
                             }
@@ -288,7 +284,7 @@ namespace CustomsWorkerRole
                             if (DateTime.Now.Subtract(_LastReprtAt) > TimeSpan.FromHours(1))
                             {
                                 _LastReprtAt = DateTime.Now;
-                                Logger.LogMe(this.GetType().FullName + ":Still Alive", false);
+                                NetCommonHelper.Logger.DevLog.Instance.WriteDebug( ":Still Alive");
                             }
 
                         }
@@ -318,8 +314,7 @@ namespace CustomsWorkerRole
             }
             catch (Exception e)
             {
-                Logger.LogMe(e.ToString(), false, RabbitMQLogFILE);
-
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
                 ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "CustomsAnalyzeQueueWR : Run() Method", null);
                 Thread.Sleep(10000);
             }

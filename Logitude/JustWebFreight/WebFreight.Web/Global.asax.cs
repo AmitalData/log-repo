@@ -68,8 +68,7 @@ namespace WebFreight.Web
             LogitudeAppSettings.IsRecycled = true;
             LogitudeAppSettings.WarmingIsFinished = false;
             //} 
-            NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NLog.config"));
-
+       
             if (string.IsNullOrEmpty(LogitudeSettings.DeploymentStage))
             {
                 string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -386,7 +385,15 @@ namespace WebFreight.Web
             LogitudeSettings.HandleLogMe = new Action<string, bool, string, DateTime>((mess, err, suffix, stopLogAt) =>
             {
                 if (DateTime.Now > stopLogAt) return;
-                Logger.LogMe(mess, err, suffix);
+                if(err)
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError(mess + suffix);
+                }
+                else
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(mess+suffix);
+                }
+               
             });
 
 
@@ -493,11 +500,11 @@ namespace WebFreight.Web
             catch (Exception e)
             {
 
-                Logger.LogMe("ProductInfoSetting:" + e.ToString(), false);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal( e);
             }
             finally
             {
-                Logger.LogMe(LogitudeSettings.ProductMessage, false, "ProductMessage");
+                
             }
 
         }

@@ -18,27 +18,27 @@ namespace Logitude.CustomsMessaging.Dca
             {
 
 
-                Logger.LogMe("DedicatedCourierDCA:Tenant", false);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DedicatedCourierDCA:Tenant");
                 int t = -99;
                 int.TryParse(ConfigurationManager.AppSettings.Get("DedicatedCourierDCA:Tenant"), out t);
                 if (t == -99)
                 {
                     throw new Exception(@"DedicatedCourierDCA:Tenant please insert tenant!!!!!  <add key=""DedicatedCourierDCA:Tenant"" value=""1"" /> ");
                 }
-                Logger.LogMe($"DedicatedCourierDCA:Tenant={t}", false);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"DedicatedCourierDCA:Tenant={t}");
 
                 string backupPath = ConfigurationManager.AppSettings.Get("DedicatedCourierDCA:BackupPath");
                 if (string.IsNullOrWhiteSpace(backupPath))
                 {
                     throw new Exception(@"DedicatedCourierDCA:BackupPath please insert  BackupPath <add key=""DedicatedCourierDCA:BackupPath"" value=""C:\CyberArk_DCA\GLO-il550221105\Download\GLO\UDCABackupOrphaned"" /> ");
                 }
-                Logger.LogMe($"DedicatedCourierDCA:BackupPath={backupPath}", false);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"DedicatedCourierDCA:BackupPath={backupPath}");
                 if (!Directory.Exists(backupPath))
                 {
                     throw new Exception($"DedicatedCourierDCA:BackupPath please create backupPath !!!  {backupPath} ");
                 }
                 bool UseTPL = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("DedicatedCourierDCA:UseTPL"));
-                Logger.LogMe($"DedicatedCourierDCA:UseTPL={UseTPL}", false);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"DedicatedCourierDCA:UseTPL={UseTPL}");
 
                 return new DedicatedCourierDCAModel()
                 {

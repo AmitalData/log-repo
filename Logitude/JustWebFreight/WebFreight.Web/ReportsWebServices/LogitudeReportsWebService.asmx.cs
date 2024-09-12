@@ -10901,7 +10901,6 @@ namespace WebFreight.Web.ReportsWebServices
         bool showLocals;
 
         private readonly object _locker = new object();
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetLogger("AmitalLogger");
         private static int executionCount = 1;
         private RevenueExpenseDataProvider GetTrailBalanceDataProvider(byte[] xmlFilters, int tenant)
         {

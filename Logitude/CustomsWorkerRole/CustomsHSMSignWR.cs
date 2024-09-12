@@ -330,7 +330,7 @@ where not exists(select *
                 }
 
 
-                Logger.LogMe($"hSMSignFile({_Tenant},{customsRequestsSheetId}, {dRequestParamsBase?. SignByPersonalId}, {dRequestParamsBase?.SignByPersonalId})" + ex.ToString(), true, "CustomsHSMSignWR");
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, $"hSMSignFile({_Tenant},{customsRequestsSheetId}, {dRequestParamsBase?. SignByPersonalId}, {dRequestParamsBase?.SignByPersonalId})" );
                 ExceptionHandler.HandleException(ex, DateTime.Now, _Tenant, "", "ProccessHSMSign-MarkExportSignTaskAsDone", "", null);
 
 
@@ -358,10 +358,10 @@ where not exists(select *
 
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                Logger.LogMe($"hSMSignFile-SetExceptionMessage({_Tenant},{customsRequestsSheetId})" + ex.ToString(), true, "CustomsHSMSignWR");
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e,$"hSMSignFile-SetExceptionMessage({_Tenant},{customsRequestsSheetId})" );
                 ExceptionHandler.HandleException(ex, DateTime.Now, _Tenant, "", "ProccessHSMSign-SetExceptionMessage", "", null);
 
             }

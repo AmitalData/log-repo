@@ -33,9 +33,9 @@ namespace RabbitMQSRV.Testers
             rabbitMQCode = RabbitmqHelper.GetRabbitMQCode(1);
             rabbitMQCode = "itziktest_" + rabbitMQCode;
 
-            //rabbitPublishService = new RabbitPublishService();
-            RabbitPublishService.Publish(message, "communicationLogId", InterfaceTypeCode, rabbitMQCode, 5);
-            RabbitPublishService.Publish(message, "communicationLogId", InterfaceTypeCode, rabbitMQCode, 5);
+            var rabbitPublishService = new RabbitPublishService();
+            rabbitPublishService.Publish(message, "communicationLogId", InterfaceTypeCode, rabbitMQCode, 5);
+            rabbitPublishService.Publish(message, "communicationLogId", InterfaceTypeCode, rabbitMQCode, 5);
             int tCount=0;
             if (true)
             {
@@ -106,7 +106,8 @@ namespace RabbitMQSRV.Testers
                     {
                         Thread.Sleep(10000);
                     }
-                    RabbitPublishService.Publish(message, "communicationLogId", InterfaceTypeCode, rabbitMQCode, 5);
+                    rabbitPublishService=new RabbitPublishService();
+                    rabbitPublishService.Publish(message, "communicationLogId", InterfaceTypeCode, rabbitMQCode, 5);
                     Debug.WriteLine($"{Thread.CurrentThread.Name}:{x}:success=true");
                 }
                 catch (Exception eee)

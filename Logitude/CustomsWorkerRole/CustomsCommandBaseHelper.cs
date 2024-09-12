@@ -99,21 +99,12 @@ namespace CustomsWorkerRole
                 {
                     string morethan = "";
                     string str = LogMessagingUtilWR.Instance.GetString(out morethan);
-                    Logger.LogMe(str, false, this.GetType().ToString() + "_" + morethan);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(str + "_" + morethan);
                 }
             }
         }
 
-        private void LogTime(string msg)
-        {
-            DateTime stopLogAt = new DateTime(2023, 06, 01);
-            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20230601T000000.LogUntilDateyyyyMMdd"];
-            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
-                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None);
-            msg += DateTime.Now.ToString();
-
-            LogitudeSettings.HandleLogMe(msg, false, "WorkUntilQEmpty_Db_new", stopLogAt);
-        }
+      
 
         protected virtual bool ProcessMessage_Db(CustomDBQueueMessage msgResponse, string myClass)
         {
@@ -130,7 +121,7 @@ namespace CustomsWorkerRole
 
                 if (String.IsNullOrWhiteSpace(analyzeClass))
                 {
-                    Logger.LogMe("analyzeClass is null", true, "rabbitmq");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError("analyzeClass is null");
                     //_CustomDbQueueService.SafeAbandon();
                     ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage() Method :analyzeClass ==null", null);
                     //message.DeadLetter();
@@ -148,7 +139,7 @@ namespace CustomsWorkerRole
                 int.TryParse(msgResponse.Properties["Tenant"].ToString(), out tenant);
                 if (tenant == -1)
                 {
-                    Logger.LogMe("Tenant is null", true, "rabbitmq");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError("Tenant is null");
                     ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage() Method :tenant==-1", null);
                     return false;
                 }

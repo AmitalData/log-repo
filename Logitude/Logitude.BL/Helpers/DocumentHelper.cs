@@ -374,7 +374,7 @@ namespace Logitude.BL.Helpers
             {
                 APInvoiceHelper.AddCommunicationLog("F", invocie, ex.Message, "ARInvoice", invocie.Id, "HSM Signature Failed", tenant);
 
-                //Logger.LogMe($"hSMSignFile({tenant},{invocieId})" + ex.ToString(), true, "CustomsHSMSignWR");
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
                 ExceptionHandler.HandleException(ex, DateTime.Now, tenant, "", "ProccessHSMSign-MarkExportSignTaskAsDone", "", null);
 
 

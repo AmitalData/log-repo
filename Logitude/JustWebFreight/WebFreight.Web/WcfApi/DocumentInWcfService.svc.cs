@@ -622,12 +622,12 @@ namespace WebFreight.Web.WcfApi
             if(string.IsNullOrEmpty(blobname))
                 return UpdateResponseException(response, new ArgumentException("blobname or DocumentId is null or empty"));
 
-            Logger.LogDebug("UploadDocumentFileDataFromStorage start", "tenant: " + tenant + " blobname: " + blobname + " DocumentId: " + DocumentId);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("UploadDocumentFileDataFromStorage start"+ "tenant: " + tenant + " blobname: " + blobname + " DocumentId: " + DocumentId);
 
             SecurityUtility.AuthenticationOnTenant(tenant);
             response = DocumentFileUploadHelper.AddDocumentAndSendToInternalStorage(tenant, blobname, DocumentId);
 
-            Logger.LogDebug("UploadDocumentFileDataFromStorage finish", "tenant: " + tenant + " blobname: " + blobname + " DocumentId: " + DocumentId + " response: " + response.HasError + ", error message: " + response.ErrorMessage);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("UploadDocumentFileDataFromStorage finish"+ "tenant: " + tenant + " blobname: " + blobname + " DocumentId: " + DocumentId + " response: " + response.HasError + ", error message: " + response.ErrorMessage);
 
             return response;
         }

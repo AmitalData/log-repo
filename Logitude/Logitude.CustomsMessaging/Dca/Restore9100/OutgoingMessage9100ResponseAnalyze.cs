@@ -87,7 +87,7 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
             }
             catch (System.Exception e)
             {
-                Logger.LogMe(e.ToString(), true, $"RestoreWaitingImport_BIGError_T{_CustomsSettingPM.Tenant}");
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e, $"RestoreWaitingImport_BIGError_T{_CustomsSettingPM.Tenant}");
                 throw;
             }
         }
@@ -149,7 +149,7 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
                     if (DateTime.Now.Subtract(_LastErrordateTime) > TimeSpan.FromMinutes(10))
                     {
                         _LastErrordateTime = DateTime.Now;
-                        Logger.LogMe("NO MAIN Code (response 2754 of 2750 !!!) - currMessagingService : " + currMessagingServiceCode + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log", true, "DCANotIsRegistered");
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError("NO MAIN Code (response 2754 of 2750 !!!) - currMessagingService : " + currMessagingServiceCode + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log");
                     }
                 }
                 catch
