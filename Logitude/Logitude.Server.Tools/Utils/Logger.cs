@@ -17,23 +17,11 @@ namespace Logitude.Server.Tools.Utils
 {
     public static class TODELETE_Logger
     {
-        static Thread writeLogLoop = null;
+      
         static Dictionary<string, string> suffixs = null;
 
-        private static void InitNlogConfig()
-        {
-            try
-            {
-               // if (NLog.LogManager.Configuration == null)
-                  //  NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NLog.config"));
 
-            }
-            catch (Exception ex)
-            {
-                Debug.Write("NLOG CONFIG NOT FOUND " + ex);
-                
-            }
-        }
+
         delegate DialogResult Show(string text, string caption);
         static ConcurrentQueue<Tuple<string, bool, string>> cq = null;
         static Dictionary<string, Dictionary<string, StreamWriter>> dicStream = null;
@@ -44,162 +32,22 @@ namespace Logitude.Server.Tools.Utils
             dicStream = new Dictionary<string, Dictionary<string, StreamWriter>>();
             suffixs = new Dictionary<string, string>();
             cq = new ConcurrentQueue<Tuple<string, bool, string>>();
-            writeLogLoop = new Thread(new ParameterizedThreadStart(ManagerThreadLoop));
-            writeLogLoop.Start();
+            
         }
 
-        static void ManagerThreadLoop(object threadParam)
-        {
-            while (!WorkerRoleServiceLocator.PleaseShutDown)
-            {
-                try
-                {
-                    Tuple<string, bool, string> item = null;
-                    if (cq.TryDequeue(out item))
-                    {
-                        string prefix = ValidFileName(item.Item3);
-                        InitWorkingDir();
-                        if (item.Item2)
-                        {
-                            LogError(item.Item1, prefix);
-                        }
-                        else
-                        {
-                            LogMessage(item.Item1, prefix);
-                        }
-                    }
-                    CloseOldStream();
-                    Thread.Sleep(10);
-                }
-                catch { }
-            }
-
-        }
-
-        public static void LogMe(string mess, bool Error)
-        {
-            LogMe(mess, Error, "");
-        }
+      
+      
         private static StringBuilder _SBUIErrorBuffer = new StringBuilder();
         private static DateTime UIErrorBufferAt;
 
-        public static void LogMe(string mess, bool Error, string suffix)
-        {
-            try
-            {
-                mess = $"[{DateTime.Now.ToString("G")}]{mess}";
-                if (!Error)
-                {
-                    if (string.IsNullOrEmpty(suffix)) suffix = "Mess";
-                    cq.Enqueue(new Tuple<string, bool, string>(mess, false, suffix));
-                }
-                else
-                {
-                    cq.Enqueue(new Tuple<string, bool, string>(mess, true, ""));
-                    if (string.IsNullOrEmpty(suffix)) suffix = "Mess";
-                    cq.Enqueue(new Tuple<string, bool, string>(mess, false, suffix));
-                    bool Send = false;
-                    if (UIErrorBufferAt == DateTime.MinValue)
-                        Send = true;
-                    else if (DateTime.Now.Subtract(UIErrorBufferAt) > new TimeSpan(1, 0, 0))
-                        Send = true;
-                    _SBUIErrorBuffer.AppendLine(mess);
-                    #region Send Email
-                    if (Send)
-                    {
-                        if (System.Environment.UserInteractive)
-                        {
-                            Show myDel = new Show(System.Windows.Forms.MessageBox.Show);
-                            myDel.BeginInvoke(_SBUIErrorBuffer.ToString(), ValidFileName(ValidFileName(Application.ProductName)), null, null);
-                            //System.Windows.Forms.MessageBox.Show(m);
 
-                        }
-                        SMTP.SendItdelegate SendItP = new SMTP.SendItdelegate(SMTP.SendItDefault);
-                        SendItP.BeginInvoke(_SBUIErrorBuffer.ToString(), null, null);
-                        _SBUIErrorBuffer = new StringBuilder();
-                        UIErrorBufferAt = DateTime.Now;
-                    }
-                    #endregion
-                }
-            }
-            catch (Exception ex)
-            {
-               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
-            }
-        }
 
       
 
         private delegate void LogMeDelegate(string mess, string suffix);
         private static DateTime LastDelOldAt = DateTime.MinValue;
-        private static void InitWorkingDir()
-        {
-            try
-            {
 
-                if (WorkingDir == "" ||
-                 (DateTime.Now.Subtract(LastDelOldAt) > new TimeSpan(12, 0, 0))
-                 )
-                {
-                    try
-                    {
-                        //WorkingDir = ConfigurationManager.AppSettings["WorkingDir"].ToString();
-                        //WorkingDir = Path.GetDirectoryName(Application.ExecutablePath);
-
-
-                        if (string.IsNullOrEmpty(OverrideExecutablePath))
-                        {
-
-                            WorkingDir = Path.GetDirectoryName(Application.ExecutablePath);
-                        }
-                        else
-                        {
-                            WorkingDir = OverrideExecutablePath;
-                        }
-
-                    }
-                    catch
-                    {
-                        //WorkingDir = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-
-                    }
-                    LastDelOldAt = DateTime.Now;
-                    var Machine_User = ValidFileName(Environment.MachineName + "_" + Environment.UserName);
-                    WorkingDir = WorkingDir + @"\LogService_" + Machine_User + @"\";
-                    if (!Directory.Exists(WorkingDir))
-                    {
-                        Directory.CreateDirectory(WorkingDir);
-                    }
-                    string fileName = "";
-                    DateTime d;
-                    string[] files = Directory.GetFiles(WorkingDir, ValidFileName(Application.ProductName) + ".*.Log", SearchOption.TopDirectoryOnly);
-                    FileInfo fi;
-                    if (files != null)
-                    {
-                        for (int i = 0; i < files.Length; i++)
-                        {
-                            fi = new FileInfo(files[i]);
-                            if (fi.LastWriteTime < DateTime.Today.AddDays(-7))
-                            {
-                                fi.Delete();
-                            }
-                            else
-                            {
-                                int LoggerFileSizeLimitInMB = GetLimitInMB();
-                                if (fi.Length > (1048576 * LoggerFileSizeLimitInMB))
-                                {
-                                    fi.Delete();
-                                }
-                            }
-                        }
-                    }
-                }
-
-            }
-            catch
-            {
-            }
-        }
+      
         private static int? _LoggerFileSizeLimitInMB = null;
         private static int GetLimitInMB()
         {
@@ -225,37 +73,7 @@ namespace Logitude.Server.Tools.Utils
             return _LoggerFileSizeLimitInMB.Value;
         }
 
-        private static void LogError(string mess, string suffix)
-        {
-
-            //if (suffix != "") // log again in Main Error File
-            //{
-            //    LogMeDelegate logMe = new LogMeDelegate(LogError);
-            //    logMe.BeginInvoke(new StringBuilder().Append(suffix).AppendFormat("==> ").AppendLine(mess).ToString(), "", null, null);
-            //}
-            //string suffixFile = "Error.Log";
-            //if (suffix != "") suffixFile = "Error." + suffix + ".Log";
-            //lock (typeof(Logger))
-            //{
-            //    InitWorkingDir();
-            //    using (StreamWriter sw = File.AppendText(WorkingDir + ValidFileName(Application.ProductName) + "." + DateTime.Today.Year + "." + DateTime.Today.Month + "." + DateTime.Today.Day + "." + suffixFile))
-            //    {
-            //        if (String.IsNullOrWhiteSpace(suffix))
-            //        {
-            //            sw.WriteLine("<<==" + DateTime.Now.ToLocalTime());
-            //        }
-            //        sw.WriteLine(mess);
-            //    }
-            //}
-            StreamWriter sw = GetStreamWriter(true, suffix);
-            if (String.IsNullOrWhiteSpace(suffix))
-            {
-                sw.WriteLine("<<==" + DateTime.Now.ToLocalTime());
-            }
-            sw.WriteLine(mess);
-            sw.Flush();
-        }
-
+    
         internal static StreamWriter GetStreamWriter(bool error, string suffix)
         {
             string datestr = DateTime.Today.Year + "." + DateTime.Today.Month + "." + DateTime.Today.Day;
@@ -336,7 +154,6 @@ namespace Logitude.Server.Tools.Utils
             {
                 lock (typeof(TODELETE_Logger))
                 {
-                    InitWorkingDir();
                     string[] files = Directory.GetFiles(WorkingDir, ValidFileName(Application.ProductName) + ".*.State.txt", SearchOption.TopDirectoryOnly);
                     FileInfo fi;
                     if (files != null)
@@ -351,7 +168,7 @@ namespace Logitude.Server.Tools.Utils
             }
             catch (Exception e)
             {
-                LogMe(e.ToString(), true);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
             }
         }
         private static string ValidFileName(string FileName)
@@ -385,7 +202,7 @@ namespace Logitude.Server.Tools.Utils
             {
                 lock (typeof(TODELETE_Logger))
                 {
-                    InitWorkingDir();
+                   
                     using (StreamWriter sw = File.CreateText(WorkingDir + ValidFileName(Application.ProductName) + "." + suffixFile))
                     {
                         sw.WriteLine(mess);
@@ -394,7 +211,7 @@ namespace Logitude.Server.Tools.Utils
             }
             catch (Exception e)
             {
-                LogMe(e.ToString(), true);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
             }
         }
         public static void CloseOldStream()
@@ -469,56 +286,18 @@ namespace Logitude.Server.Tools.Utils
             {
                 return false;
             }
-        }
-
-
-        //private static void LogToNlog(NLog.LogLevel level, Exception exception, string mess, params object[] args)
-        //{
-        //    try
-        //    {
-
-        //        InitNlogConfig();
-
-        //        switch (level.Ordinal)
-        //        {
-        //            case 1:// NLog.LogLevel.Debug:
-        //                NLogger.Debug(exception, mess, args);
-        //                break;
-        //            case 2:// NLog.LogLevel.Info:
-        //                NLogger.Info(exception, mess, args);
-        //                break;
-        //            case 3:// NLog.LogLevel.Warn:
-        //                NLogger.Warn(exception, mess, args);
-        //                break;
-        //            case 4: // NLog.LogLevel.Error:
-        //                NLogger.Error(exception, mess, args);
-        //                break;
-        //            case 5:// NLog.LogLevel.Fatal:                       
-        //                NLogger.Fatal(exception, mess, args);
-        //                break;
-
-        //            case 0:
-        //                NLogger.Trace(exception, mess, args);
-        //                break;
-
-
-        //            default:
-        //                break;
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        Debug.Write("Nlog failed");
-
-        //    }
 
 
 
-        //}
+       
 
+        
 
-
+        
       
+     
+
+       
     }
 
 }

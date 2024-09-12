@@ -22,7 +22,7 @@ namespace LogitudeBatchServices
             //}
             //else
             //{
-            if (args.Count() > 0)
+             if (args.Count() > 0)
             {
                 //string myArgs = "";
                 //foreach (var arg in args)

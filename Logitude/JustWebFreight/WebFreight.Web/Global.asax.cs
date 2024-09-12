@@ -68,8 +68,8 @@ namespace WebFreight.Web
             LogitudeAppSettings.IsRecycled = true;
             LogitudeAppSettings.WarmingIsFinished = false;
             //} 
-            NetCommonHelper.Logger.DevLog.Instance.SetProcessName("WebSite",true);
          
+
             if (string.IsNullOrEmpty(LogitudeSettings.DeploymentStage))
             {
                 string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -328,7 +328,8 @@ namespace WebFreight.Web
                 {
                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo(mess);
                 }
-                //Logger.LogMe(mess, err, suffix);
+ 
+               
             });
 
             LogitudeSettings.HandleDbExceptionInject = ExceptionHandler.HandleDbException;
@@ -436,7 +437,10 @@ namespace WebFreight.Web
             }
             finally
             {
+
                 NetCommonHelper.Logger.DevLog.Instance.WriteInfo(LogitudeSettings.ProductMessage);
+
+                
             }
 
         }
