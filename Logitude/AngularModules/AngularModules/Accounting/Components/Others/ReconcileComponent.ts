@@ -37,6 +37,7 @@ import { count, delay, expand, takeLast } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 import { GLAccountExtendedListService } from 'Accounting/Services/ExtendedLists/GLAccountExtendedListService';
 import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
+import formatRFC7231 from 'date-fns/formatRFC7231';
 
 export class LineModel extends BaseComponent {
     public LedgerTransactionPM: LedgerTransactionPM = null;
@@ -153,6 +154,7 @@ export class LineModel extends BaseComponent {
                 else {
                     this.LedgerTransactionPM.AmountToReconcile = this.OpenAmount;
                 }
+                this.LedgerTransactionPM.AmountToReconcile = Number(this.LedgerTransactionPM.AmountToReconcile.toFixed(2));
             }
             else {
                 this.LedgerTransactionPM.AmountToReconcile = 0;
