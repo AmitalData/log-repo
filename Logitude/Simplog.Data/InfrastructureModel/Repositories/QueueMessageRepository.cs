@@ -86,5 +86,14 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             throw new System.NotImplementedException();
         }
+
+        public List<QueueMessage> GetWaitingForHybridAndFailds(int workerStatus)
+        {
+            var q = from a in context.QueueMessages                                        
+                    where (a.QueueDefinitionCode == "externaltasksqueue" + a.Tenant + "1" || a.QueueDefinitionCode == "externaltasksqueue" + a.Tenant + "2") &&
+                    ((a.RetryNumber < 4 && a.Status == workerStatus) || a.Status == -1)
+                    select a;
+            return q.ToList();
+        }
     }
 }
