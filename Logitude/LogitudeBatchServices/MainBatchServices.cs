@@ -22,8 +22,7 @@ namespace LogitudeBatchServices
             //}
             //else
             //{
-            NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NLog.config"));
-            if (args.Count() > 0)
+             if (args.Count() > 0)
             {
                 //string myArgs = "";
                 //foreach (var arg in args)

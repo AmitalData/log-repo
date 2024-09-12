@@ -50,7 +50,7 @@ namespace CustomsWorkerRole.Test
 
                          )
                     {
-                        WriteLog("Starting Send Email");
+                        
                         _LastSendReqSheetStatistic = DateTime.Now;
                         //LastClacReqSheetStatistic = DateTime.Now;
                         var reqSheetStatisticClass = new ReqSheetStatisticClass();
@@ -66,23 +66,16 @@ namespace CustomsWorkerRole.Test
             catch (Exception stsE)
             {
 
-                MySheetStatistic = "ReqSheetStatisticClass failed :" + stsE.ToString();
-                //Debug.WriteLine(MySheetStatistic);
-                WriteLog(MySheetStatistic);
+             
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(stsE);
             }
         }
 
-        private static void WriteLog(string mess)
-        {
-            if (DateTime.Now < new DateTime(2018, 02, 01))
-            {
-                Logger.LogMe(mess, false, "Statistic");
-            }
-        }
+       
 
         private static void SendIt(Action<string, string> sendEmail)
         {
-            WriteLog("Start SendIt");
+           
             //_LastSendReqSheetStatistic = DateTime.Now;
             var doNotSendEmail = true;
             if (doNotSendEmail)
@@ -90,7 +83,7 @@ namespace CustomsWorkerRole.Test
                 Task.Factory.StartNew(() =>
                 {
                     sendEmail(MySheetStatistic, MySheetStatisticSubject);
-                    WriteLog("Email Sent !!!");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteTrace("Email Sent !!!");
                 }); ;
             }
         }

@@ -46,7 +46,7 @@ namespace AmitalCustomsWindowsService
             }
             catch (System.Exception e)
             {
-                Logger.LogMe(e.ToString(), true, "DbError");
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
                 return false;
 
             }
@@ -116,7 +116,7 @@ namespace AmitalCustomsWindowsService
                 //Debug.WriteLine($"DB MinorLine={_PatchDistributionMatchModel.Last_DBMigrationLine.CounterKey}");
                 if (_PatchDistributionMatchModel.MajorVersionMatch == PatchDistributionMatch.MajorVersionMatchEnum.OldDB)
                 {
-                    Logger.LogMe($"shuttttdown !!!_PatchDistributionMatchModel.MajorVersionMatch == PatchDistributionMatch.MajorVersionMatchEnum.OldDB", true);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError($"shuttttdown !!!_PatchDistributionMatchModel.MajorVersionMatch == PatchDistributionMatch.MajorVersionMatchEnum.OldDB");
                     return true;
 
                 }
@@ -125,14 +125,14 @@ namespace AmitalCustomsWindowsService
                     >
                     _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion)
                 {
-                    Logger.LogMe($"shuttttdown !!!OldDB !!! MyAssemblyDBMigrationModel.MinorVersion {_PatchDistributionMatchModel.MyAssemblyDBMigrationModel.MinorVersion }> _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion {_PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion}", true);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError($"shuttttdown !!!OldDB !!! MyAssemblyDBMigrationModel.MinorVersion {_PatchDistributionMatchModel.MyAssemblyDBMigrationModel.MinorVersion}> _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion {_PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion}");
                     return true;
                 }
                 return false;
             }
             catch (Exception ee)
             {
-                Logger.LogMe("IsOldDB -- " + ee.ToString(), true);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ee);
                 return true;
             }
         }
@@ -142,7 +142,7 @@ namespace AmitalCustomsWindowsService
             if (WorkerRoleServiceLocator.PleaseShutDown)
             {
                 WorkerRoleServiceLocator.PleaseShutDown = false;
-                Logger.LogMe("WorkerRoleServiceLocator.PleaseShutDown = false;", false);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WorkerRoleServiceLocator.PleaseShutDown = false;");
 
             }
             for (Int32 iWorker = 0; iWorker < _Workers.Count; iWorker++)
@@ -156,7 +156,7 @@ namespace AmitalCustomsWindowsService
                     }
                     else
                     {
-                        Logger.LogMe(GetThreadName(iWorker), false, "NotIsAliveBut_WhileServiceStarted_IsOut");
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug(GetThreadName(iWorker));
                     }
                     //_Threads[iWorker] = new Thread(_Workers[iWorker].Run);
                     //_Threads[iWorker].Start();
@@ -176,7 +176,7 @@ namespace AmitalCustomsWindowsService
             //_Threads.Add(t);
             _Threads[iWorker] = currThread;
             _Threads[iWorker].Start();
-            Logger.LogMe(GetThreadName(iWorker), false, "StartThread");
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(GetThreadName(iWorker));
         }
 
         private string GetThreadName(int iWorker)
@@ -205,7 +205,7 @@ namespace AmitalCustomsWindowsService
 
 
 
-        public void AddWorkerFromAppSettingDB<TWorker>(bool suppresDoOnlyCheck = false,String queueDefinitionCode=null, WorkerQueueType workerQueueType= WorkerQueueType.DB)
+        public void AddWorkerFromAppSettingDB<TWorker>(bool suppresDoOnlyCheck = false, String queueDefinitionCode = null, WorkerQueueType workerQueueType = WorkerQueueType.DB)
        where TWorker : Logitude.Server.Tools.WorkerEntryPointDoneLog, new()
         {
             if (suppresDoOnlyCheck)
@@ -215,7 +215,7 @@ namespace AmitalCustomsWindowsService
             var type = typeof(TWorker);
             var typeName = type.Name;
 
-            var workerOnce = new WorkerOnce<TWorker>(1, _Workers.Count) { ServiceStarted = true , QueueDefinitionCode = queueDefinitionCode , WorkerQueueType  =workerQueueType };
+            var workerOnce = new WorkerOnce<TWorker>(1, _Workers.Count) { ServiceStarted = true, QueueDefinitionCode = queueDefinitionCode, WorkerQueueType = workerQueueType };
 
             _Workers.Add(workerOnce);
             _Threads.Add(null);
@@ -226,7 +226,7 @@ namespace AmitalCustomsWindowsService
         {
 
             var suppresDoOnlyCheck = false;
-            string queueDefinitionCode = null;    
+            string queueDefinitionCode = null;
             WorkerQueueType workerQueueType = WorkerQueueType.DB;
 
             var addWorkerFromAppSettingMethodInfoDB = typeof(DBWorkerService).GetMethod("AddWorkerFromAppSettingDB");
@@ -268,7 +268,7 @@ namespace AmitalCustomsWindowsService
                 listOfWorkerEntryPoint = new List<Logitude.Server.Tools.WorkerEntryPoint>();
                 listOfWorkerEntryPoint.Add(new DownloadDcaMessageSheetWR());
                 var AddWorkerFromAppSettingGenericMethod = addWorkerFromAppSettingMethodInfoDB.MakeGenericMethod(new Type[] { (new DownloadDcaMessageSheetWR()).GetType() });
-                AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck, (object)queueDefinitionCode, (object)workerQueueType }); 
+                AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck, (object)queueDefinitionCode, (object)workerQueueType });
                 return;
             }
 
@@ -289,7 +289,7 @@ namespace AmitalCustomsWindowsService
                     {
                         var AddWorkerFromAppSettingGenericMethod = addWorkerFromAppSettingMethodInfoDB.MakeGenericMethod(new Type[] { worker.GetType() });
                         AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck, (object)queueDefinitionCode, (object)workerQueueType });
-                    
+
                     }
                 }
             }
@@ -348,26 +348,9 @@ namespace AmitalCustomsWindowsService
                     StopThread(i);
 
                 }
-                //if (WorkerRoleServiceLocator.HaveCourierTenant)
-                //{
-                //    Logger.LogMe("Is Courier Wait 60Sec", false);
-                //    var sw = Stopwatch.StartNew();
-                //    while (sw.Elapsed < TimeSpan.FromSeconds(60))
-                //    {
-                //        if (!_Threads.Any(r => !r.IsAlive))
-                //        {
-                //            break;
-                //        }
-                //        Thread.Sleep(300);
-                //    }
-                //    bool b = _Threads.Any(r => !r.IsAlive);
-                //    Logger.LogMe($"All thread down == _Threads.Any(r => !r.IsAlive)? ={b} ", false);
-                //    Thread.Sleep(100);
-                //}
-                //else
-                {
-                    Thread.Sleep(1000);
-                }
+
+                Thread.Sleep(1000);
+
 
 
 
@@ -376,7 +359,7 @@ namespace AmitalCustomsWindowsService
             catch (Exception e)
             {
 
-                Logger.LogMe(e.ToString(), true, "StopThreads");
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
             }
 
         }
@@ -385,7 +368,7 @@ namespace AmitalCustomsWindowsService
         {
 
             _Workers[iWorker].ServiceStarted = false;//== dispose !!!
-            Logger.LogMe(GetThreadName(iWorker), false, "StopThread");
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(GetThreadName(iWorker));
         }
 
 

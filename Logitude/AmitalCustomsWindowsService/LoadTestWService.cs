@@ -28,9 +28,7 @@ namespace AmitalCustomsWindowsService
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var err = e.ExceptionObject.ToString();
-            Logger.LogMe("CurrentDomain_UnhandledException!!!" + e.IsTerminating.ToString() + err, true);
-            Logger.LogMe("CurrentDomain_UnhandledException!!!" + e.ToString(), true);
-            //System.Diagnostics.Debugger.Launch();
+            NetCommonHelper.Logger.DevLog.Instance.WriteError("CurrentDomain_UnhandledException!!!" + e.IsTerminating.ToString() + "Err:" + e.ToString() + err);
             var featureCheckMaxPoolSizeWasReachedThenRetart = ConfigurationManager.AppSettings["20180219.CheckMaxPoolSizeWasReachedThenRetart"] == "1";
             if (featureCheckMaxPoolSizeWasReachedThenRetart) { }
             Environment.Exit(-1);
@@ -38,7 +36,8 @@ namespace AmitalCustomsWindowsService
         protected override void OnStart(string[] args)
         {
             // TODO: Add code here to start your service.
-            Task.Factory.StartNew(() => {
+            Task.Factory.StartNew(() =>
+            {
                 StartMe();
             });
         }
@@ -46,15 +45,15 @@ namespace AmitalCustomsWindowsService
         protected override void OnStop()
         {
             // TODO: Add code here to perform any tear-down necessary to stop your service.
-            
-            Logger.LogMe("OnStop()", false);
+
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("OnStop()");
             _LoadTestWorkerService.StopThreads();
         }
 
         public void StartMe()
         {
             //throw new NotImplementedException();
-            
+
             Program.ThreadStartStaticIsMustB4UsingTheDB();
             _LoadTestWorkerService.EnshureThreadWorking(true);
         }

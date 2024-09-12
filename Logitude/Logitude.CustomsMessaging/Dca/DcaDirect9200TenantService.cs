@@ -111,16 +111,12 @@ namespace Logitude.CustomsMessaging.Dca
             }
             catch (System.Exception e)
             {
-                _SaveError = true;
-                _SBErrorLog.AppendLine("Error: " + e.ToString());
-
+                
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
             }
             finally
             {
-                if (_SaveError)
-                {
-                    Logger.LogMe(_SBErrorLog.ToString(), true, "DcaDirect9200TenantService");
-                }
+              
 
             }
         }
@@ -200,7 +196,7 @@ namespace Logitude.CustomsMessaging.Dca
                     var l = sbFilenameQueue.ToList();
                     var sb1 = new StringBuilder();
                     l.ForEach(line => { sb1.AppendLine(line); });
-                    Logger.LogMe(sb1.ToString(), false, "TenantDownloaderFilename");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(sb1.ToString());
                     string haveMore = response.Result.HowManyOtherWaitingMessages > 0 ? "Have more .." : "";
                     _SBInfoLog.AppendLine("All messages received  " + haveMore);
 
@@ -284,7 +280,7 @@ namespace Logitude.CustomsMessaging.Dca
 
 
 
-                    Logger.LogMe(sbFilename.ToString(), false, "TenantDownloaderFilename");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(sbFilename.ToString());
                     string haveMore = response.Result.HowManyOtherWaitingMessages > 0 ? "Have more .." : "";
                     _SBInfoLog.AppendLine("All messages received  " + haveMore);
 
@@ -502,13 +498,13 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
             {
                 try
                 {
-                    Debug.WriteLine("DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass = " + currMessagingService);
-                    Debug.WriteLine("Due infinite errors i cancel writing log");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass = " + currMessagingService);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Due infinite errors i cancel writing log");
 
                     if (DateTime.Now.Subtract(_LastErrordateTime) > TimeSpan.FromMinutes(10))
                     {
                         _LastErrordateTime = DateTime.Now;
-                        Logger.LogMe("NO MAIN Code (response 2754 of 2750 !!!) - currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log", true, "DCANotIsRegistered");
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("NO MAIN Code (response 2754 of 2750 !!!) - currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log");
                     }
                 }
                 catch

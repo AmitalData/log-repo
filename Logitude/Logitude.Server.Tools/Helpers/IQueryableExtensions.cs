@@ -94,7 +94,7 @@ namespace Logitude.Server.Tools.Helpers
         
         public static System.Collections.IList LogAndGetList<T>(this IQueryable<T> query, string funcOrQueryName)
         {
-            Logger.LogDebug("{0} Query \r\n {1} ", funcOrQueryName, query.ToTraceQuery());
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("{0} Query \r\n {1} ", funcOrQueryName, query.ToTraceQuery()));
             DateTime start = DateTime.Now;
             
             Type elementType = query.ElementType;
@@ -104,7 +104,7 @@ namespace Logitude.Server.Tools.Helpers
 
             resultList = query.ToList();
 
-            Logger.LogDebug("{0} SUM duration {1} seconds ",funcOrQueryName, (DateTime.Now - start).TotalSeconds);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug( string.Format("{0} SUM duration {1} seconds ",funcOrQueryName, (DateTime.Now - start).TotalSeconds));
 
             return resultList;
 

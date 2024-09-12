@@ -285,7 +285,7 @@ namespace Logitude.CustomsMessaging.Dca
                 restoreWaitingImportService.RestoreWaitingImportSaveInDB();
 
                 sb.AppendLine($"RestoreWaitingImportSaveInDB({this._CustomsSettingPM.Tenant}):took:{sw.Elapsed}");
-                Logger.LogMe(sb.ToString(), false, "DCAStopwatch");
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(sb.ToString());
                 return;
             }
 
@@ -366,7 +366,7 @@ namespace Logitude.CustomsMessaging.Dca
                                             if (DateTime.Now.Subtract(_LastErrordateTime) > TimeSpan.FromMinutes(10))
                                             {
                                                 _LastErrordateTime = DateTime.Now;
-                                                Logger.LogMe("NO MAIN Code (response 2754 of 2750 !!!)  currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log", true, "DCANotIsRegistered");
+                                                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("NO MAIN Code (response 2754 of 2750 !!!)  currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log");
                                             }
                                             string myMoreParams = "";
                                             bool myErrorOccurred;
@@ -410,7 +410,7 @@ namespace Logitude.CustomsMessaging.Dca
                 catch (Exception eee)
                 {
 
-                    Logger.LogMe(eee.ToString(), true, "DCAMulti");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee);
                 }
                 finally
                 {
@@ -419,7 +419,7 @@ namespace Logitude.CustomsMessaging.Dca
                     {
                         exceptionQueue.ToList().ForEach(e1 =>
                         {
-                            Logger.LogMe(e1.ToString(), true, "DCAMulti");
+                            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e1);
                         });
                     }
                     catch

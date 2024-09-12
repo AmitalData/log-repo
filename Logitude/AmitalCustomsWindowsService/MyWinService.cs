@@ -47,9 +47,8 @@ namespace AmitalCustomsWindowsService
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var err = e.ExceptionObject.ToString();
-            Logger.LogMe("CurrentDomain_UnhandledException!!!" + e.IsTerminating.ToString() + err, true);
-            Logger.LogMe("CurrentDomain_UnhandledException!!!" + e.ToString(), true);
-            //System.Diagnostics.Debugger.Launch();
+            NetCommonHelper.Logger.DevLog.Instance.WriteError("CurrentDomain_UnhandledException!!!" + e.IsTerminating.ToString()+"Err:"+e.ToString() + err);
+          
         }
 
         protected override void OnStart(string[] args)
@@ -100,11 +99,11 @@ namespace AmitalCustomsWindowsService
         {
             
 
-            Logger.LogMe("OnStop()", false);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("OnStop()");
             if (false)
             {
                 SMTP.SendItDefault(Environment.CommandLine.ToString() + " ", "AmitalCustomsWindowsService:OnStop()");
-                Logger.LogMe("OnStop()!!!", false);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("OnStop()!!!");
 
             }
             for (int i = 0; i < _Workers.Count; i++)
@@ -196,7 +195,7 @@ namespace AmitalCustomsWindowsService
                 //AddAllWR();
                 if (_Workers.Count < 1)
                 {
-                    Logger.LogMe("unexpected setting - No Worker Loaded !!!!!!!!!!!", true);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError("unexpected setting - No Worker Loaded !!!!!!!!!!!");
                     return;
                 }
 
@@ -313,7 +312,7 @@ namespace AmitalCustomsWindowsService
             try
             {
                 _myTimer.Stop();
-                //Logger.LogMe("timer1_Tick", false, "timer1");
+                
                 StartMe();
 
                 if (!_IsCheckOnce)
@@ -328,11 +327,11 @@ namespace AmitalCustomsWindowsService
 
 
                 SaveState();
-                //Logger.LogMe("timer1_Tick", false, "timer2");
+                
             }
             catch (Exception ex)
             {
-                Logger.LogMe("timer1_Tick:" + ex.ToString(), true);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
             }
             finally
             {
@@ -380,7 +379,7 @@ namespace AmitalCustomsWindowsService
             }
             catch (Exception ex)
             {
-                Logger.LogMe("SaveState:" + ex.ToString(), true);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
             }
         }
         
@@ -401,15 +400,15 @@ namespace AmitalCustomsWindowsService
             string workerCount = ConfigurationManager.AppSettings.Get(typeName);
             int iWorkerCount = 0;
             int.TryParse(workerCount, out  iWorkerCount);
-            Logger.LogMe("AddWorkerFromAppSetting " + typeName + " Value:" + iWorkerCount.ToString(), false);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("AddWorkerFromAppSetting " + typeName + " Value:" + iWorkerCount.ToString());
             if (iWorkerCount<1)
             {
-                Logger.LogMe("AddWorkerFromAppSetting " + typeName + " Value < 0", false);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("AddWorkerFromAppSetting " + typeName + " Value < 0");
                 return;
             }
             if (iWorkerCount>10)
             {
-                Logger.LogMe("unexpected setting (Mean while 3 worker allowed !!) AddWorkerFromAppSetting " + typeName + " Value > 3", true);
+                NetCommonHelper.Logger.DevLog.Instance.WriteError("unexpected setting (Mean while 3 worker allowed !!) AddWorkerFromAppSetting " + typeName + " Value > 3");
                 iWorkerCount = 10;
             }
             

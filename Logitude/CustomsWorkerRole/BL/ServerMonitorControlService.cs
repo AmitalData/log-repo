@@ -29,12 +29,12 @@ namespace CustomsWorkerRole.BL
             {
                 if (DateTime.Now < THEGracePeriod)
                 {
-                    Logger.LogMe($"Please insert {Environment.MachineName} in ServersNames!! -> Grace Period  TILL  {THEGracePeriod} ", false, ServerMonitorControl);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Please insert {Environment.MachineName} in ServersNames!! -> Grace Period  TILL  {THEGracePeriod} ");
 
                 }
                 else
                 {
-                    Logger.LogMe($"SHUTDOWN!!! Please insert ServersNames!! -Grace Period exceeded !! {THEGracePeriod} ", true, ServerMonitorControl);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError($"SHUTDOWN!!! Please insert ServersNames!! -Grace Period exceeded !! {THEGracePeriod} ");
                     ExitEnsureLogWrite();
 
                 }
@@ -45,32 +45,32 @@ namespace CustomsWorkerRole.BL
             serviceNameList = serviceNameList.Select(r => r.ToLower()).ToList();
             if (serviceNameList.Count == 0)
             {
-                Logger.LogMe($"SHUTDOWN!!! ServersName defined But {Environment.MachineName} not exist ", true, ServerMonitorControl);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SHUTDOWN!!! ServersName defined But {Environment.MachineName} not exist ");
                 ExitEnsureLogWrite();
                 return;
             }
-            Logger.LogMe($"{Environment.MachineName} exist in ServersName ", false, ServerMonitorControl);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"{Environment.MachineName} exist in ServersName ");
             var curServiceName = GetServiceName();
             if (!String.IsNullOrWhiteSpace(  curServiceName ))
             {
                 curServiceName = curServiceName.ToLower();
                 if (serviceNameList.Contains(curServiceName))
                 {
-                    Logger.LogMe($"{curServiceName} found in  ServersName", false, ServerMonitorControl);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"{curServiceName} found in  ServersName");
 
                 }
                 else
                 {
-                    Logger.LogMe($"{curServiceName} not found ServersName ", false, ServerMonitorControl);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"{curServiceName} not found ServersName ");
 
-                    Logger.LogMe($"SHUTDOWN!!!restrict!! {curServiceName} not found ServersName ", true, ServerMonitorControl);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError($"SHUTDOWN!!!restrict!! {curServiceName} not found ServersName ");
                     ExitEnsureLogWrite();
                     return;
                 }
             }
             else
             {
-                Logger.LogMe($"GetServiceName() == null", false, ServerMonitorControl);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"GetServiceName() == null");
             }
         }
 

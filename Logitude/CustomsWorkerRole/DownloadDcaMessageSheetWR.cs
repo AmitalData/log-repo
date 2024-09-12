@@ -165,8 +165,8 @@ namespace CustomsWorkerRole
                     .Where(env => env.Tenant == _DedicatedCourierDCAModel.Tenant);//Courier
                 if (!costomSettingDCAList.Any())
                 {
-                    Logger.LogMe("_DedicatedCourierDCAModel.Tenant is not valid!!!! must env.CompanyType == B and in customssetting !!", true);
-                    //Thread.Sleep(TimeSpan.FromMinutes(3));
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError("_DedicatedCourierDCAModel.Tenant is not valid!!!! must env.CompanyType == B and in customssetting !!");
+                   
                     Thread.Sleep(TimeSpan.FromSeconds(3));
                     return;
                 }

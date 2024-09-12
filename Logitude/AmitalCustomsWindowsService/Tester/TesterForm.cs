@@ -528,17 +528,17 @@ namespace AmitalCustomsWindowsService.Tester
             if (dardcODED)
             {
                 var password = signUpWorkerRole.CreatTenant(email, Company);
-                Logger.LogMe("CreatTenant:email=" + email + ":Pass=" + password, false);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CreatTenant:email=" + email + ":Pass=" + password);
             }
             else
             {
                 signUpWorkerRole.WorkOnceSuppressClearQ();
             }
-            Debug.WriteLine("signUpWorkerRole.WorkOnce END !!");
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("signUpWorkerRole.WorkOnce END !!");
             //}
             //catch (Exception ee)
             //{
-            //    Logger.LogMe(ee.ToString(), true); 
+            
             //    //throw;
             //}
         }
@@ -572,7 +572,7 @@ namespace AmitalCustomsWindowsService.Tester
             catch (Exception e1)
             {
 
-                Logger.LogMe(e1.ToString(), true);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e1);  
             }
         }
 

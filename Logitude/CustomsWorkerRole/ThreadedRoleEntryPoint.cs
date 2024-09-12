@@ -253,7 +253,14 @@ namespace CustomsWorkerRole
             LogitudeSettings.HandleLogMe = new Action<string, bool, string, DateTime>((mess, err, suffix, stopLogAt) =>
             {
                 if (DateTime.Now > stopLogAt) return;
-                Logger.LogMe(mess, err, suffix);
+                if (err)
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError(mess + suffix);
+                }
+                else
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(mess + suffix);
+                }
             });
 
 

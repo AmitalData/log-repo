@@ -62,7 +62,7 @@ namespace Logitude.Server.Tools.FTP
             catch (Exception e)
             {
 
-                Logger.LogMe(e.ToString(), true, "SFTPDeleteTempFilesService");
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
                 //throw;
             }
         }
@@ -109,7 +109,7 @@ namespace Logitude.Server.Tools.FTP
             }
             catch (Exception e)
             {
-                Logger.LogMe(e.ToString(), true, "SFTPDeleteTempFilesService");
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
                 return false;
             }
         }

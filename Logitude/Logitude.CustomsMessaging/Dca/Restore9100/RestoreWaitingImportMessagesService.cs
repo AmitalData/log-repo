@@ -108,7 +108,7 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
                 Debug.WriteLine($"RestoreWaitingImportSaveInDB-Send 9100 restore fromDate {request.GetOptions.fromDate}");
                 var response = SendOutgoingMessageRequest(request);
                 Debug.WriteLine($"RestoreWaitingImportSaveInDB-Send 9100 took {sw.Elapsed}");
-                Logger.LogMe($"t{_CustomsSettingPM.Tenant};fromDate {request.GetOptions.fromDate}; OutgoingMessage={response?.OutgoingMessage?.Length}", false, "DCAStopwatch");
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"t{_CustomsSettingPM.Tenant};fromDate {request.GetOptions.fromDate}; OutgoingMessage={response?.OutgoingMessage?.Length}");
                 if (response?.OutgoingMessage?.Length == null || response?.OutgoingMessage?.Length == 0)
                 {
                     Debug.WriteLine($"RestoreWaitingImportSaveInDB-OutgoingMessage == 0 - nothing todo");
@@ -135,18 +135,18 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
                     );
                 if (outgoingMessage9100ResponseAnalyze.exceptionBag.Count>0)
                 {
-                    Logger.LogMe(String.Join(Environment.NewLine, outgoingMessage9100ResponseAnalyze.exceptionBag.ToList()), true, $"RestoreWaitingImport_Error_T{_CustomsSettingPM.Tenant}");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError(String.Join(Environment.NewLine, outgoingMessage9100ResponseAnalyze.exceptionBag.ToList())+ $"RestoreWaitingImport_Error_T{_CustomsSettingPM.Tenant}");
                 }
                 if (outgoingMessage9100ResponseAnalyze.sbFilenameQueue.Count>0)
                 {
-                    Logger.LogMe(String.Join(Environment.NewLine, outgoingMessage9100ResponseAnalyze.sbFilenameQueue.ToList()), false, $"RestoreWaitingImport_Files_T{_CustomsSettingPM.Tenant}");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Join(Environment.NewLine, outgoingMessage9100ResponseAnalyze.sbFilenameQueue.ToList())+ $"RestoreWaitingImport_Files_T{_CustomsSettingPM.Tenant}");
                 }
                 
 
             }
             catch (System.Exception e)
             {
-                Logger.LogMe(e.ToString(), true, $"RestoreWaitingImport_BIGError_T{_CustomsSettingPM.Tenant}");
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e, $"RestoreWaitingImport_BIGError_T{_CustomsSettingPM.Tenant}");
                 throw;
             }
             finally

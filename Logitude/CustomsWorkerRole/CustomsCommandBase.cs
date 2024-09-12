@@ -361,7 +361,7 @@ namespace CustomsWorkerRole
 
                                         queue_TransactionScope.Dispose();
                                         successProcessMessage = false;
-                                        Logger.LogMe(e1.ToString(), true, "rabbitmq");
+                                        NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e1);
                                         ExceptionHandler.HandleException(e1, DateTime.Now, 0, "", "WorkerRoleRabbitMQ", $"WorkUntilPrcossesStop_RabbitMQ{messageId}", null);
                                         Thread.Sleep(1000);
 
@@ -395,7 +395,7 @@ namespace CustomsWorkerRole
                                         catch (Exception eee)
                                         {
 
-                                            Logger.LogMe(eee.ToString(), true, "rabbitmq");
+                                            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee);
                                             ExceptionHandler.HandleException(eee, DateTime.Now, 0, "", "WorkerRoleRabbitMQ", $"WorkUntilPrcossesStop_RabbitMQ{messageId}", null);
                                             Thread.Sleep(1000);
                                         }
@@ -418,7 +418,7 @@ namespace CustomsWorkerRole
                             catch (Exception ex)
                             {
 
-                                //Logger.LogMe(ex.Message, false, RabbitMQLogFILE);
+                                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
                                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRoleRabbitMQ", $"WorkUntilPrcossesStop_RabbitMQ{messageId}", null);
                                 Thread.Sleep(1000);
 
@@ -590,7 +590,7 @@ namespace CustomsWorkerRole
                             {
                                 string morethan = "";
                                 string str = LogMessagingUtilWR.Instance.GetString(out morethan);
-                                Logger.LogMe(str, false, this.GetType().ToString() + "_" + morethan);
+                                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(str + "_" + morethan);
                             }
                         }
 
@@ -740,7 +740,7 @@ namespace CustomsWorkerRole
 
                 if (String.IsNullOrWhiteSpace(analyzeClass))
                 {
-                    Logger.LogMe("analyzeClass is null", true, "rabbitmq");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError("analyzeClass is null");
                     //_CustomDbQueueService.SafeAbandon();
                     ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage() Method :analyzeClass ==null", null);
                     //message.DeadLetter();
@@ -758,7 +758,7 @@ namespace CustomsWorkerRole
                 int.TryParse(msgResponse.Properties["Tenant"].ToString(), out tenant);
                 if (tenant == -1)
                 {
-                    Logger.LogMe("Tenant is null", true, "rabbitmq");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError("Tenant is null");
                     ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage() Method :tenant==-1", null);
                     return false;
                 }
