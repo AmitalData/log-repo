@@ -143,9 +143,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.SetWarningByCooTypeCode(EntityPM.CooTypeCode);
         this.initSelectionValueFields();
         this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true : false;
-        this.setDisplayMessage();
-
-        
+         this.setDisplayMessage();
+ 
         
     }
     InitUrls() {
@@ -153,6 +152,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             this.myDictionary[paramName]=localStorage.getItem(paramName+"_"+this.entityPM.CooTypeCode+".png");
         }
     }
+     
+    
     
     
     InitMoreDataScreenValues() {

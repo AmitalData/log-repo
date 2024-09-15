@@ -103,14 +103,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //file = new System.IO.StreamWriter(System.Web.HttpContext.Current.Server.MapPath("~/CCUFILEM Save Logs.txt"), true);
             //}
         }
-
+     
         internal void Update(Boolean doTask  )//eitan h 12/3/15 task 11788
         //internal void Update()
         {
             if (_DirtyDeclarationPM.Direction == "E")
                 return;
+            string logData = "";
             DateTime stopLogAt = DateTime.MinValue;
-            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20210427HD368109.LogUntilDateyyyyMMdd"];
+            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["TOTALINVOICELINESNO.LogUntilDateyyyyMMdd"];
             var setting = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPM.Tenant);
 
             if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
@@ -120,7 +121,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                                     CultureInfo.InvariantCulture,
                                                     DateTimeStyles.None);
             }
-            string logData = "";
+      
 
             this._CreateCCUTAXFor105Feature = true; ///ConfigurationManager.AppSettings["20180121.CreateCCUTAXFor105"] == "1";///todo
             this._NoRaiseLD2ULogicFeature = true; ///ConfigurationManager.AppSettings["20180204.NoRaiseLD2ULogicFeature"] == "1";
@@ -2353,6 +2354,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         private void DoSupplierInvoices()
         {
+            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["SupplierInvoiceCCU.LogUntilDateyyyyMMdd"];
+            var setting = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPM.Tenant);
+            string logData = "";
+            DateTime stopLogAt = DateTime.MinValue;
+
+            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+            {
+                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+                                                    "yyyyMMdd",
+                                                    CultureInfo.InvariantCulture,
+                                                    DateTimeStyles.None);
+            }
+           
             EntityQueryServices.SupplierInvoiceQueryService mySupplierInvoiceQueryService = new EntityQueryServices.SupplierInvoiceQueryService(_Context);
             List<Def.EntityPMs.SupplierInvoicePM> mySupplierInvoicePMList = new List<Def.EntityPMs.SupplierInvoicePM>();
 
@@ -2424,9 +2438,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
+    
 
             _CCUFILEMPM.NOOFINVOICES = _DirtyDeclarationPM.SupplierInvoices.Count();
             _CCUFILEMPM.TOTALINVOICELINESNO = GetCountSupplierInvoicesItems();
+            logData = "CUSTOMFILENO:" + _DirtyDeclarationPM.CustomFileNo + ", TOTALINVOICELINESNO:" + _CCUFILEMPM.TOTALINVOICELINESNO.ToString() + ",Stack:" + new StackTrace().ToString();
+            LogitudeSettings.HandleLogMe(logData, false,"CCU" , stopLogAt);
+
             _CCUFILEMPM.PRATMEHESLIST = GetAllPratMehesList(3);
             _CCUFILEMPM.ALLPRATMEHESLIST = GetAllPratMehesList();
             if(_CCUFILEMPM.ALLPRATMEHESLIST.Length > 1024) _CCUFILEMPM.ALLPRATMEHESLIST = _CCUFILEMPM.ALLPRATMEHESLIST.Substring(0, 1024);
