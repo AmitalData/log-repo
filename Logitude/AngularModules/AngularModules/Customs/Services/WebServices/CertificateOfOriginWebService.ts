@@ -17,6 +17,7 @@ import { CustomFieldClass } from 'Infrastructure/DataContracts/CustomFieldClass'
 import { Guid } from 'Infrastructure/Utilities/Guid';
 import { PerformanceLogger } from 'Infrastructure/Utilities/PerformanceLogger';
 import { ClassLevelValidator } from 'Infrastructure/Validators/ClassLevelValidator';
+import { PrivateLabelsBrandingDataService } from 'Infrastructure/Services/WebServices/PrivateLabelsBrandingDataService';
 
 
 @Injectable()
@@ -97,7 +98,32 @@ export class CertificateOfOriginWebService {
 
         );
     }
+    GetToolTipImagesFromStorage() {
 
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.get(this._apiUrl + "/GetToolTipImagesFromStorage/" , ServiceHelper.GetHttpHeaders()).pipe(map((blob: Record<string, any>) => {
+                const urls = {};
+                for (const [key, value] of Object.entries(blob)) {
+                 
+                  const imageUrl =  PrivateLabelsBrandingDataService.GetImageFromBytes(value) ;
+                  urls[key.substring(key.lastIndexOf('/') + 1)] = imageUrl;
+                  localStorage.setItem(key.substring(key.lastIndexOf('/') + 1), imageUrl);
+                }
+                return urls;
+            }), catchError(ServiceHelper.HandleServiceError));
+        }
+
+        );
+
+    }
     GetCityOfDeclarationByImporterID(importerID: string, tenant: number) {
         return defer(() => {
 

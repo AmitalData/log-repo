@@ -61,8 +61,9 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     constructor(
         public entityArgs: EntityArgs,
     ) {
+        
         super();
-
+        
     }
 
     private CertificateChanges = new BehaviorSubject<boolean>(false);
@@ -83,14 +84,16 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     }
 
     SetWindowArgs(args: any) {
+        
         this.EntityPM = args.CertificateOfOrigin;
         this.DecalarationData = args.Decalaration;
         this.IsNewOrEdit = args.IsNewOrEdit;
         this.isAllowChange = args.isAllowChange;
-        
+       
         this.isListenToChangeInCertificate(args.logWindow);
 
         this.InitMoreDataScreenValues();
+        this.InitToolTipImages();
         this.BuildTabs();
         this.RunComponent();
         this.entityArgs.EntityPM = this.EntityPM;
@@ -286,7 +289,14 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
             });
         }
     }
-
+    InitToolTipImages(){
+        if(!AppTool.IsNullOrEmpty(this.EntityPM?.CooTypeCode)){
+            this.certificateOfOriginWebService.GetToolTipImagesFromStorage().subscribe(myResult => {
+                var myResponse = myResult;
+               
+            });
+        }
+    }
     SaveAndSendClick(customSendOptionsArgs: any = null) {
         if ((!this.EntityPM.CooTypeCode || !this.EntityPM.RequestReasonCode) && ((this.EntityPM.RequestReasonCode != "10" && this.EntityPM.RequestReasonCode != "13" && this.EntityPM.RequestReasonCode != "14") )){// manddatory fields
             this.GENERAL.CheckMandatoryFields();
@@ -518,6 +528,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         if (this.ResponseData == null) {
             return;
         }
+       
         this.certificateOfOriginWebService.GetCertificateOfOriginByIDIncludeChildrens(this.ResponseData.ApplicationID, this.DecalarationData.Id, this.EntityPM.Tenant).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResult.HasError && myResult.Result) {
@@ -535,12 +546,16 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
                     this.UpdateIsChange(false);//#103474
             }
         });
+        
+
+
 
     }
-
+  
     UpdateIsChange(isChange: boolean) {//#103474
+        
         this.EntityPM.IsChange = isChange;
-
+        
         this.certificateOfOriginWebService.update(this.EntityPM).subscribe((response: any) => {
             if (!response.HasError) {
                 var result = response.Result;

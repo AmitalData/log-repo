@@ -66,6 +66,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     public isCitizen: boolean;
     public isPassport: boolean;
     public entityPM: CertificateOfOriginPM;
+    myDictionary: Record<string, string> = {};
     public currentDeclaration: DeclarationPM;
     public currentCard: CardPM;
     public CertificateOriginInvoiceItems: ObservableCollection // type <CertificateOfOriginInvoicePM[]>;
@@ -107,8 +108,9 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.CertificateOriginItemItems = new ObservableCollection([]);
         this.currentDeclaration = currentDeclaration;
         this.cargoDescription = this.currentDeclaration.Consignments[0]?.CargoDescription;
-
+        
         if (IsNewOrEdit === StatusCertificateOfOrigin.IsNew) {
+           
             this.InitMoreDataScreenValues();
             this.supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclaration(currentDeclaration.Id).subscribe((response: any) => {
                 var result = response.Result;
@@ -121,6 +123,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                             this.currentDeclaration.SupplierInvoices = result;
                             this.InitNewCertificate(EntityPM);
                             this.isReady = true;
+
                         }
                     });
                 }
@@ -130,14 +133,24 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             this.InitilizeListsFromCertificateOfOrigin(EntityPM);
             this.isReady = true;
         }
-
+        
+        this.InitUrls()
         this.SetPropertiesEnabled();
         this.SetWarning();
         this.SetWarningByCooTypeCode(EntityPM.CooTypeCode);
         this.initSelectionValueFields();
         this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true : false;
-        this.setDisplayMessage();
+         this.setDisplayMessage();
+ 
+        
     }
+    InitUrls() {
+        for (const paramName in this.entityPM) {
+            this.myDictionary[paramName]=localStorage.getItem(paramName+"_"+this.entityPM.CooTypeCode+".png");
+        }
+    }
+     
+    
     InitMoreDataScreenValues() {
         this.certificateOfOriginWebService.GetCityOfDeclarationByImporterID(this.currentDeclaration.ImporterId, this.currentDeclaration.Tenant).subscribe(myResult => {
             if (!myResult.HasError && myResult.Result != null) {
@@ -1231,7 +1244,13 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         return this.entityPM.CooTypeCode;
     }
     public set CooTypeCode(newValue: string) {
+        
+        if(this.entityPM.CooTypeCode != newValue){
+            this.entityPM.CooTypeCode = newValue;
+            this.InitUrls();
+        }
         this.entityPM.CooTypeCode = newValue;
+         
         if (this.ErrorsList?.length > 0 || this.IsNewOrEdit === StatusCertificateOfOrigin.IsEdit) {
             this.CheckMandatoryFields();
         }
@@ -1243,7 +1262,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.SetWarningByCooTypeCode(this.entityPM.CooTypeCode);
         this.entityPM.IsDirty = true;
     }
-
+    
     public get RequestReasonCode(): string {
         return this.entityPM.RequestReasonCode;
     }
@@ -1581,6 +1600,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.entityPM.DateOfDeclaration = newValue;
         this.entityPM.IsDirty = true;
     }
+   
 
     public get IsDeclaredByManufacture(): boolean {
         return this.entityPM.IsDeclaredByManufacture;
@@ -1821,10 +1841,11 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.entityPM.IsDirty = true;
     }
     //#endregion CertificateOfOrigin properties
-
+    
 }
 
-export class CertificateOfOriginInvoiceLine extends BaseComponent {
+
+  export class CertificateOfOriginInvoiceLine extends BaseComponent {
     public entityPM: CertificateOfOriginInvoicePM;
     public ObjectTableName: string = "Customs.CertificateOfOriginInvoice";
     public DataContext = this;
@@ -2080,6 +2101,8 @@ class FormSectionsCouples {
             });
         });
     }
+
+   
 }
 
 
