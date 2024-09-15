@@ -201,10 +201,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml" />
-    <Reference Include="Unifreight.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Unifreight.Data\obj\Debug\Unifreight.Data.dll</HintPath>
-    </Reference>
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\UnifreightIIG.4.0.1\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
@@ -781,6 +777,10 @@
     <ProjectReference Include="..\Unifreight.BL\Unifreight.BL.csproj">
       <Project>{0ec1bd46-2613-4227-a6d7-d345dd0978cd}</Project>
       <Name>Unifreight.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Unifreight.Data\Unifreight.Data.csproj">
+      <Project>{40f07800-11e8-4fba-9fc2-fd6c8d11e3ef}</Project>
+      <Name>Unifreight.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
