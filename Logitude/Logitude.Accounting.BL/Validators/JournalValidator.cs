@@ -510,10 +510,11 @@ namespace Logitude.Accounting.BL.Validators
 
 
                     seq++;
-                    if (currJournalLinePM.Line != seq && myJournalPM.StatusCode != statusCode_JournalCancelled)
-                    {
-                        errorsList.AddNew(JournalValidator.M_LineSequence + seq.ToString() + " !=" + currJournalLinePM.Line.ToString());
-                    }
+                    //Canceled by Task 110526
+                    //if (currJournalLinePM.Line != seq && myJournalPM.StatusCode != statusCode_JournalCancelled)
+                    //{
+                    //    errorsList.AddNew(JournalValidator.M_LineSequence + seq.ToString() + " !=" + currJournalLinePM.Line.ToString());
+                    //}
                     //if (item.ForeignAmount == 0)
                     if (currJournalLinePM.ForeignAmount
                         //.GetValueOrDefault()
