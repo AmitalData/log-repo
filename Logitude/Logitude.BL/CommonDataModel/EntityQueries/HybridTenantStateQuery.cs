@@ -108,7 +108,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         private void AddWitingAndFailedHybridQueues(int tenant, List<HybridTenantStateList> hybridTenantStateLists)
         {
-            int workerStatus = WorkerNameService.GetWorkerWaitingStatusForReceiving(tenant);
+            int workerStatus = 0;
+            try
+            {
+                workerStatus = WorkerNameService.GetWorkerWaitingStatusForReceiving(tenant);
+            }
+            catch { }
+
             var queueMessages = new QueueMessageRepository(tenant).GetWaitingForHybridAndFailds(workerStatus)
                 .Select(queueMessage => new
                 {
