@@ -9,6 +9,7 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Contracts;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -40,6 +41,7 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
             CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(t.Tenant);
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(t.Tenant);
             var OpenCourierMasters = courierMasterQueryService.GetAllOpenCourierMastersWithLandingDate(t.Tenant);
+            bool isConnectedToUnifreight = CustomsSettingQueryService.GetSettingByTenant(t.Tenant).IsConnectedToUniFreight;
             foreach (var courierMaster in OpenCourierMasters)
             {
                 bool isEventNATR = false;
@@ -48,7 +50,10 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
                 var myDeclarationUpdateService = new DeclarationUpdateService(_CustomContext, new Dictionary<string, IContext>(), t.Tenant);
                 try
                 {
-                    isEventNATR = myDeclarationUpdateService.CheckLeadingFileEvent(courierMaster, loggedUserId, "NATR");
+                    if (isConnectedToUnifreight)
+                    {
+                        isEventNATR = myDeclarationUpdateService.CheckLeadingFileEvent(courierMaster, loggedUserId, "NATR");
+                    }
                 }
                 catch (Exception e)
                 {
@@ -69,11 +74,20 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
                     {
                         SendNatr(t.Tenant, "", courierMaster.UnifreightLeadingFile);
                     }
+                    UpdateCourierMaster(courierMaster);
                 }
             }
 
 
            
+        }
+        private void UpdateCourierMaster(CourierMasterPM courierMaster)
+        {
+            var _CustomContext = CustomContext.GetContext(courierMaster.Tenant);
+            CourierMasterUpdateService service = new CourierMasterUpdateService(_CustomContext, new Dictionary<string, IContext>(), courierMaster.Tenant);
+            courierMaster.SentDeclarationStatus = true;
+            courierMaster.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+            service.Update(courierMaster, true);
         }
         private void SendDeclarationStatusRequest(DeclarationPM declarationPM,string loggedUserId)
         {

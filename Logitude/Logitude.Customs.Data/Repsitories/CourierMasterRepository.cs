@@ -85,7 +85,7 @@ namespace Logitude.Customs.Data.Repsitories
             DateTime nowDate = DateTime.Now;
             DateTime dayAgoDate = DateTime.Now.AddDays(-1);
             return (from a in context.CourierMasters
-                    where a.Tenant == tenant && a.IsOpen == true && a.LandingDate < nowDate && a.LandingDate > dayAgoDate
+                    where a.Tenant == tenant && a.IsOpen == true && a.LandingDate < nowDate && a.LandingDate > dayAgoDate && a.SentDeclarationStatus != true
                     select a).ToList();
         }
 
