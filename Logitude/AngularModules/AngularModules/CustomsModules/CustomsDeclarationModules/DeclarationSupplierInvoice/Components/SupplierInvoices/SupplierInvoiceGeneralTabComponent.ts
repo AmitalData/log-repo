@@ -78,6 +78,8 @@ import { ClientIndicationListService } from 'Customs/Services/StandardLists/Clie
 import { ClientItemExtendedPMService } from 'Customs/Services/ExtendedPMs/ClientItemExtendedPMService';
 import { ClientItemPM } from 'Customs/EntityPMs/ClientItemPM';
 import { Observable } from 'rxjs';
+import { CustomsPartnersItemList } from 'Customs/EntityLists/CustomsPartnersItemList';
+import { List } from 'Infrastructure/DataContracts/Dashboard/List';
 
 
 @Component({
@@ -128,6 +130,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     itemGovernmentProcedureTypeListService: ItemGovernmentProcedureTypeListService = new ItemGovernmentProcedureTypeListService();
     customsSettingListService: CustomsSettingListService = new CustomsSettingListService();
     private modificationAndDiscountTypeListService: ModificationAndDiscountTypeListService = new ModificationAndDiscountTypeListService();
+    customsCountryListService: CustomsCountryListService = new CustomsCountryListService();
+
     vendorCurrencyService: VendorCurrencyService = new VendorCurrencyService();
     IsActionButtonsEnabled: boolean = true;
 
@@ -156,6 +160,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     private CurrentSession = SessionLocator.SelectedSession;
     public tradeAgreementFilter: ApiQueryFilters = null as any;
     public ModificationAndDiscountTypeList = new Map<string, string>();
+    public isConnectToUnifreight: boolean = false;
+
     constructor(
         private supplierInvoiceSharedService: SupplierInvoiceSharedService,
         private cd: ChangeDetectorRef,
@@ -198,8 +204,13 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         //FRITZ
         this.IFritz_feature = FeatureLocator.Features.filter(d => d.Code == "IFRITZ")[0];
         console.log("IFritz feature: ", this.IFritz_feature);
-
-        this.initTradeAgreementFilter();
+        this.customsSettingListService.getSingleFromCache(SessionLocator.Tenant.toString())
+        .subscribe((customsSettingList: ServiceResponse) => {
+                if (customsSettingList) {
+                    this.isConnectToUnifreight = customsSettingList.Result ? customsSettingList?.Result?.IsConnectedToUniFreight : true;              
+                    this.initTradeAgreementFilter();
+                }
+            });
     }
 
     private buildQuantityTypeGeneralParams() {
@@ -4677,8 +4688,9 @@ export class SupplierInvoiceItemLine extends BaseComponent {
 
 
         }
-
-        this.declarationWebService.GetGITITEMPartnersItemListByItemCode(this.Parent.vendorNumber, this.Parent.declarationPM.CustomerCode, this.ItemCode, 30, false)
+        if(this.Parent.isConnectToUnifreight) 
+        {
+          this.declarationWebService.GetGITITEMPartnersItemListByItemCode(this.Parent.vendorNumber, this.Parent.declarationPM.CustomerCode, this.ItemCode, 30, false)
             .subscribe((response: ServiceResponse) => {
                 var res = response.Result;
                 if (!AppTool.IsNullOrEmpty(res) && res.length == 1) {
@@ -4714,8 +4726,149 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                         });
                 }
             });
+        }
+        else 
+        {
+          
+                this.GetGITITEMPartnersItemListFromUnifreight(this.Parent.vendorNumber, this.Parent.declarationPM.CustomerCode, this.ItemCode, 30, 'ALL',false)
+                .then(async (res) => {
+                    // כאן אתה יכול להמשיך עם הקוד שלך אחרי שהפונקציה החזירה תשובה
+                 
+                    if (!AppTool.IsNullOrEmpty(res) && res.size() == 1) {                      
+                        this.PartnerItemsSelectionCompleted(this.entityPM, res.get(0));
+                        return;
+                    }
+                    else {                     
+                        this.GetGITITEMPartnersItemListFromUnifreight(this.Parent.vendorNumber, this.Parent.declarationPM.CustomerCode, this.ItemCode, 30, 'ALL',true)
+                        .then(async (res) => {
+                                if (!AppTool.IsNullOrEmpty(res) && res.size() == 1) {
+                                    this.PartnerItemsSelectionCompleted(this.entityPM, res.get(0));
+                                    return;
+                                }
+                                else {
+                                    this.GetGITITEMPartnersItemListFromUnifreight(this.Parent.vendorNumber, this.Parent.declarationPM.CustomerCode, this.ItemCode, 30, 'NAME',true).then(async (res) => {                                 
+                                            if (!AppTool.IsNullOrEmpty(res) && res.size() == 1) {
+                                                this.PartnerItemsSelectionCompleted(this.entityPM, res.get(0));
+                                                return;
+                                            } else {
+                                                //Eitancommented 15 minutes ago
+                                                //@odelia devashi @itzik M סיכום:
+                                                //גם כםשר מזינים קודם פרט מכס וםח"כ קוד פריט (מקט), עדיין צריך ליצור TASK של לימוד עצמי + שימוש ב-CACHE ברמת SESSION
+                                                if (!AppTool.IsNullOrEmpty(this.ClassificationCode)) {
+                                                    this.AdditemCodeDetail();//Task 43218: שיפור במנגנון לימוד עצמי
+                                                }
+                                            }
+                                        })
+                                     
+                                }
+                            })
+                        
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching data: ", error);
+                });                    
+              
+               
+           
+        }
+    }
+     GetGITITEMPartnersItemListFromUnifreight(vendorId: string, customerCode: string, itemCode: string, top: number, searchBy: string, searchNULLVendor: boolean): Promise<List<CustomsPartnersItemList>> {
+        return new Promise((resolve, reject) => {
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+        let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+            .subscribe(
+                (message: UnifreightMessageM) => {
+                    var IsMatchUnifreightCallbackCommand = (                      
+                        message.LogitudeEntityNumber == this.Parent.declarationPM.Id &&
+                        message.LogitudeViewModel == "SupplierInvoiceGeneralTabComponent.ts-GetGITITEMS");
+                    if (IsMatchUnifreightCallbackCommand) {
+                        sub.unsubscribe();
+                        let XMLResponse = UnifreightMessageM.GetStringValue(message, "XMLResponse");
+                        const xmlData = (xml: string) => xml.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+                        const result = this.parseXml(xmlData(XMLResponse));
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+                        resolve(result); // מחזירים את התוצאה עם resolve
+                       
+                    }
+                }
+            );
+
+        var unifreightMessageM =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage(this.Parent.declarationPM.CustomFileNo, this.Parent.declarationPM.Id, "SupplierInvoiceGeneralTabComponent.ts-GetGITITEMS", AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
+        unifreightMessageM.Requset.push(["XMLRequest", this.convertToXML(vendorId, customerCode, itemCode, top, searchBy,searchNULLVendor)]);
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "AmitalGatewayUtil.GetGITITEMS",
+            "CFIHMAIN.LogitudeTask",
+            "GetGITITEMS",
+            unifreightMessageM,
+            "");
+        });
     }
 
+
+    parseXml(xmlString: string): List<CustomsPartnersItemList> {
+       
+        // Parse the XML string into a DOM Document
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlString, 'application/xml');
+
+        // Extract values from the XML
+        const RESPONSE = xmlDoc.getElementsByTagName('RESPONSE')[0];
+        const items = RESPONSE.getElementsByTagName('ITEM');
+        var customsPartnersItemLists:List<CustomsPartnersItemList> = new List<CustomsPartnersItemList>();
+        var customsPartnersItemList: CustomsPartnersItemList;
+        for (let i = 0; i < items.length; i++) {
+            const item = items[i];
+            customsPartnersItemList = new CustomsPartnersItemList();
+
+            customsPartnersItemList.Id = item.getElementsByTagName('COUNTER')[0]?.textContent || '';
+            customsPartnersItemList.Tenant = this.Parent.declarationPM.Tenant;
+            customsPartnersItemList.ItemCode = item.getElementsByTagName('ITEMNO')[0]?.textContent || '';
+            customsPartnersItemList.ClassificationCode = item.getElementsByTagName('PRATID')[0]?.textContent || '';
+            customsPartnersItemList.Name = item.getElementsByTagName('NAMEENG')[0]?.textContent || '';
+            customsPartnersItemList.SearchFields = item.getElementsByTagName('SEARCHENG')[0]?.textContent || '';
+            customsPartnersItemList.CustomerId = item.getElementsByTagName('PARTNERID')[0]?.textContent || '';
+            customsPartnersItemList.VendorId = item.getElementsByTagName('SAPAKID')[0]?.textContent || '';
+            customsPartnersItemList.CustomerName = item.getElementsByTagName('PARTNERID')[0]?.textContent || '';
+            customsPartnersItemList.VendorName = item.getElementsByTagName('VENDORNAME')[0]?.textContent || '';
+            customsPartnersItemList.OriginCountryCode = item.getElementsByTagName('ORIGINCOUNTRY')[0]?.textContent || '';
+            if(!AppTool.IsNullOrEmpty(customsPartnersItemList.OriginCountryCode)) 
+            {
+                this.Parent.customsCountryListService.getSingleFromCache(customsPartnersItemList.OriginCountryCode).subscribe(res=>{
+    
+                    if(!AppTool.IsNullOrEmpty(res?.Result?.LocalName)){
+                       customsPartnersItemList.OriginCountryName = res?.Result?.LocalName;
+                    }
+                    else{
+                        customsPartnersItemList.OriginCountryCode = null;
+                        customsPartnersItemList.OriginCountryName = null;
+                    }
+                });
+            }
+            customsPartnersItemList.InvoiceQuantityType = item.getElementsByTagName('UNITID')[0]?.textContent || '';
+
+           
+            customsPartnersItemLists.add(customsPartnersItemList);
+         
+        }               
+        return customsPartnersItemLists;
+    }
+    
+    convertToXML(vendorId: string, customerCode: string, itemCode: string, top: number, searchBy: string, searchNULLVendor: boolean) {      
+        return `<GITITEMS>
+        <PARTNERID>${customerCode}</PARTNERID>
+        <SAPAKID>${vendorId}</SAPAKID>
+        <SEARCH></SEARCH>
+        <ITEMNO>${itemCode}</ITEMNO>
+        <SEARCHBY>${searchBy}</SEARCHBY>
+        <TOP>${top}</TOP>
+        <SEARCHNULLVENDOR>${searchNULLVendor}</SEARCHNULLVENDOR>
+        </GITITEMS>`;   
+    }
+   
     ItemCodeDblClick(logCellTemplate: LogCellTemplateComponent) {
         if (!this.Parent.IsReadOnly) {
             console.log("[Double Click] ", this.entityPM);
@@ -4736,6 +4889,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                 invoicePM: this.Parent.EntityPM,
                 customerCode: this.Parent.declarationPM.CustomerCode,
                 searchText: this.ItemCode,
+                declarationPM: this.Parent.declarationPM
             };
             logWindow.WindowClosed.subscribe(($event: any) => {
                 this.PartnerItemsSelectionCompleted(this.entityPM, $event);
