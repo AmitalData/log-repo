@@ -103,6 +103,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        Id = entity.Id,
                                                        Name = entity.Name,
                                                        SearchFields = entity.SearchFields,
+                                                       LocalName = entity.LocalName,
                                                    };
             return result;
         }
