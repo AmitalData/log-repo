@@ -83,7 +83,7 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
         }
         private void UpdateCourierMaster(CourierMasterPM courierMaster)
         {
-            var _CustomContext = CustomContext.GetContext(t.Tenant);
+            var _CustomContext = CustomContext.GetContext(courierMaster.Tenant);
             CourierMasterUpdateService service = new CourierMasterUpdateService(_CustomContext, new Dictionary<string, IContext>(), courierMaster.Tenant);
             courierMaster.SentDeclarationStatus = true;
             courierMaster.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
