@@ -111,7 +111,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                         EntityReference = Data.ShipmentNumber
                     };
 
-                    if (!CustomsSettingQueryService.GetSettingByTenant(Data.Tenant).StandAlone)
                         communicationLogRepository.Add(commLog);
                     communicationLogRepository.SubmitChanges();
                     string filename = document.Id + "." + document.Extension;
