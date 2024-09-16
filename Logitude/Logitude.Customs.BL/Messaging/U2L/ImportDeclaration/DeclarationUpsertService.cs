@@ -48,7 +48,7 @@ using Logitude.Customs.Data.EntityMapping;
 namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 {
 
-	//Logitude.Customs.BL.Messaging.U2L.ImportDeclaration.DeclarationUpsertService 
+    //Logitude.Customs.BL.Messaging.U2L.ImportDeclaration.DeclarationUpsertService 
 	public class DeclarationUpsertService : UnifreightGenericService
 	{
 		private LOGICUSTFILE _LOGICUSTFILE;
@@ -660,8 +660,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 					string warehouseId = null;
 					if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.WarehouseId))
 					{
-						warehouseId = _AmitalCustomsFile.SystemConnection == "N" ? _AmitalCustomsFile.WarehouseId : TranslateWarehouse(_AmitalCustomsFile.WarehouseId);
-					}
+                        warehouseId = _AmitalCustomsFile.SystemConnection == "N" && string.IsNullOrEmpty(this._MyDeclarationPM.Consignments[0].StorageSiteCode) ? TranslateWarehouse(_AmitalCustomsFile.WarehouseId) : _AmitalCustomsFile.SystemConnection == "N" ? this._MyDeclarationPM.Consignments[0].StorageSiteCode : TranslateWarehouse(_AmitalCustomsFile.WarehouseId);
+                    }
 					this._MyDeclarationPM.Consignments[0].StorageSiteCode = warehouseId;
 
 					if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) && _AmitalCustomsFile.IsCourierDeclaration.ToLower() != "true"))
@@ -941,9 +941,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 									if (!String.IsNullOrWhiteSpace(customsAirline.UnloadPortCode)) this._MyDeclarationPM.Consignments[0].UnloadPortCode = customsAirline.UnloadPortCode;
 								}
 							}
-						}
-						_MyDeclarationPM.Consignments[0].StorageSiteCode = _AmitalCustomsFile.SystemConnection == "N" ? _AmitalCustomsFile.WarehouseId : TranslateWarehouse(_AmitalCustomsFile.WarehouseId);
-						AppendLogLine("one Consignment6 Consignment.UnloadPortCode=" + this._MyDeclarationPM.Consignments[0].UnloadPortCode);
+							else if (_AmitalCustomsFile.SystemConnection == "N")
+                            {
+                                _MyDeclarationPM.Consignments[0].UnloadPortCode = TranslateUnloadPort(_AmitalCustomsFile.UnloadportId);
+                            }
+                        }
+                        _MyDeclarationPM.Consignments[0].StorageSiteCode = _AmitalCustomsFile.SystemConnection == "N" && string.IsNullOrEmpty(this._MyDeclarationPM.Consignments[0].StorageSiteCode) ? TranslateWarehouse(_AmitalCustomsFile.WarehouseId) : _AmitalCustomsFile.SystemConnection == "N" ? this._MyDeclarationPM.Consignments[0].StorageSiteCode : TranslateWarehouse(_AmitalCustomsFile.WarehouseId);
+	                    AppendLogLine("one Consignment6 Consignment.UnloadPortCode=" + this._MyDeclarationPM.Consignments[0].UnloadPortCode);
 						if (this._MyDeclarationPM.Consignments[0].ChangeSetOp != ChangeSetOperation.Insert)
 						{
 							this._MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
@@ -1950,18 +1954,18 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 			this._DeclarationReferantDataPM.Mawb = _AmitalCustomsFile.ReferentMAWB;
 			this._DeclarationReferantDataPM.Tenant = ResolvedTenant();
 
-            if (this._MyDeclarationPM.SystemConnection == "N" && this._DeclarationReferantDataPM.ChangeSetOp == ChangeSetOperation.Update)
-            {
-                this._DeclarationReferantDataPM.MawbDate = !String.IsNullOrWhiteSpace(_AmitalCustomsFile.MawbDate) ? DateTime.Parse(_AmitalCustomsFile.MawbDate) : this._DeclarationReferantDataPM.MawbDate;
-                this._DeclarationReferantDataPM.EstimatedArrivalDate = !String.IsNullOrWhiteSpace(_AmitalCustomsFile.EstimatedArrivalDate) ? DateTime.Parse(_AmitalCustomsFile.EstimatedArrivalDate) : this._DeclarationReferantDataPM.EstimatedArrivalDate;
-                this._DeclarationReferantDataPM.PackageTypeCode = _AmitalCustomsFile.PackageTypeCode;
-                this._DeclarationReferantDataPM.ArrivalDate = !String.IsNullOrWhiteSpace(_AmitalCustomsFile.ArrivalDate) ? DateTime.Parse(_AmitalCustomsFile.ArrivalDate) : this._DeclarationReferantDataPM.ArrivalDate;
-                this._DeclarationReferantDataPM.Commodity = _AmitalCustomsFile.Commodity;
-                this._DeclarationReferantDataPM.Vessel = _AmitalCustomsFile.Vessel;
-                this._DeclarationReferantDataPM.FlightVoyageNumber = _AmitalCustomsFile.FlightVoyageNumber;
-                this._DeclarationReferantDataPM.CarrierCode = _AmitalCustomsFile.CarrierCode;
-                this._DeclarationReferantDataPM.Mawb = _AmitalCustomsFile.MAWB;
-            }
+			if (this._MyDeclarationPM.SystemConnection == "N" && this._DeclarationReferantDataPM.ChangeSetOp == ChangeSetOperation.Update)
+			{
+				this._DeclarationReferantDataPM.MawbDate = !String.IsNullOrWhiteSpace(_AmitalCustomsFile.MawbDate) ? DateTime.Parse(_AmitalCustomsFile.MawbDate) : this._DeclarationReferantDataPM.MawbDate;
+				this._DeclarationReferantDataPM.EstimatedArrivalDate = !String.IsNullOrWhiteSpace(_AmitalCustomsFile.EstimatedArrivalDate) ? DateTime.Parse(_AmitalCustomsFile.EstimatedArrivalDate) : this._DeclarationReferantDataPM.EstimatedArrivalDate;
+				this._DeclarationReferantDataPM.PackageTypeCode = _AmitalCustomsFile.PackageTypeCode;
+				this._DeclarationReferantDataPM.ArrivalDate = !String.IsNullOrWhiteSpace(_AmitalCustomsFile.ArrivalDate) ? DateTime.Parse(_AmitalCustomsFile.ArrivalDate) : this._DeclarationReferantDataPM.ArrivalDate;
+				this._DeclarationReferantDataPM.Commodity = _AmitalCustomsFile.Commodity;
+				this._DeclarationReferantDataPM.Vessel = _AmitalCustomsFile.Vessel;
+				this._DeclarationReferantDataPM.FlightVoyageNumber = _AmitalCustomsFile.FlightVoyageNumber;
+				this._DeclarationReferantDataPM.CarrierCode = _AmitalCustomsFile.CarrierCode;
+				this._DeclarationReferantDataPM.Mawb = _AmitalCustomsFile.MAWB;
+			}
 
             myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
 		}

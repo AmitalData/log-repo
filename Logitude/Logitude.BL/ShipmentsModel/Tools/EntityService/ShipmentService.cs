@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -447,71 +448,180 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-        public void CreateCustomShipment()
+        public void CreateCustomShipment(IAdditionalShipmentData additionalShipmentData = null)
         {
-            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            try
             {
-                this.isNewEntity = true;
-
-                this.InitializeComponent();
-
-                ShipmentValidating.ValidateCustomShipment(entityPM, true);
-
-                // generate shipment number
-                this.entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "SHIP", entityPM.DirectionId, entityPM.TransportModeId);
-
-                // todo: add AIR to AddShipmentTypes and execute it
-                entityPM.ShipmentTypeId = null;
-
-                // todo: get default values
-                this.entityPM.SalesmanUserId = "1-421340";
-                this.entityPM.ReferantUserId = "1-421335";
-
-                this.entityPM.CreatedByUserId = loggedContact.Id;
-                this.entityPM.UpdatedByUserId = loggedContact.Id;
-
-                ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, entityPM.ShipmentPackages, objectContext, FieldChanges);
-
-                entityRepository.Add(entityPoco);
-                entityRepository.SubmitChanges();
-
-                entityPM.IsConnectToMasterShipment = entityMasterData != null ? true : false;
-                shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
-                shipmentBehaviourFacade.Handle(FieldChanges);
-                shipmentBehaviourFacade.HandleShipmentDigitalFields(shipmentDigitalFields);
-                shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
-
-                AuditLog auditLog = null;
-                if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant))
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    auditLog = AddShipmentAuditLogChanges(entityPoco);
-                    AuditLogRepository.Add(auditLog);
-                    AuditLogRepository.SubmitChanges();
+                    List<ShipmentValidating.MessageDetails> messageDetailsList = new List<ShipmentValidating.MessageDetails>();
+
+                    this.isNewEntity = true;
+
+                    this.InitializeComponent();
+
+                    ShipmentValidating.ValidateCustomShipment(entityPM, true);
+
+                    if (additionalShipmentData.ActionCode == ActionCode.NewCustomsFile)
+                    {
+                        DataTable linkedShipments = GetLinkedShipments(tenant, entityPM.CustomerId, entityPM.TransportModeId, entityPM.CarrierCode, entityPM.Mawb, entityPM.House, entityPM.IskaNumber);
+
+                        if (linkedShipments.Rows.Count > 0)
+                        {
+                            List<string> customsFile = linkedShipments.AsEnumerable().Select(row => row["ShipmentNumber"].ToString()).ToList();
+
+                            var exception = customsFile.Count() == 1 ? ShipmentValidating.MessageDetailsProvider.FoundShipment : ShipmentValidating.MessageDetailsProvider.FoundMultipleShipments;
+                            throw new MessageDetailsValidationException(exception, customsFile);
+                        }
+                    }
+
+                    // generate shipment number
+                    this.entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "SHIP", entityPM.DirectionId, entityPM.TransportModeId);
+
+                    // todo: add AIR to AddShipmentTypes and execute it
+                    entityPM.ShipmentTypeId = null;
+
+                    // todo: get default values
+                    this.entityPM.SalesmanUserId = "1-421340";
+                    this.entityPM.ReferantUserId = "1-421335";
+
+                    this.entityPM.CreatedByUserId = loggedContact.Id;
+                    this.entityPM.UpdatedByUserId = loggedContact.Id;
+
+                    ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, entityPM.ShipmentPackages, objectContext, FieldChanges);
+
+                    entityRepository.Add(entityPoco);
+                    entityRepository.SubmitChanges();
+
+                    entityPM.IsConnectToMasterShipment = entityMasterData != null ? true : false;
+                    shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
+                    shipmentBehaviourFacade.Handle(FieldChanges);
+                    shipmentBehaviourFacade.HandleShipmentDigitalFields(shipmentDigitalFields);
+                    shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
+
+                    AuditLog auditLog = null;
+                    if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant))
+                    {
+                        auditLog = AddShipmentAuditLogChanges(entityPoco);
+                        AuditLogRepository.Add(auditLog);
+                        AuditLogRepository.SubmitChanges();
+                    }
+
+                    new WorkflowEntityQueueMessage()
+                    {
+                        Entity = WorkflowEntities.Shipment,
+                        EntityId = entityPM.Id,
+                        AuditLogId = auditLog?.Id,
+                        Tenant = entityPM.Tenant,
+                        Type = QueueMessagesTypes.Create,
+                        IsCustom = false
+                    }.Produce();
+
+                    new TaskDoneQueueMessage()
+                    {
+                        Entity = WorkflowEntities.Shipment,
+                        EntityId = entityPM.Id,
+                        Tenant = entityPM.Tenant,
+                        Type = QueueMessagesTypes.Create
+                    }.Produce();
+
+                    CreateDeclaration(entityPM, "NEW");
+
+                    try
+                    {
+                        EventTracerArgs eventTracerArgs = new EventTracerArgs()
+                        {
+                            EntityId = entityPM.Id,
+                            Tenant = entityPM.Tenant,
+                            UserId = loggedContact.Id,
+                            ObjectTableName = "Shipment",
+                            IsAddedManually = false,
+                            EventTypeCode = "OPN",
+                        };
+                        EventTracer.CreateTraceEvent(eventTracerArgs);
+                    }
+                    catch (Exception ex)
+                    {
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError($"Error when creating OPN event on new custom shipment: {ex.Message}");
+                    }
+
+                    if (additionalShipmentData.ActionCode == ActionCode.NewCustomsFile || additionalShipmentData.ActionCode == ActionCode.NewCustomsFileAfterCheck)
+                    {
+                        try
+                        {
+                            EventTracerArgs eventTracerArgs = new EventTracerArgs()
+                            {
+                                EntityId = entityPM.Id,
+                                Tenant = entityPM.Tenant,
+                                UserId = loggedContact.Id,
+                                ObjectTableName = "Shipment",
+                                IsAddedManually = false,
+                                EventTypeCode = "CONF",
+                            };
+                            EventTracer.CreateTraceEvent(eventTracerArgs);
+                        }
+                        catch (Exception ex)
+                        {
+                            NetCommonHelper.Logger.DevLog.Instance.WriteError($"Error when creating CONF event on new custom shipment: {ex.Message}");
+                        }
+                    }
+
+                    scope.Complete();
                 }
-
-                new WorkflowEntityQueueMessage()
+            }
+            catch (Exception ex)
+            {
+                string errorMessage = ex.Message + Environment.NewLine;
+                if (ex.InnerException != null)
                 {
-                    Entity = WorkflowEntities.Shipment,
-                    EntityId = entityPM.Id,
-                    AuditLogId = auditLog?.Id,
-                    Tenant = entityPM.Tenant,
-                    Type = QueueMessagesTypes.Create,
-                    IsCustom = false
-                }.Produce();
+                    errorMessage = errorMessage + " (" + (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) + ")" + Environment.NewLine;
+                }
+                errorMessage = errorMessage + ex.StackTrace + Environment.NewLine;
 
-                new TaskDoneQueueMessage()
-                {
-                    Entity = WorkflowEntities.Shipment,
-                    EntityId = entityPM.Id,
-                    Tenant = entityPM.Tenant,
-                    Type = QueueMessagesTypes.Create
-                }.Produce();
+                InsertInShipmnetUpdateLog(-1, errorMessage);
 
-                CreateDeclaration(entityPM, "NEW");
+                NetCommonHelper.Logger.DevLog.Instance.WriteError($"Error when creating custom shipment: {errorMessage}");
 
-                scope.Complete();
+                throw ex;
             }
         }
+
+        public DataTable GetLinkedShipments(int tenant, string customerId, string transportModeId, string carrierCode, string mawb, string house, string iskaNumber)
+        {
+            string strConnString = TenantServerConfigration.GetDbConnection(tenant);
+
+            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }))
+            {
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("[dbo].[GetLinkedShipments]", cn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue("@i_tenant", tenant);
+                        cmd.Parameters.AddWithValue("@i_customerId", customerId);
+                        cmd.Parameters.AddWithValue("@i_transportModeId", transportModeId);
+                        cmd.Parameters.AddWithValue("@i_carrierCode", carrierCode);
+                        cmd.Parameters.AddWithValue("@i_mawb", mawb);
+                        cmd.Parameters.AddWithValue("@i_house", house);
+                        cmd.Parameters.AddWithValue("@i_iskaNumber", iskaNumber);
+
+                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                        DataTable result = new DataTable();
+                        adapter.Fill(result);
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            result.Load(reader);
+                        }
+
+                        return result;
+                    }
+                }
+            }
+        }
+
         public void CreateDeclaration(ShipmentPM shipmentPM, string mode)
         {
             int tenant = shipmentPM.Tenant;
@@ -913,11 +1023,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
 
         }
-        public void UpdateCustomShipment()
+        public List<ShipmentValidating.MessageDetails> UpdateCustomShipment(IAdditionalShipmentData additionalShipmentData = null)
         {
             InsertInShipmnetUpdateLog(0);
             try
             {
+                List<ShipmentValidating.MessageDetails> messageDetailsList = new List<ShipmentValidating.MessageDetails>();
+
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
                     if (entityPM.CustomerId != entityPoco.CustomerId)
@@ -934,7 +1046,27 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     ShipmentValidating.ValidateCustomShipment(entityPM, false);
                     ValidateShipmentReferancesCollection();
 
-                    ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, new List<ShipmentPackagePM> { }, objectContext, FieldChanges);
+                    if (additionalShipmentData?.ActionCode == ActionCode.CheckAndConnect)
+                    {
+                        if (string.IsNullOrWhiteSpace(entityPM.ShipmentNumber))
+                        {
+                            throw new MessageDetailsValidationException(ShipmentValidating.MessageDetailsProvider.NotFoundShipmentNumber);
+                        }
+
+                        messageDetailsList = ShipmentValidating.ValidateCheckAndConnectCustomShipment(entityPM);
+
+                        var errorMessages = messageDetailsList.Where(d => d.MessageType == ShipmentValidating.MessageTypeEnum.Error);
+                        if (errorMessages.Count() > 0)
+                        {
+                            throw new MessageDetailsValidationException(errorMessages.First());
+                        }
+
+                        ShipmentMapping.MapEntityForUpdate(entityPM, entityPoco, FieldChanges);
+                    }
+                    else
+                    {
+                        ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, new List<ShipmentPackagePM> { }, objectContext, FieldChanges);
+                    }
 
                     entityRepository.Update(entityPoco);
                     this.UpdateShipmentPackageCustom();
@@ -942,6 +1074,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     entityRepository.SubmitChanges();
 
                     this.UpdateShipmentReferancesCollection();
+
+                    if (additionalShipmentData?.ActionCode == ActionCode.CheckAndConnect)
+                    {
+                        FreightForwarderReferenceRepository freightForwarderReferenceRepository = new FreightForwarderReferenceRepository(entityPM.Tenant);
+                        FreightForwarderReference freightForwarderReference = new FreightForwarderReference()
+                        {
+                            Tenant = entityPM.Tenant,
+                            ShipmentNumber = int.Parse(entityPM.ShipmentNumber),
+                            ShipmentId = entityPM.Id,
+                        };
+                        freightForwarderReferenceRepository.Add(freightForwarderReference);
+                    }
 
                     AuditLog auditLog = null;
                     if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant))
@@ -970,40 +1114,35 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }.Produce();
 
                     if (!entityPM.IsHybrid)
-                        UpdateDeclaration(entityPM, "UPDATE");
+                        UpdateDeclaration(entityPM, "UPDATE", additionalShipmentData);
 
                     scope.Complete();
                 }
                 InsertInShipmnetUpdateLog(1);
+
+                return messageDetailsList;
             }
             catch (Exception ex)
             {
-
                 string errorMessage = ex.Message + Environment.NewLine;
-
                 if (ex.InnerException != null)
                 {
-
                     errorMessage = errorMessage + " (" + (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) + ")" + Environment.NewLine;
-
                 }
-
                 errorMessage = errorMessage + ex.StackTrace + Environment.NewLine;
                 InsertInShipmnetUpdateLog(-1, errorMessage);
+                NetCommonHelper.Logger.DevLog.Instance.WriteError($"Error when updating custom shipment: {errorMessage}");
                 throw ex;
             }
-
         }
 
-        public void UpdateDeclaration(ShipmentPM shipmentPM, string mode)
+        public void UpdateDeclaration(ShipmentPM shipmentPM, string mode, IAdditionalShipmentData additionalShipmentData = null)
         {
             int tenant = shipmentPM.Tenant;
+            bool updateEmptyValueOnly = false;
             ICustomContext customContext = CustomContext.GetContext(tenant);
-            IWarehouseContext warehouseContext = WarehouseContext.GetContext(tenant);
 
-            CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(customContext);
-            WarehouseEntryRepository warehouseEntryRepository = new WarehouseEntryRepository(warehouseContext);
             DeclarationReferantDataRepository declarationReferantDataRepository = new DeclarationReferantDataRepository(tenant);
 
 
@@ -1048,16 +1187,30 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             myAmitalCustom.Mode = mode;
             myAmitalCustom.Tenant = shipmentPM.Tenant.ToString();
 
+            if (additionalShipmentData?.ActionCode == ActionCode.CheckAndConnect)
+            {
+                updateEmptyValueOnly = true;
+
+                if (!string.IsNullOrEmpty(additionalShipmentData?.UnloadPortCode))
+                {
+                    myAmitalCustom.UnloadportId = additionalShipmentData.UnloadPortCode;
+                }
+                if (!string.IsNullOrEmpty(additionalShipmentData?.StorageSiteCode))
+                {
+                    myAmitalCustom.WarehouseId = additionalShipmentData.StorageSiteCode;
+                }
+            }
+
             #region declaration referant data fields
-            myAmitalCustom.MAWB = shipmentPM.Mawb;
-            myAmitalCustom.MawbDate = shipmentPM.MawbDate?.ToString();
-            myAmitalCustom.EstimatedArrivalDate = shipmentPM.EstimatedArrivalDate?.ToString();
-            myAmitalCustom.PackageTypeCode = shipmentPM.PackageTypeCode;
-            myAmitalCustom.ArrivalDate = shipmentPM.ArrivalDate?.ToString();
-            myAmitalCustom.Commodity = shipmentPM.Commodity;
-            myAmitalCustom.Vessel = shipmentPM.Vessel;
-            myAmitalCustom.FlightVoyageNumber = shipmentPM.FlightVoyageNumber;
-            myAmitalCustom.CarrierCode = shipmentPM.CarrierCode;
+            myAmitalCustom.MAWB = string.IsNullOrEmpty(declarationReferantDataPM.Mawb) || !updateEmptyValueOnly ? shipmentPM.Mawb : declarationReferantDataPM.Mawb;
+            myAmitalCustom.MawbDate = declarationReferantDataPM.MawbDate == null || !updateEmptyValueOnly ? shipmentPM.MawbDate?.ToString() : declarationReferantDataPM.MawbDate?.ToString();
+            myAmitalCustom.EstimatedArrivalDate = declarationReferantDataPM.EstimatedArrivalDate == null || !updateEmptyValueOnly ? shipmentPM.EstimatedArrivalDate?.ToString() : declarationReferantDataPM.EstimatedArrivalDate?.ToString();
+            myAmitalCustom.PackageTypeCode = string.IsNullOrEmpty(declarationReferantDataPM.PackageTypeCode) || !updateEmptyValueOnly ? shipmentPM.PackageTypeCode : declarationReferantDataPM.PackageTypeCode;
+            myAmitalCustom.ArrivalDate = declarationReferantDataPM.ArrivalDate == null || !updateEmptyValueOnly ? shipmentPM.ArrivalDate?.ToString() : declarationReferantDataPM.ArrivalDate?.ToString();
+            myAmitalCustom.Commodity = additionalShipmentData?.ActionCode == ActionCode.CheckAndConnect ? shipmentPM.Commodity : declarationReferantDataPM.Commodity;
+            myAmitalCustom.Vessel = string.IsNullOrEmpty(declarationReferantDataPM.Vessel) || !updateEmptyValueOnly ? shipmentPM.Vessel : declarationReferantDataPM.Vessel;
+            myAmitalCustom.FlightVoyageNumber = string.IsNullOrEmpty(declarationReferantDataPM.FlightVoyageNumber) || !updateEmptyValueOnly ? shipmentPM.FlightVoyageNumber : declarationReferantDataPM.FlightVoyageNumber;
+            myAmitalCustom.CarrierCode = string.IsNullOrEmpty(declarationReferantDataPM.CarrierCode) || !updateEmptyValueOnly ? shipmentPM.CarrierCode : declarationReferantDataPM.CarrierCode;
             #endregion
 
             var respnse = APIConnectionHelper.Instance.PostViaWebAPI<Response, LogitudeCustomsFile>("/api/Declarartion/UpdateDeclarationInU2L", myAmitalCustom);
@@ -8516,4 +8669,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         public string EntityChangeFieldXml { get; set; }
         public List<NotifyPropertyChangeValues> NotifyPropertyChangeValuesLists { get; set; }
     }
+    public class MessageDetailsValidationException : ValidationException
+    {
+        public ShipmentValidating.MessageDetails MessageDetails { get; }
+        public List<string> CustomsFile { get; }
+        public MessageDetailsValidationException(ShipmentValidating.MessageDetails messageDetails, List<string> customsFile = null)
+        {
+            MessageDetails = messageDetails;
+            CustomsFile = customsFile;
+        }
+    }
+    public interface IAdditionalShipmentData
+    {
+        ActionCode ActionCode { get; set; }
+        string UnloadPortCode { get; set; }
+        string StorageSiteCode { get; set; }
+    }
+    public enum ActionCode { Empty = 0, CheckAndConnect = 1, NewCustomsFile = 2, NewCustomsFileAfterCheck = 3, Disconnect = 9 }
 }

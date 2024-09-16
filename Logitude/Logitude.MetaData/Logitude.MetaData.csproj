@@ -650,6 +650,7 @@
     <None Include="DBOthers\QuoteModel\Procedures\usp_QuotesAutomaticallyClosingDailyJob.dxml" />
     <None Include="DBOthers\QuoteModel\Views\QuoteFollowUpDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_ComputeForeignPartnerCountryCode.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Procedures\GetLinkedShipments.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_ComputeHouseShipmentStatusFunction.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_ComputeShipmentFirstApprovalDate.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_ComputeShipmentStatus.dxml" />

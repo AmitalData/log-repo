@@ -16,6 +16,7 @@ using POCO = Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
+using Logitude.Customs.Data.EntityPOCOs;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -28,7 +29,14 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-   }
+        public List<FreightForwarderReference> GetByShipmentNumber(string shipmentNumber, int tenant)
+        {
+            IQueryable<FreightForwarderReference> query = (from a in context.FreightForwarderReferences
+                                                           where a.ShipmentNumber.ToString() == shipmentNumber && a.Tenant == tenant
+                                                           select a);
+            return query.ToList();
+        }
+    }
 
 }
    

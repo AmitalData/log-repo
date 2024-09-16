@@ -52,7 +52,9 @@ using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using System.Runtime.Remoting.Messaging;
 using Logitude.Customs.Def.EntityPMs;
-  
+using ActionCode = Logitude.BL.ShipmentsModel.Tools.EntityService.ActionCode;
+using static Logitude.BL.ShipmentsModel.Tools.Validating.ShipmentValidating;
+
 
 namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 {
@@ -167,6 +169,88 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
+        }
+        public HttpResponseMessage PostCustomShipment(ICustomInputData customEntityPM)
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    int tenant = authToken.Tenant;
+
+                    SecurityUtility.AuthenticationOnTenant(tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("Shipment", customEntityPM.Tenant, authToken.Tenant);
+
+                    customEntityPM.IsCustomShipment = true;
+                    IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
+                    ShipmentService service = new ShipmentService(objectContext, customEntityPM, SecurityUtility.GetAuthenticatedUser());
+
+                    List<MessageDetails> response;
+                    IAdditionalShipmentData additionalShipmentData = customEntityPM;
+                    ICustomResponse customResponse = new ICustomResponse();
+
+                    if (customEntityPM.ActionCode == ActionCode.CheckAndConnect)
+                    {
+                        response = service.UpdateCustomShipment(additionalShipmentData: additionalShipmentData);
+
+                        customResponse.MessageDetails = response.Where(d => d.MessageType == MessageTypeEnum.Warning).FirstOrDefault();
+                    }
+                    else if (customEntityPM.ActionCode == ActionCode.NewCustomsFile || customEntityPM.ActionCode == ActionCode.NewCustomsFileAfterCheck)
+                    {
+                        service.CreateCustomShipment(additionalShipmentData: additionalShipmentData);
+                    }
+                    else if (customEntityPM.ActionCode == ActionCode.Disconnect)
+                    {
+                        // todo: service.Disconnect();
+                    }
+                    else
+                    {
+                        throw new Exception("Action code not supported");
+                    }
+
+                    scope.Complete();
+
+                    customResponse.Success = true;
+                    customResponse.CustomsFile = new List<string> { customEntityPM.ShipmentNumber };
+                    return Request.CreateResponse(HttpStatusCode.OK, customResponse);
+                }
+            }
+            catch (MessageDetailsValidationException ex)
+            {
+                ICustomResponse customResponse = new ICustomResponse()
+                {
+                    Success = false,
+                    MessageDetails = ex.MessageDetails
+                };
+
+                if (ex.CustomsFile != null)
+                {
+                    customResponse.CustomsFile = ex.CustomsFile;
+                }
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"Client error: {customResponse.MessageDetails}");
+
+                return Request.CreateResponse(HttpStatusCode.BadRequest, customResponse);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public class ICustomInputData : ShipmentPM, IAdditionalShipmentData
+        {
+            public ActionCode ActionCode { get; set; }
+            public string UnloadPortCode { get; set; }
+            public string StorageSiteCode { get; set; }
+        }
+
+        public class ICustomResponse
+        {
+            public bool Success { get; set; }
+            public List<string> CustomsFile { get; set; }
+            public MessageDetails MessageDetails { get; set; }
         }
 
         public HttpResponseMessage Put(ShipmentPM entityPM)
