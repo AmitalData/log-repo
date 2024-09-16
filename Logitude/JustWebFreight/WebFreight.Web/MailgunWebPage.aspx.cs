@@ -69,9 +69,9 @@ namespace WebFreight.Web
                 sb.AppendLine("Request.Files count : " + Request.Files?.Count.ToString());
 
                 string filename = Guid.NewGuid().ToString();
-                File.WriteAllText($"{folderpath}\\ORITLOG_BODY_{filename}.log", retval);
-                File.WriteAllText($"{folderpath}\\ORITLOG_HEADERS_{filename}.log", sb.ToString());
-                File.WriteAllText($"{folderpath}\\ORITLOG_QUERYSTR_{filename}.log", Request.Url.OriginalString);
+                File.WriteAllText($"{folderpath}\\MailgunWebPage_BODY_{filename}.log", retval);
+                File.WriteAllText($"{folderpath}\\MailgunWebPage_HEADERS_{filename}.log", sb.ToString());
+                File.WriteAllText($"{folderpath}\\MailgunWebPage_QUERYSTR_{filename}.log", Request.Url.OriginalString);
 
             }
 
@@ -90,7 +90,7 @@ namespace WebFreight.Web
 
             try
             {
-                string values = "";
+                string values = reqStreamString;
                 //using (var reader = new StreamReader(Request.InputStream))
                 //{
                 //    values = reader.ReadToEnd();
