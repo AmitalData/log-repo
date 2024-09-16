@@ -1039,6 +1039,6 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     }
 
     public ExportToExcel(){
-        this.LogitudeGridExportToExcelComponent.ExportToExcelExcute('BankDepositLine',this.GetDeposiutAPIFilters(),this.QueryColumns);
+        this.LogitudeGridExportToExcelComponent.ExportToExcelExcute('BankDepositLine',this.GetDeposiutAPIFilters(),this.QueryColumns,"SaveToMicrosoftExcel2007",true);
     }
 }
