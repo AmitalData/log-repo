@@ -35,10 +35,10 @@ CREATE PROCEDURE dbo.Queue_SetStatus
 --- CustomsBranch- Translate from Oracle!!
   
 
-   @V_MESSAGEID float(53),
+   @V_MESSAGEID   BigInt,
    
 
-   @V_STATUD float(53)
+   @V_STATUD Int
 AS 
    BEGIN
 
