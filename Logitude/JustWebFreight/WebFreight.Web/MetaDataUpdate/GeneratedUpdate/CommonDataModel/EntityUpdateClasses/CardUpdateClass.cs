@@ -86,16 +86,12 @@ using Logitude.DashboardModule.BL;
 
 
 
-
-
-
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class CardUpdateClass
    {  		
  
-		public const string HashString = "a116bccd6e3fa619bcc4de10fd991fff";
- 
+		public const string HashString = "669e6caa1ec943da09c02fedb3dc917f";
  	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -148,7 +144,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    MaxNumberOfCustomFields =  50,
 			      				    LocalDefaultText =  "כרטיסים",
 			      				    DefaultText =  "Card",
-                                 
 			      				    Code =  "1561",
 			      				    Name =  "Card",
 			      				    GenerateDomainService =  false,
@@ -7132,15 +7127,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalculatedLocalName",
 					  						DefaultText =  "Local Name",
- 					  						FullLocalDefaultText =  "שם בעברית",
- 
-
+					  						FullLocalDefaultText =  "שם בעברית",
 
 					  						ListFieldLable =  "CalculatedLocalNameListLable",
 					  						ListLableDefaultText =  "Local Name",
-
 					  						ListLocalDefaultText =  "שם בעברית",
-
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
