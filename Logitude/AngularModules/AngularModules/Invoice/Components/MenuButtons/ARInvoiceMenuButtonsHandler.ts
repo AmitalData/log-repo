@@ -48,6 +48,7 @@ export class ARInvoiceMenuButtonsHandler {
         this.IsConfirmationMessageForCriedtNoteVisible = FeatureLocator.HasFeaturePermession("ARInvoice", "ConfirmationForAutoCreditForCreditNotes") ? true : false;
     }
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
+        
         if (this.EntityPM != null) {
             if (this.entityArgs.EditComponent != null) {
 
@@ -58,7 +59,8 @@ export class ARInvoiceMenuButtonsHandler {
 
                     switch (button.EventCode) {
                         case "SaveAsDraft": {
-                            if (this.EntityPM.ARInvoiceTypeCode == 'IT') {
+                            
+                            if (this.EntityPM.ARInvoiceTypeCode == 'IT' || this.EntityPM.IsAutoCredit) {
                                 myButtonIsDisabled = true;
                                 button.IsHidden = true;
                             }
@@ -108,7 +110,7 @@ export class ARInvoiceMenuButtonsHandler {
                         }
 
                         case "SetAsSent": {
-                            if (SessionLocator.TenantPM.AccountingActivated == true) {
+                            if (SessionLocator.TenantPM.AccountingActivated == true ) {
                                 button.IsHidden = true;
                             }
                             else {
