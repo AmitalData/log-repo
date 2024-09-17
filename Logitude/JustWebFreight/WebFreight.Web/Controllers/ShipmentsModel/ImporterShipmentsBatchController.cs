@@ -772,7 +772,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                     else
                     {
                         Responce.ErrorType = "Validation Error";
-                        Responce.ErrorMessage = "StatusId field doesn't exist in the database, insert this entity before using it.";
+                        Responce.ErrorMessage = $"StatusId value doesn't exist in the database, insert this entity before using it. Tenant:[{entityAM.Tenant}];StatusCode:[{entityAM.OriginalStatusCode}]";
                         return Responce;
                     }
 
@@ -798,7 +798,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                         else
                         {
                             Responce.ErrorType = "Validation Error";
-                            Responce.ErrorMessage = "StatusId field doesn't exist in the database, insert this entity before using it.";
+                            Responce.ErrorMessage = $"StatusId value doesn't exist in the database, insert this entity before using it. Tenant:[{entityAM.Tenant}];StatusCode:[{entityAM.StatusCode}]";
                             return Responce;
                         }
                     }

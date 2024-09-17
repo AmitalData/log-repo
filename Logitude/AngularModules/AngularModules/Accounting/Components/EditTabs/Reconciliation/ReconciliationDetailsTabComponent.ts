@@ -355,7 +355,7 @@ export class ReconciliationDetailsTabComponent extends BaseComponent implements 
 
     //#endregion
     public ExportToExcelClick(){
-        this.LogitudeGridExportToExcelComponent.ExportToExcelExcute("ReconciliationLine",this.filterAgrs,this.QueryColumns);
+        this.LogitudeGridExportToExcelComponent.ExportToExcelExcute("ReconciliationLine",this.filterAgrs,this.QueryColumns,"SaveToMicrosoftExcel2007",true);
     }
     
 

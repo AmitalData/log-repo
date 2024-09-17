@@ -18,15 +18,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Id"
-    Type="varchar"
-    Size="15"
-    DefaultValue="''">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
     Name="Tenant"
     Type="int">
     <Constraints
@@ -73,6 +64,15 @@
     Size="4000">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15"
+    DefaultValue="''">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
   <Column
     Name="ReconcileRemarks"

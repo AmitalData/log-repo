@@ -327,7 +327,7 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
     }
 
     public ExportToExcelClick(){
-        this.LogitudeGridExportToExcelComponent.ExportToExcelExcute("InterestReportLinesByDate",this.filterAgrs,this.QueryColumns);
+        this.LogitudeGridExportToExcelComponent.ExportToExcelExcute("InterestReportLinesByDate",this.filterAgrs,this.QueryColumns,"SaveToMicrosoftExcel2007",true);
     }
     
 }

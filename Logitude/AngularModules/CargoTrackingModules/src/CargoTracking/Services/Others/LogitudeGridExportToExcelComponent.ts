@@ -16,6 +16,8 @@ export class LogitudeGridExportToExcelService {
     public ObjectTableName: string;
     failedResponse = 'Faild';
     private _apiUrl: string;
+    Type: string
+    IsXslxFormat: boolean = false;
     constructor(
         private logboxShipmentExportExcelService: LogboxShipmentExportExcelService,
         public dialog: MatDialog,
@@ -27,8 +29,12 @@ export class LogitudeGridExportToExcelService {
     ExportToExcelExcute(
         ObjectTableName: string,
         filterAgrs: ApiQueryFilters,
-        QueryColumns: any[]
+        QueryColumns: any[],
+        Type:string = null,
+        IsXslxFormat: boolean = false
     ) {
+        this.Type=Type;
+        this.IsXslxFormat = IsXslxFormat;
         this.ObjectTableName = ObjectTableName;
         this.filterAgrs = filterAgrs;
         if (this.filterAgrs) this.filterAgrs.GetAll = true;
@@ -92,7 +98,8 @@ export class LogitudeGridExportToExcelService {
             '&qname=' +
             'cargoTracking' +
             '_' +
-            MyDate;
+            MyDate+
+            "&type=" + this.Type;
         return url;
     }
 
@@ -111,6 +118,8 @@ export class LogitudeGridExportToExcelService {
         logboxShipmentExportExcelArgs.PageSize = this.filterAgrs.PageSize;
         logboxShipmentExportExcelArgs.ObjectTableName = this.ObjectTableName;
         logboxShipmentExportExcelArgs.QueryColumns = this.QueryColumns;
+        logboxShipmentExportExcelArgs.IsXslxFormat = this.IsXslxFormat;
+
         logboxShipmentExportExcelArgs.UserId =
             sessionStorage.getItem('LoggedUserId');
         logboxShipmentExportExcelArgs.SortBy = this.filterAgrs.SortBy;
@@ -166,4 +175,5 @@ export class LogboxShipmentExportExcelArgs {
     SortBy: string;
     SortDirection: string;
     Filters: ApiQueryFilters;
+    IsXslxFormat: boolean;
 }

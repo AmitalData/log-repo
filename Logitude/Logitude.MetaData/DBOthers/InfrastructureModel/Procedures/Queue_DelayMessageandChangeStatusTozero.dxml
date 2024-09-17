@@ -4,25 +4,26 @@
   Name="Queue_DelayMessageandChangeStatusTozero"
   Schema="dbo"
   Module="Infrastructure">
-  <SqlScript><![CDATA[
+  <SqlScript>
+  <![CDATA[
 Create procedure [dbo].[Queue_DelayMessageandChangeStatusTozero]
 (
-   @MessageId bigint,
-   @DelaySeconds int
+   @V_MessageId bigint,
+   @V_DelaySeconds int
 )
  as begin
 
 IF exists (SELECT [Id]
-FROM [dbo].[QueueMessages] WITH (UPDLOCK) WHERE  [ID] = @MessageId)
+FROM [dbo].[QueueMessages] WITH (UPDLOCK) WHERE  [ID] = @V_MessageId)
 
 BEGIN
 UPDATE [dbo].[QueueMessages]
-SET  [NextRunDateTime] = dateadd(second,@DelaySeconds,getdate()),[Status] = 0
-WHERE [Id] = @MessageId and [Status] <> 0
+SET  [NextRunDateTime] = dateadd(second,@V_DelaySeconds,getdate()),[Status] = 0
+WHERE [Id] = @V_MessageId and [Status] <> 0
 
 UPDATE [dbo].[QueueMessageMoreDetails]
-SET  [NextRunDateTime] = dateadd(second,@DelaySeconds,getdate()),[Status] = 0
-WHERE [Id] = @MessageId and [Status] <> 0
+SET  [NextRunDateTime] = dateadd(second,@V_DelaySeconds,getdate()),[Status] = 0
+WHERE [Id] = @V_MessageId and [Status] <> 0
 END
 
 

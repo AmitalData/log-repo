@@ -228,7 +228,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.buildFilterArgs();
         this.QueryColumns = [];
         this.buildQueryColumns();
-        this.logitudeGridExportToExcelService.ExportToExcelExcute('CargoTrackingShipment', this.filterAgrs, this.QueryColumns);
+        this.logitudeGridExportToExcelService.ExportToExcelExcute('CargoTrackingShipment', this.filterAgrs, this.QueryColumns,"SaveToMicrosoftExcel2007",true);
     }
 
     private buildFilterArgs() {

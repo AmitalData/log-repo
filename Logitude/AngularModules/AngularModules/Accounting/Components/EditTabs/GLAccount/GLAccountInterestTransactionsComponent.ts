@@ -449,7 +449,7 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
 
     ExportToExcelClick()
     {
-        this.excelService.ExportToExcelExcute("GLAccountInterestTransactions", this.filterAgrs, this.QueryColumns);
+        this.excelService.ExportToExcelExcute("GLAccountInterestTransactions", this.filterAgrs, this.QueryColumns,"SaveToMicrosoftExcel2007",true);
     }
 
     //#endregion
