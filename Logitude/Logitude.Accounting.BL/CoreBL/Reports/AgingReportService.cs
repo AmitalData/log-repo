@@ -115,7 +115,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             bool fromGLAccountAgingData = false;
             if (_Param.FroceFromGLAccountAgingData && !_Param.SuppressFromGLAccountAgingData)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("{fromGLAccountAgingData}:{0}", fromGLAccountAgingData));
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("fromGLAccountAgingData:{0}", fromGLAccountAgingData));
 
                 var agingReportFromAgingData = new AgingReportFromAgingData(_AccountingContext, _MainAccountIdList_ToFetchThenAggragrate, _qAllAccAging4AccountTypeCode_CustomerOrVendor, _AccountingCurrencyId);
                 theDBList = agingReportFromAgingData.GetFromGLAccountAgingData(_Param.Tenant, listPeriods, myorderLessThanExclusive);//, listLessThanExclusivePeriods);

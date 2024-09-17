@@ -167,6 +167,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          GLAccountName = "",
                          GLAccountNumber = "",
                          GLAccountId = g.Key.AccountId,
+                         GLAccountEnglish = "",
                          ChartOfAccountId = "",
 
                          ChartOfAcountName1English = "",
@@ -239,6 +240,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 GLAccountName = "",
                 GLAccountNumber = "",
                 GLAccountId = g.Key.AccountId,
+                GLAccountEnglish = "",
                 ChartOfAccountId = "",
 
                 ChartOfAcountName1English = "",
@@ -292,6 +294,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                              GLAccountName = "",
                              GLAccountNumber = "",
                              GLAccountId = gbGLAccountId.Key,
+                             GLAccountEnglish = "",
                              ChartOfAccountId = "",
 
                              ChartOfAcountName1English = "",
@@ -345,8 +348,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                  GLAccountNumber = chartf.GLAccountNumber,
                  GLAccountId = chartf.GLAccountId,
 				 GLAccountEnglish = chartf.GLAccountEnglish,
-
-				 ChartOfAccountId = chartf.ChartOfAccountId,
+                 ChartOfAccountId = chartf.ChartOfAccountId,
 
 
                  ChartOfAcountName1English = chartf.Level1English,
@@ -407,8 +409,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                  GLAccountName = chartf.GLAccountName,
                  GLAccountNumber = chartf.GLAccountNumber,
                  GLAccountId = chartf.GLAccountId,
+                 GLAccountEnglish = chartf.GLAccountEnglish,
+
                  ChartOfAccountId = chartf.ChartOfAccountId,
-				 GLAccountEnglish = chartf.GLAccountEnglish,
 
 
 				 ChartOfAcountName1English = chartf.Level1English,
@@ -483,6 +486,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                      GLAccountName = "",//= groupTrailOnlyCOAType.Key.GLAccountName,
                                                      GLAccountNumber = "",
                                                      GLAccountId = "",// groupTrailOnlyCOAType.Key.GLAccountId,
+                                                     GLAccountEnglish = "",
 
                                                      ChartOfAccountId = "",
 
@@ -561,6 +565,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                      GLAccountName = "",//= groupTrailOnlyCOAType.Key.GLAccountName,
                                                      GLAccountNumber = "",
                                                      GLAccountId = "",// groupTrailOnlyCOAType.Key.GLAccountId,
+                                                     GLAccountEnglish = "",
                                                      ChartOfAccountId = "",
                                                      // CurrencyId = groupTrailOnlyCOAType.Key.CurrencyId,
 
