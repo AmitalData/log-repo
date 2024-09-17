@@ -263,7 +263,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private LoadTaxPercentage() {
         if (this.IsFullAccounting)
         {
-            if (this.vendorGLAccount.ChartOfAccountsTypeCode == "3") {
+            if (this.vendorGLAccount?.ChartOfAccountsTypeCode == "3") {
                 this.TaxDeductionPercentage = 0;
             } else {
 
@@ -926,6 +926,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
     }
     private FillDataFromCardList(list: CardList) {
+       
         if (list == null) {
             this.GLAccountId = null;
             this.BillToId = null;
