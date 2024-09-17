@@ -50,32 +50,36 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             {
                 FromExcelQueryJoin = context.CourierHawbFromExcels.Where(r => r.DeclarationId == "-1");
             }
-            var qDeclarationPaymentPendingHold =
+      
+			var qDeclarationPaymentPendingHold =
             (from p in context.DeclarationPendings
+             join cpr in context.CourierPendingReasons
+             on new { Code = p.CourierPendingReasonCode, Tenant = p.Tenant } equals new { Code = cpr.Code, Tenant = cpr.Tenant } into joined
+             from cpr in joined.DefaultIfEmpty()
              where p.Status == "A"
-             group p by p.DeclarationID into g
+             group new { p, cpr } by p.DeclarationID into g
              select new MyJoin
              {
-                 DeclarationId = g.Key,
-                 ErrorPlace = g.Any(r => r.CourierPendingReason.ErrorPlace == "1"),
-
-                 //CourierPendingReason1stName = g.DefaultIfEmpty(
-                 //new DeclarationPending()
-                 //{
-                 //    CourierPendingReason = new CourierPendingReason { }
-                 //})
-                 //.FirstOrDefault().CourierPendingReason.LocalName
-
-                 CourierPendingReason1stName = g.Any() ? g.FirstOrDefault().CourierPendingReason.LocalName : null,
-                 //CourierPendingReasonNameList = g.Any() ? string.Join(",", g.Select(x=>x.CourierPendingReason.LocalName).ToList()) : null
-                 //CourierPendingReasonNameList = g.Any() ?  g.Select(x=>x.CourierPendingReason.LocalName).Aggregate((a,b) => a + "," + b) : null
-
-
+            	 DeclarationId = g.Key,
+            	 ErrorPlace = g.Any(r => r.cpr != null && r.cpr.ErrorPlace == "1"),
+            
+            
+            	 //CourierPendingReason1stName = g.DefaultIfEmpty(
+            	 //new DeclarationPending()
+            	 //{
+            	 //    CourierPendingReason = new CourierPendingReason { }
+            	 //})
+            	 //.FirstOrDefault().CourierPendingReason.LocalName
+            
+            	 CourierPendingReason1stName = g.Any() && g.FirstOrDefault().cpr != null ? g.FirstOrDefault().cpr.LocalName : null,
+            	 //CourierPendingReasonNameList = g.Any() ? string.Join(",", g.Select(x=>x.CourierPendingReason.LocalName).ToList()) : null
+            	 //CourierPendingReasonNameList = g.Any() ?  g.Select(x=>x.CourierPendingReason.LocalName).Aggregate((a,b) => a + "," + b) : null
+            
+            
              }
             );
 
-
-            IQueryable<DeclarationCourierStatusList> query = (from a in iQueryable.Include("Trucker")
+			IQueryable<DeclarationCourierStatusList> query = (from a in iQueryable.Include("Trucker")
 
                                                               join d in context.Declarations.Include("GovernmentProcedureCurrent").Include("CourierCustomStatus").Include("DeclarationStatusType").Include("CustomerCard").Include("Importer").Include("AgentTalkBackType")
                                                               on a.DeclarationId equals d.Id
