@@ -355,6 +355,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.AutoSending).HasColumnName("AutoSending");
 
             this.Property(t => t.SystemConnection).HasColumnName("SystemConnection").HasMaxLength(1).IsUnicode(false);
+
+            this.Property(t => t.ShipmentId).HasColumnName("ShipmentId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

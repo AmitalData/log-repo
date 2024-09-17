@@ -241,6 +241,7 @@ export class DeclarationList {
 	ComputerFee: number;
 	EffectiveFlight: boolean;
 	SystemConnection: string;
+	ShipmentId: string;
 	
 }
  

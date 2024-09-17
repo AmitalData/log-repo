@@ -1589,6 +1589,11 @@ export class DeclarationPM {
     public set IsFromUpdateShipment(newValue: boolean) { if (this.isFromUpdateShipment != newValue) { this.isFromUpdateShipment = newValue; this.MarkAsDirty("IsFromUpdateShipment"); } }
        
 	 
+    private shipmentId: string;
+    public get ShipmentId() { return this.shipmentId; }
+    public set ShipmentId(newValue: string) { if (this.shipmentId != newValue) { this.shipmentId = newValue; this.MarkAsDirty("ShipmentId"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		
@@ -1617,4 +1622,4 @@ export class DeclarationPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

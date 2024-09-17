@@ -487,6 +487,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool EffectiveFlight  { get; set; }
        [DataMember]
        public string SystemConnection  { get; set; }
+       [DataMember]
+       public string ShipmentId  { get; set; }
    }
 
 }
