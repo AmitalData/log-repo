@@ -531,6 +531,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                             var tokenManager = TokenManager.GetInstance(_CourierHawbMamanCommunicationLogSettings);
                             var token = tokenManager.Token;
 
+                            NetCommonHelper.Logger.DevLog.Instance.WriteTrace($" Token: {token.AccessToken}");
 
                             //string webApiURI = host;//URI + "APIAuthentication";
                             //webApiURI = "https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae";

@@ -5,11 +5,12 @@ using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Web;
 
 public class TokenManager
 {
-    private static TokenManager instance;
+    private static volatile TokenManager instance;
     private static readonly object lockObject = new object();
     private Lazy<AuthToken> lazyToken;
     private readonly CourierWEBAPICommSettings settings;
@@ -18,7 +19,7 @@ public class TokenManager
     private TokenManager(CourierWEBAPICommSettings settings)
     {
         this.settings = settings;
-        this.lazyToken = new Lazy<AuthToken>(FetchToken, true);
+        this.lazyToken = new Lazy<AuthToken>(FetchToken, LazyThreadSafetyMode.ExecutionAndPublication);
     }
 
     // Public static method to get the Singleton instance
@@ -41,7 +42,7 @@ public class TokenManager
     {
         get
         {
-            if (!lazyToken.IsValueCreated || IsTokenExpired())
+            if (!lazyToken.IsValueCreated)
             {
                 RefreshToken();
             }
@@ -56,6 +57,8 @@ public class TokenManager
             string myResultString = "";
             try
             {
+                NetCommonHelper.Logger.DevLog.Instance.WriteTrace("FetchToken");
+
                 client.Timeout = TimeSpan.FromMinutes(MyWebClient.TimeOutFromMinutes); // Assuming this is a defined constant or replace with actual value
                 var agent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36";
                 client.DefaultRequestHeaders.Add("User-Agent", agent);
@@ -96,6 +99,7 @@ public class TokenManager
                     access_token = d.access_token;
                     token_type = d.token_type;
                 }
+                NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"New Token Generated: {access_token}");
 
                 return new AuthToken
                 {
@@ -111,15 +115,16 @@ public class TokenManager
         }
     }
 
-
-    private bool IsTokenExpired()
-    {
-        return DateTime.UtcNow >= lazyToken.Value.ExpiryTime;
-    }
-
     public void RefreshToken()
     {
-        lazyToken = new Lazy<AuthToken>(FetchToken, true);
+        lock (lockObject)
+        {
+            // Only reset if necessary
+            if (!lazyToken.IsValueCreated)
+            {
+                lazyToken = new Lazy<AuthToken>(FetchToken, LazyThreadSafetyMode.ExecutionAndPublication);
+            }
+        }
     }
 }
 
