@@ -1,4 +1,1 @@
-Warning: Missing Index In DXML File Card.dxml, The Found Index On DB Is PIX_CARDS_TENANT_VATNUMBER_INACTIVE_PARTNERTYPEID_2D067, The Index Should Added To The DXML File
-Warning: Missing Index In DXML File Card.dxml, The Found Index On DB Is PIX_CARDS_TENANT_INACTIVE_PARTNERTYPEID_D9BDA, The Index Should Added To The DXML File
-Warning: Missing Index In DXML File Card.dxml, The Found Index On DB Is PIX_CARDS_TENANT_PARTNERTYPEID_DDAAD, The Index Should Added To The DXML File
-Warning: Missing Index In DXML File Card.dxml, The Found Index On DB Is PIX_CARDS_VATNUMBER, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File EventType.dxml, The Found Index On DB Is Tenant_InActive_IsAgentView_Includes, The Index Should Added To The DXML File

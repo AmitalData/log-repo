@@ -68,9 +68,9 @@ namespace WebFreight.Web
                 sb.AppendLine("Request.Files count : " + Request.Files?.Count.ToString());
 
                 string filename = Guid.NewGuid().ToString();
-                File.WriteAllText($"{folderpath}\\ORITLOG_BODY_{filename}.log", retval);
-                File.WriteAllText($"{folderpath}\\ORITLOG_HEADERS_{filename}.log", sb.ToString());
-                File.WriteAllText($"{folderpath}\\ORITLOG_QUERYSTR_{filename}.log", Request.Url.OriginalString);
+                File.WriteAllText($"{folderpath}\\LogboxMilgun_BODY_{filename}.log", retval);
+                File.WriteAllText($"{folderpath}\\LogboxMilgun_HEADERS_{filename}.log", sb.ToString());
+                File.WriteAllText($"{folderpath}\\LogboxMilgun_QUERYSTR_{filename}.log", Request.Url.OriginalString);
 
             }
 
