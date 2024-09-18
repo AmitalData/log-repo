@@ -500,7 +500,9 @@ namespace Logitude.CustomsMessaging.RequestServices
             IsSendWithManifest = (!FeatureExcludeManifest || !this._DeclarationPM.ExcludeManifest);
 
             var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
-            if (requestParams.LoggingObjectTableId2 == objectTableIdCourierMaster || fromMevaker)
+            var objectTableIdCourierHawbFromExcel = ObjectTableRepository.GetObjectTableByName("Customs.CourierHawbFromExcel");
+
+            if (requestParams.LoggingObjectTableId2 == objectTableIdCourierMaster || fromMevaker || requestParams.LoggingObjectTableId2 == objectTableIdCourierHawbFromExcel)
             {
                 if (!fromMevaker)
                 {

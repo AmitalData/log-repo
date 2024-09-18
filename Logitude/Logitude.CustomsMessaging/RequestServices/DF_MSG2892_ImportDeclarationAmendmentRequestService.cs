@@ -278,8 +278,10 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
             var req = new DF_NG_2892_MSG14000_ImportDeclarationAmendmentRequestMsg();
             CreateDeclarationPM(requestParams);
-            var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
-            if (requestParams.LoggingObjectTableId2 == objectTableIdCourierMaster || fromMevaker)
+            var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster"); 
+            var objectTableIdCourierHawbFromExcel = ObjectTableRepository.GetObjectTableByName("Customs.CourierHawbFromExcel");
+
+            if (requestParams.LoggingObjectTableId2 == objectTableIdCourierMaster || fromMevaker || requestParams.LoggingObjectTableId2 == objectTableIdCourierHawbFromExcel)
             {
                 if (!fromMevaker)
                 {
