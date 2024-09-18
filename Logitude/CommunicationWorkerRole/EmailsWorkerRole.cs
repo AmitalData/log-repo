@@ -604,12 +604,7 @@ namespace CommunicationWorkerRole
 
             catch (Exception e)
             {
-                Trace.TraceError("Error Message : " + e.Message.ToString());
-
-                if (e.InnerException != null)
-                {
-                    Trace.TraceError("Inner Exception : " + e.InnerException.ToString());
-                }
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
             }
 
             CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
