@@ -1,5 +1,6 @@
 ﻿using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.QueueService;
+using Microsoft.VisualStudio.PlatformUI;
 using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -26,7 +27,7 @@ namespace WebFreight.Web
         protected void Page_Load(object sender, EventArgs e)
         {
 
-           
+           // LoadFromFolder();
 
             try
             {
@@ -115,6 +116,96 @@ namespace WebFreight.Web
 
         }
 
+        private void DoProcess(string AccessKey,string reqStreamString)
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                {
+                 
+                    if (string.IsNullOrEmpty(AccessKey))
+                    {
+                       
+                            throw new AuthenticationException("you are not authonticated to call this page.");
+                       
+                    }
+                    WebhookKeysRepository webhookKeysRepository = new WebhookKeysRepository();
+                    var MyWebHookKey = webhookKeysRepository.GetSingleWebhookKeyByAccessKey(AccessKey);
+                    if (MyWebHookKey == null)
+                    {
+                        //throw new HttpResponseException(HttpStatusCode.Unauthorized);
+                        throw new AuthenticationException("you are not authonticated to call this page.");
+                    }
+
+                   
+
+                    if (!string.IsNullOrEmpty(reqStreamString))
+                    {
+                        this.SaveMessageToAnalyzeQueue(reqStreamString, MyWebHookKey);
+                    }
+
+                    scope.Complete();
+                }
+            }
+            catch (Exception ex)
+            {
+              //  Response.Write(ex.Message);
+                throw ex;
+            }
+        }
+
+        private void LoadFromFolder()
+        {
+            if (!Directory.Exists("c:\\temp\\app_data\\Error"))
+            {
+                Directory.CreateDirectory("c:\\temp\\app_data\\Error");
+            }
+            if (!Directory.Exists("c:\\temp\\app_data\\Done"))
+            {
+                Directory.CreateDirectory("c:\\temp\\app_data\\Done");
+            }
+
+            var files=Directory.GetFiles("c:\\temp\\app_data\\", "ORITLOG_BODY_*.log");
+            foreach (var file in files)
+            {
+                string queryFile = file.Replace("ORITLOG_BODY_", "ORITLOG_QUERYSTR_");
+                string headerFile = file.Replace("ORITLOG_BODY_", "ORITLOG_HEADERS_");
+
+                var body = File.ReadAllText(file);
+                var URL = File.ReadAllText(queryFile);
+                var accesskey=URL.Replace("http://external-cloud-website-il-10.azurewebsites.net:80/WebhooksReceiver.aspx?AccessKey=", "");
+                try
+                {
+                    if (!File.Exists(file.Replace("ORITLOG_", "Done\\ORITLOG_")))
+                    {
+                        DoProcess(accesskey, body);
+                        File.Move(file, file.Replace("ORITLOG_", "Done\\ORITLOG_"));
+                        File.Move(queryFile, queryFile.Replace("ORITLOG_", "Done\\ORITLOG_"));
+                        File.Move(headerFile, headerFile.Replace("ORITLOG_", "Done\\ORITLOG_"));
+                    }
+                    else
+                    {
+                        File.Delete(file);
+                        File.Delete(queryFile);
+                        File.Delete(headerFile);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                   
+                   
+                    File.Move(file, file.Replace("ORITLOG_", "Error\\ORITLOG_"));
+                    File.Move(queryFile, queryFile.Replace("ORITLOG_", "Error\\ORITLOG_"));
+                    File.Move(headerFile, headerFile.Replace("ORITLOG_", "Error\\ORITLOG_"));
+
+                    
+                }
+              
+
+
+            }
+        }
 
         private void helpMe()
         {

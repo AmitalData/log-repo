@@ -57,9 +57,12 @@ using System.Data;
 using WebFreight.Web.CustomersHTML;
 using System.Web.UI.WebControls;
 using System.Configuration;
-using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using JWT;
+using JWT.Serializers;
+using JWT.Algorithms;
+using JWT.Exceptions;
 namespace WebFreight.Web
 {
 #if DEBUG
@@ -1263,44 +1266,44 @@ namespace WebFreight.Web
         {
             public int[] Tenants { get; set; }
         }
-        public static T GetPayloadFromToken<T>(string token) where T : class, new()
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            string secret = Environment.GetEnvironmentVariable("WarmSecret");
-            if (string.IsNullOrWhiteSpace(secret))
-            {
-                secret = ConfigurationManager.AppSettings["WarmSecret"];
-            }
-            if (string.IsNullOrWhiteSpace(secret))
-            {
-                throw new Exception("No secret specified in configuration file");
-            }
-            var key = Encoding.UTF8.GetBytes(secret);
+        //public static T GetPayloadFromToken<T>(string token) where T : class, new()
+        //{
+        //    var tokenHandler = new JwtSecurityTokenHandler();
+        //    string secret = Environment.GetEnvironmentVariable("WarmSecret");
+        //    if (string.IsNullOrWhiteSpace(secret))
+        //    {
+        //        secret = ConfigurationManager.AppSettings["WarmSecret"];
+        //    }
+        //    if (string.IsNullOrWhiteSpace(secret))
+        //    {
+        //        throw new Exception("No secret specified in configuration file");
+        //    }
+        //    var key = Encoding.UTF8.GetBytes(secret);
 
-            var validationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = false,
-                ValidateAudience = false,
-                ValidateLifetime = false,
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(key)
-            };
+        //    var validationParameters = new TokenValidationParameters
+        //    {
+        //        ValidateIssuer = false,
+        //        ValidateAudience = false,
+        //        ValidateLifetime = false,
+        //        ValidateIssuerSigningKey = true,
+        //        IssuerSigningKey = new SymmetricSecurityKey(key)
+        //    };
 
-            try
-            {
-                tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
+        //    try
+        //    {
+        //        tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
 
-                // If token is valid, extract the payload
-                var jwtToken = validatedToken as JwtSecurityToken;
-                var payload = jwtToken.Payload.SerializeToJson();
-                return JsonConvert.DeserializeObject<T>(payload);
-            }
-            catch
-            {
-                // If token is not valid, return null
-                return null;
-            }
-        }
+        //        // If token is valid, extract the payload
+        //        var jwtToken = validatedToken as JwtSecurityToken;
+        //        var payload = jwtToken.Payload.SerializeToJson();
+        //        return JsonConvert.DeserializeObject<T>(payload);
+        //    }
+        //    catch
+        //    {
+        //        // If token is not valid, return null
+        //        return null;
+        //    }
+        //}
         [HttpGet]
         [ActionName("StartWarm")]
         public HttpResponseMessage StartWarm(string t = null)
@@ -1321,7 +1324,20 @@ namespace WebFreight.Web
                 {
                     throw new Exception("No Jwt provided");
                 }
-                JwtPayload tokenData = GetPayloadFromToken<JwtPayload>(t);
+
+                string secret = Environment.GetEnvironmentVariable("WarmSecret");
+                if (string.IsNullOrWhiteSpace(secret))
+                {
+                    secret = ConfigurationManager.AppSettings["WarmSecret"];
+                   
+                }
+                if (string.IsNullOrWhiteSpace(secret))
+                {
+                    throw new Exception("No secter provided");
+                }
+
+
+                JwtPayload tokenData = JWT_DecryptToken<JwtPayload>(t,secret);
                 if (tokenData == null)
                 {
                     throw new Exception("Invalid Token");
@@ -1364,6 +1380,58 @@ namespace WebFreight.Web
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+
+        #region jwt token generation and decryption
+        private static IJsonSerializer CreateSerializer() =>
+            new DefaultJsonSerializerFactory().Create();
+        private static JwtBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
+        private static HMACSHA256Algorithm algorithm = new HMACSHA256Algorithm();
+        private static UtcDateTimeProvider dateTimeProvider = new UtcDateTimeProvider();
+
+
+        private static string JWT_GenerateToken<T>(T Value,string secret, int timeoutMinutes)
+        {
+
+            IDateTimeProvider provider = new UtcDateTimeProvider();
+            //var now = provider.GetNow().AddMinutes(timeoutMinutes);
+            //double secondsSinceEpoch = UnixEpoch.GetSecondsSince(now);
+            //Value.exp = secondsSinceEpoch;
+            var serializer = CreateSerializer();
+            var encoder = new JwtEncoder(algorithm, serializer, urlEncoder);
+
+            return encoder.Encode(Value, secret);
+        }
+
+        private static T JWT_DecryptToken<T>(string token,string secret) where T : class, new()
+        {
+          
+            try
+            {
+                var serializer = CreateSerializer();
+                var validator = new JwtValidator(serializer, dateTimeProvider);
+                var decoder = new JwtDecoder(serializer, validator, urlEncoder, algorithm);
+                return decoder.DecodeToObject<T>(token, secret);
+            }
+            catch (TokenExpiredException ex)
+            {
+                throw new Exception("Token Expired");
+            }
+            catch (SignatureVerificationException ex)
+            {
+                throw new Exception("SignatureVerificationException");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+            return null;
+        }
+
+        #endregion
+
 
         private void MapHasLogboxAccessPrivateLabelTenants(List<CompanyLogin> loginsList, List<string> logboxAccessiblePrivateLabelTenantsIds)
         {
