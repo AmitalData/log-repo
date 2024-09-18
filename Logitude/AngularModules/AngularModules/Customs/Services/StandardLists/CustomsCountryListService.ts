@@ -161,6 +161,213 @@ export class CustomsCountryListService {
 		});        
 	}
 
+
+	getSingleFromCache(code: string) {
+
+		var callTime = new Date();
+
+		if (!SessionLocator.UseCachedData) {
+            return this.getSingle(code);
+        }
+	    
+		var exists = CustomsCountryListService.CachedData.filter(a => a.Code === code).length;
+
+        var serviceResponse: ServiceResponse = new ServiceResponse(); 
+
+        if (exists === 0) {
+			return defer(() => {
+				var cacheKey = "CustomsCountry_CachedData_" + SessionLocator.Tenant;
+				var _mappedListsArray: Array<CustomsCountryList> = [];
+                var cachedString = LocalStorageManager.GetItem(cacheKey);
+
+                if (cachedString) {
+                    var cachedJson = JSON.parse(cachedString);
+                    for (var key in cachedJson) {
+                        var entity: CustomsCountryList = this.MapJsonToEntityList(cachedJson[key]);
+                        _mappedListsArray.push(entity);
+                    }
+
+                    CustomsCountryListService.CachedData = _mappedListsArray;
+                    serviceResponse = new ServiceResponse();
+                    
+                    var filteredData = CustomsCountryListService.CachedData.filter(a => a.Code === code)[0];
+                    serviceResponse.Result = filteredData;
+					serviceResponse.CallTime = callTime;
+ 
+                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "CustomsCountry", "GetSingleListFromCache", 'code=' + code); 
+
+                    return of(serviceResponse);                    
+                }
+
+				else {
+					return this._http.get(this._apiUrl+'/getsingle/?'+'code=' + code, ServiceHelper.GetHttpFullHeaders())
+					.pipe(
+						map((response: HttpResponse<any>) => {
+							var list = response.body;
+                    
+							var entity: CustomsCountryList;
+							if (list)
+							{
+								entity = this.MapJsonToEntityList(list);
+							}   
+
+							serviceResponse.Result = entity;
+							serviceResponse.CallTime = callTime;
+
+							var servertime = response.headers.get('ServerExecutionTime');
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CustomsCountry", "GetSingleList", 'code=' + code); 
+                                      
+							return serviceResponse;
+						}), 
+						
+						catchError(ServiceHelper.HandleServiceError));
+				}
+			});
+		}
+
+		else {
+		   var filteredData = CustomsCountryListService.CachedData.filter(a => a.Code === code)[0];
+		    serviceResponse.Result = filteredData;
+			serviceResponse.CallTime = callTime;
+		   return of(serviceResponse);
+		}
+	}
+
+    getAllFromCache(filters: ApiQueryFilters = new ApiQueryFilters(true)) {
+
+		var callTime = new Date();
+
+		if (!SessionLocator.UseCachedData) {
+			return this.getByFilters(filters);
+		}
+
+		var exists = CustomsCountryListService.CachedData.length;
+		var urlparameters = '/getbyfilters?';
+        var mykeys = Object.keys(filters);
+        var addtionalFiltersValues = null;
+
+        for (var i in mykeys) {
+            var propName = mykeys[i];
+            var propValue = filters[propName];
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters" || propName == "TreeFilters"  || propName == "ParentEntity");
+
+            if (urlparameters != "?") {
+                urlparameters = urlparameters.concat('&');
+            }
+
+            if (!ignoreFilter) {
+				if (exists === 0 || filters.ForceCacheRefresh) {
+					propValue = encodeURIComponent(propValue);
+				}
+
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+			}
+
+			if (propName == "TreeFilters" && propValue && propValue.length > 0) {
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+            }
+			
+			if (propName == "ParentEntity" && propValue) {
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+            }
+
+            if (propName == "AdditionalFilters" && propValue.length > 0) {
+                addtionalFiltersValues = JSON.stringify(propValue);
+			}
+        }
+
+        if (addtionalFiltersValues) {
+            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+        }
+
+        var callUrl = this._apiUrl.concat(urlparameters);       
+       
+        if (exists === 0 || filters.ForceCacheRefresh) {
+            var cacheKey = "CustomsCountry_CachedData_" + filters.Tenant;
+            var _mappedListsArray: Array<CustomsCountryList> = [];
+            var serviceResponse: ServiceResponse;
+
+            if (!filters.ForceCacheRefresh) {
+                var cachedString = LocalStorageManager.GetItem(cacheKey);
+                if (cachedString) {
+                    var cachedJson = JSON.parse(cachedString);
+
+                    for (var key in cachedJson) {
+                        var entity: CustomsCountryList = this.MapJsonToEntityList(cachedJson[key]);
+                        _mappedListsArray.push(entity);
+                    }
+
+                    CustomsCountryListService.CachedData = _mappedListsArray;
+                    serviceResponse = new ServiceResponse();
+
+                     if (!filters.GetAll) {
+                        _mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
+                    }
+
+                    serviceResponse.Result = _mappedListsArray;
+					serviceResponse.CallTime = callTime;
+                    
+                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "CustomsCountry", "GetAllFromCache", "");                     
+                }
+            }
+
+            if (serviceResponse) {
+                return of(serviceResponse);
+            }
+
+            else {
+                return defer(() => {
+                    return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
+						.pipe(
+							map((response: HttpResponse<any>) => {
+
+								var serviceResponse: ServiceResponse;
+								serviceResponse = response.body;
+                        
+								if (serviceResponse.Result) {
+									for (var key in serviceResponse.Result) {
+										var entity: CustomsCountryList = this.MapJsonToEntityList(serviceResponse.Result[key]);
+										_mappedListsArray.push(entity);
+									}
+								}
+
+								if (filters.GetAll) {
+									LocalStorageManager.SetItem(cacheKey, JSON.stringify(_mappedListsArray))
+									CustomsCountryListService.CachedData = _mappedListsArray;
+								}
+
+								else {
+							
+									_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
+								}
+
+								serviceResponse.Result = _mappedListsArray;
+								serviceResponse.CallTime = callTime;
+						
+								var servertime = response.headers.get('ServerExecutionTime');
+								PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CustomsCountry", "GetAll", ""); 
+
+								return serviceResponse;
+							}),
+							
+							catchError(ServiceHelper.HandleServiceError));
+                });
+            }
+        }
+
+        else {
+            var filteredData = CustomsCountryListService.CachedData;
+            if (!filters.GetAll) {
+	
+                filteredData = InfraGenericFilter.GetFilteredArray(filteredData, filters);
+            }
+
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+            serviceResponse.Result = filteredData;
+			serviceResponse.CallTime = callTime;
+            return of(serviceResponse);
+        }
+    }
 	
 	    MapJsonToEntityList(jsonList: any) {
        
