@@ -893,7 +893,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                             SupplierInvoiceItemPM.ClassificationCode =invoiceItem.CLASSIFICATIONCODE;
                             SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Update;
                         }
-                        if ((invoiceItem.ITEMORIGINCOUNTRY ?? "") != (SupplierInvoiceItemPM.OriginCountryCode ?? ""))
+                        if (!string.IsNullOrEmpty(invoiceItem.ITEMORIGINCOUNTRY) && invoiceItem.ITEMORIGINCOUNTRY != (SupplierInvoiceItemPM.OriginCountryCode ?? ""))
                         {
                             SupplierInvoiceItemPM.OriginCountryCode = invoiceItem.ITEMORIGINCOUNTRY;
                             SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Update;
@@ -920,6 +920,10 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                                 SupplierInvoiceItemPM.TradeAgreementCode = TranslateTradeAgreementCode(invoiceItem.TRADEAGREEMENTCODE);
                                 SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Update;
                             }
+                        }
+                        if (!string.IsNullOrEmpty(invoiceItem.Desc) && invoiceItem.Desc != (SupplierInvoiceItemPM.ItemDescription ?? ""))
+                        {
+                            SupplierInvoiceItemPM.ItemDescription = invoiceItem.Desc;
                         }
                     }
                 }
@@ -948,7 +952,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             Dictionary<string, string> ClasificationQtyTypes = new Dictionary<string, string>() { };
             CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(ResolvedTenant());
 			
-			foreach (var invoiceItem in invoice.INVOICEITEMS)
+			foreach (INVOICEITEMS invoiceItem in invoice.INVOICEITEMS)
             {
                 int int1 = 0;
                 decimal decimal1 = 0;
