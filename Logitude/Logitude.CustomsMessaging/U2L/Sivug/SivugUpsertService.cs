@@ -19,8 +19,10 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Unifreight.BL.EntityQueryServices;
@@ -927,6 +929,20 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
 
         private List<SupplierInvoiceItemPM> GetSupplierInvoiceItemPM(INVOICE invoice)
         {
+            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["SupplierInvoiceStatisticQuantity.LogUntilDateyyyyMMdd"];
+            var setting = CustomsSettingQueryService.GetSettingByTenant(this._MyDeclarationPM.Tenant);
+            string logData = "";
+            DateTime stopLogAt = DateTime.MinValue;
+
+            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+            {
+                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+                                                    "yyyyMMdd",
+                                                    CultureInfo.InvariantCulture,
+                                                    DateTimeStyles.None);
+            }
+
+
             var SupplierInvoiceItemPMList = new List<SupplierInvoiceItemPM>();
 
             Dictionary<string, string> ClasificationQtyTypes = new Dictionary<string, string>() { };
@@ -1008,12 +1024,17 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 {
                     SupplierInvoiceItemPM.InvoiceQuantity = null;
                 }
+                logData = "StatisticQuantity:" + SupplierInvoiceItemPM.StatisticQuantity;
+                LogitudeSettings.HandleLogMe(logData, false, "StatisticQuantity", stopLogAt);
 
                 if (invoiceItem.StatisticQuantity != null && !String.IsNullOrWhiteSpace(invoiceItem.StatisticQuantity))
                 {
                     if (decimal.TryParse(invoiceItem.StatisticQuantity, out decimal1))
                     {
                         SupplierInvoiceItemPM.StatisticQuantity = decimal1;
+                        logData = "StatisticQuantity:" + SupplierInvoiceItemPM.StatisticQuantity;
+                        LogitudeSettings.HandleLogMe(logData, false, "StatisticQuantity", stopLogAt);
+
                     }
                     else
                     {
