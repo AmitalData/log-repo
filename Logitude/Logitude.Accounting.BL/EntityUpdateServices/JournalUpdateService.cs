@@ -617,7 +617,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                        select a).Any();
                 if (isJournalLineDelete)
                 {
-                    CustomsStoredProcedures.UpdateJouranlLinesLineNumber(entityPM.Id, entityPM.Tenant);
+                   // CustomsStoredProcedures.UpdateJouranlLinesLineNumber(entityPM.Id, entityPM.Tenant);
                 }
 
                 if (entityPM.StatusCode == "6"  //== "2") //Pending Approval  
