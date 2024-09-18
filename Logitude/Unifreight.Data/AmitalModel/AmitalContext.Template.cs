@@ -413,7 +413,7 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.DESCOFGOODS1)
                     .HasColumnName(@"DESC_OF_GOODS1")
                     .HasMaxLength(30)
-                    .HasColumnType("varchar2");
+                    .HasColumnType("nvarchar2");
             modelBuilder.Entity<CCUMSHGR>()
                 .Property(p => p.DESCOFGOODS2)
                     .HasColumnName(@"DESC_OF_GOODS2")
@@ -11356,7 +11356,7 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.DESCOFGOODS1)
                     .HasColumnName(@"DESC_OF_GOODS1")
                     .HasMaxLength(30)
-                    .HasColumnType("varchar");
+                    .HasColumnType("nvarchar");
             modelBuilder.Entity<CCUMSHGR>()
                 .Property(p => p.DESCOFGOODS2)
                     .HasColumnName(@"DESC_OF_GOODS2")
