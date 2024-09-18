@@ -270,6 +270,7 @@
   <ItemGroup>
     <Compile Include="AllWorkerEntryPointTypeService.cs" />
     <Compile Include="BL\DocumentApiExecutionService.cs" />
+    <Compile Include="BL\MamanTokenManager.cs" />
     <Compile Include="BL\SerialAnalyzeDcaResponseByAggregateKey.cs" />
     <Compile Include="BL\ServerMonitorControlService.cs" />
     <Compile Include="CustomsAnalyzeQueueWR.cs" />
