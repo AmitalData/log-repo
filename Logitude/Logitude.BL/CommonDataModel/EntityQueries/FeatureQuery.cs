@@ -305,15 +305,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public LoggedUserFeatures GetAllowedFeaturesForLoggedUser(string loggedUserId, int tenant)
         {
-
-            string key = $"GetAllowedFeaturesForLoggedUser,{loggedUserId},{tenant}" ;
-            var loggedUserFeatures = CacheManager.GetOrInsertNewObject<LoggedUserFeatures>(key, () =>
+            LoggedUserFeatures loggedUserFeatures  ;
+            if (!SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.LogboxAndAccountingProduction))
             {
-                return GetAllowedFeaturesForLoggedUserBL(loggedUserId, tenant);
-            });
-
-            bool usecache = true;
-            if (!usecache)
+                string key = $"GetAllowedFeaturesForLoggedUser,{loggedUserId},{tenant}";
+                 loggedUserFeatures = CacheManager.GetOrInsertNewObject<LoggedUserFeatures>(key, () =>
+                {
+                    return GetAllowedFeaturesForLoggedUserBL(loggedUserId, tenant);
+                });
+            }
+            else
             {
                 var sw = Stopwatch.StartNew();
                 loggedUserFeatures = GetAllowedFeaturesForLoggedUserBL(loggedUserId, tenant);
