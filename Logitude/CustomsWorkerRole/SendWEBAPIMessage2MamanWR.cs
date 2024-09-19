@@ -311,6 +311,8 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             }
             catch (Exception exc)
             {
+
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(exc);
                 //ExceptionHandler.HandleException(exc, DateTime.Now, _Tenant, "", "WorkerRole", "", null);
                 _WaitingCommLog.Retries++;
                 if (_WaitingCommLog.Retries > MaxRetries)

@@ -134,8 +134,7 @@ namespace Logitude.Server.Tools.QueueService
                 }
                 else
                 {
-                    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
-                    {
+                    
                         if (NextRunDate.HasValue)
                         {
                             if (DateTime.UtcNow > NextRunDate)
@@ -150,7 +149,7 @@ namespace Logitude.Server.Tools.QueueService
                             }
                             NextRunDate = null;
                         }
-                    }
+                  
 
                 }
                 if (CustomerId != null)
