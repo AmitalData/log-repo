@@ -403,9 +403,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("GetAllowedFeaturesForLoggedUser ,token - " + token);
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 string loggedUserEmail = authToken.Email;
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("GetAllowedFeaturesForLoggedUser ,authToken.Tenant- " + tenant);
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("GetAllowedFeaturesForLoggedUser ,authToken.Email- " + loggedUserEmail);
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
@@ -414,6 +417,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 ContactPM contact = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
                 if (contact != null)
                 {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo("GetAllowedFeaturesForLoggedUser ,contact.Id - " + contact.Id);
+
                     loggedUserId = contact.Id;
                 }
 
