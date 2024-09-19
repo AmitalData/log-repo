@@ -80,6 +80,16 @@ namespace Logitude.Customs.BL.Messaging.U2L.Reshimon
             {
                 this._MyDeclarationPM = myQueryService.GetSingle(this._MyDeclarationPM.Id, true, false);
             }
+            if(this._MyDeclarationPM != null && this._MyDeclarationPM.IsAmendment == true)
+            {
+               var orgDeclarations = myQueryService.GetSingle(this._MyDeclarationPM.AmendmentOriginalDeclartation, true, false);
+                if(orgDeclarations != null)
+                {
+                    this._MyDeclarationPM.DeclarationPayments = orgDeclarations.DeclarationPayments;
+                }
+             
+            }
+
             AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart(); 
             ICustomContext dbContext = CustomContext.GetContext(ResolvedTenant());
             MyGenericResponseObj.Stage = "GetXml for file " + this._MyDeclarationPM.CustomFileNo;
