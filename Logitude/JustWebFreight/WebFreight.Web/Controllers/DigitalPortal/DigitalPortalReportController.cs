@@ -14,7 +14,6 @@ using Logitude.SystemLogs;
 using Syncfusion.XlsIO;
 using System.Collections.Generic;
 using System.Linq;
-using Simplog.Server.Infrastructure.DataContracts.Models;
 using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.Data.EntityLists;
 using Newtonsoft.Json;

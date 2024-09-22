@@ -8,7 +8,6 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using Simplog.Server.Infrastructure.DataContracts.Models;
 using Logitude.BL.InvoiceModel.EntityQueries;
-using Simplog.Server.Infrastructure.DataContracts.Models;
 using Simplog.Data.Helpers;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using System.Collections.Generic;
