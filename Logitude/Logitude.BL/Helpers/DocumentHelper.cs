@@ -784,7 +784,7 @@ namespace Logitude.BL.Helpers
                 string contactEmail = this.IsSignatureHtmlPresentByBillToId(invocie.BillToId, tenant);
                 if (!string.IsNullOrEmpty(contactEmail))
                 {
-                    this.CreatePdfDoc(documentsFiling, invocie.Id, invocie.Tenant, "ARInvoice");
+                    this.CreatePdfDoc(documentsFiling, invocie.Id, invocie.Tenant, "ARInvoice", true);
                     if (this.isInterestReport && invocie.ARInvoiceTypeCode == "IT")
                     {
                         this.CreateDocumentInterestReport(invocie.Tenant, invocie.Id);
@@ -819,7 +819,7 @@ namespace Logitude.BL.Helpers
             return email;
         }
 
-        private void CreatePdfDoc(DocumentsFiling documentsFiling, string Id, int tenant, string objectTableName)
+        private void CreatePdfDoc(DocumentsFiling documentsFiling, string Id, int tenant, string objectTableName, bool IsDigitalSign = false)
         {
 
             IExportDocumentHelper exportDocumentHelper = ContainerAccessor.Container.Resolve(typeof(IExportDocumentHelper), "ExportDocumentHelper", new ParameterOverride("", 1)) as IExportDocumentHelper;
@@ -830,10 +830,19 @@ namespace Logitude.BL.Helpers
             string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(tenant);
             var objectTable = objectTableRepository.GetObjectTableByName(objectTableName, tenant, true);
 
-            documentTypePM.DocumentTypeCopies.ForEach(doc =>
+
+            if (IsDigitalSign)
             {
+                var doc = documentTypePM.DocumentTypeCopies.FirstOrDefault();
                 exportDocumentHelper.ExportDocument2Pdf(documentsFiling.DocumentTypeId, Id, objectTable.Id, null, null, documentsFiling.Id, tenant, doc.Id, resolveLoggingUserId);
-            });
+            }
+            else
+            {
+                documentTypePM.DocumentTypeCopies.ForEach(doc =>
+                {
+                    exportDocumentHelper.ExportDocument2Pdf(documentsFiling.DocumentTypeId, Id, objectTable.Id, null, null, documentsFiling.Id, tenant, doc.Id, resolveLoggingUserId);
+                });
+            }
 
         }
 

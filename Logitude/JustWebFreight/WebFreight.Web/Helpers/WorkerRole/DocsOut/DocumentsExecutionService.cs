@@ -29,6 +29,9 @@ using Simplog.Data.QuoteModel;
 using Microsoft.Practices.Unity;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.Helpers;
+using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
+using Logitude.BL.InvoiceModel.EntityQueries;
+
 
 namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
 {
@@ -304,25 +307,45 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
             ExportDocumentArgs exportDocumentArgs = !string.IsNullOrEmpty(documentsExecutionLog.RequestXML) ? LogitudeXmlSerializer.DeserializeObject<ExportDocumentArgs>(documentsExecutionLog.RequestXML) : null;
             if (exportDocumentArgs != null)
             {
-                childObjectTableName =!string.IsNullOrEmpty(exportDocumentArgs.ChildObjectTableId) ? ObjectTableRepository.GetNameById(exportDocumentArgs.ChildObjectTableId , exportDocumentArgs.Tenant) :""; 
-                List<DocumentTypeCopiesDetails> documentTypeCopiesDetails = new List<DocumentTypeCopiesDetails>();
-                string authenticatedUserEmail = GetContactEmailByContactId(exportDocumentArgs.LoggedContactId, exportDocumentArgs.Tenant);
-                Parallel.ForEach(exportDocumentArgs.DocumentTypeCopyIdsList, (documentTypeCopyId) =>
+                bool skip = false;
+                string objectTableName = !string.IsNullOrEmpty(exportDocumentArgs.ObjectTableId) ? ObjectTableRepository.GetNameById(exportDocumentArgs.ObjectTableId, exportDocumentArgs.Tenant) : "";
+                if (objectTableName == "ARInvoice" && !string.IsNullOrEmpty(exportDocumentArgs.EntityId))
                 {
-                    AuthenticationUtil.AuthenticatedUserEmail = authenticatedUserEmail;
-                    ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
-                    string result = exportDocumentHelper.ExportDocument2Pdf(exportDocumentArgs, documentTypeCopyId);
-                    documentTypeCopiesDetails.Add(new DocumentTypeCopiesDetails() { DocumentTypeCopyId = documentTypeCopyId, DocumentId = result });
-                });
-
-                UpdateDocumentOut(exportDocumentArgs);
-                if (childObjectTableName == "ARInvoice" || exportDocumentArgs.ObjectTableName == "ARInvoice") UpdateARInvoicePrintingDetails(exportDocumentArgs , authenticatedUserEmail); 
-
-                DocumentPopulateAutomaticDateUpdateService documentPopulateAutomaticDateUpdateService = new DocumentPopulateAutomaticDateUpdateService();
-                documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = exportDocumentArgs.EntityId, ObjectTableName = exportDocumentArgs.ObjectTableName, ChildObjectTableId = exportDocumentArgs.ChildObjectTableId, ChildEntityId = exportDocumentArgs.ChildEntityId, DocumentTypeCode = exportDocumentArgs.CurrentDocumentTypeCode, ProcessType = "Print", Tenant = exportDocumentArgs.Tenant });
-                if (!(childObjectTableName == "APInvoice" && string.IsNullOrWhiteSpace(exportDocumentArgs.EntityId)))
+                    ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(exportDocumentArgs.Tenant);
+                    var aRInvoice = aRInvoiceQuery.GetSingleARInvoice(exportDocumentArgs.EntityId, exportDocumentArgs.Tenant);
+                    if (aRInvoice != null)
+                    {
+                        string signStatus = aRInvoice.IsSigned;
+                        if (signStatus == "1" || signStatus == "3" || signStatus == "4")
+                        {
+                            skip = true;
+                            NetCommonHelper.Logger.DevLog.Instance.WriteTrace("Skip Printing Signed ARInvoice [{aRInvoice.InvoiceNumber}] Tenant=[{aRInvoice.Tenant}] IsSigned=[{signStatus}]" +
+                                JsonConvert.SerializeObject(exportDocumentArgs));
+                        }
+                    }
+                }
+                if (!skip)
                 {
-                    RunAutomation(exportDocumentArgs, "OnDocumentUpdate", documentTypeCopiesDetails);
+                    childObjectTableName = !string.IsNullOrEmpty(exportDocumentArgs.ChildObjectTableId) ? ObjectTableRepository.GetNameById(exportDocumentArgs.ChildObjectTableId, exportDocumentArgs.Tenant) : "";
+                    List<DocumentTypeCopiesDetails> documentTypeCopiesDetails = new List<DocumentTypeCopiesDetails>();
+                    string authenticatedUserEmail = GetContactEmailByContactId(exportDocumentArgs.LoggedContactId, exportDocumentArgs.Tenant);
+                    Parallel.ForEach(exportDocumentArgs.DocumentTypeCopyIdsList, (documentTypeCopyId) =>
+                    {
+                        AuthenticationUtil.AuthenticatedUserEmail = authenticatedUserEmail;
+                        ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
+                        string result = exportDocumentHelper.ExportDocument2Pdf(exportDocumentArgs, documentTypeCopyId);
+                        documentTypeCopiesDetails.Add(new DocumentTypeCopiesDetails() { DocumentTypeCopyId = documentTypeCopyId, DocumentId = result });
+                    });
+
+                    UpdateDocumentOut(exportDocumentArgs);
+                    if (childObjectTableName == "ARInvoice" || exportDocumentArgs.ObjectTableName == "ARInvoice") UpdateARInvoicePrintingDetails(exportDocumentArgs, authenticatedUserEmail);
+
+                    DocumentPopulateAutomaticDateUpdateService documentPopulateAutomaticDateUpdateService = new DocumentPopulateAutomaticDateUpdateService();
+                    documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = exportDocumentArgs.EntityId, ObjectTableName = exportDocumentArgs.ObjectTableName, ChildObjectTableId = exportDocumentArgs.ChildObjectTableId, ChildEntityId = exportDocumentArgs.ChildEntityId, DocumentTypeCode = exportDocumentArgs.CurrentDocumentTypeCode, ProcessType = "Print", Tenant = exportDocumentArgs.Tenant });
+                    if (!(childObjectTableName == "APInvoice" && string.IsNullOrWhiteSpace(exportDocumentArgs.EntityId)))
+                    {
+                        RunAutomation(exportDocumentArgs, "OnDocumentUpdate", documentTypeCopiesDetails);
+                    }
                 }
                 UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() {StatusCode = "D", DoneDate = DateTime.Now });
                 if(!isVersion2) queueService.Complete();
