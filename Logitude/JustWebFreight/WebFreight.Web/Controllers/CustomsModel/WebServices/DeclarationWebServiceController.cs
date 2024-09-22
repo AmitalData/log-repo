@@ -539,7 +539,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 UserRepository userRepository = new UserRepository(tenant);
                 User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, loggedUserEmail, tenant, true);
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
-
+                DeclarationUpdateService DeclarationUpdateService = new DeclarationUpdateService(customContext);
                 if (sendDeclarationBatchRequestParams.IsAllSelected && filters != null)
                 {
                     filters.GetAll = true;
@@ -551,8 +551,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
                 switch (sendDeclarationBatchRequestParams.Action.ToLower())
                 {
-                    case "sendsigneddeclarationsaction": 
+                    case "sendsigneddeclarationsaction":
                     case "senddeclarationaction":
+                        DeclarationUpdateService.UpdateTaxationDateTime(new List<string>(){ "1-100558", "1 - 100559" }, 6);
                         bool signDeclaration = sendDeclarationBatchRequestParams.Action.ToLower() == "sendsigneddeclarationsaction";
 
                         var sendMessagingService = new DCAInUCB2751_MsgMessagingService();
@@ -562,6 +563,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         break;
 
                     case "senddeclarationpaymentsaction":
+                        DeclarationUpdateService.UpdateTaxationDateTime(new List<string>(sendDeclarationBatchRequestParams.SelectedIds), tenant);
+
                         var paymentMessagingService = new DCAInUCB2755E_MsgMessagingService();
                         var paymentDeclarationSts = paymentMessagingService.CreateCRS(tenant, sendDeclarationBatchRequestParams, out RequestInProgressList);
                         result.RequestInProgressList = RequestInProgressList;
