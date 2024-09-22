@@ -60,6 +60,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             IQueryable<TrailReportTemp> _QUnionAllMoneyData = qAccumulateLocalAmountOnly_TotalStart_JoinAccounts_GroupByChartOfAccountsTypeCode.Union(qAccumulate_LocalAmount_TransStart_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode_All).Union(qAccumulateLocalAmountOnly_TotalDelta2End_JoinAccounts_GroupByChartOfAccountsTypeCode).Union(qAccumulate_LocalAmount_TransEnd_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode_All);
 
             bool addAllChatOfAccountTyps = true;
+            if (_TrailReportParam.ChartOfAccountsIdList != null && _TrailReportParam.ChartOfAccountsIdList.Count > 0)
+            {
+                addAllChatOfAccountTyps = false;
+            }
             if (addAllChatOfAccountTyps)
             {
                 _QUnionAllMoneyData = AddAllChatOfAccountTypEmptyRows(_QUnionAllMoneyData, _TrailReportParam.ChartOfAccountsTypeCodeList);
