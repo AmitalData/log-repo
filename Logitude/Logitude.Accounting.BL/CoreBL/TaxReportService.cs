@@ -348,6 +348,24 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
 
+                if (aPInvoicePM != null)
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("APInvoice " + aPInvoicePM.InvoiceNumber
+                       + ", Invoice VAT No. " + aPInvoicePM.VATNumber
+                       + ", aPInvoiceVatNumber=" + aPInvoiceVatNumber
+                       + ", aPInvoiceVatNumberNormalized=" + aPInvoiceVatNumberNormalized
+                       + ", inputReportLine.VatNumber=" + inputReportLine.VatNumber
+                        );
+                }
+                else
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("APInvoice is null"
+                       + ", inputReportLine.VatNumber=" + inputReportLine.VatNumber
+                        );
+                }
+
+
+
                 JournalPM journal = journalPMs.Where(d => d.Id == transaction.JournalId && d.TaxReportJournalLineNumber == transaction.JournalLineNumber).FirstOrDefault();
                 if (inputReportLine.ConfirmationNumber == null && journal.ConfirmationNumber != null)
                 {
