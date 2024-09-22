@@ -169,6 +169,15 @@ export class MainDisplayComponent implements OnInit {
 
 			// Determine if the current item should be expanded
 			if (containsSearchText || shouldExpandChildren) {
+
+        // #109247
+				const itemHierarchicLocationID : number = Number(item.ItemHierarchicLocationID);
+				if(searchText.length == 2 && itemHierarchicLocationID > 2) {
+					return;
+				}
+				if(searchText.length == 4 && itemHierarchicLocationID > 3) {
+					return;
+				}
 				this.showChildern(expend, item);
 				shouldExpandParent = true;
 			}
