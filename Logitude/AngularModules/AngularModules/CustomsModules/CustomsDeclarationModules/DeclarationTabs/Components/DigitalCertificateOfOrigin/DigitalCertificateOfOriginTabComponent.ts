@@ -85,6 +85,8 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
         this.CertificateOfOriginItems = new ObservableCollection([]);
 
         this.Listen();
+        this.InitToolTipImages();
+
         this._entityListService = new EntityListService();
 
         this.certificateOfOriginPMService = new CertificateOfOriginPMService();
@@ -103,6 +105,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
                         this.IsVisible = true;
                         this.certificateOfOriginPMService = new CertificateOfOriginPMService();
                         this.ObjectTableName = this.entityArgs.ObjectTableName;
+                        
                         this.ReloadMyScreen();
                       
                     });
@@ -144,8 +147,17 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
         this.getCertificateOfOrigins();
         this.DisplayOnlyCheck();
+        
     }
-
+    InitToolTipImages(){
+        
+        this.certificateOfOriginWebService.GetToolTipImagesFromStorage().subscribe(myResult => {
+            
+            var myResponse = myResult;
+           
+        });
+   
+}
     isNew = StatusCertificateOfOrigin.IsNew;
     isEdit = StatusCertificateOfOrigin.IsEdit;
     selectedCertificateOfOrigin = new CertificateOfOriginPM();

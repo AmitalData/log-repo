@@ -93,7 +93,6 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         this.isListenToChangeInCertificate(args.logWindow);
 
         this.InitMoreDataScreenValues();
-        this.InitToolTipImages();
         this.BuildTabs();
         this.RunComponent();
         this.entityArgs.EntityPM = this.EntityPM;
@@ -289,14 +288,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
             });
         }
     }
-    InitToolTipImages(){
-        if(!AppTool.IsNullOrEmpty(this.EntityPM?.CooTypeCode)){
-            this.certificateOfOriginWebService.GetToolTipImagesFromStorage().subscribe(myResult => {
-                var myResponse = myResult;
-               
-            });
-        }
-    }
+   
     SaveAndSendClick(customSendOptionsArgs: any = null) {
         if ((!this.EntityPM.CooTypeCode || !this.EntityPM.RequestReasonCode) && ((this.EntityPM.RequestReasonCode != "10" && this.EntityPM.RequestReasonCode != "13" && this.EntityPM.RequestReasonCode != "14") )){// manddatory fields
             this.GENERAL.CheckMandatoryFields();

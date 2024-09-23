@@ -85,9 +85,9 @@ namespace Logitude.CustomsMessaging.Dca
                     }
 
                 }
-                catch
+                catch (Exception ex)
                 {
-                    this.ErrorMessage = "<TCustomsResponse>.DeserilazeObject fail -the XSD not valid !!!(ask itzik to refresh XSD )";
+                    this.ErrorMessage = "<TCustomsResponse>.DeserilazeObject fail -the XSD not valid !!!(ask itzik to refresh XSD ): " + ex.Message;
                     return;
                 }
                 
