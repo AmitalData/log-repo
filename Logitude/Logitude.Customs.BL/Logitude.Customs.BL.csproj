@@ -2863,6 +2863,7 @@
     <Compile Include="TraceEvents\UnifreightFUStatusTaskService.cs" />
     <Compile Include="TraceEvents\UnifreightHybridQueueTaskService.cs" />
     <Compile Include="TraceEvents\AmitalInsertToQueueService.cs" />
+    <Compile Include="Typesense\CustomsBookTypesenseService.cs" />
     <Compile Include="Utils\Serializer.cs" />
     <Compile Include="WCOResource.Designer.cs">
       <AutoGen>True</AutoGen>

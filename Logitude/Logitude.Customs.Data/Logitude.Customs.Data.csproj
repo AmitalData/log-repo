@@ -2040,6 +2040,11 @@
     <Compile Include="Repsitories\UIMessageTenantRepository.cs" />
     <Compile Include="Repsitories\UpdateCodeRepository.cs" />
     <Compile Include="Repsitories\VendorCurrencyRepository.cs" />
+    <Compile Include="Typesense\Models\CustomsBook.cs" />
+    <Compile Include="Typesense\Models\RemarkAndCustomsBook.cs" />
+    <Compile Include="Typesense\Models\RemarksCustomsBook.cs" />
+    <Compile Include="Typesense\Services\CustomsBookServices.cs" />
+    <Compile Include="Typesense\Services\RemarksCustomsBookServices.cs" />
     <Compile Include="Utils\CacheHelper.cs" />
     <Compile Include="Utils\FreelancerCustomersUtil.cs" />
     <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">

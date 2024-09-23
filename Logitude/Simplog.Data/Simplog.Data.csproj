@@ -198,6 +198,9 @@
     <Compile Include="Azure\Repositories\CommunicationLogsRepository.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AllActiveGLAccountsView.cs" />
     <Compile Include="CommonDataModel\CommonDataContext.cs" />
+    <Compile Include="Typesense\TClient.cs" />
+    <Compile Include="Typesense\TClientBase.cs" />
+    <Compile Include="Typesense\TStructs.cs" />
     <Content Include="DecCourierStatusesView_Oracle.sql" />
     <Content Include="InfrastructureModel\DeleteQBOTranslations.sql" />
     <Content Include="InfrastructureModel\DeleteBusinessRecords.sql" />
