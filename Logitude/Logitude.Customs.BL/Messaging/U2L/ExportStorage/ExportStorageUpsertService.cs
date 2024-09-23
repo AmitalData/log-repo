@@ -208,7 +208,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ExportStorage
                 if (_UnifreigntExportStorage.CargoDetails != null)
                 {
                     _DBExportStoragePM.CargoType = _UnifreigntExportStorage.CargoDetails.CargoType;
-                    _DBExportStoragePM.MarksNumbers = _UnifreigntExportStorage.CargoDetails.CargoDescription + "SEAL : " + _UnifreigntExportStorage.ContainerDetails.Seal.SealNumber;
+                    _DBExportStoragePM.MarksNumbers = _UnifreigntExportStorage.CargoDetails.CargoDescription + '\n' + "SEAL : " + _UnifreigntExportStorage.ContainerDetails.Seal.SealNumber;
                     decimal PackageQuantity = 0;
                     if (!String.IsNullOrWhiteSpace(_UnifreigntExportStorage.CargoDetails.Quantity))
                     {
