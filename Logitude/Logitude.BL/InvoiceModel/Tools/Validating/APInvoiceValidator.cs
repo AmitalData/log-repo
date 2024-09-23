@@ -36,6 +36,7 @@ using Logitude.BL.Resolvers;
 
 using System.Text.RegularExpressions;
 using System.Data.Entity.Core.Objects;
+using Logitude.BL.CommonDataModel.EntityLists;
 
 
 namespace Logitude.BL.InvoiceModel.Tools.Validating
@@ -228,6 +229,48 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                                 throw new ApplicationException(msgRequired.Replace("%FieldName", field));
                             }
                         }
+                    }
+                }
+
+                
+                List<APInvoiceLinePM> activeLines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
+                if (activeLines != null && activeLines.Count > 0 && activeTotalVats != null && activeTotalVats.Count > 0)
+                {
+                    List<string> expenses = new List<string>(); 
+                    
+                    List<string> chTypeIds = activeLines.Select(ln => ln.ChargesTypeId).ToList();
+                    if (chTypeIds != null && chTypeIds.Count > 0)
+                    { 
+
+                        ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(entityPM.Tenant);
+                        IQueryable<ChargesTypeList> query = chargesTypeQuery.GetChargesTypeListsByTenant(entityPM.Tenant);
+                        if (query != null)
+                        {
+                            expenses = query.Where(ch => ch.IsExpense == true).Select(ch => ch.Id).ToList();
+                        }
+                    }
+
+                    double? localtotal = 0;
+                    if (expenses != null && expenses.Count > 0)
+                    {
+                        foreach (APInvoiceLinePM line in activeLines)
+                        {
+                            var chTypeId = line.ChargesTypeId;
+                            if (chTypeId == null && (chTypeId != null && !expenses.Contains(chTypeId)) || line.VatPercentage > 0)
+                            {
+                                localtotal += line.LocalCurrencyAmount;
+                            }
+                        }
+                    }
+
+                    double totalVat = activeTotalVats.Sum(tv => tv.LocalVATAmount);
+                    if (localtotal > 0 && totalVat < 0)
+                    {
+                        throw new ApplicationException("Reference " + entityPM.InvoiceNumber + "   total " + localtotal.ToString()  + " is positive,  but VAT " + totalVat + " is negative");
+                    }
+                    else if (localtotal < 0 && totalVat > 0)
+                    {
+                        throw new ApplicationException("Reference " + entityPM.InvoiceNumber + "   total " + localtotal.ToString() + " is negaive,  but VAT " + totalVat + " is positive");
                     }
                 }
             }
