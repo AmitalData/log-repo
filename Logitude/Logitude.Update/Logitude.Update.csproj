@@ -416,10 +416,6 @@
       <Project>{91564685-7EE1-466D-AFCD-183A1BF62259}</Project>
       <Name>Logitude.Accounting.Def</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
-      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
-      <Name>Logitude.BL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Logitude.CargoTracking.BL\Logitude.CargoTracking.BL.csproj">
       <Project>{6b7fb227-28d2-45b8-b079-2e2f4251510d}</Project>
       <Name>Logitude.CargoTracking.BL</Name>

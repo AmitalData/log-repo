@@ -436,10 +436,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
-      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
-      <Name>Logitude.BL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Logitude.CRM.Data\Logitude.CRM.Data.csproj">
       <Project>{4733f914-0e16-4412-84df-d98232dd43e9}</Project>
       <Name>Logitude.CRM.Data</Name>

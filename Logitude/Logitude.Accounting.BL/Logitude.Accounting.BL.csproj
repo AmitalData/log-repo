@@ -1049,10 +1049,6 @@
       <Project>{91564685-7ee1-466d-afcd-183a1bf62259}</Project>
       <Name>Logitude.Accounting.Def</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
-      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
-      <Name>Logitude.BL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Logitude.CRM.Data\Logitude.CRM.Data.csproj">
       <Project>{4733F914-0E16-4412-84DF-D98232DD43E9}</Project>
       <Name>Logitude.CRM.Data</Name>

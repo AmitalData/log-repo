@@ -155,10 +155,6 @@
     <Folder Include="CloseTables\EnumGenerated\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
-      <Project>{A663E7EF-B858-4BB6-BC33-E473F51B8E56}</Project>
-      <Name>Logitude.BL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Logitude.CRM.Data\Logitude.CRM.Data.csproj">
       <Project>{4733F914-0E16-4412-84DF-D98232DD43E9}</Project>
       <Name>Logitude.CRM.Data</Name>

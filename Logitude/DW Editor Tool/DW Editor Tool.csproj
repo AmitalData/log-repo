@@ -221,11 +221,5 @@
       <LastGenOutput>DWObjectTablesGenerator1.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
-      <Project>{A663E7EF-B858-4BB6-BC33-E473F51B8E56}</Project>
-      <Name>Logitude.BL</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -67,10 +67,6 @@
       <Project>{ba2a42b8-a348-4d44-984c-1d718cb20b6f}</Project>
       <Name>CommunicationWorkerRole</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
-      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
-      <Name>Logitude.BL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
       <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
       <Name>Logitude.Server.Tools</Name>

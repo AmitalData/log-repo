@@ -220,10 +220,6 @@
     <Folder Include="Utils\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
-      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
-      <Name>Logitude.BL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Logitude.CargoTracking.Data\Logitude.CargoTracking.Data.csproj">
       <Project>{7281a115-2213-41a3-a39a-22476f5a8db8}</Project>
       <Name>Logitude.CargoTracking.Data</Name>

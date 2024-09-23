@@ -22,6 +22,8 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using System.Transactions;
 using Logitude.Server.Tools;
+using Logitude.Customs.BL.Typesense;
+using System.Threading.Tasks;
 
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
@@ -36,7 +38,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 Filters filters = new Filters();
                 filters.CustomsBookType = customsBookType;
                 filters.Tenant = Tenant;
-               
+
                 string token = HttpContext.Current.Request.Headers["Token"];
                 if (token == null)
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(new Exception("Token is missing")));
@@ -81,7 +83,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        
+
         [HttpPost]
         public HttpResponseMessage GetCustomsBookMainViewSearchByText([FromBody] Filters filters)
         {
@@ -179,10 +181,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-    [HttpPost]
-
-    public HttpResponseMessage DeleteRemarksClassification(RemarksClassificationPM entityPM)
-    {
+        [HttpPost]
+        public HttpResponseMessage DeleteRemarksClassification(RemarksClassificationPM entityPM)
+        {
             if (ModelState.IsValid)
             {
                 try
@@ -231,7 +232,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 RemarksClassificationQueryService remarksClassificationQuery = new RemarksClassificationQueryService(MyContext);
                 remarksClassificationQuery.InitializeSettings();
 
-                List<RemarksClassificationList> remarksClassificationPMList = remarksClassificationQuery.GetAllCommentsByCustomsItemId(customsItemId,tenant);
+                List<RemarksClassificationList> remarksClassificationPMList = remarksClassificationQuery.GetAllCommentsByCustomsItemId(customsItemId, tenant);
 
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
@@ -243,9 +244,17 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
 
         }
+
+        public async Task<HttpResponseMessage> GetFromTypesense(string searchValue, string customsBookType)
+        {
+            int tenant = HeaderHelper.Authenticate().Tenant;
+
+            RemarkAndCustomsBook res = await new CustomsBookTypesenseService().SearchInItmesAndRemark(searchValue, customsBookType, tenant);
+
+            return Request.CreateResponse(HttpStatusCode.OK, res);
+        }
     }
 
-  
 
     public class Filters
     {

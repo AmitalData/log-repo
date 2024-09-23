@@ -69,10 +69,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
-      <Project>{A663E7EF-B858-4BB6-BC33-E473F51B8E56}</Project>
-      <Name>Logitude.BL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Logitude.IntegrationTest.Core\Logitude.IntegrationTest.Core.csproj">
       <Project>{83ee55e3-c13c-4df6-ac3c-c634e9cd8d66}</Project>
       <Name>Logitude.IntegrationTest.Core</Name>

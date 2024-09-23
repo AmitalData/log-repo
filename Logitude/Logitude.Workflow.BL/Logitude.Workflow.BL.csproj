@@ -199,10 +199,6 @@
     <Compile Include="Validators\WorkflowClassLevelValidator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
-      <Project>{A663E7EF-B858-4BB6-BC33-E473F51B8E56}</Project>
-      <Name>Logitude.BL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Logitude.Infrastructure.Data\Logitude.Infrastructure.Data.csproj">
       <Project>{B02E4D92-9226-4F3F-990F-66C7F66E9316}</Project>
       <Name>Logitude.Infrastructure.Data</Name>

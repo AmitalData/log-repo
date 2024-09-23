@@ -244,10 +244,6 @@
     <Folder Include="TraceEvents\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
-      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
-      <Name>Logitude.BL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Logitude.Infrastructure.Data\Logitude.Infrastructure.Data.csproj">
       <Project>{b02e4d92-9226-4f3f-990f-66c7f66e9316}</Project>
       <Name>Logitude.Infrastructure.Data</Name>

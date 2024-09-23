@@ -31,10 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-     <Reference Include="System" />
+    <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -61,10 +61,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
-      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
-      <Name>Logitude.BL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
       <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
       <Name>Logitude.Server.Tools</Name>
@@ -122,9 +118,9 @@
     <None Include="Connected Services\OceanInsightsTestWcfServiceReference\OceanInsightsTestWcfService3.xsd">
       <SubType>Designer</SubType>
     </None>
-     <None Include="libman.json" />
+    <None Include="libman.json" />
     <None Include="packages.config" />
-     <None Include="Properties\DataSources\Logitude.Server.Tools.Response.datasource" />
+    <None Include="Properties\DataSources\Logitude.Server.Tools.Response.datasource" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\LoginWcfServiceReference\" />

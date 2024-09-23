@@ -95,10 +95,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
-      <Project>{A663E7EF-B858-4BB6-BC33-E473F51B8E56}</Project>
-      <Name>Logitude.BL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Logitude.CommonDataTests\Logitude.Common.csproj">
       <Project>{169A3591-DAE5-4FD2-8A11-BB925658A893}</Project>
       <Name>Logitude.Common</Name>

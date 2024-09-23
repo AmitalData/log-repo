@@ -151,11 +151,9 @@
       <HintPath>..\packages\UnifreightIIG.4.0.1\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-
       <HintPath>..\packages\UnifreightIIG.4.0.1\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.UServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-
       <HintPath>..\packages\UnifreightIIG.4.0.1\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -311,10 +309,6 @@
     <ProjectReference Include="..\Logitude.AmitalMessaging\Logitude.AmitalMessaging.csproj">
       <Project>{e177d993-3117-420c-a59b-88f5398019ed}</Project>
       <Name>Logitude.AmitalMessaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
-      <Project>{A663E7EF-B858-4BB6-BC33-E473F51B8E56}</Project>
-      <Name>Logitude.BL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.Customs.BL\Logitude.Customs.BL.csproj">
       <Project>{d2951c0f-8a2b-4ee2-933a-8b6b4134f766}</Project>

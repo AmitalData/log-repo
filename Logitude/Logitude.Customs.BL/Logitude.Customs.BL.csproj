@@ -2791,6 +2791,7 @@
     <Compile Include="TraceEvents\UnifreightFUStatusTaskService.cs" />
     <Compile Include="TraceEvents\UnifreightHybridQueueTaskService.cs" />
     <Compile Include="TraceEvents\AmitalInsertToQueueService.cs" />
+    <Compile Include="Typesense\CustomsBookTypesenseService.cs" />
     <Compile Include="Utils\Serializer.cs" />
     <Compile Include="WCOResource.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -2871,10 +2872,6 @@
     <ProjectReference Include="..\Logitude.AmitalMessaging\Logitude.AmitalMessaging.csproj">
       <Project>{e177d993-3117-420c-a59b-88f5398019ed}</Project>
       <Name>Logitude.AmitalMessaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
-      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
-      <Name>Logitude.BL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.Customs.Data\Logitude.Customs.Data.csproj">
       <Project>{643f92c9-7cf1-4429-b79e-1e354b758abf}</Project>

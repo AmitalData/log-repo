@@ -196,10 +196,6 @@
     <Compile Include="Repositories\Generated\CargoTrackingWatermarkRepository.Generated.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
-      <Project>{A663E7EF-B858-4BB6-BC33-E473F51B8E56}</Project>
-      <Name>Logitude.BL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Logitude.CargoTracking.Def\Logitude.CargoTracking.Def.csproj">
       <Project>{1602A405-278E-4FF9-B7B5-DFC6E525B497}</Project>
       <Name>Logitude.CargoTracking.Def</Name>
