@@ -25371,11 +25371,11 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
-    <EventType
+     <EventType
       Code="&quot;CAN&quot;"
       ObjectTableName="&quot;Customs.Declaration&quot;"
       EnglishName="&quot;Canceled&quot;"
-      LocalName="&quot;בוטל&quot;"
+      LocalName="&quot;הצהרה בוטלה&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -25384,7 +25384,7 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
-  </EventTypes>
+   </EventTypes>
   <Records />
   <MenuButtons
     MenuButtonGroupType="&quot;Customs.DeclarationEdit&quot;"
