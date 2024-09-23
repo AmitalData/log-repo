@@ -315,6 +315,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         if(myDeclarationPM.Direction == "E") 
                         {                           
                             RaiseEvent(myDeclarationPM, user?.Id, status_id: "CHK");
+                            if (myDeclarationPM.IsDiamondDeclaration)
+                            {
+                                var statusSoyRemarks = $"CODE-80-בדיקה-{myDeclarationPM.DeclarationNumber}" + "\n" + NoticeToClient.checkId+" ,"+ NoticeToClient.checkSiteNumber + " ,"+ NoticeToClient.storageSiteNumber;
+                                RaiseEvent(myDeclarationPM, user?.Id, status_id: "SOY",comments: statusSoyRemarks);
+                            }
                         }
 
                         break;
@@ -527,7 +532,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
 
-        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id)
+        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id,string comments = null)
         {
 
             try
@@ -558,7 +563,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         xml_status = "new",
                         status_id = status_id,
                         status_DateTime = DateTime.Now,
-                        comments = dirtyDeclarationPM.Id,
+                        comments = comments!=null? comments:dirtyDeclarationPM.Id,
     
     
                     }

@@ -16,6 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.MessageLib.CargoTracking;
+using Logitude.Customs.Data.EntityPOCOs;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {// moran 25.1.15 - Task 9967
@@ -152,6 +153,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 RegisterStatusLogisticPermitInExportStorage(customResponse, requestParams, false);
                 UpdateLogisticPermit(customResponse, requestParams);
+                if (_MyDeclarationPM.IsDiamondDeclaration)
+                {
+                    var code = new int?[] { 4, 6, 8 }.Contains(customResponse?.GeneralDetails?.actionCode) ? "90":"";
+                    var statusSoyRemarks = $"CODE-{code}-היתר לוגיסטי-{_MyDeclarationPM.DeclarationNumber}";
+                    RaiseEvent(_MyDeclarationPM, requestParams.LoggingUserId, "SOY", statusSoyRemarks);
+
+                }
 
             }
 
