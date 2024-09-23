@@ -53,8 +53,6 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
         }
     }
     SetPropertiesEnabled() {
-        debugger
-
         var enabled = !this.IsDisplayOnly;
         // Fields in the First table
         this.UIProperties.SetEnabled("IsCumulation", this.ObjectTableName, enabled);
@@ -212,6 +210,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set IsDeclaredByExporter(newValue: boolean) {
         this.entityPM.IsDeclaredByExporter = newValue;
+        this.SetWarningByCooTypeCode(this.entityPM.CooTypeCode);
         this.entityPM.IsDirty = true;
     }
 
