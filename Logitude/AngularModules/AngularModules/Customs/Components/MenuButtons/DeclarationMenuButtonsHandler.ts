@@ -1183,15 +1183,21 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         _DeclarationMessagesService.PostDeclarationRequest(currRequestParams)
         .subscribe((myServiceResponse: ServiceResponse) => {
             SessionLocator.SelectedSession.StopBusyIndicator();
+            if (!myServiceResponse?.Result?.HasException) {
+                if (myServiceResponse?.Result?.Succeeded) 
+                {
+                       this.CheackIsAnyRequest(interfaceTypeCode , message,canResetDeclaration);  
+                }
+                else 
+                {
+                   this.ShowResetDeclarationMessage(myServiceResponse?.Result?.UserMessage);
+                }
+            }
+            else {
+                this.ShowResetDeclarationMessage(TextCodeTranslator.Translate("Customs.Declaration.O.ErrCommCustoms"));
 
-            if (myServiceResponse?.Result?.Succeeded) 
-            {
-                   this.CheackIsAnyRequest(interfaceTypeCode , message,canResetDeclaration);  
             }
-            else 
-            {
-               this.ShowResetDeclarationMessage(TextCodeTranslator.Translate("Customs.Declaration.O.ErrCommCustoms"));
-            }
+            
         });
     }
     private CheackIsAnyRequest(interfaceTypeCode: string, message: string,canResetDeclaration: boolean) {
