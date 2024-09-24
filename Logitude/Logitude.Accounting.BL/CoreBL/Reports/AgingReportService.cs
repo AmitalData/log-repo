@@ -122,6 +122,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             int year = DateTime.Now.Year;
 
             if (_Param.AgingForDate != null)
+
             {
                 month = _Param.AgingForDate.Month;
                 year = _Param.AgingForDate.Year;

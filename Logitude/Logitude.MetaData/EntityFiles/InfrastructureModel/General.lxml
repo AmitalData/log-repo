@@ -39,8 +39,8 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;a26e&quot;"
-      Name="&quot;General&quot;"
+   Code="&quot;6e82&quot;"
+       Name="&quot;General&quot;"
     GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
   ServerModuleName="&quot;Generals&quot;"
@@ -6001,7 +6001,7 @@
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
     <TextCode
-       Code="&quot;General.O.Mine&quot;"
+        Code="&quot;General.O.Mine&quot;"
       DefaultText="&quot;Mine&quot;"
       LocalDefaultText="&quot;שלי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
@@ -6025,7 +6025,7 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
      <TextCode
-       Code="&quot;Accounting.General.O.ConfirmationNumberValidation&quot;"
+        Code="&quot;Accounting.General.O.ConfirmationNumberValidation&quot;"
       DefaultText="&quot;Confirmation Number is required for a apinvoice&quot;"
       LocalDefaultText="&quot;עבור חשבונית ספק נדרש מספר הקצאה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
@@ -8451,7 +8451,7 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-    <Feature
+     <Feature
       Code="&quot;CUSTOMSSHIPMENTS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.CUSTOMSSHIPMENTS&quot;"
@@ -8469,5 +8469,6 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+ 
   </AdditionalFeatures>
 </entity>

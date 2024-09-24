@@ -219,19 +219,13 @@ export class GLAccountMenuButtonsHandler {
                         break;
                     }
 
-                case "GLAccountRecalculate":
+                 case "GLAccountRecalculate":
                     {
                         this.RecalculateButtonClicked();
     
                         break;
                     }
-
-                case "GLAccountRecalculate":
-                    {
-                        this.RecalculateButtonClicked();
-    
-                        break;
-                    }
+ 
             }
         } else {
             this.entityArgs.EditComponent.ValidationErrorsList = [];

@@ -2976,8 +2976,10 @@ namespace WebFreight.Web.MetaDataUpdate
                             continue;
                     }
 
+ 
 
                 if (currentTenantEntityStatus.Keys.Contains(entityStatus.Code + entityStatus.ObjectTableId))
+ 
                     {
                         //EntityStatus updatedEntityStatus = currentTenantEntityStatus[entityStatus.Code];
                         //updatedEntityStatus.Name = entityStatus.Name;
@@ -3004,7 +3006,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             Id = IdCounter.GetNumber("EntityStatus", tenant).ToString(),
                         };
                         entityStatusRepository.Add(newEntityStatus);
-                    currentTenantEntityStatus.Add(newEntityStatus.Code + newEntityStatus.ObjectTableId, newEntityStatus);
+                        currentTenantEntityStatus.Add(newEntityStatus.Code, newEntityStatus);
                     }
 
                 }
@@ -3038,8 +3040,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     if (tenantZeroEntityStatu != null)
                     {
 
-					if (currentTenantEntityStatus.Keys.Contains(tenantZeroEntityStatu.Code + tenantZeroEntityStatu.ObjectTableId))
-						currentTenantEntityStatu = currentTenantEntityStatus[tenantZeroEntityStatu.Code+ tenantZeroEntityStatu.ObjectTableId];
+                        currentTenantEntityStatu = currentTenantEntityStatus[tenantZeroEntityStatu.Code];
                     }
 
 
