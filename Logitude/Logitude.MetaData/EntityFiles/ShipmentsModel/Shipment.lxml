@@ -121703,6 +121703,12 @@
       LocalDefaultText="&quot;שטר מטען ראשי חייב להיות 8 ספרות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.O.ImporterApprovalForSubmitting&quot;"
+      DefaultText="&quot;The importer's approval for submitting an import declaration to customs&quot;"
+      LocalDefaultText="&quot;אישור היבואן להגשת הצהרת יבוא למכס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
