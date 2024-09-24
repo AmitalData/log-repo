@@ -1899,11 +1899,13 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                                     //}
                                     //this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
                                         }
-}
-}
+                                    }   
+                           }  
+
+                            
                         this.ClonedEntityPM = CloneDeep(this.EntityPM);
 
-                    });
+                    
 
                 }, error => {
                                 this.OnSavingFailed();
@@ -1914,12 +1916,16 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                     this.ValidationErrorsList = myErrors;
                     this.FireSaveCompleted(false);
                 });
- });
-              
+              });
+                 
+            }
+            });
+           
 
             }
+        
+        
         }
-            
         else if (this.ObjectTableName == "WorkFlow" && this.entityArgs?.EditComponentArgument?.HasChanges! == true) {
             this.SaveDraftVersion(isClosing);
         }
@@ -1927,6 +1933,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         else {
             this.Close();
         }
+     
     }
     async CheckDuplicateEntity(): Promise<boolean> {
 
