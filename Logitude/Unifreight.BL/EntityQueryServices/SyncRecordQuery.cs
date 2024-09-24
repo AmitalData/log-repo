@@ -70,7 +70,7 @@ namespace Unifreight.BL.EntityQueryServices
                     UpdateDate = syncRecord.SyncDT,
                     CraeteDate = syncRecord.CreateDate                
                 };
-            }).SkipWhile(x => x == null).ToList();
+            }).Where(x => x != null).ToList();
 
             return entityRecords;
         }
@@ -92,7 +92,10 @@ namespace Unifreight.BL.EntityQueryServices
             bool isCloseTeable = syncRecord.KeyVal == "ALL";
 
             string query = $"SELECT * FROM {syncRecord.Entname}"; 
-            if(!isCloseTeable)
+
+            if(syncRecord.Entname.ToLower() == "ccumshgr")
+                query += " WHERE FILE_NO = '" + syncRecord.FileNo + "'";
+            else if (!isCloseTeable)
                 query += " WHERE " + syncRecord.KeyVal.Replace(",", " and ");
 
             SqlConnection conn = 
@@ -104,7 +107,7 @@ namespace Unifreight.BL.EntityQueryServices
             dt.Load(dataReader);
             conn.Close();
 
-            if (dt.Rows.Count != 1 && !isCloseTeable)
+            if (dt.Rows.Count != 1 && !isCloseTeable && syncRecord.Entname.ToLower() != "ccumshgr")
             {
                 DevLog.Instance.WriteError($"record not found once for table: {syncRecord.Entname: name} and keyVal: {syncRecord.KeyVal.Replace(",", " and ")}");
                 return null;
