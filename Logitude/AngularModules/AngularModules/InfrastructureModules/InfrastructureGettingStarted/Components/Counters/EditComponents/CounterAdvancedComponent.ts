@@ -144,7 +144,6 @@ export class CounterAdvancedComponent extends BaseComponent {
         itemsParams.push({ Parameter1: 'I', Parameter2: "A" });
         itemsParams.push({ Parameter1: 'D', Parameter2: "A" });
         itemsParams.push({ Parameter1: 'R', Parameter2: "A" });
-        itemsParams.push({ Parameter1: 'C', Parameter2: "A" });
 
         itemsParams.forEach(item => {
             var itemPM: CounterDefinitionPM = this.APIHelper.CounterDefinitions.filter(f => f.Parameter1 == item['Parameter1'] && f.Parameter2 == item['Parameter2'])[0];
@@ -408,7 +407,6 @@ export class CounterAdvancedColumnItem {
             case "I": { this.Name = "Import"; break; }
             case "D": { this.Name = "Domestic"; break; }
             case "R": { this.Name = "Drop"; break; }
-            case "C": { this.Name = "Customs"; break; }
         }
     }
 

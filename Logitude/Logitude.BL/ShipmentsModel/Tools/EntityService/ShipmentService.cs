@@ -458,10 +458,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 ShipmentValidating.ValidateCustomShipment(entityPM, true);
 
                 // generate shipment number
-                this.entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "SHIP", entityPM.DirectionId, entityPM.TransportModeId);
+                this.entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "DECL", "DC", null);
 
-                // todo: add AIR to AddShipmentTypes and execute it
-                entityPM.ShipmentTypeId = null;
+				// todo: add AIR to AddShipmentTypes and execute it
+				entityPM.ShipmentTypeId = null;
 
                 // todo: get default values
                 this.entityPM.SalesmanUserId = "1-421340";
