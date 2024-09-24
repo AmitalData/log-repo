@@ -69,7 +69,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                 on a.DeclarationId equals de.Id into deJoin
                                 from der in deJoin.DefaultIfEmpty().Take(1)
 
-                                where a.Tenant == tenant
+                                where a.Tenant == tenant && !string.IsNullOrEmpty(a.COONumber)
                                 select new
                                 {
                                     a.COONumber,
