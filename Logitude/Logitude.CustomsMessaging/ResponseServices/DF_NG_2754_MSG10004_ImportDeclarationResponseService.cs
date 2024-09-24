@@ -192,12 +192,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     defIsCollectActive = defaultValueQueryService.GetDefault("ISRAEL", "CGO_ACT_COLLECT", "NON", courierMaster.IntegratorNumber, _MyDeclarationPM.Tenant);
 
-                    isCollectActive = defIsCollectActive == "Y";
+                    var setting = CustomsSettingQueryService.GetSettingByTenant(_MyDeclarationPM.Tenant);
+                        isCollectActive = defIsCollectActive == "Y";
                     if (isCollectActive)
                     {
-                        if (_MyDeclarationPM.IsConnectedToUnifreight) 
-                        { 
-                           try
+                        if (setting.IsConnectedToUniFreight)
+                        {
+                            try
                            {
                                isStatusVPA = myDeclarationUpdateService.CheckFileStatus(_MyDeclarationPM, requestParams.LoggingUserId, "VPA");
                            }
