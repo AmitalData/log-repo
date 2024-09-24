@@ -3575,6 +3575,8 @@ namespace Logitude.Accounting.BL.CoreBL
             TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
             FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(tenant);
             FullAccountingSettingPM setting = fullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
+            FullAccountingSettingPM tenant0settings = fullAccountingSettingQueryService.GetSingleFullAccountingSetting(0);
+
             AddressQuery addressQuery = new AddressQuery(tenant);
             AddressPM address = addressQuery.GetSingleAddressPM(tenantPM.AddressId, tenant);
 
@@ -3612,12 +3614,12 @@ namespace Logitude.Accounting.BL.CoreBL
             stringBuilder.Append("Unifreight Acc");
 
 
-            if (setting != null)
+            if (tenant0settings != null)
             {
-                if (setting.SoftwareVersion != null)
+                if (tenant0settings.SoftwareVersion != null)
                 {
-                    if (setting.SoftwareVersion.Length > 20) { setting.SoftwareVersion = setting.SoftwareVersion.Substring(0, 20); }
-                    stringBuilder.Append(a + setting.SoftwareVersion.PadLeft(20, ' '));
+                    if (tenant0settings.SoftwareVersion.Length > 20) { tenant0settings.SoftwareVersion = tenant0settings.SoftwareVersion.Substring(0, 20); }
+                    stringBuilder.Append(a + tenant0settings.SoftwareVersion.PadLeft(20, ' '));
                 }
                 else
                 {
