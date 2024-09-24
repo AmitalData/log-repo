@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-
 import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -197,7 +196,7 @@ export class TaxReportExtendedPMService {
 
     CancelClosingJournal(taxReportId: string)
     {
-        return this.httpClient.post(this._apiUrl + '/PostCancelClosingJournal?taxReportId=' + taxReportId,null, ServiceHelper.GetHttpHeaders()).pipe(
+        return this.httpClient.post(this._apiUrl + '/PostCancelClosingJournalInBatch?taxReportId=' + taxReportId,null, ServiceHelper.GetHttpHeaders()).pipe(
             map(response =>
             {
                 let serviceResponse = response;
