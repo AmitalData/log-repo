@@ -519,3 +519,8 @@ export interface RemarksClassificationList {
 	CustomsItemsID: number;
 	RemarkDescription: string;
 }
+export interface RulesList {
+	Id: string;
+	Tenant: number;
+	Title: string;
+}
