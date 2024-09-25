@@ -385,7 +385,6 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
 
                     inputReportLine.LineTypeCode = "R";
-                    inputReportLine.VatNumber = inputReportLine.Reference;
                     inputReportLine.Reference = "000000000";
                     inputReportLine.ReferecneGroup = "0000";
 
