@@ -182,7 +182,7 @@ Dictionary<string, string> GeneratedTabTextCodes = new Dictionary<string, string
 
 
 		bool iswrongname = false;
-		string[] namespacearr = pmnamespacestring.ToString().Split('.');
+		string[] namespacearr = repnamespacestring.ToString().Split('.');
 		string projectname = namespacearr[1].Replace("Lib","");
 
 
