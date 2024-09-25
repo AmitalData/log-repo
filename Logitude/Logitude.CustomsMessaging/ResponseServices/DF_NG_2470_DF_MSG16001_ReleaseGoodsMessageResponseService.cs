@@ -303,7 +303,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (featureExportDiamonds != null)
             {
-                string declarationStatus = "0";
+                string declarationStatus = declarationPM.DeclarationStatusTypeCode;
                 string declarationStatusLabel = "";
            
                     // get the declaration status label
