@@ -322,7 +322,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                             return Request.CreateResponse(HttpStatusCode.Unauthorized, new StringContent("Invalid Security Id!", System.Text.Encoding.UTF8, "text/plain"));
                         }
 
-                        return DownloadDocumentInner(DA, securitykey, id);
+                        return DownloadDocumentInner(DA, securitykey, id, false);
 
                     }
                     catch (Exception ex)
