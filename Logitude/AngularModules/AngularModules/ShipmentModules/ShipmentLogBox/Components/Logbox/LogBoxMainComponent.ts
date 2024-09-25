@@ -1190,7 +1190,9 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         windowArgs.ObjectTableName = "Shipment";
         windowArgs.QueryName = this.SelectedFilter;
         windowArgs.QueryType = "LogBox";
+        windowArgs.Type = "SaveToMicrosoftExcel2007";
         let logitudeWindow = new LogitudeWindow();
+
         logitudeWindow.Width = 500;
         logitudeWindow.Height = 200;
         logitudeWindow.Title = TextCodeTranslator.Translate("General.B.ExportingDataToExcel");//"Exporting View Data List To Excel File";
