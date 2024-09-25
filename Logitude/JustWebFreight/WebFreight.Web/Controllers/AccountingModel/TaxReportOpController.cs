@@ -674,6 +674,29 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
+
+        public HttpResponseMessage PostCancelClosingJournalInBatch(string taxReportId)
+        {
+            try
+            {
+                int tenant = GetAuthinticatedTenant();
+                string batchId = new BatchCancelClosingJournalTask(null).CreateQBatchTaskExecution<BatchCancelClosingJournalTaskArgs>(
+                    new BatchCancelClosingJournalTaskArgs()
+                    {
+                        TaxReportId = taxReportId,
+                        Tenant = tenant
+                    }, tenant, "Cancel Closing Tax Report Journal", false);
+
+                return Request.CreateResponse(HttpStatusCode.OK, batchId);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+
         private string EncodeStringFromImageParameter(ImageParameter fileUploadParamerter)
         {
             byte[] dataBytes = Convert.FromBase64String(fileUploadParamerter.Base64String);
