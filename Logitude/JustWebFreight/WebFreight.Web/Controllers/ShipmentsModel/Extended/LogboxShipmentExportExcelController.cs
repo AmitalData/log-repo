@@ -1,4 +1,5 @@
-﻿using Logitude.BL.InfrastructureModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.LogitudeGridExportToExcel;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
@@ -72,7 +73,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
             {
                 FileName = "LogBox" + ObjectTableName + DateTime.Now.ToShortDateString(),
                 FolderName = "others",
-                Extension = "xls",//fileparams[1],
+                Extension ="xlsx",
                 Tenant = tenant,
                 FileSize = data.Length,
 
@@ -111,6 +112,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
         public string SortDirection { get; set; }
         public List<QueryFilterItem> AdditionalFilters { get; set; }
 
+        public bool IsXslxFormat { get; set; }
 
     }
 
