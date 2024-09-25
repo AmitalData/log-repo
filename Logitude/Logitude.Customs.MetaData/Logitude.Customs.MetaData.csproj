@@ -65,7 +65,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Program Files (x86)\Microsoft Visual Studio 11.0\VSSDK\VisualStudioIntegration\Common\Assemblies\v4.0\Microsoft.VisualStudio.Shell.11.0.dll</HintPath>
     </Reference>
-     <!--<Reference Include="Microsoft.VisualStudio.Shell.Interop.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+    <!--<Reference Include="Microsoft.VisualStudio.Shell.Interop.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath> ..\..\..\Program Files (x86)\Microsoft Visual Studio 11.0\VSSDK\VisualStudioIntegration\Common\Assemblies\v4.0\Microsoft.VisualStudio.Shell.Interop.11.0.dll</HintPath>
@@ -239,10 +239,10 @@
     <None Include="DBScripts\Pre\20221220_AddCustomsHSMSignWR_Global.sxml" />
     <None Include="DBScripts\Pre\20221220_AddCustomsHSMSignWR_MAIN.sxml" />
     <None Include="DBScripts\Pre\20230310_CreateTypeVarcharTable.sxml" />
-     <None Include="DBScripts\Pre\20240610_UpdateTransportMode.sxml" />
+    <None Include="DBScripts\Pre\20240610_UpdateTransportMode.sxml" />
     <None Include="DBScripts\Post\20240610_UpdateTransportmodeLocalName.sxml" />
-     <None Include="DBScripts\Pre\202409011314_IsMandatoryDelete.sxml" />
-     <None Include="DBTables\AcceptanceStatus.dxml" />
+    <None Include="DBScripts\Pre\202409011314_IsMandatoryDelete.sxml" />
+    <None Include="DBTables\AcceptanceStatus.dxml" />
     <None Include="DBTables\AccumalationState.dxml" />
     <None Include="DBTables\ActionCode.dxml" />
     <None Include="DBTables\AddressContactState.dxml" />
@@ -375,7 +375,6 @@
     <None Include="DBTables\ConverterType.dxml" />
     <None Include="DBTables\CoolingReportingMethod.dxml" />
     <None Include="DBTables\CountryCurrency.dxml" />
-    <None Include="DBTables\FreightForwarderReference.dxml" />
     <None Include="DBTables\NUnicloud.dxml" />
     <None Include="DBTables\CountryGroup.dxml" />
     <None Include="DBTables\CourierCustomStatus.dxml" />
@@ -711,7 +710,6 @@
     <None Include="EntityFiles\CB_TariffComputedData.lxml" />
     <None Include="EntityFiles\CB_TradeLevy.lxml" />
     <None Include="EntityFiles\CB_Vendor.lxml" />
-    <None Include="EntityFiles\FreightForwarderReference.lxml" />
     <None Include="EntityFiles\NUnicloud.lxml" />
     <None Include="EntityFiles\DiscountTypeRegulation.lxml" />
     <None Include="EntityFiles\CustomsItemGroup.lxml" />

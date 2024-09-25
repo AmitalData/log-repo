@@ -691,7 +691,6 @@
     <Compile Include="EntityDataMappings\FacilitationTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\FaultInspectionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\FclLclCodeDataMapping.cs" />
-    <Compile Include="EntityDataMappings\FreightForwarderReferenceDataMapping.cs" />
     <Compile Include="EntityDataMappings\FreightPaymentMethodDataMapping.cs" />
     <Compile Include="EntityDataMappings\FuelTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\FullnessCodeDataMapping.cs" />
@@ -963,7 +962,6 @@
     <Compile Include="EntityDataMappings\Generated\FacilitationTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FaultInspectionTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FclLclCodeDataMapping.Generated.cs" />
-    <Compile Include="EntityDataMappings\Generated\FreightForwarderReferenceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FreightPaymentMethodDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FuelTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FullnessCodeDataMapping.Generated.cs" />
@@ -1384,7 +1382,6 @@
     <Compile Include="EntityDataMappings\VendorTypeDataMapping.cs" />
     <Compile Include="EntityQueryServiceExt\CustomsDocumentQueryServiceExt.cs" />
     <Compile Include="EntityQueryServices\CargoIdentifireTypeQueryService.cs" />
-    <Compile Include="EntityQueryServices\Generated\FreightForwarderReferenceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\RemarksClassificationQueryService.cs" />
     <Compile Include="EntityQueryServices\CB_CustomsItemComputedDataQueryService.cs" />
     <Compile Include="EntityQueryServices\CB_RequirementComputedDataQueryService.cs" />
@@ -2058,7 +2055,6 @@
     <Compile Include="EntityUpdateServices\Generated\CustomsItemHierarchicLocationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DiscountTypeRegulationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\EntryExitTypeUpdateService.Generated.cs" />
-    <Compile Include="EntityUpdateServices\Generated\FreightForwarderReferenceUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\InterConditionsRelationshipUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\LevyTrustUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\InceptionCodeUpdateService.Generated.cs" />
