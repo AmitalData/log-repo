@@ -3963,6 +3963,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\FilingInboxAttachmentLogUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\FilingInboxAttachmentUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\FilingInboxUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\FreelancerGroupTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\FTPDetailUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\GlobalZoneUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\HorseGenderUpdateClass.cs" />
@@ -4034,6 +4035,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\TruckerUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\TwoFactorAuthenticationDeviceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\UnassignedEntityUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\UserFreelancerGroupUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\UserLastSettingsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\UserLicenseUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\UserUpdateClass.cs" />
@@ -6194,6 +6196,7 @@
     <Content Include="WcfApi\CustomerDWWcfService.svc" />
     <Content Include="WcfApi\ShaamWcfService.svc" />
     <Content Include="WcfApi\OceanInsightsTestWcfService.svc" />
+    <Content Include="WcfApi\FreelancerGroupTypeWcfService.svc" />
     <Content Include="WcfApi\StatusCodeWcfService.svc" />
     <Content Include="WcfApi\OcrDocumentWcfService.svc" />
     <Content Include="WcfApi\PaymentTermWcfService.svc" />
@@ -7544,6 +7547,7 @@
     <Compile Include="WcfApi\IOcrDocumentWcfService.cs" />
     <Compile Include="WcfApi\IExternalTasksQueueExportSignWcfService.cs" />
     <Compile Include="WcfApi\IPaymentTermWcfService.cs" />
+    <Compile Include="WcfApi\IFreelancerGroupTypeWcfService.cs" />
     <Compile Include="WcfApi\IStatusCodeWcfService.cs" />
     <Compile Include="WcfApi\IWarehouseWcfService.cs" />
     <Compile Include="WcfApi\ShaamWcfService.svc.cs">
@@ -7551,6 +7555,9 @@
     </Compile>
     <Compile Include="WcfApi\OceanInsightsTestWcfService.svc.cs">
       <DependentUpon>OceanInsightsTestWcfService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="WcfApi\FreelancerGroupTypeWcfService.svc.cs">
+      <DependentUpon>FreelancerGroupTypeWcfService.svc</DependentUpon>
     </Compile>
     <Compile Include="WcfApi\StatusCodeWcfService.svc.cs">
       <DependentUpon>StatusCodeWcfService.svc</DependentUpon>
