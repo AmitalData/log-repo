@@ -81,6 +81,9 @@ import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTransla
 import { QueryPM } from '../../EntityPMs/QueryPM';
 import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
 // import { event } from 'cypress/types/jquery';
+import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
+import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
+import { DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
 
 @Component({
     templateUrl: './ListComponent.html',
@@ -111,6 +114,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             : ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl'
                 ? true
                 : false;
+    @Output() SelectedRows: EventEmitter<any> = new EventEmitter();
+    RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);
     public SeachBoxIsDisabled: boolean = false;
     //@Output() ShowTipEvent = new EventEmitter();
     public IsNavigateButtonVisible: boolean = false;
@@ -134,6 +139,15 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     public IsLogisticActionRequestObjectTable: boolean = false;
     WorkFlowPMService: WorkFlowPMService = new WorkFlowPMService();
+    private _declarationWebService: DeclarationWebService = new DeclarationWebService();
+    public onChangeCheckBoxesState: EventEmitter<any> = new EventEmitter();
+    public ScreenQueryAction = {};
+    private ScreenQueryActions = {
+        "Customs.Declaration.DiamondsDeclarations": {
+            actions: ["SendDeclarationAction", "SendSignedDeclarationsAction", "SendDeclarationPaymentsAction"],
+            actionTranslationPrefix: "Customs.Declaration.O."
+        }
+    };
 
     @ViewChild(LogGridComponent) MyLogGridComponent: LogGridComponent = null;
     @ViewChild(LogGridComponentV2) MyLogGridComponentV2: LogGridComponentV2 =
@@ -714,6 +728,9 @@ export class ListComponent implements OnInit, AfterViewInit {
             ObjectsLocator.GlobalSetting == undefined
                 ? 'ltr'
                 : ObjectsLocator.GlobalSetting.LayoutDirection;
+
+        this.ExcludedItems = new ObservableCollection([]);
+        this.SelectedItems = new ObservableCollection([]);
     }
 
     name: string;
@@ -1381,10 +1398,10 @@ export class ListComponent implements OnInit, AfterViewInit {
                                         this.listArgs.Filters
                                     );
                                 }
-                                cmpRef.instance.SelectedValueChanged.subscribe(
-                                    ($event: any) => {
-                                        this.FiltersMenu =
-                                            new ApiQueryFilters();
+                                    cmpRef.instance.SelectedValueChanged.subscribe(($event: any) => {
+                                        this.SelectedFilterChanged($event);
+
+                                        this.FiltersMenu = new ApiQueryFilters();
                                         this.FiltersMenu = $event.Filters;
                                         this.MenuHeaderchangeevent.emit({
                                             Filters: $event.Filters,
@@ -1909,6 +1926,17 @@ export class ListComponent implements OnInit, AfterViewInit {
                     );
                 });
 
+                if (this.IsSelectAllCheckboxVisible) {
+                    this.columns.push({
+                        FieldName: "",
+                        DataTypeCode: 'String',
+                        Display: '',
+                        IsCustomTemplate: true,
+                        Styles: { width: '27px' },
+                        IsCheckBox: true
+                    });
+                }
+
                 for (var i = 0; i < this.QueryColumns.length; i++) {
                     var CurColumn = this.columns.filter(
                         (a) =>
@@ -2202,6 +2230,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                     }
                 });
             }
+
+            this.SetSelectAllCheckBox(this.SelectedQuery.UniqueCode);
 
             this.GetQueryColumns(this.SelectedQuery.UniqueCode, this.UserId);
         }
@@ -4346,6 +4376,37 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.IsAddButtonVisible = isVisible;
     }
 
+    public IsSelectAllCheckboxVisible: boolean = false;
+    private SetSelectAllCheckBox(queryCode) {
+        var isVisible = false;
+
+        if (this.ScreenQueryActions[queryCode]) {
+            isVisible = true;
+            this.ScreenQueryAction = this.ScreenQueryActions[queryCode];
+        }
+
+        this.IsSelectAllCheckboxVisible = isVisible;
+
+        this.SelectAllRowsChecked(false);
+    }
+
+    SelectedFilterChanged($event) {
+        if ($event.RowCount) {
+            this.dataCount = $event.RowCount;
+        }
+
+        this.SelectAllRowsChecked(false);
+    }
+
+    SelectAllRowsChecked(selected) {
+        this.IsSelected = selected;
+
+        this.SelectedItems.Collection = [];
+        this.ExcludedItems.Collection = [];
+
+        this.CalculateSelectedCount();
+    }
+
     // New
     public NewEntityButtonLabel: string = null;
     public IsNewEntityButtonVisible: boolean = false;
@@ -6131,8 +6192,112 @@ export class ListComponent implements OnInit, AfterViewInit {
             ).then((cmpRef) => {
                 //this.FiltersBarLoaded.emit(cmpRef.instance);
                 // event not needed - meanwhile ?!?!
-            });
+
+                });
         }
+    }
+
+    public IsSelected: boolean = false;
+    public SelectedItems: ObservableCollection;
+    public ExcludedItems: ObservableCollection;
+    public SelectedCount: number = 0;
+
+    onCheckBoxChecked($event) {
+        if ($event.IsChecked) {
+
+            if (!this.SelectedItems.Collection.includes($event.rowData.Id)) {
+                this.SelectedItems.Insert($event.rowData.Id);
+
+                if (this.IsSelected) {
+                    if (this.ExcludedItems.Collection.includes($event.rowData.Id)) {
+                        this.ExcludedItems.Remove($event.rowData.Id);
+                    }
+                }
+            }
+        }
+        else {
+            if (this.SelectedItems.Collection.includes($event.rowData.Id)) {
+                this.SelectedItems.Remove($event.rowData.Id);
+            }
+
+            if (this.IsSelected) {
+                if (!this.ExcludedItems.Collection.includes($event.rowData.Id)) {
+                    this.ExcludedItems.Insert($event.rowData.Id);
+                }
+            }
+        }
+
+        this.CalculateSelectedCount();
+    }
+
+    CalculateSelectedCount() {
+        this.SelectedCount = this.IsSelected? this.dataCount - this.ExcludedItems.Collection.length: this.SelectedItems.Collection.length;
+        this.SelectedRows.emit(this.IsSelected || this.SelectedItems.Collection.length);
+    }
+
+    ShowActionConfirmationWindow(action) {
+
+        var confirmWindow = new ConfirmWindow();
+        var confirmMsg;
+        if (this.IsSelected) {
+            confirmMsg = "נבחרו כל הצהרות ל{actionTranslation}, הםם להמשיך? ";
+        }
+        else {
+            confirmMsg = "נבחרו {count} הצהרות ל{actionTranslation}, הםם להמשיך? "
+                .replace("{count}", this.SelectedCount.toString());
+        }
+        confirmMsg = confirmMsg.replace("{actionTranslation}", TextCodeTranslator.Translate(this.ScreenQueryAction["actionTranslationPrefix"] + action));
+        confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
+        confirmWindow.Width = 400;
+        confirmWindow.Height = 180;
+        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+        confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.Cancel");
+        confirmWindow.Show(confirmMsg);
+
+        var params = {
+            Action: action,
+            IsAllSelected: this.IsSelected, 
+            SelectedIds: this.IsSelected? this.ExcludedItems.Collection: this.SelectedItems.Collection, 
+            LoggingUserId: SessionLocator.LoggedUserId
+        };
+
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+
+                if (this.ObjectTable.Name == "Customs.Declaration") {
+                    this._declarationWebService.PostActionOnDeclarationBatch(params, this.CurrentQueryFilters).subscribe((response:any) => {
+
+                        // deselect the rows
+                        if (this.SelectedItems.Collection.length > 0) {
+                            let emittedArray = this.SelectedItems.Collection.map((res) => ({ rowData: {Id: res}, IsChecked: false, RowIndex: -1, ById: true }));
+                            this.onChangeCheckBoxesState.emit(emittedArray);
+                        }
+                        if (this.ExcludedItems.Collection.length > 0) {
+                            let emittedArray = this.ExcludedItems.Collection.map((res) => ({ rowData: {Id: res}, IsChecked: false, RowIndex: -1, ById: true }));
+                            this.onChangeCheckBoxesState.emit(emittedArray);
+                        }
+                        this.SelectAllRowsChecked(false);
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+
+                        // show message
+                        var myMessageWindow = new MessageWindow();
+                        if(!AppTool.IsNullOrEmpty(response.RequestInProgressList)){
+                            myMessageWindow.ShowEventButton=true;
+                            myMessageWindow.EventButtonText=TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                        }  
+                        myMessageWindow.Show(response.Message);
+                        // myMessageWindow.WindowClosed.subscribe(s => {
+                        //     this.RefreshButtonClicked();
+                        // });
+                        // myMessageWindow.SendEvent.subscribe(s=>{
+                        //     if(s){
+                        //         this.LoadCustomsRequestSheetsScreen(response.RequestInProgressList)
+                        //     }
+                        // });
+                    });
+                }
+            }
+        });
     }
 
     MultiPrintClicked() {
