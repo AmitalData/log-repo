@@ -16540,7 +16540,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 using (TransactionScope scop = TransactionFactory.GetNewTransaction(new TimeSpan(0, 5, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(0, 5, 0)))
                 {
                     GlobalDBRepository globalDbRep = new GlobalDBRepository();
-                    dbList = globalDbRep.GetGlobalDBs().ToList();
+                    dbList = globalDbRep.GetActiveDataBases().ToList();
                     scop.Complete();
                 }
 
