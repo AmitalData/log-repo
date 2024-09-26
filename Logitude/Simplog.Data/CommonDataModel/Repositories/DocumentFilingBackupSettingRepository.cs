@@ -28,7 +28,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         }
  
 
-        public DocumentFilingBackupSetting GetSingleDocumentFilingBackupSetting(int id, int otherTenant)
+        public DocumentFilingBackupSetting GetSingleDocumentFilingBackupSetting(int id, int otherTenant = 0)
         {
             return (from a in this.context.DocumentFilingBackupSettings
                     where a.Tenant == id
