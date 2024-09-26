@@ -615,7 +615,26 @@ export class CustomsDocumentTicketViewModel {
 
             });
         }*/
-        if (!AppTool.IsNullOrEmpty(relatedDocumentViewModel.CustomDocument.CustomsDocId) && !AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId)) {
+       debugger;
+            if ((relatedDocumentViewModel.CustomDocument!= null && relatedDocumentViewModel.CustomDocument.DocumentStatusCode == '7') ||(relatedDocumentViewModel.Status1ImageGreen==true && relatedDocumentViewModel.Status2ImageGreen!=true )) {
+                SessionLocator.SelectedSession.StopBusyIndicator();
+ 
+                  var confirmWindow = new ConfirmWindow();
+                  confirmWindow.Width = 400;
+                  confirmWindow.Height = 200;
+                  confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                  confirmWindow.ShowNoButton = false;
+                  confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.No");
+                  confirmWindow.Show("לא ניתן לקשר את המסמך - קיימת בקשה בתהליך");
+                  confirmWindow.WindowClosed.subscribe((event: any) => {
+                      if (confirmWindow.Yes) {
+                          confirmWindow.Close();
+                      }
+                  });
+                    return;
+            }  
+            
+            if (!AppTool.IsNullOrEmpty(relatedDocumentViewModel.CustomDocument.CustomsDocId) && !AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId)) {
             SessionLocator.SelectedSession.StopBusyIndicator();
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 400;
