@@ -35,7 +35,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         }
 
 
-        public CustomsInterfaceSetting GetSingleCustomsInterfaceSetting(int id, int otherTenant)
+        public CustomsInterfaceSetting GetSingleCustomsInterfaceSetting(int id, int otherTenant=0)
         {
             return (from a in this.context.CustomsInterfaceSettings
                     where a.Tenant == id
