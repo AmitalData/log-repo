@@ -840,16 +840,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         public void UpdateTaxationDateTime(List<string> ids,int tenant)
         {
             ICustomContext customContext = CustomContext.GetContext(tenant);
-            DeclarationQueryService declarationQueryService = new DeclarationQueryService(customContext);
+            DeclarationQueryService _DeclarationQueryService = new DeclarationQueryService(customContext);
+            DeclarationUpdateService _DeclarationUpdateService = new DeclarationUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
 
-            List<DeclarationPM> DeclarationsList = declarationQueryService.GetDeclarationsByIds(ids, tenant);
+            List<DeclarationPM> _DeclarationsList = _DeclarationQueryService.GetDeclarationsByIds(ids, tenant);
 
 
-            foreach (var item in DeclarationsList)
+            foreach (var item in _DeclarationsList)
             {
                 item.TaxationDateTime = DateTime.UtcNow.Date;
+                item.ChangeSetOp = ChangeSetOperation.Update;
+                _DeclarationUpdateService.Update(item, false);
             }
-            UpdateMulti(DeclarationsList, null, null, true);
+            _DeclarationUpdateService.SubmitChanges();
 
         }
         private string DeclarationTicketsStatus(DeclarationPM declarationPM)
