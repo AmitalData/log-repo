@@ -1,6 +1,6 @@
 ﻿<Procedure DBType="Main" Name="usp_NewCustomsBookMainViewSearchByText" Schema="dbo" Module="Customs">
   <SqlScript>
-	  <![CDATA[
+    <![CDATA[
 
 CREATE OR ALTER PROCEDURE [dbo].[usp_NewCustomsBookMainViewSearchByText]
 	@SearchFields VARCHAR(40),
