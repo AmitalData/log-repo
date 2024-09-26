@@ -615,7 +615,7 @@ export class CustomsDocumentTicketViewModel {
 
             });
         }*/
-       debugger;
+      
             if ((relatedDocumentViewModel.CustomDocument!= null && relatedDocumentViewModel.CustomDocument.DocumentStatusCode == '7') ||(relatedDocumentViewModel.Status1ImageGreen==true && relatedDocumentViewModel.Status2ImageGreen!=true )) {
                 SessionLocator.SelectedSession.StopBusyIndicator();
  
