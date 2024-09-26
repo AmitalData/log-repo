@@ -72,7 +72,6 @@ export class RulesComponent implements OnInit, OnChanges {
 
   initData() {
     this.API_MainService.GetCustomsBookRulesData(this.currentItem.CustomsItemID).subscribe((data: any) => {
-      debugger
       this.allRules = data.body;
       this.allRules.forEach((rule) => {
         rule.expanded = false;

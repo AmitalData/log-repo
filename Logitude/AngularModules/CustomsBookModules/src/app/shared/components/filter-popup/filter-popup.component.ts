@@ -26,7 +26,7 @@ export class FilterPopupComponent {
 
 	pickFilter(id: string) {
 		this.service.setFilterMarked(id);
-		this.numberOfFilters = Object.values(this._initFilters).filter((value) => value === true).length;
+		this.numberOfFilters = Object.values(this._initFilters).filter((value) => value === true).length;	
 	}
 
 	clearFilter() {
@@ -40,7 +40,7 @@ export class FilterPopupComponent {
 	}
 
 	filterClickEvent() {
-		this.filterClick.emit(this._initFilters);
+		this.filterClick.emit(this.service.getFilters());
 		this.openPopup = false;
 	}
 }

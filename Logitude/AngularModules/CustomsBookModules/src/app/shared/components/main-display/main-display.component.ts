@@ -256,6 +256,8 @@ export class MainDisplayComponent implements OnInit {
 		if (filtersSearch.details) selectedFilters.push(FilterOption.Details);
 		if (filtersSearch.sections) selectedFilters.push(FilterOption.Sections);
 		if (filtersSearch.customsDetails) selectedFilters.push(FilterOption.CustomsDetails);
+		if (filtersSearch.rules) selectedFilters.push(FilterOption.Rules);
+		if (filtersSearch.remarks) selectedFilters.push(FilterOption.Remarks);
 		return selectedFilters.join(',');
 	}
 
@@ -275,7 +277,7 @@ export class MainDisplayComponent implements OnInit {
 
 		if (SearchBy.searchBy_form01 == this.selectSearchBy) {
 			this.isLoadingMode.next(true); // update loading mode
-			filters.CustomsItemHierarchic = '1,2,3,4,5';
+			filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
 			this.API_MainService.GetCustomsBookMainViewSearchByClassification(filters).subscribe(
 				(data: any) => {
 					const result: CB_CustomsItemComputedDataList[] = data.body;
@@ -292,7 +294,7 @@ export class MainDisplayComponent implements OnInit {
 		}
 		else if (SearchBy.pageSearch_form02 == this.selectSearchBy) {// spacial search by text
 			this.isLoadingMode.next(true); // update loading mode
-			if (filters.CustomsItemHierarchic === '') filters.CustomsItemHierarchic = '1,2,3,4,5';
+			if (filters.CustomsItemHierarchic === '') filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
 			this.API_MainService.GetCustomsBookMainViewSearchByText(filters).subscribe(
 				(data: any) => {
 					const result: CB_CustomsItemComputedDataList[] = data.body;
@@ -407,7 +409,9 @@ enum FilterOption {
 	Chapters = '2',
 	Details = '3',
 	Sections = '4',
-	CustomsDetails = '5,6,7'
+	CustomsDetails = '5',
+	Rules = '6',
+	Remarks = '7'
 }
 
 export interface ItemData {
