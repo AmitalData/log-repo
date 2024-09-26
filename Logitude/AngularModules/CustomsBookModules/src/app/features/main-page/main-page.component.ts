@@ -37,7 +37,7 @@ export class MainPageComponent {
 		let filters: Filters = {
 			SearchFields: this.searchService.GetSearchText(),
 			CustomsBookType: this.HeaderService.getSearchState(true),
-			CustomsItemHierarchic: '1,2,3,4',
+			CustomsItemHierarchic: '1,2,3,4,5',
 			Reamarks: false,
 			Rules: true,
 			SkippedRows: 0,
