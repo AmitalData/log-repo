@@ -553,7 +553,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 {
                     case "sendsigneddeclarationsaction":
                     case "senddeclarationaction":
-                        DeclarationUpdateService.UpdateTaxationDateTime(new List<string>(){ "1-100558", "1 - 100559" }, 6);
+                        DeclarationUpdateService.UpdateTaxationDateTime(new List<string>(sendDeclarationBatchRequestParams.SelectedIds), tenant);
                         bool signDeclaration = sendDeclarationBatchRequestParams.Action.ToLower() == "sendsigneddeclarationsaction";
 
                         var sendMessagingService = new DCAInUCB2751_MsgMessagingService();
