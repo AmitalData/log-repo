@@ -57,7 +57,7 @@ namespace Logitude.Customs.BL.Messaging.L2U.CustomFile
                 amitalCustomFileCommunicationModel, myCreditFile);
             bool myImmediately = true;
 
-            var info = myUServerCommunicationService.Send(myImmediately);
+            var info = myUServerCommunicationService.Send(myImmediately,false, reqParamsJson);
 
 			CustomsSettingQueryService settingService = new CustomsSettingQueryService(_CustomFileCreditModel.Tenant);
 			CustomsSettingPM setting = settingService.GetSettingByTenantN(_CustomFileCreditModel.Tenant);
