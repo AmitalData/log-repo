@@ -502,6 +502,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new HorseGenderMap());
             modelBuilder.Configurations.Add(new CustomFieldsMainObjectMap());
             modelBuilder.Configurations.Add(new FreelancerGroupTypeMap());
+            modelBuilder.Configurations.Add( new UserFreelancerGroupMap());
 
 
             base.OnModelCreating(modelBuilder);
@@ -1092,6 +1093,8 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<AllActiveGLAccountsView> AllActiveGLAccountsViews { get; set; }
 
         public IDbSet<FreelancerGroupType> FreelancerGroupTypes { get; set; }
+        public IDbSet<UserFreelancerGroup> UserFreelancerGroups { get; set; }
+
 
 
 

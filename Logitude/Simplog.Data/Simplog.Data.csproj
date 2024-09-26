@@ -185,6 +185,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\ChargesExternalAccountsByProduct.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CheckDigitControlAlgorithm.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomsBookMainView.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\UserFreelancerGroup.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\FreelancerGroupType.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\RequestSheetInQueueMesView.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\DecTaxesByTaxTypeCodeView.cs" />
@@ -213,6 +214,7 @@
     <Compile Include="CommonDataModel\Mapping\CustomerGroupMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerTeamMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DigitalContactLastSettingMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\UserFreelancerGroupMap.cs" />
     <Compile Include="CommonDataModel\Mapping\FreelancerGroupTypeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\HorseGenderMap.cs" />
     <Compile Include="CommonDataModel\Mapping\HTSCodeMap.cs" />
@@ -223,6 +225,7 @@
     <Compile Include="CommonDataModel\Repositories\CustomerGroupRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CustomerTeamRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\DigitalContactLastSettingRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\UserFreelancerGroupRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\FreelancerGroupTypeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\HorseGenderRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\MentionRepository.cs" />
