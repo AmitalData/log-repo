@@ -39,6 +39,8 @@ using Unifreight.BL.EntityPMs.UGenerated;
 using Logitude.Customs.Data.EntityPOCOs;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Server.Tools;
+using Logitude.Customs.Data.EntityMapping;
+using System.Text.Json;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -1325,68 +1327,86 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
             var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(declarationPM.Id, true, false);
-            var myDeclarationPaymentUpdateService = new DeclarationPaymentUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant); ;
 
             if (declarationPaymentPM != null)
             {
                 if (declarationPaymentPM.AutomaticPayment == 1 || requestParams.RequestName == "Auto Payment Request")
                 {
-                    if (CheckFileCredit(declarationPM, declarationPaymentPM, requestParams.LoggingUserId))
+					CustomsSettingQueryService settingService = new CustomsSettingQueryService(requestParams.Tenant);
+					CustomsSettingPM setting = settingService.GetSettingByTenantN(requestParams.Tenant);
+					CheckFileCrediteReq checkFileCrediteReq = new CheckFileCrediteReq();
+					checkFileCrediteReq.ClassName = "DF_NG_2754_MSG10004_ImportDeclarationResponseService";
+					checkFileCrediteReq.AppicationId = declarationPM.Id;
+					checkFileCrediteReq.LoggingUserId = requestParams.LoggingUserId;
+					checkFileCrediteReq.LoggingObjectTableId = requestParams.LoggingObjectTableId;
+					checkFileCrediteReq.LoggingEntityReference = requestParams.LoggingEntityReference;
+
+					string jsonString = System.Text.Json.JsonSerializer.Serialize(checkFileCrediteReq);
+					var isCheckFileCredit = CheckFileCredit(declarationPM, declarationPaymentPM, requestParams.LoggingUserId, jsonString);
+                    if (setting.IsConnectedToUniFreight)
                     {
-                        try
-                        {
-                            DateTime requestDate = CheckIfBlockTime(declarationPM, declarationPaymentPM);
-                            declarationPaymentPM.PaymentDate = DateTime.Now;
-                            declarationPaymentPM.ChangeSetOp = ChangeSetOperation.Update;
-
-                            using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
-                            {
-                                var requestParams2755 = new GenericRequestParams()
-                                {
-                                    Tenant = requestParams.Tenant,
-                                    LoggingEnabled = true,
-                                    LoggingObjectTableId = requestParams.LoggingObjectTableId,
-                                    LoggingEntityId = declarationPM.Id,
-                                    AppicationId = declarationPM.Id,
-                                    InterfaceTypeCode = "2755",
-                                    LoggingUserId = requestParams.LoggingUserId,
-                                    RequestVIA = SendRequestVIA.WebServiceBatch,
-                                 };
-                                if (requestDate != DateTime.MinValue)
-                                {
-                                    requestDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, requestDate.Hour, requestDate.Minute, requestDate.Second);
-                                    declarationPaymentPM.PaymentDate = requestDate;
-
-                                    requestParams2755.RequestVIAChangeDue = string.Concat("נרשמה בקשה מתוזמנת לתאריך ", requestDate.ToShortDateString(), " שעה ", requestDate.ToShortTimeString());// "הבקשה תשלח בעתיד";
-                                    requestParams2755.FutureSendDateTime = requestDate;
-                                    Task.Run(async () => {
-                                        await Task.Delay(TimeSpan.FromSeconds(30));
-                                        SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false, requestDate);
-                                    });
-                                }
-                                else
-                                {
-                                    Task.Run(async () => {
-                                        await Task.Delay(TimeSpan.FromSeconds(30));
-                                        SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
-                                    });
-                                }
-
-                                scopeNewCRS.Complete();
-                            }
-
-                            myDeclarationPaymentUpdateService.Update(declarationPaymentPM, true);
-                        }
-                        catch (System.Exception)
-                        {
-                            throw;
-                        }
-                    }
+                        SendPaymentIsCheckFileCredit(isCheckFileCredit, declarationPM, declarationPaymentPM, dbContext, requestParams.LoggingUserId, requestParams.LoggingObjectTableId);
+					}
                 }
             }
         }
+        public void SendPaymentIsCheckFileCredit(bool isCheckFileCredit ,DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM, ICustomContext dbContext,string LoggingUserId,string LoggingObjectTableId)
+        {
+			var myDeclarationPaymentUpdateService = new DeclarationPaymentUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant); ;
 
-        private bool CheckFileCredit(DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM, string user)
+			if (isCheckFileCredit)
+			{
+				try
+				{
+					DateTime requestDate = CheckIfBlockTime(declarationPM, declarationPaymentPM);
+					declarationPaymentPM.PaymentDate = DateTime.Now;
+					declarationPaymentPM.ChangeSetOp = ChangeSetOperation.Update;
+
+					using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
+					{
+						var requestParams2755 = new GenericRequestParams()
+						{
+							Tenant = declarationPM.Tenant,
+							LoggingEnabled = true,
+							LoggingObjectTableId = LoggingObjectTableId,
+							LoggingEntityId = declarationPM.Id,
+							AppicationId = declarationPM.Id,
+							InterfaceTypeCode = "2755",
+							LoggingUserId = LoggingUserId,
+							RequestVIA = SendRequestVIA.WebServiceBatch,
+						};
+						if (requestDate != DateTime.MinValue)
+						{
+							requestDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, requestDate.Hour, requestDate.Minute, requestDate.Second);
+							declarationPaymentPM.PaymentDate = requestDate;
+
+							requestParams2755.RequestVIAChangeDue = string.Concat("נרשמה בקשה מתוזמנת לתאריך ", requestDate.ToShortDateString(), " שעה ", requestDate.ToShortTimeString());// "הבקשה תשלח בעתיד";
+							requestParams2755.FutureSendDateTime = requestDate;
+							Task.Run(async () => {
+								await Task.Delay(TimeSpan.FromSeconds(30));
+								SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false, requestDate);
+							});
+						}
+						else
+						{
+							Task.Run(async () => {
+								await Task.Delay(TimeSpan.FromSeconds(30));
+								SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
+							});
+						}
+						scopeNewCRS.Complete();
+					}
+
+					myDeclarationPaymentUpdateService.Update(declarationPaymentPM, true);
+				}
+				catch (System.Exception)
+				{
+					throw;
+				}
+			}
+		}
+
+		private bool CheckFileCredit(DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM, string user, string requestParamsJson)
         {
             CustomFileCreditRequestParams requestParamsCredit = new CustomFileCreditRequestParams()
             {
@@ -1404,7 +1424,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 RequestVIA = SendRequestVIA.WebServiceBatch,
             };
             var myCustomFileCreditService = new CustomFileCreditService(requestParamsCredit);
-            CUSTOMCREDIT_UL creditResponseData = myCustomFileCreditService.CheckFileCredit();
+            CUSTOMCREDIT_UL creditResponseData = myCustomFileCreditService.CheckFileCredit(requestParamsJson);
             if (!string.IsNullOrEmpty(creditResponseData.CustomFileCredit[0].ErrorMessage))
             {
                 return false;

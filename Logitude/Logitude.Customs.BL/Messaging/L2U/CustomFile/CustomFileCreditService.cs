@@ -22,7 +22,7 @@ namespace Logitude.Customs.BL.Messaging.L2U.CustomFile
             _CustomFileCreditModel = customFileCreditModel;
         }
 
-        public CUSTOMCREDIT_UL CheckFileCredit()
+        public CUSTOMCREDIT_UL CheckFileCredit(string reqParamsJson = null)
         {
             var context = CustomContext.GetContext(_CustomFileCreditModel.Tenant);
             var myDeclarationQueryService = new DeclarationQueryService(context);
@@ -58,7 +58,18 @@ namespace Logitude.Customs.BL.Messaging.L2U.CustomFile
             bool myImmediately = true;
 
             var info = myUServerCommunicationService.Send(myImmediately);
-            if (String.IsNullOrWhiteSpace(info.ImmediatelyResponse))
+
+			CustomsSettingQueryService settingService = new CustomsSettingQueryService(_CustomFileCreditModel.Tenant);
+			CustomsSettingPM setting = settingService.GetSettingByTenantN(_CustomFileCreditModel.Tenant);
+            if (!setting.IsConnectedToUniFreight)
+            {
+                var CUSTOMCREDIT_UL = new CUSTOMCREDIT_UL();
+				CUSTOMCREDIT_UL.CustomFileCredit = new CustomFileCredit[] { new CustomFileCredit() { ErrorMessage = "!setting.IsConnectedToUniFreight" } };
+
+                return CUSTOMCREDIT_UL;
+
+			}
+			if (String.IsNullOrWhiteSpace(info.ImmediatelyResponse))
             {
                 throw new Exception("ImmediatelyResponse is null");
             }

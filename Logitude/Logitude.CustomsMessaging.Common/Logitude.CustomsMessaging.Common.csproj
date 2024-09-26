@@ -59,6 +59,7 @@
     <Compile Include="Gen\CustomDomainServiceErrorCodesEnum.Shared.cs" />
     <Compile Include="Gen\LuhnAlgorithm.Shared.cs" />
     <Compile Include="Gen\SubscribeSignServer.Shared.cs" />
+    <Compile Include="RequestParams\CheckFileCrediteReq.Shared.cs" />
     <Compile Include="RequestParams\AddAddressContactForClient.Shared.cs" />
     <Compile Include="RequestParams\AddMultiPendingsRequestParams.cs" />
     <Compile Include="RequestParams\CargoSealsRequestParams.Shared.cs" />
