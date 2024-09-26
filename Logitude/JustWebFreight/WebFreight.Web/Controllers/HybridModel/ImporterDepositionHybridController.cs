@@ -12,7 +12,7 @@ using WebFreight.Web.WcfApi;
 
 namespace WebFreight.Web.Controllers.HybridModel
 {
-    public class ImporterDepositionController : ApiController
+    public class ImporterDepositionHybridController : ApiController
     {
         [System.Web.Http.HttpPost]
         public async Task<Response> SendImporterDepositionToLogBox([FromBody] object[] t)//(ImporterDepositionPM importerDepositionPM)

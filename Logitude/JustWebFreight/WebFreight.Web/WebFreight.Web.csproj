@@ -1094,7 +1094,7 @@
     <Compile Include="Controllers\HybridModel\HybridPartnerHybridController.cs" />
     <Compile Include="Controllers\HybridModel\HybridPartnersPermissionsHybridController.cs" />
     <Compile Include="Controllers\HybridModel\HybridTenantStateController.cs" />
-    <Compile Include="Controllers\HybridModel\ImporterDepositionController.cs" />
+    <Compile Include="Controllers\HybridModel\ImporterDepositionHybridController.cs" />
     <Compile Include="Controllers\HybridModel\IncotermHybridController.cs" />
     <Compile Include="Controllers\HybridModel\InsertCommTaskController.cs" />
     <Compile Include="Controllers\HybridModel\LoginHybridController.cs" />
