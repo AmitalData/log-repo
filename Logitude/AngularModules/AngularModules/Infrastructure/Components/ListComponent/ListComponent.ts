@@ -108,12 +108,6 @@ export class ListComponent implements OnInit, AfterViewInit {
     @Output() QueryListSourceChanged = new EventEmitter();
     @Output() FiltersBarLoaded: EventEmitter<any> = new EventEmitter<any>();
     @Output() RowClicked = new EventEmitter();
-    RTL: boolean =
-        ObjectsLocator.GlobalSetting == undefined
-            ? false
-            : ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl'
-                ? true
-                : false;
     @Output() SelectedRows: EventEmitter<any> = new EventEmitter();
     RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);
     public SeachBoxIsDisabled: boolean = false;
