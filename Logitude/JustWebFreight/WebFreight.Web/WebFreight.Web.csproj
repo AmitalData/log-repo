@@ -1051,6 +1051,7 @@
     <Compile Include="Controllers\HybridModel\StatusCodeHybridController.cs" />
     <Compile Include="Controllers\HybridModel\TenantManagementDWHybridController.cs" />
     <Compile Include="Controllers\HybridModel\TruckerHybridController.cs" />
+    <Compile Include="Controllers\HybridModel\FreelancerGroupTypeHybridController.cs" />
     <Compile Include="Controllers\HybridModel\UserHybridController.cs" />
     <Compile Include="Controllers\HybridModel\UserIDNumberRequestHybridController.cs" />
     <Compile Include="Controllers\HybridModel\VendorCommissionHybridController.cs" />
