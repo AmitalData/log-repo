@@ -28277,6 +28277,12 @@
       LocalDefaultText="&quot;הצהרות שהותרו&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ErrCommCustoms&quot;"
+      DefaultText="&quot;An error occurred, please verify communication with customs&quot;"
+      LocalDefaultText="&quot;אירעה שגיאה נא לודא תקשורת מול המכס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

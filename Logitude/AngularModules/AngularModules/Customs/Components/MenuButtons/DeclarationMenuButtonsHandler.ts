@@ -36,7 +36,7 @@ import { DeclarationEventManager } from '../../Utilities/DeclarationEventManager
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
 import { MenuButtonsComponent } from '../../../Infrastructure/Components/LogitudeComponents/MenuButtonsComponent/MenuButtonsComponent';
 import { GenericRequestParams } from '../../DataContract/RequestParams/GenericRequestParams';
-import { TestCase } from '../../DataContract/RequestParams/RequestParamsBase';
+import { SendRequestVIA, TestCase } from '../../DataContract/RequestParams/RequestParamsBase';
 import { CustomsSettingExtendedListService } from '../../Services/ExtendedLists/CustomsSettingExtendedListService';
 import { ExportStoragePM } from 'Customs/EntityPMs/ExportStoragePM';
 import { ExportStoragePMService } from 'Customs/Services/StandardPMs/ExportStoragePMService';
@@ -47,6 +47,7 @@ import { ListComponentArgs } from 'Infrastructure/Args';
 import { MainMenuItem } from 'Infrastructure/Components/MainMenuComponent/MainMenuComponent';
 import { List } from 'Infrastructure/DataContracts/Dashboard/List';
 import { SupplierInvoiceExtendedPMService } from 'Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
+import { DeclarationRestoreRequestParams } from 'Customs/DataContract/RequestParams/DeclarationRestoreRequestParams';
 
 
 export class DeclarationMenuButtonsHandler implements OnDestroy {
@@ -439,7 +440,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
                     }
                     if (button.EventCode == "ResetDeclarationNumber") {//Eitan H 26/11/17 34387
-                        if (this.IsDisplayOnly || (this.EntityPM.Direction == "E" && this.EntityPM.IsSubmitDeclaration)) {
+                        if (this.IsDisplayOnly || (this.EntityPM.Direction == "E" && this.EntityPM.IsSubmitDeclaration) || (this.EntityPM.Direction != "E" && this.EntityPM.DeclarationStatusTypeCode == "5")) {
                             button.IsDisabled = true;
                             button.IsHidden = false;
                         }
@@ -1147,43 +1148,90 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         }
     }
     private GetAnyRequestBeforeResetDeclaration(interfaceTypeCode: string, message: string) {
-        var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         var canResetDeclaration: boolean = this.EntityPM.Direction == 'E' ? true : this.EntityPM.PaymentDate == null;
         if (canResetDeclaration) {
-            declarationDisplayOnlyChecks.GetAnyRequest(interfaceTypeCode, this.EntityPM.CustomFileNo, this.EntityPM.Tenant)
-                .subscribe((response: ServiceResponse) => {
-                    if (!response.HasError) {
-                        var requestSheets = response.Result;
-                        var haveRS2755: boolean = false;
-                        const analyzed = "30";
-                        if (requestSheets == null || requestSheets.length == 0) {
-                        } else {
-                            haveRS2755 = true;
-                        }
-                        if (haveRS2755) {
-                            if (this.EntityPM.Direction == 'E') {
-                                canResetDeclaration = false;
-                            } else {
-                                for (let request of requestSheets) {
-                                    if (request.RequestStatusCode != analyzed) {
-                                        canResetDeclaration = false;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        if (canResetDeclaration) {
-                            this.ResetDeclaration();
-                        } else {
-                            this.ShowResetDeclarationMessage(message);
-                        }
-                    }
-                });
+            if (this.EntityPM.Direction != 'E') 
+            {
+                this.RestoreDeclaration(interfaceTypeCode , message,canResetDeclaration)
+            }
+            else {
+                this.CheackIsAnyRequest(interfaceTypeCode , message,canResetDeclaration)
+            }
+
+          
         } else {
             this.ShowResetDeclarationMessage(TextCodeTranslator.Translate("Customs.Declaration.O.CantResetDeclarationNumberPaymentDate"));
         }
     }
+    private RestoreDeclaration(interfaceTypeCode , message,canResetDeclaration){
+        SessionLocator.SelectedSession.StartBusyIndicator("checking");
 
+        var _DeclarationMessagesService = new DeclarationMessagesService();
+        var currRequestParams = new DeclarationRestoreRequestParams();
+        currRequestParams.LoggingEnabled = true;
+        currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+        currRequestParams.Tenant = SessionLocator.Tenant;
+        currRequestParams.LoggingEntityReference = this.EntityPM?.Direction;
+        currRequestParams.AppicationId = this.EntityPM.Id;
+        currRequestParams.DeclarationId = this.EntityPM.Id;
+        currRequestParams.DeclarationNumber = this.EntityPM.DeclarationNumber;
+        currRequestParams.CustomsFile = this.EntityPM.CustomFileNo;
+        currRequestParams.RequestVIA = SendRequestVIA.WebServiceInteractive;
+        currRequestParams.ResponseName = "8373"
+        currRequestParams.RequestName = "Restore From ResetDeclaration"
+        
+        _DeclarationMessagesService.PostDeclarationRequest(currRequestParams)
+        .subscribe((myServiceResponse: ServiceResponse) => {
+            SessionLocator.SelectedSession.StopBusyIndicator();
+            if (!myServiceResponse?.Result?.HasException) {
+                if (myServiceResponse?.Result?.Succeeded) 
+                {
+                       this.CheackIsAnyRequest(interfaceTypeCode , message,canResetDeclaration);  
+                }
+                else 
+                {
+                   this.ShowResetDeclarationMessage(myServiceResponse?.Result?.UserMessage);
+                }
+            }
+            else {
+                this.ShowResetDeclarationMessage(TextCodeTranslator.Translate("Customs.Declaration.O.ErrCommCustoms"));
+
+            }
+            
+        });
+    }
+    private CheackIsAnyRequest(interfaceTypeCode: string, message: string,canResetDeclaration: boolean) {
+        var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
+        declarationDisplayOnlyChecks.GetAnyRequest(interfaceTypeCode, this.EntityPM.CustomFileNo, this.EntityPM.Tenant)
+        .subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                var requestSheets = response.Result;
+                var haveRS2755: boolean = false;
+                const analyzed = "30";
+                if (requestSheets == null || requestSheets.length == 0) {
+                } else {
+                    haveRS2755 = true;
+                }
+                if (haveRS2755) {
+                    if (this.EntityPM.Direction == 'E') {
+                        canResetDeclaration = false;
+                    } else {
+                        for (let request of requestSheets) {
+                            if (request.RequestStatusCode != analyzed) {
+                                canResetDeclaration = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (canResetDeclaration) {
+                    this.ResetDeclaration();
+                } else {
+                    this.ShowResetDeclarationMessage(message);
+                }
+            }
+        });
+    }
     private ResetDeclaration(){
         let confirm = new ConfirmWindow();
         confirm.WindowClosed.subscribe((event: any) => {

@@ -24,6 +24,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public override void Update(DF_NG_2754_MSG10004_ImportDeclarationResponse customResponse, DeclarationRestoreRequestParams requestParams)
         {
+            if (requestParams.RequestName == "Restore From ResetDeclaration")
+            {
+				this.MyResponseData = new DeclarationRestoreResponseData();
+                string declarationStatus = customResponse?.Response?.Status?.NameCode.Value;
+
+                if (string.IsNullOrEmpty(declarationStatus) || declarationStatus == "12" || declarationStatus == "13")
+                {
+					this.MyResponseData.Succeeded = true;
+					this.MyResponseData.UserMessage = "ניתן לבצע איפוס הצהרה";	
+				}
+                else
+                {
+					this.MyResponseData.Succeeded = false;
+					this.MyResponseData.UserMessage = "נראה שהתיק שולם יש לבצע שחזור הצהרה";
+				}
+				return;
+			}
             if (requestParams.ShowData)
             {
                 GetDeclarationDataRespons(customResponse, requestParams.Tenant);
