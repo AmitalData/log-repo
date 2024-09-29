@@ -81,11 +81,14 @@ using Logitude.DashboardModule.Data.Repositories;
 using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.BL;
 
+
+
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpdateClasses
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "e63a1ba4947e11afb7b61f339193136a";
+		public const string HashString = "6963ce4aabc81d2c7f9bbce26bc65a0a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -95763,6 +95766,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  		   TextCode ShipmentTextCode_ShipmentGCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.Customer", DefaultText = "Customer",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentGContainersLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.ContainersLines", DefaultText = "Containers lines",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOImporterApprovalForSubmitting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.ImporterApprovalForSubmitting", DefaultText = "The importer's approval for submitting an import declaration to customs",LocalDefaultText = @"אישור היבואן להגשת הצהרת יבוא למכס", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

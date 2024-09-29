@@ -231,7 +231,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                                     newWindow.Height = 700;
                                     newWindow.RTL = true;
                                     //newWindow.CustomTitleIcon = "data:image/JPEG;base64," + SessionLocator.PrivateLableSettings.SmallLogo;
-                                    newWindow.Title = "םישור היבוםן להגשת הצהרת יבום למכס";
+                                    newWindow.Title = TextCodeTranslator.Translate("Shipment.O.ImporterApprovalForSubmitting");
                                     var windowArgs: any = {};
                                     //windowArgs.IsNew = false;
                                     windowArgs.EntityPm = myResult.Result;
