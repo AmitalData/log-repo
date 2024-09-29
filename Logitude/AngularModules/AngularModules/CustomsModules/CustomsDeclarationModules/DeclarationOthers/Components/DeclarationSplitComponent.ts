@@ -1,25 +1,8 @@
 declare var window: any;
-import {
-    Component,
-    AfterViewInit,
-    OnDestroy,
-    ChangeDetectorRef,
-    ViewChildren,
-    QueryList,
-    Output,
-    Input,
-    OnInit,
-    ViewEncapsulation,
-    ViewChild,
-    HostListener,
-    ElementRef,
-} from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, ChangeDetectorRef, ViewChildren, QueryList, Output, Input, OnInit, ViewEncapsulation, ViewChild, HostListener, ElementRef } from '@angular/core';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { LocationDirective } from '../../../../Infrastructure/Utilities/LocationDirective';
-import {
-    ApiQueryFilters,
-    FilterItem,
-} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ApiQueryFilters, FilterItem } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { AppTool, ArrayTool, DateTool } from '../../../../Infrastructure/Tools';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -33,10 +16,7 @@ import { Validator } from '../../../../Infrastructure/Validators/Validator';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { ObjectTablePM } from '../../../../Infrastructure/EntityPMs/ObjectTablePM';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
-import {
-    AmitalGatewayUtil,
-    UnifreightMessageM,
-} from '../../../../Infrastructure/Utilities/AmitalGatewayUtil';
+import { AmitalGatewayUtil, UnifreightMessageM } from '../../../../Infrastructure/Utilities/AmitalGatewayUtil';
 //import * as cv from 'opencv4nodejs';
 //import * as Tesseract from 'tesseract.js';
 import { DeclarationPM } from '../../../../Customs/EntityPMs/DeclarationPM';
@@ -60,15 +40,14 @@ import { CustomsDocumentsDataProvider } from 'CustomsModules/CustomsDocuments/Co
 import { NullTemplateVisitor } from '@angular/compiler';
 import { CustomsSettingExtendedListService } from 'Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 @Component({
+
     templateUrl: './DeclarationSplitComponent.html',
 })
-export class DeclarationSplitComponent
-    extends BaseComponent
-    implements AfterViewInit, OnDestroy
-{
+
+export class DeclarationSplitComponent extends BaseComponent implements AfterViewInit, OnDestroy {
     public DataContext: any = this;
     public DeclarationPM: DeclarationPM;
-    public ObjectTableName: string = 'Customs.Declaration';
+    public ObjectTableName: string = "Customs.Declaration";
     IsDocsPanelVisible: boolean = false;
     public MetadataValues: CustomsDocumentMetaDataValuePM[];
     public RelatedDocuments: RelatedDocumentViewModel[];
@@ -85,57 +64,40 @@ export class DeclarationSplitComponent
     endY = 0;
     showPdfDocument: boolean = false;
 
-    public customs: string = 'עמילות';
-    public forwarding: string = 'שילוח';
+    public customs: string = "עמילות";
+    public forwarding: string = "שילוח";
     //Services
-    private custDocRelatedDocsWebService: CustDocRelatedDocsWebService =
-        new CustDocRelatedDocsWebService();
-    private _ImageLibraryService: ImageLibraryService =
-        new ImageLibraryService();
-    private _CustomDocumentViewerService: CustomDocumentViewerService =
-        new CustomDocumentViewerService();
-    private custDocsMetadataWebService: CustDocMetaDataValuesWebService =
-        new CustDocMetaDataValuesWebService();
-    private customsSettingListService: CustomsSettingListService =
-        new CustomsSettingListService();
-    private customsSettingExtendedListService: CustomsSettingExtendedListService =
-        new CustomsSettingExtendedListService();
+    private custDocRelatedDocsWebService: CustDocRelatedDocsWebService = new CustDocRelatedDocsWebService();
+    private _ImageLibraryService: ImageLibraryService = new ImageLibraryService();
+    private _CustomDocumentViewerService: CustomDocumentViewerService = new CustomDocumentViewerService();
+    private custDocsMetadataWebService: CustDocMetaDataValuesWebService = new CustDocMetaDataValuesWebService();
+    private customsSettingListService: CustomsSettingListService = new CustomsSettingListService;
+    private customsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
     DeclarationSplitDocumentSelectionEVENT;
-    DeclarationSplitDocumentItemSelectionByInvoiceEVENT;
     DeclarationSplitDocumentItemSelectionEVENT;
     invoiceItem: any;
     constructor(private cd: ChangeDetectorRef, private elem: ElementRef) {
         super();
-        var counter = ControlsIdCounter.GetNextControlIdCounter(
-            'DocumentViewerImage'
-        );
-        this.DocumentViewerImageId = 'DocumentViewerImage-' + counter;
+        var counter = ControlsIdCounter.GetNextControlIdCounter("DocumentViewerImage");
+        this.DocumentViewerImageId = "DocumentViewerImage-" + counter;
 
-        this._entityResourceService
-            .getEntityResourceByTableName('Customs.Declaration')
-            .subscribe((response: any) => {
-                if (
-                    FeatureLocator.HasFeaturePermession(
-                        'Customs.Declaration',
-                        'ViewDocumentAsPdf'
-                    )
-                ) {
-                    // this.DeclarationPM.IsCourierDeclaration is not defined in BLD
-                    this.customsSettingExtendedListService
-                        .GetSettingByTenant()
-                        .subscribe((response: ServiceResponse) => {
-                            this.showPdfDocument =
-                                response?.Result?.CompanyType == 'B';
-                        });
-                } else {
-                    this.showPdfDocument = false;
-                }
-            });
+        this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
+            if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "ViewDocumentAsPdf")) {
+                // this.DeclarationPM.IsCourierDeclaration is not defined in BLD
+                this.customsSettingExtendedListService.GetSettingByTenant().subscribe((response: ServiceResponse) => {
+                    this.showPdfDocument = response?.Result?.CompanyType == "B";
+                });
+            }
+            else {
+                this.showPdfDocument = false;
+            }
+        });
+
     }
     @ViewChild('myImg', { static: true }) myImgVariable: ElementRef;
 
     ngAfterViewInit() {
-        if (!this.showPdfDocument) {
+        if (!this.showPdfDocument) { 
             /*this.myImgVariable.nativeElement.onload = () => {
                 this.recognizeText();
             }*/
@@ -144,164 +106,114 @@ export class DeclarationSplitComponent
     }
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.DeclarationSplitDocumentSelectionEVENT);
-        AppTool.KillEventEmitter(
-            this.DeclarationSplitDocumentItemSelectionEVENT
-        );
+        AppTool.KillEventEmitter(this.DeclarationSplitDocumentItemSelectionEVENT);
+
     }
 
+
     _DocumentFilingIdToSetWhileLoadDocument: string;
-    private _entityResourceService: EntityResourceService =
-        new EntityResourceService();
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
 
     SetComponentArgs(args: any) {
+        
         if (!AppTool.IsNullOrEmpty(args)) {
             this.DeclarationPM = args.EntityPM;
 
             // 1- get customs settings
-            this.customsSettingListService
-                .getSingleFromCache(this.DeclarationPM.Tenant.toString())
-                .subscribe((response: ServiceResponse) => {
-                    var list = response.Result;
-                    if (!AppTool.IsNullOrEmpty(list)) {
-                        var customsSetting = list;
-                        this.IsConnectedToUniFreight =
-                            customsSetting.IsConnectedToUniFreight;
-                    }
-                    if (this.DeclarationPM.Direction == 'E') {
-                        this._entityResourceService
-                            .getEntityResourceByTableName(
-                                'Customs.CustomsDocument',
-                                0
-                            )
-                            .subscribe((response: any) => {
-                                this.customs = TextCodeTranslator.Translate(
-                                    'Customs.CustomsDocument.O.CustomFile'
-                                );
+            this.customsSettingListService.getSingleFromCache(this.DeclarationPM.Tenant.toString()).subscribe((response: ServiceResponse) => {
+                var list = response.Result;
+                if (!AppTool.IsNullOrEmpty(list)) {
+                    var customsSetting = list;
+                    this.IsConnectedToUniFreight = customsSetting.IsConnectedToUniFreight;
+                }
+                if (this.DeclarationPM.Direction == 'E') {
+                 this._entityResourceService.getEntityResourceByTableName("Customs.CustomsDocument", 0).subscribe((response:any) => {
+                  
+                        this.customs = TextCodeTranslator.Translate('Customs.CustomsDocument.O.CustomFile');
+    
+                        this.forwarding = TextCodeTranslator.Translate('Customs.CustomsDocument.O.ExportFile');
+    
+                        this.DocumentFilterSelectedValue = "all";
+                 
+                 });
+                 this._entityResourceService.getEntityResourceByTableName("Customs.OcrDocument").subscribe((response: any) => {});
 
-                                this.forwarding = TextCodeTranslator.Translate(
-                                    'Customs.CustomsDocument.O.ExportFile'
-                                );
+             }
+                
+                //// 2- get metadata values then
+                //SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+                //this.custDocsMetadataWebService.GetCustomsDocumentMetaDataValuesByCustomsDocumentFilingIds(customsDocTickets).subscribe((response2: ServiceResponse) => {
+                //    this.MetadataValues = response2.Result;
 
-                                this.DocumentFilterSelectedValue = 'all';
-                            });
-                        this._entityResourceService
-                            .getEntityResourceByTableName('Customs.OcrDocument')
-                            .subscribe((response: any) => {});
-                    }
+                // 3- load documents(tickets)
+                this.LoadDocuments();
 
-                    //// 2- get metadata values then
-                    //SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-                    //this.custDocsMetadataWebService.GetCustomsDocumentMetaDataValuesByCustomsDocumentFilingIds(customsDocTickets).subscribe((response2: ServiceResponse) => {
-                    //    this.MetadataValues = response2.Result;
 
-                    // 3- load documents(tickets)
-                    this.LoadDocuments();
 
-                    SessionLocator.SelectedSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
 
-                    //    });
-                });
 
-            this.DeclarationSplitDocumentSelectionEVENT =
-                DeclarationEventManager.DeclarationSplitDocumentSelection.subscribe(
-                    (DocumentFilingId: any) => {
-                        console.log(
-                            '-->> Loading document for supplier invoice: ' +
-                                DocumentFilingId
-                        );
-                        if (AppTool.IsNullOrEmpty(this.RelatedDocuments)) {
-                            //ClassifcationComponent Build B4 This Component finish Load Document !!!
-                            this._DocumentFilingIdToSetWhileLoadDocument =
-                                DocumentFilingId;
-                            return;
-                        }
-                        var document = this.RelatedDocuments.find(
-                            (d) => d.Id == DocumentFilingId
-                        );
-                        this.TicketItemClicked(document);
-                    }
-                );
+                //    });
+            });
 
-            this.DeclarationSplitDocumentItemSelectionEVENT =
-                DeclarationEventManager.DeclarationSplitDocumentItemSelection.subscribe(
-                    (data: any) => {
-                        if (data == 'remove') {
-                            var elem = document.getElementById(
-                                'rectangle-rectangle-1'
-                            );
-                            elem.parentNode.removeChild(elem);
-                            return;
-                        }
-                        this.invoiceItem = data;
-                        if (AppTool.IsNullOrEmpty(this.RelatedDocuments)) {
-                            //ClassifcationComponent Build B4 This Component finish Load Document !!!
-                            this._DocumentFilingIdToSetWhileLoadDocument =
-                                this.invoiceItem.DocumentFilingId;
-                            return;
-                        }
-                        var document1 = this.RelatedDocuments.find(
-                            (d) => d.Id == this.invoiceItem.DocumentFilingId
-                        );
-                        this.TicketItemClicked(document1, true);
-                    }
-                );
+            this.DeclarationSplitDocumentSelectionEVENT = DeclarationEventManager.DeclarationSplitDocumentSelection.subscribe((DocumentFilingId: any) => {
+                console.log("-->> Loading document for supplier invoice: " + DocumentFilingId);
+                if (AppTool.IsNullOrEmpty(this.RelatedDocuments)) {
+                    //ClassifcationComponent Build B4 This Component finish Load Document !!!
+                    this._DocumentFilingIdToSetWhileLoadDocument = DocumentFilingId;
+                    return;
+                }
+                var document = this.RelatedDocuments.find(d => d.Id == DocumentFilingId);
+                this.TicketItemClicked(document);
 
-            this.DeclarationSplitDocumentItemSelectionByInvoiceEVENT =
-                DeclarationEventManager.DeclarationSplitDocumentItemSelectionByInvoice.subscribe(
-                    (data: any) => {
-                        if (data == 'remove') {
-                            var elem = document.getElementById(
-                                'rectangle-rectangle-1'
-                            );
-                            elem.parentNode.removeChild(elem);
-                            return;
-                        }
+            });
 
-                        if (
-                            this.invoiceItem !== null &&
-                            this.invoiceItem === data
-                        )
-                            return;
 
-                        this.invoiceItem = data;
-                        if (AppTool.IsNullOrEmpty(this.RelatedDocuments)) {
-                            //ClassifcationComponent Build B4 This Component finish Load Document !!!
-                            this._DocumentFilingIdToSetWhileLoadDocument =
-                                this.invoiceItem.DocumentsFilingPM;
-                            return;
-                        }
+            this.DeclarationSplitDocumentItemSelectionEVENT = DeclarationEventManager.DeclarationSplitDocumentItemSelection.subscribe((data: any) => {
 
-                        var document1 = this.RelatedDocuments.find((d) => {
-                            return d.documentsFilingPM.OcrReference == data;
-                        });
+                if (data == "remove") {
 
-                        this.TicketItemClicked(document1, true);
-                    }
-                );
+                    var elem = document.getElementById("rectangle-rectangle-1");
+                    elem.parentNode.removeChild(elem);
+                    return;
+                }
+                this.invoiceItem = data;
+                if (AppTool.IsNullOrEmpty(this.RelatedDocuments)) {
+                    //ClassifcationComponent Build B4 This Component finish Load Document !!!
+                    this._DocumentFilingIdToSetWhileLoadDocument = this.invoiceItem.DocumentFilingId;
+                    return;
+                }
+                var document1 = this.RelatedDocuments.find(d => d.Id == this.invoiceItem.DocumentFilingId);
+                this.TicketItemClicked(document1, true);
+
+
+            });
         }
     }
+
+
+
+
 
     //#region Document List
     SelectedTicket: RelatedDocumentViewModel;
 
     PageUp() {
-        if (this.CurrentPageIndex > 0) this.CurrentPageIndex--;
+        if (this.CurrentPageIndex > 0)
+            this.CurrentPageIndex--;
         this.LoadDocumentPage();
     }
     PageDown() {
-        if (this.CurrentPageIndex < this.pagesCount) this.CurrentPageIndex++;
+        if (this.CurrentPageIndex < this.pagesCount)
+            this.CurrentPageIndex++;
         this.LoadDocumentPage();
     }
 
     IsMouseOverDownload: boolean = false;
-    TicketItemClicked(
-        document: RelatedDocumentViewModel,
-        selectItem: boolean = false,
-        forceRefresh: boolean = false
-    ) {
-        if (this.SelectedTicket === document) return;
+    TicketItemClicked(document: RelatedDocumentViewModel, selectItem: boolean = false, forceRefresh: boolean = false) {
+
         if (this.IsMouseOverDownload) return;
-        if (this.DeclarationPM.Direction != 'E')
+        if (this.DeclarationPM.Direction != "E")
             this.IsDocsPanelVisible = false;
         //reset counters
         this.pagesCount = 1;
@@ -311,7 +223,7 @@ export class DeclarationSplitComponent
         this.IsNoDocumentSelected = false;
 
         this.angleIndex = 0;
-        this.ImgScaleValue = 'scale(1)';
+        this.ImgScaleValue = "scale(1)";
         this.TrackBarValue = 1;
 
         if (forceRefresh) {
@@ -319,15 +231,11 @@ export class DeclarationSplitComponent
         }
         this.LoadDocumentPage(selectItem);
         //this.LoadDocumentPage(); // need to check it again, it cannot draw image at first call
+
     }
     RefreshButtonClicked() {
         if (!this.showPdfDocument) {
-            this.resample_single(
-                this.canvas,
-                this.canvas.width,
-                this.canvas.height,
-                true
-            );
+            this.resample_single(this.canvas, this.canvas.width, this.canvas.height, true);
         }
 
         // if (!AppTool.IsNullOrEmpty(this.CurrentPageIndex))
@@ -335,22 +243,22 @@ export class DeclarationSplitComponent
         // //this.renderImage();
     }
     OpenInWindowButtonClicked() {
-        //var documentFiling = resp.Result;
-        this._ImageLibraryService
-            .DownloadFile(
-                this.SelectedTicket.documentsFilingPM.DocumentId,
-                this.SelectedTicket.documentsFilingPM.FileExtension,
-                this.SelectedTicket.documentsFilingPM.Folder,
-                SessionLocator.Tenant
-            )
-            .subscribe((res: any) => {
-                var documentName =
-                    SessionLocator.Tenant +
-                    '_' +
-                    this.SelectedTicket.documentsFilingPM.DocumentId;
 
-                DownloadManager.DownloadPage(documentName);
-            });
+
+
+        //var documentFiling = resp.Result;
+        this._ImageLibraryService.DownloadFile(this.SelectedTicket.documentsFilingPM.DocumentId, this.SelectedTicket.documentsFilingPM.FileExtension, this.SelectedTicket.documentsFilingPM.Folder, SessionLocator.Tenant).subscribe((res: any) => {
+
+
+            var documentName = SessionLocator.Tenant + "_" + this.SelectedTicket.documentsFilingPM.DocumentId;
+
+
+            DownloadManager.DownloadPage(documentName);
+
+        });
+
+
+
     }
 
     composedPath(el) {
@@ -368,30 +276,29 @@ export class DeclarationSplitComponent
 
     LoadDocumentPage(selectItem: boolean = false) {
         if (this.SelectedTicket) {
+
             var index = this.CurrentPageIndex;
 
             if (index == 0) index = 1;
-
-            if (
-                this.invoiceItem != null &&
-                !AppTool.IsNullOrEmpty(this.invoiceItem.OcrPageNumber) &&
-                this.invoiceItem.OcrPageNumber != 0 &&
-                selectItem
-            ) {
+    
+            if (this.invoiceItem != null && !AppTool.IsNullOrEmpty(this.invoiceItem.OcrPageNumber) && this.invoiceItem.OcrPageNumber != 0 && selectItem) {
                 index = this.invoiceItem.OcrPageNumber;
             }
-
-            console.log('Load Page: ', index);
+    
+            console.log("Load Page: ", index);
 
             if (this.showPdfDocument) {
+
                 // if there is no base64 of the pdf file, get it from the backend
                 if (!this.base64Document) {
                     this.LoadPdfDocument(selectItem);
-                } else {
+                }
+                else {
                     // the entire pdf file has already been loaded from the backend, just do a fixe about the selected page
                     this.FixCurrentPageIndex(index, selectItem);
                 }
-            } else {
+            }
+            else {
                 // get from the backend the tiff document for the current page
                 this.LoadTiffDocumentPage(index, selectItem);
             }
@@ -399,7 +306,7 @@ export class DeclarationSplitComponent
     }
 
     LoadTiffDocumentPage(index: number, selectItem: boolean = false) {
-        this.StartBusyIndicator('Loading page...');
+        this.StartBusyIndicator("Loading page...");
 
         //SessionLocator.SelectedSession.StartBusyIndicatorLoading();
 
@@ -410,130 +317,107 @@ export class DeclarationSplitComponent
 
         //let path = this.composedPath(event.target);
 
-        this._CustomDocumentViewerService
-            .GetDocumentPage(
-                this.SelectedTicket.documentsFilingPM.DocumentId,
-                index - 1,
-                this.IsConnectedToUniFreight,
-                this.RotationAngle
-            )
-            .subscribe((myResponse: ServiceResponse) => {
-                var result = myResponse.Result;
-                console.log('[Response] GetDocumentPage', result);
-                this.StopBusyIndicator();
-                if (result) {
-                    //reset rotation
-                    //this.ImgTransformOriginValue = "right top";
-                    //this.ImgRotationValue = "rotate(0deg)";
-                    //this.RotationAngle = 0;
+        this._CustomDocumentViewerService.GetDocumentPage(this.SelectedTicket.documentsFilingPM.DocumentId, index - 1, this.IsConnectedToUniFreight, this.RotationAngle).subscribe((myResponse: ServiceResponse) => {
+            var result = myResponse.Result;
+            console.log("[Response] GetDocumentPage", result);
+            this.StopBusyIndicator();
+            if (result) {
 
-                    this.pagesCount = result.Count;
+                //reset rotation
+                //this.ImgTransformOriginValue = "right top";
+                //this.ImgRotationValue = "rotate(0deg)";
+                //this.RotationAngle = 0;
 
-                    if (!AppTool.IsNullOrEmpty(result.Page)) {
-                        //SessionLocator.SelectedSession.StopBusyIndicator();
+                this.pagesCount = result.Count;
 
-                        this.base64Document =
-                            'data:image/png;base64,' + result.Page;
+                if (!AppTool.IsNullOrEmpty(result.Page)) {
+                    //SessionLocator.SelectedSession.StopBusyIndicator();
 
-                        //document.getElementsByClassName("div-grabbable")[0].removeChild(document.getElementsByClassName("rectangle")[0]);
-                        var elements =
-                            document.getElementsByClassName('rectangle');
-                        while (elements.length > 0) {
-                            elements[0].parentNode.removeChild(elements[0]);
-                        }
+                    this.base64Document = "data:image/png;base64," + result.Page;
 
-                        if (
-                            this.invoiceItem != null &&
-                            this.invoiceItem.OcrTop != 0 &&
-                            this.invoiceItem.OcrTop != undefined &&
-                            this.invoiceItem.OcrHeight != 0 &&
-                            this.invoiceItem.OcrHeight != undefined &&
-                            selectItem
-                        ) {
-                            var elem = document.getElementsByClassName(
-                                'grabbable'
-                            )[0] as HTMLImageElement;
-
-                            let rect = document.createElement('div');
-                            rect.className = 'rectangle';
-                            rect.id = 'rectangle-' + 'rectangle-1';
-                            rect.style.position = 'absolute';
-                            rect.style.border = '1px solid #ed1c31';
-                            rect.style.borderRadius = '3px';
-                            rect.style.left = 0 + 'px';
-                            var percent = elem.height / elem.naturalHeight;
-                            rect.style.top =
-                                this.invoiceItem.OcrTop * percent - 1 + 'px';
-                            rect.style.width = '100%';
-                            rect.style.height =
-                                this.invoiceItem.OcrHeight * percent + 2 + 'px';
-                            document
-                                .getElementsByClassName('div-grabbable')[0]
-                                .appendChild(rect);
-
-                            console.log(this.base64Document);
-                        }
-
-                        this.FixCurrentPageIndex(index, selectItem);
-
-                        // this.img.src = this.base64Document;
-                        // this.renderImage();
-                        // var t = setTimeout(() => { this.renderImage(); }, 20);
-                    } else {
-                        this.CurrentPageIndex = 0;
-                        this.base64Document = null;
-                        // this.img.src = this.base64Document;
-                        // this.renderImage();
-                        // var t = setTimeout(() => { this.renderImage(); },20);
-                        return;
+                    //document.getElementsByClassName("div-grabbable")[0].removeChild(document.getElementsByClassName("rectangle")[0]);
+                    var elements = document.getElementsByClassName("rectangle");
+                    while (elements.length > 0) {
+                        elements[0].parentNode.removeChild(elements[0]);
                     }
+
+                    if (this.invoiceItem != null && this.invoiceItem.OcrTop != 0 && this.invoiceItem.OcrTop != undefined && this.invoiceItem.OcrHeight != 0 && this.invoiceItem.OcrHeight != undefined && selectItem) {
+                        var elem = document.getElementsByClassName("grabbable")[0] as HTMLImageElement;;
+
+                        let rect = document.createElement('div');
+                        rect.className = 'rectangle';
+                        rect.id = 'rectangle-' + "rectangle-1";
+                        rect.style.position = 'absolute';
+                        rect.style.border = '1px solid #ed1c31';
+                        rect.style.borderRadius = '3px';
+                        rect.style.left = 0 + 'px';
+                        var percent = (elem.height / elem.naturalHeight);
+                        rect.style.top = (this.invoiceItem.OcrTop * percent) - 1 + 'px';
+                        rect.style.width = '100%';
+                        rect.style.height = (this.invoiceItem.OcrHeight * percent) + 2 + 'px';
+                        document.getElementsByClassName("div-grabbable")[0].appendChild(rect);
+
+                        console.log(this.base64Document);
+                    }
+
+                    this.FixCurrentPageIndex(index, selectItem);
+
+
+                    // this.img.src = this.base64Document;
+                    // this.renderImage();
+                    // var t = setTimeout(() => { this.renderImage(); }, 20);
+
                 } else {
                     this.CurrentPageIndex = 0;
-                    //SessionLocator.SelectedSession.StopBusyIndicator();
                     this.base64Document = null;
                     // this.img.src = this.base64Document;
                     // this.renderImage();
                     // var t = setTimeout(() => { this.renderImage(); },20);
                     return;
                 }
+
+            } else {
+                this.CurrentPageIndex = 0;
                 //SessionLocator.SelectedSession.StopBusyIndicator();
-            });
+                this.base64Document = null;
+                // this.img.src = this.base64Document;
+                // this.renderImage();
+                // var t = setTimeout(() => { this.renderImage(); },20);
+                return;
+            }
+            //SessionLocator.SelectedSession.StopBusyIndicator();
+
+
+
+        });
     }
 
     LoadPdfDocument(selectItem: boolean = false) {
-        this.StartBusyIndicator('Loading page...');
 
-        this._CustomDocumentViewerService
-            .GetDocumentPageAsPdf(
-                this.SelectedTicket.documentsFilingPM.DocumentId
-            )
-            .subscribe((myResponse: ServiceResponse) => {
-                var result = myResponse.Result;
-                if (result && !AppTool.IsNullOrEmpty(result.contentField)) {
-                    this.base64Document =
-                        'data:application/pdf;base64,' + result.contentField;
+        this.StartBusyIndicator("Loading page...");
 
-                    this.FixCurrentPageIndex(this.CurrentPageIndex, selectItem);
-                } else {
-                    this.CurrentPageIndex = 0;
-                    this.base64Document = null;
-                }
+        this._CustomDocumentViewerService.GetDocumentPageAsPdf(this.SelectedTicket.documentsFilingPM.DocumentId).subscribe((myResponse: ServiceResponse) => {
 
-                this.StopBusyIndicator();
-            });
+            var result = myResponse.Result;
+            if (result && !AppTool.IsNullOrEmpty(result.contentField)) {
+                this.base64Document = "data:application/pdf;base64," + result.contentField;
+
+                this.FixCurrentPageIndex(this.CurrentPageIndex, selectItem);
+
+            } else {
+                this.CurrentPageIndex = 0;
+                this.base64Document = null;
+            }
+            
+            this.StopBusyIndicator();
+        });
     }
 
     FixCurrentPageIndex(index: number, selectItem: boolean) {
-        if (
-            this.invoiceItem != null &&
-            this.invoiceItem.OcrTop != 0 &&
-            this.invoiceItem.OcrTop != undefined &&
-            this.invoiceItem.OcrHeight != 0 &&
-            this.invoiceItem.OcrHeight != undefined &&
-            selectItem
-        ) {
+        if (this.invoiceItem != null && this.invoiceItem.OcrTop != 0 && this.invoiceItem.OcrTop != undefined && this.invoiceItem.OcrHeight != 0 && this.invoiceItem.OcrHeight != undefined && selectItem) {
             this.CurrentPageIndex = this.invoiceItem.OcrPageNumber;
-        } else {
+        }
+        else {
             this.CurrentPageIndex = index;
         }
     }
@@ -544,8 +428,8 @@ export class DeclarationSplitComponent
 
     //#region split indicator
     showSplitIndicator: boolean = false;
-    splitIndicatorText: string = '';
-    StartBusyIndicator(text: string = 'Loading...') {
+    splitIndicatorText: string = "";
+    StartBusyIndicator(text: string = "Loading...") {
         this.splitIndicatorText = text;
         this.showSplitIndicator = true;
     }
@@ -556,31 +440,18 @@ export class DeclarationSplitComponent
     private customsDocumentsDataProvider: CustomsDocumentsDataProvider;
 
     LoadDocuments() {
-        this.customsDocumentsDataProvider = new CustomsDocumentsDataProvider(
-            this.ObjectTableName,
-            this.DeclarationPM,
-            null,
-            null,
-            null
-        );
+        this.customsDocumentsDataProvider = new CustomsDocumentsDataProvider(this.ObjectTableName, this.DeclarationPM, null, null, null);
 
         SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-        var objecttable = window.ObjectTables.filter(
-            (x) => x.Name === 'Customs.Declaration'
-        )[0];
+        var objecttable = window.ObjectTables.filter(x => x.Name === "Customs.Declaration")[0];
 
-        this.customsDocumentsDataProvider
-            .GetCustomsDocumentsRelatedDocuments(
-                this.DocumentFilterSelectedValue
-            )
+        this.customsDocumentsDataProvider.GetCustomsDocumentsRelatedDocuments(this.DocumentFilterSelectedValue)
             .subscribe((response: ServiceResponse) => {
-                console.log(
-                    '[response] GetDocumentsFilingsForRelatedDocuments:',
-                    response
-                );
+                console.log("[response] GetDocumentsFilingsForRelatedDocuments:", response);
                 SessionLocator.SelectedSession.StopBusyIndicator();
 
                 if (!AppTool.IsNullOrEmpty(response)) {
+
                     this.RelatedDocuments = [];
                     var relatedDocs: DocumentsFilingPM[];
                     relatedDocs = response.Result;
@@ -590,11 +461,7 @@ export class DeclarationSplitComponent
                         var values = null;
 
                         //if (!ticket) {
-                        var relatedDocViewModel = new RelatedDocumentViewModel(
-                            relatedDocs[i],
-                            values,
-                            true
-                        );
+                        var relatedDocViewModel = new RelatedDocumentViewModel(relatedDocs[i], values, true);
                         this.RelatedDocuments.push(relatedDocViewModel);
                         //}
                     }
@@ -602,18 +469,13 @@ export class DeclarationSplitComponent
                     //this.TicketItemClicked(this.RelatedDocuments[0]);
                     //this.IsDocsPanelVisible = true;
 
+
+
                     //ClassifcationComponent Build B4 This Component finish Load Document !!!
                     if (
                         this.RelatedDocuments.length != 0 &&
-                        AppTool.IsNullOrEmpty(
-                            this._DocumentFilingIdToSetWhileLoadDocument
-                        )
-                    ) {
-                        var document = this.RelatedDocuments.find(
-                            (d) =>
-                                d.Id ==
-                                this._DocumentFilingIdToSetWhileLoadDocument
-                        );
+                        AppTool.IsNullOrEmpty(this._DocumentFilingIdToSetWhileLoadDocument)) {
+                        var document = this.RelatedDocuments.find(d => d.Id == this._DocumentFilingIdToSetWhileLoadDocument);
                         this._DocumentFilingIdToSetWhileLoadDocument = null;
                         this.TicketItemClicked(document);
                     }
@@ -621,35 +483,34 @@ export class DeclarationSplitComponent
             });
     }
 
+
+
+
     DownloadDocumentFile(documentsFilingId: string) {
-        this.custDocRelatedDocsWebService
-            .GetSingleDocumentsFilingPM(documentsFilingId)
-            .subscribe((resp: ServiceResponse) => {
-                var documentFiling = resp.Result;
-                this._ImageLibraryService
-                    .DownloadFile(
-                        documentFiling.DocumentId,
-                        documentFiling.Extension,
-                        documentFiling.Folder,
-                        SessionLocator.Tenant
-                    )
-                    .subscribe((res: any) => {
-                        var documentName = documentFiling.DocumentId;
-                        //var token = ServiceHelper.GetLDocumentDownloadToken();
-                        //let uri = ServiceHelper.GetLogitudeURL() + "WebPages/Downloadpage.aspx?id=" + documentName + "&tempId=" + token;
-                        //if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
-                        //    AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseOpenNewBrowser(uri);
-                        //    return;
-                        //}
-                        DownloadManager.DownloadPage(documentName);
-                    });
+
+        this.custDocRelatedDocsWebService.GetSingleDocumentsFilingPM(documentsFilingId).subscribe((resp: ServiceResponse) => {
+            var documentFiling = resp.Result;
+            this._ImageLibraryService.DownloadFile(documentFiling.DocumentId, documentFiling.Extension, documentFiling.Folder, SessionLocator.Tenant).subscribe((res: any) => {
+
+
+                var documentName = documentFiling.DocumentId;
+                //var token = ServiceHelper.GetLDocumentDownloadToken();
+                //let uri = ServiceHelper.GetLogitudeURL() + "WebPages/Downloadpage.aspx?id=" + documentName + "&tempId=" + token;
+                //if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+                //    AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseOpenNewBrowser(uri);
+                //    return;
+                //}
+                DownloadManager.DownloadPage(documentName);
+
+
             });
+        });
+
     }
 
+
     currentPageIndex: number = 0;
-    public get CurrentPageIndex() {
-        return this.currentPageIndex;
-    }
+    public get CurrentPageIndex() { return this.currentPageIndex }
     public set CurrentPageIndex(value: number) {
         this.currentPageIndex = value;
     }
@@ -658,10 +519,12 @@ export class DeclarationSplitComponent
         var value = Number(valueString);
 
         this.timerToken = setTimeout(() => {
+
             if (value > 0 && value <= this.pagesCount) {
                 this.currentPageIndex = value;
                 this.LoadDocumentPage();
             }
+
         }, 1000);
     }
 
@@ -676,11 +539,13 @@ export class DeclarationSplitComponent
         this.trackBarValue = value;
         this.CalculateScaleValue();
         //this.resample_single(this.canvas, this.canvas.width, this.canvas.height, true);
+
+
     }
 
     TrackBarStep: number = 0.2;
-    ImgScaleValue: string = 'scale(1)';
-    ImgHeight: string = '';
+    ImgScaleValue: string = "scale(1)";
+    ImgHeight: string = "";
 
     ZoomInButton() {
         if (this.TrackBarValue >= 3) return;
@@ -688,57 +553,65 @@ export class DeclarationSplitComponent
         this.CalculateScaleValue();
 
         if (this.TrackBarValue == 1)
-            this.resample_single(
-                this.canvas,
-                this.canvas.width,
-                this.canvas.height,
-                true
-            );
+            this.resample_single(this.canvas, this.canvas.width, this.canvas.height, true);
+
+
     }
     ZoomOutButton() {
         if (this.TrackBarValue <= 1) return;
         this.TrackBarValue -= +this.TrackBarStep;
         this.CalculateScaleValue();
+
     }
     CalculateScaleValue() {
         //var scaleValue = this.trackBarValue / 100 + 1;
         var scaleValue = this.trackBarValue;
-        this.ImgScaleValue = 'scale(' + scaleValue + ')';
-        this.ImgHeight = (scaleValue * 100).toString() + '%';
+        this.ImgScaleValue = "scale(" + scaleValue + ")";
+        this.ImgHeight = (scaleValue * 100).toString() + "%";
     }
     //#endregion
 
     //#region Rotation
-    ImgTransformOriginValue: string = 'right top';
-    ImgRotationValue: string = 'rotate(0deg)';
+    ImgTransformOriginValue: string = "right top";
+    ImgRotationValue: string = "rotate(0deg)";
     RotationAngle: number = 0;
 
     ToggleTransformOrigin() {
+
         if (this.RotationAngle == 0) {
-            this.ImgTransformOriginValue = 'right top';
-        } else if (this.RotationAngle == 90) {
-            this.ImgTransformOriginValue = 'left top';
-        } else if (this.RotationAngle == 180) {
-            this.ImgTransformOriginValue = 'left bottom';
-        } else if (this.RotationAngle == 270) {
-            this.ImgTransformOriginValue = 'right bottom';
-        } else if (this.RotationAngle == 360) {
-            this.ImgTransformOriginValue = 'right top';
+            this.ImgTransformOriginValue = "right top";
+        }
+        else if (this.RotationAngle == 90) {
+            this.ImgTransformOriginValue = "left top";
+        }
+        else if (this.RotationAngle == 180) {
+            this.ImgTransformOriginValue = "left bottom";
+        }
+        else if (this.RotationAngle == 270) {
+            this.ImgTransformOriginValue = "right bottom";
+        }
+        else if (this.RotationAngle == 360) {
+            this.ImgTransformOriginValue = "right top";
         }
     }
+
 
     public get transformValue(): string {
         return this.ImgScaleValue + ' ' + this.ImgRotationValue;
     }
 
+
+
     RotateRightButton() {
         if (this.IsNoDocumentSelected) return;
 
         // Rotate
-        if (this.RotationAngle >= 360) this.RotationAngle = 90;
-        else this.RotationAngle += 90;
+        if (this.RotationAngle >= 360)
+            this.RotationAngle = 90;
+        else
+            this.RotationAngle += 90;
 
-        this.ImgRotationValue = 'rotate(' + this.RotationAngle + 'deg)';
+        this.ImgRotationValue = "rotate(" + this.RotationAngle + "deg)";
 
         // origin position
         this.ToggleTransformOrigin();
@@ -746,40 +619,48 @@ export class DeclarationSplitComponent
         this.LoadDocumentPage();
 
         // this.rotateCW();
+
     }
     RotateLeftButton() {
         if (this.IsNoDocumentSelected) return;
 
-        if (this.RotationAngle <= 0) this.RotationAngle = 270;
-        else this.RotationAngle -= 90;
+        if (this.RotationAngle <= 0)
+            this.RotationAngle = 270;
+        else
+            this.RotationAngle -= 90;
 
-        this.ImgRotationValue = 'rotate(' + this.RotationAngle + 'deg)';
+        this.ImgRotationValue = "rotate(" + this.RotationAngle + "deg)";
 
         //origin position
         this.ToggleTransformOrigin();
 
         this.LoadDocumentPage();
         // this.rotateCCW();
+
     }
 
     //- rotate image to convas - JS Code
-    img = new Image();
+    img = new Image;
     canvas;
     ctx;
-    angles = [0 * Math.PI, 0.5 * Math.PI, Math.PI, 1.5 * Math.PI]; // store angles (0, 90, 180, 270) in an array
+    angles = [0 * Math.PI, 0.5 * Math.PI, Math.PI, 1.5 * Math.PI];  // store angles (0, 90, 180, 270) in an array
     angleIndex = 0;
 
     startRenderingImage() {
+
         //this.img.src = './Images/Split/testimage.png'; // http://i.imgur.com/sAyE5ZE.png
         //this.img.src = this.base64Document;
         this.canvas = document.getElementById('canvas');
         this.ctx = this.canvas.getContext('2d');
 
+
         this.renderImage();
+
+
     }
     renderImage() {
         if (this.base64Document) {
-            this.StartBusyIndicator('Rendering...');
+            this.StartBusyIndicator("Rendering...");
 
             /// use index to set canvas size
             // switch (this.angleIndex) {
@@ -812,40 +693,53 @@ export class DeclarationSplitComponent
             // this.ctx.setTransform(1, 0, 0, 1, 0, 0);
             // this.img.src = this.base64Document;
 
+
+
+
             this.StopBusyIndicator();
             this.cd.detectChanges();
+
 
             // this.resample_single(this.canvas, this.canvas.width, this.canvas.height, true);
 
             // setTimeout(() => {
             //     this.resample_single(this.canvas, this.canvas.width, this.canvas.height, true);
             // }, 500);
+
         } else {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
             this.StopBusyIndicator();
             this.cd.detectChanges();
         }
+
     }
     resample_single(canvas, width, height, resize_canvas) {
+
         // console.log("RESAMPLE: start");
+
+
         // var width_source = canvas.width;
         // var height_source = canvas.height;
         // width = Math.round(width);
         // height = Math.round(height);
+
         // width_source = width_source == 0 ? 1 : width_source;
         // height_source = height_source == 0 ? 1 : height_source;
         // width = width == 0 ? 1 : width;
         // height = height == 0 ? 1 : height;
+
         // var ratio_w = width_source / width;
         // var ratio_h = height_source / height;
         // var ratio_w_half = Math.ceil(ratio_w / 2);
         // var ratio_h_half = Math.ceil(ratio_h / 2);
+
         // var ctx = canvas.getContext("2d");
         // var img = ctx.getImageData(0, 0, width_source, height_source);
         // var img2 = ctx.createImageData(width, height);
         // var data = img.data;
         // var data2 = img2.data;
+
         // for (var j = 0; j < height; j++) {
         //     for (var i = 0; i < width; i++) {
         //         var x2 = (i + j * width) * 4;
@@ -893,6 +787,7 @@ export class DeclarationSplitComponent
         //         data2[x2 + 3] = gx_a / weights_alpha;
         //     }
         // }
+
         // //clear and resize canvas
         // if (resize_canvas === true) {
         //     canvas.width = width;
@@ -900,13 +795,17 @@ export class DeclarationSplitComponent
         // } else {
         //     ctx.clearRect(0, 0, width_source, height_source);
         // }
+
         // //draw
         // ctx.putImageData(img2, 0, 0);
+
         // console.log("RESAMPLE: done");
+
     }
 
     resample_light(canvas, width, height, resize_canvas) {
-        console.log('RESAMPLE: start');
+        console.log("RESAMPLE: start");
+
 
         var width_source = canvas.width;
         var height_source = canvas.height;
@@ -923,25 +822,29 @@ export class DeclarationSplitComponent
         var ratio_w_half = Math.ceil(ratio_w / 2);
         var ratio_h_half = Math.ceil(ratio_h / 2);
 
-        var ctx = canvas.getContext('2d');
+        var ctx = canvas.getContext("2d");
         var img = ctx.getImageData(0, 0, width_source, height_source);
         var img2 = ctx.createImageData(width, height);
         var data = img.data;
         var data2 = img2.data;
 
+
         //draw
         ctx.putImageData(img2, 0, 0);
 
-        console.log('RESAMPLE: done');
+        console.log("RESAMPLE: done");
+
     }
 
+
+
     rotateCW() {
-        this.angleIndex++; /// increment index of array
+        this.angleIndex++;     /// increment index of array
         if (this.angleIndex >= this.angles.length) this.angleIndex = 0;
         this.renderImage();
     }
     rotateCCW() {
-        this.angleIndex--; /// decrement index of array
+        this.angleIndex--;      /// decrement index of array
         if (this.angleIndex < 0) this.angleIndex = this.angles.length - 1;
         this.renderImage();
     }
@@ -955,35 +858,38 @@ export class DeclarationSplitComponent
     lastOffsetX: number = 0;
 
     OnMouseWheel(event) {
-        console.log('[EVENT] MouseWheel, ', event);
+        console.log("[EVENT] MouseWheel, ", event);
 
         if (event) {
             if (event.altKey) {
                 event.preventDefault();
                 var delta = event.deltaY / 100;
-                if (delta < 0) this.ZoomInButton();
-                else this.ZoomOutButton();
+                if (delta < 0)
+                    this.ZoomInButton();
+                else
+                    this.ZoomOutButton();
             }
             if (event.ctrlKey) {
                 event.preventDefault();
                 var delta = event.deltaY / 100;
-                if (delta < 0) this.ZoomInButton();
-                else this.ZoomOutButton();
+                if (delta < 0)
+                    this.ZoomInButton();
+                else
+                    this.ZoomOutButton();
             }
         }
     }
     OnMouseMove(event) {
         if (event) {
             if (event.which == 1) {
-                var element = document.getElementById(
-                    this.DocumentViewerImageId
-                );
+                var element = document.getElementById(this.DocumentViewerImageId);
 
                 //console.log("[EVENT] MouseMove, ", event);
                 //console.log("[crd] scrollTop, ", element.scrollTop);
                 //console.log("[crd] scrollLeft, ", element.scrollLeft);
                 var deltaY;
                 var deltaX;
+
 
                 //if (this.RotationAngle == 180 ) {
                 //    deltaY = (this.lastOffsetY - event.offsetY) * -1 ;
@@ -1004,25 +910,17 @@ export class DeclarationSplitComponent
                 element.scrollTop += deltaY;
                 element.scrollLeft += deltaX;
 
-                console.log('--------------------------');
-                console.log(
-                    '[scrollTop] Y: ' +
-                        this.lastOffsetY +
-                        '-' +
-                        event.offsetY +
-                        '=' +
-                        deltaY
-                );
-                console.log(
-                    '[scrollLeft] X: ' +
-                        this.lastOffsetX +
-                        '-' +
-                        event.offsetX +
-                        '=' +
-                        deltaX
-                );
+
+                console.log("--------------------------");
+                console.log("[scrollTop] Y: " + this.lastOffsetY + "-" + event.offsetY + "=" + deltaY);
+                console.log("[scrollLeft] X: " + this.lastOffsetX + "-" + event.offsetX + "=" + deltaX);
+
+
+
             }
         }
+
+
     }
     /*@HostListener('contextmenu', ['$event'])
     onContextMenu(event: MouseEvent) {
@@ -1031,6 +929,9 @@ export class DeclarationSplitComponent
             window.open(`https://www.google.com/search?q=${this.selectedText}`);
         }
     }*/
+
+
+
 
     /*recognizeText() {
         // Calculate the coordinates of the selected area
@@ -1086,10 +987,13 @@ export class DeclarationSplitComponent
             this.startX = event.clientX;
             this.startY = event.clientY;
         }
+
+
+
     }
     //#endregion
 
-    DocumentFilterSelectedValue: string = 'customs';
+    DocumentFilterSelectedValue: string = "customs";
     DocumentFilterItemClicked(value: string) {
         this.DocumentFilterSelectedValue = value;
         this.LoadDocuments();
