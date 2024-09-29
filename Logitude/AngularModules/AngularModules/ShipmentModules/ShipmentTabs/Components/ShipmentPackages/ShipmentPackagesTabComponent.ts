@@ -10,6 +10,7 @@ import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
 import { Validator } from "Infrastructure/Validators/Validator";
 import { ShipmentPackagePM } from "Shipment/EntityPMs/ShipmentPackagePM";
+import { ShipmentPM } from "Shipment/EntityPMs/ShipmentPM";
 
 @Component({
     templateUrl: './ShipmentPackagesTabComponent.html',
@@ -31,6 +32,8 @@ export class ShipmentPackagesTabComponent extends BaseComponent implements OnIni
         this.ItemsSource = new ObservableCollection([]);
         this.EntityPM = this.entityArgs.EntityPM;
         this.DisplayOnlyCheck();
+        this.Listen();
+
 
     }
 
@@ -41,17 +44,38 @@ export class ShipmentPackagesTabComponent extends BaseComponent implements OnIni
     }
 
     DisplayOnlyCheck() {
-        if (this.EntityPM.ShipmentTypeId == "LCLD") {
+        if (this.EntityPM.ShipmentTypeId != "FCLD") {
             this.IsDisplayOnly = true;
             this.IsDisplayMessage = true;
             this.DisplayOnlyMessage = TextCodeTranslator.Translate("ShipmentPackage.O.DisplayOnlyMessage");
             return;
-        } else if (this.EntityPM.ShipmentTypeId == "FCLD") {
-            return;
-        }
-
-
+        } 
     }
+
+    private SessionEvent: any = null;
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
+    Listen() {
+        if (this.entityArgs.EditComponent) {
+            this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                if (isSaveSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.InitializeShipmentPackage();
+                }
+            });
+
+            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                if (isLoadSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                }
+            });
+        }
+    }
+
+    InitializeShipmentPackage() {
+            this.BuildItemsList();  
+    }
+
 
 
     ngOnInit() {
@@ -109,11 +133,21 @@ export class ShipmentPackagesTabComponent extends BaseComponent implements OnIni
         }
     }
 
+    public get ShipmentPackages() { return this.EntityPM.ShipmentPackages; }
+    public set ShipmentPackages(newValue: ShipmentPackagePM[]) {
+        if (this.EntityPM.ShipmentPackages != newValue) {
+            this.EntityPM.ShipmentPackages = newValue;
+        }
+    }
+
 
 }
 
 export class ShipmentPackageItemLine extends BaseComponent {
     public entityPM: ShipmentPackagePM = null;
+    public ShipmentPM: ShipmentPM;
+    public ObjectTableName: string = "ShipmentPackage";
+
     public DataContext = this;
     Parent: ShipmentPackagesTabComponent;
     public index: number;
@@ -121,6 +155,8 @@ export class ShipmentPackageItemLine extends BaseComponent {
         super();
         this.entityPM = EntityPM;
         this.Parent = parent;
+        this.ShipmentPM = parent.EntityPM;
+
         this.index = index;
         this.UIProperties.SetRequired("ContainerNumber", "ShipmentPackages");
 
@@ -148,13 +184,17 @@ export class ShipmentPackageItemLine extends BaseComponent {
 
     public get ContainerNumber() { return this.entityPM.ContainerNumber; }
     public set ContainerNumber(value: string) {
-        this.entityPM.ContainerNumber = value;
+        if (this.entityPM.ContainerNumber !== value) {
+            this.entityPM.ContainerNumber = value;
+            this.MarkShipmentAsDirty();
+        }
     }
 
     public get PackageTypeId() { return this.entityPM.PackageTypeId; }
     public set PackageTypeId(newValue: string) {
         if (this.entityPM.PackageTypeId != newValue) {
             this.entityPM.PackageTypeId = newValue;
+            this.MarkShipmentAsDirty();
             if (AppTool.IsNullOrEmpty(newValue)) {
                 this.entityPM.PackageTypeName = null;
             }
@@ -167,7 +207,6 @@ export class ShipmentPackageItemLine extends BaseComponent {
                         var myPackageTypeList: PackageTypeList = myResponse.Result;
                         if (myPackageTypeList != null) {
                             this.PackageTypeName = myPackageTypeList.LocalName;
-                            
                         }
                     }
                 });
@@ -176,13 +215,31 @@ export class ShipmentPackageItemLine extends BaseComponent {
     }
 
     public get PackageTypeName() { return this.entityPM.PackageTypeName; }
-    public set PackageTypeName(value: string) { this.entityPM.PackageTypeName = value; }
-
+    public set PackageTypeName(value: string) {
+        if (this.entityPM.PackageTypeName !== value) {
+            this.entityPM.PackageTypeName = value;
+        }
+    }
+    
 
 
     public get ShipperSeal() { return this.entityPM.ShipperSeal; }
-    public set ShipperSeal(value: string) { this.entityPM.ShipperSeal = value; }
+    public set ShipperSeal(value: string) {
+        if (this.entityPM.ShipperSeal !== value) {
+            this.entityPM.ShipperSeal = value;
+            this.MarkShipmentAsDirty();
+        }
+    }
 
     public get Weight() { return this.entityPM.Weight; }
-    public set Weight(value: number) { this.entityPM.Weight = value; }
+    public set Weight(value: number) {
+        if (this.entityPM.Weight !== value) {
+            this.entityPM.Weight = value;
+            this.MarkShipmentAsDirty();
+        }
+    }
+
+    public MarkShipmentAsDirty() {
+        this.ShipmentPM.MarkAsDirty("ShipmentPackages");
+    }
 }
