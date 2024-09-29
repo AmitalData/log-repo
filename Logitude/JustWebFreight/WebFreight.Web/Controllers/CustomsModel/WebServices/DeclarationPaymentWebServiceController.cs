@@ -42,7 +42,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
     {
 
     
-        public HttpResponseMessage PostAnswerCheckFileCredit(int tenant , string  response)
+        public HttpResponseMessage PostResponseCheckFileCredit(int tenant , string  response)
 		{
 			try
 			{
