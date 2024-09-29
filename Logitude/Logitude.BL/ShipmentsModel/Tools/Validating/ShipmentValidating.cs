@@ -1471,11 +1471,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
         public static void ValidateCustomShipment(ShipmentPM entityPM, bool isNewEntity)
         {
-            if (string.IsNullOrEmpty(entityPM.DepartmentId))
+            if (string.IsNullOrEmpty(entityPM.DepartmentId) && isNewEntity)
             {
                 throw new ApplicationException("DepartmentId is mandatory");
             }
-            if (string.IsNullOrEmpty(entityPM.CustomerId))
+            if (string.IsNullOrEmpty(entityPM.CustomerId) && isNewEntity)
             {
                 throw new ApplicationException("CustomerId is mandatory");
             }
@@ -1506,14 +1506,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
         }
-        public static List<MessageDetails> ValidateCheckAndConnectCustomShipment(ShipmentPM entityPM)
+        public static List<MessageDetails> ValidateCheckAndConnectCustomShipment(ShipmentPM entityPM, Shipment shipment)
         {
-            // get shipment, its freight forwarder reference and declaration referant data
-            ShipmentRepository shipmentRepository = new ShipmentRepository(entityPM.Tenant);
-            Shipment shipment = shipmentRepository.GetSingleShipmentByShipmentNumber(entityPM.ShipmentNumber, entityPM.Tenant);
-
+            // get shipment freight forwarder reference and declaration referant data
             FreightForwarderReferenceRepository freightForwarderReferenceRepository = new FreightForwarderReferenceRepository(entityPM.Tenant);
-            FreightForwarderReference freightForwarderReferenceList = freightForwarderReferenceRepository.GetByShipmentNumber(entityPM.ShipmentNumber, entityPM.Tenant).FirstOrDefault();
+            FreightForwarderReference freightForwarderReferenceList = freightForwarderReferenceRepository.GetByForwarderShipmentNumber(entityPM.ForwarderShipmentNumber, entityPM.Tenant).FirstOrDefault();
 
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
             string decId = declarationQueryService.GetIdByCustomFileNo(entityPM.ShipmentNumber, entityPM.Tenant);
@@ -1522,40 +1519,33 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
             List<MessageDetails> messageDetailsList = new List<MessageDetails>();
 
-            if (shipment == null)
+            if (entityPM.CustomerId != shipment.CustomerId)
             {
-                messageDetailsList.Add(MessageDetailsProvider.NotFoundShipmentNumber);
+                messageDetailsList.Add(MessageDetailsProvider.NotMatchedCustomerId);
             }
-            else
+            if (entityPM.ShipmentNumber == freightForwarderReferenceList?.ForwarderShipmentNumber && entityPM.FreightForwarderId == shipment.FreightForwarderId)
             {
-                if (entityPM.CustomerId != shipment.CustomerId)
-                {
-                    messageDetailsList.Add(MessageDetailsProvider.NotMatchedCustomerId);
-                }
-                else if (entityPM.ShipmentNumber == freightForwarderReferenceList?.ShipmentNumber.ToString() && entityPM.FreightForwarderId == shipment.FreightForwarderId)
-                {
-                    messageDetailsList.Add(MessageDetailsProvider.CustomFileAlreadyLinked);
-                }
-                else if (!string.IsNullOrEmpty(shipment.TransportModeId) && entityPM.TransportModeId != shipment.TransportModeId)
-                {
-                    messageDetailsList.Add(MessageDetailsProvider.NotMatchedTransportModeId);
-                }
-                else if (!string.IsNullOrEmpty(declarationReferantDataPM?.CarrierCode) && entityPM.CarrierCode != declarationReferantDataPM.CarrierCode)
-                {
-                    messageDetailsList.Add(MessageDetailsProvider.NotMatchedCarrierCode);
-                }
-                else if (!string.IsNullOrEmpty(declarationReferantDataPM?.Mawb) && entityPM.Mawb != declarationReferantDataPM.Mawb)
-                {
-                    messageDetailsList.Add(MessageDetailsProvider.NotMatchedMawb);
-                }
-                else if (!string.IsNullOrEmpty(shipment.House) && entityPM.House != shipment.House)
-                {
-                    messageDetailsList.Add(MessageDetailsProvider.NotMatchedHouse);
-                }
-                else if (!string.IsNullOrEmpty(shipment.IskaNumber) && entityPM.IskaNumber != shipment.IskaNumber)
-                {
-                    messageDetailsList.Add(MessageDetailsProvider.NotMatchedIskaNumber);
-                }
+                messageDetailsList.Add(MessageDetailsProvider.CustomFileAlreadyLinked);
+            }
+            if (!string.IsNullOrEmpty(shipment.TransportModeId) && entityPM.TransportModeId != shipment.TransportModeId)
+            {
+                messageDetailsList.Add(MessageDetailsProvider.NotMatchedTransportModeId);
+            }
+            if (!string.IsNullOrEmpty(declarationReferantDataPM?.CarrierCode) && entityPM.CarrierCode != declarationReferantDataPM.CarrierCode)
+            {
+                messageDetailsList.Add(MessageDetailsProvider.NotMatchedCarrierCode);
+            }
+            if (!string.IsNullOrEmpty(declarationReferantDataPM?.Mawb) && entityPM.Mawb != declarationReferantDataPM.Mawb)
+            {
+                messageDetailsList.Add(MessageDetailsProvider.NotMatchedMawb);
+            }
+            if (!string.IsNullOrEmpty(shipment.House) && entityPM.House != shipment.House)
+            {
+                messageDetailsList.Add(MessageDetailsProvider.NotMatchedHouse);
+            }
+            if (!string.IsNullOrEmpty(shipment.IskaNumber) && entityPM.IskaNumber != shipment.IskaNumber)
+            {
+                messageDetailsList.Add(MessageDetailsProvider.NotMatchedIskaNumber);
             }
             return messageDetailsList;
         }
@@ -1574,6 +1564,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 { "NotMatchedIskaNumber", new MessageDetails { MessageType = MessageTypeEnum.Warning, MessageCode = 8, MessageData = "מזהה עיסקה פנימי לא זהה" } },
                 { "FoundShipment", new MessageDetails { MessageType = MessageTypeEnum.Error, MessageCode = 9, MessageData = "אותר תיק עמילות" } },
                 { "FoundMultipleShipments", new MessageDetails { MessageType = MessageTypeEnum.Error, MessageCode = 10, MessageData = "אותרו כמה תיקי עמילות מתאימים לחיבור" } },
+                { "LinkedToAnotherForwarderShipment", new MessageDetails { MessageType = MessageTypeEnum.Error, MessageCode = 11, MessageData = "תיק עמילות {CustomShipmentNumber} מחובר לתיק שילוח {ForwarderShipmentNumber}" } },
             };
 
             public static MessageDetails NotFoundShipmentNumber => PredefinedMessageDetailsList["NotFoundShipmentNumber"];
@@ -1586,19 +1577,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             public static MessageDetails NotMatchedIskaNumber => PredefinedMessageDetailsList["NotMatchedIskaNumber"];
             public static MessageDetails FoundShipment => PredefinedMessageDetailsList["FoundShipment"];
             public static MessageDetails FoundMultipleShipments => PredefinedMessageDetailsList["FoundMultipleShipments"];
+            public static MessageDetails LinkedToAnotherForwarderShipment => PredefinedMessageDetailsList["LinkedToAnotherForwarderShipment"];
         }
 
         public class MessageDetails
         {
-            public MessageTypeEnum MessageType { get; set; }
+            public string MessageType { get; set; }
             public int MessageCode { get; set; }
             public string MessageData { get; set; }
         }
 
-        public enum MessageTypeEnum
+        public static class MessageTypeEnum
         {
-            Error,
-            Warning
+            public const string Error = "Error";
+            public const string Warning = "Warning";
         }
 
         public static void ValidateContainerNumbers(ShipmentPM entityPM)

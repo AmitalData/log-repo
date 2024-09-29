@@ -970,7 +970,7 @@ namespace Simplog.Data.ShipmentsModel.Mocks
         public IDbSet<OceanInsightsStatusLog> OceanInsightsStatusLogs { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public IDbSet<ReferenceType> ReferenceTypes => throw new NotImplementedException();
-
         public IDbSet<ShipmentReferance> ShipmentReferances => throw new NotImplementedException();
+        public IDbSet<FreightForwarderReference> FreightForwarderReferences => throw new NotImplementedException();
     }
 }

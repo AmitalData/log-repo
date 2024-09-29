@@ -283,6 +283,7 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new SharedLogisticsInvitationStatusMap());
             modelBuilder.Configurations.Add(new ShipmentPackageItemMap());
             modelBuilder.Configurations.Add(new ShipmentReferanceMap());
+            modelBuilder.Configurations.Add(new FreightForwarderReferenceMap());
             modelBuilder.Configurations.Add(new ReferenceTypeMap());
             modelBuilder.Configurations.Add(new IndustryMap());
             modelBuilder.Configurations.Add(new LeadSourceMap());
@@ -497,6 +498,7 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<ShipmentDocsField> ShipmentDocsFields { get; set; }
         public IDbSet<ReferenceType> ReferenceTypes { get; set; }
         public IDbSet<ShipmentReferance> ShipmentReferances { get; set; }
+        public IDbSet<FreightForwarderReference> FreightForwarderReferences { get; set; }
 
         public void SetAsModified(object entity)
         {

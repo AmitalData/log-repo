@@ -99,6 +99,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private ShipmentAWBPrintOnlyRepository shipmentAWBPrintOnlyRepository;
         private ShipmentReceivableRepository shipmentReceivableRepository;
         private ShipmentPayableRepository shipmentPayableRepository;
+        private FreightForwarderReferenceRepository freightForwarderReferenceRepository;
         private ShipmentPackageItemRepository shipmentPackageItemRepository;
         private ShipmentPackageHarmonizeRepository shipmentPackageHarmonizeRepository;
         private PickUpDeliveryPackageHarmonizeRepository pickUpDeliveryPackageHarmonizeRepository;
@@ -175,6 +176,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.shipmentAWBPrintOnlyRepository = new ShipmentAWBPrintOnlyRepository(objectContext);
             this.shipmentReceivableRepository = new ShipmentReceivableRepository(objectContext);
             this.shipmentPayableRepository = new ShipmentPayableRepository(objectContext);
+            this.freightForwarderReferenceRepository = new FreightForwarderReferenceRepository(objectContext);
             this.pickUpDeliveryPackageHarmonizeRepository = new PickUpDeliveryPackageHarmonizeRepository(objectContext);
             this.shipmentCarrierStatusRepository = new ShipmentCarrierStatusRepository(objectContext);
             this.followUpRepository = new FollowUpRepository(tenant);
@@ -568,6 +570,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     scope.Complete();
                 }
+            }
+            catch (ValidationException ex)
+            {
+                string message = ex is MessageDetailsValidationException detailsEx ? string.Join(", ", detailsEx.MessageDetails.Select(a => a.MessageCode)) : ex.Message;
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"Validation failure on create shipment: {message}");
+                throw ex;
             }
             catch (Exception ex)
             {
@@ -1050,15 +1058,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
                         if (string.IsNullOrWhiteSpace(entityPM.ShipmentNumber))
                         {
-                            throw new MessageDetailsValidationException(ShipmentValidating.MessageDetailsProvider.NotFoundShipmentNumber);
+                            throw new ValidationException("missing ShipmentNumber");
                         }
 
-                        messageDetailsList = ShipmentValidating.ValidateCheckAndConnectCustomShipment(entityPM);
+                        messageDetailsList = ShipmentValidating.ValidateCheckAndConnectCustomShipment(entityPM, entityPoco);
 
                         var errorMessages = messageDetailsList.Where(d => d.MessageType == ShipmentValidating.MessageTypeEnum.Error);
                         if (errorMessages.Count() > 0)
                         {
-                            throw new MessageDetailsValidationException(errorMessages.First());
+                            throw new MessageDetailsValidationException(errorMessages.ToList());
                         }
 
                         ShipmentMapping.MapEntityForUpdate(entityPM, entityPoco, FieldChanges);
@@ -1077,11 +1085,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     if (additionalShipmentData?.ActionCode == ActionCode.CheckAndConnect)
                     {
-                        FreightForwarderReferenceRepository freightForwarderReferenceRepository = new FreightForwarderReferenceRepository(entityPM.Tenant);
                         FreightForwarderReference freightForwarderReference = new FreightForwarderReference()
                         {
                             Tenant = entityPM.Tenant,
-                            ShipmentNumber = int.Parse(entityPM.ShipmentNumber),
+                            ForwarderShipmentNumber = entityPM.ForwarderShipmentNumber,
+                            ForwarderFileConnect = true,
                             ShipmentId = entityPM.Id,
                         };
                         freightForwarderReferenceRepository.Add(freightForwarderReference);
@@ -1121,6 +1129,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 InsertInShipmnetUpdateLog(1);
 
                 return messageDetailsList;
+            }
+            catch (ValidationException ex)
+            {
+                string message = ex is MessageDetailsValidationException detailsEx? string.Join(", ", detailsEx.MessageDetails.Select(a => a.MessageCode)): ex.Message;
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"Validation failure on update shipment: {message}");
+                throw ex;
             }
             catch (Exception ex)
             {
@@ -1231,6 +1245,68 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             };
 
             return auditLog;
+        }
+
+        public void DisconnectCustomShipment()
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    if (string.IsNullOrEmpty(entityPM.ShipmentNumber) || string.IsNullOrEmpty(entityPM.ForwarderShipmentNumber))
+                    {
+                        throw new ValidationException("missing ShipmentNumber / ForwarderShipmentNumber");
+                    }
+
+                    // get custom shipment and the linked forwarder shipment
+                    ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                    var shipment = shipmentQuery.GetCustomShipmentsWithFreightForwarderByShipmentNumber(tenant, entityPM.ShipmentNumber);
+
+                    if (!string.IsNullOrEmpty(shipment?.ForwarderShipmentNumber))
+                    {
+                        // if the custom shipment is linked to a forwarder shipment different from this in input
+                        if (shipment.ForwarderShipmentNumber != entityPM.ForwarderShipmentNumber)
+                        {
+                            throw new MessageDetailsValidationException(ShipmentValidating.MessageDetailsProvider.LinkedToAnotherForwarderShipment, new List<string> { shipment.CustomShipmentNumber }, shipment.ForwarderShipmentNumber);
+                        }
+                        else
+                        {
+                            // remove the linked forwarder reference
+                            FreightForwarderReference freightForwarderReference = freightForwarderReferenceRepository.GetSingleFreightForwarderReference(tenant, shipment.ShipmentId);
+                            if (freightForwarderReference != null)
+                            {
+                                freightForwarderReferenceRepository.Remove(freightForwarderReference);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        entityPoco.FreightForwarderId = null;
+                        entityRepository.Update(entityPoco);
+                        entityRepository.SubmitChanges();
+                    }
+
+                    scope.Complete();
+                }
+            }
+            catch (ValidationException ex)
+            {
+                string message = ex is MessageDetailsValidationException detailsEx ? string.Join(", ", detailsEx.MessageDetails.Select(a => a.MessageCode)) : ex.Message;
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"Validation failure on disconnect shipment: {message}");
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                string errorMessage = ex.Message + Environment.NewLine;
+                if (ex.InnerException != null)
+                {
+                    errorMessage = errorMessage + " (" + (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) + ")" + Environment.NewLine;
+                }
+                errorMessage = errorMessage + ex.StackTrace + Environment.NewLine;
+                InsertInShipmnetUpdateLog(-1, errorMessage);
+                NetCommonHelper.Logger.DevLog.Instance.WriteError($"Error when disconnecting custom shipment: {errorMessage}");
+                throw ex;
+            }
         }
 
         private void RunAutomationThatDependencyOnLastEntityUpdate()
@@ -8671,12 +8747,33 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
     }
     public class MessageDetailsValidationException : ValidationException
     {
-        public ShipmentValidating.MessageDetails MessageDetails { get; }
+        public List<ShipmentValidating.MessageDetails> MessageDetails { get; }
         public List<string> CustomsFile { get; }
-        public MessageDetailsValidationException(ShipmentValidating.MessageDetails messageDetails, List<string> customsFile = null)
+        public string ForwarderShipmentNumber { get; }
+        public MessageDetailsValidationException(ShipmentValidating.MessageDetails messageDetails, List<string> customsFile = null, string forwarderShipmentNumber = null)
         {
-            MessageDetails = messageDetails;
             CustomsFile = customsFile;
+            MessageDetails = new List<ShipmentValidating.MessageDetails> { 
+                this.PrepareMessageDetails(messageDetails, forwarderShipmentNumber, customsFile) 
+            };
+        }
+        public MessageDetailsValidationException(List<ShipmentValidating.MessageDetails> messageDetails, List<string> customsFile = null, string forwarderShipmentNumber = null)
+        {
+            CustomsFile = customsFile;
+            MessageDetails = new List<ShipmentValidating.MessageDetails> { };
+            messageDetails.ForEach(currentMessageDetails => MessageDetails.Add(this.PrepareMessageDetails(currentMessageDetails, forwarderShipmentNumber, customsFile)));
+        }
+        private ShipmentValidating.MessageDetails PrepareMessageDetails(ShipmentValidating.MessageDetails messageDetails, string forwarderShipmentNumber, List<string> customsFile)
+        {
+            if (!string.IsNullOrEmpty(forwarderShipmentNumber))
+            {
+                messageDetails.MessageData = messageDetails.MessageData.Replace("{ForwarderShipmentNumber}", forwarderShipmentNumber);
+            }
+            if (customsFile?.Count > 0)
+            {
+                messageDetails.MessageData = messageDetails.MessageData.Replace("{CustomShipmentNumber}", customsFile.First());
+            }
+            return messageDetails;
         }
     }
     public interface IAdditionalShipmentData
@@ -8685,5 +8782,5 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         string UnloadPortCode { get; set; }
         string StorageSiteCode { get; set; }
     }
-    public enum ActionCode { Empty = 0, CheckAndConnect = 1, NewCustomsFile = 2, NewCustomsFileAfterCheck = 3, Disconnect = 9 }
+    public enum ActionCode { CheckAndConnect = 1, NewCustomsFile = 2, NewCustomsFileAfterCheck = 3, Disconnect = 9 }
 }

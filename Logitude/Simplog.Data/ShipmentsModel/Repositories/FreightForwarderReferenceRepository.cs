@@ -52,6 +52,14 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return myResult;
         }
 
+        public List<FreightForwarderReference> GetByForwarderShipmentNumber(string forwarderShipmentNumber, int tenant)
+        {
+            IQueryable<FreightForwarderReference> query = (from a in context.FreightForwarderReferences
+                                                           where a.ForwarderShipmentNumber == forwarderShipmentNumber && a.Tenant == tenant
+                                                           select a);
+            return query.ToList();
+        }
+
         public void Add(FreightForwarderReference entity)
         {
             context.FreightForwarderReferences.Add(entity);

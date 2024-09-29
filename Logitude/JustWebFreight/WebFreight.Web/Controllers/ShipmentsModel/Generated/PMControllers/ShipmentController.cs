@@ -54,6 +54,7 @@ using System.Runtime.Remoting.Messaging;
 using Logitude.Customs.Def.EntityPMs;
 using ActionCode = Logitude.BL.ShipmentsModel.Tools.EntityService.ActionCode;
 using static Logitude.BL.ShipmentsModel.Tools.Validating.ShipmentValidating;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
@@ -183,33 +184,43 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                     SecurityUtility.AuthenticationOnTenant(tenant);
                     SecurityUtility.AuthenticationOnEntityTenant("Shipment", customEntityPM.Tenant, authToken.Tenant);
 
+                    if (customEntityPM.ActionCode == ActionCode.Disconnect || customEntityPM.ActionCode == ActionCode.CheckAndConnect)
+                    {
+                        // get the existing shipment to set it in entityPoco
+                        ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+                        customEntityPM.Id = shipmentRepository.GetShipmentIdByShipmentNumber(customEntityPM.ShipmentNumber, tenant);
+                        if (string.IsNullOrEmpty(customEntityPM.Id))
+                        {
+                            throw new MessageDetailsValidationException(MessageDetailsProvider.NotFoundShipmentNumber);
+                        }
+                    }
+
                     customEntityPM.IsCustomShipment = true;
                     IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
                     ShipmentService service = new ShipmentService(objectContext, customEntityPM, SecurityUtility.GetAuthenticatedUser());
 
                     List<MessageDetails> response;
-                    IAdditionalShipmentData additionalShipmentData = customEntityPM;
                     ICustomResponse customResponse = new ICustomResponse();
 
-                    if (customEntityPM.ActionCode == ActionCode.CheckAndConnect)
+                    switch (customEntityPM.ActionCode)
                     {
-                        response = service.UpdateCustomShipment(additionalShipmentData: additionalShipmentData);
+                        case ActionCode.Disconnect:
+                            service.DisconnectCustomShipment();
+                            break;
 
-                        customResponse.MessageDetails = response.Where(d => d.MessageType == MessageTypeEnum.Warning).FirstOrDefault();
-                    }
-                    else if (customEntityPM.ActionCode == ActionCode.NewCustomsFile || customEntityPM.ActionCode == ActionCode.NewCustomsFileAfterCheck)
-                    {
-                        service.CreateCustomShipment(additionalShipmentData: additionalShipmentData);
-                    }
-                    else if (customEntityPM.ActionCode == ActionCode.Disconnect)
-                    {
-                        // todo: service.Disconnect();
-                    }
-                    else
-                    {
-                        throw new Exception("Action code not supported");
-                    }
+                        case ActionCode.CheckAndConnect:
+                            response = service.UpdateCustomShipment(additionalShipmentData: customEntityPM);
+                            customResponse.MessageDetails = response.Where(d => d.MessageType == MessageTypeEnum.Warning).ToList();
+                            break;
 
+                        case ActionCode.NewCustomsFile:
+                        case ActionCode.NewCustomsFileAfterCheck:
+                            service.CreateCustomShipment(additionalShipmentData: customEntityPM);
+                            break;
+
+                        default:
+                            throw new ValidationException("Action code not supported");
+                    }
                     scope.Complete();
 
                     customResponse.Success = true;
@@ -222,16 +233,14 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 ICustomResponse customResponse = new ICustomResponse()
                 {
                     Success = false,
-                    MessageDetails = ex.MessageDetails
+                    MessageDetails = ex.MessageDetails,
+                    CustomsFile = ex.CustomsFile != null? ex.CustomsFile: null
                 };
-
-                if (ex.CustomsFile != null)
-                {
-                    customResponse.CustomsFile = ex.CustomsFile;
-                }
-                NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"Client error: {customResponse.MessageDetails}");
-
                 return Request.CreateResponse(HttpStatusCode.BadRequest, customResponse);
+            }
+            catch (ValidationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
             catch (Exception ex)
             {
@@ -250,7 +259,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
         {
             public bool Success { get; set; }
             public List<string> CustomsFile { get; set; }
-            public MessageDetails MessageDetails { get; set; }
+            public List<MessageDetails> MessageDetails { get; set; }
         }
 
         public HttpResponseMessage Put(ShipmentPM entityPM)
