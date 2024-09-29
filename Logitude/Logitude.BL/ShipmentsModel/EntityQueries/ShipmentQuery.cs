@@ -15938,6 +15938,25 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         }
 
+        public CustomShipmentLinkedFreightForwarder GetCustomShipmentsWithFreightForwarderByShipmentNumber(int tenant, string shipmentNumber)
+        {
+            IQueryable<CustomShipmentLinkedFreightForwarder> query = (from record in repository.context.Shipments
+                                                                      
+                                                                      join ffr in repository.context.FreightForwarderReferences
+                                                                      on record.Id equals ffr.ShipmentId into ffrJoin
+                                                                      from freightForwarderReferences in ffrJoin.DefaultIfEmpty()
+
+                                                                      where record.Tenant == tenant && record.ShipmentNumber == shipmentNumber
+                                                                      select new CustomShipmentLinkedFreightForwarder
+                                                                      {
+                                                                          ShipmentId = record.Id,
+                                                                          CustomShipmentNumber = record.ShipmentNumber,
+                                                                          ForwarderShipmentNumber = freightForwarderReferences != null ? freightForwarderReferences.ForwarderShipmentNumber : null
+                                                                      });
+            return query.FirstOrDefault();
+        }
+
+
         public ShipmentAdditionalCloudData GetShipmentAdditionalCloudData(string shipmentId, int tenant)
         {
             Shipment shipment = repository.GetShipmentForCargoTracking(shipmentId, tenant);
@@ -16775,6 +16794,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public decimal TaxAmount { get; set; }
     }
 
+    public class CustomShipmentLinkedFreightForwarder
+    {
+        public string ShipmentId { get; set; }
+        public string CustomShipmentNumber { get; set; }
+        public string ForwarderShipmentNumber { get; set; }
+    }
 
     public class DeparturesArrivalsDataItem
     {

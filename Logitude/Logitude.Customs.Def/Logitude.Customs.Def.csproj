@@ -155,7 +155,6 @@
     <Compile Include="EntityPMs\Generated\CustomsItemHierarchicLocationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DiscountTypeRegulationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\EntryExitTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\FreightForwarderReferencePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\InceptionCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\InterConditionsRelationshipPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\NUnicloudPM.Generated.cs" />

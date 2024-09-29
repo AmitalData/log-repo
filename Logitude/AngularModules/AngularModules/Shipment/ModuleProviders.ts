@@ -44,6 +44,7 @@ import { ContainerTrackingProviderPMService } from './Services/StandardPMs/Conta
 import { ContainerStatusSourceListService } from './Services/StandardLists/ContainerStatusSourceListService';
 import { ContainerTrackingProviderMenuButtonsHandler } from './Components/MenuButtons/ContainerTrackingProviderMenuButtonsHandler';
 import { AWBAdditionalHandlingInfoPMService } from './Services/StandardPMs/AWBAdditionalHandlingInfoPMService';
+import { FreightForwarderReferenceListService } from './Services/StandardLists/FreightForwarderReferenceListService';
  
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -69,6 +70,7 @@ export class ModuleProviders {
             case "ShipmentReceivableStatusListService": { myResult = new ShipmentReceivableStatusListService(); break; }
             case "ShipmentTypeListService": { myResult = new ShipmentTypeListService(); break; }
             case "ReferenceTypeListService": { myResult = new ReferenceTypeListService(); break; }
+            case "FreightForwarderReferenceListService": { myResult = new FreightForwarderReferenceListService(); break; }
             case "SpecialServicesTypeListService": { myResult = new SpecialServicesTypeListService(); break; }
             case "ShipmentFollowUpListService": { myResult = new ShipmentFollowUpListService(); break; }
             case "ContainerFollowUpPMService": { myResult = new ContainerFollowUpPMService(); break; }

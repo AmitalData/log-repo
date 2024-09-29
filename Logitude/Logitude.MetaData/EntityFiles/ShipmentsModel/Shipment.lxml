@@ -111950,6 +111950,19 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+    <EventType
+      Code="&quot;CONF&quot;"
+      ObjectTableName="&quot;Shipment&quot;"
+      EnglishName="&quot;Linked custom shipment&quot;"
+      LocalName="&quot;קישור תיק שילוח לתיק עמילות&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons
