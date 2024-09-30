@@ -89,7 +89,9 @@ public dynamic GetBaseUsingNameSpace(string destinationFolder)
 	string spacestring = "";
 	string[] path = destinationFolder.Split('/');
 
-		 if(modelName == "CommonDataModel" 	|| modelName == "GlobalModel" || modelName == "InfrastructureModel" ||modelName == "QuoteModel"	||modelName == "InvoiceModel" )
+		 if(modelName == "CommonDataModel" 	|| modelName == "GlobalModel" || modelName == "InfrastructureModel" ||modelName == "QuoteModel"	||modelName == "InvoiceModel"
+		 ||modelName == "CustomsModel"
+		 )
 		 {
 		   return spacestring;
 		 }
@@ -98,9 +100,7 @@ public dynamic GetBaseUsingNameSpace(string destinationFolder)
 		 if(modelName == "AccountingModel" //||modelName == "CommonDataModel" 
 		 ||modelName == "InvoiceModel" ||modelName == "QuoteModel" ||modelName == "Infrastructure"  ||modelName ==  "CargoTrackingModel"
 		 || modelName == "GlobalModel" || modelName == "CRMModel" || modelName == "TariffModule" || modelName == "Workflow"
-		  || modelName =="TimeManagement" 
-		 
-		 )
+		  || modelName =="CustomsModel"  )
 		 {
 		   spacestring =    "Logitude."+ modelName.Replace("Model","") +".";
 		   return spacestring;
