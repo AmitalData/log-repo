@@ -1382,7 +1382,6 @@
     <Compile Include="EntityDataMappings\VendorTypeDataMapping.cs" />
     <Compile Include="EntityQueryServiceExt\CustomsDocumentQueryServiceExt.cs" />
     <Compile Include="EntityQueryServices\CargoIdentifireTypeQueryService.cs" />
-     <Compile Include="EntityQueryServices\Generated\FreightForwarderReferenceQueryService.Generated.cs" />
      <Compile Include="EntityQueryServices\CB_RuleQueryService.cs" />
      <Compile Include="EntityQueryServices\RemarksClassificationQueryService.cs" />
     <Compile Include="EntityQueryServices\CB_CustomsItemComputedDataQueryService.cs" />
