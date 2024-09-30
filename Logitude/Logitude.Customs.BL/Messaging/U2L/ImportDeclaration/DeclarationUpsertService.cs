@@ -1733,12 +1733,16 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
             if (invoiceItem.Certificats != null)
             {
-                SupplierInvioceItemCertificatPM supplierInvioceItemCertificatPM = InitSupplierInvoiceItemCertificate(invoiceItem.Certificats);
-				if (supplierInvioceItemCertificatPM != null)
-                {
-                    AppendLogLine("add SupplierInvioceItemCertificats");
-                    supplierInvoiceItem.SupplierInvioceItemCertificats = new List<SupplierInvioceItemCertificatPM>() { supplierInvioceItemCertificatPM };
-                }
+                supplierInvoiceItem.SupplierInvioceItemCertificats = new List<SupplierInvioceItemCertificatPM>();
+				foreach (var item in invoiceItem.Certificats.Certificat)
+				{
+					SupplierInvioceItemCertificatPM supplierInvioceItemCertificatPM = InitSupplierInvoiceItemCertificate(item);
+					if (supplierInvioceItemCertificatPM != null)
+					{
+						AppendLogLine("add SupplierInvioceItemCertificats");
+						supplierInvoiceItem.SupplierInvioceItemCertificats.Add(supplierInvioceItemCertificatPM);
+					}
+				}
             }
             if (invoiceItem.ConnectedDeclarations?.connectedDeclaration != null &&_MyDeclarationPM.IsDiamondDeclaration)
             {
@@ -1758,7 +1762,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             return supplierInvoiceItem;
         }
 
-		private SupplierInvioceItemCertificatPM InitSupplierInvoiceItemCertificate(ExportInvoiceItemCertificats invoiceItemCertificate)
+		private SupplierInvioceItemCertificatPM InitSupplierInvoiceItemCertificate(ExportInvoiceItemCertificat invoiceItemCertificate)
 		{
 			if (string.IsNullOrEmpty(invoiceItemCertificate.CertificateTypeCode) || string.IsNullOrEmpty(invoiceItemCertificate.AtachmentTypeCode) ||
 				(string.IsNullOrEmpty(invoiceItemCertificate.CertificateNumber) && string.IsNullOrEmpty(invoiceItemCertificate.Certificateexemptiontypecode)))

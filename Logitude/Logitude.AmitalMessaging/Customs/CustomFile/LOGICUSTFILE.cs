@@ -1613,7 +1613,7 @@ public class ExportInvoiceItem
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGICUSTFILE")]
 [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGICUSTFILE", IsNullable = false)]
-public class ExportInvoiceItemCertificats
+public class ExportInvoiceItemCertificat
 {
     private string certificateTypeCodeField;
     private string atachmentTypeCodeField;
@@ -1927,6 +1927,32 @@ public class ConnectedDeclarations
         set
         {
             this.connectedDeclarationField = value;
+        }
+    }
+}
+
+
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGICUSTFILE")]
+[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGICUSTFILE", IsNullable = false)]
+public class ExportInvoiceItemCertificats
+{
+    private ExportInvoiceItemCertificat[] certificatField;
+
+    [System.Xml.Serialization.XmlElementAttribute("Certificat")]
+
+    public ExportInvoiceItemCertificat[] Certificat
+    {
+        get
+        {
+            return this.certificatField;
+        }
+        set
+        {
+            this.certificatField = value;
         }
     }
 }
