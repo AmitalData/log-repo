@@ -64,7 +64,7 @@ export class AccountingWorkspaceComponent {
        // }
        // var VendorsTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCVendors") && f.ObjectTableId == table.Id)[0];
         //if (VendorsTabFeature) {
-       //     this.IsVendorsTabVisibile = true;
+           this.IsVendorsTabVisibile = true;
        // }
        // var BanksTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCBanks") && f.ObjectTableId == table.Id)[0];
        // if (BanksTabFeature) {
