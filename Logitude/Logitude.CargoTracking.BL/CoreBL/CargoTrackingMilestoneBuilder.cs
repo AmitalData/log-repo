@@ -53,7 +53,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Code = CargoTrackingMilestoneValues.Created,
                 Name = created.EnglishName,
                 LocalName = created.LocalName,
-                Weight = shipment.DirectionId == "I" ? created.Weight.HasValue ? created.Weight.Value : 0 
+                Weight = (shipment.DirectionId == "I"|| shipment.DirectionId == "C") ? created.Weight.HasValue ? created.Weight.Value : 0 
                 : shipment.DirectionId == "E" ? created.ExportWeight.HasValue ? created.ExportWeight.Value : 0 : 0,
                 Date = shipment.CreateDate,
                 EstimationDate = null,
@@ -75,7 +75,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Code = CargoTrackingMilestoneValues.Booking,
                 Name = booking.EnglishName,
                 LocalName = booking.LocalName,
-                Weight = shipment.DirectionId == "I" ? booking.Weight.HasValue ? booking.Weight.Value : 0
+                Weight = (shipment.DirectionId == "I" || shipment.DirectionId == "C") ? booking.Weight.HasValue ? booking.Weight.Value : 0
                 : shipment.DirectionId == "E" ? booking.ExportWeight.HasValue ? booking.ExportWeight.Value : 0 : 0,
                 Date = shipment.BookingDate,
                 EstimationDate = shipment.BookingEstimationDate,
@@ -96,7 +96,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Code = CargoTrackingMilestoneValues.Pickup,
                 Name = pickup.EnglishName,
                 LocalName = pickup.LocalName,
-                Weight = shipment.DirectionId == "I" ? pickup.Weight.HasValue ? pickup.Weight.Value : 0 
+                Weight = (shipment.DirectionId == "I" || shipment.DirectionId == "C") ? pickup.Weight.HasValue ? pickup.Weight.Value : 0 
                 : shipment.DirectionId == "E" ? pickup.ExportWeight.HasValue ? pickup.ExportWeight.Value : 0 : 0,
                 Date = shipment.PickupDate,
                 EstimationDate = shipment.PickupEstimationDate,
@@ -138,7 +138,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Code = CargoTrackingMilestoneValues.Departure,
                 Name = departure.EnglishName,
                 LocalName = departure.LocalName,
-                Weight = shipment.DirectionId == "I" ? departure.Weight.HasValue ? departure.Weight.Value : 0 
+                Weight = (shipment.DirectionId == "I" || shipment.DirectionId == "C") ? departure.Weight.HasValue ? departure.Weight.Value : 0 
                 : shipment.DirectionId == "E" ? departure.ExportWeight.HasValue ? departure.ExportWeight.Value : 0 : 0,
                 Date = shipment.DepartureDate,
                 EstimationDate = shipment.DepartureEstimationDate,
@@ -159,7 +159,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Code = CargoTrackingMilestoneValues.Arrival,
                 Name = arrival.EnglishName,
                 LocalName = arrival.LocalName,
-                Weight = shipment.DirectionId == "I" ? arrival.Weight.HasValue ? arrival.Weight.Value : 0 
+                Weight = (shipment.DirectionId == "I" || shipment.DirectionId == "C") ? arrival.Weight.HasValue ? arrival.Weight.Value : 0 
                 : shipment.DirectionId == "E" ? arrival.ExportWeight.HasValue ? arrival.ExportWeight.Value : 0 : 0,
                 Date = shipment.ArrivalDate,
                 EstimationDate = shipment.ArrivalEstimationDate,
@@ -180,7 +180,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Code = CargoTrackingMilestoneValues.ToWarehouse,
                 Name = towarehouse.EnglishName,
                 LocalName = towarehouse.LocalName,
-                Weight = shipment.DirectionId == "I" ? towarehouse.Weight.HasValue ? towarehouse.Weight.Value : 0 
+                Weight = (shipment.DirectionId == "I" || shipment.DirectionId == "C") ? towarehouse.Weight.HasValue ? towarehouse.Weight.Value : 0 
                 : shipment.DirectionId == "E" ? towarehouse.ExportWeight.HasValue ? towarehouse.ExportWeight.Value : 0 : 0,
                 Date = shipment.ToWarehouseDate,
                 EstimationDate = shipment.ToWarehouseEstimationDate,
@@ -201,7 +201,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Code = CargoTrackingMilestoneValues.AssignedToCustomsBroker,
                 Name = assignedToCustomsBroker.EnglishName,
                 LocalName = assignedToCustomsBroker.LocalName,
-                Weight = shipment.DirectionId == "I" ? assignedToCustomsBroker.Weight.HasValue ? assignedToCustomsBroker.Weight.Value : 0 
+                Weight = (shipment.DirectionId == "I" || shipment.DirectionId == "C") ? assignedToCustomsBroker.Weight.HasValue ? assignedToCustomsBroker.Weight.Value : 0 
                 : shipment.DirectionId == "E" ? assignedToCustomsBroker.ExportWeight.HasValue ? assignedToCustomsBroker.ExportWeight.Value : 0 : 0,
                 Date = shipment.AssignedCustomsAgentDate,
                 EstimationDate = shipment.AssignedCustomsAgentEstDate,
@@ -222,7 +222,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Code = CargoTrackingMilestoneValues.CustomsProcess,
                 Name = customsProcess.EnglishName,
                 LocalName = customsProcess.LocalName,
-                Weight = shipment.DirectionId == "I" ? customsProcess.Weight.HasValue ? customsProcess.Weight.Value : 0 
+                Weight = (shipment.DirectionId == "I" || shipment.DirectionId == "C") ? customsProcess.Weight.HasValue ? customsProcess.Weight.Value : 0 
                 : shipment.DirectionId == "E" ? customsProcess.ExportWeight.HasValue ? customsProcess.ExportWeight.Value : 0 : 0,
                 //Date = Shipment.process,
                 EstimationDate = null,
@@ -243,7 +243,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Code = CargoTrackingMilestoneValues.GoodsClassification,
                 Name = goodsClassification.EnglishName,
                 LocalName = goodsClassification.LocalName,
-                Weight = shipment.DirectionId == "I" ? goodsClassification.Weight.HasValue ? goodsClassification.Weight.Value : 0 
+                Weight = (shipment.DirectionId == "I" || shipment.DirectionId == "C") ? goodsClassification.Weight.HasValue ? goodsClassification.Weight.Value : 0 
                 : shipment.DirectionId == "E" ? goodsClassification.ExportWeight.HasValue ? goodsClassification.ExportWeight.Value : 0 : 0,
                 Date = shipment.GoodsClassificationDate,
                 EstimationDate = shipment.GoodsClassificationEstDate,
@@ -264,7 +264,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Code = CargoTrackingMilestoneValues.DocumentInspection,
                 Name = documentInspection.EnglishName,
                 LocalName = documentInspection.LocalName,
-                Weight = shipment.DirectionId == "I" ? documentInspection.Weight.HasValue ? documentInspection.Weight.Value : 0 
+                Weight = (shipment.DirectionId == "I" || shipment.DirectionId == "C") ? documentInspection.Weight.HasValue ? documentInspection.Weight.Value : 0 
                 : shipment.DirectionId == "E" ? documentInspection.ExportWeight.HasValue ? documentInspection.ExportWeight.Value : 0 : 0,
                 Date = shipment.DocumentInspectionDate,
                 EstimationDate = shipment.DocumentInspectionEstDate,
@@ -285,7 +285,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Code = CargoTrackingMilestoneValues.PaymentRequested,
                 Name = paymentRequested.EnglishName,
                 LocalName = paymentRequested.LocalName,
-                Weight = shipment.DirectionId == "I" ? paymentRequested.Weight.HasValue ? paymentRequested.Weight.Value : 0
+                Weight = (shipment.DirectionId == "I" || shipment.DirectionId == "C") ? paymentRequested.Weight.HasValue ? paymentRequested.Weight.Value : 0
                 : shipment.DirectionId == "E" ? paymentRequested.ExportWeight.HasValue ? paymentRequested.ExportWeight.Value : 0 : 0,
                 Date = shipment.PaymentRequiredDate,
                 EstimationDate = shipment.PaymentRequiredEstimationDate,
@@ -306,7 +306,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Code = CargoTrackingMilestoneValues.PaymentReceived,
                 Name = paymentReceived.EnglishName,
                 LocalName = paymentReceived.LocalName,
-                Weight = shipment.DirectionId == "I" ? paymentReceived.Weight.HasValue ? paymentReceived.Weight.Value : 0 
+                Weight = (shipment.DirectionId == "I" || shipment.DirectionId == "C") ? paymentReceived.Weight.HasValue ? paymentReceived.Weight.Value : 0 
                 : shipment.DirectionId == "E" ? paymentReceived.ExportWeight.HasValue ? paymentReceived.ExportWeight.Value : 0 : 0,
                 Date = shipment.PaymentReceivedDate,
                 EstimationDate = shipment.PaymentReceivedEstomationDate,
@@ -327,7 +327,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Code = CargoTrackingMilestoneValues.CustomsPayment,
                 Name = customsPayment.EnglishName,
                 LocalName = customsPayment.LocalName,
-                Weight = shipment.DirectionId == "I" ? customsPayment.Weight.HasValue ? customsPayment.Weight.Value : 0 
+                Weight = (shipment.DirectionId == "I" || shipment.DirectionId == "C") ? customsPayment.Weight.HasValue ? customsPayment.Weight.Value : 0 
                 : shipment.DirectionId == "E" ? customsPayment.ExportWeight.HasValue ? customsPayment.ExportWeight.Value : 0 : 0,
                 Date = shipment.CustomsPaymentDate,
                 EstimationDate = null,
@@ -348,7 +348,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Code = CargoTrackingMilestoneValues.Clearance,
                 Name = clearance.EnglishName,
                 LocalName = clearance.LocalName,
-                Weight = shipment.DirectionId == "I" ? clearance.Weight.HasValue ? clearance.Weight.Value : 0
+                Weight = (shipment.DirectionId == "I" || shipment.DirectionId == "C") ? clearance.Weight.HasValue ? clearance.Weight.Value : 0
                 : shipment.DirectionId == "E" ? clearance.ExportWeight.HasValue ? clearance.ExportWeight.Value : 0 : 0,
                 Date = shipment.ClearanceDate,
                 EstimationDate = null,
@@ -369,7 +369,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Code = CargoTrackingMilestoneValues.GatepassArrived,
                 Name = gatepassArrived.EnglishName,
                 LocalName = gatepassArrived.LocalName,
-                Weight = shipment.DirectionId == "I" ? gatepassArrived.Weight.HasValue ? gatepassArrived.Weight.Value : 0 
+                Weight = (shipment.DirectionId == "I" || shipment.DirectionId == "C") ? gatepassArrived.Weight.HasValue ? gatepassArrived.Weight.Value : 0 
                 : shipment.DirectionId == "E" ? gatepassArrived.ExportWeight.HasValue ? gatepassArrived.ExportWeight.Value : 0 : 0,
                 Date = shipment.GatepassArrivedDate,
                 EstimationDate = shipment.GatepassArrivedEstDate,
@@ -390,7 +390,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Code = CargoTrackingMilestoneValues.AssignedToTrucker,
                 Name = assignedToTrucker.EnglishName,
                 LocalName = assignedToTrucker.LocalName,
-                Weight = shipment.DirectionId == "I" ? assignedToTrucker.Weight.HasValue ? assignedToTrucker.Weight.Value : 0
+                Weight = (shipment.DirectionId == "I" || shipment.DirectionId == "C") ? assignedToTrucker.Weight.HasValue ? assignedToTrucker.Weight.Value : 0
                 : shipment.DirectionId == "E" ? assignedToTrucker.ExportWeight.HasValue ? assignedToTrucker.ExportWeight.Value : 0 : 0,
                 Date = shipment.AssignedTruckerDate,
                 EstimationDate = shipment.AssignedTruckerEstimationDate,
@@ -411,7 +411,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Code = CargoTrackingMilestoneValues.DeliveryOut,
                 Name = deliveryOut.EnglishName,
                 LocalName = deliveryOut.LocalName,
-                Weight = shipment.DirectionId == "I" ? deliveryOut.Weight.HasValue ? deliveryOut.Weight.Value : 0 
+                Weight = (shipment.DirectionId == "I" || shipment.DirectionId == "C") ? deliveryOut.Weight.HasValue ? deliveryOut.Weight.Value : 0 
                 : shipment.DirectionId == "E" ? deliveryOut.ExportWeight.HasValue ? deliveryOut.ExportWeight.Value : 0 : 0,
                 Date = shipment.DeliveryDate,
                 EstimationDate = shipment.DeliveryEstimationDate,
@@ -432,7 +432,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Code = CargoTrackingMilestoneValues.Delivered,
                 Name = delivered.EnglishName,
                 LocalName = delivered.LocalName,
-                Weight = shipment.DirectionId == "I" ? delivered.Weight.HasValue ? delivered.Weight.Value : 0 
+                Weight = (shipment.DirectionId == "I" || shipment.DirectionId == "C") ? delivered.Weight.HasValue ? delivered.Weight.Value : 0 
                 : shipment.DirectionId == "E" ? delivered.ExportWeight.HasValue ? delivered.ExportWeight.Value : 0 : 0,
                 Date = shipment.DeliveredDate,
                 EstimationDate = shipment.DeliveredEstimationDate,
@@ -453,7 +453,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Code = CargoTrackingMilestoneValues.Invoiced,
                 Name = invoiced.EnglishName,
                 LocalName = invoiced.LocalName,
-                Weight = shipment.DirectionId == "I" ? invoiced.Weight.HasValue ? invoiced.Weight.Value : 0 
+                Weight = (shipment.DirectionId == "I" || shipment.DirectionId == "C") ? invoiced.Weight.HasValue ? invoiced.Weight.Value : 0 
                 : shipment.DirectionId == "E" ? invoiced.ExportWeight.HasValue ? invoiced.ExportWeight.Value : 0 : 0,
                 Date = shipment.InvoicedDate,
                 Done = shipment.InvoicedDone,
