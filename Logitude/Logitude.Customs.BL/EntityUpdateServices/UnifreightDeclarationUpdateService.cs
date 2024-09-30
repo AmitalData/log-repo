@@ -228,7 +228,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             LogMessagingUtil.Instance.AppendLine("Update3: GetFILENOByCUSTOMFILENO, file: " + lCUSTOMFILENO);
                         bool isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
                         if (isConnectedToUniFreight) {
-                            int? FILENO1 = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO);
+                            int? FILENO1 = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO, _DirtyDeclarationPM.Tenant);
                         }
                         
 

@@ -907,7 +907,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 					int? FILENO = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
 					if (FILENO.HasValue)
 					{
-						int? FILENO1 = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO);
+						int? FILENO1 = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO, this._MyDeclarationPM.Tenant);
 
 						//do not need the composite due we delete all down entities !!!_CCUFILEMPM = myCCUFILEMQueryService.GetSingle(FILENO.Value, true, false);
 						_CCUFILEMPM = myCCUFILEMQueryService.GetSingle(FILENO.Value, false, false);

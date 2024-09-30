@@ -99,11 +99,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         {
                             throw new BusinessErrorException("GetFILENOByCUSTOMFILENO return null");
                         }
-                        int? FILENO1 = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO);
 
-                        _CCUPAYHAND = myCCUPAYHANDQueryService.GetSingle(FILENO.Value, true, false);
+						int? FILENO1 = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO, _DeclarationPM.Tenant);
 
-                        Boolean noUpdate = false;
+						_CCUPAYHAND = myCCUPAYHANDQueryService.GetSingle(FILENO.Value, true, false);
+
+						Boolean noUpdate = false;
                         var currentRequestSheetContext = RequestSheetContext.Current.GetContextOrDefault();
                         if (!(currentRequestSheetContext != null && string.IsNullOrWhiteSpace(currentRequestSheetContext.CustomsRequestsSheetId)))
                         {

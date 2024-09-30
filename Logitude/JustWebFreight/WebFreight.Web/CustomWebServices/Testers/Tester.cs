@@ -30,14 +30,14 @@ namespace WebFreight.Web.CustomWebServices.Testers
                 {
                     //AmitalContext.SetOracleMonitor();
                     var myCCUFILEMQueryService = new CCUFILEMQueryService(_AmitalContext1);
-                    int? FILENO1 = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(4180411244);
+                    int? FILENO1 = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(4180411244,1);
                 }
                 //using (var _AmitalContext = AmitalContext.GetContext(1))
                 var _AmitalContext = AmitalContext.GetContext(1);
                 {
                     //AmitalContext.SetOracleMonitor();
                     var myCCUFILEMQueryService = new CCUFILEMQueryService(_AmitalContext);
-                    int? FILENO1 = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(4180411244);
+                    int? FILENO1 = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(4180411244,1);
                 }
             }
         }
