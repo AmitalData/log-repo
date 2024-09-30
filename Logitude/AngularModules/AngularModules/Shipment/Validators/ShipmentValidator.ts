@@ -185,10 +185,11 @@ export class ShipmentValidator implements IShipmentValidator {
     }
 
     private ValidatePackages() {
-        if(this.entityPM.IsCustomShipment){
+        if(this.entityPM.IsCustomShipment  && this.entityPM.ShipmentTypeId == "FCLD" && this.entityPM.DirectionId == "C"){
             this.entityPM.ShipmentPackages.forEach(item => {
-                if(this.entityPM.ShipmentTypeId == "FCLD" && this.entityPM.DirectionId == "C"){
-                    this.Errors.push(this.ValidateContainerNumber(item.ContainerNumber));
+                var error = this.ValidateContainerNumber(item.ContainerNumber);
+                if(!AppTool.IsNullOrEmpty(error)){
+                    this.Errors.push(error);
                 }
             });
             return;
