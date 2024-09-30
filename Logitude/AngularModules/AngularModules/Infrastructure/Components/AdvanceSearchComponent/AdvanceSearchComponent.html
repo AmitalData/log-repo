@@ -124,8 +124,7 @@
                 <label [ngStyle]="LayoutDirection == 'rtl' ? {'right': '5px','left': 'initial'} : {'left': '5px'}">{{'General.B.AddFilter' | TextCodeTranslationPipe}}</label>
                 <img [ngStyle]="LayoutDirection == 'rtl' ? {'left': '3px','right': 'initial'} : {'right': '3px'}" src="./Images/ToggleIcon.png" />
                 <!--</div>-->
-
-                <div [id]="AdvanceQueryDropButtonId" class="ToggleButtonMenu" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '0', 'right':'initial'} : ''"
+                <div [id]="AdvanceQueryDropButtonId" class="ToggleButtonMenu" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '0', 'right':'initial'} : {'right': '0', 'left':'initial'}"
                       style="width: 500px;" >
 
                     <div>
