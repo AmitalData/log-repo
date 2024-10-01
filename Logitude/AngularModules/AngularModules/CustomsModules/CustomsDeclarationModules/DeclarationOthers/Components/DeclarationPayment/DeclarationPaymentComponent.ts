@@ -126,7 +126,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             .subscribe((customsSettingList: ServiceResponse) => {
                 if (customsSettingList) {
                    this.isConnectToUnifreight = customsSettingList.Result ? customsSettingList?.Result?.IsConnectedToUniFreight : false;
-                   
+
                     this._ErrorLogPMFileLoggerService = new ErrorLogPMFileLoggerService();
                     this._ErrorLogPMFileLoggerService.get(this.ClientBankListLogUntilDateyyyyMMdd)
                         .subscribe((response: ServiceResponse) => {
@@ -1153,7 +1153,13 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
     RefreshScreen() {
         var entityPM = this.DeclarationPM;
-
+        if(!this.isConnectToUnifreight && !AmitalGatewayUtil.Instance.AmitalBrowserInUse)
+        {
+            this.IsDisplayOnly = true;
+            this.OkButtonEnabled = false;
+            this.SendButtonEnabled = false;
+            this.ErrorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ScreenOnlyUNI");
+        }
         if (entityPM.IsChanged) {
             this.IsDisplayOnly = true;
             this.OkButtonEnabled = false;
