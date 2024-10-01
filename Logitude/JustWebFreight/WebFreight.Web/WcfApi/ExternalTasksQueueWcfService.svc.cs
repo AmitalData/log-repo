@@ -314,7 +314,7 @@ namespace WebFreight.Web.WcfApi
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     int tenant1 = 0;
-                    if(authToken != null) tenant1 = authToken.Tenant; 
+                    if (authToken != null) tenant1 = authToken.Tenant;
                 }
 
                 if (tenant == 0)
@@ -326,14 +326,20 @@ namespace WebFreight.Web.WcfApi
 
                 if (queryId == "CFIRDEC")
                 {
-                    response = GetDataCFIRDEC(queryParams,  tenant);
+                    response = GetDataCFIRDEC(queryParams, tenant);
                     return (response);
                 }
-
+                CFILOGIAPI sql_logi = new CFILOGIAPI();
                 List<CFILOGIAPI> logi_list = new List<CFILOGIAPI>();  // to do call once !!!!!!!!!!!!!!!!!!!!!!!!!
                 logi_list = CFILOGIAPITask.GetLogiOcc();
-                CFILOGIAPI sql_logi = logi_list.Where(x => x.CODE == queryId).FirstOrDefault();
-
+                if (queryId == "EXTERNAL_LOGIAPI")
+                {
+                    sql_logi = JsonConvert.DeserializeObject<CFILOGIAPI>(queryParams["CFILOGIAPI"]);
+                }
+                else
+                {
+                    sql_logi = logi_list.Where(x => x.CODE == queryId).FirstOrDefault();
+                }
                 if (sql_logi == null)
                 {
                     response.HasError = true;
@@ -365,6 +371,11 @@ namespace WebFreight.Web.WcfApi
                 List<List<string>> all_lines = new List<List<string>>();
                 int rows_effected = 0;
                 var shipmentsContext = new Simplog.Data.ShipmentsModel.ShipmentsContext();
+                if (sqlQuery.IndexOf("@NEXTNUM") > -1)
+                {
+                    sqlQuery = sqlQuery.Replace("@NEXTNUM", queryParams["NEXTNUM"]);
+                    sqlQuery = sqlQuery.Replace("@OFFSETNUM", queryParams["OFFSETNUM"]);
+                }
                 using (SqlConnection connection = new SqlConnection())
                 {
                     connection.ConnectionString = shipmentsContext.Database.Connection.ConnectionString;
@@ -386,7 +397,7 @@ namespace WebFreight.Web.WcfApi
                         {
                             using (SqlDataReader reader = cmd.ExecuteReader())
                             {
-                                
+
 
                                 if (reader.HasRows)
                                 {
