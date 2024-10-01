@@ -567,7 +567,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         NetCommonHelper.Logger.DevLog.Instance.WriteError($"Error when creating OPN event on new custom shipment: {ex.Message}");
                     }
 
-                    if (additionalShipmentData.ActionCode == ActionCode.NewCustomsFile || additionalShipmentData.ActionCode == ActionCode.NewCustomsFileAfterCheck)
+                    if (additionalShipmentData?.ActionCode == ActionCode.NewCustomsFile || additionalShipmentData?.ActionCode == ActionCode.NewCustomsFileAfterCheck)
                     {
                         try
                         {
