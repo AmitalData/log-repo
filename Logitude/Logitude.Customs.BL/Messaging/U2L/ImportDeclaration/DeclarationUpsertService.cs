@@ -660,11 +660,23 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 					string warehouseId = null;
 					if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.WarehouseId))
 					{
-                        warehouseId = _AmitalCustomsFile.SystemConnection == "N" && string.IsNullOrEmpty(this._MyDeclarationPM.Consignments[0].StorageSiteCode) ? TranslateWarehouse(_AmitalCustomsFile.WarehouseId) : _AmitalCustomsFile.SystemConnection == "N" ? this._MyDeclarationPM.Consignments[0].StorageSiteCode : TranslateWarehouse(_AmitalCustomsFile.WarehouseId);
+						if (_AmitalCustomsFile.SystemConnection == "N")
+						{
+                            warehouseId = !String.IsNullOrWhiteSpace(_AmitalCustomsFile.WarehouseId) && string.IsNullOrEmpty(_MyDeclarationPM.Consignments[0].StorageSiteCode)? TranslateWarehouse(_AmitalCustomsFile.WarehouseId): _MyDeclarationPM.Consignments[0].StorageSiteCode;
+                        }
+                        else
+						{
+                            warehouseId = TranslateWarehouse(_AmitalCustomsFile.WarehouseId);
+                        }
                     }
 					this._MyDeclarationPM.Consignments[0].StorageSiteCode = warehouseId;
 
-					if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) && _AmitalCustomsFile.IsCourierDeclaration.ToLower() != "true"))
+                    if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.UnloadportId) && string.IsNullOrEmpty(_MyDeclarationPM.Consignments[0].UnloadPortCode) && _AmitalCustomsFile.SystemConnection == "N")
+                    {
+                        _MyDeclarationPM.Consignments[0].UnloadPortCode = TranslateUnloadPort(_AmitalCustomsFile.UnloadportId);
+                    }
+
+                    if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) && _AmitalCustomsFile.IsCourierDeclaration.ToLower() != "true"))
 					{
 
 						if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.HAWBDATE))
@@ -942,10 +954,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 									if (!String.IsNullOrWhiteSpace(customsAirline.UnloadPortCode)) this._MyDeclarationPM.Consignments[0].UnloadPortCode = customsAirline.UnloadPortCode;
 								}
 							}
-							else if (_AmitalCustomsFile.SystemConnection == "N")
-                            {
-                                _MyDeclarationPM.Consignments[0].UnloadPortCode = TranslateUnloadPort(_AmitalCustomsFile.UnloadportId);
-                            }
                         }
                         _MyDeclarationPM.Consignments[0].StorageSiteCode = _AmitalCustomsFile.SystemConnection == "N" && string.IsNullOrEmpty(this._MyDeclarationPM.Consignments[0].StorageSiteCode) ? TranslateWarehouse(_AmitalCustomsFile.WarehouseId) : _AmitalCustomsFile.SystemConnection == "N" ? this._MyDeclarationPM.Consignments[0].StorageSiteCode : TranslateWarehouse(_AmitalCustomsFile.WarehouseId);
 	                    AppendLogLine("one Consignment6 Consignment.UnloadPortCode=" + this._MyDeclarationPM.Consignments[0].UnloadPortCode);

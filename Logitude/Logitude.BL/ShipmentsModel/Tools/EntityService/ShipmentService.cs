@@ -456,32 +456,52 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    List<ShipmentValidating.MessageDetails> messageDetailsList = new List<ShipmentValidating.MessageDetails>();
-
                     this.isNewEntity = true;
+
+                    if (additionalShipmentData != null)
+                    {
+                        // get foreign field Ids to save them or to prevent failure if saving unknown code
+                        GetForeignFieldsForCustomShipmentApi();
+
+                        // if need to check if the shipment already exists
+                        if (additionalShipmentData.ActionCode == ActionCode.NewCustomsFile)
+                        {
+                            List<string> customsFile = GetLinkedCustomShipments(tenant, entityPM.CustomerId, entityPM.TransportModeId, entityPM.CarrierCode, entityPM.Mawb, entityPM.House, entityPM.IskaNumber);
+
+                            if (customsFile.Count > 0)
+                            {
+                                var exception = customsFile.Count() == 1 ? ShipmentValidating.MessageDetailsProvider.FoundShipment : ShipmentValidating.MessageDetailsProvider.FoundMultipleShipments;
+                                throw new MessageDetailsValidationException(exception, customsFile);
+                            }
+                        }
+
+                        // set default values
+                        this.entityPM.ConcurrencyGUID = Guid.NewGuid().ToString();
+                        this.entityPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
+                        this.entityPM.DirectionId = "C";
+                        this.entityPM.DepartmentId = GetDefaultDepartmentId();
+                        this.entityPM.LastUpdateDate = DateTime.Now;
+
+                        BranchRepository branchRepository = new BranchRepository(tenant);
+                        Branch branch = branchRepository.GetBranchByName("Main Office", tenant);
+                        if (branch == null)
+                        {
+                            branch = branchRepository.context.Branches.FirstOrDefault(b => b.Tenant == tenant);
+                        }
+                        this.entityPM.BranchId = branch.Id;
+                    }
+                    else
+                    {
+                        // todo: add AIR to AddShipmentTypes and execute it
+                        entityPM.ShipmentTypeId = null;
+                    }
 
                     this.InitializeComponent();
 
                     ShipmentValidating.ValidateCustomShipment(entityPM, true);
 
-                    if (additionalShipmentData.ActionCode == ActionCode.NewCustomsFile)
-                    {
-                        DataTable linkedShipments = GetLinkedShipments(tenant, entityPM.CustomerId, entityPM.TransportModeId, entityPM.CarrierCode, entityPM.Mawb, entityPM.House, entityPM.IskaNumber);
-
-                        if (linkedShipments.Rows.Count > 0)
-                        {
-                            List<string> customsFile = linkedShipments.AsEnumerable().Select(row => row["ShipmentNumber"].ToString()).ToList();
-
-                            var exception = customsFile.Count() == 1 ? ShipmentValidating.MessageDetailsProvider.FoundShipment : ShipmentValidating.MessageDetailsProvider.FoundMultipleShipments;
-                            throw new MessageDetailsValidationException(exception, customsFile);
-                        }
-                    }
-
                     // generate shipment number
-                this.entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "DECL", "DC", null);
-
-				// todo: add AIR to AddShipmentTypes and execute it
-				entityPM.ShipmentTypeId = null;
+                    this.entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "DECL", "DC", null);
 
                     // todo: get default values
                     this.entityPM.SalesmanUserId = "1-421340";
@@ -527,7 +547,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         Type = QueueMessagesTypes.Create
                     }.Produce();
 
-                    CreateDeclaration(entityPM, "NEW");
+                    CreateDeclaration(entityPM, "NEW", additionalShipmentData?.UnloadPortCode, additionalShipmentData?.StorageSiteCode);
 
                     try
                     {
@@ -594,11 +614,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-        public DataTable GetLinkedShipments(int tenant, string customerId, string transportModeId, string carrierCode, string mawb, string house, string iskaNumber)
+        public List<string> GetLinkedCustomShipments(int tenant, string customerId, string transportModeId, string carrierCode, string mawb, string house, string iskaNumber)
         {
-            string strConnString = TenantServerConfigration.GetDbConnection(tenant);
+            string strConnString = entityRepository.context.GetConnection().ConnectionString;
 
-            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }))
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
@@ -608,29 +628,163 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         cmd.CommandType = CommandType.StoredProcedure;
 
                         cmd.Parameters.AddWithValue("@i_tenant", tenant);
-                        cmd.Parameters.AddWithValue("@i_customerId", customerId);
-                        cmd.Parameters.AddWithValue("@i_transportModeId", transportModeId);
-                        cmd.Parameters.AddWithValue("@i_carrierCode", carrierCode);
-                        cmd.Parameters.AddWithValue("@i_mawb", mawb);
-                        cmd.Parameters.AddWithValue("@i_house", house);
-                        cmd.Parameters.AddWithValue("@i_iskaNumber", iskaNumber);
+                        cmd.Parameters.AddWithValue("@i_customerId", customerId ?? "");
+                        cmd.Parameters.AddWithValue("@i_transportModeId", transportModeId ?? "");
+                        cmd.Parameters.AddWithValue("@i_carrierCode", carrierCode ?? "");
+                        cmd.Parameters.AddWithValue("@i_mawb", mawb ?? "");
+                        cmd.Parameters.AddWithValue("@i_house", house ?? "");
+                        cmd.Parameters.AddWithValue("@i_iskaNumber", iskaNumber ?? "");
 
-                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                        DataTable result = new DataTable();
-                        adapter.Fill(result);
+                        List<string> ShipmentNumberList = new List<string>();
+                        SqlDataReader reader = cmd.ExecuteReader();
 
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        while (reader.Read())
                         {
-                            result.Load(reader);
+                            ShipmentNumberList.Add(reader["ShipmentNumber"].ToString());
                         }
 
-                        return result;
+                        return ShipmentNumberList;
                     }
                 }
             }
         }
 
-        public void CreateDeclaration(ShipmentPM shipmentPM, string mode)
+        private string GetDefaultDepartmentId()
+        {
+            DepartmentRepository departmentRepository = new DepartmentRepository(tenant);
+            Department department = departmentRepository.context.Departments.FirstOrDefault(b => b.Tenant == tenant);
+            return department.Id;
+        }
+
+        /// <summary>
+        /// this function is for the api that will be called by UNF and so, we will receive codes, not id
+        /// determine id for the foreign fields to save them or to prevent failure if saving unknown code
+        /// </summary>
+        private void GetForeignFieldsForCustomShipmentApi()
+        {
+            if (!string.IsNullOrEmpty(entityPM.CarrierCode))
+            {
+                // get carrier code id by code
+                AirlineRepository airlineRepository = new AirlineRepository(tenant);
+                Airline carrierCode = airlineRepository.GetSingleAirlineByCode(entityPM.CarrierCode, tenant);
+                if (carrierCode != null)
+                {
+                    entityPM.CarrierCode = carrierCode.Id;
+                }
+                else
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"not found carrier code id by code: {entityPM.CarrierCode}");
+                    entityPM.CarrierCode = null;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.CustomerId))
+            {
+                // get customer id by code
+                CardRepository cardRepository = new CardRepository(tenant);
+                Card card = cardRepository.GetSingleCardByCode(entityPM.CustomerId, tenant, true);
+                if (card != null)
+                {
+                    entityPM.CustomerId = card.Id;
+                }
+                else
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"not found customer id by code: {entityPM.CustomerId}");
+                    entityPM.CustomerId = null;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.IncotermCode))
+            {
+                // get incoterm id by code
+                IncotermRepository incotermRepository = new IncotermRepository(tenant);
+                Incoterm incoterm = incotermRepository.GetSingleIncotermByCode(entityPM.IncotermCode, tenant);
+                if (incoterm != null)
+                {
+                    entityPM.IncotermId = incoterm.Id;
+                }
+                else
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"not found incoterm id by code: {entityPM.IncotermCode}");
+                    entityPM.IncotermId = null;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.FreightForwarderId))
+            {
+                // get freight forwarder id by code
+                CardRepository cardRepository = new CardRepository(tenant);
+                Card card = cardRepository.GetSingleCardByCode(entityPM.FreightForwarderId, tenant, true);
+                entityPM.FreightForwarderId = card != null ? card.Id : null;
+                if (card != null)
+                {
+                    entityPM.FreightForwarderId = card.Id;
+                }
+                else
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"not found freight forwarder id by code: {entityPM.FreightForwarderId}");
+                    entityPM.FreightForwarderId = null;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.ShipmentTypeName))
+            {
+                // get shipment type id by name
+                ShipmentTypeRepository shipmentTypeRepository = new ShipmentTypeRepository(tenant);
+                ShipmentType shipmentType = shipmentTypeRepository.GetSingleShipmentTypeByName(entityPM.ShipmentTypeName);
+                if (shipmentType != null)
+                {
+                    entityPM.ShipmentTypeId = shipmentType.Id;
+                }
+                else
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"not found shipment type id by name: {entityPM.ShipmentTypeName}");
+                    entityPM.ShipmentTypeId = null;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.DeclarationOfficeCode))
+            {
+                // get declaration office code to assert it is a valid value
+                CustomsHouseTypeRepository declarationOfficeCodeRepository = new CustomsHouseTypeRepository(tenant);
+                CustomsHouseType customsHouseType = declarationOfficeCodeRepository.GetSingle(entityPM.DeclarationOfficeCode);
+                if (customsHouseType == null)
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"not found declaration office code: {entityPM.DeclarationOfficeCode}");
+                    entityPM.DeclarationOfficeCode = null;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.TransportModeId))
+            {
+                // get transport mode to assert it is a valid value
+                TransportModeRepository transportModeRepository = new TransportModeRepository(tenant);
+                TransportMode customsHouseType = transportModeRepository.GetSingleTransportMode(entityPM.TransportModeId);
+                if (customsHouseType == null)
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"not found transport mode: {entityPM.TransportModeId}");
+                    entityPM.TransportModeId = null;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.Vessel))
+            {
+                // get vessel id by code
+                VesselRepository vesselRepository = new VesselRepository(tenant);
+                Vessel vessel = vesselRepository.GetSingleVesselByCode(entityPM.Vessel, tenant);
+                if (vessel != null)
+                {
+                    entityPM.Vessel = vessel.Id;
+                }
+                else
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"not found vessel by code: {entityPM.Vessel}");
+                    entityPM.Vessel = null;
+                }
+            }
+        }
+
+        public void CreateDeclaration(ShipmentPM shipmentPM, string mode, string unloadPortCode = null, string storageSiteCode = null)
         {
             int tenant = shipmentPM.Tenant;
             var myAmitalCustom = new LogitudeCustomsFile();
@@ -663,6 +817,25 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             myAmitalCustom.Direction = "I";
             myAmitalCustom.Mode = mode;
             myAmitalCustom.Tenant = shipmentPM.Tenant.ToString();
+
+            #region declaration referant data fields
+            myAmitalCustom.MAWB = shipmentPM.Mawb;
+            myAmitalCustom.MawbDate = shipmentPM.MawbDate?.ToString();
+            myAmitalCustom.EstimatedArrivalDate = shipmentPM.EstimatedArrivalDate?.ToString();
+            myAmitalCustom.ArrivalDate = shipmentPM.ArrivalDate?.ToString();
+            myAmitalCustom.Vessel = shipmentPM.Vessel;
+            myAmitalCustom.FlightVoyageNumber = shipmentPM.FlightVoyageNumber;
+            myAmitalCustom.CarrierCode = shipmentPM.CarrierCode;
+            #endregion
+
+            if (!string.IsNullOrEmpty(unloadPortCode))
+            {
+                myAmitalCustom.UnloadportId = unloadPortCode;
+            }
+            if (!string.IsNullOrEmpty(storageSiteCode))
+            {
+                myAmitalCustom.WarehouseId = storageSiteCode;
+            }
 
             var respnse = APIConnectionHelper.Instance.PostViaWebAPI<Response, LogitudeCustomsFile>("/api/Declarartion/UpdateDeclarationInU2L", myAmitalCustom);
         }
@@ -1043,7 +1216,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     if (entityPM.CustomerId != entityPoco.CustomerId)
                     {
                         // todo: get default values (if value from client is not changed?)
-                        this.entityPM.DepartmentId = "1-10140";
+                        this.entityPM.DepartmentId = GetDefaultDepartmentId();
                         this.entityPM.SalesmanUserId = "1-421340";
                         this.entityPM.ReferantUserId = "1-421335";
                     }
@@ -1060,6 +1233,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         {
                             throw new ValidationException("missing ShipmentNumber");
                         }
+
+                        // get foreign field Ids to save them or to prevent failure if saving unknown code
+                        GetForeignFieldsForCustomShipmentApi();
 
                         messageDetailsList = ShipmentValidating.ValidateCheckAndConnectCustomShipment(entityPM, entityPoco);
 
@@ -1093,6 +1269,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             ShipmentId = entityPM.Id,
                         };
                         freightForwarderReferenceRepository.Add(freightForwarderReference);
+                        freightForwarderReferenceRepository.SubmitChanges();
                     }
 
                     AuditLog auditLog = null;
@@ -1195,6 +1372,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             myAmitalCustom.GrossMassMeasure = shipmentPM.GrossWeight?.ToString();
             //myAmitalCustom.GrossMassMeasureTypeCode = "KGM";
             myAmitalCustom.CargoDescription = shipmentPM.DescriptionOfGoods;
+            myAmitalCustom.DeclarationOfficeCode = shipmentPM.DeclarationOfficeCode;
 
             myAmitalCustom.Direction = "I";
             myAmitalCustom.SystemConnection = "N";
@@ -1276,6 +1454,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             if (freightForwarderReference != null)
                             {
                                 freightForwarderReferenceRepository.Remove(freightForwarderReference);
+                                freightForwarderReferenceRepository.SubmitChanges();
                             }
                         }
                     }
