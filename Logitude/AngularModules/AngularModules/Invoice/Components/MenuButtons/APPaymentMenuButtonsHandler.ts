@@ -686,6 +686,12 @@ export class APPaymentMenuButtonsHandler {
 
             else { this.VoidingAPPayment(null); }
         }
+        else
+        {
+            messageText = errors[0].toString();
+            messageWindow = new MessageWindow();
+            messageWindow.Show(messageText);
+        }
     }
 
 
