@@ -28864,6 +28864,12 @@
       LocalDefaultText="&quot; שים לב, בחירת ההצהרות שבוצעה תימחק, האם להמשיך ?&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ScreenOnlyUNI&quot;"
+      DefaultText="&quot;This screen in the cloud only works through Unifreight&quot;"
+      LocalDefaultText="&quot;מסך זה בענן עובד רק דרך יוניפרייט&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
