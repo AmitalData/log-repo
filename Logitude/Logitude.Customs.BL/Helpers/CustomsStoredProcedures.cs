@@ -1,6 +1,7 @@
 ﻿using Devart.Data.Oracle;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.Repsitories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -10,6 +11,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Diagnostics.PerformanceData;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -984,7 +986,38 @@ AS */
 
 
         }
+        public static void UpdateJouranlLinesLineNumber(string journalId, int tenant)
+        {
+                 string strConnString = GetConnection(tenant);
+                    
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    SqlCommand cmd = new SqlCommand("dbo.USP_UPDATEJOURANLLINESSEQUENCE", cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
+                    SqlParameter param1 = new SqlParameter("@V_JOURANLID", SqlDbType.VarChar);
+                    param1.Direction = ParameterDirection.Input;
+                    param1.Value = journalId;
+                    cmd.Parameters.Add(param1);
+
+                    SqlParameter param3 = new SqlParameter("@V_Tenant", SqlDbType.Int);
+                    param3.Direction = ParameterDirection.Input;
+                    param3.Value = tenant;
+                    cmd.Parameters.Add(param3);
+
+                   
+
+
+
+
+
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    cn.Close();
+                }
+            
+
+        }
         public static string GetConnection(int tenant)
         {
             GlobalDB currentDb;

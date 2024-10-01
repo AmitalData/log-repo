@@ -1356,8 +1356,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (shipmentPM.TransportModeId == "O")
             {
                 myAmitalCustom.CargoTypeCode = "11";
-                myAmitalCustom.ManifestNumber = shipmentPM.IskaNumber?.Length >= 7 ? shipmentPM.IskaNumber.Substring(1, 7) : shipmentPM.IskaNumber;
-                myAmitalCustom.SecondCargoID = shipmentPM.IskaNumber?.Length >= 7 ? shipmentPM.IskaNumber.Substring(7) : "";
+                myAmitalCustom.ManifestNumber = shipmentPM.IskaNumber?.Length >= 7 ? shipmentPM.IskaNumber.Substring(1, 6) : shipmentPM.IskaNumber;
+                myAmitalCustom.SecondCargoID = shipmentPM.IskaNumber?.Length > 7 ? shipmentPM.IskaNumber.Substring(7) : "";
             }
             if (shipmentPM.TransportModeId == "L")
             {

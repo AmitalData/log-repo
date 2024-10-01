@@ -53,9 +53,9 @@ namespace RabbitMQSRV
             {
                 var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
                 prodInfo = assemblyUtil.GetProductInfo(typeof(Program).Assembly);
-                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(prodInfo);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(prodInfo);
 
-                Action<bool, bool,bool> BuildObjectTablesZipFilesDataAction = WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
+                Action<bool, bool> BuildObjectTablesZipFilesDataAction = WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
                 /*CustomsWorkerRole.*/CustomsWorkerEntryPoint.StartStatic(false, BuildObjectTablesZipFilesDataAction, prodInfo, SecurityUtility.CheckContactFeature);
 
                 InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null , null, null);
@@ -87,8 +87,11 @@ namespace RabbitMQSRV
             {
 
                 NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
-               
-               
+                if (Environment.UserInteractive)
+                {
+                    Debug.Fail("StartStatic");
+                }
+           
                 _ThreadStartStaticLoaded = false;
             }
         }
@@ -218,7 +221,7 @@ namespace RabbitMQSRV
             if (CacheManager.CacheWrapper != null) return;
             CustomsWorkerEntryPoint.StartStatic();
         }
-        public static void StartStatic(bool suppressCache = false, Action<bool, bool, bool> BuildObjectTablesZipFilesDataAction = null, string prodInfo = null,
+        public static void StartStatic(bool suppressCache = false, Action<bool, bool> BuildObjectTablesZipFilesDataAction = null, string prodInfo = null,
             Action<string, string, int, string> checkContactFeature = null
             )
         {
@@ -261,7 +264,7 @@ namespace RabbitMQSRV
             //}
         }
 
-        public static void ThreadedRoleEntryPointStartStatic(Action<bool, bool ,bool> BuildObjectTablesZipFilesDataAction = null, string ProductInfo = null)
+        public static void ThreadedRoleEntryPointStartStatic(Action<bool, bool> BuildObjectTablesZipFilesDataAction = null, string ProductInfo = null)
         {
             if (string.IsNullOrEmpty(LogitudeSettings.DeploymentStage))
             {
@@ -332,8 +335,7 @@ namespace RabbitMQSRV
                         NetCommonHelper.Logger.DevLog.Instance.WriteError(mess);
                     else
                         NetCommonHelper.Logger.DevLog.Instance.WriteInfo(mess);
-                    
-                });
+       });
 
                 LogitudeSettings.RunWorkerRoleAutomaticBreakPoint = false;
 

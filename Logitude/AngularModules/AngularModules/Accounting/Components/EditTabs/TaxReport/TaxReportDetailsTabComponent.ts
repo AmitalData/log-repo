@@ -157,7 +157,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     }
 
     public Export2ExcelClicked() {
-        this.LogitudeGridExportToExcelComponent.ExportToExcelExcute('TaxReportLine', this.ListFilters, this.QueryColumns);
+        this.LogitudeGridExportToExcelComponent.ExportToExcelExcute('TaxReportLine', this.ListFilters, this.QueryColumns,"SaveToMicrosoftExcel2007",true);
     }
     SetUIProperty() {
         this.UIProperties.SetEnabled("VatNumber", this.ObjectTableName, false);

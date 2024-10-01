@@ -39,6 +39,7 @@ import { ConsignmentPM } from 'Customs/EntityPMs/ConsignmentPM';
 import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
 import { ContainerizationPM } from 'Customs/EntityPMs/ContainerizationPM';
 import { LogtuideTableDataService } from 'Infrastructure/Services/logtuide-table-data.service';
+import { DataResult } from '../Others/CourierMasterService';
 declare var window: any;
 
 @Injectable()
@@ -2074,6 +2075,25 @@ export class DeclarationWebService {
         });
     }
 
+    PostActionOnDeclarationBatch(requestParams, filters: ApiQueryFilters) {
+        return defer(() => {
+    
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            return this._http.post(this._apiUrl + '/PostActionOnDeclarationBatch?' + this.logtuideTableDataService.apiQueryFilterToQueryString(filters), 
+                JSON.stringify(requestParams),
+                ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                    var res:any=response;
+                    var serviceResponse: DataResult = new DataResult();
+                    serviceResponse.Message = res?.Message ;
+                    serviceResponse.RequestInProgressList = res?.RequestInProgressList ;
+                    return serviceResponse;
+
+                }),catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 
     MapJsonToCorrectionView(jsonPM: any, mapParent: boolean = true, entityPM: DeclarationCorrectionView = null) {
 

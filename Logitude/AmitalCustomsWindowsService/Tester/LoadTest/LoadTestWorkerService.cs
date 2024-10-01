@@ -41,7 +41,7 @@ namespace AmitalCustomsWindowsService.Tester.LoadTest
             catch (Exception e)
             {
 
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e, "StopThreads");
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
             }
 
         }
@@ -106,13 +106,13 @@ namespace AmitalCustomsWindowsService.Tester.LoadTest
             {
                 _Threads[iWorker].Join();
             }
-            NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"Async:{LoadTestWR.Async} TotalRetrieve:{sTotalRetrieve} ThreadCount{sThreadCount} took:{sw.Elapsed} "+":"+ "TOT." + (LoadTestWR.Async ? "Async" : "Sync"));
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Async:{LoadTestWR.Async} TotalRetrieve:{sTotalRetrieve} ThreadCount{sThreadCount} took:{sw.Elapsed} TOT." + (LoadTestWR.Async ? "Async" : "Sync"));
 
         }
         private void StopThread(int iWorker)
         {
             _Workers[iWorker].ServiceStarted = false;//== dispose !!!
-            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(GetThreadName(iWorker));
+          NetCommonHelper.Logger.DevLog.Instance.WriteDebug(GetThreadName(iWorker));
         }
         private string GetThreadName(int iWorker)
         {
@@ -128,7 +128,7 @@ namespace AmitalCustomsWindowsService.Tester.LoadTest
             //_Threads.Add(t);
             _Threads[iWorker] = currThread;
             _Threads[iWorker].Start();
-            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(GetThreadName(iWorker));
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(GetThreadName(iWorker));
         }
     }
     public class LoadTestParam
@@ -190,7 +190,7 @@ namespace AmitalCustomsWindowsService.Tester.LoadTest
                 }
             }
 
-            NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"Async:{Async} _ThreadHandeleCount:{myLoadTestParam.currentThread} countDone{myLoadTestParam.totalEachThread} took:{sw.Elapsed}  UserInteractive:{Environment.UserInteractive} ");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Async:{Async} _ThreadHandeleCount:{myLoadTestParam.currentThread} countDone{myLoadTestParam.totalEachThread} took:{sw.Elapsed}  UserInteractive:{Environment.UserInteractive} ");
 
         }
         public override void StartMe()

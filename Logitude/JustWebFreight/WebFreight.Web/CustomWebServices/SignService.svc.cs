@@ -142,9 +142,7 @@ namespace WebFreight.Web.CustomWebServices
             }
             finally
             {
-                //Logger.LogMe(
-                //    "CustomsRequestsSheetId=" + CustomsRequestsSheetId + ";supressCompleteResponseSignBytes=" + supressCompleteResponseSignBytes.ToString(), false, "CompleteResponseSignBytes");
-                try
+                 try
                 {
                     _CustomsRequestsSheetDoneList.RemoveAll(rec => DateTime.Now.Subtract(rec.DoneAt) > TimeSpan.FromSeconds(90));
                 }

@@ -11,7 +11,6 @@ using WebFreight.Web.Security;
 using Simplog.Server.Infrastructure.DataContracts.Models;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.EntityLists;
-using Simplog.Server.Infrastructure.DataContracts.Models;
 using Simplog.Server.Infrastructure.DataContracts.Models.SearchModel;
 using Logitude.SystemLogs;
 using System.Net;

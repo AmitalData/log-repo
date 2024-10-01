@@ -52,7 +52,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             {
                 string documentExtension = "";
                 string filename = "";
-                //tenant = 0;
+
                 string AllHeaderRequest = DA;
                 if (AllHeaderRequest == "1")
                 {
@@ -151,9 +151,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                 if (suppressDownload)
                                 {
                                     var xmlF = System.Text.UTF8Encoding.UTF8.GetString(_DatainByte);
-                                    //Response.Clear();
-                                    //Response.Write(xmlF);
-                                    //return;
                                     return Request.CreateResponse(HttpStatusCode.NotAcceptable, new StringContent(xmlF, System.Text.Encoding.UTF8, "text/xml"));
 
                                 }
@@ -170,87 +167,15 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                             }
 
 
-                            //HttpContext.Current.Response.Clear();
-                            //HttpContext.Current.Response.AddHeader("Content-Length", _DatainByte.Length.ToString());
 
                             _response = Request.CreateResponse(HttpStatusCode.OK);
-                            _response.Headers.Add("Content-Length", _DatainByte.Length.ToString());
                             _response.Content = new StreamContent(new MemoryStream(_DatainByte));
+                            _response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                            _response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                            _response.Content.Headers.ContentDisposition.FileName = documentName;
+                            _response.Content.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
-                            switch (documentExtension)
-                            {
-                                case "pdf":
-                                    _response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/" + "pdf");
-                                    _response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline");
-                                    _response.Content.Headers.ContentDisposition.FileName = documentName;
-                                    break;
 
-                                case "doc":
-                                    _response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/" + "msword");
-                                    _response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-                                    _response.Content.Headers.ContentDisposition.FileName = documentName;
-                                    break;
-
-                                case "docx":
-                                    _response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/" + "vnd.openxmlformats-officedocument.wordprocessingml.document");
-                                    _response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-                                    _response.Content.Headers.ContentDisposition.FileName = documentName;
-                                    break;
-
-                                case "xls":
-                                    _response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/" + "vnd.ms-excel");
-                                    _response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-                                    _response.Content.Headers.ContentDisposition.FileName = documentName;
-                                    break;
-
-                                case "xlsx":
-                                    _response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/" + "vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-                                    _response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-                                    _response.Content.Headers.ContentDisposition.FileName = documentName;
-                                    break;
-
-                                case "ppt":
-                                    _response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/" + "vnd.ms-powerpoint");
-                                    _response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-                                    _response.Content.Headers.ContentDisposition.FileName = documentName;
-                                    break;
-
-                                case "pptx":
-                                    _response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/" + "vnd.openxmlformats-officedocument.presentationml.presentation");
-                                    _response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-                                    _response.Content.Headers.ContentDisposition.FileName = documentName;
-                                    break;
-
-                                case "jpg":
-                                    _response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
-                                    _response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-                                    _response.Content.Headers.ContentDisposition.FileName = documentName;
-                                    break;
-
-                                case "zip":
-                                    _response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/zip");
-                                    _response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-                                    _response.Content.Headers.ContentDisposition.FileName = documentName;
-                                    break;
-
-                                case "xml":
-                                    _response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                                    _response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline");
-                                    _response.Content.Headers.ContentDisposition.FileName = filename;
-                                    break;
-
-                                case "html":
-                                    _response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/html");
-                                    _response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline");
-                                    _response.Content.Headers.ContentDisposition.FileName = documentName;
-                                    break;
-                                default:
-                                    _response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                                    _response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-                                    _response.Content.Headers.ContentDisposition.FileName = documentName;
-                                    break;
-
-                            }
 
 
 
@@ -307,22 +232,18 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 if (ErrorMessage.Contains("Sorry you’re not authenticated to view this document"))
                 {
-                    //HttpContext.Current.Response.Write("Sorry you’re not authenticated to view this document");
                     return Request.CreateResponse(HttpStatusCode.NotAcceptable, new StringContent("Sorry you’re not authenticated to view this document", System.Text.Encoding.UTF8, "text/plain") );
                 }
                 else if (ErrorMessage.Contains("Sorry, your download link has expired."))
                 {
-                    //HttpContext.Current.Response.Write("Sorry, your download link has expired.");
                     return Request.CreateResponse(HttpStatusCode.NotAcceptable, new StringContent("Sorry, your download link has expired.", System.Text.Encoding.UTF8, "text/plain") );
                 }
                 else if (ErrorMessage.Contains("The document is not allowed."))
                 {
-                    //HttpContext.Current.Response.Write("The document is not allowed.");
                     return Request.CreateResponse(HttpStatusCode.NotAcceptable, new StringContent("The document is not allowed.", System.Text.Encoding.UTF8, "text/plain") );
                 }
                 else
                 {
-                    //HttpContext.Current.Response.Write("Invalid Document Security Id!");
                     return Request.CreateResponse(HttpStatusCode.NotAcceptable, new StringContent("Invalid Document Security Id!", System.Text.Encoding.UTF8, "text/plain") );
                 }
 
@@ -348,8 +269,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         }
 
         [HttpGet]
-        [Route("CorrespondenceDownload/PreValidateAndDownloadDocument")]
-        public HttpResponseMessage PreValidateAndDownloadDocument(string DA = "", string securitykey = "", string id = "")
+        [Route("CorrespondenceDownload/ValidateAndDownloadDocument")]
+        public HttpResponseMessage ValidateAndDownloadDocument(string DA = "", string securitykey = "", string id = "")
         {
             try
             {
@@ -360,7 +281,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     NetCommonHelper.Logger.DevLog.Instance.WriteError("Not Authenticated DA= " + DA + ", securitykey= " + securitykey + ", id= " + id);
 
                     HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Redirect);
-                    response.Headers.Location = new Uri("../login.aspx");
+                    response.Headers.Location = new Uri("../login", UriKind.Relative);
                     return response;
 
                 }
@@ -400,12 +321,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                             NetCommonHelper.Logger.DevLog.Instance.WriteError("Authenticated Tenant " + authTenant.ToString() + ", Document link tenant " + tenant.ToString() + ", DA= " + DA + ", securitykey= " + securitykey + ", id= " + id);
                             return Request.CreateResponse(HttpStatusCode.Unauthorized, new StringContent("Invalid Security Id!", System.Text.Encoding.UTF8, "text/plain"));
                         }
-                        return Request.CreateResponse(HttpStatusCode.OK, new StringContent(" ", System.Text.Encoding.UTF8, "text/plain"));
+
+                        return DownloadDocumentInner(DA, securitykey, id, false);
 
                     }
                     catch (Exception ex)
                     {
-                        NetCommonHelper.Logger.DevLog.Instance.WriteError("PreValidateAndDownloadDocument (1)  Exception= " + ex.ToString());
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError("ValidateAndDownloadDocument (1)  Exception= " + ex.ToString());
 
                         return Request.CreateResponse(HttpStatusCode.Unauthorized, ApiExceptionBuilder.BuildException(ex)); ;
                     }
@@ -415,9 +337,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
             catch (Exception errorInfo)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteError("PreValidateAndDownloadDocument (2)  Exception= " + errorInfo.ToString());
+                NetCommonHelper.Logger.DevLog.Instance.WriteError("ValidateAndDownloadDocument (2)  Exception= " + errorInfo.ToString());
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Redirect);
-                response.Headers.Location = new Uri("../login.aspx");
+                response.Headers.Location = new Uri("../login", UriKind.Relative);
                 return response;
             }  
 
@@ -426,37 +348,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         }
 
 
-        [HttpGet]
-        [Route("CorrespondenceDownload/ValidateAndDownloadDocument")]
-        public HttpResponseMessage ValidateAndDownloadDocument(string DA = "", string securitykey = "", string id = "")
-        {
-            try
-            {
 
-
-                if (!HttpContext.Current.Request.IsAuthenticated)
-                {
-                    HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Redirect);
-                    response.Headers.Location = new Uri("../login.aspx");
-                    return response;
-
-                }
-                else
-                {
-                    return DownloadDocumentInner(DA, securitykey, id, false);
-                }
-            }
-            catch (Exception errorInfo)
-            {
-                NetCommonHelper.Logger.DevLog.Instance.WriteError("ValidateAndDownloadDocument  Exception= " + errorInfo.ToString());
-                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Redirect);
-                response.Headers.Location = new Uri("../login.aspx");
-                return response;
-            }
-
-
-
-        }
 
 
         private byte[] TransformXml2Html(byte[] myByteArray)
@@ -697,9 +589,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 bool exists = false;
                 if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
-                {//using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                    //{
-                    //}
+                {
                     ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
                     string email = HttpContext.Current.User.Identity.Name;
 

@@ -468,59 +468,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 
 				if (IsValidSend)
 				{
-
-					var MyUnifreightEventParam = new UnifreightEventParam()
-					{
-						Code = "APAYA",
-						Mode = UnifreightEventMode.@new,
-						EventDateTime = DateTime.Now,
-						Entname = "CFIFILEM",
-						PrimaryNum = _MyDeclarationPM.CustomFileNo,
-						EventRemarks = "תשלום הצהרה אוטומטי"
-					};
-
-
-					LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
-					var myOpenUnifreighTask = new UnifreightEventTaskService();
-					myOpenUnifreighTask.UpsertEventLE2U(
-						_MyDeclarationPM.Tenant,
-					  user,
-						MyUnifreightEventParam);
-
-
-					var requestParams = new GenericRequestParams()
-					{
-						LoggingEnabled = true,
-						IsFakeResponse = true,
-						InterfaceTypeCode = "2755",
-						Tenant = _MyDeclarationPM.Tenant,
-						RequestName = "Auto Payment Request",
-						ResponseName = "Auto Payment Response",
-						LoggingEntityId = _MyDeclarationPM.Id,
-						RequestVIA = SendRequestVIA.WebServiceBatch,
-						SuppressSplitWR = true,
-						AppicationId = _MyDeclarationPM.Id,
-						// LoggingEntityReference = "AutoPayment",
-						//UnifreightListOnServerOnly = SetBankIdInUnifreightListOnServerOnly(autoPaymentService?.PaymentMethodsList[0]?.SelectedBank?.Id)
-					};
-
-					if (declarationPaymentPM.FuturePaymentDateTime != null)
-					{
-						DateTime requestDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, declarationPaymentPM.FuturePaymentDateTime.Value.Hour, declarationPaymentPM.FuturePaymentDateTime.Value.Minute, declarationPaymentPM.FuturePaymentDateTime.Value.Second);
-						declarationPaymentPM.PaymentDate = requestDate;
-
-						requestParams.RequestVIAChangeDue = string.Concat("נרשמה בקשה מתוזמנת לתאריך ", requestDate.ToShortDateString(), " שעה ", requestDate.ToShortTimeString());// "הבקשה תשלח בעתיד";
-						requestParams.FutureSendDateTime = requestDate;
-
-						SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams, false, requestDate);
-
-					}
-					else
-					{
-
-						SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams, false);
-
-					}
+					autoPaymentService.SendPaymentIsCheckFileCredit(IsValidSend, _MyDeclarationPM, declarationPaymentPM, user,false);
 				}
 			}
 			catch (Exception ex)

@@ -80,7 +80,15 @@ namespace WebFreight.Web.WcfApi
                     else
                     {
                         entityPM.Id = BusinessHoursHoliday.Id;
-                        service.Update(entityPM);
+
+                        if (entityPM.ChangeSetOp == ChangeSetOperation.Delete)
+                        {
+                            service.Delete(entityPM);
+                        }
+                        else
+                        {
+                            service.Update(entityPM);
+                        }
                     }
 
                     BusinessHoursHoliday = businessHoursHolidayRepository.GetSingleBusinessHoursHolidayByDate(entityPM.Day, entityPM.Month, entityPM.Year, entityPM.Tenant);

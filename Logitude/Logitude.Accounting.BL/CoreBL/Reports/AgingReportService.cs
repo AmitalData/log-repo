@@ -114,9 +114,22 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
             List<PeriodM> theDBList;
             bool fromGLAccountAgingData = false;
-            if (_Param.FroceFromGLAccountAgingData && !_Param.SuppressFromGLAccountAgingData)
+
+            int currentmonth = DateTime.Now.Month;
+            int currentyear = DateTime.Now.Year;
+
+            int month = DateTime.Now.Month;
+            int year = DateTime.Now.Year;
+
+            if (_Param.AgingForDate != null)
+
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("{fromGLAccountAgingData}:{0}", fromGLAccountAgingData));
+                month = _Param.AgingForDate.Month;
+                year = _Param.AgingForDate.Year;
+            }
+            if (_Param.FroceFromGLAccountAgingData && !_Param.SuppressFromGLAccountAgingData && month == currentmonth && year == currentyear)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("fromGLAccountAgingData:{0}", fromGLAccountAgingData));
 
                 var agingReportFromAgingData = new AgingReportFromAgingData(_AccountingContext, _MainAccountIdList_ToFetchThenAggragrate, _qAllAccAging4AccountTypeCode_CustomerOrVendor, _AccountingCurrencyId);
                 theDBList = agingReportFromAgingData.GetFromGLAccountAgingData(_Param.Tenant, listPeriods, myorderLessThanExclusive);//, listLessThanExclusivePeriods);
@@ -648,16 +661,29 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             }
 
             //_notMultiCurrencyAccountListId = _GLAccounts.Where(rec => !rec.IsMultiCurrency.GetValueOrDefault()).Select(rec => rec.Id).ToList();
-            var _AccountListId_PleaseTake_ForeignAmountList = _AccountListId_PleaseTake_ForeignAmount.ToList();
+            //var _AccountListId_PleaseTake_ForeignAmountList = _AccountListId_PleaseTake_ForeignAmount.ToList();
 
+            //var qTotalByMonthAcc_NOTMultiCurrencySooGet_ForeignAmount = ///GLAccount that is not multi Currency Get Foreign 
+            //        qTotalByMonthAcc
+            //    .Where(rec => _AccountListId_PleaseTake_ForeignAmountList.Contains(rec.AccountId));
+
+
+            //var qTotalByMonthAcc_ISMultiCurrencySooGet_LocalAmount = ///GLAccount that is not multi Currency Get Foreign 
+            //        qTotalByMonthAcc
+            //    .Where(rec => _AccountListId_PleaseTake_ForeignAmountList.Contains(rec.AccountId));
+
+
+            //_notMultiCurrencyAccountListId = _GLAccounts.Where(rec => !rec.IsMultiCurrency.GetValueOrDefault()).Select(rec => rec.Id).ToList();
             var qTotalByMonthAcc_NOTMultiCurrencySooGet_ForeignAmount = ///GLAccount that is not multi Currency Get Foreign 
                     qTotalByMonthAcc
-                .Where(rec => _AccountListId_PleaseTake_ForeignAmountList.Contains(rec.AccountId));
+                .Where(rec => _AccountListId_PleaseTake_ForeignAmount.Contains(rec.AccountId));
 
 
             var qTotalByMonthAcc_ISMultiCurrencySooGet_LocalAmount = ///GLAccount that is not multi Currency Get Foreign 
                     qTotalByMonthAcc
-                .Where(rec => _AccountListId_PleaseTake_ForeignAmountList.Contains(rec.AccountId));
+                .Where(rec => !_AccountListId_PleaseTake_ForeignAmount.Contains(rec.AccountId));
+
+
 
 
 

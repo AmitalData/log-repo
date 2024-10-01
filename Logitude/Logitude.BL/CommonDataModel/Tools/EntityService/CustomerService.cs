@@ -392,7 +392,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.UpdateCustomerMediatorByProductCollection();
             this.UpdateCardExternalCodeByCurrencyCollection();
             this.UpdateProductItemsCollection();
-            this.UpdateContactForAccounting();
 
 
             //var tenantQuery = new TenantQuery(entityPM.Tenant);
@@ -485,6 +484,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
             cardRepository.SubmitChanges();
+            this.UpdateContactForAccounting();
+
             new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<CustomerPM> { entityPM }.Cast<object>().ToList() }).Update();
             cardService.HandleGLAccountCardData(entityCard.Id, entityCard.GLAccountId, entityPM.Tenant);
             if (!entityPM.IsHybrid)

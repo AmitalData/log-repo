@@ -43,8 +43,8 @@ namespace Logitude.Customs.BL.CloseTables
         public const string InterfaceName_Ftp2Maman2470 = "ECM2470";//EC = E-Commerce 2 maman 2470
         public const string InterfaceName_ECILSWSHAWB = "ECILSWSHAWB";//EC = E-Commerce
         public const string InterfaceName_ECILSWSHAWB_Splited = "ECILSWSHAWB+P";//EC = E-Commerce
-        public const string InterfaceName_ImportAddOwner = "ImportAddOwner";
-        public const string InterfaceName_ImportPrintTracking = "ImportPrintTracking";
+        public const string InterfaceName_ImportAddOwner = "IMPORT_ADD_OWNER";
+        public const string InterfaceName_ImportPrintTracking = "IMPORT_PRINT_TRACKING";
         public const string PartnerCode_Mamam = "MAMAN";
         public const string PartnerCode_ILOVS = "ILOVS";
         public const string PartnerCode_ILSWS = "ILSWS";

@@ -141,7 +141,7 @@ namespace WebFreight.Web.WcfApi
                         else
                         {
                             response.HasError = true;
-                            response.ErrorMessage = "StatusId field doesn't exist in the database,Upsert this entity before using it.";
+                            response.ErrorMessage = $"StatusId value doesn't exist in the database, insert this entity before using it. Tenant:[{entityPM.Tenant}];StatusCode:[{entityPM.StatusId}]";
                             return response;
                         }
 

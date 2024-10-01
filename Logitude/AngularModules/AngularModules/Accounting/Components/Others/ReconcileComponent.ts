@@ -153,6 +153,7 @@ export class LineModel extends BaseComponent {
                 else {
                     this.LedgerTransactionPM.AmountToReconcile = this.OpenAmount;
                 }
+                this.LedgerTransactionPM.AmountToReconcile = Number(this.LedgerTransactionPM.AmountToReconcile.toFixed(2));
             }
             else {
                 this.LedgerTransactionPM.AmountToReconcile = 0;

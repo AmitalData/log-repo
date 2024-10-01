@@ -19,7 +19,7 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 
 
-namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
+namespace JustWebFreight.WebFreight.Web.Controllers.CustomsModel.Generated.PMControllers
 
 {
     public partial class CertificateOfOriginMandatoryFieldssController : ApiController

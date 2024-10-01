@@ -45,6 +45,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     public DataContext: any = this;
     public ObjectTableName: string = "Customs.SupplierInvioceExportDefault";
     private SupplierInvioceExportDefaultPM: SupplierInvioceExportDefaultPM;
+    private SupplierInvioceExportDefaultIsChecked: SupplierInvioceExportDefaultPM;
     private SupplierInvoiceComprehensiveUpdate: SupplierInvoicePM[] = [];
     public ValidationErrorsList: string[];
     public IsVisibile = false;
@@ -113,6 +114,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
         }
     }
     private LoadDefaults() {
+        this.SupplierInvioceExportDefaultIsChecked = new SupplierInvioceExportDefaultPM();
         this.SupplierInvioceExportDefaultPM = new SupplierInvioceExportDefaultPM();
         var myService: SupplierInvioceExportDefaultExtendedPMService = new SupplierInvioceExportDefaultExtendedPMService();
         myService.getByTenat(SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
@@ -163,7 +165,13 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     set AccountTypeCode(value: string) {
 
         if (this.SupplierInvioceExportDefaultPM.AccountTypeCode != value) {
-            this.SupplierInvioceExportDefaultPM.AccountTypeCode = this.AccountTypeCodeChecked ? value : "non";
+            this.SupplierInvioceExportDefaultPM.AccountTypeCode = value;
+            if(this.AccountTypeCodeChecked) {
+                this.SupplierInvioceExportDefaultIsChecked.AccountTypeCode = value ? value : 'non';
+            }
+            else{
+                this.SupplierInvioceExportDefaultIsChecked.AccountTypeCode = null;
+            }
 
         }
     }
@@ -171,88 +179,127 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     get PartyRelationshipCode() { return this.SupplierInvioceExportDefaultPM?.PartyRelationshipCode }
     set PartyRelationshipCode(value: string) {
 
-        if (this.SupplierInvioceExportDefaultPM.PartyRelationshipCode != value) {
-            this.SupplierInvioceExportDefaultPM.PartyRelationshipCode = this.PartyRelationshipCodeChecked ? value : "non";
-
+        if (this.SupplierInvioceExportDefaultPM.PartyRelationshipCode != value) {          
+            this.SupplierInvioceExportDefaultPM.PartyRelationshipCode = value;
+            if(this.PartyRelationshipCodeChecked) {
+                this.SupplierInvioceExportDefaultIsChecked.PartyRelationshipCode = value ? value : 'non';
+            }
+            else{
+                this.SupplierInvioceExportDefaultIsChecked.PartyRelationshipCode = null;
+            }
         }
     }
 
     get ClaimReasonCode() { return this.SupplierInvioceExportDefaultPM?.ClaimReasonCode }
     set ClaimReasonCode(value: string) {
         if (this.SupplierInvioceExportDefaultPM.ClaimReasonCode != value) {
-            this.SupplierInvioceExportDefaultPM.ClaimReasonCode = this.ClaimReasonCodeChecked ? value : "non";
-
+            this.SupplierInvioceExportDefaultPM.ClaimReasonCode = value;
+           if(this.ClaimReasonCodeChecked) {
+               this.SupplierInvioceExportDefaultIsChecked.ClaimReasonCode = value ? value : 'non';
+           }
+           else{
+               this.SupplierInvioceExportDefaultIsChecked.ClaimReasonCode = null;
+           }
         }
     }
 
     get TransactionNatureCode() { return this.SupplierInvioceExportDefaultPM?.TransactionNatureCode }
     set TransactionNatureCode(value: string) {
         if (this.SupplierInvioceExportDefaultPM.TransactionNatureCode != value) {
-            this.SupplierInvioceExportDefaultPM.TransactionNatureCode = this.TransactionNatureCodeChecked ? value : "non";
-
+          
+           this.SupplierInvioceExportDefaultPM.TransactionNatureCode = value;
+           if(this.TransactionNatureCodeChecked) {
+               this.SupplierInvioceExportDefaultIsChecked.TransactionNatureCode = value ? value : 'non';
+           }
+           else{
+               this.SupplierInvioceExportDefaultIsChecked.TransactionNatureCode = null;
+           }
         }
     }
     get ProcessTypeCode() { return this.SupplierInvioceExportDefaultPM?.ProcessTypeCode }
     set ProcessTypeCode(value: string) {
         if (this.SupplierInvioceExportDefaultPM.ProcessTypeCode != value) {
-            this.SupplierInvioceExportDefaultPM.ProcessTypeCode = this.ProcessTypeCodeChecked ? value : "non";
-
+           
+            this.SupplierInvioceExportDefaultPM.ProcessTypeCode = value;
+            if(this.ProcessTypeCodeChecked) {
+                this.SupplierInvioceExportDefaultIsChecked.ProcessTypeCode = value ? value : 'non';
+            }
+            else{
+                this.SupplierInvioceExportDefaultIsChecked.ProcessTypeCode = null;
+            }
         }
     }
 
     get BuyerRoleCode() { return this.SupplierInvioceExportDefaultPM?.BuyerRoleCode }
     set BuyerRoleCode(value: string) {
         if (this.SupplierInvioceExportDefaultPM.BuyerRoleCode != value) {
-            this.SupplierInvioceExportDefaultPM.BuyerRoleCode = this.BuyerRoleCodeChecked ? value : "non";
-
+           
+            this.SupplierInvioceExportDefaultPM.BuyerRoleCode = value;
+            if(this.BuyerRoleCodeChecked) {
+                this.SupplierInvioceExportDefaultIsChecked.BuyerRoleCode = value ? value : 'non';
+            }
+            else{
+                this.SupplierInvioceExportDefaultIsChecked.BuyerRoleCode = null;
+            }
         }
     }
 
 
     get AccountTypeCodeChecked() { return this.accountTypeCodeChecked }
     set AccountTypeCodeChecked(value: boolean) {
-        if (!value)
-            this.SupplierInvioceExportDefaultPM.AccountTypeCode = "non";
+        if (value)
+        this.SupplierInvioceExportDefaultIsChecked.AccountTypeCode = this.SupplierInvioceExportDefaultPM.AccountTypeCode ? this.SupplierInvioceExportDefaultPM.AccountTypeCode : 'non';
+        else
+        this.SupplierInvioceExportDefaultIsChecked.AccountTypeCode = null;
         this.accountTypeCodeChecked = value
-
     }
 
 
     get PartyRelationshipCodeChecked() { return this.partyRelationshipCodeChecked }
     set PartyRelationshipCodeChecked(value: boolean) {
 
-        if (!value)
-            this.SupplierInvioceExportDefaultPM.PartyRelationshipCode = "non";
+        if (value)
+        this.SupplierInvioceExportDefaultIsChecked.PartyRelationshipCode = this.SupplierInvioceExportDefaultPM.PartyRelationshipCode? this.SupplierInvioceExportDefaultPM.PartyRelationshipCode : 'non';
+        else
+            this.SupplierInvioceExportDefaultIsChecked.PartyRelationshipCode = null;
         this.partyRelationshipCodeChecked = value
     }
 
 
     get ClaimReasonCodeChecked() { return this.claimReasonCodeChecked }
     set ClaimReasonCodeChecked(value: boolean) {
-        if (!value)
-            this.SupplierInvioceExportDefaultPM.ClaimReasonCode = "non";
+        if (value)
+        this.SupplierInvioceExportDefaultIsChecked.ClaimReasonCode = this.SupplierInvioceExportDefaultPM.ClaimReasonCode? this.SupplierInvioceExportDefaultPM.ClaimReasonCode : 'non';
+        else
+            this.SupplierInvioceExportDefaultIsChecked.ClaimReasonCode = null;
         this.claimReasonCodeChecked = value
 
     }
 
     get TransactionNatureCodeChecked() { return this.transactionNatureCodeChecked }
     set TransactionNatureCodeChecked(value: boolean) {
-        if (!value)
-            this.SupplierInvioceExportDefaultPM.TransactionNatureCode = "non";
+        if (value)
+        this.SupplierInvioceExportDefaultIsChecked.TransactionNatureCode = this.SupplierInvioceExportDefaultPM.TransactionNatureCode? this.SupplierInvioceExportDefaultPM.TransactionNatureCode : 'non';
+        else
+            this.SupplierInvioceExportDefaultIsChecked.TransactionNatureCode = null;
         this.transactionNatureCodeChecked = value
     }
     get ProcessTypeCodeChecked() { return this.processTypeCodeChecked }
     set ProcessTypeCodeChecked(value: boolean) {
-        if (!value)
-            this.SupplierInvioceExportDefaultPM.ProcessTypeCode = "non";
+        if (value)
+        this.SupplierInvioceExportDefaultIsChecked.ProcessTypeCode = this.SupplierInvioceExportDefaultPM.ProcessTypeCode? this.SupplierInvioceExportDefaultPM.ProcessTypeCode : 'non';
+        else
+            this.SupplierInvioceExportDefaultIsChecked.ProcessTypeCode = null;
         this.processTypeCodeChecked = value
 
     }
 
     get BuyerRoleCodeChecked() { return this.buyerRoleCodeChecked }
     set BuyerRoleCodeChecked(value: boolean) {
-        if (!value)
-            this.SupplierInvioceExportDefaultPM.BuyerRoleCode = "non";
+        if (value)
+        this.SupplierInvioceExportDefaultIsChecked.BuyerRoleCode = this.SupplierInvioceExportDefaultPM.BuyerRoleCode? this.SupplierInvioceExportDefaultPM.BuyerRoleCode : 'non';
+        else
+            this.SupplierInvioceExportDefaultIsChecked.BuyerRoleCode = null;
         this.buyerRoleCodeChecked = value
 
     }
@@ -388,7 +435,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
         currRequestParams.DeclarationId = this.CurrentSession.CurrentEditComponent.EntityPM.Id;
         currRequestParams.SupplierInvoiceList = this.SupplierInvoiceComprehensiveUpdate.map(p => p.InvoiceCounterKey).join(',');
         currRequestParams.SupplierInvioceItemCertificats = []
-        currRequestParams.SupplierInvioceExportDefault = this.SupplierInvioceExportDefaultPM;
+        currRequestParams.SupplierInvioceExportDefault = this.SupplierInvioceExportDefaultIsChecked;
         this.ItemsSource.Collection.forEach(element => {
             var supplierInvioceItemCertificat: SupplierInvioceItemCertificat = new SupplierInvioceItemCertificat();
             supplierInvioceItemCertificat.CertificateNumber = element.CertificateNumber;

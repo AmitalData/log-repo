@@ -4,7 +4,7 @@
   Name="Queue_DelayMessage"
   Schema="dbo"
   Module="Infrastructure">
-	<SqlScript_>
+	<DONT_EXECUTE_SqlScript_>
 		<![CDATA[
 CREATE procedure [dbo].[Queue_DelayMessage]
 --- CustomsBranch- Translate from Oracle!!!
@@ -30,15 +30,15 @@ END
 
 end
 ]]>
-	</SqlScript_>
+	</DONT_EXECUTE_SqlScript_>
   <SqlScript>
 	  <![CDATA[
 create  PROCEDURE [dbo].[Queue_DelayMessage]  
 --- CustomsBranch- Translate from Oracle
 
-   @V_MESSAGEID float(53),
+   @V_MESSAGEID bigint,
 
-   @V_DELAYSECONDS float(53)
+   @V_DELAYSECONDS int
 AS 
    BEGIN
 

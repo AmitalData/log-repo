@@ -11,12 +11,13 @@ import { API_MainService } from '../../../core/API_MainService';
 import { AddCommentService } from '../add-comment/service/add-comment.service';
 import { NgClass, NgFor, NgForOf, NgIf } from '@angular/common';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
+import { RulesComponent } from "../rules/rules.component";
 
 
 @Component({
   selector: 'app-details-frame',
   standalone: true,
-  imports: [NgClass, FontAwesomeModule, AccordionComponent, CommentsComponent, NgFor, NgForOf, NgIf],
+  imports: [NgClass, FontAwesomeModule, AccordionComponent, CommentsComponent, RulesComponent, NgFor, NgForOf, NgIf],
   templateUrl: './details-frame.component.html',
   styleUrl: './details-frame.component.css'
 })
@@ -30,6 +31,7 @@ export class DetailsFrameComponent implements OnInit {
   @Input() currentItem: BehaviorSubject<CB_CustomsItemComputedDataList>;
   item: CB_CustomsItemComputedDataList;
   showComments: boolean = false;
+  showRules: boolean = false;
   show: boolean = false;
   checked: boolean = false;
   faSquareCheck = faSquareCheck;

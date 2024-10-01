@@ -29,13 +29,12 @@ namespace CustomsWorkerRole.BL
             {
                 if (DateTime.Now < THEGracePeriod)
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"Please insert {Environment.MachineName} in ServersNames!! -> Grace Period  TILL  {THEGracePeriod} ");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Please insert {Environment.MachineName} in ServersNames!! -> Grace Period  TILL  {THEGracePeriod} ");
 
                 }
                 else
                 {
                     NetCommonHelper.Logger.DevLog.Instance.WriteError($"SHUTDOWN!!! Please insert ServersNames!! -Grace Period exceeded !! {THEGracePeriod} ");
-                    
                     ExitEnsureLogWrite();
 
                 }
@@ -46,32 +45,32 @@ namespace CustomsWorkerRole.BL
             serviceNameList = serviceNameList.Select(r => r.ToLower()).ToList();
             if (serviceNameList.Count == 0)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteError($"SHUTDOWN!!! ServersName defined But {Environment.MachineName} not exist "+":"+ServerMonitorControl);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SHUTDOWN!!! ServersName defined But {Environment.MachineName} not exist ");
                 ExitEnsureLogWrite();
                 return;
             }
-            NetCommonHelper.Logger.DevLog.Instance.WriteError($"{Environment.MachineName} exist in ServersName " + ":" + ServerMonitorControl);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"{Environment.MachineName} exist in ServersName ");
             var curServiceName = GetServiceName();
             if (!String.IsNullOrWhiteSpace(  curServiceName ))
             {
                 curServiceName = curServiceName.ToLower();
                 if (serviceNameList.Contains(curServiceName))
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"{curServiceName} found in  ServersName" + ":" + ServerMonitorControl);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"{curServiceName} found in  ServersName");
 
                 }
                 else
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"{curServiceName} not found ServersName " + ":" + ServerMonitorControl);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"{curServiceName} not found ServersName ");
 
-                    NetCommonHelper.Logger.DevLog.Instance.WriteError($"SHUTDOWN!!!restrict!! {curServiceName} not found ServersName " + ":" + ServerMonitorControl);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError($"SHUTDOWN!!!restrict!! {curServiceName} not found ServersName ");
                     ExitEnsureLogWrite();
                     return;
                 }
             }
             else
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"GetServiceName() == null" + ":" + ServerMonitorControl);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"GetServiceName() == null");
             }
         }
 
@@ -81,7 +80,7 @@ namespace CustomsWorkerRole.BL
             {
                 //Task.Delay(TimeSpan.FromSeconds(1));
                 System.Threading.Thread.Sleep(200);
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("SHUTDOWN!!! Before Exit - try to Write logs");
+                Debug.WriteLine("SHUTDOWN!!! Before Exit - try to Write logs");
             }
 
             Environment.Exit(0);

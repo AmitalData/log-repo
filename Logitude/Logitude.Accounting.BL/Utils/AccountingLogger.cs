@@ -35,20 +35,7 @@ namespace Logitude.Accounting.BL.Utils
                 else if (DateTime.Now.Subtract(UIErrorBufferAt) > new TimeSpan(1, 0, 0))
                     Send = true;
                 UIErrorBuffer += mess + Environment.NewLine;
-                //if (Send)
-                //{
-                //    if (System.Environment.UserInteractive)
-                //    {
-                //        Show myDel = new Show(System.Windows.Forms.MessageBox.Show);
-                //        myDel.BeginInvoke(UIErrorBuffer, ValidFileName(ValidFileName(Application.ProductName)), null, null);
-                //        //System.Windows.Forms.MessageBox.Show(m);
-
-                //    }
-                //    SMTP.SendItdelegate SendItP = new SMTP.SendItdelegate(SMTP.SendItDefault);
-                //    SendItP.BeginInvoke(UIErrorBuffer, null, null);
-                //    UIErrorBuffer = "";
-                //    UIErrorBufferAt = DateTime.Now;
-                //}
+               
             }
             else
             {

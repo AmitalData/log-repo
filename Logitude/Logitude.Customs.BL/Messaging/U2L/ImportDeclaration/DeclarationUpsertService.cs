@@ -848,8 +848,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				}
 				_MyDeclarationPM.Tenant = ResolvedTenant();
 
-				if (string.IsNullOrWhiteSpace(this._MyDeclarationPM.Direction) || this._MyDeclarationPM.Direction == "I") _MyDeclarationPM.IsConnectedToUnifreight = true; //Yuval Chalup 19.10.2016 TASK-22516
-
+				if (string.IsNullOrWhiteSpace(this._MyDeclarationPM.Direction) || this._MyDeclarationPM.Direction == "I") 
+					_MyDeclarationPM.IsConnectedToUnifreight = true; //Yuval Chalup 19.10.2016 TASK-22516else{
+				else
 				_MyDeclarationPM.IsConnectedToUnifreight = CustomsSettingQueryService.GetSettingByTenant(ResolvedTenant()).IsConnectedToUniFreight;
 
 				//_MyDeclarationPM.ProcedureCurrentCode = ResolveProcedureCurrentCode();//remarked by eitan h 24/9/15 16527
@@ -1863,9 +1864,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
             supplierInvoiceItemsConDeclarPM.DeclarationTypeCode = invoiceItemConnectedDeclaration.DeclarationType;
             supplierInvoiceItemsConDeclarPM.DeclarationNumber = invoiceItemConnectedDeclaration.DeclarationNo;
-            supplierInvoiceItemsConDeclarPM.InvoiceNumber = int.Parse(invoiceItemConnectedDeclaration.InvoiceLine);
+            supplierInvoiceItemsConDeclarPM.InvoiceNumber =  int.Parse(invoiceItemConnectedDeclaration.InvoiceLine);
 			supplierInvoiceItemsConDeclarPM.InvoiceItemLineNumber = int.Parse(invoiceItemConnectedDeclaration.ItemLine);
-            supplierInvoiceItemsConDeclarPM.Quantity = int.Parse(invoiceItemConnectedDeclaration.Quantity);
+            supplierInvoiceItemsConDeclarPM.Quantity = decimal.Parse(invoiceItemConnectedDeclaration.Quantity);
             supplierInvoiceItemsConDeclarPM.QuantityTypeCode = invoiceItemConnectedDeclaration.QuantityType;
 
 

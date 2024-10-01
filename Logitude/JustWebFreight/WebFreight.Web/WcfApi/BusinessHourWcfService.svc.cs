@@ -69,6 +69,11 @@ namespace WebFreight.Web.WcfApi
                     else
                     {
                         entityPM.Id = businessHour.Id;
+
+                        if (entityPM.ChangeSetOp == ChangeSetOperation.Delete)
+                        {
+                            service.Delete(entityPM);
+                        }
                         service.Update(entityPM);
                     }
                   

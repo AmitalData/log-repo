@@ -26,6 +26,7 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
         public decimal? CalculatedPostponedChequesCommision { get; set; }
         public decimal? AllotmentCommession { get; set; }
         public string AllotmentCalculation { get; set; }
+        public List <FutureInterestTransactionProvider> FutureInterestTransactions { get; set; }
     }
 
     public class InterestReportLinesByDateProvider
@@ -59,5 +60,33 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
         public decimal? ForeignAmount { get; set; }
 
      }
+
+    public class FutureInterestTransactionProvider 
+    {
+       // public string Id { get; set; }
+        public int Tenant { get; set; }
+        public DateTime CreateDateTime { get; set; }
+        public string SearchFields { get; set; }
+        public string InterestEntityTypeCode { get; set; }
+        public int OriginalEntityLineNumber { get; set; }
+        public decimal LocalAmount { get; set; }
+        public decimal? ForeignAmount { get; set; }
+        public DateTime? InterestValueDate { get; set; }
+        public bool IsClosed { get; set; }
+        public string CurrencyCode { get; set; }
+        public string EntityNumber { get; set; }
+        public string JournalNumber { get; set; }
+        public string InterestEntityType { get; set; }
+        public string EntityType { get; set; }
+        public string AccountEntityCode { get; set; }
+        public bool IsCancelled { get; set; }
+        public string InterestReportNumber { get; set; }
+        public string Source { get; set; }
+        public string SourceTypeCode { get; set; }
+        public string SourceType { get; set; }
+        public string AccountingEntityCode { get; set; }
+        public DateTime AccountingDate { get; set; }
+        public string Notes { get; set; }
+    }
 
 }

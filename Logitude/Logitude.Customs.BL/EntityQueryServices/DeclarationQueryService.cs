@@ -40,6 +40,7 @@ using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.BL.Security;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Customs.Data.CustomFilters;
+using Logitude.BL.CommonDataModel.EntityLists;
 //using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.Customs.BL.EntityQueryServices
@@ -2077,7 +2078,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 var customsDocumentPMList = myCustomsDocumentQueryService.GetCustomsDocumentList(DocumentsFilingIdList, declarationPM.Tenant);
 
                 // determine how many supplier invoices documents had been successfully sent to the mekhes
-                int sentSupplierInvoices = customsDocumentPMList.Where(document => document.DocumentTypeCode == "380" && document.DocumentStatusCode == "1").Count();
+                int sentSupplierInvoices = customsDocumentPMList.Where(document => (document.DocumentTypeCode == "380" || document.DocumentTypeCode == "325") && document.DocumentStatusCode == "1").Count();
 
                 // get all supplier invoices count of the declaration
                 SupplierInvoiceListQueryService supplierInvoiceQuery = new SupplierInvoiceListQueryService(context);
@@ -2087,7 +2088,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
                 // the declaration may be sent if documents about all its supplier invoices have been sent to the mehes and received simuhin
                 declarationReadyForSending = sentSupplierInvoices >= declarationSupplierInvoiceCount;
+                if (declarationReadyForSending && declarationPM.ProcedureCurrentCode == "1000041")
+                {
+                    bool containsAllCodes = new List<string> { "IL_1003", "IL_506", "IL_1050" }
+                    .All(code => customsDocumentPMList.Any(document => document.DocumentTypeCode.Contains(code)));
 
+                    return containsAllCodes;
+                }
                 /* if need to check for every invoice, the relation between document and invoice is
                  * (invoice.SequenceNumeric == customsDocumentsTicketPM.ConnectedInvoicesSequences) */
             }

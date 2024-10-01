@@ -19,8 +19,10 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Unifreight.BL.EntityQueryServices;
@@ -891,7 +893,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                             SupplierInvoiceItemPM.ClassificationCode =invoiceItem.CLASSIFICATIONCODE;
                             SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Update;
                         }
-                        if ((invoiceItem.ITEMORIGINCOUNTRY ?? "") != (SupplierInvoiceItemPM.OriginCountryCode ?? ""))
+                        if (!string.IsNullOrEmpty(invoiceItem.ITEMORIGINCOUNTRY) && invoiceItem.ITEMORIGINCOUNTRY != (SupplierInvoiceItemPM.OriginCountryCode ?? ""))
                         {
                             SupplierInvoiceItemPM.OriginCountryCode = invoiceItem.ITEMORIGINCOUNTRY;
                             SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Update;
@@ -919,6 +921,10 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                                 SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Update;
                             }
                         }
+                        if (!string.IsNullOrEmpty(invoiceItem.Desc) && invoiceItem.Desc != (SupplierInvoiceItemPM.ItemDescription ?? ""))
+                        {
+                            SupplierInvoiceItemPM.ItemDescription = invoiceItem.Desc;
+                        }
                     }
                 }
             }
@@ -927,12 +933,26 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
 
         private List<SupplierInvoiceItemPM> GetSupplierInvoiceItemPM(INVOICE invoice)
         {
+            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["SupplierInvoiceStatisticQuantity.LogUntilDateyyyyMMdd"];
+            var setting = CustomsSettingQueryService.GetSettingByTenant(this._MyDeclarationPM.Tenant);
+            string logData = "";
+            DateTime stopLogAt = DateTime.MinValue;
+
+            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+            {
+                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+                                                    "yyyyMMdd",
+                                                    CultureInfo.InvariantCulture,
+                                                    DateTimeStyles.None);
+            }
+
+
             var SupplierInvoiceItemPMList = new List<SupplierInvoiceItemPM>();
 
             Dictionary<string, string> ClasificationQtyTypes = new Dictionary<string, string>() { };
             CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(ResolvedTenant());
 			
-			foreach (var invoiceItem in invoice.INVOICEITEMS)
+			foreach (INVOICEITEMS invoiceItem in invoice.INVOICEITEMS)
             {
                 int int1 = 0;
                 decimal decimal1 = 0;
@@ -1008,12 +1028,17 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 {
                     SupplierInvoiceItemPM.InvoiceQuantity = null;
                 }
+                logData = "StatisticQuantity:" + SupplierInvoiceItemPM.StatisticQuantity;
+                LogitudeSettings.HandleLogMe(logData, false, "StatisticQuantity", stopLogAt);
 
                 if (invoiceItem.StatisticQuantity != null && !String.IsNullOrWhiteSpace(invoiceItem.StatisticQuantity))
                 {
                     if (decimal.TryParse(invoiceItem.StatisticQuantity, out decimal1))
                     {
                         SupplierInvoiceItemPM.StatisticQuantity = decimal1;
+                        logData = "StatisticQuantity:" + SupplierInvoiceItemPM.StatisticQuantity;
+                        LogitudeSettings.HandleLogMe(logData, false, "StatisticQuantity", stopLogAt);
+
                     }
                     else
                     {

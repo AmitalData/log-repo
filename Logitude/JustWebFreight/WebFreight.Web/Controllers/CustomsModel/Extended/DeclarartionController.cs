@@ -78,7 +78,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
 
                 DeclarationRepository declarationRep = new DeclarationRepository(customContext);
-                string id = declarationRep.GetIdByCustomFileNo(customFileNo, tenant);
+                string id = declarationRep.GetIdByCustomFileNoAndAmendmentDontDisplayInList(customFileNo, tenant, false);
 
                 DeclarationQueryService declarationQuery = new DeclarationQueryService(customContext);
                 DeclarationListQueryService listService = new DeclarationListQueryService(customContext);

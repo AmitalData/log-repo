@@ -2513,7 +2513,7 @@ export class MaintenanceComponent {
                 case 'MTHT': {
                     var windowTitle = 'Hybrid Tenant State';
                     var logWindow = new LogitudeWindow();
-                    logWindow.Width = 1100;
+                    logWindow.Width = 1310;
                     logWindow.Height = 550;
                     logWindow.Title = windowTitle;
                     logWindow.Show(

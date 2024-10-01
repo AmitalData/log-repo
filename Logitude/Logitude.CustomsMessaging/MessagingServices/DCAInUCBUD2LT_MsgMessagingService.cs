@@ -567,12 +567,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 DocumentTypeQueryService documentTypeQueryService = new DocumentTypeQueryService(_DocumentsFilingPM.Tenant);
                 DocumentTypePM documentTypePM = documentTypeQueryService.GetDocumentTypeCodeById(_DocumentsFilingPM.DocumentTypeId, _DocumentsFilingPM.Tenant);
 
-               
+                DocumentTypeCustomsDataPM documentTypeCustomsDataPM=null;
                 if (documentTypePM != null && !String.IsNullOrWhiteSpace(documentTypePM.Code))
                 {
                     LogitudeSettings.HandleLogMe("documentTypePM != null " + documentTypePM?.Code + logData, false, "CreateUD2LTService", stopLogAt);
                     DocumentTypeCustomsDataQueryService documentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(_DocumentsFilingPM.Tenant);
-                    DocumentTypeCustomsDataPM documentTypeCustomsDataPM = documentTypeCustomsDataQueryService.GetSingle(documentTypePM.Code, false, true);
+                     documentTypeCustomsDataPM = documentTypeCustomsDataQueryService.GetSingle(documentTypePM.Code, false, true);
 
                     if (documentTypeCustomsDataPM != null && !String.IsNullOrWhiteSpace(documentTypeCustomsDataPM.CustomsDoucumentTypeCode))
                     {
@@ -598,7 +598,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 if (declartionPM != null)
                 {
-                    if (declartionPM.Direction == "E" && declartionPM.IsDiamondDeclaration && declartionPM.AutoSending)
+                     List<string> EntityCodes = new List<string> { "380", "325", "IL_1003", "IL_506", "IL_1050" };
+
+                    if (declartionPM.Direction == "E" && declartionPM.IsDiamondDeclaration && declartionPM.AutoSending && EntityCodes.Contains(documentTypeCustomsDataPM?.CustomsDoucumentTypeCode))
                         AutoSending = true;
                 }
             }

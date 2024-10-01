@@ -70,14 +70,15 @@ namespace Logitude.Update.PatchDistribution
             var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
             var prodInfo = assemblyUtil.GetProductInfo(typeof(JustWebFreight.WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses.MyEntityUpdateClass).Assembly);
             var assemblyVersion = assemblyUtil.GetVersion(prodInfo);
-            NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"assemblyVersion ={assemblyVersion}");
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"assemblyVersion ={assemblyVersion}");
 
 
             var patchDistributionMatch = new PatchDistributionMatch();
             _PatchDistributionMatchModel =patchDistributionMatch.GetPatchDistributionMatchModel(assemblyVersion);
-            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(_PatchDistributionMatchModel.Message);
-            NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"DB MajorVersion={_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion}");
-            NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"DB MinorVersion Last Closed !!!={_PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion}");
+
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(_PatchDistributionMatchModel.Message);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"DB MajorVersion={_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion}");
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"DB MinorVersion Last Closed !!!={_PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion}");
             //Logger.LogMe($"DB MinorLine={_PatchDistributionMatchModel.Last_DBMigrationLine.CounterKey}", false);
 
 
@@ -147,7 +148,7 @@ namespace Logitude.Update.PatchDistribution
                 }
                     );
                 UpdateDBEnabled = false;
-                NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"End!!!!!!!!!!!!!!!!!");
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"End!!!!!!!!!!!!!!!!!");
                 MessageBox.Show("Please don't forget to recycle the IIS");
             }
             catch (PatchDistributionException myPatchDistributionException)

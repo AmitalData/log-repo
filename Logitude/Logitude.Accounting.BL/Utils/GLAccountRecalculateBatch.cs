@@ -88,11 +88,23 @@ namespace Logitude.Accounting.BL.Utils
 
                     var revengtotalsvc = new ReverseEngineerTotalByMonthService(DateTime.Today, tenant, myGLAccountId);
                     List<Data.Repositories.GLAccountTotalByMonthsDTO> changedList = new List<GLAccountTotalByMonthsDTO>();
-                    revengtotalsvc.FixDbIntegrityFromLedgeToAllMonths(ref changedList);
+                    try
+                    {
+                        revengtotalsvc.FixDbIntegrityFromLedgeToAllMonths(ref changedList);
+                    }
+                    catch (Exception ex) 
+                    { 
+                    }
 
 
                     var revengbalancesvc = new ReverseEngineerGLAccountBalance(tenant);
-                    revengbalancesvc.FIXCheckDbIntegrity();
+                    try 
+                    { 
+                        revengbalancesvc.FIXCheckDbIntegrity();
+                    }
+                    catch (Exception ex)
+                    {
+                    }
 
                     string userid = "";
                     if (gLAccountRecalculateArg.BatchTask != null && !String.IsNullOrEmpty(gLAccountRecalculateArg.BatchTask.CreatedByUserId))

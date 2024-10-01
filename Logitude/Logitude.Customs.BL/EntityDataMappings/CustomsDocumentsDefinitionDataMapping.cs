@@ -12,6 +12,7 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -48,9 +49,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             if (!string.IsNullOrEmpty(entityPOCO.TransportationTypeCode))
             {
-                CustomsTransportModeQueryService customsTransportModeQueryService = new CustomsTransportModeQueryService(entityPOCO.Tenant);
-                CustomsTransportModePM customsTransportModePM = customsTransportModeQueryService.GetSingle(entityPOCO.TransportationTypeCode, false, true);
-                entityPM.TransportationTypeName = customsTransportModePM.LocalName;
+                TransportModeQuery TransportModeQueryService = new TransportModeQuery(entityPOCO.Tenant);
+                var TransportModePM = TransportModeQueryService.GetSinglePM(entityPOCO.TransportationTypeCode);
+                entityPM.TransportationTypeName = TransportModePM.LocalName;
             }
 
             if (!string.IsNullOrEmpty(entityPOCO.ProcessTypeCode))

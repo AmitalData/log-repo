@@ -241,9 +241,9 @@ namespace WebFreight.Web.MetaDataUpdate
 
             //-------------Transport Mode---------------
             TransportModeRepository transModeRep = new TransportModeRepository(tempContext);
-            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "A", Name = "Air" }, transModeRep);
-            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "O", Name = "Ocean" }, transModeRep);
-            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "I", Name = "Inland" }, transModeRep);
+            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "A", Name = "Air", LocalName = "אויר" }, transModeRep);
+            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "O", Name = "Ocean" , LocalName = "ים" }, transModeRep);
+            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "I", Name = "Inland" , LocalName = "יבשה" }, transModeRep);
 
             //============= Just For Testing ============= 
             if (Testing.General.IsTesting)
@@ -1474,9 +1474,9 @@ namespace WebFreight.Web.MetaDataUpdate
 
             //-------------Transport Mode---------------
             TransportModeRepository transModeRep = new TransportModeRepository(tempContext);
-            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "A", Name = "Air" }, transModeRep);
-            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "O", Name = "Ocean" }, transModeRep);
-            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "I", Name = "Inland" }, transModeRep);
+            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "A", Name = "Air", LocalName = "אויר" }, transModeRep);
+            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "O", Name = "Ocean", LocalName = "יבשה" }, transModeRep);
+            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "I", Name = "Inland", LocalName = "ים" }, transModeRep);
 
             //============= Just For Testing ============= 
             if (Testing.General.IsTesting)

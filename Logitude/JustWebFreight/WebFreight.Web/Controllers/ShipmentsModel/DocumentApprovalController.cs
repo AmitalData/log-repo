@@ -114,7 +114,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
                     };
 
-                    if (!CustomsSettingQueryService.GetSettingByTenant(Data.Tenant).StandAlone)
                         communicationLogRepository.Add(commLog);
                     communicationLogRepository.SubmitChanges();
                     string filename = document.Id + "." + document.Extension;

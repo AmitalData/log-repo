@@ -347,7 +347,7 @@
                                                     </td>
                                                 </tr>
 
-                                                <tr class="FormFieldRow" *ngIf="_InterfaceDetail !=null && _InterfaceDetail.ViaMethod == 'WEBAPI' && serviceURL ">
+                                                <tr class="FormFieldRow" *ngIf="_InterfaceDetail !=null && _InterfaceDetail.ViaMethod == 'WEBAPI' && (_InterfaceDetail.Code === 'IMPORT_ADD_OWNER' || _InterfaceDetail.Code === 'IMPORT_PRINT_TRACKING')">
                                                     <td colspan="5">
                                                         <table>
                                                             <tr>

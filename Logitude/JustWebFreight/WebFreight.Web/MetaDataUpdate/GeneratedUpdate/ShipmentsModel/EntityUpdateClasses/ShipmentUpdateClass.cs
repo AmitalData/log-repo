@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "5618543f49af0e044002b1a8b0959fe1";
+		public const string HashString = "6963ce4aabc81d2c7f9bbce26bc65a0a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -97596,6 +97596,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  		   TextCode ShipmentTextCode_ShipmentONewShipmentCancelWarning = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.NewShipmentCancelWarning", DefaultText = "You are about to cancel shipment and all data will be lost",LocalDefaultText = @"אתה עומד לבטל את פתיחת התיק וכל הנתונים יאבדו", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentOInvalidMawb = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.InvalidMawb", DefaultText = "Mawb must be 8 digits",LocalDefaultText = @"שטר מטען ראשי חייב להיות 8 ספרות", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ShipmentTextCode_ShipmentOImporterApprovalForSubmitting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.ImporterApprovalForSubmitting", DefaultText = "The importer's approval for submitting an import declaration to customs",LocalDefaultText = @"אישור היבואן להגשת הצהרת יבוא למכס", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -941,6 +941,30 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             return shipments;
         }
 
+        //private static IQueryable<CargoTrackingShipmentList> FilterByCustomers(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
+        //{
+        //    if (shipmentSearchInput.CustomersIds.Count > 0)
+        //    {
+
+
+        //        NetCommonHelper.Logger.DevLog.Instance.WriteDebug( string.Format("FilterByCustomers count:{0}", shipmentSearchInput.CustomersIds.Count));
+        //        // Assume shipmentSearchInput.CustomersIds is a List<string> or an array of customer IDs
+
+        //        // Create a variable to hold the customer IDs as a string
+        //        string customerIdsString = string.Join(", ", shipmentSearchInput.CustomersIds.Select(id => $"'{id}'"));
+
+        //        // Modify the Where clause to use the dynamically generated customer IDs string
+        //        shipments = shipments.Where(d => customerIdsString.Contains(d.CustomerId));
+
+        //        //shipments = shipments.Where(d =>
+        //        //            shipmentSearchInput.CustomersIds.Contains(d.CustomerId)
+        //        //        );
+
+
+        //    }
+        //    return shipments;
+        //}
+
         private static IQueryable<CargoTrackingShipmentList> FilterByCustomers(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
         {
             if (shipmentSearchInput.CustomersIds.Count > 0)
@@ -948,19 +972,11 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
 
              NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("FilterByCustomers count:{0}", shipmentSearchInput.CustomersIds.Count));
-                // Assume shipmentSearchInput.CustomersIds is a List<string> or an array of customer IDs
-
-                // Create a variable to hold the customer IDs as a string
-                string customerIdsString = string.Join(", ", shipmentSearchInput.CustomersIds.Select(id => $"'{id}'"));
-
-                // Modify the Where clause to use the dynamically generated customer IDs string
-                shipments = shipments.Where(d => customerIdsString.Contains(d.CustomerId));
-
-                //shipments = shipments.Where(d =>
-                //            shipmentSearchInput.CustomersIds.Contains(d.CustomerId)
-                //        );
 
 
+                shipments = shipments.Where(d =>
+                            shipmentSearchInput.CustomersIds.Contains(d.CustomerId)
+                        );
             }
             return shipments;
         }

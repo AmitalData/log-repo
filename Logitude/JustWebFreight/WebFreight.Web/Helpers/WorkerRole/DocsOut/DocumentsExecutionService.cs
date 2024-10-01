@@ -29,6 +29,13 @@ using Simplog.Data.QuoteModel;
 using Microsoft.Practices.Unity;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.Helpers;
+using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+
 
 namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
 {
@@ -299,30 +306,132 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
             return "Document build failed: Unhandled Error";
         }
 
+        private readonly object _locker = new object();
         private void ExportStimulDocumentToPDF(bool isVersion2 = false)
         {
             ExportDocumentArgs exportDocumentArgs = !string.IsNullOrEmpty(documentsExecutionLog.RequestXML) ? LogitudeXmlSerializer.DeserializeObject<ExportDocumentArgs>(documentsExecutionLog.RequestXML) : null;
             if (exportDocumentArgs != null)
             {
-                childObjectTableName =!string.IsNullOrEmpty(exportDocumentArgs.ChildObjectTableId) ? ObjectTableRepository.GetNameById(exportDocumentArgs.ChildObjectTableId , exportDocumentArgs.Tenant) :""; 
-                List<DocumentTypeCopiesDetails> documentTypeCopiesDetails = new List<DocumentTypeCopiesDetails>();
-                string authenticatedUserEmail = GetContactEmailByContactId(exportDocumentArgs.LoggedContactId, exportDocumentArgs.Tenant);
-                Parallel.ForEach(exportDocumentArgs.DocumentTypeCopyIdsList, (documentTypeCopyId) =>
+                bool skip = false;
+                string objectTableName = !string.IsNullOrEmpty(exportDocumentArgs.ObjectTableId) ? ObjectTableRepository.GetNameById(exportDocumentArgs.ObjectTableId, exportDocumentArgs.Tenant) : "";
+                if (objectTableName == "ARInvoice" && !string.IsNullOrEmpty(exportDocumentArgs.EntityId))
                 {
-                    AuthenticationUtil.AuthenticatedUserEmail = authenticatedUserEmail;
-                    ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
-                    string result = exportDocumentHelper.ExportDocument2Pdf(exportDocumentArgs, documentTypeCopyId);
-                    documentTypeCopiesDetails.Add(new DocumentTypeCopiesDetails() { DocumentTypeCopyId = documentTypeCopyId, DocumentId = result });
-                });
-
-                UpdateDocumentOut(exportDocumentArgs);
-                if (childObjectTableName == "ARInvoice" || exportDocumentArgs.ObjectTableName == "ARInvoice") UpdateARInvoicePrintingDetails(exportDocumentArgs , authenticatedUserEmail); 
-
-                DocumentPopulateAutomaticDateUpdateService documentPopulateAutomaticDateUpdateService = new DocumentPopulateAutomaticDateUpdateService();
-                documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = exportDocumentArgs.EntityId, ObjectTableName = exportDocumentArgs.ObjectTableName, ChildObjectTableId = exportDocumentArgs.ChildObjectTableId, ChildEntityId = exportDocumentArgs.ChildEntityId, DocumentTypeCode = exportDocumentArgs.CurrentDocumentTypeCode, ProcessType = "Print", Tenant = exportDocumentArgs.Tenant });
-                if (!(childObjectTableName == "APInvoice" && string.IsNullOrWhiteSpace(exportDocumentArgs.EntityId)))
+                    ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(exportDocumentArgs.Tenant);
+                    var aRInvoice = aRInvoiceQuery.GetSingleARInvoice(exportDocumentArgs.EntityId, exportDocumentArgs.Tenant);
+                    if (aRInvoice != null)
+                    {
+                        string signStatus = aRInvoice.IsSigned;
+                        if (signStatus == "1" || signStatus == "3" || signStatus == "4")
+                        {
+                            skip = true;
+                            NetCommonHelper.Logger.DevLog.Instance.WriteTrace("Skip Printing Signed ARInvoice [{aRInvoice.InvoiceNumber}] Tenant=[{aRInvoice.Tenant}] IsSigned=[{signStatus}]" +
+                                JsonConvert.SerializeObject(exportDocumentArgs));
+                        }
+                    }
+                }
+                if (!skip)
                 {
-                    RunAutomation(exportDocumentArgs, "OnDocumentUpdate", documentTypeCopiesDetails);
+                    childObjectTableName = !string.IsNullOrEmpty(exportDocumentArgs.ChildObjectTableId) ? ObjectTableRepository.GetNameById(exportDocumentArgs.ChildObjectTableId, exportDocumentArgs.Tenant) : "";
+                    List<DocumentTypeCopiesDetails> documentTypeCopiesDetails = new List<DocumentTypeCopiesDetails>();
+                    string authenticatedUserEmail = GetContactEmailByContactId(exportDocumentArgs.LoggedContactId, exportDocumentArgs.Tenant);
+
+                    if (childObjectTableName == "ARInvoice" || exportDocumentArgs.ObjectTableName == "ARInvoice")
+                    {
+                        DocumentHelper DocumentHelper = new DocumentHelper();
+                        IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
+                        FullAccountingSettingPM accountingSettings = query.GetFullAccountingSettingByTenant(exportDocumentArgs.Tenant);
+
+
+
+                        DocumentTypeCopyQuery documentTypeCopyQuery = new DocumentTypeCopyQuery(exportDocumentArgs.Tenant);
+                        List<DocumentTypeCopyPM> typeCopies = documentTypeCopyQuery.GetDocumentTypeCopiesByTenant(exportDocumentArgs.Tenant);
+                        if (typeCopies != null && typeCopies.Count > 0)
+                        {
+                            DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(exportDocumentArgs.Tenant);
+                            List<string> documentTypes = new List<string>();
+                            List<string> entityIds = new List<string>();
+                            foreach (string typeCopyId in exportDocumentArgs.DocumentTypeCopyIdsList)
+                            {
+                                DocumentTypeCopyPM tcPM = typeCopies.Where(tcy => tcy.Id == typeCopyId).FirstOrDefault();
+                                if (tcPM != null)
+                                {
+                                    string docType = tcPM.DocumentTypeId;
+                                    if (!string.IsNullOrEmpty(docType))
+                                    {
+                                        documentTypes.Add(docType);
+                                    }
+                                    if (objectTableName == "ARInvoice" && !string.IsNullOrEmpty(exportDocumentArgs.EntityId) && !entityIds.Contains(exportDocumentArgs.EntityId))
+                                    {
+                                        entityIds.Add(exportDocumentArgs.EntityId);
+                                    }
+                                    if (childObjectTableName == "ARInvoice" && !string.IsNullOrEmpty(exportDocumentArgs.ChildEntityId) && !entityIds.Contains(exportDocumentArgs.ChildEntityId))
+                                    {
+                                        entityIds.Add(exportDocumentArgs.ChildEntityId);
+                                    }
+
+                                }
+                            }
+                            if (documentTypes.Count > 0)
+                            {
+                                List<DocumentsFilingList> documentsFilings = documentsFilingQuery.GetDocumentsFilingListsByDocumentTypeIdsAndEntityId(documentTypes, entityIds, exportDocumentArgs.Tenant);
+                                if (documentsFilings != null && documentsFilings.Count > 0)
+                                {
+                                    List<string> toDelete = new List<string>();
+
+
+                                    Parallel.ForEach(documentsFilings, (documentsFiling) =>
+                                    { 
+                                        string docId = documentsFiling.DocumentId;
+                                        if (!string.IsNullOrEmpty(docId))
+                                        {
+                                            bool okGotFromStorage = false;
+                                            okGotFromStorage = DocumentHelper.CheckPDFInvoiceInStorage(docId, exportDocumentArgs.Tenant, accountingSettings);
+                                            if (okGotFromStorage)
+                                            {
+                                                lock (_locker)
+                                                {
+                                                    string typeCopyToDelete = typeCopies.Where(tc => tc.DocumentTypeId == documentsFiling.DocumentTypeId).FirstOrDefault().Id;
+                                                    toDelete.Add(typeCopyToDelete);
+                                                }
+                                            }
+                                        }
+                                    });
+                                    if (toDelete.Count > 0)
+                                    {
+                                        foreach (string copyId in toDelete)
+                                        {
+                                            exportDocumentArgs.DocumentTypeCopyIdsList.Remove(copyId);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+                    Parallel.ForEach(exportDocumentArgs.DocumentTypeCopyIdsList, (documentTypeCopyId) =>
+                    {
+                        AuthenticationUtil.AuthenticatedUserEmail = authenticatedUserEmail;
+                        ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
+                        string result = exportDocumentHelper.ExportDocument2Pdf(exportDocumentArgs, documentTypeCopyId);
+                        lock (_locker)
+                        {
+                            documentTypeCopiesDetails.Add(new DocumentTypeCopiesDetails() { DocumentTypeCopyId = documentTypeCopyId, DocumentId = result });
+                        }
+                    });
+                    if (exportDocumentArgs.DocumentTypeCopyIdsList != null && exportDocumentArgs.DocumentTypeCopyIdsList.Count > 0)
+                    {
+
+                        UpdateDocumentOut(exportDocumentArgs);
+                        if (childObjectTableName == "ARInvoice" || exportDocumentArgs.ObjectTableName == "ARInvoice") UpdateARInvoicePrintingDetails(exportDocumentArgs, authenticatedUserEmail);
+
+                        DocumentPopulateAutomaticDateUpdateService documentPopulateAutomaticDateUpdateService = new DocumentPopulateAutomaticDateUpdateService();
+                        documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = exportDocumentArgs.EntityId, ObjectTableName = exportDocumentArgs.ObjectTableName, ChildObjectTableId = exportDocumentArgs.ChildObjectTableId, ChildEntityId = exportDocumentArgs.ChildEntityId, DocumentTypeCode = exportDocumentArgs.CurrentDocumentTypeCode, ProcessType = "Print", Tenant = exportDocumentArgs.Tenant });
+                        if (!(childObjectTableName == "APInvoice" && string.IsNullOrWhiteSpace(exportDocumentArgs.EntityId)))
+                        {
+                            RunAutomation(exportDocumentArgs, "OnDocumentUpdate", documentTypeCopiesDetails);
+                        }
+                    }
                 }
                 UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() {StatusCode = "D", DoneDate = DateTime.Now });
                 if(!isVersion2) queueService.Complete();

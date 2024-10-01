@@ -828,9 +828,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             LogMessagingUtil.Instance.AppendLine("Time after update declaration: " + DateTime.Now.ToString("hh:mm:ss.fff tt"));
         }
 
-        private void UpdateManualPayment(DeclarationStatusRequestParams requestParams, ICustomContext customContext, DeclarationPM declarationPM)
+        private void UpdateManualPayment(string LoggingEntityReference, ICustomContext customContext, DeclarationPM declarationPM)
         {
-            if (requestParams.LoggingEntityReference == "AutoPayment")
+            if (LoggingEntityReference == "AutoPayment")
             {
                 DeclarationReferantDataQueryService declarationReferantDataQueryService = new DeclarationReferantDataQueryService(declarationPM.Tenant);
                 DeclarationReferantDataUpdateService updateService = new DeclarationReferantDataUpdateService(customContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), declarationPM.Tenant);
@@ -867,105 +867,128 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 if (declarationPaymentPM.AutomaticPayment == 1)
                 {
-                    if (!CheckFileCredit(declarationPM, declarationPaymentPM, requestParams.LoggingUserId))
-                    {
+					CustomsSettingQueryService settingService = new CustomsSettingQueryService(requestParams.Tenant);
+					CustomsSettingPM setting = settingService.GetSettingByTenantN(requestParams.Tenant);
+					CheckFileCrediteReq checkFileCrediteReq = new CheckFileCrediteReq();
+					checkFileCrediteReq.ClassName = "DF_NG_8251_Web02_DeclarationStatus_ResponseService";
+					checkFileCrediteReq.AppicationId = declarationPM.Id;
+					checkFileCrediteReq.LoggingUserId = requestParams.LoggingUserId;
+					checkFileCrediteReq.LoggingObjectTableId = requestParams.LoggingObjectTableId;
+					checkFileCrediteReq.LoggingEntityReference = requestParams.LoggingEntityReference;
 
-                        var MyUnifreightEventParam = new UnifreightEventParam()
-                        {
-                            Code = "APAYF",
-                            Mode = UnifreightEventMode.@new,
-                            EventDateTime = DateTime.Now,
-                            Entname = "CFIFILEM",
-                            PrimaryNum = declarationPM.CustomFileNo,
-                            EventRemarks = "לא אושר בבקרת אשראי",
-                        };
-                        LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
-                        var myOpenUnifreighTask = new UnifreightEventTaskService();
-                        myOpenUnifreighTask.UpsertEventLE2U(
-                            declarationPM.Tenant,
-                           requestParams.LoggingUserId,
-                            MyUnifreightEventParam);
-
-                        UpdateManualPayment(requestParams, dbContext, declarationPM);
-
-                    }
-                    else
-                    {
-                        try
-                        {
-                            DateTime requestDate = CheckIfBlockTime(declarationPM, declarationPaymentPM);
-
-                            using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
-                            {
-                                declarationPaymentPM.PaymentDate = DateTime.Now;
-                                declarationPaymentPM.ChangeSetOp = ChangeSetOperation.Update;
-
-                                var requestParams2755 = new GenericRequestParams()
-                                {
-                                    Tenant = requestParams.Tenant,
-                                    LoggingEnabled = true,
-                                    LoggingObjectTableId = requestParams.LoggingObjectTableId,
-                                    LoggingEntityId = declarationPM.Id,
-                                    AppicationId = declarationPM.Id,
-                                    InterfaceTypeCode = "2755",
-                                    LoggingUserId = requestParams.LoggingUserId,
-                                    RequestVIA = SendRequestVIA.WebServiceBatch,
-
-                                };
-                                if (requestDate != DateTime.MinValue)
-                                {
-                                    requestDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, requestDate.Hour, requestDate.Minute, requestDate.Second);
-                                    declarationPaymentPM.PaymentDate = requestDate;
-
-                                    requestParams2755.RequestVIAChangeDue = string.Concat("נרשמה בקשה מתוזמנת לתאריך ", requestDate.ToShortDateString(), " שעה ", requestDate.ToShortTimeString());// "הבקשה תשלח בעתיד";
-                                    requestParams2755.FutureSendDateTime = requestDate;
-
-                                    SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false, requestDate);
-
-                                }
-                                else
-                                {
-                                    SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
-                                }
+					string jsonString = System.Text.Json.JsonSerializer.Serialize(checkFileCrediteReq);
 
 
-
-                                scopeNewCRS.Complete();
-                            }
-
-                        }
-                        catch (System.Exception)
-                        {
-                            var MyUnifreightEventParam = new UnifreightEventParam()
-                            {
-                                Code = "APAYF",
-                                Mode = UnifreightEventMode.@new,
-                                EventDateTime = DateTime.Now,
-                                Entname = "CFIFILEM",
-                                PrimaryNum = declarationPM.CustomFileNo,
-                                EventRemarks = "כשלון בשליחת הגשת תשלום",
-                            };
-                            LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
-                            var myOpenUnifreighTask = new UnifreightEventTaskService();
-                            myOpenUnifreighTask.UpsertEventLE2U(
-                                declarationPM.Tenant,
-                               requestParams.LoggingUserId,
-                                MyUnifreightEventParam);
-
-                            UpdateManualPayment(requestParams, dbContext, declarationPM);
-
-                            throw;
-                        }
-                    }
-                }
+					var isCheckFileCredit = CheckFileCredit(declarationPM, declarationPaymentPM, requestParams.LoggingUserId, jsonString);
+					if (setting.IsConnectedToUniFreight)
+					{
+						SendPaymentIsCheckFileCredit(isCheckFileCredit, declarationPM, declarationPaymentPM, dbContext, requestParams.LoggingUserId, requestParams.LoggingObjectTableId, requestParams.LoggingEntityReference);
+					}
+				}
                 myDeclarationPaymentUpdateService.Update(declarationPaymentPM, true);
 
             }
 
 
         }
+		public void SendPaymentIsCheckFileCredit(bool isCheckFileCredit, DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM, ICustomContext dbContext, string LoggingUserId,string LoggingObjectTableId,string LoggingEntityReference,bool isFromAPI = false )
+		{
+			var myDeclarationPaymentUpdateService = new DeclarationPaymentUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant); ;
 
-        private DateTime CheckIfBlockTime(DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM)
+			if (!isCheckFileCredit)
+			{
+				var MyUnifreightEventParam = new UnifreightEventParam()
+				{
+					Code = "APAYF",
+					Mode = UnifreightEventMode.@new,
+					EventDateTime = DateTime.Now,
+					Entname = "CFIFILEM",
+					PrimaryNum = declarationPM.CustomFileNo,
+					EventRemarks = "לא אושר בבקרת אשראי",
+				};
+				LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+				var myOpenUnifreighTask = new UnifreightEventTaskService();
+				myOpenUnifreighTask.UpsertEventLE2U(
+					declarationPM.Tenant,
+				    LoggingUserId,
+					MyUnifreightEventParam);
+
+				UpdateManualPayment(LoggingEntityReference, dbContext, declarationPM);
+			}
+			else
+			{
+				try
+				{
+					DateTime requestDate = CheckIfBlockTime(declarationPM, declarationPaymentPM);
+
+					using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
+					{
+						declarationPaymentPM.PaymentDate = DateTime.Now;
+						declarationPaymentPM.ChangeSetOp = ChangeSetOperation.Update;
+
+						var requestParams2755 = new GenericRequestParams()
+						{
+							Tenant = declarationPM.Tenant,
+							LoggingEnabled = true,
+							LoggingObjectTableId = LoggingObjectTableId,
+							LoggingEntityId = declarationPM.Id,
+							AppicationId = declarationPM.Id,
+							InterfaceTypeCode = "2755",
+							LoggingUserId = LoggingUserId,
+							RequestVIA = SendRequestVIA.WebServiceBatch,
+
+						};
+						if (requestDate != DateTime.MinValue)
+						{
+							requestDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, requestDate.Hour, requestDate.Minute, requestDate.Second);
+							declarationPaymentPM.PaymentDate = requestDate;
+
+							requestParams2755.RequestVIAChangeDue = string.Concat("נרשמה בקשה מתוזמנת לתאריך ", requestDate.ToShortDateString(), " שעה ", requestDate.ToShortTimeString());// "הבקשה תשלח בעתיד";
+							requestParams2755.FutureSendDateTime = requestDate;
+
+							SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false, requestDate);
+
+						}
+						else
+						{
+							SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
+						}
+
+
+
+						scopeNewCRS.Complete();
+					}
+
+				}
+				catch (System.Exception)
+				{
+					var MyUnifreightEventParam = new UnifreightEventParam()
+					{
+						Code = "APAYF",
+						Mode = UnifreightEventMode.@new,
+						EventDateTime = DateTime.Now,
+						Entname = "CFIFILEM",
+						PrimaryNum = declarationPM.CustomFileNo,
+						EventRemarks = "כשלון בשליחת הגשת תשלום",
+					};
+					LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+					var myOpenUnifreighTask = new UnifreightEventTaskService();
+					myOpenUnifreighTask.UpsertEventLE2U(
+						declarationPM.Tenant,
+					   LoggingUserId,
+						MyUnifreightEventParam);
+
+					UpdateManualPayment(LoggingEntityReference, dbContext, declarationPM);
+
+					throw;
+				}
+			}
+            if(isFromAPI)
+				myDeclarationPaymentUpdateService.Update(declarationPaymentPM, true);
+
+		}
+
+		private DateTime CheckIfBlockTime(DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM)
         {
             DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(declarationPaymentPM.Tenant);
 
@@ -1040,7 +1063,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             };
         }
 
-        private bool CheckFileCredit(DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM, string user)
+        private bool CheckFileCredit(DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM, string user, string requestParamsJson)
         {
             CustomFileCreditRequestParams requestParamsCredit = new CustomFileCreditRequestParams()
             {
@@ -1058,7 +1081,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 RequestVIA = SendRequestVIA.WebServiceBatch,
             };
             var myCustomFileCreditService = new CustomFileCreditService(requestParamsCredit);
-            CUSTOMCREDIT_UL creditResponseData = myCustomFileCreditService.CheckFileCredit();
+            CUSTOMCREDIT_UL creditResponseData = myCustomFileCreditService.CheckFileCredit(requestParamsJson);
             if (!string.IsNullOrEmpty(creditResponseData.CustomFileCredit[0].ErrorMessage))
             {
                 return false;

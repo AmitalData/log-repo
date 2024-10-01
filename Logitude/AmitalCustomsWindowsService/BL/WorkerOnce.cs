@@ -70,7 +70,7 @@ namespace AmitalCustomsWindowsService.BL
                 {
                     // if time to do something, do so
                     // exception handling omitted here for simplicity
-                    //Logger.LogMe("Multithreaded Service working; id = " + this._id.ToString(), false);
+                    
                     try
                     {
                         _TWorker.WorkOnce();
@@ -88,20 +88,20 @@ namespace AmitalCustomsWindowsService.BL
                 }
                 if (_TWorker.DebugMode && (Environment.UserInteractive || this.MyType == "LoadTestWR"))
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo("_TWorker.DebugMode && Environment.UserInteractive");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("_TWorker.DebugMode && Environment.UserInteractive");
                     return;
                 }
                 if (DateTime.Now.Subtract(_LastReprtAt) > TimeSpan.FromHours(1))
                 {
                     _LastReprtAt = DateTime.Now;
-                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo(typeof(TWorker).FullName + ":Still Alive");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(typeof(TWorker).FullName + ":Still Alive");
                 }
                 Thread.Sleep(TimeSpan.FromSeconds(_intervalInSec));
 
             }
 
-            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(typeof(TWorker).FullName + ":ServiceStarted=" + ServiceStarted.ToString() );
-            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(typeof(TWorker).FullName + ":ExecuteTask:OUtOUtOUtOUtOUtOUtOUtOUt !!OUt !!");
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(typeof(TWorker).FullName + ":ServiceStarted=" + ServiceStarted.ToString());
+           
             WhileServiceStarted_IsOut = true;
             if (_TWorker.DebugMode)
             {

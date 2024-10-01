@@ -86,7 +86,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.PerformanceLogger
             }
             catch (System.Exception e)
             {
-                ///Logger.LogMe(e.ToString(), true, "DbError");
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
 
 
             }

@@ -441,7 +441,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
                     }
                     if (button.EventCode == "ResetDeclarationNumber") {//Eitan H 26/11/17 34387
-                        if (this.IsDisplayOnly || (this.EntityPM.Direction == "E" && this.EntityPM.IsSubmitDeclaration)) {
+                        if (this.IsDisplayOnly || (this.EntityPM.Direction == "E" && this.EntityPM.IsSubmitDeclaration) || (this.EntityPM.Direction != "E" && this.EntityPM.DeclarationStatusTypeCode == "5")) {
                             button.IsDisabled = true;
                             button.IsHidden = false;
                         }
@@ -1194,15 +1194,21 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         _DeclarationMessagesService.PostDeclarationRequest(currRequestParams)
         .subscribe((myServiceResponse: ServiceResponse) => {
             SessionLocator.SelectedSession.StopBusyIndicator();
+            if (!myServiceResponse?.Result?.HasException) {
+                if (myServiceResponse?.Result?.Succeeded) 
+                {
+                       this.CheackIsAnyRequest(interfaceTypeCode , message,canResetDeclaration);  
+                }
+                else 
+                {
+                   this.ShowResetDeclarationMessage(myServiceResponse?.Result?.UserMessage);
+                }
+            }
+            else {
+                this.ShowResetDeclarationMessage(TextCodeTranslator.Translate("Customs.Declaration.O.ErrCommCustoms"));
 
-            if (myServiceResponse?.Result?.Succeeded) 
-            {
-                   this.CheackIsAnyRequest(interfaceTypeCode , message,canResetDeclaration);  
             }
-            else 
-            {
-               this.ShowResetDeclarationMessage(myServiceResponse?.Result?.UserMessage);
-            }
+            
         });
     }
     private CheackIsAnyRequest(interfaceTypeCode: string, message: string,canResetDeclaration: boolean) {

@@ -8,5 +8,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string Id { get; set; }
         public string Name { get; set; }
         public string SearchFields { get; set; }
+
+        public string LocalName { get; set; }
     }
 }
