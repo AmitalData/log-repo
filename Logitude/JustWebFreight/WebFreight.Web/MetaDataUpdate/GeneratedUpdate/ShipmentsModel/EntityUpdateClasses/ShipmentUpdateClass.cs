@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "6963ce4aabc81d2c7f9bbce26bc65a0a";
+		public const string HashString = "cdff87d85cb85c807a9c1fccf80704c7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -16955,7 +16955,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
@@ -90888,13 +90888,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -90908,6 +90909,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomsShipments",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -90919,6 +90921,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "ArrivalDate",
 					  						DefaultText =  "Arrival Date",
 					  						FullLocalDefaultText =  "תאריך הגעה",
+					  						ListFieldLable =  "ArrivalDateListLable",
+					  						ListLableDefaultText =  "Arrival Date",
+					  						ListLocalDefaultText =  "תאריך הגעה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -90948,13 +90953,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -90968,6 +90974,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomsShipments",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -90979,6 +90986,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "EstimatedArrivalDate",
 					  						DefaultText =  "Estimated Arrival Date",
 					  						FullLocalDefaultText =  "תאריך הגעה משוער",
+					  						ListFieldLable =  "EstimatedArrivalDateListLable",
+					  						ListLableDefaultText =  "Estimated Arrival Date",
+					  						ListLocalDefaultText =  "תאריך הגעה משוער",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -91610,20 +91620,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   Feature ShipmentFeature_21 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Q.LogboxShipments", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentFeatures.LogboxShipments", NameTextCodeDefaultText = "LogboxShipments", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ShipmentObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ShipmentTextCode_22 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.CustomsShipments", DefaultText = @"Customs Shipments",LocalDefaultText = "עמילות מכס", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ShipmentFeature_22 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Q.CustomsShipments", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentFeatures.CustomsShipments", NameTextCodeDefaultText = "CustomsShipments", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ShipmentObjectTable, addedFeatures, addedTextCodes);
+			   TextCode ShipmentTextCode_22 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.OpenCommissionCases", DefaultText = @"Open Commission Cases ",LocalDefaultText = "תיקי עמילות פתוחים", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ShipmentFeature_22 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Q.OpenCommissionCases", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentFeatures.OpenCommissionCases", NameTextCodeDefaultText = "OpenCommissionCases ", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ShipmentObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ShipmentTextCode_23 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.OpenCommissionCases", DefaultText = @"Open Commission Cases ",LocalDefaultText = "תיקי עמילות פתוחים", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ShipmentFeature_23 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Q.OpenCommissionCases", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentFeatures.OpenCommissionCases", NameTextCodeDefaultText = "OpenCommissionCases ", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ShipmentObjectTable, addedFeatures, addedTextCodes);
+			   TextCode ShipmentTextCode_23 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.CloseCommissionCases", DefaultText = @"Close Commission Cases",LocalDefaultText = "תיקי עמילות סגורים", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ShipmentFeature_23 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Q.CloseCommissionCases", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentFeatures.CloseCommissionCases", NameTextCodeDefaultText = "CloseCommissionCases", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ShipmentObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ShipmentTextCode_24 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.CloseCommissionCases", DefaultText = @"Close Commission Cases",LocalDefaultText = "תיקי עמילות סגורים", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ShipmentFeature_24 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Q.CloseCommissionCases", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentFeatures.CloseCommissionCases", NameTextCodeDefaultText = "CloseCommissionCases", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ShipmentObjectTable, addedFeatures, addedTextCodes);
- 
-
-			   TextCode ShipmentTextCode_25 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.AllCommissionCases", DefaultText = @"All Commission Cases",LocalDefaultText = "הכל", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ShipmentFeature_25 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Q.AllCommissionCases", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentFeatures.AllCommissionCases", NameTextCodeDefaultText = "AllCommissionCases", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ShipmentObjectTable, addedFeatures, addedTextCodes);
+			   TextCode ShipmentTextCode_24 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.AllCommissionCases", DefaultText = @"All Commission Cases",LocalDefaultText = "הכל", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ShipmentFeature_24 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Q.AllCommissionCases", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentFeatures.AllCommissionCases", NameTextCodeDefaultText = "AllCommissionCases", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ShipmentObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -92323,27 +92329,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query CustomsShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_22.Id, NameTextCodeCode = ShipmentTextCode_22.Code, ObjectTableName = "Shipment", Code = "CustomsShipments",  QueryGroupCode = "SHIP", IndexOrder = 22, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "CustomsShipments", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_22.Id,FeatureUniqeCode= ShipmentFeature_22.FeatureUniqeCode, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
-	
-			 QueryColumn CustomsShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsShipmentsQuery.Id,QueryCode = CustomsShipmentsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Shipment.TransportModeId" , ColumnWidth = 100 }, addedQueryColumns);
-
-			 QueryColumn CustomsShipmentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsShipmentsQuery.Id,QueryCode = CustomsShipmentsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Shipment.DepartmentName" , ColumnWidth = 100 }, addedQueryColumns);
-
-			 QueryColumn CustomsShipmentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsShipmentsQuery.Id,QueryCode = CustomsShipmentsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Shipment.CreateDateTime" , ColumnWidth = 100 }, addedQueryColumns);
-
-			 QueryColumn CustomsShipmentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsShipmentsQuery.Id,QueryCode = CustomsShipmentsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Shipment.ShipmentNumber" , ColumnWidth = 100 }, addedQueryColumns);
-
-			 QueryColumn CustomsShipmentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsShipmentsQuery.Id,QueryCode = CustomsShipmentsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Shipment.CustomerName" , ColumnWidth = 100 }, addedQueryColumns);
-
-             AdvancedQueryFilter CustomsShipmentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.DirectionId", PredefinedValue = "C",PredefinedValue2 = null, CustomPredefined = false, QueryId = CustomsShipmentsQuery.Id,QueryCode = CustomsShipmentsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
-
-
-             AdvancedQueryFilter CustomsShipmentsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.IsCustomShipment", PredefinedValue = "1",PredefinedValue2 = null, CustomPredefined = false, QueryId = CustomsShipmentsQuery.Id,QueryCode = CustomsShipmentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
-
-  
-	      
-
-			  Query OpenCommissionCasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_23.Id, NameTextCodeCode = ShipmentTextCode_23.Code, ObjectTableName = "Shipment", Code = "OpenCommissionCases ",  QueryGroupCode = "SHIP", IndexOrder = 23, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "CustomsShipments", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_23.Id,FeatureUniqeCode= ShipmentFeature_23.FeatureUniqeCode, DefaultSortName = "Id", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+			  Query OpenCommissionCasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_22.Id, NameTextCodeCode = ShipmentTextCode_22.Code, ObjectTableName = "Shipment", Code = "OpenCommissionCases ",  QueryGroupCode = "SHIP", IndexOrder = 22, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "CustomsShipments", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_22.Id,FeatureUniqeCode= ShipmentFeature_22.FeatureUniqeCode, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn OpenCommissionCasesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCommissionCasesQuery.Id,QueryCode = OpenCommissionCasesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Shipment.ShipmentNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -92371,12 +92357,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
              AdvancedQueryFilter OpenCommissionCasesQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.DirectionId", PredefinedValue = "C",PredefinedValue2 = null, CustomPredefined = false, QueryId = OpenCommissionCasesQuery.Id,QueryCode = OpenCommissionCasesQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter OpenCommissionCasesQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.IsCustomShipment", PredefinedValue = "1",PredefinedValue2 = null, CustomPredefined = false, QueryId = OpenCommissionCasesQuery.Id,QueryCode = OpenCommissionCasesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter OpenCommissionCasesQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.IsCustomShipment", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = OpenCommissionCasesQuery.Id,QueryCode = OpenCommissionCasesQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   
 	      
 
-			  Query CloseCommissionCasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_24.Id, NameTextCodeCode = ShipmentTextCode_24.Code, ObjectTableName = "Shipment", Code = "CloseCommissionCases",  QueryGroupCode = "SHIP", IndexOrder = 24, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "CustomsShipments", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_24.Id,FeatureUniqeCode= ShipmentFeature_24.FeatureUniqeCode, DefaultSortName = "Id", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+			  Query CloseCommissionCasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_23.Id, NameTextCodeCode = ShipmentTextCode_23.Code, ObjectTableName = "Shipment", Code = "CloseCommissionCases",  QueryGroupCode = "SHIP", IndexOrder = 23, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "CustomsShipments", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_23.Id,FeatureUniqeCode= ShipmentFeature_23.FeatureUniqeCode, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn CloseCommissionCasesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseCommissionCasesQuery.Id,QueryCode = CloseCommissionCasesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Shipment.ShipmentNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -92404,12 +92390,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
              AdvancedQueryFilter CloseCommissionCasesQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.DirectionId", PredefinedValue = "C",PredefinedValue2 = null, CustomPredefined = false, QueryId = CloseCommissionCasesQuery.Id,QueryCode = CloseCommissionCasesQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter CloseCommissionCasesQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.IsCustomShipment", PredefinedValue = "1",PredefinedValue2 = null, CustomPredefined = false, QueryId = CloseCommissionCasesQuery.Id,QueryCode = CloseCommissionCasesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter CloseCommissionCasesQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.IsCustomShipment", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = CloseCommissionCasesQuery.Id,QueryCode = CloseCommissionCasesQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   
 	      
 
-			  Query AllCommissionCasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_25.Id, NameTextCodeCode = ShipmentTextCode_25.Code, ObjectTableName = "Shipment", Code = "AllCommissionCases",  QueryGroupCode = "SHIP", IndexOrder = 25, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "CustomsShipments", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_25.Id,FeatureUniqeCode= ShipmentFeature_25.FeatureUniqeCode, DefaultSortName = "Id", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+			  Query AllCommissionCasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_24.Id, NameTextCodeCode = ShipmentTextCode_24.Code, ObjectTableName = "Shipment", Code = "AllCommissionCases",  QueryGroupCode = "SHIP", IndexOrder = 24, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "CustomsShipments", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_24.Id,FeatureUniqeCode= ShipmentFeature_24.FeatureUniqeCode, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn AllCommissionCasesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommissionCasesQuery.Id,QueryCode = AllCommissionCasesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Shipment.ShipmentNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -92434,7 +92420,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
              AdvancedQueryFilter AllCommissionCasesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.DirectionId", PredefinedValue = "C",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllCommissionCasesQuery.Id,QueryCode = AllCommissionCasesQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter AllCommissionCasesQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.IsCustomShipment", PredefinedValue = "1",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllCommissionCasesQuery.Id,QueryCode = AllCommissionCasesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter AllCommissionCasesQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.IsCustomShipment", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllCommissionCasesQuery.Id,QueryCode = AllCommissionCasesQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
@@ -95641,25 +95627,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CONF",
-                EnglishName = "Linked custom shipment",
-                LocalName = "קישור תיק שילוח לתיק עמילות",
-                IsManualEntry = false,
-                ShortView = false,
-                IsAgentView = false,
-                IsCustomerView = false,
-                IsSharedLogisticsEnabled = false,
-                AllowedInAutomation = false,
-                ManualActivatedFollowUp = false,
-                IsFollowUp = false,
+                Code =  "CONF",
+                EnglishName =  "Linked custom shipment",
+                LocalName =  "קישור תיק שילוח לתיק עמילות",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = ShipmentObjectTable.Id,
-
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
-        }
-
-        public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
+	    }
+	
+	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
 		   //FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
@@ -97596,7 +97582,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  		   TextCode ShipmentTextCode_ShipmentONewShipmentCancelWarning = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.NewShipmentCancelWarning", DefaultText = "You are about to cancel shipment and all data will be lost",LocalDefaultText = @"אתה עומד לבטל את פתיחת התיק וכל הנתונים יאבדו", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentOInvalidMawb = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.InvalidMawb", DefaultText = "Mawb must be 8 digits",LocalDefaultText = @"שטר מטען ראשי חייב להיות 8 ספרות", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
  		   TextCode ShipmentTextCode_ShipmentOImporterApprovalForSubmitting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.ImporterApprovalForSubmitting", DefaultText = "The importer's approval for submitting an import declaration to customs",LocalDefaultText = @"אישור היבואן להגשת הצהרת יבוא למכס", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPlaceOlderCustomsShipments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.PlaceOlderCustomsShipments", DefaultText = "Custom file/MAWB/House/Declaration/Iska",LocalDefaultText = @"תיק עמילות/ש.מ ראשי/ש.מ פנימי/הצהרה/מזהה עיסקה", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
