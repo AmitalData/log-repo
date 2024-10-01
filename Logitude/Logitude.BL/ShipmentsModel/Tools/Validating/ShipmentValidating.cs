@@ -1523,7 +1523,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             {
                 messageDetailsList.Add(MessageDetailsProvider.NotMatchedCustomerId);
             }
-            if (entityPM.ShipmentNumber == freightForwarderReferenceList?.ForwarderShipmentNumber && entityPM.FreightForwarderId == shipment.FreightForwarderId)
+            if (entityPM.ForwarderShipmentNumber == freightForwarderReferenceList?.ForwarderShipmentNumber && entityPM.FreightForwarderId == shipment.FreightForwarderId)
             {
                 messageDetailsList.Add(MessageDetailsProvider.CustomFileAlreadyLinked);
             }

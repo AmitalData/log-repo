@@ -4650,7 +4650,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 entityPM.FreightForwarderId = entityPoco.FreightForwarderId;
             }
 
-            // todo: if unknown ShipmentType do not fail
             if (string.IsNullOrEmpty(entityPoco.ShipmentTypeId))
             {
                 FieldChange.Add(entityPoco.ShipmentTypeId, entityPM.ShipmentTypeId, nameof(entityPM.ShipmentTypeId), fieldChanges);
