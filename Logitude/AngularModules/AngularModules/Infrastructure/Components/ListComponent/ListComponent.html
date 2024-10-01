@@ -404,19 +404,6 @@
                             <div LocationDirective Code="MNO"></div>
                         </td>
  
-                         <td *ngIf="IsShowAddReportFromLibraryLink" style="width:200px;vertical-align:central">
-                         <td style="width: 40px;"> <img *ngIf="HasMutliUpdateFeature" src="./Images/Icons/MultiUpdate.png" title="Multi Update" (click)="MutliUpdate()" class="CenterCenter MultiUpdateIcon" /></td>
-                        <td style="width: 40px;"> <img *ngIf="HasMultiPrintFeature" src="./Images/Icons/multi-print.png" title="Multi Print" (click)="MultiPrintClicked()" class="CenterCenter MultiUpdateIcon" /></td>
-                         <td style="width:200px;vertical-align:central">
-                             <div style="width:200px;height:20px">
-                                 <p *ngIf="IsShowAddReportFromLibraryLink" (click)="LinkAddReportFromLibraryClick()" class="CustomLink" style="font-size:12px;float:right;width:200px;height:20px;">Add Report From Library</p>
-                             </div>
-                        </td>
-                       
-                        <td *ngIf="(dataSource && dataSource.rowCount == ConstantPageSize && DontApplyVirtualization)" style="color: #666666; font-size: 11px; padding-left:5px;padding-right:5px;width:1px;background-color:#FFFBDA">
-                            <div>  <span>Showing the first {{ConstantPageSize}} rows, use the search field to find more results.</span></div>
-                        </td>
-
                         <td style="width: 53px;" tabindex="-1" *ngIf="SelectedCount > 0">
                             <div tabindex="-1" class="ToggleButton" id="toggleButton">
                                 <img src="./Images/ToggleIcon.png" style="margin-left: 5px; margin-top: 2px; left: 0px;" />
@@ -425,6 +412,19 @@
                                     <button *ngFor="let action of (ScreenQueryAction['actions'] || [])" [id]="action" (click)="ShowActionConfirmationWindow(action)" style="text-align:right">{{ (ScreenQueryAction["actionTranslationPrefix"] + action) | TextCodeTranslationPipe }}</button>
                                 </div>
                             </div>
+                        </td>
+
+                        <td *ngIf="IsShowAddReportFromLibraryLink" style="width:200px;vertical-align:central">
+                        <td *ngIf="HasMutliUpdateFeature" style="width: 40px;"> <img src="./Images/Icons/MultiUpdate.png" title="Multi Update" (click)="MutliUpdate()" class="CenterCenter MultiUpdateIcon" /></td>
+                        <td *ngIf="HasMultiPrintFeature" style="width: 40px;"> <img src="./Images/Icons/multi-print.png" title="Multi Print" (click)="MultiPrintClicked()" class="CenterCenter MultiUpdateIcon" /></td>
+                        <td *ngIf="IsShowAddReportFromLibraryLink" style="width:200px;vertical-align:central">
+                             <div style="width:200px;height:20px">
+                                 <p (click)="LinkAddReportFromLibraryClick()" class="CustomLink" style="font-size:12px;float:right;width:200px;height:20px;">Add Report From Library</p>
+                             </div>
+                        </td>
+                       
+                        <td *ngIf="(dataSource && dataSource.rowCount == ConstantPageSize && DontApplyVirtualization)" style="color: #666666; font-size: 11px; padding-left:5px;padding-right:5px;width:1px;background-color:#FFFBDA">
+                            <div>  <span>Showing the first {{ConstantPageSize}} rows, use the search field to find more results.</span></div>
                         </td>
 
                         <td>
