@@ -23392,6 +23392,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOCancelSelectedRowsConfirm = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CancelSelectedRowsConfirm", DefaultText = "The declaration selection will be removed, are you sure?",LocalDefaultText = @" שים לב, בחירת ההצהרות שבוצעה תימחק, האם להמשיך ?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOScreenOnlyUNI = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ScreenOnlyUNI", DefaultText = "This screen in the cloud only works through Unifreight",LocalDefaultText = @"מסך זה בענן עובד רק דרך יוניפרייט", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
    
 	    
 }
