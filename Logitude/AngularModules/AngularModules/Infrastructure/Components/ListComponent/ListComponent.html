@@ -448,7 +448,7 @@
 
 
                         <td style="width: 250px; vertical-align: middle;" [class.DeclarationsTable]="DeclarationsTable">
-                            <SearchTextBox [IsDisabled]="SeachBoxIsDisabled || !SelectedQuery" [SearchText]="searchFields" [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)" [DataCy]="'Search' + ObjectTableName"></SearchTextBox>
+                            <SearchTextBox [IsDisabled]="SeachBoxIsDisabled || !SelectedQuery" [SearchText]="searchFields" [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)" [DataCy]="'Search' + ObjectTableName" [QuerySection] = "SelectedQuery?.QuerySection"></SearchTextBox>
                         </td>
 
 

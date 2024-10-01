@@ -11,7 +11,7 @@ import {ObjectsLocator} from '../Infrastructure/Locators/ObjectsLocator';
     template: `<input [attr.data-cy]="DataCy" type="text" [disabled]="IsDisabled" [id]="SearchFieldsId" placeholder="{{PlaceHolder}}" (focus)="ClearPlaceHolder();" (blur)="FillPlaceHolder();" [ngStyle]="textValueStyle" [(ngModel)]="SearchText" style="background: url(Images/Search.png) no-repeat scroll;background-color: white;background-position: right center;font-style: italic;" [ngStyle]="LayoutDirection == 'rtl' ? {'padding-left': '30px'} : {'padding-right': '30px'}" />
                <img *ngIf="SearchText" [className]="LayoutDirection == 'rtl' ? 'DeleteButton LeftCenter' : 'DeleteButton RightCenter'" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '15px'} : {'right': '15px'}" src="Images/RedX.png" (click)="OnDeleteValue()" />
               `,
-    inputs: ['ObjectTableName', 'PlaceHolder', 'SearchText', 'IsDisabled', 'DataCy'],
+    inputs: ['ObjectTableName', 'PlaceHolder', 'SearchText', 'IsDisabled', 'DataCy', 'QuerySection'],
 })
 
 export class SearchTextBox implements OnInit {
@@ -22,6 +22,7 @@ export class SearchTextBox implements OnInit {
     ObjectTableName: string;
     ObjectTableId: string;
     ObjectField: any;
+    QuerySection: string;
     private timerToken: any;
     private searchText: string = null;
     get SearchText() { return this.searchText; }
@@ -81,6 +82,8 @@ export class SearchTextBox implements OnInit {
             else {
                 var ObjectTable = this.GetObjectTableName(this.ObjectTableName);
                 var textCode = (ObjectTable =="DocumentTypeTemplate" ? "DocumentType" : ObjectTable) + ".F.SearchFields";
+                if(this.QuerySection == "CustomsShipments")
+                textCode = 'Shipment.O.PlaceOlderCustomsShipments';
                 var waterMark = TextCodeTranslator.Translate(textCode);
                 if (!AppTool.IsNullOrEmpty(waterMark)) {
                     this.PlaceHolder = waterMark;

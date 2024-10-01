@@ -7991,6 +7991,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;SearchFields&quot;"
     DefaultText="&quot;Search partners / ports / ref.#&quot;"
+    FullLocalDefaultText="&quot;&quot;"
     HelpTextCode="&quot;SearchFields&quot;"
     HelpTextDefaultText="&quot;Searching by :&#xA;1: Shipment and master shipment numbers&#xA;2: References&#xA;3: From or to ports&#xA;4: Invoice numbers&quot;"
     IsNullable="false"
@@ -19577,7 +19578,7 @@
     CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
@@ -106136,14 +106137,15 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     IsListFilter="false"
+    Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -106157,6 +106159,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;CustomsShipments&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -106168,6 +106171,9 @@
     FullFieldLable="&quot;ArrivalDate&quot;"
     DefaultText="&quot;Arrival Date&quot;"
     FullLocalDefaultText="&quot;תאריך הגעה&quot;"
+    ListFieldLable="&quot;ArrivalDateListLable&quot;"
+    ListLableDefaultText="&quot;Arrival Date&quot;"
+    ListLocalDefaultText="&quot;תאריך הגעה&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -106177,7 +106183,7 @@
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
-    GenerateInList="false"
+    GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"
     IncludeInSearchField="false"
@@ -106207,14 +106213,15 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     IsListFilter="false"
+    Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -106228,6 +106235,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;CustomsShipments&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -106239,6 +106247,9 @@
     FullFieldLable="&quot;EstimatedArrivalDate&quot;"
     DefaultText="&quot;Estimated Arrival Date&quot;"
     FullLocalDefaultText="&quot;תאריך הגעה משוער&quot;"
+    ListFieldLable="&quot;EstimatedArrivalDateListLable&quot;"
+    ListLableDefaultText="&quot;Estimated Arrival Date&quot;"
+    ListLocalDefaultText="&quot;תאריך הגעה משוער&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -106248,7 +106259,7 @@
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
-    GenerateInList="false"
+    GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"
     IncludeInSearchField="false"
@@ -108830,9 +108841,9 @@
     <QueryFilters />
   </Query>
   <Query
-    Code="&quot;CustomsShipments&quot;"
-    TextCode="&quot;Customs Shipments&quot;"
-    LocalTextCode="&quot;עמילות מכס&quot;"
+    Code="&quot;OpenCommissionCases &quot;"
+    TextCode="&quot;Open Commission Cases &quot;"
+    LocalTextCode="&quot;תיקי עמילות פתוחים&quot;"
     QueryGroupCode="&quot;SHIP&quot;"
     IndexOrder="22"
     ObjectTableName="&quot;Shipment&quot;"
@@ -108842,66 +108853,6 @@
     IsPackagable="true"
     DefaultSortName="&quot;CreateDateTime&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
-    IsSpellChecked="false">
-    <QueryColumns>
-      <QueryColumn
-        QueryCode="&quot;CustomsShipments&quot;"
-        IndexOrder="0"
-        ObjectFieldName="&quot;TransportModeId&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;CustomsShipments&quot;"
-        IndexOrder="1"
-        ObjectFieldName="&quot;DepartmentName&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;CustomsShipments&quot;"
-        IndexOrder="2"
-        ObjectFieldName="&quot;CreateDateTime&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;CustomsShipments&quot;"
-        IndexOrder="3"
-        ObjectFieldName="&quot;ShipmentNumber&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;CustomsShipments&quot;"
-        IndexOrder="4"
-        ObjectFieldName="&quot;CustomerName&quot;"
-        ColumnWidth="100" />
-    </QueryColumns>
-    <QueryFilters>
-      <QueryFilter
-        QueryCode="&quot;CustomsShipments&quot;"
-        PredefinedValue="&quot;C&quot;"
-        ObjectFieldName="&quot;DirectionId&quot;"
-        IsPredefined="true"
-        Operator="&quot;Equal&quot;"
-        IndexOrder="0"
-        CustomPredefined="false" />
-      <QueryFilter
-        QueryCode="&quot;CustomsShipments&quot;"
-        PredefinedValue="&quot;true&quot;"
-        ObjectFieldName="&quot;IsCustomShipment&quot;"
-        IsPredefined="true"
-        Operator="&quot;Equal&quot;"
-        IndexOrder="0"
-        CustomPredefined="false" />
-    </QueryFilters>
-  </Query>
-  <Query
-    Code="&quot;OpenCommissionCases &quot;"
-    TextCode="&quot;Open Commission Cases &quot;"
-    LocalTextCode="&quot;תיקי עמילות פתוחים&quot;"
-    QueryGroupCode="&quot;SHIP&quot;"
-    IndexOrder="23"
-    ObjectTableName="&quot;Shipment&quot;"
-    QuerySection="&quot;CustomsShipments&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="true"
-    IsPackagable="true"
-    DefaultSortName="&quot;Id&quot;"
-    DefaultSortDirection="&quot;Ascending&quot;"
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
@@ -108987,14 +108938,14 @@
     TextCode="&quot;Close Commission Cases&quot;"
     LocalTextCode="&quot;תיקי עמילות סגורים&quot;"
     QueryGroupCode="&quot;SHIP&quot;"
-    IndexOrder="24"
+    IndexOrder="23"
     ObjectTableName="&quot;Shipment&quot;"
     QuerySection="&quot;CustomsShipments&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
     IsPackagable="true"
-    DefaultSortName="&quot;Id&quot;"
-    DefaultSortDirection="&quot;Ascending&quot;"
+    DefaultSortName="&quot;CreateDateTime&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
@@ -109080,14 +109031,14 @@
     TextCode="&quot;All Commission Cases&quot;"
     LocalTextCode="&quot;הכל&quot;"
     QueryGroupCode="&quot;SHIP&quot;"
-    IndexOrder="25"
+    IndexOrder="24"
     ObjectTableName="&quot;Shipment&quot;"
     QuerySection="&quot;CustomsShipments&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
     IsPackagable="true"
-    DefaultSortName="&quot;Id&quot;"
-    DefaultSortDirection="&quot;Ascending&quot;"
+    DefaultSortName="&quot;CreateDateTime&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
@@ -121720,6 +121671,12 @@
       Code="&quot;Shipment.O.ImporterApprovalForSubmitting&quot;"
       DefaultText="&quot;The importer's approval for submitting an import declaration to customs&quot;"
       LocalDefaultText="&quot;אישור היבואן להגשת הצהרת יבוא למכס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.O.PlaceOlderCustomsShipments&quot;"
+      DefaultText="&quot;Custom file/MAWB/House/Declaration/Iska&quot;"
+      LocalDefaultText="&quot;תיק עמילות/ש.מ ראשי/ש.מ פנימי/הצהרה/מזהה עיסקה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
