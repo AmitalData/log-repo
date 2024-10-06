@@ -29,6 +29,7 @@ export class TaxReportMenuButtonsHandler {
     EntityPMService: EntityPMService = new EntityPMService();
 
     private CurrentSession = SessionLocator.SelectedSession;
+    private BlockReportCancel: boolean = false;
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
@@ -138,24 +139,7 @@ export class TaxReportMenuButtonsHandler {
         switch (menuButton.EventCode) {
             case "TRCN": // Cancel
                 {
-                    var confirmWindow = new ConfirmWindow();
-                    var msg = TextCodeTranslator.Translate("Accounting.General.O.WantToCancelTaxReport");
-                    confirmWindow.Show(msg);
-                    confirmWindow.WindowClosed.subscribe((event: any) => {
-                        if (confirmWindow.Yes) {
-                            this.EntityPM.StatusCode = TaxReportStatus.CancelationInProgress;
-                            this.entityArgs.EditComponent.SaveChanges();
-                            this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                                if (isSaveSuccess) {
-                                    this.entityArgs.EditComponent.ReloadEntityPM();
-                                    this.CancelTaxReportInBatch();
-                                } else {
-                                    this.EntityPM.IsCancelled = false;
-                                }
-                            });
-                        }
-                    });
-
+                    this.CancelTaxReport();
                     break;
                 }
             case "TRDL": // Download
@@ -408,6 +392,51 @@ export class TaxReportMenuButtonsHandler {
             });
     }
 
+
+    CancelTaxReport() {
+        this.CurrentSession.StartBusyIndicatorCreating();
+
+        this.taxReportExtendedPMService.GetActiveFutureReportsExist(this.EntityPM.CreateDate)
+            .subscribe((response: any) => {
+                this.StopBusyIndicator();
+                if (response != null) {
+                    if (!response.Result.Result) {
+                        this.CancelTaxReportInner();
+                    }
+                    else {
+                            const message = new MessageWindow();
+                            message.ShowErrorIcon = true;
+                            message.Width = 400;
+                            let text : string = TextCodeTranslator.Translate(TextCode.TaxReportOCancelLaterReports);
+                            message.Show(text + '\n');
+                    }
+                } 
+            }, (error) => {
+                new MessageWindow().Show(error || 'Something wrong happened!');
+            });
+    }
+
+    CancelTaxReportInner() {
+        var confirmWindow = new ConfirmWindow();
+        var msg = TextCodeTranslator.Translate("Accounting.General.O.WantToCancelTaxReport");
+        confirmWindow.Show(msg);
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.EntityPM.StatusCode = TaxReportStatus.CancelationInProgress;
+                this.entityArgs.EditComponent.SaveChanges();
+                this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        this.entityArgs.EditComponent.ReloadEntityPM();
+                        this.CancelTaxReportInBatch();
+                    } else {
+                        this.EntityPM.IsCancelled = false;
+                    }
+                });
+            }
+        });
+    }
+
+
     CancelClosingJournal() {
         this.CurrentSession.StartBusyIndicatorCreating();
 
@@ -457,6 +486,7 @@ enum TextCode {
     TaxReportCloseJournalNotSupported = "TaxReport.O.CloseJournalNotSupported",
     TaxReportCloseJournalRunInBackground = "TaxReport.O.CloseJournalRunInBackground",
     TaxReportCancelClosingJournalRunInBackground = "TaxReport.O.CloseJournalRunInBackground",
+    TaxReportOCancelLaterReports = "TaxReport.O.CancelLaterReports",
 }
 function CloneDeep(EntityPM: TaxReportPM) {
     throw new Error('Function not implemented.');
