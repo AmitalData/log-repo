@@ -76,7 +76,7 @@ namespace CustomsWorkerRole
             IEnumerable<SyncRecord> tenant0CloseTableRecords = records.Where(record => record.KeyVal == "ALL" && record.Tenant == 0);
             List<SyncRecord> newRecords = new List<SyncRecord>();
             List<SyncRecord> RemoveRecords = new List<SyncRecord>();
-            List<int> tenantIds = tenantQuery.GetAll(true).Select(x => x.Id).ToList();
+            List<int> tenantIds = tenantQuery.GetAll(true).Select(x => x.Id).Where(x => x != 0).ToList();
 
             tenant0CloseTableRecords.ForEach(record =>
             {
@@ -86,6 +86,7 @@ namespace CustomsWorkerRole
                 {
                     newRecords.Add(new SyncRecord
                     {
+                        Id = Guid.NewGuid().ToString(),
                         FileNo = record.FileNo,
                         KeyVal = record.KeyVal,
                         Tenant = tenantId,
