@@ -31,6 +31,13 @@
 						TCD.CustomsItemIDNum = @CustomsItemIDNum 
 						AND TCD.StartDate <= GETDATE()
 						AND TCD.EndDate > GETDATE()
+						-- If the agreement's CalculationReference matches the general CalculationReference, check further
+						AND (CustomsRateWithout.CalculationReference <> CustomsRateWithin.CalculationReference
+								OR (
+										CustomsRateWithout.ComputationMethodID <> 15
+										OR CustomsRateWithout.Rate <> 100
+								)
+						)
 					ORDER BY TCD.TradeAgreementID 
 			END
 
