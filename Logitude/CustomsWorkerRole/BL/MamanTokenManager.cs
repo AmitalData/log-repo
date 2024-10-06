@@ -117,13 +117,11 @@ public class TokenManager
 
     public void RefreshToken()
     {
+        NetCommonHelper.Logger.DevLog.Instance.WriteTrace("Entering RefreshToken method.");
         lock (lockObject)
         {
-            // Only reset if necessary
-            if (!lazyToken.IsValueCreated)
-            {
-                lazyToken = new Lazy<AuthToken>(FetchToken, LazyThreadSafetyMode.ExecutionAndPublication);
-            }
+           lazyToken = new Lazy<AuthToken>(FetchToken, LazyThreadSafetyMode.ExecutionAndPublication);
+           NetCommonHelper.Logger.DevLog.Instance.WriteTrace("Token has been reset and will be refreshed on the next access.");
         }
     }
 }
