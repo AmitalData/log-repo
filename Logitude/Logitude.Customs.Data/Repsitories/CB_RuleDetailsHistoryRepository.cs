@@ -54,6 +54,7 @@ namespace Logitude.Customs.Data.Repsitories
                                 ID = reader["RD_ID"] != DBNull.Value ? (int)reader["RD_ID"] : 0,
                                 RuleID = reader["RuleID"] != DBNull.Value ? (int)reader["RuleID"] : 0,
                                 Title = reader["Title"] != DBNull.Value ? (string)reader["Title"] : null,
+                                Rules = reader["Rules"] != DBNull.Value ? (string)reader["Rules"] : null,
                                 UpdateDate = reader["UpdateDate"] != DBNull.Value ? (DateTime?)reader["UpdateDate"] : null,
                                 ChangeRequestTypePriority = reader["ChangeRequestTypePriority"] != DBNull.Value ? (int)reader["ChangeRequestTypePriority"] : 0,
                                 OrderinalPostion = reader["OrderinalPostion"] != DBNull.Value ? (int)reader["OrderinalPostion"] : 0,
