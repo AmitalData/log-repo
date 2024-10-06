@@ -24,7 +24,7 @@ export class RulesComponent implements OnInit, OnChanges {
 
 
   ngOnInit(): void {
-
+    this.initData();
   }
 
   // moke data to remove when get data from API
@@ -71,11 +71,15 @@ export class RulesComponent implements OnInit, OnChanges {
   }
 
   initData() {
-    this.API_MainService.GetCustomsBookRulesData(this.currentItem.CustomsItemID).subscribe((data: any) => {
-      this.allRules = data.body;
-      this.allRules.forEach((rule) => {
-        rule.expanded = false;
-      });
+    // this.API_MainService.GetCustomsBookRulesData(this.currentItem.CustomsItemID).subscribe((data: any) => {
+    this.API_MainService.GetCustomsBookRulesData(26345).subscribe((data: any) => {
+      console.log(data.body);
+      //debugger
+
+      // this.allRules = data.body;
+      // this.allRules.forEach((rule) => {
+      //   rule.expanded = false;
+      // });
     });
   }
 

@@ -96,8 +96,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 SecurityUtility.AuthenticationOnTenant(0);
 
 
-                CB_RuleQueryService requirementComputedDataQueryService = new CB_RuleQueryService(0);
-                List<CB_RuleList> result = requirementComputedDataQueryService.GetCustomsBookRulesData(customsItemId);
+
+                CB_RuleDetailsHistoryQueryService ruleDetailsHistoryQueryService = new CB_RuleDetailsHistoryQueryService(0);
+                List<CB_RuleDetailsHistoryList> result = ruleDetailsHistoryQueryService.GetCustomsBookRulesData(customsItemId);
+
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
