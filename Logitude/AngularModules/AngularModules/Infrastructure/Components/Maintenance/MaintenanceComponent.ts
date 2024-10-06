@@ -3531,16 +3531,13 @@ class MaintenanceMenuItem {
             myResult = this.item.ObjectTableName;
         }
         else {
-            var ObjectTable = window.ObjectTables.filter(
-                (d) => d.Id == this.ObjectTableId
-            )[0];
-            if (
-                ObjectTable.Name.indexOf('Customs.') != -1 ||
-                ObjectTable.ClientModuleName == 'Accounting'
-            ) {
-                myResult = TextCodeTranslator.TranslateTable(
-                    this.item.ObjectTableName
-                );
+            var ObjectTable = window.ObjectTables.filter(d => d.Id == this.ObjectTableId)[0];
+            if (ObjectTable.Name.indexOf("Customs.") != -1 || ObjectTable.ClientModuleName == "Accounting") {
+                myResult = TextCodeTranslator.TranslateTable(this.item.ObjectTableName);
+            }
+
+            else {
+                myResult = TextCodeTranslator.TranslateTablePlural(this.item.ObjectTableName);
             }
         }
 
