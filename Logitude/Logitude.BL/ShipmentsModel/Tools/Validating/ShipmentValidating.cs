@@ -1502,7 +1502,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
                 if (entityPM.TransportModeId == "O" && !(entityPM.FlightVoyageNumber.Count() == 4 && entityPM.FlightVoyageNumber.Count(char.IsDigit) == 3 && char.IsLetter(entityPM.FlightVoyageNumber[0])))
                 {
-                    throw new ApplicationException(TranslateTextsClass.Translate("Shipment.O.InvalidFlightVoyageNumber2", entityPM.Tenant, true));
+                    throw new ApplicationException(TranslateTextsClass.Translate("Shipment.O.InvalidFlightVoyageNumber1", entityPM.Tenant, true));
                 }
             }
         }
