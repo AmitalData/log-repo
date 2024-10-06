@@ -4,7 +4,7 @@ import { FormsModule, } from '@angular/forms';
 import { HeaderService, searchState } from '../app-header/service/header.service';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { debounceTime, Subject, switchMap } from 'rxjs';
+import { catchError, debounceTime, EMPTY, Subject, switchMap } from 'rxjs';
 import { API_MainService } from '../../../core/API_MainService';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 
@@ -44,7 +44,7 @@ export class PageTopComponent {
 		this.searchService.searchText$.pipe(
 			debounceTime(100),
 			switchMap((searchText) =>
-				this.API_MainService.GetFromTypesense(searchText, this.headerService.getSearchState(true), SessionInfo.LoggedUserTenant))
+				this.API_MainService.GetFromTypesense(searchText, this.headerService.getSearchState(true), SessionInfo.LoggedUserTenant).pipe(catchError((error) => EMPTY)))
 		).subscribe(async (res: any) => {
 			const regex = new RegExp(`(${this.textToSearch})`, 'gi');
 			const result: GetFromTypesenseResponse = res.body;
