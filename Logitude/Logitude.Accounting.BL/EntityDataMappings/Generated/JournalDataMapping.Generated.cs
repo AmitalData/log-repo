@@ -101,7 +101,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Copied, 
 	         CopiedFrom, 
 	         SecurityLevel, 
-	         ConfirmationNumber,
+	         ConfirmationNumber, 
+	         IsExternalEntity,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

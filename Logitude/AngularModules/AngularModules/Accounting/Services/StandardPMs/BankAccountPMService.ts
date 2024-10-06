@@ -183,7 +183,7 @@ export class BankAccountPMService {
                  
             }
 			
-               this.MapChequeCounterSerials(entityPM, jsonPM,mapParent); // Call composition tables map methods
+               this.MapChequeCounterSerials(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 

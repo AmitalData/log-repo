@@ -1745,6 +1745,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isExternalEntity ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsExternalEntity  
+	   {
+	    
+	     get
+		{
+		   return isExternalEntity;
+		 }
+		 set
+		 {
+		   if(isExternalEntity != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsExternalEntity",OldValue=isExternalEntity,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isExternalEntity=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

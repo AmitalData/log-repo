@@ -399,6 +399,11 @@ export class LedgerTransactionPM {
     public set AmountInNIS(newValue: number) { if (this.amountInNIS != newValue) { this.amountInNIS = newValue; this.MarkAsDirty("AmountInNIS"); } }
        
 	 
+    private isExternalEntity: boolean;
+    public get IsExternalEntity() { return this.isExternalEntity; }
+    public set IsExternalEntity(newValue: boolean) { if (this.isExternalEntity != newValue) { this.isExternalEntity = newValue; this.MarkAsDirty("IsExternalEntity"); } }
+       
+	 
 
     public OldEntityPM: LedgerTransactionPM;
 		
