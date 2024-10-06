@@ -130,7 +130,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             IEnumerable<SyncRecord> records = context.SyncRecord.Where(syncRecord =>                                
                 syncRecord.IsSync == SyncRecordStatus.New && syncRecord.CreateDate > yesterday && syncRecord.FileNo == "0");
 
-            int recordsCounts = records.Count();
+            int recordsCounts = Math.Min(records.Count(), 10000);
             for (int i = 0; i < recordsCounts; i++)
                 records.ElementAt(i).IsSync = SyncRecordStatus.InProcess;
 
