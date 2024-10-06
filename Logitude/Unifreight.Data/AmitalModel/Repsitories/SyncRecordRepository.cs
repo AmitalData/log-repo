@@ -128,7 +128,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             DateTime yesterday = DateTime.Now.AddDays(-1);
 
             IEnumerable<SyncRecord> records = context.SyncRecord.Where(syncRecord =>                                
-                syncRecord.IsSync == SyncRecordStatus.New && syncRecord.CreateDate > yesterday && syncRecord.FileNo == "0");
+                syncRecord.IsSync == SyncRecordStatus.New && syncRecord.CreateDate > yesterday);
 
             int recordsCounts = Math.Min(records.Count(), 10000);
             for (int i = 0; i < recordsCounts; i++)
