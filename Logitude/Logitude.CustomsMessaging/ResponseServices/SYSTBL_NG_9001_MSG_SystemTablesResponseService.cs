@@ -181,7 +181,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             var syncRecord = new SyncRecord();
             syncRecord.CreateDate = DateTime.Now;
-            syncRecord.Id = IdCounter.GetNumber("SyncRecord", requestParams.Tenant).ToString();
+            syncRecord.Id = Guid.NewGuid().ToString();
             syncRecord.Tenant = 0;
             syncRecord.KeyVal = "ALL";
             syncRecord.Entname = tableName;
