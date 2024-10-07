@@ -13236,7 +13236,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<YCULTASK>()
                 .Property(p => p.REQUESTDATA)
                     .HasColumnName(@"REQUEST_DATA")
-                    .HasColumnType("varchar(max)");
+                    .HasColumnType("nvarchar(max)");
             modelBuilder.Entity<YCULTASK>()
                 .Property(p => p.RESPONSE)
                     .HasColumnType("varchar(max)");

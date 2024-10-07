@@ -176,7 +176,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (!string.IsNullOrWhiteSpace(objecttableid))
             {
                 ObjectTableQuery objectTableQuery = new ObjectTableQuery(requestParams.Tenant);
-                tableName = objectTableQuery.GetObjectTableNamesById(objecttableid, requestParams.Tenant);
+                tableName = objectTableQuery.GetSinglePM(objecttableid, requestParams.Tenant).DBTableName;
             }
 
             var syncRecord = new SyncRecord();
