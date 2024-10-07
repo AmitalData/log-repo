@@ -70,22 +70,22 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
 
     OnAllBtnClicked() {
         this.IsChecked = true;
-        this.claimReasonCodeChecked = true
-        this.transactionNatureCodeChecked = true
-        this.processTypeCodeChecked = true
-        this.buyerRoleCodeChecked = true
-        this.partyRelationshipCodeChecked = true
-        this.accountTypeCodeChecked = true
+        this.ClaimReasonCodeChecked = true
+        this.TransactionNatureCodeChecked = true
+        this.ProcessTypeCodeChecked = true
+        this.BuyerRoleCodeChecked = true
+        this.PartyRelationshipCodeChecked = true
+        this.AccountTypeCodeChecked = true
     }
 
     OnNoneBtnClicked() {
         this.IsChecked = false;
-        this.claimReasonCodeChecked = false
-        this.transactionNatureCodeChecked = false
-        this.processTypeCodeChecked = false
-        this.buyerRoleCodeChecked = false
-        this.partyRelationshipCodeChecked = false
-        this.accountTypeCodeChecked = false
+        this.ClaimReasonCodeChecked = false
+        this.TransactionNatureCodeChecked = false
+        this.ProcessTypeCodeChecked = false
+        this.BuyerRoleCodeChecked = false
+        this.PartyRelationshipCodeChecked = false
+        this.AccountTypeCodeChecked = false
     }
 
 
