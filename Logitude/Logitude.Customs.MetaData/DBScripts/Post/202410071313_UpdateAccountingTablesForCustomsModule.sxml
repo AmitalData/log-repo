@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs">
+	<!--post !!!-->
+	<Sql Version="1">
+
+	</Sql>
+	<Oracle Version="1">
+		<![CDATA[
+  
+-- For TaxWithholdingAssessOfficeS
+BEGIN
+   IF EXISTS (SELECT 1 FROM all_tables WHERE table_name = 'TAXWITHHOLDINGASSESSOFFICES') THEN
+      EXECUTE IMMEDIATE 'ALTER TABLE TaxWithholdingAssessOfficeS ADD code_temp VARCHAR2(3)';
+      EXECUTE IMMEDIATE 'ALTER TABLE TaxWithholdingAssessOfficeS DROP COLUMN code';
+      EXECUTE IMMEDIATE 'ALTER TABLE TaxWithholdingAssessOfficeS RENAME COLUMN code_temp TO code';
+      COMMIT;
+   END IF;
+END;
+/
+
+-- For ACCOUNTINGCOMPANYTYPES
+BEGIN
+   IF EXISTS (SELECT 1 FROM all_tables WHERE table_name = 'ACCOUNTINGCOMPANYTYPES') THEN
+      EXECUTE IMMEDIATE 'ALTER TABLE ACCOUNTINGCOMPANYTYPES ADD code_temp VARCHAR2(1)';
+      EXECUTE IMMEDIATE 'ALTER TABLE ACCOUNTINGCOMPANYTYPES DROP COLUMN code';
+      EXECUTE IMMEDIATE 'ALTER TABLE ACCOUNTINGCOMPANYTYPES RENAME COLUMN code_temp TO code';
+      COMMIT;
+   END IF;
+END;
+/
+
+-- For WithholdingTaxDeductionTypes
+BEGIN
+   IF EXISTS (SELECT 1 FROM all_tables WHERE table_name = 'WITHHOLDINGTAXDEDUCTIONTYPES') THEN
+      EXECUTE IMMEDIATE 'ALTER TABLE WithholdingTaxDeductionTypes ADD code_temp VARCHAR2(3)';
+      EXECUTE IMMEDIATE 'ALTER TABLE WithholdingTaxDeductionTypes DROP COLUMN code';
+      EXECUTE IMMEDIATE 'ALTER TABLE WithholdingTaxDeductionTypes RENAME COLUMN code_temp TO code';
+      COMMIT;
+   END IF;
+END;
+/
+    ]]>
+	</Oracle>
+</Script>
