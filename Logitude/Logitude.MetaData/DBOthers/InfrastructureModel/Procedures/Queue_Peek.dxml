@@ -8,7 +8,7 @@
 	<SqlScript>
 		<![CDATA[
 
-ALTER PROCEDURE [dbo].[Queue_Peek]
+create or alter PROCEDURE [dbo].[Queue_Peek]
 
 @V_MESSAGEID numeric  OUTPUT,
 @V_MESSAGEBODY varchar(max)  OUTPUT,
