@@ -173,7 +173,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             accountingContext = AccountingContext.GetContext(tenant);
             GLAccountListQueryService listService = new GLAccountListQueryService(accountingContext);
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-          //  return listService.GetList(queryOperations, tenant);
+            //  return listService.GetList(queryOperations, tenant);
             List<GLAccountList> list = listService.GetList(queryOperations, tenant);
             List<GLAccountList> ActiveGLAccountList = list.Where(a => a.Inactive == false).ToList();
             foreach (var gLAccountList in ActiveGLAccountList)
