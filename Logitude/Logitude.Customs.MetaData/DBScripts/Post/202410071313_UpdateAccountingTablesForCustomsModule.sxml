@@ -4,12 +4,15 @@
 	<Sql Version="1">
 
 	</Sql>
-	<Oracle Version="1">
+	<Oracle Version="2">
 		<![CDATA[
   
 -- For TaxWithholdingAssessOfficeS
+DECLARE
+   table_count NUMBER;
 BEGIN
-   IF EXISTS (SELECT 1 FROM all_tables WHERE table_name = 'TAXWITHHOLDINGASSESSOFFICES') THEN
+   SELECT COUNT(*) INTO table_count FROM all_tables WHERE table_name = 'TAXWITHHOLDINGASSESSOFFICES';
+   IF table_count > 0 THEN
       EXECUTE IMMEDIATE 'ALTER TABLE TaxWithholdingAssessOfficeS ADD code_temp VARCHAR2(3)';
       EXECUTE IMMEDIATE 'ALTER TABLE TaxWithholdingAssessOfficeS DROP COLUMN code';
       EXECUTE IMMEDIATE 'ALTER TABLE TaxWithholdingAssessOfficeS RENAME COLUMN code_temp TO code';
@@ -17,10 +20,12 @@ BEGIN
    END IF;
 END;
 
-
 -- For ACCOUNTINGCOMPANYTYPES
+DECLARE
+   table_count NUMBER;
 BEGIN
-   IF EXISTS (SELECT 1 FROM all_tables WHERE table_name = 'ACCOUNTINGCOMPANYTYPES') THEN
+   SELECT COUNT(*) INTO table_count FROM all_tables WHERE table_name = 'ACCOUNTINGCOMPANYTYPES';
+   IF table_count > 0 THEN
       EXECUTE IMMEDIATE 'ALTER TABLE ACCOUNTINGCOMPANYTYPES ADD code_temp VARCHAR2(1)';
       EXECUTE IMMEDIATE 'ALTER TABLE ACCOUNTINGCOMPANYTYPES DROP COLUMN code';
       EXECUTE IMMEDIATE 'ALTER TABLE ACCOUNTINGCOMPANYTYPES RENAME COLUMN code_temp TO code';
@@ -28,16 +33,19 @@ BEGIN
    END IF;
 END;
 
-
 -- For WithholdingTaxDeductionTypes
+DECLARE
+   table_count NUMBER;
 BEGIN
-   IF EXISTS (SELECT 1 FROM all_tables WHERE table_name = 'WITHHOLDINGTAXDEDUCTIONTYPES') THEN
+   SELECT COUNT(*) INTO table_count FROM all_tables WHERE table_name = 'WITHHOLDINGTAXDEDUCTIONTYPES';
+   IF table_count > 0 THEN
       EXECUTE IMMEDIATE 'ALTER TABLE WithholdingTaxDeductionTypes ADD code_temp VARCHAR2(3)';
       EXECUTE IMMEDIATE 'ALTER TABLE WithholdingTaxDeductionTypes DROP COLUMN code';
       EXECUTE IMMEDIATE 'ALTER TABLE WithholdingTaxDeductionTypes RENAME COLUMN code_temp TO code';
       COMMIT;
    END IF;
 END;
+
 
     ]]>
 	</Oracle>
