@@ -157,7 +157,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     var code = new int?[] { 4, 6, 8 }.Contains(customResponse?.GeneralDetails?.actionCode) ? "90":"";
                     var statusSoyRemarks = $"CODE-{code}-היתר לוגיסטי-{_MyDeclarationPM.DeclarationNumber}";
-                    RaiseEvent(_MyDeclarationPM, requestParams.LoggingUserId, "SOY", statusSoyRemarks);
+                    RaiseEvent(_MyDeclarationPM, requestParams.LoggingUserId, "SOY", statusSoyRemarks,true);
 
                 }
 
@@ -257,7 +257,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-        private void RaiseEvent(DeclarationPM _MyDeclarationPM, string loggingUserId, string eventCode, string remarks)
+        private void RaiseEvent(DeclarationPM _MyDeclarationPM, string loggingUserId, string eventCode, string remarks,bool suppress_RAISE_EVENT=false)
         {
 
             string eventType = "";
@@ -296,7 +296,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             };
 
             LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent  eventCode =" + eventCode + "  CustomFileNo: " + _MyDeclarationPM.CustomFileNo + "   ");
-            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: suppress_RAISE_EVENT);
 
         }
 
