@@ -3760,6 +3760,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="UniCloudShipment"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"
@@ -4547,7 +4553,7 @@
   <Index
     Columns="Tenant,ShipmentNumber" />
   <Index
-	Columns="ShipmentNumber" />
+    Columns="ShipmentNumber" />
   <Index
     Columns="AutomaticLastUpdateDate" />
   <Index
