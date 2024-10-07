@@ -4547,7 +4547,7 @@
   <Index
     Columns="Tenant,ShipmentNumber" />
   <Index
-	Columns="ShipmentNumber" />
+    Columns="ShipmentNumber" />
   <Index
     Columns="AutomaticLastUpdateDate" />
   <Index

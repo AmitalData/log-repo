@@ -528,6 +528,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;CustomsShipments&quot;"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;DeclarationNumber&quot;"
@@ -7258,7 +7259,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="true"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     IsListFilter="false"
     Operator="&quot;Equals&quot;"
@@ -7292,6 +7293,9 @@
     DisplayLongName="false"
     FullFieldLable="&quot;StatusId&quot;"
     DefaultText="&quot;Status&quot;"
+    ListFieldLable="&quot;StatusIdListLable&quot;"
+    ListLableDefaultText="&quot;StatusId&quot;"
+    ListLocalDefaultText="&quot;סטטוס&quot;"
     ShortFieldLable="&quot;StatusId&quot;"
     ShortFieldLableDefaultText="&quot;Shipment Status&quot;"
     IsNullable="false"
@@ -7314,6 +7318,7 @@
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
     RecordType="&quot;Shipment&quot;"
+    AdditionalQuerySections="&quot;CustomsShipments&quot;"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;StatusId&quot;"
@@ -8948,6 +8953,7 @@
     FullLocalDefaultText="&quot;תנאי מכר&quot;"
     ListFieldLable="&quot;IncotermIdListLable&quot;"
     ListLableDefaultText="&quot;Incoterm Id&quot;"
+    ListLocalDefaultText="&quot;תנאי מכר&quot;"
     HelpTextCode="&quot;Incoterm&quot;"
     HelpTextDefaultText="&quot;Incoterm&quot;"
     IsNullable="false"
@@ -9036,6 +9042,7 @@
     FullLocalDefaultText="&quot;איש מכירות&quot;"
     ListFieldLable="&quot;SalesmanUserIdListLable&quot;"
     ListLableDefaultText="&quot;Salesman User Id&quot;"
+    ListLocalDefaultText="&quot;איש מכירות&quot;"
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="&quot;User&quot;"
@@ -12681,6 +12688,7 @@
     FullLocalDefaultText="&quot;תאריך שטר מטען פנימי&quot;"
     ListFieldLable="&quot;HAWBDateListLable&quot;"
     ListLableDefaultText="&quot;HAWB Date&quot;"
+    ListLocalDefaultText="&quot;תאריך שטר מטען פנימי&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -12728,7 +12736,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     IsListFilter="false"
     Operator="&quot;Equals&quot;"
@@ -12761,6 +12769,9 @@
     FullFieldLable="&quot;MainCarriageFromPortId&quot;"
     DefaultText="&quot;Main Carriage From Port&quot;"
     FullLocalDefaultText="&quot;נמל טעינה&quot;"
+    ListFieldLable="&quot;MainCarriageFromPortIdListLable&quot;"
+    ListLableDefaultText="&quot;MainCarriageFromPortId&quot;"
+    ListLocalDefaultText="&quot;נמל טעינה&quot;"
     ShortFieldLable="&quot;MainCarriageFromPortId&quot;"
     ShortFieldLableDefaultText="&quot;Main Carriage From Port&quot;"
     ShortLocalDefaultText="&quot;נמל טעינה&quot;"
@@ -12781,6 +12792,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="true"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;CustomsShipments&quot;"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;MainCarriageFromPortId&quot;"
@@ -19933,8 +19945,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;Volume&quot;"
     DefaultText="&quot;Volume (%VolumeCode)&quot;"
+    FullLocalDefaultText="&quot;נפח&quot;"
     ListFieldLable="&quot;VolumeListLable&quot;"
     ListLableDefaultText="&quot;Volume&quot;"
+    ListLocalDefaultText="&quot;נפח&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -29672,6 +29686,7 @@
     FullLocalDefaultText="&quot;משקל לחיוב בק&quot;ג&quot;"
     ListFieldLable="&quot;ChargeableWeightListLable&quot;"
     ListLableDefaultText="&quot;Charg. Weight&quot;"
+    ListLocalDefaultText="&quot;משקל לחיוב בק&quot;ג&quot;"
     ShortFieldLable="&quot;ChargeableWeight&quot;"
     ShortFieldLableDefaultText="&quot;Wt / Msr (%ChargWeightCode)&quot;"
     ShortLocalDefaultText="&quot;משקל לחיוב בק&quot;ג&quot;"
@@ -105942,7 +105957,7 @@
     FullLocalDefaultText="&quot;חב' תעופה/ספנות&quot;"
     ListFieldLable="&quot;CarrierCodeListLable&quot;"
     ListLableDefaultText="&quot;Carrier Code&quot;"
-    ListLocalDefaultText="&quot;קוד ספק&quot;"
+    ListLocalDefaultText="&quot;חב' תעופה/ספנות&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -106325,6 +106340,7 @@
     FullLocalDefaultText="&quot;סוג אריזה&quot;"
     ListFieldLable="&quot;PackageTypeCodeListLable&quot;"
     ListLableDefaultText="&quot;Package Type Code&quot;"
+    ListLocalDefaultText="&quot;סוג אריזה&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -106400,6 +106416,7 @@
     FullLocalDefaultText="&quot;אוניה&quot;"
     ListFieldLable="&quot;VesselListLable&quot;"
     ListLableDefaultText="&quot;Vessel&quot;"
+    ListLocalDefaultText="&quot;אוניה&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -106475,6 +106492,7 @@
     FullLocalDefaultText="&quot;מס' טיסה/הפלגה&quot;"
     ListFieldLable="&quot;FlightVoyageNumberListLable&quot;"
     ListLableDefaultText="&quot;Flight Voyage Number&quot;"
+    ListLocalDefaultText="&quot;מס' טיסה/הפלגה&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -106550,6 +106568,7 @@
     FullLocalDefaultText="&quot;סוג סחורה&quot;"
     ListFieldLable="&quot;CommodityListLable&quot;"
     ListLableDefaultText="&quot;Commodity&quot;"
+    ListLocalDefaultText="&quot;סוג סחורה&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -106589,14 +106608,15 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
-    IsListFilter="false"
+    IsListFilter="true"
+    Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -108863,46 +108883,51 @@
       <QueryColumn
         QueryCode="&quot;OpenCommissionCases &quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;CreateDateTime&quot;"
+        ObjectFieldName="&quot;StatusId&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenCommissionCases &quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;CustomerId&quot;"
+        ObjectFieldName="&quot;CreateDateTime&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenCommissionCases &quot;"
         IndexOrder="3"
-        ObjectFieldName="&quot;ShipmentReferances&quot;"
+        ObjectFieldName="&quot;CustomerId&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenCommissionCases &quot;"
         IndexOrder="4"
-        ObjectFieldName="&quot;DeclarationOfficeCode&quot;"
+        ObjectFieldName="&quot;ShipmentReferances&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenCommissionCases &quot;"
         IndexOrder="5"
-        ObjectFieldName="&quot;Mawb&quot;"
+        ObjectFieldName="&quot;DeclarationOfficeCode&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenCommissionCases &quot;"
         IndexOrder="6"
-        ObjectFieldName="&quot;House&quot;"
+        ObjectFieldName="&quot;Mawb&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenCommissionCases &quot;"
         IndexOrder="7"
-        ObjectFieldName="&quot;DescriptionOfGoods&quot;"
+        ObjectFieldName="&quot;House&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenCommissionCases &quot;"
         IndexOrder="8"
-        ObjectFieldName="&quot;GrossWeight&quot;"
+        ObjectFieldName="&quot;DescriptionOfGoods&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenCommissionCases &quot;"
         IndexOrder="9"
+        ObjectFieldName="&quot;GrossWeight&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenCommissionCases &quot;"
+        IndexOrder="10"
         ObjectFieldName="&quot;NumberOfPackages&quot;"
         ColumnWidth="100" />
     </QueryColumns>
@@ -108956,46 +108981,51 @@
       <QueryColumn
         QueryCode="&quot;CloseCommissionCases&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;CreateDateTime&quot;"
+        ObjectFieldName="&quot;StatusId&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CloseCommissionCases&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;CustomerId&quot;"
+        ObjectFieldName="&quot;CreateDateTime&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CloseCommissionCases&quot;"
         IndexOrder="3"
-        ObjectFieldName="&quot;ShipmentReferances&quot;"
+        ObjectFieldName="&quot;CustomerId&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CloseCommissionCases&quot;"
         IndexOrder="4"
-        ObjectFieldName="&quot;DeclarationOfficeCode&quot;"
+        ObjectFieldName="&quot;ShipmentReferances&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CloseCommissionCases&quot;"
         IndexOrder="5"
-        ObjectFieldName="&quot;Mawb&quot;"
+        ObjectFieldName="&quot;DeclarationOfficeCode&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CloseCommissionCases&quot;"
         IndexOrder="6"
-        ObjectFieldName="&quot;House&quot;"
+        ObjectFieldName="&quot;Mawb&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CloseCommissionCases&quot;"
         IndexOrder="7"
-        ObjectFieldName="&quot;DescriptionOfGoods&quot;"
+        ObjectFieldName="&quot;House&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CloseCommissionCases&quot;"
         IndexOrder="8"
-        ObjectFieldName="&quot;GrossWeight&quot;"
+        ObjectFieldName="&quot;DescriptionOfGoods&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CloseCommissionCases&quot;"
         IndexOrder="9"
+        ObjectFieldName="&quot;GrossWeight&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CloseCommissionCases&quot;"
+        IndexOrder="10"
         ObjectFieldName="&quot;NumberOfPackages&quot;"
         ColumnWidth="100" />
     </QueryColumns>
@@ -109049,46 +109079,51 @@
       <QueryColumn
         QueryCode="&quot;AllCommissionCases&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;CreateDateTime&quot;"
+        ObjectFieldName="&quot;StatusId&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllCommissionCases&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;CustomerId&quot;"
+        ObjectFieldName="&quot;CreateDateTime&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllCommissionCases&quot;"
         IndexOrder="3"
-        ObjectFieldName="&quot;ShipmentReferances&quot;"
+        ObjectFieldName="&quot;CustomerId&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllCommissionCases&quot;"
         IndexOrder="4"
-        ObjectFieldName="&quot;DeclarationOfficeCode&quot;"
+        ObjectFieldName="&quot;ShipmentReferances&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllCommissionCases&quot;"
         IndexOrder="5"
-        ObjectFieldName="&quot;Mawb&quot;"
+        ObjectFieldName="&quot;DeclarationOfficeCode&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllCommissionCases&quot;"
         IndexOrder="6"
-        ObjectFieldName="&quot;House&quot;"
+        ObjectFieldName="&quot;Mawb&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllCommissionCases&quot;"
         IndexOrder="7"
-        ObjectFieldName="&quot;DescriptionOfGoods&quot;"
+        ObjectFieldName="&quot;House&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllCommissionCases&quot;"
         IndexOrder="8"
-        ObjectFieldName="&quot;GrossWeight&quot;"
+        ObjectFieldName="&quot;DescriptionOfGoods&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllCommissionCases&quot;"
         IndexOrder="9"
+        ObjectFieldName="&quot;GrossWeight&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllCommissionCases&quot;"
+        IndexOrder="10"
         ObjectFieldName="&quot;NumberOfPackages&quot;"
         ColumnWidth="100" />
     </QueryColumns>
