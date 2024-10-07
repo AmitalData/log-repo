@@ -510,7 +510,7 @@
     <Compile Include="CommonDataModel\EntityQueries\ReportExecutionLogQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\UnassignedEntityQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\RegimenFiscalQuery.cs" />
-    <Compile Include="CommonDataModel\EntityQueries\UserPermittedProductQuery - Copy.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\UserFreelancerGroupQuery.cs" />
     <Compile Include="CommonDataModel\ExternalService\CommunicationLogExtendedService.cs" />
     <Compile Include="CommonDataModel\ExternalService\CopyDocumentTypeTemplateService.cs" />
     <Compile Include="CommonDataModel\ExternalService\PartnerARinvoiceDocumentTypeService.cs" />

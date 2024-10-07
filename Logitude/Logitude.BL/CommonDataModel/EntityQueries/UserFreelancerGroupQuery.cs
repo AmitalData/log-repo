@@ -72,6 +72,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      };
             return UserFreelancerGroup;
         }
+        public IQueryable<UserFreelancerGroupPM> GetUserFreelancerGroupsByUserId(string userId, int tenant)
+        {
+            IQueryable<UserFreelancerGroupPM> UserFreelancerGroup = from a in repository.context.UserFreelancerGroups
+                                                     where a.UserId == userId && a.Tenant == tenant
+                                                     select new UserFreelancerGroupPM()
+                                                     {
+                                                         Id = a.Id,
+                                                         Tenant = a.Tenant,
+                                                         GroupID = a.GroupID,
+                                                         UserId = a.UserId,
+                                                     };
+            return UserFreelancerGroup;
+        }
 
     }
 }
