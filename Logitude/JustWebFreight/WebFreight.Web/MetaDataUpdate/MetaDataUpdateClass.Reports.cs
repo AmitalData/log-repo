@@ -1,5 +1,6 @@
 ﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,8 +41,11 @@ namespace WebFreight.Web.MetaDataUpdate
             this.LoadReports_Quotes(quotesGroup, tenantFeatures, reportRepository, TenantReports);
             this.LoadReports_CRM(CRMGroup, tenantFeatures, reportRepository, TenantReports);
             this.LoadReports_TFS(TFSGroup, tenantFeatures, reportRepository, TenantReports);
-            this.LoadReports_Administrative(AdminGroup, tenantFeatures, reportRepository, TenantReports);
-            this.LoadReports_ExportCustoms(ExportCustomGroup, tenantFeatures, reportRepository, TenantReports);
+            if (!SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.LogboxAndAccountingProduction) && !SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Cloud))
+            {
+                this.LoadReports_Administrative(AdminGroup, tenantFeatures, reportRepository, TenantReports);
+                this.LoadReports_ExportCustoms(ExportCustomGroup, tenantFeatures, reportRepository, TenantReports);
+            }
 
 
             reportRepository.SubmitChanges();
