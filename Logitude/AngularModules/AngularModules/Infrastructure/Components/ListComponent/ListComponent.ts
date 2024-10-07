@@ -3655,7 +3655,27 @@ export class ListComponent implements OnInit, AfterViewInit {
 
                                     break;
                                 }
+                                case "QuoteTemplate": {
+                                    var windowArgs: any = {};
+                                    var logWindow = new LogitudeWindow();
+                                    windowArgs.IsNewEntityCall = false;
+                                    windowArgs.CurrentEntity = entityList;
+                                    var logWindow = new LogitudeWindow();
+                                    logWindow.WindowArgs = windowArgs;
+                                    logWindow.Title = entityList.Name;
+                                    logWindow.Width = window.innerWidth - 150;
+                                    logWindow.Height = window.innerHeight - 150;
+                                    logWindow.IsShowCloseButton = true;
+                                    logWindow.DataContext = this;
+                                    logWindow.Show("./QuoteModules/QuoteTemplates/Components/EditQuoteTemplateComponent");
 
+                                    logWindow.WindowClosed.subscribe(($event1: any) => {
+                                        this.isEditControlOpened = false;
+                                        this.OnBackFromEdit(selectedEntityId, $event);
+                                    });
+
+                                    break;
+                                }
                                 case 'Customs.DeclarationCargoSplit': {
                                     var windowArgs: any = {};
                                     this._entityResourceService
