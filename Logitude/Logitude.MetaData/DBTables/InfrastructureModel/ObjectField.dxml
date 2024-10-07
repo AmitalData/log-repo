@@ -651,13 +651,6 @@
       Nullable="false" />
   </Column>
   <Column
-Name="ShortName"
-Type="varchar"
-Size="30">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="IsListFilter"
     Type="bit">
     <Constraints
@@ -666,6 +659,13 @@ Size="30">
   <Column
     Name="DisplayInRequiredFields"
     Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShortName"
+    Type="varchar"
+    Size="50">
     <Constraints
       Nullable="true" />
   </Column>
