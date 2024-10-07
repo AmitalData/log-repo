@@ -805,14 +805,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
         private HttpResponseMessage GetQuickSearch(string ObjectTableName, string SearchFields, int tenant)
         {
-            bool isFullTextSearch = false;
-            TenantRepository myTenantRepository = new TenantRepository(tenant);
-            Tenant myTenant = myTenantRepository.GetSingleTenant(tenant);
-            if (myTenant != null)
-            {
-                isFullTextSearch = myTenant.IsFullTextSearchEnabled;
-            }
-
             QueryOperations myQueryOperations = new QueryOperations();
             myQueryOperations.PageIndex = 0;
             myQueryOperations.PageSize = 10;
@@ -820,19 +812,26 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 myQueryOperations.PageSize = 8;
             }
-
             if (!string.IsNullOrEmpty(SearchFields))
             {
                 myQueryOperations.SetFilter("SearchFields", SearchFields, false, "Contains", null, false);
             }
-
             FilterSerializer serializer = new FilterSerializer();
             byte[] arrayOfBytes = serializer.SerializeFilterItems(myQueryOperations);
-
             switch (ObjectTableName)
             {
                 case "Shipment":
                     {
+                        bool isFullTextSearch = false;
+                        TenantRepository myTenantRepository = new TenantRepository(tenant);
+                        Tenant myTenant = myTenantRepository.GetSingleTenant(tenant);
+                        if (myTenant != null)
+                        {
+                            isFullTextSearch = myTenant.IsFullTextSearchEnabled;
+                        }
+
+
+
                         ShipmentsDomainService myDomainService = new ShipmentsDomainService();
                         if (isFullTextSearch)
                         {
@@ -931,11 +930,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         // Set Type Filter
                         myQueryOperations.SetFilter("AccountTypeCode", "1", false, "Equals", null, false);
                         arrayOfBytes = serializer.SerializeFilterItems(myQueryOperations);
-
-                        // Get the list
-                        AccountingDomainService myDomainService = new AccountingDomainService();
-                        List<GLAccountList> myResult = myDomainService.GetGLAccountFilters(arrayOfBytes, tenant);
-                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        return Request.CreateResponse(HttpStatusCode.OK, GetAccountsList(tenant, arrayOfBytes));
                         //break;
                     }
 
@@ -944,11 +939,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         // Set Type Filter
                         myQueryOperations.SetFilter("AccountTypeCode", "2", false, "Equals", null, false);
                         arrayOfBytes = serializer.SerializeFilterItems(myQueryOperations);
-
-                        // Get the list
-                        AccountingDomainService myDomainService = new AccountingDomainService();
-                        List<GLAccountList> myResult = myDomainService.GetGLAccountFilters(arrayOfBytes, tenant);
-                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        return Request.CreateResponse(HttpStatusCode.OK, GetAccountsList(tenant, arrayOfBytes));
                         //break;
                     }
 
@@ -957,11 +948,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         // Set Type Filter
                         myQueryOperations.SetFilter("AccountTypeCode", "3", false, "Equals", null, false);
                         arrayOfBytes = serializer.SerializeFilterItems(myQueryOperations);
-
-                        // Get the list
-                        AccountingDomainService myDomainService = new AccountingDomainService();
-                        List<GLAccountList> myResult = myDomainService.GetGLAccountFilters(arrayOfBytes, tenant);
-                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        return Request.CreateResponse(HttpStatusCode.OK, GetAccountsList(tenant, arrayOfBytes));
                         //break;
                     }
 
@@ -1135,6 +1122,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         return Request.CreateResponse(HttpStatusCode.OK, myResult);
                     }
             }
+        }
+
+        private List<GLAccountList> GetAccountsList(int tenant, byte[] arrayOfBytes)
+        {
+            Logitude.Accounting.Data.EntityListQueryServices.GLAccountListQueryService listService = new Logitude.Accounting.Data.EntityListQueryServices.GLAccountListQueryService(Logitude.Accounting.Data.AccountingContext.GetContext(tenant));
+            return listService.GetQuickSearchList(EntityListFilter.GetQueryOperations(arrayOfBytes), tenant);
         }
 
         private HttpResponseMessage ExecuteQuickSearchOnSeconderyDB(string ObjectTableName, string SearchFields, int tenant)
