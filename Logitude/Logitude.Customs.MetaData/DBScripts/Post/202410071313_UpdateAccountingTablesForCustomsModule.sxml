@@ -16,7 +16,7 @@ BEGIN
       COMMIT;
    END IF;
 END;
-/
+
 
 -- For ACCOUNTINGCOMPANYTYPES
 BEGIN
@@ -27,7 +27,7 @@ BEGIN
       COMMIT;
    END IF;
 END;
-/
+
 
 -- For WithholdingTaxDeductionTypes
 BEGIN
@@ -38,7 +38,7 @@ BEGIN
       COMMIT;
    END IF;
 END;
-/
+
     ]]>
 	</Oracle>
 </Script>
