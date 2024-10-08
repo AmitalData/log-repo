@@ -39,7 +39,7 @@ export class MainPageComponent {
 			CustomsBookType: this.HeaderService.getSearchState(true),
 			CustomsItemHierarchic: this.searchService.customsItemHierarchicDefault,
 			Reamarks: false,
-			Rules: true,
+			Rules: false,
 			SkippedRows: 0,
 			PageSize: 0,
 			Tenant: SessionInfo.LoggedUserTenant
