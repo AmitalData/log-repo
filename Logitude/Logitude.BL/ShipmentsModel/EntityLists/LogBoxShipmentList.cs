@@ -11,6 +11,9 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string TransportModeId { get; set; }
         public string DirectionId { get; set; }
         public string ShipmentNumber { get; set; }
+        public int? PackagesQuantity { get; set; }
+        public double? GrossWeight { get; set; }
+
         public string TruckContainerNumber { get; set; }
         public string DirectionName { get; set; }
         public string TransportModeName { get; set; }

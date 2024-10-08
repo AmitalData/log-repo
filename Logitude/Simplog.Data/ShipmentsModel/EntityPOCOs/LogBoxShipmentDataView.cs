@@ -25,7 +25,10 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ContainersNumbersandTypesArray { get; set; }
         public int Tenant { get; set; }
         public string ShipmentNumber { get; set; }
-        public string DirectionId { get; set; }
+        public int? PackagesQuantity { get; set; }
+       public double? GrossWeight { get; set; }
+       public string DirectionId { get; set; }
+
         public string StatusName { get; set; }
         public DateTime? CustomsClearanceDate { get; set; }
         public DateTime? StatusDate { get; set; }
