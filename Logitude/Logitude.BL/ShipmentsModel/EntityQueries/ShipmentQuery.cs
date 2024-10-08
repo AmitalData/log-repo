@@ -13598,6 +13598,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                DirectionId = f.DirectionId,
                                CreateDateTime = f.CreateDateTime,
                                ShipmentNumber = f.ShipmentNumber,
+                               PackagesQuantity=f.PackagesQuantity,
+                               GrossWeight=f.GrossWeight,
                                TransportModeId = f.TransportModeId,
                                CustomerReference1 = f.CustomerReference1,
                                CustomerReference2 = f.CustomerReference2,
@@ -14693,6 +14695,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     DirectionId = f.DirectionId,
                     CreateDateTime = f.CreateDateTime,
                     ShipmentNumber = f.ShipmentNumber,
+                    PackagesQuantity = f.PackagesQuantity,
+                    GrossWeight = f.GrossWeight,
+
                     TransportModeId = f.TransportModeId,
                     CustomerReference1 = f.CustomerReference1,
                     CustomerReference2 = f.CustomerReference2,
