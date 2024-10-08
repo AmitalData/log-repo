@@ -745,7 +745,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         public List<DeclarationList> GetListForContainerization(QueryOperations queryOperations, int tenant, string containerID, string CargoTypeCode, string ManifestNumber, string SecondCargoID, string ThirdCargoID)
         {
             IQueryable<Declaration> iQueryable = GetIqueryable(tenant, queryOperations);
-            IQueryable<DeclarationList> query2 = GetIqueryableListForContainerization(iQueryable, tenant, containerID, CargoTypeCode, ManifestNumber, SecondCargoID, ThirdCargoID);
 
             GenericFilter filter = new GenericFilter();
             QueryOperations nonListQueryOperation = new QueryOperations();
@@ -754,6 +753,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 
             iQueryable = filter.GetFilteredQuery<Declaration>(nonListQueryOperation, iQueryable);
+            IQueryable<DeclarationList> query2 = GetIqueryableListForContainerization(iQueryable, tenant, containerID, CargoTypeCode, ManifestNumber, SecondCargoID, ThirdCargoID);
 
             query2 = GetByFilters(queryOperations, tenant, iQueryable, query2);
             return query2.ToList();
