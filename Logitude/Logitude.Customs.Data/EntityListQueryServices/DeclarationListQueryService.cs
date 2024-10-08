@@ -747,6 +747,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<Declaration> iQueryable = GetIqueryable(tenant, queryOperations);
             IQueryable<DeclarationList> query2 = GetIqueryableListForContainerization(iQueryable, tenant, containerID, CargoTypeCode, ManifestNumber, SecondCargoID, ThirdCargoID);
 
+            GenericFilter filter = new GenericFilter();
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            iQueryable = filter.GetFilteredQuery<Declaration>(nonListQueryOperation, iQueryable);
+
             query2 = GetByFilters(queryOperations, tenant, iQueryable, query2);
             return query2.ToList();
         }
@@ -771,21 +779,21 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 iQueryable = GetIqueryable(tenant, queryOperations);
             }
 
-            QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
-            QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-
-            iQueryable = filter.GetFilteredQuery<Declaration>(nonListQueryOperation, iQueryable);
-
             int skippedPorts = queryOperations.PageIndex;
 
             if (query2 == null)
             {
-                query2 = GetIqueryableList(iQueryable, tenant);
-            }
+                QueryOperations nonListQueryOperation = new QueryOperations();
+                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+                QueryOperations listQueryOperation = new QueryOperations();
+                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 
-            query2 = filter.GetFilteredQuery<DeclarationList>(listQueryOperation, query2);
+                iQueryable = filter.GetFilteredQuery<Declaration>(nonListQueryOperation, iQueryable);
+
+                query2 = GetIqueryableList(iQueryable, tenant);
+
+                query2 = filter.GetFilteredQuery<DeclarationList>(listQueryOperation, query2);
+            }
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
