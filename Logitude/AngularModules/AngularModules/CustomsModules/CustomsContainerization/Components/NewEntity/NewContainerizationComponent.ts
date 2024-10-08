@@ -234,7 +234,7 @@ export class NewContainerizationComponent extends BaseComponent {
 
 
         if (this.selectedValue != 'All') {
-            var ModeFilter = new FilterItem("TransportModeId", this.selectedValue, null, null, "Equals", false, false, false, "string", false);
+            var ModeFilter = new FilterItem("TransportModeForExport", this.selectedValue, null, null, "Equals", false, false, false, "string", false);
             filters.AdditionalFilters.push(ModeFilter);
         }
 
