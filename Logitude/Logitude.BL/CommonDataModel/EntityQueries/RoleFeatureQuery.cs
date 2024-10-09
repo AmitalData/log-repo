@@ -78,39 +78,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 		public List<RoleFeature> GetRoleFeaturesForRoleFromCache(string roleId, int tenant)
 		{
-			string entityName = "RoleFeature" + roleId + tenant;
-			List<RoleFeature> entity;
-		    bool getFromCache = true;
-
-			if (getFromCache)
-			{
-
-				if (CacheManager.CacheWrapper.Get(entityName) == null)
-				{
-					entity = (from a in repository.context.RoleFeatures
-							  where (a.Tenant == tenant || a.Tenant == 0) && a.RoleId == roleId
-							  select a).ToList(); 
-						if (entity != null)
-						{
-							CacheManager.CacheWrapper.Insert(entityName, entity);
-						}			
-				}
-				else
-				{
-					entity = (List<RoleFeature>)CacheManager.CacheWrapper.Get(entityName);
-				}
-
-
-			}
-			else
-			{
-				entity = (from a in repository.context.RoleFeatures
-						  where (a.Tenant == tenant || a.Tenant == 0) && a.RoleId == roleId
-						  select a).ToList();
-
-			}
+            string entityName = "RoleFeature;" + roleId +";" + tenant; //RoleFeature1-136 - need delimited(Vladi)
+            List<RoleFeature> entity= (List<RoleFeature>)CacheManager.CacheWrapper.Get(entityName);
+            if (entity == null)
+            {
+                entity = (from a in repository.context.RoleFeatures
+                          where (a.Tenant == tenant || a.Tenant == 0) && a.RoleId == roleId
+                          select a).ToList();
+                if (entity != null)
+                {
+                    CacheManager.CacheWrapper.Insert(entityName, entity);
+                }
+            }
 			return entity;
-			
 		}
 	}
 }
