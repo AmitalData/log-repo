@@ -314,6 +314,11 @@ export class JournalPM {
     public set ConfirmationNumber(newValue: string) { if (this.confirmationNumber != newValue) { this.confirmationNumber = newValue; this.MarkAsDirty("ConfirmationNumber"); } }
        
 	 
+    private isExternalEntity: boolean;
+    public get IsExternalEntity() { return this.isExternalEntity; }
+    public set IsExternalEntity(newValue: boolean) { if (this.isExternalEntity != newValue) { this.isExternalEntity = newValue; this.MarkAsDirty("IsExternalEntity"); } }
+       
+	 
 
     public OldEntityPM: JournalPM;
 		

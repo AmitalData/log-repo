@@ -343,6 +343,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 CalculatedForeignAmount = transaction.CalculatedForeignAmount,
                 CumulativeOpenAmount = transaction.CumulativeOpenAmount,
 
+                IsExternalEntity = transaction.IsExternalEntity,
+
             };
         }
 
