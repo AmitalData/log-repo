@@ -20,6 +20,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string PartnerLogoId { get; set; }
         public bool IsShipmentOrder { get; set; }
         public string TruckNumber { get; set; }
+        public string Master { get; set; }
         public string CarrierNumber { get; set; }
         public string PartnerName { get; set; }
         public string ContainersNumbersandTypesArray { get; set; }

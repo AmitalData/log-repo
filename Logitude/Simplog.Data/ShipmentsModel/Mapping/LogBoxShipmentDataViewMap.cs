@@ -23,6 +23,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.ShipperName).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.Shipper).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
+            this.Property(t => t.Master).HasMaxLength(20).IsUnicode(false);
             // Table & Column Mappings
             this.ToTable("LogBoxShipmentDataView");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -30,6 +31,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.ShipmentNumber).HasColumnName("ShipmentNumber");
             this.Property(t => t.PackagesQuantity).HasColumnName("PackagesQuantity");
             this.Property(t => t.GrossWeight).HasColumnName("GrossWeight");
+            this.Property(t => t.Master).HasColumnName("Master");
 
             this.Property(t => t.CustomerReference1).HasColumnName("CustomerReference1");
             this.Property(t => t.CustomerReference2).HasColumnName("CustomerReference2");
