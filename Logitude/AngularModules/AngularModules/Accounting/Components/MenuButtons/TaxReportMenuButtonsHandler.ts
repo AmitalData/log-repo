@@ -404,7 +404,7 @@ export class TaxReportMenuButtonsHandler {
                     message.Show(TextCodeTranslator.Translate(TextCode.TaxReportCloseJournalRunInBackground));
                 }
             }, (error) => {
-                new MessageWindow().Show(error || 'Somthing wrong happend!');
+                new MessageWindow().Show(error || 'Something wrong happened!');
             });
     }
 
@@ -421,9 +421,13 @@ export class TaxReportMenuButtonsHandler {
                     message.Show(response.ErrorsArray.join('\n'));
                 } else {
                     this.entityArgs.EditComponent.ReloadEntityPM();
+                    const message = new MessageWindow();
+                    message.ShowSuccessIcon = true;
+                    message.Width = 400;
+                    message.Show(TextCodeTranslator.Translate(TextCode.TaxReportCancelClosingJournalRunInBackground));
                 }
             }, (error) => {
-                new MessageWindow().Show(error || 'Somthing wrong happend!');
+                new MessageWindow().Show(error || 'Something wrong happened!');
             });
     }
 }
@@ -452,6 +456,7 @@ enum TextCode {
     TaxReportClosingJournalConfirmationMessage = "TaxReport.O.ClosingJournalConfirmationMessage",
     TaxReportCloseJournalNotSupported = "TaxReport.O.CloseJournalNotSupported",
     TaxReportCloseJournalRunInBackground = "TaxReport.O.CloseJournalRunInBackground",
+    TaxReportCancelClosingJournalRunInBackground = "TaxReport.O.CloseJournalRunInBackground",
 }
 function CloneDeep(EntityPM: TaxReportPM) {
     throw new Error('Function not implemented.');
