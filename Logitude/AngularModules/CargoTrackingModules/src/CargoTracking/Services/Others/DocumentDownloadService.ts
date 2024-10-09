@@ -1,44 +1,117 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { defer } from 'rxjs';
+import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
 import { catchError, map } from 'rxjs/operators';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
+import { HomeComponent } from 'src/CargoTracking/Components/PublicSite/HomeComponent/HomeComponent';
+import { Router } from '@angular/router';
+import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
 declare var window: any;
+
 
 
 @Injectable()
 export class DocumentDownloadService {
     private  _apiUrl: string;
     private  token: string;
+    private headers: any;
+    public authHeaders = ServiceHelper.GetHeadersWithToken();
 
-    constructor(@Inject('BASE_URL') private baseUrl: string, private  _http: HttpClient) {
+    constructor(@Inject('BASE_URL') private baseUrl: string, private  _http: HttpClient, private router: Router) {
 
     }
 
-    public ExternalDownloadAllDocuments(securityId: string, forwardingShipmentId: string, tenant: number)
-    {
-        var link = ServiceHelper.GetAppURL(this.baseUrl)
-            + `WebPages/CorrespondenceDownloadpage.aspx?DA=1&securitykey=${securityId}::CS:${tenant}:${forwardingShipmentId ? forwardingShipmentId : ""}:cargo`;
-        var win = window.open(link, '_blank');
+    async ExternalDownloadAllDocuments(securityId: string, forwardingShipmentId: string, tenant: number) {
 
-        if (win) {
-            win.focus();
+        var mylink = ServiceHelper.GetAppURL(this.baseUrl)
+            + `api/CorrespondenceDownload/ValidateAndDownloadDocument?DA=1&securitykey=${securityId}::CS:${tenant}:${forwardingShipmentId ? forwardingShipmentId : ""}:cargo`;
+        await this.downloadFile(mylink)
+    }
+
+
+
+
+    private async buildHeaders(){
+            this.headers = ServiceHelper.GetHeadersWithToken();
+            return this.headers;
+    }
+
+
+    private async downloadRequest(link: string): Promise<HttpResponse<Blob>> {
+
+                //ServiceHelper.GetHeadersWithToken()
+                return new Promise<any>((resolve, reject) => {
+                    
+                    this._http.get(link, {
+                        ...this.authHeaders,
+                        observe: 'response',
+                        responseType: 'blob'
+                    }).subscribe((res: HttpResponse<Blob>) =>{
+                        resolve(res)      
+                    })
+                })
+            
+        
+    }
+
+
+    async ExternalDownloadPage(securityId: string, tenant: number, fileName: string ) {
+        var mylink = ServiceHelper.GetAppURL(this.baseUrl) + `api/CorrespondenceDownload/ValidateAndDownloadDocument?Id=${securityId}~${tenant}~${null}~${fileName}`;
+        await this.downloadFile(mylink)
+    }
+
+    async downloadFile(mylink: string ) {
+        RootContext.StartBusyIndicatorLoading();
+
+        try {
+            const data = await this.downloadRequest(mylink);
+            const contentDisposition = data.headers.get('Content-Disposition');
+
+            const blob = new Blob([data.body])
+            const downloadURL = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = downloadURL;
+            const filename2 = contentDisposition
+                    .split(';')[1]
+                    .split('filename')[1]
+                    .split('=')[1]
+                    .trim()
+                    .match(/"([^"]+)"/)[1];
+            link.download = filename2;
+            link.click();
+            link.remove();
+        } catch (error) {
+            RootContext.StopBusyIndicator();
+            this.OnSignoutClicked();
         }
 
+        RootContext.StopBusyIndicator();
     }
-    public ExternalDownloadPage(securityId: string, tenant: number, fileName: string)
-    {
-        var link = ServiceHelper.GetAppURL(this.baseUrl)
-            + `WebPages/CorrespondenceDownloadpage.aspx?Id=${securityId}~${tenant}~${null}~${fileName}`;
-        var win = window.open(link, '_blank');
 
-        if (win) {
-            win.focus();
-        }
+
+    OnSignoutClicked() {
+
+        CargoTrackingBrandingData.Tenant = +sessionStorage.getItem("LoggedUserTenant");
+
+        sessionStorage.clear();
+
+        if (CargoTrackingBrandingData.Tenant)
+
+
+
+
+            this.router.navigate(["cargo-tracking/login"]);//,{ queryParams: {tenant: this.tenant}}
+
+        else
+
+            this.router.navigate(["cargo-tracking/login"]);    
 
     }
+
+
 
     public  DownloadPage(id: string, documentName: string) {
         var url: string = "id=" + id;
