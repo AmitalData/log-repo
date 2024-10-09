@@ -409,43 +409,34 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string loggedUserEmail = authToken.Email;
                 NetCommonHelper.Logger.DevLog.Instance.WriteInfo("GetAllowedFeaturesForLoggedUser ,authToken.Tenant- " + tenant);
                 NetCommonHelper.Logger.DevLog.Instance.WriteInfo("GetAllowedFeaturesForLoggedUser ,authToken.Email- " + loggedUserEmail);
-
                 SecurityUtility.AuthenticationOnTenant(tenant);
-
                 string loggedUserId = null;
                 ContactQuery contactQuery = new ContactQuery(tenant);
                 ContactPM contact = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
                 if (contact != null)
                 {
                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo("GetAllowedFeaturesForLoggedUser ,contact.Id - " + contact.Id);
-
                     loggedUserId = contact.Id;
                 }
-
                 FeatureQuery featureQuery = new FeatureQuery(tenant);
                 LoggedUserFeatures loggedUserFeatures = featureQuery.GetAllowedFeaturesForLoggedUser(loggedUserId, tenant);
                 List<FeaturePM> myResult1 = loggedUserFeatures.Features;
-
                 List<FeaturePM> myResult = new List<FeaturePM>();
                 List<string> toggleCodes = myResult1.Where(d => !string.IsNullOrEmpty(d.ToggleCode)).Select(s => s.ToggleCode).ToList();
-
                 if (toggleCodes.Count == 0)
                 {
                     myResult = myResult1;
                 }
-
                 else
                 {
                     FeatureToggleRepository featureToggleRepository = new FeatureToggleRepository(0);
                     List<FeatureToggle> featureToggles = featureToggleRepository.GetAllByToggleCodeList(toggleCodes, 0).ToList();
-
                     foreach (FeaturePM item in myResult1)
                     {
                         if (string.IsNullOrEmpty(item.ToggleCode))
                         {
                             myResult.Add(item);
                         }
-
                         else
                         {
                             FeatureToggle featureToggle = featureToggles.Where(d => d.ToggleCode == item.ToggleCode && (d.TenantNumber == tenant || (tenant >= d.FromTenantNumber && tenant <= d.ToTenantNumber))).FirstOrDefault();
@@ -456,25 +447,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         }
                     }
                 }
-
-
-                //if (tenant == 4)
-                //{
-                //    string fileContentString = "UserId:" + loggedUserId + ", UserEmail:" + loggedUserEmail;
-                //    string allowedPackagesString = LogitudeXmlSerializer.SerializeObjectToXmlString<List<string>>(loggedUserFeatures.AllowedPackagesCodes);
-                //    string allFeaturesString = LogitudeXmlSerializer.SerializeObjectToXmlString<List<FeaturePM>>(myResult);
-
-                //    fileContentString += Environment.NewLine + "Allowed Packages" + Environment.NewLine;
-                //    fileContentString += Environment.NewLine + allowedPackagesString + Environment.NewLine;
-                //    fileContentString += Environment.NewLine + "Allowed Features" + Environment.NewLine;
-                //    fileContentString += Environment.NewLine + allFeaturesString;
-
-                //    AzureLog.SaveFileToStorage("ICLFeatures" + DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss") + ".txt", fileContentString, tenant);
-                //}
-
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
-
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
