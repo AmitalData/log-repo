@@ -756,6 +756,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             iQueryable = filter.GetFilteredQuery<Declaration>(nonListQueryOperation, iQueryable);
             IQueryable<DeclarationList> query2 = GetIqueryableListForContainerization(iQueryable, tenant, containerID, CargoTypeCode, ManifestNumber, SecondCargoID, ThirdCargoID);
+            query2 = filter.GetFilteredQuery<DeclarationList>(listQueryOperation, query2);
 
             query2 = GetByFilters(queryOperations, tenant, iQueryable, query2);
             return query2.ToList();
