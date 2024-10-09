@@ -60,6 +60,11 @@ using Logitude.Customs.Data.EntityPOCOs;
 using System.Data;
 using Org.BouncyCastle.Bcpg.Sig;
 using Logitude.Customs.Data.EntityMapping;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityListQueryServices;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Reflection;
+using System.Web.Script.Serialization;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -520,7 +525,64 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
 
         }
- 
+
+        [HttpPost]
+        public HttpResponseMessage PostActionOnDeclarationBatch([FromBody] SendDeclarationBatchRequestParams sendDeclarationBatchRequestParams, [FromUri] ApiQueryFilters filters)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                UserRepository userRepository = new UserRepository(tenant);
+                User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, loggedUserEmail, tenant, true);
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+                DeclarationUpdateService DeclarationUpdateService = new DeclarationUpdateService(customContext);
+                if (sendDeclarationBatchRequestParams.IsAllSelected && filters != null)
+                {
+                    filters.GetAll = true;
+                    sendDeclarationBatchRequestParams.QueryOperations = PrepareFilters(tenant, filters);
+                }
+
+                DataResult result = new DataResult();
+                string RequestInProgressList;
+
+                switch (sendDeclarationBatchRequestParams.Action.ToLower())
+                {
+                    case "sendsigneddeclarationsaction":
+                    case "senddeclarationaction":
+                        DeclarationUpdateService.UpdateTaxationDateTime(new List<string>(sendDeclarationBatchRequestParams.SelectedIds), tenant);
+                        bool signDeclaration = sendDeclarationBatchRequestParams.Action.ToLower() == "sendsigneddeclarationsaction";
+
+                        var sendMessagingService = new DCAInUCB2751_MsgMessagingService();
+                        var sendDeclarationSts = sendMessagingService.CreateCRS(tenant, sendDeclarationBatchRequestParams, signDeclaration, out RequestInProgressList);
+                        result.RequestInProgressList = RequestInProgressList;
+                        result.Message = sendDeclarationSts;
+                        break;
+
+                    case "senddeclarationpaymentsaction":
+                        DeclarationUpdateService.UpdateTaxationDateTime(new List<string>(sendDeclarationBatchRequestParams.SelectedIds), tenant);
+
+                        var paymentMessagingService = new DCAInUCB2755E_MsgMessagingService();
+                        var paymentDeclarationSts = paymentMessagingService.CreateCRS(tenant, sendDeclarationBatchRequestParams, out RequestInProgressList);
+                        result.RequestInProgressList = RequestInProgressList;
+                        result.Message = paymentDeclarationSts;
+                        break;
+
+                    default:
+                        throw new Exception("Action not supported");
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage PostSendTransshipmenDeclaration(GenericRequestParams requestParamsData)
         {
             try
@@ -2587,7 +2649,92 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 				return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
 			}
 		}
-	}
+
+        private QueryOperations PrepareFilters(int tenant, ApiQueryFilters filters)
+        {
+            QueryOperations queryOperations = new QueryOperations()
+            {
+                ObjectTableName = "Customs.Declaration",
+                PageIndex = filters.PageIndex,
+                PageSize = filters.PageSize,
+                QuerySection = "Customs.Declarations",
+                SortByColumnName = filters.SortBy,
+                SortDirectin = filters.SortDirection,
+                GetAll = filters.GetAll,
+            };
+
+            List<ObjectField> DeclarationObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.Declaration", tenant);
+            List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
+            for (int i = 1; i <= 10; i++)
+            {
+                object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);
+                object filterValue1 = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Value")).GetValue(filters);
+                object filterOperatorProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Operator")).GetValue(filters);
+                object filterValue2 = null;
+
+                if (filterNameProp != null)
+                {
+                    string filterName = filterNameProp.ToString();
+                    string filterOperator = filterOperatorProp != null ? filterOperatorProp.ToString() : "Equals";
+                    //if (filterValue1 != null && filterValue1.GetType() == typeof(string))
+                    //{
+                    //string[] values = filterValue1.ToString().Split(',');
+                    //if (values.Count() > 1)
+                    //{
+                    //filterValue1 = values[0];
+                    //filterValue2 = values[1];
+                    //}
+                    //}
+                    //ToDo: Get object field by name and set the remained filter properties
+                    ObjectField field = DeclarationObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+                    if (field != null)
+                    {
+                        string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
+                        object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+
+                        string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
+                        object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+
+                        //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
+                        queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+
+                    }
+                    else
+                        queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(filters.AdditionalFilters))
+            {
+                JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
+                var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
+
+                foreach (QueryFilterItem filter in filters_list)
+                {
+                    ObjectField field = DeclarationObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                    if (field != null)
+                    {
+
+
+                        string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
+                        object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+
+                        string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
+                        object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+
+                        //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+                        queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+
+                    }
+                    else
+                    {
+                        queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                    }
+                }
+            }
+            return queryOperations;
+        }
+    }
 
     internal class CustomsPartnersItemCRList
     {
@@ -2615,4 +2762,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         public int  Tenant { get; set; }
    }
 
+    public class DataResult
+    {
+        public string RequestInProgressList { get; set; }
+        public string Message { get; set; }
+    }
 }

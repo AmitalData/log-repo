@@ -28283,6 +28283,30 @@
       LocalDefaultText="&quot;אירעה שגיאה נא לודא תקשורת מול המכס&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.SendDeclarationAction&quot;"
+      DefaultText="&quot;Send Declaration&quot;"
+      LocalDefaultText="&quot;שידור הצהרה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.SendSignedDeclarationsAction&quot;"
+      DefaultText="&quot;Send Signed Declarations&quot;"
+      LocalDefaultText="&quot;שידור הצהרה חתומה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.SendDeclarationPaymentsAction&quot;"
+      DefaultText="&quot;Send Declaration Payments&quot;"
+      LocalDefaultText="&quot;שידור הגשת הצהרה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.CancelSelectedRowsConfirm&quot;"
+      DefaultText="&quot;The declaration selection will be removed, are you sure?&quot;"
+      LocalDefaultText="&quot; שים לב, בחירת ההצהרות שבוצעה תימחק, האם להמשיך ?&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

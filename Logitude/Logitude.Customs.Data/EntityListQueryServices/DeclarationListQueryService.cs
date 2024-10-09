@@ -142,15 +142,16 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 #endif
 
 
-        private IQueryable<DeclarationList> GetIqueryableList(IQueryable<Declaration> iQueryable)
+        private IQueryable<DeclarationList> GetIqueryableList(IQueryable<Declaration> iQueryable, int? tenant = null)
         {
             var arrAmentmentStatus = new string[] { "6", "7", "8", "10" };
 
-
-
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            int tenant = tenant = authToken.Tenant;
+            if (tenant == null)
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                tenant = tenant = authToken.Tenant;
+            }
 
             bool isCourierEnv = context.CustomsSettings.FirstOrDefault(r => r.Tenant == tenant).CompanyType == "B";
 
@@ -742,27 +743,57 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         }
         public List<DeclarationList> GetListForContainerization(QueryOperations queryOperations, int tenant, string containerID, string CargoTypeCode, string ManifestNumber, string SecondCargoID, string ThirdCargoID)
         {
+            IQueryable<Declaration> iQueryable = GetIqueryable(tenant, queryOperations);
+
             GenericFilter filter = new GenericFilter();
-            GenericSort sortClass = new GenericSort();
-
-            IQueryable<Declaration> iQueryable = (from a in context.Declarations
-
-                                                  where a.Tenant == tenant
-                                                  select a);
-            iQueryable = ApplyCustomFilters(queryOperations, iQueryable, tenant);
-
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 
             iQueryable = filter.GetFilteredQuery<Declaration>(nonListQueryOperation, iQueryable);
+            IQueryable<DeclarationList> query2 = GetIqueryableListForContainerization(iQueryable, tenant, containerID, CargoTypeCode, ManifestNumber, SecondCargoID, ThirdCargoID);
+            query2 = filter.GetFilteredQuery<DeclarationList>(listQueryOperation, query2);
+
+            query2 = GetByFilters(queryOperations, tenant, iQueryable, query2);
+            return query2.ToList();
+        }
+
+        private IQueryable<Declaration> GetIqueryable(int tenant, QueryOperations queryOperations)
+        {
+            IQueryable<Declaration> iQueryable = (from a in context.Declarations
+
+                                                  where a.Tenant == tenant
+                                                  select a);
+            iQueryable = ApplyCustomFilters(queryOperations, iQueryable, tenant);
+            return iQueryable;
+        }
+
+        public IQueryable<DeclarationList> GetByFilters(QueryOperations queryOperations, int tenant, IQueryable<Declaration> iQueryable = null, IQueryable<DeclarationList> query2 = null) {
+
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            if (iQueryable == null)
+            {
+                iQueryable = GetIqueryable(tenant, queryOperations);
+            }
 
             int skippedPorts = queryOperations.PageIndex;
 
-            IQueryable<DeclarationList> query2 = GetIqueryableListForContainerization(iQueryable, tenant, containerID, CargoTypeCode, ManifestNumber, SecondCargoID, ThirdCargoID);
+            if (query2 == null)
+            {
+                QueryOperations nonListQueryOperation = new QueryOperations();
+                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+                QueryOperations listQueryOperation = new QueryOperations();
+                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 
-            query2 = filter.GetFilteredQuery<DeclarationList>(listQueryOperation, query2);
+                iQueryable = filter.GetFilteredQuery<Declaration>(nonListQueryOperation, iQueryable);
+
+                query2 = GetIqueryableList(iQueryable, tenant);
+
+                query2 = filter.GetFilteredQuery<DeclarationList>(listQueryOperation, query2);
+            }
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
@@ -836,7 +867,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 query2 = query2.Skip(skippedPorts);
                 query2 = query2.Take(queryOperations.PageSize);
             }
-            return query2.ToList();
+            return query2;
 
 
         }

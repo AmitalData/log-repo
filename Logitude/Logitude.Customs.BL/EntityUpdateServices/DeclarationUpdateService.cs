@@ -52,6 +52,7 @@ using System.Configuration;
 using System.Globalization;
 using Logitude.Customs.BL.Messaging.ILSWS;
 using System.Xml;
+using System.Runtime.Remoting.Contexts;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -863,6 +864,24 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             return sendDeclarationMandatory;
         }
 
+        public void UpdateTaxationDateTime(List<string> ids,int tenant)
+        {
+            ICustomContext customContext = CustomContext.GetContext(tenant);
+            DeclarationQueryService _DeclarationQueryService = new DeclarationQueryService(customContext);
+            DeclarationUpdateService _DeclarationUpdateService = new DeclarationUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
+
+            List<DeclarationPM> _DeclarationsList = _DeclarationQueryService.GetDeclarationsByIds(ids, tenant);
+
+
+            foreach (var item in _DeclarationsList)
+            {
+                item.TaxationDateTime = DateTime.UtcNow.Date;
+                item.ChangeSetOp = ChangeSetOperation.Update;
+                _DeclarationUpdateService.Update(item, false);
+            }
+            _DeclarationUpdateService.SubmitChanges();
+
+        }
         private string DeclarationTicketsStatus(DeclarationPM declarationPM)
         {
             CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(declarationPM.Tenant);

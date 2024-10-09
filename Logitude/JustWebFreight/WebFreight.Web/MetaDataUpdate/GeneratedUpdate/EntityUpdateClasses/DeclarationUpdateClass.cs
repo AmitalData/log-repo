@@ -22937,6 +22937,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOErrCommCustoms = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ErrCommCustoms", DefaultText = "An error occurred, please verify communication with customs",LocalDefaultText = @"אירעה שגיאה נא לודא תקשורת מול המכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSendDeclarationAction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendDeclarationAction", DefaultText = "Send Declaration",LocalDefaultText = @"שידור הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSendSignedDeclarationsAction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendSignedDeclarationsAction", DefaultText = "Send Signed Declarations",LocalDefaultText = @"שידור הצהרה חתומה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSendDeclarationPaymentsAction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendDeclarationPaymentsAction", DefaultText = "Send Declaration Payments",LocalDefaultText = @"שידור הגשת הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCancelSelectedRowsConfirm = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CancelSelectedRowsConfirm", DefaultText = "The declaration selection will be removed, are you sure?",LocalDefaultText = @" שים לב, בחירת ההצהרות שבוצעה תימחק, האם להמשיך ?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
    
 	    
 }

@@ -159,6 +159,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB2755",//,Batch Send 2755 per CourierMasterId
 "UCB1170",//,Batch Send 1170 per CourierMasterId
 "UCBAC",//,Batch Send UCBAC per CourierMasterId
+"UCB2751",//,Batch Send 2751 for export
+"UCB2755E",//,Batch Payment 2755E for export
 "UCBUDCSMC",//Batch update declarationCourierStatus MasterChanged
 "UCB8250",//,Batch Send 8250 per CourierMasterId
 "UCBUD2LT",///UniCourierBatchSendUCBUD2LT_MsgResponseService
@@ -182,6 +184,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8326", // שאילתא לתצהיר יבואן
 "UCTZIP", // Unifreight Table Custom ZIP
 "UCB2750", // שידור הצהרות בלדר
+"UCB2751", // שידור הצהרות יצוא
+"UCB2755E", // שידור הגשת הצהרות יצוא
 "DCAMU", // multi update 
 "2755T", // הגשת שטעון
 "2757T", // תשובה להגשת שטעון
@@ -328,6 +332,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB2755",//,Batch Send 2755 per CourierMasterId
 "UCB1170",//,Batch Send 1170 per CourierMasterId
 "UCBAC",//,Batch Send UCBAC per CourierMasterId
+"UCB2751",//,Batch Send 2751 for export
+"UCB2755E",//,Batch Payment 2755E for export
 "UCBUDCSMC",//Batch update declarationCourierStatus MasterChanged
 "UCB8250",//,Batch Send 8250 per CourierMasterId
 "UCBUD2LT",///UniCourierBatchSendUCBUD2LT_MsgResponseService
@@ -501,6 +507,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB2755",//,Batch Send 2755 per CourierMasterId
 "UCB1170",//,Batch Send 2750 per CourierMasterId
 "UCBAC",//,Batch Send UCBAC per CourierMasterId
+"UCB2751",//,Batch Send 2751 for export
+"UCB2755E",//,Batch Payment 2755E for export
 "UCBUDCSMC",//Batch update declarationCourierStatus MasterChanged
 "UCBCMSS",//,Batch Send change StorageSite per CourierMasterId
 "1170", // - מסר מצהר

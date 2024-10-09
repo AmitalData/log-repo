@@ -278,6 +278,8 @@
     <Compile Include="MessagingServices\DCAInCB_MSG_8314_8888_CustomItemDetailsHeaderMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCBAC_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInGetPC_MSG2280_2281_CertificateOfOriginRequestMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCB2755E_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCB2751_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCBCreateExportSupplierInvoicesFromFile_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCBUpsertSupplierInvioceByOcr_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCI_CourierMastersConnectedMessagingService.cs" />
@@ -514,6 +516,8 @@
     <Compile Include="ResponseServices\LG_NG_8410_LogisticActionRequestMessageResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchApproveAllPending_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSendAC_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniExportDeclarationBatchPayment2755E_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniExportDeclarationBatchSend2751_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSendDelayForm_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchUpdateDeclarationCourierStatusMasterChanged_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSendUCADPE_MsgResponseService.cs" />

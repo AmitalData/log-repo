@@ -81,6 +81,7 @@
     <Compile Include="RequestParams\MessageWaitingRequestParams.cs" />
     <Compile Include="RequestParams\NewVehicleRequestParams.Shared.cs" />
     <Compile Include="RequestParams\RTGSInfoQueryRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\SendDeclarationBatchRequestParams.Shared.cs" />
     <Compile Include="RequestParams\SendALLDelayFormParams.Shared.cs" />
     <Compile Include="RequestParams\SendALLCorrectRequestParams.Shared.cs" />
     <Compile Include="RequestParams\MultiUpdateRequestParams.Shared.cs" />
@@ -195,6 +196,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="RequestParams\CustomsStepEnum.Shared.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{ACC2EA9E-E150-4099-8AA1-66326AB14BE8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
