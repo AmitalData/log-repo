@@ -1341,9 +1341,23 @@ namespace WebFreight.Web.Helpers
                                 }
                                 else if (GetCellType(column.ObjectFieldDataTypeCode) == CellType.Boolean)
                                 {
-                                    if (value == "") value = "0";
+                                    if (string.IsNullOrEmpty(value))
+                                    {
+                                        value = "false";
+                                    }
+                                    else if (value == "0")
+                                    {
+                                        value = "false";
+                                    }
+                                    else if (value == "1")
+                                    {
+                                        value = "true";
+                                    }
+
+
+
                                     cell.SetCellValue(bool.Parse(value));
-                                 
+
                                 }
                                 else
                                     SetCellValueWithMaxLength(cell, value.ToString());
