@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml;
+using System.Text.RegularExpressions;
 
 namespace MeatadataGeneratorTool.Helpers
 {
@@ -1263,11 +1264,66 @@ namespace MeatadataGeneratorTool.Helpers
                 {
                     if (att.Value != null)
                     {
+                        att.Value = TryConvertFromBase64(att.Value);
                         result = att.Value.Trim('"');
                     }
                 }
             }
             return result;
+        }
+        private string TryConvertFromBase64(string input)
+        {
+            try
+            {
+                var backUpInput = input.Replace("\"", "");
+                string convertedInput = ConvertFromBase64(backUpInput);
+                if (IsHebrew(convertedInput))
+                    return convertedInput;
+                return input;
+
+            }
+            catch (FormatException)
+            {
+                return input;
+            }
+        }
+        private static bool IsHebrew(string text)
+        {
+            return text.Any(c => c >= '\u0590' && c <= '\u05FF');
+        }
+
+        private string ConvertFromBase64(string input)
+        {
+            byte[] bytes = Convert.FromBase64String(input);
+            string decodedString = Encoding.UTF8.GetString(bytes);
+            return SanitizeXmlString(decodedString);
+        }
+        private string SanitizeXmlString(string xml)
+        {
+            StringBuilder buffer = new StringBuilder(xml.Length);
+
+            foreach (char c in xml)
+            {
+                if (IsLegalXmlChar(c))
+                {
+                    buffer.Append(c);
+                }
+               
+            }
+
+            return buffer.ToString();
+        }
+        private bool IsLegalXmlChar(int character)
+        {
+            return
+            (
+                character == 0x9 /* == '\t' == 9   */          ||
+                character == 0xA /* == '\n' == 10  */          ||
+                character == 0xD /* == '\r' == 13  */          ||
+                (character >= 0x20 && character <= 0xD7FF) ||
+                (character >= 0xE000 && character <= 0xFFFD) ||
+                (character >= 0x10000 && character <= 0x10FFFF)
+            );
         }
 
     }

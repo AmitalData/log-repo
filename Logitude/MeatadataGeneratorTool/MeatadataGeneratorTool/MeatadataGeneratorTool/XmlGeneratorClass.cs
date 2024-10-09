@@ -2368,6 +2368,12 @@ namespace MeatadataGeneratorTool
         {
             if (attrValue != null)
             {
+                if (IsHebrew(attrValue) && fieldElement.Name!= "Record")
+                {
+                    attrValue = ConvertToBase64(attrValue);
+                    attrValue = "\"" + attrValue + "\"";
+
+                }
                 fieldElement.SetAttribute(atrrName, attrValue);
             }
         }
@@ -2378,10 +2384,28 @@ namespace MeatadataGeneratorTool
 
         private static void SetAttribute(string atrrName, string attrValue, XmlElement fieldElement)
         {
-            if (!string.IsNullOrEmpty(attrValue))
+            if (!string.IsNullOrEmpty(attrValue) && fieldElement.Name != "Record")
             {
+                if (IsHebrew(attrValue))
+                {
+                    attrValue = ConvertToBase64(attrValue);
+                    attrValue = "\"" + attrValue + "\"";
+
+                }
                 fieldElement.SetAttribute(atrrName, attrValue);
             }
+        }
+
+
+        private static bool IsHebrew(string text)
+        {
+            return text.Any(c => c >= '\u0590' && c <= '\u05FF');
+        }
+
+        private static string ConvertToBase64(string text)
+        {
+            var bytes = Encoding.UTF8.GetBytes(text);
+            return Convert.ToBase64String(bytes);
         }
         #endregion
 
