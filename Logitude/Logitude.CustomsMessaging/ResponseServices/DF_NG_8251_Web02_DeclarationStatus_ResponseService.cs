@@ -569,9 +569,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                             {
                                                 RaiseEvent(declarationPM, user?.Id, status_id: "WAT", versionId: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion, status_DateTime: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime);
                                             }
-                                        }
 
-                                        SendSoyStatusToUnifreight(declarationPM, user?.Id, declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode, declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion, declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime);
+                                            SendSoyStatusToUnifreight(declarationPM, user?.Id, declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode, declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion, declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime);
+                                        }
                                     }
                                 }
                                
