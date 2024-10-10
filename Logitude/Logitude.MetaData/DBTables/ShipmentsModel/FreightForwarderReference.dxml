@@ -33,6 +33,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="LineNumber"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="ShipmentId"
     ReferencedTable="Shipments"

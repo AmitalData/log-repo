@@ -24,6 +24,7 @@ import { ShipmentUnassignedFieldPM } from './ShipmentUnassignedFieldPM';
 import { CustomChildEntity } from '../../Infrastructure/EntityPMs/CustomChildEntity';
 import { ShipmentAdditionalData } from '../DataContract/ShipmentAdditionalData';
 import { ShipmentReferancePM } from './ShipmentReferancePM';
+import { FreightForwarderReferencePM } from './FreightForwarderReferencePM';
 
 export class ShipmentPM {
     public UIProperties: UIProperties;
@@ -5597,6 +5598,11 @@ export class ShipmentPM {
     private carrierCodeMawb: string;
     public get CarrierCodeMawb() { return this.carrierCodeMawb; }
     public set CarrierCodeMawb(newValue: string) { if (this.carrierCodeMawb != newValue) { this.carrierCodeMawb = newValue; this.MarkAsDirty("CarrierCodeMawb"); } }
+    
+    private freightForwarderReferences: FreightForwarderReferencePM[];
+    public get FreightForwarderReferences() { return this.freightForwarderReferences; }
+    public set FreightForwarderReferences(newValue: FreightForwarderReferencePM[]) { if (this.freightForwarderReferences != newValue) { this.freightForwarderReferences = newValue; this.MarkAsDirty("FreightForwarderReferences"); } }
+
 
     public OldEntityPM: ShipmentPM;
 

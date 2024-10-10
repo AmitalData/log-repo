@@ -34,7 +34,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    {
                                                        ShipmentId = a.ShipmentId,
                                                        Tenant = a.Tenant,
-                                                       ForwarderShipmentNumber = a.ForwarderShipmentNumber,
+													   LineNumber = a.LineNumber,
+													   ForwarderShipmentNumber = a.ForwarderShipmentNumber,
                                                        ForwarderFileConnect = a.ForwarderFileConnect,
                                                    }).ToList();
             return myResult;
@@ -49,7 +50,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                    {
                        ShipmentId = a.ShipmentId,
                        Tenant = a.Tenant,
-                       ForwarderShipmentNumber = a.ForwarderShipmentNumber,
+					   LineNumber = a.LineNumber,
+					   ForwarderShipmentNumber = a.ForwarderShipmentNumber,
                        ForwarderFileConnect = a.ForwarderFileConnect,
 
                    }).FirstOrDefault();
@@ -89,11 +91,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                    {
                        ShipmentId = a.ShipmentId,
                        Tenant = a.Tenant,
-                       ForwarderShipmentNumber = a.ForwarderShipmentNumber,
+					   LineNumber = a.LineNumber,
+					   ForwarderShipmentNumber = a.ForwarderShipmentNumber,
                        ForwarderFileConnect = a.ForwarderFileConnect,
                    }).ToList();
 
             return freightForwarderReferences;
         }
+
     }
 }

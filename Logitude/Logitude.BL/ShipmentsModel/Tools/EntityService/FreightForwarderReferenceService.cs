@@ -52,7 +52,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             this.isNewEntity = false;
             this.entityPM = theEntityPm;
-            this.Poco = entityRepository.GetSingleFreightForwarderReference(entityPM.Tenant, theEntityPm.ShipmentId);
+            this.Poco = entityRepository.GetSingleFreightForwarderReference(entityPM.Tenant, theEntityPm.ShipmentId,theEntityPm.LineNumber);
             ShipmentMapping.MapFreightForwarderReference(entityPM, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();

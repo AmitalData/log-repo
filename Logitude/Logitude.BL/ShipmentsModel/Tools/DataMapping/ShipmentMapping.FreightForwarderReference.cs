@@ -15,7 +15,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             {
                 itemPoco.Tenant = itemPM.Tenant;
                 itemPoco.ShipmentId = itemPM.ShipmentId;
-            }
+				itemPoco.LineNumber = itemPM.LineNumber;
+			}
             itemPoco.ForwarderShipmentNumber = itemPM.ForwarderShipmentNumber;
             itemPoco.ForwarderFileConnect = itemPM.ForwarderFileConnect;
         }
