@@ -80,11 +80,11 @@ import { WorkFlowPM } from 'Workflow/EntityPMs/WorkFlowPM';
 import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTranslationPipe';
 import { QueryPM } from '../../EntityPMs/QueryPM';
 import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
-// import { event } from 'cypress/types/jquery';
+ // import { event } from 'cypress/types/jquery';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
-
+ 
 @Component({
     templateUrl: './ListComponent.html',
     providers: [
@@ -722,6 +722,9 @@ export class ListComponent implements OnInit, AfterViewInit {
             ObjectsLocator.GlobalSetting == undefined
                 ? 'ltr'
                 : ObjectsLocator.GlobalSetting.LayoutDirection;
+
+        this.ExcludedItems = new ObservableCollection([]);
+        this.SelectedItems = new ObservableCollection([]);
 
         this.ExcludedItems = new ObservableCollection([]);
         this.SelectedItems = new ObservableCollection([]);
@@ -1929,8 +1932,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                         Styles: { width: '27px' },
                         IsCheckBox: true
                     });
-                }
-
+                 }
+ 
                 for (var i = 0; i < this.QueryColumns.length; i++) {
                     var CurColumn = this.columns.filter(
                         (a) =>
@@ -4399,7 +4402,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.ScreenQueryAction = this.ScreenQueryActions[queryCode];
         }
 
-        this.IsSelectAllCheckboxVisible = isVisible;
+ 
+         this.IsSelectAllCheckboxVisible = isVisible;
 
         this.SelectAllRowsChecked(false);
     }
@@ -4420,7 +4424,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
         this.CalculateSelectedCount();
     }
-
+ 
     // New
     public NewEntityButtonLabel: string = null;
     public IsNewEntityButtonVisible: boolean = false;
