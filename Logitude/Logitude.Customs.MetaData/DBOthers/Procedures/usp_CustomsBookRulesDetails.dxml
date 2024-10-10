@@ -1,60 +1,80 @@
 ﻿<Procedure DBType="Main" Name="usp_CustomsBookRulesDetails" Schema="dbo" Module="Customs">
   <SqlScript>
 	  <![CDATA[
-    CREATE OR ALTER PROCEDURE [dbo].[usp_CustomsBookRulesDetails]
-    @CustomsItemID VARCHAR(20)
-    AS
-    BEGIN
-        WITH RecursiveRules AS (
+        CREATE OR ALTER PROCEDURE [dbo].[usp_CustomsBookRulesDetails]
+        @CustomsItemID VARCHAR(20)
+        AS
+        BEGIN
+            WITH RecursiveRules AS (
+                SELECT 
+                    rd.ID AS RD_ID,
+                    rd.RuleID, 
+                    rd.UpdateDate, 
+                    rd.ChangeRequestTypePriority, 
+                    rd.OrderinalPostion,
+                    r.Title,
+                    rd.rules,
+                    r.CustomsItemID,
+                    rd.EntityStatusID,
+                    rd.Parent_RuleDetailsHistoryID,
+                    ROW_NUMBER() OVER (PARTITION BY rd.RuleID ORDER BY rd.UpdateDate DESC) AS RowNum
+                FROM customs.CB_RuleDetailsHistorys rd
+                INNER JOIN customs.CB_Rules r ON rd.RuleID = r.ID
+                WHERE 
+                    rd.EntityStatusID = 2 -- רשומות בתוקף
+                    AND rd.StartDate <= GETDATE() -- תאריך התחלה תקין
+                    AND rd.EndDate >= GETDATE() -- תאריך סיום תקין
+                    AND r.CustomsItemID = @CustomsItemID -- התאמת CustomsItemID
+            ),
+            RecursiveHierarchy AS (
+                -- שליפת כללים ראשיים שאין להם הורה (Parent_RuleDetailsHistoryID = NULL)
+                SELECT 
+                    RR.RD_ID,
+                    RR.RuleID,
+                    RR.UpdateDate,
+                    RR.ChangeRequestTypePriority,
+                    RR.OrderinalPostion,
+                    RR.Title,
+                    RR.rules,
+                    RR.CustomsItemID,
+                    RR.EntityStatusID,
+                    RR.Parent_RuleDetailsHistoryID
+                FROM RecursiveRules RR
+                WHERE RR.Parent_RuleDetailsHistoryID IS NULL and RowNum = 1
+       
+                UNION ALL
+
+                -- שליפת תתי-סעיפים על בסיס RD_ID של האב
+                SELECT 
+                    RR.RD_ID,
+                    RR.RuleID,
+                    RR.UpdateDate,
+                    RR.ChangeRequestTypePriority,
+                    RR.OrderinalPostion,
+                    RR.Title,
+                    RR.rules,
+                    RR.CustomsItemID,
+                    RR.EntityStatusID,
+                    RR.Parent_RuleDetailsHistoryID
+                FROM RecursiveRules RR
+                INNER JOIN RecursiveHierarchy PH
+                    ON RR.Parent_RuleDetailsHistoryID = PH.RD_ID
+                --WHERE RR.RowNum = 1 -- שליפת הרשומה העדכנית ביותר עבור תתי-סעיפים
+            )
             SELECT 
-                rd.ID AS RD_ID,
-                rd.RuleID, 
-                rd.UpdateDate, 
-                rd.ChangeRequestTypePriority, 
-                rd.OrderinalPostion,
-                -- Removed the duplicate Parent_RuleDetailsHistoryID column
-                r.Title,
-                rd.rules,
-                r.CustomsItemID,
-                rd.EntityStatusID,
-                rd.Parent_RuleDetailsHistoryID, -- Keeping only this instance
-                ROW_NUMBER() OVER (PARTITION BY rd.RuleID ORDER BY rd.UpdateDate DESC) AS RowNum
-            FROM customs.CB_RuleDetailsHistorys rd
-            INNER JOIN customs.CB_Rules r ON rd.RuleID = r.ID
-            WHERE 
-                rd.EntityStatusID = 2 -- רשומות בתוקף
-                AND rd.StartDate <= GETDATE() -- תאריך התחלה תקין
-                AND rd.EndDate >= GETDATE() -- תאריך סיום תקין
-                AND r.CustomsItemID = @CustomsItemID -- התאמת CustomsItemID
-        ),
-        ParentRules AS (
-            -- שליפת כללים ראשיים שאין להם הורה (Parent_RuleDetailsHistoryID = NULL)
-            SELECT * 
-            FROM RecursiveRules 
-            --WHERE Parent_RuleDetailsHistoryID IS NULL
-            --    AND RowNum = 1 -- שליפת הרשומה העדכנית ביותר
-            UNION ALL
-            -- שליפת תתי-סעיפים לפי ID של הכלל הראשי
-            SELECT rr.* 
-            FROM RecursiveRules rr
-            INNER JOIN ParentRules pr 
-                ON rr.Parent_RuleDetailsHistoryID = pr.RuleID
-            WHERE rr.RowNum = 1 -- שליפת הרשומה העדכנית ביותר עבור תתי סעיפים
-        )
-        SELECT 
-            CustomsItemID,
-            RD_ID,
-            RuleID, 
-            rules,
-            Title, 
-            UpdateDate, 
-            ChangeRequestTypePriority, 
-            OrderinalPostion,
-            EntityStatusID,
-            Parent_RuleDetailsHistoryID
-        FROM ParentRules
-        ORDER BY OrderinalPostion;
-    END
+                CustomsItemID,
+                RD_ID,
+                RuleID, 
+                rules,
+                Title, 
+                UpdateDate, 
+                ChangeRequestTypePriority, 
+                OrderinalPostion,
+                EntityStatusID,
+                Parent_RuleDetailsHistoryID
+            FROM RecursiveHierarchy
+            ORDER BY OrderinalPostion;
+        END
     ]]>
   </SqlScript>
 
