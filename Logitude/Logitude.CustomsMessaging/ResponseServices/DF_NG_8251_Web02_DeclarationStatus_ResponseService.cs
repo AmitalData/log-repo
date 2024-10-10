@@ -27,6 +27,7 @@ using Logitude.Customs.BL.Messaging.Customs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -568,10 +569,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                             {
                                                 RaiseEvent(declarationPM, user?.Id, status_id: "WAT", versionId: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion, status_DateTime: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime);
                                             }
+
+                                            SendSoyStatusToUnifreight(declarationPM, user?.Id, declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode, declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion, declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime);
                                         }
-
-
-
                                     }
                                 }
                                
@@ -1177,7 +1177,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id, string versionId, DateTime? status_DateTime)
+        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id, string versionId, DateTime? status_DateTime, string comments = null)
         {
             //primary_number = $"{dirtyDeclarationPM.CustomFileNo},{dirtyDeclarationPM.TransportModeId == "A" ? "EFIFILEM" : "MFIFILEM" }",
             string primary_number = $"{dirtyDeclarationPM.CustomFileNo},EFIFILEM";
@@ -1205,7 +1205,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     xml_status = "new",
                     status_id = status_id,
                     status_DateTime = status_DateTime ?? DateTime.Now,
-                    comments = dirtyDeclarationPM.Id + versionId,
+                    comments = !string.IsNullOrEmpty(comments) ? comments: dirtyDeclarationPM.Id + versionId,
 
 
 
@@ -1220,5 +1220,38 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         }
 
+        private void SendSoyStatusToUnifreight(DeclarationPM declarationPM, string userId, string declarationStatus, string versionId, DateTime? dateTime = null)
+        {
+            if (!declarationPM.AutoSending || !declarationPM.IsDiamondDeclaration) return;
+
+            // determine if the export diamonds feature is enabled to allow autosending
+            ICommonDataContext myContextCommon = CommonDataContext.GetContext(declarationPM.Tenant);
+            FeatureRepository myFeatureRepository = new FeatureRepository(myContextCommon);
+            FeatureQuery featureQuery = new FeatureQuery(myFeatureRepository);
+            var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(declarationPM.Tenant), declarationPM.Tenant);
+            var featureExportDiamonds = features.Features.FirstOrDefault(x => x.Code == "ExportDiamonds");
+
+            if (featureExportDiamonds != null)
+            {
+                // get the declaration status label
+                string declarationStatusLabel = "";
+                DeclarationStatusTypeQueryService declarationStatusTypeQueryService = new DeclarationStatusTypeQueryService(declarationPM.Tenant);
+                DeclarationStatusTypePM declarationStatusType = declarationStatusTypeQueryService.GetSingle(declarationStatus, false, true);
+                declarationStatusLabel = declarationStatusType?.LocalName ?? "לא ידוע";
+
+                string statusSoyRemarks = $"CODE-{declarationStatus}-{declarationStatusLabel}-";
+
+                if (!string.IsNullOrEmpty(declarationPM.DeclarationNumber))
+                {
+                    statusSoyRemarks += declarationPM.DeclarationNumber;
+                }
+
+                RaiseEvent(declarationPM, userId,
+                    status_id: "SOY",
+                    versionId: versionId,
+                    status_DateTime: dateTime,
+                    comments: statusSoyRemarks);
+            }
+        }
     }
 }
