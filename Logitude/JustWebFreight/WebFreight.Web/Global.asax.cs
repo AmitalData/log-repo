@@ -794,42 +794,32 @@ namespace WebFreight.Web
         private string GetContactPasswordFromCache(string email)
         {
             ContactPasswordRepository contactPasswordRep = new ContactPasswordRepository();
-            string cahce_key = "ContactPassword_" + email;
             if (CacheManager.CacheWrapper != null)
             {
-                if (CacheManager.CacheWrapper.Get(cahce_key) == null)
+                string cacheKey = $"ContactPassword_{email}";
+                string password = (string)CacheManager.CacheWrapper.Get(cacheKey);
+                if (password == null)
                 {
                     lock (_lock)
                     {
-                        return GetContactPassword(email, contactPasswordRep, cahce_key);
+                        return GetContactPassword(email);
                     }
                 }
                 else
                 {
-                    return (string)CacheManager.CacheWrapper.Get(cahce_key);
+                    return password;
                 }
             }
             else
             {
-                ContactPassword contactPassword = contactPasswordRep.GetSingleContactPassword(email);
-                return contactPassword.Password;
+                return GetContactPassword(email);
             }
-
         }
 
-        private string GetContactPassword(string email, ContactPasswordRepository contactPasswordRep, string cahce_key)
+        private string GetContactPassword(string email)
         {
-            if (CacheManager.CacheWrapper.Get(cahce_key) == null)
-            {
-                ContactPassword contactPassword = contactPasswordRep.GetSingleContactPassword(email);
-                if (contactPassword != null)
-                {
-                    CacheManager.CacheWrapper.Insert(cahce_key, contactPassword.Password, null, DateTime.UtcNow.AddMinutes(5), TimeSpan.Zero);
-                }
-
+                ContactPassword contactPassword = new ContactPasswordRepository().GetSingleContactPassword(email);
                 return contactPassword != null ? contactPassword.Password : "";
-            }
-            return (string)CacheManager.CacheWrapper.Get(cahce_key);
         }
 
 

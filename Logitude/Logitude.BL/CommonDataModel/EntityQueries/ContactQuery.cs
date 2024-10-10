@@ -656,14 +656,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public ContactPM GetContactByEmailOnly(string email, int tenant)
         {
             email = email.ToLower();
-            string entityName = "ContactPM" + email + tenant;
-            entityName = entityName.ToLower();
+            string cacheKey = $"ContactPM_{email}_{tenant}";
             ContactPM entity;
-            UserRepository usersRepository = new UserRepository(tenant);
-
+            //UserRepository usersRepository = new UserRepository(tenant);
             if (HttpContext.Current != null)
             {
-                if (CacheManager.CacheWrapper.Get(entityName) == null)
+                entity = (ContactPM)CacheManager.CacheWrapper.Get(cacheKey);
+                if (entity == null)
                 {
                     bool isTenant0User = false;
                     ContactPM contact = (from a in repository.context.Contacts
@@ -778,22 +777,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     entity = contact;
                     if (entity != null)
                     {
-                        if (CacheManager.CacheWrapper.Get(entityName) == null)
+                        if (CacheManager.CacheWrapper.Get(cacheKey) == null)
                         {
-                            CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            CacheManager.CacheWrapper.Insert(cacheKey, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                         }
                     }
                 }
-
-                else
-                {
-                    entity = (ContactPM)CacheManager.CacheWrapper.Get(entityName);
-                }
             }
-
             else
             {
-                bool isTenant0User = false;
                 ContactPM contact = (from a in repository.context.Contacts
                                      where a.Email == email && a.UserType == "R"
                                      && a.Tenant == tenant
@@ -871,17 +863,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    CreateDate = a.CreateDate,
                                    DigitalPortalLanguage = a.DigitalPortalLanguage
                                }).FirstOrDefault();
-
-                    isTenant0User = true;
                 }
-
                 if (contact != null)
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
                         IGlobalContext globalContext = GlobalContext.GetContext();
                         ContactPassword contactPassword = globalContext.ContactPasswords.Where(cn => cn.Email == contact.Email.ToLower()).FirstOrDefault();
-
                         if (contactPassword != null)
                         {
                             contact.IsLocked = contactPassword.IsLocked;
@@ -890,13 +878,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         }
                     }
                 }
-
                 entity = contact;
             }
-
             return entity;
         }
-
         public string GetContactIdByLoggedEmail(int tenant)
         {
             string email = HttpContext.Current.User.Identity.Name;

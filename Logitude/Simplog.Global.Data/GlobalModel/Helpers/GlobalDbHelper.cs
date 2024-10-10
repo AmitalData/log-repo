@@ -7,6 +7,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using System.Transactions;
 using Simplog.Server.Infrastructure;
 using System.Configuration;
+using System.Xml.Linq;
 
 namespace Simplog.Global.Data.GlobalModel.Helpers
 {
@@ -15,54 +16,32 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
         public static GlobalDB GetGlobalDB(int tenant)
         {
             GlobalDB currentDb = null;
-            string name = "TenantDB" + tenant;
-            //itzik if (HttpContext.Current != null)
+            string cacheKey = $"TenantDB_{tenant}";
             if (CacheManager.CacheWrapper != null)
             {
-                if (CacheManager.CacheWrapper.Get(name) == null)
+                currentDb = (GlobalDB)CacheManager.CacheWrapper.Get(cacheKey);
+                if (currentDb == null)
                 {
-                    
-                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
                         IGlobalContext globalcontext = GlobalContext.GetContext();
-
                         GlobalTenant globaltenant = (from a in globalcontext.GlobalTenants
                                                      where a.Id == tenant
                                                      select a).FirstOrDefault();
-
-//#if ORACLE_DB
                         string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
                         string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
-
                         if (enviroment == "azure app service")
                             currentDb = GetGlobalDbFromEnviroment();
-
                         else if (dbms == "oracle")
                         {
-                            if (globaltenant == null)
+                            var query = from a in globalcontext.GlobalDBs
+                                        select a;
+                            if (globaltenant != null)
                             {
-                                currentDb = (from a in globalcontext.GlobalDBs
-
-                                             select a).FirstOrDefault();
+                                query=query.Where(a => a.Id == globaltenant.GlobalDBId);
                             }
-                            else
-                            {
-                                currentDb = (from a in globalcontext.GlobalDBs
-                                             where a.Id == globaltenant.GlobalDBId
-                                             select a).FirstOrDefault();
-                            }
-                            //if (DateTime.Now < new DateTime(2015, 12, 5))
-                            //{
-                            //    currentDb.DBConnection = 
-                            //        //"User Id=logitude_main;  Password=oracle;Direct=True;Data Source=10.10.10.67;port=1521;sid=amital";
-                            //        "User Id=AMITESTM3;  Password=AMITESTM3;Direct=True;Data Source=10.10.10.67;port=1521;sid=amital";
-                            //}
+                            currentDb = query.FirstOrDefault();
                         }
-
-                        //else if (LogitudeSettings.IsCostomsDeploy)
-                        //    currentDb.DBConnection = ConfigurationManager.ConnectionStrings["LogitudeStr"].ConnectionString;
-
-                        //#else
                         else
                         {
                             if (globaltenant == null)
@@ -78,19 +57,13 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
                                              select a).FirstOrDefault();
                             }
                         }
-//#endif
+                        //#endif
 
-                        CacheManager.CacheWrapper.Insert(name, GetGlobalDbWithoutProxy(currentDb), null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                        CacheManager.CacheWrapper.Insert(cacheKey, GetGlobalDbWithoutProxy(currentDb), null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                         scope.Complete();
                     }
                 }
-                else
-                {
-                    currentDb = (GlobalDB)CacheManager.CacheWrapper.Get(name);
-                }
             }
-
-
             if (currentDb == null) //Itzik Why i get null ??? else
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
@@ -108,7 +81,7 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
 
                         if (currentDb != null && CacheManager.CacheWrapper != null) //Itzik 
                         {
-                            CacheManager.CacheWrapper.Insert(name, GetGlobalDbWithoutProxy(currentDb), null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            CacheManager.CacheWrapper.Insert(cacheKey, GetGlobalDbWithoutProxy(currentDb), null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                         }
 
                     }
@@ -121,7 +94,7 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
 
                         if (currentDb != null && CacheManager.CacheWrapper != null) //Itzik 
                         {
-                            CacheManager.CacheWrapper.Insert(name, GetGlobalDbWithoutProxy(currentDb), null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            CacheManager.CacheWrapper.Insert(cacheKey, GetGlobalDbWithoutProxy(currentDb), null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                         }
                     }
                 }

@@ -78,8 +78,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 		public List<RoleFeature> GetRoleFeaturesForRoleFromCache(string roleId, int tenant)
 		{
-            string entityName = "RoleFeature;" + roleId +";" + tenant; //RoleFeature1-136 - need delimited(Vladi)
-            List<RoleFeature> entity= (List<RoleFeature>)CacheManager.CacheWrapper.Get(entityName);
+            string cacheKey = $"RoleFeature_{roleId}_{tenant}";
+            List<RoleFeature> entity= (List<RoleFeature>)CacheManager.CacheWrapper.Get(cacheKey);
             if (entity == null)
             {
                 entity = (from a in repository.context.RoleFeatures
@@ -87,7 +87,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                           select a).ToList();
                 if (entity != null)
                 {
-                    CacheManager.CacheWrapper.Insert(entityName, entity);
+                    CacheManager.CacheWrapper.Insert(cacheKey, entity);
                 }
             }
 			return entity;
