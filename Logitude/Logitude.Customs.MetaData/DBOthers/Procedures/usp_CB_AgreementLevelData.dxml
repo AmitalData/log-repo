@@ -1,45 +1,75 @@
 ﻿<Procedure DBType="Main" Name="usp_CB_AgreementLevelData" Schema="dbo" Module="Customs">
   <SqlScript>
 	  <![CDATA[		
-		CREATE OR ALTER PROCEDURE [dbo].[usp_CB_AgreementLevelData]
-				@CustomsItemIDNum NVARCHAR(50),
-				@MeasurementUnitMalamId INT
-			AS
-			BEGIN
-				select 
-					CASE     -- מדינות ומכס כללי
-						WHEN T.Title = 'מכס כללי' THEN T.Title
-						WHEN T.Title = 'מס קניה' THEN T.Title
-					ELSE TA.Title  END AS TradeAgreementName, -- מדינות ומכס כללי
-          CustomsItemIDNum,
-					TariffID,
-					CustomsRateWithout.CalculationReference AS CustomsRateWithout, -- שיעור מכס 
-					CustomsRateWithin.CalculationReference AS CustomsRateWithin, -- שיעור מכס במסגרת מכסה 
-					TCD.QuotaID, -- מספר מכסה
-					M.LOCALNAME AS MeasurementUnit, --יחידה סטטיסטית 
-					TCD.StartDate, -- בתוקף מ
-					TCD.EndDate, -- בתוקף עד 
-					CustomsRateWithout.OptionalTaxAddition -- תמ"א
-					from customs.CB_TariffComputedDatas TCD
-					left join customs.CB_Tariffs T ON T.ID = TCD.TariffID
-					left join customs.CB_TradeAgreements TA ON TA.ID = TCD.TradeAgreementID
-					left join CUSTOMS.CB_ComputationMethodDatas CustomsRateWithout ON CustomsRateWithout.ID = TCD.WithoutQuota_ComputationID
-					left join CUSTOMS.CB_ComputationMethodDatas CustomsRateWithin ON CustomsRateWithin.ID = TCD.WithinQuota_ComputationID
-					left join CUSTOMS.MEASURMENTUNITS M ON M.MALAMID = @MeasurementUnitMalamId -- פרמטר שנשלח מהUI
-					--    CustomsItemIDNum = פרמטר שנשלח מהUI
-					where 
-						TCD.CustomsItemIDNum = @CustomsItemIDNum 
-						AND TCD.StartDate <= GETDATE()
-						AND TCD.EndDate > GETDATE()
-						-- If the agreement's CalculationReference matches the general CalculationReference, check further
-						AND (CustomsRateWithout.CalculationReference <> CustomsRateWithin.CalculationReference
-								OR (
-										CustomsRateWithout.ComputationMethodID <> 15
-										OR CustomsRateWithout.Rate <> 100
-								)
-						)
-					ORDER BY TCD.TradeAgreementID 
-			END
+      CREATE OR ALTER PROCEDURE [dbo].[usp_CB_AgreementLevelData]
+      @CustomsItemIDNum NVARCHAR(50),
+      @MeasurementUnitMalamId INT
+      AS
+      BEGIN
+          -- CTE to get the 'מכס כללי' agreement data
+          WITH GeneralAgreement AS (
+              SELECT TOP 1 CM.*
+              FROM CUSTOMS.CB_ComputationMethodDatas CM
+              INNER JOIN customs.CB_TariffComputedDatas TCD ON TCD.WithoutQuota_ComputationID = CM.ID
+              INNER JOIN customs.CB_Tariffs T ON T.ID = TCD.TariffID
+              WHERE T.Title = 'מכס כללי'
+                  AND TCD.CustomsItemIDNum = @CustomsItemIDNum
+                  AND TCD.StartDate <= GETDATE()
+                  AND TCD.EndDate > GETDATE()
+          )
+    
+          SELECT 
+            CASE     
+                WHEN T.Title = 'מכס כללי' THEN T.Title -- מדינות ומכס כללי
+                WHEN T.Title = 'מס קניה' THEN T.Title -- מדינות ומכס כללי
+                ELSE TA.Title  
+            END AS TradeAgreementName, -- מדינות ומכס כללי
+            CustomsItemIDNum,
+            TariffID,
+            CASE 
+                WHEN CustomsRateWithout.ComputationMethodID = '10' THEN 
+                    FORMAT(
+                        (TRY_CAST((SELECT Rate FROM GeneralAgreement) AS DECIMAL(10, 2)) - 
+                        (TRY_CAST((SELECT Rate FROM GeneralAgreement) AS DECIMAL(10, 2)) * 
+                        TRY_CAST(CustomsRateWithout.ReductionRate AS DECIMAL(10, 2)) / 100.0)), 'N2') + '%'
+                ELSE
+                    CustomsRateWithout.CalculationReference -- שיעור מכס 
+            END AS CustomsRateWithout,
+            CustomsRateWithout.ComputationMethodID,
+            FORMAT(
+                CASE 
+                    WHEN CustomsRateWithout.ComputationMethodID = '10' THEN
+                        (TRY_CAST((SELECT Rate FROM GeneralAgreement) AS DECIMAL(10, 2)) - 
+                        (TRY_CAST((SELECT Rate FROM GeneralAgreement) AS DECIMAL(10, 2)) * 
+                        TRY_CAST(CustomsRateWithout.ReductionRate AS DECIMAL(10, 2)) / 100.0))
+                    ELSE
+                        TRY_CAST(CustomsRateWithout.CalculationReference AS DECIMAL(10, 2)) 
+                END, 'N2') + '%' AS CustomsRateWithoutCalc,
+            CustomsRateWithin.CalculationReference AS CustomsRateWithin, -- שיעור מכס במסגרת מכסה 
+            TCD.QuotaID, -- מספר מכסה
+            M.LOCALNAME AS MeasurementUnit, -- יחידה סטטיסטית 
+            TCD.StartDate, -- בתוקף מ
+            TCD.EndDate, -- בתוקף עד 
+            CustomsRateWithout.OptionalTaxAddition -- תמ"א
+            FROM customs.CB_TariffComputedDatas TCD
+            LEFT JOIN customs.CB_Tariffs T ON T.ID = TCD.TariffID
+            LEFT JOIN customs.CB_TradeAgreements TA ON TA.ID = TCD.TradeAgreementID
+            LEFT JOIN CUSTOMS.CB_ComputationMethodDatas CustomsRateWithout ON CustomsRateWithout.ID = TCD.WithoutQuota_ComputationID
+            LEFT JOIN CUSTOMS.CB_ComputationMethodDatas CustomsRateWithin ON CustomsRateWithin.ID = TCD.WithinQuota_ComputationID
+            LEFT JOIN CUSTOMS.MEASURMENTUNITS M ON M.MALAMID = @MeasurementUnitMalamId -- פרמטר שנשלח מהUI
+            WHERE 
+                TCD.CustomsItemIDNum = @CustomsItemIDNum 
+                AND TCD.StartDate <= GETDATE()
+                AND TCD.EndDate > GETDATE()
+                -- If the agreement's CalculationReference matches the general CalculationReference, check further
+                AND (CustomsRateWithout.CalculationReference <> CustomsRateWithin.CalculationReference
+                        OR (
+                            CustomsRateWithout.ComputationMethodID <> 15
+                            OR CustomsRateWithout.Rate <> 100
+                        )
+                )
+            ORDER BY TCD.TradeAgreementID 
+      END
 
 
     ]]>
