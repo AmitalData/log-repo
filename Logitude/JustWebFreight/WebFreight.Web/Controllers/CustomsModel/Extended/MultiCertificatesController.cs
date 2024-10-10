@@ -159,7 +159,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                             updateService.Update(cert, true);
 
                             // 2- update supp invoice item
-                            updateService.UpdateCertificateStatus(cert, tenant);
+                           string status= updateService.UpdateCertificateStatus(cert, tenant);
 
                         });
                     }

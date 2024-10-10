@@ -760,13 +760,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             (Repository as Logitude.Customs.Data.Repsitories.SupplierInvioceItemCertificatRepository).FastDeleteMultiParents(entityKeyFields, supplierInvoiceItemsParentsLines);
         }
 
-        public void UpdateCertificateStatus(SupplierInvioceItemCertificatPM cert, int tenant)
+        public string UpdateCertificateStatus(SupplierInvioceItemCertificatPM cert, int tenant, bool onlyReturnStatus=false)
         {
             // update item
             SupplierInvoiceItemQueryService query = new SupplierInvoiceItemQueryService(tenant);
             //SupplierInvoiceItemPM item = query.GetSingleSupplierInvoicePMBySequence(cert.DeclarationId, cert.InvoiceCounterKey, cert.SequenceNumeric);
-            SupplierInvoiceItemPM item = query.GetSingle(cert.DeclarationId, cert.InvoiceCounterKey,cert.LineNumber,false,false);
-
+       
             if (cert != null)
             {
 
@@ -801,14 +800,21 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     statusCode = "1";
                 }
+                if (!onlyReturnStatus)
+                {
+                    SupplierInvoiceItemPM item = query.GetSingle(cert.DeclarationId, cert.InvoiceCounterKey, cert.LineNumber, false, false);
 
-                item.CertificatesStatusCode = statusCode;
+                    item.CertificatesStatusCode = statusCode;
 
-                ICustomContext customContext = CustomContext.GetContext(tenant);
-                SupplierInvoiceItemUpdateService updateService = new SupplierInvoiceItemUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
-                item.ChangeSetOp = ChangeSetOperation.Update;
-                updateService.Update(item, true);
+                    ICustomContext customContext = CustomContext.GetContext(tenant);
+                    SupplierInvoiceItemUpdateService updateService = new SupplierInvoiceItemUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
+                    item.ChangeSetOp = ChangeSetOperation.Update;
+                    updateService.Update(item, true);
+                }
+
+                return statusCode;
             }
+            return "";
 
         }
 

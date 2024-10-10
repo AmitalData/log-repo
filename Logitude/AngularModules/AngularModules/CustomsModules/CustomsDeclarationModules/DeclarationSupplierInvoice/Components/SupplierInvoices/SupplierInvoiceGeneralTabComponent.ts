@@ -1378,6 +1378,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             });
     }
 
+
     _OpInsurancePercent_Completed(res): void {
         //if (!_OpInsurancePercent.IsCanceled) {
         //    if (!_OpInsurancePercent.HasError) {
@@ -1489,6 +1490,91 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     public set IsValueForCustomsOnly(newValue: boolean) { this.EntityPM.IsValueForCustomsOnly = newValue; }
 
     //#endregion
+    _IIGGeneralMessagesService: IIGGeneralMessagesService = new IIGGeneralMessagesService();
+
+    SendGetQuantityTypeBy8314(classificationCode:string , args:any) {
+
+        if (AppTool.IsNullOrEmpty(classificationCode)) return
+        var currRequestParams = new CustomsItemDetailsQueryRequestParams();///Force new GUID On Each Send !!
+        currRequestParams.ValidToDate = new Date();
+        currRequestParams.Classification = classificationCode;
+        currRequestParams.CustomsBookType = this.Parent.declarationPM.Direction == 'I' ? 1 : 2;
+
+        currRequestParams.LoggingEnabled = true;
+        currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+        currRequestParams.Tenant = SessionLocator.Tenant;
+        currRequestParams.RequestVIA = SendRequestVIA.WebServiceInteractive;
+        currRequestParams.ForcePersonalSign = false;
+        var ResponseData: any
+        CustomMessageProgressComponent
+            .ShowProgressBar(this.CurrentSession, currRequestParams.PBId, "שאילתא לנתוני פרט מכס", true)
+            .then((res) => {
+                debugger;
+                if (res) {
+                    ResponseData = res;
+
+                    if (!ResponseData.HasError){
+                        var keys = Object.keys(this.ClasificationQtyTypes);
+                        if (!(keys.indexOf(classificationCode) > -1) ) {
+                            this.ClasificationQtyTypes[classificationCode] = ResponseData.Result;
+                          
+                        }
+                    
+                    }
+                  
+                    this.SelectionOriginCompleted(args,true);
+                }
+
+            }
+
+
+            ).catch((err) => {
+
+
+            });
+
+        this._IIGGeneralMessagesService.PostCustomsItemDetailsQuery(currRequestParams)
+            .subscribe((myServiceResponse: ServiceResponse) => {
+
+            });
+
+
+    }
+
+public getSpecificQuantityType( args:any)
+{
+    var classificationCode=args[args.UpdateField];
+     var keys = Object.keys(this.ClasificationQtyTypes);
+var qunatityTypeCode="";
+ this.ClasificationQtyTypes[classificationCode] = null;
+var code = classificationCode.toString().slice(0, classificationCode.toString().length - 1);
+this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Direction === 'E').subscribe((myServiceResponse: ServiceResponse) => {
+    if (!myServiceResponse.HasError) {
+        if (!myServiceResponse.HasError) {
+            if (myServiceResponse.Result) {
+                qunatityTypeCode = "(" + myServiceResponse.Result + ")";
+                if (!(keys.indexOf(classificationCode) > -1) ) {
+                    this.ClasificationQtyTypes[classificationCode] = myServiceResponse.Result;
+                }
+                this.SelectionOriginCompleted(args,true);
+            }
+            else {
+                
+                    this.SendGetQuantityTypeBy8314(classificationCode,args);
+                    qunatityTypeCode = null;
+                
+
+            }
+        
+   
+        }
+    }
+
+
+
+});
+        }
+
 
     OnInvoiceNumberLostFocus(invoiceNumberTextBox: any) {
 
@@ -1742,8 +1828,14 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     }
 
     private _CustomsCountryListService: CustomsCountryListService = new CustomsCountryListService();
-    SelectionOriginCompleted(args) {
+    SelectionOriginCompleted(args, fromClassificationCodeAfterQuantityType=false) {
         if (args.ItemsSource != null) {
+            if(args.UpdateField=="ClassificationCode" && !fromClassificationCodeAfterQuantityType){
+                this.getSpecificQuantityType(args);
+
+            }
+           else{
+
             if (args.UpdateAll) {
                 for (let item of this.EntityPM.SupplierInvoiceItems.filter(d => !d.IsParent)) {
                     if (item[args.UpdateField] != args) {
@@ -1769,6 +1861,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                     }
                 }
             }
+           }
+
         }
     }
     updateProcess(item: SupplierInvoiceItemPM, args) {
@@ -4093,6 +4187,10 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                             this.InvoiceQuantityType = result;
                         }
                     }
+                }
+                else{
+                    this.InvoiceQuantityType=null;
+                    this.QunatityTypeCode=null;
                 }
             }
             else {

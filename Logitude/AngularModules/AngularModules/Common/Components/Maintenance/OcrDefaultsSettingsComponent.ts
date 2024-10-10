@@ -507,7 +507,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
 
     ngDoCheck() {
         if (this.IsFromSupplierInvoice) {
-            this.disableSubmit = !(this.accountTypeCodeChecked || this.partyRelationshipCodeChecked || this.buyerRoleCodeChecked || this.processTypeCodeChecked || this.transactionNatureCodeChecked || this.claimReasonCodeChecked);
+            this.disableSubmit = !(this.ItemsSource.Collection.length!=0 ||this.accountTypeCodeChecked || this.partyRelationshipCodeChecked || this.buyerRoleCodeChecked || this.processTypeCodeChecked || this.transactionNatureCodeChecked || this.claimReasonCodeChecked);
         }
     }
 }

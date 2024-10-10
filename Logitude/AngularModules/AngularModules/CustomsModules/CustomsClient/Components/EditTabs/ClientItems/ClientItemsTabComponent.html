@@ -49,7 +49,12 @@
                                     <td colspan="2" style="height: 100%;width: 100%;">
                                         <div class="CellContent">
                                             <logitude-edit-grid GridWidth="100%" GridHeight="100%"
-                                                [ItemSource]="ItemsList">
+                                                [ItemSource]="ItemsList"
+                                                [IsReadOnly]="fromSupplierInvoiceItem"
+                                                (SelectedItemChanged)="OnRowSelected($event)"
+                                                (RowDoubleClick)="OnRowDoubleClick($event)"
+                                                [SelectedRow]="SelectedRow"
+                                                >
                                                 <!-- SequenceNumeric -->
                                                 <log-column [width]="'40'" [Alignment]="'right'"
                                                     [header]="SequenceNumeric">
@@ -168,6 +173,30 @@
 
                         </td>
                     </tr>
+                    
+    <tr style="height: 32px;" *ngIf="fromSupplierInvoiceItem">
+        <td colspan="2" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
                 </table>
 
             </div>
