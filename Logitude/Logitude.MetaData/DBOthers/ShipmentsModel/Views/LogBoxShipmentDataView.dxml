@@ -44,6 +44,8 @@ ShipmentComputedFields.IsRequestedDocuments as IsRequestedDocuments,
 ShipmentComputedFields.LastDocumentDateTime as LastDocumentDateTime,
 ShipmentComputedFields.DocumentsSearchFields as DocumentsSearchFields,
 dbo.ShipmentMasterDatas.TruckNumber,
+dbo.ShipmentMasterDatas.Master,
+
 ShipmentComputedFields.ContainersNumbersandTypesArray as ContainersNumbersandTypesArray,
 CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN ShipmentMasterDataEntityStatus.Name ELSE dbo.EntityStatus.Name END ELSE dbo.EntityStatus.Name END AS StatusName,
 CASE WHEN (dbo.ShipmentMasterDatas.MainCarriageATA IS NOT NULL) THEN dbo.ShipmentMasterDatas.MainCarriageATA ELSE dbo.ShipmentMasterDatas.MainCarriageETA END AS MainCarriageExpectedOrActual,
