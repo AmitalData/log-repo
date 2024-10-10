@@ -43,6 +43,7 @@ export class ClientItemsTabComponent extends BaseComponent {
     public ItemsList: ObservableCollection;
     public filters = new ApiQueryFilters();
     public ClientCode: string;
+    public fromSupplierInvoiceItem=false;
     constructor(private _EntityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
         this.EntityResourceService.getEntityResourceByTableName("Customs.ClientItem").subscribe((response: any) => {
@@ -81,6 +82,26 @@ export class ClientItemsTabComponent extends BaseComponent {
 
 
     }
+    
+    public SelectedRow: any = null;
+    OnRowSelected(item: any) {
+        if(!this.fromSupplierInvoiceItem) return;
+
+        this.SelectedRow = item;
+    }
+    OnRowDoubleClick(item: any) {
+        if(!this.fromSupplierInvoiceItem) return;
+        this.SelectedRow = item;
+        this.CurrentSession.CloseCurrentWindowEmit(this.SelectedRow);
+
+    }
+    CancelButtonClicked() {
+        this.CurrentSession.CloseCurrentWindow();
+    }
+
+    OkButtonClicked() {
+        this.CurrentSession.CloseCurrentWindowEmit(this.SelectedRow);
+    }
     InitTab(EntityPM: ClientPM) {
 
         this.entityPM = EntityPM;
@@ -96,6 +117,7 @@ export class ClientItemsTabComponent extends BaseComponent {
                 this.ClientCode = args.ClientCode;
                 this.LoadDate();
             }
+            this.fromSupplierInvoiceItem =true;
         }
     }
 
