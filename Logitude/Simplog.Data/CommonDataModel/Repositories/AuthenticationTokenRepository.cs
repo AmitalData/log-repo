@@ -84,37 +84,32 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             if (string.IsNullOrEmpty(token))
                 return null;
-
             if (!string.IsNullOrEmpty(token) && !token.Contains("+"))
             {
                 token = token.Replace(" ", "+");
             }
-
-          
-                string entityName = "Token" + token;
-                if (CacheManager.CacheWrapper.Get(entityName) != null)
+            string cacheKey = $"Token_{token}";
+            AuthenticationToken authenticationToken = (AuthenticationToken)CacheManager.CacheWrapper.Get(cacheKey);
+            if (authenticationToken != null)
+            {
+                if (authenticationToken.ExpirationDate != null && authenticationToken.ExpirationDate < DateTime.Now)
                 {
-                    AuthenticationToken authenticationToken = (AuthenticationToken)CacheManager.CacheWrapper.Get(entityName);
-                    if(authenticationToken.ExpirationDate != null && authenticationToken.ExpirationDate < DateTime.Now)
-                    {
-                        throw new AutenticationException("Session expired. Please log in again");
-                    }
-                    return authenticationToken;
+                    throw new AutenticationException("Session expired. Please log in again");
                 }
-                else
+                return authenticationToken;
+            }
+            else
+            {
+                ICommonDataContext context = CommonDataContext.GetContext(0);
+                var entity = (from a in context.AuthenticationTokens
+                              where a.Token == token
+                              select a).FirstOrDefault();
+                if (entity != null)
                 {
-                    ICommonDataContext context = CommonDataContext.GetContext(0);
-                    var entity = (from a in context.AuthenticationTokens
-                                  where a.Token == token
-                                  select a).FirstOrDefault();
-                    if (entity != null)
-                    {
-                        CacheManager.CacheWrapper.Insert(entityName, entity, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                    }
-                    return entity;
+                    CacheManager.CacheWrapper.Insert(cacheKey, entity, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                 }
-            
-      
+                return entity;
+            }
         }
 
         public class AutenticationException : Exception

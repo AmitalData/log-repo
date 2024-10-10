@@ -542,13 +542,10 @@ namespace WebFreight.Web.Security
             int loggedTenant = tenant;
 
             ContactInfo myContactInfo = null;
-            string key = email + "_" + tenant + "_info";
+            string cacheKey = $"ContactInfo_{email}_{tenant}";
+            myContactInfo = (ContactInfo)CacheManager.CacheWrapper.Get(cacheKey);
 
-            if (CacheManager.CacheWrapper.Get(key) != null && !forceAPIFeaturesCheck)
-            {
-                myContactInfo = (ContactInfo)CacheManager.CacheWrapper.Get(key);
-            }
-            else
+            if (myContactInfo == null || forceAPIFeaturesCheck)
             {
                 if (tenant == 0)
                 {
@@ -561,7 +558,7 @@ namespace WebFreight.Web.Security
                         PackagesCodes = allPackages,
                     };
 
-                    CacheManager.CacheWrapper.Insert(key, myContactInfo, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                    CacheManager.CacheWrapper.Insert(cacheKey, myContactInfo, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                 }
                 else
                 {
@@ -649,7 +646,7 @@ namespace WebFreight.Web.Security
                                 PackagesCodes = allPackages,
                             };
 
-                            CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            CacheManager.CacheWrapper.Insert(cacheKey, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                         }
                     }
                     else
@@ -664,12 +661,11 @@ namespace WebFreight.Web.Security
 
                             };
 
-                            CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            CacheManager.CacheWrapper.Insert(cacheKey, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                         }
                     }
                 }
             }
-
             return myContactInfo;
         }
 
