@@ -875,14 +875,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
 				if (supplierInvioceItemCertificats?.Length>0)
                 {
+                    SupplierInvioceItemCertificatUpdateService updateService = new SupplierInvioceItemCertificatUpdateService(context, new Dictionary<string, IContext>(), supplierInvoice.Tenant);
 
                     supplierInvoiceItem.SupplierInvioceItemCertificats.ForEach(x => x.ChangeSetOp = ChangeSetOperation.Delete);
                     foreach (var Certificat in supplierInvioceItemCertificats)
                     {
                         Certificat.ChangeSetOp = ChangeSetOperation.Insert;
-                        
+                        supplierInvoiceItem.ChangeSetOp = ChangeSetOperation.Update;
+                        supplierInvoice.ChangeSetOp = ChangeSetOperation.Update;
                         supplierInvoiceItem.SupplierInvioceItemCertificats.Add(Certificat);
-                            //CertificatUpdateService.Update(MyCertificat,true);
+                        supplierInvoiceItem.CertificatesStatusCode= updateService.UpdateCertificateStatus(Certificat, supplierInvoice.Tenant, true);
+                        //CertificatUpdateService.Update(MyCertificat,true);
                     }
                    
                 }
