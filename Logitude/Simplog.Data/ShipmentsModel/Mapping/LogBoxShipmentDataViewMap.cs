@@ -31,6 +31,12 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.ShipmentNumber).HasColumnName("ShipmentNumber");
             this.Property(t => t.PackagesQuantity).HasColumnName("PackagesQuantity");
             this.Property(t => t.GrossWeight).HasColumnName("GrossWeight");
+            this.Property(t => t.MainCarriageFromPortCountryCode).HasColumnName("MainCarriageFromPortCountryCode");
+            this.Property(t => t.MainCarriageToPortCountryCode).HasColumnName("MainCarriageToPortCountryCode");
+            this.Property(t => t.MainCarriageToPortCode).HasColumnName("MainCarriageToPortCode");
+            this.Property(t => t.MainCarriageFromPortCode).HasColumnName("MainCarriageFromPortCode");
+            this.Property(t => t.FromPortCode).HasColumnName("FromPortCode");
+            this.Property(t => t.ToPortCode).HasColumnName("ToPortCode");
             this.Property(t => t.Master).HasColumnName("Master");
 
             this.Property(t => t.CustomerReference1).HasColumnName("CustomerReference1");
