@@ -222,7 +222,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //_CCUPAYHAND.TOTALPAYTAX = _DirtyDeclarationPaymentPM.;
             //_CCUPAYHAND.TOTALPAYDEPOSIT = _DirtyDeclarationPaymentPM.;
             _CCUPAYHAND.HANDDATE = _DirtyDeclarationPaymentPM.PaymentDate;
-            _CCUPAYHAND.HANDTYPE = true;
+            _CCUPAYHAND.HANDTYPE = 1;
             if (!String.IsNullOrWhiteSpace(_DirtyDeclarationPaymentPM.SignatoryIdentification))
             {
                 _CCUPAYHAND.RESHIMONSIGN = _DirtyDeclarationPaymentPM.SignatoryIdentification.Substring(0, Math.Min(9, _DirtyDeclarationPaymentPM.SignatoryIdentification.Length)); // moran 27.7.16 - Task 21585 - take first 9

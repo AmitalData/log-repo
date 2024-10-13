@@ -121,7 +121,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for HANDTYPE in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<bool> HANDTYPE
+        public virtual global::System.Nullable<int> HANDTYPE
         {
             get
             {
@@ -136,7 +136,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<bool> _HANDTYPE;
+        private global::System.Nullable<int> _HANDTYPE;
 
     
         /// <summary>
