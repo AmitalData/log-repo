@@ -4827,47 +4827,49 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         }
         else 
         {
-          
-                this.GetGITITEMPartnersItemListFromUnifreight(this.Parent.vendorNumber, this.Parent.declarationPM.CustomerCode, this.ItemCode, 30, 'ALL',false)
-                .then(async (res) => {
-                    // כאן אתה יכול להמשיך עם הקוד שלך אחרי שהפונקציה החזירה תשובה
-                 
-                    if (!AppTool.IsNullOrEmpty(res) && res.size() == 1) {                      
-                        this.PartnerItemsSelectionCompleted(this.entityPM, res.get(0));
-                        return;
-                    }
-                    else {                     
-                        this.GetGITITEMPartnersItemListFromUnifreight(this.Parent.vendorNumber, this.Parent.declarationPM.CustomerCode, this.ItemCode, 30, 'ALL',true)
-                        .then(async (res) => {
-                                if (!AppTool.IsNullOrEmpty(res) && res.size() == 1) {
-                                    this.PartnerItemsSelectionCompleted(this.entityPM, res.get(0));
-                                    return;
-                                }
-                                else {
-                                    this.GetGITITEMPartnersItemListFromUnifreight(this.Parent.vendorNumber, this.Parent.declarationPM.CustomerCode, this.ItemCode, 30, 'NAME',true).then(async (res) => {                                 
-                                            if (!AppTool.IsNullOrEmpty(res) && res.size() == 1) {
-                                                this.PartnerItemsSelectionCompleted(this.entityPM, res.get(0));
-                                                return;
-                                            } else {
-                                                //Eitancommented 15 minutes ago
-                                                //@odelia devashi @itzik M סיכום:
-                                                //גם כםשר מזינים קודם פרט מכס וםח"כ קוד פריט (מקט), עדיין צריך ליצור TASK של לימוד עצמי + שימוש ב-CACHE ברמת SESSION
-                                                if (!AppTool.IsNullOrEmpty(this.ClassificationCode)) {
-                                                    this.AdditemCodeDetail();//Task 43218: שיפור במנגנון לימוד עצמי
-                                                }
+          if(this.Parent.declarationPM.Direction!='E'){
+            this.GetGITITEMPartnersItemListFromUnifreight(this.Parent.vendorNumber, this.Parent.declarationPM.CustomerCode, this.ItemCode, 30, 'ALL',false)
+            .then(async (res) => {
+                // כאן אתה יכול להמשיך עם הקוד שלך אחרי שהפונקציה החזירה תשובה
+             
+                if (!AppTool.IsNullOrEmpty(res) && res.size() == 1) {                      
+                    this.PartnerItemsSelectionCompleted(this.entityPM, res.get(0));
+                    return;
+                }
+                else {                     
+                    this.GetGITITEMPartnersItemListFromUnifreight(this.Parent.vendorNumber, this.Parent.declarationPM.CustomerCode, this.ItemCode, 30, 'ALL',true)
+                    .then(async (res) => {
+                            if (!AppTool.IsNullOrEmpty(res) && res.size() == 1) {
+                                this.PartnerItemsSelectionCompleted(this.entityPM, res.get(0));
+                                return;
+                            }
+                            else {
+                                this.GetGITITEMPartnersItemListFromUnifreight(this.Parent.vendorNumber, this.Parent.declarationPM.CustomerCode, this.ItemCode, 30, 'NAME',true).then(async (res) => {                                 
+                                        if (!AppTool.IsNullOrEmpty(res) && res.size() == 1) {
+                                            this.PartnerItemsSelectionCompleted(this.entityPM, res.get(0));
+                                            return;
+                                        } else {
+                                            //Eitancommented 15 minutes ago
+                                            //@odelia devashi @itzik M סיכום:
+                                            //גם כםשר מזינים קודם פרט מכס וםח"כ קוד פריט (מקט), עדיין צריך ליצור TASK של לימוד עצמי + שימוש ב-CACHE ברמת SESSION
+                                            if (!AppTool.IsNullOrEmpty(this.ClassificationCode)) {
+                                                this.AdditemCodeDetail();//Task 43218: שיפור במנגנון לימוד עצמי
                                             }
-                                        })
-                                     
-                                }
-                            })
-                        
-                    }
-                })
-                .catch(error => {
-                    console.error("Error fetching data: ", error);
-                });                    
+                                        }
+                                    })
+                                 
+                            }
+                        })
+                    
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+            });                    
+          
+           
+          }
               
-               
            
         }
     }
