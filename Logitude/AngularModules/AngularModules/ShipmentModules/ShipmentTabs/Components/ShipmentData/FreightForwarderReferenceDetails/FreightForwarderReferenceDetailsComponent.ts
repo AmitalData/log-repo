@@ -61,11 +61,8 @@ export class FreightForwarderReferenceDetailsComponent extends BaseComponent {
          var line: number = 0;
          var sequence: number = 0;
          if (this.FreightForwarderReferences.length > 0) {
-             line = this.FreightForwarderReferences.length + 1;
-         }
-         else {
-             line = 0;
-         }
+             line = this.FreightForwarderReferences.reduce((max, obj) => (obj.LineNumber > max ? obj.LineNumber : max), this.FreightForwarderReferences[0].LineNumber);
+         }        
 
          line += 1;
          sequence += 1;
