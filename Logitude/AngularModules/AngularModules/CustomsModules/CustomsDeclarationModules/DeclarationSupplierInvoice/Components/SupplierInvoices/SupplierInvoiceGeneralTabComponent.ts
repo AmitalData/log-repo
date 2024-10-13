@@ -1553,9 +1553,9 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
         if (!myServiceResponse.HasError) {
             if (myServiceResponse.Result) {
                 qunatityTypeCode = "(" + myServiceResponse.Result + ")";
-                if (!(keys.indexOf(classificationCode) > -1) ) {
-                    this.ClasificationQtyTypes[classificationCode] = myServiceResponse.Result;
-                }
+                
+                this.ClasificationQtyTypes[classificationCode] = myServiceResponse.Result;
+             
                 this.SelectionOriginCompleted(args,true);
             }
             else {
@@ -1878,7 +1878,7 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
                 item.ClassificationCode = value;
                 var lineItem = this.ItemsSource.Collection[item.SequenceNumeric - 1];
                 if (lineItem) {
-                    lineItem.GetQuantityType();
+                    lineItem.GetQuantityType(true,false,true);
                 }
                 break;
             }
@@ -4174,7 +4174,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
 
     
 
-    GetQuantityType(isChangeInvoiceQuantityType: boolean = true, calcInvoiceQuantityType: boolean = false) {
+    GetQuantityType(isChangeInvoiceQuantityType: boolean = true, calcInvoiceQuantityType: boolean = false,ovverideValue:boolean=false) {
 
         if (this.ClassificationCode != null) {
             var keys = Object.keys(this.Parent.ClasificationQtyTypes);
@@ -4183,7 +4183,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                 if (result) {
                     this.QunatityTypeCode = "(" + result + ")";
                     if (this.Parent.IsChecked && isChangeInvoiceQuantityType) {
-                        if (this.InvoiceQuantityType == null && result != null) {
+                        if ((ovverideValue )||(this.InvoiceQuantityType == null && result != null) ) {
                             this.InvoiceQuantityType = result;
                         }
                     }
