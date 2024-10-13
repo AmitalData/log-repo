@@ -90,8 +90,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         public List<ShipmentStoragePricingPM> ShipmentStoragePricingsChangeSet;
         public List<ShipmentProductItemPM> ShipmentProductItemsChangeSet;
         public List<ShipmentUnassignedFieldPM> ShipmentUnassignedFieldChangeSet;
+		public List<FreightForwarderReferencePM> FreightForwarderReferenceChangeSet;
 
-        public Customer Customer { get; private set; }
+		public Customer Customer { get; private set; }
 
         public ShipmentServiceInitializer(IShipmentsContext ShipmentContext, ShipmentPM entityPM, string loggedEmail)
         {

@@ -2192,10 +2192,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentReferanceQuery shipmentReferanceQuery = new ShipmentReferanceQuery(shipmentReferanceRepository);
                     shipmentPM.ShipmentReferances = shipmentReferanceQuery.GetShipmentReferances(shipment.Id, shipment.Tenant);
                 }
-                #endregion
+				#endregion
+				#region FreightForwarder references
+				if (shipment.DirectionId == "C")
+				{
+					FreightForwarderReferenceRepository freightForwarderReferenceRepository = new FreightForwarderReferenceRepository(tenant);
+					FreightForwarderReferenceQuery freightForwarderReferenceQuery = new FreightForwarderReferenceQuery(freightForwarderReferenceRepository);
+					shipmentPM.FreightForwarderReferences = freightForwarderReferenceQuery.GetFreightForwarderReferences(shipment.Id, shipment.Tenant);
+				}
+				#endregion
 
-                #region Packages | Commodities
-                ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(tenant);
+				#region Packages | Commodities
+				ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(tenant);
                 ShipmentPackageQuery shipmentPackageQuery = new ShipmentPackageQuery(shipmentPackageRepository);
 
                 ShipmentCommodityRepository shipmentCommodityRepository = new ShipmentCommodityRepository(tenant);

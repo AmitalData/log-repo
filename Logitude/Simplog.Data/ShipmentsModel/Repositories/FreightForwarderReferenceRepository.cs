@@ -30,15 +30,22 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return (from record in context.FreightForwarderReferences where record.Tenant == tenant select record);
         }
 
-        public FreightForwarderReference GetSingleFreightForwarderReference(int tenant, string id, int? authTokenTenant = null)
+        public FreightForwarderReference GetSingleFreightForwarderReference(int tenant, string id, int lineNumber, int? authTokenTenant = null)
         {
             return (from record in context.FreightForwarderReferences 
-                    where record.ShipmentId == id && record.Tenant == tenant 
-                    select record
+                    where record.ShipmentId == id && record.Tenant == tenant && record.LineNumber == lineNumber
+					select record
                     ).FirstOrDefault();
         }
+		public List<FreightForwarderReference> GetSingleFreightForwarderReferenceByShipmentId(int tenant, string shipmentId)
+		{
+			return (from record in context.FreightForwarderReferences
+					where record.ShipmentId == shipmentId && record.Tenant == tenant 
+					select record
+					).ToList();
+		}
 
-        public List<FreightForwarderReference> GetFreightForwarderReferencesByIds(List<string> ids, int tenant)
+		public List<FreightForwarderReference> GetFreightForwarderReferencesByIds(List<string> ids, int tenant)
         {
             List<FreightForwarderReference> myResult = new List<FreightForwarderReference>();
 

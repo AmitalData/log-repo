@@ -1227,7 +1227,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     ShipmentValidating.ValidateCustomShipment(entityPM, false);
                     ValidateShipmentReferancesCollection();
 
-                    if (additionalShipmentData?.ActionCode == ActionCode.CheckAndConnect)
+					if (additionalShipmentData?.ActionCode == ActionCode.CheckAndConnect)
                     {
                         if (string.IsNullOrWhiteSpace(entityPM.ShipmentNumber))
                         {
@@ -1258,8 +1258,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     entityRepository.SubmitChanges();
 
                     this.UpdateShipmentReferancesCollection();
+					this.UpdateFreightForwarderReferencesCollection();
 
-                    if (additionalShipmentData?.ActionCode == ActionCode.CheckAndConnect)
+					if (additionalShipmentData?.ActionCode == ActionCode.CheckAndConnect)
                     {
                         FreightForwarderReference freightForwarderReference = new FreightForwarderReference()
                         {
@@ -1450,13 +1451,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         else
                         {
                             // remove the linked forwarder reference
-                            FreightForwarderReference freightForwarderReference = freightForwarderReferenceRepository.GetSingleFreightForwarderReference(tenant, shipment.ShipmentId);
-                            if (freightForwarderReference != null)
-                            {
-                                freightForwarderReferenceRepository.Remove(freightForwarderReference);
-                                freightForwarderReferenceRepository.SubmitChanges();
-                            }
-                        }
+                            List<FreightForwarderReference> freightForwarderReferences = freightForwarderReferenceRepository.GetSingleFreightForwarderReferenceByShipmentId(tenant, shipment.ShipmentId);
+                            foreach (FreightForwarderReference freightForwarderReference in freightForwarderReferences)
+							{
+								if (freightForwarderReference != null)
+								{
+									freightForwarderReferenceRepository.Remove(freightForwarderReference);
+									
+								}
+							}
+							freightForwarderReferenceRepository.SubmitChanges();
+
+						}
                     }
                     else
                     {
@@ -3031,8 +3037,40 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.shipmentReferanceRepository.SubmitChanges();
             }
         }
+		private void UpdateFreightForwarderReferencesCollection()
+		{
+			if (initializer.FreightForwarderReferenceChangeSet != null && initializer.FreightForwarderReferenceChangeSet.Count > 0)
+			{
+				foreach (FreightForwarderReferencePM itemPM in initializer.FreightForwarderReferenceChangeSet)
+				{
+					switch (itemPM.ChangeSetOp)
+					{
+						case ChangeSetOperation.Insert:
+							{
+								this.CreateFreightForwarderReference(itemPM);
+								break;
+							}
 
-        private void UpdateShipmentStoragePricingsCollection()
+						case ChangeSetOperation.Update:
+							{
+								this.UpdateFreightForwarderReference(itemPM);
+								break;
+							}
+
+						case ChangeSetOperation.Delete:
+							{
+								this.DeleteFreightForwarderReference(itemPM);
+								break;
+							}
+
+						default: { break; }
+					}
+				}
+				this.freightForwarderReferenceRepository.SubmitChanges();
+			}
+		}
+		
+		private void UpdateShipmentStoragePricingsCollection()
         {
             if (initializer.ShipmentStoragePricingsChangeSet != null)
             {
@@ -7515,8 +7553,37 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 shipmentReferanceRepository.Remove(itemPoco);
             }
         }
+		private void CreateFreightForwarderReference(FreightForwarderReferencePM itemPM)
+		{
+			itemPM.ShipmentId = entityPM.Id;
+			itemPM.Tenant = tenant;
 
-        private void CreateShipmentProductItem(ShipmentProductItemPM itemPM)
+			FreightForwarderReference itemPoco = new FreightForwarderReference()
+			{
+				ShipmentId = itemPM.ShipmentId,
+			};
+
+			ShipmentMapping.MapFreightForwarderReference(itemPM, itemPoco, true);
+			freightForwarderReferenceRepository.Add(itemPoco);
+		}
+		private void UpdateFreightForwarderReference(FreightForwarderReferencePM itemPM)
+		{
+			FreightForwarderReference itemPoco = freightForwarderReferenceRepository.GetSingleFreightForwarderReference(itemPM.Tenant, itemPM.ShipmentId, itemPM.LineNumber);
+			if (itemPoco != null)
+			{
+				ShipmentMapping.MapFreightForwarderReference(itemPM, itemPoco, false);
+				freightForwarderReferenceRepository.Update(itemPoco);
+			}
+		}
+		private void DeleteFreightForwarderReference(FreightForwarderReferencePM itemPM)
+		{
+			FreightForwarderReference itemPoco = freightForwarderReferenceRepository.GetSingleFreightForwarderReference(itemPM.Tenant, itemPM.ShipmentId, itemPM.LineNumber);
+			if (itemPoco != null)
+			{
+				freightForwarderReferenceRepository.Remove(itemPoco);
+			}
+		}
+		private void CreateShipmentProductItem(ShipmentProductItemPM itemPM)
         {
             if (!itemPM.IsEmptyLine)
             {

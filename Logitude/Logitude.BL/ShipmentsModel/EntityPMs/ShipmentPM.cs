@@ -2947,9 +2947,25 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
                 }
             }
         }
+		private List<FreightForwarderReferencePM> freightForwarderReferences;
+		[Include]
+		[Composition]
+		[Association("FreightForwarderReferencePMShipment", "Id", "ShipmentId")]
+		public List<FreightForwarderReferencePM> FreightForwarderReferences
+		{
+			get
+			{
+				if (freightForwarderReferences == null) { freightForwarderReferences = new List<FreightForwarderReferencePM>(); }
+				return freightForwarderReferences;
+			}
 
-        // Standalone shipment
-        public bool IsStandalonePickupDelivery { get; set; }
+			set
+			{
+				if (value != null) { freightForwarderReferences = value; }
+			}
+		}
+		// Standalone shipment
+		public bool IsStandalonePickupDelivery { get; set; }
         public string StandalonePickupDeliveryId { get; set; }
         public string StandalonePickupDeliveryNumber { get; set; }
         public string ForwarderStandaloneShipmentId { get; set; }

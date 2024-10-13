@@ -15,7 +15,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public int Tenant { get; set; }
         [Key]
         public string ShipmentId { get; set; }
-        public string ForwarderShipmentNumber { get; set; }
+		[Key]
+		public int LineNumber { get; set; }
+		public string ForwarderShipmentNumber { get; set; }
         public bool ForwarderFileConnect { get; set; }
 
         [ForeignKey("ShipmentId")]

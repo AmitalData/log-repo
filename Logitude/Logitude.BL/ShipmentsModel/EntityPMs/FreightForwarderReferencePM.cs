@@ -18,7 +18,11 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ShipmentId { get; set; }
-        public string ForwarderShipmentNumber { get; set; }
+		[Key]
+
+		[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+		public int LineNumber { get; set; }
+		public string ForwarderShipmentNumber { get; set; }
         public bool ForwarderFileConnect { get; set; }
 
         public ChangeSetOperation ChangeSetOp { get; set; }

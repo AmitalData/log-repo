@@ -10,6 +10,7 @@ export class FreightForwarderReferenceList {
    
 	Tenant: number;
 	ShipmentId: string;
+	LineNumber: number;
 	ForwarderShipmentNumber: string;
 	ForwarderFileConnect: boolean;
 	

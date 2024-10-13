@@ -32,7 +32,10 @@ export class FreightForwarderReferencePM {
     private shipmentId: string;
     public get ShipmentId() { return this.shipmentId; }
     public set ShipmentId(newValue: string) { if (this.shipmentId != newValue) { this.shipmentId = newValue; this.MarkAsDirty("ShipmentId"); } }
-       
+    
+    private lineNumber: number;
+    public get LineNumber() { return this.lineNumber; }
+    public set LineNumber(newValue: number) { if (this.lineNumber != newValue) { this.lineNumber = newValue; this.MarkAsDirty("LineNumber"); } }           
 	 
     private forwarderShipmentNumber: string;
     public get ForwarderShipmentNumber() { return this.forwarderShipmentNumber; }
@@ -42,7 +45,10 @@ export class FreightForwarderReferencePM {
     private forwarderFileConnect: boolean;
     public get ForwarderFileConnect() { return this.forwarderFileConnect; }
     public set ForwarderFileConnect(newValue: boolean) { if (this.forwarderFileConnect != newValue) { this.forwarderFileConnect = newValue; this.MarkAsDirty("ForwarderFileConnect"); } }
-       
+    
+    private changeSetOp: string;
+    public get ChangeSetOp() { return this.changeSetOp; }
+    public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }      
 	 
 
     public OldEntityPM: FreightForwarderReferencePM;
