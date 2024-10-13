@@ -83,7 +83,7 @@ public class TokenManager
 
                 LogMessagingUtil.Instance.AppendLine($"PostAsync({settings.URIToken}, {content})");
                 var authoTask = client.PostAsync(settings.URIToken, content);
-                authoTask.Wait(); // Consider using async/await instead of .Result or .Wait() to avoid blocking threads
+                authoTask.Wait();
 
                 var response = authoTask.Result;
                 myResultString = response.Content.ReadAsStringAsync().Result;
@@ -122,9 +122,8 @@ public class TokenManager
             }
             catch (Exception ex)
             {
-                // Enhanced logging with NetCommonHelper
+                LogMessagingUtil.Instance.AppendLine($"An error occurred in the authenticate HTTP request: {ex.Message}");
                 NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"An error occurred in the authenticate HTTP request: {ex.Message}");
-                NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"Exception Details: {ex.ToString()}");
                 throw;
             }
         }
