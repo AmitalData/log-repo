@@ -29,7 +29,7 @@
 
 
                     <!-- ForwarderShipmentNumber -->
-                    <log-column [header]="'ShipmentReferance.F.ForwarderShipmentNumber' | TextCodeTranslationPipe" [binding]="'ForwarderShipmentNumber'" [width]="'180'" [Editable]="true" [Alignment]="'right'" >
+                    <log-column [header]="'FreightForwarderReference.F.ForwarderShipmentNumber' | TextCodeTranslationPipe" [binding]="'ForwarderShipmentNumber'" [width]="'180'" [Editable]="true" [Alignment]="'right'" >
                         <ng-template let-item >
                             <log-cell-template (CellClicked)="onCellSelected($event,item)" #logcelltemplate [RIndex]="item.rowIndex" [IsEnabled] = "!item.ForwarderFileConnect">
                                 <div class="TextTrimming" style="direction: ltr; text-align:left" *ngIf="logcelltemplate.IsDisplayMode">
@@ -49,7 +49,7 @@
                         <ng-template let-item>
                             <log-cell-template [IgnoreMods]="true" #logcelltemplate [IsEnabled] = "!item.ForwarderFileConnect">
                                 <div style="width: 18px; float: left; height:20px; padding-top: 2px;">
-                                    <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteButtonClicked(item)"></IconButton>
+                                    <IconButton [Name]="'Delete'" [IsSmall]="true" [IsEnabled] = "!item.ForwarderFileConnect" (click)="item.DeleteButtonClicked(item)"></IconButton>
                                 </div>
                             </log-cell-template>
                         </ng-template>

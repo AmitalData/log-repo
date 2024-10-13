@@ -10,6 +10,7 @@ import { ShipmentReferancePM } from "Shipment/EntityPMs/ShipmentReferancePM";
 import { MessageWindow } from "Controls/Windows/MessageWindow";
 import { ColumnsWidths } from "Infrastructure/Components/LogitudeComponents/LogLovV2Component";
 import { FreightForwarderReferencePM } from "Shipment/EntityPMs/FreightForwarderReferencePM";
+import { EntityResourceService } from "Infrastructure/Services/EntityResourceService";
 
 @Component({    
     templateUrl: './ShipmentDataTabComponent.html',
@@ -20,6 +21,7 @@ export class ShipmentDataTabComponent extends BaseComponent {
     public ObjectTableName: string;
     public DataContext = this;
     public ColumnsWidths: ColumnsWidths[];
+    public entityResourceService: EntityResourceService = new EntityResourceService();
 
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -38,7 +40,7 @@ export class ShipmentDataTabComponent extends BaseComponent {
             { ColumnName: 'CountryName', Width: 50 },
             { ColumnName: 'CityName', Width: 50 },
             { ColumnName: 'CountryCode', Width: 60 },
-        ];
+        ];        
     }
 
     InitializeShipmentReferance() {
@@ -276,29 +278,30 @@ export class ShipmentDataTabComponent extends BaseComponent {
     }
     //#region FreightForwarderReferences
     EditForwarderShipmentNumberValue() {
-
-        const freightForwarderReferences = this.GetActiveFreightForwarderReferences();
-        if (freightForwarderReferences.length == 0 || (freightForwarderReferences.length > 0 && AppTool.IsNullOrEmpty(freightForwarderReferences[0].ForwarderShipmentNumber))) {
-            var messageWindow: MessageWindow = new MessageWindow();
-            messageWindow.Show(TextCodeTranslator.Translate("FreightForwarderReference.O.ForwarderShiptNumMust"));
-            return;
-        }
-
-        var windowArgs: any = {};
-        windowArgs.EntityPM = this.EntityPM;
-
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 320;
-        logWindow.Height = 350;
-        logWindow.Title = TextCodeTranslator.Translate("FreightForwarderReference.F.ForwarderShipmentNumber");
-        logWindow.ShowCloseButton = true;
-        logWindow.WindowArgs = windowArgs;
-        logWindow.WindowClosed.subscribe(($event: any) => {
-            if ($event == "ok") {
-                this.OnChanged();
-            }
-        });
-        logWindow.Show('./ShipmentModules/ShipmentTabs/Components/ShipmentData/FreightForwarderReferenceDetails/FreightForwarderReferenceDetailsComponent');   
+        this.entityResourceService.getEntityResourceByTableName("FreightForwarderReference").subscribe((response: any) => {   
+          const freightForwarderReferences = this.GetActiveFreightForwarderReferences();
+          if (freightForwarderReferences.length == 0 || (freightForwarderReferences.length > 0 && AppTool.IsNullOrEmpty(freightForwarderReferences[0].ForwarderShipmentNumber))) {
+              var messageWindow: MessageWindow = new MessageWindow();
+              messageWindow.Show(TextCodeTranslator.Translate("FreightForwarderReference.O.ForwarderShiptNumMust"));
+              return;
+          }
+  
+          var windowArgs: any = {};
+          windowArgs.EntityPM = this.EntityPM;
+  
+          var logWindow = new LogitudeWindow();
+          logWindow.Width = 320;
+          logWindow.Height = 350;
+          logWindow.Title = TextCodeTranslator.Translate("FreightForwarderReference.F.ForwarderShipmentNumber");
+          logWindow.ShowCloseButton = true;
+          logWindow.WindowArgs = windowArgs;
+          logWindow.WindowClosed.subscribe(($event: any) => {
+              if ($event == "ok") {
+                  this.OnChanged();
+              }
+          });
+          logWindow.Show('./ShipmentModules/ShipmentTabs/Components/ShipmentData/FreightForwarderReferenceDetails/FreightForwarderReferenceDetailsComponent'); 
+        });  
     }
    
 
