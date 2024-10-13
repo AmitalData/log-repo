@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "d0e2b90e60a9908f9fa4afd7410d9b4a";
+		public const string HashString = "e6ec5a4e8561de152cc6a24715bebbd9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -6364,6 +6364,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatusId",
 					  						DefaultText =  "Status",
+					  						FullLocalDefaultText =  "סטטוס",
 					  						ListFieldLable =  "StatusIdListLable",
 					  						ListLableDefaultText =  "StatusId",
 					  						ListLocalDefaultText =  "סטטוס",
@@ -6440,8 +6441,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatusName",
 					  						DefaultText =  "Status",
+					  						FullLocalDefaultText =  "סטטוס",
 					  						ListFieldLable =  "StatusNameListLable",
 					  						ListLableDefaultText =  "Status",
+					  						ListLocalDefaultText =  "סטטוס",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -92353,11 +92356,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	
 			 QueryColumn OpenCommissionCasesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCommissionCasesQuery.Id,QueryCode = OpenCommissionCasesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Shipment.ShipmentNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenCommissionCasesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCommissionCasesQuery.Id,QueryCode = OpenCommissionCasesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Shipment.StatusId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenCommissionCasesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCommissionCasesQuery.Id,QueryCode = OpenCommissionCasesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Shipment.CustomerName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenCommissionCasesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCommissionCasesQuery.Id,QueryCode = OpenCommissionCasesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Shipment.CreateDateTime" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenCommissionCasesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCommissionCasesQuery.Id,QueryCode = OpenCommissionCasesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Shipment.StatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenCommissionCasesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCommissionCasesQuery.Id,QueryCode = OpenCommissionCasesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Shipment.CustomerId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenCommissionCasesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCommissionCasesQuery.Id,QueryCode = OpenCommissionCasesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Shipment.CreateDateTime" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn OpenCommissionCasesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCommissionCasesQuery.Id,QueryCode = OpenCommissionCasesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Shipment.ShipmentReferances" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -92388,11 +92391,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	
 			 QueryColumn CloseCommissionCasesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseCommissionCasesQuery.Id,QueryCode = CloseCommissionCasesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Shipment.ShipmentNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CloseCommissionCasesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseCommissionCasesQuery.Id,QueryCode = CloseCommissionCasesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Shipment.StatusId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CloseCommissionCasesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseCommissionCasesQuery.Id,QueryCode = CloseCommissionCasesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Shipment.CustomerName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CloseCommissionCasesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseCommissionCasesQuery.Id,QueryCode = CloseCommissionCasesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Shipment.CreateDateTime" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CloseCommissionCasesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseCommissionCasesQuery.Id,QueryCode = CloseCommissionCasesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Shipment.StatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CloseCommissionCasesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseCommissionCasesQuery.Id,QueryCode = CloseCommissionCasesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Shipment.CustomerId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CloseCommissionCasesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseCommissionCasesQuery.Id,QueryCode = CloseCommissionCasesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Shipment.CreateDateTime" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn CloseCommissionCasesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseCommissionCasesQuery.Id,QueryCode = CloseCommissionCasesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Shipment.ShipmentReferances" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -92423,11 +92426,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	
 			 QueryColumn AllCommissionCasesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommissionCasesQuery.Id,QueryCode = AllCommissionCasesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Shipment.ShipmentNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllCommissionCasesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommissionCasesQuery.Id,QueryCode = AllCommissionCasesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Shipment.StatusId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllCommissionCasesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommissionCasesQuery.Id,QueryCode = AllCommissionCasesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Shipment.CustomerName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllCommissionCasesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommissionCasesQuery.Id,QueryCode = AllCommissionCasesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Shipment.CreateDateTime" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllCommissionCasesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommissionCasesQuery.Id,QueryCode = AllCommissionCasesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Shipment.StatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllCommissionCasesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommissionCasesQuery.Id,QueryCode = AllCommissionCasesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Shipment.CustomerId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllCommissionCasesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommissionCasesQuery.Id,QueryCode = AllCommissionCasesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Shipment.CreateDateTime" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn AllCommissionCasesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommissionCasesQuery.Id,QueryCode = AllCommissionCasesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Shipment.ShipmentReferances" , ColumnWidth = 100 }, addedQueryColumns);
 
