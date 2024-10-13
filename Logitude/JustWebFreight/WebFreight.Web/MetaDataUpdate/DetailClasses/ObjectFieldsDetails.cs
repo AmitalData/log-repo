@@ -27,6 +27,8 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public string ControlField3 { get; set; }
         public bool DisplayOnLookUp { get; set; }
         public bool DisplayOnLookUpLocal { get; set; }
+        public bool DisplayOnLookUpLocalBack_up { get; set; }
+
         public bool Isoveridden { get; set; }
         public int Tenant { get; set; }
         public string ObjectTableName { get; set; }
@@ -79,9 +81,17 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public string AgentPermissionTypeCode { get; set; }
         public string CustomPickListCode { get; set; }
         public string FullLocalDefaultText { get; set; }
+        public string FullLocalDefaultTextBack_up { get; set; }
+
         public string ShortLocalDefaultText { get; set; }
+        public string ShortLocalDefaultTextBack_up { get; set; }
+
         public string ListLocalDefaultText { get; set; }
+        public string ListLocalDefaultTextBack_up { get; set; }
+
         public string HelpLocalDefaultText { get; set; }
+        public string HelpLocalDefaultTextBack_up { get; set; }
+
         public bool DisplayLongName { get; set; }
         public string LookUpTableName { get; set; }
         public int NumberOfDigits { get; set; }
@@ -116,8 +126,14 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public bool MyProperty { get; set; }
         public bool IsSpellCheckedFullFieldLable { get; set; }
         public bool IsSpellCheckedHelpLocalDefaultText { get; set; }
+        public bool IsSpellCheckedHelpLocalDefaultTextBack_up { get; set; }
+
         public bool IsSpellCheckedShortLocalDefaultText { get; set; }
+        public bool IsSpellCheckedShortLocalDefaultTextBack_up { get; set; }
+
         public bool IsSpellCheckedListLocalDefaultText { get; set; }
+        public bool IsSpellCheckedListLocalDefaultTexBack_upt { get; set; }
+
         public bool CopyToDW { get; set; }
         public string DataTypeCode { get; set; }
         public bool AllowedInAirlineMessaging { get;  set; }

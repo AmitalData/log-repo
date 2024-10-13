@@ -25,6 +25,8 @@
         public string FeatureId { get; set; }
         public string EditWizardName { get; set; }
         public string FullLocalDefaultText { get; set; }
+        public string FullLocalDefaultTextBack_up { get; set; }
+
         public string Perspective { get; set; }
         public bool IsHiddenFromView { get; set; }
         public bool IsNewFromTenantZeroOnly { get; set; }

@@ -23,6 +23,7 @@ using MeatadataGeneratorTool.Helpers;
 using MeatadataGeneratorTool.TextCodes;
 using MeatadataGeneratorTool.Features;
 using System.Xml.Linq;
+using System.Text.RegularExpressions;
 
 namespace MeatadataGeneratorTool
 {
@@ -2370,8 +2371,11 @@ namespace MeatadataGeneratorTool
             {
                 if (IsHebrew(attrValue) && fieldElement.Name!= "Record")
                 {
+                    fieldElement.SetAttribute(atrrName+ "Back_up", attrValue);
+
                     attrValue = ConvertToBase64(attrValue);
-                    attrValue = "\"" + attrValue + "\"";
+
+                    attrValue = "\"" + "bs64:" + attrValue + "\"";
 
                 }
                 fieldElement.SetAttribute(atrrName, attrValue);
@@ -2384,12 +2388,14 @@ namespace MeatadataGeneratorTool
 
         private static void SetAttribute(string atrrName, string attrValue, XmlElement fieldElement)
         {
-            if (!string.IsNullOrEmpty(attrValue) && fieldElement.Name != "Record")
+            if (!string.IsNullOrEmpty(attrValue))
             {
-                if (IsHebrew(attrValue))
+                if (IsHebrew(attrValue) && fieldElement.Name != "Record")
                 {
+                    fieldElement.SetAttribute(atrrName + "Back_up", attrValue);
+
                     attrValue = ConvertToBase64(attrValue);
-                    attrValue = "\"" + attrValue + "\"";
+                    attrValue = "\"" + "bs64:" + attrValue + "\"";
 
                 }
                 fieldElement.SetAttribute(atrrName, attrValue);
@@ -2399,7 +2405,8 @@ namespace MeatadataGeneratorTool
 
         private static bool IsHebrew(string text)
         {
-            return text.Any(c => c >= '\u0590' && c <= '\u05FF');
+            Regex hebrewRegex = new Regex(@"[\u0590-\u05FF]");
+            return hebrewRegex.IsMatch(text);
         }
 
         private static string ConvertToBase64(string text)

@@ -1254,6 +1254,7 @@ namespace MeatadataGeneratorTool.Helpers
 
             return result;
         }
+        private const string Base64Prefix = "\"" + "bs64:";
 
         public string GetAttributeStringValue(XmlAttribute att)
         {
@@ -1264,7 +1265,11 @@ namespace MeatadataGeneratorTool.Helpers
                 {
                     if (att.Value != null)
                     {
-                        att.Value = TryConvertFromBase64(att.Value);
+                        if (att.Value.StartsWith(Base64Prefix))
+                        {
+                            att.Value = TryConvertFromBase64(att.Value.Substring(Base64Prefix.Length));
+
+                        }
                         result = att.Value.Trim('"');
                     }
                 }
@@ -1289,14 +1294,64 @@ namespace MeatadataGeneratorTool.Helpers
         }
         private static bool IsHebrew(string text)
         {
-            return text.Any(c => c >= '\u0590' && c <= '\u05FF');
+            Regex hebrewRegex = new Regex(@"[\u0590-\u05FF]");
+            return hebrewRegex.IsMatch(text);
         }
 
         private string ConvertFromBase64(string input)
         {
-            byte[] bytes = Convert.FromBase64String(input);
-            string decodedString = Encoding.UTF8.GetString(bytes);
-            return SanitizeXmlString(decodedString);
+            // Check if the input is a valid Base64 string
+            if (IsBase64String(input))
+            {
+                try
+                {
+                    byte[] data = Convert.FromBase64String(input);
+                    string decodedString = Encoding.UTF8.GetString(data);
+
+                    // After decoding, check if it's Hebrew
+                    if (IsHebrew(decodedString))
+                    {
+                        return SanitizeXmlString(decodedString);
+                    }
+                    else
+                    {
+                        return SanitizeXmlString(input);
+                    }
+                }
+                catch (FormatException)
+                {
+                    // Handle the case where decoding fails
+                    return SanitizeXmlString(input);
+                }
+            }
+            else
+            {
+                return SanitizeXmlString(input);
+            }
+        }
+
+        private bool IsBase64String(string input)
+        {
+            if (string.IsNullOrEmpty(input) || input.Length % 4 != 0)
+                return false;
+
+            // Check if all characters are valid Base64 characters
+            foreach (char c in input)
+            {
+                if (!char.IsLetterOrDigit(c) && c != '+' && c != '/' && c != '=')
+                    return false;
+            }
+
+            // Attempt to decode the Base64 string
+            try
+            {
+                Convert.FromBase64String(input);
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
         }
         private string SanitizeXmlString(string xml)
         {
@@ -1308,7 +1363,7 @@ namespace MeatadataGeneratorTool.Helpers
                 {
                     buffer.Append(c);
                 }
-               
+                // Optionally append '?' or another placeholder for illegal chars
             }
 
             return buffer.ToString();
@@ -1316,15 +1371,14 @@ namespace MeatadataGeneratorTool.Helpers
         private bool IsLegalXmlChar(int character)
         {
             return
-            (
-                character == 0x9 /* == '\t' == 9   */          ||
-                character == 0xA /* == '\n' == 10  */          ||
-                character == 0xD /* == '\r' == 13  */          ||
-                (character >= 0x20 && character <= 0xD7FF) ||
+                character == 0x9 ||  // Tab
+                character == 0xA ||  // Line feed
+                character == 0xD ||  // Carriage return
+                (character >= 0x20 && character <= 0xD7FF) ||  // Other valid ranges
                 (character >= 0xE000 && character <= 0xFFFD) ||
-                (character >= 0x10000 && character <= 0x10FFFF)
-            );
+                (character >= 0x10000 && character <= 0x10FFFF);
         }
+
 
     }
 }

@@ -84,6 +84,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     LocalDefaultText = textCodeDetails.LocalDefaultText,
                     IsSpellChecked = textCodeDetails.IsSpellChecked,
                 };
+              
                 newTextCode.LocalDefaultText = TryConvertFromBase64(newTextCode.LocalDefaultText);
 
                 addedTextCodes.Add(newTextCode);
@@ -91,17 +92,23 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
         }
 
+        private const string Base64Prefix =  "bs64:";
 
 
         public static string TryConvertFromBase64(string input)
         {
             try
             {
-                string convertedInput = ConvertFromBase64(input);
-                 convertedInput = convertedInput.Replace("\"", "");
+                if (input.StartsWith(Base64Prefix))
+                {
+                    input = input.Substring(Base64Prefix.Length);
+                    string convertedInput = ConvertFromBase64(input);
+                    convertedInput = convertedInput.Replace("\"", "");
 
-                if (IsHebrew(convertedInput))
-                    return convertedInput;
+                    if (IsHebrew(convertedInput))
+                        return convertedInput;
+                    return input;
+                }
                 return input;
 
             }

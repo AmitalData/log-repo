@@ -10,6 +10,8 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public string FeatureTypeCode { get; set; }
         public bool Packagable { get; set; }
         public string FullLocalDefaultText { get; set; }
+        public string FullLocalDefaultTextBack_up { get; set; }
+
         public bool IsBusinessUnitEnabled { get; set; }
         public bool IsMemoryAdded { get; set; }
         public bool IsOld { get;  set; }
