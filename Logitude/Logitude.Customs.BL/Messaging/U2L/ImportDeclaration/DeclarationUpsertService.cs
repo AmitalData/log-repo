@@ -168,9 +168,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				};
 				var myQueryService = new DeclarationQueryService(_context);
 				var myDeclarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), ResolvedTenant());
-				//var mySupplierInvoiceItemsTaxUpdateService = new SupplierInvoiceItemsTaxUpdateService(context, new Dictionary<string, IContext>(), ResolvedTenant());
-				//var myDeclarationTaxUpdateService = new DeclarationTaxUpdateService(context, new Dictionary<string, IContext>(), ResolvedTenant());
-				//amitalContext = AmitalContext.GetContext(ResolvedTenant());
+ 
 				if ((new CustomsSettingQueryService(ResolvedTenant())).GetSettingByTenantN(ResolvedTenant()).IsConnectedToUniFreight)
 				{
 					amitalContext = AmitalContext.GetContext(ResolvedTenant());
@@ -731,10 +729,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                             if (decimal.TryParse(_AmitalCustomsFile.GrossMassMeasure, out GrossMassMeasure) || string.IsNullOrWhiteSpace(_AmitalCustomsFile.GrossMassMeasure)) //Yuval Chalup 23.02.2016 TASK-20330 (Add  || string.IsNullOrWhiteSpace(_AmitalCustomsFile.GrossMassMeasure))
                             {
 
-                                string isOverrideWeight = CustomsSettingQueryService.GetSettingByTenant(ResolvedTenant()).IsConnectedToUniFreight ?
-                                    GetAmitalDefault("ISRAEL", "CIM_NO_OVR_WGT", "NON", _AmitalCustomsFile.CustomerId, ResolvedTenant()) :
-                                    "N";
-
                                 decimal weight = Math.Truncate(GrossMassMeasure);
                                 if (weight > 99999999)
                                 {
@@ -792,10 +786,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                         if (decimal.TryParse(_AmitalCustomsFile.GrossMassMeasure, out GrossMassMeasure) || string.IsNullOrWhiteSpace(_AmitalCustomsFile.GrossMassMeasure)) //Yuval Chalup 23.02.2016 TASK-20330 (Add  || string.IsNullOrWhiteSpace(_AmitalCustomsFile.GrossMassMeasure))
                         {
 
-                            string isOverrideWeight = CustomsSettingQueryService.GetSettingByTenant(ResolvedTenant()).IsConnectedToUniFreight ?
-                                GetAmitalDefault("ISRAEL", "CIM_NO_OVR_WGT", "NON", _AmitalCustomsFile.CustomerId, ResolvedTenant()) :
-                                "N";
-                            if (isOverrideWeight == "Y" && this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasure > 0)
+							string isOverrideWeight = 
+								GetAmitalDefault("ISRAEL", "CIM_NO_OVR_WGT", "NON", _AmitalCustomsFile.CustomerId, ResolvedTenant()) ;
+                             
+                            if (isOverrideWeight == "Y" && _MyDeclarationPM.Direction != "E" && this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasure > 0)
                             {
                                 GrossMassMeasure = (decimal)this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasure;
                             }
@@ -1084,9 +1078,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             if (decimal.TryParse(_AmitalCustomsFile.GrossMassMeasure, out GrossMassMeasure) || string.IsNullOrWhiteSpace(_AmitalCustomsFile.GrossMassMeasure)) //Yuval Chalup 23.02.2016 TASK-20330 (Add  || string.IsNullOrWhiteSpace(_AmitalCustomsFile.GrossMassMeasure))
             {
 
-                string isOverrideWeight = CustomsSettingQueryService.GetSettingByTenant(ResolvedTenant()).IsConnectedToUniFreight ?
-                    GetAmitalDefault("ISRAEL", "CIM_NO_OVR_WGT", "NON", _AmitalCustomsFile.CustomerId, ResolvedTenant()) :
-                    "N";
+				string isOverrideWeight =
+					GetAmitalDefault("ISRAEL", "CIM_NO_OVR_WGT", "NON", _AmitalCustomsFile.CustomerId, ResolvedTenant());
+                     
 
                 decimal weight = Math.Truncate(GrossMassMeasure);
                 if (weight > 99999999)
@@ -2242,8 +2236,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				return null;
 			}
 			Card myCard = null;
-			///using (var cardScope = TransactionFactory.GetNewTransaction())
-			//using (TransactionScope scope = TransactionFactory.GetTransaction())
 			{
 				var repository = new CardRepository(ResolvedTenant());
 				myCard = repository.GetSingleCardByCode(amitalCustomerCode, ResolvedTenant(), false);// why not from cache - maybe just now updated !!
@@ -2253,8 +2245,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 					AppendLogLine("Customer Card does not exist for Amital Customer Code " + amitalCustomerCode);
 					MyGenericResponseObj.Message = "Customer Card does not exist for Amital Customer Code " + amitalCustomerCode;
 
-                    if(CustomsSettingQueryService.GetSettingByTenant(ResolvedTenant()).IsConnectedToUniFreight)
-						return null;
+                    if(_AmitalCustomsFile.Direction!="E")
+                        return null;
 
 					AppendLogLine("Open A new Card in the same Transaction Scope ");
 					var cardRep = new CardRepository(ResolvedTenant());
@@ -2561,20 +2553,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
 		private string GetAmitalDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
 		{
-			if (amitalContext == null) return null;
-			var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
+            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
 
-			if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
-			{
-				return ("");
-			}
+           return defaultValueQueryService.GetDefault(DISTRID, DEFID, BRANCHID, CARDID, tenant);
 
-			GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-			if (myGDFDATAPM == null)
-			{
-				return ("");
-			}
-			return (myGDFDATAPM.DEFDATA);
 		}
 
 

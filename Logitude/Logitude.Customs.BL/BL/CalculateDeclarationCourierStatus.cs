@@ -252,8 +252,7 @@ namespace Logitude.Customs.BL.BL
         {
             var setting = CustomsSettingQueryService.GetSettingByTenant(myDeclarationCourierStatusPM.Tenant);
 
-            if (setting != null & setting.IsConnectedToUniFreight)
-            {
+          
 
                     if (myDeclarationCourierStatusPM == null) return;
                 //Set HighLowValue
@@ -271,7 +270,7 @@ namespace Logitude.Customs.BL.BL
                     {
                         myDeclarationCourierStatusPM.HighLowValue = "L";
                     }
-                }
+               
         }
 
         

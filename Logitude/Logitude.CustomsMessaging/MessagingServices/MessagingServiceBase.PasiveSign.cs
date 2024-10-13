@@ -151,12 +151,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         {
                           
                             case SignMethodByQueueEnum.HybridDbSignQueue:
-#if false
-                                if (!pmCustomsSetting.IsConnectedToUniFreight)
-                                {
-                                    _CustomsRequestsSheetService.AddExportDBSignQueue(requestParams, personId, SignatureBy, pmCustomsSetting.CustomsAgentId);
-                                }
-#endif
+ 
                                 var signQueueHybridExportDBService = new CreateSignQueueHybridExportDBService();
                                 signQueueHybridExportDBService.CreateQueue(requestParams, personId, SignatureBy, pmCustomsSetting.CustomsAgentId);
 

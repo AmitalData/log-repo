@@ -1612,15 +1612,14 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
                 CustomsSettingPM setting = settingService.GetSettingByTenantN(tenant);
 
-                if (setting.IsConnectedToUniFreight)
-                {
+             
                     DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
                     string isNoIncotermCheck = defaultValueQueryService.GetDefault("ISRAEL", "CGG_NO_INC_CHK", "NON", "NON", tenant);
                     if (isNoIncotermCheck == "Y")
                     {
                         return Request.CreateResponse(HttpStatusCode.OK, false);
                     }
-                }
+              
 
                 var result = queryService.CheckFreightAmountsByIncoterm(declarationId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, result);

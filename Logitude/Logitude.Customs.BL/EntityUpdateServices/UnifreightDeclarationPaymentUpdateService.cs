@@ -56,16 +56,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var sw = Stopwatch.StartNew();
             try
             {
-                //if ((!Environment.MachineName.Equals("itzik-7-new", StringComparison.OrdinalIgnoreCase)) && (!Environment.MachineName.Equals("yuval-7-new", StringComparison.OrdinalIgnoreCase))) return;
-                ///if (String.IsNullOrWhiteSpace(_DirtyDeclarationPaymentPM.DeclarationId))
+
                 ///all ref 2 _DirtyDeclarationPaymentPM check if null !!!!!!!!
                 if (_DirtyDeclarationPaymentPM== null || String.IsNullOrWhiteSpace(_DirtyDeclarationPaymentPM.DeclarationId))
                 {
                     return;
                 }
 
-                //var setting = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPaymentPM.Tenant);
-                //if (!setting.IsConnectedToUniFreight)
+
                 DeclarationQueryService declarationQueryService = new DeclarationQueryService(_DirtyDeclarationPaymentPM.Tenant);
                 DeclarationPM declarationPM = declarationQueryService.GetSingle(_DirtyDeclarationPaymentPM.DeclarationId, false, false);
                 if (declarationPM == null || (declarationPM != null && !declarationPM.IsConnectedToUnifreight))

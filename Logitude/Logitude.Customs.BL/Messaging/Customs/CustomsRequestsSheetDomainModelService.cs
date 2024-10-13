@@ -434,7 +434,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 {
                     return true;//in courier CompanyType -AvoidSign
                 }
-                if (CustomsSettingQueryService.GetLogitudeCustomsSettingsM(requestParams.Tenant).IsConnectedToUniFreight &&   !String.IsNullOrWhiteSpace(requestParams.LoggingEntityId) & !string.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId))
+                if (!String.IsNullOrWhiteSpace(requestParams.LoggingEntityId) & !string.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId))
                 {
                     DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(_Tenant);
 
@@ -444,9 +444,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                     if (requestParams.LoggingObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Declaration"))
                     {
 
-                        //var customsSettingQueryService = new CustomsSettingQueryService(_Tenant);
-                        //var customsSettingPM = customsSettingQueryService.GetSingle(_Tenant.ToString(), false, true);
-                        //if (customsSettingPM.TotalInvoiceAmountInUSD.HasValue)
+                   
                         {
                             var declarationQueryService = new DeclarationQueryService(_Tenant);
                             var declaration = declarationQueryService.GetSingle(RequestParams.LoggingEntityId, false, false);
@@ -457,12 +455,10 @@ namespace Logitude.Customs.BL.Messaging.Customs
                                 DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declaration.Id, true, false);
                                 if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > defaultAmount)
                                 {
-                                    //myDeclarationCourierStatusPM.HighLowValue = "H";
-                                }
+                                 }
                                 else
                                 {
-                                    //myDeclarationCourierStatusPM.HighLowValue = "L";
-                                    LogMessagingUtil.Instance.AppendLine($"{defaultAmount} בלדרות ביטול חתימה במסרים - סך חשבון בהצהרה בדולרים   {myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD.GetValueOrDefault()} קטן מהגדרת המינימום");
+                                     LogMessagingUtil.Instance.AppendLine($"{defaultAmount} בלדרות ביטול חתימה במסרים - סך חשבון בהצהרה בדולרים   {myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD.GetValueOrDefault()} קטן מהגדרת המינימום");
                                     return true;
                                 }
                             }
@@ -1859,12 +1855,7 @@ After that Remove file  from DCA  .. ");
                         {
                         
                             case SignMethodByQueueEnum.HybridDbSignQueue:
-#if false
-                                    if (!pmCustomsSetting.IsConnectedToUniFreight)
-                                    {
-                                        AddExportDBSignQueue(RequestParams, personId, CalcSignByFromStep(null), pmCustomsSetting.CustomsAgentId);
-                                    }
-#endif
+ 
                                 {
                                     var signQueueHybridExportDBService = new CreateSignQueueHybridExportDBService();
                                     signQueueHybridExportDBService.CreateQueue(RequestParams, personId, CalcSignByFromStep(null), pmCustomsSetting.CustomsAgentId);

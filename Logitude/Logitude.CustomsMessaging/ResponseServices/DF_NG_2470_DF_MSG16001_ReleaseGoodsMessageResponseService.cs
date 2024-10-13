@@ -141,10 +141,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             var user = userRepository.GetSingleUserByCode("MEHES", declarationPM.Tenant, true);
 
 
-                            var setting = CustomsSettingQueryService.GetSettingByTenant(declarationPM.Tenant);
-                            
-                            if (setting.IsConnectedToUniFreight || AmitalEventTracer.UseHybrid_When_NotIsConnectedToUniFreight)
-                            {
+                      
                                 if (declarationPM.Direction == "E")
                                 {
                                     RaiseEvent(declarationPM, user?.Id, status_id: "HTR", status_DateTime: statusDateTime);
@@ -152,7 +149,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     SendSoyStatusToUnifreight(declarationPM, user?.Id);
 
                                 }
-                            }
+                           
 
 
 

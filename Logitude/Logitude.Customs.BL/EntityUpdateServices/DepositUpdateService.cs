@@ -81,8 +81,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             OnUpdatingTapag(entityPM);
 
-            //var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
-            //if (setting.IsConnectedToUniFreight)
+          
             DeclarationPM connectedDeclarationPM = GetConnectedDeclarationPM(entityPM);
             if (connectedDeclarationPM != null && (connectedDeclarationPM.IsConnectedToUnifreight || connectedDeclarationPM.IsAmendment==true))
             {

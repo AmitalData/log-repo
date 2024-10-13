@@ -41,11 +41,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData = new INF_MSG_GenericResponseData(); //moran 1.3.15 - Task 9921
             MyResponseData.Succeeded = true; //moran 1.3.15 - Task 9921
 
-            var setting = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
-            if (setting != null)
-            {
-                if (setting.IsConnectedToUniFreight)
-                {
+           
                     string clientId = null;
                     clientId = clientQueryService.GetIdByCodeOrPassport(customResponse.POA.authorizerExternalId.ToString(), customResponse.POA.authorizerPassportNumber, requestParams.Tenant);
                     //if (String.IsNullOrWhiteSpace(client))
@@ -99,8 +95,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         client.ChangeSetOp = ChangeSetOperation.Update;
                         clientUpdateService.Update(client, true);
                     }
-                }
-            }
+             
 
             if (this.MyRequestSheetParam == null)
             {

@@ -62,13 +62,7 @@ namespace Logitude.Customs.BL.TraceEvents
                 if (mySetting.StandAlone)
                     return;
 
-                //if (!mySetting.IsConnectedToUniFreight && mySetting.UnfConnectionString == null)
-                //{
-                //    if (!UseHybrid_When_NotIsConnectedToUniFreight)
-                //    {
-                //        return;
-                //    }
-                //}
+  
                 if (myAmitalEventTracer.NotConnectedToUniface)//לא מחובר ברמת ההצהרה
                 {
 
@@ -85,9 +79,7 @@ namespace Logitude.Customs.BL.TraceEvents
                 if (isExport && !mySetting.IsConnectedToUniFreight)
                 {
 
-
-                        ///var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
-
+ 
                         string queueName = GetQueueNameByUnifreightEntity(myAmitalEventTracer.MyFUStatus.entname);
                         if (!string.IsNullOrWhiteSpace(queueName))
                         {
@@ -131,7 +123,6 @@ namespace Logitude.Customs.BL.TraceEvents
             {
 
                 if (
-                    Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(myAmitalEventTracer.Tenant).IsConnectedToUniFreight && 
                     myAmitalEventTracer.MyUnifreightEventParam != null && myAmitalEventTracer.MyUnifreightEventParam.IsValid())
                 {
 

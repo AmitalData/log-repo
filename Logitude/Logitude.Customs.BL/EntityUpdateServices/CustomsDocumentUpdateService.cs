@@ -269,14 +269,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         var pm = documentsFilingQuery.GetSinglePM(documentsFilingId, entityPM.Tenant);
                         if (pm.ExternalEntityName == "CFIFILEM" && !string.IsNullOrWhiteSpace(pm.ExternalEntityReference))
                         {
-                            CustomsSettingQueryService settingService = new CustomsSettingQueryService(entityPM.Tenant);
-                            CustomsSettingPM setting = settingService.GetSettingByTenantN(entityPM.Tenant);
-
-                            if (setting.IsConnectedToUniFreight)
-                            {
                                 var unifreightFUStatusTaskService = new UnifreightFUStatusTaskService();
                                 unifreightFUStatusTaskService.DeleteINAFUStatus(entityPM.Tenant, pm.ExternalEntityReference);
-                            }
+                            
                         }
                         AddHybridTaskDocumentFilingChange(pm); //Bug 36694: Disconnecting document from the ticket  does not create trigger to UNF
                     }
@@ -815,31 +810,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     requestParams.ForcePersonalSign = true;
                 }
                 var my9mb = 9000000;
-                //var my3mb = 3000000;
 
-
-                //if (entityPM.FileSize.HasValue && entityPM.FileSize.GetValueOrDefault() > my3mb)
-                //{
-                //    SendDCA(requestParams);
-                //}
-                //else
                 {
                     DocumentsFilingRepository rep = new DocumentsFilingRepository(entityPM.Tenant);
                     var fileSize = rep.GetDocumentFileSizeByDocumentFilingId(requestParams.DocumentsFilingId, requestParams.Tenant);
                     var hugeFile = false;
-                    /*CustomsSettingQueryService settingService = new CustomsSettingQueryService(entityPM.Tenant);
-                    CustomsSettingPM setting = settingService.GetSettingByTenantN(entityPM.Tenant);
-
-                    if (setting.IsConnectedToUniFreight)
-                    {
-                        var repo1 = new GDMFILEVERRepository(requestParams.Tenant);
-                        var list = repo1.GetList(requestParams.DocumentsFilingId);
-                        if (list.Count > 0)
-                        {
-                            var lastVer = list.Max(r => r.VERSION);
-                            var lastGDMFILEVER = list.First(r => r.VERSION == lastVer);
-                            //9558452
-                            //7000000*/
+ 
                     if (fileSize > HugeFileSizeSendToDCA)
                     {
                         if (fileSize > MaxFileSizeDONOTSendToDCA)

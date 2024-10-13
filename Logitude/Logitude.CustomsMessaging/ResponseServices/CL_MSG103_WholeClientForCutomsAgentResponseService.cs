@@ -122,8 +122,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     if (setting != null)
                     {
-                        //if (!setting.IsConnectedToUniFreight)
-                        if (string.IsNullOrWhiteSpace(setting.UnfConnectionString))
+                         if (string.IsNullOrWhiteSpace(setting.UnfConnectionString))
                         {
                             BuildCustomerCard(requestParams.LoggingUserId);
                         }
@@ -249,8 +248,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (setting != null)
             {
-                //if (setting.IsConnectedToUniFreight)
-                if (!string.IsNullOrWhiteSpace(setting.UnfConnectionString))
+                 if (!string.IsNullOrWhiteSpace(setting.UnfConnectionString))
                 {
                     SendClientToUnifreight(customResponse.GeneralCustomerData, requestParams.Tenant);
                     userMessage = userMessage + "\n" + "נשלח מסר ליוניפרייט";

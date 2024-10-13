@@ -45,11 +45,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             ValidatePM(entityPM);
             //CustomsSettingQueryService settingsQuery = new CustomsSettingQueryService(entityPM.Tenant);
-            var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
-            if (!setting.StandAlone)
-            {
+          
                 UpdateUnifreight(entityPM);
-            }
+         
 
             UpdateNotification(entityPM); // moran 2.9.14 - Task 6932 
 

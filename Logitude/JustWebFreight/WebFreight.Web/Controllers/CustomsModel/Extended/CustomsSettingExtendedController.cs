@@ -203,12 +203,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             {
                 return true;
             }
-            var customsSettingQueryService = new CustomsSettingQueryService(tenant);
-            var pm=customsSettingQueryService.GetSettingByTenantN(tenant);
-            if (!pm.IsConnectedToUniFreight)
-            {
-                return true;
-            }
+ 
             string UNFAutoInsurance_DefaultValue = defaultValueQueryService.GetDefault("ISRAEL", "CGG_AUTO_INSUR", "NON", "NON", tenant);
             if (String.IsNullOrWhiteSpace(UNFAutoInsurance_DefaultValue))
             {

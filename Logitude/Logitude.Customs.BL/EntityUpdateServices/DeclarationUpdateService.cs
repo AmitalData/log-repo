@@ -147,8 +147,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (setting != null)
             {
                 entityPM.AgentId = setting.CustomsAgentId.Length <= 9 ? setting.CustomsAgentId : null;
-                //if (!setting.IsConnectedToUniFreight)
-                if (!entityPM.IsConnectedToUnifreight && entityPM.IsAmendment != true)
+                 if (!entityPM.IsConnectedToUnifreight && entityPM.IsAmendment != true)
                 {
 
                     if (string.IsNullOrEmpty(entityPM.CustomFileNo))
@@ -437,10 +436,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     return;
                 }
-
-                //CustomsSettingQueryService settingsQuery = new CustomsSettingQueryService(entityPM.Tenant);
-                //var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
-                //if (setting.IsConnectedToUniFreight)
+ 
                 var eventContextTagModel = entityPM.CurrentContextTag as EventContextTagModel;
 
                 var declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
@@ -451,8 +447,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     var entityPMOrg = declarationQueryService.GetSingle(entityPM.AmendmentOriginalDeclartation, true, false);
                     entityPMOrg.CurrentContextTag = eventContextTagModel;
                     entityPMOrg.HatraDate = entityPM.HatraDate;
-                    //  entityPMOrg.DeclarationNumber = entityPM.DeclarationNumber;
-
+ 
                     UpdateUnifreight(entityPMOrg);
 
 
@@ -2154,14 +2149,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var setting = CustomsSettingQueryService.GetSettingByTenant(tenant);
             if (setting != null)
             {
-                //if (setting.IsConnectedToUniFreight)
-                if (!string.IsNullOrWhiteSpace(setting.UnfConnectionString))
+                 if (!string.IsNullOrWhiteSpace(setting.UnfConnectionString))
                 {
                     AmitalContext amitalContext;
                     using (amitalContext = AmitalContext.GetContext(tenant))
                     {
-                        //AmitalContext.SetOracleMonitor();
-                        var myCCUFILEMQueryService = new CCUFILEMQueryService(amitalContext);
+                         var myCCUFILEMQueryService = new CCUFILEMQueryService(amitalContext);
 
                         myCCUFILEM = myCCUFILEMQueryService.GetCCUFILEMByRESHIMONNO(reshimonNumber);
 

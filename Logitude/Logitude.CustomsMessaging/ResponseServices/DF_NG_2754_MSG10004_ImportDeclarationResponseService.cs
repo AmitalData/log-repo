@@ -1119,120 +1119,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     _MyDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(_MyDeclarationPM ,_MyDeclarationCourierStatusPM: _MyDeclarationCourierStatusPM);
                     declarationCourierStatusUpdateService.Update(_MyDeclarationCourierStatusPM, true);
                 }
-                /*
-                DeclarationPendingQueryService myCourierPendingReasonQueryService = new DeclarationPendingQueryService(context);
-                DeclarationPendingPM declarationPendingPM_900 = myCourierPendingReasonQueryService.GetSingle(_MyDeclarationPM.Id, "900", false, false);
-                DeclarationPendingPM declarationPendingPM_901 = myCourierPendingReasonQueryService.GetSingle(_MyDeclarationPM.Id, "901", false, false);
-                
-                //DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-                //DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, false, false);
-                //if (currentDeclarationCourierStatusPM != null && 
-                //    (string.IsNullOrEmpty(currentDeclarationCourierStatusPM.CourierPendingReasonCode) || currentDeclarationCourierStatusPM.CourierPendingReasonCode == "900" || currentDeclarationCourierStatusPM.CourierPendingReasonCode == "901"))
-                
-                {
-                    // Pending 901
-                    Boolean isSetPendingTo901 = false;
-                    if (customResponse.Response.Error != null)
-                    {
-                        foreach (var errorItem in customResponse.Response.Error)
-                        {
-                            if (errorItem.ValidationCode != null && errorItem.ValidationCode.Value == "2382")
-                            {
-                                LogMessagingUtil.Instance.AppendLine("Pending - הצהרה פלסטינאית = 901");
-                                isSetPendingTo901 = true;
-                                //currentDeclarationCourierStatusPM.CourierPendingReasonCode = "901";
-                                //currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                                if (declarationPendingPM_901 == null)
-                                {
-                                    declarationPendingPM_901 = new DeclarationPendingPM();
-                                    declarationPendingPM_901.CourierPendingReasonCode = "901";
-                                }
-                                declarationPendingPM_901.ChangeSetOp = ChangeSetOperation.Update;
-                                declarationPendingPM_901.Status = "A";
-                                LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code To 901");
-                            }
-                        }
-                    }
-                    if (!isSetPendingTo901)
-                    {
-
-                        //if (currentDeclarationCourierStatusPM.CourierPendingReasonCode == "901")
-                        if (declarationPendingPM_901 != null)
-                        {
-                            //currentDeclarationCourierStatusPM.CourierPendingReasonCode = null;
-                            //currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                            declarationPendingPM_901.ChangeSetOp = ChangeSetOperation.Update;
-                            declarationPendingPM_901.Status = "S";
-                            LogMessagingUtil.Instance.AppendLine("Courier Pending Reason Code 901 Set as Solved");
-                        }
-
-                        // Pending 900
-                        CourierMasterQueryService courierMasterService = new CourierMasterQueryService(requestParams.Tenant);
-                        CourierMasterPM courierMaster = courierMasterService.GetSingle(_MyDeclarationPM.CourierMasterId, false, false);
-                        if (courierMaster != null)
-                        {
-                            var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
-                            var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_ACT_COLLECT", "NON", courierMaster.IntegratorNumber, false, true);
-                            bool isCollectActive = def.DEFDATA == "Y";
-                            if (isCollectActive)
-                            {
-                                LogMessagingUtil.Instance.AppendLine("תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900");
-                                if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && _MyDeclarationPM.TotalTax > 0)
-                                {
-                                    //currentDeclarationCourierStatusPM.CourierPendingReasonCode = "900";
-                                    //currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                                    if (declarationPendingPM_900 == null)
-                                    {
-                                        declarationPendingPM_900 = new DeclarationPendingPM();
-                                        declarationPendingPM_900.CourierPendingReasonCode = "900";
-                                    }
-                                    declarationPendingPM_900.ChangeSetOp = ChangeSetOperation.Update;
-                                    declarationPendingPM_900.Status = "A";
-                                    LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code 900");
-                                }
-                                //else if (currentDeclarationCourierStatusPM.CourierPendingReasonCode == "900")
-                                else if (declarationPendingPM_900 != null)
-                                {
-                                    //currentDeclarationCourierStatusPM.CourierPendingReasonCode = null;
-                                    //currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                                    declarationPendingPM_900.ChangeSetOp = ChangeSetOperation.Update;
-                                    declarationPendingPM_900.Status = "S";
-                                    LogMessagingUtil.Instance.AppendLine("Courier Pending Reason Code 900 Set as Solved");
-                                }
-                            }
-                        }
-                    }
-
-                    //if (currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
-                    //{
-                    //  DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
-                    //declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
-                    //}
-                    
-                    DeclarationPendingUpdateService declarationPendingUpdateService = new DeclarationPendingUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                    if (declarationPendingPM_900 != null && declarationPendingPM_900.ChangeSetOp == ChangeSetOperation.Update)
-                    {
-                        declarationPendingUpdateService.Update(declarationPendingPM_900, true);
-                    }
-                    if (declarationPendingPM_901 != null && declarationPendingPM_901.ChangeSetOp == ChangeSetOperation.Update)
-                    {
-                        declarationPendingUpdateService.Update(declarationPendingPM_901, true);
-                    }
-                }
-                */
+ 
             }
 
-            //var setting = CustomsSettingQueryService.GetSettingByTenant(_MyDeclarationPM.Tenant);
-            //if (setting.IsConnectedToUniFreight)
-
+            
             //<--- Yuval Chalup 09.11.2015 TASK-16498 - Update PaymentOrderNumber in Payment
             if (_MyDeclarationPM.Direction!="E")
             {
                 if (customResponse.DeclarationPaymentDetails != null)
                 {
                     if (customResponse.DeclarationPaymentDetails.PaymentOrderStatus != null && customResponse.DeclarationPaymentDetails.PaymentOrderNumber != null && customResponse.DeclarationPaymentDetails.PaymentOrderStatus != 0)
-                    // if (customResponse.DeclarationPaymentDetails.PaymentOrderNumber != null || (_IsSubmitDeclarationResponse == true && string.IsNullOrWhiteSpace(paymentOrderNumber) && _MyDeclarationPM.DeclarationStatusTypeCode == "5" && _MyDeclarationPM.TotalTax <= 5))
-                    {
+                     {
                         var unifreightDeclarationPaymentUpdateService = new UnifreightDeclarationPaymentUpdateService(declarationPaymentsPM, _MyDeclarationPM);
                         unifreightDeclarationPaymentUpdateService.Update();
                     }
@@ -1243,10 +1140,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (customResponse.CollateralRequestDetails != null) // Create Collateral
             {
                 LogMessagingUtil.Instance.AppendLine("CollateralRequestDetails: Create Collateral");
-                //var headerXml = XmlGenericUtil<UnifreightIIG.Common.ImportDeclarationServiceReference.RequestContentHeader>
-                //    .SerializeObject(customResponse.);
-                //var header = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Collateral.RequestContentHeader>.DeSerializeObject(headerXml);
-                var requestXml = XmlGenericUtil<UnifreightIIG.Common.ImportDeclarationServiceReference.CollateralRequestDetails[]>
+                 var requestXml = XmlGenericUtil<UnifreightIIG.Common.ImportDeclarationServiceReference.CollateralRequestDetails[]>
                     .SerializeObject(customResponse.CollateralRequestDetails);
                 var collateralArry = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Collateral.CollateralRequestDetails[]>.DeSerializeObject(requestXml);
 

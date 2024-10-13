@@ -365,14 +365,7 @@ namespace Logitude.Customs.Data.Repsitories
                  a.Tenant == tenant &&
                  a.CreateDateTime >= monthAgo
                  select a);
-
-            //var qOpenFrom =
-            //    (
-            //    from a in qOpenLastMonth
-            //    group a by a.IsConnectedToUnifreight into g
-            //    select new { g.Key, tot = g.Count() }
-            //    );
-
+ 
 
             var qLastMonthTotDecStandAlone =
                 (

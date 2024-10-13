@@ -44,22 +44,13 @@ namespace Logitude.Customs.BL.Messaging.Amital
                 throw new ArgumentNullException("SendFileToAmitalService():xmlfile is null");
             }
 
-			//myParams.Add("GWSFBLO:UnifreightUserID", p_user);
-			//var setting = UnifreightIIGCommonUtil.GetTenantSetting(tenant);
-			//if (setting == null)
-			//{
-			//    throw new Exception("SendFileToAmitalService():no setting for tenant");
-			//}
+	 
 			var myUServerDNS = "UNIV55";// setting.UServerDNS;
             var myUServerPort = "8055";// setting.UServerPort;
 
 
             var mySetting = Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(tenant);
-			//Removed by Yuval Chalup 13.04.2017 (Consulting with Itzik)
-			//if (!mySetting.IsConnectedToUniFreight)
-			//{
-			//    throw new Exception(string.Format("SendFileToAmitalService():Tenant {0} Is not Connected To UniFreight", tenant));
-			///}
+	 
 		
 			if (!mySetting.IsConnectedToUniFreight)
 			{
