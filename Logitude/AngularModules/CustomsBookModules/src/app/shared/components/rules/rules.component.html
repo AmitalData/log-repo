@@ -3,34 +3,51 @@
         <div class="detailsSlide_commentsTop">
             <div class="detailsSlide_commentsTitle">
                 <a href="#" class="detailsSlide_commentsPinned" role="checkbox" aria-checked="false"
-                    (click)="$event.preventDefault()"><i role="img" aria-hidden="true" class="icon-pin"></i><i
-                        role="img" aria-hidden="true" class="icon-pin_full"></i></a>
-                <h3>כללים ({{allRules?.length}})</h3>
+                    (click)="$event.preventDefault()">
+                    <i role="img" aria-hidden="true" class="icon-pin"></i>
+                    <i role="img" aria-hidden="true" class="icon-pin_full"></i>
+                </a>
+                <h3>כללים ({{ allRules?.length }})</h3>
             </div>
-            <div class="detailsSlide_commentsClose"><a href="#" role="button" aria-controls="comments"><i role="img"
-                        aria-hidden="true" class="icon-close"></i></a></div>
+            <div class="detailsSlide_commentsClose">
+                <a href="#" role="button" aria-controls="comments">
+                    <i role="img" aria-hidden="true" class="icon-close"></i>
+                </a>
+            </div>
         </div>
-     
+
         <ul class="rulesList">
-            <li class="rulesItem" *ngFor="let item of allRules">
+            <li class="rulesItem" *ngFor="let item of allRules; let i = index">
                 <div class="rulesItem_toggle">
                     <a href="#" role="button" (click)="toggleRule(item, $event)" [attr.aria-expanded]="item.expanded">
-                        {{ item.title }}
+                        {{ item.Title }}
                     </a>
                 </div>
-                <div class="rulesItem_download"><a href="#" role="button"><i role="img" aria-hidden="true"
-                            class="icon-download"></i></a></div>
+                <div class="rulesItem_download">
+                    <a href="#" role="button">
+                        <i role="img" aria-hidden="true" class="icon-download"></i>
+                    </a>
+                </div>
                 <div class="rulesItem_DDown" [class.shown]="item.expanded">
                     <div class="rulesItem_section">
                         <table class="boxRuleData">
-                            <tr *ngFor="let rule of item.rulesList; let i = index">
-                                <td>{{ i + 1}}</td>
-                                <td>{{ rule.Rules }}</td>
+                            <tr class="parentLine">
+                                <td>{{ i + 1 }}</td>
+                                <td>
+                                    <span>
+                                        {{orderText(item.Rules) }}
+                                    </span>
+                                    <table class="boxRuleDataChild ">
+                                        <tr *ngFor="let childItem of item.childrens; let j = index">
+                                            <td>{{ alephBetHelper.getLetterFromNumber(j + 1) }}</td>
+                                            <td>{{ orderText(childItem.Rules)}}</td>
+                                        </tr>
+                                    </table>
+                                </td>
                             </tr>
                         </table>
                     </div>
                 </div>
-
             </li>
         </ul>
     </div>
