@@ -98,8 +98,15 @@ namespace WebFreight.Web
 
             AccountingRegistrations.Register();
             CustomsRegistrations.Register();
-
-            CacheManager.CacheWrapper = new CacheWrapper(HttpContext.Current.Cache);
+            string notUsecache = System.Configuration.ConfigurationManager.AppSettings.Get("NotUseCache");
+            if (notUsecache == "1")
+            {
+                CacheManager.CacheWrapper = new CacheEmptyWrapper(HttpContext.Current.Cache);
+            }
+            else
+            {
+                CacheManager.CacheWrapper = new CacheWrapper(HttpContext.Current.Cache);
+            }
             if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox))
             {
                 LogitudeCacheManager.ServerCache = new RedisCache();
