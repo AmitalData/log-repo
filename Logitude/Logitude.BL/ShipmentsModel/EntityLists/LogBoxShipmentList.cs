@@ -20,6 +20,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string PartnerLogoId { get; set; }
         public bool IsShipmentOrder { get; set; }
         public string TruckNumber { get; set; }
+        public string Master { get; set; }
         public string CarrierNumber { get; set; }
         public string PartnerName { get; set; }
         public string ContainersNumbersandTypesArray { get; set; }
@@ -48,5 +49,13 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string ApprovedByUserName { get; set; }
         public DateTime? MainCarriageExpectedOrActual { get; set; }
         public DateTime CreateDateTime { get; set; }
+        public DateTime? MainCarriageETD { get; set; }
+        public DateTime? MainCarriageATD { get; set; }
+        public string ToPortCode { get; set; }
+        public string FromPortCode { get; set; }
+        public string MainCarriageFromPortCode { get; set; }
+        public string MainCarriageToPortCode { get; set; }
+        public string MainCarriageToPortCountryCode { get; set; }
+        public string MainCarriageFromPortCountryCode { get; set; }
     }
 }
