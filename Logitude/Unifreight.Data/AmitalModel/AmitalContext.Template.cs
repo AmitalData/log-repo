@@ -542,7 +542,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.HANDTYPE)
                     .HasColumnName(@"HAND_TYPE")
-                    .HasColumnType("bool");
+                    .HasColumnType("int");
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.PROCESSWANT)
                     .HasColumnName(@"PROCESS_WANT")
@@ -11485,7 +11485,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.HANDTYPE)
                     .HasColumnName(@"HAND_TYPE")
-                    .HasColumnType("bit");
+                    .HasColumnType("int");
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.PROCESSWANT)
                     .HasColumnName(@"PROCESS_WANT")

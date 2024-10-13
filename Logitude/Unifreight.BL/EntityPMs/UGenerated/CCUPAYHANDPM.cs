@@ -26,7 +26,7 @@ namespace Unifreight.BL.EntityPMs
         [DataMember]
         public DateTime? HANDDATE { get; set; }
         [DataMember]
-        public bool? HANDTYPE { get; set; }
+        public int? HANDTYPE { get; set; }
         [DataMember]
         public string IMPORTERNAME { get; set; }
         [DataMember]
