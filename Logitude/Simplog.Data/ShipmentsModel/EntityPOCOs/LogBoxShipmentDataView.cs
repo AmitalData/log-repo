@@ -61,9 +61,10 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ForwarderShipmentNumber { get; set; }
         public string PrivateLabelAgentName { get; set; }
         public string ForwarderPartnerId { get; set; }
-
         public string ToPortCode { get; set; }
         public string FromPortCode { get; set; }
+        public DateTime? MainCarriageETD { get; set; }
+        public DateTime? MainCarriageATD { get; set; }
         public string MainCarriageFromPortCode { get; set; }
         public string MainCarriageToPortCode { get; set; }
         public string MainCarriageToPortCountryCode { get; set; }

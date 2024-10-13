@@ -13636,7 +13636,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                MainCarriageToPortCountryCode = f.MainCarriageToPortCountryCode,
                                ToPortCode = f.ToPortCode,
                                FromPortCode = f.FromPortCode,
-                           
+                               MainCarriageATD = f.MainCarriageATD,
+                               MainCarriageETD = f.MainCarriageETD,
                                TransportModeId = f.TransportModeId,
                                CustomerReference1 = f.CustomerReference1,
                                CustomerReference2 = f.CustomerReference2,
@@ -14735,6 +14736,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     PackagesQuantity = f.PackagesQuantity,
                     GrossWeight = f.GrossWeight,
                     Master=f.Master,
+                    MainCarriageATD = f.MainCarriageATD,
+                    MainCarriageETD = f.MainCarriageETD,
                     MainCarriageFromPortCountryCode = f.MainCarriageFromPortCountryCode,
                     MainCarriageToPortCode = f.MainCarriageToPortCode,
                     MainCarriageFromPortCode = f.MainCarriageFromPortCode,
