@@ -544,6 +544,27 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                             Wait4Finsh(task, 3);
 
                             var response = task.Result;
+
+                            // Log response status code and headers before attempting to read the body
+                            NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"Response Status Code: {response.StatusCode}");
+                            NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"Response Headers: {response.Headers}");
+
+                            // Log the content type to understand what is expected
+                            if (response.Content.Headers.ContentType != null)
+                            {
+                                NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"Content Type: {response.Content.Headers.ContentType.MediaType}");
+                            }
+
+                            // Attempt to read the response content
+                            var responseContent = response.Content.ReadAsStringAsync().Result;
+                            NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"[DEBUG] Raw Response Content: {responseContent}");
+
+                            // Now you can check if the response starts with '<', indicating it might be XML
+                            if (responseContent.Trim().StartsWith("<"))
+                            {
+                                NetCommonHelper.Logger.DevLog.Instance.WriteTrace("[WARNING] The response appears to be XML or HTML instead of JSON.");
+                            }
+
                             if (response.IsSuccessStatusCode)
                             {
                                 // If the request succeeds, return the result
@@ -577,7 +598,22 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             }
             catch (Exception ex)
             {
+                // Log the basic exception message
+                NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"An error occurred: {ex.Message}");
+
+                // Log the full exception details including the stack trace
+                NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"Exception Details: {ex.ToString()}");
+
+                // Log the inner exception details if available
+                if (ex.InnerException != null)
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"Inner Exception: {ex.InnerException.Message}");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"Inner Exception Details: {ex.InnerException.ToString()}");
+                }
+
+                // Re-throw the exception to ensure it propagates up the stack
                 LogMessagingUtil.Instance.AppendLine($"An error occurred: {ex.Message}");
+                LogMessagingUtil.Instance.AppendLine($"Exception Details: {ex.ToString()}");
                 throw;
             }
         }

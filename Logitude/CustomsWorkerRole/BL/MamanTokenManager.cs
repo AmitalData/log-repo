@@ -57,9 +57,9 @@ public class TokenManager
             string myResultString = "";
             try
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteTrace("FetchToken");
+                NetCommonHelper.Logger.DevLog.Instance.WriteTrace("FetchToken started.");
 
-                client.Timeout = TimeSpan.FromMinutes(MyWebClient.TimeOutFromMinutes); // Assuming this is a defined constant or replace with actual value
+                client.Timeout = TimeSpan.FromMinutes(MyWebClient.TimeOutFromMinutes); // Ensure this is defined or replace with an actual value
                 var agent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36";
                 client.DefaultRequestHeaders.Add("User-Agent", agent);
                 StringContent content;
@@ -83,9 +83,22 @@ public class TokenManager
 
                 LogMessagingUtil.Instance.AppendLine($"PostAsync({settings.URIToken}, {content})");
                 var authoTask = client.PostAsync(settings.URIToken, content);
-                authoTask.Wait();  // Consider using async/await instead of .Result or .Wait() to avoid blocking threads
-                myResultString = authoTask.Result.Content.ReadAsStringAsync().Result;
-                LogMessagingUtil.Instance.AppendLine($"PostAsyncResult ({myResultString})");
+                authoTask.Wait(); // Consider using async/await instead of .Result or .Wait() to avoid blocking threads
+
+                var response = authoTask.Result;
+                myResultString = response.Content.ReadAsStringAsync().Result;
+
+                // Log the response status and headers before parsing
+                NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"Response Status Code: {response.StatusCode}");
+                NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"Response Headers: {response.Headers}");
+                NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"Raw Response Content: {myResultString}");
+
+                // Check if the response is XML or HTML instead of JSON
+                if (myResultString.Trim().StartsWith("<"))
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteTrace("[WARNING] The response appears to be XML or HTML instead of JSON.");
+                    throw new Exception("The token response is not in the expected JSON format.");
+                }
 
                 dynamic d = JsonConvert.DeserializeObject(myResultString);
                 string access_token, token_type;
@@ -109,8 +122,10 @@ public class TokenManager
             }
             catch (Exception ex)
             {
-                LogMessagingUtil.Instance.AppendLine($"An error occurred in the authenticate HTTP request: {ex.Message}");
-                throw;  // Consider a retry mechanism or other error handling
+                // Enhanced logging with NetCommonHelper
+                NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"An error occurred in the authenticate HTTP request: {ex.Message}");
+                NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"Exception Details: {ex.ToString()}");
+                throw;
             }
         }
     }
