@@ -7,9 +7,9 @@ using System.Collections.Generic;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
-    public partial class CB_RuleQueryService : EntityQueryService<CB_Rule, CB_RuleKeys, CB_RulePM, CB_CustomsItemPM, CB_CustomsItemKeys>
+    public partial class CB_RuleDetailsHistoryQueryService : EntityQueryService<CB_RuleDetailsHistory, CB_RuleDetailsHistoryKeys, CB_RuleDetailsHistoryPM, CB_RulePM, CB_RuleKeys>
     {
-        public List<CB_RuleList> GetCustomsBookRulesData(int customsItemId)
+        public List<CB_RuleDetailsHistoryList> GetCustomsBookRulesData(int customsItemId)
         {
             return this.repository.GetCustomsBookRulesData(customsItemId);
         }

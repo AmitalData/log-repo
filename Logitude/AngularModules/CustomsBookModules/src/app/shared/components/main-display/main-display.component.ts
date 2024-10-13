@@ -523,11 +523,19 @@ export interface RemarksClassificationList {
 	CustomsItemsID: number;
 	RemarkDescription: string;
 }
-export interface RulesList {
+export interface RulesDetailsList {
 	ID: number;
 	CreateDate: Date;
-	UpdateDate: Date;
+	UpdateDate?: Date;
 	Title: string;
-	CustomsItemID: number;
+	StartDate?: Date;
+	EndDate?: Date;
+	EntityStatusID: string;
+	Rules: string;
+	EnglishRules: string;
+	RulesRTF: string;
+	ChangeRequestTypePriority: number;
+	CustomsBookAdditionID: number;
+	EnglishRulesRTF: string;
 	CB_ID: string;
 }

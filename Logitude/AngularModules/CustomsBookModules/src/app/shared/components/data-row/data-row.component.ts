@@ -71,7 +71,7 @@ export class DataRowComponent implements OnInit {
 			return text;
 		}
 		const regex = new RegExp(`(${search})`, 'gi');
-		return text.replace(regex, `<mark>$1</mark>`);
+		return text.replace(regex, `<mark><strong>$1</strong></mark>`);
 	}
 
 	expandClick(isShowChildren: boolean) {

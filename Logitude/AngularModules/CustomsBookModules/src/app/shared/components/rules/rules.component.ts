@@ -2,9 +2,10 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { API_MainService } from '../../../core/API_MainService';
-import { CB_CustomsItemComputedDataList, RulesList } from '../main-display/main-display.component';
+import { CB_CustomsItemComputedDataList, RulesDetailsList } from '../main-display/main-display.component';
 import { NgFor, NgIf } from '@angular/common';
 import { faChevronLeft, faSquareCaretRight } from '@fortawesome/free-solid-svg-icons';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 
 @Component({
@@ -17,14 +18,19 @@ import { faChevronLeft, faSquareCaretRight } from '@fortawesome/free-solid-svg-i
 export class RulesComponent implements OnInit, OnChanges {
   isOpenData: boolean;
   @Input() showRules: boolean;
-  @Input() currentItem: CB_CustomsItemComputedDataList;
-  allRules: CB_RuleList[] = [];
+  // @Input() currentItem: CB_CustomsItemComputedDataList;
+  @Input() currentItem: BehaviorSubject<CB_CustomsItemComputedDataList>;
+
+  allRules: CB_RulesDetailsList[] = [];
 
   constructor(private API_MainService: API_MainService) { }
 
 
   ngOnInit(): void {
-
+    this.currentItem.subscribe((data: CB_CustomsItemComputedDataList) => {
+      if (data?.CustomsItemID != null)
+        this.initData(data?.CustomsItemID);
+    });
   }
 
   // moke data to remove when get data from API
@@ -70,14 +76,40 @@ export class RulesComponent implements OnInit, OnChanges {
     }
   }
 
-  initData() {
-    this.API_MainService.GetCustomsBookRulesData(this.currentItem.CustomsItemID).subscribe((data: any) => {
-      this.allRules = data.body;
-      this.allRules.forEach((rule) => {
-        rule.expanded = false;
-      });
+  initData(customsItemID: number) {
+    this.API_MainService.GetCustomsBookRulesData(customsItemID).subscribe((data: any) => {
+      // this.allRules = data.body;
+      console.log(data.body);
+      if(!data.body) return; // TODO: add error message
+      this.allRules = this.ConvertToRulesList(data.body);
+      console.log(this.allRules);
+      
     });
   }
+
+  // convert to rules list to show in the view by grouping the rules by title:
+  ConvertToRulesList(rules: any): CB_RulesDetailsList[] {
+    let rulesList: CB_RulesDetailsList[] = [];
+
+    rules.forEach((rule: any) => {
+      let title = rule.Title;
+      let rulesDetailsList: CB_RulesDetailsList = rulesList.find((x: CB_RulesDetailsList) => x.title === title);
+
+      if (rulesDetailsList) {
+        rulesDetailsList.rulesList.push(rule);
+      }
+      else {
+        rulesDetailsList = {
+          title: title,
+          rulesList: [rule]
+        }
+        rulesList.push(rulesDetailsList);
+      }
+    });
+
+    return rulesList;
+  }
+
 
   toggleRule(rule: any, event: Event) {
     event.preventDefault();
@@ -101,8 +133,9 @@ export class RulesComponent implements OnInit, OnChanges {
   }
 }
 
-export interface CB_RuleList extends RulesList {
-  content: string;
+export interface CB_RulesDetailsList {
+  title: string;
+  rulesList: RulesDetailsList[];
   expanded?: boolean;
   showDropdown?: boolean;
   hideDropdown?: boolean;

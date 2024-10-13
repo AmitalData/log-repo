@@ -32,7 +32,6 @@ export class CommentsComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {
-      console.log(data);
       this.allComments = data;
       this.showMenuOpen = false; // initialize the menu to be closed
     });

@@ -5,26 +5,27 @@
                 <a href="#" class="detailsSlide_commentsPinned" role="checkbox" aria-checked="false"
                     (click)="$event.preventDefault()"><i role="img" aria-hidden="true" class="icon-pin"></i><i
                         role="img" aria-hidden="true" class="icon-pin_full"></i></a>
-                <h3>כללים ({{rules.length}})</h3>
+                <h3>כללים ({{allRules?.length}})</h3>
             </div>
             <div class="detailsSlide_commentsClose"><a href="#" role="button" aria-controls="comments"><i role="img"
                         aria-hidden="true" class="icon-close"></i></a></div>
         </div>
+     
         <ul class="rulesList">
-            <li class="rulesItem" *ngFor="let rule of rules; let i = index">
+            <li class="rulesItem" *ngFor="let item of allRules">
                 <div class="rulesItem_toggle">
-                    <a href="#" role="button" (click)="toggleRule(rule, $event)" [attr.aria-expanded]="rule.expanded">
-                        {{ rule.title }}
+                    <a href="#" role="button" (click)="toggleRule(item, $event)" [attr.aria-expanded]="item.expanded">
+                        {{ item.title }}
                     </a>
                 </div>
                 <div class="rulesItem_download"><a href="#" role="button"><i role="img" aria-hidden="true"
                             class="icon-download"></i></a></div>
-                <div class="rulesItem_DDown" [class.shown]="rule.expanded">
+                <div class="rulesItem_DDown" [class.shown]="item.expanded">
                     <div class="rulesItem_section">
                         <table class="boxRuleData">
-                            <tr>
+                            <tr *ngFor="let rule of item.rulesList; let i = index">
                                 <td>{{ i + 1}}</td>
-                                <td>{{ rule.content }}</td>
+                                <td>{{ rule.Rules }}</td>
                             </tr>
                         </table>
                     </div>
