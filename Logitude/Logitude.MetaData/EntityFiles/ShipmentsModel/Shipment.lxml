@@ -7293,6 +7293,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;StatusId&quot;"
     DefaultText="&quot;Status&quot;"
+    FullLocalDefaultText="&quot;סטטוס&quot;"
     ListFieldLable="&quot;StatusIdListLable&quot;"
     ListLableDefaultText="&quot;StatusId&quot;"
     ListLocalDefaultText="&quot;סטטוס&quot;"
@@ -7380,8 +7381,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;StatusName&quot;"
     DefaultText="&quot;Status&quot;"
+    FullLocalDefaultText="&quot;סטטוס&quot;"
     ListFieldLable="&quot;StatusNameListLable&quot;"
     ListLableDefaultText="&quot;Status&quot;"
+    ListLocalDefaultText="&quot;סטטוס&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -108959,17 +108962,17 @@
       <QueryColumn
         QueryCode="&quot;OpenCommissionCases &quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;StatusId&quot;"
+        ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenCommissionCases &quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;CreateDateTime&quot;"
+        ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenCommissionCases &quot;"
         IndexOrder="3"
-        ObjectFieldName="&quot;CustomerId&quot;"
+        ObjectFieldName="&quot;CreateDateTime&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenCommissionCases &quot;"
@@ -109057,17 +109060,17 @@
       <QueryColumn
         QueryCode="&quot;CloseCommissionCases&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;StatusId&quot;"
+        ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CloseCommissionCases&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;CreateDateTime&quot;"
+        ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CloseCommissionCases&quot;"
         IndexOrder="3"
-        ObjectFieldName="&quot;CustomerId&quot;"
+        ObjectFieldName="&quot;CreateDateTime&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CloseCommissionCases&quot;"
@@ -109155,17 +109158,17 @@
       <QueryColumn
         QueryCode="&quot;AllCommissionCases&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;StatusId&quot;"
+        ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllCommissionCases&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;CreateDateTime&quot;"
+        ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllCommissionCases&quot;"
         IndexOrder="3"
-        ObjectFieldName="&quot;CustomerId&quot;"
+        ObjectFieldName="&quot;CreateDateTime&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllCommissionCases&quot;"
