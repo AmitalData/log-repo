@@ -100,6 +100,7 @@ export class DeclarationReferantDataList {
 	Vessel: string;
 	FlightVoyageNumber: string;
 	CarrierCode: string;
+	OriginCountryCode: string;
 	
 }
  

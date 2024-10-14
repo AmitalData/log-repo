@@ -5603,7 +5603,10 @@ export class ShipmentPM {
     public get FreightForwarderReferences() { return this.freightForwarderReferences; }
     public set FreightForwarderReferences(newValue: FreightForwarderReferencePM[]) { if (this.freightForwarderReferences != newValue) { this.freightForwarderReferences = newValue; this.MarkAsDirty("FreightForwarderReferences"); } }
 
-
+    private originCountryCode: string;
+    public get OriginCountryCode() { return this.originCountryCode; }
+    public set OriginCountryCode(newValue: string) { if (this.originCountryCode != newValue) { this.originCountryCode = newValue; this.MarkAsDirty("OriginCountryCode"); } }
+  
     public OldEntityPM: ShipmentPM;
 
     private aWBOCIPMs: AWBOCIPM[];

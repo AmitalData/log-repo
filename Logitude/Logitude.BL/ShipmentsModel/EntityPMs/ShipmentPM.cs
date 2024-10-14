@@ -2316,10 +2316,11 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string FlightVoyageNumber { get; set; }
         public string Commodity { get; set; }
         public bool IsCustomShipment { get; set; }
+		public string OriginCountryCode { get; set; }
 
 
-        #region WarehouseLeg
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+		#region WarehouseLeg
+		[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
 		[DataMember]
 		public string WarehouseLegWarehouseName { get; set; }
 		[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

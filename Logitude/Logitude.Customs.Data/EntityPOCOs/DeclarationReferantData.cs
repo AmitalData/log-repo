@@ -144,6 +144,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CarrierCode { get; set; }
 	      
         public virtual Airline AirlineCode { get; set; }
+        [Column("OriginCountryCode")]
+	    public string OriginCountryCode { get; set; }
     }
 }
 	 

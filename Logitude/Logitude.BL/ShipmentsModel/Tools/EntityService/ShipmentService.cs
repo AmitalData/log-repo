@@ -826,9 +826,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             myAmitalCustom.Vessel = shipmentPM.Vessel;
             myAmitalCustom.FlightVoyageNumber = shipmentPM.FlightVoyageNumber;
             myAmitalCustom.CarrierCode = shipmentPM.CarrierCode;
-            #endregion
+			myAmitalCustom.OriginCountryCodeRef = shipmentPM.OriginCountryCode;
+			#endregion
 
-            if (!string.IsNullOrEmpty(unloadPortCode))
+			if (!string.IsNullOrEmpty(unloadPortCode))
             {
                 myAmitalCustom.UnloadportId = unloadPortCode;
             }
@@ -1404,9 +1405,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             myAmitalCustom.Vessel = string.IsNullOrEmpty(declarationReferantDataPM.Vessel) || !updateEmptyValueOnly ? shipmentPM.Vessel : declarationReferantDataPM.Vessel;
             myAmitalCustom.FlightVoyageNumber = string.IsNullOrEmpty(declarationReferantDataPM.FlightVoyageNumber) || !updateEmptyValueOnly ? shipmentPM.FlightVoyageNumber : declarationReferantDataPM.FlightVoyageNumber;
             myAmitalCustom.CarrierCode = string.IsNullOrEmpty(declarationReferantDataPM.CarrierCode) || !updateEmptyValueOnly ? shipmentPM.CarrierCode : declarationReferantDataPM.CarrierCode;
-            #endregion
+			myAmitalCustom.OriginCountryCodeRef = string.IsNullOrEmpty(declarationReferantDataPM.OriginCountryCode) || !updateEmptyValueOnly ? shipmentPM.OriginCountryCode : declarationReferantDataPM.OriginCountryCode;
+			#endregion
 
-            var respnse = APIConnectionHelper.Instance.PostViaWebAPI<Response, LogitudeCustomsFile>("/api/Declarartion/UpdateDeclarationInU2L", myAmitalCustom);
+			var respnse = APIConnectionHelper.Instance.PostViaWebAPI<Response, LogitudeCustomsFile>("/api/Declarartion/UpdateDeclarationInU2L", myAmitalCustom);
         }
         private AuditLog AddShipmentAuditLogChanges(Shipment entityPoco)
         {

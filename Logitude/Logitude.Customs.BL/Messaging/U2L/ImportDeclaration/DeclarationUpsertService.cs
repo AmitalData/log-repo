@@ -1972,9 +1972,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				this._DeclarationReferantDataPM.FlightVoyageNumber = _AmitalCustomsFile.FlightVoyageNumber;
 				this._DeclarationReferantDataPM.CarrierCode = _AmitalCustomsFile.CarrierCode;
 				this._DeclarationReferantDataPM.Mawb = _AmitalCustomsFile.MAWB;
+				this._DeclarationReferantDataPM.OriginCountryCode = _AmitalCustomsFile.OriginCountryCodeRef;
 			}
 
-            myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
+			myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
 		}
 
 		private string TranslateForwarder(string forwarderId)

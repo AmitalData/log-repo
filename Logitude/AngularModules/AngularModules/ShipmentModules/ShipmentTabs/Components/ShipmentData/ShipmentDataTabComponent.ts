@@ -146,7 +146,13 @@ export class ShipmentDataTabComponent extends BaseComponent {
             this.OnChanged();
         }
     }
-
+    public get OriginCountryCode() { return this.EntityPM.OriginCountryCode; }
+    public set OriginCountryCode(newValue: string) {
+        if (this.EntityPM.OriginCountryCode != newValue) {
+            this.EntityPM.OriginCountryCode = newValue;
+            this.OnChanged();
+        }
+    }
     EditReferenceTypeValue() {
 
         const shipmentReferences = this.GetActiveShipmentReferances();
