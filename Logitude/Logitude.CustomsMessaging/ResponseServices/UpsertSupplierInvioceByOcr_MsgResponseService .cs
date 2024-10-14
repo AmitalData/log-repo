@@ -177,8 +177,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             UpsertSupplierInvoiceResult Result = UpsertSupplierInvoiceByOcr(customResponse, myOcrDocument.Reference, dic, supplierInvoiceItemsList, ocrPositionItems);
 
-                            //if (Result.isNewInvoice)// update CustomsDocumentPointer
-                            //{
+                          
                                 LogMessagingUtil.Instance.Clear();
                                 LogMessagingUtil.Instance.AppendLine("Is New Invoice: " + myOcrDocument.Reference);
 
