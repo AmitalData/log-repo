@@ -384,9 +384,9 @@
                          <td *ngIf="IsShowAddReportFromLibraryLink" style="width:200px;vertical-align:central">
                          <td style="width: 40px;"> <img *ngIf="HasMutliUpdateFeature" src="./Images/Icons/MultiUpdate.png" title="Multi Update" (click)="MutliUpdate()" class="CenterCenter MultiUpdateIcon" /></td>
                         <td style="width: 40px;"> <img *ngIf="HasMultiPrintFeature" src="./Images/Icons/multi-print.png" title="Multi Print" (click)="MultiPrintClicked()" class="CenterCenter MultiUpdateIcon" /></td>
-                         <td style="width:200px;vertical-align:central">
+                         <td *ngIf="IsShowAddReportFromLibraryLink" style="width:200px;vertical-align:central">
                              <div style="width:200px;height:20px">
-                                 <p *ngIf="IsShowAddReportFromLibraryLink" (click)="LinkAddReportFromLibraryClick()" class="CustomLink" style="font-size:12px;float:right;width:200px;height:20px;">Add Report From Library</p>
+                                 <p  (click)="LinkAddReportFromLibraryClick()" class="CustomLink" style="font-size:12px;float:right;width:200px;height:20px;">Add Report From Library</p>
                              </div>
                         </td>
                        
