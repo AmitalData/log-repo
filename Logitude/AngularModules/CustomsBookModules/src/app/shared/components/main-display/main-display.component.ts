@@ -277,7 +277,7 @@ export class MainDisplayComponent implements OnInit {
 
 		if (SearchBy.searchBy_form01 == this.selectSearchBy) {
 			this.isLoadingMode.next(true); // update loading mode
-			filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
+			if (filters.CustomsItemHierarchic === '') filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
 			this.API_MainService.GetCustomsBookMainViewSearchByClassification(filters).subscribe(
 				(data: any) => {
 					const result: CB_CustomsItemComputedDataList[] = data.body;
@@ -404,7 +404,7 @@ export class MainDisplayComponent implements OnInit {
 	}
 }
 
-enum FilterOption {
+export enum FilterOption {
 	Parts = '1',
 	Chapters = '2',
 	Details = '3',
