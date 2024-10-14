@@ -40,7 +40,8 @@
               drd.COMMODITY,
               s.SALESMANUSERID,
               s.Tenant,
-              s.SearchFields
+              s.SearchFields,
+              drd.OriginCountryCode
           FROM [dbo].[SHIPMENTS] s
           LEFT JOIN [dbo].[ShipmentReferances] sr
               ON  s.ID = sr.ShipmentId

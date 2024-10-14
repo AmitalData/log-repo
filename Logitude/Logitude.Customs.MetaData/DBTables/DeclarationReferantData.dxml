@@ -301,6 +301,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="OriginCountryCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="VendorId"
     ReferencedTable="CustomsVendors"

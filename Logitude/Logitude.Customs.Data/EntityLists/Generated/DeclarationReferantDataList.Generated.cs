@@ -205,6 +205,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string FlightVoyageNumber  { get; set; }
        [DataMember]
        public string CarrierCode  { get; set; }
+       [DataMember]
+       public string OriginCountryCode  { get; set; }
    }
 
 }

@@ -344,11 +344,20 @@
                 </tr>
 
                 <tr class="FormFieldRow">
-                    <!-- erets motsa -->
-                    <td style="width: 180px;">
-                        <LogLabel [NoObjectField]="true" [Text]="'ארץ מוצא'" [DataContext]="DataContext"></LogLabel>
+
+                     <!-- OriginCountryCode -->
+                     <td style="width: 180px;">
+                        <LogLabel [ObjectFieldName]="'OriginCountryCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
-                    <td></td>
+                    <td>
+                        <LogLov 
+                            [ObjectFieldName]="'OriginCountryCode'" 
+                            [SelectedValue]="OriginCountryCode"
+                            [ObjectTableName]="ObjectTableName"
+                            [DataContext]="DataContext"
+                            [LookUpTableName]="'Customs.CustomsCountry'">
+                        </LogLov>
+                    </td>
                     <td class="columnBetweenFields"></td>
 
                     <!-- MainCarriageFromPortId -->

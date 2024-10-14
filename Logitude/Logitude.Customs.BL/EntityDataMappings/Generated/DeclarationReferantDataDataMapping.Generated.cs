@@ -71,7 +71,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         MawbDate, 
 	         Vessel, 
 	         FlightVoyageNumber, 
-	         CarrierCode,
+	         CarrierCode, 
+	         OriginCountryCode,
 	      }
 
 
@@ -131,7 +132,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         MawbDate, 
 	         Vessel, 
 	         FlightVoyageNumber, 
-	         CarrierCode,
+	         CarrierCode, 
+	         OriginCountryCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -353,6 +355,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CarrierCode))
             {
 				entityPOCO.CarrierCode = entityPM.CarrierCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OriginCountryCode))
+            {
+				entityPOCO.OriginCountryCode = entityPM.OriginCountryCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -581,6 +588,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CarrierCode = entityPOCO.CarrierCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OriginCountryCode))
+            {
+					entityPM.OriginCountryCode = entityPOCO.OriginCountryCode;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationReferantDataPM entityPM, DeclarationReferantDataPM oldEntityPM)
@@ -800,6 +812,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CarrierCode))
             {
                 oldEntityPM.CarrierCode = entityPM.CarrierCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OriginCountryCode))
+            {
+                oldEntityPM.OriginCountryCode = entityPM.OriginCountryCode;
             }
 			
 		}
