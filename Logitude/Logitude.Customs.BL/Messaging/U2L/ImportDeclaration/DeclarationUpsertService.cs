@@ -1713,10 +1713,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     supplierInvoiceItem.SupplierInvioceItemCertificats = new List<SupplierInvioceItemCertificatPM>() { supplierInvioceItemCertificatPM };
                 }
             }
-            if (invoiceItem.ConnectedDeclarations != null &&_MyDeclarationPM.IsDiamondDeclaration)
+            if (invoiceItem.ConnectedDeclarations?.connectedDeclaration != null &&_MyDeclarationPM.IsDiamondDeclaration)
             {
 				supplierInvoiceItem.SupplierInvoiceItemsConDeclars = new List<SupplierInvoiceItemsConDeclarPM>();
-                foreach (var item in invoiceItem.ConnectedDeclarations)
+                foreach (var item in invoiceItem.ConnectedDeclarations.connectedDeclaration)
                 {
                     SupplierInvoiceItemsConDeclarPM supplierInvoiceItemsConDeclarPM = InitSupplierInvoiceItemConnectedDeclarations(invoiceItem.ConnectedDeclarations[0],invoiceItem.ItemNo);
                     if (supplierInvoiceItemsConDeclarPM != null)
