@@ -679,7 +679,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         // this.disableElementById("selectedValueTradeAgreementBox", enabled);
         // this.disableElementById("selectedValueOriginCountryBox", enabled);
         // this.disableElementById("selectedValueDestinationCountryBox", enabled);
-        this.disableClassOpacityDimBox(enabled)
+        this.disableClassOpacityDimBox(enabled);
     }
 
     disableClassOpacityDimBox(enabled){
