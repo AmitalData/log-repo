@@ -1771,21 +1771,22 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 					}
 				}
             }
-            if (invoiceItem.ConnectedDeclarations?.connectedDeclaration != null &&_MyDeclarationPM.IsDiamondDeclaration)
+            if (invoiceItem.ConnectedDeclarations?.connectedDeclaration != null && _MyDeclarationPM.IsDiamondDeclaration)
             {
-				supplierInvoiceItem.SupplierInvoiceItemsConDeclars = new List<SupplierInvoiceItemsConDeclarPM>();
+                supplierInvoiceItem.SupplierInvoiceItemsConDeclars = new List<SupplierInvoiceItemsConDeclarPM>();
                 foreach (var item in invoiceItem.ConnectedDeclarations.connectedDeclaration)
                 {
-                    SupplierInvoiceItemsConDeclarPM supplierInvoiceItemsConDeclarPM = InitSupplierInvoiceItemConnectedDeclarations(invoiceItem.ConnectedDeclarations[0],invoiceItem.ItemNo);
+                    SupplierInvoiceItemsConDeclarPM supplierInvoiceItemsConDeclarPM = InitSupplierInvoiceItemConnectedDeclarations(item, invoiceItem.ItemNo);
                     if (supplierInvoiceItemsConDeclarPM != null)
                     {
                         AppendLogLine("add supplierInvoiceItemsConDeclarPM");
-						supplierInvoiceItem.SupplierInvoiceItemsConDeclars.Add(supplierInvoiceItemsConDeclarPM);
+                        supplierInvoiceItem.SupplierInvoiceItemsConDeclars.Add(supplierInvoiceItemsConDeclarPM);
                     }
 
                 }
-              
+
             }
+            
             return supplierInvoiceItem;
         }
 
@@ -1847,7 +1848,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
         }
 
 
-        private SupplierInvoiceItemsConDeclarPM InitSupplierInvoiceItemConnectedDeclarations(ConnectedDeclarations invoiceItemConnectedDeclaration,string itemNo)
+        private SupplierInvoiceItemsConDeclarPM InitSupplierInvoiceItemConnectedDeclarations(ConnectedDeclaration invoiceItemConnectedDeclaration,string itemNo)
         {
            
 
