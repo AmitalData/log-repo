@@ -1718,7 +1718,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				supplierInvoiceItem.SupplierInvoiceItemsConDeclars = new List<SupplierInvoiceItemsConDeclarPM>();
                 foreach (var item in invoiceItem.ConnectedDeclarations)
                 {
-                    SupplierInvoiceItemsConDeclarPM supplierInvoiceItemsConDeclarPM = InitSupplierInvoiceItemConnectedDeclarations(invoiceItem.ConnectedDeclarations[0]);
+                    SupplierInvoiceItemsConDeclarPM supplierInvoiceItemsConDeclarPM = InitSupplierInvoiceItemConnectedDeclarations(invoiceItem.ConnectedDeclarations[0],invoiceItem.ItemNo);
                     if (supplierInvoiceItemsConDeclarPM != null)
                     {
                         AppendLogLine("add supplierInvoiceItemsConDeclarPM");
@@ -1789,7 +1789,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
         }
 
 
-        private SupplierInvoiceItemsConDeclarPM InitSupplierInvoiceItemConnectedDeclarations(ConnectedDeclarations invoiceItemConnectedDeclaration)
+        private SupplierInvoiceItemsConDeclarPM InitSupplierInvoiceItemConnectedDeclarations(ConnectedDeclarations invoiceItemConnectedDeclaration,string itemNo)
         {
            
 
@@ -1805,7 +1805,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             supplierInvoiceItemsConDeclarPM.DeclarationTypeCode = invoiceItemConnectedDeclaration.DeclarationType;
             supplierInvoiceItemsConDeclarPM.DeclarationNumber = invoiceItemConnectedDeclaration.DeclarationNo;
             supplierInvoiceItemsConDeclarPM.InvoiceNumber = int.Parse(invoiceItemConnectedDeclaration.InvoiceLine);
-			supplierInvoiceItemsConDeclarPM.InvoiceItemLineNumber = int.Parse(invoiceItemConnectedDeclaration.ItemLine);
+			supplierInvoiceItemsConDeclarPM.ItemSequence = int.Parse(invoiceItemConnectedDeclaration.ItemLine);
+			supplierInvoiceItemsConDeclarPM.InvoiceItemLineNumber = int.Parse(itemNo);
+
             supplierInvoiceItemsConDeclarPM.Quantity = int.Parse(invoiceItemConnectedDeclaration.Quantity);
             supplierInvoiceItemsConDeclarPM.QuantityTypeCode = invoiceItemConnectedDeclaration.QuantityType;
 
