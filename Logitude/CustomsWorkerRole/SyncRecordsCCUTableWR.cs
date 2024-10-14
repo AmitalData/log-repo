@@ -77,12 +77,19 @@ namespace CustomsWorkerRole
             }
             catch (DbUpdateException e) when (e.Message.Contains("SyncRecordsCCUTableWR") && e.Message.Contains("GeneralLock"))
             {
-                DevLog.Instance.WriteTrace("Another WR work and lock the this job");
+                DevLog.Instance.WriteTrace("Another WR lock this job");
             }
             catch (Exception e)
             {
                 DevLog.Instance.WriteFatal(e, "error on SendToUnifreightQueue");
-                Unlock();
+                try
+                {
+                    Unlock();
+                }
+                catch (Exception ex)
+                {
+                    DevLog.Instance.WriteFatal(ex, "Unlock failed");
+                }
             }
         }
 
