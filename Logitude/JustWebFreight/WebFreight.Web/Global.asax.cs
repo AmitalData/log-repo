@@ -98,8 +98,15 @@ namespace WebFreight.Web
 
             AccountingRegistrations.Register();
             CustomsRegistrations.Register();
-
-            CacheManager.CacheWrapper = new CacheWrapper(HttpContext.Current.Cache);
+            string notUsecache = System.Configuration.ConfigurationManager.AppSettings.Get("NotUseCache");
+            if (notUsecache == "1")
+            {
+                CacheManager.CacheWrapper = new CacheEmptyWrapper(HttpContext.Current.Cache);
+            }
+            else
+            {
+                CacheManager.CacheWrapper = new CacheWrapper(HttpContext.Current.Cache);
+            }
             if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox))
             {
                 LogitudeCacheManager.ServerCache = new RedisCache();
@@ -678,15 +685,11 @@ namespace WebFreight.Web
                 if (!string.IsNullOrEmpty(HttpContext.Current.Request.CurrentExecutionFilePath) && HttpContext.Current.Request.CurrentExecutionFilePath.Contains("/WcfApi/"))
                 {
                     HttpContext.Current.User = null;
-
                 }
 
                 string token = HttpContext.Current.Request.Headers["Token"];
                 if (!string.IsNullOrEmpty(token))
                 {
-
-                    ICommonDataContext context = CommonDataContext.GetContext(0);
-                    AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(context);
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     if (authToken != null)
                     {
@@ -712,6 +715,7 @@ namespace WebFreight.Web
                                     if (GetContactPasswordFromCache(authToken.Email) == authToken.Password)
                                     {
                                         HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
+                                        HttpContext.Current.Items.Add("authToken", authToken);
                                     }
                                     else
                                     {
@@ -785,42 +789,32 @@ namespace WebFreight.Web
         private string GetContactPasswordFromCache(string email)
         {
             ContactPasswordRepository contactPasswordRep = new ContactPasswordRepository();
-            string cahce_key = "ContactPassword_" + email;
             if (CacheManager.CacheWrapper != null)
             {
-                if (CacheManager.CacheWrapper.Get(cahce_key) == null)
+                string cacheKey = $"ContactPassword_{email}";
+                string password = (string)CacheManager.CacheWrapper.Get(cacheKey);
+                if (password == null)
                 {
                     lock (_lock)
                     {
-                        return GetContactPassword(email, contactPasswordRep, cahce_key);
+                        return GetContactPassword(email);
                     }
                 }
                 else
                 {
-                    return (string)CacheManager.CacheWrapper.Get(cahce_key);
+                    return password;
                 }
             }
             else
             {
-                ContactPassword contactPassword = contactPasswordRep.GetSingleContactPassword(email);
-                return contactPassword.Password;
+                return GetContactPassword(email);
             }
-
         }
 
-        private string GetContactPassword(string email, ContactPasswordRepository contactPasswordRep, string cahce_key)
+        private string GetContactPassword(string email)
         {
-            if (CacheManager.CacheWrapper.Get(cahce_key) == null)
-            {
-                ContactPassword contactPassword = contactPasswordRep.GetSingleContactPassword(email);
-                if (contactPassword != null)
-                {
-                    CacheManager.CacheWrapper.Insert(cahce_key, contactPassword.Password, null, DateTime.UtcNow.AddMinutes(5), TimeSpan.Zero);
-                }
-
+                ContactPassword contactPassword = new ContactPasswordRepository().GetSingleContactPassword(email);
                 return contactPassword != null ? contactPassword.Password : "";
-            }
-            return (string)CacheManager.CacheWrapper.Get(cahce_key);
         }
 
 
