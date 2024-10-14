@@ -1,5 +1,7 @@
 ﻿using CustomsWorkerRole.Utils;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Helpers;
+using Logitude.Customs.BL.EntityQueryServices;
 using Microsoft.Practices.ObjectBuilder2;
 using NetCommonHelper.Logger;
 using System;
@@ -33,7 +35,6 @@ namespace CustomsWorkerRole
 
                 List<SyncRecord> syncRecordsInQueueList = new List<SyncRecord>();
                 SyncRecordQuery syncRecordQuery = new SyncRecordQuery();
-                TenantQuery tenantQuery = new TenantQuery();
                 List<SyncRecord> records = syncRecordQuery.GetAndMarkNewSyncRecord();
 
                 if (records == null || records.Count == 0)
@@ -41,7 +42,7 @@ namespace CustomsWorkerRole
 
                 DevLog.Instance.WriteDebug("SendSyncRecoredToUnifreightQueue, records count: " + records.Count);
 
-                List<SyncRecord> newRecords = InsertRecordsForCloseTables(syncRecordQuery, tenantQuery, records);
+                List<SyncRecord> newRecords = InsertRecordsForCloseTables(syncRecordQuery, records);
 
                 IEnumerable<IGrouping<int, SyncRecord>> RecordsGroupByTenants = records.Concat(newRecords).GroupBy(record => record.Tenant);
 
@@ -71,33 +72,33 @@ namespace CustomsWorkerRole
             }
         }
 
-        private static List<SyncRecord> InsertRecordsForCloseTables(SyncRecordQuery syncRecordQuery, TenantQuery tenantQuery, List<SyncRecord> records)
+        private static List<SyncRecord> InsertRecordsForCloseTables(SyncRecordQuery syncRecordQuery, List<SyncRecord> records)
         {
             IEnumerable<SyncRecord> tenant0CloseTableRecords = records.Where(record => record.KeyVal == "ALL" && record.Tenant == 0);
             List<SyncRecord> newRecords = new List<SyncRecord>();
             List<SyncRecord> RemoveRecords = new List<SyncRecord>();
-            List<int> tenantIds = tenantQuery.GetAll(true).Select(x => x.Id).Where(x => x != 0).ToList();
+            List<int> tenantIds = CacheHelper.GetFromCache("TenantIdsForClosedTables", () => new CustomsSettingQueryService(0).GetAll().Select(x => x.Tenant).ToList());
 
             tenant0CloseTableRecords.ForEach(record =>
-            {
-                RemoveRecords.Add(record);
+             {
+                 RemoveRecords.Add(record);
 
-                tenantIds.ForEach(tenantId =>
-                {
-                    newRecords.Add(new SyncRecord
-                    {
-                        Id = Guid.NewGuid().ToString(),
-                        FileNo = record.FileNo,
-                        KeyVal = record.KeyVal,
-                        Tenant = tenantId,
-                        IsSync = record.IsSync,
-                        CreateDate = DateTime.UtcNow,
-                        Entname = record.Entname,
-                        SyncDT = record.SyncDT,
-                        TrigAction = record.TrigAction,
-                    });
-                });
-            });
+                 tenantIds.ForEach(tenantId =>
+                 {
+                     newRecords.Add(new SyncRecord
+                     {
+                         Id = Guid.NewGuid().ToString(),
+                         FileNo = record.FileNo,
+                         KeyVal = record.KeyVal,
+                         Tenant = tenantId,
+                         IsSync = record.IsSync,
+                         CreateDate = DateTime.UtcNow,
+                         Entname = record.Entname,
+                         SyncDT = record.SyncDT,
+                         TrigAction = record.TrigAction,
+                     });
+                 });
+             });
 
             RemoveRecords.ForEach(record => records.Remove(record));
             syncRecordQuery.Add(newRecords);
