@@ -1,5 +1,4 @@
 ﻿using CustomsWorkerRole.Utils;
-using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.Customs.BL.EntityQueryServices;
 using Microsoft.Practices.ObjectBuilder2;
