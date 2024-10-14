@@ -437,7 +437,7 @@ namespace CustomsBook
 
         static void Main(string[] args)
         {
-            NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(Path.Combine("C:\\LWC\\Logitude\\CustomsBook\\NLog.config"));
+            NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(Path.Combine(AppDomain.CurrentDomain.BaseDirectory , "NLog.config"));
             logger.Debug("Start TaskScheduler");
             DownloadFile();
             Console.ReadLine();
