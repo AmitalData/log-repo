@@ -69,5 +69,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string MainCarriageToPortCode { get; set; }
         public string MainCarriageToPortCountryCode { get; set; }
         public string MainCarriageFromPortCountryCode { get; set; }
+        public DateTime? MainCarriageETA { get; set; }
+        public DateTime? MainCarriageATA { get; set; }
     }
 }

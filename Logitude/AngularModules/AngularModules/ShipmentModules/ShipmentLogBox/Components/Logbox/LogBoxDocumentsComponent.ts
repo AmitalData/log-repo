@@ -345,6 +345,8 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     }
 
     private SetMainCarriageArrivalDate() {
+        this.IsExportActivated;
+        this.SelectedShipment.MainCarriageETA;
         if (this.ShipmentPM.MainCarriageATA != null) {
             this.MainCarriageTA = this.ShipmentPM.MainCarriageATA;
             this.MainCarriageTALabel = 'ATA:';
