@@ -33,6 +33,8 @@ export class AddCommentComponent implements OnInit, OnChanges {
       this.showAddComment = isOpened;
     });
     this.addCommentService.itemData.subscribe((data: CB_CustomsItemComputedDataList) => {
+
+      if(!data?.CustomsItemID) return
       this.currentItem = data;
       this.allCommentCount = this.addCommentService.allComments.getValue().length;
       this.showComments();

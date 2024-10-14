@@ -525,17 +525,12 @@ export interface RemarksClassificationList {
 }
 export interface RulesDetailsList {
 	ID: number;
-	CreateDate: Date;
-	UpdateDate?: Date;
+	RuleID: number;
 	Title: string;
-	StartDate?: Date;
-	EndDate?: Date;
-	EntityStatusID: string;
 	Rules: string;
-	EnglishRules: string;
-	RulesRTF: string;
+	UpdateDate: Date;
 	ChangeRequestTypePriority: number;
-	CustomsBookAdditionID: number;
-	EnglishRulesRTF: string;
-	CB_ID: string;
+	OrderinalPostion: number;
+	EntityStatusID: string;
+	Parent_RuleDetailsHistoryID: number;
 }
