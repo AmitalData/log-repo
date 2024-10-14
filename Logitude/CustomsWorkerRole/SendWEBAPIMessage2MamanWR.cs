@@ -544,6 +544,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                             Wait4Finsh(task, 3);
 
                             var response = task.Result;
+
                             if (response.IsSuccessStatusCode)
                             {
                                 // If the request succeeds, return the result
@@ -577,6 +578,12 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             }
             catch (Exception ex)
             {
+                // Log the basic exception message
+                NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"An error occurred: {ex.Message}");
+                if (ex.InnerException != null)
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"Inner Exception: {ex.InnerException.Message}");
+                }
                 LogMessagingUtil.Instance.AppendLine($"An error occurred: {ex.Message}");
                 throw;
             }

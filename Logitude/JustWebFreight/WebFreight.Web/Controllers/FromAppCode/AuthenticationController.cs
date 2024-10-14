@@ -63,6 +63,8 @@ using JWT;
 using JWT.Serializers;
 using JWT.Algorithms;
 using JWT.Exceptions;
+using System.Runtime.Remoting.Contexts;
+using Stimulsoft.Base.Gauge.GaugeGeoms;
 namespace WebFreight.Web
 {
 #if DEBUG
@@ -3355,6 +3357,109 @@ namespace WebFreight.Web
 
             return result;
         }
+
+
+        [HttpGet]
+        [ActionName("CheckHealth")]
+        public HttpResponseMessage CheckHealth()
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            try
+            {
+                                
+
+
+                stopwatch.Start();
+                IWebFreightContext context = WebFreightContext.GetContext(0);
+                context.ObjectTables.FirstOrDefault();
+
+                stopwatch.Stop();
+
+                long elapsedTime = stopwatch.ElapsedMilliseconds;
+
+                string time = elapsedTime.ToString();
+
+                return Request.CreateResponse(HttpStatusCode.OK, time);
+            }
+            catch (Exception ex)
+            {
+                stopwatch.Stop(); 
+
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, ex.Message);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        [HttpGet]
+        [ActionName("GetCacheKeys")]
+        public HttpResponseMessage GetCacheKeys()
+        {
+            try
+            {
+
+
+
+                var enumerator = CacheManager.CacheWrapper.GetEnumerator();
+                var keys = new List<string>();
+                while (enumerator.MoveNext())
+                {
+                    keys.Add(enumerator.Key.ToString());
+                }
+                var json = JsonConvert.SerializeObject(keys);
+ 
+                return Request.CreateResponse(HttpStatusCode.OK, json);
+            }
+            catch (Exception ex)
+            {
+
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, ex.Message);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [HttpGet]
+        [ActionName("GetCacheKeysData")]
+        public HttpResponseMessage GetCacheKeysData(string key=null)
+        {
+            try
+            {
+                var result = string.Empty;
+                if (key != null)
+                {
+                     result = CacheManager.CacheWrapper.Get(key)?.ToString();
+                 }
+                else
+                {
+                    var enumerator = CacheManager.CacheWrapper.GetEnumerator();
+
+                    var keys = new List<string>();
+                    var values = new List<string>();
+
+                    while (enumerator.MoveNext())
+                    {
+                        keys.Add(enumerator.Key.ToString());
+                        values.Add(enumerator.Value.ToString());
+                    }
+
+                    var dictionary = new Dictionary<string, string>();
+                    for (int i = 0; i < keys.Count; i++)
+                    {
+                        dictionary[keys[i]] = values[i];
+                    }
+
+                     result = JsonConvert.SerializeObject(dictionary);
+                 
+                  
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, ex.Message);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
 
 
 
