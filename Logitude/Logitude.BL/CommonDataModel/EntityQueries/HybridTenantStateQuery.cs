@@ -9,6 +9,9 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Logitude.Server.Tools.QueueService;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -93,14 +96,60 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             }
 
-            if(hybridTenantStateLists!=null && hybridTenantStateLists.Count > 0)
+            if (hybridTenantStateLists != null && hybridTenantStateLists.Count > 0)
             {
                 hybridTenantStateLists = hybridTenantStateLists.Where(d => d.TenantName != "NoTenantFount").ToList();
             }
 
+            AddWitingAndFailedHybridQueues(tenant, hybridTenantStateLists);
+
             return hybridTenantStateLists;
         }
 
+        private void AddWitingAndFailedHybridQueues(int tenant, List<HybridTenantStateList> hybridTenantStateLists)
+        {
+            int workerStatus = 0;
+            try
+            {
+                workerStatus = WorkerNameService.GetWorkerWaitingStatusForReceiving(tenant);
+            }
+            catch { }
 
+            var queueMessages = new QueueMessageRepository(tenant).GetWaitingForHybridAndFailds(workerStatus)
+                .Select(queueMessage => new
+                {
+                    CommunicationLogId = DictionaryJsonConverter.FromJsonToDictionary(queueMessage.MessageBody)["CommunicationLogId"].ToString(),
+                    queueMessageId = queueMessage.Id,
+                    queueMessage.Tenant,
+                    queueMessage.Status
+                }).ToList();
+
+            // delete the queueMessages that have been deleted from the communicationLogs
+            var clIds = queueMessages.Select(q => q.CommunicationLogId).ToList();
+            (from cl in repository.context.CommunicationLogs
+             where clIds.Contains(cl.Id) && cl.CommunicationStatusTypeCode == "D"
+             select cl.Id)
+                .ToList()
+                .ForEach(CommunicationLogId => queueMessages.RemoveAll(x => x.CommunicationLogId == CommunicationLogId));
+
+            var waitingAndFaildMsgList = queueMessages.GroupBy(c => c.Tenant)
+                    .Select(g => new
+                    {
+                        Tenant = g.Key,
+                        CountFailed = g.Count(c => c.Status == -1),
+                        CountWaiting = g.Count(c => c.Status != -1)
+                    })
+                    .ToList();
+
+            waitingAndFaildMsgList.ForEach(x =>
+            {
+                var hybridTenantState = hybridTenantStateLists.FirstOrDefault(h => h.Tenant == x.Tenant);
+                if (hybridTenantState != null)
+                {
+                    hybridTenantState.HybridWaitingQueue = x.CountWaiting;
+                    hybridTenantState.HybridFailedQueue = x.CountFailed;
+                }
+            });
+        }
     }
 }
