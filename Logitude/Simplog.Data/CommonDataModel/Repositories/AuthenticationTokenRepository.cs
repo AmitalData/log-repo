@@ -82,34 +82,37 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public static AuthenticationToken GetSingleTokenFromCache(string token)
         {
-            if (string.IsNullOrEmpty(token))
-                return null;
-            if (!string.IsNullOrEmpty(token) && !token.Contains("+"))
-            {
-                token = token.Replace(" ", "+");
-            }
+            if (string.IsNullOrEmpty(token)) return null;
             string cacheKey = $"Token_{token}";
-            AuthenticationToken authenticationToken = (AuthenticationToken)CacheManager.CacheWrapper.Get(cacheKey);
+            AuthenticationToken authenticationToken  =(AuthenticationToken)HttpContext.Current.Items["authToken"];
+            if (authenticationToken == null)
+            {
+                if ( !token.Contains("+"))
+                {
+                    token = token.Replace(" ", "+");
+                }
+                authenticationToken = (AuthenticationToken)CacheManager.CacheWrapper.Get(cacheKey);
+            }
             if (authenticationToken != null)
             {
+                if (token != authenticationToken.Token)
+                {
+                    throw new AutenticationException("Invalid token");
+                }   
                 if (authenticationToken.ExpirationDate != null && authenticationToken.ExpirationDate < DateTime.Now)
                 {
                     throw new AutenticationException("Session expired. Please log in again");
                 }
-                return authenticationToken;
             }
             else
             {
-                ICommonDataContext context = CommonDataContext.GetContext(0);
-                var entity = (from a in context.AuthenticationTokens
-                              where a.Token == token
-                              select a).FirstOrDefault();
-                if (entity != null)
+                authenticationToken = new AuthenticationTokenRepository().GetSingleToken(token);
+                if (authenticationToken != null)
                 {
-                    CacheManager.CacheWrapper.Insert(cacheKey, entity, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                    CacheManager.CacheWrapper.Insert(cacheKey, authenticationToken, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                 }
-                return entity;
             }
+            return authenticationToken;
         }
 
         public class AutenticationException : Exception

@@ -99,8 +99,15 @@ namespace WebFreight.Web
 
             AccountingRegistrations.Register();
             CustomsRegistrations.Register();
-
-            CacheManager.CacheWrapper = new CacheWrapper(HttpContext.Current.Cache);
+            string notUsecache = System.Configuration.ConfigurationManager.AppSettings.Get("NotUseCache");
+            if (notUsecache == "1")
+            {
+                CacheManager.CacheWrapper = new CacheEmptyWrapper(HttpContext.Current.Cache);
+            }
+            else
+            {
+                CacheManager.CacheWrapper = new CacheWrapper(HttpContext.Current.Cache);
+            }
             if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox))
             {
                 LogitudeCacheManager.ServerCache = new RedisCache();
@@ -687,15 +694,11 @@ namespace WebFreight.Web
                 if (!string.IsNullOrEmpty(HttpContext.Current.Request.CurrentExecutionFilePath) && HttpContext.Current.Request.CurrentExecutionFilePath.Contains("/WcfApi/"))
                 {
                     HttpContext.Current.User = null;
-
                 }
 
                 string token = HttpContext.Current.Request.Headers["Token"];
                 if (!string.IsNullOrEmpty(token))
                 {
-
-                    ICommonDataContext context = CommonDataContext.GetContext(0);
-                    AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(context);
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     if (authToken != null)
                     {
@@ -721,6 +724,7 @@ namespace WebFreight.Web
                                     if (GetContactPasswordFromCache(authToken.Email) == authToken.Password)
                                     {
                                         HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
+                                        HttpContext.Current.Items.Add("authToken", authToken);
                                     }
                                     else
                                     {

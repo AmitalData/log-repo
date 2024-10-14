@@ -395,6 +395,7 @@
     <Compile Include="Helpers\APIConnectionHelper.cs" />
     <Compile Include="Helpers\AppDataUtil.cs" />
     <Compile Include="Helpers\BaseClasses\BaseLazyInstance.cs" />
+    <Compile Include="Helpers\CacheEmptyWrapper.cs" />
     <Compile Include="Helpers\CacheManager.cs" />
     <Compile Include="Helpers\CacheWrapper.cs" />
     <Compile Include="Helpers\CustomFieldList.cs" />
