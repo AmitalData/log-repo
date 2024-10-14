@@ -55,10 +55,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
 
         public UServerCommunicationServiceInfoM Send(UServerCommunicationServiceParam uServerCommunicationServiceParam)
         {
-            //if (UnifreightIIGCommonUtil.GetTenantSetting(GetTenant()) == null)
-            //{
-            //    throw new Exception("SendFileToAmitalService():no setting for tenant");
-            //}
+         
 
             bool testDelay = false;
             if (testDelay)

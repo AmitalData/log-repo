@@ -241,20 +241,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     Boolean _IsChanged = false;
                     if (_MyDeclarationPM.Consignments != null && _MyDeclarationPM.Consignments.Count() > 0)
                     {
-                        var setting = CustomsSettingQueryService.GetSettingByTenant(_MyDeclarationPM.Tenant);
-                        if (setting != null)
+                        if (_MyDeclarationPM.Direction != "E")
                         {
-                            if (setting.IsConnectedToUniFreight)
-                            {
-                        DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(_MyDeclarationPM.Tenant);
+                            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(_MyDeclarationPM.Tenant);
 
-                        string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGG_MAN_RUNOVR", "NON", "NON", _MyDeclarationPM.Tenant);
-                                if (defValue == "Y")
-                                {
-                                    _IsRunOver = true;
-                                }
+                            string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGG_MAN_RUNOVR", "NON", "NON", _MyDeclarationPM.Tenant);
+                            if (defValue == "Y")
+                            {
+                                _IsRunOver = true;
                             }
                         }
+                     
+                         
                                
                         if ((String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].UnloadPortCode) || _IsRunOver) && _MyDeclarationPM.Consignments[0].UnloadPortCode != customResponse.Cargo.CargoAdditionalData.First().unloadingLocationID)
                         {
@@ -1035,10 +1033,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private CFIPACKS GetCFIPACKSXML(MN_NG_8241_Cargo_Message customResponse)
         {
-            //var setting = CustomsSettingQueryService.GetSettingByTenant(_MyDeclarationPM.Tenant);
-            //if (setting != null)
-            //{
-            //if (!setting.IsConnectedToUniFreight)
+      
             if (!_MyDeclarationPM.IsConnectedToUnifreight)
             {
                 return null;

@@ -1923,29 +1923,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
-        public string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant) // moran 3.1.17 - AMI-58876
-        {
-            var setting = CustomsSettingQueryService.GetLogitudeCustomsSettingsM(tenant);
-            if (setting.IsConnectedToUniFreight)
-            {
-                var cntxt = AmitalContext.GetContext(tenant);
-                var myGDFDATAQueryService = new GDFDATAQueryService(cntxt);
-
-                if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
-                {
-                    return ("");
-                }
-
-                GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-                if (myGDFDATAPM == null)
-                {
-                    return ("");
-                }
-                return (myGDFDATAPM.DEFDATA);
-            }
-            return ("");
-        }
-
+ 
         public override void InitializeSettings() // mohammad 1-3-2017 to initialize properties and other settings from a generated controller.
         {
             this.LoadSupplierInvoicesWithItems = false;

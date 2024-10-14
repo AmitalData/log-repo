@@ -17,8 +17,7 @@ namespace Logitude.Customs.BL.TraceEvents
                where TransmissionBodyType : class
 
     {
-        public const bool UseHybrid_When_NotIsConnectedToUniFreight = true;
-        private TransmissionBodyType _TransmissionBodyModel;
+         private TransmissionBodyType _TransmissionBodyModel;
 
         public AmitalInsertToQueueService(TransmissionBodyType eve)
         {
@@ -28,10 +27,8 @@ namespace Logitude.Customs.BL.TraceEvents
         public void InsertToQueue(AmitalEventTracerModel myAmitalEventTracer, string action)
         {
             var mySetting = Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(myAmitalEventTracer.Tenant);
-
-            //AmitalEventTracerModel myAmitalEventTracer = createEvent(declarationPM, action);
-
-            if (!mySetting.IsConnectedToUniFreight && UseHybrid_When_NotIsConnectedToUniFreight)
+ 
+            if (!mySetting.IsConnectedToUniFreight )
             {
 
                 System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(this._TransmissionBodyModel.GetType());
