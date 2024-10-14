@@ -1,10 +1,12 @@
 ﻿using CustomsWorkerRole.Utils;
+using Logitude.Server.Tools.Utils;
 using Logitude.BL.Helpers;
 using Logitude.Customs.BL.EntityQueryServices;
 using Microsoft.Practices.ObjectBuilder2;
 using NetCommonHelper.Logger;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
@@ -14,6 +16,7 @@ namespace CustomsWorkerRole
     public class SyncRecordsCCUTableWR : CustomsWorkerEntryPoint
     {
         private bool isFirstTime = true;
+        private static readonly string lockKey = "SyncRecordsCCUTableWR";
 
         public override void WorkOnce()
         {
@@ -34,10 +37,16 @@ namespace CustomsWorkerRole
 
                 List<SyncRecord> syncRecordsInQueueList = new List<SyncRecord>();
                 SyncRecordQuery syncRecordQuery = new SyncRecordQuery();
+
+                Lock();
+
                 List<SyncRecord> records = syncRecordQuery.GetAndMarkNewSyncRecord();
 
                 if (records == null || records.Count == 0)
+                {
+                    Unlock();
                     return;
+                }
 
                 DevLog.Instance.WriteDebug("SendSyncRecoredToUnifreightQueue, records count: " + records.Count);
 
@@ -64,11 +73,29 @@ namespace CustomsWorkerRole
 
                 syncRecordQuery.UpdateStatusInQueue(syncRecordsInQueueList);
 
+                Unlock();
+            }
+            catch (DbUpdateException e) when (e.Message.Contains("SyncRecordsCCUTableWR") && e.Message.Contains("GeneralLock"))
+            {
+                DevLog.Instance.WriteTrace("Another WR work and lock the this job");
             }
             catch (Exception e)
             {
                 DevLog.Instance.WriteFatal(e, "error on SendToUnifreightQueue");
+                Unlock();
             }
+        }
+
+        private static void Lock()
+        {
+            var concurrentKiller = new ConcurrentKiller();
+            concurrentKiller.FreeLockIfCreated15MinOld(lockKey, 0);
+            concurrentKiller.LockOrCrashOnCommitDueUnique(lockKey, 0);
+        }
+
+        private static void Unlock()
+        {
+            new ConcurrentKiller().FreeLock(lockKey, 0);
         }
 
         private static List<SyncRecord> InsertRecordsForCloseTables(SyncRecordQuery syncRecordQuery, List<SyncRecord> records)
