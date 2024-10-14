@@ -1,28 +1,25 @@
-
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { API_MainService } from '../../../core/API_MainService';
 import { CB_CustomsItemComputedDataList, RulesDetailsList } from '../main-display/main-display.component';
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { faChevronLeft, faSquareCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
-
 
 @Component({
   selector: 'app-rules',
   standalone: true,
-  imports: [FontAwesomeModule, NgIf, NgFor],
+  imports: [FontAwesomeModule, NgIf, NgFor, CommonModule],
   templateUrl: './rules.component.html',
   styleUrl: './rules.component.css'
 })
 export class RulesComponent implements OnInit, OnChanges {
   isOpenData: boolean;
   @Input() showRules: boolean;
-  // @Input() currentItem: CB_CustomsItemComputedDataList;
   @Input() currentItem: BehaviorSubject<CB_CustomsItemComputedDataList>;
   alephBetHelper = new alephBetHelper();
   allRules: CB_RulesDetailsList[] = [];
-
+  groupRulesList: GroupedRules[] = [];
   constructor(private API_MainService: API_MainService) { }
 
   ngOnInit(): void {
@@ -38,16 +35,15 @@ export class RulesComponent implements OnInit, OnChanges {
     }
   }
 
+  // Method to fetch rules data from the API and build the rules hierarchy
   initData(customsItemID: number) {
     this.API_MainService.GetCustomsBookRulesData(customsItemID).subscribe((data: any) => {
-
       if (!data.body) return; // TODO: add error message
       this.allRules = this.buildRulesHierarchy(data.body);
-
-      console.log(this.allRules);
     });
   }
 
+  // Method to toggle the expanded state of a rule and manage dropdown visibility
   toggleRule(rule: any, event: Event) {
     event.preventDefault();
     event.stopPropagation();
@@ -67,11 +63,10 @@ export class RulesComponent implements OnInit, OnChanges {
     }, 0);
   }
 
-
+  // Method to build a hierarchical structure of rules and group them by title
   buildRulesHierarchy(rulesList: CB_RulesDetailsList[]): CB_RulesDetailsList[] {
-
-    // for each rule, get its children recursively
-    const getChildren = (parentRule: CB_RulesDetailsList) => {
+    // Function to get children of a parent rule recursively
+    const getChildren = (parentRule: CB_RulesDetailsList): CB_RulesDetailsList[] => {
       // Filter for children of the current parent rule
       const children = rulesList.filter(rule => rule.Parent_RuleDetailsHistoryID === parentRule.ID);
       // For each child, get its own children recursively
@@ -83,7 +78,6 @@ export class RulesComponent implements OnInit, OnChanges {
 
     // Find root rules
     const rootRules = rulesList.filter(rule => rule.Parent_RuleDetailsHistoryID == 0 || rule.Parent_RuleDetailsHistoryID == null);
-
     // Build the hierarchy for root rules
     const rulesListData = rootRules.map(rootRule => {
       const children = getChildren(rootRule);
@@ -93,54 +87,54 @@ export class RulesComponent implements OnInit, OnChanges {
       };
     });
 
-    // group by title and put inside the array of in grouped   the paents by same rule id:
-    // key is the title and rules is the array of the parents by same rule id from rootRules
-    const grouped = rulesListData.reduce((acc, rule) => {
+    // Group rules by title
+    const grouped: GroupedRules[] = rulesListData.reduce((acc: GroupedRules[], rule) => {
       const key = rule.Title;
-      if (!acc[key]) {
-        acc[key] = [];
-      }
-      acc[key].push(rule);
-      return acc;
-    }, {});
-    console.log(grouped);
+      let group = acc.find(g => g.title === key);
 
+      // If the group doesn't exist, create a new one
+      if (!group) {
+        group = new GroupedRules();
+        group.title = key;
+        acc.push(group);
+      }
+      // Add the current rule to the group's rules
+      group.rules.push(rule);
+      return acc;
+    }, []);
+    this.groupRulesList = grouped;
     return rulesListData;
   }
 
-
+  // Method to trim the start of the given text
   orderText(text: string): string {
     if (!text) return text;
     return text.trimStart();
   }
-
-  // dataList: RulesDetailsList= [];
 }
 
-export interface CB_RulesDetailsList {
-  ID: number;
-  RuleID: number;
-  Title: string;
-  Rules: string;
-  UpdateDate: Date;
-  ChangeRequestTypePriority: number;
-  OrderinalPostion: number;
-  EntityStatusID: string;
-  Parent_RuleDetailsHistoryID: number;
+// Interface extending RulesDetailsList and adding childrens property
+interface CB_RulesDetailsList extends RulesDetailsList {
   childrens: CB_RulesDetailsList[];
-  expanded?: boolean;
-  showDropdown?: boolean;
-  hideDropdown?: boolean;
 }
 
+// Class defining a structure for grouped rules
+class GroupedRules {
+  title: string;
+  rules: CB_RulesDetailsList[] = [];
+  expanded?: boolean = false;
+  showDropdown?: boolean = false;
+  hideDropdown?: boolean = false;
+}
+
+// Helper class to get Hebrew letter from a number
 class alephBetHelper {
   alephBet: string[] = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י', 'כ', 'ל', 'מ', 'נ', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ש', 'ת'];
   getLetterFromNumber(number) {
-    // Adjust for zero-based indexing
     const index = number - 1;
-    if (index < 0 || index >= this.alephBet.length) {
+    if (index < 0 || index >= this.alephBet.length)
       throw new Error("Number out of range. Please enter a number between 1 and 22.");
-    }
     return `${this.alephBet[index]}-`;
   }
 }
+
