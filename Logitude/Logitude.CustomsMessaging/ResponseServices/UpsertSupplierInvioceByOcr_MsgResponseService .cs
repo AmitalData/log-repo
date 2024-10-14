@@ -222,10 +222,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 this.MyResponseData.Remarks = "Invalid value, not exist in table - " + Result.invalidValuesRemarks;
                             CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(context);
                             CustomsRequestsSheetPM requestsSheetPM = customsRequestsSheetQueryService.GetRequestInProgress(customResponse.tenant, "DCAOCR", ObjectTableRepository.GetObjectTableByName("Customs.Declaration"), customResponse.Declarationid, null, null, null, false, requestParams.CustomsRequestsSheetId).FirstOrDefault();
+                            
+                            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("requestsSheet DCAOCR- start 5 " + requestsSheetPM.Id);
+
                             if (requestsSheetPM != null)
                             {
+                                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("requestsSheet DCAOCR- " + requestsSheetPM.Id);
                                 MessagingServiceFactoryHelper.ResolveAndReQueue("DCAOCR", requestParams.Tenant, requestsSheetPM.Id, null, futureSendDateTime: DateTime.Now.AddMinutes(0.5));
                             }
+                            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("requestsSheet DCAOCR finsh 5");
+
 
                         }
                         catch (System.Exception ex)
