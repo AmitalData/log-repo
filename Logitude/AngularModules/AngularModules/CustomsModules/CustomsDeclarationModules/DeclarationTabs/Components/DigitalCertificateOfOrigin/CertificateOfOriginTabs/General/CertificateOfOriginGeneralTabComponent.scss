@@ -3,9 +3,14 @@
     line-height: 40px;
 }
 
+.bold-label ::ng-deep label {
+    font-weight: bold;
+}
+
 .opacityDimBox {
     opacity: 0.6;
 }
+
 // :host ::ng-deep .InputDiv {
 
 //     max-height: 50px !important;
