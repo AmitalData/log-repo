@@ -77,12 +77,19 @@ namespace CustomsWorkerRole
             }
             catch (DbUpdateException e) when (e.Message.Contains("SyncRecordsCCUTableWR") && e.Message.Contains("GeneralLock"))
             {
-                DevLog.Instance.WriteTrace("Another WR work and lock the this job");
+                DevLog.Instance.WriteTrace("Another WR lock this job");
             }
             catch (Exception e)
             {
                 DevLog.Instance.WriteFatal(e, "error on SendToUnifreightQueue");
-                Unlock();
+                try
+                {
+                    Unlock();
+                }
+                catch (Exception ex)
+                {
+                    DevLog.Instance.WriteFatal(ex, "Unlock failed");
+                }
             }
         }
 
@@ -106,25 +113,25 @@ namespace CustomsWorkerRole
             List<int> tenantIds = CacheHelper.GetFromCache("TenantIdsForClosedTables", () => new CustomsSettingQueryService(0).GetAll().Select(x => x.Tenant).ToList());
 
             tenant0CloseTableRecords.ForEach(record =>
-             {
-                 RemoveRecords.Add(record);
+            {
+                RemoveRecords.Add(record);
 
-                 tenantIds.ForEach(tenantId =>
-                 {
-                     newRecords.Add(new SyncRecord
-                     {
-                         Id = Guid.NewGuid().ToString(),
-                         FileNo = record.FileNo,
-                         KeyVal = record.KeyVal,
-                         Tenant = tenantId,
-                         IsSync = record.IsSync,
-                         CreateDate = DateTime.UtcNow,
-                         Entname = record.Entname,
-                         SyncDT = record.SyncDT,
-                         TrigAction = record.TrigAction,
-                     });
-                 });
-             });
+                tenantIds.ForEach(tenantId =>
+                {
+                    newRecords.Add(new SyncRecord
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        FileNo = record.FileNo,
+                        KeyVal = record.KeyVal,
+                        Tenant = tenantId,
+                        IsSync = record.IsSync,
+                        CreateDate = DateTime.UtcNow,
+                        Entname = record.Entname,
+                        SyncDT = record.SyncDT,
+                        TrigAction = record.TrigAction,
+                    });
+                });
+            });
 
             RemoveRecords.ForEach(record => records.Remove(record));
             syncRecordQuery.Add(newRecords);

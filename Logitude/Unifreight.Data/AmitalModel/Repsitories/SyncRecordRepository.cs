@@ -120,12 +120,15 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
         public DateTime? GetLastSyncDate(int tenant, string fileNo)
         {
-            DateTime yesterday = DateTime.Now.AddDays(-1);
-            List<SyncRecord> records = context.SyncRecord.Where(syncRecord => syncRecord.Tenant == tenant && syncRecord.FileNo == fileNo && syncRecord.CreateDate > yesterday).ToList();
-            if (records.Count == 0)
+            SyncRecord record = context.SyncRecord
+                .Where(syncRecord => syncRecord.Tenant == tenant && syncRecord.FileNo == fileNo)
+                .OrderByDescending(x => x.CreateDate)
+                .FirstOrDefault();
+
+            if (record == null)
                 return null;
 
-            return records.Any(x => x.SyncDT == null) ? DateTime.Now : records.Max(x => x.SyncDT.Value);
+            return record.SyncDT ?? DateTime.Now;
         }
 
         public List<SyncRecord> GetAndMarkNewSyncRecord()
