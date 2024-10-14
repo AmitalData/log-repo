@@ -29,9 +29,9 @@ namespace AmitalTestConsoleApp
             LoadLogitudeSettings();
 
             int tenant = 102;
-            string fileNo = "0";
+            string fileNo = "167964930";
 
-            string tableName = "Customs.CustomsCountries";
+            string tableName = "Customs.InvoiceTypes";
             string itemUpdate =  tableName;
             bool isCloseTable = true;
 
@@ -39,12 +39,12 @@ namespace AmitalTestConsoleApp
             //string itemUpdate =  fileNo;
             //bool isCloseTable = false;
 
-            //CreateNewRecord(tenant, fileNo, tableName, isCloseTable);
+            CreateNewRecord(tenant, fileNo, tableName, isCloseTable);
             WRSendTaskToQueueMessage();
-            //Envelope task = GetTaskFromQueue(tenant);
-            //List<EntityRecord> dataSync = APIGetSyncData(tenant, itemUpdate);
-            //APIMarkSyncFinished(tenant, itemUpdate, dataSync);
-            //EnqueueTask(task.CommunicationLogId, tenant);
+            Envelope task = GetTaskFromQueue(tenant);
+            List<EntityRecord> dataSync = APIGetSyncData(tenant, itemUpdate);
+            APIMarkSyncFinished(tenant, itemUpdate, dataSync);
+            EnqueueTask(task.CommunicationLogId, tenant);
 
             Console.WriteLine("************ finish TestSyncRecord ************");
         }
@@ -56,7 +56,7 @@ namespace AmitalTestConsoleApp
             syncRecordQuery.Add(new List<SyncRecord>() { new SyncRecord()
             {
                 Id = Guid.NewGuid().ToString(),
-                Tenant = 0,
+                Tenant = tenant,
                 CreateDate = DateTime.Now,
                 IsSync = 0,
                 Entname = tableName,
@@ -77,9 +77,6 @@ namespace AmitalTestConsoleApp
         {
             Thread.Sleep(500);
             string taskXml = new ExternalTasksQueueWcfService().GetTaskFromQueue(tenant, 4);
-            if(string.IsNullOrEmpty(taskXml))
-                throw new Exception("No task in queue");
-
             Envelope task = LogitudeXmlSerializer.DeserializeObject<Envelope>(taskXml);
             QueueTask queueTask = task.Tasks.FirstOrDefault();
             Console.WriteLine($"Get Task From Queue - action: {queueTask?.Action}, parameter: {queueTask?.Parameters?.FirstOrDefault()?.Value}, CommunicationLogId: {task.CommunicationLogId}" );
