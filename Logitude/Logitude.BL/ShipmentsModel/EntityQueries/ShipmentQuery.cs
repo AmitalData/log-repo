@@ -13638,6 +13638,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                FromPortCode = f.FromPortCode,
                                MainCarriageATD = f.MainCarriageATD,
                                MainCarriageETD = f.MainCarriageETD,
+                               MainCarriageATA = f.MainCarriageATA,
+                               MainCarriageETA = f.MainCarriageETA,
                                TransportModeId = f.TransportModeId,
                                CustomerReference1 = f.CustomerReference1,
                                CustomerReference2 = f.CustomerReference2,
