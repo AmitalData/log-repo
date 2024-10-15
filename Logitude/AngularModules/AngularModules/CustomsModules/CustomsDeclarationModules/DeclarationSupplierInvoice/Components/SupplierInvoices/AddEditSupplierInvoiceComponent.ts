@@ -250,8 +250,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     }
                 }
             });
-        if(this.declarationPM.Direction!='E'){
-        customsSettingExtendedListService.GetSkipAutoInsurancePromise(this.declarationPM.CustomerCode, this.declarationPM.Tenant).subscribe((myResult:any) => {
+        customsSettingExtendedListService.GetSkipAutoInsurancePromise(this.declarationPM.CustomerCode, this.declarationPM.Tenant, this.declarationPM.Direction).subscribe((myResult:any) => {
             var res: ServiceResponse = myResult;
             if (res.Result.SkipAutoInsurance === true) {
                 this._SkipAutoInsurance = true;
@@ -290,8 +289,8 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     });
                 });
             });
-            });
-        }
+        });
+
            
 
         this.IsNextButtonEnabled = true;
