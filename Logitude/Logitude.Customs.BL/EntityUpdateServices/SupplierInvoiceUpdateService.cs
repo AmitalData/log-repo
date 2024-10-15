@@ -193,7 +193,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     this.openTaskForUnifreight = true;
                 }
             }
-            if (_DeclarationPM.Direction != "E")
+            if (_DeclarationPM != null && _DeclarationPM.Direction != "E")
             {
                 string remarksClass = ""; string remarksChas = "";
 
