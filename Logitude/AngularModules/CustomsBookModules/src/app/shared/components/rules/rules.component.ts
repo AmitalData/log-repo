@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { API_MainService } from '../../../core/API_MainService';
 import { CB_CustomsItemComputedDataList, RulesDetailsList } from '../main-display/main-display.component';
@@ -15,6 +15,7 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 })
 export class RulesComponent implements OnInit, OnChanges {
   isOpenData: boolean;
+  @Output() closeRules = new EventEmitter<boolean>();
   @Input() showRules: boolean;
   @Input() currentItem: BehaviorSubject<CB_CustomsItemComputedDataList>;
   alephBetHelper = new alephBetHelper();
@@ -111,6 +112,11 @@ export class RulesComponent implements OnInit, OnChanges {
   orderText(text: string): string {
     if (!text) return text;
     return text.trimStart();
+  }
+
+  closeRulesClick() {
+    this.showRules = false;
+    this.closeRules.emit();
   }
 }
 

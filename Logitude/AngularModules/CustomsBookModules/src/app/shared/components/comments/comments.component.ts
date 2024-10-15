@@ -1,5 +1,5 @@
 
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AddCommentService, CommentState } from '../add-comment/service/add-comment.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { API_MainService } from '../../../core/API_MainService';
@@ -16,6 +16,7 @@ import { NgClass, NgFor, NgIf } from '@angular/common';
   styleUrl: './comments.component.css'
 })
 export class CommentsComponent implements OnInit, OnChanges {
+  @Output() closeComments = new EventEmitter<boolean>();
   @Input() showComments: boolean = false;
   // @Input() currentItem: BehaviorSubject<CB_CustomsItemComputedDataList> = new BehaviorSubject<CB_CustomsItemComputedDataList>(null);
   @Input() currentItem: CB_CustomsItemComputedDataList;
@@ -72,6 +73,10 @@ export class CommentsComponent implements OnInit, OnChanges {
       remarkDescription: comment.RemarkDescription
     };
     return this.remarksClassificationPM;
+  }
+  closeCommentsClick() {
+    this.showComments = false;
+    this.closeComments.emit();
   }
 }
 

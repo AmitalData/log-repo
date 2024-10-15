@@ -10,7 +10,7 @@
                 </a>
                 <h3 *ngIf="allComments?.length >= 0">הערות בפרק ({{allComments?.length}})</h3>
             </div>
-            <div class="detailsSlide_commentsClose" (click)="showComments = false"><a role="button"
+            <div class="detailsSlide_commentsClose" (click)="closeCommentsClick()"><a role="button"
                     aria-controls="comments"><i role="img" aria-hidden="true" class="icon-close"></i></a></div>
         </div>
         <div class="commentsList" *ngIf="allComments?.length > 0">

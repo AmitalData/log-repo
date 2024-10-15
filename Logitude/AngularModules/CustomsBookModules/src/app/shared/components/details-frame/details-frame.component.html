@@ -54,8 +54,8 @@
             </div>
         </div>
         <div class="conetnt_container">
-            <app-rules [showRules]="showRules" [currentItem]="currentItem" />
-            <app-comments [showComments]="showComments" [currentItem]="item" />
+            <app-rules [showRules]="showRules" [currentItem]="currentItem"  (closeRules)="closeRules()"/>
+            <app-comments [showComments]="showComments" [currentItem]="item" (closeComments)="closeComments()"/>
             <app-accordion [currentItem]="currentItem"></app-accordion>
         </div>
     </div>

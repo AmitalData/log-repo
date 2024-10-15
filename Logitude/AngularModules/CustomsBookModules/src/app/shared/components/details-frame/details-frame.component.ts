@@ -81,5 +81,12 @@ export class DetailsFrameComponent implements OnInit {
   showAddCommentSidebar() {
     this.addCommentService.setIsOpened(true, this.item);
   }
+
+  closeComments() {
+    this.showCommentsIsOpen.next(false);
+  }
+  closeRules() {
+    this.showRulesIsOpen.next(false);
+  }
 }
 
