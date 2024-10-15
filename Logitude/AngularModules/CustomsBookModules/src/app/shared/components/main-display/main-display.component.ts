@@ -169,6 +169,15 @@ export class MainDisplayComponent implements OnInit {
 
 			// Determine if the current item should be expanded
 			if (containsSearchText || shouldExpandChildren) {
+
+				// #109247
+				const itemHierarchicLocationID: number = Number(item.ItemHierarchicLocationID);
+				if (searchText.length == 2 && itemHierarchicLocationID > 2) {
+					return;
+				}
+				if (searchText.length == 4 && itemHierarchicLocationID > 3) {
+					return;
+				}
 				this.showChildern(expend, item);
 				shouldExpandParent = true;
 			}
@@ -247,6 +256,8 @@ export class MainDisplayComponent implements OnInit {
 		if (filtersSearch.details) selectedFilters.push(FilterOption.Details);
 		if (filtersSearch.sections) selectedFilters.push(FilterOption.Sections);
 		if (filtersSearch.customsDetails) selectedFilters.push(FilterOption.CustomsDetails);
+		if (filtersSearch.rules) selectedFilters.push(FilterOption.Rules);
+		if (filtersSearch.remarks) selectedFilters.push(FilterOption.Remarks);
 		return selectedFilters.join(',');
 	}
 
@@ -266,23 +277,37 @@ export class MainDisplayComponent implements OnInit {
 
 		if (SearchBy.searchBy_form01 == this.selectSearchBy) {
 			this.isLoadingMode.next(true); // update loading mode
-			filters.CustomsItemHierarchic = '1,2,3,4';
-			this.API_MainService.GetCustomsBookMainViewSearchByClassification(filters).subscribe((data: any) => {
-				const result: CB_CustomsItemComputedDataList[] = data.body;
-				if (!result) return; // TODO: add error message
-				this.itemsData.next(result);
-				this.isLoadingMode.next(false); // update loading mode
-			});
+			if (filters.CustomsItemHierarchic === '') filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
+			this.API_MainService.GetCustomsBookMainViewSearchByClassification(filters).subscribe(
+				(data: any) => {
+					const result: CB_CustomsItemComputedDataList[] = data.body;
+					if (!result) return; // TODO: add error message
+					this.itemsData.next(result);
+					this.isLoadingMode.next(false); // update loading mode
+				},
+				(error) => {
+					this.isLoadingMode.next(false); // update loading mode
+					this.itemsData.next([]);
+					console.log(error.message);
+				}
+			);
 		}
 		else if (SearchBy.pageSearch_form02 == this.selectSearchBy) {// spacial search by text
 			this.isLoadingMode.next(true); // update loading mode
-			if (filters.CustomsItemHierarchic === '') filters.CustomsItemHierarchic = '1,2,3,4';
-			this.API_MainService.GetCustomsBookMainViewSearchByText(filters).subscribe((data: any) => {
-				const result: CB_CustomsItemComputedDataList[] = data.body;
-				if (!result) return; // TODO: add error message
-				this.itemsData.next(result);
-				this.isLoadingMode.next(false); // update loading mode
-			});
+			if (filters.CustomsItemHierarchic === '') filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
+			this.API_MainService.GetCustomsBookMainViewSearchByText(filters).subscribe(
+				(data: any) => {
+					const result: CB_CustomsItemComputedDataList[] = data.body;
+					if (!result) return; // TODO: add error message
+					this.itemsData.next(result);
+					this.isLoadingMode.next(false); // update loading mode
+				},
+				(error) => {
+					this.isLoadingMode.next(false); // update loading mode
+					this.itemsData.next([]);
+					console.log(error.message);
+				}
+			);
 		}
 	}
 
@@ -379,12 +404,14 @@ export class MainDisplayComponent implements OnInit {
 	}
 }
 
-enum FilterOption {
+export enum FilterOption {
 	Parts = '1',
 	Chapters = '2',
 	Details = '3',
 	Sections = '4',
-	CustomsDetails = '5,6,7'
+	CustomsDetails = '5',
+	Rules = '6',
+	Remarks = '7'
 }
 
 export interface ItemData {
@@ -495,4 +522,15 @@ export interface RemarksClassificationList {
 	Tenant: number;
 	CustomsItemsID: number;
 	RemarkDescription: string;
+}
+export interface RulesDetailsList {
+	ID: number;
+	RuleID: number;
+	Title: string;
+	Rules: string;
+	UpdateDate: Date;
+	ChangeRequestTypePriority: number;
+	OrderinalPostion: number;
+	EntityStatusID: string;
+	Parent_RuleDetailsHistoryID: number;
 }

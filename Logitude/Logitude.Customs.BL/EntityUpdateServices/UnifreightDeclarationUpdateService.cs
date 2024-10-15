@@ -192,19 +192,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     _IsConsignmentChanged = IsConsignmentChanged();
                 }
 
-                //_IsSupplerInvChanged = true;
-                //var setting = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPM.Tenant);
-                //if (setting != null)
-                //{
-                //  if (!setting.IsConnectedToUnifreight)
-                //if (!_DirtyDeclarationPM.IsConnectedToUnifreight)
-                //{
-                //    return;
-                //}
-                //}
-                
+      
 
-                TransactionScope scope = null;//TransactionFactory.GetNewTransaction())//new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { IsolationLevel = IsolationLevel.ReadCommitted }))
+                TransactionScope scope = null;
                 if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
                 {
                     scope = TransactionFactory.GetNewOracleReadCommittedTransaction();
@@ -228,7 +218,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             LogMessagingUtil.Instance.AppendLine("Update3: GetFILENOByCUSTOMFILENO, file: " + lCUSTOMFILENO);
                         bool isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
                         if (isConnectedToUniFreight) {
-                            int? FILENO1 = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO);
+                            int? FILENO1 = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO, _DirtyDeclarationPM.Tenant);
                         }
                         
 
@@ -3753,21 +3743,12 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
             return existChange;
         }
 
-        //static HashSet<string> _HashSet = new HashSet<string>();
-        //static Dictionary<string,int>  _HashSet1 = new Dictionary<string,int>();
-        //int i;
+ 
         private string GetTranslationP2L(string partnerID, string tableID, string partnerCode)
         {
             bool isConnectedToUnifreight = CustomsSettingQueryService.GetSettingByTenant(this._DirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
 
-            //i++;
-            //_HashSet.Add(partnerID + "," + tableID + "," + partnerCode);
-            //if (!_HashSet1.ContainsKey(this.GetHashCode().ToString() + tableID))
-            //{
-            //    _HashSet1[this.GetHashCode().ToString() + tableID] = 0;
-            //}
-            //_HashSet1[this.GetHashCode().ToString() + tableID] = ++_HashSet1[this.GetHashCode().ToString() + tableID];
-            //return "";
+ 
             if (isConnectedToUnifreight) {
                 if (partnerID == null || tableID == null || partnerCode == null)
                 {
@@ -3783,8 +3764,7 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
                     return GetTranslationP2LFromCache(partnerID, tableID, partnerCode);
                 }
                 var myGTRTRANPM = _GTRTRANQueryService.GetSingle(partnerID, tableID, partnerCode, null, true);
-                //GTRTRAN myGTRTRANPM = myGTRTRANQueryService.GetTranslationP2L(partnerID, tableID, partnerCode);
-
+ 
                 if (myGTRTRANPM == null)
                 {
                     if (tableID == "CTBBONDED") // moran 15.5.16 - Task 20709

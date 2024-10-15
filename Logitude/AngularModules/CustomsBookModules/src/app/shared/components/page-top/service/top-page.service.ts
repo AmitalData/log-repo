@@ -15,6 +15,7 @@ export class SearchService {
 
   private _searchTextSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public searchText$: Observable<string> = this._searchTextSubject.asObservable();
+  public customsItemHierarchicDefault:string = '1,2,3,4,5';
 
   constructor() {
     this._searchTextSubject.next('');

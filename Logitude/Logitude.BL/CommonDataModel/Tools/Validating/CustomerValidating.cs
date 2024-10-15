@@ -25,15 +25,9 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
 
             int tenant = entityPM.Tenant;
             TenantRepository tenantRepository = new TenantRepository(myContext);
-            CustomerRepository CustomerRepository = new CustomerRepository(myContext);
-
+          
             Tenant myTenant = tenantRepository.GetSingleTenantOnly(tenant);
-            var customer= CustomerRepository.GetCustomersByVat(entityPM.VatNumber, tenant);
-            if(customer?.Count() > 0 && isNewEntity)
-            {
-                string msg = "VAT Number already exists " + entityPM.VatNumber;
-                throw new ApplicationException(msg);
-            }
+        
 
             foreach (AddressPM itemPM in entityPM.Addresses)
             {

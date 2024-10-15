@@ -53,6 +53,7 @@ using System.Globalization;
 using Logitude.Customs.BL.Messaging.ILSWS;
 using System.Xml;
 using Logitude.BL.ShipmentsModel.EntityPMs;
+using System.Runtime.Remoting.Contexts;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -146,8 +147,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (setting != null)
             {
                 entityPM.AgentId = setting.CustomsAgentId.Length <= 9 ? setting.CustomsAgentId : null;
-                //if (!setting.IsConnectedToUniFreight)
-                if (!entityPM.IsConnectedToUnifreight && entityPM.IsAmendment != true)
+                 if (!entityPM.IsConnectedToUnifreight && entityPM.IsAmendment != true)
                 {
 
                     if (string.IsNullOrEmpty(entityPM.CustomFileNo))
@@ -436,10 +436,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     return;
                 }
-
-                //CustomsSettingQueryService settingsQuery = new CustomsSettingQueryService(entityPM.Tenant);
-                //var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
-                //if (setting.IsConnectedToUniFreight)
+ 
                 var eventContextTagModel = entityPM.CurrentContextTag as EventContextTagModel;
 
                 var declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
@@ -450,8 +447,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     var entityPMOrg = declarationQueryService.GetSingle(entityPM.AmendmentOriginalDeclartation, true, false);
                     entityPMOrg.CurrentContextTag = eventContextTagModel;
                     entityPMOrg.HatraDate = entityPM.HatraDate;
-                    //  entityPMOrg.DeclarationNumber = entityPM.DeclarationNumber;
-
+ 
                     UpdateUnifreight(entityPMOrg);
 
 
@@ -915,6 +911,24 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             return sendDeclarationMandatory;
         }
 
+        public void UpdateTaxationDateTime(List<string> ids,int tenant)
+        {
+            ICustomContext customContext = CustomContext.GetContext(tenant);
+            DeclarationQueryService _DeclarationQueryService = new DeclarationQueryService(customContext);
+            DeclarationUpdateService _DeclarationUpdateService = new DeclarationUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
+
+            List<DeclarationPM> _DeclarationsList = _DeclarationQueryService.GetDeclarationsByIds(ids, tenant);
+
+
+            foreach (var item in _DeclarationsList)
+            {
+                item.TaxationDateTime = DateTime.UtcNow.Date;
+                item.ChangeSetOp = ChangeSetOperation.Update;
+                _DeclarationUpdateService.Update(item, false);
+            }
+            _DeclarationUpdateService.SubmitChanges();
+
+        }
         private string DeclarationTicketsStatus(DeclarationPM declarationPM)
         {
             CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(declarationPM.Tenant);
@@ -2135,14 +2149,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var setting = CustomsSettingQueryService.GetSettingByTenant(tenant);
             if (setting != null)
             {
-                //if (setting.IsConnectedToUniFreight)
-                if (!string.IsNullOrWhiteSpace(setting.UnfConnectionString))
+                 if (!string.IsNullOrWhiteSpace(setting.UnfConnectionString))
                 {
                     AmitalContext amitalContext;
                     using (amitalContext = AmitalContext.GetContext(tenant))
                     {
-                        //AmitalContext.SetOracleMonitor();
-                        var myCCUFILEMQueryService = new CCUFILEMQueryService(amitalContext);
+                         var myCCUFILEMQueryService = new CCUFILEMQueryService(amitalContext);
 
                         myCCUFILEM = myCCUFILEMQueryService.GetCCUFILEMByRESHIMONNO(reshimonNumber);
 

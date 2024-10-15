@@ -1604,7 +1604,8 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             if (!String.IsNullOrEmpty(gLAccountId))
             {
                 return (from record in context.LedgerTransactions
-                        where record.Tenant == tenant && record.AccountId == gLAccountId && record.Mark == true
+                        where record.Tenant == tenant && record.AccountId == gLAccountId && record.Mark == true 
+                                                      && (record.OpenAmount != 0m || record.AmountToReconcile != 0m)
                         select record).ToList();
             }
             else

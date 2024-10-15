@@ -34,7 +34,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string InterfaceTypeCode { get; set; }
 
         [Column("UseRabbitMQ")]
-        public string UseRabbitMQ { get; set; }
+        public bool UseRabbitMQ { get; set; }
 
 
         [Column("QueueCodeRabbit")]
@@ -44,7 +44,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 
 
         [Column("HaveRabbitMQ")]
-        public string HaveRabbitMQ { get; set; }
+        public bool HaveRabbitMQ { get; set; }
 
         [Column("EntityCode")]
         public string EntityCode { get; set; }
@@ -56,7 +56,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 
         #region tomer
         [Column("RabbitMQCreateDate")]
-        public DateTime RabbitMQCreateDate { get; set; }
+        public DateTime? RabbitMQCreateDate { get; set; }
 
         [Column("RabbitMQRetryNumber")]
         public int RabbitMQRetryNumber { get; set; }

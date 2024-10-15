@@ -256,13 +256,13 @@
                         <tr>
                             <!-- FreightForwarderId -->
                             <td>
-                                <LogLov 
+                                <LogLov  [class.readonly] = "disableFreightForwarderId"
                                     [ObjectFieldName]="'FreightForwarderId'" 
                                     [SelectedValue]="FreightForwarderId"
                                     [ObjectTableName]="ObjectTableName"
                                     [DataContext]="DataContext"
                                     [HideLastColumn]="true"
-                                    [LookUpTableName]="'Card'">
+                                    [LookUpTableName]="'Card'">                                    
                                 </LogLov>
                             </td>
 
@@ -270,15 +270,17 @@
                                 <div></div>
                             </td>
 
-                            <!-- ShipmentNumber -->
+                            <!-- ForwarderShipmentNumber -->
                             <td>
-                                <LogTextBox 
-                                    [ObjectFieldName]="'ShipmentNumber'" 
-                                    [Text]="FreightForwarderReferenceShipmentNumber"
-                                    [ObjectTableName]="ObjectTableName"
+                                <LogTextBox [class.readonly] = "disableForwarderShipmentNumber"
+                                    [ObjectFieldName]="'ForwarderShipmentNumber'" 
+                                    [Text]="ForwarderShipmentNumber"
+                                    [ObjectTableName]="'FreightForwarderReference'"
+                                    [HideLastColumn]="true"
                                     [DataContext]="DataContext">
                                 </LogTextBox>
                             </td>
+                            <td><IconButton [IsSmall]="true" [Name]="'Edit'" (click)="EditForwarderShipmentNumberValue()"></IconButton></td>
                         </tr>
                     </table>
                     <td class="columnBetweenFields"></td>
@@ -342,11 +344,20 @@
                 </tr>
 
                 <tr class="FormFieldRow">
-                    <!-- erets motsa -->
-                    <td style="width: 180px;">
-                        <LogLabel [NoObjectField]="true" [Text]="'ארץ מוצא'" [DataContext]="DataContext"></LogLabel>
+
+                     <!-- OriginCountryCode -->
+                     <td style="width: 180px;">
+                        <LogLabel [ObjectFieldName]="'OriginCountryCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
-                    <td></td>
+                    <td>
+                        <LogLov 
+                            [ObjectFieldName]="'OriginCountryCode'" 
+                            [SelectedValue]="OriginCountryCode"
+                            [ObjectTableName]="ObjectTableName"
+                            [DataContext]="DataContext"
+                            [LookUpTableName]="'Customs.CustomsCountry'">
+                        </LogLov>
+                    </td>
                     <td class="columnBetweenFields"></td>
 
                     <!-- MainCarriageFromPortId -->

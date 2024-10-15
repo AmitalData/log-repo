@@ -56,16 +56,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var sw = Stopwatch.StartNew();
             try
             {
-                //if ((!Environment.MachineName.Equals("itzik-7-new", StringComparison.OrdinalIgnoreCase)) && (!Environment.MachineName.Equals("yuval-7-new", StringComparison.OrdinalIgnoreCase))) return;
-                ///if (String.IsNullOrWhiteSpace(_DirtyDeclarationPaymentPM.DeclarationId))
+
                 ///all ref 2 _DirtyDeclarationPaymentPM check if null !!!!!!!!
                 if (_DirtyDeclarationPaymentPM== null || String.IsNullOrWhiteSpace(_DirtyDeclarationPaymentPM.DeclarationId))
                 {
                     return;
                 }
 
-                //var setting = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPaymentPM.Tenant);
-                //if (!setting.IsConnectedToUniFreight)
+
                 DeclarationQueryService declarationQueryService = new DeclarationQueryService(_DirtyDeclarationPaymentPM.Tenant);
                 DeclarationPM declarationPM = declarationQueryService.GetSingle(_DirtyDeclarationPaymentPM.DeclarationId, false, false);
                 if (declarationPM == null || (declarationPM != null && !declarationPM.IsConnectedToUnifreight))
@@ -99,11 +97,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         {
                             throw new BusinessErrorException("GetFILENOByCUSTOMFILENO return null");
                         }
-                        int? FILENO1 = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO);
 
-                        _CCUPAYHAND = myCCUPAYHANDQueryService.GetSingle(FILENO.Value, true, false);
+						int? FILENO1 = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO, _DeclarationPM.Tenant);
 
-                        Boolean noUpdate = false;
+						_CCUPAYHAND = myCCUPAYHANDQueryService.GetSingle(FILENO.Value, true, false);
+
+						Boolean noUpdate = false;
                         var currentRequestSheetContext = RequestSheetContext.Current.GetContextOrDefault();
                         if (!(currentRequestSheetContext != null && string.IsNullOrWhiteSpace(currentRequestSheetContext.CustomsRequestsSheetId)))
                         {
@@ -221,7 +220,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //_CCUPAYHAND.TOTALPAYTAX = _DirtyDeclarationPaymentPM.;
             //_CCUPAYHAND.TOTALPAYDEPOSIT = _DirtyDeclarationPaymentPM.;
             _CCUPAYHAND.HANDDATE = _DirtyDeclarationPaymentPM.PaymentDate;
-            _CCUPAYHAND.HANDTYPE = true;
+            _CCUPAYHAND.HANDTYPE = 1;
             if (!String.IsNullOrWhiteSpace(_DirtyDeclarationPaymentPM.SignatoryIdentification))
             {
                 _CCUPAYHAND.RESHIMONSIGN = _DirtyDeclarationPaymentPM.SignatoryIdentification.Substring(0, Math.Min(9, _DirtyDeclarationPaymentPM.SignatoryIdentification.Length)); // moran 27.7.16 - Task 21585 - take first 9

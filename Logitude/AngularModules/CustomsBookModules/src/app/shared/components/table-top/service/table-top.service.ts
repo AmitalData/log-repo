@@ -5,7 +5,7 @@ import { TableTopState } from '../table-top.component';
 	providedIn: 'root',
 })
 export class TableTopService {
-	categiries = ['הסכמים', 'ש.מכס', 'מס קניה', 'תמ”א', 'יח’ סטטיסטית'];
+	categiries = ['הסכמים', 'ש.מכס','יח’ סטטיסטית', 'מס קניה', 'תמ”א'];
 
 	getCategories() {
 		return this.categiries;

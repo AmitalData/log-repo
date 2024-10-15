@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-
 import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -145,6 +144,18 @@ export class TaxReportExtendedPMService {
             }),
             catchError(ServiceHelper.HandleServiceError));
     }
+    GetActiveFutureReportsExist(createDate:Date) {
+        return this.httpClient.get(this._apiUrl + '/GetActiveFutureReportsExist?createDate=' + createDate, ServiceHelper.GetHttpHeaders()).pipe(
+            map(res => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                var result = res;
+                serviceResponse.Result = result;
+
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+    }
 
   CreateNewTaxReportLine(taxReportPM: TaxReportPM) {
     return this.httpClient.put(this._apiUrl + "/PutCreateTaxReportLine", JSON.stringify(taxReportPM), ServiceHelper.GetHttpHeaders()).pipe(
@@ -197,7 +208,7 @@ export class TaxReportExtendedPMService {
 
     CancelClosingJournal(taxReportId: string)
     {
-        return this.httpClient.post(this._apiUrl + '/PostCancelClosingJournal?taxReportId=' + taxReportId,null, ServiceHelper.GetHttpHeaders()).pipe(
+        return this.httpClient.post(this._apiUrl + '/PostCancelClosingJournalInBatch?taxReportId=' + taxReportId,null, ServiceHelper.GetHttpHeaders()).pipe(
             map(response =>
             {
                 let serviceResponse = response;

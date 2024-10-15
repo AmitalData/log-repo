@@ -117,6 +117,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.FlightVoyageNumber).HasColumnName("FlightVoyageNumber").HasMaxLength(9).IsUnicode(false);
 
             this.Property(t => t.CarrierCode).HasColumnName("CarrierCode").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.OriginCountryCode).HasColumnName("OriginCountryCode").HasMaxLength(2).IsUnicode(false);
         }
     }
 }

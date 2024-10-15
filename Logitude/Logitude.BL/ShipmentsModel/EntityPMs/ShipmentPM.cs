@@ -2316,10 +2316,11 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string FlightVoyageNumber { get; set; }
         public string Commodity { get; set; }
         public bool IsCustomShipment { get; set; }
+		public string OriginCountryCode { get; set; }
 
 
-        #region WarehouseLeg
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+		#region WarehouseLeg
+		[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
 		[DataMember]
 		public string WarehouseLegWarehouseName { get; set; }
 		[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -2947,9 +2948,25 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
                 }
             }
         }
+		private List<FreightForwarderReferencePM> freightForwarderReferences;
+		[Include]
+		[Composition]
+		[Association("FreightForwarderReferencePMShipment", "Id", "ShipmentId")]
+		public List<FreightForwarderReferencePM> FreightForwarderReferences
+		{
+			get
+			{
+				if (freightForwarderReferences == null) { freightForwarderReferences = new List<FreightForwarderReferencePM>(); }
+				return freightForwarderReferences;
+			}
 
-        // Standalone shipment
-        public bool IsStandalonePickupDelivery { get; set; }
+			set
+			{
+				if (value != null) { freightForwarderReferences = value; }
+			}
+		}
+		// Standalone shipment
+		public bool IsStandalonePickupDelivery { get; set; }
         public string StandalonePickupDeliveryId { get; set; }
         public string StandalonePickupDeliveryNumber { get; set; }
         public string ForwarderStandaloneShipmentId { get; set; }

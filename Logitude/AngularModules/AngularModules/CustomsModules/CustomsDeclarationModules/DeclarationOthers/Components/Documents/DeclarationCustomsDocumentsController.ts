@@ -203,7 +203,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                                     entityParams.ParentEntityCode = 'Declaration';
                                     entityParams.ParentEntityId = this.declarationPM.Id;
                                     entityParams.ChildEntity1Code = "SupplierInvoice";
-                                    entityParams.ChildEntity1Id = supplierInvoice.SequenceNumeric + "";
+                                    entityParams.ChildEntity1Id = supplierInvoice.InvoiceCounterKey + "";
                                     var documentType = supplierInvoice.AccountTypeCode == '325'? "325" : "380";
                                     var invoiceTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, documentType);
                                     var metaData: { [Code: string]: any; } = {};

@@ -172,11 +172,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.ExportStorage
 
                     AppendLogLine("Update!!");
                     _DBExportStoragePM.ChangeSetOp = ChangeSetOperation.Update;
+                    _DBExportStoragePM.StorageNo = _UnifreigntExportStorage.StorageNo;
+                    _DBExportStoragePM.ExportFileNo = _UnifreigntExportStorage.ExportFileNo;
+                    _DBExportStoragePM.MarksNumbers = _UnifreigntExportStorage.CargoDetails.CargoDescription + "                    " + _UnifreigntExportStorage.ContainerDetails.Seal.SealType + " : " + _UnifreigntExportStorage.ContainerDetails.Seal.SealNumber;
 
                 }
 
 
-               // _DBExportStoragePM.DeclarationId = _UnifreigntExportStorage.DeclarationId;
+                // _DBExportStoragePM.DeclarationId = _UnifreigntExportStorage.DeclarationId;
 
                 _DBExportStoragePM.ExportDealIdentification = _UnifreigntExportStorage.General.ExportDealIdentification;
                 
@@ -207,7 +210,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ExportStorage
                 if (_UnifreigntExportStorage.CargoDetails != null)
                 {
                     _DBExportStoragePM.CargoType = _UnifreigntExportStorage.CargoDetails.CargoType;
-                    _DBExportStoragePM.MarksNumbers = _UnifreigntExportStorage.CargoDetails.CargoDescription + "SEAL : " + _UnifreigntExportStorage.ContainerDetails.Seal.SealNumber;
+                    _DBExportStoragePM.MarksNumbers = _UnifreigntExportStorage.CargoDetails.CargoDescription + '\n' + "SEAL : " + _UnifreigntExportStorage.ContainerDetails.Seal.SealNumber;
                     decimal PackageQuantity = 0;
                     if (!String.IsNullOrWhiteSpace(_UnifreigntExportStorage.CargoDetails.Quantity))
                     {

@@ -9,6 +9,14 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using System.Transactions;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
+using System.Data.Common;
+using Simplog.Data.InfrastructureModel;
+using Logitude.Customs.Data.EntityLists;
+using System.Data.SqlClient;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -21,7 +29,8 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-   }
+     
+    }
 
 }
    

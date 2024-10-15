@@ -37,7 +37,6 @@ import { count, delay, expand, takeLast } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 import { GLAccountExtendedListService } from 'Accounting/Services/ExtendedLists/GLAccountExtendedListService';
 import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
-import formatRFC7231 from 'date-fns/formatRFC7231';
 
 export class LineModel extends BaseComponent {
     public LedgerTransactionPM: LedgerTransactionPM = null;

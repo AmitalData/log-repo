@@ -65,15 +65,16 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                                                            IsVoided = a.IsVoided,
                                                            IsLedgerCreated = a.IsLedgerCreated,
-                                                           
-                                                        
-                                                          
-                                                           
-                                                         
-                                                       
+                                                           IsExternalEntity = a.ExternalSystem != null ? true : false,
 
-                                                         
-                                                       });
+
+
+
+
+
+
+
+                                             });
             return query;
 		}
 
@@ -167,7 +168,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                         LastActivityDate = lastActivity.ActivityDate,
                         LastActivityTypeName = lastActivity.ActivityType.Name,
                         LastActivityByUserName = lastActivity.User.Contact.EnglishName,
-
+                        IsExternalEntity = a.ExternalSystem != null ? true : false,
                     };
 
 
@@ -317,6 +318,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                 VoidedByUserName = journal.VoidedByUser != null ? journal.VoidedByUser.Contact.EnglishName : null,
                                 IsVoided = journal.IsVoided,
                                 IsLedgerCreated = journal.IsLedgerCreated,
+                                IsExternalEntity = journal.ExternalSystem != null ? true : false,
                             };
                             List<LedgerTransactionList> myLT_List = new List<LedgerTransactionList>();
                             group.ToList().ForEach(lt =>

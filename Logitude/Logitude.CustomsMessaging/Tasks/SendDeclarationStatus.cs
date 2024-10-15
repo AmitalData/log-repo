@@ -26,9 +26,10 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
     {
         public void StartRun(string taskId, int seedDefaultTenant)
         {
-
+            NetCommonHelper.Logger.DevLog.Instance.WriteTrace("StartRun:SendDeclarationStatus");
             var customsSettingQueryService = new CustomsSettingQueryService(seedDefaultTenant);
             var allCustomsSetting = customsSettingQueryService.GetAll();
+            NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"GetAllCustomSetting count: {allCustomsSetting.Count}");
             allCustomsSetting.ForEach(t => RunPerTenant(t));
 
 
@@ -36,48 +37,51 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
 
         private void RunPerTenant(CustomsSettingPM t)
         {
-            LogMessagingUtil.Instance.AppendLine($"RunPerTenant({t.Tenant})");
-            CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(t.Tenant);
-            CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(t.Tenant);
-            DeclarationQueryService declarationQueryService = new DeclarationQueryService(t.Tenant);
-            var OpenCourierMasters = courierMasterQueryService.GetAllOpenCourierMastersWithLandingDate(t.Tenant);
-            bool isConnectedToUnifreight = CustomsSettingQueryService.GetSettingByTenant(t.Tenant).IsConnectedToUniFreight;
-            foreach (var courierMaster in OpenCourierMasters)
+            if (t.CompanyType == "B")
             {
-                bool isEventNATR = false;
-                var loggedUserId = AuthenticationUtil.ResolveUserId(courierMaster.Tenant);
-                var _CustomContext = CustomContext.GetContext(t.Tenant);
-                var myDeclarationUpdateService = new DeclarationUpdateService(_CustomContext, new Dictionary<string, IContext>(), t.Tenant);
-                try
+                NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"RunPerTenant({t.Tenant})");
+                CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(t.Tenant);
+                CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(t.Tenant);
+                DeclarationQueryService declarationQueryService = new DeclarationQueryService(t.Tenant);
+                var OpenCourierMasters = courierMasterQueryService.GetAllOpenCourierMastersWithLandingDate(t.Tenant);
+                NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"OpenCourierMasters({OpenCourierMasters.Count()})");
+                bool isConnectedToUnifreight = CustomsSettingQueryService.GetSettingByTenant(t.Tenant).IsConnectedToUniFreight;
+                foreach (var courierMaster in OpenCourierMasters)
                 {
-                    if (isConnectedToUnifreight)
+                    bool isEventNATR = false;
+                    var loggedUserId = AuthenticationUtil.ResolveUserId(courierMaster.Tenant);
+                    var _CustomContext = CustomContext.GetContext(t.Tenant);
+                    var myDeclarationUpdateService = new DeclarationUpdateService(_CustomContext, new Dictionary<string, IContext>(), t.Tenant);
+                    try
                     {
-                        isEventNATR = myDeclarationUpdateService.CheckLeadingFileEvent(courierMaster, loggedUserId, "NATR");
-                    }
-                }
-                catch (Exception e)
-                {
-                    LogMessagingUtil.Instance.AppendLine("Exception was thrown while checking if NATR exist in the couriermaster " + courierMaster.Id + Environment.NewLine + e.Message);
-                }
-                if (!isEventNATR)
-                {
-                    var decIdsList = courierDeclarationRepository.GetDeclarationIdsByCourierMasterIDWithNoCourierCustomStatus(courierMaster.Id, t.Tenant);
-                    foreach (var dec in decIdsList)
-                    {
-                        var decPM = declarationQueryService.GetSingleDeclarationById(dec, t.Tenant);
-                        if (decPM != null)
+                        if (isConnectedToUnifreight)
                         {
-                            SendDeclarationStatusRequest(decPM, loggedUserId);
+                            isEventNATR = myDeclarationUpdateService.CheckLeadingFileEvent(courierMaster, loggedUserId, "NATR");
                         }
                     }
-                    if (decIdsList != null)
+                    catch (Exception e)
                     {
-                        SendNatr(t.Tenant, "", courierMaster.UnifreightLeadingFile);
+                        LogMessagingUtil.Instance.AppendLine("Exception was thrown while checking if NATR exist in the couriermaster " + courierMaster.Id + Environment.NewLine + e.Message);
                     }
-                    UpdateCourierMaster(courierMaster);
+                    if (!isEventNATR)
+                    {
+                        var decIdsList = courierDeclarationRepository.GetDeclarationIdsByCourierMasterIDWithNoCourierCustomStatus(courierMaster.Id, t.Tenant);
+                        foreach (var dec in decIdsList)
+                        {
+                            var decPM = declarationQueryService.GetSingleDeclarationById(dec, t.Tenant);
+                            if (decPM != null)
+                            {
+                                SendDeclarationStatusRequest(decPM, loggedUserId);
+                            }
+                        }
+                        if (decIdsList != null)
+                        {
+                            SendNatr(t.Tenant, "", courierMaster.UnifreightLeadingFile);
+                        }
+                        UpdateCourierMaster(courierMaster);
+                    }
                 }
             }
-
 
            
         }

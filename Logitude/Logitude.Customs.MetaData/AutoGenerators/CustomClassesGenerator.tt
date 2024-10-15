@@ -50,7 +50,7 @@ GenerateAllUpdateServices("../EntityFiles","../../Logitude.Customs.BL/EntityUpda
 
 GenerateAllListQueryServices("../EntityFiles","../../Logitude.Customs.Data/EntityListQueryServices","CustomContext");
 //
-GenerateAllUpdateClasses("../EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/EntityUpdateClasses","");
+GenerateAllUpdateClasses("../EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/EntityUpdateClasses","CustomsModel");
 GenerateMetaDataUpdateClass("../EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate","CustomsUpdateClass");
 
 

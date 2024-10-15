@@ -294,6 +294,11 @@ export class DeclarationReferantDataPM {
     public set CarrierCode(newValue: string) { if (this.carrierCode != newValue) { this.carrierCode = newValue; this.MarkAsDirty("CarrierCode"); } }
        
 	 
+    private originCountryCode: string;
+    public get OriginCountryCode() { return this.originCountryCode; }
+    public set OriginCountryCode(newValue: string) { if (this.originCountryCode != newValue) { this.originCountryCode = newValue; this.MarkAsDirty("OriginCountryCode"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		

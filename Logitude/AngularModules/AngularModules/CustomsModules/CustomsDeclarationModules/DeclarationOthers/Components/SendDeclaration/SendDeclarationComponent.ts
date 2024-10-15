@@ -795,6 +795,7 @@ export class SendDeclarationService implements OnDestroy {
     }
 
     CheckFreightByIncoterm() {
+       if(this.EntityPM.Direction=='E') return;
         //this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");//Avoid ReSend
 
         //this.DeclarationService.CheckFreightAmountsByIncoterm(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {

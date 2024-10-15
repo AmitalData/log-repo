@@ -287,21 +287,24 @@ namespace Logitude.Customs.BL.Messaging.Maman
         }
         private static List<string> GetlistStorageDefault(DeclarationPM drityEntityPM)
         {
-            var amitalContext = AmitalContext.GetContext(drityEntityPM.Tenant);
-            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-            var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", false, true);
-            def.DEFDATA = def.DEFDATA ?? "";
+            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(drityEntityPM.Tenant);
+
+            string def = defaultValueQueryService.GetDefault("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", drityEntityPM.Tenant);
+
+
+     
+            def = def ?? "";
 
             var listStorageDefault = new List<string>();//&& declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILOVL"
-            if (def.DEFDATA.Contains("ILMMN")) // Maman
+            if (def.Contains("ILMMN")) // Maman
             {
                 listStorageDefault.Add("ILMMN");
             }
-            if (def.DEFDATA.Contains("ILOVL")) // OVS
+            if (def.Contains("ILOVL")) // OVS
             {
                 listStorageDefault.Add("ILOVL");
             }
-            if (def.DEFDATA.Contains("ILSWS")) // OVS
+            if (def.Contains("ILSWS")) // OVS
             {
                 listStorageDefault.Add("ILSWS");
             }

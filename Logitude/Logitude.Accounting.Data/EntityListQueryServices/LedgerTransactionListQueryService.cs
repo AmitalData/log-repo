@@ -104,6 +104,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            SecurityLevelFiltering = 1,
                                                            TaxReportId = jad != null ? jad.TaxReportId : "",
                                                                TaxReportNumber = jad != null && jad.TaxReport != null ? jad.TaxReport.TaxReportNumber : "",
+                                                               IsExternalEntity = a.JournalLine.Journal.ExternalSystem != null ? true : false,
                                                            });
 
 
@@ -379,7 +380,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 JournalCreatedByUser = null,
                 TaxReportId = "",
                 TaxReportNumber = "",
-                SecurityLevelFiltering = 1
+                SecurityLevelFiltering = 1,
+                IsExternalEntity = false,
             });
 
             return ledgerTransactionList.AsQueryable();
@@ -679,7 +681,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            JournalCreatedByUser = a.JournalLine.Journal.CreatedByUser.Contact.DontShowLocalLabels ? a.JournalLine.Journal.CreatedByUser.Contact.EnglishName : a.JournalLine.Journal.CreatedByUser.Contact.LocalName,
                                                            TaxReportId = "",
                                                            TaxReportNumber = "",
-                                                           SecurityLevelFiltering = 1
+                                                           SecurityLevelFiltering = 1,
+                                                           IsExternalEntity = a.JournalLine.Journal.ExternalSystem != null ? true : false,
                                                        });
             return query;
         }

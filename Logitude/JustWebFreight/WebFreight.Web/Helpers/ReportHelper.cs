@@ -1389,14 +1389,10 @@ namespace WebFreight.Web.Helpers
         public Dictionary<string, dynamic> myProperties;
         public List<ISlvLeaf> mylist ;
 
-        public List<ISlvLeaf> BuildDataProviderJson(string code)
+        public string GetDataProviderName(string code)
         {
-            LogitudeReportsWebService logitudeReportsWebService = new LogitudeReportsWebService();
-            XmlSerializer serializer = new XmlSerializer(typeof(string));
-            MemoryStream memstream = new MemoryStream();
-            string dataProviderName = "";
-            string dataProvider = null;
-             dataprovider=null;
+            string dataProviderName = string.Empty;
+
             switch (code)
             {
                 #region
@@ -1893,6 +1889,16 @@ namespace WebFreight.Web.Helpers
                     #endregion
             }
 
+            return dataProviderName;
+        }
+
+        public List<ISlvLeaf> BuildDataProviderJson(string code)
+        {
+            LogitudeReportsWebService logitudeReportsWebService = new LogitudeReportsWebService();
+            XmlSerializer serializer = new XmlSerializer(typeof(string));
+            MemoryStream memstream = new MemoryStream();
+            string dataProviderName = GetDataProviderName(code);
+
             mylist = new List<ISlvLeaf>();
             mylist = GetPropertyNames(dataProviderName, mylist);
 
@@ -1905,6 +1911,7 @@ namespace WebFreight.Web.Helpers
             public  string content { get; set; } // Example: "<span>Child</span>"
             public bool expanded { get; set; }
             public  List<ISlvLeaf> children { get; set; }
+            public Type type { get; set; }
         }
         public List<ISlvLeaf> GetPropertyNames(string dataProviderName, List<ISlvLeaf> mylist)
         {
@@ -1937,7 +1944,8 @@ namespace WebFreight.Web.Helpers
                         {
                             content = property.Name,
                             expanded = false,
-                            children = new List<ISlvLeaf>()
+                            children = new List<ISlvLeaf>(),
+                            type = property.PropertyType
                         };
                         mylist.Add(iSlvLeaf);
                         

@@ -126,13 +126,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             customsVendorCode = message[0];
                             customsVendorId = CheckIfCustomsVendorCodeExist(customsVendorCode, requestParams.Tenant);
                         }
-                        var setting = CustomsSettingQueryService.GetLogitudeCustomsSettingsM(requestParams.Tenant);
-                        if (string.IsNullOrWhiteSpace(customsVendorId)  && setting.IsConnectedToUniFreight)
+                         if (string.IsNullOrWhiteSpace(customsVendorId))
                         {
                             LogMessagingUtil.Instance.AppendLine("בדיקת דיפולט - שליפת ספק בהודעה על תצהיר");
-                            var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
-                            var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGG_RET_VEND", "NON", "NON", false, true);
-                            bool isRetrieveVendorActive = def.DEFDATA == "Y";
+                            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(requestParams.Tenant);
+
+                            var def = defaultValueQueryService.GetDefault("ISRAEL", "CGG_RET_VEND", "NON", "NON", requestParams.Tenant);
+                             bool isRetrieveVendorActive = def == "Y";
                             if (isRetrieveVendorActive)
                             {
                                 SendVendorSearchByCustomsAgentRequest(requestParams, importerVAT, customsVendorCode);

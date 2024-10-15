@@ -542,7 +542,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.HANDTYPE)
                     .HasColumnName(@"HAND_TYPE")
-                    .HasColumnType("bool");
+                    .HasColumnType("int");
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.PROCESSWANT)
                     .HasColumnName(@"PROCESS_WANT")
@@ -11469,7 +11469,7 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"FILE_NO")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int");
+                    .HasColumnType("bigint");
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.DRAFTSTATUS)
                     .HasColumnName(@"DRAFT_STATUS")
@@ -11485,7 +11485,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.HANDTYPE)
                     .HasColumnName(@"HAND_TYPE")
-                    .HasColumnType("bit");
+                    .HasColumnType("int");
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.PROCESSWANT)
                     .HasColumnName(@"PROCESS_WANT")
@@ -12191,13 +12191,13 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"FILE_NO")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUPAYLINEF>()
                 .Property(p => p.LINENO)
                     .HasColumnName(@"LINE_NO")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUPAYLINEF>()
                 .Property(p => p.PAYORDNO)
                     .HasColumnName(@"PAY_ORD_NO")
@@ -12209,11 +12209,11 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnType("char");
             modelBuilder.Entity<CCUPAYLINEF>()
                 .Property(p => p.TYPE)
-                    .HasColumnType("SMALLINT");
+                    .HasColumnType("int");
             modelBuilder.Entity<CCUPAYLINEF>()
                 .Property(p => p.PAYEETYPE)
                     .HasColumnName(@"PAYEE_TYPE")
-                    .HasColumnType("SMALLINT");
+                    .HasColumnType("int");
             modelBuilder.Entity<CCUPAYLINEF>()
                 .Property(p => p.PAYAMOUNT)
                     .HasColumnName(@"PAY_AMOUNT")
@@ -12226,7 +12226,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUPAYLINEF>()
                 .Property(p => p.BANKID)
                     .HasColumnName(@"BANK_ID")
-                    .HasColumnType("int");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUPAYLINEF>()
                 .Property(p => p.BANKBRANCH)
                     .HasColumnName(@"BANK_BRANCH")
@@ -13236,7 +13236,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<YCULTASK>()
                 .Property(p => p.REQUESTDATA)
                     .HasColumnName(@"REQUEST_DATA")
-                    .HasColumnType("varchar(max)");
+                    .HasColumnType("nvarchar(max)");
             modelBuilder.Entity<YCULTASK>()
                 .Property(p => p.RESPONSE)
                     .HasColumnType("varchar(max)");

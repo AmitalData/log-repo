@@ -1,9 +1,12 @@
 ﻿using CustomsWorkerRole.Utils;
-using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Server.Tools.Utils;
+using Logitude.BL.Helpers;
+using Logitude.Customs.BL.EntityQueryServices;
 using Microsoft.Practices.ObjectBuilder2;
 using NetCommonHelper.Logger;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
@@ -13,6 +16,7 @@ namespace CustomsWorkerRole
     public class SyncRecordsCCUTableWR : CustomsWorkerEntryPoint
     {
         private bool isFirstTime = true;
+        private static readonly string lockKey = "SyncRecordsCCUTableWR";
 
         public override void WorkOnce()
         {
@@ -27,58 +31,99 @@ namespace CustomsWorkerRole
 
         public void SendSyncRecoredToUnifreightQueue()
         {
-            DevLog.Instance.WriteDebug("SendSyncRecoredToUnifreightQueue start run");
-
-            List<SyncRecord> syncRecordsInQueueList = new List<SyncRecord>();
-            SyncRecordQuery syncRecordQuery = new SyncRecordQuery();
-            TenantQuery tenantQuery = new TenantQuery();
-            List<SyncRecord> records = syncRecordQuery.GetAndMarkNewSyncRecord();
-
-            if (records == null || records.Count == 0)
-                return;
-
-            DevLog.Instance.WriteDebug("SendSyncRecoredToUnifreightQueue, records count: " + records.Count);
-
-            List<SyncRecord> newRecords = InsertRecordsForCloseTables(syncRecordQuery, tenantQuery, records);
-
-            IEnumerable<IGrouping<int, SyncRecord>> RecordsGroupByTenants = records.Concat(newRecords).GroupBy(record => record.Tenant);
-
-            foreach (IGrouping<int, SyncRecord> group in RecordsGroupByTenants)
+            try
             {
-                List<SyncRecord> recordsOfTenant = group.ToList();
-                if (recordsOfTenant.Count == 0)
-                    continue;
+                DevLog.Instance.WriteDebug("SendSyncRecoredToUnifreightQueue start run");
 
+                List<SyncRecord> syncRecordsInQueueList = new List<SyncRecord>();
+                SyncRecordQuery syncRecordQuery = new SyncRecordQuery();
+
+                Lock();
+
+                List<SyncRecord> records = syncRecordQuery.GetAndMarkNewSyncRecord();
+
+                if (records == null || records.Count == 0)
+                {
+                    Unlock();
+                    return;
+                }
+
+                DevLog.Instance.WriteDebug("SendSyncRecoredToUnifreightQueue, records count: " + records.Count);
+
+                List<SyncRecord> newRecords = InsertRecordsForCloseTables(syncRecordQuery, records);
+
+                IEnumerable<IGrouping<int, SyncRecord>> RecordsGroupByTenants = records.Concat(newRecords).GroupBy(record => record.Tenant);
+
+                foreach (IGrouping<int, SyncRecord> group in RecordsGroupByTenants)
+                {
+                    List<SyncRecord> recordsOfTenant = group.ToList();
+                    if (recordsOfTenant.Count == 0)
+                        continue;
+
+                    try
+                    {
+                        SendToQueue(recordsOfTenant, group.Key);
+                        syncRecordsInQueueList.AddRange(recordsOfTenant);
+                    }
+                    catch (Exception e)
+                    {
+                        DevLog.Instance.WriteFatal(e, "error on SendToUnifreightQueue, tenant: " + group.Key);
+                    }
+                }
+
+                syncRecordQuery.UpdateStatusInQueue(syncRecordsInQueueList);
+
+                Unlock();
+            }
+            catch (DbUpdateException e) when (e.Message.Contains("SyncRecordsCCUTableWR") && e.Message.Contains("GeneralLock"))
+            {
+                DevLog.Instance.WriteTrace("Another WR lock this job");
+            }
+            catch (Exception e)
+            {
+                DevLog.Instance.WriteFatal(e, "error on SendToUnifreightQueue");
                 try
                 {
-                    SendToQueue(recordsOfTenant, group.Key);
-                    syncRecordsInQueueList.AddRange(recordsOfTenant);
+                    Unlock();
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    DevLog.Instance.WriteFatal(e, "error on SendToUnifreightQueue, tenant: " + group.Key);
+                    DevLog.Instance.WriteFatal(ex, "Unlock failed");
                 }
             }
-
-            syncRecordQuery.UpdateStatusInQueue(syncRecordsInQueueList);
         }
 
-        private static List<SyncRecord> InsertRecordsForCloseTables(SyncRecordQuery syncRecordQuery, TenantQuery tenantQuery, List<SyncRecord> records)
+        private static void Lock()
+        {
+            var concurrentKiller = new ConcurrentKiller();
+            concurrentKiller.FreeLockIfCreated15MinOld(lockKey, 0);
+            concurrentKiller.LockOrCrashOnCommitDueUnique(lockKey, 0);
+        }
+
+        private static void Unlock()
+        {
+            new ConcurrentKiller().FreeLock(lockKey, 0);
+        }
+
+        private static List<SyncRecord> InsertRecordsForCloseTables(SyncRecordQuery syncRecordQuery, List<SyncRecord> records)
         {
             IEnumerable<SyncRecord> tenant0CloseTableRecords = records.Where(record => record.KeyVal == "ALL" && record.Tenant == 0);
             List<SyncRecord> newRecords = new List<SyncRecord>();
             List<SyncRecord> RemoveRecords = new List<SyncRecord>();
+            List<int> tenantIds = CacheHelper.GetFromCache("TenantIdsForClosedTables", () => new CustomsSettingQueryService(0).GetAll().Select(x => x.Tenant).ToList());
+
             tenant0CloseTableRecords.ForEach(record =>
             {
                 RemoveRecords.Add(record);
-                records.Remove(record);
-                tenantQuery.GetAll(true).ForEach(tenant =>
+
+                tenantIds.ForEach(tenantId =>
                 {
                     newRecords.Add(new SyncRecord
                     {
+                        Id = Guid.NewGuid().ToString(),
                         FileNo = record.FileNo,
                         KeyVal = record.KeyVal,
-                        Tenant = tenant.Id,
+                        Tenant = tenantId,
                         IsSync = record.IsSync,
                         CreateDate = DateTime.UtcNow,
                         Entname = record.Entname,
@@ -88,6 +133,7 @@ namespace CustomsWorkerRole
                 });
             });
 
+            RemoveRecords.ForEach(record => records.Remove(record));
             syncRecordQuery.Add(newRecords);
             syncRecordQuery.Remove(RemoveRecords);
             return newRecords;
@@ -138,10 +184,10 @@ namespace CustomsWorkerRole
 
             DevLog.Instance.WriteInfo("SendToQueue, fileNos: " + fileNos + ", closeTables: " + tablesName + ", tenant: " + tenant);
 
-            if(fileNos.Length > 0)
+            if (fileNos.Length > 0)
                 UnifreightQueueService.Insert(tenant, priority, queueName, subjectUnifreightTables, storageFolder, actionUnifreightTables, tableName, fileNos);
 
-            if(tablesName.Length > 0)
+            if (tablesName.Length > 0)
                 UnifreightQueueService.Insert(tenant, priority, queueName, subjectCloseTables, storageFolder, actionCloseTables, tableName, tablesName);
         }
     }

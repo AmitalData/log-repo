@@ -475,6 +475,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 DocumentTypeQueryService documentTypeQueryService = new DocumentTypeQueryService(_DocumentsFilingPM.Tenant);
                 DocumentTypePM documentTypePM = documentTypeQueryService.GetDocumentTypeCodeById(_DocumentsFilingPM.DocumentTypeId, _DocumentsFilingPM.Tenant);
                 DeclarationPM declartionPM = null;
+                DocumentTypeCustomsDataPM documentTypeCustomsDataPM = null;
                 if (_DocumentsFilingPM.ExternalEntityName == "EFIFILEM")
                 {
                     var declarationQueryService = new Logitude.Customs.BL.EntityQueryServices.DeclarationQueryService(_DocumentsFilingPM.Tenant);
@@ -484,7 +485,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 {
                     LogitudeSettings.HandleLogMe("  if (documentTypePM != null && !String.IsNullOrWhiteSpace(documentTypePM.Code))" + documentTypePM?.Code, false, "SendBondedCustomDocument", stopLogAt);
                     DocumentTypeCustomsDataQueryService documentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(_DocumentsFilingPM.Tenant);
-                    DocumentTypeCustomsDataPM documentTypeCustomsDataPM = documentTypeCustomsDataQueryService.GetSingle(documentTypePM.Code, false, true);
+                     documentTypeCustomsDataPM = documentTypeCustomsDataQueryService.GetSingle(documentTypePM.Code, false, true);
 
                     if (documentTypeCustomsDataPM != null && !String.IsNullOrWhiteSpace(documentTypeCustomsDataPM.CustomsDoucumentTypeCode))
                     {
@@ -516,7 +517,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
                 if (declartionPM != null)
                 {
-                    if (declartionPM.Direction == "E" && declartionPM.IsDiamondDeclaration && declartionPM.AutoSending)
+                    List<string> EntityCodes = new List<string> { "380", "325", "IL_1003", "IL_506", "IL_1050" };
+
+                    if (declartionPM.Direction == "E" && declartionPM.IsDiamondDeclaration && declartionPM.AutoSending && EntityCodes.Contains(documentTypeCustomsDataPM?.CustomsDoucumentTypeCode))
                     {
                         LogitudeSettings.HandleLogMe("  declartionPM.Direction == E && declartionPM.IsDiamondDeclaration && declartionPM.AutoSending  " + declartionPM?.Id, false, "SendBondedCustomDocument", stopLogAt);
                         AutoSending = true;

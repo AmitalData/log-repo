@@ -417,7 +417,7 @@ namespace Logitude.CustomsMessaging.Helpers
                 var setting = CustomsSettingQueryService.GetSettingByTenant(item.Tenant);
                 if (setting != null)
                 {
-                    if (setting.IsConnectedToUniFreight || !String.IsNullOrWhiteSpace(setting.UnfConnectionString))
+                    if (setting.IsConnectedToUniFreight )
                     {
                         UServerCommunication.SendUpdateTableToUnifreight(item.Tenant, TableID, myCUSTOMS_TABLE, false, true);
                     }

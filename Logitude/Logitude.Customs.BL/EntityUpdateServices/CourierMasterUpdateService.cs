@@ -333,6 +333,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(entityPM.Tenant);
                     }
 
+                    CourierDeclarationQueryService courierDeclarationQuery = new CourierDeclarationQueryService(entityPM.Tenant);
+                    var declarationIdFromCourierMaster= courierDeclarationQuery.GetFirstDeclarationCustomFileByCourierMasterId(entityPM.Id, entityPM.Tenant);
 
 
                     var myGGGQPM = new GGGQPM()
@@ -346,10 +348,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         PRIORITY = 8,
 
                         ENTNAME = "CFIFILEM",
-                        PRIMARYNUM = entityPM.Id,
+                        PRIMARYNUM = declarationIdFromCourierMaster,
                         FORMID = "A1468",
                         GSTRING1 = "A1468",
-                        GSTRING2 = "NONE",
+                        GSTRING2 = entityPM.Id,
                         GSTRING3 = entityPM.Id,
 
                         DEBUG = "F",

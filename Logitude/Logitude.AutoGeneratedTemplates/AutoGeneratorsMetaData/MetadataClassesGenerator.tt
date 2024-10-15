@@ -14,6 +14,8 @@
 <#@ import Namespace="System.IO" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
 
+
+
 <#
 	//GenerateAllUpdateClasses("../EntityFiles","../.../Logitude.Customs.MetaData/EntityUpdateClasses");
 	//GenerateUpdateClass("../generatedXmls/CheckEntityType.lxml","../EntityUpdateClasses/CheckEntityTypeUpdateClass.cs");
@@ -87,13 +89,18 @@ public dynamic GetBaseUsingNameSpace(string destinationFolder)
 	string spacestring = "";
 	string[] path = destinationFolder.Split('/');
 
+		 if(modelName == "CommonDataModel" 	|| modelName == "GlobalModel" || modelName == "InfrastructureModel" ||modelName == "QuoteModel"	||modelName == "InvoiceModel"
+		 ||modelName == "CustomsModel"
+		 )
+		 {
+		   return spacestring;
+		 }
+
 	
-		 if(modelName == "AccountingModel" ||modelName == "CommonDataModel" 
+		 if(modelName == "AccountingModel" //||modelName == "CommonDataModel" 
 		 ||modelName == "InvoiceModel" ||modelName == "QuoteModel" ||modelName == "Infrastructure"  ||modelName ==  "CargoTrackingModel"
 		 || modelName == "GlobalModel" || modelName == "CRMModel" || modelName == "TariffModule" || modelName == "Workflow"
-		  || modelName =="TimeManagement" 
-		 
-		 )
+		  || modelName =="CustomsModel"  )
 		 {
 		   spacestring =    "Logitude."+ modelName.Replace("Model","") +".";
 		   return spacestring;
@@ -115,14 +122,11 @@ public dynamic GetBaseUsingNameSpace(string destinationFolder)
 		if(dir != "..")
         {
 			spacestring += dir + ".";
-			return spacestring.ToString().Trim('.');
         }
     }
+	return spacestring.ToString().Trim('.');
 
 
-	spacestring = spacestring.ToString().Trim('.');
-		  
-	return spacestring;
 }
 
 
@@ -182,9 +186,12 @@ Dictionary<string, string> GeneratedTabTextCodes = new Dictionary<string, string
 
 
 		bool iswrongname = false;
-		string[] namespacearr = pmnamespacestring.ToString().Split('.');
-		string projectname = namespacearr[1].Replace("Lib","");
-
+		string[] namespacearr = repnamespacestring.ToString().Split('.');
+		string projectname = "";
+		if (namespacearr.Count()>1)
+		{
+		namespacearr[1].Replace("Lib","");
+		}
 
         if (projectname != "Accounting" && projectname != "Booking"  && projectname != "Warehouse" && projectname != "TimeManagement" && projectname != "TariffModule" && projectname != "CargoTracking" && projectname != "ShipmentOrderModule" && projectname != "Workflow" && projectname != "DashboardModule" && projectname != "Shipment")
         {

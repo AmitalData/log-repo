@@ -59,6 +59,7 @@
     <Compile Include="Gen\CustomDomainServiceErrorCodesEnum.Shared.cs" />
     <Compile Include="Gen\LuhnAlgorithm.Shared.cs" />
     <Compile Include="Gen\SubscribeSignServer.Shared.cs" />
+    <Compile Include="RequestParams\CheckFileCrediteReq.Shared.cs" />
     <Compile Include="RequestParams\AddAddressContactForClient.Shared.cs" />
     <Compile Include="RequestParams\AddMultiPendingsRequestParams.cs" />
     <Compile Include="RequestParams\CargoSealsRequestParams.Shared.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="RequestParams\MessageWaitingRequestParams.cs" />
     <Compile Include="RequestParams\NewVehicleRequestParams.Shared.cs" />
     <Compile Include="RequestParams\RTGSInfoQueryRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\SendDeclarationBatchRequestParams.Shared.cs" />
     <Compile Include="RequestParams\SendALLDelayFormParams.Shared.cs" />
     <Compile Include="RequestParams\SendALLCorrectRequestParams.Shared.cs" />
     <Compile Include="RequestParams\MultiUpdateRequestParams.Shared.cs" />
@@ -201,6 +203,12 @@
       <Link>DependencyValidation1.layerdiagram</Link>
       <Visible>False</Visible>
     </AdditionalFiles>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{ACC2EA9E-E150-4099-8AA1-66326AB14BE8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

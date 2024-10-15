@@ -9,6 +9,8 @@ import { LogitudeWindow } from "Controls/Windows/LogitudeWindow";
 import { ShipmentReferancePM } from "Shipment/EntityPMs/ShipmentReferancePM";
 import { MessageWindow } from "Controls/Windows/MessageWindow";
 import { ColumnsWidths } from "Infrastructure/Components/LogitudeComponents/LogLovV2Component";
+import { FreightForwarderReferencePM } from "Shipment/EntityPMs/FreightForwarderReferencePM";
+import { EntityResourceService } from "Infrastructure/Services/EntityResourceService";
 
 @Component({    
     templateUrl: './ShipmentDataTabComponent.html',
@@ -19,6 +21,7 @@ export class ShipmentDataTabComponent extends BaseComponent {
     public ObjectTableName: string;
     public DataContext = this;
     public ColumnsWidths: ColumnsWidths[];
+    public entityResourceService: EntityResourceService = new EntityResourceService();
 
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -37,7 +40,7 @@ export class ShipmentDataTabComponent extends BaseComponent {
             { ColumnName: 'CountryName', Width: 50 },
             { ColumnName: 'CityName', Width: 50 },
             { ColumnName: 'CountryCode', Width: 60 },
-        ];
+        ];        
     }
 
     InitializeShipmentReferance() {
@@ -143,7 +146,13 @@ export class ShipmentDataTabComponent extends BaseComponent {
             this.OnChanged();
         }
     }
-
+    public get OriginCountryCode() { return this.EntityPM.OriginCountryCode; }
+    public set OriginCountryCode(newValue: string) {
+        if (this.EntityPM.OriginCountryCode != newValue) {
+            this.EntityPM.OriginCountryCode = newValue;
+            this.OnChanged();
+        }
+    }
     EditReferenceTypeValue() {
 
         const shipmentReferences = this.GetActiveShipmentReferances();
@@ -273,7 +282,97 @@ export class ShipmentDataTabComponent extends BaseComponent {
             }
         }
     }
+    //#region FreightForwarderReferences
+    EditForwarderShipmentNumberValue() {
+        this.entityResourceService.getEntityResourceByTableName("FreightForwarderReference").subscribe((response: any) => {   
+          const freightForwarderReferences = this.GetActiveFreightForwarderReferences();
+          if (freightForwarderReferences.length == 0 || (freightForwarderReferences.length > 0 && AppTool.IsNullOrEmpty(freightForwarderReferences[0].ForwarderShipmentNumber))) {
+              var messageWindow: MessageWindow = new MessageWindow();
+              messageWindow.Show(TextCodeTranslator.Translate("FreightForwarderReference.O.ForwarderShiptNumMust"));
+              return;
+          }
+  
+          var windowArgs: any = {};
+          windowArgs.EntityPM = this.EntityPM;
+  
+          var logWindow = new LogitudeWindow();
+          logWindow.Width = 320;
+          logWindow.Height = 350;
+          logWindow.Title = TextCodeTranslator.Translate("FreightForwarderReference.F.ForwarderShipmentNumber");
+          logWindow.ShowCloseButton = true;
+          logWindow.WindowArgs = windowArgs;
+          logWindow.WindowClosed.subscribe(($event: any) => {
+              if ($event == "ok") {
+                  this.OnChanged();
+              }
+          });
+          logWindow.Show('./ShipmentModules/ShipmentTabs/Components/ShipmentData/FreightForwarderReferenceDetails/FreightForwarderReferenceDetailsComponent'); 
+        });  
+    }
+   
 
+   
+    public get FreightForwarderReferences() { return this.EntityPM.FreightForwarderReferences; }
+    public set FreightForwarderReferences(newValue: FreightForwarderReferencePM[]) {
+        if (this.EntityPM.FreightForwarderReferences != newValue) {
+            this.EntityPM.FreightForwarderReferences = newValue;
+
+            this.OnChanged();
+        }
+    } 
+    public get disableFreightForwarderId() { return this.GetActiveFreightForwarderReferences().filter(x=>x.ForwarderFileConnect).length > 0 }
+    public get disableForwarderShipmentNumber() { return this.ForwarderShipmentNumber=='LIST' || (this.GetActiveFreightForwarderReferences().length == 1 &&  this.GetActiveFreightForwarderReferences()[0].ForwarderFileConnect)}
+
+
+
+    AddFreightForwarderReferance() {
+        var item: FreightForwarderReferencePM = new FreightForwarderReferencePM();
+        item.ShipmentId = this.EntityPM.Id;
+        item.Tenant = this.EntityPM.Tenant;
+        item.ForwarderFileConnect = false;
+        item.LineNumber = 1;
+        item.ChangeSetOp = "Insert";
+        this.EntityPM.FreightForwarderReferences.push(item);
+    }
+
+    GetActiveFreightForwarderReferences() {
+        return this.FreightForwarderReferences.filter(entity => entity.ChangeSetOp != "Delete");
+    }
+  
+
+    public get ForwarderShipmentNumber() { 
+        let freightForwarderReferences = this.GetActiveFreightForwarderReferences();
+        if (freightForwarderReferences.length > 1) {
+            return "LIST";
+        }
+        else {
+            return freightForwarderReferences[0]?.ForwarderShipmentNumber;
+        }
+    }
+    public set ForwarderShipmentNumber(newValue: string) {
+        let freightForwarderReferences = this.GetActiveFreightForwarderReferences();
+
+        if (freightForwarderReferences.length == 0 || (freightForwarderReferences.length == 1 && freightForwarderReferences[0]?.ForwarderShipmentNumber != newValue)) {
+
+            var index = 0;
+            if (freightForwarderReferences.length == 0) {
+                this.AddFreightForwarderReferance();
+            }
+            else {
+                index = this.FreightForwarderReferences.indexOf(freightForwarderReferences[0]);
+            }
+
+            if (index > -1) {
+                this.FreightForwarderReferences[index].ForwarderShipmentNumber = newValue;
+                if (!this.FreightForwarderReferences[index].ChangeSetOp) {
+                    this.FreightForwarderReferences[index].ChangeSetOp = "Update";
+                }
+                this.EntityPM.MarkAsDirty("FreightForwarderReferences");
+                this.OnChanged();
+            }
+        }
+    }
+    //#endregion
     public get ReferantUserId() { return this.EntityPM.ReferantUserId; }
     public set ReferantUserId(newValue: string) {
         if (this.EntityPM.ReferantUserId != newValue) {
@@ -432,12 +531,6 @@ export class ShipmentDataTabComponent extends BaseComponent {
         }
     }
     
-    // todo
-    public get FreightForwarderReferenceShipmentNumber() { 
-        return "";
-    }
-    public set FreightForwarderReferenceShipmentNumber(newValue: string) {
-        this.OnChanged();
-    }
+  
     
 }

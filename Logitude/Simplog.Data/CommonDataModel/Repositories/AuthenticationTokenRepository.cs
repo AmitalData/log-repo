@@ -82,39 +82,37 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public static AuthenticationToken GetSingleTokenFromCache(string token)
         {
-            if (string.IsNullOrEmpty(token))
-                return null;
-
-            if (!string.IsNullOrEmpty(token) && !token.Contains("+"))
+            if (string.IsNullOrEmpty(token)) return null;
+            string cacheKey = $"Token_{token}";
+            AuthenticationToken authenticationToken  =(AuthenticationToken)HttpContext.Current.Items["authToken"];
+            if (authenticationToken == null)
             {
-                token = token.Replace(" ", "+");
+                if ( !token.Contains("+"))
+                {
+                    token = token.Replace(" ", "+");
+                }
+                authenticationToken = (AuthenticationToken)CacheManager.CacheWrapper.Get(cacheKey);
             }
-
-          
-                string entityName = "Token" + token;
-                if (CacheManager.CacheWrapper.Get(entityName) != null)
+            if (authenticationToken != null)
+            {
+                if (token != authenticationToken.Token)
                 {
-                    AuthenticationToken authenticationToken = (AuthenticationToken)CacheManager.CacheWrapper.Get(entityName);
-                    if(authenticationToken.ExpirationDate != null && authenticationToken.ExpirationDate < DateTime.Now)
-                    {
-                        throw new AutenticationException("Session expired. Please log in again");
-                    }
-                    return authenticationToken;
-                }
-                else
+                    throw new AutenticationException("Invalid token");
+                }   
+                if (authenticationToken.ExpirationDate != null && authenticationToken.ExpirationDate < DateTime.Now)
                 {
-                    ICommonDataContext context = CommonDataContext.GetContext(0);
-                    var entity = (from a in context.AuthenticationTokens
-                                  where a.Token == token
-                                  select a).FirstOrDefault();
-                    if (entity != null)
-                    {
-                        CacheManager.CacheWrapper.Insert(entityName, entity, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                    }
-                    return entity;
+                    throw new AutenticationException("Session expired. Please log in again");
                 }
-            
-      
+            }
+            else
+            {
+                authenticationToken = new AuthenticationTokenRepository().GetSingleToken(token);
+                if (authenticationToken != null)
+                {
+                    CacheManager.CacheWrapper.Insert(cacheKey, authenticationToken, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                }
+            }
+            return authenticationToken;
         }
 
         public class AutenticationException : Exception

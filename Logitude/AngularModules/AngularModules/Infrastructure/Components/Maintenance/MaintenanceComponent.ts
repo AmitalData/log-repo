@@ -2513,7 +2513,7 @@ export class MaintenanceComponent {
                 case 'MTHT': {
                     var windowTitle = 'Hybrid Tenant State';
                     var logWindow = new LogitudeWindow();
-                    logWindow.Width = 1100;
+                    logWindow.Width = 1310;
                     logWindow.Height = 550;
                     logWindow.Title = windowTitle;
                     logWindow.Show(
@@ -3531,16 +3531,13 @@ class MaintenanceMenuItem {
             myResult = this.item.ObjectTableName;
         }
         else {
-            var ObjectTable = window.ObjectTables.filter(
-                (d) => d.Id == this.ObjectTableId
-            )[0];
-            if (
-                ObjectTable.Name.indexOf('Customs.') != -1 ||
-                ObjectTable.ClientModuleName == 'Accounting'
-            ) {
-                myResult = TextCodeTranslator.TranslateTable(
-                    this.item.ObjectTableName
-                );
+            var ObjectTable = window.ObjectTables.filter(d => d.Id == this.ObjectTableId)[0];
+            if (ObjectTable.Name.indexOf("Customs.") != -1 || ObjectTable.ClientModuleName == "Accounting") {
+                myResult = TextCodeTranslator.TranslateTable(this.item.ObjectTableName);
+            }
+
+            else {
+                myResult = TextCodeTranslator.TranslateTablePlural(this.item.ObjectTableName);
             }
         }
 

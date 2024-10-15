@@ -1221,39 +1221,60 @@ namespace Logitude.Customs.BL.BL
 		#region validateAfterFill
 		public bool validateBeforeSend(string user)
 		{
-			bool IsValidSend = true;
-			if (!CheckFileCredit(_MyDeclarationPM, user))
-			{
-
-				var MyUnifreightEventParam = new UnifreightEventParam()
-				{
-					Code = "APAYF",
-					Mode = UnifreightEventMode.@new,
-					EventDateTime = DateTime.Now,
-					Entname = "CFIFILEM",
-					PrimaryNum = _MyDeclarationPM.CustomFileNo,
-					EventRemarks = "לא אושר בבקרת אשראי",
-				};
-				LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
-				var myOpenUnifreighTask = new UnifreightEventTaskService();
-				myOpenUnifreighTask.UpsertEventLE2U(
-					_MyDeclarationPM.Tenant,
-				   user,
-					MyUnifreightEventParam);
-				IsValidSend = false;
-			}
 
 			DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(_tenant);
 			string OridefCIM_AUTO_PAY = defaultValueQueryService.GetDefault("ISRAEL", "CIM_AUTO_PAY", "NON", _MyDeclarationPM.CustomerCode, _tenant);
 
 			if (OridefCIM_AUTO_PAY == "Y" && !_MyDeclarationPM.AvailabilityDate.HasValue && !(new string[] { "4070001", "4070005", "7070001", "7070005" }.Contains(_MyDeclarationPM.ProcedureCurrentCode)))
 			{
-				IsValidSend = false;
+				return false;
 			}
-			return IsValidSend;
-		}
 
-		private bool CheckFileCredit(DeclarationPM declarationPM, string user)
+			CustomsSettingQueryService settingService = new CustomsSettingQueryService(_tenant);
+			CustomsSettingPM setting = settingService.GetSettingByTenantN(_tenant);
+			CheckFileCrediteReq checkFileCrediteReq = new CheckFileCrediteReq();
+			checkFileCrediteReq.ClassName = "AutoPaymentService";
+			checkFileCrediteReq.AppicationId = _MyDeclarationPM.Id; 
+			checkFileCrediteReq.LoggingUserId = user;
+			string jsonString = System.Text.Json.JsonSerializer.Serialize(checkFileCrediteReq);
+
+			var isCheckFileCredit = CheckFileCredit(_MyDeclarationPM, user, jsonString);
+			if (setting.IsConnectedToUniFreight)
+			{
+				if (!isCheckFileCredit)
+				{
+					SendEventAPAYF(_MyDeclarationPM, user);
+					
+					return false;
+				}
+			}
+			else
+			{
+				return false;
+			}
+
+
+			return true;
+		}
+		private void SendEventAPAYF(DeclarationPM declarationPM, string user)
+		{
+			var MyUnifreightEventParam = new UnifreightEventParam()
+			{
+				Code = "APAYF",
+				Mode = UnifreightEventMode.@new,
+				EventDateTime = DateTime.Now,
+				Entname = "CFIFILEM",
+				PrimaryNum = declarationPM.CustomFileNo,
+				EventRemarks = "לא אושר בבקרת אשראי",
+			};
+			LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+			var myOpenUnifreighTask = new UnifreightEventTaskService();
+			myOpenUnifreighTask.UpsertEventLE2U(
+				declarationPM.Tenant,
+			   user,
+				MyUnifreightEventParam);
+		}
+		private bool CheckFileCredit(DeclarationPM declarationPM, string user,string requestParamsJson)
 		{
 			CustomFileCreditRequestParams requestParamsCredit = new CustomFileCreditRequestParams()
 			{
@@ -1271,7 +1292,7 @@ namespace Logitude.Customs.BL.BL
 				RequestVIA = SendRequestVIA.WebServiceBatch,
 			};
 			var myCustomFileCreditService = new CustomFileCreditService(requestParamsCredit);
-			CUSTOMCREDIT_UL creditResponseData = myCustomFileCreditService.CheckFileCredit();
+			CUSTOMCREDIT_UL creditResponseData = myCustomFileCreditService.CheckFileCredit(requestParamsJson);
 			if (!string.IsNullOrEmpty(creditResponseData.CustomFileCredit[0].ErrorMessage))
 			{
 				return false;
@@ -1997,6 +2018,73 @@ namespace Logitude.Customs.BL.BL
 			catch (Exception ex)
 			{
 				return null;
+			}
+		}
+		#endregion
+
+        #region SendPayment
+		public void SendPaymentIsCheckFileCredit(bool isCheckFileCredit, DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM, string user, bool isFromAPI)
+		{
+			if (isCheckFileCredit)
+			{
+				var MyUnifreightEventParam = new UnifreightEventParam()
+				{
+					Code = "APAYA",
+					Mode = UnifreightEventMode.@new,
+					EventDateTime = DateTime.Now,
+					Entname = "CFIFILEM",
+					PrimaryNum = declarationPM.CustomFileNo,
+					EventRemarks = "תשלום הצהרה אוטומטי"
+				};
+				LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+				var myOpenUnifreighTask = new UnifreightEventTaskService();
+				myOpenUnifreighTask.UpsertEventLE2U(
+					declarationPM.Tenant,
+				  user,
+					MyUnifreightEventParam);
+
+
+				var requestParams = new GenericRequestParams()
+				{
+					LoggingEnabled = true,
+					IsFakeResponse = true,
+					InterfaceTypeCode = "2755",
+					Tenant = declarationPM.Tenant,
+					RequestName = "Auto Payment Request",
+					ResponseName = "Auto Payment Response",
+					LoggingEntityId = declarationPM.Id,
+					RequestVIA = SendRequestVIA.WebServiceBatch,
+					SuppressSplitWR = true,
+					AppicationId = declarationPM.Id,
+					// LoggingEntityReference = "AutoPayment",
+					//UnifreightListOnServerOnly = SetBankIdInUnifreightListOnServerOnly(autoPaymentService?.PaymentMethodsList[0]?.SelectedBank?.Id)
+				};
+
+				if (declarationPaymentPM.FuturePaymentDateTime != null)
+				{
+					DateTime requestDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, declarationPaymentPM.FuturePaymentDateTime.Value.Hour, declarationPaymentPM.FuturePaymentDateTime.Value.Minute, declarationPaymentPM.FuturePaymentDateTime.Value.Second);
+					declarationPaymentPM.PaymentDate = requestDate;
+
+					requestParams.RequestVIAChangeDue = string.Concat("נרשמה בקשה מתוזמנת לתאריך ", requestDate.ToShortDateString(), " שעה ", requestDate.ToShortTimeString());// "הבקשה תשלח בעתיד";
+					requestParams.FutureSendDateTime = requestDate;
+
+					SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams, false, requestDate);
+
+				}
+				else
+				{
+
+					SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams, false);
+
+				}
+			}
+			else
+			{
+				if (isFromAPI)
+				{
+					SendEventAPAYF(declarationPM, user);
+				}
+
 			}
 		}
 		#endregion

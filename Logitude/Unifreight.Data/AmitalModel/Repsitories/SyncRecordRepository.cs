@@ -27,7 +27,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
         public void Add(List<SyncRecord> records)
         {
-            context.SyncRecord.AddRange(records);            
+            context.SyncRecord.AddRange(records);
         }
 
         public void Remove(SyncRecord entity)
@@ -37,9 +37,9 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         }
 
         public void Remove(List<SyncRecord> entityList)
-        {            
+        {
             entityList.ForEach(entity => context.SyncRecord.Attach(entity));
-            context.SyncRecord.RemoveRange(entityList);         
+            context.SyncRecord.RemoveRange(entityList);
         }
 
         public void Update(SyncRecord entity)
@@ -95,7 +95,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
                 records.GroupBy(record => new { record.Entname, record.KeyVal, record.TrigAction })
                 .Select(group => group.FirstOrDefault())
                 .ToList();
-            
+
             return groupRecord;
         }
 
@@ -118,19 +118,28 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             context.SaveChanges();
         }
 
-        public DateTime? GetLastSyncDate(int tenant, string fileNo) =>
-            context.SyncRecord
+        public DateTime? GetLastSyncDate(int tenant, string fileNo)
+        {
+            SyncRecord record = context.SyncRecord
                 .Where(syncRecord => syncRecord.Tenant == tenant && syncRecord.FileNo == fileNo)
-                .Max(syncRecord => syncRecord.SyncDT);
+                .OrderByDescending(x => x.CreateDate)
+                .FirstOrDefault();
+
+            if (record == null)
+                return null;
+
+            return record.SyncDT ?? DateTime.Now;
+        }
 
         public List<SyncRecord> GetAndMarkNewSyncRecord()
         {
             DateTime yesterday = DateTime.Now.AddDays(-1);
 
-            IEnumerable<SyncRecord> records = context.SyncRecord.Where(syncRecord =>                                
+            IEnumerable<SyncRecord> records = context.SyncRecord.Where(syncRecord =>
                 syncRecord.IsSync == SyncRecordStatus.New && syncRecord.CreateDate > yesterday);
 
-            for (int i = 0; i < records.Count(); i++)
+            int recordsCounts = Math.Min(records.Count(), 10000);
+            for (int i = 0; i < recordsCounts; i++)
                 records.ElementAt(i).IsSync = SyncRecordStatus.InProcess;
 
             return records.ToList();
@@ -140,7 +149,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         {
             for (int i = 0; i < records.Count; i++)
             {
-                records[i].IsSync = SyncRecordStatus.InQueue;                
+                records[i].IsSync = SyncRecordStatus.InQueue;
                 context.SyncRecord.Attach(records[i]);
                 context.SetAsModified(records[i]);
             }

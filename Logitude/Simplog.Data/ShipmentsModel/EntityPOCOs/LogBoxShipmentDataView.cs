@@ -25,7 +25,10 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ContainersNumbersandTypesArray { get; set; }
         public int Tenant { get; set; }
         public string ShipmentNumber { get; set; }
-        public string DirectionId { get; set; }
+        public int? PackagesQuantity { get; set; }
+       public double? GrossWeight { get; set; }
+       public string DirectionId { get; set; }
+        public string Master { get; set; }
         public string StatusName { get; set; }
         public DateTime? CustomsClearanceDate { get; set; }
         public DateTime? StatusDate { get; set; }
@@ -58,5 +61,15 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ForwarderShipmentNumber { get; set; }
         public string PrivateLabelAgentName { get; set; }
         public string ForwarderPartnerId { get; set; }
+        public string ToPortCode { get; set; }
+        public string FromPortCode { get; set; }
+        public DateTime? MainCarriageETD { get; set; }
+        public DateTime? MainCarriageATD { get; set; }
+        public string MainCarriageFromPortCode { get; set; }
+        public string MainCarriageToPortCode { get; set; }
+        public string MainCarriageToPortCountryCode { get; set; }
+        public string MainCarriageFromPortCountryCode { get; set; }
+        public DateTime? MainCarriageETA { get; set; }
+        public DateTime? MainCarriageATA { get; set; }
     }
 }

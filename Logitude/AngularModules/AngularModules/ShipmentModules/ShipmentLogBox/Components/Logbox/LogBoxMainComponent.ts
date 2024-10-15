@@ -231,7 +231,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                                     newWindow.Height = 700;
                                     newWindow.RTL = true;
                                     //newWindow.CustomTitleIcon = "data:image/JPEG;base64," + SessionLocator.PrivateLableSettings.SmallLogo;
-                                    newWindow.Title = "םישור היבוםן להגשת הצהרת יבום למכס";
+                                    newWindow.Title = TextCodeTranslator.Translate("Shipment.O.ImporterApprovalForSubmitting");
                                     var windowArgs: any = {};
                                     //windowArgs.IsNew = false;
                                     windowArgs.EntityPm = myResult.Result;
@@ -1190,7 +1190,9 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         windowArgs.ObjectTableName = "Shipment";
         windowArgs.QueryName = this.SelectedFilter;
         windowArgs.QueryType = "LogBox";
+        windowArgs.Type = "SaveToMicrosoftExcel2007";
         let logitudeWindow = new LogitudeWindow();
+
         logitudeWindow.Width = 500;
         logitudeWindow.Height = 200;
         logitudeWindow.Title = TextCodeTranslator.Translate("General.B.ExportingDataToExcel");//"Exporting View Data List To Excel File";

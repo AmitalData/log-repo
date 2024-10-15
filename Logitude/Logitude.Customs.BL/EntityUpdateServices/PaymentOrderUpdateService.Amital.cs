@@ -49,8 +49,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             ICustomContext customContext = CustomContext.GetContext(dirtyEntityPM.Tenant);
             CustomsSettingQueryService settingService = new CustomsSettingQueryService(customContext);
-            bool isConnectedToUniFreight = settingService.GetSingleByTenant(dirtyEntityPM.Tenant).IsConnectedToUniFreight;
-            this._DirtyEntityPM = dirtyEntityPM;
+             this._DirtyEntityPM = dirtyEntityPM;
             this._LoggingUserId = AuthenticationUtil.ResolveUserId(dirtyEntityPM.Tenant);
             string loggingUserId = this._LoggingUserId;
 
@@ -88,7 +87,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         break;
                 }
 
-                if(eventContextTagModel.UnifreighTaskCode == "LP2UB" && isConnectedToUniFreight)
+                if(eventContextTagModel.UnifreighTaskCode == "LP2UB" && connectedDeclarationPM.IsConnectedToUnifreight && connectedDeclarationPM.Direction!="E")
                 {
                     UpdateUnifreightPaymentOrderBLD(dirtyEntityPM, connectedDeclarationPM, loggingUserId);
                 }

@@ -4,59 +4,12 @@
   Name="Queue_Peek"
   Schema="dbo"
   Module="Infrastructure">
-  <SqlScript_>
-  <![CDATA[
-CREATE procedure [dbo].[Queue_Peek]
-(@MessageId  bigint output,
-@MessageBody  varchar(2000) output,
-@RetryNumber int output,
-@QueueDefinitionCode varchar(255),
-@WatingStatus int)
-as 
-
-begin
-
---DECLARE @NextId INTEGER
-Declare @frequency INTEGER
-set @frequency = 60
-
--- Find next available item available where the status is enabled
-SET @MessageId = (SELECT TOP 1 [Id]
-FROM [dbo].[QueueMessages] WITH (UPDLOCK, READPAST,ROWLOCK) WHERE [NextRunDateTime] <= getdate() and [Status] = @WatingStatus and QueueDefinitionCode = @QueueDefinitionCode ORDER BY [NextRunDateTime] ASC)
-
-
---If found, flag it to prevent being picked up again
-IF (@MessageId IS NOT NULL)
-BEGIN
-
-Set @MessageBody = (Select MessageBody from [dbo].[QueueMessages] where [Id] = @MessageId)
-Set @RetryNumber = (Select RetryNumber from [dbo].[QueueMessages] where [Id] = @MessageId)
-Set @MessageBody = (Select MessageBody from [dbo].[QueueMessages] where [Id] = @MessageId)
-
-UPDATE [dbo].[QueueMessages]
-SET [ProcessingDateTime] = getdate(),[NextRunDateTime] = dateadd(second,@frequency,getdate()),RetryNumber = (RetryNumber+1)
-WHERE [Id] = @MessageId
-
-UPDATE [dbo].[QueueMessageMoreDetails]
-SET [ProcessingDateTime] = getdate(),[NextRunDateTime] = dateadd(second,@frequency,getdate()),RetryNumber = (RetryNumber+1)
-WHERE [Id] = @MessageId
-
-END
-
-
--- return queue data
---IF (@NextId IS NOT NULL)
---select [QueueID],[QueueDateTime],[Title],[Status],[TextData],[NextRunTime],[ProcessingTime]
---from [dbo].[TasksQueue]
---where [QueueID] = @NextId
-
- 
-end
-]]></SqlScript_>
+  
 	<SqlScript>
 		<![CDATA[
-CREATE PROCEDURE [dbo].[Queue_Peek]
----VLADI IMPROVEMENTS
+
+create or alter PROCEDURE [dbo].[Queue_Peek]
+
 @V_MESSAGEID numeric  OUTPUT,
 @V_MESSAGEBODY varchar(max)  OUTPUT,
 @V_RETRYNUMBER numeric  OUTPUT,
@@ -95,7 +48,6 @@ DECLARE
 @V_ROW$ENTITYCODE varchar(40),
 @V_ROW$ENTITYID varchar(40),
 @V_WATINGSTATUS_int int
-
 set @V_WATINGSTATUS_int = @V_WATINGSTATUS
 /*-20220127 IM Rabbit*/
 SET @V_FREQUENCY = 60
@@ -131,7 +83,6 @@ QT.STATUS = @V_WATINGSTATUS_int AND
 QT.QUEUEDEFINITIONCODE = @V_QUEUEDEFINITIONCODE AND
 QT.USERABBITMQ = 0
 ORDER BY QT.TENANTPRIORITY ASC, QT.NEXTRUNDATETIME ASC
-
 IF @V_ROW$ID > 0
 BEGIN
 /*
@@ -148,10 +99,11 @@ SET @V_MESSAGECREATEDSERVERTIME = @V_ROW$CREATEDATETIME
 *   SSMA warning messages:
 *   O2SS0425: Dateadd operation may cause bad performance.
 */
+--SET @V_NEXTRUNDELAYINSEC=60;
 UPDATE dbo.QUEUEMESSAGES
 SET
 PROCESSINGDATETIME = sysdatetime(),
-NEXTRUNDATETIME = DATEADD(ss,@V_NEXTRUNDELAYINSEC,GETDATE()) , --ssma_oracle.dateadd(@V_NEXTRUNDELAYINSEC / 86400, sysdatetime())/*-(SYSDATE + v_frequency/86400),----utils.dateadd('SECOND', v_frequency, SYSDATE),*/,
+NEXTRUNDATETIME =DATEADD(MINUTE,@V_NEXTRUNDELAYINSEC,GETDATE()) , --DATEADD(ss,@V_NEXTRUNDELAYINSEC,GETDATE()) , --ssma_oracle.dateadd(@V_NEXTRUNDELAYINSEC / 86400, sysdatetime())/*-(SYSDATE + v_frequency/86400),----utils.dateadd('SECOND', v_frequency, SYSDATE),*/,
 RETRYNUMBER = (QUEUEMESSAGES.RETRYNUMBER + 1)
 WHERE QUEUEMESSAGES.ID = @V_MESSAGEID/* return queue data*/
 /*
@@ -161,15 +113,13 @@ WHERE QUEUEMESSAGES.ID = @V_MESSAGEID/* return queue data*/
 UPDATE dbo.QUEUEMESSAGEMOREDETAILS
 SET
 PROCESSINGDATETIME = sysdatetime(),
-NEXTRUNDATETIME = DATEADD(ss,@V_NEXTRUNDELAYINSEC,GETDATE()) , --ssma_oracle.dateadd(@V_NEXTRUNDELAYINSEC / 86400, sysdatetime())/*-(SYSDATE + v_frequency/86400),----utils.dateadd('SECOND', v_frequency, SYSDATE),*/,
+NEXTRUNDATETIME = DATEADD(MINUTE,@V_NEXTRUNDELAYINSEC,GETDATE()) ,--DATEADD(ss,@V_NEXTRUNDELAYINSEC,GETDATE()) , --ssma_oracle.dateadd(@V_NEXTRUNDELAYINSEC / 86400, sysdatetime())/*-(SYSDATE + v_frequency/86400),----utils.dateadd('SECOND', v_frequency, SYSDATE),*/,
 RETRYNUMBER = (QUEUEMESSAGEMOREDETAILS.RETRYNUMBER + 1)
 WHERE QUEUEMESSAGEMOREDETAILS.ID = @V_MESSAGEID/* return queue data*/
 END
-
 End
-
-
 end
+
 ]]>
 	</SqlScript>
   <OracleScript>

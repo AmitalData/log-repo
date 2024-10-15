@@ -49,6 +49,8 @@ using Logitude.Infrastructure.BL.EntityQueryServices;
 using WebFreight.Web.Helpers.APIHelpers;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.Resolvers;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
@@ -567,21 +569,35 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             var objectContext = GlobalContext.GetContext();
             GlobalContactRepository globalContactsRepository = new GlobalContactRepository(objectContext);
 
-            GlobalContact globalContact = globalContactsRepository.GetGlobalContactByEmailAndTenant(useremail, tenant);
-            UserPM loggeduser = null;
-            if (globalContact != null)
+            bool sameEmail = false;
+            ContactPM contact = LoggedContactResolver.GetLoggedContact(tenant);
+            if (contact != null)
             {
-                UserRepository userRepository = new UserRepository(tenant);
-                UserQuery query = new UserQuery(userRepository);
-                loggeduser = query.GetSingleUserPMByEmail(useremail, globalContact.GlobalTenantId, false);
-                if (globalContact.GlobalTenantId == 0 && LogitudeSettings.IsCostomsDeploy && loggeduser == null)// in custom allowed sysdamin login to the tenant 
+                string email = contact.Email;
+                if (!String.IsNullOrWhiteSpace(useremail) && useremail == email)
                 {
-                    loggeduser = query.GetSingleUserPMByEmail(useremail, tenant, false);
+                    sameEmail = true;
                 }
             }
-            if (loggeduser != null)
+            UserPM loggeduser = null;
+            if (sameEmail)
             {
-                loggeduser.DisableCachedData = FeatureToggleHelper.HasFeatureToggle("DCS", tenant);
+                GlobalContact globalContact = globalContactsRepository.GetGlobalContactByEmailAndTenant(useremail, tenant);
+
+                if (globalContact != null)
+                {
+                    UserRepository userRepository = new UserRepository(tenant);
+                    UserQuery query = new UserQuery(userRepository);
+                    loggeduser = query.GetSingleUserPMByEmail(useremail, globalContact.GlobalTenantId, false);
+                    if (globalContact.GlobalTenantId == 0 && LogitudeSettings.IsCostomsDeploy && loggeduser == null)// in custom allowed sysdamin login to the tenant 
+                    {
+                        loggeduser = query.GetSingleUserPMByEmail(useremail, tenant, false);
+                    }
+                }
+                if (loggeduser != null)
+                {
+                    loggeduser.DisableCachedData = FeatureToggleHelper.HasFeatureToggle("DCS", tenant);
+                }
             }
             return loggeduser;
         }

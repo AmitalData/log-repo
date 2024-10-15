@@ -29,6 +29,7 @@ export class TaxReportMenuButtonsHandler {
     EntityPMService: EntityPMService = new EntityPMService();
 
     private CurrentSession = SessionLocator.SelectedSession;
+    private BlockReportCancel: boolean = false;
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
@@ -138,24 +139,7 @@ export class TaxReportMenuButtonsHandler {
         switch (menuButton.EventCode) {
             case "TRCN": // Cancel
                 {
-                    var confirmWindow = new ConfirmWindow();
-                    var msg = TextCodeTranslator.Translate("Accounting.General.O.WantToCancelTaxReport");
-                    confirmWindow.Show(msg);
-                    confirmWindow.WindowClosed.subscribe((event: any) => {
-                        if (confirmWindow.Yes) {
-                            this.EntityPM.StatusCode = TaxReportStatus.CancelationInProgress;
-                            this.entityArgs.EditComponent.SaveChanges();
-                            this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                                if (isSaveSuccess) {
-                                    this.entityArgs.EditComponent.ReloadEntityPM();
-                                    this.CancelTaxReportInBatch();
-                                } else {
-                                    this.EntityPM.IsCancelled = false;
-                                }
-                            });
-                        }
-                    });
-
+                    this.CancelTaxReport();
                     break;
                 }
             case "TRDL": // Download
@@ -404,9 +388,54 @@ export class TaxReportMenuButtonsHandler {
                     message.Show(TextCodeTranslator.Translate(TextCode.TaxReportCloseJournalRunInBackground));
                 }
             }, (error) => {
-                new MessageWindow().Show(error || 'Somthing wrong happend!');
+                new MessageWindow().Show(error || 'Something wrong happened!');
             });
     }
+
+
+    CancelTaxReport() {
+        this.CurrentSession.StartBusyIndicatorCreating();
+
+        this.taxReportExtendedPMService.GetActiveFutureReportsExist(this.EntityPM.CreateDate)
+            .subscribe((response: any) => {
+                this.StopBusyIndicator();
+                if (response != null) {
+                    if (!response.Result.Result) {
+                        this.CancelTaxReportInner();
+                    }
+                    else {
+                            const message = new MessageWindow();
+                            message.ShowErrorIcon = true;
+                            message.Width = 400;
+                            let text : string = TextCodeTranslator.Translate(TextCode.TaxReportOCancelLaterReports);
+                            message.Show(text + '\n');
+                    }
+                } 
+            }, (error) => {
+                new MessageWindow().Show(error || 'Something wrong happened!');
+            });
+    }
+
+    CancelTaxReportInner() {
+        var confirmWindow = new ConfirmWindow();
+        var msg = TextCodeTranslator.Translate("Accounting.General.O.WantToCancelTaxReport");
+        confirmWindow.Show(msg);
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.EntityPM.StatusCode = TaxReportStatus.CancelationInProgress;
+                this.entityArgs.EditComponent.SaveChanges();
+                this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        this.entityArgs.EditComponent.ReloadEntityPM();
+                        this.CancelTaxReportInBatch();
+                    } else {
+                        this.EntityPM.IsCancelled = false;
+                    }
+                });
+            }
+        });
+    }
+
 
     CancelClosingJournal() {
         this.CurrentSession.StartBusyIndicatorCreating();
@@ -421,9 +450,13 @@ export class TaxReportMenuButtonsHandler {
                     message.Show(response.ErrorsArray.join('\n'));
                 } else {
                     this.entityArgs.EditComponent.ReloadEntityPM();
+                    const message = new MessageWindow();
+                    message.ShowSuccessIcon = true;
+                    message.Width = 400;
+                    message.Show(TextCodeTranslator.Translate(TextCode.TaxReportCancelClosingJournalRunInBackground));
                 }
             }, (error) => {
-                new MessageWindow().Show(error || 'Somthing wrong happend!');
+                new MessageWindow().Show(error || 'Something wrong happened!');
             });
     }
 }
@@ -452,6 +485,8 @@ enum TextCode {
     TaxReportClosingJournalConfirmationMessage = "TaxReport.O.ClosingJournalConfirmationMessage",
     TaxReportCloseJournalNotSupported = "TaxReport.O.CloseJournalNotSupported",
     TaxReportCloseJournalRunInBackground = "TaxReport.O.CloseJournalRunInBackground",
+    TaxReportCancelClosingJournalRunInBackground = "TaxReport.O.CloseJournalRunInBackground",
+    TaxReportOCancelLaterReports = "TaxReport.O.CancelLaterReports",
 }
 function CloneDeep(EntityPM: TaxReportPM) {
     throw new Error('Function not implemented.');

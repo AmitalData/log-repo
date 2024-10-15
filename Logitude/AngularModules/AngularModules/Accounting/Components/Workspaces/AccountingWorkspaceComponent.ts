@@ -54,34 +54,34 @@ export class AccountingWorkspaceComponent {
     CheckFeatures() {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         var table = window.ObjectTables.filter(d => d.Name === 'General')[0];
-        var mainTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCMAIN") && f.ObjectTableId == table.Id)[0];
-        if (mainTabFeature) {
+        // var mainTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCMAIN") && f.ObjectTableId == table.Id)[0];
+        // if (mainTabFeature) {
             this.IsMainTabVisibile = true;
-        }
-        var CustomersTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCCustomers") && f.ObjectTableId == table.Id)[0];
-        if (CustomersTabFeature) {
+        // }
+        // var CustomersTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCCustomers") && f.ObjectTableId == table.Id)[0];
+        // if (CustomersTabFeature) {
             this.IsCustomersTabVisibile = true;
-        }
-        var VendorsTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCVendors") && f.ObjectTableId == table.Id)[0];
-        if (VendorsTabFeature) {
-            this.IsVendorsTabVisibile = true;
-        }
-        var BanksTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCBanks") && f.ObjectTableId == table.Id)[0];
-        if (BanksTabFeature) {
+       // }
+       // var VendorsTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCVendors") && f.ObjectTableId == table.Id)[0];
+        //if (VendorsTabFeature) {
+           this.IsVendorsTabVisibile = true;
+       // }
+       // var BanksTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCBanks") && f.ObjectTableId == table.Id)[0];
+       // if (BanksTabFeature) {
             this.IsBanksTabVisibile = true;
-        }
-        var journalTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCJORN") && f.ObjectTableId == table.Id)[0];
-        if (journalTabFeature) {
+      //  }
+       // var journalTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCJORN") && f.ObjectTableId == table.Id)[0];
+      //  if (journalTabFeature) {
             this.IsJournalTabVisibile = true;
-        }
-        var GLAccountsTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCGLAccounts") && f.ObjectTableId == table.Id)[0];
-        if (GLAccountsTabFeature) {
+       // }
+      //  var GLAccountsTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCGLAccounts") && f.ObjectTableId == table.Id)[0];
+       // if (GLAccountsTabFeature) {
             this.IsGLAccountsTabVisibile = true;
-        }
-        var MiscTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCMisc") && f.ObjectTableId == table.Id)[0];
-        if (MiscTabFeature) {
+      //  }
+      //  var MiscTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCMisc") && f.ObjectTableId == table.Id)[0];
+      //  if (MiscTabFeature) {
             this.IsMiscTabVisibile = true;
-        }
+     //   }
         var InterestTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCInterest") && f.ObjectTableId == table.Id)[0];
         if (InterestTabFeature) {
             this.IsInterestTabVisibile = true;

@@ -1,0 +1,90 @@
+﻿<Procedure DBType="Main" Name="usp_NewCustomsBookMainViewSearchByText_BackUpNew" Schema="dbo" Module="Customs">
+  <SqlScript>
+    <![CDATA[
+    CREATE OR ALTER PROCEDURE [dbo].[usp_NewCustomsBookMainViewSearchByText_BackUpNew]
+    @SearchFields VARCHAR(40),
+    @CustomsBookType VARCHAR(2),
+    @CustomsItemHierarchic VARCHAR(20),
+    @Remarks BIT,
+    @Rules BIT,
+    @Tenant INT = 0 
+AS
+BEGIN
+    -- Common Data Source
+    WITH CommonData AS (
+        SELECT m.CustomsItemId,
+               m.Parent_CustomsItemId,
+               m.ItemHierarchicLocationID,
+               m.Fullclassification,
+               m.BaseFullClassification,
+               m.ComputedCheckDigit,
+               m.IsLeaf,
+               m.GoodsDescription,
+               m.Agreements,
+               m.CustomsRate,
+               m.PurchaseTax,
+               m.OptionalTaxAddition,
+               m.MeasurementUnitName,
+               m.MALAMID AS MeasurementUnitID
+        FROM [dbo].[NewCustomsBookMainView] m
+        WHERE m.CI_CustomsBookTypeIDNum = @CustomsBookType
+          AND m.ItemHierarchicLocationID != '1'
+    )
+    
+    -- Main Query
+    SELECT 
+        sub.CustomsItemId,
+        MAX(sub.Parent_CustomsItemID) AS Parent_CustomsItemID,
+        MAX(sub.Fullclassification) AS FullClassification,
+        MAX(sub.BaseFullClassification) AS BaseFullClassification,
+        MAX(sub.ComputedCheckDigit) AS ComputedCheckDigit,
+        MAX(sub.ItemHierarchicLocationID) AS ItemHierarchicLocationID,
+        MAX(CAST(sub.IsLeaf AS int)) AS IsLeaf,
+        MAX(sub.GoodsDescription) AS GoodsDescription,
+        MAX(sub.Agreements) AS Agreements,
+        MAX(sub.CustomsRate) AS CustomsRate,
+        MAX(sub.PurchaseTax) AS PurchaseTax,
+        MAX(sub.OptionalTaxAddition) AS OptionalTaxAddition,
+        MAX(sub.MeasurementUnitName) AS MeasurementUnitName,
+        MAX(sub.MeasurementUnitID) AS MeasurementUnitID,
+        STRING_AGG(sub.Remarks, ', ') AS Remarks,
+        MAX(CASE WHEN sub.Rules = 1 THEN 1 ELSE 0 END) AS Rules,
+        STRING_AGG(sub.Result, ', ') AS Result
+    FROM (
+        SELECT CommonData.*,
+               0 AS Rules,
+               'GoodsDescription' AS Result,
+               NULL AS Remarks
+        FROM CommonData
+        WHERE GoodsDescription LIKE '%' + @SearchFields + '%'
+
+        UNION ALL
+        
+        SELECT CommonData.*,
+               1 AS Rules,
+               'Remarks' AS Result,
+               r.RemarkDescription AS Remarks
+        FROM CommonData
+        JOIN customs.RemarksClassifications r ON CommonData.CustomsItemId = r.CustomsItemsID
+        WHERE r.Tenant = @Tenant
+          AND r.RemarkDescription LIKE '%' + @SearchFields + '%'
+    ) AS sub
+    LEFT JOIN (
+        SELECT Id, CustomsItemsID
+        FROM customs.RemarksClassifications
+        WHERE Tenant = @Tenant
+    ) r ON sub.CustomsItemId = r.CustomsItemsID
+    GROUP BY sub.CustomsItemId
+    ORDER BY MAX(sub.FullClassification);
+END
+
+   
+    ]]>
+  </SqlScript>
+
+  <OracleScript>
+    <![CDATA[
+	
+    ]]>
+  </OracleScript>
+</Procedure>

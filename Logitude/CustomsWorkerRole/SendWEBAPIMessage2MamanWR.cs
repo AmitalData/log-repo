@@ -521,67 +521,69 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
             try
             {
-
                 for (int attempt = 0; attempt < retryCount; attempt++)
                 {
-
                     using (var client = new HttpClient())
                     {
                         try
                         {
-                            client.Timeout = TimeSpan.FromMinutes(MyWebClient.TimeOutFromMinutes);//The default value is 100,000 milliseconds (100 seconds).
+                            client.Timeout = TimeSpan.FromMinutes(MyWebClient.TimeOutFromMinutes);
+
                             var tokenManager = TokenManager.GetInstance(_CourierHawbMamanCommunicationLogSettings);
                             var token = tokenManager.Token;
 
-                            NetCommonHelper.Logger.DevLog.Instance.WriteTrace($" Token: {token.AccessToken}");
+                            NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"Attempt {attempt + 1}: Token: {token.AccessToken}");
 
-                            //string webApiURI = host;//URI + "APIAuthentication";
-                            //webApiURI = "https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae";
+                            // Prepare the request
                             client.DefaultRequestHeaders.Add("User-Agent", agent);
                             var content = new StringContent(dataJson, Encoding.UTF8, "application/json");
-
-                            string credentials = "";
-                            //Authorization: Bearer O5GRnBFMruLRIdRJAI_CQNLzXanWBQ0FO4zQGR6gkluiYOWTaop-p_UkEfq0NaoIuFC_kLfJjABjJdN5HW0_aC-kTMS63nHKUb9yiCxOOiv5UmrCvd1XLgFbBxCLwdDcCnwiCgdM_CTkhM_cFX5KWsNyWAD9i85wyk06lV-iROw2itvXo3Vir-19fMiTZnFbe_OffXJWfl2lF89zXT_MYzlOJdCqDRYELSwAPjBcPzLva5-EN4Pi2Jyu-nZs7DxW5NcEDM6JJUDk66C7VXxqz5s3Q4D4Knr14lmYMmetdAY
-                            //credentials = "O5GRnBFMruLRIdRJAI_CQNLzXanWBQ0FO4zQGR6gkluiYOWTaop-p_UkEfq0NaoIuFC_kLfJjABjJdN5HW0_aC-kTMS63nHKUb9yiCxOOiv5UmrCvd1XLgFbBxCLwdDcCnwiCgdM_CTkhM_cFX5KWsNyWAD9i85wyk06lV-iROw2itvXo3Vir-19fMiTZnFbe_OffXJWfl2lF89zXT_MYzlOJdCqDRYELSwAPjBcPzLva5-EN4Pi2Jyu-nZs7DxW5NcEDM6JJUDk66C7VXxqz5s3Q4D4Knr14lmYMmetdAY";
                             client.DefaultRequestHeaders.Add("Authorization", $"{token.Token_Type} {token.AccessToken}");
 
-                            LogMessagingUtil.Instance.AppendLine($"URIBaldarCreateECTHRMessgae.PostAsync....");
+                            LogMessagingUtil.Instance.AppendLine("URIBaldarCreateECTHRMessgae.PostAsync....");
                             var task = client.PostAsync(_CourierHawbMamanCommunicationLogSettings.URIMethod, content);
                             Wait4Finsh(task, 3);
+
                             var response = task.Result;
-                            LogMessagingUtil.Instance.AppendLine($"PostAsyncResult={myResultString}");
 
                             if (response.IsSuccessStatusCode)
                             {
+                                // If the request succeeds, return the result
                                 myResultString = response.Content.ReadAsStringAsync().Result;
+                                LogMessagingUtil.Instance.AppendLine($"PostAsyncResult={myResultString}");
                                 return myResultString;  // Success, return the response
                             }
-                            else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized && attempt < retryCount - 1)
+                            else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                             {
-                                // Refresh the token if unauthorized and not on the last retry attempt
+                                NetCommonHelper.Logger.DevLog.Instance.WriteTrace("401 Unauthorized detected. Refreshing token...");
                                 tokenManager.RefreshToken();
                             }
                             else
                             {
-                                // If not unauthorized or it's the last attempt, throw an exception
-                                throw new HttpRequestException($"Request failed with status code: {response.StatusCode}");
+                                NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"Request failed with status code: {response.StatusCode}");
                             }
                         }
                         catch (Exception ex)
                         {
+                            NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"Attempt {attempt + 1} failed with exception: {ex.Message}");
                             if (attempt == retryCount - 1)
                             {
-                                throw new Exception($"An error occurred: {ex.Message}");
+                                throw new Exception($"An error occurred on the last retry: {ex.Message}");
                             }
                         }
                     }
-
                 }
 
-                return myResultString;
+                // After all attempts fail, throw an exception
+                throw new Exception("All retry attempts failed.");
             }
             catch (Exception ex)
             {
+                // Log the basic exception message
+                NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"An error occurred: {ex.Message}");
+                if (ex.InnerException != null)
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"Inner Exception: {ex.InnerException.Message}");
+                }
                 LogMessagingUtil.Instance.AppendLine($"An error occurred: {ex.Message}");
                 throw;
             }

@@ -35,6 +35,7 @@ using Logitude.Customs.BL.NotificationBL;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -140,15 +141,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             var user = userRepository.GetSingleUserByCode("MEHES", declarationPM.Tenant, true);
 
 
-                            var setting = CustomsSettingQueryService.GetSettingByTenant(declarationPM.Tenant);
-                            
-                            if (setting.IsConnectedToUniFreight || AmitalEventTracer.UseHybrid_When_NotIsConnectedToUniFreight)
-                            {
+                      
                                 if (declarationPM.Direction == "E")
                                 {
                                     RaiseEvent(declarationPM, user?.Id, status_id: "HTR", status_DateTime: statusDateTime);
+                                 
+                                    SendSoyStatusToUnifreight(declarationPM, user?.Id);
+
                                 }
-                            }
+                           
 
 
 
@@ -237,6 +238,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             LogMessagingUtil.Instance.AppendLine(errMess);
                             return;                            
                     }
+
+
                     //declarationPM.HatraDate = hataraDate; - Yuval Chalup 17.01.2018 Remarked (Init in each case above)
                     LogMessagingUtil.Instance.AppendLine("declarationPM.HatraDate" + (declarationPM.HatraDate.HasValue ? declarationPM.HatraDate.Value.ToString() : "") + ",Time: " + DateTime.Now.ToString("hh:mm:ss.fff tt"));
 
@@ -285,7 +288,42 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-    
+        private void SendSoyStatusToUnifreight(DeclarationPM declarationPM, string userId, DateTime? dateTime = null)
+        {
+            if (!declarationPM.AutoSending || !declarationPM.IsDiamondDeclaration) return;
+            // determine if the export diamonds feature is enabled to allow autosending
+            ICommonDataContext myContextCommon = CommonDataContext.GetContext(declarationPM.Tenant);
+            FeatureRepository myFeatureRepository = new FeatureRepository(myContextCommon);
+            FeatureQuery featureQuery = new FeatureQuery(myFeatureRepository);
+            var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(declarationPM.Tenant), declarationPM.Tenant);
+            var featureExportDiamonds = features.Features.FirstOrDefault(x => x.Code == "ExportDiamonds");
+
+            if (featureExportDiamonds != null)
+            {
+                string declarationStatus = declarationPM.DeclarationStatusTypeCode;
+                string declarationStatusLabel = "";
+           
+                    // get the declaration status label
+                    DeclarationStatusTypeQueryService declarationStatusTypeQueryService = new DeclarationStatusTypeQueryService(declarationPM.Tenant);
+                    DeclarationStatusTypePM declarationStatusType = declarationStatusTypeQueryService.GetSingle(declarationPM.DeclarationStatusTypeCode, false, true);
+                    declarationStatusLabel = declarationStatusType?.LocalName ?? "לא ידוע";
+                
+                string statusSoyRemarks = $"CODE-{declarationStatus}-{declarationStatusLabel}-";
+
+                if (!string.IsNullOrEmpty(declarationPM.DeclarationNumber))
+                {
+                    statusSoyRemarks += declarationPM.DeclarationNumber;
+                }
+              
+ 
+
+                RaiseEvent(declarationPM, userId,
+                    status_id: "SOY",
+                    status_DateTime: declarationPM.HatraDate,
+                    comments: statusSoyRemarks);
+            }
+        }
+
 
         private void Send2470ToMaman(DeclarationPM declarationPM, DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage customResponse, GenericRequestParams requestParams)
         {
@@ -395,7 +433,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
 
         }
-        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id, DateTime? status_DateTime)
+        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id, DateTime? status_DateTime, string  comments=null)
         {
             //primary_number = $"{dirtyDeclarationPM.CustomFileNo},{dirtyDeclarationPM.TransportModeId == "A" ? "EFIFILEM" : "MFIFILEM" }",
             string primary_number = $"{dirtyDeclarationPM.CustomFileNo},EFIFILEM";
@@ -423,7 +461,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     xml_status = "new",
                     status_id = status_id,
                     status_DateTime = status_DateTime ?? DateTime.Now,
-                    comments = dirtyDeclarationPM.DeclarationNumber,
+                    comments = !string.IsNullOrEmpty(comments)? comments:dirtyDeclarationPM.DeclarationNumber,
 
 
 

@@ -599,6 +599,8 @@ export class ShipmentPMService {
             entity.Vessel = declarationReferentDataPM.Vessel;
             entity.FlightVoyageNumber = declarationReferentDataPM.FlightVoyageNumber;
             entity.Commodity = declarationReferentDataPM.Commodity;
+            entity.OriginCountryCode = declarationReferentDataPM.OriginCountryCode;
+
         }
 
         return entity;

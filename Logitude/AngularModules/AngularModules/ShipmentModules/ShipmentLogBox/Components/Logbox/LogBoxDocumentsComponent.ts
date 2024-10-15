@@ -345,6 +345,8 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     }
 
     private SetMainCarriageArrivalDate() {
+        this.IsExportActivated;
+        this.SelectedShipment.MainCarriageETA;
         if (this.ShipmentPM.MainCarriageATA != null) {
             this.MainCarriageTA = this.ShipmentPM.MainCarriageATA;
             this.MainCarriageTALabel = 'ATA:';
@@ -437,6 +439,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         }
     }
     get ValueChangedAfterTriming() {
+        
         return (!AppTool.IsNullOrEmpty(this.ValueChanged) && this.ValueChanged.length) > this.maxTextLength ? this.ValueChanged.substring(0, this.maxTextLength) + "..." : this.ValueChanged;
     }
 

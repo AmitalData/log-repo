@@ -18449,7 +18449,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
- <field
+  
   <field
     Id="&quot;781689c3-865a-4ee3-8565-e06abefe26d5&quot;"
     FieldName="&quot;SendingInterestReport&quot;"
@@ -18523,9 +18523,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
-  
- 
   
   <field
     Id="&quot;75406c8c-d864-430d-b303-a87d765dabbd&quot;"

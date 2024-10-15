@@ -110,25 +110,9 @@ export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
 
                     var featureVehicle = FeatureLocator.Features.filter(f => f.Code == "LOADVEHICLESFROMUNI")[0];
                     if (featureVehicle) {
-                        this.customsSettingListService.getAll().subscribe((response: ServiceResponse) => {
-                            var list: CustomsSettingList[] = response.Result;
-
-                            if (!AppTool.IsNullOrEmpty(list)) {
-                                var customsSetting = list.filter(d => d.Tenant == SessionLocator.Tenant)[0];
-
-                                if (!AppTool.IsNullOrEmpty(customsSetting)) {
-                                    if (customsSetting.IsConnectedToUniFreight) {
+               
                                         this.VehiclesFilesButtonVisibility = true;
-                                        ////let myDec = this.CurrentSession.CurrentEditComponent.EntityPM;
-                                        //let myDec = args.declarationPM;
-                                        //if (AmitalGatewayUtil.Instance.IsDeclarationInUse(myDec.CustomFileNo, myDec.IsConvertedDeclaration, myDec.IsConnectedToUnifreight)) {
-                                        //    this.VehiclesFilesButtonVisibility = true;
-                                        //}
-                                    }
-                                }
-                            }
-                        });
-
+                       
                     }
                 });
             });

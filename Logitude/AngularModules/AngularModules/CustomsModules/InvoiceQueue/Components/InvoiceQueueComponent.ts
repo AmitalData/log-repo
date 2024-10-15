@@ -83,7 +83,7 @@ export class InvoiceQueueComponent
     }
 
     private GetData() {
-        this.ResetVariables();
+        this.ResetVariables();   
         this._declarationPMService.get(this.UnifreightMessage.LogitudeEntityNumber).subscribe(data => {
              //this._declarationPMService.get("1-17965094").subscribe(data => {
 
@@ -574,21 +574,27 @@ export class InvoiceQueueComponent
     invoice: AllInvoices;
     GetInvoiceFromUnifreight() {
         let myDeclaration: DeclarationPM = this.declaration;
-        let myViewModelName = "InvoiceQueueComponent.ts-GetInvoiceFromUnifreight";
+        let myViewModelName = "InvoiceQueueComponent.ts-GetQInvoice";
+
+        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
         SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-        let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
-            .subscribe(
-                (message: UnifreightMessageM) => {
-                    var IsMatchUnifreightCallbackCommand = (
-                        message.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
-                        message.LogitudeEntityNumber == myDeclaration.Id &&
-                        message.LogitudeViewModel == myViewModelName);
-                    if (IsMatchUnifreightCallbackCommand) {
+          let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+                .subscribe(
+                    (mess: UnifreightMessageM) => {
+                        //alert(JSON.stringify(mess));
+                        var IsMatchUnifreightCallbackCommand = (
+                            mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                            mess.LogitudeEntityNumber == myDeclaration.Id &&
+                            mess.UnifreightEntityNumber == myDeclaration.CustomFileNo &&
+                            mess.LogitudeViewModel == myViewModelName);
+                        IsMatchUnifreightCallbackCommand = true;
+                       
+                    if (IsMatchUnifreightCallbackCommand) { 
                         sub.unsubscribe();
-                        let XMLResponse = UnifreightMessageM.GetStringValue(message, "XMLResponse");
+                        let XMLResponse = UnifreightMessageM.GetStringValue(mess, "XMLResponse");
                         const xmlData = (xml: string) => xml.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
-                        this.invoice = this.parseXml(xmlData(XMLResponse));
-                        if (this.invoice.InvoiceLines.length > 0) {
+                        this.invoice = this.parseXmlWithMultipleRoots(xmlData(XMLResponse));
+                        if (this.invoice.InvoiceLines.length > 0) {  
                             this.processInvoiceData(this.invoice, this);
                         }
                         SessionLocator.SelectedSession.StopBusyIndicator();
@@ -599,32 +605,74 @@ export class InvoiceQueueComponent
 
         var unifreightMessageM =
             AmitalGatewayUtil.Instance.
-                DeclarationMessaging.GetMessage(myDeclaration.CustomFileNo, myDeclaration.Id, "InvoiceQueueComponent.ts", AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
+                DeclarationMessaging.GetMessage(myDeclaration.CustomFileNo, myDeclaration.Id, myViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
         unifreightMessageM.Requset.push(["XMLRequest", this.convertToXML()]);
-
+       
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
             "AmitalGatewayUtil.GetQInvoice",
             "CFIFILEM.LogitudeTask",
             "GetQInvoice",
             unifreightMessageM,
             "");
+        }
     }
 
-    parseXml(xmlString: string): AllInvoices {
+    parseXmlWithMultipleRoots(xmlString: string): AllInvoices {
         const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xmlString, 'application/xml');
-
-        const allInvoices: AllInvoices = {
-            Statuses: this.extractStatuses(xmlDoc),
-            InvoiceLines: this.extractInvoiceLines(xmlDoc),
-            IntegratedInvoices: this.extractIntegratedInvoices(xmlDoc),
-            Invoices: this.extractInvoices(xmlDoc),
-            Messages: this.extractMessages(xmlDoc),
-            GeneralDetails: this.extractGeneralDetails(xmlDoc)
-        };
-
+        let allInvoices = this.getDefaultAllInvoices();
+    
+        // Regular expressions to extract each section from the XML string
+        const invoiceLinesMatch = xmlString.match(/<InvoiceLines>[\s\S]*?<\/InvoiceLines>/);
+        const integratedInvoicesMatch = xmlString.match(/<IntegratedInvoices[\s\S]*?\/>/);
+        const invoicesMatch = xmlString.match(/<Invoices>[\s\S]*?<\/Invoices>/);
+        const messagesMatch = xmlString.match(/<Messages[\s\S]*?\/>/);
+        const generalDetailsMatch = xmlString.match(/<GeneralDetails>[\s\S]*?<\/GeneralDetails>/);
+    
+        // Parse and extract data for each section if available
+        if (invoiceLinesMatch) {
+            const invoiceLinesDoc = parser.parseFromString(invoiceLinesMatch[0], 'application/xml');
+            allInvoices.InvoiceLines = this.extractInvoiceLines(invoiceLinesDoc);
+        }
+    
+        if (integratedInvoicesMatch) {
+            const integratedInvoicesDoc = parser.parseFromString(integratedInvoicesMatch[0], 'application/xml');
+            allInvoices.IntegratedInvoices = this.extractIntegratedInvoices(integratedInvoicesDoc);
+        }
+    
+        if (invoicesMatch) {
+            const invoicesDoc = parser.parseFromString(invoicesMatch[0], 'application/xml');
+            allInvoices.Invoices = this.extractInvoices(invoicesDoc);
+        }
+    
+        if (messagesMatch) {
+            const messagesDoc = parser.parseFromString(messagesMatch[0], 'application/xml');
+            allInvoices.Messages = this.extractMessages(messagesDoc);
+        }
+    
+        if (generalDetailsMatch) {
+            const generalDetailsDoc = parser.parseFromString(generalDetailsMatch[0], 'application/xml');
+            allInvoices.GeneralDetails = this.extractGeneralDetails(generalDetailsDoc);
+        }
+    
         return allInvoices;
     }
+    
+    
+    getDefaultAllInvoices(): AllInvoices {
+        return {
+            Statuses: [], // Empty array of StatusData
+            InvoiceLines: [], // Empty array of InvoiceLine
+            IntegratedInvoices: [], // Empty array of IntegratedInvoice
+            Invoices: [], // Empty array of Invoice
+            Messages: [], // Empty array of MessagesData
+            GeneralDetails: { // Default GeneralDetails object
+                Forwarder: '',
+                TypeOfDelivery: '',
+                TransportResponsibility: ''
+            }
+        };
+    }
+    
 
     extractStatuses(xmlDoc: Document): StatusData[] {
         return Array.from(xmlDoc.getElementsByTagName('StatusData')).map(statusNode => ({

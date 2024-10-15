@@ -14,6 +14,8 @@ dbo.Shipments.CustomerReference1,
 dbo.Shipments.CustomerReference2,
 dbo.Shipments.CustomerReference3, 
 dbo.Shipments.AgentReference2, 
+dbo.Shipments.GrossWeight, 
+
 dbo.Shipments.AgentReference1,
 dbo.Shipments.IsOperationalClosed, 
 dbo.Shipments.DirectionId, 
@@ -23,6 +25,7 @@ dbo.Shipments.ShipperName,
 dbo.Shipments.ShipperName as Shipper, 
 dbo.Shipments.PrivateLabelAgentName AS PrivateLabelAgentName,
 dbo.Shipments.SearchFields,
+dbo.Shipments.PackagesQuantity,
 dbo.Shipments.ComputedStatusDate as StatusDate,
 dbo.Shipments.ForwarderShipmentNumber as ForwarderShipmentNumber,
 HybridPartner.Id as ForwarderPartnerId,
@@ -41,6 +44,18 @@ ShipmentComputedFields.IsRequestedDocuments as IsRequestedDocuments,
 ShipmentComputedFields.LastDocumentDateTime as LastDocumentDateTime,
 ShipmentComputedFields.DocumentsSearchFields as DocumentsSearchFields,
 dbo.ShipmentMasterDatas.TruckNumber,
+dbo.ShipmentMasterDatas.Master,
+dbo.ShipmentMasterDatas.MainCarriageATD,
+dbo.ShipmentMasterDatas.MainCarriageETD,
+dbo.ShipmentMasterDatas.MainCarriageATA,
+dbo.ShipmentMasterDatas.MainCarriageETA,
+ToPorts.Code AS ToPortCode, 
+FromPorts.Code AS FromPortCode,
+MainCarriageFromPorts.Code AS MainCarriageFromPortCode, 
+MainCarriageToPorts.Code AS MainCarriageToPortCode,
+MainCarriageToCountries.Code AS MainCarriageToPortCountryCode,
+MainCarriageFromCountries.Code AS MainCarriageFromPortCountryCode,
+
 ShipmentComputedFields.ContainersNumbersandTypesArray as ContainersNumbersandTypesArray,
 CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN ShipmentMasterDataEntityStatus.Name ELSE dbo.EntityStatus.Name END ELSE dbo.EntityStatus.Name END AS StatusName,
 CASE WHEN (dbo.ShipmentMasterDatas.MainCarriageATA IS NOT NULL) THEN dbo.ShipmentMasterDatas.MainCarriageATA ELSE dbo.ShipmentMasterDatas.MainCarriageETA END AS MainCarriageExpectedOrActual,
@@ -58,7 +73,15 @@ dbo.TransportModes ON dbo.Shipments.TransportModeId = dbo.TransportModes.Id LEFT
 dbo.Cards AS MainCarriageCarrierCards ON dbo.ShipmentMasterDatas.MainCarriageCarrierId = MainCarriageCarrierCards.Id LEFT OUTER JOIN
 dbo.ShipmentComputedFields AS ShipmentComputedFields ON dbo.Shipments.Id = ShipmentComputedFields.Id INNER JOIN
 dbo.ShipmentAdditionalCloudDatas AS ShipmentAdditionalCloudDatas ON dbo.Shipments.Id = ShipmentAdditionalCloudDatas.Id 
-						 
+LEFT OUTER JOIN
+dbo.Ports AS ToPorts ON dbo.Shipments.ToPortId = ToPorts.Id LEFT OUTER JOIN
+dbo.Ports AS FromPorts ON dbo.Shipments.FromPortId = FromPorts.Id 
+LEFT OUTER JOIN
+dbo.Ports AS MainCarriageFromPorts ON dbo.ShipmentMasterDatas.MainCarriageFromPortId = MainCarriageFromPorts.Id LEFT OUTER JOIN
+dbo.Ports AS MainCarriageToPorts ON dbo.ShipmentMasterDatas.MainCarriageToPortId = MainCarriageToPorts.Id
+LEFT OUTER JOIN
+dbo.Countries AS MainCarriageFromCountries ON MainCarriageFromPorts.CountryId = MainCarriageFromCountries.Id LEFT OUTER JOIN
+dbo.Countries AS MainCarriageToCountries ON MainCarriageToPorts.CountryId = MainCarriageToCountries.Id						 
     ]]>
   </SqlScript>
   <OracleScript>

@@ -10,14 +10,14 @@ import { NgClass, NgIf } from '@angular/common';
 	styleUrl: './filter-popup.component.css',
 })
 export class FilterPopupComponent {
-	service: FilterPopupService;
+	// service: FilterPopupService;
 	private _initFilters: FiltersSearch;
 	openPopup = false;
 	numberOfFilters = 0;
 	@Output() filterClick: EventEmitter<any> = new EventEmitter();
 
-	constructor() {
-		this.service = new FilterPopupService();
+	constructor( private service: FilterPopupService) {
+		// this.service = new FilterPopupService();
 	}
 
 	ngOnInit() {
@@ -26,7 +26,7 @@ export class FilterPopupComponent {
 
 	pickFilter(id: string) {
 		this.service.setFilterMarked(id);
-		this.numberOfFilters = Object.values(this._initFilters).filter((value) => value === true).length;
+		this.numberOfFilters = Object.values(this._initFilters).filter((value) => value === true).length;	
 	}
 
 	clearFilter() {
@@ -39,8 +39,8 @@ export class FilterPopupComponent {
 		return this._initFilters[id];
 	}
 
-	filterClickEvent() {
-		this.filterClick.emit(this._initFilters);
+	filterClickEvent() {		
+		this.filterClick.emit(this.service.getFilters());
 		this.openPopup = false;
 	}
 }

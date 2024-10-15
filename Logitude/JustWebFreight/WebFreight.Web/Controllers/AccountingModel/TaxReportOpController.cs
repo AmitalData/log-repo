@@ -422,6 +422,32 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
 
         }
+
+
+        public HttpResponseMessage GetActiveFutureReportsExist(DateTime createDate)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                AuthenticationToken authToken = GetAuthenticationToken();
+                SecurityUtility.CheckContactFeature("TaxReport", "READ", authToken.Tenant);
+                int tenant = authToken.Tenant;
+                bool FutureReportExist = CheckIfActiveFutureReportsExist(createDate, tenant);
+                ServiceResponse response = new ServiceResponse();
+                response.Result = FutureReportExist;
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+
         private bool CheckIfActiveFutureReportsExist(DateTime createDate, int tenant)
         {
             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
@@ -673,6 +699,29 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
 
         }
+
+
+        public HttpResponseMessage PostCancelClosingJournalInBatch(string taxReportId)
+        {
+            try
+            {
+                int tenant = GetAuthinticatedTenant();
+                string batchId = new BatchCancelClosingJournalTask(null).CreateQBatchTaskExecution<BatchCancelClosingJournalTaskArgs>(
+                    new BatchCancelClosingJournalTaskArgs()
+                    {
+                        TaxReportId = taxReportId,
+                        Tenant = tenant
+                    }, tenant, "Cancel Closing Tax Report Journal", false);
+
+                return Request.CreateResponse(HttpStatusCode.OK, batchId);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
 
         private string EncodeStringFromImageParameter(ImageParameter fileUploadParamerter)
         {

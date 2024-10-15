@@ -87,6 +87,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string CurrencyId  { get; set; }
        [DataMember]
        public int? SecurityLevel  { get; set; }
+       [DataMember]
+       public bool IsExternalEntity  { get; set; }
    }
 
 }

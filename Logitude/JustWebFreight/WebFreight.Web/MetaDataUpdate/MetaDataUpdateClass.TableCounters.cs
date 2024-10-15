@@ -127,36 +127,6 @@ namespace WebFreight.Web.MetaDataUpdate
 				//    Parameter2 = "I",
 				//};
 
-				CounterDefinition shipment_Customs_Air_Counter = new CounterDefinition()
-				{
-					Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-					CounterId = shipmentCounter.Id,
-					Tenant = 0,
-					StartNumber = 1000,
-					Parameter1 = "C",
-					Parameter2 = "A",
-				};
-
-				CounterDefinition shipment_Customs_Ocean_Counter = new CounterDefinition()
-				{
-					Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-					CounterId = shipmentCounter.Id,
-					Tenant = 0,
-					StartNumber = 1000,
-					Parameter1 = "C",
-					Parameter2 = "O",
-				};
-
-				CounterDefinition shipment_Customs_Inland_Counter = new CounterDefinition()
-				{
-					Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-					CounterId = shipmentCounter.Id,
-					Tenant = 0,
-					StartNumber = 1000,
-					Parameter1 = "C",
-					Parameter2 = "I",
-				};
-
 				CounterDefinitionRepository.Add(shipment_Export_Air_Counter);
                 CounterDefinitionRepository.Add(shipment_Export_Ocean_Counter);
                 CounterDefinitionRepository.Add(shipment_Export_Inland_Counter);
@@ -167,10 +137,7 @@ namespace WebFreight.Web.MetaDataUpdate
 				//CounterDefinitionRepository.Add(shipment_Domestic_Air_Counter);
 				//CounterDefinitionRepository.Add(shipment_Domestic_Ocean_Counter);
 				//CounterDefinitionRepository.Add(shipment_Domestic_Inland_Counter);
-
-				CounterDefinitionRepository.Add(shipment_Customs_Air_Counter);
-				CounterDefinitionRepository.Add(shipment_Customs_Ocean_Counter);
-				CounterDefinitionRepository.Add(shipment_Customs_Inland_Counter);
+			
 			}
             #endregion
 

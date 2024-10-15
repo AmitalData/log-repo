@@ -36,7 +36,7 @@
                 <table style="width:870px">
                     <!-- First Row -->
                     <tr class="FieldRow FirstRowBox">
-                        <td style="width:130px;">
+                        <td style="width:130px;" class="bold-label">
                             <LogLabel [ObjectFieldName]="'CooTypeCode'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
@@ -62,7 +62,7 @@
                             </table>
 
                         </td>
-                        <td style="width:130px; padding-right: 10px">
+                        <td style="width:130px; padding-right: 10px;" class="bold-label">
                             <LogLabel [ObjectFieldName]="'RequestReasonCode'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
@@ -97,7 +97,7 @@
                     </tr>
 
                     <!-- Second Row -->
-                    <tr class="FieldRow">
+                    <tr class="FieldRow"  [ngClass]="{ 'opacityDimBox': disableOpacityBox }">
                         <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'TradeAgreementCountry1'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
@@ -197,7 +197,7 @@
                     </tr>
 
                     <!-- Third Row  -->
-                    <tr class="FieldRow">
+                    <tr class="FieldRow"  [ngClass]="{ 'opacityDimBox': disableOpacityBox }">
                         <!-- --------- selection between OriginGroupOfCountry/OriginCountry  ------------------------ -->
                         <td style="width: 130px;" rowspan="1">
                             <div style="height: 4px;"></div>
@@ -330,7 +330,7 @@
                     </tr>
 
                     <!-- Forth Row -->
-                    <tr class="FieldRow">
+                    <tr class="FieldRow"  [ngClass]="{ 'opacityDimBox': disableOpacityBox }">
                         <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'PlaceOfManufacture'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
@@ -400,7 +400,7 @@
                     </tr>
 
                     <!-- Fifth Row -->
-                    <tr class="FieldRow">
+                    <tr class="FieldRow"  [ngClass]="{ 'opacityDimBox': disableOpacityBox }">
                         <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'Observations'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
@@ -466,7 +466,7 @@
                     </tr>
 
                     <!-- Six Row -->
-                    <tr class="FieldRow">
+                    <tr class="FieldRow"  [ngClass]="{ 'opacityDimBox': disableOpacityBox }">
                         <td class="TabTitleRow" style="width:130px;">
                             <table>
                                 <tr>
@@ -535,7 +535,7 @@
                     </tr>
 
                     <!-- Seventh Row -->
-                    <tr class="FieldRow">
+                    <tr class="FieldRow"  [ngClass]="{ 'opacityDimBox': disableOpacityBox }">
                         <td colspan="5">
                             <!-- Part 2: -->
                             <table style="width:580px">
@@ -683,7 +683,7 @@
                 </table>
 
                 <!-- Part 3: -->
-                <table style="width:870px">
+                <table style="width:870px" [ngClass]="{ 'opacityDimBox': disableOpacityBox }">
                     <tr>
                         <td class="TabTitleRow" style="float: right;width: 22px;">
                             <HelpIcon *ngIf="myDictionary['CertificateOriginItemItems']!=null" [HideHeader]="true"

@@ -82,7 +82,33 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        
+        public HttpResponseMessage GetCustomsBookRulesData(int customsItemId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                if (token == null)
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(new Exception("Token is missing")));
 
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(0);
+
+
+
+                CB_RuleDetailsHistoryQueryService ruleDetailsHistoryQueryService = new CB_RuleDetailsHistoryQueryService(0);
+                List<CB_RuleDetailsHistoryList> result = ruleDetailsHistoryQueryService.GetCustomsBookRulesData(customsItemId);
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
         public HttpResponseMessage GetCustomsBookTaxRates(int customsItemId)
         {

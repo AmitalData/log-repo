@@ -23,11 +23,25 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.ShipperName).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.Shipper).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
+            this.Property(t => t.Master).HasMaxLength(20).IsUnicode(false);
             // Table & Column Mappings
             this.ToTable("LogBoxShipmentDataView");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.ShipmentNumber).HasColumnName("ShipmentNumber");
+            this.Property(t => t.PackagesQuantity).HasColumnName("PackagesQuantity");
+            this.Property(t => t.GrossWeight).HasColumnName("GrossWeight");
+            this.Property(t => t.MainCarriageFromPortCountryCode).HasColumnName("MainCarriageFromPortCountryCode");
+            this.Property(t => t.MainCarriageToPortCountryCode).HasColumnName("MainCarriageToPortCountryCode");
+            this.Property(t => t.MainCarriageToPortCode).HasColumnName("MainCarriageToPortCode");
+            this.Property(t => t.MainCarriageFromPortCode).HasColumnName("MainCarriageFromPortCode");
+            this.Property(t => t.FromPortCode).HasColumnName("FromPortCode");
+            this.Property(t => t.ToPortCode).HasColumnName("ToPortCode");
+            this.Property(t => t.Master).HasColumnName("Master");
+            this.Property(t => t.MainCarriageETD).HasColumnName("MainCarriageETD");
+            this.Property(t => t.MainCarriageATD).HasColumnName("MainCarriageATD");
+            this.Property(t => t.MainCarriageATA).HasColumnName("MainCarriageATA");
+            this.Property(t => t.MainCarriageETA).HasColumnName("MainCarriageETA");
             this.Property(t => t.CustomerReference1).HasColumnName("CustomerReference1");
             this.Property(t => t.CustomerReference2).HasColumnName("CustomerReference2");
             this.Property(t => t.LastUpdateDate).HasColumnName("LastUpdateDate");

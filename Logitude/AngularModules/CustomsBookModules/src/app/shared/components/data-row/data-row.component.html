@@ -21,9 +21,10 @@
 				class="item_details">
 				<a> {{TariffListCount }} </a>
 				<a> {{ TariffList1?.CustomsRate }} </a>
-				<a> {{ TariffList2?.CustomsRate }} </a>
-				<a> {{ TariffList2?.OptionalTaxAddition }} </a>
 				<a> {{ TariffList1?.MeasurementUnitName }} </a>
+				<a> {{ TariffList2?.CustomsRate }} </a>
+				<a *ngIf="TariffList2?.OptionalTaxAddition"> {{ TariffList2?.OptionalTaxAddition }} </a>
+				<a *ngIf="!TariffList2?.OptionalTaxAddition"> - </a>
 			</div>
 		</a>
 	</div>

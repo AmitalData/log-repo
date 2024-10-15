@@ -38,5 +38,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public decimal Volume { get; set; }
         public string Commodity { get; set; }
         public int SalesmanUserId { get; set; }
-    }
+		public string OriginCountryCode { get; set; }
+
+	}
 }

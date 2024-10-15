@@ -63,5 +63,15 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
         }
+
+
+        public void Delete(BusinessHoursHolidayPM entityPM)
+        {
+            this.isNewEntity = false;
+            this.entityPm = entityPM;
+            this.Poco = entityRepository.GetSingleBusinessHoursHolidays(entityPM.Id, entityPm.Tenant);
+            entityRepository.Remove(Poco);
+            entityRepository.SubmitChanges();
+        }
     }
 }

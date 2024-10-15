@@ -93,8 +93,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
    {  		
 
  
-		public const string HashString = "0593fabab89dc71094e8b8926ce4cbae";
-  	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+ 
+		public const string HashString = "8927c24f6f4563f561742f9ee5d9b713";
+   	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -137,8 +138,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
  
-			      				    Code =  "a26e",
-			      				    Name =  "General",
+ 
+			      				    Code =  "6e82",
+ 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
 			      				    ServerModuleName =  "Generals",
@@ -732,9 +734,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 		   Feature GeneralFeature_CONFIRMATIONNUMBERDEFAULTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONFIRMATIONNUMBERDEFAULTS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CONFIRMATIONNUMBERDEFAULTS", NameTextCodeDefaultText = @"Confirmation number defaults" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
-		   Feature GeneralFeature_CUSTOMSSHIPMENTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSSHIPMENTS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CUSTOMSSHIPMENTS", NameTextCodeDefaultText = @"Customs Shipments" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+ 		   Feature GeneralFeature_CUSTOMSSHIPMENTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSSHIPMENTS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CUSTOMSSHIPMENTS", NameTextCodeDefaultText = @"Customs Shipments" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 		   Feature GeneralFeature_GeneralSearchMenu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GeneralSearchMenu", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.GeneralSearchMenu", NameTextCodeDefaultText = @"General Search" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
-
+ 
 
 
         }
@@ -2884,6 +2886,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralOVatNumberExisted = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.VatNumberExisted", DefaultText = "VatNumber existed in code",LocalDefaultText = "ח''פ קיים בקוד", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 
 }
 
     

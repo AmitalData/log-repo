@@ -2192,10 +2192,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentReferanceQuery shipmentReferanceQuery = new ShipmentReferanceQuery(shipmentReferanceRepository);
                     shipmentPM.ShipmentReferances = shipmentReferanceQuery.GetShipmentReferances(shipment.Id, shipment.Tenant);
                 }
-                #endregion
+				#endregion
+				#region FreightForwarder references
+				if (shipment.DirectionId == "C")
+				{
+					FreightForwarderReferenceRepository freightForwarderReferenceRepository = new FreightForwarderReferenceRepository(tenant);
+					FreightForwarderReferenceQuery freightForwarderReferenceQuery = new FreightForwarderReferenceQuery(freightForwarderReferenceRepository);
+					shipmentPM.FreightForwarderReferences = freightForwarderReferenceQuery.GetFreightForwarderReferences(shipment.Id, shipment.Tenant);
+				}
+				#endregion
 
-                #region Packages | Commodities
-                ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(tenant);
+				#region Packages | Commodities
+				ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(tenant);
                 ShipmentPackageQuery shipmentPackageQuery = new ShipmentPackageQuery(shipmentPackageRepository);
 
                 ShipmentCommodityRepository shipmentCommodityRepository = new ShipmentCommodityRepository(tenant);
@@ -13619,6 +13627,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                DirectionId = f.DirectionId,
                                CreateDateTime = f.CreateDateTime,
                                ShipmentNumber = f.ShipmentNumber,
+                               PackagesQuantity=f.PackagesQuantity,
+                               GrossWeight=f.GrossWeight,
+                               Master = f.Master,
+                               MainCarriageFromPortCountryCode = f.MainCarriageFromPortCountryCode,
+                               MainCarriageToPortCode = f.MainCarriageToPortCode,
+                               MainCarriageFromPortCode = f.MainCarriageFromPortCode,
+                               MainCarriageToPortCountryCode = f.MainCarriageToPortCountryCode,
+                               ToPortCode = f.ToPortCode,
+                               FromPortCode = f.FromPortCode,
+                               MainCarriageATD = f.MainCarriageATD,
+                               MainCarriageETD = f.MainCarriageETD,
+                               MainCarriageATA = f.MainCarriageATA,
+                               MainCarriageETA = f.MainCarriageETA,
                                TransportModeId = f.TransportModeId,
                                CustomerReference1 = f.CustomerReference1,
                                CustomerReference2 = f.CustomerReference2,
@@ -14714,6 +14735,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     DirectionId = f.DirectionId,
                     CreateDateTime = f.CreateDateTime,
                     ShipmentNumber = f.ShipmentNumber,
+                    PackagesQuantity = f.PackagesQuantity,
+                    GrossWeight = f.GrossWeight,
+                    Master=f.Master,
+                    MainCarriageATD = f.MainCarriageATD,
+                    MainCarriageETD = f.MainCarriageETD,
+                    MainCarriageFromPortCountryCode = f.MainCarriageFromPortCountryCode,
+                    MainCarriageToPortCode = f.MainCarriageToPortCode,
+                    MainCarriageFromPortCode = f.MainCarriageFromPortCode,
+                    MainCarriageToPortCountryCode = f.MainCarriageToPortCountryCode,
+                    ToPortCode = f.ToPortCode,
+                    FromPortCode = f.FromPortCode,
                     TransportModeId = f.TransportModeId,
                     CustomerReference1 = f.CustomerReference1,
                     CustomerReference2 = f.CustomerReference2,
@@ -15938,6 +15970,25 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         }
 
+        public CustomShipmentLinkedFreightForwarder GetCustomShipmentsWithFreightForwarderByShipmentNumber(int tenant, string shipmentNumber)
+        {
+            IQueryable<CustomShipmentLinkedFreightForwarder> query = (from record in repository.context.Shipments
+                                                                      
+                                                                      join ffr in repository.context.FreightForwarderReferences
+                                                                      on record.Id equals ffr.ShipmentId into ffrJoin
+                                                                      from freightForwarderReferences in ffrJoin.DefaultIfEmpty()
+
+                                                                      where record.Tenant == tenant && record.ShipmentNumber == shipmentNumber
+                                                                      select new CustomShipmentLinkedFreightForwarder
+                                                                      {
+                                                                          ShipmentId = record.Id,
+                                                                          CustomShipmentNumber = record.ShipmentNumber,
+                                                                          ForwarderShipmentNumber = freightForwarderReferences != null ? freightForwarderReferences.ForwarderShipmentNumber : null
+                                                                      });
+            return query.FirstOrDefault();
+        }
+
+
         public ShipmentAdditionalCloudData GetShipmentAdditionalCloudData(string shipmentId, int tenant)
         {
             Shipment shipment = repository.GetShipmentForCargoTracking(shipmentId, tenant);
@@ -16775,6 +16826,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public decimal TaxAmount { get; set; }
     }
 
+    public class CustomShipmentLinkedFreightForwarder
+    {
+        public string ShipmentId { get; set; }
+        public string CustomShipmentNumber { get; set; }
+        public string ForwarderShipmentNumber { get; set; }
+    }
 
     public class DeparturesArrivalsDataItem
     {

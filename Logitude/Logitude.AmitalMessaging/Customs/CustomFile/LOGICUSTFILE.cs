@@ -219,6 +219,8 @@ public partial class LogitudeCustomsFile
 	private string vesselField;
 	private string flightVoyageNumberField;
 	private string carrierCodeField;
+	private string originCountryCodeRefField;
+
 	/// <remarks/>
 	public string CustomFileNo
     {
@@ -1306,6 +1308,17 @@ public partial class LogitudeCustomsFile
 			this.carrierCodeField = value;
 		}
 	}
+	public string OriginCountryCodeRef
+	{
+		get
+		{
+			return this.originCountryCodeRefField;
+		}
+		set
+		{
+			this.originCountryCodeRefField = value;
+		}
+	}
 	[System.Xml.Serialization.XmlElementAttribute("Invoices")]
 
     public ExportInvoices Invoices
@@ -1696,7 +1709,7 @@ public class ExportInvoiceItem
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGICUSTFILE")]
 [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGICUSTFILE", IsNullable = false)]
-public class ExportInvoiceItemCertificats
+public class ExportInvoiceItemCertificat
 {
     private string certificateTypeCodeField;
     private string atachmentTypeCodeField;
@@ -1987,8 +2000,6 @@ public class ConnectedDeclaration
 
 
 
-
-
 [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
 [System.SerializableAttribute()]
 [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -2013,5 +2024,33 @@ public class ConnectedDeclarations
         }
     }
 }
+
+
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGICUSTFILE")]
+[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGICUSTFILE", IsNullable = false)]
+public class ExportInvoiceItemCertificats
+{
+    private ExportInvoiceItemCertificat[] certificatField;
+
+    [System.Xml.Serialization.XmlElementAttribute("Certificat")]
+
+    public ExportInvoiceItemCertificat[] Certificat
+    {
+        get
+        {
+            return this.certificatField;
+        }
+        set
+        {
+            this.certificatField = value;
+        }
+    }
+}
+
+
 
 

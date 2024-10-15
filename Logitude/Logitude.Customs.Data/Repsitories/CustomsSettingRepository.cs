@@ -53,7 +53,7 @@ namespace Logitude.Customs.Data.Repsitories
             return res;
         }
 
-        public static CustomsSetting GetSettingByTenantCache(int tenant)
+        public CustomsSetting GetSettingByTenantCache(int tenant)
         {
             string key = $"RepoGetSettingByTenant{tenant}";
             var res = CacheManager.GetOrInsertNewObject<CustomsSetting>(key,

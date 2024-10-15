@@ -20,6 +20,7 @@ export class AddCommentComponent implements OnInit, OnChanges {
   currentItem: CB_CustomsItemComputedDataList;
   allCommentCount: number = 0;
   commentMode: CommentState;
+  allComments: RemarksClassificationList[] = [];
 
   constructor(
     private addCommentService: AddCommentService,
@@ -32,8 +33,11 @@ export class AddCommentComponent implements OnInit, OnChanges {
       this.showAddComment = isOpened;
     });
     this.addCommentService.itemData.subscribe((data: CB_CustomsItemComputedDataList) => {
+
+      if(!data?.CustomsItemID) return
       this.currentItem = data;
       this.allCommentCount = this.addCommentService.allComments.getValue().length;
+      this.showComments();
     });
 
     this.addCommentService.currentRemark.subscribe((remarksClassification: RemarksClassificationPM) => {
@@ -56,6 +60,13 @@ export class AddCommentComponent implements OnInit, OnChanges {
     }
   }
 
+  showComments() {
+    this.API_MainService.GetAllCommentsByCustomsItemId(this.currentItem.CustomsItemID, SessionInfo.LoggedUserTenant).subscribe((data: any) => {
+      const result: RemarksClassificationList[] = data.body;
+      this.allComments = result;
+    });
+  }
+
   updateCommentText(event: any) {
     this.commentText = event.target.value;
   }
@@ -68,7 +79,7 @@ export class AddCommentComponent implements OnInit, OnChanges {
         remarkDescription: this.commentText || '',
       };
 
-      if (this.addCommentService.allComments.getValue().length >= 1) {
+      if (this.allComments.length >= 1) {
         return;
       }
       if (!this.remarksClassificationPM?.remarkDescription || !this.remarksClassificationPM?.customsItemsID) return;
@@ -137,5 +148,5 @@ export class AddCommentComponent implements OnInit, OnChanges {
       });
     }
   }
- 
+
 }
