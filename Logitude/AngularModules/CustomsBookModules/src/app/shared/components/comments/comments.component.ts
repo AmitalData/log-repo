@@ -5,13 +5,13 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { API_MainService } from '../../../core/API_MainService';
 import { CB_CustomsItemComputedDataList, RemarksClassificationList, RemarksClassificationPM } from '../main-display/main-display.component';
 import { BehaviorSubject } from 'rxjs';
-import { NgFor, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 
 
 @Component({
   selector: 'app-comments',
   standalone: true,
-  imports: [FontAwesomeModule, NgIf, NgFor],
+  imports: [FontAwesomeModule, NgIf, NgFor, NgClass],
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.css'
 })
@@ -21,7 +21,7 @@ export class CommentsComponent implements OnInit, OnChanges {
   @Input() currentItem: CB_CustomsItemComputedDataList;
   allComments: RemarksClassificationList[] = [];
   remarksClassificationPM: RemarksClassificationPM;
-
+  clickPin: boolean = false;
   // faPlusCircle = faPlusCircle;
 
   constructor(private addCommentService: AddCommentService, private API_MainService: API_MainService) { }
@@ -52,13 +52,13 @@ export class CommentsComponent implements OnInit, OnChanges {
   }
 
   editComment(event: any, comment: RemarksClassificationList) {
-    this.remarksClassificationPM = this.convertToRemarksClassificationPM(comment);    
+    this.remarksClassificationPM = this.convertToRemarksClassificationPM(comment);
     this.addCommentService.setIsOpened(true, this.currentItem, CommentState.Edit, this.remarksClassificationPM);
     event.preventDefault();
   }
 
   deleteComment(event: any, comment: RemarksClassificationList) {
-    this.remarksClassificationPM = this.convertToRemarksClassificationPM(comment);    
+    this.remarksClassificationPM = this.convertToRemarksClassificationPM(comment);
     this.addCommentService.setIsOpened(false, this.currentItem, CommentState.Delete, this.remarksClassificationPM);
     event.preventDefault();
   }
