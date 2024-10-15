@@ -32,8 +32,9 @@
 	<div class="mainTable_itemActions" *ngIf="!this.showDetailsOpen.getValue()">
 		<ul>
 			<li>
-				<div class="mainTable_itemDocument" (click)="showRules = !showRules">
-					<a class="icon"><i role="img" [ngClass]="!showRules ? 'icon-document' : 'icon-document_full'"> </i></a>
+				<div class="mainTable_itemDocument" (click)="showRulesClick()" (click)="showDetails.emit()">
+					<a class="icon"><i role="img" [ngClass]="{'icon-document': !isSelected, 'icon-document_full': isSelected}"> </i></a>
+					<!-- <a class="icon"><i role="img" [ngClass]="!showRules ? 'icon-document' : 'icon-document_full'"> </i></a> -->
 				</div>
 			</li>
 			<!--<li>

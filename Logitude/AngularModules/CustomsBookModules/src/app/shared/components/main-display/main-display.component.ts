@@ -40,6 +40,7 @@ export class MainDisplayComponent implements OnInit {
 	selectSearchBy: string = SearchBy.searchBy_form01;
 	showDetails: boolean = false;
 	showCommentsIsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	showRulesIsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	showAddComment: boolean = false;
 	showCommentSidebar: boolean = false;
@@ -133,6 +134,9 @@ export class MainDisplayComponent implements OnInit {
 	showCommentsOpen(isOpenComment: boolean) {
 		this.showCommentsIsOpen.next(isOpenComment);
 	}
+	showRulesOpen(isOpenRule: boolean) {
+		this.showRulesIsOpen.next(isOpenRule);
+	}
 
 	onToggleAll(event: Event, item: CB_CustomsItemComputedDataList): void {
 		const checked = (event.target as HTMLInputElement)?.checked;
@@ -222,14 +226,20 @@ export class MainDisplayComponent implements OnInit {
 	updateShowDetailsClick() {
 		this.showDetails = !this.showDetails;
 		this.showDetailsOpen.next(this.showDetails);
-		if (!this.showDetails) this.showCommentsIsOpen.next(false);
+		if (!this.showDetails) {
+			this.showCommentsIsOpen.next(false);
+			this.showRulesIsOpen.next(false);
+		}
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes['showDetails']) {
 			this.showDetails = changes['showDetails'].currentValue;
 			this.showDetailsOpen.next(this.showDetails);
-			if (!this.showDetails) this.showCommentsIsOpen.next(false);
+			if (!this.showDetails) {
+				this.showCommentsIsOpen.next(false);
+				this.showRulesIsOpen.next(false)
+			}
 		}
 		if (changes['itemsData']) {
 			this.itemsData = changes['itemsData'].currentValue;
@@ -331,6 +341,7 @@ export class MainDisplayComponent implements OnInit {
 		this.showDetails = false;
 		this.showDetailsOpen.next(this.showDetails);
 		this.showCommentsIsOpen.next(false);
+		this.showRulesIsOpen.next(false)
 		this.data = [];
 		this.searchValue = "";
 		this.countSearchResult = 0;
