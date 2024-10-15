@@ -28,7 +28,7 @@ namespace CustomsBook
     internal class TaskScheduler
     {
 
-        static Logger logger = LogManager.GetCurrentClassLogger();
+        public static Logger logger = LogManager.GetCurrentClassLogger();
         static async void DownloadFile()
         {
             // Define the URL of the ZIP file to download
@@ -437,8 +437,13 @@ namespace CustomsBook
         static void Main(string[] args)
         {
             NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(Path.Combine(AppDomain.CurrentDomain.BaseDirectory , "NLog.config"));
+            
             logger.Debug("Start TaskScheduler");
-            DownloadFile();
+
+            //DownloadFile();
+
+            UpdateAzureSearchAIData.Update();
+
             Console.ReadLine();
         }
     }
