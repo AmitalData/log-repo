@@ -1,5 +1,5 @@
 <div class="detailsSlide_box">
-	<div class="detailsSlide_toggle" (click)="expandedArea1 = !expandedArea1">
+	<div class="detailsSlide_toggle" (click)="expandedArea1 = !expandedArea1" >
 		<div>
 			<h3 class="main_title">שיעורי מס</h3>
 		</div>
@@ -7,7 +7,7 @@
 			<fa-icon [size]="'xl'" class="toggle-close" [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>
 		</div>
 	</div>
-	<div class="detailsSlide_ddown" [class.active]="expandedArea1" id="detailsSlide_ddown01">
+	<div class="detailsSlide_ddown" [class.active]="expandedArea1" id="detailsSlide_ddown01" *ngIf="!expandedArea1">
 		<!-- First section: מכס -->
 		<section class="title">
 			<h4 class="title">מכס</h4>
@@ -27,7 +27,7 @@
 </div>
 
 <div class="detailsSlide_box">
-	<div class="detailsSlide_toggle" (click)="expandedArea2 = !expandedArea2">
+	<div class="detailsSlide_toggle" (click)="expandedArea2 = !expandedArea2" >
 		<div>
 			<h3 class="main_title">דרישות חוקיות</h3>
 		</div>
@@ -35,7 +35,7 @@
 			<fa-icon [size]="'xl'" class="toggle-close" [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>
 		</div>
 	</div>
-	<div class="detailsSlide_ddown" [class.active]="expandedArea2" id="detailsSlide_ddown01">
+	<div class="detailsSlide_ddown" [class.active]="expandedArea2" id="detailsSlide_ddown01" *ngIf="!expandedArea2">
 		<section class="title" >
 			<div class="tableContainer">
 				<app-generic-table *ngIf="true" [tableData]="tableData3"></app-generic-table>

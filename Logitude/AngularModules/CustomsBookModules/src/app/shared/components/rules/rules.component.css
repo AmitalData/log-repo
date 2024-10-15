@@ -30,6 +30,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 0 10px;
 }
 
 .detailsSlide_commentsTitle {
@@ -205,6 +206,7 @@ a.detailsSlide_commentsPinned[aria-checked='true'] i:nth-child(2) {
     counter-reset: section;
     max-height: 400px;
     overflow: auto;
+    padding: 0 10px;
 }
 
 .parentLine{
