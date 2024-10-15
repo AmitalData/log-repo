@@ -1686,11 +1686,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
                 if (invoice.InvoiceItems?.InvoiceItem?.Length > 0)
                 {
+                    int lineNumber = 1;
                     Array.ForEach(invoice.InvoiceItems.InvoiceItem, (item) =>
                     {
-						int lineNumber = 1;
+					
+ 
                         SupplierInvoiceItemPM supplierInvoiceItem = InitSupplierInvoiceItem(item, lineNumber);
-						supplierInvoice.SupplierInvoiceItems.Add(supplierInvoiceItem);
+ 						supplierInvoice.SupplierInvoiceItems.Add(supplierInvoiceItem);
 						lineNumber++;
 
                     });
