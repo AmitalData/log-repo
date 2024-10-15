@@ -1265,11 +1265,9 @@ namespace MeatadataGeneratorTool.Helpers
                 {
                     if (att.Value != null)
                     {
-                        if (att.Value.StartsWith(Base64Prefix))
-                        {
-                            att.Value = TryConvertFromBase64(att.Value.Substring(Base64Prefix.Length));
+                        if (att.Value.StartsWith("BS64:") || att.Value.StartsWith("\"BS64:"))
+                            att.Value = TryConvertFromBase64(att.Value);
 
-                        }
                         result = att.Value.Trim('"');
                     }
                 }
@@ -1280,53 +1278,39 @@ namespace MeatadataGeneratorTool.Helpers
         {
             try
             {
-                var backUpInput = input.Replace("\"", "");
-                string convertedInput = ConvertFromBase64(backUpInput);
-                if (IsHebrew(convertedInput))
-                    return convertedInput;
-                return input;
-
+                return ConvertFromBase64(input);
             }
             catch (FormatException)
             {
                 return input;
             }
         }
-        private static bool IsHebrew(string text)
-        {
-            Regex hebrewRegex = new Regex(@"[\u0590-\u05FF]");
-            return hebrewRegex.IsMatch(text);
-        }
-
+      
         private string ConvertFromBase64(string input)
         {
-            // Check if the input is a valid Base64 string
-            if (IsBase64String(input))
+            string substringToRemove = "\"";
+            string backUp = input;
+            try
             {
-                try
+                input = input.Trim('\"');
+                input = input.Substring(5);//REMOVE BS64:
+                byte[] data = Convert.FromBase64String(input);
+                string decodedString = Encoding.UTF8.GetString(data);
+                if (backUp.StartsWith(substringToRemove))
                 {
-                    byte[] data = Convert.FromBase64String(input);
-                    string decodedString = Encoding.UTF8.GetString(data);
+                    decodedString = substringToRemove + decodedString;
+                }
 
-                    // After decoding, check if it's Hebrew
-                    if (IsHebrew(decodedString))
-                    {
-                        return SanitizeXmlString(decodedString);
-                    }
-                    else
-                    {
-                        return SanitizeXmlString(input);
-                    }
-                }
-                catch (FormatException)
+                if (backUp.EndsWith(substringToRemove))
                 {
-                    // Handle the case where decoding fails
-                    return SanitizeXmlString(input);
+                    decodedString = decodedString + substringToRemove;
                 }
+                return decodedString;
+
             }
-            else
+            catch (FormatException)
             {
-                return SanitizeXmlString(input);
+                return backUp;
             }
         }
 

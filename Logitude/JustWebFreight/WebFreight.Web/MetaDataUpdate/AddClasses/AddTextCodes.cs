@@ -92,22 +92,22 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
         }
 
-        private const string Base64Prefix =  "bs64:";
 
 
         public static string TryConvertFromBase64(string input)
         {
             try
             {
-                if (input.StartsWith(Base64Prefix))
+                if (input == null)
                 {
-                    input = input.Substring(Base64Prefix.Length);
-                    string convertedInput = ConvertFromBase64(input);
-                    convertedInput = convertedInput.Replace("\"", "");
+                    return null;
+                }
+                if (input.StartsWith("BS64:") || input.StartsWith("\"BS64:"))
+                {
 
-                    if (IsHebrew(convertedInput))
-                        return convertedInput;
-                    return input;
+                    return ConvertFromBase64(input);
+
+                   
                 }
                 return input;
 
@@ -117,48 +117,30 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 return input;
             }
         }
-        private static bool IsHebrew(string text)
-        {
-            return text.Any(c => c >= '\u0590' && c <= '\u05FF');
-        }
-
+      
         private static string ConvertFromBase64(string input)
         {
-            byte[] bytes = Convert.FromBase64String(input);
-            string decodedString = Encoding.UTF8.GetString(bytes);
-            return SanitizeXmlString(decodedString);
-        }
-        private static string SanitizeXmlString(string xml)
-        {
-            StringBuilder buffer = new StringBuilder(xml.Length);
-
-            foreach (char c in xml)
+            string substringToRemove = "\"";
+            string backUp = input;
+            try
             {
-                if (IsLegalXmlChar(c))
-                {
-                    buffer.Append(c);
-                }
-                else
-                {
-                    // Optionally, you can replace invalid characters with a placeholder
-                    // buffer.Append('?');
-                }
+                input = input.Trim('\"');
+                input = input.Substring(5);//REMOVE BS64:
+                byte[] data = Convert.FromBase64String(input);
+                string decodedString = Encoding.UTF8.GetString(data);
+               
+                return decodedString;
+
+            }
+            catch (FormatException)
+            {
+                return backUp;
             }
 
-            return buffer.ToString();
         }
-        private static bool IsLegalXmlChar(int character)
-        {
-            return
-            (
-                character == 0x9 /* == '\t' == 9   */          ||
-                character == 0xA /* == '\n' == 10  */          ||
-                character == 0xD /* == '\r' == 13  */          ||
-                (character >= 0x20 && character <= 0xD7FF) ||
-                (character >= 0xE000 && character <= 0xFFFD) ||
-                (character >= 0x10000 && character <= 0x10FFFF)
-            );
-        }
+   
+       
+     
 
     }
 }

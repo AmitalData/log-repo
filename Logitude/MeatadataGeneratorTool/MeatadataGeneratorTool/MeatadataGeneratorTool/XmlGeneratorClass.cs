@@ -2369,13 +2369,13 @@ namespace MeatadataGeneratorTool
         {
             if (attrValue != null)
             {
-                if (IsHebrew(attrValue) && fieldElement.Name!= "Record")
+                if (IsHebrew(attrValue) && fieldElement.Name != "Record")
                 {
-                    fieldElement.SetAttribute(atrrName+ "Back_up", attrValue);
+                    fieldElement.SetAttribute(atrrName + "Back_up", attrValue);
 
                     attrValue = ConvertToBase64(attrValue);
+                    attrValue = "\"" + "BS64" + attrValue + "\"";
 
-                    attrValue = "\"" + "bs64:" + attrValue + "\"";
 
                 }
                 fieldElement.SetAttribute(atrrName, attrValue);
@@ -2395,8 +2395,7 @@ namespace MeatadataGeneratorTool
                     fieldElement.SetAttribute(atrrName + "Back_up", attrValue);
 
                     attrValue = ConvertToBase64(attrValue);
-                    attrValue = "\"" + "bs64:" + attrValue + "\"";
-
+                    attrValue = "\"" + "BS64" + attrValue + "\"";
                 }
                 fieldElement.SetAttribute(atrrName, attrValue);
             }
