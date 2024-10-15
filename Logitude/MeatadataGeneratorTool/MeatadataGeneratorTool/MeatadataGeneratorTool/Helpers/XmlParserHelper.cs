@@ -1314,54 +1314,7 @@ namespace MeatadataGeneratorTool.Helpers
             }
         }
 
-        private bool IsBase64String(string input)
-        {
-            if (string.IsNullOrEmpty(input) || input.Length % 4 != 0)
-                return false;
-
-            // Check if all characters are valid Base64 characters
-            foreach (char c in input)
-            {
-                if (!char.IsLetterOrDigit(c) && c != '+' && c != '/' && c != '=')
-                    return false;
-            }
-
-            // Attempt to decode the Base64 string
-            try
-            {
-                Convert.FromBase64String(input);
-                return true;
-            }
-            catch (FormatException)
-            {
-                return false;
-            }
-        }
-        private string SanitizeXmlString(string xml)
-        {
-            StringBuilder buffer = new StringBuilder(xml.Length);
-
-            foreach (char c in xml)
-            {
-                if (IsLegalXmlChar(c))
-                {
-                    buffer.Append(c);
-                }
-                // Optionally append '?' or another placeholder for illegal chars
-            }
-
-            return buffer.ToString();
-        }
-        private bool IsLegalXmlChar(int character)
-        {
-            return
-                character == 0x9 ||  // Tab
-                character == 0xA ||  // Line feed
-                character == 0xD ||  // Carriage return
-                (character >= 0x20 && character <= 0xD7FF) ||  // Other valid ranges
-                (character >= 0xE000 && character <= 0xFFFD) ||
-                (character >= 0x10000 && character <= 0x10FFFF);
-        }
+      
 
 
     }
