@@ -1689,6 +1689,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     Array.ForEach(invoice.InvoiceItems.InvoiceItem, (item) =>
                     {
                         SupplierInvoiceItemPM supplierInvoiceItem = InitSupplierInvoiceItem(item);
+                        SupplierInvoiceItemPM supplierInvoiceItem = InitSupplierInvoiceItem(item, lineNumber);
 						supplierInvoice.SupplierInvoiceItems.Add(supplierInvoiceItem);
                     });
                 }
