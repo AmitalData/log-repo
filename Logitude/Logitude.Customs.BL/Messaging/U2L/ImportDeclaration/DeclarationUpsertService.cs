@@ -1634,22 +1634,24 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 {
                     Array.ForEach(invoice.InvoiceItems.InvoiceItem, (item) =>
                     {
-                        SupplierInvoiceItemPM supplierInvoiceItem = InitSupplierInvoiceItem(item);
+						int lineNumber = 1;
                         SupplierInvoiceItemPM supplierInvoiceItem = InitSupplierInvoiceItem(item, lineNumber);
 						supplierInvoice.SupplierInvoiceItems.Add(supplierInvoiceItem);
+						lineNumber++;
+
                     });
                 }
             }
         }
 
-        private SupplierInvoiceItemPM InitSupplierInvoiceItem(ExportInvoiceItem invoiceItem)
+        private SupplierInvoiceItemPM InitSupplierInvoiceItem(ExportInvoiceItem invoiceItem, int lineNumber)
 		{
             SupplierInvoiceItemPM supplierInvoiceItem = new SupplierInvoiceItemPM()
             {
                 ChangeSetOp = ChangeSetOperation.Insert,
                 Tenant = ResolvedTenant(),
             };
-
+            supplierInvoiceItem.LineNumber=lineNumber;
             supplierInvoiceItem.ItemCode = invoiceItem?.ItemNo;
             supplierInvoiceItem.ItemDescription = invoiceItem?.ItemDescription;
 
@@ -1719,7 +1721,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 supplierInvoiceItem.SupplierInvoiceItemsConDeclars = new List<SupplierInvoiceItemsConDeclarPM>();
                 foreach (var item in invoiceItem.ConnectedDeclarations.connectedDeclaration)
                 {
-                    SupplierInvoiceItemsConDeclarPM supplierInvoiceItemsConDeclarPM = InitSupplierInvoiceItemConnectedDeclarations(item, invoiceItem.ItemNo);
+                    SupplierInvoiceItemsConDeclarPM supplierInvoiceItemsConDeclarPM = InitSupplierInvoiceItemConnectedDeclarations(item, lineNumber);
                     if (supplierInvoiceItemsConDeclarPM != null)
                     {
                         AppendLogLine("add supplierInvoiceItemsConDeclarPM");
@@ -1791,7 +1793,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
         }
 
 
-        private SupplierInvoiceItemsConDeclarPM InitSupplierInvoiceItemConnectedDeclarations(ConnectedDeclaration invoiceItemConnectedDeclaration,string itemNo)
+        private SupplierInvoiceItemsConDeclarPM InitSupplierInvoiceItemConnectedDeclarations(ConnectedDeclaration invoiceItemConnectedDeclaration,int lineNumber)
         {
            
 
@@ -1808,7 +1810,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             supplierInvoiceItemsConDeclarPM.DeclarationNumber = invoiceItemConnectedDeclaration.DeclarationNo;
             supplierInvoiceItemsConDeclarPM.InvoiceNumber = int.Parse(invoiceItemConnectedDeclaration.InvoiceLine);
 			supplierInvoiceItemsConDeclarPM.ItemSequence = int.Parse(invoiceItemConnectedDeclaration.ItemLine);
-			supplierInvoiceItemsConDeclarPM.InvoiceItemLineNumber = int.Parse(itemNo);
+			supplierInvoiceItemsConDeclarPM.InvoiceItemLineNumber = lineNumber;
 
             supplierInvoiceItemsConDeclarPM.Quantity = int.Parse(invoiceItemConnectedDeclaration.Quantity);
             supplierInvoiceItemsConDeclarPM.QuantityTypeCode = invoiceItemConnectedDeclaration.QuantityType;
