@@ -42,7 +42,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             entityPM.DeclarationId = entityParentPM.DeclarationId;
             entityPM.CounterKey = entityParentPM.InvoiceCounterKey;
 
-            if (!entityPM.IsCopy && entityPM.LastCopyFromOrderNo != "10000")
+            if (!entityPM.IsCopy && entityPM.LastCopyFromOrderNo != "10000" && entityPM.LineNumber ==0)
             {
                 entityParentPM.InvoiceItemLastLineNumber += 1;
                 entityPM.LineNumber = entityParentPM.InvoiceItemLastLineNumber;
