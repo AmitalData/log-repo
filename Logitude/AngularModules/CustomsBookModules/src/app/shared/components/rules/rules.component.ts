@@ -20,6 +20,7 @@ export class RulesComponent implements OnInit, OnChanges {
   alephBetHelper = new alephBetHelper();
   allRules: CB_RulesDetailsList[] = [];
   groupRulesList: GroupedRules[] = [];
+  clickPin: boolean = true;
   constructor(private API_MainService: API_MainService) { }
 
   ngOnInit(): void {

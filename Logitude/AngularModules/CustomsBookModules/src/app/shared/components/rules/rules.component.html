@@ -2,10 +2,11 @@
     <div class="detailsSlide_comments" [class.hidden]="!showRules">
         <div class="detailsSlide_commentsTop">
             <div class="detailsSlide_commentsTitle">
-                <a href="#" class="detailsSlide_commentsPinned" role="checkbox" aria-checked="false"
-                    (click)="$event.preventDefault()">
-                    <i role="img" aria-hidden="true" class="icon-pin"></i>
-                    <i role="img" aria-hidden="true" class="icon-pin_full"></i>
+                <a class="detailsSlide_commentsPinned" role="checkbox" aria-checked="false"
+                    (click)="clickPin = !clickPin">
+                    <i role="img" aria-hidden="true" [ngClass]="clickPin ? 'icon-pin' : 'icon-pin_full'"></i>
+                    <!-- <i role="img" aria-hidden="true" class="icon-pin"></i> -->
+                    <!-- <i role="img" aria-hidden="true" class="icon-pin_full"></i> -->
                 </a>
                 <h3>כללים ({{ groupRulesList.length }})</h3>
             </div>
@@ -19,8 +20,7 @@
         <ul class="rulesList">
             <li class="rulesItem" *ngFor="let group of groupRulesList">
                 <div class="rulesItem_toggle">
-                    <a href="#" role="button" (click)="toggleRule(group, $event)"
-                        [attr.aria-expanded]="group.expanded">
+                    <a href="#" role="button" (click)="toggleRule(group, $event)" [attr.aria-expanded]="group.expanded">
                         {{ group.title }}
                     </a>
                 </div>

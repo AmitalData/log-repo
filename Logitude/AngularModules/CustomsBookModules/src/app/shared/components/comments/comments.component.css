@@ -58,7 +58,8 @@
 
 .detailsSlide_commentsTitle {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: space-between;
 }
 
 a.detailsSlide_commentsPinned {

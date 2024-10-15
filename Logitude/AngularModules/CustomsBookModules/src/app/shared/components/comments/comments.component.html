@@ -3,8 +3,8 @@
         <div class="detailsSlide_commentsTop">
             <div class="detailsSlide_commentsTitle">
                 <a class="detailsSlide_commentsPinned" role="checkbox" aria-checked="false"
-                    >
-                    <i role="img" aria-hidden="true" (click)="clickPin = !clickPin"  [ngClass]="clickPin ? 'icon-filter_full' : 'icon-filter'"></i>
+                    (click)="clickPin = !clickPin">
+                    <i role="img" aria-hidden="true" [ngClass]="clickPin ? 'icon-pin' : 'icon-pin_full'"></i>
                     <!-- <i role="img" aria-hidden="true" class="icon-pin"></i> -->
                     <!-- <i role="img" aria-hidden="true" class="icon-pin_full"></i> -->
                 </a>

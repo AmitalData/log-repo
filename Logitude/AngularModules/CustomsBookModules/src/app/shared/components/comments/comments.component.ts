@@ -21,7 +21,7 @@ export class CommentsComponent implements OnInit, OnChanges {
   @Input() currentItem: CB_CustomsItemComputedDataList;
   allComments: RemarksClassificationList[] = [];
   remarksClassificationPM: RemarksClassificationPM;
-  clickPin: boolean = false;
+  clickPin: boolean = true;
   // faPlusCircle = faPlusCircle;
 
   constructor(private addCommentService: AddCommentService, private API_MainService: API_MainService) { }
