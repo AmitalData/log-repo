@@ -181,11 +181,11 @@ export class CustomsSettingExtendedListService {
 
         return entityList;
     }
-    GetSkipAutoInsurancePromise(customerCode: string, tenant: number) {
+    GetSkipAutoInsurancePromise(customerCode: string, tenant: number,direction: string) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetSkipAutoInsurance/?customerCode=' + customerCode + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetSkipAutoInsurance/?customerCode=' + customerCode + '&tenant=' + tenant + '&direction=' + direction, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                     var obj = response;
 
                     //var entity: CustomsSettingList;

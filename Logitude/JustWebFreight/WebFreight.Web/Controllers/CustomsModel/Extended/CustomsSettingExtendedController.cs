@@ -172,7 +172,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         }
 
 
-        public HttpResponseMessage GetSkipAutoInsurance(string customerCode, int tenant)
+        public HttpResponseMessage GetSkipAutoInsurance(string customerCode, int tenant,string direction)
         {
 
             try
@@ -183,7 +183,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
-                var skipautoinsurance = GetSkipAutoInsurancePrivate(customerCode, tenant);
+                var skipautoinsurance = direction == "E" ? false: GetSkipAutoInsurancePrivate(customerCode, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, new { SkipAutoInsurance = skipautoinsurance });
             }
