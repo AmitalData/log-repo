@@ -273,11 +273,15 @@ export class MainDisplayComponent implements OnInit {
 			Tenant: SessionInfo.LoggedUserTenant
 		};
 
-		this.selectSearchBy = this.searchService.selectSearchBy;
+    this.selectSearchBy = this.searchService.selectSearchBy;
 
 		if (SearchBy.searchBy_form01 == this.selectSearchBy) {
 			this.isLoadingMode.next(true); // update loading mode
-			if (filters.CustomsItemHierarchic === '') filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
+			if (filters.CustomsItemHierarchic === '') {
+				filters.Reamarks = true;
+				filters.Rules = true;
+				filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
+			}
 			this.API_MainService.GetCustomsBookMainViewSearchByClassification(filters).subscribe(
 				(data: any) => {
 					const result: CB_CustomsItemComputedDataList[] = data.body;
@@ -294,7 +298,11 @@ export class MainDisplayComponent implements OnInit {
 		}
 		else if (SearchBy.pageSearch_form02 == this.selectSearchBy) {// spacial search by text
 			this.isLoadingMode.next(true); // update loading mode
-			if (filters.CustomsItemHierarchic === '') filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
+			if (filters.CustomsItemHierarchic === '') {
+				filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
+				filters.Reamarks = true;
+				filters.Rules = true;
+			}
 			this.API_MainService.GetCustomsBookMainViewSearchByText(filters).subscribe(
 				(data: any) => {
 					const result: CB_CustomsItemComputedDataList[] = data.body;

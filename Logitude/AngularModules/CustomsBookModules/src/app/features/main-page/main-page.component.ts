@@ -57,13 +57,18 @@ export class MainPageComponent {
 			PageSize: 0,
 			Tenant: SessionInfo.LoggedUserTenant
 		};
-		if (filters.CustomsItemHierarchic === '') filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
+		
+		if (filters.CustomsItemHierarchic === '') {
+			filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
+			filters.Reamarks = true;
+			filters.Rules = true;
+		}
 
 		// add prevent another search while loading
 		if (this.isLoadingMode.getValue()) {
 			return;
 		}
-
+		
 		if (filters.SearchFields === "") return;
 		if (SearchBy.searchBy_form01 == this.selectSearchBy) {
 			this.isLoadingMode.next(true); // update loading mode

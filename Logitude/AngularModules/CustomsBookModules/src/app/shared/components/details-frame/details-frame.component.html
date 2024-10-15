@@ -13,9 +13,7 @@
                 <ul>
                     <li>
                         <div class="mainTable_itemDocument"  (click)="showRules = !showRules">
-                            <a class="icon">
-                                <i role="img" class="icon-document"> </i>
-                            </a>
+                            <a class="icon"><i role="img" [ngClass]="!showRules ? 'icon-document' : 'icon-document_full'"> </i></a>
                         </div>
                     </li>
                     <!-- <li>

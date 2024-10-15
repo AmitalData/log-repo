@@ -17,6 +17,7 @@ import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo'
 	styleUrl: './data-row.component.css',
 })
 export class DataRowComponent implements OnInit {
+	@Output() showRulesOpen: EventEmitter<boolean> = new EventEmitter<boolean>();
 	@Output() showCommentsOpen: EventEmitter<boolean> = new EventEmitter<boolean>();
 	@Output() showDetails: EventEmitter<boolean> = new EventEmitter<boolean>();
 	@Output() showChildern: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -45,7 +46,7 @@ export class DataRowComponent implements OnInit {
 	ngOnInit() {
 		this.getCustomsBookAgreementLevelData();
 		this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {
-			this.showCommentsByClick();
+			this.showCommentsData();
 		});
 	}
 
@@ -135,9 +136,10 @@ export class DataRowComponent implements OnInit {
 	}
 
 	showComments: boolean = false;
+	showRules: boolean = false;
 
 	countOfComments: number;
-	showCommentsByClick() {
+	showCommentsData() {
 		this.API_MainService.GetAllCommentsByCustomsItemId(this.data.CustomsItemID, SessionInfo.LoggedUserTenant).subscribe((data: any) => {
 			const result: RemarksClassificationList[] = data.body;
 
@@ -150,6 +152,10 @@ export class DataRowComponent implements OnInit {
 	showCommentsClick() {
 		this.showComments = !this.showComments;
 		this.showCommentsOpen.emit(true);
+	}
+	showRulesClick() {
+		this.showRules = !this.showRules;
+		this.showRulesOpen.emit(true);
 	}
 }
 

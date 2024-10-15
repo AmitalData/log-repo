@@ -32,8 +32,8 @@
 	<div class="mainTable_itemActions" *ngIf="!this.showDetailsOpen.getValue()">
 		<ul>
 			<li>
-				<div class="mainTable_itemDocument">
-					<a class="icon"><i role="img" class="icon-document"> </i></a>
+				<div class="mainTable_itemDocument" (click)="showRules = !showRules">
+					<a class="icon"><i role="img" [ngClass]="!showRules ? 'icon-document' : 'icon-document_full'"> </i></a>
 				</div>
 			</li>
 			<!--<li>
