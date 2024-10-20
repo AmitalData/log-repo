@@ -281,10 +281,12 @@ namespace Logitude.Accounting.BL.Utils
                                     select
                                      lt.LocalAmountDebit - lt.LocalAmountCredit;
 
-                        decimal ledgerTransAmt = qLedgerTrans.Sum();
-
-
-
+                        decimal ledgerTransAmt = 0m;
+                        if (qLedgerTrans != null)
+                        {
+                            List<Decimal> ledgerTransAmounts = qLedgerTrans.ToList();
+                            if (ledgerTransAmounts.Count > 0)    ledgerTransAmt = ledgerTransAmounts.Sum();
+                        }
 
 
                         ////////////
@@ -314,7 +316,7 @@ namespace Logitude.Accounting.BL.Utils
                                   );
                         decimal amount_after = 0m;
                         List<InterestTransactionBefore> after_list = calcAfterInterestTrans.ToList();
-                        if (after_list != null)
+                        if (after_list != null && after_list.Count > 0)
                         {
                             decimal? amount_after_qm = after_list.Select(c => c.LocalAmount).Sum();
                             amount_after = amount_after_qm.HasValue ? amount_after_qm.Value : 0m;
@@ -340,7 +342,7 @@ namespace Logitude.Accounting.BL.Utils
                                  );
                         decimal amount_before = 0m;
                         List<InterestTransactionBefore> before_list = calcBeforeInterestTrans.ToList();
-                        if (before_list != null)
+                        if (before_list != null && before_list.Count > 0)
                         {
                             decimal? amount_before_qm = before_list.Select(c => c.LocalAmount).Sum();
                             amount_before = amount_before_qm.HasValue ? amount_before_qm.Value : 0m;
