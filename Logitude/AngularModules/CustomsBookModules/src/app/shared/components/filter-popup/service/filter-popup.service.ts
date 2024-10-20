@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class FilterPopupService {
-	private _showFilterPopup: boolean = false;
+	public _showFilterPopup: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	private _filterMarked: FiltersSearch = {
 		parts: false,
 		chapters: false,
@@ -16,8 +17,8 @@ export class FilterPopupService {
 	};
 	constructor() {}
 
-	toggleFilterPopup() {
-		this._showFilterPopup = !this._showFilterPopup;
+	toggleFilterPopup(openPopup: boolean) {
+		this._showFilterPopup.next(openPopup);
 	}
 
 	getFilters() {

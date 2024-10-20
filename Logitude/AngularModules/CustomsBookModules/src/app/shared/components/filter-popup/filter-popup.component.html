@@ -1,7 +1,7 @@
 <div class="searchResults_filter">
 	<div class="searchResults_filterToggle">
 		<a role="button" title="סינון תוצאות" aria-expanded="true"
-			><i role="img" (click)="openPopup = !openPopup" [ngClass]="openPopup ? 'icon-filter_full' : 'icon-filter'"></i
+			><i role="img" (click)="clickFilterEvent()" [ngClass]="openPopup ? 'icon-filter_full' : 'icon-filter'"></i
 			><span *ngIf="numberOfFilters > 0" class="numberOfFilters">{{ numberOfFilters }}</span>
 		</a>
 	</div>
