@@ -5,9 +5,10 @@ import { faStar, faCommentDots, faSquareCaretRight, faFileText } from '@fortawes
 import { AddCommentService } from '../add-comment/service/add-comment.service';
 import { NgIf, NgClass } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
-import { CB_CustomsItemComputedDataList, CB_TariffList, RemarksClassificationList } from '../main-display/main-display.component';
+import { CB_CustomsItemComputedDataList, CB_TariffList, RemarksClassificationList, RulesDetailsList } from '../main-display/main-display.component';
 import { API_MainService } from '../../../core/API_MainService';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
+import { SearchBy, SearchService } from '../page-top/service/top-page.service';
 
 @Component({
 	selector: 'app-data-row',
@@ -39,14 +40,17 @@ export class DataRowComponent implements OnInit {
 	faFileArchive = faFileText;
 	checked: boolean = false;
 	selected: boolean = false;
+	isSearchItemExistRule: boolean = false;
+	isSearchItemExistRemark: boolean = false;
 	showAddComment = this.addCommentService.getIsOpened();
 
-	constructor(private addCommentService: AddCommentService, private renderer: Renderer2, private API_MainService: API_MainService) { }
+	constructor(private addCommentService: AddCommentService, private renderer: Renderer2, private API_MainService: API_MainService, private searchService: SearchService) { }
 
 	ngOnInit() {
 		this.getCustomsBookAgreementLevelData();
 		this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {
 			this.showCommentsData();
+			this.showRulesData(this.data.CustomsItemID);
 		});
 	}
 
@@ -71,6 +75,13 @@ export class DataRowComponent implements OnInit {
 		if (!search) {
 			return text;
 		}
+
+		// return original text when search by classification:
+		if (SearchBy.searchBy_form01 == this.searchService.selectSearchBy) {
+			return text;
+		}
+
+		// return bold + mark text when search by word:
 		const regex = new RegExp(`(${search})`, 'gi');
 		return text.replace(regex, `<mark><strong>$1</strong></mark>`);
 	}
@@ -145,9 +156,30 @@ export class DataRowComponent implements OnInit {
 
 			if (!result) return; // TODO: add error message
 
+			if (this.searchItem != "" && result[0]?.RemarkDescription?.includes(this.searchItem)) {
+				this.isSearchItemExistRemark = true;
+			}
+			else this.isSearchItemExistRemark = false;
+
 			this.countOfComments = result?.length > 0 ? result.length : 0;
 		});
 	}
+
+	showRulesData(customsItemID: number) {
+		this.API_MainService.GetCustomsBookRulesData(customsItemID).subscribe((data: any) => {
+			const result: RulesDetailsList[] = data.body;
+			if (!data.body) return; // TODO: add error message
+
+			if (this.searchItem == "") return;
+			result.forEach((rule: RulesDetailsList) => {
+				if (rule.Rules.includes(this.searchItem)) {
+					this.isSearchItemExistRule = true;
+					return;
+				}
+			});
+		});
+	}
+
 
 	showCommentsClick() {
 		this.showComments = !this.showComments;

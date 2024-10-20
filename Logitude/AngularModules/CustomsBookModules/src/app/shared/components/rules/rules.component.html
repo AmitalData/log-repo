@@ -30,13 +30,11 @@
                             <tr *ngFor="let rule of group.rules; let i = index" class="parentLine">
                                 <td>{{ i + 1 }}</td>
                                 <td>
-                                    <span>
-                                        {{ orderText(rule.Rules) }}
-                                    </span>
+                                    <span [innerHTML]="orderText(rule.Rules)"> {{ orderText(rule.Rules) }} </span>
                                     <table class="boxRuleDataChild">
                                         <tr *ngFor="let childItem of rule.childrens; let j = index">
                                             <td>{{ alephBetHelper.getLetterFromNumber(j + 1) }}</td>
-                                            <td>{{ orderText(childItem.Rules) }}</td>
+                                            <td [innerHTML]="orderText(childItem.Rules)">{{ orderText(childItem.Rules) }}</td>
                                         </tr>
                                     </table>
                                 </td>

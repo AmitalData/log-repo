@@ -5,8 +5,7 @@
 		</button>
 	</div>
 	<div class="mainTable_itemName" (click)="showDetails.emit()" #dynamicDiv>
-		<a href="#" role="button" [ngClass]="{'selectedLink': isSelected}" 
-			(click)="$event.preventDefault()">
+		<a href="#" role="button" [ngClass]="{'selectedLink': isSelected}" (click)="$event.preventDefault()">
 			<span class="full_classification" *ngIf="data?.CI_Parent_CustomsItemIDNum"
 				[innerHTML]="highlight(ClassificationNoDisplay(data,data?.FullClassification), searchItem)"
 				[title]="data.CIH_GoodsDescription">
@@ -23,7 +22,8 @@
 				<a [title]="TariffList1?.CustomsRate"> {{ TariffList1?.CustomsRate }} </a>
 				<a [title]="TariffList1?.MeasurementUnitName"> {{ TariffList1?.MeasurementUnitName }} </a>
 				<a [title]="TariffList2?.CustomsRate"> {{ TariffList2?.CustomsRate }} </a>
-				<a *ngIf="TariffList2?.OptionalTaxAddition" [title]=" TariffList2?.OptionalTaxAddition"> {{ TariffList2?.OptionalTaxAddition }} </a>
+				<a *ngIf="TariffList2?.OptionalTaxAddition" [title]=" TariffList2?.OptionalTaxAddition"> {{
+					TariffList2?.OptionalTaxAddition }} </a>
 				<a *ngIf="!TariffList2?.OptionalTaxAddition"> - </a>
 			</div>
 		</a>
@@ -33,7 +33,12 @@
 		<ul>
 			<li>
 				<div class="mainTable_itemDocument" (click)="showRulesClick()" (click)="showDetails.emit()">
-					<a class="icon"><i role="img" [ngClass]="{'icon-document': !isSelected, 'icon-document_full': isSelected}"> </i></a>
+					<a class="icon">
+						<i role="img"
+							[ngClass]="isSelected || isSearchItemExistRule? 'icon-document_full' : 'icon-document'">
+						</i>
+					</a>
+					<!-- <a class="icon"><i role="img" [ngClass]="{'icon-document': !isSelected, 'icon-document_full': isSelected}"> </i></a> -->
 					<!-- <a class="icon"><i role="img" [ngClass]="!showRules ? 'icon-document' : 'icon-document_full'"> </i></a> -->
 				</div>
 			</li>
@@ -45,7 +50,8 @@
 			<li *ngIf="countOfComments > 0; else newComment">
 				<div class="mainTable_itemComment" (click)="showCommentsClick()" (click)="showDetails.emit()">
 					<a class="icon" aria-expanded="true">
-						<i role="img" [ngClass]="{'icon-comment': !isSelected, 'icon-comment_full': isSelected}"></i>
+						<i role="img" [ngClass]="isSelected || isSearchItemExistRemark? 'icon-comment_full' : 'icon-comment'"></i>
+						<!-- <i role="img" [ngClass]="{'icon-comment': !isSelected, 'icon-comment_full': isSelected}"></i> -->
 					</a>
 					<span class="countOfComments">{{ countOfComments }}</span>
 				</div>

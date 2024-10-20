@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="commentText">
-                    <p class="commentSection">{{ comment.RemarkDescription }}</p>
+                    <p class="commentSection" [innerHTML]="highlight(comment.RemarkDescription)">{{ comment.RemarkDescription }}</p>
                 </div>
             </div>
         </div>

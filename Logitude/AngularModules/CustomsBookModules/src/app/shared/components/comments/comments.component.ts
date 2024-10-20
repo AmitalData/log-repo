@@ -6,6 +6,7 @@ import { API_MainService } from '../../../core/API_MainService';
 import { CB_CustomsItemComputedDataList, RemarksClassificationList, RemarksClassificationPM } from '../main-display/main-display.component';
 import { BehaviorSubject } from 'rxjs';
 import { NgClass, NgFor, NgIf } from '@angular/common';
+import { SearchService } from '../page-top/service/top-page.service';
 
 
 @Component({
@@ -23,9 +24,10 @@ export class CommentsComponent implements OnInit, OnChanges {
   allComments: RemarksClassificationList[] = [];
   remarksClassificationPM: RemarksClassificationPM;
   clickPin: boolean = true;
+  searchText: string = '';
   // faPlusCircle = faPlusCircle;
 
-  constructor(private addCommentService: AddCommentService, private API_MainService: API_MainService) { }
+  constructor(private addCommentService: AddCommentService, private API_MainService: API_MainService, private searchService: SearchService) { }
 
   showAddCommentSidebar() {
     this.addCommentService.setIsOpened(true, this.currentItem);
@@ -74,9 +76,17 @@ export class CommentsComponent implements OnInit, OnChanges {
     };
     return this.remarksClassificationPM;
   }
+
   closeCommentsClick() {
     this.showComments = false;
     this.closeComments.emit();
+  }
+  
+  highlight(text: string): string {
+    this.searchText = this.searchService.GetSearchText();
+    if (!this.searchText) return text;
+    const regex = new RegExp(`(${this.searchText})`, 'gi');
+    return text.replace(regex, `<strong>$1</strong>`);
   }
 }
 
