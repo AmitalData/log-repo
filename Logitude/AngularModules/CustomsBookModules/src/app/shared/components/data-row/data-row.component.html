@@ -5,7 +5,7 @@
 		</button>
 	</div>
 	<div class="mainTable_itemName" (click)="showDetails.emit()" #dynamicDiv>
-		<a href="#" role="button" [ngClass]="{'selectedLink': isSelected}" [title]="data.CIH_GoodsDescription"
+		<a href="#" role="button" [ngClass]="{'selectedLink': isSelected}" 
 			(click)="$event.preventDefault()">
 			<span class="full_classification" *ngIf="data?.CI_Parent_CustomsItemIDNum"
 				[innerHTML]="highlight(ClassificationNoDisplay(data,data?.FullClassification), searchItem)"
@@ -19,11 +19,11 @@
 			</span>
 			<div *ngIf="!isShowDetailsOpen && ( TariffListCount > 0 && data?.CI_Parent_CustomsItemIDNum && ClassificationNoDisplay(data,data?.FullClassification).length > 2 && state === 'search')"
 				class="item_details">
-				<a> {{TariffListCount }} </a>
-				<a> {{ TariffList1?.CustomsRate }} </a>
-				<a> {{ TariffList1?.MeasurementUnitName }} </a>
-				<a> {{ TariffList2?.CustomsRate }} </a>
-				<a *ngIf="TariffList2?.OptionalTaxAddition"> {{ TariffList2?.OptionalTaxAddition }} </a>
+				<a [title]="TariffListCount"> {{TariffListCount }} </a>
+				<a [title]="TariffList1?.CustomsRate"> {{ TariffList1?.CustomsRate }} </a>
+				<a [title]="TariffList1?.MeasurementUnitName"> {{ TariffList1?.MeasurementUnitName }} </a>
+				<a [title]="TariffList2?.CustomsRate"> {{ TariffList2?.CustomsRate }} </a>
+				<a *ngIf="TariffList2?.OptionalTaxAddition" [title]=" TariffList2?.OptionalTaxAddition"> {{ TariffList2?.OptionalTaxAddition }} </a>
 				<a *ngIf="!TariffList2?.OptionalTaxAddition"> - </a>
 			</div>
 		</a>
