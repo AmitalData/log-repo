@@ -83,21 +83,21 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public static AuthenticationToken GetSingleTokenFromCache(string token)
         {
             if (string.IsNullOrEmpty(token)) return null;
+            if (!token.Contains("+"))
+            {
+                token = token.Replace(" ", "+");
+            }
             string cacheKey = $"Token_{token}";
             AuthenticationToken authenticationToken  =(AuthenticationToken)HttpContext.Current.Items["authToken"];
             if (authenticationToken == null)
             {
-                if ( !token.Contains("+"))
-                {
-                    token = token.Replace(" ", "+");
-                }
                 authenticationToken = (AuthenticationToken)CacheManager.CacheWrapper.Get(cacheKey);
             }
             if (authenticationToken != null)
             {
-                if (token != authenticationToken.Token)
+                if (token.Replace(" ", "+") != authenticationToken.Token.Replace(" ", "+"))
                 {
-                    throw new AutenticationException("Invalid token");
+                    throw new AutenticationException($"Invalid token :  {token} <> {authenticationToken.Token}");
                 }   
                 if (authenticationToken.ExpirationDate != null && authenticationToken.ExpirationDate < DateTime.Now)
                 {
