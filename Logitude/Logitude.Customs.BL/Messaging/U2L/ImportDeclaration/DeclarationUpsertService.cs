@@ -1659,23 +1659,27 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
                 if (invoice.InvoiceItems?.InvoiceItem?.Length > 0)
                 {
+                    int lineNumber = 1;
                     Array.ForEach(invoice.InvoiceItems.InvoiceItem, (item) =>
                     {
-                        SupplierInvoiceItemPM supplierInvoiceItem = InitSupplierInvoiceItem(item);
+					
+                        SupplierInvoiceItemPM supplierInvoiceItem = InitSupplierInvoiceItem(item, lineNumber);
 						supplierInvoice.SupplierInvoiceItems.Add(supplierInvoiceItem);
+						lineNumber++;
+
                     });
                 }
             }
         }
 
-        private SupplierInvoiceItemPM InitSupplierInvoiceItem(ExportInvoiceItem invoiceItem)
+        private SupplierInvoiceItemPM InitSupplierInvoiceItem(ExportInvoiceItem invoiceItem, int lineNumber)
 		{
             SupplierInvoiceItemPM supplierInvoiceItem = new SupplierInvoiceItemPM()
             {
                 ChangeSetOp = ChangeSetOperation.Insert,
                 Tenant = ResolvedTenant(),
             };
-
+            supplierInvoiceItem.LineNumber=lineNumber;
             supplierInvoiceItem.ItemCode = invoiceItem?.ItemNo;
             supplierInvoiceItem.ItemDescription = invoiceItem?.ItemDescription;
 
@@ -1744,21 +1748,22 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 					}
 				}
             }
-            if (invoiceItem.ConnectedDeclarations?.connectedDeclaration != null &&_MyDeclarationPM.IsDiamondDeclaration)
+            if (invoiceItem.ConnectedDeclarations?.connectedDeclaration != null && _MyDeclarationPM.IsDiamondDeclaration)
             {
-				supplierInvoiceItem.SupplierInvoiceItemsConDeclars = new List<SupplierInvoiceItemsConDeclarPM>();
+                supplierInvoiceItem.SupplierInvoiceItemsConDeclars = new List<SupplierInvoiceItemsConDeclarPM>();
                 foreach (var item in invoiceItem.ConnectedDeclarations.connectedDeclaration)
                 {
-                    SupplierInvoiceItemsConDeclarPM supplierInvoiceItemsConDeclarPM = InitSupplierInvoiceItemConnectedDeclarations(item);
+                    SupplierInvoiceItemsConDeclarPM supplierInvoiceItemsConDeclarPM = InitSupplierInvoiceItemConnectedDeclarations(item, lineNumber);
                     if (supplierInvoiceItemsConDeclarPM != null)
                     {
                         AppendLogLine("add supplierInvoiceItemsConDeclarPM");
-						supplierInvoiceItem.SupplierInvoiceItemsConDeclars.Add(supplierInvoiceItemsConDeclarPM);
+                        supplierInvoiceItem.SupplierInvoiceItemsConDeclars.Add(supplierInvoiceItemsConDeclarPM);
                     }
 
                 }
-              
+
             }
+            
             return supplierInvoiceItem;
         }
 
@@ -1820,7 +1825,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
         }
 
 
-        private SupplierInvoiceItemsConDeclarPM InitSupplierInvoiceItemConnectedDeclarations(ConnectedDeclaration invoiceItemConnectedDeclaration)
+        private SupplierInvoiceItemsConDeclarPM InitSupplierInvoiceItemConnectedDeclarations(ConnectedDeclaration invoiceItemConnectedDeclaration,int lineNumber)
         {
            
 
@@ -1835,9 +1840,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
             supplierInvoiceItemsConDeclarPM.DeclarationTypeCode = invoiceItemConnectedDeclaration.DeclarationType;
             supplierInvoiceItemsConDeclarPM.DeclarationNumber = invoiceItemConnectedDeclaration.DeclarationNo;
-            supplierInvoiceItemsConDeclarPM.InvoiceNumber =  int.Parse(invoiceItemConnectedDeclaration.InvoiceLine);
-			supplierInvoiceItemsConDeclarPM.InvoiceItemLineNumber = int.Parse(invoiceItemConnectedDeclaration.ItemLine);
-            supplierInvoiceItemsConDeclarPM.Quantity = decimal.Parse(invoiceItemConnectedDeclaration.Quantity);
+            supplierInvoiceItemsConDeclarPM.InvoiceNumber = int.Parse(invoiceItemConnectedDeclaration.InvoiceLine);
+			supplierInvoiceItemsConDeclarPM.ItemSequence = int.Parse(invoiceItemConnectedDeclaration.ItemLine);
+			supplierInvoiceItemsConDeclarPM.InvoiceItemLineNumber = lineNumber;
+
+            supplierInvoiceItemsConDeclarPM.Quantity = int.Parse(invoiceItemConnectedDeclaration.Quantity);
             supplierInvoiceItemsConDeclarPM.QuantityTypeCode = invoiceItemConnectedDeclaration.QuantityType;
 
 
