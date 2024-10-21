@@ -30,7 +30,7 @@ using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 
-namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
+namespace JustWebFreight.WebFreight.Web.Controllers.AccountingModel.Generated.ListControllers
 {
     public partial class LedgerTransactionsController : ApiController
     {
