@@ -19,7 +19,7 @@ using System.Web.Http;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 
-namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsController.cs
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated //AccountingPeriodViewsController.cs
 {
     //[RoutePrefix("api/ReconciliationOp")]
     public partial class ChargesTypeOpController : ApiController

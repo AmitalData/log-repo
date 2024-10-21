@@ -30,7 +30,7 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.BL.EntityQueryServices;
 
-namespace WebFreight.Web.Controllers.AccountingModel
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
     public class ChartOfAccountsTypesExtendedController : ApiController
     {

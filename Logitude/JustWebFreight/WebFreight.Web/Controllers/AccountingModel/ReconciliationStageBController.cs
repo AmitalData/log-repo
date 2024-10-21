@@ -15,7 +15,7 @@ using WebFreight.Web.Security;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
-namespace WebFreight.Web.Controllers.AccountingModel
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
     //[RoutePrefix("api/ReconciliationStageB")]
     public class ReconciliationStageBController : ApiController

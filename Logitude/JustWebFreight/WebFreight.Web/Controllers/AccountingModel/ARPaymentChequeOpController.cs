@@ -26,7 +26,7 @@ using WebFreight.Web.DataContracts;
 using Logitude.Accounting.BL.Utils;
 using Logitude.Accounting.BL.CoreBL;
 
-namespace WebFreight.Web.Controllers.AccountingModel 
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated 
 {
     //[RoutePrefix("api/PostDatedChequesRedemptionOp")]
     public partial class ARPaymentChequeOpController : ApiController

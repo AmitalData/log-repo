@@ -37,7 +37,7 @@ using Logitude.Accounting.BL.EntityQueryServices;
 using System.Web.Http.ModelBinding;
 using Logitude.Accounting.Data.Repositories;
 
-namespace WebFreight.Web.Controllers.AccountingModel
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
     public class GLAccountCurrencyController: ApiController
     {

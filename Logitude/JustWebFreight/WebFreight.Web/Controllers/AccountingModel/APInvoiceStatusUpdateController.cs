@@ -15,7 +15,7 @@ using WebFreight.Web.Security;
 using Simplog.Data.CommonDataModel.Repositories;
 using System.Globalization;
 
-namespace WebFreight.Web.Controllers.AccountingModel
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
     //[RoutePrefix("api/APInvoiceStatusUpdate")]
     public class APInvoiceStatusUpdateController : ApiController

@@ -44,7 +44,7 @@ using Simplog.Data.Helpers;
 using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.CloseTables;
 
-namespace WebFreight.Web.Controllers.AccountingModel
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
     public partial class CashBookOpController : ApiController
     {

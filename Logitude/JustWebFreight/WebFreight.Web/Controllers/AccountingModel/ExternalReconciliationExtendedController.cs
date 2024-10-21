@@ -17,7 +17,7 @@ using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.BL.CoreBL.ExternalReconcile.Utils;
 
-namespace WebFreight.Web.Controllers.AccountingModel
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
     public class ExternalReconciliationExtendedController : ApiController
     {

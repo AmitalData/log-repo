@@ -16,7 +16,7 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using WebFreight.Web.WebServices;
 
-namespace WebFreight.Web.Controllers.AccountingModel
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
     public class BankCodeController : ApiController
     {

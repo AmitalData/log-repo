@@ -12,7 +12,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using WebFreight.Web.Security;
 using Simplog.Data.CommonDataModel.Repositories;
 
-namespace WebFreight.Web.Controllers.AccountingModel
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
     //[RoutePrefix("api/InterestTransactionsCheckA")]
     public class InterestTransactionsCheckAController : ApiController

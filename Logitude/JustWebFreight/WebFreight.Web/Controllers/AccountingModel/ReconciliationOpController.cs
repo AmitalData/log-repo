@@ -52,7 +52,7 @@ using System.Collections;
 using Logitude.Accounting.Data.EntityMapping;
 using Intuit.Ipp.Data;
 
-namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsController.cs
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated //AccountingPeriodViewsController.cs
 {
     //[RoutePrefix("api/ReconciliationOp")]
     public partial class ReconciliationOpController : ApiController
