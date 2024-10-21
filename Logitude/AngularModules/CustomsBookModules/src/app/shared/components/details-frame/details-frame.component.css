@@ -123,29 +123,29 @@
 }
 
 .mainTable_itemComment {
-    position: relative;
-    cursor: pointer;
+	position: relative;
+	cursor: pointer;
 }
 
 .icon {
-    display: inline-block;
+	display: inline-block;
 }
 
 .countOfComments {
 	position: absolute;
-    right: 0px;
-    top: 0px;
-    width: 16px !important; 
-    height: 16px;
-    background-color: var(--blue);
-    border: 1px solid #f0f2f5;
-    border-radius: 50%;
-    color: white;
-    text-align: center;
-    font-weight: 300;
-    font-size: 11px;
-    line-height: 14px;
-    display: inline-block;
+	right: 0px;
+	top: 0px;
+	width: 16px !important;
+	height: 16px;
+	background-color: var(--blue);
+	border: 1px solid #f0f2f5;
+	border-radius: 50%;
+	color: white;
+	text-align: center;
+	font-weight: 300;
+	font-size: 11px;
+	line-height: 14px;
+	display: inline-block;
 }
 
 .detailsSlide_box {
@@ -175,6 +175,10 @@ a.detailsSlide_commentsPinned {
 	width: 20px;
 	height: 20px;
 	text-align: center;
+}
+
+.icon-document_full {
+	color: var(--blue);
 }
 
 a.detailsSlide_commentsPinned i:nth-child(2) {
@@ -272,7 +276,7 @@ a.detailsSlide_commentsPinned i:nth-child(2) {
 	color: black;
 }
 .icon-comment_full {
-    color: var(--blue);
+	color: var(--blue);
 }
 .commentOptions a.commentOptions_toggle i {
 	pointer-events: none;

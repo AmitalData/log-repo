@@ -16,17 +16,23 @@ export class FilterPopupComponent {
 	numberOfFilters = 0;
 	@Output() filterClick: EventEmitter<any> = new EventEmitter();
 
-	constructor( private service: FilterPopupService) {
-		// this.service = new FilterPopupService();
-	}
+	constructor(private service: FilterPopupService) { }
 
 	ngOnInit() {
 		this._initFilters = this.service.getFilters();
+
+		this.service._showFilterPopup.subscribe((value) => {
+			this.openPopup = value;
+		});
+	}
+
+	clickFilterEvent() {
+		this.service.toggleFilterPopup(!this.openPopup);
 	}
 
 	pickFilter(id: string) {
 		this.service.setFilterMarked(id);
-		this.numberOfFilters = Object.values(this._initFilters).filter((value) => value === true).length;	
+		this.numberOfFilters = Object.values(this._initFilters).filter((value) => value === true).length;
 	}
 
 	clearFilter() {
@@ -39,7 +45,7 @@ export class FilterPopupComponent {
 		return this._initFilters[id];
 	}
 
-	filterClickEvent() {		
+	filterClickEvent() {
 		this.filterClick.emit(this.service.getFilters());
 		this.openPopup = false;
 	}

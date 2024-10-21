@@ -23,7 +23,7 @@
 							[isSelected]="showDetails && selectedItemId == item.CustomsItemID"
 							[searchItem]="searchValue" (showCommentSidebar)="showAddComment = !showAddComment"
 							(showChildern)="showChildern($event, item)" class="app-data-row"
-							(showDetails)="showDetailsClick(item.CustomsItemID, item)" (showCommentsOpen)="showCommentsOpen($event)">
+							(showDetails)="showDetailsClick(item.CustomsItemID, item)" (showCommentsOpen)="showCommentsOpen($event)"  (showRulesOpen)="showRulesOpen($event)">
 						</app-data-row>
 						<ul class="wtree" [@inOutAnimation]>
 							<ng-container *ngIf="item.IsShowChildren">
@@ -35,7 +35,7 @@
 											[isSelected]="showDetails && selectedItemId == item?.children[key2]?.CustomsItemID"
 											(showCommentSidebar)="showAddComment = !showAddComment" class="app-data-row"
 											(showChildern)="showChildern($event, item.children[key2])"
-											(showDetails)="showDetailsClick(item.children[key2]?.CustomsItemID , item.children[key2])" (showCommentsOpen)="showCommentsOpen($event)">
+											(showDetails)="showDetailsClick(item.children[key2]?.CustomsItemID , item.children[key2])" (showCommentsOpen)="showCommentsOpen($event)"  (showRulesOpen)="showRulesOpen($event)">
 										</app-data-row>
 										<ng-container *ngIf="item.children[key2]?.IsShowChildren">
 											<ul [@inOutAnimation]>
@@ -57,7 +57,7 @@
 															(showCommentSidebar)="showAddComment = !showAddComment"
 															class="app-data-row"
 															(showChildern)="showChildern($event, item.children[key2].children[key3])"
-															(showDetails)="showDetailsClick(item.children[key2].children[key3]?.CustomsItemID , item.children[key2].children[key3])" (showCommentsOpen)="showCommentsOpen($event)">
+															(showDetails)="showDetailsClick(item.children[key2].children[key3]?.CustomsItemID , item.children[key2].children[key3])" (showCommentsOpen)="showCommentsOpen($event)"  (showRulesOpen)="showRulesOpen($event)">
 														</app-data-row>
 														<ng-container
 															*ngIf="item.children[key2].children[key3]?.IsShowChildren">
@@ -76,7 +76,7 @@
 																			(showCommentSidebar)="showAddComment = !showAddComment"
 																			class="app-data-row"
 																			(showChildern)="showChildern($event, item.children[key2].children[key3].children[key4])"
-																			(showDetails)="showDetailsClick(item.children[key2].children[key3].children[key4]?.CustomsItemID, item.children[key2].children[key3].children[key4])" (showCommentsOpen)="showCommentsOpen($event)">
+																			(showDetails)="showDetailsClick(item.children[key2].children[key3].children[key4]?.CustomsItemID, item.children[key2].children[key3].children[key4])" (showCommentsOpen)="showCommentsOpen($event)"  (showRulesOpen)="showRulesOpen($event)">
 																		</app-data-row>
 																		<ng-container
 																			*ngIf="item.children[key2].children[key3].children[key4]?.IsShowChildren">
@@ -94,7 +94,7 @@
 																							(showCommentSidebar)="showAddComment = !showAddComment"
 																							class="app-data-row"
 																							(showChildern)="showChildern($event, item.children[key2].children[key3].children[key4].children[key5])"
-																							(showDetails)="showDetailsClick(item.children[key2].children[key3].children[key4].children[key5]?.CustomsItemID, item.children[key2].children[key3].children[key4].children[key5])" (showCommentsOpen)="showCommentsOpen($event)">
+																							(showDetails)="showDetailsClick(item.children[key2].children[key3].children[key4].children[key5]?.CustomsItemID, item.children[key2].children[key3].children[key4].children[key5])" (showCommentsOpen)="showCommentsOpen($event)"  (showRulesOpen)="showRulesOpen($event)">
 																						</app-data-row>
 																						<ng-container
 																							*ngIf="item.children[key2].children[key3].children[key4].children[key5]?.IsShowChildren">
@@ -113,7 +113,7 @@
 																											(showCommentSidebar)="showAddComment = !showAddComment"
 																											class="app-data-row"
 																											(showChildern)="showChildern($event, item.children[key2].children[key3].children[key4].children[key5].children[key6])"
-																											(showDetails)="showDetailsClick(item.children[key2].children[key3].children[key4].children[key5].children[key6]?.CustomsItemID, item.children[key2].children[key3].children[key4].children[key5].children[key6])" (showCommentsOpen)="showCommentsOpen($event)">
+																											(showDetails)="showDetailsClick(item.children[key2].children[key3].children[key4].children[key5].children[key6]?.CustomsItemID, item.children[key2].children[key3].children[key4].children[key5].children[key6])" (showCommentsOpen)="showCommentsOpen($event)"  (showRulesOpen)="showRulesOpen($event)">
 																										</app-data-row>
 																									</li>
 																								</ng-container>
@@ -139,7 +139,7 @@
 				</ng-container>
 			</div>
 			<div class="details_frame_container" [class.active]="showDetails">
-				<app-details-frame (showDetails)="updateShowDetailsClick()" [currentItem]="currentItem" [showCommentsIsOpen]="showCommentsIsOpen"/>
+				<app-details-frame (showDetails)="updateShowDetailsClick()" [currentItem]="currentItem" [showCommentsIsOpen]="showCommentsIsOpen" [showRulesIsOpen]="showRulesIsOpen"/>
 			</div>
 		</div>
 	</div>

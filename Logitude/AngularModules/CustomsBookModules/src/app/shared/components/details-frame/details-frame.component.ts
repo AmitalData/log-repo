@@ -27,6 +27,7 @@ export class DetailsFrameComponent implements OnInit {
   @Output() showDetails = new EventEmitter<boolean>();
   @Input() showAddComment: boolean = false;
   @Input() showCommentsIsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  @Input() showRulesIsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   // @Input() itemData: BehaviorSubject<ItemData> = new BehaviorSubject<ItemData>(null);
   @Input() currentItem: BehaviorSubject<CB_CustomsItemComputedDataList>;
   item: CB_CustomsItemComputedDataList;
@@ -55,6 +56,9 @@ export class DetailsFrameComponent implements OnInit {
         this.showCommentsIsOpen.subscribe((isOpen: boolean) => {
           this.showComments = isOpen;
         });
+        this.showRulesIsOpen.subscribe((isOpen: boolean) => {
+          this.showRules = isOpen;
+        });
       }
     });
   }
@@ -76,6 +80,13 @@ export class DetailsFrameComponent implements OnInit {
 
   showAddCommentSidebar() {
     this.addCommentService.setIsOpened(true, this.item);
+  }
+
+  closeComments() {
+    this.showCommentsIsOpen.next(false);
+  }
+  closeRules() {
+    this.showRulesIsOpen.next(false);
   }
 }
 

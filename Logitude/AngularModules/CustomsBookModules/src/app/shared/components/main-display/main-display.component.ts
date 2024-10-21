@@ -11,7 +11,7 @@ import { BehaviorSubject, filter } from 'rxjs';
 import { SearchBy, SearchService } from '../page-top/service/top-page.service';
 import { FormsModule } from '@angular/forms';
 import { HeaderService, searchState } from '../app-header/service/header.service';
-import { FiltersSearch } from '../filter-popup/service/filter-popup.service';
+import { FilterPopupService, FiltersSearch } from '../filter-popup/service/filter-popup.service';
 import { AddCommentComponent } from '../add-comment/add-comment.component';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 @Component({
@@ -40,6 +40,7 @@ export class MainDisplayComponent implements OnInit {
 	selectSearchBy: string = SearchBy.searchBy_form01;
 	showDetails: boolean = false;
 	showCommentsIsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	showRulesIsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	showAddComment: boolean = false;
 	showCommentSidebar: boolean = false;
@@ -54,7 +55,7 @@ export class MainDisplayComponent implements OnInit {
 	cbRequirementComputedDataList: CB_RequirementComputedDataList[];
 	isExpand: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService) { }
+	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService, private filterPopupService: FilterPopupService) { }
 	searchState: string = searchState.יבוא;
 
 	ngOnInit() {
@@ -133,6 +134,9 @@ export class MainDisplayComponent implements OnInit {
 	showCommentsOpen(isOpenComment: boolean) {
 		this.showCommentsIsOpen.next(isOpenComment);
 	}
+	showRulesOpen(isOpenRule: boolean) {
+		this.showRulesIsOpen.next(isOpenRule);
+	}
 
 	onToggleAll(event: Event, item: CB_CustomsItemComputedDataList): void {
 		const checked = (event.target as HTMLInputElement)?.checked;
@@ -205,14 +209,10 @@ export class MainDisplayComponent implements OnInit {
 	showDetailsClick(CustomsItemID: number, item: CB_CustomsItemComputedDataList) {
 		this.selectedItemId = CustomsItemID;
 		if (this.currentItem.getValue()?.CustomsItemID == CustomsItemID) {
-			// this.showDetails = !this.showDetails;
-			// this.showDetailsOpen.next(this.showDetails);
 			this.updateShowDetailsClick();
 			return;
 		}
 		else if (!this.showDetails) {
-			// this.showDetails = !this.showDetails;
-			// this.showDetailsOpen.next(this.showDetails);
 			this.updateShowDetailsClick();
 		}
 		this.currentItem.next(item);
@@ -222,14 +222,23 @@ export class MainDisplayComponent implements OnInit {
 	updateShowDetailsClick() {
 		this.showDetails = !this.showDetails;
 		this.showDetailsOpen.next(this.showDetails);
-		if (!this.showDetails) this.showCommentsIsOpen.next(false);
+		if (!this.showDetails) {
+			this.showCommentsIsOpen.next(false);
+			this.showRulesIsOpen.next(false);
+		}
+		else {
+			this.filterPopupService.toggleFilterPopup(false);
+		}
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes['showDetails']) {
 			this.showDetails = changes['showDetails'].currentValue;
 			this.showDetailsOpen.next(this.showDetails);
-			if (!this.showDetails) this.showCommentsIsOpen.next(false);
+			if (!this.showDetails) {
+				this.showCommentsIsOpen.next(false);
+				this.showRulesIsOpen.next(false)
+			}
 		}
 		if (changes['itemsData']) {
 			this.itemsData = changes['itemsData'].currentValue;
@@ -277,7 +286,11 @@ export class MainDisplayComponent implements OnInit {
 
 		if (SearchBy.searchBy_form01 == this.selectSearchBy) {
 			this.isLoadingMode.next(true); // update loading mode
-			if (filters.CustomsItemHierarchic === '') filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
+			if (filters.CustomsItemHierarchic === '') {
+				filters.Reamarks = true;
+				filters.Rules = true;
+				filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
+			}
 			this.API_MainService.GetCustomsBookMainViewSearchByClassification(filters).subscribe(
 				(data: any) => {
 					const result: CB_CustomsItemComputedDataList[] = data.body;
@@ -294,7 +307,11 @@ export class MainDisplayComponent implements OnInit {
 		}
 		else if (SearchBy.pageSearch_form02 == this.selectSearchBy) {// spacial search by text
 			this.isLoadingMode.next(true); // update loading mode
-			if (filters.CustomsItemHierarchic === '') filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
+			if (filters.CustomsItemHierarchic === '') {
+				filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
+				filters.Reamarks = true;
+				filters.Rules = true;
+			}
 			this.API_MainService.GetCustomsBookMainViewSearchByText(filters).subscribe(
 				(data: any) => {
 					const result: CB_CustomsItemComputedDataList[] = data.body;
@@ -323,9 +340,11 @@ export class MainDisplayComponent implements OnInit {
 		this.showDetails = false;
 		this.showDetailsOpen.next(this.showDetails);
 		this.showCommentsIsOpen.next(false);
+		this.showRulesIsOpen.next(false)
 		this.data = [];
 		this.searchValue = "";
 		this.countSearchResult = 0;
+		this.filterPopupService.toggleFilterPopup(false);
 		this.data = this.fullData;
 		this.searchToggleAllChildren(false);
 	}

@@ -3,6 +3,7 @@ import { SearchBy, SearchService } from './service/top-page.service';
 import { FormsModule } from '@angular/forms';
 import { HeaderService, searchState } from '../app-header/service/header.service';
 import { NgIf } from '@angular/common';
+import { FilterPopupService } from '../filter-popup/service/filter-popup.service';
 
 @Component({
 	selector: 'app-page-top',
@@ -16,7 +17,7 @@ export class PageTopComponent {
 	@Output() searchClick = new EventEmitter<string | number>();
 
 	textToSearch: string = '';
-	constructor(public searchService: SearchService, private headerService: HeaderService) { }
+	constructor(public searchService: SearchService, private headerService: HeaderService, private filterPopupService: FilterPopupService) { }
 
 	public text: string = '';
 	public checked: string | number = '';
@@ -42,7 +43,14 @@ export class PageTopComponent {
 	}
 
 	clickSearch() {
+		if (this.textToSearch.trim() === "") {
+			this.textToSearch = "";
+			return;
+		}
+
 		this.searchClick.emit(this.searchService.selectSearchBy);
+		this.filterPopupService.toggleFilterPopup(false);
+
 		this.searchService.searchText$.subscribe((searchText) => {
 			// reset search input in html:
 			if (searchText === "") this.textToSearch = "";

@@ -1,10 +1,11 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { API_MainService } from '../../../core/API_MainService';
 import { CB_CustomsItemComputedDataList, RulesDetailsList } from '../main-display/main-display.component';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { faChevronLeft, faSquareCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { SearchService } from '../page-top/service/top-page.service';
 
 @Component({
   selector: 'app-rules',
@@ -15,12 +16,16 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 })
 export class RulesComponent implements OnInit, OnChanges {
   isOpenData: boolean;
+  @Output() closeRules = new EventEmitter<boolean>();
   @Input() showRules: boolean;
   @Input() currentItem: BehaviorSubject<CB_CustomsItemComputedDataList>;
   alephBetHelper = new alephBetHelper();
   allRules: CB_RulesDetailsList[] = [];
   groupRulesList: GroupedRules[] = [];
-  constructor(private API_MainService: API_MainService) { }
+  clickPin: boolean = true;
+  searchText: string = '';
+
+  constructor(private API_MainService: API_MainService, private searchService: SearchService) { }
 
   ngOnInit(): void {
     this.currentItem.subscribe((data: CB_CustomsItemComputedDataList) => {
@@ -109,7 +114,21 @@ export class RulesComponent implements OnInit, OnChanges {
   // Method to trim the start of the given text
   orderText(text: string): string {
     if (!text) return text;
-    return text.trimStart();
+    text = text.trimStart();
+    text = this.highlight(text);
+    return text;
+  }
+
+  closeRulesClick() {
+    this.showRules = false;
+    this.closeRules.emit();
+  }
+
+  highlight(text: string): string {
+    this.searchText = this.searchService.GetSearchText();
+    if (!this.searchText) return text;
+    const regex = new RegExp(`(${this.searchText})`, 'gi');
+    return text.replace(regex, `<strong>$1</strong>`);
   }
 }
 

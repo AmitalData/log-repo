@@ -25,6 +25,14 @@ a {
 	color: var(--general);
 }
 
+.icon-document_full {
+	color: var(--blue);
+}
+
+.icon-comment_full {
+	color: var(--blue);
+}
+
 .selectedLink {
 	color: white !important;
 	font-weight: 700;

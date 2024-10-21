@@ -54,11 +54,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 0 10px;
 }
 
 .detailsSlide_commentsTitle {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: space-between;
 }
 
 a.detailsSlide_commentsPinned {
