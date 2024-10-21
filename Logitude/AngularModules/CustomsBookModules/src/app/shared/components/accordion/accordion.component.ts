@@ -36,19 +36,22 @@ export class AccordionComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.InitData();
+
     this.listenToChanges();
   }
 
   listenToChanges() {
     this.currentItem.subscribe((data: CB_CustomsItemComputedDataList) => {
       this.customsItemId = data?.CustomsItemID;
-      if (this.customsItemId)
-        this.InitData();
+      if (this.customsItemId) {
+        this.resetData();
+        this.getData();
+      }
     });
   }
 
   InitData() {
-
     this.tableData1 = {
       columns: [
         { key: 'Logo', displayName: '', dataType: 'img', visible: true },
@@ -87,12 +90,20 @@ export class AccordionComponent implements OnInit {
       ],
       data: []
     };
+  }
 
+  resetData() {
+    this.tableData1.data = [];
+    this.tableData2.data = [];
+    this.tableData3.data = [];
+  }
+
+  getData() {
     // דרישות חוקיות
     this.API_MainService.GetCustomsBookRegularityRequirementData(this.customsItemId).subscribe(
       (data: any) => {
         const result: CB_RequirementComputedDataList[] = data.body;
-        if (!result) return; 
+        if (!result) return;
 
         this.MainEntity.CB_RequirementComputedDataList = result;
         this.tableData3.data = this.MainEntity.CB_RequirementComputedDataList;
@@ -103,11 +114,11 @@ export class AccordionComponent implements OnInit {
     );
 
     // שיעורי מס
-    if (!this.currentItem.getValue().PH_MeasurementUnitID) return;
+    if (!this.currentItem?.getValue()?.PH_MeasurementUnitID) return;
     this.API_MainService.GetCustomsBookAgreementLevelData(this.customsItemId, this.currentItem.getValue().PH_MeasurementUnitID).subscribe(
       (data: any) => {
         const result: CB_TariffList[] = data.body;
-        if (!result) return; 
+        if (!result) return;
 
         this.MainEntity.CB_TariffList = result;
         this.tableData1.data = this.MainEntity.CB_TariffList.filter(x => x.TradeAgreementName != 'מס קניה');
