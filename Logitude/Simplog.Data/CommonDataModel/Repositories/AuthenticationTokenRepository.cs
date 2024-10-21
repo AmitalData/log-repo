@@ -88,11 +88,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 token = token.Replace(" ", "+");
             }
             string cacheKey = $"Token_{token}";
-            AuthenticationToken authenticationToken  =(AuthenticationToken)HttpContext.Current.Items["authToken"];
-            if (authenticationToken == null)
-            {
+            AuthenticationToken authenticationToken;// =(AuthenticationToken)HttpContext.Current.Items["authToken"];
+            //if (authenticationToken == null)
+            //{
                 authenticationToken = (AuthenticationToken)CacheManager.CacheWrapper.Get(cacheKey);
-            }
+            //}
             if (authenticationToken != null)
             {
                 if (token.Replace(" ", "+") != authenticationToken.Token.Replace(" ", "+"))
