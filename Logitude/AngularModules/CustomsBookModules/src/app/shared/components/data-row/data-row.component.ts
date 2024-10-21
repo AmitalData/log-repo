@@ -43,15 +43,16 @@ export class DataRowComponent implements OnInit {
 	isSearchItemExistRule: boolean = false;
 	isSearchItemExistRemark: boolean = false;
 	showAddComment = this.addCommentService.getIsOpened();
+	selectedSearchBy: SearchBy = SearchBy.searchBy_form01;
 
 	constructor(private addCommentService: AddCommentService, private renderer: Renderer2, private API_MainService: API_MainService, private searchService: SearchService) { }
 
 	ngOnInit() {
 		this.getCustomsBookAgreementLevelData();
-		this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {
-			this.showCommentsData();
-			this.showRulesData(this.data.CustomsItemID);
-		});
+		// this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {});
+		this.showCommentsData();
+		this.showRulesData(this.data.CustomsItemID);
+		this.selectedSearchBy = this.searchService.selectSearchBy;
 	}
 
 	TariffList1: CB_TariffList;
@@ -68,16 +69,14 @@ export class DataRowComponent implements OnInit {
 			this.TariffListCount = this.TariffListData.filter(x => x.TradeAgreementName != 'מס קניה').length;
 			this.contentWidth();
 		});
-
 	}
 
 	highlight(text: string, search: string): string {
 		if (!search) {
 			return text;
 		}
-
 		// return original text when search by classification:
-		if (SearchBy.searchBy_form01 == this.searchService.selectSearchBy) {
+		if (SearchBy.searchBy_form01 == this.selectedSearchBy) {
 			return text;
 		}
 
