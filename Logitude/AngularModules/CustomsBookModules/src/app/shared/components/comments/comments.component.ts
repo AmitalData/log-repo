@@ -40,6 +40,9 @@ export class CommentsComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {
       this.allComments = data;
+      this.showComments = this.allComments.length > 0 ? true : false;
+      this.expandedArea = !this.showComments;
+
       this.showMenuOpen = false; // initialize the menu to be closed
     });
     this.addCommentService.currentRemark.subscribe((data: RemarksClassificationPM) => {
@@ -80,6 +83,11 @@ export class CommentsComponent implements OnInit, OnChanges {
     };
     return this.remarksClassificationPM;
   }
+
+  // closeCommentsClick() {
+  //   this.showComments = false;
+  //   this.closeComments.emit();
+  // }
   
   highlight(text: string): string {
     this.searchText = this.searchService.GetSearchText();
