@@ -681,7 +681,7 @@ namespace Logitude.Customs.BL.BL
                 if (myDeclarationCourierStatusPM.DeclarationPendings != null && myDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
                 {
                     declarationPendingPM_906 = myDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.CourierPendingReasonCode == "906").FirstOrDefault();
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("906 penidng found "+ "decId: " + declarationPendingPM_906.DeclarationID);
+                    if(declarationPendingPM_906?.DeclarationID != null) NetCommonHelper.Logger.DevLog.Instance.WriteDebug("906 penidng found "+ "decId: " + declarationPendingPM_906?.DeclarationID);
                 }
 
 
@@ -689,7 +689,7 @@ namespace Logitude.Customs.BL.BL
 
                 CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(declarationPM.Tenant);
                 Boolean isActive = courierPendingReasonRepositoryRepository.IsActive("906", myDeclarationCourierStatusPM.Tenant);
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("906 penidng isActive " + isActive + " decId: " + declarationPendingPM_906.DeclarationID);
+                if (declarationPendingPM_906?.DeclarationID != null) NetCommonHelper.Logger.DevLog.Instance.WriteDebug("906 penidng isActive " + isActive + " decId: " + declarationPendingPM_906?.DeclarationID);
 
                 if (isActive)
                 {
