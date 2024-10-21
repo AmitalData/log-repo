@@ -146,6 +146,10 @@ public void GenerateEntityViewController(string xmlFilePath,string outputFilePat
 
 public dynamic GetControllerNameSpace(string destinationFolder)
 {
+    if(destinationFolder.Contains("WebFreight.Web"))
+    {
+        return "WebFreight.Web.App_Code.AngularJS_App_Code.Generated";
+	}
 	string spacestring = "";
 	string[] path = destinationFolder.Split('/');
 	foreach(string dir in path)

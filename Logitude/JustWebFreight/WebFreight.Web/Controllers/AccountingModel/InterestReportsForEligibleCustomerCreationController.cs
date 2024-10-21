@@ -17,7 +17,7 @@ using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Server.Tools.QueueService;
 
-namespace WebFreight.Web.Controllers.AccountingModel
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
     public class InterestReportsForEligibleCustomerCreationController : ApiController
     {

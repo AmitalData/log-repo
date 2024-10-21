@@ -16,7 +16,7 @@ using WebFreight.Web.Security;
 using Simplog.Server.Infrastructure.Helpers;
 using Stimulsoft.Report;
 
-namespace WebFreight.Web.Controllers.AccountingModel
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
     //[RoutePrefix("api/ReconciliationAfterConversion")]
     public class ReconciliationAfterConversionController : ApiController

@@ -31,7 +31,7 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityQueries;
 
-namespace WebFreight.Web.Controllers.AccountingModel
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
     public partial class CopyFromTenant0ExtendedController : ApiController
     {

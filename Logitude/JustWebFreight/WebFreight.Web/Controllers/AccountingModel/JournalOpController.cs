@@ -45,7 +45,7 @@ using Logitude.Accounting.BL.CoreBL.Batch;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers.ExternalAPIHelpers;
 
-namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsController.cs
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated //AccountingPeriodViewsController.cs
 {
     //[RoutePrefix("api/ReconciliationOp")]
     public partial class JournalOpController : ApiController

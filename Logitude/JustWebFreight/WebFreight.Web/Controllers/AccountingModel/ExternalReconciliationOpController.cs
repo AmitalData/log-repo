@@ -42,7 +42,7 @@ using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
 using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
 
-namespace WebFreight.Web.Controllers.AccountingModel 
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated 
 {
     public partial class ExternalReconciliationOpController : ApiController
     {

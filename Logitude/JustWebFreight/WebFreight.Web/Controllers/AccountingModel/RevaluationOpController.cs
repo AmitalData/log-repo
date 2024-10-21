@@ -25,7 +25,7 @@ using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
 using Logitude.Accounting.BL.Utils;
 
-namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsController.cs
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated //AccountingPeriodViewsController.cs
 {
     //[RoutePrefix("api/RevaluationOp")]
     public partial class RevaluationOpController : ApiController

@@ -39,7 +39,7 @@ using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.Data.Repositories;
 
 
-namespace WebFreight.Web.Controllers.AccountingModel
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
     public class ReconciliationCancelController
     {

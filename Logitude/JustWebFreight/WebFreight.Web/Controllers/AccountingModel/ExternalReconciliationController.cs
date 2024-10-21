@@ -42,7 +42,7 @@ using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
 using Simplog.Data.Helpers;
 
-namespace WebFreight.Web.Controllers.AccountingModel 
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated 
 {
     public partial class ExternalReconciliationController : ApiController
     {

@@ -38,7 +38,7 @@ using Logitude.Customs.Data;
 
 
 
-namespace JustWebFreight.WebFreight.Web.Controllers.CustomsModel.Generated.PMControllers
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     

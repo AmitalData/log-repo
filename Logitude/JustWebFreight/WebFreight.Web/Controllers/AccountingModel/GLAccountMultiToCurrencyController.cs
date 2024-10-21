@@ -19,7 +19,7 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.Accounting.Data.EntityLists;
 
-namespace WebFreight.Web.Controllers.AccountingModel
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
     //[RoutePrefix("api/GLAccountMultiToCurrency")]
     public class GLAccountMultiToCurrencyController : ApiController

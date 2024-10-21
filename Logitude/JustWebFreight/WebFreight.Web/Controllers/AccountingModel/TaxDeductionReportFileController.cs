@@ -13,7 +13,7 @@ using System.Web.Http;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 
-namespace WebFreight.Web.Controllers.AccountingModel
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
     public class TaxDeductionReportFileController: ApiController
     {

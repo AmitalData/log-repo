@@ -15,7 +15,7 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using Logitude.Accounting.BL.Utils;
 
-namespace WebFreight.Web.Controllers.AccountingModel
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
     //[RoutePrefix("api/Redempt_a_Cheque")]
     public class Redempt_a_ChequeController : ApiController

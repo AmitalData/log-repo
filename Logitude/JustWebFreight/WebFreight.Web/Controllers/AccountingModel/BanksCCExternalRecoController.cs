@@ -17,7 +17,7 @@ using System.Globalization;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Def.EntityPMs;
 
-namespace WebFreight.Web.Controllers.AccountingModel
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
     //[RoutePrefix("api/BanksCCExternalReco")]
     public class BanksCCExternalRecoController : ApiController

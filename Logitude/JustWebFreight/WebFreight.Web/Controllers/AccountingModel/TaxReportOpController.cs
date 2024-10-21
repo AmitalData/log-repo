@@ -42,7 +42,7 @@ using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityQueries;
 using static Dropbox.Api.Sharing.ListFileMembersIndividualResult;
 
-namespace WebFreight.Web.Controllers.AccountingModel
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
 
     public class GetTaxReportLinesResponse

@@ -14,7 +14,7 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using Logitude.Accounting.BL.EntityQueryServices;
 
-namespace WebFreight.Web.Controllers.AccountingModel
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
     public class AccountingEntegrityCheckController : ApiController
     {
