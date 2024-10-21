@@ -1,5 +1,5 @@
-<div class="detailsSlide_box">
-	<div class="detailsSlide_toggle" (click)="expandedArea1 = !expandedArea1" >
+<div class="detailsSlide_box" *ngIf="tableData1?.data?.length > 0 || tableData2?.data?.length > 0">
+	<div class="detailsSlide_toggle" (click)="expandedArea1 = !expandedArea1">
 		<div>
 			<h3 class="main_title">שיעורי מס</h3>
 		</div>
@@ -26,8 +26,8 @@
 	</div>
 </div>
 
-<div class="detailsSlide_box">
-	<div class="detailsSlide_toggle" (click)="expandedArea2 = !expandedArea2" >
+<div class="detailsSlide_box" *ngIf="tableData3?.data?.length > 0">
+	<div class="detailsSlide_toggle" (click)="expandedArea2 = !expandedArea2">
 		<div>
 			<h3 class="main_title">דרישות חוקיות</h3>
 		</div>
@@ -36,10 +36,10 @@
 		</div>
 	</div>
 	<div class="detailsSlide_ddown" [class.active]="expandedArea2" id="detailsSlide_ddown01" *ngIf="!expandedArea2">
-		<section class="title" >
+		<section class="title">
 			<div class="tableContainer">
 				<app-generic-table *ngIf="true" [tableData]="tableData3"></app-generic-table>
 			</div>
-		</section>		
+		</section>
 	</div>
 </div>
