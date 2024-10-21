@@ -84,15 +84,15 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             if (string.IsNullOrEmpty(token)) return null;
             string cacheKey = $"Token_{token}";
-            AuthenticationToken authenticationToken  =(AuthenticationToken)HttpContext.Current.Items["authToken"];
-            if (authenticationToken == null)
-            {
+            AuthenticationToken authenticationToken; //=(AuthenticationToken)HttpContext.Current.Items["authToken"];
+            //if (authenticationToken == null)
+            //{
                 if ( !token.Contains("+"))
                 {
                     token = token.Replace(" ", "+");
                 }
                 authenticationToken = (AuthenticationToken)CacheManager.CacheWrapper.Get(cacheKey);
-            }
+            //}
             if (authenticationToken != null)
             {
                 if (token != authenticationToken.Token)
