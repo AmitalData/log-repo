@@ -83,11 +83,6 @@ export class CommentsComponent implements OnInit, OnChanges {
     };
     return this.remarksClassificationPM;
   }
-
-  // closeCommentsClick() {
-  //   this.showComments = false;
-  //   this.closeComments.emit();
-  // }
   
   highlight(text: string): string {
     this.searchText = this.searchService.GetSearchText();

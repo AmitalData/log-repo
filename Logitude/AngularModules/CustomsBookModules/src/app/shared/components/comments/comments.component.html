@@ -15,7 +15,13 @@
                         <div class="commentSection">{{currentItem?.CIH_GoodsDescription}}</div>
                     </div>
                     <div class="commentOptions">
-                        <a href="#" role="button" class="commentOptions_toggle" (click)="showMenu()"
+                        <a class="actionCommentBox" href="#" role="button" (click)="editComment($event,comment)" [title]="'עריכה'">
+                            <i role="img" aria-hidden="true" class="icon-pencil"></i>
+                        </a>
+                        <a class="actionCommentBox" href="#" role="button" (click)="deleteComment($event, comment)" [title]="'מחיקה'">
+                            <i role="img" aria-hidden="true" class="icon-trash"></i>
+                        </a>
+                        <!-- <a href="#" role="button" class="commentOptions_toggle" (click)="showMenu()"
                             (click)="$event.preventDefault()">
                             <i role="img" aria-hidden="true" class="icon-dots"></i>
                         </a>
@@ -35,7 +41,7 @@
                             <div class="commentOptions_trapFocus" (click)="$event.preventDefault()">
                                 <a href="#" role="button">חזור לתחילת הפאנל</a>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="commentText">
                         <p class="commentSection" [innerHTML]="highlight(comment.RemarkDescription)">

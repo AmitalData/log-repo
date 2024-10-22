@@ -49,10 +49,11 @@ export class DataRowComponent implements OnInit {
 
 	ngOnInit() {
 		this.getCustomsBookAgreementLevelData();
-		// this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {});
-		this.showCommentsData();
 		this.showRulesData(this.data.CustomsItemID);
 		this.selectedSearchBy = this.searchService.selectSearchBy;
+		this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {
+			this.showCommentsData();
+		});
 	}
 
 	TariffList1: CB_TariffList;

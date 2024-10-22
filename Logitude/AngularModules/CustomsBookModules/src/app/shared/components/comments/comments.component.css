@@ -165,6 +165,9 @@ i[role="img"][aria-hidden="true"] {
     top: 12px;
     width: 30px;
     height: 30px;
+
+    display: flex;
+    flex-direction: column;
 }
 
 .commentOptions a.commentOptions_toggle {
@@ -303,4 +306,9 @@ li {
     &.active {
         transform: rotate(90deg);
     }
+}
+
+.actionCommentBox{
+    color: black;
+    margin: 10px;
 }
