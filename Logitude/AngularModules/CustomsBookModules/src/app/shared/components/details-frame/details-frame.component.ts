@@ -44,6 +44,9 @@ export class DetailsFrameComponent implements OnInit {
   faTrashCan = faTrashCan;
   faCaretSquareRight = faSquareCaretRight;
   faFileArchive = faFileText;
+  countOfComments: number = 0;
+  isLoading: boolean = false;
+
   constructor(private API_MainService: API_MainService, private addCommentService: AddCommentService) { }
 
 
@@ -52,7 +55,9 @@ export class DetailsFrameComponent implements OnInit {
     this.currentItem.subscribe((data: CB_CustomsItemComputedDataList) => {
       if (data?.CustomsItemID != null) {
         this.item = data
-        this.showCommentsByClick();
+
+        this.countOfComments = this.item?.remarksClassificationList?.length > 0 ? this.item?.remarksClassificationList?.length : 0;
+        this.addCommentService.allComments.next(this.item?.remarksClassificationList);
         this.showCommentsIsOpen.subscribe((isOpen: boolean) => {
           this.showComments = isOpen;
         });
@@ -63,20 +68,19 @@ export class DetailsFrameComponent implements OnInit {
     });
   }
 
-  countOfComments: number = 0;
-  showCommentsByClick() {
-    this.API_MainService.GetAllCommentsByCustomsItemId(this.currentItem.getValue().CustomsItemID, SessionInfo.LoggedUserTenant).subscribe((data: any) => {
-      const result: RemarksClassificationList[] = data.body;
-      if (!result) return; // TODO: add error message
+  //showCommentsByClick() {
+  //  this.API_MainService.GetAllCommentsByCustomsItemId(this.currentItem.getValue().CustomsItemID, SessionInfo.LoggedUserTenant).subscribe((data: any) => {
+  //    const result: RemarksClassificationList[] = data.body;
+  //    if (!result) return; // TODO: add error message
 
-      this.countOfComments = result?.length > 0 ? result.length : 0;
-      this.addCommentService.allComments.next(result);
-    });
+  //    this.countOfComments = result?.length > 0 ? result.length : 0;
+  //    this.addCommentService.allComments.next(result);
+  //  });
 
-    this.addCommentService.allComments.subscribe((result: RemarksClassificationList[]) => {
-      this.countOfComments = result?.length > 0 ? result.length : 0;
-    });
-  }
+  //  this.addCommentService.allComments.subscribe((result: RemarksClassificationList[]) => {
+  //    this.countOfComments = result?.length > 0 ? result.length : 0;
+  //  });
+  //}
 
   showAddCommentSidebar() {
     this.addCommentService.setIsOpened(true, this.item);

@@ -147,20 +147,20 @@ export class DataRowComponent implements OnInit {
 
 	showComments: boolean = false;
 	showRules: boolean = false;
-
+	comments: RemarksClassificationList[] = [];
 	countOfComments: number;
 	showCommentsData() {
 		this.API_MainService.GetAllCommentsByCustomsItemId(this.data.CustomsItemID, SessionInfo.LoggedUserTenant).subscribe((data: any) => {
-			const result: RemarksClassificationList[] = data.body;
+			this.comments = data.body;
 
-			if (!result) return; // TODO: add error message
+			if (!this.comments) return; // TODO: add error message
 
-			if (this.searchItem != "" && result[0]?.RemarkDescription?.includes(this.searchItem)) {
+			if (this.searchItem != "" && this.comments[0]?.RemarkDescription?.includes(this.searchItem)) {
 				this.isSearchItemExistRemark = true;
 			}
 			else this.isSearchItemExistRemark = false;
 
-			this.countOfComments = result?.length > 0 ? result.length : 0;
+			this.countOfComments = this.comments?.length > 0 ? this.comments.length : 0;
 		});
 	}
 
@@ -182,7 +182,10 @@ export class DataRowComponent implements OnInit {
 
 	showCommentsClick() {
 		this.showComments = !this.showComments;
+		this.data.remarksClassificationList = this.comments;
+		this.data.agreementsList = this.TariffListData;
 		this.showCommentsOpen.emit(true);
+		this.showDetails.emit();
 	}
 	showRulesClick() {
 		this.showRules = !this.showRules;
