@@ -339,6 +339,12 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                                                     customsDocumentPointerPM.Child1EntityId = this._MyDeclarationPM.SupplierInvoices.Where(d => d.UnfInvoiceCounterKey == customsDocument.UNFINVOICEKEY).FirstOrDefault().SequenceNumeric.ToString();
                                                 }
                                             }
+                                            else if (!string.IsNullOrWhiteSpace(customsDocument.SerialNum))
+                                            {
+                                                AppendLogLine($"not found match between SupplierInvoices.UnfInvoiceCounterKey and UNFINVOICEKEY, use SerialNum: {customsDocument.SerialNum}");
+                                                customsDocumentPointerPM.Child1EntityCode = "SupplierInvoice";
+                                                customsDocumentPointerPM.Child1EntityId = customsDocument.SerialNum;
+                                            }
                                         }
                                     }
                                     else
