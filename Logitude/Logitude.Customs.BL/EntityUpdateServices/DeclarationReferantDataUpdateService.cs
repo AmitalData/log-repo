@@ -11,6 +11,7 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.TraceEvents;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
+using Logitude.Customs.Data.EntityPOCOs;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -35,9 +36,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             base.OnUpdating(entityPM);
         }
+		protected override void OnUpdating(DeclarationReferantDataPM entityPM, DeclarationReferantData entityPOCO)
+		{
+            CreateEventsCustomShipment(entityPM, entityPOCO);
+			base.OnUpdating(entityPM, entityPOCO);
+		}
 
 
-        private void SendUnifreightEventParam(DeclarationReferantDataPM declarationReferantDataPM,string code)
+		private void SendUnifreightEventParam(DeclarationReferantDataPM declarationReferantDataPM,string code)
         {
             try
             {
@@ -76,5 +82,57 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 throw;
             }
         }
-    }
+
+		public void CreateEventsCustomShipment(DeclarationReferantDataPM entityPM, DeclarationReferantData entityPOCO)
+		{
+            DeclarationPM declarationPM = EntityParentPM as DeclarationPM;
+			string loggedContactId = null;
+			ContactRepository contactRepository = new ContactRepository(Tenant);
+			var loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(Tenant), Tenant);
+			if (loggedContact != null)
+			{
+				loggedContactId = loggedContact.Id;
+			}
+			if (entityPM.EstimatedArrivalDate != null && entityPM.EstimatedArrivalDate != entityPOCO.EstimatedArrivalDate)
+			{
+				EventTracer.DeleteTraceEvent("ETA", entityPM.Tenant, "Shipment", declarationPM.ShipmentId);
+				EventTracerArgs eventTracerArgs = new EventTracerArgs()
+				{
+					EntityId = declarationPM.ShipmentId,
+					Tenant = entityPM.Tenant,
+					UserId = loggedContact.Id,
+					ObjectTableName = "Shipment",
+					IsAddedManually = false,
+					EventTypeCode = "ETA",
+					EventDateTime = new DateTime(entityPM.EstimatedArrivalDate.Value.Year, entityPM.EstimatedArrivalDate.Value.Month, entityPM.EstimatedArrivalDate.Value.Day, 0, 0, 0)
+				};
+				EventTracer.CreateTraceEvent(eventTracerArgs);
+			}
+            if(entityPOCO.EstimatedArrivalDate != null && entityPM.EstimatedArrivalDate == null)
+			{
+				EventTracer.DeleteTraceEvent("ETA", entityPM.Tenant, "Shipment", declarationPM.ShipmentId);
+			}
+
+			if (entityPM.ArrivalDate != null && entityPM.ArrivalDate != entityPOCO.ArrivalDate)
+			{
+				EventTracer.DeleteTraceEvent("ARR", entityPM.Tenant, "Shipment", declarationPM.ShipmentId);
+				EventTracerArgs eventTracerArgs = new EventTracerArgs()
+				{
+					EntityId = declarationPM.ShipmentId,
+					Tenant = entityPM.Tenant,
+					UserId = loggedContact.Id,
+					ObjectTableName = "Shipment",
+					IsAddedManually = false,
+					EventTypeCode = "ARR",
+					EventDateTime = new DateTime(entityPM.ArrivalDate.Value.Year, entityPM.ArrivalDate.Value.Month, entityPM.ArrivalDate.Value.Day, 0, 0, 0)
+				};
+				EventTracer.CreateTraceEvent(eventTracerArgs);
+			}
+			if (entityPOCO.ArrivalDate != null && entityPM.ArrivalDate == null)
+			{
+				EventTracer.DeleteTraceEvent("ARR", entityPM.Tenant, "Shipment", declarationPM.ShipmentId);
+			}
+		}
+
+	}
 }

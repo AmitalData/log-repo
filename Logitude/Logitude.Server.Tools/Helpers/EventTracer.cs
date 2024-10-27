@@ -340,9 +340,37 @@ namespace Logitude.Server.Tools.Helpers
 
             return id;
         }
+		public static void DeleteTraceEvent(string eventTypeCode, int tenant, string objectTableName,string entityId)
+		{
+			IWebFreightContext objectContext = WebFreightContext.GetContext(tenant);
+			ObjectTableRepository objectTabelRepository = new ObjectTableRepository(objectContext);
+			TraceEventRepository traceEventRepository = new TraceEventRepository(objectContext);
+			EventTypeRepository eventTypeRepository = new EventTypeRepository(objectContext);
+			ObjectTable objectTable = objectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
+			string objectTableId = objectTable.Id;
+			List<EventType> allEventTypes = eventTypeRepository.GetEventTypesByTenantAndObjectTableId(tenant, objectTableId).ToList();
+			if (!string.IsNullOrEmpty(eventTypeCode))
+			{
+				EventType eventType = allEventTypes.Where(d => d.Code == eventTypeCode).FirstOrDefault();
 
+				if (eventType != null)
+				{
+					List<TraceEvent> AllEventTraces = traceEventRepository.GetAllTraceEventsByEventType(entityId, eventType.Id, tenant).ToList();
+					if (AllEventTraces.Count > 0)
+					{
+						foreach (TraceEvent iTraceEvent in AllEventTraces)
+						{
+							iTraceEvent.Deleted = true;
+							traceEventRepository.Update(iTraceEvent);
+						}
 
-    }
+						traceEventRepository.SubmitChanges();
+					}
+				}
+			}
+		}
+
+	}
 
     public class TraceEventParams
     {
