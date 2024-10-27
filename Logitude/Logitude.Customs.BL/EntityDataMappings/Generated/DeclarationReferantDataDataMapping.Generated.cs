@@ -61,8 +61,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Mawb, 
 	         Hawb, 
 	         ImporterApproval, 
-	         DeclarationIdToDisplay, 
-	         VesselId,
+	         DeclarationIdToDisplay,
 	      }
 
 
@@ -119,7 +118,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsCloseOrOpenFromUser, 
 	         OccuredStatus, 
 	         NotOccuredStatus, 
-	         VesselId, 
 	         VesselName,
 	      }
 
@@ -322,11 +320,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationIdToDisplay))
             {
 				entityPOCO.DeclarationIdToDisplay = entityPM.DeclarationIdToDisplay;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VesselId))
-            {
-				entityPOCO.VesselId = entityPM.VesselId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -535,11 +528,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.DeclarationIdToDisplay = entityPOCO.DeclarationIdToDisplay;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VesselId))
-            {
-					entityPM.VesselId = entityPOCO.VesselId;
-            }
-
 		}
 
 		public void PMToOldPM(DeclarationReferantDataPM entityPM, DeclarationReferantDataPM oldEntityPM)
@@ -739,11 +727,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationIdToDisplay))
             {
                 oldEntityPM.DeclarationIdToDisplay = entityPM.DeclarationIdToDisplay;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VesselId))
-            {
-                oldEntityPM.VesselId = entityPM.VesselId;
             }
 			
 		}

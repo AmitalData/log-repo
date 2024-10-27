@@ -123,11 +123,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool ImporterApproval { get; set; }
         [Column("DeclarationIdToDisplay")]
 	    public string DeclarationIdToDisplay { get; set; }
-        [ForeignKey("Vessel")]
-        [Column("VesselId")]
-	    public string VesselId { get; set; }
-	      
-        public virtual Vessel Vessel { get; set; }
     }
 }
 	 

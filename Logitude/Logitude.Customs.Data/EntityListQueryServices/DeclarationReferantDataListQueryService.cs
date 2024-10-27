@@ -74,7 +74,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                                  CustomerName = (d.CustomerCard.LocalName != null ? d.CustomerCard.LocalName : d.CustomerCard.EnglishName),
 
-                                                                 VesselName = a.Vessel != null ? (a.Vessel.LocalName != null? a.Vessel.LocalName : a.Vessel.EnglishName): null,
+                                                                 VesselName = a.VesselCode != null ? (a.VesselCode.LocalName != null? a.VesselCode.LocalName : a.VesselCode.EnglishName): null,
 
                                                                  TransportModeId = d.TransportModeId,
 

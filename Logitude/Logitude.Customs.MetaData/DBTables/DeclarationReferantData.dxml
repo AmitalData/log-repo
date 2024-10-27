@@ -274,13 +274,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="VesselId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="VendorId"
     ReferencedTable="CustomsVendors"
@@ -321,11 +314,6 @@
     ReferencedTable="PackingTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
-  <Relation
-    ForeignKeyColumn="VesselId"
-    ReferencedTable="Vessels"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
   <Index
     Columns="IsClosedForFollowUp" />
   <Index

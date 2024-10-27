@@ -202,7 +202,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDecReferantData
                     Vessel vessel = vesselRepository.GetSingleVesselByCode(_LogitudeDeclarationReferantData.Vessel, ResolvedTenant());
                     if (vessel != null)
                     {
-                        _DeclarationReferantDataPM.VesselId = vessel.Id;
+                        _DeclarationReferantDataPM.Vessel = vessel.Id;
                     }
                     else
                     {

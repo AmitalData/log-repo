@@ -1170,29 +1170,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string vesselId ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string VesselId  
-	   {
-	    
-	     get
-		{
-		   return vesselId;
-		 }
-		 set
-		 {
-		   if(vesselId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VesselId",OldValue=vesselId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   vesselId=value;
-		   }
-			
-		 }
-	   }
 	  private string vesselName ;
 	  	  
        
