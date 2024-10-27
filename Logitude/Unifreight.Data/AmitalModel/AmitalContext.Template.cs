@@ -12222,7 +12222,7 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.ACCOUNTNAME)
                     .HasColumnName(@"ACCOUNT_NAME")
                     .HasMaxLength(30)
-                    .HasColumnType("varchar");
+                    .HasColumnType("nvarchar");
             modelBuilder.Entity<CCUPAYLINEF>()
                 .Property(p => p.BANKID)
                     .HasColumnName(@"BANK_ID")
