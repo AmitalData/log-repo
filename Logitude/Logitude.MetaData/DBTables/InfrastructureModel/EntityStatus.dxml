@@ -112,5 +112,5 @@
   <Index
     Columns="Tenant,ObjectTableId" />
   <Index
-	Columns="Tenant,Code" />
+    Columns="Tenant,Code" />
 </Table>
