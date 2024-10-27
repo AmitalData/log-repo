@@ -27,6 +27,8 @@
             CustomsItemIDNum,
             TariffID,
             CASE 
+                WHEN (CustomsRateWithout.ComputationMethodID = '10' OR CustomsRateWithout.ComputationMethodID = '15') AND (SELECT Rate FROM GeneralAgreement) IS NULL THEN 
+			            (SELECT CalculationReference FROM GeneralAgreement)
                 WHEN CustomsRateWithout.ComputationMethodID = '10' THEN 
                     FORMAT(
                         (TRY_CAST((SELECT Rate FROM GeneralAgreement) AS DECIMAL(10, 2)) - 
