@@ -190,6 +190,10 @@ namespace Logitude.Customs.Data.EntityLists
        public bool IsCloseOrOpenFromUser  { get; set; }
        [DataMember]
        public int ListCounter  { get; set; }
+       [DataMember]
+       public string VesselId  { get; set; }
+       [DataMember]
+       public string VesselName  { get; set; }
    }
 
 }

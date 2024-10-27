@@ -102,6 +102,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.ImporterApproval).HasColumnName("ImporterApproval");
 
             this.Property(t => t.DeclarationIdToDisplay).HasColumnName("DeclarationIdToDisplay").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.VesselId).HasColumnName("VesselId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

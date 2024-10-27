@@ -274,6 +274,16 @@ export class DeclarationReferantDataPM {
     public set NotOccuredStatus(newValue: string) { if (this.notOccuredStatus != newValue) { this.notOccuredStatus = newValue; this.MarkAsDirty("NotOccuredStatus"); } }
        
 	 
+    private vesselId: string;
+    public get VesselId() { return this.vesselId; }
+    public set VesselId(newValue: string) { if (this.vesselId != newValue) { this.vesselId = newValue; this.MarkAsDirty("VesselId"); } }
+       
+	 
+    private vesselName: string;
+    public get VesselName() { return this.vesselName; }
+    public set VesselName(newValue: string) { if (this.vesselName != newValue) { this.vesselName = newValue; this.MarkAsDirty("VesselName"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		
