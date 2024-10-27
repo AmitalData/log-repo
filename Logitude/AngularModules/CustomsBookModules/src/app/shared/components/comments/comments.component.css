@@ -167,7 +167,7 @@ i[role="img"][aria-hidden="true"] {
     height: 30px;
 
     display: flex;
-    flex-direction: column;
+    flex-direction: row-reverse;
 }
 
 .commentOptions a.commentOptions_toggle {
