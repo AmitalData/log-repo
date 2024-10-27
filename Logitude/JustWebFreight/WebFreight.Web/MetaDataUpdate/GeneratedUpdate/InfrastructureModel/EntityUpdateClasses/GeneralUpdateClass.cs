@@ -93,7 +93,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
    {  		
 
  
- 		public const string HashString = "7967d941810307676873a3d1281456hu";
+ 		public const string HashString = "7967d941810307676873a3d1281456gdf5";
   	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -731,11 +731,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 		   Feature GeneralFeature_CONFIRMATIONNUMBERDEFAULTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONFIRMATIONNUMBERDEFAULTS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CONFIRMATIONNUMBERDEFAULTS", NameTextCodeDefaultText = @"Confirmation number defaults" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
-    
-	    
-		}
+            Feature GeneralFeature_NLogSettings = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NLogSettings", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.NLogSettings", NameTextCodeDefaultText = @"NLog Settings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes, GeneralObjectTable);
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
+
+        }
+
+        public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()

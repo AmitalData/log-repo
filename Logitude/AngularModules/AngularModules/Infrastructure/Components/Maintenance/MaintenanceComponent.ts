@@ -808,6 +808,14 @@ export class MaintenanceComponent {
             item.ObjectTableName = "Partners Upload";
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
+        if (FeatureLocator.HasFeaturePermession("General", "NLogSettings")) {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "OTH";
+            item.Icon = "List"
+            item.Code = "NLSS";
+            item.ObjectTableName = "NLog Settings";
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        }
 
         if (FeatureLocator.HasFeaturePermession("General", "CacheLogMenu")) {
             var item = new MenusTablePM();
@@ -1925,7 +1933,14 @@ export class MaintenanceComponent {
                     logitudeWindow.Show('./Infrastructure/Components/Maintenance/CacheLogComponent');
                     break;
                 }
-
+                case "NLSS": {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Width = 800;
+                    logitudeWindow.Height = 600;
+                    logitudeWindow.Title = 'NLog settings';
+                    logitudeWindow.Show('./Infrastructure/Components/Maintenance/NLogSettingsComponent');
+                    break;
+                }
                 case "SUPM": {
                     this._entityResourceService.getEntityResourceByTableName("SupportMailbox", 0).subscribe((response: any) => {
                         var windowTitle = "Support Mail Boxes";

@@ -212,6 +212,7 @@ import { AddEditChildEntityComponent } from './Components/LogitudeComponents/Cus
 import { NewCustomObjectComponent } from './Components/NewEntity/NewCustomObjectComponent';
 import { DataProviderFieldsNestedList } from '../Report/Components/DataProviderFieldsNestedList';
 import { TreeComponent } from './Components/LogitudeComponents/tree';
+import { NLogSettingsComponent } from './Components/Maintenance/NLogSettingsComponent';
 
  //import { ScrollingModule } from '@angular/cdk/scrolling';
 export const Directives = [
@@ -297,6 +298,7 @@ export const ControlsComponents = [
     LogFooterComponent,
     TipsComponent,
     CacheLogComponent,
+    NLogSettingsComponent,
     ImageComponent,
     LogTabsComponent,
     LogBooleanComponent,
@@ -492,6 +494,8 @@ export class ModuleDeclarations {
             case 'StimulsoftViewerComponent': { myResult = StimulsoftViewerComponent; break; }
             case 'TipsComponent': { myResult = TipsComponent; break; }
             case 'CacheLogComponent': { myResult = CacheLogComponent; break; }
+            case 'NLogSettingsComponent': { myResult = NLogSettingsComponent; break; }
+
             case 'ChooseUserComponent': { myResult = ChooseUserComponent; break; }
 
             case 'ChooseDatesComponent': { myResult = ChooseDatesComponent; break; }
