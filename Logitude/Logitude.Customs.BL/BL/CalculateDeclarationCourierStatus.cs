@@ -681,6 +681,7 @@ namespace Logitude.Customs.BL.BL
                 if (myDeclarationCourierStatusPM.DeclarationPendings != null && myDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
                 {
                     declarationPendingPM_906 = myDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.CourierPendingReasonCode == "906").FirstOrDefault();
+                    if(declarationPendingPM_906?.DeclarationID != null) NetCommonHelper.Logger.DevLog.Instance.WriteDebug("906 penidng found "+ "decId: " + declarationPendingPM_906?.DeclarationID + "STACK: " + Environment.StackTrace);
                 }
 
 
@@ -688,6 +689,8 @@ namespace Logitude.Customs.BL.BL
 
                 CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(declarationPM.Tenant);
                 Boolean isActive = courierPendingReasonRepositoryRepository.IsActive("906", myDeclarationCourierStatusPM.Tenant);
+                if (declarationPendingPM_906?.DeclarationID != null) NetCommonHelper.Logger.DevLog.Instance.WriteDebug("906 penidng isActive " + isActive + " decId: " + declarationPendingPM_906?.DeclarationID + "STACK: " + Environment.StackTrace);
+
                 if (isActive)
                 {
                     if (declarationPendingPM_906 == null)
@@ -701,6 +704,8 @@ namespace Logitude.Customs.BL.BL
                         if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.None)
                         {
                             myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("906 pending update. STACK: " + Environment.StackTrace);
+
                         }
                     }
 
