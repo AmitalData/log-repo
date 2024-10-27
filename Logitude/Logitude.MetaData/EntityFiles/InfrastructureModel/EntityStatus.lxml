@@ -1312,17 +1312,17 @@
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;ALES&quot;"
-        IndexOrder="1"
+        IndexOrder="3"
         ObjectFieldName="&quot;DisplayName&quot;"
         ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;ALES&quot;"
-        IndexOrder="2"
+        IndexOrder="1"
         ObjectFieldName="&quot;Code&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ALES&quot;"
-        IndexOrder="3"
+        IndexOrder="2"
         ObjectFieldName="&quot;Name&quot;"
         ColumnWidth="150" />
       <QueryColumn
