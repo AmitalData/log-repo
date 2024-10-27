@@ -483,6 +483,10 @@ export interface CB_CustomsItemComputedDataList {
 	SearchByTextResult: string;
 	children: CB_CustomsItemComputedDataList[];
 	IsShowChildren: boolean;
+	remarksClassificationList?: RemarksClassificationList[];
+	rulesDetailsList?: RulesDetailsList[];
+	agreementsList?: CB_TariffList[];
+	requirementComputedDataList?: CB_RequirementComputedDataList[];
 }
 
 export interface CB_RequirementComputedDataList {

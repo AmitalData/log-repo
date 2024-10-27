@@ -7,6 +7,7 @@ import { CB_CustomsItemComputedDataList, RemarksClassificationList, RemarksClass
 import { BehaviorSubject } from 'rxjs';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { SearchService } from '../page-top/service/top-page.service';
+import { faChevronLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -26,6 +27,9 @@ export class CommentsComponent implements OnInit, OnChanges {
   clickPin: boolean = true;
   searchText: string = '';
   // faPlusCircle = faPlusCircle;
+  faChevronLeft = faChevronLeft;
+  faChevronDown = faChevronDown;
+  expandedArea: boolean = false;
 
   constructor(private addCommentService: AddCommentService, private API_MainService: API_MainService, private searchService: SearchService) { }
 
@@ -36,6 +40,9 @@ export class CommentsComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {
       this.allComments = data;
+      this.showComments = this.allComments.length > 0 ? true : false;
+      this.expandedArea = !this.showComments;
+
       this.showMenuOpen = false; // initialize the menu to be closed
     });
     this.addCommentService.currentRemark.subscribe((data: RemarksClassificationPM) => {
@@ -75,11 +82,6 @@ export class CommentsComponent implements OnInit, OnChanges {
       remarkDescription: comment.RemarkDescription
     };
     return this.remarksClassificationPM;
-  }
-
-  closeCommentsClick() {
-    this.showComments = false;
-    this.closeComments.emit();
   }
   
   highlight(text: string): string {

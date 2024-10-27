@@ -7,20 +7,20 @@
 			<fa-icon [size]="'xl'" class="toggle-close" [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>
 		</div>
 	</div>
-	<div class="detailsSlide_ddown" [class.active]="expandedArea1" id="detailsSlide_ddown01" *ngIf="!expandedArea1">
+	<div class="detailsSlide_ddown" [class.active]="expandedArea1" id="detailsSlide_ddown01" >
 		<!-- First section: מכס -->
-		<section class="title">
+		<section class="title" *ngIf="!expandedArea1">
 			<h4 class="title">מכס</h4>
 			<div class="tableContainer">
-				<app-generic-table *ngIf="true" [tableData]="tableData1"></app-generic-table>
+				<app-generic-table [tableData]="tableData1"></app-generic-table>
 			</div>
 		</section>
 
 		<!-- Second section: מס קנייה -->
-		<section>
+		<section *ngIf="!expandedArea1">
 			<h4 class="sub_title">מס קנייה</h4>
 			<div class="tableContainer">
-				<app-generic-table *ngIf="true" [tableData]="tableData2"></app-generic-table>
+				<app-generic-table [tableData]="tableData2"></app-generic-table>
 			</div>
 		</section>
 	</div>
@@ -35,10 +35,10 @@
 			<fa-icon [size]="'xl'" class="toggle-close" [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>
 		</div>
 	</div>
-	<div class="detailsSlide_ddown" [class.active]="expandedArea2" id="detailsSlide_ddown01" *ngIf="!expandedArea2">
+	<div class="detailsSlide_ddown" [class.active]="expandedArea2" id="detailsSlide_ddown01" >
 		<section class="title">
 			<div class="tableContainer">
-				<app-generic-table *ngIf="true" [tableData]="tableData3"></app-generic-table>
+				<app-generic-table *ngIf="!expandedArea2" [tableData]="tableData3"></app-generic-table>
 			</div>
 		</section>
 	</div>

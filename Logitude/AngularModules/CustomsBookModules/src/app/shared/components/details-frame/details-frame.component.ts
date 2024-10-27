@@ -44,37 +44,40 @@ export class DetailsFrameComponent implements OnInit {
   faTrashCan = faTrashCan;
   faCaretSquareRight = faSquareCaretRight;
   faFileArchive = faFileText;
+  countOfComments: number = 0;
+  isLoading: boolean = false;
+
   constructor(private API_MainService: API_MainService, private addCommentService: AddCommentService) { }
 
 
   ngOnInit() {
-    // this.currentItem.FullClassification = "";
     this.currentItem.subscribe((data: CB_CustomsItemComputedDataList) => {
       if (data?.CustomsItemID != null) {
         this.item = data
-        this.showCommentsByClick();
+
+        this.countOfComments = this.item?.remarksClassificationList?.length > 0 ? this.item?.remarksClassificationList?.length : 0;
+        this.addCommentService.allComments.next(this.item?.remarksClassificationList);
         this.showCommentsIsOpen.subscribe((isOpen: boolean) => {
           this.showComments = isOpen;
         });
         this.showRulesIsOpen.subscribe((isOpen: boolean) => {
           this.showRules = isOpen;
         });
+
+        this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {
+          this.countOfComments = data?.length > 0 ? data.length : 0;
+        });
       }
     });
   }
 
-  countOfComments: number = 0;
-  showCommentsByClick() {
-    this.API_MainService.GetAllCommentsByCustomsItemId(this.currentItem.getValue().CustomsItemID, SessionInfo.LoggedUserTenant).subscribe((data: any) => {
-      const result: RemarksClassificationList[] = data.body;
-      if (!result) return; // TODO: add error message
+  showCommentsData() {
+    this.API_MainService.GetAllCommentsByCustomsItemId(this.item?.CustomsItemID, SessionInfo.LoggedUserTenant).subscribe((data: any) => {
+      this.item.remarksClassificationList = data?.body;
 
-      this.countOfComments = result?.length > 0 ? result.length : 0;
-      this.addCommentService.allComments.next(result);
-    });
+      if (!this.item.remarksClassificationList) return; // TODO: add error message
 
-    this.addCommentService.allComments.subscribe((result: RemarksClassificationList[]) => {
-      this.countOfComments = result?.length > 0 ? result.length : 0;
+      this.countOfComments = this.item.remarksClassificationList?.length > 0 ? this.item.remarksClassificationList.length : 0;
     });
   }
 

@@ -4,7 +4,7 @@
 			<i role="img" aria-hidden="true"> <fa-icon [icon]="faArrowAltCircleLeft"></fa-icon> </i>
 		</button>
 	</div>
-	<div class="mainTable_itemName" (click)="showDetails.emit()" #dynamicDiv>
+	<div class="mainTable_itemName" (click)="showCommentsClick()" #dynamicDiv>
 		<a href="#" role="button" [ngClass]="{'selectedLink': isSelected}" (click)="$event.preventDefault()">
 			<span class="full_classification" *ngIf="data?.CI_Parent_CustomsItemIDNum"
 				[innerHTML]="highlight(ClassificationNoDisplay(data,data?.FullClassification), searchItem)"
@@ -32,7 +32,7 @@
 	<div class="mainTable_itemActions" *ngIf="!this.showDetailsOpen.getValue()">
 		<ul>
 			<li>
-				<div class="mainTable_itemDocument" (click)="showRulesClick()" (click)="showDetails.emit()">
+				<div class="mainTable_itemDocument" (click)="showRulesClick()" (click)="showCommentsClick()">
 					<a class="icon">
 						<i role="img"
 							[ngClass]="isSelected || isSearchItemExistRule? 'icon-document_full' : 'icon-document'">
@@ -48,7 +48,7 @@
 				</div>
 			</li> -->
 			<li *ngIf="countOfComments > 0; else newComment">
-				<div class="mainTable_itemComment" (click)="showCommentsClick()" (click)="showDetails.emit()">
+				<div class="mainTable_itemComment" (click)="showCommentsClick()" >
 					<a class="icon" aria-expanded="true">
 						<i role="img" [ngClass]="isSelected || isSearchItemExistRemark? 'icon-comment_full' : 'icon-comment'"></i>
 						<!-- <i role="img" [ngClass]="{'icon-comment': !isSelected, 'icon-comment_full': isSelected}"></i> -->
