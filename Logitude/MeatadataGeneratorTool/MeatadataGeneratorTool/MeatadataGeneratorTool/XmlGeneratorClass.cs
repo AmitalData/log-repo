@@ -2374,7 +2374,7 @@ namespace MeatadataGeneratorTool
                     fieldElement.SetAttribute(atrrName + "Back_up", attrValue);
 
                     attrValue = ConvertToBase64(attrValue);
-                    attrValue = "\"" + "BS64" + attrValue + "\"";
+                    attrValue = "\"" + "BS64:" + attrValue + "\"";
 
 
                 }
@@ -2395,7 +2395,7 @@ namespace MeatadataGeneratorTool
                     fieldElement.SetAttribute(atrrName + "Back_up", attrValue);
 
                     attrValue = ConvertToBase64(attrValue);
-                    attrValue = "\"" + "BS64" + attrValue + "\"";
+                    attrValue = "\"" + "BS64:" + attrValue + "\"";
                 }
                 fieldElement.SetAttribute(atrrName, attrValue);
             }

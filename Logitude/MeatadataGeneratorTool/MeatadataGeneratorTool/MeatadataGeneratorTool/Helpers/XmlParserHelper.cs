@@ -1254,7 +1254,6 @@ namespace MeatadataGeneratorTool.Helpers
 
             return result;
         }
-        private const string Base64Prefix = "\"" + "bs64:";
 
         public string GetAttributeStringValue(XmlAttribute att)
         {
