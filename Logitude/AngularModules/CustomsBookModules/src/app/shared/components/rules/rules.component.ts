@@ -45,7 +45,10 @@ export class RulesComponent implements OnInit, OnChanges {
     this.API_MainService.GetCustomsBookRulesData(customsItemID).subscribe((data: any) => {
       if (!data.body) return; // TODO: add error message
       // Clean up spaces by replacing multiple &nbsp; with a single space, then condense extra spaces
-      let rules = data?.body?.forEach(rule => rule.Rules = rule.Rules.replace(/(&nbsp;)+/g, ' ').replace(/\s+/g, ' ').trim());
+      let rules = data.body;
+      rules.forEach(rule => {
+        rule.Rules = rule.Rules.replace(/(&nbsp;)+/g, ' ').replace(/\s+/g, ' ').trim();
+      });
 
       this.allRules = this.buildRulesHierarchy(rules);
     });
