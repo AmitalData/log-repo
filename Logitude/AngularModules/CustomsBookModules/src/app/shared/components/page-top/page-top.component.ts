@@ -29,7 +29,7 @@ export class PageTopComponent {
 	public checked: string | number = '';
 	public searchBy = SearchByParam;
 	public selectedSearchOption: SearchByParam = this.searchBy.Classification;
-	public currentSearchState: string = searchState.יבום;
+	public currentSearchState: string = searchState.יבוא;
 	public SearchByValidation: SearchBy = SearchBy.searchBy_form01;
 	ngOnInit() {
 		this.text = this.searchService.SearchBy('searchBy_form01');
