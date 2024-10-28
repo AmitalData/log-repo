@@ -6620,6 +6620,12 @@
       LocalDefaultText="&quot;מס' התעודה עודכן בחשבונות בהצהרה , אך טרם נשלחה ההצהרה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+  Code="&quot;Customs.CertificateOfOrigin.O.NotDeclaration&quot;"
+  DefaultText="&quot;Can't send certificate because declaration not sent.&quot;"
+  LocalDefaultText="&quot;לא ניתן לשלוח תעודה לפני שההצהרה נשלחה למכס&quot;"
+  TextCodeTypeCode="&quot;O&quot;"
+  IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
