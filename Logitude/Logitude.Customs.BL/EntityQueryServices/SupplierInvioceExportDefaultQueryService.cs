@@ -23,18 +23,18 @@ namespace Logitude.Customs.BL.EntityQueryServices
 			entityPM.SupplierInvItemCertificatDefs = supplierInvoiceItemsPriceQueryService.GetMulti(supplierInvioceExportDefaultKeys, false);
 		}
 
-	   public SupplierInvioceExportDefault GetSupplierInvoiceExportDefaultByTenant(int tenant)
+	   public SupplierInvioceExportDefaultPM GetSupplierInvoiceExportDefaultByTenant(int tenant)
        {
-            SupplierInvioceExportDefault supplierInvioceExportDefault = null;
+            SupplierInvioceExportDefaultPM supplierInvioceExportDefaultPM = null;
            if (tenant != null)
            {
 
                 SupplierInvioceExportDefaultRepository supplierInvioceExportDefaultRepository = new SupplierInvioceExportDefaultRepository(context);
-                 supplierInvioceExportDefault = supplierInvioceExportDefaultRepository.GetSupplierInvoiceExportDefaultByTenant( tenant);
-
+				var supplierInvioceExportDefault = supplierInvioceExportDefaultRepository.GetSupplierInvoiceExportDefaultByTenant( tenant);
+				supplierInvioceExportDefaultPM = GetEntityPM(supplierInvioceExportDefault);
 
 			}
-			return supplierInvioceExportDefault;
+			return supplierInvioceExportDefaultPM;
        }
 
       

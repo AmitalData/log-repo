@@ -44,13 +44,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
 				SupplierInvioceExportDefaultQueryService queryService = new SupplierInvioceExportDefaultQueryService(customContext);
-				SupplierInvioceExportDefaultRepository supplierInvioceExportDefaultRepository = new SupplierInvioceExportDefaultRepository(customContext);
-                SupplierInvioceExportDefaultPM supplierInvioceExportDefaultPM = null;
-
-                var supplierInvioceExportDefault = supplierInvioceExportDefaultRepository.GetSupplierInvoiceExportDefaultByTenant(tenant);
-                
-                if(supplierInvioceExportDefault != null)
-				 supplierInvioceExportDefaultPM = queryService.GetSingle(supplierInvioceExportDefault.Id, true, false);
+               
+                var supplierInvioceExportDefaultPM = queryService.GetSupplierInvoiceExportDefaultByTenant(tenant);                       
 
                 return Request.CreateResponse(HttpStatusCode.OK, supplierInvioceExportDefaultPM);
             }

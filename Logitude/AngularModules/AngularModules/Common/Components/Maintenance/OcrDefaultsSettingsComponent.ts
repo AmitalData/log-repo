@@ -128,6 +128,21 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
                 this.SupplierInvioceExportDefaultPM = new SupplierInvioceExportDefaultPM();
                 this.DefaultsSupplierInvioceExportDefaultPM()
             }
+            else {
+                this.SupplierInvioceExportDefaultPM.SupplierInvItemCertificatDefs.forEach(x =>{
+                    var item: SupplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM(null);
+                    item.CertificateNumber = x.CertificateNumber
+                    item.Tenant = x.Tenant
+                    item.ReqConfirmationTypeCode = x.ReqConfirmationTypeCode
+                    item.CertificateExemptionTypeCode = x.CertificateExemptionTypeCode
+                    item.AttachmentTypeCode = x.AttachmentTypeCode
+                    item.ResConfirmationTypeCode = x.ResConfirmationTypeCode
+                    item.CustomsAttachmentID = x.CustomsAttachmentID
+                    item.SequenceNumeric = x.SequenceNumeric
+                    this.ItemsSource.Insert(new InvoiceItemCertificateLine(item, null));
+
+                });             
+            }
             this.IsVisibile = true;
             this.CurrentSession.StopBusyIndicator();
 
