@@ -82,4 +82,9 @@ export class API_MainService extends BaseService {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/GetAllCommentsByCustomsItemId?customsItemId=${customsItemId}&tenant=${tenant}`;
 		return this.Get(url);
 	}
+
+	GetFromTypesense(searchValue: string, customsBookType: string, tenant: number) {
+		const url = `${this._apiUrl}CB_CustomsItemExtended/GetFromTypesense?searchValue=${searchValue}&customsBookType=${customsBookType}&tenant=${tenant}`;
+		return this.Get(url);
+	}
 }
