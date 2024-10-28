@@ -49,14 +49,17 @@ namespace CustomsBook
             DataTable dataTable = new DataTable();
 
             foreach (var property in typeof(T).GetProperties())
-                dataTable.Columns.Add(property.Name, property.PropertyType);
+            {
+                Type propertyType = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
+                dataTable.Columns.Add(property.Name, propertyType);
+            }
 
             foreach (var result in results)
             {
                 DataRow row = dataTable.NewRow();
 
                 foreach (var property in typeof(T).GetProperties())
-                    row[property.Name] = property.GetValue(result);
+                    row[property.Name] = property.GetValue(result) ?? DBNull.Value;
 
                 dataTable.Rows.Add(row);
             }

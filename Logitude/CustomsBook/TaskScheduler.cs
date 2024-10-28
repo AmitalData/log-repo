@@ -440,11 +440,11 @@ namespace CustomsBook
             
             logger.Debug("Start TaskScheduler");
 
-            //DownloadFile();
+            DownloadFile();
 
             UpdateAzureSearchAIData.Update();
 
-            Console.ReadLine();
+            //Console.ReadLine();
         }
     }
 }
