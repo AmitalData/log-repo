@@ -4452,10 +4452,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.NewEntityButtonLabel = TextCodeTranslator.Translate(
                 'Customs.General.O.OpenLogisticActionRequest'
             );
-        } else if (
-            this.SelectedQuery?.NameTextCodeCode ==
-            'Shipment.Q.CustomsShipments'
-        ) {
+
+        } else if (this.MenuTableQuerySection == 'CustomsShipments') {
             this.NewEntityButtonLabel = TextCodeTranslator.Translate(
                 'Shipment.O.OpenNewCustomShipment'
             );
@@ -5170,19 +5168,12 @@ export class ListComponent implements OnInit, AfterViewInit {
 
             if (this.ObjectTableName == 'Shipment') {
                 var args = new NewEntityArgs();
-                args.QueryNameTextCode = AppTool.IsNullOrEmpty(
-                    this.SelectedQuery
-                )
-                    ? null
-                    : this.SelectedQuery.NameTextCodeCode;
+                args.QueryNameTextCode = AppTool.IsNullOrEmpty(this.SelectedQuery)? null: this.SelectedQuery.QuerySection;
                 logWindow.WindowArgs = args;
 
                 str = TextCodeTranslator.Translate('Shipment.O.NewShipment');
 
-                if (
-                    this.SelectedQuery?.NameTextCodeCode ==
-                    'Shipment.Q.CustomsShipments'
-                ) {
+                if (this.MenuTableQuerySection == 'CustomsShipments') {
                     logWindow.Width = 650;
                     logWindow.Height = 300;
                 }

@@ -698,5 +698,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string ContainersNumbers { get; set; }
         public string ReferantUserId { get; set; }
         public string IskaNumber { get; set; }
+        public string UniCloudShipment { get; set; }
     }
 }

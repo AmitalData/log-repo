@@ -924,6 +924,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.HSCode).HasColumnName("HSCode");
             this.Property(t => t.IskaNumber).HasColumnName("IskaNumber");
             this.Property(t => t.ReferantUserId).HasColumnName("ReferantUserId");
+            this.Property(t => t.UniCloudShipment).HasColumnName("UniCloudShipment");
 
             if (dbms == "oracle")
             {

@@ -2317,6 +2317,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string Commodity { get; set; }
         public bool IsCustomShipment { get; set; }
 		public string OriginCountryCode { get; set; }
+        public bool UniCloudShipment { get; set; }
 
 
 		#region WarehouseLeg

@@ -5538,6 +5538,10 @@ export class ShipmentPM {
     public get IsCustomShipment() { return this.isCustomShipment; }
     public set IsCustomShipment(newValue: boolean) { if (this.isCustomShipment != newValue) { this.isCustomShipment = newValue; this.MarkAsDirty("IsCustomShipment"); } }
 
+    private uniCloudShipment: boolean;
+    public get UniCloudShipment() { return this.uniCloudShipment; }
+    public set UniCloudShipment(newValue: boolean) { if (this.uniCloudShipment != newValue) { this.uniCloudShipment = newValue; this.MarkAsDirty("UniCloudShipment"); } }
+
     private shipmentReferances: ShipmentReferancePM[];
     public get ShipmentReferances() { return this.shipmentReferances; }
     public set ShipmentReferances(newValue: ShipmentReferancePM[]) { if (this.shipmentReferances != newValue) { this.shipmentReferances = newValue; this.MarkAsDirty("ShipmentReferances"); } }

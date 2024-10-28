@@ -692,7 +692,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                     this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
                 });
             }
-            else if (this.EntityPM.DirectionId == "C") {
+            else if (this.EntityPM.IsCustomShipment) {
                 myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code.indexOf("CustomsHeaderScreen") != -1 )[0];
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
@@ -1187,7 +1187,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                             allTabs.splice(indexOfTab, 1);
                         }
                     } else {
-                        if (this.EntityPM.DirectionId != "C") {
+                        if (!this.EntityPM.IsCustomShipment) {
                             var indexOfTab = allTabs.findIndex(t => t.Code == "SHSP");
                             if (indexOfTab > -1) {
                                 allTabs.splice(indexOfTab, 1);
@@ -1195,7 +1195,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                         }
                     }
                     
-                    if(this.EntityPM.DirectionId != "C"){
+                    if(!this.EntityPM.IsCustomShipment){
                         var indexOfTab = allTabs.findIndex(t => t.Code == "SHDA");
                         if (indexOfTab > -1) {
                             allTabs.splice(indexOfTab, 1);

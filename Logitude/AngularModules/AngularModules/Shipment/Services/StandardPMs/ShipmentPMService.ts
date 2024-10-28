@@ -77,7 +77,7 @@ export class ShipmentPMService {
                     return pmresponse;
 
                  }), mergeMap((pmresponse: ServiceResponse) => {
-                    if (pmresponse?.Result?.DirectionId === "C") {
+                    if (pmresponse?.Result?.IsCustomShipment) {
                         return this.MapCustomShipment(pmresponse);
                     } else {
                         return of(pmresponse);
@@ -108,7 +108,6 @@ export class ShipmentPMService {
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError && mm?.Result) {
                     entity.DeclarationPM = mm.Result;
-                    entity.IsCustomShipment = true;
                     return this._declarationReferantDataPMService.get(entity.DeclarationPM.Id).pipe(
                         map((myResult: any) => {
                             var mm: ServiceResponse = myResult;
@@ -458,7 +457,6 @@ export class ShipmentPMService {
         });
     }
     update(entityPM: ShipmentPM, oldEntityPM: ShipmentPM | null = null) {
-        let IsCustomShipment = entityPM.IsCustomShipment;
         return defer(() => {
 
             var validator: ClassLevelValidator = new ClassLevelValidator();
@@ -506,7 +504,7 @@ export class ShipmentPMService {
                     return response;
 
                  }), mergeMap((pmresponse: ServiceResponse) => {
-                    if (IsCustomShipment) {
+                    if (pmresponse?.Result?.IsCustomShipment) {
                         return this.MapCustomShipment(pmresponse);
                     } else {
                         return of(pmresponse);
@@ -620,7 +618,7 @@ export class ShipmentPMService {
         var jsonPMKeys = Object.keys(jsonPM);
 
         for (var key in jsonPMKeys) {
-            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged" || jsonPMKeys[key] === "IsCustomShipment") {
+            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
                 continue;
             }
             var property = jsonPMKeys[key];

@@ -3760,6 +3760,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="UniCloudShipment"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"

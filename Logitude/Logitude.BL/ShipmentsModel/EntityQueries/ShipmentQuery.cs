@@ -1815,7 +1815,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             #endregion
 
-            if (shipment.DirectionId == "C")
+            #region UniCloudShipment
+
+            shipmentPM.UniCloudShipment = shipment.UniCloudShipment;
+            shipmentPM.IsCustomShipment = shipment.UniCloudShipment && shipment.DirectionId == "C";
+
+            if (shipmentPM.IsCustomShipment)
             {
                 shipmentPM.ReferantUserId = shipment.ReferantUserId;
                 shipmentPM.ReferantUserName = shipment.UserId?.Contact?.LocalName;
@@ -1823,6 +1828,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.Status = ""; // todo: mapping
                 shipmentPM.DepartmentName = shipment.Department?.LocalName;
             }
+            #endregion
 
             // Warehouse Leg 
             shipmentPM.WarehouseLegWarehouseName = shipment.WarehouseLegCard?.EnglishName;
@@ -2186,7 +2192,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #endregion
 
                 #region Shipment references
-                if (shipment.DirectionId == "C")
+                if (shipmentPM.IsCustomShipment)
                 {
                     ShipmentReferanceRepository shipmentReferanceRepository = new ShipmentReferanceRepository(tenant);
                     ShipmentReferanceQuery shipmentReferanceQuery = new ShipmentReferanceQuery(shipmentReferanceRepository);
@@ -4577,7 +4583,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                     ShipmentPM shipmentPM = new ShipmentPM();
                     shipmentPM.Tenant = shipment.Tenant;
-                    shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true, shipment.DirectionId == "C"? true: false, cardId);
+                    shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true, shipment.UniCloudShipment, cardId);
                     ShipmentPM securedPM = new ShipmentPM();
 
                     securedPM = SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);

@@ -56,7 +56,9 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                         }
                     }
 
+                    customEntityPM.DirectionId = "C";
                     customEntityPM.IsCustomShipment = true;
+                    customEntityPM.UniCloudShipment = true;
                     IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
                     ShipmentService service = new ShipmentService(objectContext, customEntityPM, SecurityUtility.GetAuthenticatedUser());
 

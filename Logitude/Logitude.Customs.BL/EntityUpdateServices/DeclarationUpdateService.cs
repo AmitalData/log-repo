@@ -271,12 +271,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             shipmentPM.DescriptionOfGoods = entityPM.Consignments[0].CargoDescription;
 			shipmentPM.ShipmentNumber = entityPM.CustomFileNo;
 			shipmentPM.CreatedByUserId = entityPM.CreatedByUserId;
-			shipmentPM.DirectionId = "C";
-			shipmentPM.Tenant = entityPM.Tenant;
+            shipmentPM.DirectionId = "C";
+            shipmentPM.Tenant = entityPM.Tenant;
             shipmentPM.IsCustomShipment = true;
- 
-			
-			ICustomContext context = MainContext as CustomContext;			
+            shipmentPM.UniCloudShipment = true;
+
+
+            ICustomContext context = MainContext as CustomContext;			
 			DeclarationReferantDataUpdateService declarationReferantDataUpdateService = new DeclarationReferantDataUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
 			declarationReferantDataPM.ChangeSetOp = ChangeSetOperation.Update;
 			declarationReferantDataUpdateService.Update(declarationReferantDataPM, true);
