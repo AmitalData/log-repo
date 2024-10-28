@@ -110,7 +110,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				this.MyResponseData.HasException = true;
 				// return;
 			}
-			else certificateOfOriginPM.ErrXml = null;
+			else
+			{
+				certificateOfOriginPM.ErrXml = null;
+                certificateOfOriginPM.IsChange=false;
+
+            }
             if (customResponse.CertificateOfOriginRequestFeedback == null)
 			{
                 this.MyResponseData.Succeeded = true;
