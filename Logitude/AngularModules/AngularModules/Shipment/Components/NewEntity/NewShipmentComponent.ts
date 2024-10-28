@@ -271,10 +271,11 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     public IsNewStandAlonePickupDelivery: boolean = false; 
     public ColumnsWidths: ColumnsWidths[];
     SetWindowArgs(args: any) {
-        this.EntityPM.IsCustomShipment = args?.QueryNameTextCode == "Shipment.Q.CustomsShipments";
+        this.EntityPM.IsCustomShipment = args?.QueryNameTextCode == "CustomsShipments";
         if (this.EntityPM.IsCustomShipment) {
             this.EntityPM.DepartmentId = null;
             this.DirectionId = "C";
+            this.EntityPM.UniCloudShipment = true;
             this.ShowShipmentLevels = false;
             this.SetCustomerRequired();
         }

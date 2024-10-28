@@ -561,9 +561,13 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? AutomaticLastUpdateDate { get; set; }
         public string ENSNumber { get; set; }
         public DateTime? ENSDate { get; set; }
+
+        #region UniCloudShipment
         public string ReferantUserId { get; set; }
         public virtual User UserId { get; set; }
         public string IskaNumber { get; set; }
+        public bool UniCloudShipment { get; set; }
+        #endregion
 
         #region WarehouseLeg
         public string WarehouseLegWarehouseId { get; set; }

@@ -209,6 +209,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             FieldChange.Add(entityPoco.ReferantUserId, entityPM.ReferantUserId, nameof(entityPM.ReferantUserId), fieldChanges);
             entityPoco.ReferantUserId = entityPM.ReferantUserId;
 
+            FieldChange.Add(entityPoco.UniCloudShipment, entityPM.UniCloudShipment, nameof(entityPM.UniCloudShipment), fieldChanges);
+            entityPoco.UniCloudShipment = entityPM.UniCloudShipment;
+
             if (entityPM.IsExceptionResolved)
             {
                 entityPoco.ExceptionDescription = null;
@@ -4168,6 +4171,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddFieldChangedProperties(changeTrackingPM, "CustomsClearanceDate", changeTrackingPM.CustomsClearanceDate, pm.CustomsClearanceDate, "CustomsClearanceDate", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "IskaNumber", changeTrackingPM.IskaNumber, pm.IskaNumber, "string", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "ReferantUserId", changeTrackingPM.ReferantUserId, pm.ReferantUserId, "string", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "UniCloudShipment", changeTrackingPM.UniCloudShipment, pm.UniCloudShipment, "bool", notifyPropertyChangeValuesList);
 
             AddFieldChangedProperties(changeTrackingPM, "MainCarriageFromPortId", changeTrackingPM.MainCarriageFromPortId, pm.MainCarriageFromPortId, "string", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "MainCarriageToPortId", changeTrackingPM.MainCarriageToPortId, pm.MainCarriageToPortId, "string", notifyPropertyChangeValuesList);

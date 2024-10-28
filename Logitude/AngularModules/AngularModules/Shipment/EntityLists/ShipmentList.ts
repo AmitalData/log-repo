@@ -601,5 +601,6 @@ export class ShipmentList {
 		ContainersNumbers: string;
 		ReferantUserId: string;
 		IskaNumber: string;
+		UniCloudShipment: boolean;
 	
-}
+}
