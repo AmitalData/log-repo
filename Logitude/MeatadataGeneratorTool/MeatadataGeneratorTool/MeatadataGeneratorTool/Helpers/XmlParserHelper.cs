@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml;
+using System.Text.RegularExpressions;
 
 namespace MeatadataGeneratorTool.Helpers
 {
@@ -1263,12 +1264,57 @@ namespace MeatadataGeneratorTool.Helpers
                 {
                     if (att.Value != null)
                     {
+                        if (att.Value.StartsWith("BS64:") || att.Value.StartsWith("\"BS64:"))
+                            att.Value = TryConvertFromBase64(att.Value);
+
                         result = att.Value.Trim('"');
                     }
                 }
             }
             return result;
         }
+        private string TryConvertFromBase64(string input)
+        {
+            try
+            {
+                return ConvertFromBase64(input);
+            }
+            catch (FormatException)
+            {
+                return input;
+            }
+        }
+      
+        private string ConvertFromBase64(string input)
+        {
+            string substringToRemove = "\"";
+            string backUp = input;
+            try
+            {
+                input = input.Trim('\"');
+                input = input.Substring(5);//REMOVE BS64:
+                byte[] data = Convert.FromBase64String(input);
+                string decodedString = Encoding.UTF8.GetString(data);
+                if (backUp.StartsWith(substringToRemove))
+                {
+                    decodedString = substringToRemove + decodedString;
+                }
+
+                if (backUp.EndsWith(substringToRemove))
+                {
+                    decodedString = decodedString + substringToRemove;
+                }
+                return decodedString;
+
+            }
+            catch (FormatException)
+            {
+                return backUp;
+            }
+        }
+
+      
+
 
     }
 }

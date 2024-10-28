@@ -23,6 +23,7 @@ using MeatadataGeneratorTool.Helpers;
 using MeatadataGeneratorTool.TextCodes;
 using MeatadataGeneratorTool.Features;
 using System.Xml.Linq;
+using System.Text.RegularExpressions;
 
 namespace MeatadataGeneratorTool
 {
@@ -2368,6 +2369,15 @@ namespace MeatadataGeneratorTool
         {
             if (attrValue != null)
             {
+                if (IsHebrew(attrValue) && fieldElement.Name != "Record")
+                {
+                    fieldElement.SetAttribute(atrrName + "Back_up", attrValue);
+
+                    attrValue = ConvertToBase64(attrValue);
+                    attrValue = "\"" + "BS64:" + attrValue + "\"";
+
+
+                }
                 fieldElement.SetAttribute(atrrName, attrValue);
             }
         }
@@ -2380,8 +2390,28 @@ namespace MeatadataGeneratorTool
         {
             if (!string.IsNullOrEmpty(attrValue))
             {
+                if (IsHebrew(attrValue) && fieldElement.Name != "Record")
+                {
+                    fieldElement.SetAttribute(atrrName + "Back_up", attrValue);
+
+                    attrValue = ConvertToBase64(attrValue);
+                    attrValue = "\"" + "BS64:" + attrValue + "\"";
+                }
                 fieldElement.SetAttribute(atrrName, attrValue);
             }
+        }
+
+
+        private static bool IsHebrew(string text)
+        {
+            Regex hebrewRegex = new Regex(@"[\u0590-\u05FF]");
+            return hebrewRegex.IsMatch(text);
+        }
+
+        private static string ConvertToBase64(string text)
+        {
+            var bytes = Encoding.UTF8.GetBytes(text);
+            return Convert.ToBase64String(bytes);
         }
         #endregion
 

@@ -40,6 +40,9 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public string SearchFields { get; set; }
         public string DescriptionDefaultText { get; set; }
         public string DescriptionLocalDefaultText { get; set; }
+
+        public string DescriptionLocalDefaultTextBack_up { get; set; }
+
         public bool IsSaveButtonVisible { get; set; }
         public bool IsComposition { get; set; }
         public string MainTipCode { get; set; }
@@ -49,8 +52,12 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public bool AllowCustomFields { get; set; }
         public bool HasDynamicHeader { get; set; }
         public string LocalDefaultText { get; set; }
+        public string LocalDefaultTextBack_up { get; set; }
+
         public bool IsEditable { get; set; }
         public string NewButtonLocalDefaultText { get; set; }
+        public string NewButtonLocalDefaultTextBack_up { get; set; }
+
         public string NewButtonDefaultText { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
@@ -87,6 +94,8 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public bool AllowedInTicket { get; set; }
         public string LovDisplayMemberPath { get; set; }
         public string LovDisplayMemberPathLocal { get; set; }
+        public string LovDisplayMemberPathLocalBack_up { get; set; }
+
         public bool IsTabsHidden { get; set; }
         public bool PrimaryKeyIsTenant { get; internal set; }
         public bool NoDefaultFeatures { get; internal set; }

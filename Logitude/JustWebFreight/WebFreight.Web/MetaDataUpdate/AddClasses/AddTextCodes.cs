@@ -7,6 +7,9 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.MetaDataUpdate.DetailClasses;
 using Logitude.Server.Tools.Counters;
+using System.Text.RegularExpressions;
+using System.Text;
+using System;
 namespace WebFreight.Web.MetaDataUpdate.AddClasses
 {
     public class AddTextCodes
@@ -27,6 +30,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 textCode.TextCodeTypeCode = textCodeDetails.TextCodeTypeCode;
                 textCode.InActive = textCodeDetails.InActive;
                 textCode.IsSpellChecked = textCodeDetails.IsSpellChecked;
+                textCode.LocalDefaultText = TryConvertFromBase64(textCode.LocalDefaultText);
+
                 textCodeRepository.Update(textCode);
                 return textCode;
             }
@@ -46,6 +51,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                         LocalDefaultText = textCodeDetails.LocalDefaultText,
                         IsSpellChecked = textCodeDetails.IsSpellChecked,
                     };
+                    newTextCode.LocalDefaultText = TryConvertFromBase64(newTextCode.LocalDefaultText);
+
                     textCodeRepository.Add(newTextCode);
                     AddedTextCodes.Add(textCodeDetails.Code, newTextCode);
                     return newTextCode;
@@ -77,10 +84,63 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     LocalDefaultText = textCodeDetails.LocalDefaultText,
                     IsSpellChecked = textCodeDetails.IsSpellChecked,
                 };
+              
+                newTextCode.LocalDefaultText = TryConvertFromBase64(newTextCode.LocalDefaultText);
+
                 addedTextCodes.Add(newTextCode);
                 return newTextCode;
             }
         }
+
+
+
+        public static string TryConvertFromBase64(string input)
+        {
+            try
+            {
+                if (input == null)
+                {
+                    return null;
+                }
+                if (input.StartsWith("BS64:") || input.StartsWith("\"BS64:"))
+                {
+
+                    return ConvertFromBase64(input);
+
+                   
+                }
+                return input;
+
+            }
+            catch (FormatException)
+            {
+                return input;
+            }
+        }
+      
+        private static string ConvertFromBase64(string input)
+        {
+            string substringToRemove = "\"";
+            string backUp = input;
+            try
+            {
+                input = input.Trim('\"');
+                input = input.Substring(5);//REMOVE BS64:
+                byte[] data = Convert.FromBase64String(input);
+                string decodedString = Encoding.UTF8.GetString(data);
+               
+                return decodedString;
+
+            }
+            catch (FormatException)
+            {
+                return backUp;
+            }
+
+        }
+   
+       
+     
 
     }
 }
