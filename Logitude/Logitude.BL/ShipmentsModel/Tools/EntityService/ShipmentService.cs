@@ -558,7 +558,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             UserId = loggedContact.Id,
                             ObjectTableName = "Shipment",
                             IsAddedManually = false,
-                            EventTypeCode = "OPN",
+                            EventTypeCode = "ORDR",
                         };
                         EventTracer.CreateTraceEvent(eventTracerArgs);
                     }
