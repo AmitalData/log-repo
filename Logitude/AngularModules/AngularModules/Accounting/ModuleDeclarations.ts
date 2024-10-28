@@ -163,6 +163,7 @@ import { CashbookTotalAdjustWindow } from './Components/EditTabs/CashBook/Cashbo
 import { JournalShortTitleComponent } from './Components/ShortTitles/JournalShortTitleComponent';
 import { GLAccountInterestTransactionsComponent } from './Components/EditTabs/GLAccount/GLAccountInterestTransactionsComponent';
 import { GlAccountInterestTransactionsListTemplate } from './Components/ListTemplates/GlAccountInterestTransactionsListTemplate';
+import { NewNLogComponent } from './Components/Maintenance/NewNLogComponent';
 
 //import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
 
@@ -216,6 +217,7 @@ export const Components =
         AccountingPeriodEventComponent,
         NewTaxWithholdingAssessingOfficeComponent,
         YearTransferComponent,
+        NewNLogComponent,
         AccountingLoadTestComponent,
         AccountingMainTesterComponent,
         Generate1000Component,
@@ -391,6 +393,8 @@ export class ModuleDeclarations {
             case "ChartOfAccountsTypesOrderComponent": { myResult = ChartOfAccountsTypesOrderComponent; break; }
             case "FullAccountingAddControlComponent": { myResult = FullAccountingAddControlComponent; break; }
             case "YearTransferComponent": { myResult = YearTransferComponent; break; }
+            case "NewNLogComponent": { myResult = NewNLogComponent; break; }
+
             case "AccountingPeriodsComponent": { myResult = AccountingPeriodsComponent; break; }
             case "EditAccountingPeriodComponent": { myResult = EditAccountingPeriodComponent; break; }
             case "AccountingPeriodEventComponent": { myResult = AccountingPeriodEventComponent; break; }

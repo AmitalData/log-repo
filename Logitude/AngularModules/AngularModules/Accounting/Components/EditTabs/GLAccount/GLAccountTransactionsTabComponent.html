@@ -963,12 +963,12 @@
             <logitude-grid *ngIf="!UsingLogGridV2" GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
                 [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="columns" 
                 [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent" (DataLoaded)="OnDataLoaded($event)"
-                [IsCustomTemplate]="true">
+                [IsCustomTemplate]="true"  >
             </logitude-grid>
             <logitude-grid-v2 *ngIf="UsingLogGridV2" GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
                 [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="columns"
                 [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent" (DataLoaded)="OnDataLoaded($event)"
-                [IsCustomTemplate]="true">
+                [IsCustomTemplate]="true"  >
             </logitude-grid-v2>
 
         </div>

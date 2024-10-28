@@ -541,7 +541,7 @@
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="NetCommonHelper, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NetCommonHelper.1.0.7\lib\net472\NetCommonHelper.dll</HintPath>
+      <HintPath>..\..\packages\NetCommonHelper.1.0.9\lib\net472\NetCommonHelper.dll</HintPath>
     </Reference>
     <Reference Include="NewRelic.Api.Agent, Version=10.0.0.0, Culture=neutral, PublicKeyToken=06552fced0b33d87, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NewRelicWindowsAzure.10.25.0\lib\NewRelic.Api.Agent.dll</HintPath>
@@ -1125,6 +1125,7 @@
     <Compile Include="Controllers\HybridModel\VendorHybridController.cs" />
     <Compile Include="Controllers\HybridModel\VesselHybridController.cs" />
     <Compile Include="Controllers\HybridModel\WarehouseHybridController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\NLogController.cs" />
     <Compile Include="Controllers\InfrastructureModel\QueueMessagesViewsController.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\CardAPiHelper.cs" />
     <Compile Include="Controllers\AccountingModel\Redempt_a_ChequeController.cs" />
@@ -8179,6 +8180,7 @@
     <Folder Include="MobileApplication\Views\DigitalActivity\" />
     <Folder Include="MobileApplication\Views\IIGGeneralMessages\" />
     <Folder Include="MobileApplication\Views\InterfaceManagementListExtended\" />
+    <Folder Include="MobileApplication\Views\NLog\" />
     <Folder Include="MobileApplication\Views\QuoteApiV1\" />
     <Folder Include="MobileApplication\Views\SupplierInvioceItemCertificats\" />
     <Folder Include="OceanInsights\" />
