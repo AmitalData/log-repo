@@ -21,6 +21,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {SupplierInvioceExportDefaultPM} from '../../EntityPMs/SupplierInvioceExportDefaultPM';
 
+import {SupplierInvioceItemCertificatDefaultPM} from '../../EntityPMs/SupplierInvioceItemCertificatDefaultPM';
 
 @Injectable()
 
@@ -182,12 +183,22 @@ export class SupplierInvioceExportDefaultPMService {
                  
             }
 			
+               this.MapSupplierInvItemCertificatDefs(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
-
+			   			   
+            entityPM.OldEntityPM.SupplierInvItemCertificatDefs = [];
+            for (var item in entityPM.SupplierInvItemCertificatDefs) {
+            var mySupplierInvioceItemCertificatDefaultPM = entityPM.SupplierInvItemCertificatDefs[item];
+            var newSupplierInvioceItemCertificatDefaultPM: SupplierInvioceItemCertificatDefaultPM = this.clone(mySupplierInvioceItemCertificatDefaultPM);
+						
+							 
+            entityPM.OldEntityPM.SupplierInvItemCertificatDefs.push(newSupplierInvioceItemCertificatDefaultPM);
+            }
+			   
 		}
         else {
 
@@ -199,6 +210,98 @@ export class SupplierInvioceExportDefaultPMService {
         return entityPM;
     }
 
+    MapSupplierInvItemCertificatDefs(entityPM: SupplierInvioceExportDefaultPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldSupplierInvItemCertificatDefs: SupplierInvioceItemCertificatDefaultPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldSupplierInvItemCertificatDefs = entityPM.OldEntityPM.SupplierInvItemCertificatDefs;
+        }
+
+        entityPM.SupplierInvItemCertificatDefs = new Array<SupplierInvioceItemCertificatDefaultPM>();
+        for (var item in jsonPM.SupplierInvItemCertificatDefs) {
+            var jItem = jsonPM.SupplierInvItemCertificatDefs[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newSupplierInvioceItemCertificatDefaultPM: SupplierInvioceItemCertificatDefaultPM;
+	  
+            if (mapParent) {
+                newSupplierInvioceItemCertificatDefaultPM = new SupplierInvioceItemCertificatDefaultPM(entityPM);
+            }
+            else
+            {
+                newSupplierInvioceItemCertificatDefaultPM = new SupplierInvioceItemCertificatDefaultPM(null);
+            }
+ 			newSupplierInvioceItemCertificatDefaultPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+				                  var pmProperty = pmKeysArray[pmKey];
+                newSupplierInvioceItemCertificatDefaultPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newSupplierInvioceItemCertificatDefaultPM.UniqueKey = Guid.newGuid();
+                newSupplierInvioceItemCertificatDefaultPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newSupplierInvioceItemCertificatDefaultPM.OldEntityPM = this.clone(newSupplierInvioceItemCertificatDefaultPM);
+
+				
+            }
+            else {
+                if (newSupplierInvioceItemCertificatDefaultPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newSupplierInvioceItemCertificatDefaultPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newSupplierInvioceItemCertificatDefaultPM.ChangeSetOp = "Insert";
+                }
+ 
+                newSupplierInvioceItemCertificatDefaultPM.OldEntityPM = null;
+                newSupplierInvioceItemCertificatDefaultPM.EntityParentPM = null;
+            }
+			 newSupplierInvioceItemCertificatDefaultPM.DisableMarkAsDirty = false;
+			 newSupplierInvioceItemCertificatDefaultPM.IsDirty = false;
+            entityPM.SupplierInvItemCertificatDefs.push(newSupplierInvioceItemCertificatDefaultPM);
+        }
+        if (oldSupplierInvItemCertificatDefs) {
+            
+            for (var itemKey in oldSupplierInvItemCertificatDefs) {
+                if (entityPM.SupplierInvItemCertificatDefs.filter(p=> p.UniqueKey === oldSupplierInvItemCertificatDefs[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldSupplierInvItemCertificatDefs[itemKey]) {
+                        //oldSupplierInvItemCertificatDefs[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.SupplierInvItemCertificatDefs.push(oldSupplierInvItemCertificatDefs[itemKey]);
+						var oldItemJson = oldSupplierInvItemCertificatDefs[itemKey];
+                        var deletedPM: SupplierInvioceItemCertificatDefaultPM = new SupplierInvioceItemCertificatDefaultPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.SupplierInvItemCertificatDefs.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
 
 	  public clone(jsonPM: any) {
         var entityPM: any;

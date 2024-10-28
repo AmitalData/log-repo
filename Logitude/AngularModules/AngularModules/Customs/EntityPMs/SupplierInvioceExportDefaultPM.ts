@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {SupplierInvioceItemCertificatDefaultPM} from './SupplierInvioceItemCertificatDefaultPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -64,7 +65,41 @@ export class SupplierInvioceExportDefaultPM {
     public set ClaimReasonCode(newValue: string) { if (this.claimReasonCode != newValue) { this.claimReasonCode = newValue; this.MarkAsDirty("ClaimReasonCode"); } }
        
 	 
+     
+	private supplierInvItemCertificatDefs: SupplierInvioceItemCertificatDefaultPM[];
+    get  SupplierInvItemCertificatDefs() {
+        if (this.supplierInvItemCertificatDefs == null) {
+            this.supplierInvItemCertificatDefs = [];
+        }
 
+        return this.supplierInvItemCertificatDefs;
+    }
+    set  SupplierInvItemCertificatDefs(newValue: SupplierInvioceItemCertificatDefaultPM[]) {
+        if (this.supplierInvItemCertificatDefs != newValue) {
+            this.supplierInvItemCertificatDefs = newValue;
+        }
+    }
+    public AddSupplierInvioceItemCertificatDefault(item: SupplierInvioceItemCertificatDefaultPM) {
+        if (item != null) {
+            var index = this. SupplierInvItemCertificatDefs.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. SupplierInvItemCertificatDefs.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveSupplierInvioceItemCertificatDefault(item: SupplierInvioceItemCertificatDefaultPM) {
+        if (item != null) {
+            var index = this. SupplierInvItemCertificatDefs.indexOf(item);
+            if (index > -1) {
+                this. SupplierInvItemCertificatDefs.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public SupplierInvItemCertificatDefs: Array<SupplierInvioceItemCertificatDefaultPM>= [];
+ 
     public OldEntityPM: SupplierInvioceExportDefaultPM;
 		
     public IsDirty: boolean;

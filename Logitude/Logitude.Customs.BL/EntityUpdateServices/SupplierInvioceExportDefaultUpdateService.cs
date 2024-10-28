@@ -37,6 +37,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
 
 
+		protected override void UpdateComposition(SupplierInvioceExportDefaultPM entityPM)
+		{
+			
+			SupplierInvioceItemCertificatDefaultUpdateService supplierInvioceItemCertificatDefaultUpdateService = new SupplierInvioceItemCertificatDefaultUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+			supplierInvioceItemCertificatDefaultUpdateService.UpdateMulti(entityPM.SupplierInvItemCertificatDefs, entityPM.DeletedSupplierInvItemCertificatDefs, entityPM, false);
 
-    }
+			base.UpdateComposition(entityPM);
+		}
+
+	}
 }
