@@ -1,6 +1,7 @@
 ﻿using Logitude.Customs.Data.AzureSearch.Repo;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
+using NLog;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
@@ -13,20 +14,22 @@ namespace CustomsBook
 {
     internal class UpdateAzureSearchAIData
     {
+        static readonly Logger logger = Program.logger;
+
         public static async void Update()
         {
             try
             {
-                TaskScheduler.logger.Info("Update Azure Search AI data started");
+                logger.Info("Update Azure Search AI data started");
 
                 await ReCreateRemarkTable();
                 await ReCreateCustomsBookTable();
 
-                TaskScheduler.logger.Info("Update Azure Search AI data finished");
+                logger.Info("Update Azure Search AI data finished");
             }
             catch (Exception e)
             {
-                TaskScheduler.logger.Fatal(e, "Update Azure Search AI data failed");
+                logger.Fatal(e, "Update Azure Search AI data failed");
             }
         }
 
