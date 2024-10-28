@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginUpdateClass
    {  		
-		public const string HashString = "21566f21a71630977597241acd5dbff0";
+		public const string HashString = "04da9bcb636341f7c9c44f631ee30365";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5714,6 +5714,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CertificateOfOriginTextCode_CustomsCertificateOfOriginODescIsReq = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.DescIsReq", DefaultText = "Description Is Req",LocalDefaultText = @"שדה תיאור טובין חובה למילוי", ObjectTableId = CertificateOfOriginObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CertificateOfOriginTextCode_CustomsCertificateOfOriginODecNotSubmitted = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.DecNotSubmitted", DefaultText = "The certificate number has been updated in the accounts in the declaration, but the declaration has not yet been sent.",LocalDefaultText = @"מס' התעודה עודכן בחשבונות בהצהרה , אך טרם נשלחה ההצהרה", ObjectTableId = CertificateOfOriginObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CertificateOfOriginTextCode_CustomsCertificateOfOriginONotDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.NotDeclaration", DefaultText = "Can't send certificate because declaration not sent.",LocalDefaultText = @"לא ניתן לשלוח תעודה לפני שההצהרה נשלחה למכס", ObjectTableId = CertificateOfOriginObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
