@@ -384,6 +384,7 @@
     <Compile Include="EntityKeys\StuffingSiteTypeKeys.cs" />
     <Compile Include="EntityKeys\SuppInvoiceItemsAbachStatementKeys.cs" />
     <Compile Include="EntityKeys\SupplierInvioceExportDefaultKeys.cs" />
+    <Compile Include="EntityKeys\SupplierInvioceItemCertificatDefaultKeys.cs" />
     <Compile Include="EntityKeys\SupplierInvoiceItemsPriceKeys.cs" />
     <Compile Include="EntityKeys\SupplierInvoicePaymentKeys.cs" />
     <Compile Include="EntityKeys\SupplierInvoiceUCRKeys.cs" />
@@ -764,6 +765,7 @@
     <Compile Include="EntityListQueryServices\Generated\StuffingSiteTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SuppInvoiceItemsAbachStatementListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SupplierInvioceExportDefaultListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SupplierInvioceItemCertificatDefaultListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SupplierInvoiceItemsPriceListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SupplierInvoicePaymentListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SupplierInvoiceUCRListQueryService.Generated.cs" />
@@ -847,6 +849,7 @@
     <Compile Include="EntityListQueryServices\StuffingSiteTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SuppInvoiceItemsAbachStatementListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SupplierInvioceExportDefaultListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\SupplierInvioceItemCertificatDefaultListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SupplierInvoiceItemsPriceListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SupplierInvoicePaymentListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SupplierInvoiceUCRListQueryService.cs" />
@@ -939,6 +942,7 @@
     <Compile Include="EntityLists\Generated\SupplierInvioceExportDefaultList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OriginCriterionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RequestReasonCodeEnumList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SupplierInvioceItemCertificatDefaultList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TarifRelatedToQuotaList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TradeLevyStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RequestToAdvanceAQueueList.Generated.cs" />
@@ -1317,6 +1321,7 @@
     <Compile Include="EntityMapping\StuffingSiteTypeMap.cs" />
     <Compile Include="EntityMapping\SuppInvoiceItemsAbachStatementMap.cs" />
     <Compile Include="EntityMapping\SupplierInvioceExportDefaultMap.cs" />
+    <Compile Include="EntityMapping\SupplierInvioceItemCertificatDefaultMap.cs" />
     <Compile Include="EntityMapping\SupplierInvoiceItemsPriceMap.cs" />
     <Compile Include="EntityMapping\SupplierInvoicePaymentMap.cs" />
     <Compile Include="EntityMapping\SupplierInvoiceUCRMap.cs" />
@@ -1551,6 +1556,7 @@
     <Compile Include="EntityPOCOs\StuffingSiteType.cs" />
     <Compile Include="EntityPOCOs\SuppInvoiceItemsAbachStatement.cs" />
     <Compile Include="EntityPOCOs\SupplierInvioceExportDefault.cs" />
+    <Compile Include="EntityPOCOs\SupplierInvioceItemCertificatDefault.cs" />
     <Compile Include="EntityPOCOs\SupplierInvoiceItemsPrice.cs" />
     <Compile Include="EntityPOCOs\SupplierInvoicePayment.cs" />
     <Compile Include="EntityPOCOs\SupplierInvoiceUCR.cs" />
@@ -1932,6 +1938,7 @@
     <Compile Include="Repsitories\Generated\StuffingSiteTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SuppInvoiceItemsAbachStatementRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SupplierInvioceExportDefaultRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\SupplierInvioceItemCertificatDefaultRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SupplierInvoiceItemsPriceRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SupplierInvoicePaymentRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SupplierInvoiceUCRRepository.Generated.cs" />
@@ -2015,6 +2022,7 @@
     <Compile Include="Repsitories\StuffingSiteTypeRepository.cs" />
     <Compile Include="Repsitories\SuppInvoiceItemsAbachStatementRepository.cs" />
     <Compile Include="Repsitories\SupplierInvioceExportDefaultRepository.cs" />
+    <Compile Include="Repsitories\SupplierInvioceItemCertificatDefaultRepository.cs" />
     <Compile Include="Repsitories\SupplierInvoiceItemsPriceRepository.cs" />
     <Compile Include="Repsitories\SupplierInvoicePaymentRepository.cs" />
     <Compile Include="Repsitories\SupplierInvoiceUCRRepository.cs" />

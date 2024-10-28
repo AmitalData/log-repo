@@ -177,6 +177,7 @@
     <Compile Include="EntityPMs\Generated\CertificateOfOriginTypeCodeEnumPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\OriginCriterionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RequestReasonCodeEnumPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SupplierInvioceItemCertificatDefaultPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TarifRelatedToQuotaPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TradeLevyStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\InternalBorderSiteTypePM.cs" />

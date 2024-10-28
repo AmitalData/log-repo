@@ -286,11 +286,14 @@
 
         <td style="vertical-align: bottom">            
 
-            <table *ngIf="IsFromSupplierInvoice && IsVisibile">
+            <table *ngIf="IsVisibile">
 
 
                 <tr>
+                    <td *ngIf="IsFromSupplierInvoice" style="width: 4%;">
+                        <LogCheckBox [Checked]="SupplierInvioceItemCertificatDefaultChecked" [ObjectFieldName]="'SupplierInvioceItemCertificatDefaultChecked'" [ObjectTableName]="ObjectTableName"  [DataContext]="DataContext"></LogCheckBox> 
 
+                     </td>
                     <!-- ClassificationCode -->
                     <td style="width:85px; padding-right: 15px;">
                         <div style="color: #3b95d5;font-size:15px;">

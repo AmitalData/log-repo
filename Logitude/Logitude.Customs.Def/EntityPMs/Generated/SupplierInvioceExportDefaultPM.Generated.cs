@@ -211,7 +211,42 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+
+	   private List<SupplierInvioceItemCertificatDefaultPM> supplierInvItemCertificatDefs;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("SupplierInvItemCertificatDefs", "Id","SupplierInvioceExportDefaultId")]
+	   [DataMember]
+	   public virtual List<SupplierInvioceItemCertificatDefaultPM> SupplierInvItemCertificatDefs  
+	   {
+	        get
+             {
+                 if (supplierInvItemCertificatDefs == null)
+                 {
+                     supplierInvItemCertificatDefs = new List<SupplierInvioceItemCertificatDefaultPM>();
+                 }
+                 return supplierInvItemCertificatDefs;
+              }
+             set { supplierInvItemCertificatDefs = value; }
 	    }
+		   
+	   private List<SupplierInvioceItemCertificatDefaultPM>  deletedSupplierInvItemCertificatDefs;
+	   public virtual List<SupplierInvioceItemCertificatDefaultPM> DeletedSupplierInvItemCertificatDefs  
+	   {
+	        get
+             {
+                 if ( deletedSupplierInvItemCertificatDefs == null)
+                 {
+                      deletedSupplierInvItemCertificatDefs = new List<SupplierInvioceItemCertificatDefaultPM>();
+                 }
+                 return  deletedSupplierInvItemCertificatDefs;
+              }
+             set {  deletedSupplierInvItemCertificatDefs = value; }
+	    }
+	  	    }
    
 }
 	 
