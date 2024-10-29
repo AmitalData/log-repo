@@ -1,13 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
   Name="SupplierInvioceItemCertificatDefaults"
-  OldNames="SupplierInvioceItemCertificats"
   Schema="Customs"
   DBType="Main"
   Module="Customs">
   <Column
     Name="SupplierInvioceExportDefaultId"
-    OldNames="DeclarationId"
     Type="varchar"
     Size="15">
     <Constraints
