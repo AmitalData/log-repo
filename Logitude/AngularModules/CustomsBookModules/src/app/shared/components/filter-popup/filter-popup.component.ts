@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FilterPopupService, FiltersSearch } from './service/filter-popup.service';
 import { NgClass, NgIf } from '@angular/common';
+import { SearchService } from '../page-top/service/top-page.service';
 
 @Component({
 	selector: 'app-filter-popup',
@@ -16,7 +17,7 @@ export class FilterPopupComponent {
 	numberOfFilters = 0;
 	@Output() filterClick: EventEmitter<any> = new EventEmitter();
 
-	constructor(private service: FilterPopupService) { }
+	constructor(private service: FilterPopupService, private searchService: SearchService) { }
 
 	ngOnInit() {
 		this._initFilters = this.service.getFilters();
@@ -46,7 +47,8 @@ export class FilterPopupComponent {
 	}
 
 	filterClickEvent() {
-		this.filterClick.emit(this.service.getFilters());
 		this.openPopup = false;
+		if (this.searchService.GetSearchText()?.trim() === "") return;
+		this.filterClick.emit(this.service.getFilters());
 	}
 }
