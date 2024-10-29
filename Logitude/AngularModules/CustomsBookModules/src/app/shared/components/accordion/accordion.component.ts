@@ -57,7 +57,7 @@ export class AccordionComponent implements OnInit {
   InitData() {
     this.tableData1 = {
       columns: [
-        { key: 'Logo', displayName: '', dataType: 'img', visible: true },
+        { key: 'Logo', displayName: '', dataType: 'img', visible: false },
         { key: 'TradeAgreementName', displayName: 'שם ההסכם', dataType: 'string', visible: true, notEqual: `'מס קנייה'` },
         { key: 'CustomsRate', displayName: 'שיעור מכס', dataType: 'number', visible: true },
         { key: 'CustomsRateWithinQuota', displayName: 'שיעור מכס במסגרת מכסה', dataType: 'number', visible: true },
