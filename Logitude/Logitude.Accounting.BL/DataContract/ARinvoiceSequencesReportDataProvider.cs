@@ -126,7 +126,7 @@ namespace Logitude.Accounting.BL.DataContract
             Int64 dummy;
             List<string> invoicesNumbers = new List<string>();
             var list = (from a in invoiceContext.ARInvoices
-                        where (EntityFunctions.TruncateTime(a.CreateDate) >= startDate.Date && EntityFunctions.TruncateTime(a.CreateDate) <= endDate.Date)
+                        where (EntityFunctions.TruncateTime(a.InvoiceDate) >= startDate.Date && EntityFunctions.TruncateTime(a.InvoiceDate) <= endDate.Date)
                         select a   
                         ).ToList();
             List<string> invoiceNumbersContainOnlyNumbers = list.Where(a => a.Tenant == Tenant && Int64.TryParse(a.InvoiceNumber, out dummy) == true).OrderBy(
