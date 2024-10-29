@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using NLog;
 
 namespace CustomsBook
@@ -8,15 +9,15 @@ namespace CustomsBook
     {
         public static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(Path.Combine(AppDomain.CurrentDomain.BaseDirectory , "NLog.config"));
             
             logger.Debug("Start TaskScheduler");
 
-            UpdateCustomsBook.Run().Wait();
+            await UpdateCustomsBook.Run();
 
-            UpdateAzureSearchAIData.Update();
+            await UpdateAzureSearchAIData.Update();
 
             //Console.ReadLine();
         }

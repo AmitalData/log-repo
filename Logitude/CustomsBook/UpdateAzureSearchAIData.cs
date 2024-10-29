@@ -16,7 +16,7 @@ namespace CustomsBook
     {
         static readonly Logger logger = Program.logger;
 
-        public static async void Update()
+        public static async Task Update()
         {
             try
             {
