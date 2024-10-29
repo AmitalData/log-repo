@@ -186,7 +186,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             syncRecord.KeyVal = "ALL";
             syncRecord.Entname = tableName;
             syncRecord.TrigAction = "U";
-            syncRecord.IsSync = 1;
+            syncRecord.IsSync = 0;
             syncRecord.FileNo = "0";
             var syncRecordRepository = new SyncRecordRepository(requestParams.Tenant);
             syncRecordRepository.Add(syncRecord);
