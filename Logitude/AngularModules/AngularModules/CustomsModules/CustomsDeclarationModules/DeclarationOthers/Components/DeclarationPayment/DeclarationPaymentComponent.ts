@@ -2504,56 +2504,23 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         return isNaN(date.getTime()) ? null : date;
     }
     convertToXML(params: CustomFileCreditRequestParams) {
+        const xmlString = `
+               <CustomFileCreditRequest>
+                 <CustomsFile>
+                   <FileNo>${this.DeclarationPM.CustomFileNo}</FileNo>
+                   <Mode>${params.Mode}</Mode>
+                   <TotalTax>${this.DeclarationPM.TotalTax}</TotalTax>
+                   <UpdatedByUser>${params.LoggingUserId}</UpdatedByUser>
+                 </CustomsFile>
+               </CustomFileCreditRequest>
+               `; 
+               const escapedXmlString = xmlString
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .trim();
         
-        const xmlDocument = document.implementation.createDocument('', '', null);
-    
-        const arrayOfEntry = xmlDocument.createElement('ArrayOfEntry');
-    
-        const entries = [
-          { key: '$$GSC_USER_ID', value: 'ITZIK' },
-          { key: 'GWSFLOGITUDE:componentname', value: 'CWSFCREDITFILE' },
-          { key: 'GWSFLOGITUDE:operation', value: 'DeclarationCheckCredit' },
-          { key: 'componentname', value: 'GWSFLOGITUDE' },
-          { key: 'Subject', value: 'Logitude Declaration check File Credit' },
-          { key: 'Operation', value: 'DataAccess' },
-          {
-            key: 'GWSFLOGITUDE:Xml',
-            value: `
-              <CustomFileCreditRequest>
-                <CustomsFile>
-                  <FileNo>${this.DeclarationPM.CustomFileNo}</FileNo>
-                  <Mode>${params.Mode}</Mode>
-                  <TotalTax>${this.DeclarationPM.TotalTax}</TotalTax>
-                  <UpdatedByUser>${params.LoggingUserId}</UpdatedByUser>
-                </CustomsFile>
-              </CustomFileCreditRequest>
-            `
-          }
-        ];
-    
-        entries.forEach(entry => {
-          const entryElement = xmlDocument.createElement('Entry');
-          
-          const keyElement = xmlDocument.createElement('Key');
-          keyElement.textContent = entry.key;
-          entryElement.appendChild(keyElement);
-          
-          const valueElement = xmlDocument.createElement('Value');
-          valueElement.textContent = entry.value.trim();
-          entryElement.appendChild(valueElement);
-          
-          arrayOfEntry.appendChild(entryElement);
-        });
-    
-        xmlDocument.appendChild(arrayOfEntry);
-    
-        // המרת המסמך ל-XML
-        const xmlString = new XMLSerializer().serializeToString(xmlDocument);
-        
-
-
-        console.log(xmlString);
-        return xmlString;
+       
+        return escapedXmlString;
     }
    
     OnlySendPayment(params: CustomFileCreditRequestParams) {
