@@ -67,7 +67,7 @@ namespace Logitude.Customs.Data.CustomFilters
                     queryableData = queryableData.Where(d => d.DeclarationNumber == null);
                     break;
                 case "IncorrectDeclarations":
-                    queryableData = queryableData.Where(d => d.DeclarationStatusTypeCode != correctDraftStatus && !releasedStatuses.Contains(d.DeclarationStatusTypeCode) && d.IsSubmitDeclaration == false);
+                    queryableData = queryableData.Where(d => d.DeclarationNumber != null && d.DeclarationStatusTypeCode != correctDraftStatus && !releasedStatuses.Contains(d.DeclarationStatusTypeCode) && d.IsSubmitDeclaration != true);
                     break;
                 case "CorrectDraft":
                     queryableData = queryableData.Where(d => d.DeclarationStatusTypeCode == correctDraftStatus);
