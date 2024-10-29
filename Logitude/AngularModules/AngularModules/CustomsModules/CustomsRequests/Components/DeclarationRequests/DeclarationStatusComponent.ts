@@ -133,6 +133,10 @@ export class DeclarationStatusComponent
                                         this.setRequired();
                                     }
                                 });
+                        }else{
+                            if(this.DeclarationNumber == null){
+                                this.FetchDeclaration(myResponse, false);
+                            }
                         }
                     }
                 });
