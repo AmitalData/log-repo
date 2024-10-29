@@ -645,6 +645,7 @@
     <None Include="DBTables\SubCountry.dxml" />
     <None Include="DBTables\SuppInvoiceItemsAbachStatement.dxml" />
     <None Include="DBTables\SupplierInvioceItemCertificat.dxml" />
+    <None Include="DBTables\SupplierInvioceItemCertificatDefault.dxml" />
     <None Include="DBTables\SupplierInvoice.dxml" />
     <None Include="DBTables\SupplierInvoiceFreightAmount.dxml" />
     <None Include="DBTables\SupplierInvoiceItem.dxml" />

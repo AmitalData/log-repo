@@ -4,7 +4,7 @@
   ObjectTableName="&quot;Customs.SupplierInvioceItemCertificatDefault&quot;"
   IsNew="false"
   DBTableName="&quot;Customs.SupplierInvioceItemCertificatDefaults&quot;"
-  DBTableOldNames="Customs.SupplierInvioceItemCertificats,Customs.SupplierInvioceItemCertificatDefaults"
+  DBTableOldNames="Customs.SupplierInvioceItemCertificatDefaults"
   ObjectTableSingular="&quot;SupplierInvioceItemsCertificateDefault&quot;"
   ObjectTablePlural="&quot;SupplierInvioceItemsCertificateDefaults&quot;"
   HasCustomFilter="false"
@@ -42,7 +42,7 @@
   ParentTableName="SupplierInvioceExportDefault"
   LocalDefaultText="&quot;קליטת קובץ אישורים&quot;"
   DefaultText="&quot;Supplier Invioce Items Certificate Default&quot;"
-  Code="&quot;6bb9&quot;"
+  Code="&quot;4dc6&quot;"
   Name="&quot;Customs.SupplierInvioceItemCertificat Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -71,7 +71,7 @@
   <field
     Id="&quot;2e9375d3-4f95-49d8-8ddc-a046a556346c&quot;"
     FieldName="&quot;SupplierInvioceExportDefaultId&quot;"
-    OldNames="DeclarationId,SupplierInvioceExportDefaultId"
+    OldNames="SupplierInvioceExportDefaultId"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -762,7 +762,43 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-  <EventTypes />
+  <Screen
+    Name="&quot;Customs.SupplierInvioceItemCertificatDefaultHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.SupplierInvioceItemCertificatDefault&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
+  <EventTypes>
+    <EventType
+      Code="&quot;CREV&quot;"
+      ObjectTableName="&quot;Customs.SupplierInvioceItemCertificatDefault&quot;"
+      EnglishName="&quot;Created&quot;"
+      LocalName="&quot;Created&quot;"
+      IsManualEntry="false"
+      ShortView="true"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;UPEV&quot;"
+      ObjectTableName="&quot;Customs.SupplierInvioceItemCertificatDefault&quot;"
+      EnglishName="&quot;Updated&quot;"
+      LocalName="&quot;Updated&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+  </EventTypes>
   <Records />
   <DataContracts />
   <AdditionalTextCodes />
