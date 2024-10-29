@@ -17,6 +17,8 @@ using Logitude.BL.Interfaces;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.ObjectBuilder2;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityPMs;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -312,6 +314,10 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private void AddRecoLines_FromOldDBTransaction(IGrouping<string, LedgerTransactionPM> oldLTransGroupByAccountId, ReconciliationPM myReconciliationPM, ref int lineCounter)
         {
+            TenantQuery tenantQuery = new TenantQuery(myReconciliationPM.Tenant);
+            TenantPM tenantPM = tenantQuery.GetSinglePM(myReconciliationPM.Tenant);
+            string tenantCurrency = tenantPM.CurrencyId;
+
             foreach (var oldLedger in oldLTransGroupByAccountId)
             {
                 var journalReconcile = _JournalPM.JournalReconciles.First(r => r.LedgerTransactionId == oldLedger.Id);
@@ -320,9 +326,67 @@ namespace Logitude.Accounting.BL.CoreBL
                 myReconciliationLinePM.ReconciliationId = myReconciliationPM.Id;
                 myReconciliationLinePM.Tenant = myReconciliationPM.Tenant;
                 myReconciliationLinePM.Line = lineCounter++;
-                myReconciliationLinePM.CurrencyId = journalReconcile.CurrencyId;
                 myReconciliationLinePM.TransactionId = journalReconcile.LedgerTransactionId;
-                myReconciliationLinePM.ReconciliationAmount = journalReconcile.ReconciliationAmount;
+
+                if (!String.IsNullOrEmpty(oldLedger.OpenAmountCurrencyId) && !String.IsNullOrEmpty(journalReconcile.CurrencyId)
+                    && journalReconcile.CurrencyId != oldLedger.OpenAmountCurrencyId) // journalReconcile currency does not match the account's reco. method
+                {
+                    if (journalReconcile.CurrencyId != oldLedger.CurrencyId)
+                    {
+                        string errorMessage = "JournalReconcile Currency is not " + tenantPM.CurrencyCode + " and not " + oldLedger.CurrencyCode
+                            + Environment.NewLine + ", Journal " + oldLedger.JournalNumber + ", Line " + oldLedger.JournalLineNumber
+                            + Environment.NewLine + ", JournalReconcile " + journalReconcile.JournalNumber + ", LT=" + journalReconcile.LedgerTransactionId + ", Old Ledger Transactiom " + oldLedger.Id ;
+
+                        throw new ApplicationException(errorMessage);
+
+                    }
+
+                    if (oldLedger.OpenAmountCurrencyId == tenantCurrency)  // Account's reco. method is local currency, journalReconcile must be in foreign
+                    {
+                        if (journalReconcile.ReconciliationAmount != oldLedger.ForeignAmountDebit - oldLedger.ForeignAmountCredit) // checking whole amount 
+                        {
+                            string errorMessage = "JournalReconcile amount " + journalReconcile.ReconciliationAmount.ToString() 
+                                + " differs from " + oldLedger.CurrencyCode + " " + (oldLedger.ForeignAmountDebit - oldLedger.ForeignAmountCredit).ToString()
+                                + Environment.NewLine + ", Journal " + oldLedger.JournalNumber + ", Line " + oldLedger.JournalLineNumber
+                                + Environment.NewLine + ", JournalReconcile " + journalReconcile.JournalNumber + ", LT=" + journalReconcile.LedgerTransactionId + ", Old Ledger Transactiom " + oldLedger.Id;
+                            // because we cannot say how much to reconcile in local
+
+                            throw new ApplicationException(errorMessage);
+                        }
+
+                        // local.
+                        myReconciliationLinePM.CurrencyId = tenantCurrency;
+                        myReconciliationLinePM.ReconciliationAmount = oldLedger.LocalAmountDebit - oldLedger.LocalAmountCredit;
+
+                    }
+
+                    else // Account's reco. method is foreign currency, journalReconcile must be in local
+                    {
+                        if (journalReconcile.ReconciliationAmount != oldLedger.LocalAmountDebit - oldLedger.LocalAmountCredit) // checking whole amount
+                        {
+                            string errorMessage = "JournalReconcile amount " + journalReconcile.ReconciliationAmount.ToString()
+                                + " differs from " + tenantPM.CurrencyCode + " " + (oldLedger.LocalAmountDebit - oldLedger.LocalAmountCredit).ToString()
+                                + Environment.NewLine + ", Journal " + oldLedger.JournalNumber + ", Line " + oldLedger.JournalLineNumber
+                                + Environment.NewLine + ", JournalReconcile " + journalReconcile.JournalNumber + ", LT=" + journalReconcile.LedgerTransactionId + ", Old Ledger Transactiom " + oldLedger.Id;
+                            // because we cannot say how much to reconcile in foreign
+
+                            throw new ApplicationException(errorMessage);
+                        }
+
+                        // foreign.
+                        myReconciliationLinePM.CurrencyId = oldLedger.CurrencyId;
+                        myReconciliationLinePM.ReconciliationAmount = oldLedger.ForeignAmountDebit - oldLedger.ForeignAmountCredit;
+                    }
+                }
+
+                else
+                {
+                    myReconciliationLinePM.CurrencyId = journalReconcile.CurrencyId;
+                    myReconciliationLinePM.ReconciliationAmount = journalReconcile.ReconciliationAmount;
+                }
+
+
+
                 myReconciliationLinePM.GroupNumber = 1;
                 myReconciliationPM.ReconciliationLines.Add(myReconciliationLinePM);
             }
