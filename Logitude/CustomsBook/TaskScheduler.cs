@@ -54,7 +54,7 @@ namespace CustomsBook
                 {
 
                     // Code to download the ZIP file
-                    await DownloadFiles(url, downloadedFilePath);
+                   await DownloadFiles(url, downloadedFilePath);
 
                     // Check if the downloaded file size is 0 KB
                     long fileSize = new FileInfo(downloadedFilePath).Length;
@@ -290,7 +290,10 @@ namespace CustomsBook
                                 {
                                     bulkCopy.ColumnMappings.Add(columnName, "ValidQuotaDetailsHistoryID");
                                 }
-
+                                if (columnName == "IsVoluntaryOrImporterInBreachOfTrust")
+                                {
+                                    bulkCopy.ColumnMappings.Add(columnName, "IsVoluntaryOrImporterOfTrust");
+                                }
                                 if (sqlTableName == "Customs.CB_TariffComputedDatas")
                                 {
                                     if (columnName == "WithoutQuota_ComputationMethodDataID")
@@ -387,7 +390,7 @@ namespace CustomsBook
                 case "CustomsBookAdditionsDetailsHistory":
                     return "Customs.CB_CustomsBookAdditionsDetailsHistorys";
                 case "AdditionRulesDetailsHistory":
-                    return "Customs.CB_AdditionRulesDetailsHistorys";                    
+                    return "Customs.CB_AdditionRulesDetailsHistorys";
                 case "CustomsItemComputedData":
                     return "Customs.CB_CustomsItemComputedDatas";
                 case "TariffComputedData":

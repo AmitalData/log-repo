@@ -64,6 +64,11 @@ export class CB_RegularityRequiredCertificatePM {
     public set CB_ID(newValue: string) { if (this.cB_ID != newValue) { this.cB_ID = newValue; this.MarkAsDirty("CB_ID"); } }
        
 	 
+    private isVoluntaryOrImporterOfTrust: boolean;
+    public get IsVoluntaryOrImporterOfTrust() { return this.isVoluntaryOrImporterOfTrust; }
+    public set IsVoluntaryOrImporterOfTrust(newValue: boolean) { if (this.isVoluntaryOrImporterOfTrust != newValue) { this.isVoluntaryOrImporterOfTrust = newValue; this.MarkAsDirty("IsVoluntaryOrImporterOfTrust"); } }
+       
+	 
 
     public OldEntityPM: CB_RegularityRequiredCertificatePM;
 		

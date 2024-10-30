@@ -41,6 +41,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
      [Key]
         [Column("CB_ID")]
 	    public string CB_ID { get; set; }
+        [Column("IsVoluntaryOrImporterOfTrust")]
+	    public bool IsVoluntaryOrImporterOfTrust { get; set; }
     }
 }
 	 

@@ -16,6 +16,7 @@ export class CB_RegularityRequiredCertificateList {
 	TrNumber: number;
 	AuthorityID: string;
 	CB_ID: string;
+	IsVoluntaryOrImporterOfTrust: boolean;
 	
 }
  
