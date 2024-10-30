@@ -260,7 +260,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private void RaiseEvent(DeclarationPM _MyDeclarationPM, string loggingUserId, string eventCode, string remarks,bool suppress_RAISE_EVENT=false)
         {
             string primary_number = _MyDeclarationPM.Direction == "E" ? $"{_MyDeclarationPM.CustomFileNo},EFIFILEM": _MyDeclarationPM.CustomFileNo;
-            if (_MyDeclarationPM.TransportModeId != "A")
+            if (_MyDeclarationPM.TransportModeId != "A" && _MyDeclarationPM.Direction == "E")
             {
                 primary_number = $"{_MyDeclarationPM.CustomFileNo},MFIFILEM";
             }
