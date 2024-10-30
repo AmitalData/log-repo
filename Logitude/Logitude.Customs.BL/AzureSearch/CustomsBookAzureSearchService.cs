@@ -8,12 +8,14 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.BL.Helpers;
 
-namespace ConsoleDevFramwork.AzureSearch
+namespace Logitude.Customs.BL.AzureSearch
 {
     public static class CustomsBookAzureSearchService
     {
-        static string serviceName => DefaultService.Instance.Get(0, "AzureSearchAI", "connection").Value1;
-        static string apiKey => DefaultService.Instance.Get(0, "AzureSearchAI", "connection").Value2;
+        //static string serviceName => DefaultService.Instance.Get(0, "AzureSearchAI", "connection").Value1;
+        //static string apiKey => DefaultService.Instance.Get(0, "AzureSearchAI", "connection").Value2;
+        static string serviceName => System.Configuration.ConfigurationManager.AppSettings["AzureSearchAIUrl"];
+        static string apiKey => System.Configuration.ConfigurationManager.AppSettings["AzureSearchAIKey"];
 
         public static async Task<RemarkAndCustomsBook> SearchItmesAndRemark(string searchValue, string customsBookType, int tenant)
         {
