@@ -17,11 +17,19 @@ namespace Logitude.Customs.Data.Repsitories
         
 		public List<SupplierInvioceItemCertificatDefault> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
-        }
+			SupplierInvioceExportDefaultKeys supplierInvioceExportDefaultKeys = entityKeys as SupplierInvioceExportDefaultKeys;
 
-   }
+			return (from a in context.SupplierInvioceItemCertificatDefaults
+					where a.SupplierInvioceExportDefaultId == supplierInvioceExportDefaultKeys.Id
+					select a).ToList();
+		}
+		public void FastDeleteMulti(SupplierInvioceExportDefaultKeys entityKeyFields)
+		{
+			(context as DbContextBase)
+				.DeleteWhere<SupplierInvioceItemCertificatDefault>(rec => rec.SupplierInvioceExportDefaultId == entityKeyFields.Id);
+		}
+
+	}
 
 }
    

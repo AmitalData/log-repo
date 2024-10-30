@@ -19,14 +19,22 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(SupplierInvioceItemCertificatDefaultPM entityPM, SupplierInvioceItemCertificatDefault entityPOCO)
         {
-            //throw new NotImplementedException();
-        }
+			CustomMappedPOCOProperties.Add(POCOPropertyNames.SupplierInvioceExportDefaultId);
+			CustomMappedPOCOProperties.Add(POCOPropertyNames.SequenceNumeric);			
+			if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+			{
+
+				entityPOCO.SupplierInvioceExportDefaultId = entityPM.SupplierInvioceExportDefaultId;
+				entityPOCO.SequenceNumeric = entityPM.SequenceNumeric;
+			
+			}
+		}
 
         public void CustomPOCOToPM(SupplierInvioceItemCertificatDefaultPM entityPM, SupplierInvioceItemCertificatDefault entityPOCO)
         {
-            //throw new NotImplementedException();
-        }
-   }
+			//throw new NotImplementedException();
+		}
+	}
 
 
 }
