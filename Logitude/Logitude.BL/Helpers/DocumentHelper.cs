@@ -556,6 +556,9 @@ namespace Logitude.BL.Helpers
                 }
                 else
                 {
+                    string mess = "Error while sending signed invoice " + arinvocie.InvoiceNumber;
+                    APInvoiceHelper.AddCommunicationLog("F", arinvocie, mess, "ARInvoice", arinvocie.Id, "Send Html Document Failed", tenant);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError(mess);
                     arinvocie.IsSigned = "4";
                     repository.Update(arinvocie);
                     repository.SubmitChanges();
@@ -566,6 +569,8 @@ namespace Logitude.BL.Helpers
                 arinvocie.IsSigned = "4";
                 repository.Update(arinvocie);
                 repository.SubmitChanges();
+                APInvoiceHelper.AddCommunicationLog("F", arinvocie, e.Message, "ARInvoice", arinvocie.Id, "Send Invoice Failed", tenant);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
             }
         }
         public string SendHtmlDocument(byte[] htmlData, string internalDocumentId, string externalDocumentId, int tenant, string toEmail, string subject, string cc, string bcc, string userId, string entityId, string objectTableId, string attachments, string entityReference, string from, string replyTo)
@@ -806,6 +811,7 @@ namespace Logitude.BL.Helpers
                     ip = currentIP;
                 }
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "web role", null, ip);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
             }
 
 
