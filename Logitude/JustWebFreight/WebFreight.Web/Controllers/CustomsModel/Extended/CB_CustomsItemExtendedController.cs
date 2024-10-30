@@ -22,8 +22,8 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using System.Transactions;
 using Logitude.Server.Tools;
-using Logitude.Customs.BL.Typesense;
 using System.Threading.Tasks;
+using ConsoleDevFramwork.AzureSearch;
 
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
@@ -249,7 +249,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         {
             int tenant = HeaderHelper.Authenticate().Tenant;
 
-            RemarkAndCustomsBook res = await new CustomsBookTypesenseService().SearchInItmesAndRemark(searchValue, customsBookType, tenant);
+            RemarkAndCustomsBook res = await CustomsBookAzureSearchService.SearchItmesAndRemark(searchValue, customsBookType, tenant);
 
             return Request.CreateResponse(HttpStatusCode.OK, res);
         }

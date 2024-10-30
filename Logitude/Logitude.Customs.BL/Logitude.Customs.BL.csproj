@@ -140,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AmitalContextUtil.cs" />
+    <Compile Include="AzureSearch\CustomsBookAzureSearchService.cs" />
     <Compile Include="BL\AutoPaymentService.cs" />
     <Compile Include="BL\CalculateDeclarationCourierStatus.cs" />
     <Compile Include="BL\CreateContainerization.cs" />
@@ -2791,7 +2792,6 @@
     <Compile Include="TraceEvents\UnifreightFUStatusTaskService.cs" />
     <Compile Include="TraceEvents\UnifreightHybridQueueTaskService.cs" />
     <Compile Include="TraceEvents\AmitalInsertToQueueService.cs" />
-    <Compile Include="Typesense\CustomsBookTypesenseService.cs" />
     <Compile Include="Utils\Serializer.cs" />
     <Compile Include="WCOResource.Designer.cs">
       <AutoGen>True</AutoGen>

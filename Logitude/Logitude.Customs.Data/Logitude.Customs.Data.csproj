@@ -49,6 +49,12 @@
     <OutputPath>bin\None\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Azure.Core, Version=1.39.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Azure.Core.1.39.0\lib\net472\Azure.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Azure.Search.Documents, Version=11.5.1.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Azure.Search.Documents.11.5.1\lib\netstandard2.0\Azure.Search.Documents.dll</HintPath>
+    </Reference>
     <Reference Include="Devart.Data, Version=5.0.2296.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
       <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.dll</HintPath>
     </Reference>
@@ -74,12 +80,24 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ClientModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ClientModel.1.0.0\lib\netstandard2.0\System.ClientModel.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=6.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.6.0.1\lib\net461\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory.Data, Version=1.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.Data.1.0.2\lib\net461\System.Memory.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Threading.Channels, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Channels.4.7.1\lib\net461\System.Threading.Channels.dll</HintPath>
+    </Reference>
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows" />
@@ -90,6 +108,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AzureSearch\Entities\CustomsItemASEntity.cs" />
+    <Compile Include="AzureSearch\Entities\RemarksCustomsBookASEntity.cs" />
+    <Compile Include="AzureSearch\Entities\RemarkWithCustomsBookASEntity.cs" />
+    <Compile Include="AzureSearch\Repo\CustomsBookAzureSearchRepo.cs" />
+    <Compile Include="AzureSearch\Repo\RemarksCustomsBookAzureSearchRepo.cs" />
     <Compile Include="CustomContext.SharedTables.cs" />
     <Compile Include="CustomContextExt.cs" />
     <Compile Include="CustomFilters\ClientCustomFilters.cs" />
@@ -1968,11 +1991,6 @@
     <Compile Include="Repsitories\UIMessageTenantRepository.cs" />
     <Compile Include="Repsitories\UpdateCodeRepository.cs" />
     <Compile Include="Repsitories\VendorCurrencyRepository.cs" />
-    <Compile Include="Typesense\Models\CustomsBook.cs" />
-    <Compile Include="Typesense\Models\RemarkAndCustomsBook.cs" />
-    <Compile Include="Typesense\Models\RemarksCustomsBook.cs" />
-    <Compile Include="Typesense\Services\CustomsBookServices.cs" />
-    <Compile Include="Typesense\Services\RemarksCustomsBookServices.cs" />
     <Compile Include="Utils\CacheHelper.cs" />
     <Compile Include="Utils\FreelancerCustomersUtil.cs" />
     <None Include="CustomContext.Views.cs" />
