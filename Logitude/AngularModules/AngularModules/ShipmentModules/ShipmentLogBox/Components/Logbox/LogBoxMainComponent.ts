@@ -591,7 +591,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         );
 
         this.QueryColumns.push(
-            this.GetQueryColumn(("ShipmentNumber_" + this.SelectedFilter.replace(" ", "")), 'Text', 'Shipment #')
+            this.GetQueryColumn("ForwarderShipmentNumber", 'Text', 'Shipment #')
         );
 
         let shipperUserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.Shipper")[0];
@@ -894,6 +894,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         this.filterAgrs.Tenant = SessionLocator.Tenant;
         let logboxShipmentExportExcelArgs: LogboxShipmentExportExcelArgs = new LogboxShipmentExportExcelArgs();
         logboxShipmentExportExcelArgs.Tenant = SessionLocator.Tenant;
+        this.filterAgrs.addAdditionalFilter("ColumnName?", this.SelectedFilter, null, null, "Equals", true, true, false, "String");
         logboxShipmentExportExcelArgs.AdditionalFilters = this.filterAgrs.AdditionalFilters;
         logboxShipmentExportExcelArgs.PageIndex = this.filterAgrs.PageIndex;
         logboxShipmentExportExcelArgs.PageSize = this.filterAgrs.PageSize;
