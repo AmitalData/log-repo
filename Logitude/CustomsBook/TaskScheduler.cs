@@ -290,10 +290,6 @@ namespace CustomsBook
                                 {
                                     bulkCopy.ColumnMappings.Add(columnName, "ValidQuotaDetailsHistoryID");
                                 }
-                                if (columnName == "IsVoluntaryOrImporterInBreachOfTrust")
-                                {
-                                    bulkCopy.ColumnMappings.Add(columnName, "IsVoluntaryOrImporterOfTrust");
-                                }
                                 if (sqlTableName == "Customs.CB_TariffComputedDatas")
                                 {
                                     if (columnName == "WithoutQuota_ComputationMethodDataID")
