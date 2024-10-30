@@ -60,6 +60,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string FromEpisodeDetail  { get; set; }
        [DataMember]
        public string AutonomyRegion  { get; set; }
+       [DataMember]
+       public bool IsVoluntaryOrImporterOfTrust  { get; set; }
    }
 
 }

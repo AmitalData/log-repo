@@ -25,6 +25,7 @@
 					RI.IsPersonalImportIncluded, -- חל ביבוא אישי
 					RI.IsCarnetIncluded,
 					RC.TrNumber,
+          RC.IsVoluntaryOrImporterOfTrust,
 					ROW_NUMBER() OVER (PARTITION BY RI.ID, RC.AuthorityID, RC.ConfirmationTypeID ORDER BY RC.TrNumber) AS rn
 				FROM 
 					customs.CB_RequirementComputedDatas R
@@ -59,7 +60,8 @@
 				TextualCondition, -- תיאור תנאים
 				InterConditionsRelationship, -- יחס תנאים
 				IsPersonalImportIncluded, -- חל ביבוא אישי 
-				IsCarnetIncluded -- חל בקרנה 
+				IsCarnetIncluded, -- חל בקרנה 
+        IsVoluntaryOrImporterOfTrust -- האם ולנטרי יבואן מפר אמון
 				-- אזור אוטונומיה - חסר עדיין
 			FROM 
 				CTE
@@ -78,7 +80,8 @@
 				TextualCondition,
 				InterConditionsRelationship,
 				IsPersonalImportIncluded,
-				IsCarnetIncluded
+				IsCarnetIncluded,
+        IsVoluntaryOrImporterOfTrust
 			ORDER BY
 				RegularityRequirementID;
 
