@@ -18,6 +18,7 @@ export class TableTopComponent {
 
 	@Input() countSearchResult: number = 0;
 	@Input() searchMode: TableTopState = TableTopState.ViewAll;
+	@Input() showDetails: boolean;
 
 	constructor() {
 		this.service = new TableTopService();
