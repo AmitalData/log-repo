@@ -113,6 +113,10 @@ export class QuoteSettingPM {
     private quoteExpirationDays: number;
     public get QuoteExpirationDays() { return this.quoteExpirationDays; }
     public set QuoteExpirationDays(newValue: number) { if (this.quoteExpirationDays != newValue) { this.quoteExpirationDays = newValue; this.MarkAsDirty("QuoteExpirationDays"); } }
+    
+    private costChargesMust: boolean;
+    public get CostChargesMust() { return this.costChargesMust; }
+    public set CostChargesMust(newValue: boolean) { if (this.costChargesMust != newValue) { this.costChargesMust = newValue; this.MarkAsDirty("costChargesMust"); } }
        
 	 
 
@@ -142,4 +146,4 @@ export class QuoteSettingPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
