@@ -37,6 +37,8 @@ namespace Logitude.Customs.Data.EntityLists
        [Key]
        [DataMember]
        public string CB_ID  { get; set; }
+       [DataMember]
+       public bool IsVoluntaryOrImporterOfTrust  { get; set; }
    }
 
 }

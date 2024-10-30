@@ -89,6 +89,11 @@ export class CB_RequirementComputedDataPM {
     public set IsAllCustomsItems(newValue: boolean) { if (this.isAllCustomsItems != newValue) { this.isAllCustomsItems = newValue; this.MarkAsDirty("IsAllCustomsItems"); } }
        
 	 
+    private isVoluntaryOrImporterOfTrust: boolean;
+    public get IsVoluntaryOrImporterOfTrust() { return this.isVoluntaryOrImporterOfTrust; }
+    public set IsVoluntaryOrImporterOfTrust(newValue: boolean) { if (this.isVoluntaryOrImporterOfTrust != newValue) { this.isVoluntaryOrImporterOfTrust = newValue; this.MarkAsDirty("IsVoluntaryOrImporterOfTrust"); } }
+       
+	 
 
     public OldEntityPM: CB_RequirementComputedDataPM;
 		

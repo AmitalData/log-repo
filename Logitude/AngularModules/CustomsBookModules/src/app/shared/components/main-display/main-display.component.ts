@@ -513,6 +513,7 @@ export interface CB_RequirementComputedDataList {
 	IsCarnetIncluded?: boolean;
 	FromEpisodeDetail: string;
 	AutonomyRegion: string;
+	IsVoluntaryOrImporterOfTrust: boolean;
 }
 
 export interface CB_TariffList {

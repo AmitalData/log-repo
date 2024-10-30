@@ -27,7 +27,7 @@
             CustomsItemIDNum,
             TariffID,
             CASE 
-			          WHEN CustomsRateWithout.ComputationMethodID = '10' THEN 
+			          WHEN CustomsRateWithout.ComputationMethodID = '10' AND CustomsRateWithout.ReductionRate IS NOT NULL THEN 
 				          CONCAT(
 					          CASE 
 						          WHEN (SELECT Rate FROM GeneralAgreement) IS NOT NULL AND (SELECT Rate FROM GeneralAgreement) <> 0 THEN 
@@ -36,7 +36,7 @@
 							          (TRY_CAST((SELECT Rate FROM GeneralAgreement) AS DECIMAL(10, 2)) * 
 							          TRY_CAST(CustomsRateWithout.ReductionRate AS DECIMAL(10, 2)) / 100.0), 'N2') 
 							          + '%' 
-						          ELSE ''
+						          ELSE (SELECT CalculationReference FROM GeneralAgreement)
 					          END,
 					          CASE 
 						          WHEN (SELECT DefinedPerUnitMethod FROM GeneralAgreement) IS NOT NULL AND (SELECT DefinedPerUnitMethod FROM GeneralAgreement) <> 0 THEN 

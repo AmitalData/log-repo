@@ -89,7 +89,9 @@ export class AccordionComponent implements OnInit {
         { key: 'InterConditionsRelationship', displayName: 'יחס תנאים', dataType: 'string', visible: true },
         { key: 'IsPersonalImportIncluded', displayName: 'חל ביבוא אישי', dataType: 'boolean', visible: true },
         { key: 'IsCarnetIncluded', displayName: 'חל בקרנה', dataType: 'boolean', visible: true },
-        { key: '', displayName: 'איזור אוטונמיה', dataType: 'string', visible: false }
+        { key: '', displayName: 'איזור אוטונמיה', dataType: 'string', visible: false },
+        { key: 'IsVoluntaryOrImporterOfTrust', displayName: 'האם ולנטרי יבואן מפר אמון', dataType: 'boolean', visible: true }
+
       ],
       data: []
     };

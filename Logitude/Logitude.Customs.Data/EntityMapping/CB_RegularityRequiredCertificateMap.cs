@@ -55,6 +55,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.AuthorityID).HasColumnName("AuthorityID").HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.CB_ID).HasColumnName("CB_ID").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.IsVoluntaryOrImporterOfTrust).HasColumnName("IsVoluntaryOrImporterOfTrust");
         }
     }
 }

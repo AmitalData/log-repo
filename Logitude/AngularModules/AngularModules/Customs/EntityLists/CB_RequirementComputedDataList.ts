@@ -31,6 +31,7 @@ export class CB_RequirementComputedDataList {
 	IsCarnetIncluded: boolean;
 	FromEpisodeDetail: string;
 	AutonomyRegion: string;
+	IsVoluntaryOrImporterOfTrust: boolean;
 	
 }
  
