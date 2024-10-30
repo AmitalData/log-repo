@@ -709,6 +709,10 @@
       <Project>{e177d993-3117-420c-a59b-88f5398019ed}</Project>
       <Name>Logitude.AmitalMessaging</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
+      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
+      <Name>Logitude.BL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.Customs.BL\Logitude.Customs.BL.csproj">
       <Project>{d2951c0f-8a2b-4ee2-933a-8b6b4134f766}</Project>
       <Name>Logitude.Customs.BL</Name>

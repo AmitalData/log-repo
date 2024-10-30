@@ -94,6 +94,10 @@
       <Project>{8408e4e5-b4b7-46bc-8300-1ae163b36e2d}</Project>
       <Name>WebFreight.Web</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
+      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
+      <Name>Logitude.BL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.IntegrationTest.Core\Logitude.IntegrationTest.Core.csproj">
       <Project>{83ee55e3-c13c-4df6-ac3c-c634e9cd8d66}</Project>
       <Name>Logitude.IntegrationTest.Core</Name>

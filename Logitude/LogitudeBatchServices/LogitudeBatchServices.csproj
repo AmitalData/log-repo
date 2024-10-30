@@ -222,6 +222,10 @@
       <Project>{a3799525-14a2-42fc-a2de-69ed3fd1c5d1}</Project>
       <Name>Logitude.Accounting.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
+      <Project>{A663E7EF-B858-4BB6-BC33-E473F51B8E56}</Project>
+      <Name>Logitude.BL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.Customs.BL\Logitude.Customs.BL.csproj">
       <Project>{D2951C0F-8A2B-4EE2-933A-8B6B4134F766}</Project>
       <Name>Logitude.Customs.BL</Name>

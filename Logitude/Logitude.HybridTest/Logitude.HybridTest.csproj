@@ -506,6 +506,10 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
+      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
+      <Name>Logitude.BL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.CRM.BL\Logitude.CRM.BL.csproj">
       <Project>{40502295-5a7f-4a20-91d2-768ca7cd35ec}</Project>
       <Name>Logitude.CRM.BL</Name>

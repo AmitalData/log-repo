@@ -76,6 +76,10 @@
       <Project>{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}</Project>
       <Name>WebFreight.Web</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
+      <Project>{A663E7EF-B858-4BB6-BC33-E473F51B8E56}</Project>
+      <Name>Logitude.BL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.HybridTest\Logitude.HybridTest.csproj">
       <Project>{98DF8D4E-D654-401C-BC5D-E7DF18984A80}</Project>
       <Name>Logitude.HybridTest</Name>
