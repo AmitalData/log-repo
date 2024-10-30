@@ -457,7 +457,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 Suppress_DoNotShowCardWithoutActivity = false,
                 IsRevenueExpenseReport = false,
                 MyTrailReportLevel = ReportLevel.GLAccount,
-
+                IsTrialBalanceReport = false,
 
             };
 
