@@ -1296,7 +1296,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
 
             List<LogBoxShipmentList> listQuery = query2.ToList();
 
-            FillContainerNumbersLogBox(listQuery,queryOperations);
+            PopulateLogBoxShipmentDetails(listQuery,queryOperations);
 
             CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Shipment", tenant, listQuery.Cast<object>().ToList());
@@ -1316,7 +1316,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                 }
             });
         }
-        private void FillContainerNumbersLogBox(List<LogBoxShipmentList> listQuery,QueryOperations queryOperations)
+        private void PopulateLogBoxShipmentDetails(List<LogBoxShipmentList> listQuery,QueryOperations queryOperations)
         {
             
                 var ShipmentNumberFilter = queryOperations?.QueryFilterItems?.Where(QueryFilterItem => QueryFilterItem.FieldName == "ColumnName?").FirstOrDefault();
