@@ -397,7 +397,7 @@ namespace WebFreight.Web.Helpers
 
                         if (isNewExcel)
                         {
-                            return this.NpoiExcelGenerator(datalist, query, queryColumns, tenant);
+                            return this.NpoiExcelGenerator(datalist, query, queryColumns, tenant,queryOperations);
                         }
                         else
                         {
@@ -1152,7 +1152,7 @@ namespace WebFreight.Web.Helpers
         {
             return MaxCellLength;
         }
-        private byte[] NpoiExcelGenerator(IEnumerator dataList, QueryPM query, List<QueryColumnPM> queryColumns, int tenant)
+        private byte[] NpoiExcelGenerator(IEnumerator dataList, QueryPM query, List<QueryColumnPM> queryColumns, int tenant, QueryOperations queryOperations = null)
         {
             LogTime("start NpoiExcelGenerator Func at : ", true);
 
@@ -1302,7 +1302,22 @@ namespace WebFreight.Web.Helpers
                         foreach (QueryColumnPM column in queryColumns)
                         {
                             dynamic value = null;
+                            if (column.ObjectFieldName == "LogBoxShipment#ColumnName?")
+                            {
+                                var ShipmentNumberFilter = queryOperations?.QueryFilterItems?.Where(QueryFilterItem => QueryFilterItem.FieldName == "ColumnName?").FirstOrDefault();
+                                if (ShipmentNumberFilter != null)
+                                {
+                                    var columnName = "";
 
+                                    if (ShipmentNumberFilter.FieldValue == "ForwarderShipmentNumber")
+                                        columnName = a.GetType().GetProperty("ForwarderShipmentNumber") != null ? "ForwarderShipmentNumber" : "CustomerReference1";
+                                    else if (ShipmentNumberFilter.FieldValue == "My Shipments")
+                                        columnName = "CustomerReference1";
+                                    else
+                                        columnName = "ForwarderShipmentNumber";
+                                    column.ObjectFieldName = columnName;
+                                }
+                            }
 
                             cell = row.CreateCell(i);
                             cell.CellStyle = DataCellFontStyle;
