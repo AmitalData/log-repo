@@ -103,7 +103,7 @@
       <Project>{78EC8434-E6AD-4E93-9B17-C746F5403F7B}</Project>
       <Name>Simplog.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Data.Global.csproj">
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
       <Project>{6D7FFAD2-35B6-4133-8700-CF73E58D0C85}</Project>
       <Name>Simplog.Global.Data</Name>
     </ProjectReference>
