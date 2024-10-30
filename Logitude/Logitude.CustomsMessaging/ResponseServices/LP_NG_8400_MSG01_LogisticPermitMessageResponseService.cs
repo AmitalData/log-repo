@@ -259,6 +259,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private void RaiseEvent(DeclarationPM _MyDeclarationPM, string loggingUserId, string eventCode, string remarks,bool suppress_RAISE_EVENT=false)
         {
+            string primary_number = _MyDeclarationPM.Direction == "E" ? $"{_MyDeclarationPM.CustomFileNo},EFIFILEM": _MyDeclarationPM.CustomFileNo;
+            if (_MyDeclarationPM.TransportModeId != "A")
+            {
+                primary_number = $"{_MyDeclarationPM.CustomFileNo},MFIFILEM";
+            }
 
             string eventType = "";
             if (eventCode == "LPA")
@@ -280,11 +285,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 EntityId = _MyDeclarationPM.Id,
                 UserId = loggingUserId,
 
-                CommunicationSubject = "FU Status " + eventCode + " from logitude (Declaration Logistic Permit " + eventType + ")",
+                CommunicationSubject = "FU Status " + eventCode + " from logitude" + (eventType != "" ? " (Declaration Logistic Permit " + eventType + ")" : ""),
                 MyFUStatus = new AmitalEventTracerModel.FUStatus()
                 {
-                    entname = "CFIFILEM",
-                    primary_number = _MyDeclarationPM.CustomFileNo,
+                    entname = _MyDeclarationPM.Direction == "E" ? "BFIFILE" : "CFIFILEM",
+                    primary_number = primary_number,
                     status = "new",
                     xml_status = "new",
                     status_id = eventCode,
