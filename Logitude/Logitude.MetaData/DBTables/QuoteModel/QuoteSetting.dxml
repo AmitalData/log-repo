@@ -116,4 +116,10 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CostChargesMust"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>
