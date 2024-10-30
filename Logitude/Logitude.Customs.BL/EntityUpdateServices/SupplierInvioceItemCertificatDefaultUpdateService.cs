@@ -33,6 +33,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
 			base.OnCreating(entityPM, entityParentPM);
 		}
+		public void FastDeleteComposition(SupplierInvioceExportDefaultKeys entityKeyFields)
+		{
+			(Repository as Logitude.Customs.Data.Repsitories.SupplierInvioceItemCertificatDefaultRepository).FastDeleteMulti(entityKeyFields);
+		}
 
 	}
    
