@@ -397,7 +397,7 @@ namespace WebFreight.Web.Helpers
 
                         if (isNewExcel)
                         {
-                            return this.NpoiExcelGenerator(datalist, query, queryColumns, tenant,queryOperations);
+                            return this.NpoiExcelGenerator(datalist, query, queryColumns, tenant);
                         }
                         else
                         {
@@ -1152,7 +1152,7 @@ namespace WebFreight.Web.Helpers
         {
             return MaxCellLength;
         }
-        private byte[] NpoiExcelGenerator(IEnumerator dataList, QueryPM query, List<QueryColumnPM> queryColumns, int tenant, QueryOperations queryOperations = null)
+        private byte[] NpoiExcelGenerator(IEnumerator dataList, QueryPM query, List<QueryColumnPM> queryColumns, int tenant)
         {
             LogTime("start NpoiExcelGenerator Func at : ", true);
 
