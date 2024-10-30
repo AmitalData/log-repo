@@ -31,7 +31,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
                 SupplierInvioceExportDefaultRepository supplierInvioceExportDefaultRepository = new SupplierInvioceExportDefaultRepository(context);
 				var supplierInvioceExportDefault = supplierInvioceExportDefaultRepository.GetSupplierInvoiceExportDefaultByTenant( tenant);
-				supplierInvioceExportDefaultPM = GetEntityPM(supplierInvioceExportDefault);
+				supplierInvioceExportDefaultPM = GetEntityPM(supplierInvioceExportDefault,true,new SupplierInvioceExportDefaultKeys { Id = supplierInvioceExportDefault?.Id} );
 
 			}
 			return supplierInvioceExportDefaultPM;
