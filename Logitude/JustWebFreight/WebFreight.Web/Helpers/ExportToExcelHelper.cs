@@ -1302,22 +1302,8 @@ namespace WebFreight.Web.Helpers
                         foreach (QueryColumnPM column in queryColumns)
                         {
                             dynamic value = null;
-                            if (column.ObjectFieldName == "LogBoxShipment#ColumnName?")
-                            {
-                                var ShipmentNumberFilter = queryOperations?.QueryFilterItems?.Where(QueryFilterItem => QueryFilterItem.FieldName == "ColumnName?").FirstOrDefault();
-                                if (ShipmentNumberFilter != null)
-                                {
-                                    var columnName = "";
-
-                                    if (ShipmentNumberFilter.FieldValue == "ForwarderShipmentNumber")
-                                        columnName = a.GetType().GetProperty("ForwarderShipmentNumber") != null ? "ForwarderShipmentNumber" : "CustomerReference1";
-                                    else if (ShipmentNumberFilter.FieldValue == "My Shipments")
-                                        columnName = "CustomerReference1";
-                                    else
-                                        columnName = "ForwarderShipmentNumber";
-                                    column.ObjectFieldName = columnName;
-                                }
-                            }
+                           
+                           
 
                             cell = row.CreateCell(i);
                             cell.CellStyle = DataCellFontStyle;

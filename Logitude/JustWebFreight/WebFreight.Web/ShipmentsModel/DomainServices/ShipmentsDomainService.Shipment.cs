@@ -1296,7 +1296,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
 
             List<LogBoxShipmentList> listQuery = query2.ToList();
 
-            FillContainerNumbersLogBox(listQuery);
+            FillContainerNumbersLogBox(listQuery,queryOperations);
 
             CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Shipment", tenant, listQuery.Cast<object>().ToList());
@@ -1316,14 +1316,26 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                 }
             });
         }
-        private void FillContainerNumbersLogBox(List<LogBoxShipmentList> listQuery)
+        private void FillContainerNumbersLogBox(List<LogBoxShipmentList> listQuery,QueryOperations queryOperations)
         {
-            listQuery.ForEach(shipment =>
-            {
+            
+                var ShipmentNumberFilter = queryOperations?.QueryFilterItems?.Where(QueryFilterItem => QueryFilterItem.FieldName == "ColumnName?").FirstOrDefault();
+               
+                listQuery.ForEach(shipment =>
+              {
                 bool isInlandDomesticShipment = (shipment.DirectionId == "D" && shipment.TransportModeId == "I");
                 if (shipment.TransportModeId != "O" || !string.IsNullOrEmpty(shipment.ContainersNumbersandTypesArray))
                 {
                     shipment.TruckContainerNumber = shipment.TransportModeId == "O" ? Regex.Replace(shipment.ContainersNumbersandTypesArray, "(\\[.*?\\])", "") : isInlandDomesticShipment ? shipment.TruckNumber : shipment.CarrierNumber;
+                }
+                if (ShipmentNumberFilter != null)
+                {
+                    if (ShipmentNumberFilter.FieldValue == "ForwarderShipmentNumber")
+                        shipment.ForwarderShipmentNumber = shipment.ForwarderShipmentNumber!= null ? shipment.ForwarderShipmentNumber : shipment.CustomerReference1;
+                    else if (ShipmentNumberFilter.FieldValue == "My Shipments")
+                        shipment.ForwarderShipmentNumber = shipment.CustomerReference1;
+                    else
+                        shipment.ForwarderShipmentNumber = shipment.ForwarderShipmentNumber;
                 }
             });
         }
