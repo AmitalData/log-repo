@@ -11139,7 +11139,7 @@ namespace WebFreight.Web.ReportsWebServices
                 //Suppress_ControlAccount = true,
                 //  Skip = true
                 Suppress_DoNotShowCardWithoutActivity = false,
-
+                IsTrialBalanceReport = true,
 
             };
 

@@ -1190,8 +1190,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public bool Suppress_ControlAccount { get; set; }
 
         public bool IsRevenueExpenseReport { get; set; }
-
-
+        public bool IsTrialBalanceReport { get; set; }
 
         #region Task 60992: Trial Balance- New filters + multiple choice
         /// <summary>
