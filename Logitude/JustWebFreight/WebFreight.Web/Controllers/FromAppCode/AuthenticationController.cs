@@ -1257,11 +1257,14 @@ namespace WebFreight.Web
                 ExceptionHandler.HandleException(e, DateTime.Now, 0, loginParameters.Email, "", "AuthenticationController : PostUserValidation", null);
                 UserData data = new UserData();
                 data.HasError = true;
-                string message = e.Message;
+                string message = "";
+                
                 if (e.InnerException != null)
                 {
-                    message += Environment.NewLine + e.InnerException.Message;
+                    message += e.InnerException.Message;
                 }
+                message += Environment.NewLine + e.Message;
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e, message);
                 data.ExceptionMessage = message;
                 return data;
             }
@@ -1804,9 +1807,19 @@ namespace WebFreight.Web
             catch (Exception e)
             {
                 ExceptionHandler.HandleException(e, DateTime.Now, tenant, parameters.Email, "", "AuthenticationController : PostLoginData", null);
+                string errorMessage = "";
+
+                if (e.InnerException != null)
+                {
+                    errorMessage = e.InnerException.Message + Environment.NewLine;
+                }
+
+                errorMessage += e.Message;
+                
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e, errorMessage);
                 UserData user = new UserData();
                 user.HasError = true;
-                user.ExceptionMessage = e.Message;
+                user.ExceptionMessage = errorMessage;
                 return user;
             }
         }
