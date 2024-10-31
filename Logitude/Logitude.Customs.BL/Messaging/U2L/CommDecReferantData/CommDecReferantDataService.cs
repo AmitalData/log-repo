@@ -196,6 +196,19 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDecReferantData
                 {
                     _DeclarationReferantDataPM.OrderMoney = true;
                 }
+                if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.Vessel))
+                {
+                    VesselRepository vesselRepository = new VesselRepository(ResolvedTenant());
+                    Vessel vessel = vesselRepository.GetSingleVesselByCode(_LogitudeDeclarationReferantData.Vessel, ResolvedTenant());
+                    if (vessel != null)
+                    {
+                        _DeclarationReferantDataPM.Vessel = vessel.Id;
+                    }
+                    else
+                    {
+                        NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"Not found vessel for code: {_LogitudeDeclarationReferantData.Vessel}");
+                    }
+                }
                 if (_LogitudeDeclarationReferantData.FileStatus == "VDA") _DeclarationReferantDataPM.ImporterApproval = true;
 
                 myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);

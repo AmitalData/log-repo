@@ -134,6 +134,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FlightVoyageNumber, 
 	         CarrierCode, 
 	         OriginCountryCode,
+	         VesselName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

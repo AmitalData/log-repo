@@ -299,6 +299,11 @@ export class DeclarationReferantDataPM {
     public set OriginCountryCode(newValue: string) { if (this.originCountryCode != newValue) { this.originCountryCode = newValue; this.MarkAsDirty("OriginCountryCode"); } }
        
 	 
+    private vesselName: string;
+    public get VesselName() { return this.vesselName; }
+    public set VesselName(newValue: string) { if (this.vesselName != newValue) { this.vesselName = newValue; this.MarkAsDirty("VesselName"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		
@@ -327,4 +332,4 @@ export class DeclarationReferantDataPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
