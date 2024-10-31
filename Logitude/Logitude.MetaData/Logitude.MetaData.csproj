@@ -162,7 +162,6 @@
     <None Include="DBScripts\GlobalModel\202302271155_AddDeploymnetPackageWR.sxml" />
     <None Include="DBScripts\GlobalModel\AddReconciliationWorkerRole.sxml" />
     <None Include="DBScripts\GlobalModel\AddWorkflowEngineWorkerBatchService.sxml" />
-    <None Include="DBScripts\GlobalModel\AddWorkflowTaskDoneWorkerBatchService.sxml" />
     <None Include="DBScripts\InfrastructureModel\202302051135_UpdateObjectTableFullNameTextCode.sxml" />
     <None Include="DBScripts\InfrastructureModel\202301161230_InsertCustomObjectTableQueryGroup.sxml" />
     <None Include="DBScripts\InfrastructureModel\202212141022_FillRelatedScreenCodeInScreensTable.sxml" />
