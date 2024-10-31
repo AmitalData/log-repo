@@ -66,7 +66,6 @@ using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.BL.Security;
 using Logitude.BL.AnalyticTableServices;
 using System.Data.SqlClient;
-using Logitude.BL.Workflow;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -423,14 +422,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     IsCustom = false
                 }.Produce();
 
-                new TaskDoneQueueMessage()
-                {
-                    Entity = WorkflowEntities.Shipment,
-                    EntityId = entityPM.Id,
-                    Tenant = entityPM.Tenant,
-                    Type = QueueMessagesTypes.Create
-                }.Produce();
-
                 scope.Complete();
 
             }
@@ -754,14 +745,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         Tenant = entityPM.Tenant,
                         Type = QueueMessagesTypes.Update,
                         IsCustom = false
-                    }.Produce();
-
-                    new TaskDoneQueueMessage()
-                    {
-                        Entity = WorkflowEntities.Shipment,
-                        EntityId = entityPM.Id,
-                        Tenant = entityPM.Tenant,
-                        Type = QueueMessagesTypes.Update
                     }.Produce();
 
                     scope.Complete();
