@@ -12,6 +12,7 @@ using Logitude.Customs.BL.TraceEvents;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.Repsitories;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -85,7 +86,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
 		public void CreateEventsCustomShipment(DeclarationReferantDataPM entityPM, DeclarationReferantData entityPOCO)
 		{
-            DeclarationPM declarationPM = EntityParentPM as DeclarationPM;
+			DeclarationRepository declarationRepository = new DeclarationRepository(Tenant);
+			Declaration declaration = declarationRepository.GetSingle(entityPM.DeclarationId, entityPM.Tenant);
+			if(declaration.SystemConnection != "N")
+			{
+				return;
+			}
 			string loggedContactId = null;
 			ContactRepository contactRepository = new ContactRepository(Tenant);
 			var loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(Tenant), Tenant);
@@ -95,10 +101,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 			}
 			if (entityPM.EstimatedArrivalDate != null && entityPM.EstimatedArrivalDate != entityPOCO.EstimatedArrivalDate)
 			{
-				EventTracer.DeleteTraceEvent("ETA", entityPM.Tenant, "Shipment", declarationPM.ShipmentId);
+				EventTracer.DeleteTraceEvent("ETA", entityPM.Tenant, "Shipment", declaration.ShipmentId);
 				EventTracerArgs eventTracerArgs = new EventTracerArgs()
 				{
-					EntityId = declarationPM.ShipmentId,
+					EntityId = declaration.ShipmentId,
 					Tenant = entityPM.Tenant,
 					UserId = loggedContact.Id,
 					ObjectTableName = "Shipment",
@@ -110,15 +116,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 			}
             if(entityPOCO.EstimatedArrivalDate != null && entityPM.EstimatedArrivalDate == null)
 			{
-				EventTracer.DeleteTraceEvent("ETA", entityPM.Tenant, "Shipment", declarationPM.ShipmentId);
+				EventTracer.DeleteTraceEvent("ETA", entityPM.Tenant, "Shipment", declaration.ShipmentId);
 			}
 
 			if (entityPM.ArrivalDate != null && entityPM.ArrivalDate != entityPOCO.ArrivalDate)
 			{
-				EventTracer.DeleteTraceEvent("ARR", entityPM.Tenant, "Shipment", declarationPM.ShipmentId);
+				EventTracer.DeleteTraceEvent("ARR", entityPM.Tenant, "Shipment", declaration.ShipmentId);
 				EventTracerArgs eventTracerArgs = new EventTracerArgs()
 				{
-					EntityId = declarationPM.ShipmentId,
+					EntityId = declaration.ShipmentId,
 					Tenant = entityPM.Tenant,
 					UserId = loggedContact.Id,
 					ObjectTableName = "Shipment",
@@ -130,7 +136,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 			}
 			if (entityPOCO.ArrivalDate != null && entityPM.ArrivalDate == null)
 			{
-				EventTracer.DeleteTraceEvent("ARR", entityPM.Tenant, "Shipment", declarationPM.ShipmentId);
+				EventTracer.DeleteTraceEvent("ARR", entityPM.Tenant, "Shipment", declaration.ShipmentId);
 			}
 		}
 
