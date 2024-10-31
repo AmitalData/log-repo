@@ -120,6 +120,6 @@
     Name="CostChargesMust"
     Type="bit">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
 </Table>
