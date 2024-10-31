@@ -1,8 +1,6 @@
 <div class="detailsSlide active" aria-hidden="false">
     <div class="detailsSlideFrame">
-        <div class="detailsSlide_close"><a href="#" role="button" (click)="showDetails.emit(false)"
-                (click)="$event.preventDefault()">
-                &#10005;</a></div>
+      
         <div class="detailsSlide_top">
             <div class="detailsSlide_title">
 
@@ -12,21 +10,11 @@
             <div class="detailsSlide_topActions">
                 <ul>
                     <li>
-                        <div class="mainTable_itemDocument"  (click)="showRules = !showRules">
-                            <a class="icon"><i role="img" [ngClass]="!showRules ? 'icon-document' : 'icon-document_full'"> </i></a>
+                        <div class="mainTable_itemDocument" (click)="showRules = !showRules">
+                            <a class="icon"><i role="img"
+                                    [ngClass]="!showRules ? 'icon-document' : 'icon-document_full'"> </i></a>
                         </div>
                     </li>
-                    <!-- <li>
-                        <div class="mainTable_itemPopup"><a class="icon"><i role="img" class="icon-popup"></i> </a>
-                        </div>
-                    </li> -->
-                    <!-- <li>
-                        <div class="mainTable_itemComment" (click)="showComments =!showComments"  class="showComment"><a class="icon">
-                                <i role="img" class="icon-comment"></i></a>
-                                <span class="countOfComments">{{countOfComments}}</span>
-                        </div>
-                    </li> -->
-
                     <li *ngIf="countOfComments > 0; else newComment">
                         <div class="mainTable_itemComment" (click)="showComments = !showComments">
                             <a class="icon" aria-expanded="true">
@@ -43,20 +31,21 @@
                             </div>
                         </li>
                     </ng-template>
-                    <!-- <li>
-                        <div class="mainTable_itemStarred" (click)="checked = !checked"><a class="icon"><i role="img"
-                                    [class]="checked? ' icon-star_full' :'icon-star' ">
-                                </i></a>
-                        </div>
-                    </li> -->
+                    <li>
+                        <div class="detailsSlide_close" [ngClass]="showDetailsStatus ? '' : 'showDetailsStatus'"><a href="#"
+                            role="button" (click)="showDetails.emit(false)" (click)="$event.preventDefault()">
+                            &#10005;</a></div>
+                    </li>
                 </ul>
 
             </div>
         </div>
         <div class="conetnt_container">
-            <app-rules [showRules]="showRules" [currentItem]="currentItem"  (closeRules)="closeRules()"/>
-            <app-comments [showComments]="showComments" [currentItem]="item" (closeComments)="closeComments()"/>
-            <app-accordion [currentItem]="currentItem"></app-accordion>
+            <app-rules class="conetntContainerData" [showRules]="showRules" [currentItem]="currentItem"
+                (closeRules)="closeRules()" />
+            <app-comments class="conetntContainerData" [showComments]="showComments" [currentItem]="item"
+                (closeComments)="closeComments()" />
+            <app-accordion class="conetntContainerData" [currentItem]="currentItem"></app-accordion>
         </div>
     </div>
 </div>

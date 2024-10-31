@@ -1,11 +1,10 @@
-
 ::-webkit-scrollbar {
     width: 0px;
-    background: transparent; 
+    background: transparent;
 }
 
 th, td {
-    word-wrap: break-word; 
+    word-wrap: break-word;
     white-space: normal;
     text-align: right;
 }
@@ -75,3 +74,30 @@ th, td {
 .detailsSlide_table th {
     padding: 6px 10px 5px 0px;
 }
+
+.tableBox {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    overflow-x: auto;
+}
+
+/* .detailsSlide_table.tableBox {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.detailsSlide_table.tableBox table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.detailsSlide_table.tableBox th,
+.detailsSlide_table.tableBox td {
+    width: auto;
+    word-wrap: break-word;
+    text-align: center;
+    padding: 8px;
+    box-sizing: border-box;
+} */
