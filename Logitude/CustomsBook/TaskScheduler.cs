@@ -1,29 +1,35 @@
-﻿using NLog;
+﻿using System;
+using System.Net;
+using System.ComponentModel;
+using System.Net.Http.Headers;
+
+using System.Threading.Tasks;
+using System.Timers;
+using System.Net.Http;
+using System.IO;
+using System.IO.Compression;
 using SharpCompress.Archives;
-using System;
 using System.Collections.Generic;
-using System.Configuration;
+using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Data;
-using System.IO;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.ShipmentsModel;
+using Logitude.Customs.Data;
+using System.Configuration;
 using System.Linq;
-using System.Net.Http;
+using NLog;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Xml.Schema;
 
 namespace CustomsBook
 {
-    internal class UpdateCustomsBook
+    internal class TaskScheduler
     {
-        static readonly Logger logger = Program.logger;
-        
-        public static async Task Run()
-        {
-            await DownloadFile();
-        }
 
-        static async Task DownloadFile()
+        static Logger logger = LogManager.GetCurrentClassLogger();
+        static async void DownloadFile()
         {
             // Define the URL of the ZIP file to download
             string url = "https://shaarolami-query.customs.mof.gov.il/CustomspilotWeb/he/CustomsBook/Home/DownloadFile";
@@ -199,7 +205,7 @@ namespace CustomsBook
             {
                 try
                 {
-                    // Load the XML document
+            // Load the XML document
                     xmlDoc = XDocument.Load(xmlFilePath);
 
                 }
@@ -210,8 +216,7 @@ namespace CustomsBook
                     return;
                 }
             }
-            else
-            {
+            else {
                 logger.Debug($"Table {fileName} name not found in mapping.");
                 return;
             }
@@ -224,7 +229,7 @@ namespace CustomsBook
                 {
                     try
                     {
-
+                      
 
                         DataTable dataTable = new DataTable(sqlTableName);
 
@@ -280,7 +285,7 @@ namespace CustomsBook
                                 else if (columnName == "CI_CustomsItemHierarchicLocationIDNum")
                                 {
                                     bulkCopy.ColumnMappings.Add(columnName, "ItemHierarchicLocationID");
-                                }
+                                } 
                                 else if (columnName == "CIH_CustomsItemEntityStatusIDNum")
                                 {
                                     bulkCopy.ColumnMappings.Add(columnName, "CustomsItemEntityStatusIDNum");
@@ -292,7 +297,7 @@ namespace CustomsBook
                                 if (sqlTableName == "Customs.CB_TariffComputedDatas")
                                 {
                                     if (columnName == "WithoutQuota_ComputationMethodDataID")
-                                    {
+                                {
                                         bulkCopy.ColumnMappings.Add(columnName, "WithoutQuota_ComputationID");
                                     }
                                     else if (columnName == "WithinQuota_ComputationMethodDataID")
@@ -304,13 +309,13 @@ namespace CustomsBook
                                 {
                                     if (columnName == "WithoutQuota_ComputationMethodDataID")
                                     {
-                                        bulkCopy.ColumnMappings.Add(columnName, "WithoutQuota_ComputMethDataID");
-                                    }
-                                    else if (columnName == "WithinQuota_ComputationMethodDataID")
-                                    {
-                                        bulkCopy.ColumnMappings.Add(columnName, "WithinQuota_ComputMethDataID");
-                                    }
+                                    bulkCopy.ColumnMappings.Add(columnName, "WithoutQuota_ComputMethDataID");
                                 }
+                                else if (columnName == "WithinQuota_ComputationMethodDataID")
+                                {
+                                    bulkCopy.ColumnMappings.Add(columnName, "WithinQuota_ComputMethDataID");
+                                }
+                            }
                             }
                             bulkCopy.WriteToServer(dataTable);
                         }
@@ -429,6 +434,16 @@ namespace CustomsBook
                 }
             }
             return columns;
+        }
+
+
+
+        static void Main(string[] args)
+        {
+            NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(Path.Combine(AppDomain.CurrentDomain.BaseDirectory , "NLog.config"));
+            logger.Debug("Start TaskScheduler");
+            DownloadFile();
+            Console.ReadLine();
         }
     }
 }
