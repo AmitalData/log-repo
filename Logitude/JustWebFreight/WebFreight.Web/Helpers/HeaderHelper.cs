@@ -3,7 +3,9 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using System;
 using System.Linq;
+using System.Net;
 using System.Web;
+using System.Web.Http;
 
 namespace WebFreight.Web.Helpers
 {
@@ -22,7 +24,7 @@ namespace WebFreight.Web.Helpers
             {
                 return false;
             }
-        }   
+        }
 
         public static int? GetTenantFromToken()
         {
@@ -42,6 +44,34 @@ namespace WebFreight.Web.Helpers
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             return authToken;
+        }
+
+        public static AuthenticationToken Authenticate()
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+
+            if (string.IsNullOrEmpty(token))
+                ThrowAutherizeException();
+
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+
+            if (authToken == null)
+                ThrowAutherizeException();
+
+            return authToken;
+        }
+
+        private static void ThrowAutherizeException()
+        {
+            throw new HttpResponseException(HttpStatusCode.Forbidden);
+        }
+    }
+
+    public class TokenAutherizeAttribute : Attribute
+    {
+        public TokenAutherizeAttribute()
+        {
+            HeaderHelper.Authenticate();
         }
     }
 }

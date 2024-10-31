@@ -11,17 +11,15 @@ using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
-using System.Web.Script.Serialization;
-using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using System.Transactions;
-using Logitude.Server.Tools;
+using Logitude.Customs.BL.AzureSearch;
+using System.Threading.Tasks;
 
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
@@ -179,9 +177,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-    [HttpPost]
-
-    public HttpResponseMessage DeleteRemarksClassification(RemarksClassificationPM entityPM)
+        [HttpPost]
+        public HttpResponseMessage DeleteRemarksClassification(RemarksClassificationPM entityPM)
     {
             if (ModelState.IsValid)
             {
@@ -243,9 +240,17 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
 
         }
+
+        public async Task<HttpResponseMessage> GetFromTypesense(string searchValue, string customsBookType)
+        {
+            int tenant = HeaderHelper.Authenticate().Tenant;
+
+            RemarkAndCustomsBook res = await CustomsBookAzureSearchService.SearchItmesAndRemark(searchValue, customsBookType, tenant);
+
+            return Request.CreateResponse(HttpStatusCode.OK, res);
+        }
     }
 
-  
 
     public class Filters
     {
