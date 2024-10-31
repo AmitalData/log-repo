@@ -257,6 +257,10 @@ namespace CustomsBook
                                 {
                                     bulkCopy.ColumnMappings.Add(columnName, "CB_ID");
                                 }
+                                if (columnName == "IsVoluntaryOrImporterInBreachOfTrust")
+                                {
+                                    bulkCopy.ColumnMappings.Add(columnName, "IsVoluntaryOrImporterOfTrust");
+                                }
                                 if (sqlSchema.Contains(columnName))
                                 {
                                     bulkCopy.ColumnMappings.Add(columnName, columnName);
