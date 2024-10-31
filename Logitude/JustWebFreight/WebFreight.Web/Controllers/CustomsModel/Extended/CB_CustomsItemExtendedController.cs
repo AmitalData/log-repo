@@ -11,19 +11,15 @@ using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
-using System.Web.Script.Serialization;
-using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using System.Transactions;
-using Logitude.Server.Tools;
 using System.Threading.Tasks;
-using ConsoleDevFramwork.AzureSearch;
+using Logitude.Customs.BL.AzureSearch;
 
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended

@@ -23,7 +23,7 @@ export class PageTopComponent {
 	customsItemsAutocomplateList: Subject<CustomsItemsAutocomplate[]> = new Subject<CustomsItemsAutocomplate[]>();
 	textToSearch: string = '';
 	
-	constructor(public searchService: SearchService, private headerService: HeaderService, private filterPopupService: FilterPopupService, private API_MainService: API_MainService,) { }
+	constructor(public searchService: SearchService, private headerService: HeaderService, private API_MainService: API_MainService, private filterPopupService: FilterPopupService,) { }
 
 	public text: string = '';
 	public checked: string | number = '';
