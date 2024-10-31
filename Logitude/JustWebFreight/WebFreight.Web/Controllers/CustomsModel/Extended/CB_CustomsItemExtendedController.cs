@@ -18,9 +18,8 @@ using System.Web.Http;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using System.Transactions;
-using Logitude.Server.Tools;
 using System.Threading.Tasks;
-using ConsoleDevFramwork.AzureSearch;
+using Logitude.Customs.BL.AzureSearch;
 
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
