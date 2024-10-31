@@ -6,6 +6,7 @@ using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.BL.InterestService;
 using Logitude.Accounting.BL.InterestService.HelperClasses;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -252,7 +253,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             aRInvoiceLinePM.ForiegnCurrencyCode = tenantPM.CurrencyCode;
             aRInvoiceLinePM.InvoiceCurrencyCode = tenantPM.CurrencyCode;
             aRInvoiceLinePM.ForiegnCurrencyId = tenantPM.CurrencyId;
-            if (interestReport.TotalAmount== null)
+            if (interestReport.TotalAmount == null)
             {
                 aRInvoiceLinePM.UnitPrice = 0;
                 aRInvoiceLinePM.ForiegnCurrencyAmount = 0;
@@ -268,9 +269,18 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 aRInvoiceLinePM.ProfitCurrencyAmount = (double?)interestReport.TotalAmount;
                 aRInvoiceLinePM.LocalCurrencyAmount = (double?)interestReport.TotalAmount;
             }
-            aRInvoiceLinePM.Quantity = 1;         
-            aRInvoiceLinePM.Description =string.Concat("Interest  For", " ", interestReport.InterestReportLinesByDates.Last().ToDate.ToString("dd/MM/yyyy"));
-            aRInvoiceLinePM.LocalDescription = string.Concat("ריבית ל", " ", interestReport.InterestReportLinesByDates.Last().ToDate.ToString("dd/MM/yyyy"));
+            aRInvoiceLinePM.Quantity = 1;
+            string interest_date = "";
+            if (interestReport.InterestReportLinesByDates != null && interestReport.InterestReportLinesByDates.Count > 0)
+            {
+                interest_date = interestReport.InterestReportLinesByDates.OrderBy(ln => ln.ToDate).Last().ToDate.ToString("dd/MM/yyyy");
+            }
+            else
+            {
+                interest_date = interestReport.InterestCalculationDate.ToString("dd/MM/yyyy");
+            }
+            aRInvoiceLinePM.Description =string.Concat("Interest  For", " ", interest_date);
+            aRInvoiceLinePM.LocalDescription = string.Concat("ריבית ל", " ", interest_date);
             aRInvoiceLinePM.ChargesTypeId = chargesType.Id;
             aRInvoiceLinePM.VatTypeId = chargesType.VatTypeId;
             aRInvoiceLinePM.VatPercentage = vatTypePercentagePM.Percentage;
