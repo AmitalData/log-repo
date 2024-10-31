@@ -23,13 +23,13 @@ export class PageTopComponent {
 	customsItemsAutocomplateList: Subject<CustomsItemsAutocomplate[]> = new Subject<CustomsItemsAutocomplate[]>();
 	textToSearch: string = '';
 	
-	constructor(public searchService: SearchService, private headerService: HeaderService, private filterPopupService: FilterPopupService, private API_MainService: API_MainService,) { }
+	constructor(public searchService: SearchService, private headerService: HeaderService, private API_MainService: API_MainService, private filterPopupService: FilterPopupService,) { }
 
 	public text: string = '';
 	public checked: string | number = '';
 	public searchBy = SearchByParam;
 	public selectedSearchOption: SearchByParam = this.searchBy.Classification;
-	public currentSearchState: string = searchState.יבוא;
+	public currentSearchState: string = searchState.????;
 	public SearchByValidation: SearchBy = SearchBy.searchBy_form01;
 	ngOnInit() {
 		this.text = this.searchService.SearchBy('searchBy_form01');

@@ -40,7 +40,7 @@
 							type="text" 
 							(input)="onChange($event)" 
 							[(ngModel)]="textToSearch" 
-							[maxlength]="text === SearchByValidation ? 13 : 100" 
+							[maxlength]="text === SearchByValidation ? 11 : 100" 
 							[placeholder]="text" 
 							(keyup.enter)="clickSearch()" 
 							[matAutocomplete]="auto"
