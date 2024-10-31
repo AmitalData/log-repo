@@ -234,8 +234,8 @@ update  BATCHSERVICESDEFINITIONMODS  set  NUMBEROFTHREADS =3 where CODE='SendWEB
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
 
-                    _IQueueService = new DbQueueService();
-                    _IQueueService.InitializeQueue(SBQueueNames.AnalyzeQueueMQ.ToString(), 0);
+					_IQueueService = new DbQueueService();
+                    _IQueueService.InitializeQueue(SBQueueNames.AnalyzeQueueMQ.ToString(), General.GetTenantDB());
 
 
                     using (TransactionScope scopeRecive = TransactionFactory.GetNewReadCommittedTransaction())

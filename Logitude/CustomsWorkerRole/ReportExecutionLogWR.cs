@@ -98,7 +98,8 @@ namespace CustomsWorkerRole
 
         private void ExecuteQueue()
         {
-            queueService = new DbQueueService("ReportExecutionLogQueue", 0);
+		
+			queueService = new DbQueueService("ReportExecutionLogQueue", General.GetTenantDB());
             var queueResponse = queueService.Receive(new TimeSpan(0, 0, 1));
             if (queueResponse != null && queueResponse.MessageId != null)
             {
@@ -117,8 +118,8 @@ namespace CustomsWorkerRole
         {
             try
             {
-                queueService = new DbQueueService();
-                queueService.InitializeQueue("ReportExecutionLogQueue", 0);
+				queueService = new DbQueueService();
+                queueService.InitializeQueue("ReportExecutionLogQueue", General.GetTenantDB());
 
             }
             catch (Exception ex)

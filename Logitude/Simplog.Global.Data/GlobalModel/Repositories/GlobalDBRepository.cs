@@ -150,7 +150,7 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
                                          select a).FirstOrDefault();
 
             db = (from a in context.GlobalDBs
-                  where a.Id == globaltenant.GlobalDBId
+                  where a.Id == globaltenant.GlobalDBId|| a.Id == "0"
                   select a).FirstOrDefault();
             return db;
         }
