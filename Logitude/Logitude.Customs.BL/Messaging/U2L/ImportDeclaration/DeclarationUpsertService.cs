@@ -1844,7 +1844,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 			supplierInvoiceItemsConDeclarPM.ItemSequence = int.Parse(invoiceItemConnectedDeclaration.ItemLine);
 			supplierInvoiceItemsConDeclarPM.InvoiceItemLineNumber = lineNumber;
 
-            supplierInvoiceItemsConDeclarPM.Quantity = int.Parse(invoiceItemConnectedDeclaration.Quantity);
+			decimal quantity = 0;
+			if (decimal.TryParse(invoiceItemConnectedDeclaration.Quantity, out quantity) || string.IsNullOrWhiteSpace(invoiceItemConnectedDeclaration.Quantity))
+			{
+				supplierInvoiceItemsConDeclarPM.Quantity = quantity;
+			}
             supplierInvoiceItemsConDeclarPM.QuantityTypeCode = invoiceItemConnectedDeclaration.QuantityType;
 
 
