@@ -2520,13 +2520,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                  </CustomsFile>
                </CustomFileCreditRequest>
                `; 
-               const escapedXmlString = xmlString
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .trim();
-        
-       
-        return escapedXmlString;
+
+        return xmlString;
     }
    
     OnlySendPayment(params: CustomFileCreditRequestParams) {
