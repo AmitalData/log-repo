@@ -437,14 +437,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     IsCustom = false
                 }.Produce();
 
-                new TaskDoneQueueMessage()
-                {
-                    Entity = WorkflowEntities.Shipment,
-                    EntityId = entityPM.Id,
-                    Tenant = entityPM.Tenant,
-                    Type = QueueMessagesTypes.Create
-                }.Produce();
-
                 scope.Complete();
 
             }
@@ -537,14 +529,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         Tenant = entityPM.Tenant,
                         Type = QueueMessagesTypes.Create,
                         IsCustom = false
-                    }.Produce();
-
-                    new TaskDoneQueueMessage()
-                    {
-                        Entity = WorkflowEntities.Shipment,
-                        EntityId = entityPM.Id,
-                        Tenant = entityPM.Tenant,
-                        Type = QueueMessagesTypes.Create
                     }.Produce();
 
                     CreateDeclaration(entityPM, "NEW", additionalShipmentData?.UnloadPortCode, additionalShipmentData?.StorageSiteCode);
@@ -1173,14 +1157,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         IsCustom = false
                     }.Produce();
 
-                    new TaskDoneQueueMessage()
-                    {
-                        Entity = WorkflowEntities.Shipment,
-                        EntityId = entityPM.Id,
-                        Tenant = entityPM.Tenant,
-                        Type = QueueMessagesTypes.Update
-                    }.Produce();
-
                     scope.Complete();
 
                     #endregion
@@ -1290,14 +1266,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         Tenant = entityPM.Tenant,
                         Type = QueueMessagesTypes.Update,
                         IsCustom = false
-                    }.Produce();
-
-                    new TaskDoneQueueMessage()
-                    {
-                        Entity = WorkflowEntities.Shipment,
-                        EntityId = entityPM.Id,
-                        Tenant = entityPM.Tenant,
-                        Type = QueueMessagesTypes.Update
                     }.Produce();
 
                     if (!entityPM.IsHybrid)
