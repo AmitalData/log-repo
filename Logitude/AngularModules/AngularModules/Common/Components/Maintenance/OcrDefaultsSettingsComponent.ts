@@ -67,7 +67,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     public disableSubmit: boolean = this.IsFromSupplierInvoice;
     FIELD_IS_REQUIERD: string;
     public ProcessTypeCodeFilterItems: ApiQueryFilters;
-
+    private entityResourceService: EntityResourceService = new EntityResourceService();
 
 
     OnAllBtnClicked() {
@@ -96,14 +96,17 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
 
     constructor() {
         super();
-        this.ItemsSource = new ObservableCollection([]);
-        this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-
-        this.CurrentSession.StartBusyIndicator('Loading...');
-        
-        this.ProcessTypeCodeFilterItems = new ApiQueryFilters();
-
-        this.LoadDefaults();
+        this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceItemCertificat").subscribe((res: any) => {
+            this.ItemsSource = new ObservableCollection([]);
+            this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+    
+            this.CurrentSession.StartBusyIndicator('Loading...');
+            
+            this.ProcessTypeCodeFilterItems = new ApiQueryFilters();
+    
+            this.LoadDefaults();
+            this.IsVisibile = true;
+        });
 
     }
     SetWindowArgs(args: any) {
@@ -143,7 +146,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
 
                 });             
             }
-            this.IsVisibile = true;
+            
             this.CurrentSession.StopBusyIndicator();
 
         });
