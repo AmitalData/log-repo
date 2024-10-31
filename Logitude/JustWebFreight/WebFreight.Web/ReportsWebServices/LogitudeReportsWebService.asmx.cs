@@ -11141,7 +11141,6 @@ namespace WebFreight.Web.ReportsWebServices
                 Suppress_DoNotShowCardWithoutActivity = false,
                 IsTrialBalanceReport = true,
 
-
             };
 
             switch (level)

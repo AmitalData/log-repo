@@ -1192,8 +1192,6 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public bool IsRevenueExpenseReport { get; set; }
         public bool IsTrialBalanceReport { get; set; }
 
-
-
         #region Task 60992: Trial Balance- New filters + multiple choice
         /// <summary>
         /// new filter Chart Of Account type with multiple choice option.
