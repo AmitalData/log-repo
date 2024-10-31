@@ -33,7 +33,7 @@ namespace Logitude.Customs.Data.Utils
         public List<string> GetConnectedCustomersIds(int tenant)
         {
             if (!IsConnectedCustomerCached()) // if the cache is empty, cache the connected customers
-                CacheConnectedCustomers();
+                CacheConnectedCustomers(tenant);
 
             var customersIds = GetFromCache();
 
@@ -66,7 +66,7 @@ namespace Logitude.Customs.Data.Utils
             return customersIds;
         }
 
-        private void CacheConnectedCustomers()
+        private void CacheConnectedCustomers(int tenant)
         {
             CustomsSettingRepository custSettingsRepo = new CustomsSettingRepository(user.Tenant);
             
@@ -93,7 +93,7 @@ namespace Logitude.Customs.Data.Utils
                     // Get users from unf service
                     try
                     {
-                        AmitalRestrictOwnerModel restOwnerModel = custSettingsRepo.GetMyAmitalRestrictOwnerModel(false, user.Tenant);
+                        AmitalRestrictOwnerModel restOwnerModel = custSettingsRepo.GetMyAmitalRestrictOwnerModel(false, tenant);
                         codesList = restOwnerModel.Cards;
                     }
                     catch (Exception ex)

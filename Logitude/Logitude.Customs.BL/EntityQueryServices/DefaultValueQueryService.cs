@@ -100,6 +100,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             return accountNumber;
         }
+        public List<string> GetCardIdsByDefaultValue(string Distr, string DefaultTypeCode, List<string> groups, int Tenant)
+        {
+            List<string> cardIds = repository.GetCardIdsByDefaultValue(Distr, DefaultTypeCode, groups, Tenant);
+            return cardIds;
+        }
 
 
     }

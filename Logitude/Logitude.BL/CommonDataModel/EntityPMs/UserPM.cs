@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using Logitude.BL.Validators;
 using Logitude.Server.Tools;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.BL.CommonDataModel.EntityPMs
 {
@@ -280,6 +281,24 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public bool DisableCachedData { get; set; }
+
+        List<UserFreelancerGroupPM> freelancerGroups;
+        [Include]
+        [Association("UserFreelancerGroupsPMUserPM", "Id", "UserId")]
+        [Composition]
+        [DataMember]
+        public virtual List<UserFreelancerGroupPM> FreelancerGroups
+        {
+            get
+            {
+                if (freelancerGroups == null)
+                {
+                    freelancerGroups = new List<UserFreelancerGroupPM>();
+                }
+                return freelancerGroups;
+            }
+            set { freelancerGroups = value; }
+        }
 
     }
 }

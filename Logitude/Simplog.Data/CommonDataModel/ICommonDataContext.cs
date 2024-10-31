@@ -253,6 +253,9 @@ namespace Simplog.Data.CommonDataModel
 
         IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects { get; }
 
+        IDbSet<FreelancerGroupType> FreelancerGroupTypes { get; set; }
+        IDbSet<UserFreelancerGroup> UserFreelancerGroups { get; set; }
+
 
         IDbSet<AllActiveGLAccountsView> AllActiveGLAccountsViews { get; set; }
 

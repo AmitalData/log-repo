@@ -119,6 +119,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         UserPermittedProductQuery perProductQuery = new UserPermittedProductQuery(perProductRep);
                         entity.UserPermittedProducts = perProductQuery.GetContactFromUserPermittedProductPMsByUserId(entity.Id, entity.Tenant).ToList();
 
+                        UserFreelancerGroupRepository userFreelancerGroupRepository = new UserFreelancerGroupRepository(this.repository.context);
+                        UserFreelancerGroupQuery userFreelancerGroupQuery = new UserFreelancerGroupQuery(userFreelancerGroupRepository);
+                        entity.FreelancerGroups = userFreelancerGroupQuery.GetUserFreelancerGroupPMsByTenantAndUserId(entity.Id, entity.Tenant).ToList();
+
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
                             if (entity != null)
@@ -207,6 +211,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     UserPermittedProductRepository perProductRep = new UserPermittedProductRepository(this.repository.context);
                     UserPermittedProductQuery perProductQuery = new UserPermittedProductQuery(perProductRep);
                     entity.UserPermittedProducts = perProductQuery.GetContactFromUserPermittedProductPMsByUserId(entity.Id, entity.Tenant).ToList();
+
+                    UserFreelancerGroupRepository userFreelancerGroupRepository = new UserFreelancerGroupRepository(this.repository.context);
+                    UserFreelancerGroupQuery userFreelancerGroupQuery = new UserFreelancerGroupQuery(userFreelancerGroupRepository);
+                    entity.FreelancerGroups = userFreelancerGroupQuery.GetUserFreelancerGroupPMsByTenantAndUserId(entity.Id, entity.Tenant).ToList();
                 }
             }
 
@@ -300,6 +308,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             UserPermittedProductQuery perProductQuery = new UserPermittedProductQuery(perProductRep);
                             entity.UserPermittedProducts = perProductQuery.GetContactFromUserPermittedProductPMsByUserId(entity.Id, entity.Tenant).ToList();
 
+                            UserFreelancerGroupRepository userFreelancerGroupRepository = new UserFreelancerGroupRepository(this.repository.context);
+                            UserFreelancerGroupQuery userFreelancerGroupQuery = new UserFreelancerGroupQuery(userFreelancerGroupRepository);
+                            entity.FreelancerGroups = userFreelancerGroupQuery.GetUserFreelancerGroupPMsByTenantAndUserId(entity.Id, entity.Tenant).ToList();
+
                             if (CacheManager.CacheWrapper.Get(entityName) == null)
                             {
                                 if (entity != null)
@@ -388,6 +400,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         UserPermittedProductRepository perProductRep = new UserPermittedProductRepository(this.repository.context);
                         UserPermittedProductQuery perProductQuery = new UserPermittedProductQuery(perProductRep);
                         entity.UserPermittedProducts = perProductQuery.GetContactFromUserPermittedProductPMsByUserId(entity.Id, entity.Tenant).ToList();
+
+                        UserFreelancerGroupRepository userFreelancerGroupRepository = new UserFreelancerGroupRepository(this.repository.context);
+                        UserFreelancerGroupQuery userFreelancerGroupQuery = new UserFreelancerGroupQuery(userFreelancerGroupRepository);
+                        entity.FreelancerGroups = userFreelancerGroupQuery.GetUserFreelancerGroupPMsByTenantAndUserId(entity.Id, entity.Tenant).ToList();
                     }
                 }
             }
@@ -465,6 +481,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     UserPermittedProductRepository perProductRep = new UserPermittedProductRepository(this.repository.context);
                     UserPermittedProductQuery perProductQuery = new UserPermittedProductQuery(perProductRep);
                     entity.UserPermittedProducts = perProductQuery.GetContactFromUserPermittedProductPMsByUserId(entity.Id, entity.Tenant).ToList();
+
+                    UserFreelancerGroupRepository userFreelancerGroupRepository = new UserFreelancerGroupRepository(this.repository.context);
+                    UserFreelancerGroupQuery userFreelancerGroupQuery = new UserFreelancerGroupQuery(userFreelancerGroupRepository);
+                    entity.FreelancerGroups = userFreelancerGroupQuery.GetUserFreelancerGroupPMsByTenantAndUserId(entity.Id, entity.Tenant).ToList();
                 }
             }
 
@@ -554,7 +574,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             UserPermittedProductRepository perProductRep = new UserPermittedProductRepository(this.repository.context);
                             UserPermittedProductQuery perProductQuery = new UserPermittedProductQuery(perProductRep);
                             entity.UserPermittedProducts = perProductQuery.GetContactFromUserPermittedProductPMsByUserId(entity.Id, entity.Tenant).ToList();
-                            
+
+                            UserFreelancerGroupRepository userFreelancerGroupRepository = new UserFreelancerGroupRepository(this.repository.context);
+                            UserFreelancerGroupQuery userFreelancerGroupQuery = new UserFreelancerGroupQuery(userFreelancerGroupRepository);
+                            entity.FreelancerGroups = userFreelancerGroupQuery.GetUserFreelancerGroupPMsByTenantAndUserId(entity.Id, entity.Tenant).ToList();
+
                             if (CacheManager.CacheWrapper.Get(entityName) == null)
                             {
                                 if (entity != null)
@@ -643,6 +667,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         UserPermittedProductRepository perProductRep = new UserPermittedProductRepository(this.repository.context);
                         UserPermittedProductQuery perProductQuery = new UserPermittedProductQuery(perProductRep);
                         entity.UserPermittedProducts = perProductQuery.GetContactFromUserPermittedProductPMsByUserId(entity.Id, entity.Tenant).ToList();
+
+                        UserFreelancerGroupRepository userFreelancerGroupRepository = new UserFreelancerGroupRepository(this.repository.context);
+                        UserFreelancerGroupQuery userFreelancerGroupQuery = new UserFreelancerGroupQuery(userFreelancerGroupRepository);
+                        entity.FreelancerGroups = userFreelancerGroupQuery.GetUserFreelancerGroupPMsByTenantAndUserId(entity.Id, entity.Tenant).ToList();
                     }
                 }
             }
@@ -720,6 +748,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     UserPermittedProductRepository perProductRep = new UserPermittedProductRepository(this.repository.context);
                     UserPermittedProductQuery perProductQuery = new UserPermittedProductQuery(perProductRep);
                     entity.UserPermittedProducts = perProductQuery.GetContactFromUserPermittedProductPMsByUserId(entity.Id, entity.Tenant).ToList();
+
+                    UserFreelancerGroupRepository userFreelancerGroupRepository = new UserFreelancerGroupRepository(this.repository.context);
+                    UserFreelancerGroupQuery userFreelancerGroupQuery = new UserFreelancerGroupQuery(userFreelancerGroupRepository);
+                    entity.FreelancerGroups = userFreelancerGroupQuery.GetUserFreelancerGroupPMsByTenantAndUserId(entity.Id, entity.Tenant).ToList();
                 }
             }
 
@@ -812,6 +844,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             UserPermittedProductQuery perProductQuery = new UserPermittedProductQuery(perProductRep);
                             entity.UserPermittedProducts = perProductQuery.GetContactFromUserPermittedProductPMsByUserId(entity.Id, entity.Tenant).ToList();
 
+                            UserFreelancerGroupRepository userFreelancerGroupRepository = new UserFreelancerGroupRepository(this.repository.context);
+                            UserFreelancerGroupQuery userFreelancerGroupQuery = new UserFreelancerGroupQuery(userFreelancerGroupRepository);
+                            entity.FreelancerGroups = userFreelancerGroupQuery.GetUserFreelancerGroupPMsByTenantAndUserId(entity.Id, entity.Tenant).ToList();
+
                             if (CacheManager.CacheWrapper.Get(entityName) == null)
                             {
                                 //if (entity != null)
@@ -901,6 +937,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         UserPermittedProductRepository perProductRep = new UserPermittedProductRepository(this.repository.context);
                         UserPermittedProductQuery perProductQuery = new UserPermittedProductQuery(perProductRep);
                         entity.UserPermittedProducts = perProductQuery.GetContactFromUserPermittedProductPMsByUserId(entity.Id, entity.Tenant).ToList();
+
+                        UserFreelancerGroupRepository userFreelancerGroupRepository = new UserFreelancerGroupRepository(this.repository.context);
+                        UserFreelancerGroupQuery userFreelancerGroupQuery = new UserFreelancerGroupQuery(userFreelancerGroupRepository);
+                        entity.FreelancerGroups = userFreelancerGroupQuery.GetUserFreelancerGroupPMsByTenantAndUserId(entity.Id, entity.Tenant).ToList();
                     }
                 }
             }
@@ -981,6 +1021,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     UserPermittedProductRepository perProductRep = new UserPermittedProductRepository(this.repository.context);
                     UserPermittedProductQuery perProductQuery = new UserPermittedProductQuery(perProductRep);
                     entity.UserPermittedProducts = perProductQuery.GetContactFromUserPermittedProductPMsByUserId(entity.Id, entity.Tenant).ToList();
+
+                    UserFreelancerGroupRepository userFreelancerGroupRepository = new UserFreelancerGroupRepository(this.repository.context);
+                    UserFreelancerGroupQuery userFreelancerGroupQuery = new UserFreelancerGroupQuery(userFreelancerGroupRepository);
+                    entity.FreelancerGroups = userFreelancerGroupQuery.GetUserFreelancerGroupPMsByTenantAndUserId(entity.Id, entity.Tenant).ToList();
 
                 }
             }
@@ -1426,6 +1470,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 UserPermittedProductRepository perProductRep = new UserPermittedProductRepository(this.repository.context);
                 UserPermittedProductQuery perProductQuery = new UserPermittedProductQuery(perProductRep);
                 entity.UserPermittedProducts = perProductQuery.GetContactFromUserPermittedProductPMsByUserId(entity.Id, entity.Tenant).ToList();
+
+                UserFreelancerGroupRepository userFreelancerGroupRepository = new UserFreelancerGroupRepository(this.repository.context);
+                UserFreelancerGroupQuery userFreelancerGroupQuery = new UserFreelancerGroupQuery(userFreelancerGroupRepository);
+                entity.FreelancerGroups = userFreelancerGroupQuery.GetUserFreelancerGroupPMsByTenantAndUserId(entity.Id, entity.Tenant).ToList();
             }
 
             return entity;
@@ -1671,6 +1719,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 UserPermittedProductRepository perProductRep = new UserPermittedProductRepository(this.repository.context);
                 UserPermittedProductQuery perProductQuery = new UserPermittedProductQuery(perProductRep);
                 entity.UserPermittedProducts = perProductQuery.GetContactFromUserPermittedProductPMsByUserId(entity.Id, entity.Tenant).ToList();
+
+                UserFreelancerGroupRepository userFreelancerGroupRepository = new UserFreelancerGroupRepository(this.repository.context);
+                UserFreelancerGroupQuery userFreelancerGroupQuery = new UserFreelancerGroupQuery(userFreelancerGroupRepository);
+                entity.FreelancerGroups = userFreelancerGroupQuery.GetUserFreelancerGroupPMsByTenantAndUserId(entity.Id, entity.Tenant).ToList();
             }
 
             return entity;

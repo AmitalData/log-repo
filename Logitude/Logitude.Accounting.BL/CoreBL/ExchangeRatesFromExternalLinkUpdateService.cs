@@ -18,11 +18,18 @@ namespace Logitude.Accounting.BL.CoreBL
         }
         public void UpdateRatesByExternalXml()
         {
-			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-			XmlDocument document = GetExchangeRatesXmlFromExternalLink();
-            List<RateUpdate> rates = GetRatesFromXml(document);
-            RatesUpdate ratesUpdate = GetRatesUpdate(rates);
-            UpdateRatesByService(ratesUpdate);
+            try
+            {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                XmlDocument document = GetExchangeRatesXmlFromExternalLink();
+                List<RateUpdate> rates = GetRatesFromXml(document);
+                RatesUpdate ratesUpdate = GetRatesUpdate(rates);
+                UpdateRatesByService(ratesUpdate);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
 
         }
         private XmlDocument GetExchangeRatesXmlFromExternalLink()

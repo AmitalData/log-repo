@@ -1,7 +1,13 @@
-﻿using Logitude.Customs.BL.Messaging.Customs;
+﻿using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Def.Messaging.Customs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Models;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -25,6 +31,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
                 if (RequestSheetContext.Current != null)
                 {
                     var loggingUserIdFromRS = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
+                    if (!string.IsNullOrWhiteSpace(loggingUserIdFromRS))
                     if (!string.IsNullOrWhiteSpace(loggingUserIdFromRS))
                     {
                         UserRepository userRep = new UserRepository(tenant);
@@ -62,62 +69,84 @@ namespace Logitude.Customs.BL.Messaging.Amital
 
         AmitalRestrictOwnerModel GetResctOwnerListBL(int tenant , string UnifreightUserId )
         {
+
             var myAmitalRestrictOwnerModel = new AmitalRestrictOwnerModel()
-            {  Tenant= tenant, UnifreightUserId = UnifreightUserId };
-            
-            var amitalCustomFileCommunicationModel = new Logitude.Customs.BL.Messaging.Amital.AmitalCommunicationModelBase(
-               Logitude.Server.Tools.Models.AmitalStandardCommunicationModel.OperationMethod.DataAccess,
-               "GWSFUSERDATA", "GetResctOwnerList")
+            { Tenant = tenant, UnifreightUserId = UnifreightUserId };
+            CustomsSettingRepository custSettingsRepo = new CustomsSettingRepository(tenant);
+            CustomsSetting custSettings = custSettingsRepo.GetSettingByTenant(tenant);
+            if (custSettings != null && !custSettings.IsConnectedToUniFreight)
             {
-                Tenant = 1,
-                objectTableName = "",
-                CommunicationLoggingEntityReference = "",
-                EntityId = "",
-                UserId = UnifreightUserId,
-                CommunicationSubject = "GetResctOwnerList",
-
-                //LogitudeFile = myFile,
-            };
-
-
-            var myDictionary = new Dictionary<string, string>();
-            myDictionary.Add("USR_CODE", UnifreightUserId);
-
-            var myUServerCommunicationService = new Logitude.Customs.BL.Messaging.Amital.UServerCommunicationService
-                <Logitude.Customs.BL.Messaging.Amital.AmitalCommunicationModelBase, Dictionary<string, string>>(
-                amitalCustomFileCommunicationModel, myDictionary);
-            var info = myUServerCommunicationService.Send(true,true);
-            if (info.GenericResponseObj.Status != "0")
-            {
-                throw new Exception("Send  Communication GetResctOwnerList to UServer  Failed  :" + info.GenericResponseObj.Message);
-            }
-
-            var xml = info.GenericResponseObj.ResponseXml;
-            var resList = UnifreightListsUtil.Deserialize(xml);
-
-
-            var sIsRestrictedOwner = UnifreightListsUtil.GetValue(ref resList, "IsRestrictedOwner");
-            bool IsRestrictedOwner;
-            if (!bool.TryParse(sIsRestrictedOwner, out IsRestrictedOwner))
-            {
-                throw new Exception("Response From UServer GetResctOwnerList  IsRestrictedOwner is not Boolean:" + info.GenericResponseObj.ResponseXml);
-            }
-
-            myAmitalRestrictOwnerModel.IsRestrictedOwner = IsRestrictedOwner;
-            if (myAmitalRestrictOwnerModel.IsRestrictedOwner)
-            {
-                var ResctOwnerList = UnifreightListsUtil.GetValue(ref resList, "ResctOwnerList");
-                if (string.IsNullOrWhiteSpace(ResctOwnerList))
+                ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+                UserFreelancerGroupRepository userFreelancerGroupRepository = new UserFreelancerGroupRepository(commonContext);
+                UserFreelancerGroupQuery userFreelancerGroupQuery = new UserFreelancerGroupQuery(userFreelancerGroupRepository);
+                var groups = userFreelancerGroupQuery.GetUserFreelancerGroupsByUserId(UnifreightUserId, tenant).ToList();
+                DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
+                if(groups.Count == 0)
                 {
-                    //yuval said its ok without list  ---- //throw new Exception()
+                    return myAmitalRestrictOwnerModel;
                 }
-                else
-                {
-                    myAmitalRestrictOwnerModel.Cards = ResctOwnerList.Split(',').ToList();
-                }
-            }
+                var cards = defaultValueQueryService.GetCardIdsByDefaultValue("ISRAEL", "CIM_RESTRICTGRP", groups, tenant);
+                myAmitalRestrictOwnerModel.Cards = cards;
+                return myAmitalRestrictOwnerModel;
 
-            return myAmitalRestrictOwnerModel;
+
+            }
+            else
+            {
+                var amitalCustomFileCommunicationModel = new Logitude.Customs.BL.Messaging.Amital.AmitalCommunicationModelBase(
+                   Logitude.Server.Tools.Models.AmitalStandardCommunicationModel.OperationMethod.DataAccess,
+                   "GWSFUSERDATA", "GetResctOwnerList")
+                {
+                    Tenant = 1,
+                    objectTableName = "",
+                    CommunicationLoggingEntityReference = "",
+                    EntityId = "",
+                    UserId = UnifreightUserId,
+                    CommunicationSubject = "GetResctOwnerList",
+
+                    //LogitudeFile = myFile,
+                };
+
+
+                var myDictionary = new Dictionary<string, string>();
+                myDictionary.Add("USR_CODE", UnifreightUserId);
+
+                var myUServerCommunicationService = new Logitude.Customs.BL.Messaging.Amital.UServerCommunicationService
+                    <Logitude.Customs.BL.Messaging.Amital.AmitalCommunicationModelBase, Dictionary<string, string>>(
+                    amitalCustomFileCommunicationModel, myDictionary);
+                var info = myUServerCommunicationService.Send(true, true);
+                if (info.GenericResponseObj.Status != "0")
+                {
+                    throw new Exception("Send  Communication GetResctOwnerList to UServer  Failed  :" + info.GenericResponseObj.Message);
+                }
+
+                var xml = info.GenericResponseObj.ResponseXml;
+                var resList = UnifreightListsUtil.Deserialize(xml);
+
+
+                var sIsRestrictedOwner = UnifreightListsUtil.GetValue(ref resList, "IsRestrictedOwner");
+                bool IsRestrictedOwner;
+                if (!bool.TryParse(sIsRestrictedOwner, out IsRestrictedOwner))
+                {
+                    throw new Exception("Response From UServer GetResctOwnerList  IsRestrictedOwner is not Boolean:" + info.GenericResponseObj.ResponseXml);
+                }
+
+                myAmitalRestrictOwnerModel.IsRestrictedOwner = IsRestrictedOwner;
+                if (myAmitalRestrictOwnerModel.IsRestrictedOwner)
+                {
+                    var ResctOwnerList = UnifreightListsUtil.GetValue(ref resList, "ResctOwnerList");
+                    if (string.IsNullOrWhiteSpace(ResctOwnerList))
+                    {
+                        //yuval said its ok without list  ---- //throw new Exception()
+                    }
+                    else
+                    {
+                        myAmitalRestrictOwnerModel.Cards = ResctOwnerList.Split(',').ToList();
+                    }
+                }
+
+                return myAmitalRestrictOwnerModel;
+            }
         }
     }
 

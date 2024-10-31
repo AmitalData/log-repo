@@ -4738,10 +4738,17 @@ User/Pass",
         {
             if (textBox2.Text == "0")
             {
-                var listofTenants = GetTenantListThatHasTaskScheduler();
-                foreach (var tenant in listofTenants)
+                try
                 {
-                    UpdateRatesByExternalXmlForAllTenantWithSchedular(tenant);
+                    var listofTenants = GetTenantListThatHasTaskScheduler();
+                    foreach (var tenant in listofTenants)
+                    {
+                        UpdateRatesByExternalXmlForAllTenantWithSchedular(tenant);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"UpdateRatesByExternalXmlForAllTenantWithSchedular error :({ex.InnerException})");
                 }
             }
             else
@@ -4755,10 +4762,16 @@ User/Pass",
 
         public static void UpdateRatesByExternalXmlForAllTenantWithSchedular(int tenant)
         {
-
-            LoggedContactResolver.RegisterLoggedContactUtil();
-            ExchangeRatesFromExternalLinkUpdateService ratesUpdateService = new ExchangeRatesFromExternalLinkUpdateService(tenant);
-            ratesUpdateService.UpdateRatesByExternalXml();
+            try
+            {
+                LoggedContactResolver.RegisterLoggedContactUtil();
+                ExchangeRatesFromExternalLinkUpdateService ratesUpdateService = new ExchangeRatesFromExternalLinkUpdateService(tenant);
+                ratesUpdateService.UpdateRatesByExternalXml();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
 
         }
         public static List<int> GetTenantListThatHasTaskScheduler()
