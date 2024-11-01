@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="QuickbooksSyncRequestTickets"
+  Schema="dbo"
+  DBType="Main"
+  Module="Invoice">
+  <Column
+    Name="Ticket"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ReferenceNumber"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="UserName"
+    Type="varchar"
+    Size="70">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Password"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RequestCount"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ExternalTablesRequestCount"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsCurrentInvoiceChecked"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+</Table>

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Trigger
+  DBType="Main"
+  Name="TriggerOnCreate_AutomaticLastUpdateDateShipmentMasterDatas"
+  Schema="dbo"
+  Module="Shipment">
+  <SqlScript><![CDATA[
+CREATE TRIGGER TriggerOnCreate_AutomaticLastUpdateDateShipmentMasterDatas ON ShipmentMasterDatas AFTER Insert  AS  BEGIN UPDATE ShipmentMasterDatas SET AutomaticLastUpdateDate = GETDATE() WHERE Id IN (SELECT DISTINCT Id FROM Inserted)END;
+]]></SqlScript>
+  <OracleScript>
+</OracleScript>
+</Trigger>

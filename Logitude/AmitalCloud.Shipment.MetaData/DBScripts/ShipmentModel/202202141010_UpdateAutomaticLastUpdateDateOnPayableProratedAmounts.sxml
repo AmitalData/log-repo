@@ -1,0 +1,9 @@
+﻿<Script DBType="Main" Module="Shipment" >
+  <Sql Version="1">
+    <![CDATA[
+
+    update PayableProratedAmounts set AutomaticLastUpdateDate = GETDATE() where AutomaticLastUpdateDate is null
+
+    ]]>
+  </Sql>
+</Script>

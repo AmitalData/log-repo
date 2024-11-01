@@ -1,0 +1,95 @@
+﻿<Script DBType="Main">
+  <Sql Version="2">
+    <![CDATA[
+    
+declare @Tenant as int
+      declare @TenantString as varchar(50)
+      declare @EntityId as varchar(15)
+      declare @UserId as varchar(15)
+      declare @UserEmail as varchar(150)
+	  declare @ShipmentTypeCode as varchar(4)
+
+      BEGIN 
+	      DECLARE TenantsCursor CURSOR READ_ONLY
+	      FOR
+	      SELECT Id
+	      FROM Tenants
+	      OPEN TenantsCursor FETCH NEXT FROM TenantsCursor INTO @Tenant        
+	      WHILE @@FETCH_STATUS = 0
+		      BEGIN
+          
+          set @TenantString = CONVERT(varchar(50), @Tenant)
+          set @UserEmail = 'system@tenant'+ @TenantString + '.com'
+		  set @UserId = (select Id from Contacts where Email = @UserEmail and Tenant = @Tenant) 
+          set @UserId = (select Id from Users where Id = @UserId and Tenant = @Tenant)
+          
+          if (@UserId is not null)
+          begin 
+          
+              if not exists (select Id from ShipmentSubTypes where Tenant = @Tenant and Code = 'Air')
+              begin
+		          set @ShipmentTypeCode = (select Id from ShipmentTypes where Id = 'Air')
+			      EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'ShipmentSubType'
+                  insert into ShipmentSubTypes(Id, Tenant, Code, Name, ShipmentTypeCode, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive, SearchFields)
+                  values(@EntityId, @Tenant,  'Air', 'Air', @ShipmentTypeCode, GETDATE(), GETDATE(), @UserId, @UserId, 0, 'Air,Air')                            
+              end
+		
+		      if not exists (select Id from ShipmentSubTypes where Tenant = @Tenant and Code = 'FCL')
+              begin
+		          set @ShipmentTypeCode = (select Id from ShipmentTypes where Id = 'FCLD')
+			      EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'ShipmentSubType'
+                  insert into ShipmentSubTypes(Id, Tenant, Code, Name, ShipmentTypeCode, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive, SearchFields)
+                  values(@EntityId, @Tenant,  'FCL', 'FCL', @ShipmentTypeCode, GETDATE(), GETDATE(), @UserId, @UserId, 0, 'FCL,FCL')                            
+              end
+			  
+			  if not exists (select Id from ShipmentSubTypes where Tenant = @Tenant and Code = 'LCL')
+              begin
+		          set @ShipmentTypeCode = (select Id from ShipmentTypes where Id = 'LCLD')
+			      EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'ShipmentSubType'
+                  insert into ShipmentSubTypes(Id, Tenant, Code, Name, ShipmentTypeCode, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive, SearchFields)
+                  values(@EntityId, @Tenant,  'LCL', 'LCL', @ShipmentTypeCode, GETDATE(), GETDATE(), @UserId, @UserId, 0, 'LCL,LCL')                            
+              end
+
+			  if not exists (select Id from ShipmentSubTypes where Tenant = @Tenant and Code = 'FTL')
+              begin
+		          set @ShipmentTypeCode = (select Id from ShipmentTypes where Id = 'FTL')
+			      EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'ShipmentSubType'
+                  insert into ShipmentSubTypes(Id, Tenant, Code, Name, ShipmentTypeCode, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive, SearchFields)
+                  values(@EntityId, @Tenant,  'FTL', 'FTL', @ShipmentTypeCode, GETDATE(), GETDATE(), @UserId, @UserId, 0, 'FTL,FTL')                            
+              end
+
+			  if not exists (select Id from ShipmentSubTypes where Tenant = @Tenant and Code = 'LTL')
+              begin
+		          set @ShipmentTypeCode = (select Id from ShipmentTypes where Id = 'LTL')
+			      EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'ShipmentSubType'
+                  insert into ShipmentSubTypes(Id, Tenant, Code, Name, ShipmentTypeCode, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive, SearchFields)
+                  values(@EntityId, @Tenant,  'LTL', 'LTL', @ShipmentTypeCode, GETDATE(), GETDATE(), @UserId, @UserId, 0, 'LTL,LTL')                            
+              end
+
+			   if not exists (select Id from ShipmentSubTypes where Tenant = @Tenant and Code = 'MyGI')
+              begin
+		          set @ShipmentTypeCode = (select Id from ShipmentTypes where Id = 'MyGI')
+			      EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'ShipmentSubType'
+                  insert into ShipmentSubTypes(Id, Tenant, Code, Name, ShipmentTypeCode, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive, SearchFields)
+                  values(@EntityId, @Tenant,  'MyGI', 'My Groupage Inland', @ShipmentTypeCode, GETDATE(), GETDATE(), @UserId, @UserId, 0, 'MyGI,My Groupage Inland')                            
+              end
+
+			   if not exists (select Id from ShipmentSubTypes where Tenant = @Tenant and Code = 'MyGO')
+              begin
+		          set @ShipmentTypeCode = (select Id from ShipmentTypes where Id = 'MyGO')
+			      EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'ShipmentSubType'
+                  insert into ShipmentSubTypes(Id, Tenant, Code, Name, ShipmentTypeCode, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive, SearchFields)
+                  values(@EntityId, @Tenant,  'MyGO', 'My Groupage Ocean', @ShipmentTypeCode, GETDATE(), GETDATE(), @UserId, @UserId, 0, 'MyGO,My Groupage Ocean')                            
+              end
+              
+		  end
+                 FETCH NEXT FROM TenantsCursor INTO @Tenant      
+              END
+	      CLOSE TenantsCursor
+	      DEALLOCATE TenantsCursor
+      END
+      
+    ]]>
+  </Sql>
+</Script>
+

@@ -1,0 +1,533 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3240D3D5-3BC4-4ED7-A442-A8D645B1E849}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AmitalCloud.Shipment.Domain</RootNamespace>
+    <AssemblyName>AmitalCloud.Shipment.Domain</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Library\Bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Library\Bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AmazedSaint.Elastic, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll</HintPath>
+    </Reference>
+    <Reference Include="AmitalCloud.Infrastructure.Domain, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\AmitalCloud.Infrastructure.Domain.dll</HintPath>
+    </Reference>
+    <Reference Include="AmitalCloud.Invoice.Domain, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\AmitalCloud.Invoice.Domain.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceBus, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.Hosting.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceModel.DomainServices.WindowsAzure, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.WindowsAzure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="EntityKeys\AccountingInformationIdentifierKeys.cs" />
+    <Compile Include="EntityKeys\AWBAdditionalHandlingInfoKeys.cs" />
+    <Compile Include="EntityKeys\AWBChargesCodeKeys.cs" />
+    <Compile Include="EntityKeys\AWBCustomsInformationKeys.cs" />
+    <Compile Include="EntityKeys\AWBInformationKeys.cs" />
+    <Compile Include="EntityKeys\AWBOCIKeys.cs" />
+    <Compile Include="EntityKeys\AWBSpecialHandlingCodeKeys.cs" />
+    <Compile Include="EntityKeys\ContainerDiscrepancyKeys.cs" />
+    <Compile Include="EntityKeys\ContainerKeys.cs" />
+    <Compile Include="EntityKeys\ContainersExternalDataKeys.cs" />
+    <Compile Include="EntityKeys\ContainerStatusKeys.cs" />
+    <Compile Include="EntityKeys\ContainerStatusSourceKeys.cs" />
+    <Compile Include="EntityKeys\ContainerTrackingProviderKeys.cs" />
+    <Compile Include="EntityKeys\ContainerTrackingRequestKeys.cs" />
+    <Compile Include="EntityKeys\ContainerTrackingResponseKeys.cs" />
+    <Compile Include="EntityKeys\CustomsTransferHeaderKeys.cs" />
+    <Compile Include="EntityKeys\CustomsTransferLineKeys.cs" />
+    <Compile Include="EntityKeys\CustomsTransferTypeKeys.cs" />
+    <Compile Include="EntityKeys\CustomsTransmissionsStatusKeys.cs" />
+    <Compile Include="EntityKeys\FBLStockKeys.cs" />
+    <Compile Include="EntityKeys\HarmonizeCodeKeys.cs" />
+    <Compile Include="EntityKeys\InsideShipmentPackageKeys.cs" />
+    <Compile Include="EntityKeys\INTTRABookingStatusKeys.cs" />
+    <Compile Include="EntityKeys\INTTRABookingTransStatusKeys.cs" />
+    <Compile Include="EntityKeys\INTTRADocumentTypeKeys.cs" />
+    <Compile Include="EntityKeys\ManifestStatusKeys.cs" />
+    <Compile Include="EntityKeys\MessagingStockKeys.cs" />
+    <Compile Include="EntityKeys\MessagingStockUsageHistoryKeys.cs" />
+    <Compile Include="EntityKeys\OBLTypeKeys.cs" />
+    <Compile Include="EntityKeys\OtherParticipantIdKeys.cs" />
+    <Compile Include="EntityKeys\PayableProratedAmountKeys.cs" />
+    <Compile Include="EntityKeys\PickUpDeliveryFromToTypeKeys.cs" />
+    <Compile Include="EntityKeys\PickUpDeliveryPackageHarmonizeKeys.cs" />
+    <Compile Include="EntityKeys\PickUpDeliveryTransportModeKeys.cs" />
+    <Compile Include="EntityKeys\ReferenceTypeKeys.cs" />
+    <Compile Include="EntityKeys\ShipmentAssemblyKeys.cs" />
+    <Compile Include="EntityKeys\ShipmentAWBPrintOnlyKeys.cs" />
+    <Compile Include="EntityKeys\ShipmentCommodityKeys.cs" />
+    <Compile Include="EntityKeys\ShipmentComputedFieldsKeys.cs" />
+    <Compile Include="EntityKeys\ShipmentCustomerTypeKeys.cs" />
+    <Compile Include="EntityKeys\ShipmentCustomsMessageTypeKeys.cs" />
+    <Compile Include="EntityKeys\ShipmentCustomsTransmissionKeys.cs" />
+    <Compile Include="EntityKeys\ShipmentDigitalFieldKeys.cs" />
+    <Compile Include="EntityKeys\ShipmentKeys.cs" />
+    <Compile Include="EntityKeys\ShipmentLevelKeys.cs" />
+    <Compile Include="EntityKeys\ShipmentOrderPackageKeys.cs" />
+    <Compile Include="EntityKeys\ShipmentPackageHarmonizeKeys.cs" />
+    <Compile Include="EntityKeys\ShipmentPackageItemKeys.cs" />
+    <Compile Include="EntityKeys\ShipmentPackageKeys.cs" />
+    <Compile Include="EntityKeys\ShipmentPayableKeys.cs" />
+    <Compile Include="EntityKeys\ShipmentPayableStatusKeys.cs" />
+    <Compile Include="EntityKeys\ShipmentPickUpDeliveryKeys.cs" />
+    <Compile Include="EntityKeys\ShipmentPickUpDeliveryPackageKeys.cs" />
+    <Compile Include="EntityKeys\ShipmentProductItemKeys.cs" />
+    <Compile Include="EntityKeys\ShipmentReceivableKeys.cs" />
+    <Compile Include="EntityKeys\ShipmentReceivableStatusKeys.cs" />
+    <Compile Include="EntityKeys\ShipmentReferanceKeys.cs" />
+    <Compile Include="EntityKeys\ShipmentStoragePricingKeys.cs" />
+    <Compile Include="EntityKeys\ShipmentSubTypeKeys.cs" />
+    <Compile Include="EntityKeys\ShipmentTypeKeys.cs" />
+    <Compile Include="EntityKeys\ShipmentUnassignedFieldKeys.cs" />
+    <Compile Include="EntityKeys\SpecialServicesTypeKeys.cs" />
+    <Compile Include="EntityLists\Generated\AccountingInformationIdentifierList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\AWBAdditionalHandlingInfoList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\AWBChargesCodeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\AWBCustomsInformationList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\AWBInformationList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\AWBOCIList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\AWBSpecialHandlingCodeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ContainerDiscrepancyList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ContainerFollowUpList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ContainerList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ContainersExternalDataList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ContainerStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ContainerStatusSourceList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ContainerTrackingProviderList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ContainerTrackingRequestList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ContainerTrackingResponseList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CustomsTransferHeaderList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CustomsTransferLineList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CustomsTransferTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CustomsTransmissionsStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\FBLStockList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\HarmonizeCodeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\InsideShipmentPackageList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\INTTRABookingStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\INTTRABookingTransStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\INTTRADocumentTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ManifestStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\MasterList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\MessagingStockList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\MessagingStockUsageHistoryList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\OBLTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\OtherParticipantIdList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\PayableProratedAmountList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\PickUpDeliveryFromToTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\PickUpDeliveryPackageHarmonizeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\PickUpDeliveryTransportModeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ReferenceTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ShipmentAssemblyList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ShipmentAWBPrintOnlyList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ShipmentCommodityList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ShipmentComputedFieldsList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ShipmentCustomerTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ShipmentCustomsMessageTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ShipmentCustomsTransmissionList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ShipmentDigitalFieldList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ShipmentLevelList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ShipmentList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ShipmentOrderPackageList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ShipmentPackageHarmonizeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ShipmentPackageItemList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ShipmentPackageList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ShipmentPayableList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ShipmentPayableStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ShipmentPickUpDeliveryList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ShipmentPickUpDeliveryPackageList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ShipmentProductItemList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ShipmentReceivableList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ShipmentReceivableStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ShipmentReferanceList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ShipmentStoragePricingList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ShipmentSubTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ShipmentTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ShipmentUnassignedFieldList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SpecialServicesTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Manual\AWBStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Manual\ContainerFollowUpList.Generated.cs" />
+    <Compile Include="EntityLists\Manual\DigitalShipmentList.Generated.cs" />
+    <Compile Include="EntityLists\Manual\FHLStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Manual\FWBStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Manual\INTTRASIStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Manual\LogitudeOceanInsightsRequestList.Generated.cs" />
+    <Compile Include="EntityLists\Manual\MappedShipmentDirectionsList.Generated.cs" />
+    <Compile Include="EntityLists\Manual\NextLegList.Generated.cs" />
+    <Compile Include="EntityLists\Manual\OceanInsightsRequestList.Generated.cs" />
+    <Compile Include="EntityLists\Manual\OceanInsightsRequestsCountList.Generated.cs" />
+    <Compile Include="EntityLists\Manual\OceanInsightsStatusesList.Generated.cs" />
+    <Compile Include="EntityLists\Manual\PickUpDeliveryTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Manual\ShipmentCarrierStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Manual\ShipmentContainerStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Manual\ShipmentJoinPackageList.Generated.cs" />
+    <Compile Include="EntityLists\Manual\ShipmentPayableAmountTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Manual\ShipmentPayableLineStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Manual\ShipmentReceivableLineStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Manual\ShipmentsReceivablesPayablesList.Generated.cs" />
+    <Compile Include="EntityMapping\AccountingInformationIdentifierMap.cs" />
+    <Compile Include="EntityMapping\AWBAdditionalHandlingInfoMap.cs" />
+    <Compile Include="EntityMapping\AWBChargesCodeMap.cs" />
+    <Compile Include="EntityMapping\AWBCustomsInformationMap.cs" />
+    <Compile Include="EntityMapping\AWBInformationMap.cs" />
+    <Compile Include="EntityMapping\AWBOCIMap.cs" />
+    <Compile Include="EntityMapping\AWBSpecialHandlingCodeMap.cs" />
+    <Compile Include="EntityMapping\ContainerDiscrepancyMap.cs" />
+    <Compile Include="EntityMapping\ContainerMap.cs" />
+    <Compile Include="EntityMapping\ContainersExternalDataMap.cs" />
+    <Compile Include="EntityMapping\ContainerStatusMap.cs" />
+    <Compile Include="EntityMapping\ContainerStatusSourceMap.cs" />
+    <Compile Include="EntityMapping\ContainerTrackingProviderMap.cs" />
+    <Compile Include="EntityMapping\ContainerTrackingRequestMap.cs" />
+    <Compile Include="EntityMapping\ContainerTrackingResponseMap.cs" />
+    <Compile Include="EntityMapping\CustomsTransferHeaderMap.cs" />
+    <Compile Include="EntityMapping\CustomsTransferLineMap.cs" />
+    <Compile Include="EntityMapping\CustomsTransferTypeMap.cs" />
+    <Compile Include="EntityMapping\CustomsTransmissionsStatusMap.cs" />
+    <Compile Include="EntityMapping\FBLStockMap.cs" />
+    <Compile Include="EntityMapping\HarmonizeCodeMap.cs" />
+    <Compile Include="EntityMapping\InsideShipmentPackageMap.cs" />
+    <Compile Include="EntityMapping\INTTRABookingStatusMap.cs" />
+    <Compile Include="EntityMapping\INTTRABookingTransStatusMap.cs" />
+    <Compile Include="EntityMapping\INTTRADocumentTypeMap.cs" />
+    <Compile Include="EntityMapping\ManifestStatusMap.cs" />
+    <Compile Include="EntityMapping\Manual\AWBStatuMap.cs" />
+    <Compile Include="EntityMapping\Manual\DigitalShipmentDataViewMap.cs" />
+    <Compile Include="EntityMapping\Manual\FHLStatuMap.cs" />
+    <Compile Include="EntityMapping\Manual\FWBStatuMap.cs" />
+    <Compile Include="EntityMapping\Manual\INTTRASIStatusMap.cs" />
+    <Compile Include="EntityMapping\Manual\INTTRAStatusMap.cs" />
+    <Compile Include="EntityMapping\Manual\LogitudeOceanInsightsRequestMap.cs" />
+    <Compile Include="EntityMapping\Manual\LogitudeOceanInsightsResponseMap.cs" />
+    <Compile Include="EntityMapping\Manual\MappedShipmentDirectionsMap.cs" />
+    <Compile Include="EntityMapping\Manual\MessagingStockDataViewMap.cs" />
+    <Compile Include="EntityMapping\Manual\NextLegMap.cs" />
+    <Compile Include="EntityMapping\Manual\OceanInsightsRequestMap.cs" />
+    <Compile Include="EntityMapping\Manual\OceanInsightsRequestsCountMap.cs" />
+    <Compile Include="EntityMapping\Manual\OceanInsightsStatusesMap.cs" />
+    <Compile Include="EntityMapping\Manual\OceanInsightsStatusLogMap.cs" />
+    <Compile Include="EntityMapping\Manual\PickUpDeliveryTypeMap.cs" />
+    <Compile Include="EntityMapping\Manual\ShipmentAdditionalCloudDataMap.cs" />
+    <Compile Include="EntityMapping\Manual\ShipmentAnalyticMap.cs" />
+    <Compile Include="EntityMapping\Manual\ShipmentCarrierStatusMap.cs" />
+    <Compile Include="EntityMapping\Manual\ShipmentContainerStatusMap.cs" />
+    <Compile Include="EntityMapping\Manual\ShipmentCountryDashboardViewMap.cs" />
+    <Compile Include="EntityMapping\Manual\ShipmentDataViewMap.cs" />
+    <Compile Include="EntityMapping\Manual\ShipmentDirectionTransmodeViewMap.cs" />
+    <Compile Include="EntityMapping\Manual\ShipmentDocsFieldMap.cs" />
+    <Compile Include="EntityMapping\Manual\ShipmentFollowUpDataViewMap.cs" />
+    <Compile Include="EntityMapping\Manual\ShipmentMasterDataMap.cs" />
+    <Compile Include="EntityMapping\Manual\ShipmentPayableAmountTypeMap.cs" />
+    <Compile Include="EntityMapping\Manual\ShipmentPayableLineStatuMap.cs" />
+    <Compile Include="EntityMapping\Manual\ShipmentReceivableLineStatuMap.cs" />
+    <Compile Include="EntityMapping\Manual\ShipmentsCustomersDashboardViewMap.cs" />
+    <Compile Include="EntityMapping\MasterMap.cs" />
+    <Compile Include="EntityMapping\MessagingStockMap.cs" />
+    <Compile Include="EntityMapping\MessagingStockUsageHistoryMap.cs" />
+    <Compile Include="EntityMapping\OBLTypeMap.cs" />
+    <Compile Include="EntityMapping\OtherParticipantIdMap.cs" />
+    <Compile Include="EntityMapping\PayableProratedAmountMap.cs" />
+    <Compile Include="EntityMapping\PickUpDeliveryFromToTypeMap.cs" />
+    <Compile Include="EntityMapping\PickUpDeliveryPackageHarmonizeMap.cs" />
+    <Compile Include="EntityMapping\PickUpDeliveryTransportModeMap.cs" />
+    <Compile Include="EntityMapping\ReferenceTypeMap.cs" />
+    <Compile Include="EntityMapping\ShipmentAssemblyMap.cs" />
+    <Compile Include="EntityMapping\ShipmentAWBPrintOnlyMap.cs" />
+    <Compile Include="EntityMapping\ShipmentCommodityMap.cs" />
+    <Compile Include="EntityMapping\ShipmentComputedFieldsMap.cs" />
+    <Compile Include="EntityMapping\ShipmentCustomerTypeMap.cs" />
+    <Compile Include="EntityMapping\ShipmentCustomsMessageTypeMap.cs" />
+    <Compile Include="EntityMapping\ShipmentCustomsTransmissionMap.cs" />
+    <Compile Include="EntityMapping\ShipmentDigitalFieldMap.cs" />
+    <Compile Include="EntityMapping\ShipmentLevelMap.cs" />
+    <Compile Include="EntityMapping\ShipmentMap.cs" />
+    <Compile Include="EntityMapping\ShipmentOrderPackageMap.cs" />
+    <Compile Include="EntityMapping\ShipmentPackageHarmonizeMap.cs" />
+    <Compile Include="EntityMapping\ShipmentPackageItemMap.cs" />
+    <Compile Include="EntityMapping\ShipmentPackageMap.cs" />
+    <Compile Include="EntityMapping\ShipmentPayableMap.cs" />
+    <Compile Include="EntityMapping\ShipmentPayableStatusMap.cs" />
+    <Compile Include="EntityMapping\ShipmentPickUpDeliveryMap.cs" />
+    <Compile Include="EntityMapping\ShipmentPickUpDeliveryPackageMap.cs" />
+    <Compile Include="EntityMapping\ShipmentProductItemMap.cs" />
+    <Compile Include="EntityMapping\ShipmentReceivableMap.cs" />
+    <Compile Include="EntityMapping\ShipmentReceivableStatusMap.cs" />
+    <Compile Include="EntityMapping\ShipmentReferanceMap.cs" />
+    <Compile Include="EntityMapping\ShipmentStoragePricingMap.cs" />
+    <Compile Include="EntityMapping\ShipmentSubTypeMap.cs" />
+    <Compile Include="EntityMapping\ShipmentTypeMap.cs" />
+    <Compile Include="EntityMapping\ShipmentUnassignedFieldMap.cs" />
+    <Compile Include="EntityMapping\SpecialServicesTypeMap.cs" />
+    <Compile Include="EntityPMs\ConsoleShipmentPM.cs" />
+    <Compile Include="EntityPMs\Generated\AccountingInformationIdentifierPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AWBAdditionalHandlingInfoPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AWBChargesCodePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AWBCustomsInformationPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AWBInformationPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AWBOCIPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AWBSpecialHandlingCodePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ContainerDiscrepancyPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ContainerPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ContainersExternalDataPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ContainerStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ContainerStatusSourcePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ContainerTrackingProviderPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ContainerTrackingRequestPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ContainerTrackingResponsePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsTransferHeaderPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsTransferLinePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsTransferTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsTransmissionsStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\FBLStockPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\HarmonizeCodePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\InsideShipmentPackagePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\INTTRABookingStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\INTTRABookingTransStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\INTTRADocumentTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ManifestStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\MasterPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\MessagingStockPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\MessagingStockUsageHistoryPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\OBLTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\OtherParticipantIdPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PayableProratedAmountPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PickUpDeliveryFromToTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PickUpDeliveryPackageHarmonizePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PickUpDeliveryTransportModePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ReferenceTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ShipmentAssemblyPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ShipmentAWBPrintOnlyPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ShipmentCommodityPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ShipmentComputedFieldsPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ShipmentCustomerTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ShipmentCustomsMessageTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ShipmentCustomsTransmissionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ShipmentDigitalFieldPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ShipmentLevelPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ShipmentOrderPackagePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ShipmentPackageHarmonizePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ShipmentPackageItemPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ShipmentPackagePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ShipmentPayablePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ShipmentPayableStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ShipmentPickUpDeliveryPackagePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ShipmentPickUpDeliveryPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ShipmentPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ShipmentProductItemPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ShipmentReceivablePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ShipmentReceivableStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ShipmentReferancePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ShipmentStoragePricingPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ShipmentSubTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ShipmentTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ShipmentUnassignedFieldPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SpecialServicesTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Manual\CommodityPackagePM.cs" />
+    <Compile Include="EntityPMs\ShipmentAPInvoicePM.cs" />
+    <Compile Include="EntityPMs\ShipmentARInvoiceMoneyPM.cs" />
+    <Compile Include="EntityPMs\ShipmentARInvoicePM.cs" />
+    <Compile Include="EntityPMs\ShipmentCarrierStatusPM.cs" />
+    <Compile Include="EntityPMs\ShipmentDeliveryPM.cs" />
+    <Compile Include="EntityPMs\ShipmentPickUpPM.cs" />
+    <Compile Include="EntityPMs\TransshipmentLegPM.cs" />
+    <Compile Include="EntityPOCOs\AccountingInformationIdentifier.cs" />
+    <Compile Include="EntityPOCOs\AWBAdditionalHandlingInfo.cs" />
+    <Compile Include="EntityPOCOs\AWBChargesCode.cs" />
+    <Compile Include="EntityPOCOs\AWBCustomsInformation.cs" />
+    <Compile Include="EntityPOCOs\AWBInformation.cs" />
+    <Compile Include="EntityPOCOs\AWBOCI.cs" />
+    <Compile Include="EntityPOCOs\AWBSpecialHandlingCode.cs" />
+    <Compile Include="EntityPOCOs\Container.cs" />
+    <Compile Include="EntityPOCOs\ContainerDiscrepancy.cs" />
+    <Compile Include="EntityPOCOs\ContainersExternalData.cs" />
+    <Compile Include="EntityPOCOs\ContainerStatus.cs" />
+    <Compile Include="EntityPOCOs\ContainerStatusSource.cs" />
+    <Compile Include="EntityPOCOs\ContainerTrackingProvider.cs" />
+    <Compile Include="EntityPOCOs\ContainerTrackingRequest.cs" />
+    <Compile Include="EntityPOCOs\ContainerTrackingResponse.cs" />
+    <Compile Include="EntityPOCOs\CustomsTransferHeader.cs" />
+    <Compile Include="EntityPOCOs\CustomsTransferLine.cs" />
+    <Compile Include="EntityPOCOs\CustomsTransferType.cs" />
+    <Compile Include="EntityPOCOs\CustomsTransmissionsStatus.cs" />
+    <Compile Include="EntityPOCOs\FBLStock.cs" />
+    <Compile Include="EntityPOCOs\HarmonizeCode.cs" />
+    <Compile Include="EntityPOCOs\InsideShipmentPackage.cs" />
+    <Compile Include="EntityPOCOs\INTTRABookingStatus.cs" />
+    <Compile Include="EntityPOCOs\INTTRABookingTransStatus.cs" />
+    <Compile Include="EntityPOCOs\INTTRADocumentType.cs" />
+    <Compile Include="EntityPOCOs\ManifestStatus.cs" />
+    <Compile Include="EntityPOCOs\Manual\AWBStatus.cs" />
+    <Compile Include="EntityPOCOs\Manual\ContainerAnalytic.cs" />
+    <Compile Include="EntityPOCOs\Manual\DigitalShipmentsDataView.cs" />
+    <Compile Include="EntityPOCOs\Manual\FHLStatus.cs" />
+    <Compile Include="EntityPOCOs\Manual\FWBStatus.cs" />
+    <Compile Include="EntityPOCOs\Manual\INTTRASIStatus.cs" />
+    <Compile Include="EntityPOCOs\Manual\INTTRAStatus.cs" />
+    <Compile Include="EntityPOCOs\Manual\LogitudeOceanInsightsRequest.cs" />
+    <Compile Include="EntityPOCOs\Manual\LogitudeOceanInsightsResponse.cs" />
+    <Compile Include="EntityPOCOs\Manual\MappedShipmentDirections.cs" />
+    <Compile Include="EntityPOCOs\Manual\MessagingStockDataView.cs" />
+    <Compile Include="EntityPOCOs\Manual\NextLeg.cs" />
+    <Compile Include="EntityPOCOs\Manual\OceanInsightsRequest.cs" />
+    <Compile Include="EntityPOCOs\Manual\OceanInsightsRequestsCount.cs" />
+    <Compile Include="EntityPOCOs\Manual\OceanInsightsStatuses.cs" />
+    <Compile Include="EntityPOCOs\Manual\OceanInsightsStatusLog.cs" />
+    <Compile Include="EntityPOCOs\Manual\PickUpDeliveryType.cs" />
+    <Compile Include="EntityPOCOs\Manual\ShipmentAdditionalCloudData.cs" />
+    <Compile Include="EntityPOCOs\Manual\ShipmentAnalytic.cs" />
+    <Compile Include="EntityPOCOs\Manual\ShipmentCarrierStatus.cs" />
+    <Compile Include="EntityPOCOs\Manual\ShipmentContainerStatus.cs" />
+    <Compile Include="EntityPOCOs\Manual\ShipmentCountryDashboardView.cs" />
+    <Compile Include="EntityPOCOs\Manual\ShipmentDataView.cs" />
+    <Compile Include="EntityPOCOs\Manual\ShipmentDirectionTransmodeView.cs" />
+    <Compile Include="EntityPOCOs\Manual\ShipmentDocsField.cs" />
+    <Compile Include="EntityPOCOs\Manual\ShipmentFinancial.cs" />
+    <Compile Include="EntityPOCOs\Manual\ShipmentFollowUpDataView.cs" />
+    <Compile Include="EntityPOCOs\Manual\ShipmentMasterData.cs" />
+    <Compile Include="EntityPOCOs\Manual\ShipmentPayableAmountType.cs" />
+    <Compile Include="EntityPOCOs\Manual\ShipmentPayableLineStatus.cs" />
+    <Compile Include="EntityPOCOs\Manual\ShipmentReceivableLineStatus.cs" />
+    <Compile Include="EntityPOCOs\Manual\ShipmentsCustomersDashboardView.cs" />
+    <Compile Include="EntityPOCOs\Master.cs" />
+    <Compile Include="EntityPOCOs\MessagingStock.cs" />
+    <Compile Include="EntityPOCOs\MessagingStockUsageHistory.cs" />
+    <Compile Include="EntityPOCOs\OBLType.cs" />
+    <Compile Include="EntityPOCOs\OtherParticipantId.cs" />
+    <Compile Include="EntityPOCOs\PayableProratedAmount.cs" />
+    <Compile Include="EntityPOCOs\PickUpDeliveryFromToType.cs" />
+    <Compile Include="EntityPOCOs\PickUpDeliveryPackageHarmonize.cs" />
+    <Compile Include="EntityPOCOs\PickUpDeliveryTransportMode.cs" />
+    <Compile Include="EntityPOCOs\ReferenceType.cs" />
+    <Compile Include="EntityPOCOs\Shipment.cs" />
+    <Compile Include="EntityPOCOs\ShipmentAssembly.cs" />
+    <Compile Include="EntityPOCOs\ShipmentAWBPrintOnly.cs" />
+    <Compile Include="EntityPOCOs\ShipmentCommodity.cs" />
+    <Compile Include="EntityPOCOs\ShipmentComputedFields.cs" />
+    <Compile Include="EntityPOCOs\ShipmentCustomerType.cs" />
+    <Compile Include="EntityPOCOs\ShipmentCustomsMessageType.cs" />
+    <Compile Include="EntityPOCOs\ShipmentCustomsTransmission.cs" />
+    <Compile Include="EntityPOCOs\ShipmentDigitalField.cs" />
+    <Compile Include="EntityPOCOs\ShipmentLevel.cs" />
+    <Compile Include="EntityPOCOs\ShipmentOrderPackage.cs" />
+    <Compile Include="EntityPOCOs\ShipmentPackage.cs" />
+    <Compile Include="EntityPOCOs\ShipmentPackageHarmonize.cs" />
+    <Compile Include="EntityPOCOs\ShipmentPackageItem.cs" />
+    <Compile Include="EntityPOCOs\ShipmentPayable.cs" />
+    <Compile Include="EntityPOCOs\ShipmentPayableStatus.cs" />
+    <Compile Include="EntityPOCOs\ShipmentPickUpDelivery.cs" />
+    <Compile Include="EntityPOCOs\ShipmentPickUpDeliveryPackage.cs" />
+    <Compile Include="EntityPOCOs\ShipmentProductItem.cs" />
+    <Compile Include="EntityPOCOs\ShipmentReceivable.cs" />
+    <Compile Include="EntityPOCOs\ShipmentReceivableStatus.cs" />
+    <Compile Include="EntityPOCOs\ShipmentReferance.cs" />
+    <Compile Include="EntityPOCOs\ShipmentStoragePricing.cs" />
+    <Compile Include="EntityPOCOs\ShipmentSubType.cs" />
+    <Compile Include="EntityPOCOs\ShipmentType.cs" />
+    <Compile Include="EntityPOCOs\ShipmentUnassignedField.cs" />
+    <Compile Include="EntityPOCOs\SpecialServicesType.cs" />
+    <Compile Include="Interfaces\IShipmentClassLevelValidator.cs" />
+    <Compile Include="Interfaces\IShipmentContext.cs" />
+    <Compile Include="Interfaces\IShipmentDeliveryValidator.cs" />
+    <Compile Include="Interfaces\IShipmentValidationClass.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
+      <Link>DependencyValidation1.layerdiagram</Link>
+      <Visible>False</Visible>
+    </AdditionalFiles>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="EntityQueryServicesExt\" />
+    <Folder Include="EntityUpdateServicesExt\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

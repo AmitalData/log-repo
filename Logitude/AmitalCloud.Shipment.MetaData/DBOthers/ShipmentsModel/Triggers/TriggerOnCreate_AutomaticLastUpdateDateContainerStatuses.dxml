@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Trigger
+  DBType="Main"
+  Name="TriggerOnCreate_AutomaticLastUpdateDateContainerStatuses"
+  Schema="dbo"
+  Module="Shipment">
+  <SqlScript><![CDATA[
+--CREATE TRIGGER TriggerOnCreate_AutomaticLastUpdateDateContainerStatuses ON ContainerStatuses AFTER Insert  AS  BEGIN UPDATE ContainerStatuses SET AutomaticLastUpdateDate = GETDATE() WHERE Code IN (SELECT DISTINCT Code FROM Inserted)END;
+]]></SqlScript>
+  <OracleScript>
+</OracleScript>
+</Trigger>

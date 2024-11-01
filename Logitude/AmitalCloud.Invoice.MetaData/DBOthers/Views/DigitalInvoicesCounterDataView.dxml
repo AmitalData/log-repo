@@ -1,0 +1,18 @@
+<View DBType="Main" Name="DigitalInvoicesCounterDataView" Schema="dbo" Module="Invoice">
+  <SqlScript>
+    <![CDATA[
+        CREATE VIEW [dbo].[DigitalInvoicesCounterDataView]
+        AS
+        SELECT Tenant, PartnerId, BillToId, MAX(AmountDue) as MaxOpenAmount, Min(AmountDue) as MinOpenAmount, MAX(AmountInInvoiceCurrency) as MaxTotalAmount, Min(AmountInInvoiceCurrency) as MinTotalAmount
+        FROM   dbo.ARInvoices
+        where 
+        IsPrinted = '1' 
+        and IsConstituentInvoice = '0'
+		and StatusCode not in ('VD','DR','LL','AR','NT','CN')
+        group by PartnerId,BillToId, Tenant;
+
+]]>
+  </SqlScript>
+  <OracleScript>
+  </OracleScript>
+</View>

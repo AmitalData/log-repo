@@ -1,0 +1,30 @@
+<View DBType="Main" Name="MessagingStockDataView" Schema="dbo" Module="Shipment">
+  <SqlScript>
+    <![CDATA[
+CREATE VIEW [dbo].[MessagingStockDataView]
+AS
+SELECT      
+			 dbo.MessagingStocks.Id,				
+			 dbo.MessagingStocks.TenantNumber,
+			 dbo.MessagingStocks.StartDate,
+			 dbo.MessagingStocks.EndDate,
+			 dbo.MessagingStocks.Amount,	
+			 dbo.MessagingStocks.Remaining,
+			 dbo.MessagingStocks.IsCancelled,
+			 dbo.MessagingStocks.Notes,
+			 dbo.MessagingStocks.CreateDate,
+			 dbo.MessagingStocks.UpdateDate,
+			 dbo.MessagingStocks.CreatedByUserId,
+			 dbo.MessagingStocks.UpdatedByUserId,
+			 dbo.MessagingStocks.SearchFields,
+			 dbo.MessagingStocks.TotalPrice,
+			 dbo.MessagingStocks.StockType,
+			 dbo.Tenants.Company as TenantName
+
+FROM         dbo.MessagingStocks Inner join
+             dbo.Tenants ON  dbo.MessagingStocks.TenantNumber = dbo.Tenants.Id
+    ]]>
+  </SqlScript>
+  <OracleScript>
+  </OracleScript>
+</View>

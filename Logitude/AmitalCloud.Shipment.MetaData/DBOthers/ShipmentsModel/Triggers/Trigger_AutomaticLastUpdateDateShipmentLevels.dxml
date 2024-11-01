@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Trigger
+  DBType="Main"
+  Name="Trigger_AutomaticLastUpdateDateShipmentLevels"
+  Schema="dbo"
+  Module="Shipment">
+  <SqlScript>
+  <![CDATA[
+CREATE TRIGGER Trigger_AutomaticLastUpdateDateShipmentLevels ON ShipmentLevels AFTER UPDATE  AS  BEGIN
+
+SET NOCOUNT ON;
+
+IF TRIGGER_NESTLEVEL() > 1 RETURN;
+
+IF (SELECT program_name FROM sys.dm_exec_sessions WHERE session_id = (SELECT @@SPID)) <> 'ZeroDownTimeDBMigrationsTool'
+BEGIN
+UPDATE ShipmentLevels SET AutomaticLastUpdateDate = GETDATE() WHERE Code IN (SELECT DISTINCT Code FROM Inserted);
+END;
+
+END;
+]]></SqlScript>
+  <OracleScript>
+</OracleScript>
+</Trigger>

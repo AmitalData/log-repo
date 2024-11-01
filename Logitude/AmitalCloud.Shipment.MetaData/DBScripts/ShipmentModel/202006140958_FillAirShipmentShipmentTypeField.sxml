@@ -1,0 +1,10 @@
+﻿<Script DBType="Main">
+  <Sql Version="4">
+    <![CDATA[
+    
+      
+	  print 'Not needed anymore'
+      
+    ]]>
+  </Sql>
+</Script>

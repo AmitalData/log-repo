@@ -1,0 +1,12 @@
+﻿<Script DBType="Main" Module="Invoice" TargetTableName="ARPayments">
+  <Sql Version="1">
+    <![CDATA[
+    UPDATE ARPayments SET SearchFields = CONCAT(SearchFields,',',ChequeOrPaymentRef)
+    FROM ARPayments inner join (
+    select arp.Id from ARPayments arp
+    inner join APPaymentMethods arm on arp.AccountingPaymentMethodId = arm.Id
+    where arm.Code = 'CH' and arp.Id not in (SELECT PaymentId FROM ARPaymentCheques)
+    ) as chequePayments ON ARPayments.Id = chequePayments.Id
+    ]]>
+  </Sql>
+</Script>

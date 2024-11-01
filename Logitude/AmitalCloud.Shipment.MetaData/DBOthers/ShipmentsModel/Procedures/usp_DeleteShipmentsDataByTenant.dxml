@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="Main"
+  Name="usp_DeleteShipmentsDataByTenant"
+  Schema="dbo"
+  Module="Shipment">
+  <SqlScript><![CDATA[
+Create PROCEDURE dbo.usp_DeleteShipmentsDataByTenant
+(
+	@tenant int
+)
+AS
+
+
+BEGIN TRANSACTION
+
+
+delete from followups
+where tenant=@tenant
+
+IF @@ERROR <> 0
+ BEGIN
+    ROLLBACK
+    RAISERROR ('Error in deleting followups', 16, 1)
+    RETURN
+ END
+
+delete from insideshipmentpackages
+where tenant=@tenant
+
+IF @@ERROR <> 0
+ BEGIN
+    ROLLBACK
+    RAISERROR ('Error in deleting insideshipmentpackages', 16, 1)
+    RETURN
+ END
+
+delete from ShipmentPackageItems
+where tenant=@tenant
+
+IF @@ERROR <> 0
+ BEGIN
+    ROLLBACK
+    RAISERROR ('Error in deleting ShipmentPackageItems', 16, 1)
+    RETURN
+ END
+
+delete from shipmentpackages
+where tenant=@tenant
+
+IF @@ERROR <> 0
+ BEGIN
+    ROLLBACK
+    RAISERROR ('Error in deleting shipmentpackages', 16, 1)
+    RETURN
+ END
+
+delete from ShipmentPickUpDeliveryPackages
+where tenant=@tenant
+
+IF @@ERROR <> 0
+ BEGIN
+    ROLLBACK
+    RAISERROR ('Error in deleting ShipmentPickUpDeliveryPackages', 16, 1)
+    RETURN
+ END
+
+delete from shipmentpickupdeliveries
+where tenant=@tenant
+
+IF @@ERROR <> 0
+ BEGIN
+    ROLLBACK
+    RAISERROR ('Error in deleting shipmentpickupdeliveries', 16, 1)
+    RETURN
+ END
+
+delete from shipmentorderpackages
+where tenant=@tenant
+
+IF @@ERROR <> 0
+ BEGIN
+    ROLLBACK
+    RAISERROR ('Error in deleting shipmentorderpackages', 16, 1)
+    RETURN
+ END
+
+delete from shipmentpayables
+where tenant=@tenant
+
+IF @@ERROR <> 0
+ BEGIN
+    ROLLBACK
+    RAISERROR ('Error in deleting shipmentpayables', 16, 1)
+    RETURN
+ END
+
+delete from shipmentreceivables
+where tenant=@tenant
+
+IF @@ERROR <> 0
+ BEGIN
+    ROLLBACK
+    RAISERROR ('Error in deleting shipmentreceivables', 16, 1)
+    RETURN
+ END
+
+delete from shipmentawbprintonlies
+where tenant=@tenant
+
+IF @@ERROR <> 0
+ BEGIN
+    ROLLBACK
+    RAISERROR ('Error in deleting shipmentawbprintonlies', 16, 1)
+    RETURN
+ END
+
+ delete from ShipmentCommodities
+where Tenant = @tenant
+
+IF @@ERROR <> 0
+ BEGIN
+    ROLLBACK
+    RAISERROR ('Error in deleting ShipmentCommodities', 16, 1)
+    RETURN
+ END
+
+delete from AWBStockUsageHistories
+where Tenant = @tenant
+
+IF @@ERROR <> 0
+ BEGIN
+    ROLLBACK
+    RAISERROR ('Error in deleting AWBStockUsageHistories', 16, 1)
+    RETURN
+ END
+
+delete from AWBOCIs
+where Tenant = @tenant
+
+IF @@ERROR <> 0
+ BEGIN
+    ROLLBACK
+    RAISERROR ('Error in deleting AWBOCIs', 16, 1)
+    RETURN
+ END
+
+
+ delete from shipmentmasterdatas
+where tenant=@tenant;
+
+IF @@ERROR <> 0
+ BEGIN
+    ROLLBACK
+    RAISERROR ('Error in deleting shipmentmasterdatas', 16, 1)
+    RETURN
+ END
+
+
+if exists (SELECT * FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_ShipmentShipmentMasterData')
+begin
+alter table shipmentmasterdatas drop constraint FK_ShipmentShipmentMasterData
+IF @@ERROR <> 0
+ BEGIN
+    ROLLBACK
+    RAISERROR ('Error in droping constraint FK_ShipmentShipmentMasterData', 16, 1)
+    RETURN
+ END
+end
+
+delete from shipments
+where tenant = @tenant;
+
+IF @@ERROR <> 0
+ BEGIN
+    ROLLBACK
+    RAISERROR ('Error in deleting shipments', 16, 1)
+    RETURN
+ END
+
+
+COMMIT 
+
+--exec usp_DeleteShipmentsDataByTenant 1
+]]></SqlScript>
+  <OracleScript>
+</OracleScript>
+</Procedure>

@@ -1,0 +1,85 @@
+﻿<Script DBType="Main" Module="Invoice" AOT="true" TargetTableName="ARInvoices">
+  <Sql Version="3">
+    <![CDATA[
+     -- delete from ARInvoiceChargesConstraints
+	  
+	--  If(OBJECT_ID('tempdb..#tempTable') Is Not Null)
+		--		Begin
+	--				Drop Table #tempTable
+		--		End
+
+	--  If(OBJECT_ID('tempdb..#temp_ARInvoiceChargesConstraints') Is Not Null)
+	--			Begin
+	--				Drop Table #temp_ARInvoiceChargesConstraints
+	--			End
+
+	--	CREATE TABLE #temp_ARInvoiceChargesConstraints
+	--	(Id varchar(15) not null ,
+	--	 InvoiceLineId varchar(15) not null ,
+	--	 Tenant int,
+	--	 ReceivableId varchar(15) not null ,
+	--	 CreateDate Date)
+	
+	--	 select 
+	--	 ARInvoiceLines.Id, 
+	--	 ARInvoiceLines.Tenant,
+	--	 ARInvoiceLines.ReceivableId,
+	--	 ARInvoices.CreateDate
+	--	 into #tempTable
+
+	--	FROM ARInvoiceLines join ARInvoices on ARInvoiceLines.ARInvoiceId = ARInvoices.Id where ARInvoiceLines.ReceivableId is not null -- And $LastCounterWhere$
+      
+    -- 	DECLARE @Id as varchar(15)
+	--	  DECLARE @InvoiceLineId as varchar(15)
+	--		DECLARE @Tenant as int
+		--	DECLARE @Count as int
+		--	DECLARE @ReceivableId as varchar(15)
+		--	DECLARE @CreateDate as Date
+
+	--	  set @Count = 0;
+
+	--		BEGIN
+	--			 DECLARE DataCursor CURSOR READ_ONLY
+	--			 FOR
+	--			 SELECT Id, Tenant, ReceivableId,CreateDate
+	--			 FROM #tempTable
+	--			 OPEN DataCursor FETCH NEXT FROM DataCursor INTO @InvoiceLineId, @Tenant, @ReceivableId,@CreateDate
+	--			 WHILE @@FETCH_STATUS = 0
+	--			 BEGIN
+
+	--	   	if not exists (Select ReceivableId from ARInvoiceChargesConstraints where ReceivableId = @ReceivableId)
+	--			 begin
+	--			    EXECUTE usp_GetNextTableIdValue @Id OUTPUT,'ARInvoiceChargesConstraints'
+	--		      insert into #temp_ARInvoiceChargesConstraints(Id, Tenant, InvoiceLineId,ReceivableId,CreateDate) values (@Id, @Tenant, @InvoiceLineId, @ReceivableId, @CreateDate)
+	   --       set @Count = @Count + 1;
+	--			end
+		
+ 	--        if(@Count = 1000)
+	--			begin 
+	--				insert into ARInvoiceChargesConstraints (Id, Tenant, InvoiceLineId,ReceivableId,CreateDate)
+	--				Select Id, Tenant, InvoiceLineId,ReceivableId,CreateDate
+	--				FROM #temp_ARInvoiceChargesConstraints
+	--				truncate table #temp_ARInvoiceChargesConstraints
+	--				set @Count = 0
+	--			end
+		
+	--			 FETCH NEXT FROM DataCursor INTO @InvoiceLineId, @Tenant, @ReceivableId,@CreateDate
+	--			 END
+	--			 CLOSE DataCursor
+  --		 DEALLOCATE DataCursor
+	--		END
+
+	--	if (@Count > 0)
+	--	begin
+		--		insert into ARInvoiceChargesConstraints (Id, Tenant, InvoiceLineId,ReceivableId,CreateDate)
+		--		Select Id, Tenant, InvoiceLineId,ReceivableId,CreateDate
+	--			FROM #temp_ARInvoiceChargesConstraints
+	--			truncate table #temp_ARInvoiceChargesConstraints
+
+	--	end
+  --
+	--	drop table #tempTable
+	--	drop table #temp_ARInvoiceChargesConstraints
+    ]]>
+  </Sql>
+</Script>

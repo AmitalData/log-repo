@@ -1,0 +1,20 @@
+<View DBType="Main" Name="ShipmentCountryDashboardView" Schema="dbo" Module="Shipment">
+  <SqlScript>
+    <![CDATA[
+      CREATE VIEW [dbo].[ShipmentCountryDashboardView]
+      AS SELECT
+      dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumber, dbo.Shipments.TransportModeId, dbo.Shipments.DirectionId,
+      dbo.Shipments.CountryForStatisticsId, dbo.Countries.Code AS CountryForStatisticsCode, dbo.Countries.EnglishName AS CountryForStatisticsName,
+      dbo.Shipments.ChargeableWeightInKG, dbo.Shipments.GrossWeightInKG, dbo.Shipments.CustomerId, dbo.Shipments.CreateDateTime, dbo.Shipments.OperationalDate,
+      dbo.Shipments.ShipmentLevelCode, dbo.Shipments.ProfitInLocalCurrency, dbo.Shipments.OpenReceivablesInLocalCurrency,dbo.Shipments.OpenReceivablesInProfitCurrency,
+      dbo.Shipments.ProfitInProfitCurrency, dbo.Shipments.BranchId, dbo.Shipments.IsCancelled
+      FROM
+      dbo.Shipments
+      INNER JOIN
+      dbo.Countries
+      ON dbo.Shipments.CountryForStatisticsId = dbo.Countries.Id    
+    ]]>
+  </SqlScript>
+  <OracleScript>
+  </OracleScript>
+</View>

@@ -1,0 +1,82 @@
+<Script DBType="Main" Module="Shipment" >
+  <Sql Version="1">
+    <![CDATA[
+
+declare @Tenant as int
+declare @CEXCCode as varchar(10)
+declare @CEXCName as varchar(100)
+declare @CRESCode as varchar(10)
+declare @CRESName as varchar(100)
+declare @NewId as varchar(15)
+declare @AnotherNewId as varchar(15)
+declare @ObjectTableId as varchar(15)
+
+BEGIN
+       DECLARE DataCursor CURSOR READ_ONLY
+       FOR
+       SELECT Id
+       FROM Tenants
+       OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Tenant
+       WHILE @@FETCH_STATUS = 0
+       BEGIN
+			  set @ObjectTableId = (select Id from ObjectTables where Name = 'Container')
+        set @CEXCCode = 'CEXC'
+        set @CEXCName = 'Exception'
+			  set @CRESCode = 'CRES'
+			  set @CRESName = 'Exception Resolved'
+			  if not exists (select * from EventTypes where Code = @CEXCCode and Tenant = @Tenant)
+              begin                     
+                     EXECUTE usp_GetNextTableIdValue @NewId OUTPUT,'EventType'
+                     insert into EventTypes(Id, Code, ObjectTableId, Tenant, EnglishName, LocalName, AddedManually, IsManualEntry, IsFollowUp, ManualActivatedFollowUp, InActive, ShortView,SearchFields)
+                     values
+                     (
+                     @NewId,
+                     @CEXCCode,
+                     @ObjectTableId,
+                     @Tenant,
+                     @CEXCName,
+                     @CEXCName,					
+		          			 0,
+                     1,
+                     0,
+                     0,
+                     0,
+                     1,
+			          		 @CEXCCode +','+@CEXCName+','+@CEXCName
+                     )
+              end   
+
+              if not exists (select * from EventTypes where Code = @CRESCode and Tenant = @Tenant)
+              begin 
+              
+                     EXECUTE usp_GetNextTableIdValue @AnotherNewId OUTPUT,'EventType'
+                     insert into EventTypes(Id, Code, ObjectTableId, Tenant, EnglishName, LocalName, AddedManually, IsManualEntry, IsFollowUp, ManualActivatedFollowUp, InActive, ShortView,SearchFields)
+                     values
+                     (
+                     @AnotherNewId,
+                     @CRESCode,
+                     @ObjectTableId,
+                     @Tenant,
+                     @CRESName,
+                     @CRESName,
+			          		 0,
+                     1,
+                     0,
+                     0,
+                     0,
+                     1,
+				          	 @CRESCode +','+@CRESName+','+@CRESName
+                     )
+			end    		
+			
+       FETCH NEXT FROM DataCursor INTO @Tenant
+       END
+       CLOSE DataCursor
+       DEALLOCATE DataCursor
+END
+
+update ObjectTableLastUpdates set LastUpdateDate = GETDATE() where ObjectTableId = (select id from ObjectTables where Name = 'EventType')
+  
+    ]]>
+  </Sql>
+</Script>

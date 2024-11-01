@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Trigger
+  DBType="Main"
+  Name="TriggerOnCreate_AutomaticLastUpdateDateAPInvoiceLines"
+  Schema="dbo"
+  Module="Invoice">
+  <SqlScript><![CDATA[
+CREATE TRIGGER TriggerOnCreate_AutomaticLastUpdateDateAPInvoiceLines ON APInvoiceLines AFTER Insert  AS  BEGIN UPDATE APInvoiceLines SET AutomaticLastUpdateDate = GETDATE() WHERE APInvoiceId IN (SELECT DISTINCT APInvoiceId FROM Inserted) and LineNumber IN (SELECT DISTINCT LineNumber FROM Inserted)  END;
+]]></SqlScript>
+  <OracleScript>
+</OracleScript>
+</Trigger>

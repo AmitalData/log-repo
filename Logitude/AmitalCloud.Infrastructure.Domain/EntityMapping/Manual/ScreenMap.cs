@@ -1,0 +1,77 @@
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+
+namespace AmitalCloud.Infrastructure.Domain.EntityMapping
+{
+    public class ScreenMap : EntityTypeConfiguration<Screen>
+    {
+        public ScreenMap()
+        {
+            // Primary Key
+            this.HasKey(t => t.Id);
+
+            // Properties
+            this.Property(t => t.Id)
+                .IsRequired()
+                .HasMaxLength(15)
+                .IsUnicode(false);
+
+            this.Property(t => t.Code)
+                .IsRequired()
+                .HasMaxLength(100)
+                .IsUnicode(false);
+
+            this.Property(t => t.ObjectTableId)
+                .IsRequired()
+                .HasMaxLength(15)
+                .IsUnicode(false);
+
+            this.Property(t => t.Name)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+
+            this.Property(t => t.Type)
+                .HasMaxLength(30)
+                .IsUnicode(false);
+
+            this.Property(t => t.SortedByFieldCode)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+
+            this.Property(t => t.SortedType)
+                .HasMaxLength(10)
+                .IsUnicode(false);
+
+            this.Property(t => t.SearchFields)
+                .HasMaxLength(1000)
+                .IsUnicode(true);
+
+            this.Property(t => t.RelatedScreenCode)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+
+            // Table & Column Mappings
+            this.ToTable("Screens");
+            this.Property(t => t.Id).HasColumnName("Id");
+            this.Property(t => t.Code).HasColumnName("Code");
+            this.Property(t => t.NumberOfColumns).HasColumnName("NumberOfColumns");
+            this.Property(t => t.NumberOfRows).HasColumnName("NumberOfRows");
+            this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId");
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
+            this.Property(t => t.IsReadOnly).HasColumnName("IsReadOnly");
+            this.Property(t => t.Name).HasColumnName("Name");
+            this.Property(t => t.Type).HasColumnName("Type");
+            this.Property(t => t.SortedByFieldCode).HasColumnName("SortedByFieldCode");
+            this.Property(t => t.SortedType).HasColumnName("SortedType");
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields");
+            this.Property(t => t.RelatedScreenCode).HasColumnName("RelatedScreenCode");
+            this.Property(t => t.IsHeaderScreen).HasColumnName("IsHeaderScreen");
+            // Relationships
+            //this.HasRequired(t => t.ObjectTable)
+            //    .WithMany(t => t.Screens)
+            //    .HasForeignKey(d => d.ObjectTableId);
+
+        }
+    }
+}
