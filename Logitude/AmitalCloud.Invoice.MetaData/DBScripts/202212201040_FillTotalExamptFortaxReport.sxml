@@ -1,0 +1,7 @@
+﻿<Script DBType="Main" Module="Invoice" AOT="true" TargetTableName="ARInvoices" Env="local,test,cloud">
+	<Sql Version="2">
+		<![CDATA[
+	update ARInvoices set TotalExamptFortaxReport = COALESCE(TotalAmountForTaxReport, 0 )  - COALESCE(TotaVatableAmountForTaxReport, 0 )  where $LastCounterWhere$
+    ]]>
+	</Sql>
+</Script>

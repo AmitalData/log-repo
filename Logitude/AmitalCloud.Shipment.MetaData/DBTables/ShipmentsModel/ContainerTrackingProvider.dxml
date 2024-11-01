@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="ContainerTrackingProviders"
+  Schema="dbo"
+  DBType="Main"
+  Module="Shipment">
+  <Column
+    Name="SourceCode"
+    OldNames="Code"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Name"
+    Type="varchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CallbackURL"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="APIKey"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ProviderURL"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LogitudeToken"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="SourceCode"
+    ReferencedTable="ContainerStatusSources"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+</Table>

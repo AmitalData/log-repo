@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Trigger
+  DBType="Main"
+  Name="Trigger_AutomaticLastUpdateDateAPInvoiceLines"
+  Schema="dbo"
+  Module="Invoice">
+  <SqlScript>
+  <![CDATA[
+CREATE TRIGGER Trigger_AutomaticLastUpdateDateAPInvoiceLines ON APInvoiceLines AFTER UPDATE  AS  BEGIN
+
+SET NOCOUNT ON;
+
+IF TRIGGER_NESTLEVEL() > 1 RETURN;
+
+IF (SELECT program_name FROM sys.dm_exec_sessions WHERE session_id = (SELECT @@SPID)) <> 'ZeroDownTimeDBMigrationsTool'
+BEGIN
+UPDATE APInvoiceLines SET AutomaticLastUpdateDate = GETDATE() WHERE APInvoiceId IN (SELECT DISTINCT APInvoiceId FROM Inserted);
+END;
+
+END;
+]]></SqlScript>
+  <OracleScript>
+</OracleScript>
+</Trigger>

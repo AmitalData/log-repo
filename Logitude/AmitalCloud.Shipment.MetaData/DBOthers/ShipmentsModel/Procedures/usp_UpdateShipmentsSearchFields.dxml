@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="Main"
+  Name="usp_UpdateShipmentsSearchFields"
+  Schema="dbo"
+  Module="Shipment">
+  <SqlScript><![CDATA[
+CREATE PROCEDURE [dbo].[usp_UpdateShipmentsSearchFields] 
+AS
+BEGIN
+	
+declare @SearchFields as nvarchar(1000)  
+declare @ShipmentId as varchar(15)  
+
+BEGIN 
+ 
+		DECLARE eventsCursor CURSOR READ_ONLY 
+		FOR
+		SELECT Id,SearchFields
+		FROM [dbo].[shipments] where SearchFields is not null and SearchFields <> '' and SearchFields not like '%*%' --and (ShipmentNumber = '1000' and Tenant = 1)
+    	OPEN eventsCursor FETCH NEXT FROM eventsCursor INTO @ShipmentId,@SearchFields
+		WHILE @@FETCH_STATUS = 0
+			BEGIN 
+			   declare @NewSearchFieldValue nvarchar(max) = (select SearchFields from [dbo].[shipments] where Id = @ShipmentId)
+			   set @NewSearchFieldValue = @NewSearchFieldValue + '*' + (SELECT [dbo].[ReformatString](@SearchFields))
+			   print len(@NewSearchFieldValue)
+			   update [dbo].[shipments] set SearchFields = @NewSearchFieldValue where Id = @ShipmentId
+    
+		   FETCH NEXT FROM eventsCursor INTO @ShipmentId,@SearchFields			
+			END
+		CLOSE eventsCursor
+		DEALLOCATE eventsCursor
+END
+END
+]]></SqlScript>
+  <OracleScript>
+</OracleScript>
+</Procedure>

@@ -1,0 +1,9 @@
+﻿<Script DBType="Main" Module="Invoice" AOT="true" TargetTableName="ARInvoiceLines"  Pre="true">
+  <Sql Version="1">
+    <![CDATA[
+    update ARInvoiceLines
+    set ReceivableId = NULL
+    where ReceivableId is not null and ARInvoiceId in (Select id from ARInvoices where StatusCode = 'LL') And $LastCounterWhere$
+    ]]>
+  </Sql>
+</Script>

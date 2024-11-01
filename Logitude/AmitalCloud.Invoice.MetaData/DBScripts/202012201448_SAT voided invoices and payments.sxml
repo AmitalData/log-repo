@@ -1,0 +1,8 @@
+﻿<Script DBType="Main" Pre="false">
+  <Sql Version="2">
+    <![CDATA[
+update ARInvoices set SATTransferStatusCode = 'ND' where SATTransferStatusCode = 'TE' and StatusCode = 'VD' and SATXML is  null 
+update ARPayments set SATTransferStatusCode = 'ND' where SATTransferStatusCode = 'TE' and StatusCode = 'VD' and SATXML is  null 
+    ]]>
+  </Sql>
+</Script>

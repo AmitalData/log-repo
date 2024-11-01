@@ -1,0 +1,77 @@
+﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="Shipments">
+
+  <Sql Version="6">
+
+    <![CDATA[
+      
+If(OBJECT_ID('tempdb..#temp') Is Not Null)
+      Begin
+       Drop Table #temp
+      End
+
+      If(OBJECT_ID('tempdb..#temp_Shipments') Is Not Null)
+      Begin
+        Drop Table #temp_Shipments
+      End
+
+      CREATE TABLE #temp_Shipments(ShipmentId varchar(15) not null,QuoteNumber varchar(20) null)
+      
+      select Id, Tenant, QuoteId
+      into #temp
+      from Shipments where QuoteId is not null and $LastCounterWhere$
+      declare @Tenant as int
+      declare @ShipmentId as varchar(15)
+      declare @QuoteId as varchar(15)
+      declare @QuoteNumber as varchar(20)
+	  declare @Count as int
+      set @Count = 0;
+                BEGIN
+                    DECLARE DataCursor CURSOR READ_ONLY
+                    FOR
+                    SELECT Id, Tenant, QuoteId
+                    FROM #temp
+                    OPEN DataCursor FETCH NEXT FROM DataCursor INTO @ShipmentId, @Tenant, @QuoteId
+                    WHILE @@FETCH_STATUS = 0
+                    BEGIN
+                          set @QuoteNumber = NULL
+		                  set @QuoteNumber = (select QuoteNumber from Quotes where Id = @QuoteId and Tenant = @Tenant)
+
+                          insert into #temp_Shipments(ShipmentId, QuoteNumber) values (@ShipmentId, @QuoteNumber)
+                          set @Count = @Count + 1;
+                          if(@Count = 1000)
+                    begin
+                                  update Shipments
+                                  set QuoteNumber = #temp_Shipments.QuoteNumber 
+                                  FROM Shipments
+                                  INNER JOIN #temp_Shipments
+                                  on Shipments.Id = #temp_Shipments.ShipmentId
+                                  truncate table #temp_Shipments
+                                  set @Count = 0
+                          end
+
+                    FETCH NEXT FROM DataCursor INTO @ShipmentId, @Tenant, @QuoteId
+                    END
+                    CLOSE DataCursor
+                    DEALLOCATE DataCursor
+              END
+              
+              if (@Count > 0)
+              begin
+                    update Shipments
+                    set
+                    QuoteNumber = #temp_Shipments.QuoteNumber 
+                    FROM Shipments
+                    INNER JOIN #temp_Shipments
+                    on Shipments.Id = #temp_Shipments.ShipmentId
+              end
+
+        drop table #temp
+        drop table #temp_Shipments
+    
+
+    ]]>
+  </Sql>
+</Script>
+
+
+

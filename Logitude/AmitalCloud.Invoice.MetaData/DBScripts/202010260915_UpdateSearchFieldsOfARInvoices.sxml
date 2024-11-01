@@ -1,0 +1,71 @@
+﻿<Script DBType="Main" Module="Invoice" AOT="true" TargetTableName="ARInvoices">
+  <Sql Version="3">
+    <![CDATA[
+    
+		  If(OBJECT_ID('tempdb..#temp') Is Not Null)
+      Begin
+       Drop Table #temp
+      End
+
+      If(OBJECT_ID('tempdb..#temp_Invoices') Is Not Null)
+      Begin
+        Drop Table #temp_Invoices
+      End
+
+      CREATE TABLE #temp_Invoices(ARInvoiceId varchar(15) not null,SearchFields nvarchar(4000) not null)
+      
+      select Id,Tenant,PrintNotes,SearchFields
+      into #temp
+      from ARInvoices where PrintNotes is not null and $LastCounterWhere$
+      declare @Tenant as int
+      declare @ARInvoiceId as varchar(15)
+			declare @PrintNotes as nvarchar(250)
+      declare @MySearchFields as nvarchar(4000)
+			declare @Count as int
+      set @Count = 0;
+                BEGIN
+                    DECLARE DataCursor CURSOR READ_ONLY
+                    FOR
+                    SELECT Id, Tenant, PrintNotes, SearchFields
+                    FROM #temp
+                    OPEN DataCursor FETCH NEXT FROM DataCursor INTO @ARInvoiceId, @Tenant, @PrintNotes, @MySearchFields
+                    WHILE @@FETCH_STATUS = 0
+                    BEGIN
+                          set @MySearchFields = @MySearchFields +',' + @PrintNotes;
+                          insert into #temp_Invoices(ARInvoiceId, SearchFields) values (@ARInvoiceId, @MySearchFields)
+                          set @Count = @Count + 1;
+                          if(@Count = 1000)
+                    begin
+                                  update ARInvoices
+                                  set SearchFields = #temp_Invoices.SearchFields 
+                                  FROM ARInvoices
+                                  INNER JOIN #temp_Invoices
+                                  ---on ARInvoices.Id = #temp_Invoices.ARInvoiceId
+                                  on ARInvoices.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Invoices.ARInvoiceId COLLATE SQL_Latin1_General_CP1_CI_AS
+                                  truncate table #temp_Invoices
+                                  set @Count = 0
+                     end
+
+                    FETCH NEXT FROM DataCursor INTO @ARInvoiceId, @Tenant, @PrintNotes, @MySearchFields
+                    END
+                    CLOSE DataCursor
+                    DEALLOCATE DataCursor
+              END
+              
+              if (@Count > 0)
+              begin
+                    update ARInvoices
+                    set
+                    SearchFields = #temp_Invoices.SearchFields 
+                    FROM ARInvoices
+                    INNER JOIN #temp_Invoices
+                    --on ARInvoices.Id = #temp_Invoices.ARInvoiceId
+                    on ARInvoices.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Invoices.ARInvoiceId COLLATE SQL_Latin1_General_CP1_CI_AS
+
+              end
+
+        drop table #temp
+        drop table #temp_Invoices
+    ]]>
+  </Sql>
+</Script>

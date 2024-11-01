@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+
+namespace AmitalCloud.Infrastructure.Data.Helpers
+{
+    public class Root 
+    {
+        public List<Change> Changes { get; set; }
+    }
+
+    public class Change //property change class
+    {
+        [XmlAttribute]
+        public string fieldName { get; set; }// field name
+        [XmlAttribute]
+        public string oldValue { get; set; }// old value
+        [XmlAttribute]
+        public string newValue { get; set; }// new value
+    }
+}

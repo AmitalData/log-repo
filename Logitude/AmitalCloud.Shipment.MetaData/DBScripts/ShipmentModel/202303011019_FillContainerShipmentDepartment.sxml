@@ -1,0 +1,14 @@
+<Script DBType="Main" Module="Shipment" >
+	<Sql Version="1">
+		<![CDATA[
+UPDATE
+    containers
+SET
+    containers.ShipmentDepartmentId = s.DepartmentId 
+FROM 
+    containers c
+    INNER  JOIN Shipments s
+        ON c.ShipmentId = s.Id;
+    ]]>
+	</Sql>
+</Script>

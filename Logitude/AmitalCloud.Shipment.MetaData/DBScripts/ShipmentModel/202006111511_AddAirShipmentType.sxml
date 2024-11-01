@@ -1,0 +1,14 @@
+﻿<Script DBType="Main">
+  <Sql Version="2">
+    <![CDATA[
+    
+      if not exists (select Id from ShipmentTypes where Id = 'Air')
+      begin                
+        insert into ShipmentTypes (Id, Name, SearchFields, TransportModeId, AutomaticLastUpdateDate)
+        values ('Air', 'Air', 'Air,Air', 'A', GETDATE())
+      end
+      
+    ]]>
+  </Sql>
+</Script>
+

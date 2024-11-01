@@ -1,0 +1,387 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{11015707-4063-45D9-9DB9-3224DFC3692E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AmitalCloud.Infrastructure.Application</RootNamespace>
+    <AssemblyName>AmitalCloud.Infrastructure.Application</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Library\Bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AmitalCloud.Infrastructure.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\AmitalCloud.Infrastructure.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Marvin.JsonPatch, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Marvin.JsonPatch.2.2.1\lib\net45\Marvin.JsonPatch.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.Bson.1.0.2\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.6.0.0\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\System.ServiceModel.DomainServices.Server.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.3.0\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseClasses\AmitalCloudDomainService.cs" />
+    <Compile Include="BaseClasses\BaseEntityListQueryService.cs" />
+    <Compile Include="BaseClasses\BaseService.cs" />
+    <Compile Include="BaseClasses\BaseEntityQueryService.cs" />
+    <Compile Include="BaseClasses\BaseEntityUpdateService.Context.cs" />
+    <Compile Include="BaseClasses\BaseEntityUpdateService.cs" />
+    <Compile Include="BaseClasses\IService.cs" />
+    <Compile Include="EntityQueryServices\Generated\AccountingPartnerQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AccountingSettingQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AccountingSystemQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AccountQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AccountTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AdditionalServiceQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AddressQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AddressTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AgentQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AirlineMessagingRuleQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AirlineQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\APILogsDataQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\APILogsQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AuditLogQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AutomationQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AutomationResultEmailRecipientQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AWBDescriptionOfGoodsQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BatchTaskExecutionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BatchTaskExecutionStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BIFoldersPermissionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BIReportFolderQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BIReportQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BIReportsExecutionLogQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BIReportsTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BorderTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BranchQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BusinessHourQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BusinessHoursHolidayQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BusinessProcessQueueQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BusinessRoleQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BusinessUnitQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CardContactAdditionalServiceQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CardContactProductQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CardExternalAccountsByProductQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CardExternalCodeByCurrencyQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CardQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CardSearchQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CargoTenantMilestoneDefinitionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CarrierAreaQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CarrierAreasPortQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CarrierServiceLineQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ChargesExternalAccountsByProductQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ChargesGroupQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ChargesTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ChargeTypeAccountingQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CheckDigitControlAlgorithmQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ChildEntitiesCustomFieldQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CommodityQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CommunicationLogQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CommunicationLogTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CommunicationStatusTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CompetitorQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ComputingPartnerCodeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ComputingPartnerQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ComputingPartnerTableQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ComputingPartnerTranslationQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ContactDoneMethodQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ContactQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ContainerSettingQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CounterDefinitionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CountryCityQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CountryQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CreditLimitSettingQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CurrencyQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomAgentQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomChildObjectQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomerAccountManagerByProductQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomerAdditionalServiceQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomerDepositionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomerFieldsUpdateSettingQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomerGroupQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomerOpenFilesAmountQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomerProductActualDataQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomerProductLocationQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomerProductQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomerQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomerSalesNoteQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomerSizeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomerStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomerTeamQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomerTenantAccessCardQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomerTenantAccessCardsBatchQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomerTenantAccessQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomerTenantAccessRequestQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomerTenantAccessStatusTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomFieldsMainObjectsQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomsInterfaceQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomsInterfaceSettingQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomsShipperQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DataCustomObjectQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DefaultAndConfigurationKeyQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DefaultAndConfigurationQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DepartmentQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DeploymentPackageExecutionLogQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DeploymentPackageQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DeploymentPackagesVersionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DescriptionOfGoodsQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DigitalFieldSecurityQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DigitalPortalLanguageQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DigitalPortalScreenQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DigitalPreDefinedComponentQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DigitalProfileQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DigitalTextCodeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DimensionsUnitQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DirectionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DistributorQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DocumentFilingBackupBatchQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DocumentFilingBackupSettingQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DocumentFolderQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DocumentsExecutionLogQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DocumentsFilingQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DocumentTypeCategoryQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DocumentTypeCopyQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DocumentTypeCustomFieldQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DocumentTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DocumentTypeTemplateQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DueTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DWCategoriesQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DWHSettingQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DWObjectFieldQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DWObjectTableQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\EmailAlertSettingQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\EntityStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\EntityStatusTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\EventTypeCategoryQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\EventTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\FeatureAccessLevelQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\FeaturePackageTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\FeatureToggleQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\FilingInboxAttachmentLogQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\FilingInboxAttachmentQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\FilingInboxQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\FTPDetailQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\GlobalZoneQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\HorseGenderQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\HorseQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\HTSCodeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\HybridPartnerQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\HybridTenantStateQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\HybridTenantThresholdQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\IATACodeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ImageLibraryQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\InboundEmailLineQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\InboundEmailQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\IncotermQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\IndustryQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\INTTRABranchRegisteredCarrierQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\INTTRASettingModeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\INTTRASettingQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\LastRunDetailQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\LBPTeamMemberQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\LeadSourceQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\LoginPolicyQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\LogitudeMessagesTransmissionLogQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\MAWBStackQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\MeasurementQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\MentionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\MetodoPagoQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\MoveTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\MultiEntityUpdateLogQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\NumberFormatQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ObjectFieldQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ObjectTableQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PackageConnectedPackageQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PackageQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PackageTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ParticipantQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PartnerTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PasswordPolicyQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PaymentGatewayPartnerQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PaymentTermDateTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PaymentTermQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PortGroupQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PortQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PortTimeZoneQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PostalCodeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PrepaidCollectQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ProductItemQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ProductPeriodQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ProductTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\QueryExportExecutionLogQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\QueueMessageMoreDetailsQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\QuoteChargesGroupQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\QuoteGroupSectionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\QuoteTemplateQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\QuoteTemplateSectionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\QuoteTemplateSectionTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\QuoteTemplateSettingQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\QuoteTemplateTableDesignQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\QuoteTemplateTextDesignQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\QuoteTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\RankQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\RateClassQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\RatesTableQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ReferenceCustomObjectQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\RegimenFiscalQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\RegionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\RegistryDateTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ReportExecutionLogQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ReportQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ReportsTemplateQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ReportsTemplatesVersionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\RestrictionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\RoleQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\RuleUpdateHistoryQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SatisfactionSurveyQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SchedulerProcedureQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ScreenSectionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SharedLogisticsInvitationStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SharedLogisticsSettingQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ShippingAgentQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ShippingLineQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\StateQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SystemDataQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TabModificationQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TariffCarrierTranslationQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TarrifChargeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TarrifFromToQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TarrifFromToTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TarrifHeaderQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TarrifStepQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TarrifTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TaskSchedulerHistoryQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TasksSchedulerQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TeamMemberBusinessRoleQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TeamQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TemperatureUnitQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TemplateFormatQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TenantAdditionalDataQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TenantLoginPolicyQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TenantQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TermsofUseSignatureQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TextCodeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ToggleQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TraceEventQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TransportModeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TruckerQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TwoFactorAuthenticationDeviceQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\UnassignedEntityQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\UserLastSettingsQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\UserLicenseQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\UserQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\UsoCFDIQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\VatFormatTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\VatMandatoryTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\VatTypePercentageQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\VatTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\VATTypesGroupQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\VatUniquePartnerTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\VatUniqueTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\VendorQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\VesselQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\VolumeUnitQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\WarehouseQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\WarehouseStoragePricingQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\WarehouseTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\WarehouseWeightMeasurementQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\WarehouseWeightRoundingQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\WeightUnitQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\WorkerRoleNameQueryService.Generated.cs" />
+    <Compile Include="Helpers\EntityListFilter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\AmitalCloud.Infrastructure.Domain\AmitalCloud.Infrastructure.Domain.csproj">
+      <Project>{1cb82e4e-88ff-4772-bfd6-5ec33b23f1cf}</Project>
+      <Name>AmitalCloud.Infrastructure.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
+</Project>

@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B76DAA64-2C41-4A6A-9FBC-7E29B41FCFD6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AmitalCloud.Invoice.Application</RootNamespace>
+    <AssemblyName>AmitalCloud.Invoice.Application</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Library\Bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AmitalCloud.Infrastructure.Application, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\AmitalCloud.Infrastructure.Application.dll</HintPath>
+    </Reference>
+    <Reference Include="AmitalCloud.Infrastructure.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\AmitalCloud.Infrastructure.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="AmitalCloud.Infrastructure.Domain, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\AmitalCloud.Infrastructure.Domain.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CloseTables\DetailsClassesGenerated\AccountingTransferTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\APInvoiceStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\APInvoiceTransferStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\APInvoiceTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\APPaymentStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\APPaymentTransferStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ARInvoicesSignedStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ARInvoiceStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ARInvoiceStocksStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ARInvoiceTransferStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ARInvoiceTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ARPaymentStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ARPaymentTransferStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ConfirmationNumberStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\QBOGlobalTaxCalculationDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\SATInterfaceDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\SATInvoiceStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\SATPaymentMethodDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\SATTransferStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\AccountingTransferTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\APInvoiceStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\APInvoiceTransferStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\APInvoiceTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\APPaymentStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\APPaymentTransferStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ARInvoicesSignedStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ARInvoiceStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ARInvoiceStocksStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ARInvoiceTransferStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ARInvoiceTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ARPaymentStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ARPaymentTransferStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ConfirmationNumberStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\QBOGlobalTaxCalculationStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\SATInterfaceStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\SATInvoiceStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\SATPaymentMethodStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\SATTransferStatusStruct.Generated.cs" />
+    <Compile Include="EntityListQueryServices\AccountingPaymentMethodListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\AccountingSystemsSettingListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\AccountingSystemsSyncStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\AccountingTransferHeaderListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\AccountingTransferLineListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\AccountingTransferTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\APInvoiceLineListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\APInvoiceListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\APInvoicePaymentListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\APInvoiceStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\APInvoiceTotalVATListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\APInvoiceTransferStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\APInvoiceTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\APPaymentListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\APPaymentStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\APPaymentTransferStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ARInvoiceLineListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ARInvoiceListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ARInvoicePaymentListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ARInvoicesSignedStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ARInvoiceStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ARInvoiceStockLineListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ARInvoiceStockListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ARInvoiceStocksStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ARInvoiceTotalVatListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ARInvoiceTransferStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ARInvoiceTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ARPaymentBankTranferListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ARPaymentChequeReplicaListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ARPaymentListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ARPaymentStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ARPaymentTransferStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\BankAccountLiteListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ConfirmationNumberDefaultListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ConfirmationNumberStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CreditCardTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ExternalSystemsTablesCodeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\Generated\AccountingPaymentMethodListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\AccountingSystemsSettingListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\AccountingSystemsSyncStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\AccountingTransferHeaderListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\AccountingTransferLineListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\AccountingTransferTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\APInvoiceLineListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\APInvoiceListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\APInvoicePaymentListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\APInvoiceStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\APInvoiceTotalVATListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\APInvoiceTransferStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\APInvoiceTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\APPaymentListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\APPaymentStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\APPaymentTransferStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ARInvoiceLineListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ARInvoiceListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ARInvoicePaymentListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ARInvoicesSignedStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ARInvoiceStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ARInvoiceStockLineListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ARInvoiceStockListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ARInvoiceStocksStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ARInvoiceTotalVatListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ARInvoiceTransferStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ARInvoiceTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ARPaymentBankTranferListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ARPaymentChequeReplicaListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ARPaymentListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ARPaymentStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ARPaymentTransferStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\BankAccountLiteListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ConfirmationNumberDefaultListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ConfirmationNumberStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CreditCardTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ExternalSystemsTablesCodeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\QBOGlobalTaxCalculationListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SATInterfaceListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SATInterfaceSettingListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SATInvoiceStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SATPaymentMethodListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SATTransferStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\QBOGlobalTaxCalculationListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\SATInterfaceListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\SATInterfaceSettingListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\SATInvoiceStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\SATPaymentMethodListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\SATTransferStatusListQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\AccountingPaymentMethodQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AccountingSystemsSettingQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AccountingSystemsSyncStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AccountingTransferHeaderQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AccountingTransferLineQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AccountingTransferTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\APInvoiceLineQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\APInvoicePaymentQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\APInvoiceQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\APInvoiceStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\APInvoiceTotalVATQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\APInvoiceTransferStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\APInvoiceTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\APPaymentQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\APPaymentStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\APPaymentTransferStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ARInvoiceLineQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ARInvoicePaymentQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ARInvoiceQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ARInvoicesSignedStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ARInvoiceStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ARInvoiceStockLineQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ARInvoiceStockQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ARInvoiceStocksStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ARInvoiceTotalVatQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ARInvoiceTransferStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ARInvoiceTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ARPaymentBankTranferQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ARPaymentChequeReplicaQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ARPaymentQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ARPaymentStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ARPaymentTransferStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BankAccountLiteQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ConfirmationNumberDefaultQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ConfirmationNumberStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CreditCardTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ExternalSystemsTablesCodeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\QBOGlobalTaxCalculationQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SATInterfaceQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SATInterfaceSettingQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SATInvoiceStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SATPaymentMethodQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SATTransferStatusQueryService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\AccountingPaymentMethodUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\AccountingSystemsSettingUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\AccountingSystemsSyncStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\AccountingTransferHeaderUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\AccountingTransferLineUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\AccountingTransferTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\APInvoiceLineUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\APInvoicePaymentUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\APInvoiceStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\APInvoiceTotalVATUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\APInvoiceTransferStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\APInvoiceTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\APInvoiceUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\APPaymentStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\APPaymentTransferStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\APPaymentUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ARInvoiceLineUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ARInvoicePaymentUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ARInvoicesSignedStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ARInvoiceStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ARInvoiceStockLineUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ARInvoiceStocksStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ARInvoiceStockUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ARInvoiceTotalVatUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ARInvoiceTransferStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ARInvoiceTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ARInvoiceUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ARPaymentBankTranferUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ARPaymentChequeReplicaUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ARPaymentStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ARPaymentTransferStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ARPaymentUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\BankAccountLiteUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ConfirmationNumberDefaultUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ConfirmationNumberStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CreditCardTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ExternalSystemsTablesCodeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\QBOGlobalTaxCalculationUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SATInterfaceSettingUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SATInterfaceUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SATInvoiceStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SATPaymentMethodUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SATTransferStatusUpdateService.Generated.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AmitalCloud.Invoice.Data\AmitalCloud.Invoice.Data.csproj">
+      <Project>{d3800925-3888-4bde-80e4-5ba589f726f7}</Project>
+      <Name>AmitalCloud.Invoice.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AmitalCloud.Invoice.Domain\AmitalCloud.Invoice.Domain.csproj">
+      <Project>{44569e01-72a9-4546-99a9-96c8d56d5404}</Project>
+      <Name>AmitalCloud.Invoice.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
+</Project>

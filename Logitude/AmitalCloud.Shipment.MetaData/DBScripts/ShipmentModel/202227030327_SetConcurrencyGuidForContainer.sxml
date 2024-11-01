@@ -1,0 +1,9 @@
+﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="Containers">
+	<Sql Version="1">
+		<![CDATA[
+          update Containers set ConcurrencyGUID = NEWID() where ConcurrencyGUID is null and $LastCounterWhere$    
+        ]]>
+	</Sql>
+</Script>
+
+

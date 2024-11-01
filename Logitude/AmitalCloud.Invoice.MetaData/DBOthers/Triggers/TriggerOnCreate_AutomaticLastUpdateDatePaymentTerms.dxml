@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Trigger
+  DBType="Main"
+  Name="TriggerOnCreate_AutomaticLastUpdateDatePaymentTerms"
+  Schema="dbo"
+  Module="Invoice">
+	<SqlScript>
+		<![CDATA[
+CREATE TRIGGER TriggerOnCreate_AutomaticLastUpdateDatePaymentTerms ON PaymentTerms AFTER Insert  AS  BEGIN UPDATE PaymentTerms SET AutomaticLastUpdateDate = GETDATE() WHERE Id IN (SELECT DISTINCT Id FROM Inserted)END;
+]]>
+	</SqlScript>
+	<OracleScript>
+	</OracleScript>
+</Trigger>

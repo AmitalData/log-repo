@@ -43,6 +43,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoGeneratorsMetaData\Amital\EntityControllerGenerator.cs">
+      <DependentUpon>EntityControllerGenerator.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="AutoGeneratorsMetaData\Amital\EntityDetailsGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityDetailsGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AutoGeneratorsMetaData\Amital\EntityDomainServiceGenerator.cs">
+      <DependentUpon>EntityDomainServiceGenerator.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="AutoGeneratorsMetaData\Amital\EntityListQueryServicesGenerator.cs">
+      <DependentUpon>EntityListQueryServicesGenerator.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="AutoGeneratorsMetaData\Amital\EntityQueryServicesGenerator.cs">
+      <DependentUpon>EntityQueryServicesGenerator.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="AutoGeneratorsMetaData\Amital\EntityUpdateServicesGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityUpdateServicesGenerator.tt</DependentUpon>
+    </Compile>
     <Compile Include="AutoGeneratorsMetaData\APIDataContractGenerator2.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -69,7 +99,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EntityControllerGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="AutoGeneratorsMetaData\EntityDataMappingsGenerator.cs">
+    <Compile Include="AutoGeneratorsMetaData\Amital\EntityDataMappingsGenerator.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EntityDataMappingsGenerator.tt</DependentUpon>
@@ -84,7 +114,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EntityDomainServiceGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="AutoGeneratorsMetaData\EntityKeysGenerator.cs">
+    <Compile Include="AutoGeneratorsMetaData\Amital\EntityKeysGenerator.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EntityKeysGenerator.tt</DependentUpon>
@@ -94,22 +124,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EntityListQueryServicesGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="AutoGeneratorsMetaData\EntityListsGenerator.cs">
+    <Compile Include="AutoGeneratorsMetaData\Amital\EntityListsGenerator.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EntityListsGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="AutoGeneratorsMetaData\EntityMapsGenerator.cs">
+    <Compile Include="AutoGeneratorsMetaData\Amital\EntityMapsGenerator.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EntityMapsGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="AutoGeneratorsMetaData\EntityPMsGenerator.cs">
+    <Compile Include="AutoGeneratorsMetaData\Amital\EntityPMsGenerator.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EntityPMsGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="AutoGeneratorsMetaData\EntityPOCOsGenerator.cs">
+    <Compile Include="AutoGeneratorsMetaData\Amital\EntityPOCOsGenerator.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EntityPOCOsGenerator.tt</DependentUpon>
@@ -144,10 +174,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>OLDMetadataClassesGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="AutoGeneratorsMetaData\RepsitoriesGenerator.cs">
+    <Compile Include="AutoGeneratorsMetaData\Amital\RepositoriesGenerator.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RepsitoriesGenerator.tt</DependentUpon>
+      <DependentUpon>RepositoriesGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="AutoGeneratorsMetaData\TypedScriptGenerators\EntityListGenerator.cs">
       <AutoGen>True</AutoGen>
@@ -204,7 +234,7 @@
       <Link>DependencyValidation1.layerdiagram</Link>
       <Visible>False</Visible>
     </AdditionalFiles>
-    <None Include="AutoGeneratorsMetaData\EntityDataMappingsGenerator.tt">
+    <None Include="AutoGeneratorsMetaData\Amital\EntityDataMappingsGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EntityDataMappingsGenerator.cs</LastGenOutput>
     </None>
@@ -216,7 +246,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EntityDomainServiceGenerator.cs</LastGenOutput>
     </None>
-    <None Include="AutoGeneratorsMetaData\EntityKeysGenerator.tt">
+    <None Include="AutoGeneratorsMetaData\Amital\EntityKeysGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EntityKeysGenerator.cs</LastGenOutput>
     </None>
@@ -224,19 +254,19 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EntityListQueryServicesGenerator.cs</LastGenOutput>
     </None>
-    <None Include="AutoGeneratorsMetaData\EntityListsGenerator.tt">
+    <None Include="AutoGeneratorsMetaData\Amital\EntityListsGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EntityListsGenerator.cs</LastGenOutput>
     </None>
-    <None Include="AutoGeneratorsMetaData\EntityMapsGenerator.tt">
+    <None Include="AutoGeneratorsMetaData\Amital\EntityMapsGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EntityMapsGenerator.cs</LastGenOutput>
     </None>
-    <None Include="AutoGeneratorsMetaData\EntityPMsGenerator.tt">
+    <None Include="AutoGeneratorsMetaData\Amital\EntityPMsGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EntityPMsGenerator.cs</LastGenOutput>
     </None>
-    <None Include="AutoGeneratorsMetaData\EntityPOCOsGenerator.tt">
+    <None Include="AutoGeneratorsMetaData\Amital\EntityPOCOsGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EntityPOCOsGenerator.cs</LastGenOutput>
     </None>
@@ -249,9 +279,9 @@
       <LastGenOutput>EntityUpdateServicesGenerator.cs</LastGenOutput>
     </None>
     <None Include="AutoGeneratorsMetaData\Manager.ttinclude" />
-    <None Include="AutoGeneratorsMetaData\RepsitoriesGenerator.tt">
+    <None Include="AutoGeneratorsMetaData\Amital\RepositoriesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>RepsitoriesGenerator.cs</LastGenOutput>
+      <LastGenOutput>RepositoriesGenerator.cs</LastGenOutput>
     </None>
     <None Include="AutoGeneratorsMetaData\UpdateClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -262,6 +292,30 @@
     <None Include="AutoGeneratorsMetaData\NewModelsAPIDataContractGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>NewModelsAPIDataContractGenerator.cs</LastGenOutput>
+    </None>
+    <None Include="AutoGeneratorsMetaData\Amital\EntityQueryServicesGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EntityQueryServicesGenerator.cs</LastGenOutput>
+    </None>
+    <None Include="AutoGeneratorsMetaData\Amital\EntityListQueryServicesGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EntityListQueryServicesGenerator.cs</LastGenOutput>
+    </None>
+    <None Include="AutoGeneratorsMetaData\Amital\EntityDetailsGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EntityDetailsGenerator.cs</LastGenOutput>
+    </None>
+    <None Include="AutoGeneratorsMetaData\Amital\EntityUpdateServicesGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EntityUpdateServicesGenerator.cs</LastGenOutput>
+    </None>
+    <Content Include="AutoGeneratorsMetaData\Amital\EntityControllerGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EntityControllerGenerator.cs</LastGenOutput>
+    </Content>
+    <None Include="AutoGeneratorsMetaData\Amital\EntityDomainServiceGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EntityDomainServiceGenerator.cs</LastGenOutput>
     </None>
     <Content Include="AutoGeneratorsMetaData\EntityControllerGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -309,8 +363,8 @@
     </Content>
     <Content Include="AutoGeneratorsMetaData\TypedScriptGenerators\OldEntitiesGenerator\EntityListClassGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>EntityListClassGenerator.cs</LastGenOutput>
       <LastOutputs>.\EntityListClassGenerator.cs</LastOutputs>
+      <LastGenOutput>EntityListClassGenerator.cs</LastGenOutput>
     </Content>
     <Content Include="AutoGeneratorsMetaData\TypedScriptGenerators\OldEntitiesGenerator\EntityPMClassGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -326,6 +380,7 @@
       <LastGenOutput>TSToolsTemplate.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,0 +1,14 @@
+﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="Shipments">
+  <Sql Version="1">
+    <![CDATA[
+    
+      UPDATE Shipments SET
+      IsBondedWarehouse = 1
+      WHERE WarehouseLegWarehouseId IN (SELECT Id FROM Warehouses WHERE TypeCode='BO') and $LastCounterWhere$
+      
+    ]]>
+  </Sql>
+</Script>
+
+
+
