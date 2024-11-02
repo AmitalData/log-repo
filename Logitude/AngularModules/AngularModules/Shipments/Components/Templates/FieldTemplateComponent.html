@@ -1,0 +1,268 @@
+
+<table *ngIf="Entity">
+    <tr>
+        <td>
+            <div class="MediaFill">
+
+                <!-- Shipment -->
+                <table *ngIf="ObjectTableName == 'Shipment'">
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+
+                                <div *ngIf="FieldName == 'TransportModeId'" class="MediaFillRelative">
+                                    <img class="CenterCenter" [attr.src]="'./Images/Icons/' + FieldValue + '.png'" [title]="Entity['TransportModeName']" />
+                                </div>
+
+                                <div *ngIf="FieldName == 'DirectionId'" class="MediaFillRelative">
+                                    <img class="CenterCenter" [attr.src]="'./Images/Directions/' + FieldValue + '.png'" [title]="Entity['DirectionName']" />
+                                </div>
+
+                                <div *ngIf="FieldName == 'ParentShipmentDirectionId' && FieldValue != null" class="MediaFillRelative">
+                                    <img class="CenterCenter" [attr.src]="'./Images/Directions/' + FieldValue + '.png'" [title]="Entity['ParentShipmentDirectionId']" />
+                                </div>
+
+                                <div *ngIf="FieldName == 'Routing'" class="TemplateTrimming">
+                                    <div class="TemplateTrimmingChild">{{FieldValue | ReplacePipe:',':'>'}}</div>
+                                </div>
+
+                                <div *ngIf="FieldName == 'Transshipments'" class="TemplateTrimming">
+                                    <div class="TemplateTrimmingChild">{{FieldValue | ReplacePipe:',':'>'}}</div>
+                                </div>
+
+                                <div *ngIf="FieldName == 'IsOperationalClosed'">
+                                    <img style="vertical-align:middle;" *ngIf="!FieldValue" src="./Images/Icons/IsOpened.png" />
+                                    <img style="vertical-align:middle;" *ngIf="FieldValue" src="./Images/Icons/IsClosed.png" />
+                                </div>
+
+                                <div *ngIf="FieldName == 'IsAccountingClosed'">
+                                    <img style="vertical-align:middle;" *ngIf="!FieldValue" src="./Images/Icons/IsOpened.png" />
+                                    <img style="vertical-align:middle;" *ngIf="FieldValue" src="./Images/Icons/IsClosed.png" />
+                                </div>
+
+                                <div *ngIf="!IsHeaderScreenTemplate && FieldName == 'StatusName'" class="TemplateTrimming">
+                                    <div class="TemplateTrimmingChild">
+                                        <span [attr.data-cy]="'ShipmentStatusValue'" [ngStyle]="{color: Entity.ExactStatusName | StringToColorPipe}">{{FieldValue}}</span>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="IsHeaderScreenTemplate && FieldName == 'StatusName'" class="TemplateTrimming">
+                                    <div class="TemplateTrimmingChild">
+                                        <span [attr.data-cy]="'ShipmentStatusValue'" [ngStyle]="{color: FieldValue | StringToColorPipe}">{{FieldValue}}</span>
+                                        <span [ngStyle]="{color: FieldValue | StringToColorPipe}" *ngIf="Entity.PartialStatusAmount != null" style="margin-left: 3px;">{{Entity.PartialStatusAmount}}</span>
+                                        <span [ngStyle]="{color: FieldValue | StringToColorPipe}" *ngIf="Entity.StatusLocation" style="margin-left: 3px;">({{Entity.StatusLocation}})</span>
+                                    </div>
+                                </div>
+
+                                <table *ngIf="FieldName == 'ShipmentType' || FieldName == 'ShipmentTypeViewField'">
+                                    <tr>
+                                        <td style="width: 15px; max-width: 15px;" *ngIf="IsHouseIconVisible">
+                                            <img *ngIf="IsHouseNotConnected" style="vertical-align: middle; float: left;" src="./Images/NotConnected.png" data-cy="ShipmentNotConnectedIcon" />
+                                            <div *ngIf="!IsHouseNotConnected" style="width:15px; background: red;"></div>
+                                        </td>
+
+                                        <td style="text-align: left;" data-cy="ShipmentTypeValue">{{FieldValue}}</td>
+                                    </tr>
+                                </table>
+
+                                <div *ngIf="FieldName == 'CustomsTransmissionsStatusName'" [ngStyle]="{color: FieldValue | StringToColorPipe}">{{FieldValue}}</div>
+
+                                <div *ngIf="FieldName == 'FWBStatusName'" class="MediaFillRelative">
+                                    <img class="CenterCenter" [attr.src]="FWBStatusSource" [attr.title]="FWBStatusTooltip" />
+                                </div>
+
+                                <div *ngIf="FieldName == 'FHLStatusName' && ShipmentLevelCode != 'D'" class="MediaFillRelative">
+                                    <img class="CenterCenter" [attr.src]="FHLStatusSource" [attr.title]="FHLStatusTooltip" />
+                                </div>
+
+                                <div *ngIf="FieldName == 'CargonautFWBStatusName'" class="MediaFillRelative">
+                                    <img class="CenterCenter" [attr.src]="CargonautFWBStatusSource" [attr.title]="CargonautFWBStatusTooltip" />
+                                </div>
+
+                                <div *ngIf="FieldName == 'CargonautFHLStatusName' && ShipmentLevelCode != 'D'" class="MediaFillRelative">
+                                    <img class="CenterCenter" [attr.src]="CargonautFHLStatusSource" [attr.title]="CargonautFHLStatusTooltip" />
+                                </div>
+
+                                <div *ngIf="FieldName == 'AWBPrint' && Entity['AWBPrint'] == true" class="MediaFillRelative">
+                                    <img class="CenterCenter" src="./Images/Printer.png" title="Printed" />
+                                </div>
+
+                                <div *ngIf="FieldName == 'NextETD' || FieldName == 'NextETA'" class="TemplateTrimming">
+                                    <div class="TemplateTrimmingChild" [ngStyle]="{color: FieldValue | DateTimeToColorPipe}">{{FieldValue | DateTimeToDatePipe}}</div>
+                                </div>
+
+                                <div *ngIf="FieldName == 'FlightDate'" class="TemplateTrimming">
+                                    <div class="TemplateTrimmingChild ColorGreen" *ngIf="Entity['IsFlightDateActual'] == true">{{Entity[FieldName] | DateTimePipe:'DT'}}</div>
+                                    <div class="TemplateTrimmingChild" *ngIf="Entity['IsFlightDateActual'] == false" [ngStyle]="{color: Entity[FieldName] | DateTimeToColorPipe:'O'}">{{Entity[FieldName] | DateTimePipe:'DT'}}</div>
+                                </div>
+
+                                <div *ngIf="FieldName == 'CutoffDate'" class="TemplateTrimming">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 65px;">{{Entity[FieldName] | DateTimeToDatePipe}}</td>
+                                            <td style="width: 30px; margin-left:10px;">{{Entity[FieldName] | DateTimeToTimePipe}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div *ngIf="FieldName == 'INTTRASIStatusDate'" class="TemplateTrimming">
+                                    <div class="TemplateTrimmingChild">{{Entity[FieldName] | DateTimePipe:'DT'}}</div>
+                                </div>
+
+                                <div *ngIf="FieldName == 'MainCarriageETD'" class="TemplateTrimming">
+                                    <div *ngIf="Entity.MainCarriageATD == null" class="TemplateTrimmingChild" [ngStyle]="{color: FieldValue | DateTimeToColorPipe}">{{Entity[FieldName] | DateTimePipe:'D'}}</div>
+                                    <div *ngIf="Entity.MainCarriageATD != null" class="TemplateTrimmingChild" style="color:#282E30;">{{Entity[FieldName] | DateTimePipe:'D'}}</div>
+                                </div>
+
+                                <div *ngIf="FieldName == 'MainCarriageETA'" class="TemplateTrimming">
+                                    <div *ngIf="Entity.MainCarriageATA == null" class="TemplateTrimmingChild" [ngStyle]="{color: FieldValue | DateTimeToColorPipe}">{{Entity[FieldName] | DateTimePipe:'D'}}</div>
+                                    <div *ngIf="Entity.MainCarriageATA != null" class="TemplateTrimmingChild" style="color:#282E30;">{{Entity[FieldName] | DateTimePipe:'D'}}</div>
+                                </div>
+
+                                <div *ngIf="FieldName == 'GrossWeight' || FieldName == 'GrossWeightInKG' || FieldName == 'ChargeableWeight' || FieldName == 'ChargeableWeightInKG' || FieldName == 'GrossWeightPerTon'" class="TemplateTrimming">
+                                    <div class="TemplateTrimmingChild TextRight" [style.padding-right]="NumberFieldRightPadding">{{FieldValue | NumbersPipe:'N2'}}</div>
+                                </div>
+
+                                <div *ngIf="FieldName == 'ProfitInLocalCurrency' || FieldName == 'OpenReceivablesInLocalCurrency' ||  FieldName == 'AccountedReceivablesInLocalCurrency' || FieldName == 'AccountedPayablesInLocalCurrency'  ||  FieldName =='OpenPayablesInLocalCurrency' || FieldName == 'EstimateProfitInLocalCurrency'" class="TemplateTrimming">
+                                    <div class="TemplateTrimmingChild TextRight" [style.padding-right]="NumberFieldRightPadding" *ngIf="FieldValue">{{FieldValue | NumbersPipe:'N2'}} {{localCurrency}}</div>
+                                </div>
+
+                                <div *ngIf="FieldName == 'OpenReceivablesInProfitCurrency' || FieldName == 'AccountedReceivablesInProfitCurrency' ||  FieldName == 'ProfitInProfitCurrency' || FieldName == 'AccountedPayablesInProfitCurrency' ||  FieldName == 'OpenPayablesInProfitCurrency' || FieldName == 'EstimateProfitInProfitCurrency'" class="TemplateTrimming">
+                                    <div class="TemplateTrimmingChild TextRight" [style.padding-right]="NumberFieldRightPadding" *ngIf="FieldValue">{{FieldValue | NumbersPipe:'N2'}} {{ProfitCurrency}}</div>
+                                </div>
+
+                                <div *ngIf="FieldName == 'MainCarriageETDTime'" class="TemplateTrimming">
+                                    <div class="TemplateTrimmingChild">{{Entity[FieldName] | DateTimeToTimePipe}}</div>
+                                </div>
+
+                                <div *ngIf="FieldName == 'MainCarriageETATime'" class="TemplateTrimming">
+                                    <div class="TemplateTrimmingChild">{{Entity[FieldName] | DateTimeToTimePipe}}</div>
+                                </div>
+
+                                <!-- Spot Light -->
+                                <div *ngIf="IsSpotLightTemplate">
+                                    <div ChildDirective></div>
+                                </div>
+
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- ContainerFollowUp -->
+                <table *ngIf="ObjectTableName == 'ContainerFollowUp'">
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+
+                                <div *ngIf="FieldName == 'DeliveryTransportModeName'" class="MediaFillRelative">
+                                    <img *ngIf="Entity['DeliveryTransportModeCode'] == 'BYTR'" class="CenterCenter" [attr.src]="'./Images/truck.png'" style="width:23px;height:30px;" />
+                                    <img *ngIf="Entity['DeliveryTransportModeCode'] == 'BYRA'" class="CenterCenter" [attr.src]="'./Images/train.png'" style="width:23px;height:20px;" />
+                                </div>
+
+                                <div *ngIf="FieldName == 'ECRTransportModeName'" class="MediaFillRelative">
+                                    <img *ngIf="Entity['ECRTransportModeCode'] == 'BYTR'" class="CenterCenter" [attr.src]="'./Images/truck.png'" style="width:23px;height:30px;" />
+                                    <img *ngIf="Entity['ECRTransportModeCode'] == 'BYRA'" class="CenterCenter" [attr.src]="'./Images/train.png'" style="width:23px;height:20px;" />
+                                </div>
+
+                                <div *ngIf="FieldName == 'TransportModeId'" class="MediaFillRelative">
+                                    <img class="CenterCenter" [attr.src]="'./Images/Icons/' + FieldValue + '.png'" [title]="Entity['TransportModeName']" />
+                                </div>
+
+                                <div *ngIf="FieldName == 'DirectionId'" class="MediaFillRelative">
+                                    <img class="CenterCenter" [attr.src]="'./Images/Directions/' + FieldValue + '.png'" [title]="Entity['DirectionName']" />
+                                </div>
+
+                                <div *ngIf="FieldName == 'ParentShipmentDirectionId' && FieldValue != null" class="MediaFillRelative">
+                                    <img class="CenterCenter" [attr.src]="'./Images/Directions/' + FieldValue + '.png'" [title]="Entity['ParentShipmentDirectionId']" />
+                                </div>
+
+                                <div *ngIf="FieldName == 'IsDangerous' && Entity['IsDangerous'] == true" class="MediaFillRelative">
+                                    <img class="CenterCenter" src="./Images/Nuke.png" />
+                                </div>
+
+                                <div *ngIf="FieldName == 'DeliveryDeparture'" class="TemplateTrimming">
+                                    <div *ngIf="FieldValue && Entity['DeliveryATD'] == null" class="TemplateTrimmingChild" [ngStyle]="{color: FieldValue | DateTimeToColorPipe}">{{FieldValue | DateTimeToDatePipe}} (expected)</div>
+                                    <div *ngIf="FieldValue && Entity['DeliveryATD'] != null" class="TemplateTrimmingChild ColorGreen">{{FieldValue | DateTimeToDatePipe}} (actual)</div>
+                                </div>
+
+                                <div *ngIf="FieldName == 'DeliveryArrival'" class="TemplateTrimming">
+                                    <div *ngIf="FieldValue && Entity['DeliveryATA'] == null" class="TemplateTrimmingChild" [ngStyle]="{color: FieldValue | DateTimeToColorPipe}">{{FieldValue | DateTimeToDatePipe}} (expected)</div>
+                                    <div *ngIf="FieldValue && Entity['DeliveryATA'] != null" class="TemplateTrimmingChild ColorGreen">{{FieldValue | DateTimeToDatePipe}} (actual)</div>
+                                </div>
+
+                                <div *ngIf="FieldName == 'ReturnDeparture'" class="TemplateTrimming">
+                                    <div *ngIf="FieldValue && Entity['EmptyContainerReturnATD'] == null" class="TemplateTrimmingChild" [ngStyle]="{color: FieldValue | DateTimeToColorPipe}">{{FieldValue | DateTimeToDatePipe}} (expected)</div>
+                                    <div *ngIf="FieldValue && Entity['EmptyContainerReturnATD'] != null" class="TemplateTrimmingChild ColorGreen">{{FieldValue | DateTimeToDatePipe}} (actual)</div>
+                                </div>
+
+                                <div *ngIf="FieldName == 'ReturnArrival'" class="TemplateTrimming">
+                                    <div *ngIf="FieldValue && Entity['EmptyContainerReturnATA'] == null" class="TemplateTrimmingChild" [ngStyle]="{color: FieldValue | DateTimeToColorPipe}">{{FieldValue | DateTimeToDatePipe}} (expected)</div>
+                                    <div *ngIf="FieldValue && Entity['EmptyContainerReturnATA'] != null" class="TemplateTrimmingChild ColorGreen">{{FieldValue | DateTimeToDatePipe}} (actual)</div>
+                                </div>
+
+                                <!--<div *ngIf="FieldName == 'MarksAndNumbers' && FieldValue" style="height: 100%; width: 100%; position: relative;">
+        <div class="CenterCenter" style="height: 16px; width: 16px;">
+            <CellTooltip [IconPath]="'./Images/CellIcons/Info_Blue.png'" [Head]="'Marks And Numbers'" [Body]="FieldValue"></CellTooltip>
+        </div>
+    </div>
+
+    <div *ngIf="FieldName == 'Description' && FieldValue" style="height: 100%; width: 100%; position: relative;">
+        <div class="CenterCenter" style="height: 16px; width: 16px;">
+            <CellTooltip [IconPath]="'./Images/CellIcons/Info_Blue.png'" [Head]="'Description'" [Body]="FieldValue"></CellTooltip>
+        </div>
+    </div>-->
+
+                                <div class="TemplateTrimming" *ngIf="FieldName == 'Description' && FieldValue" [title]="Entity['Description']">
+                                    <div class="TemplateTrimmingChild">{{FieldValue}}</div>
+                                </div>
+
+                                <div class="TemplateTrimming" *ngIf="FieldName == 'MarksAndNumbers' && FieldValue" [title]="Entity['MarksAndNumbers']">
+                                    <div class="TemplateTrimmingChild">{{FieldValue}}</div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <!--Container-->
+                <table *ngIf="ObjectTableName == 'Container'">
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+                                <div *ngIf="FieldName == 'ShipmentId'" class="TemplateTrimming">
+                                    <span class="hyperlink" (click)="ViewShipmentClicked()">{{Entity.ShipmentNumber}}</span>
+                                </div>
+
+                                <div *ngIf="!IsHeaderScreenTemplate && FieldName == 'ShipmentStatusName'" class="TemplateTrimming">
+                                    <div class="TemplateTrimmingChild">
+                                        <span [ngStyle]="{color: Entity.ShipmentStatusName | StringToColorPipe}">{{FieldValue}}</span>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="!IsHeaderScreenTemplate && FieldName == 'StatusName'" class="TemplateTrimming">
+                                    <div class="TemplateTrimmingChild">
+                                        <span  [ngStyle]="{color: Entity.StatusName | StringToColorPipe}">{{FieldValue}}</span>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="IsHeaderScreenTemplate && FieldName == 'StatusName'" class="TemplateTrimming">
+                                    <div class="TemplateTrimmingChild">
+                                        <span [ngStyle]="{color: FieldValue | StringToColorPipe}">{{FieldValue}}</span>
+                                    </div>
+                                </div>
+
+                                <div *ngFor="let item of containerEstimatedDates">
+                                    <div *ngIf="FieldName == item.estimatedDate">
+                                        <div class="TemplateTrimmingChild" [ngStyle]="{color: Entity[item.estimatedDate] | ContainerDateTimeToColorPipe :Entity[item.actaulDate]}">{{Entity[FieldName] | DateTimePipe:'D'}}</div>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>

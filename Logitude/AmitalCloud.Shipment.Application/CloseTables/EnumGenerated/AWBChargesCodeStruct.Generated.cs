@@ -16,18 +16,18 @@ namespace AmitalCloud.Shipment.Application.CloseTables
 {
     public struct AWBChargesCodeValues
     {   
-       //public const string Basic = "BA";  
+       public const string Basic = "BA";  
        //public const string PartialCollectCredit-PartialPrepaidCash = "CA";  
        //public const string PartialCollectCredit-PartialPrepaidCredit = "CB";  
-       //public const string AllChargesCollect = "CC";  
+       public const string AllChargesCollect = "CC";  
        //public const string PartialCollectCreditCard-PartialPrepaidCash = "CE";  
-       //public const string AllChargesCollectbyGBL = "CG";  
+       public const string AllChargesCollectbyGBL = "CG";  
        //public const string PartialCollectCreditCard-PartialPrepaidCredit = "CH";  
-       //public const string DestinationCollectbyMCO = "CM";  
-       //public const string DestinationCollectCash = "CP";  
-       //public const string DestinationCollectCredit = "CX";  
-       //public const string AllChargesCollectbyCreditCard = "CZ";  
-       //public const string NoCharge = "NC";  
+       public const string DestinationCollectbyMCO = "CM";  
+       public const string DestinationCollectCash = "CP";  
+       public const string DestinationCollectCredit = "CX";  
+       public const string AllChargesCollectbyCreditCard = "CZ";  
+       public const string NoCharge = "NC";  
        //public const string NoWeightCharge-OtherChargesPrepaidbyGBL = "NG";  
        //public const string NoWeightCharge-OtherChargesPrepaidCash = "NP";  
        //public const string NoWeightCharge-OtherChargesCollect = "NT";  
@@ -37,11 +37,11 @@ namespace AmitalCloud.Shipment.Application.CloseTables
        //public const string PartialPrepaidCredit-PartialCollectCash = "PD";  
        //public const string PartialPrepaidCreditCard-PartialCollectCash = "PE";  
        //public const string PartialPrepaidCreditCard-PartialCollectCreditCard = "PF";  
-       //public const string AllChargesPrepaidbyGBL = "PG";  
+       public const string AllChargesPrepaidbyGBL = "PG";  
        //public const string PartialPrepaidCreditCard-PartialCollectCredit = "PH";  
-       //public const string AllChargesPrepaidCash = "PP";  
-       //public const string AllChargesPrepaidCredit = "PX";  
-       //public const string AllChargesPrepaidbyCreditCard = "PZ";  
+       public const string AllChargesPrepaidCash = "PP";  
+       public const string AllChargesPrepaidCredit = "PX";  
+       public const string AllChargesPrepaidbyCreditCard = "PZ";  
     }
 }
 

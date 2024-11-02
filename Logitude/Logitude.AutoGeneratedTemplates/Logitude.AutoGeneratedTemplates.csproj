@@ -43,6 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoGeneratorsMetaData\Amital\ExtendedContextGenerator.cs">
+      <DependentUpon>ExtendedContextGenerator.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="AutoGeneratorsMetaData\Amital\EntityControllerGenerator.cs">
       <DependentUpon>EntityControllerGenerator.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -309,6 +314,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EntityUpdateServicesGenerator.cs</LastGenOutput>
     </None>
+    <Content Include="AutoGeneratorsMetaData\Amital\ExtendedContextGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ExtendedContextGenerator.cs</LastGenOutput>
+    </Content>
     <Content Include="AutoGeneratorsMetaData\Amital\EntityControllerGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EntityControllerGenerator.cs</LastGenOutput>

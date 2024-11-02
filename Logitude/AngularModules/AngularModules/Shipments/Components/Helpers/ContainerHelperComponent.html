@@ -1,0 +1,19 @@
+<table style="height: 24px;">
+    <tr>
+        <td style="padding-right: 5px;" *ngIf="IsSimulatorVisible">
+            <button class="Button" (click)="ShipmentContainersSimulatorClicked()">Container Statuses Simulator</button>
+        </td>
+        <td style="padding-right: 5px;" *ngIf="IsGeneralSimulatorVisible">
+            <button class="Button" (click)="GeneralShipmentContainersSimulatorClicked()">General Container Statuses Simulator</button>
+        </td>
+        <td style="padding-right: 5px;" *ngIf="IsTrackContainerVisible" >
+            <button class="Button" (click)="TrackContainerClicked()">Track Container</button>
+        </td>
+        <td style="padding-right: 5px;" *ngIf="IsContainersRequestStatusVisible">
+            <button class="Button" (click)="ContainersRequestStatusClicked()">Container Request Status</button>
+        </td>
+
+    </tr>
+</table>
+
+

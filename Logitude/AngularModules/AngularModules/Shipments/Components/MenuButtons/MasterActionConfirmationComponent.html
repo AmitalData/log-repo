@@ -1,0 +1,316 @@
+
+<table>
+    <tr style="height:30px">
+        <td colspan="2">
+            <label style="color:#1B90CB;font-size:small;margin-left:5px">Master and Connected Shipments:</label>
+        </td>
+    </tr>
+    <tr >
+        <td colspan="2" style="vertical-align:top;height:100%">
+            <div class="SimpleGridView" style="min-height:100px;max-height:100%;width:100%">
+                <div class="SimpleGridViewHeader">
+                    <table>
+                        <tr>
+                            <td style="width: 120px; min-width: 120px;">Master\Shipment No.</td>
+                            <td style="width:100px; min-width: 100px;">Master\House No</td>
+                            <td style="width:  50px; min-width: 50px;">PP\CC</td>
+                            <td style="width: 90px; min-width: 90px;">Flight\Voyage</td>
+                            <td style="width:150px; min-width: 150px;">ATD\ATA</td>
+                            <td style="width:350px">Errors</td>
+                            <td style="width:350px">Warninigs</td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="SimpleGridViewBody" >
+                    <table>
+                        <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of MasterLists" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem"  style="height:1px">
+
+                            <td class="GridViewCell" style="width: 120px; min-width: 120px;">{{item.ShipmentNo}}</td>
+                            <td class="GridViewCell" style="width:100px; min-width: 100px;">{{item.MasterOrHouseNo}}</td>
+                            <td class="GridViewCell" style="width:  50px; min-width: 50px;">{{item.PPCC}}</td>
+                            <td class="GridViewCell" style="width: 90px; min-width: 90px;">{{item.FlightVoyage}}</td>
+                            <td class="GridViewCell" style="width:  150px; min-width: 150px;">{{item.ATDATA}}</td>
+
+                            <td class="GridViewCell" style="width:350px">
+                                <div *ngFor="let error of item.ErrorsList" style="padding-left:10px">
+                                    <img src="./Images/SimplogIcons/ErrorIcon.png" width="20" height="20" style="margin-right:5px" />{{error}}
+                                </div>
+                            </td>
+
+                            <td class="GridViewCell" style="width:350px">
+                                <div *ngFor="let warning of item.WarningsList">
+                                    <img src="./Images/SimplogIcons/Warning.png" width="20" height="20" style="margin-right:5px" />{{warning}}
+                                </div>
+                            </td>
+
+                            <td><div></div></td>
+                        </tr>
+                        <tr style="height:1px">
+                            <td colspan="8"  >
+                                <div></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr style="overflow:auto;min-height:250px;max-height:100%;height:250px" *ngIf="FCLVisibility">
+        <td style="min-width:900px;width:900px;max-width:900px;vertical-align:top">
+            <fieldset class="MediaFill GroupBox">
+                <legend>
+                    <span style="width: 7px; height: 7px; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px; display: inline-block;"></span>
+                    <span>Master vs Houses</span>
+                </legend>
+
+                <div style="height:220px;min-height:220px;max-height:220px;padding:4px;overflow-y:hidden" *ngIf="FCLVisibility">
+   
+    <table >
+        <tr *ngIf="ErrorList != null && ErrorList.length > 0" style="height:1px;">
+            <td colspan="3">
+                <ValidationSummary [ItemsSource]="ErrorList"></ValidationSummary>
+            </td>
+        </tr>
+        <tr style="height:10px">
+            <td style="background-color:rgb(179,207,241);font-weight:bold;border:solid 1px;border-color:rgb(179,207,241)">Quantities</td>
+            <td style="border:none"></td>
+            <td style="background-color:rgb(179,207,241);font-weight:bold;border:solid 1px;border-color:rgb(179,207,241)">Container numbers</td>
+        </tr>
+        <tr>
+            <td style="vertical-align:top;border:solid 1px;border-color:rgb(179,207,241);border-radius:25px;padding:1px 1px 1px 1px;width:40%">
+                <div class="SimpleGridView" style="margin-bottom:10px;height:200px;max-height:100%">
+                    <div class="SimpleGridViewHeader">
+                        <table>
+                            <tr>
+                                <td style="width:100px;min-width:100px;max-width:100px">Container Type</td>
+                                <td style="width:60px;min-width:60px;max-width:60px">House</td>
+                                <td style="width:60px;min-width:60px;max-width:60px">Master</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="SimpleGridViewBody" style="overflow-y:hidden">
+                        <table>
+                            <tr *ngFor="let item of FCL_ObsList1" (click)="SelectedItem = item" >
+
+                                <td class="GridViewCell" style="width:100px;min-width:100px;max-width:100px">
+                                    <div>{{item.LineLabel}}</div>
+                                </td>
+
+                                <td class="GridViewCell" style="width:60px;min-width:60px;max-width:60px">
+                                    <div>{{item.HouseValue}}</div>
+                                </td>
+
+                                <td class="GridViewCell" style="width:60px;min-width:60px;max-width:60px">
+                                    <div>{{item.MasterValue}}</div>
+                                </td>
+                            </tr>
+                            <tr><td colspan="3"></td></tr>
+
+                        </table>
+                    </div>
+                </div>
+
+
+
+
+            </td>
+            <td style="width:5px;min-width:5px"> <div style="width:5px;min-width:5px"></div></td>
+            <td style="vertical-align:top;border:solid 1px;border-color:rgb(179,207,241);border-radius:25px;padding:1px 1px 1px 1px">
+                <div class="SimpleGridView" style="max-height:100%;height:200px">
+                    <div class="SimpleGridViewHeader">
+                        <table>
+                            <tr>
+                                <td style="width:100px;min-width:100px;max-width:100px">Shipment No</td>
+                                <td style="width:100px;min-width:100px;max-width:100px">Container Type</td>
+                                <td style="width:60px;min-width:60px;max-width:60px">House</td>
+                                <td style="width:60px;min-width:60px;max-width:60px">Master</td>
+
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="SimpleGridViewBody" style="overflow-y:hidden">
+                        <table>
+                            <tr *ngFor="let item of FCL_ObsList2" (click)="SelectedItem = item">
+
+                                <td class="GridViewCell" style="width:100px;min-width:100px;max-width:100px">
+                                    <div>{{item.ShipmentNumber}}</div>
+                                </td>
+
+                                <td class="GridViewCell" style="width:100px;min-width:100px;max-width:100px">
+                                    <div>{{item.LineLabel}}</div>
+                                </td>
+
+                                <td class="GridViewCell" style="width:60px;min-width:60px;max-width:60px">
+                                    <div>{{item.HouseStringValue}}</div>
+                                </td>
+
+                                <td class="GridViewCell" style="width:60px;min-width:60px;max-width:60px">
+                                    <div>{{item.MasterStringValue}}</div>
+                                </td>
+                            </tr>
+                            <tr><td colspan="4"></td></tr>
+
+                        </table>
+                    </div>
+                </div>
+
+
+
+            </td>
+        </tr>
+      
+    </table>
+    </div>
+    </fieldset>
+    </td>
+    <td></td>
+    </tr>
+    <tr style="height:165px" *ngIf="LCLVisibility">
+        <td style="width:25%;min-width:350px">
+            <fieldset class="MediaFill GroupBox">
+
+                <legend>
+                    <span style="width: 7px; height: 7px;-webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px; display: inline-block;"></span>
+                    <span>Master vs Houses</span>
+                </legend>
+                <div style="padding:4px;height:130px" *ngIf="LCLVisibility">
+
+                    <table>
+                        <tr>
+                            <td style="vertical-align:top;">
+                                <div class="SimpleGridView" style="margin-bottom:10px">
+                                    <div class="SimpleGridViewHeader">
+                                        <table>
+                                            <tr>
+                                                <td style="width:100px;min-width:100px"></td>
+                                                <td style="width:50%;min-width:50%">House</td>
+                                                <td style="width:50%;min-width:50%">Master</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div class="SimpleGridViewBody" style="overflow-y:hidden">
+                                        <table>
+                                            <tr *ngFor="let item of LCL_ObsList" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem" style="border-bottom:solid;border-color:lightgray;border-width:1px">
+
+                                                <td class="GridViewCell" style="height:1px;width:100px;min-width:100px">
+                                                    <div>{{item.LineLabel}}</div>
+                                                </td>
+
+                                                <td class="GridViewCell" style="width:50%;min-width:50%">
+                                                    <div>{{item.HouseValue}}</div>
+                                                </td>
+
+                                                <td class="GridViewCell" style="height:1px;width:50%;min-width:50%">
+                                                    <div>{{item.MasterValue}}</div>
+                                                </td>
+                                            </tr>
+                                            <tr><td colspan="3"></td></tr>
+
+                                        </table>
+                                    </div>
+                                </div>
+
+
+
+
+                            </td>
+
+                    </table>
+
+
+                </div>
+            </fieldset>
+        </td>
+        <td></td>
+    </tr>
+    <tr style="height:165px" *ngIf="GroupageVisibility">
+        <td style="width:25%">
+            <fieldset class="MediaFill GroupBox">
+                <legend>
+                    <span style="width: 7px; height: 7px; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px; display: inline-block;"></span>
+                    <span>Master vs Houses</span>
+                </legend>
+                <div style="padding:4px;height:100%;width:100%" *ngIf="GroupageVisibility">
+
+                    <table>
+                        <tr>
+                            <td style="vertical-align:top">
+                                <div class="SimpleGridView" style=";margin-bottom:10px">
+                                    <div class="SimpleGridViewHeader">
+                                        <table>
+                                            <tr>
+                                                <td style="width:100px;min-width:100px"></td>
+                                                <td style="width:50%;min-width:50%">House</td>
+                                                <td style="width:50%;min-width:50%">Master</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div class="SimpleGridViewBody" style="overflow-y:hidden">
+                                        <table>
+                                            <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of GRO_ObsList" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
+
+                                                <td class="GridViewCell" style="height:1px;width:100px;min-width:100px">
+                                                    <div>{{item.LineLabel}}</div>
+                                                </td>
+
+                                                <td class="GridViewCell" style="width:50%;min-width:50%">
+                                                    <div>{{item.HouseValue}}</div>
+                                                </td>
+
+                                                <td class="GridViewCell" style="height:1px;width:50%;min-width:50%">
+                                                    <div>{{item.MasterValue}}</div>
+                                                </td>
+                                            </tr>
+                                            <tr><td colspan="3"></td></tr>
+
+                                        </table>
+                                    </div>
+                                </div>
+
+
+
+
+                            </td>
+                    </table>
+
+
+                </div>
+
+            </fieldset>
+        </td>
+
+        <td></td>
+
+
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom" colspan="2">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button id="{{'CancelAction' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button id="{{'ConfirmAction' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()" [disabled]="!EnabledOkButton">Confirm</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

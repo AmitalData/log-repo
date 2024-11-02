@@ -16,15 +16,15 @@ namespace AmitalCloud.Shipment.Application.CloseTables
 {
     public struct AccountingInformationIdentifierValues
     {   
-       //public const string CreditCardExpiryDate = "CRD";  
+       public const string CreditCardExpiryDate = "CRD";  
        //public const string CreditCardIssuanceName(NameShownontheCreditCard) = "CRI";  
-       //public const string CreditCardNumber = "CRN";  
-       //public const string GovernmentBillofLading = "GBL";  
-       //public const string GeneralInformation = "GEN";  
-       //public const string MiscellaneousChargeOrder = "MCO";  
-       //public const string ReturntoOrigin = "RET";  
+       public const string CreditCardNumber = "CRN";  
+       public const string GovernmentBillofLading = "GBL";  
+       public const string GeneralInformation = "GEN";  
+       public const string MiscellaneousChargeOrder = "MCO";  
+       public const string ReturntoOrigin = "RET";  
        //public const string Shipper’sReferenceNumber = "SRN";  
-       //public const string ModeofSettlement = "STL";  
+       public const string ModeofSettlement = "STL";  
     }
 }
 
