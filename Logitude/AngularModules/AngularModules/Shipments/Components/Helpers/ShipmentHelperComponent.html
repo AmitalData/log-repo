@@ -1,0 +1,75 @@
+
+<table style="height: 24px;">
+
+    <tr>
+        <td *ngIf="IsAnalyzeChampXMLButtonVisible" style="padding-left: 10px; padding-right: 5px;">
+            <button class="Button" (click)="AnalyzeChampXMLClicked()">Analyze Champ XML</button>
+        </td>
+
+        <td *ngIf="IsSendToCustomVisible" style="padding-left: 10px; padding-right: 5px;">
+            <button class="Button" (click)="SendToCustomsClicked()">Send to Customs</button>
+        </td>
+
+        <td *ngIf="IsShareManifestButtonVisible || IsShareDocumentsViaEmailVisible " style="padding-right: 5px;width:160px">
+            <div style="width:160px" tabindex="0" class="ToggleButton">
+                <img style="width:18px;height:18px;margin-right:130px" src="./_Resources/Images/Icons/Share/share.png" />
+                <label [attr.data-cy]="'Sharing Actions'" style="margin-left:33px">Sharing Actions</label>
+                <img src="./Images/ToggleIcon.png" />
+                <div style="right:-2px;width:160px" class="ToggleButtonMenu">
+                    <button [attr.data-cy]="'Share Manifest'" *ngIf="IsShareManifestButtonVisible" [disabled]="EntityPM && EntityPM.IsManifestSentToAgent" (click)="ShareManifestClicked()">Share Manifest</button>
+                    <button [attr.data-cy]="'Share Documents'" *ngIf="IsShareDocumentsButtonVisible && IsShareManifestButtonVisible" (click)="ShareDocumentsClicked()">Share Documents</button>
+                    <button [attr.data-cy]="'Share Documents Via Email'" *ngIf="IsShareDocumentsViaEmailVisible" (click)="ShareDocumentsViaEmailClicked()">Share Documents Via Email</button>
+                    <button [attr.data-cy]="'Update Shared Agent'" [disabled]="EntityPM && !EntityPM.IsManifestSentToAgent" *ngIf="IsUpdateSharedAgentButtonVisible && IsShareManifestButtonVisible" (click)="UpdateSharedAgentClicked()">Update Shared Agent</button>
+
+                </div>
+            </div>
+        </td>
+
+        <td style="padding-right: 5px;" *ngIf="IsSendBookingVisible">
+            <button class="Button" (click)="SendBookingClicked()">Send e-booking</button>
+        </td>
+
+        <td style="padding-right: 5px;" *ngIf="IsShippingInstructionsVisible">
+            <button class="Button" (click)="ShippingInstructionsClicked()">Send Shipping Instructions</button>
+        </td>
+
+        <td style="padding-right: 5px;" *ngIf="IsSimulatorVisible">
+            <button class="Button" (click)="ShipmentContainersSimulatorClicked()">Container Statuses Simulator</button>
+        </td>
+
+        <td style="padding-right: 5px;" *ngIf="IsShipmentContainersVisible">
+            <button class="Button" (click)="ContainersRequestStatusClicked()">Containers Request Status</button>
+        </td>
+
+        <td style="padding-right: 5px;" *ngIf="IsGeneralSimulatorVisible">
+            <button class="Button" (click)="GeneralShipmentContainersSimulatorClicked()">General Container Statuses Simulator</button>
+        </td>
+
+        <td *ngIf="IsAWBWizardButtonVisible">
+            <button class="Button" (click)="AWBButtonClicked()">{{AWBWizardButtonLabel}}</button>
+        </td>
+
+        <td *ngIf="IsImportAWBWizardButtonVisible" style="padding-left: 10px; padding-right: 5px;">
+            <button class="Button" (click)="AWBImportButtonClicked()">{{AWBImportWizardButtonLabel}}</button>
+        </td>
+
+        <td style="padding-right: 5px;" *ngIf="IsTrackContainerVisible" >
+            <button class="Button" (click)="TrackContainerClicked()">Track Container</button>
+        </td>
+
+        <td *ngIf="NotesSharedWithCustomerActivated" style="padding-left: 5px; padding-right: 0px;">
+            <HelperNotes [IconCode]="'R'" [Title]="'Notes Shared with Customer'" [IsCustom]="true" [Text]="NotesSharedWithCustomer" (TextChanged)="NotesSharedWithCustomer = $event" [ShipmentPM]="EntityPM"></HelperNotes>
+        </td>
+
+        <td style="padding-left: 10px; padding-right: 5px;">
+            <HelperNotes [Title]="'Notes'" [EntityTitle]="EntityTitle" [Text]="Notes" (TextChanged)="Notes = $event" [ShipmentPM]="EntityPM"></HelperNotes>
+        </td>
+        
+        <td *ngIf="IsFollowupsVisible">
+            <HelperFollowups [ShipmentPM]="EntityPM"></HelperFollowups>
+        </td>
+
+    </tr>
+</table>
+
+

@@ -1,0 +1,77 @@
+
+<table>
+    <tr>
+        <td>
+            <div></div>
+        </td>
+
+        <td style="width:55px; vertical-align:middle; font-size:11px; color : #6E7172;">
+            <div>Filter by:</div>
+        </td>
+
+        <td style="width:117px; vertical-align:middle;">
+            <ul class="FiltersMenu">
+                <li (click)="itemClicked('All')" (mouseover)="itemMouseOver('All')" [class.SelectedFilter]="SelectedValue === 'All'">
+                    All
+                </li>
+                <li (click)="itemClicked('A')" (mouseover)="itemMouseOver('A')" (mouseleave)="itemMouseLeave('A')" [class.SelectedFilter]="SelectedValue === 'A'" title="Air">
+                    <img [id]="TransportFilter_A" class="CenterCenter" src="./Images/TransportModes/A_g.png" style="top: 1px;" />
+                </li>
+                <li (click)="itemClicked('O')" (mouseover)="itemMouseOver('O')" (mouseleave)="itemMouseLeave('O')" [class.SelectedFilter]="SelectedValue === 'O'" title="Ocean">
+                    <img [id]="TransportFilter_O" class="CenterCenter" src="./Images/TransportModes/O_g.png" style="top: 1px;" />
+                </li>
+                <li (click)="itemClicked('I')" (mouseover)="itemMouseOver('I')" (mouseleave)="itemMouseLeave('I')" [class.SelectedFilter]="SelectedValue === 'I'" title="Inland">
+                    <img [id]="TransportFilter_I" class="CenterCenter" src="./Images/TransportModes/I_g.png" style="top: 1px;" />
+                </li>
+            </ul>
+        </td>
+
+        <td style="width:10px;">
+            <div></div>
+        </td>
+
+        <td style="vertical-align:middle;" [style.width.px]="DirectionWidth">
+            <ul class="FiltersMenu">
+                <li (click)="DirectionitemClicked('All')" (mouseover)="DirectionitemMouseOver('All')" [class.SelectedFilter]="SelectedDirection === 'All'">
+                    All
+                </li>
+                <li (click)="DirectionitemClicked('E')" (mouseover)="DirectionitemMouseOver('E')" (mouseleave)="DirectionitemMouseLeave('E')" [class.SelectedFilter]="SelectedDirection === 'E'" title="Export">
+                    <img [id]="DirectionFilter_E" class="CenterCenter" src="./Images/Directions/E_g.png" />
+                </li>
+                <li (click)="DirectionitemClicked('I')" (mouseover)="DirectionitemMouseOver('I')" (mouseleave)="DirectionitemMouseLeave('I')" [class.SelectedFilter]="SelectedDirection === 'I'" title="Import">
+                    <img [id]="DirectionFilter_I" class="CenterCenter" src="./Images/Directions/I_g.png" />
+                </li>
+                <li (click)="DirectionitemClicked('R')" (mouseover)="DirectionitemMouseOver('R')" (mouseleave)="DirectionitemMouseLeave('R')" [class.SelectedFilter]="SelectedDirection === 'R'" title="Drop">
+                    <img [id]="DirectionFilter_R" class="CenterCenter" src="./Images/Directions/R_g.png" />
+                </li>
+                <li (click)="DirectionitemClicked('D')" (mouseover)="DirectionitemMouseOver('D')" (mouseleave)="DirectionitemMouseLeave('D')" [class.SelectedFilter]="SelectedDirection === 'D'" title="Domestic">
+                    <img [id]="DirectionFilter_D" class="CenterCenter" src="./Images/Directions/D_g.png" />
+                </li>
+                <li *ngIf="itmImportShipments" (click)="DirectionitemClicked('C')" (mouseover)="DirectionitemMouseOver('C')" (mouseleave)="DirectionitemMouseLeave('C')" [class.SelectedFilter]="SelectedDirection === 'C'" title="Customs Import">
+                    <img [id]="DirectionFilter_C" class="CenterCenter" src="./Images/Directions/C_g.png" />
+                </li>
+            </ul>
+        </td>
+
+        <td style="width:10px;">
+            <div></div>
+        </td>
+
+        <td style="width:117px; vertical-align:middle;">
+            <ul class="FiltersMenu">
+                <li (click)="LevelCodeitemClicked('All')" (mouseover)="LevelCodeMouseOver('All')" [class.SelectedFilter]="LevelCodeSelectedValue === 'All'">
+                    All
+                </li>
+                <li (click)="LevelCodeitemClicked('D')" (mouseover)="LevelCodeMouseOver('D')" (mouseleave)="LevelCodeMouseLeave('D')" [class.SelectedFilter]="LevelCodeSelectedValue === 'D'" title="Direct">
+                    D
+                </li>
+                <li (click)="LevelCodeitemClicked('H')" (mouseover)="LevelCodeMouseOver('H')" (mouseleave)="LevelCodeMouseLeave('H')" [class.SelectedFilter]="LevelCodeSelectedValue === 'H'" title="House">
+                    H
+                </li>
+                <li (click)="LevelCodeitemClicked('C')" (mouseover)="LevelCodeMouseOver('C')" (mouseleave)="LevelCodeMouseLeave('C')" [class.SelectedFilter]="LevelCodeSelectedValue === 'C'" title="Master">
+                    M
+                </li>
+            </ul>
+        </td>
+    </tr>
+</table>

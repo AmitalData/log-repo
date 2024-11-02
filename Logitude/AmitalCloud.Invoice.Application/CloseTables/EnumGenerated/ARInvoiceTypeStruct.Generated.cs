@@ -19,7 +19,7 @@ namespace AmitalCloud.Invoice.Application.CloseTables
        public const string CustomsInvoice = "CA";  
        public const string CustomsCreditNote = "CC";  
        public const string CreditNote = "CD";  
-       //public const string CustomsInvoice = "CI";  
+       public const string CustomsInvoice = "CI";  
        public const string Invoice = "IN";  
        public const string ManifestInvoice = "MN";  
        public const string TaxInvoice = "TX";  
