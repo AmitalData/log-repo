@@ -16,16 +16,16 @@ namespace AmitalCloud.Shipment.Application.CloseTables
 {
     public struct AWBCustomsInformationValues
     {   
-       public const string AutomatedBrokerInterface(ABI)FilerCode = "A";  
+       //public const string AutomatedBrokerInterface(ABI)FilerCode = "A";  
        public const string AccountConsignor = "AC";  
        public const string CertificateNumber = "C";  
        public const string DangerousGoods = "D";  
-       public const string DangerousGoods = "DL";  
+       //public const string DangerousGoods = "DL";  
        public const string AuthorizedEconomicOperator = "E";  
        public const string ExpiryDate = "ED";  
-       public const string FacilitiesInformationandResourceManagementSystems(FIRMS)Code = "F";  
+       //public const string FacilitiesInformationandResourceManagementSystems(FIRMS)Code = "F";  
        public const string ItemNumber = "I";  
-       public const string KnownConsignor(consignorforbothpassengerandallcargoaircraftonly) = "KC";  
+       //public const string KnownConsignor(consignorforbothpassengerandallcargoaircraftonly) = "KC";  
        public const string ExemptionLegend = "L";  
        public const string MovementReferenceNumber = "M";  
        public const string SealNumber = "N";  

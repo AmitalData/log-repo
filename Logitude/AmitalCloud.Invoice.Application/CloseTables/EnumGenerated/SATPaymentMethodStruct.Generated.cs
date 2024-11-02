@@ -28,7 +28,7 @@ namespace AmitalCloud.Invoice.Application.CloseTables
        public const string ExchangeBureau = "31";  
        public const string ElectronicWallet = "05";  
        public const string Novation = "23";  
-       public const string 3rdPartyPayment = "14";  
+       //public const string 3rdPartyPayment = "14";  
        public const string Paymentinsubrogation = "13";  
        public const string Todefine = "99";  
        public const string Prescriptionorexpiration = "26";  

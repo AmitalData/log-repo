@@ -16,7 +16,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
-    public class Contact : BaseEntity
+    public partial class Contact : BaseEntity
 	{
 		
         [Key]

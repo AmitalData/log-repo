@@ -41,9 +41,9 @@ namespace AmitalCloud.Shipment.Application.CloseTables
        public const string BaggageDetailInformation = "BGD";  
        public const string BaggageTagIdentification = "BGT";  
        public const string Broker = "BRK";  
-       public const string CCA/AdjustmentInformation = "CAI";  
+       //public const string CCA/AdjustmentInformation = "CAI";  
        public const string CustomsActionNotification = "CAN";  
-       public const string CCA/AdjustmentSupplementaryInformation = "CAS";  
+       //public const string CCA/AdjustmentSupplementaryInformation = "CAS";  
        public const string CASSBillingDetails = "CBD";  
        public const string CASSBillingInformation = "CBI";  
        public const string CASSBillingPeriod = "CBP";  
@@ -67,15 +67,15 @@ namespace AmitalCloud.Shipment.Application.CloseTables
        public const string CustomsOrigin = "COR";  
        public const string CarrierReferenceData = "CRD";  
        public const string EmbargoCarriageRestrictions = "CRR";  
-       public const string CCA/AdjustmentTotalInformation = "CTI";  
-       public const string CCA/AdjustmentTotalWeightSummary = "CTW";  
+       //public const string CCA/AdjustmentTotalInformation = "CTI";  
+       //public const string CCA/AdjustmentTotalWeightSummary = "CTW";  
        public const string CurrencyDetails = "CUR";  
        public const string CustomerIdentification = "CUS";  
-       public const string ChargeDeclarations = "CVD";  
+       //public const string ChargeDeclarations = "CVD";  
        public const string CASSAWBInformation = "CWI";  
        public const string DGDAdditionalHandlingInformation = "DAI";  
-       public const string DGD“AllPackedinOne”Indication = "DAP";  
-       public const string DGD“AllPackedinOne”Total = "DAT";  
+       //public const string DGD“AllPackedinOne”Indication = "DAP";  
+       //public const string DGD“AllPackedinOne”Total = "DAT";  
        public const string DGDItemauthorization = "DAU";  
        public const string DGDEmergencyContactInformation = "DCI";  
        public const string Declarant = "DCL";  
@@ -93,13 +93,13 @@ namespace AmitalCloud.Shipment.Application.CloseTables
        public const string DGDRadioactivePackingInstructions = "DRP";  
        public const string DGDItemShippingName = "DSN";  
        public const string DGDSignatoryDetails = "DSU";  
-       public const string Date/TimeofNotification = "DTN";  
+       //public const string Date/TimeofNotification = "DTN";  
        public const string EmptyEquipmentinCompartmentInformation = "EIC";  
        public const string Export = "EXP";  
        public const string FlightBooking = "FLT";  
        public const string GrandAWBRecapitulationInformation = "GRI";  
        public const string GrandTotalInformation = "GTI";  
-       public const string HWBAgent’sHeadOffice = "HAH";  
+       //public const string HWBAgent’sHeadOffice = "HAH";  
        public const string HouseWaybillSummaryDetails = "HBS";  
        public const string HWBConsignmentDetails = "HCD";  
        public const string HandlingDetails = "HDL";  
@@ -128,7 +128,7 @@ namespace AmitalCloud.Shipment.Application.CloseTables
        public const string NetBillingInformation = "NBI";  
        public const string NewInformation = "NEW";  
        public const string AlsoNotify = "NFY";  
-       public const string Net/NetSales = "NNS";  
+       //public const string Net/NetSales = "NNS";  
        public const string NominatedHandlingParty = "NOM";  
        public const string OtherCustomsInformation = "OCI";  
        public const string OriginalInformation = "OLD";  
@@ -149,12 +149,12 @@ namespace AmitalCloud.Shipment.Application.CloseTables
        public const string ChargeCalculationAnswerDetails = "RQD";  
        public const string ChargeCalculationRequestHeader = "RQH";  
        public const string ChargeCalculationAnswerTotals = "RQT";  
-       public const string ChargeCalculationRequest—ULD = "RQU";  
-       public const string ChargeCalculationRequest—Volume = "RQV";  
+       //public const string ChargeCalculationRequest—ULD = "RQU";  
+       //public const string ChargeCalculationRequest—Volume = "RQV";  
        public const string RateDescription = "RTD";  
        public const string Routing = "RTG";  
        public const string RecapitulationTotalInformation = "RTI";  
-       public const string EmbargoRoutes/Areas = "RTS";  
+       //public const string EmbargoRoutes/Areas = "RTS";  
        public const string ScheduleandAvailabilityInformationAnswerDetails = "SAA";  
        public const string ScheduleandAvailabilityInformationRequestDetails = "SAR";  
        public const string SpecialCustomsInformation = "SCI";  
@@ -182,7 +182,7 @@ namespace AmitalCloud.Shipment.Application.CloseTables
        public const string TerminalIdentification = "TID";  
        public const string TotalAmount = "TOT";  
        public const string Transit = "TRA";  
-       public const string Transfer/TransitInformation = "TRN";  
+       //public const string Transfer/TransitInformation = "TRN";  
        public const string TaxSummary = "TXS";  
        public const string FreeTextDescription = "TXT";  
        public const string ULDConnectionInformation = "UCI";  
@@ -191,12 +191,12 @@ namespace AmitalCloud.Shipment.Application.CloseTables
        public const string ULDDescription = "ULD";  
        public const string ULDMovementInformation = "UMI";  
        public const string UniquePieceInformation = "UPI";  
-       public const string Void/CancelDetails = "VCD";  
+       //public const string Void/CancelDetails = "VCD";  
        public const string VehicleOperatorDetails = "VOD";  
        public const string WaybillDetails = "WBD";  
        public const string WaybillHeaderDetails = "WBH";  
        public const string WaybillIdentification = "WBI";  
-       public const string WaybillDetails = "WBL";  
+       //public const string WaybillDetails = "WBL";  
     }
 }
 
