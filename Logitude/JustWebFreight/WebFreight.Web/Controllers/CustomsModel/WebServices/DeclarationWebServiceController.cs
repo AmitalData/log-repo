@@ -2203,19 +2203,19 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 DeclarationPM declaration = declarationQueryService.GetSingle(declarationId, true, false);
                 if (declaration != null && declaration.Consignments != null && declaration.Consignments.Count() > 0)
                 {
-                    var amitalContext = AmitalContext.GetContext(tenant);
-                    var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-                    var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", false, true);
+                    DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
+                    string def = defaultValueQueryService.GetDefault("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", tenant);
+                    def = def ?? "";
 
-                    if (def.DEFDATA.Contains("ILMMN") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILMMN") // Maman
+                    if (def.Contains("ILMMN") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILMMN") // Maman
                     {
                         courierGWMessageECSpclRequestService = new CourierGWMessageECSpclMamanRequestService();
                     }
-                    else if (def.DEFDATA.Contains("ILOVL") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILOVL") // OVS
+                    else if (def.Contains("ILOVL") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILOVL") // OVS
                     {
                         courierGWMessageECSpclRequestService = new Logitude.Customs.BL.Messaging.ILOVS.CourierOVSSpecialActionRequestService();
                     }
-                    else if (def.DEFDATA.Contains("ILSWS") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILSWS") // OVS
+                    else if (def.Contains("ILSWS") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILSWS") // OVS
                     {
                         courierGWMessageECSpclRequestService = new Logitude.Customs.BL.Messaging.ILSWS.CourierSWSSpecialActionRequestService();
                     }
