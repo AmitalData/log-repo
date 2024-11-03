@@ -1332,7 +1332,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                 {
                     if (ShipmentNumberFilter.FieldValue.Equals("ForwarderShipmentNumber"))
                         shipment.ForwarderShipmentNumber = shipment.ForwarderShipmentNumber!= null ? shipment.ForwarderShipmentNumber : shipment.CustomerReference1;
-                    else if (ShipmentNumberFilter.FieldValue.Equals("My Shipments"))
+                    else if (ShipmentNumberFilter.FieldValue.Equals("MyShipments"))
                         shipment.ForwarderShipmentNumber = shipment.CustomerReference1;
                     else
                         shipment.ForwarderShipmentNumber = shipment.ForwarderShipmentNumber;
