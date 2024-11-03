@@ -435,7 +435,7 @@ export class EditSupplierInvoiceItem extends BaseComponent {
 
             this.OriginalItemPM.TransactionNatureCode = newValue;
             let hasOcr = FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR");
-            if(this.OriginalItemPM.EntityParentPM.supplierInvoicePayments.length == 1 && this.OriginalItemPM.EntityParentPM.supplierInvoicePayments[0].paymentAmount != null && hasOcr && this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E"){
+            if(this.OriginalItemPM?.EntityParentPM?.supplierInvoicePayments?.length == 1 && this.OriginalItemPM.EntityParentPM.supplierInvoicePayments[0].paymentAmount != null && hasOcr && this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E"){
                 let sum = 0;
                 
                 sum = this.OriginalItemPM.EntityParentPM.supplierInvoiceItems
