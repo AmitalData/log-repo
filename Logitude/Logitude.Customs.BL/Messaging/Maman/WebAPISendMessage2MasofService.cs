@@ -40,16 +40,17 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);
             DocumentRepository documentRepository = new DocumentRepository(commonContext);
-            var amitalContext = AmitalContext.GetContext(tenant);
-            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
 
             switch (PartnerCode)
             {
                 case CustomsPartnerFtpDetails.PartnerCode_Mamam:
                     {
-                        var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", false, true);
+                        DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
+                        string def = defaultValueQueryService.GetDefault("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", tenant);
 
-                        bool sendMamanWEBAPIIsOn = def.DEFDATA.Contains("ILMMN");
+                        def = def ?? "";
+
+                        bool sendMamanWEBAPIIsOn = def.Contains("ILMMN");
                         if (!sendMamanWEBAPIIsOn)
                         {
                             throw new Exception("WebAPISendMessage2MamanService()->!sendMamanWEBAPIIsOn");
