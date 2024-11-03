@@ -82,15 +82,23 @@ namespace CustomsBook
 
             public static AzureSearchData Get()
             {
-                DefaultAndConfiguration azureSearchData = new DefaultAndConfigurationRepository(0)
-                .GetDefaultAndConfigurations(0)
-                .Where(x => x.SetKey == "AzureSearchAI" && x.AdditionalKey == "connection")
-                .FirstOrDefault();
+                string ServiceName = System.Configuration.ConfigurationManager.AppSettings["AzureSearchAIUrl"];
+                string ApiKey = System.Configuration.ConfigurationManager.AppSettings["AzureSearchAIKey"];
 
-                if (azureSearchData == null)
-                    throw new Exception("Please provide the Azure Search API server name and Key in tenant 0 setKey 'AzureSearchAI' AdditionalKey 'connection'");
+                if (string.IsNullOrEmpty(ServiceName) || string.IsNullOrEmpty(ApiKey))
+                    throw new Exception("Please provide the Azure Search API server name and Key in AppSettings 'AzureSearchAIUrl' and 'AzureSearchAIKey'");
 
-                AzureSearchData data = new AzureSearchData() { ServiceName = azureSearchData.Value1, ApiKey = azureSearchData.Value2 };
+                AzureSearchData data = new AzureSearchData() { ServiceName = ServiceName, ApiKey = ApiKey };
+
+                //DefaultAndConfiguration azureSearchData = new DefaultAndConfigurationRepository(0)
+                //.GetDefaultAndConfigurations(0)
+                //.Where(x => x.SetKey == "AzureSearchAI" && x.AdditionalKey == "connection")
+                //.FirstOrDefault();
+
+                //if (azureSearchData == null)
+                //    throw new Exception("Please provide the Azure Search API server name and Key in tenant 0 setKey 'AzureSearchAI' AdditionalKey 'connection'");
+
+                //AzureSearchData data = new AzureSearchData() { ServiceName = azureSearchData.Value1, ApiKey = azureSearchData.Value2 };
 
                 return data;
             }
