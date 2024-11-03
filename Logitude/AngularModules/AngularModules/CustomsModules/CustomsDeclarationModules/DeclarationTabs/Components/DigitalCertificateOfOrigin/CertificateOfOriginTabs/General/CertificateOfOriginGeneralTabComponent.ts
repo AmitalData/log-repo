@@ -679,14 +679,14 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         // this.disableElementById("selectedValueTradeAgreementBox", enabled);
         // this.disableElementById("selectedValueOriginCountryBox", enabled);
         // this.disableElementById("selectedValueDestinationCountryBox", enabled);
+        this.disableClassOpacityDimBox(enabled);
     }
 
-    // disableElementById(elementId: string, enabled: boolean): void {
-    // const selectElement = document.getElementById(elementId) as HTMLSelectElement;
-    // if (selectElement) {
-    //     selectElement.disabled = !enabled;
-    // }
-    // }
+    disableClassOpacityDimBox(enabled){
+        this.disableOpacityBox = !enabled;
+    }
+    disableOpacityBox: boolean = false;
+
 
     SetWarning() {
         this.UIProperties.SetWarning("CooTypeCode", this.ObjectTableName, true);
