@@ -21,6 +21,17 @@ export class CB_RequirementComputedDataList {
 	RegularityPublicationCodeID: string;
 	AutonomyCustomsItemID: number;
 	IsAllCustomsItems: boolean;
+	RequirementValidOrigin: string;
+	RequirementGoodsDescription: string;
+	Authority: string;
+	ConfirmationType: string;
+	InterConditionsRelationship: string;
+	TextualCondition: string;
+	IsPersonalImportIncluded: boolean;
+	IsCarnetIncluded: boolean;
+	FromEpisodeDetail: string;
+	AutonomyRegion: string;
+	IsVoluntaryOrImporterOfTrust: boolean;
 	
 }
  

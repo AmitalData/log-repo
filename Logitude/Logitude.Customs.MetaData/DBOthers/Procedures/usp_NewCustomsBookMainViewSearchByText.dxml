@@ -1,0 +1,651 @@
+﻿<Procedure DBType="Main" Name="usp_NewCustomsBookMainViewSearchByText" Schema="dbo" Module="Customs">
+  <SqlScript>
+    <![CDATA[
+
+CREATE OR ALTER PROCEDURE [dbo].[usp_NewCustomsBookMainViewSearchByText]
+	@SearchFields VARCHAR(40),
+	@CustomsBookType VARCHAR(2),
+    @CustomsItemHierarchic VARCHAR(20),
+    @Remarks BIT,
+    @Rules BIT,
+	@Tenant INT = 0 
+
+AS
+BEGIN
+----במקרה של איטיות בביצועים , יש לשקול לשלוף את הנתונים מה VIEW הראשי לתוך טבלה זמנית
+	IF @CustomsItemHierarchic is null AND @Remarks = 0 AND @Rules = 0 --ללא סינון
+	BEGIN
+			SELECT 
+			sub.CustomsItemId,
+		    max(sub.Parent_CustomsItemID) AS Parent_CustomsItemID,
+		    max(sub.Fullclassification) AS FullClassification,
+			max(sub.BaseFullClassification) AS BaseFullClassification,
+			max(sub.ComputedCheckDigit) AS ComputedCheckDigit,
+		    max(sub.ItemHierarchicLocationID) AS ItemHierarchicLocationID,
+			max(CAST(sub.IsLeaf AS int)) AS IsLeaf,
+		    max(sub.GoodsDescription) AS GoodsDescription,
+		    max(CAST(sub.Rules AS int)) AS Rules,
+		    max(sub.Agreements) AS Agreements,
+		    max(sub.CustomsRate) AS CustomsRate,
+		    max(sub.PurchaseTax) AS PurchaseTax,
+		    max(sub.OptionalTaxAddition) AS OptionalTaxAddition,
+		    max(sub.MeasurementUnitName) AS MeasurementUnitName,
+		    max(sub.MeasurementUnitID) AS MeasurementUnitID,
+			r.Id as Remarks ,
+		    STRING_AGG(Result, ', ') AS Result
+		from(
+
+		SELECT m.CustomsItemId,
+			   m.Parent_CustomsItemId,
+			   m.ItemHierarchicLocationID,
+			   m.Fullclassification,
+			   m.BaseFullClassification,
+			   m.ComputedCheckDigit,
+			   m.IsLeaf,
+			   m.GoodsDescription,
+			   m.Rules,
+			   m.Agreements,
+			   m.CustomsRate, --'שיעור המכס',
+			   m.PurchaseTax, --'מס קניה',
+			   m.OptionalTaxAddition,  --'שיעור התוספת',
+			   m.MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+         m.MALAMID as MeasurementUnitID, -- יחידה סטטיסטית
+			   'GoodsDescription' AS Result
+		FROM [dbo].[NewCustomsBookMainView] m
+		WHERE m.CI_CustomsBookTypeIDNum = @CustomsBookType
+		  AND m.GoodsDescription LIKE '%' + @SearchFields+ '%'
+		  AND m.ItemHierarchicLocationID != '1'
+
+		UNION -- כללים
+
+		SELECT m.CustomsItemId,
+			   m.Parent_CustomsItemId,
+			   m.ItemHierarchicLocationID,
+			   m.Fullclassification,
+			   m.BaseFullClassification,
+			   m.ComputedCheckDigit,
+			   m.IsLeaf,
+			   m.GoodsDescription,
+			   m.Rules,
+			   m.Agreements,
+			   m.CustomsRate, --'שיעור המכס',
+			   m.PurchaseTax, --'מס קניה',
+			   m.OptionalTaxAddition,  --'שיעור התוספת',
+			   m.MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+         m.MALAMID as MeasurementUnitID, -- יחידה סטטיסטית 
+			   'Rules' AS Result
+		FROM [dbo].[NewCustomsBookMainView] m
+		JOIN customs.CB_Rules r ON m.CustomsItemId = r.CustomsItemID
+		JOIN 
+			(
+				SELECT 
+					RuleID,
+					Rules,
+					EntityStatusID,
+					StartDate,
+					EndDate,
+					MAX(UpdateDate) AS MaxUpdateDate
+				FROM 
+					customs.CB_RuleDetailsHistorys
+				GROUP BY 
+					RuleID,
+					Rules,
+					EntityStatusID,
+					StartDate,
+					EndDate
+			) h ON r.ID = h.RuleID	
+		WHERE m.CI_CustomsBookTypeIDNum = @CustomsBookType AND m.Rules = 1
+		AND h.Rules LIKE '%' + @SearchFields + '%'
+		AND  h.EntityStatusID ='2' AND h.StartDate <= GETDATE() AND h.EndDate >= GETDATE() 
+		
+		UNION -- הערות
+
+		SELECT m.CustomsItemId,
+			   m.Parent_CustomsItemId,
+			   m.ItemHierarchicLocationID,
+			   m.Fullclassification,
+			   m.BaseFullClassification,
+			   m.ComputedCheckDigit,
+			   m.IsLeaf,
+			   m.GoodsDescription,
+			   m.Rules,
+			   m.Agreements,
+			   m.CustomsRate, --'שיעור המכס',
+			   m.PurchaseTax, --'מס קניה',
+			   m.OptionalTaxAddition,  --'שיעור התוספת',
+			   m.MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+				 m.MALAMID as MeasurementUnitID, -- יחידה סטטיסטית
+			   'Remarks' AS Result
+		FROM [dbo].[NewCustomsBookMainView] m
+		JOIN customs.RemarksClassifications r ON m.CustomsItemId = r.CustomsItemsID
+		
+		WHERE r.Tenant = 0 AND m.CI_CustomsBookTypeIDNum = @CustomsBookType AND
+		r.RemarkDescription LIKE '%' + @SearchFields + '%'
+		
+		) AS sub
+		LEFT JOIN 
+			(
+				SELECT top 1 Id,CustomsItemsID
+				FROM customs.RemarksClassifications
+				WHERE Tenant = @Tenant
+			)AS r ON sub.CustomsItemId = r.CustomsItemsID
+
+		GROUP BY sub.CustomsItemId,r.Id
+		ORDER BY max(sub.FullClassification)
+
+
+	END
+
+	IF @CustomsItemHierarchic is not null AND @Remarks = 0 AND @Rules = 0 -- סינון של רמות שונות בעץ בלבד
+	BEGIN
+		SELECT 	
+			CustomsItemId,
+			Parent_CustomsItemId ,
+			ItemHierarchicLocationID,
+			Fullclassification,
+			BaseFullClassification,
+			ComputedCheckDigit,
+			IsLeaf,
+			GoodsDescription,--תאור טובין
+			Rules,--האם קיימים כללים
+			Agreements,-- הסכמים
+			customsRate AS CustomsRate, --'שיעור המכס',
+			purchaseTax AS PurchaseTax, --'מס קניה',
+			OptionalTaxAddition,  --'שיעור התוספת',
+			MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+			MALAMID as MeasurementUnitID, -- יחידה סטטיסטית
+			r.Id AS Remarks,
+			'GoodDescription' as Result
+		FROM [dbo].[NewCustomsBookMainView] m
+		LEFT JOIN 
+			(
+				SELECT top 1 Id,CustomsItemsID
+				FROM customs.RemarksClassifications
+				WHERE Tenant = @Tenant
+			)AS r ON m.CustomsItemId = r.CustomsItemsID
+
+		WHERE CI_CustomsBookTypeIDNum = @CustomsBookType
+		AND 
+			GoodsDescription LIKE '%' + @SearchFields + '%' AND CHARINDEX(',' + ItemHierarchicLocationID + ',', ',' + @CustomsItemHierarchic + ',') > 0
+		ORDER BY ItemHierarchicLocationID	
+	END
+	IF @CustomsItemHierarchic is null AND @Remarks = 0 AND @Rules = 1 -- סינון של כללים בלבד
+	BEGIN
+		SELECT 
+			m.CustomsItemId,
+			Parent_CustomsItemId ,
+			ItemHierarchicLocationID,
+			Fullclassification,
+			BaseFullClassification,
+			ComputedCheckDigit,
+			IsLeaf,
+			GoodsDescription,
+			m.Rules,
+			Agreements,
+			customsRate AS CustomsRate,
+			purchaseTax AS PurchaseTax, 
+			OptionalTaxAddition, 
+			MeasurementUnitName,
+      MALAMID as MeasurementUnitID, -- יחידה סטטיסטית
+			r.Id AS Remarks,
+			'Rules' as Result
+			FROM [dbo].[NewCustomsBookMainView] m
+
+			INNER JOIN 
+			(
+				SELECT r.CustomsItemID, h.* 
+				FROM customs.CB_Rules r
+				INNER JOIN customs.CB_RuleDetailsHistorys h
+				ON r.ID = h.RuleID
+			) AS r
+			ON m.CustomsItemId = r.CustomsItemID
+			LEFT JOIN 
+			(
+				SELECT top 1 Id,CustomsItemsID
+				FROM customs.RemarksClassifications
+				WHERE Tenant = @Tenant
+			)AS remarks ON m.CustomsItemId = remarks.CustomsItemsID
+
+			WHERE m.CI_CustomsBookTypeIDNum = @CustomsBookType
+			AND r.Rules LIKE '%' + @SearchFields + '%'
+	END
+	IF @CustomsItemHierarchic is null AND @Remarks = 1 AND @Rules = 0 -- סינון של הערות בלבד
+	BEGIN
+		SELECT 
+			m.CustomsItemId,
+			Parent_CustomsItemId ,
+			ItemHierarchicLocationID,
+			Fullclassification,
+			BaseFullClassification,
+			ComputedCheckDigit,
+			IsLeaf,
+			GoodsDescription,
+			Rules,
+			Agreements,
+			customsRate AS CustomsRate, 
+			purchaseTax AS PurchaseTax, 
+			OptionalTaxAddition, 
+			MeasurementUnitName, 
+      MALAMID as MeasurementUnitID, -- יחידה סטטיסטית
+			r.Id AS Remarks,
+			'Remarks' as Result
+			FROM [dbo].[NewCustomsBookMainView] m
+			INNER JOIN 
+			(
+				SELECT top 1 Id,CustomsItemsID
+				FROM customs.RemarksClassifications
+				WHERE Tenant = @Tenant
+			)AS r ON m.CustomsItemId = r.CustomsItemsID
+
+			WHERE m.CI_CustomsBookTypeIDNum = @CustomsBookType
+	END
+	IF @CustomsItemHierarchic is not null AND @Remarks = 0 AND @Rules = 1 --סינון של רמות שונות בעץ + כללים
+		BEGIN
+			SELECT 
+			sub.CustomsItemId,
+		    max(sub.Parent_CustomsItemID) AS Parent_CustomsItemID,
+		    max(sub.Fullclassification) AS FullClassification,
+			max(sub.BaseFullClassification) AS BaseFullClassification,
+			max(sub.ComputedCheckDigit) AS ComputedCheckDigit,
+		    max(sub.ItemHierarchicLocationID) AS ItemHierarchicLocationID,
+			max(CAST(sub.IsLeaf AS int)) AS IsLeaf,
+		    max(sub.GoodsDescription) AS GoodsDescription,
+		    max(CAST(sub.Rules AS int)) AS Rules,
+		    max(sub.Agreements) AS Agreements,
+		    max(sub.CustomsRate) AS CustomsRate,
+		    max(sub.PurchaseTax) AS PurchaseTax,
+		    max(sub.OptionalTaxAddition) AS OptionalTaxAddition,
+		    max(sub.MeasurementUnitName) AS MeasurementUnitName,
+		    max(sub.MeasurementUnitID) AS MeasurementUnitID,
+			Remark.Id as Remarks ,
+		    STRING_AGG(Result, ', ') AS Result
+		FROM
+		(
+			select
+			   m.CustomsItemId,
+			   m.Parent_CustomsItemId,
+			   m.ItemHierarchicLocationID,
+			   m.Fullclassification,
+			   m.BaseFullClassification,
+			   m.ComputedCheckDigit,
+			   m.IsLeaf,
+			   m.GoodsDescription,
+			   m.Rules,
+			   m.Agreements,
+			   m.CustomsRate, --'שיעור המכס',
+			   m.PurchaseTax, --'מס קניה',
+			   m.OptionalTaxAddition,  --'שיעור התוספת',
+			   m.MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+         m.MALAMID as MeasurementUnitID, -- יחידה סטטיסטית
+			   'GoodsDescription' AS Result
+		   FROM [dbo].[NewCustomsBookMainView] m
+		   WHERE m.CI_CustomsBookTypeIDNum = @CustomsBookType
+		   AND m.GoodsDescription LIKE '%' + @SearchFields + '%'
+		   AND CHARINDEX(',' + m.ItemHierarchicLocationID + ',', ',' + @CustomsItemHierarchic + ',') > 0
+
+		UNION -- כללים
+
+		SELECT m.CustomsItemId,
+			   m.Parent_CustomsItemId,
+			   m.ItemHierarchicLocationID,
+			   m.Fullclassification,
+			   m.BaseFullClassification,
+			   m.ComputedCheckDigit,
+			   m.IsLeaf,
+			   m.GoodsDescription,
+			   m.Rules,
+			   m.Agreements,
+			   m.CustomsRate, --'שיעור המכס',
+			   m.PurchaseTax, --'מס קניה',
+			   m.OptionalTaxAddition,  --'שיעור התוספת',
+			   m.MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+         m.MALAMID as MeasurementUnitID, -- יחידה סטטיסטית
+			   'Rules' AS Result
+		FROM [dbo].[NewCustomsBookMainView] m
+		JOIN customs.CB_Rules r ON m.CustomsItemId = r.CustomsItemID
+		JOIN 
+			(
+				SELECT 
+					RuleID,
+					Rules,
+					EntityStatusID,
+					StartDate,
+					EndDate,
+					MAX(UpdateDate) AS MaxUpdateDate
+				FROM 
+					customs.CB_RuleDetailsHistorys
+				GROUP BY 
+					RuleID,
+					Rules,
+					EntityStatusID,
+					StartDate,
+					EndDate
+			) h ON r.ID = h.RuleID	
+		WHERE m.CI_CustomsBookTypeIDNum = @CustomsBookType AND m.Rules = 1
+		AND h.Rules LIKE '%' + @SearchFields + '%'
+		AND  h.EntityStatusID ='2' AND h.StartDate <= GETDATE() AND h.EndDate >= GETDATE() 
+		
+		) AS sub
+		LEFT JOIN 
+			(
+				SELECT top 1 Id,CustomsItemsID
+				FROM customs.RemarksClassifications
+				WHERE Tenant = @Tenant
+			)AS Remark ON sub.CustomsItemId = Remark.CustomsItemsID
+
+		GROUP BY sub.CustomsItemId,Remark.Id
+		ORDER BY max(sub.FullClassification);
+
+		END
+	IF @CustomsItemHierarchic is not null AND @Remarks = 1 AND @Rules = 0 --סינון של רמות שונות בעץ + הערות
+	BEGIN
+		SELECT 
+			sub.CustomsItemId,
+		    max(sub.Parent_CustomsItemID) AS Parent_CustomsItemID,
+		    max(sub.Fullclassification) AS FullClassification,
+			max(sub.BaseFullClassification) AS BaseFullClassification,
+			max(sub.ComputedCheckDigit) AS ComputedCheckDigit,
+		    max(sub.ItemHierarchicLocationID) AS ItemHierarchicLocationID,
+			max(CAST(sub.IsLeaf AS int)) AS IsLeaf,
+		    max(sub.GoodsDescription) AS GoodsDescription,
+		    max(CAST(sub.Rules AS int)) AS Rules,
+		    max(sub.Agreements) AS Agreements,
+		    max(sub.CustomsRate) AS CustomsRate,
+		    max(sub.PurchaseTax) AS PurchaseTax,
+		    max(sub.OptionalTaxAddition) AS OptionalTaxAddition,
+		    max(sub.MeasurementUnitName) AS MeasurementUnitName,
+		    max(sub.MeasurementUnitID) AS MeasurementUnitID,
+			Remark.Id as Remarks ,
+		    STRING_AGG(Result, ', ') AS Result
+		FROM
+		(
+		   SELECT 
+		   m.CustomsItemId,
+			   m.Parent_CustomsItemId,
+			   m.ItemHierarchicLocationID,
+			   m.Fullclassification,
+			   m.BaseFullClassification,
+			   m.ComputedCheckDigit,
+			   m.IsLeaf,
+			   m.GoodsDescription,
+			   m.Rules,
+			   m.Agreements,
+			   m.CustomsRate, --'שיעור המכס',
+			   m.PurchaseTax, --'מס קניה',
+			   m.OptionalTaxAddition,  --'שיעור התוספת',
+			   m.MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+         m.MALAMID as MeasurementUnitID, -- יחידה סטטיסטית
+		   'GoodsDescription' AS Result
+		   FROM [dbo].[NewCustomsBookMainView] m
+		   WHERE m.CI_CustomsBookTypeIDNum = @CustomsBookType
+		   AND m.GoodsDescription LIKE '%' + @SearchFields + '%'
+		   AND CHARINDEX(',' + m.ItemHierarchicLocationID + ',', ',' + @CustomsItemHierarchic + ',') > 0
+
+
+		UNION -- הערות
+
+		SELECT m.CustomsItemId,
+			   m.Parent_CustomsItemId,
+			   m.ItemHierarchicLocationID,
+			   m.Fullclassification,
+			   m.BaseFullClassification,
+			   m.ComputedCheckDigit,
+			   m.IsLeaf,
+			   m.GoodsDescription,
+			   m.Rules,
+			   m.Agreements,
+			   m.CustomsRate, --'שיעור המכס',
+			   m.PurchaseTax, --'מס קניה',
+			   m.OptionalTaxAddition,  --'שיעור התוספת',
+			   m.MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס 
+         m.MALAMID as MeasurementUnitID, -- יחידה סטטיסטית
+			   'Remarks' AS Result
+		FROM [dbo].[NewCustomsBookMainView] m
+		JOIN customs.RemarksClassifications r ON m.CustomsItemId = r.CustomsItemsID
+		
+		WHERE r.Tenant = 0 AND m.CI_CustomsBookTypeIDNum = @CustomsBookType AND
+		r.RemarkDescription LIKE '%' + @SearchFields + '%'
+		
+		
+		) AS sub
+		LEFT JOIN 
+			(
+				SELECT top 1 Id,CustomsItemsID
+				FROM customs.RemarksClassifications
+				WHERE Tenant = @Tenant
+			)AS Remark ON sub.CustomsItemId = Remark.CustomsItemsID
+
+		GROUP BY sub.CustomsItemId,Remark.Id
+		ORDER BY max(sub.FullClassification);
+	END
+	IF @CustomsItemHierarchic is not null AND @Remarks = 1 AND @Rules = 1 --מסומן חלק בעץ + כללים + הערות
+	BEGIN
+		SELECT
+			sub.CustomsItemId,
+		    max(sub.Parent_CustomsItemID) AS Parent_CustomsItemID,
+		    max(sub.Fullclassification) AS FullClassification,
+			max(sub.BaseFullClassification) AS BaseFullClassification,
+			max(sub.ComputedCheckDigit) AS ComputedCheckDigit,
+		    max(sub.ItemHierarchicLocationID) AS ItemHierarchicLocationID,
+			max(CAST(sub.IsLeaf AS int)) AS IsLeaf,
+		    max(sub.GoodsDescription) AS GoodsDescription,
+		    max(CAST(sub.Rules AS int)) AS Rules,
+		    max(sub.Agreements) AS Agreements,
+		    max(sub.CustomsRate) AS CustomsRate,
+		    max(sub.PurchaseTax) AS PurchaseTax,
+		    max(sub.OptionalTaxAddition) AS OptionalTaxAddition,
+		    max(sub.MeasurementUnitName) AS MeasurementUnitName,
+		    max(sub.MeasurementUnitID) AS MeasurementUnitID,
+			r.Id as Remarks ,
+		    STRING_AGG(Result, ', ') AS Result
+		from(
+
+		SELECT m.CustomsItemId,
+			   m.Parent_CustomsItemId,
+			   m.ItemHierarchicLocationID,
+			   m.Fullclassification,
+			   m.BaseFullClassification,
+			   m.ComputedCheckDigit,
+			   m.IsLeaf,
+			   m.GoodsDescription,
+			   m.Rules,
+			   m.Agreements,
+			   m.CustomsRate, --'שיעור המכס',
+			   m.PurchaseTax, --'מס קניה',
+			   m.OptionalTaxAddition,  --'שיעור התוספת',
+			   m.MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+				 m.MALAMID as MeasurementUnitID, -- יחידה סטטיסטית
+			   'GoodsDescription' AS Result
+		FROM [dbo].[NewCustomsBookMainView] m
+		WHERE m.CI_CustomsBookTypeIDNum = @CustomsBookType
+		  AND m.GoodsDescription LIKE '%' + @SearchFields + '%'
+		  AND CHARINDEX(',' + m.ItemHierarchicLocationID + ',', ',' + @CustomsItemHierarchic + ',') > 0
+
+		UNION -- כללים
+
+		SELECT m.CustomsItemId,
+			   m.Parent_CustomsItemId,
+			   m.ItemHierarchicLocationID,
+			   m.Fullclassification,
+			   m.BaseFullClassification,
+			   m.ComputedCheckDigit,
+			   m.IsLeaf,
+			   m.GoodsDescription,
+			   m.Rules,
+			   m.Agreements,
+			   m.CustomsRate, --'שיעור המכס',
+			   m.PurchaseTax, --'מס קניה',
+			   m.OptionalTaxAddition,  --'שיעור התוספת',
+			   m.MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+         m.MALAMID as MeasurementUnitID, -- יחידה סטטיסטי
+			   'Rules' AS Result
+		FROM [dbo].[NewCustomsBookMainView] m
+		JOIN customs.CB_Rules r ON m.CustomsItemId = r.CustomsItemID
+		JOIN 
+			(
+				SELECT 
+					RuleID,
+					Rules,
+					EntityStatusID,
+					StartDate,
+					EndDate,
+					MAX(UpdateDate) AS MaxUpdateDate
+				FROM 
+					customs.CB_RuleDetailsHistorys
+				GROUP BY 
+					RuleID,
+					Rules,
+					EntityStatusID,
+					StartDate,
+					EndDate
+			) h ON r.ID = h.RuleID	
+		WHERE m.CI_CustomsBookTypeIDNum = @CustomsBookType AND m.Rules = 1
+		AND h.Rules LIKE '%' + @SearchFields + '%'
+		AND  h.EntityStatusID ='2' AND h.StartDate <= GETDATE() AND h.EndDate >= GETDATE() 
+		
+		UNION -- הערות
+
+		SELECT m.CustomsItemId,
+			   m.Parent_CustomsItemId,
+			   m.ItemHierarchicLocationID,
+			   m.Fullclassification,
+			   m.BaseFullClassification,
+			   m.ComputedCheckDigit,
+			   m.IsLeaf,
+			   m.GoodsDescription,
+			   m.Rules,
+			   m.Agreements,
+			   m.CustomsRate, --'שיעור המכס',
+			   m.PurchaseTax, --'מס קניה',
+			   m.OptionalTaxAddition,  --'שיעור התוספת',
+			   m.MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+         m.MALAMID as MeasurementUnitID, -- יחידה סטטיסטית
+			   'Remarks' AS Result
+		FROM [dbo].[NewCustomsBookMainView] m
+		JOIN customs.RemarksClassifications r ON m.CustomsItemId = r.CustomsItemsID
+		
+		WHERE r.Tenant = 0 AND m.CI_CustomsBookTypeIDNum = @CustomsBookType AND
+		r.RemarkDescription LIKE '%' + @SearchFields + '%'
+		
+		) AS sub
+		LEFT JOIN 
+			(
+				SELECT top 1 Id,CustomsItemsID
+				FROM customs.RemarksClassifications
+				WHERE Tenant = @Tenant
+			)AS r ON sub.CustomsItemId = r.CustomsItemsID
+
+		GROUP BY sub.CustomsItemId,r.Id
+
+	END
+	IF @CustomsItemHierarchic is null AND @Remarks = 1 AND @Rules = 1 -- סינון של כללים + הערות בלבד
+	BEGIN
+			SELECT 
+			sub.CustomsItemId,
+		    max(sub.Parent_CustomsItemID) AS Parent_CustomsItemID,
+		    max(sub.Fullclassification) AS FullClassification,
+			max(sub.BaseFullClassification) AS BaseFullClassification,
+			max(sub.ComputedCheckDigit) AS ComputedCheckDigit,
+		    max(sub.ItemHierarchicLocationID) AS ItemHierarchicLocationID,
+			max(CAST(sub.IsLeaf AS int)) AS IsLeaf,
+		    max(sub.GoodsDescription) AS GoodsDescription,
+		    max(CAST(sub.Rules AS int)) AS Rules,
+		    max(sub.Agreements) AS Agreements,
+		    max(sub.CustomsRate) AS CustomsRate,
+		    max(sub.PurchaseTax) AS PurchaseTax,
+		    max(sub.OptionalTaxAddition) AS OptionalTaxAddition,
+		    max(sub.MeasurementUnitName) AS MeasurementUnitName,
+		    max(sub.MeasurementUnitID) AS MeasurementUnitID,
+			MAX(sub.Remarks) as Remarks ,
+		    STRING_AGG(Result, ', ') AS Result
+		from(
+		
+		SELECT m.CustomsItemId,
+			   m.Parent_CustomsItemId,
+			   m.ItemHierarchicLocationID,
+			   m.Fullclassification,
+			   m.BaseFullClassification,
+			   m.ComputedCheckDigit,
+			   m.IsLeaf,
+			   m.GoodsDescription,
+			   m.Rules,
+			   m.Agreements,
+			   m.CustomsRate, --'שיעור המכס',
+			   m.PurchaseTax, --'מס קניה',
+			   m.OptionalTaxAddition,  --'שיעור התוספת',
+			   m.MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+         m.MALAMID as MeasurementUnitID, -- יחידה סטטיסטית
+			   '' AS Remarks,
+			   'Rules' AS Result
+		FROM [dbo].[NewCustomsBookMainView] m
+		JOIN customs.CB_Rules r ON m.CustomsItemId = r.CustomsItemID
+		JOIN 
+			(
+				SELECT 
+					RuleID,
+					Rules,
+					EntityStatusID,
+					StartDate,
+					EndDate,
+					MAX(UpdateDate) AS MaxUpdateDate
+				FROM 
+					customs.CB_RuleDetailsHistorys
+				GROUP BY 
+					RuleID,
+					Rules,
+					EntityStatusID,
+					StartDate,
+					EndDate
+			) h ON r.ID = h.RuleID	
+		WHERE m.CI_CustomsBookTypeIDNum = @CustomsBookType AND m.Rules = 1
+		AND h.Rules LIKE '%' + @SearchFields + '%'
+		AND  h.EntityStatusID ='2' AND h.StartDate <= GETDATE() AND h.EndDate >= GETDATE() 
+		
+		UNION -- הערות
+
+		SELECT m.CustomsItemId,
+			   m.Parent_CustomsItemId,
+			   m.ItemHierarchicLocationID,
+			   m.Fullclassification,
+			   m.BaseFullClassification,
+			   m.ComputedCheckDigit,
+			   m.IsLeaf,
+			   m.GoodsDescription,
+			   m.Rules,
+			   m.Agreements,
+			   m.CustomsRate, --'שיעור המכס',
+			   m.PurchaseTax, --'מס קניה',
+			   m.OptionalTaxAddition,  --'שיעור התוספת',
+			   m.MeasurementUnitName,
+          m.MALAMID,
+			   r.id AS Remarks,
+			   'Remarks' AS Result
+		FROM [dbo].[NewCustomsBookMainView] m
+		JOIN customs.RemarksClassifications r ON m.CustomsItemId = r.CustomsItemsID
+		
+		WHERE r.Tenant = 0 AND m.CI_CustomsBookTypeIDNum = @CustomsBookType AND
+		r.RemarkDescription LIKE '%' + @SearchFields + '%'
+		
+		) AS sub
+
+		GROUP BY sub.CustomsItemId
+		ORDER BY max(sub.FullClassification)
+
+
+	END
+
+END
+
+
+
+
+   
+    ]]>
+  </SqlScript>
+
+  <OracleScript>
+    <![CDATA[
+	
+    ]]>
+  </OracleScript>
+</Procedure>

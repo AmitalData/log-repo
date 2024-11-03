@@ -498,8 +498,10 @@ __pycache__/
 /LogitudeTools/WorkerRoleSimulation/WindowsFormsApplication1/App.config
 /Logitude/Logitude.BL/packages.config
 /Logitude/JustWebFreight/WebFreight.Web/Nlog.config
- 
-/Logitude/CommunicationWorkerRole/Nlog.config
+ /Logitude/CustomsBook/JustAmitalCustomsWindowsServiceConnectionStrings.config
+/Logitude/CustomsBook/JustAmitalCustomsWindowsServiceappSettings.config
+
+ /Logitude/CommunicationWorkerRole/Nlog.config
 /Logitude/CustomsWorkerRole/Nlog.config
 /Logitude/JustWebFreight/WebFreight.Web/NLog.config
 /Logitude/Logitude.CargoTracking.Data/Nlog.config

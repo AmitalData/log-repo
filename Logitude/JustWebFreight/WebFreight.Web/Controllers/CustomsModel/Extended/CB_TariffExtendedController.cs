@@ -34,6 +34,82 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
     public class CB_TariffExtendedController : ApiController
     {
 
+        public HttpResponseMessage GetCustomsBookAgreementLevelData(int customsItemId, int measurementUnitMalamId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                if (token == null)
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(new Exception("Token is missing")));
+
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(0);
+
+
+                CB_TariffQueryService tariffQueryService = new CB_TariffQueryService(0);
+                List<CB_TariffList> result = tariffQueryService.GetCustomsBookAgreementLevelData(customsItemId, measurementUnitMalamId);
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        
+        public HttpResponseMessage GetCustomsBookRegularityRequirementData(int customsItemId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                if (token == null)
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(new Exception("Token is missing")));
+
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(0);
+
+                CB_RequirementComputedDataQueryService requirementComputedDataQueryService = new CB_RequirementComputedDataQueryService(0);
+                List<CB_RequirementComputedDataList> result = requirementComputedDataQueryService.GetCustomsBookRegularityRequirementData(customsItemId);
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        
+        public HttpResponseMessage GetCustomsBookRulesData(int customsItemId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                if (token == null)
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(new Exception("Token is missing")));
+
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(0);
+
+
+
+                CB_RuleDetailsHistoryQueryService ruleDetailsHistoryQueryService = new CB_RuleDetailsHistoryQueryService(0);
+                List<CB_RuleDetailsHistoryList> result = ruleDetailsHistoryQueryService.GetCustomsBookRulesData(customsItemId);
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetCustomsBookTaxRates(int customsItemId)
         {
             try

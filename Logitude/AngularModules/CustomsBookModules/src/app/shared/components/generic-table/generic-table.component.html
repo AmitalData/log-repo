@@ -1,0 +1,32 @@
+<div class="detailsSlide_table tableBox">
+    <table *ngIf="tableData?.columns?.length > 0">
+        <tr>
+            <ng-container *ngFor="let col of tableData.columns">
+                <th [style.width]="col.width" *ngIf="col.visible">{{ col.displayName }}</th>
+            </ng-container>
+        </tr>
+        <tr *ngFor="let row of tableData.data">
+            <ng-container *ngFor="let col of tableData.columns">
+                <td *ngIf="col.visible && col.dataType == 'img'; else notImgCell">
+                    <img src="assets/images/united_kingdom.svg" />
+                    <!-- <img [src]="'' + row[col.key]"/>   change if map icon-->
+                </td>
+                <ng-template #notImgCell>
+                    <td *ngIf="col.visible && col.dataType == 'boolean'; else otherCell">
+                        {{ row[col.key] ? 'כן' : 'לא' }}
+                    </td>
+                    <ng-template #otherCell>
+                        <td *ngIf="col.visible && col.dataType != 'date'; else dateCell">
+                            {{ row[col.key] ? row[col.key] : '-' }}
+                        </td>
+                        <ng-template #dateCell>
+                            <td *ngIf="col.visible">
+                                {{ row[col.key] ? (row[col.key] | date:'dd/MM/yyyy') : '-' }}
+                            </td>
+                        </ng-template>
+                    </ng-template>
+                </ng-template>
+            </ng-container>
+        </tr>
+    </table>
+</div>

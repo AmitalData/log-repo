@@ -1,47 +1,44 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
-/**
- * Sets the value of selectSearchBy based on the provided value.
- * If no value is provided, it sets the default value.
- * @param value - The value to set selectSearchBy to.
- * @returns The updated value of selectSearchBy.
- */
-@Injectable({
-	providedIn: 'root',
-})
-export class Service {
-	private _Default_selectSearchBy: number | string = 'pageSearch_form01';
-	selectSearchBy = SearchBy[this._Default_selectSearchBy as keyof typeof SearchBy];
-	private _SearchText: string;
-
-	ngOnInit() {
-		sessionStorage.removeItem('searchText');
-	}
-
-	SearchBy(value?: number | string) {
-		!value
-			? (this.selectSearchBy = SearchBy[this._Default_selectSearchBy as keyof typeof SearchBy])
-			: (this.selectSearchBy = SearchBy[value as keyof typeof SearchBy]);
-		return this.selectSearchBy;
-	}
-
-	GetDefaultValue() {
-		sessionStorage.removeItem('searchText');
-		return this._Default_selectSearchBy;
-	}
-
-	GetSearchText() {
-		this._SearchText = sessionStorage.getItem('searchText') || '';
-		return this._SearchText;
-	}
-
-	SetSearchText(value: string) {
-		this._SearchText = value;
-		sessionStorage.setItem('searchText', value);
-	}
+export enum SearchBy {
+  'searchBy_form01' = 'חיפוש פרט מכס... ',
+  'pageSearch_form02' = 'חיפוש מילה/ צירוף מילים...',
 }
 
-enum SearchBy {
-	'searchBy_form01' = 'חיפוש פרט מכס... ',
-	'pageSearch_form02' = 'חיפוש מילה/ צירוף מילים...',
+@Injectable({
+  providedIn: 'root',
+})
+export class SearchService {
+  private _Default_selectSearchBy: number | string = 'searchBy_form01';
+  selectSearchBy = SearchBy[this._Default_selectSearchBy as keyof typeof SearchBy];
+
+  private _searchTextSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  public searchText$: Observable<string> = this._searchTextSubject.asObservable();
+  public customsItemHierarchicDefault:string = '1,2,3,4,5,6,7';
+
+  constructor() {
+    this._searchTextSubject.next('');
+  }
+
+  SearchBy(value?: number | string) {
+    if (!value) {
+      this.selectSearchBy = SearchBy[this._Default_selectSearchBy as keyof typeof SearchBy];
+    } else {
+      this.selectSearchBy = SearchBy[value as keyof typeof SearchBy];
+    }
+    return this.selectSearchBy;
+  }
+
+  GetDefaultValue() {
+    return this._Default_selectSearchBy;
+  }
+
+  GetSearchText(): string {
+    return this._searchTextSubject.getValue();
+  }
+
+  SetSearchText(value: string) {
+    this._searchTextSubject.next(value);
+  }
 }

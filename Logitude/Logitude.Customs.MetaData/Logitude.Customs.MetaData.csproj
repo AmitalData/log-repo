@@ -99,15 +99,26 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContextGenerator.tt</DependentUpon>
     </Compile>
+    <None Include="DBOthers\Procedures\usp_CB_AgreementLevelDataOLD.dxml" />
+    <None Include="DBOthers\Procedures\usp_CB_AgreementLevelData.dxml" />
+    <None Include="DBOthers\Procedures\usp_CB_RegularityRequirementData.dxml" />
     <None Include="DBOthers\Procedures\QueueEnqueue_succeedRequestsheets.dxml" />
+    <None Include="DBOthers\Procedures\usp_CustomsBookRulesDetailsOLD.dxml" />
+    <None Include="DBOthers\Procedures\usp_CustomsBookRulesDetails.dxml" />
+    <None Include="DBOthers\Procedures\usp_NEWCustomsBookMainViewSearchByClassification_OLD.dxml" />
+    <None Include="DBOthers\Procedures\usp_NewCustomsBookMainViewSearchByText_BackUpNew.dxml" />
+    <None Include="DBOthers\Procedures\usp_NewCustomsBookMainViewSearchByText.dxml" />
+    <None Include="DBOthers\Procedures\usp_NEWCustomsBookMainViewSearchByClassification.dxml" />
     <None Include="DBOthers\Procedures\Usp_DeleteCustomsRequestSheets.dxml" />
     <None Include="DBOthers\Procedures\Usp_DeleteComLogSteps.dxml" />
     <None Include="DBOthers\Procedures\Usp_DeleteQueMessMoreDet.dxml" />
     <None Include="DBOthers\Procedures\Usp_DeleteCommLogs.dxml" />
     <None Include="DBOthers\Procedures\usp_UpdateCourierHawbFromExcel.dxml" />
+    <None Include="DBOthers\Procedures\usp_CustomsBookMainView.dxml" />
     <None Include="DBOthers\Procedures\usp_UpdateQueueMessagePriority.dxml" />
     <None Include="DBOthers\Procedures\usp_UpdateQueueMessagePrio2.dxml" />
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
+    <None Include="DBOthers\Views\NewCustomsBookMainView.dxml" />
     <None Include="DBOthers\Views\CustomsBookMainView.dxml" />
     <None Include="DBOthers\Views\RequestSheetInQueueMesView.dxml" />
     <None Include="DBOthers\Views\DecTaxesByTaxTypeCodeViews.dxml" />

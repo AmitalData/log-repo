@@ -1,23 +1,24 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class FilterPopupService {
-	private _showFilterPopup: boolean = false;
-	private _filterMarked: Filters = {
+	public _showFilterPopup: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	private _filterMarked: FiltersSearch = {
 		parts: false,
 		chapters: false,
 		details: false,
 		sections: false,
 		customsDetails: false,
 		rules: false,
-		comments: false,
+		remarks: false,
 	};
 	constructor() {}
 
-	toggleFilterPopup() {
-		this._showFilterPopup = !this._showFilterPopup;
+	toggleFilterPopup(openPopup: boolean) {
+		this._showFilterPopup.next(openPopup);
 	}
 
 	getFilters() {
@@ -36,17 +37,17 @@ export class FilterPopupService {
 			sections: false,
 			customsDetails: false,
 			rules: false,
-			comments: false,
+			remarks: false,
 		};
 	}
 }
 
-interface Filters {
+export interface FiltersSearch {
 	parts: boolean;
 	chapters: boolean;
 	details: boolean;
 	sections: boolean;
 	customsDetails: boolean;
 	rules: boolean;
-	comments: boolean;
+	remarks: boolean;
 }

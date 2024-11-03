@@ -1,0 +1,138 @@
+﻿<Procedure DBType="Main" Name="usp_NEWCustomsBookMainViewSearchByClassification" Schema="dbo" Module="Customs">
+  <SqlScript>
+	  <![CDATA[
+CREATE OR ALTER PROCEDURE [dbo].[usp_NEWCustomsBookMainViewSearchByClassification]
+				@CustomsBookType VARCHAR(2),
+				@FullClassification VARCHAR(13),
+		@Tenant INT = 0
+AS
+BEGIN
+		-- If @FullClassification is null or empty, execute the main view procedure
+		IF @FullClassification IS NULL OR @FullClassification = ''
+		BEGIN
+			EXEC usp_CustomsBookMainView @CustomsBookType, @Tenant;
+			RETURN;
+		END
+
+		-- Declare a variable to hold the adjusted classification
+		DECLARE @AdjustedClassification VARCHAR(13);
+
+		-- Remove any '/' characters from @FullClassification
+		SET @FullClassification = REPLACE(@FullClassification, '/', '');
+
+		-- Adjust @FullClassification by removing trailing zeros
+		SET @AdjustedClassification = RTRIM(@FullClassification);
+
+		-- Find the position of the first non-zero digit from the right
+		IF PATINDEX('%[1-9]%', REVERSE(@AdjustedClassification)) > 0
+		BEGIN
+			SET @AdjustedClassification = LEFT(@AdjustedClassification, LEN(@AdjustedClassification) - PATINDEX('%[1-9]%', REVERSE(@AdjustedClassification)) + 1);
+		END;
+
+		-- ---- without to remove zeros if needed ----------- 
+		--SET @AdjustedClassification = @FullClassification;
+
+		-- Recursive CTE to find ancestors
+		WITH RecursiveAncestors AS (
+			SELECT
+				CustomsItemId,
+				CI_Parent_CustomsItemIDNum AS Parent_CustomsItemId
+			FROM customs.cb_CustomsItemComputedDatas
+			WHERE 
+				CI_CustomsItemCategoryIDNum = '1'
+				AND CustomsItemEntityStatusIDNum = '2'
+				AND StartDate <= GETDATE()
+				AND EndDate >= GETDATE()
+				AND REPLACE(Fullclassification, '/', '') LIKE @AdjustedClassification + '%'
+				AND CI_CustomsBookTypeIDNum = @CustomsBookType
+
+			UNION ALL
+
+			SELECT 
+				ft.CustomsItemId,
+				ft.CI_Parent_CustomsItemIDNum AS Parent_CustomsItemId
+			FROM customs.cb_CustomsItemComputedDatas ft
+			INNER JOIN RecursiveAncestors ra ON ft.CustomsItemId = ra.Parent_CustomsItemId
+			WHERE 
+				ft.CI_CustomsItemCategoryIDNum = '1'
+				AND ft.CustomsItemEntityStatusIDNum = '2'
+				AND ft.StartDate <= GETDATE()
+				AND ft.EndDate >= GETDATE()
+		)
+
+		-- This is for performance. Without this temporary table, it takes around 9 seconds, but with it, it takes around 2 seconds.
+		-- Create a temporary table for RecursiveAncestors
+		SELECT CustomsItemId
+		INTO #TempRecursiveAncestors
+		FROM RecursiveAncestors;
+
+		-- Create an index on the temporary table
+		CREATE INDEX idx_CustomsItemId ON #TempRecursiveAncestors(CustomsItemId);
+
+		-- Insert the base case into the temporary table
+		SELECT
+			CustomsItemId,
+			Parent_CustomsItemId,
+			ItemHierarchicLocationID,
+			Fullclassification,
+			BaseFullClassification,
+			ComputedCheckDigit,
+			IsLeaf,
+			GoodsDescription, -- תאור טובין
+			Rules, -- האם קיימים כללים
+			Agreements, -- הסכמים
+			CustomsRate, -- שיעור המכס
+			PurchaseTax, -- מס קניה
+			OptionalTaxAddition, -- שיעור התוספת
+			MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+			MALAMID AS MeasurementUnitID -- יחידה סטטיסטית
+		INTO #TempAncestors
+		FROM [dbo].[NewCustomsBookMainView] AS mainView
+		WHERE EXISTS (
+			SELECT 1
+			FROM #TempRecursiveAncestors AS ra
+			WHERE ra.CustomsItemId = mainView.CustomsItemId
+		);
+
+		-- Drop the temporary table
+		DROP TABLE #TempRecursiveAncestors;
+
+		-- Query to select ancestors of the specified ChildID
+		SELECT
+			CustomsItemId,
+			Parent_CustomsItemId,
+			ItemHierarchicLocationID,
+			Fullclassification,
+			BaseFullClassification,
+			ComputedCheckDigit,
+			IsLeaf,
+			GoodsDescription, -- תאור טובין
+			Rules, -- האם קיימים כללים
+			Agreements, -- הסכמים
+			CustomsRate, -- שיעור המכס
+			PurchaseTax, -- מס קניה
+			OptionalTaxAddition, -- שיעור התוספת
+			MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+			MeasurementUnitID,
+			r.Id AS Remarks 
+		FROM #TempAncestors ra
+		LEFT JOIN (
+			SELECT Id, CustomsItemsID
+			FROM customs.RemarksClassifications
+			WHERE Tenant = @Tenant
+		) AS r ON ra.CustomsItemId = r.CustomsItemsID
+		ORDER BY ItemHierarchicLocationID, FullClassification;
+
+		DROP TABLE #TempAncestors;
+
+END  
+    ]]>
+  </SqlScript>
+
+  <OracleScript>
+    <![CDATA[
+ 	
+	
+    ]]>
+  </OracleScript>
+</Procedure>

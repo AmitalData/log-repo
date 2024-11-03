@@ -14,14 +14,10 @@ ul {
 
 .pageTop {
 	display: flex;
-	align-items: start;
-	justify-content: space-between;
 	flex-direction: column;
-	height: 152px;
-	background-color: white;
-	border-bottom: 1px solid var(--greyRO);
-	padding-top: 35px;
 	direction: rtl;
+	height: 68px;
+	background-color: transparent;
 }
 
 .pageSearch {
@@ -33,6 +29,11 @@ ul {
 	gap: 15px;
 }
 
+.pageTop h1 {
+	color: var(--blue);
+	font-size: 24px;
+}
+
 h1 {
 	text-align: right;
 	color: var(--blue);
@@ -42,7 +43,7 @@ h1 {
 	display: flex;
 	justify-content: end;
 	flex-direction: column;
-	padding: 0 100px;
+	padding: 0 50px;
 }
 
 .pageSearch_toggle {
@@ -86,7 +87,7 @@ li {
 	outline: none !important;
 }
 
-.pageSearch_toggle li label input:checked + span {
+.pageSearch_toggle li label input:checked+span {
 	background-color: var(--blue);
 	color: white;
 	font-weight: 700;
@@ -130,16 +131,16 @@ li {
 	border-radius: 15px;
 }
 
-.pageSearch_form fieldset > div.pageSearch_formField.shown {
+.pageSearch_form fieldset>div.pageSearch_formField.shown {
 	opacity: 1;
 }
 
-.pageSearch_form fieldset > div.pageSearch_formField {
+.pageSearch_form fieldset>div.pageSearch_formField {
 	transition: opacity 0.4s ease-in-out;
 	opacity: 0;
 }
 
-.pageSearch_form fieldset > div.pageSearch_formField input {
+.pageSearch_form fieldset>div.pageSearch_formField input {
 	border: 1px solid transparent;
 	width: 100%;
 	height: 30px;
@@ -149,7 +150,7 @@ li {
 	text-indent: 15px;
 }
 
-.pageSearch_form fieldset > button {
+.pageSearch_form fieldset>button {
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -208,4 +209,12 @@ li {
 	width: 100%;
 	height: 100%;
 	cursor: pointer;
+}
+
+::ng-deep mat-option.no-wrap span  {
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap !important;
+	margin-left: auto;
+    margin-right: inherit !important;
 }

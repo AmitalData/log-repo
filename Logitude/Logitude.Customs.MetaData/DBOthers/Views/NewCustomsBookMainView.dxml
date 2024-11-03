@@ -1,0 +1,78 @@
+<View DBType="Main" Name="NewCustomsBookMainView" Schema="dbo" Module="Customs">
+  <SqlScript>
+    <![CDATA[
+   CREATE OR ALTER VIEW [dbo].[NewCustomsBookMainView] 
+AS
+select 
+CustomsItemId,
+CI_Parent_CustomsItemIDNum AS Parent_CustomsItemId,
+ItemHierarchicLocationID,
+CI_CustomsBookTypeIDNum,
+StartDate,
+EndDate,
+Fullclassification,
+CI_BaseFullClassification AS BaseFullClassification,
+CI_ComputedCheckDigit AS ComputedCheckDigit,
+IsLeaf,
+CI_CustomsItemCategoryIDNum,
+CustomsItemEntityStatusIDNum,
+CIH_GoodsDescription AS GoodsDescription,--תאור טובין
+IsRulesExists AS Rules,--האם קיימים כללים
+tarrif.Agreements,-- הסכמים
+ComputationMethodData.customsRate AS CustomsRate, --'שיעור המכס',
+ComputationMethodData.purchaseTax AS PurchaseTax, --'מס קניה',
+ComputationMethodData.OptionalTaxAddition,  --'שיעור התוספת',
+m.LOCALNAME AS MeasurementUnitName, -- יחידה סטטיסטית של פרט המכס
+m.MALAMID -- יחידת מידה
+from  customs.cb_CustomsItemComputedDatas item
+LEFT JOIN -- הסכמים
+	(
+	
+		select  count(*) as Agreements, CustomsItemIDNum  
+		from customs.CB_TariffComputedDatas
+		where TradeAgreementID is not null 
+		and StartDate <= GETDATE() and EndDate >= GETDATE()
+		group by CustomsItemIDNum
+
+
+	)AS tarrif ON item.CustomsItemId = tarrif.CustomsItemIDNum
+LEFT JOIN --שיעור המכס , מס קניה , שיעור התוספת
+	(
+		SELECT
+		tc.CustomsItemIDNum,
+		MAX(CASE WHEN t.Title = N'מס קניה' THEN c.CalculationReference END) AS customsRate,
+		MAX(CASE WHEN t.Title = N'מכס כללי' THEN c.CalculationReference END) AS purchaseTax,
+		MAX(CASE WHEN t.Title = N'מס קניה' THEN c.OptionalTaxAddition END) AS OptionalTaxAddition
+
+		FROM 
+		customs.CB_TariffComputedDatas tc
+		INNER JOIN customs.CB_Tariffs t 
+		ON tc.TariffID = t.ID
+		INNER JOIN customs.CB_ComputationMethodDatas c 
+		ON tc.WithoutQuota_ComputationID = c.ID
+		WHERE 
+		tc.TradeAgreementID IS NULL 
+		AND tc.StartDate <= GETDATE() 
+		AND tc.EndDate >= GETDATE()
+		GROUP BY 
+		tc.CustomsItemIDNum
+
+	)AS ComputationMethodData on item.CustomsItemId = ComputationMethodData.CustomsItemIDNum
+LEFT JOIN --שם יחידת מידה
+	(
+		select LOCALNAME, MALAMID
+		from customs.MEASURMENTUNITS 
+
+	)AS m on m.MALAMID = item.PH_MeasurementUnitID
+
+where CI_CustomsItemCategoryIDNum='1'
+and CustomsItemEntityStatusIDNum='2'
+and StartDate <= GETDATE()
+and EndDate >= GETDATE()
+
+
+    ]]>
+  </SqlScript>
+  <OracleScript> 
+  </OracleScript>
+</View>

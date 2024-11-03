@@ -1,20 +1,45 @@
-<div class="detailsSlide_box">
-	<div class="detailsSlide_toggle" (click)="expanded = !expanded">
+<div class="detailsSlide_box" *ngIf="tableData1?.data?.length > 0 || tableData2?.data?.length > 0">
+	<div class="detailsSlide_toggle" (click)="expandedArea1 = !expandedArea1">
 		<div>
 			<h3 class="main_title">שיעורי מס</h3>
 		</div>
-		<div class="toggle" [class.active]="expanded">
-			<fa-icon [size]="'xl'" class="toggle-close" [fixedWidth]="true" [icon]="faChevronDown"> </fa-icon>
+		<div class="toggle" [class.active]="expandedArea1">
+			<fa-icon [size]="'xl'" class="toggle-close" [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>
 		</div>
 	</div>
-	<div class="detailsSlide_ddown" [class.active]="expanded" id="detailsSlide_ddown01">
-		<div class="detailsSlide_table"></div>
-		<section class="title">
+	<div class="detailsSlide_ddown" [class.active]="expandedArea1" id="detailsSlide_ddown01" >
+		<!-- First section: מכס -->
+		<section class="title" *ngIf="!expandedArea1">
 			<h4 class="title">מכס</h4>
+			<div class="tableContainer">
+				<app-generic-table [tableData]="tableData1"></app-generic-table>
+			</div>
 		</section>
-		<section>
+
+		<!-- Second section: מס קנייה -->
+		<section *ngIf="!expandedArea1">
 			<h4 class="sub_title">מס קנייה</h4>
-			<div class="detailsSlide_table"></div>
+			<div class="tableContainer">
+				<app-generic-table [tableData]="tableData2"></app-generic-table>
+			</div>
+		</section>
+	</div>
+</div>
+
+<div class="detailsSlide_box" *ngIf="tableData3?.data?.length > 0">
+	<div class="detailsSlide_toggle" (click)="expandedArea2 = !expandedArea2">
+		<div>
+			<h3 class="main_title">דרישות חוקיות</h3>
+		</div>
+		<div class="toggle" [class.active]="expandedArea2">
+			<fa-icon [size]="'xl'" class="toggle-close" [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>
+		</div>
+	</div>
+	<div class="detailsSlide_ddown" [class.active]="expandedArea2" id="detailsSlide_ddown01" >
+		<section class="title">
+			<div class="tableContainer">
+				<app-generic-table *ngIf="!expandedArea2" [tableData]="tableData3"></app-generic-table>
+			</div>
 		</section>
 	</div>
 </div>

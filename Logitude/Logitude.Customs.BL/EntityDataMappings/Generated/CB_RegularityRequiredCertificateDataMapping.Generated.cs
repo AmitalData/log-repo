@@ -29,7 +29,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         TextualCondition, 
 	         TrNumber, 
 	         AuthorityID, 
-	         CB_ID,
+	         CB_ID, 
+	         IsVoluntaryOrImporterOfTrust,
 	      }
 
 
@@ -43,7 +44,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         TextualCondition, 
 	         TrNumber, 
 	         AuthorityID, 
-	         CB_ID,
+	         CB_ID, 
+	         IsVoluntaryOrImporterOfTrust,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -85,6 +87,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AuthorityID))
             {
 				entityPOCO.AuthorityID = entityPM.AuthorityID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsVoluntaryOrImporterOfTrust))
+            {
+				entityPOCO.IsVoluntaryOrImporterOfTrust = entityPM.IsVoluntaryOrImporterOfTrust;
 			}
 			}
 
@@ -131,6 +138,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CB_ID = entityPOCO.CB_ID;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsVoluntaryOrImporterOfTrust))
+            {
+					entityPM.IsVoluntaryOrImporterOfTrust = entityPOCO.IsVoluntaryOrImporterOfTrust;
+            }
+
 		}
 
 		public void PMToOldPM(CB_RegularityRequiredCertificatePM entityPM, CB_RegularityRequiredCertificatePM oldEntityPM)
@@ -170,6 +182,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AuthorityID))
             {
                 oldEntityPM.AuthorityID = entityPM.AuthorityID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsVoluntaryOrImporterOfTrust))
+            {
+                oldEntityPM.IsVoluntaryOrImporterOfTrust = entityPM.IsVoluntaryOrImporterOfTrust;
             }
 			
 		}

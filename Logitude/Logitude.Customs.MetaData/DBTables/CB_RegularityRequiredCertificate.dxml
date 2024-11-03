@@ -58,6 +58,12 @@
       PrimaryKey="true"
       Nullable="false" />
   </Column>
+  <Column
+    Name="IsVoluntaryOrImporterOfTrust"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="ConfirmationTypeID"
     ReferencedTable="ConfirmationTypes"

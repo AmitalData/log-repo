@@ -53,7 +53,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         InceptionCodeID, 
 	         RegularityPublicationCodeID, 
 	         AutonomyCustomsItemID, 
-	         IsAllCustomsItems,
+	         IsAllCustomsItems, 
+	         IsVoluntaryOrImporterOfTrust,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

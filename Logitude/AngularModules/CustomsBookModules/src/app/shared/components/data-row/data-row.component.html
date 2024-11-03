@@ -1,49 +1,73 @@
-<div class="mainTable_item">
-	<div class="mainTable_itemToggle" [class.active]="selected" (click)="selected = !selected">
-		<button>
-			<i role="img" aria-hidden="true">
-				<fa-icon [icon]="faArrowAltCircleLeft" (click)="showChildern.emit()"></fa-icon
-			></i>
+<div class="mainTable_item" [ngClass]="{'selected': isSelected}">
+	<div class="mainTable_itemToggle" [class.active]="data?.IsShowChildren" (click)="expandClick(data?.IsShowChildren)">
+		<button *ngIf="data?.children.length > 0">
+			<i role="img" aria-hidden="true"> <fa-icon [icon]="faArrowAltCircleLeft"></fa-icon> </i>
 		</button>
 	</div>
-	<div class="mainTable_itemName" (click)="showDetails.emit()">
-		<a href="#" role="button"
-			>{{ data }}
-			<span class="full_classification">
-				{{ data?.FullClassification }}
+	<div class="mainTable_itemName" (click)="showCommentsClick()" #dynamicDiv>
+		<a href="#" role="button" [ngClass]="{'selectedLink': isSelected}" (click)="$event.preventDefault()">
+			<span class="full_classification" *ngIf="data?.CI_Parent_CustomsItemIDNum"
+				[innerHTML]="highlight(ClassificationNoDisplay(data,data?.FullClassification), searchItem)"
+				[title]="data.CIH_GoodsDescription">
+				{{ ClassificationNoDisplay(data,data?.FullClassification) }}
 			</span>
-			<span *ngIf="state === 'search'" class="item_details">
-				<a> {{ data?.MeasurementUnit }} </a>
-				<a> {{ data?.MeasurementUnit }} </a>
-				<a> {{ data?.MeasurementUnit }}</a>
-				<a> {{ data?.MeasurementUnit }} </a>
-				<a> {{ data?.MeasurementUnit }}</a>
+			<span *ngIf="data?.CI_Parent_CustomsItemIDNum" [title]="data.CIH_GoodsDescription"> | </span>
+			<span class="full_classification" [title]="data.CIH_GoodsDescription"
+				[innerHTML]="highlight(data.CIH_GoodsDescription, searchItem)">
+				{{ data.CIH_GoodsDescription }}
 			</span>
+			<div *ngIf="!isShowDetailsOpen && ( TariffListCount > 0 && data?.CI_Parent_CustomsItemIDNum && ClassificationNoDisplay(data,data?.FullClassification).length > 2 && state === 'search')"
+				class="item_details">
+				<a> {{TariffListCount }} </a>
+				<a> {{ TariffList1?.CustomsRate }} </a>
+				<a> {{ TariffList1?.MeasurementUnitName }} </a>
+				<a> {{ TariffList2?.CustomsRate }} </a>
+				<a *ngIf="TariffList2?.OptionalTaxAddition"> {{
+					TariffList2?.OptionalTaxAddition }} </a>
+				<a *ngIf="!TariffList2?.OptionalTaxAddition"> - </a>
+			</div>
 		</a>
 	</div>
 	<div></div>
-	<div class="mainTable_itemActions">
+	<div class="mainTable_itemActions" *ngIf="!this.showDetailsOpen.getValue()">
 		<ul>
 			<li>
-				<div class="mainTable_itemDocument">
-					<a class="icon"><i role="img" class="icon-document"> </i></a>
+				<div class="mainTable_itemDocument" (click)="showRulesClick()" (click)="showCommentsClick()">
+					<a class="icon">
+						<i role="img"
+							[ngClass]="isSelected || isSearchItemExistRule? 'icon-document_full' : 'icon-document'">
+						</i>
+					</a>
+					<!-- <a class="icon"><i role="img" [ngClass]="{'icon-document': !isSelected, 'icon-document_full': isSelected}"> </i></a> -->
+					<!-- <a class="icon"><i role="img" [ngClass]="!showRules ? 'icon-document' : 'icon-document_full'"> </i></a> -->
 				</div>
 			</li>
-			<li>
+			<!--<li>
 				<div class="mainTable_itemPopup">
 					<a class="icon"><i role="img" class="icon-popup"></i> </a>
 				</div>
-			</li>
-			<li>
-				<div class="mainTable_itemComment" (click)="showAddCommentSidebar()">
-					<a class="icon"> <i role="img" class="icon-comment_plus"></i></a>
+			</li> -->
+			<li *ngIf="countOfComments > 0; else newComment">
+				<div class="mainTable_itemComment" (click)="showCommentsClick()" >
+					<a class="icon" aria-expanded="true">
+						<i role="img" [ngClass]="isSelected || isSearchItemExistRemark? 'icon-comment_full' : 'icon-comment'"></i>
+						<!-- <i role="img" [ngClass]="{'icon-comment': !isSelected, 'icon-comment_full': isSelected}"></i> -->
+					</a>
+					<span class="countOfComments">{{ countOfComments }}</span>
 				</div>
 			</li>
-			<li>
+			<ng-template #newComment>
+				<li>
+					<div class="mainTable_itemComment" (click)="showAddCommentSidebar(data)">
+						<a class="icon"> <i role="img" class="icon-comment_plus"></i></a>
+					</div>
+				</li>
+			</ng-template>
+			<!-- <li>
 				<div class="mainTable_itemStarred" (click)="checked = !checked">
 					<a class="icon"><i role="img" [class]="checked ? ' icon-star_full' : 'icon-star'"> </i></a>
 				</div>
-			</li>
+			</li> -->
 		</ul>
 	</div>
 </div>

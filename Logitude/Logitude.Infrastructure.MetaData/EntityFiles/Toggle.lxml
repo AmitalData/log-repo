@@ -1026,6 +1026,12 @@
       SearchFields="&quot;ILO,Invoice Status According To Ledger Open Amount&quot;"
       Description="&quot;Invoice Status According To Ledger Open Amount&quot;" />
    </Records>
+    <Record
+      Code="&quot;LCB&quot;"
+      Name="&quot;Login Customs Book&quot;"
+      SearchFields="&quot;LCB,Login Customs Book&quot;"
+      Description="&quot;Customs Book Login For Normal Users&quot;" />
+  </Records>
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />

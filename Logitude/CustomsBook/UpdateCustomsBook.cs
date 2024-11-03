@@ -1,35 +1,30 @@
-﻿using System;
-using System.Net;
-using System.ComponentModel;
-using System.Net.Http.Headers;
-
-using System.Threading.Tasks;
-using System.Timers;
-using System.Net.Http;
-using System.IO;
-using System.IO.Compression;
+﻿using NLog;
 using SharpCompress.Archives;
+using System;
 using System.Collections.Generic;
-using System.Data.OleDb;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
-using Simplog.Data.InfrastructureModel;
-using Simplog.Data.ShipmentsModel;
-using Logitude.Customs.Data;
-using System.Configuration;
+using System.IO;
 using System.Linq;
-using NLog;
+using System.Net.Http;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Xml.Linq;
-using System.Xml.Schema;
 
 namespace CustomsBook
 {
-    internal class TaskScheduler
+    internal class UpdateCustomsBook
     {
 
-        static Logger logger = LogManager.GetCurrentClassLogger();
-        static async void DownloadFile()
+        static readonly Logger logger = Program.logger;
+
+        static List<string> tempTables = new List<string>();
+        public static async Task Run()
+        {
+            await DownloadFile();
+        }
+        static async Task DownloadFile()
         {
             // Define the URL of the ZIP file to download
             string url = "https://shaarolami-query.customs.mof.gov.il/CustomspilotWeb/he/CustomsBook/Home/DownloadFile";
@@ -72,15 +67,27 @@ namespace CustomsBook
                 if (File.Exists(downloadedFilePath) && success)
                 {
                     await ExtractZipFile(downloadedFilePath, extractFolder);
+
+                    //מחיקת נתוני טבלאות זמניות
                     TruncateTables();
+
                     List<string> fileNames = FindFileNames();
                     foreach (string fileName in fileNames)
                     {
                         if (fileName != null)
                         {
-                            MapXmlToTables(fileName);
+                            MapXmlTempTable(fileName);
                         }
                     }
+
+                    // SWAP TEMP TABLES TO MAIN TABLES
+
+                    foreach (string tempTable in tempTables)
+                    {
+                        SwapTempToMainTable(tempTable);
+                    }
+
+
                 }
                 else
                 {
@@ -192,9 +199,10 @@ namespace CustomsBook
 
         }
 
-        static void MapXmlToTables(string fileName)
-        {
 
+
+        static void MapXmlTempTable(string fileName)
+        {
             // Get the path to the XML file and the SQL database
             string xmlFilePath = Path.Combine("C:\\CustomsBook\\ExtractedFiles\\", fileName);
             string sqlConnectionString = ConfigurationManager.ConnectionStrings[0].ConnectionString;
@@ -205,7 +213,7 @@ namespace CustomsBook
             {
                 try
                 {
-            // Load the XML document
+                    // Load the XML document
                     xmlDoc = XDocument.Load(xmlFilePath);
 
                 }
@@ -216,24 +224,29 @@ namespace CustomsBook
                     return;
                 }
             }
-            else {
-                logger.Debug($"Table {fileName} name not found in mapping.");
+            else
+            {
+                logger.Debug(message: $"Table {fileName} name not found in mapping.");
                 return;
             }
             using (SqlConnection sqlConnection = new SqlConnection(sqlConnectionString))
             {
                 sqlConnection.Open();
 
-                // Iterate through each table element in the XML document
+                string tempTableName = $"TEMP_{sqlTableName.Split('.').Last()}";
+
+                if (!tempTables.Contains(tempTableName))
+                {
+                    tempTables.Add(tempTableName);
+                }
+
+
                 foreach (XElement tableElement in xmlDoc.Root.Elements())
                 {
                     try
                     {
-                      
-
                         DataTable dataTable = new DataTable(sqlTableName);
 
-                        // Define columns in DataTable based on XML data
                         foreach (XElement rowElement in tableElement.Elements())
                         {
                             DataRow row = dataTable.NewRow();
@@ -241,20 +254,21 @@ namespace CustomsBook
                             {
                                 if (!dataTable.Columns.Contains(columnElement.Name.LocalName))
                                 {
-                                    dataTable.Columns.Add(columnElement.Name.LocalName);
+                                    dataTable.Columns.Add(columnElement.Name.LocalName); // Add new column if necessary
                                 }
                                 row[columnElement.Name.LocalName] = columnElement.Value;
                             }
                             dataTable.Rows.Add(row);
                         }
-                        List<string> sqlSchema = GetColumnNames(sqlTableName);
 
+                        List<string> sqlSchema = GetColumnNames(sqlTableName);
+                        // Insert data into the temporary table
                         using (SqlBulkCopy bulkCopy = new SqlBulkCopy(sqlConnection))
                         {
-                            bulkCopy.DestinationTableName = sqlTableName;
-                            bulkCopy.BatchSize = 1000; // Set desired segment size
+                            bulkCopy.DestinationTableName = $"customs.{tempTableName}";
+                            bulkCopy.BatchSize = 1000;
+                            bulkCopy.BulkCopyTimeout = 600;
 
-                            // Add column mappings
                             foreach (DataColumn column in dataTable.Columns)
                             {
                                 string columnName = column.ColumnName;
@@ -281,7 +295,7 @@ namespace CustomsBook
                                 else if (columnName == "CI_CustomsItemHierarchicLocationIDNum")
                                 {
                                     bulkCopy.ColumnMappings.Add(columnName, "ItemHierarchicLocationID");
-                                } 
+                                }
                                 else if (columnName == "CIH_CustomsItemEntityStatusIDNum")
                                 {
                                     bulkCopy.ColumnMappings.Add(columnName, "CustomsItemEntityStatusIDNum");
@@ -290,11 +304,14 @@ namespace CustomsBook
                                 {
                                     bulkCopy.ColumnMappings.Add(columnName, "ValidQuotaDetailsHistoryID");
                                 }
-
+                                if (columnName == "IsVoluntaryOrImporterInBreachOfTrust")
+                                {
+                                    bulkCopy.ColumnMappings.Add(columnName, "IsVoluntaryOrImporterOfTrust");
+                                }
                                 if (sqlTableName == "Customs.CB_TariffComputedDatas")
                                 {
                                     if (columnName == "WithoutQuota_ComputationMethodDataID")
-                                {
+                                    {
                                         bulkCopy.ColumnMappings.Add(columnName, "WithoutQuota_ComputationID");
                                     }
                                     else if (columnName == "WithinQuota_ComputationMethodDataID")
@@ -306,14 +323,15 @@ namespace CustomsBook
                                 {
                                     if (columnName == "WithoutQuota_ComputationMethodDataID")
                                     {
-                                    bulkCopy.ColumnMappings.Add(columnName, "WithoutQuota_ComputMethDataID");
-                                }
-                                else if (columnName == "WithinQuota_ComputationMethodDataID")
-                                {
-                                    bulkCopy.ColumnMappings.Add(columnName, "WithinQuota_ComputMethDataID");
+                                        bulkCopy.ColumnMappings.Add(columnName, "WithoutQuota_ComputMethDataID");
+                                    }
+                                    else if (columnName == "WithinQuota_ComputationMethodDataID")
+                                    {
+                                        bulkCopy.ColumnMappings.Add(columnName, "WithinQuota_ComputMethDataID");
+                                    }
                                 }
                             }
-                            }
+
                             bulkCopy.WriteToServer(dataTable);
                         }
 
@@ -326,8 +344,57 @@ namespace CustomsBook
                         continue;
                     }
                 }
-
                 sqlConnection.Close();
+            }
+        }
+
+        static void SwapTempToMainTable(string tempTableName)
+        {
+            string sqlConnectionString = ConfigurationManager.ConnectionStrings[0].ConnectionString;
+            string sqlTableName = tempTableName.Replace("TEMP_", ""); // הסר את prefix של TEMP כדי לקבל את שם הטבלה הראשית
+
+            using (SqlConnection sqlConnection = new SqlConnection(sqlConnectionString))
+            {
+                sqlConnection.Open();
+
+                string swapQuery = $@"
+                        BEGIN TRANSACTION;
+
+                        IF OBJECT_ID('customs.{sqlTableName}') IS NOT NULL
+                        BEGIN
+                            EXEC sp_rename 'customs.{sqlTableName}', '{sqlTableName}_Old';
+                        END
+
+                        IF OBJECT_ID('customs.{tempTableName}') IS NOT NULL
+                        BEGIN
+                            EXEC sp_rename 'customs.{tempTableName}', '{sqlTableName}';
+                        END
+
+                        IF OBJECT_ID('customs.{sqlTableName}_Old') IS NOT NULL
+                        BEGIN
+                            EXEC sp_rename 'customs.{sqlTableName}_old', '{tempTableName}';
+                        END
+
+                        COMMIT TRANSACTION;";
+
+                try
+                {
+                    using (SqlCommand swapCommand = new SqlCommand(swapQuery, sqlConnection))
+                    {
+                        swapCommand.ExecuteNonQuery();
+
+                    }
+                    logger.Debug($"Table {tempTableName} Swap to {sqlTableName} successfully.");
+
+                }
+                catch (Exception ex)
+                {
+                    logger.Debug($"Error occurred: {ex.Message}");
+                }
+                finally
+                {
+                    sqlConnection.Close();
+                }
             }
         }
 
@@ -387,7 +454,7 @@ namespace CustomsBook
                 case "CustomsBookAdditionsDetailsHistory":
                     return "Customs.CB_CustomsBookAdditionsDetailsHistorys";
                 case "AdditionRulesDetailsHistory":
-                    return "Customs.CB_AdditionRulesDetailsHistorys";                    
+                    return "Customs.CB_AdditionRulesDetailsHistorys";
                 case "CustomsItemComputedData":
                     return "Customs.CB_CustomsItemComputedDatas";
                 case "TariffComputedData":
@@ -435,12 +502,5 @@ namespace CustomsBook
 
 
 
-        static void Main(string[] args)
-        {
-            NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(Path.Combine("C:\\LWC\\Logitude\\CustomsBook\\NLog.config"));
-            logger.Debug("Start TaskScheduler");
-            DownloadFile();
-            Console.ReadLine();
-        }
     }
 }

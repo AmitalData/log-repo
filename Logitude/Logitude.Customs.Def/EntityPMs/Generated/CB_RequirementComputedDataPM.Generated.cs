@@ -319,6 +319,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isVoluntaryOrImporterOfTrust ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsVoluntaryOrImporterOfTrust  
+	   {
+	    
+	     get
+		{
+		   return isVoluntaryOrImporterOfTrust;
+		 }
+		 set
+		 {
+		   if(isVoluntaryOrImporterOfTrust != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsVoluntaryOrImporterOfTrust",OldValue=isVoluntaryOrImporterOfTrust,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isVoluntaryOrImporterOfTrust=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

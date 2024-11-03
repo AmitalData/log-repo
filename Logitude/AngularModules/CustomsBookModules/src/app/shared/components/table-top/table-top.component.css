@@ -4,12 +4,12 @@
 	color: var(--blue);
 }
 
-.mainTable_top > ul {
+.mainTable_top>ul {
 	display: flex;
 	position: sticky;
 	align-items: center;
 	justify-content: center;
-	width: 100%;
+	width: 50%;
 	font-weight: 700;
 	gap: 110px;
 	margin-top: 10px;
@@ -17,13 +17,16 @@
 	overflow: hidden;
 }
 
-.mainTable_top > ul > li {
+.mainTable_top>ul>li {
 	list-style-type: none;
 }
 
 .mainTable_top {
+	/* position: relative;
+	top: 0px; */
+	/* top: 220px; */
 	position: absolute;
-	top: 220px;
+	top: 75px;
 	right: 100px;
 	width: 100%;
 	display: flex;
