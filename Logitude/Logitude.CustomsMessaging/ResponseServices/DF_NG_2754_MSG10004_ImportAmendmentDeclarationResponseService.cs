@@ -211,6 +211,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationPM.ExcludeConsignment = declarationOrg.ExcludeConsignment;
                     //declarationPM.IsClose = declarationOrg.IsClose;
                     declarationPM.IsDiamondDeclaration = declarationOrg.IsDiamondDeclaration;
+                    declarationPM.AutoSending = declarationOrg.AutoSending;
                     declarationPM.AmendmentRequestNumber = CodeCounter.GetNumber("AmendmentRequestNumber", tenant).ToString();
 
                     if (declarationOrg.IsCourierDeclaration)
