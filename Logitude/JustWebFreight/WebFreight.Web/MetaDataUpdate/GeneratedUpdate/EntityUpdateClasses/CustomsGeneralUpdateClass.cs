@@ -21,7 +21,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "c323502e8e5d518312c74a9616fc3435";
+		public const string HashString = "1370c146b7a0eea75f8593e944c7245b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2151,6 +2151,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsMCGeneralAPIRequests = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.MC.General.APIRequests", DefaultText = "API Requests",LocalDefaultText = null, ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOInland = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.Inland", DefaultText = "Inland",LocalDefaultText = @"יבשה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOActions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.Actions", DefaultText = "Actions",LocalDefaultText = @"פעולות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
