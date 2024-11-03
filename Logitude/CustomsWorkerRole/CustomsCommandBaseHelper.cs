@@ -53,7 +53,7 @@ namespace CustomsWorkerRole
             using (TransactionScope Queue_scope = TransactionFactory.GetTransaction())
             {
                 LogMessagingUtilWR.Instance.AppendLine("ProcessMessage_Db");
-                CustomDbQueueService _CustomDbQueueService = new CustomDbQueueService(myClass, 0, item);
+                CustomDbQueueService _CustomDbQueueService = new CustomDbQueueService(myClass, General.GetTenantDB(), item);
                 bool successProcessMessage = true;
 
                 successProcessMessage = ProcessMessage_Db(item, myClass);

@@ -139,7 +139,7 @@ namespace CustomsWorkerRole
             }
             else
             {
-                _CustomDbQueueService = new CustomDbQueueService(myClass, 0);
+				_CustomDbQueueService = new CustomDbQueueService(myClass, General.GetTenantDB());
                 
             }
 
