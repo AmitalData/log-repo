@@ -60,7 +60,7 @@ export class LineModel extends BaseComponent {
             this.AmountToReconcile = this.ledgerTransaction.OpenAmount;
         this.RowIndex = myRowIndex;
         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
-
+        
 
         this.OddEven = this.ColorMe();
 
@@ -423,6 +423,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         this.EntityPM = new LedgerTransactionPM();
         this.EntityPM.Tenant = this.TenantPM.Id;
         this.CurrencyId = this.EntityPM.CurrencyId;
+        this.CurrentSession.entityResourceService.getEntityResourceByTableName("TaxDeductionReport").subscribe((response: any) => {;});
     }
 
     public InitFilters() {
@@ -2093,6 +2094,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("APPayment.M.InvalidSelectedTransctionsDifference"));
         }
 
+        if (this.GLAccountPM.CardId === undefined && this.GLAccountPM.ParentCurrencyGLAccountCardId === undefined) {
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("TaxDeductionReport.O.AccountWithoutVendor"));
+        }
+
         if (this.ValidationErrorsList.length == 0) {
             this.NewAPPaymentMethod();
         }
@@ -2117,7 +2122,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         newApPaymentPM.ValueDate = DateTool.GetCurrentDateAsUtc();
         newApPaymentPM.RegisterDate = DateTool.GetCurrentDateAsUtc();
         newApPaymentPM.DontDisplayAPInvoices=true;
-        newApPaymentPM.PaymentCurrencyId = this.CurrencyId;
+        newApPaymentPM.PaymentCurrencyId = this.CurrencyId != null ? this.CurrencyId : this.TenantPM.CurrencyId;
         newApPaymentPM.IsFromReconcilePage = true;
         newApPaymentPM.IsMultiCurrency = this.GLAccountPM.IsMultiCurrency;
         if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
