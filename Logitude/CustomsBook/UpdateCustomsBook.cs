@@ -16,13 +16,14 @@ namespace CustomsBook
 {
     internal class UpdateCustomsBook
     {
+
         static readonly Logger logger = Program.logger;
-        
+
+        static List<string> tempTables = new List<string>();
         public static async Task Run()
         {
             await DownloadFile();
         }
-
         static async Task DownloadFile()
         {
             // Define the URL of the ZIP file to download
@@ -66,15 +67,27 @@ namespace CustomsBook
                 if (File.Exists(downloadedFilePath) && success)
                 {
                     await ExtractZipFile(downloadedFilePath, extractFolder);
+
+                    //מחיקת נתוני טבלאות זמניות
                     TruncateTables();
+
                     List<string> fileNames = FindFileNames();
                     foreach (string fileName in fileNames)
                     {
                         if (fileName != null)
                         {
-                            MapXmlToTables(fileName);
+                            MapXmlTempTable(fileName);
                         }
                     }
+
+                    // SWAP TEMP TABLES TO MAIN TABLES
+
+                    foreach (string tempTable in tempTables)
+                    {
+                        SwapTempToMainTable(tempTable);
+                    }
+
+
                 }
                 else
                 {
@@ -186,9 +199,10 @@ namespace CustomsBook
 
         }
 
-        static void MapXmlToTables(string fileName)
-        {
 
+
+        static void MapXmlTempTable(string fileName)
+        {
             // Get the path to the XML file and the SQL database
             string xmlFilePath = Path.Combine("C:\\CustomsBook\\ExtractedFiles\\", fileName);
             string sqlConnectionString = ConfigurationManager.ConnectionStrings[0].ConnectionString;
@@ -212,23 +226,27 @@ namespace CustomsBook
             }
             else
             {
-                logger.Debug($"Table {fileName} name not found in mapping.");
+                logger.Debug(message: $"Table {fileName} name not found in mapping.");
                 return;
             }
             using (SqlConnection sqlConnection = new SqlConnection(sqlConnectionString))
             {
                 sqlConnection.Open();
 
-                // Iterate through each table element in the XML document
+                string tempTableName = $"TEMP_{sqlTableName.Split('.').Last()}";
+
+                if (!tempTables.Contains(tempTableName))
+                {
+                    tempTables.Add(tempTableName);
+                }
+
+
                 foreach (XElement tableElement in xmlDoc.Root.Elements())
                 {
                     try
                     {
-
-
                         DataTable dataTable = new DataTable(sqlTableName);
 
-                        // Define columns in DataTable based on XML data
                         foreach (XElement rowElement in tableElement.Elements())
                         {
                             DataRow row = dataTable.NewRow();
@@ -236,30 +254,27 @@ namespace CustomsBook
                             {
                                 if (!dataTable.Columns.Contains(columnElement.Name.LocalName))
                                 {
-                                    dataTable.Columns.Add(columnElement.Name.LocalName);
+                                    dataTable.Columns.Add(columnElement.Name.LocalName); // Add new column if necessary
                                 }
                                 row[columnElement.Name.LocalName] = columnElement.Value;
                             }
                             dataTable.Rows.Add(row);
                         }
-                        List<string> sqlSchema = GetColumnNames(sqlTableName);
 
+                        List<string> sqlSchema = GetColumnNames(sqlTableName);
+                        // Insert data into the temporary table
                         using (SqlBulkCopy bulkCopy = new SqlBulkCopy(sqlConnection))
                         {
-                            bulkCopy.DestinationTableName = sqlTableName;
-                            bulkCopy.BatchSize = 1000; // Set desired segment size
+                            bulkCopy.DestinationTableName = $"customs.{tempTableName}";
+                            bulkCopy.BatchSize = 1000;
+                            bulkCopy.BulkCopyTimeout = 600;
 
-                            // Add column mappings
                             foreach (DataColumn column in dataTable.Columns)
                             {
                                 string columnName = column.ColumnName;
                                 if (columnName == "ID")
                                 {
                                     bulkCopy.ColumnMappings.Add(columnName, "CB_ID");
-                                }
-                                if (columnName == "IsVoluntaryOrImporterInBreachOfTrust")
-                                {
-                                    bulkCopy.ColumnMappings.Add(columnName, "IsVoluntaryOrImporterOfTrust");
                                 }
                                 if (sqlSchema.Contains(columnName))
                                 {
@@ -289,8 +304,11 @@ namespace CustomsBook
                                 {
                                     bulkCopy.ColumnMappings.Add(columnName, "ValidQuotaDetailsHistoryID");
                                 }
-
-                                if (sqlTableName == "Customs.CB_TariffComputedDatas")
+                                 if (columnName == "IsVoluntaryOrImporterInBreachOfTrust")
+                                {
+                                    bulkCopy.ColumnMappings.Add(columnName, "IsVoluntaryOrImporterOfTrust");
+                                }
+                                 if (sqlTableName == "Customs.CB_TariffComputedDatas")
                                 {
                                     if (columnName == "WithoutQuota_ComputationMethodDataID")
                                     {
@@ -313,6 +331,7 @@ namespace CustomsBook
                                     }
                                 }
                             }
+
                             bulkCopy.WriteToServer(dataTable);
                         }
 
@@ -325,8 +344,57 @@ namespace CustomsBook
                         continue;
                     }
                 }
-
                 sqlConnection.Close();
+            }
+        }
+
+        static void SwapTempToMainTable(string tempTableName)
+        {
+            string sqlConnectionString = ConfigurationManager.ConnectionStrings[0].ConnectionString;
+            string sqlTableName = tempTableName.Replace("TEMP_", ""); // הסר את prefix של TEMP כדי לקבל את שם הטבלה הראשית
+
+            using (SqlConnection sqlConnection = new SqlConnection(sqlConnectionString))
+            {
+                sqlConnection.Open();
+
+                string swapQuery = $@"
+                        BEGIN TRANSACTION;
+
+                        IF OBJECT_ID('customs.{sqlTableName}') IS NOT NULL
+                        BEGIN
+                            EXEC sp_rename 'customs.{sqlTableName}', '{sqlTableName}_Old';
+                        END
+
+                        IF OBJECT_ID('customs.{tempTableName}') IS NOT NULL
+                        BEGIN
+                            EXEC sp_rename 'customs.{tempTableName}', '{sqlTableName}';
+                        END
+
+                        IF OBJECT_ID('customs.{sqlTableName}_Old') IS NOT NULL
+                        BEGIN
+                            EXEC sp_rename 'customs.{sqlTableName}_old', '{tempTableName}';
+                        END
+
+                        COMMIT TRANSACTION;";
+
+                try
+                {
+                    using (SqlCommand swapCommand = new SqlCommand(swapQuery, sqlConnection))
+                    {
+                        swapCommand.ExecuteNonQuery();
+
+                    }
+                    logger.Debug($"Table {tempTableName} Swap to {sqlTableName} successfully.");
+
+                }
+                catch (Exception ex)
+                {
+                    logger.Debug($"Error occurred: {ex.Message}");
+                }
+                finally
+                {
+                    sqlConnection.Close();
+                }
             }
         }
 
@@ -431,5 +499,8 @@ namespace CustomsBook
             }
             return columns;
         }
+
+
+
     }
 }

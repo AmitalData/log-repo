@@ -139,7 +139,7 @@
 				</ng-container>
 			</div>
 			<div class="details_frame_container" [class.active]="showDetails">
-				<app-details-frame (showDetails)="updateShowDetailsClick()" [currentItem]="currentItem" [showCommentsIsOpen]="showCommentsIsOpen" [showRulesIsOpen]="showRulesIsOpen"/>
+				<app-details-frame (showDetails)="updateShowDetailsClick()" [showDetailsStatus]="showDetails" [currentItem]="currentItem" [showCommentsIsOpen]="showCommentsIsOpen" [showRulesIsOpen]="showRulesIsOpen"/>
 			</div>
 		</div>
 	</div>

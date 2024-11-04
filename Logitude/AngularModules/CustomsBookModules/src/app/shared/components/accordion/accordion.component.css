@@ -1,8 +1,16 @@
-.detailsSlide_box {
-    /* direction: rtl; */
+/* .detailsSlide_box {
     background-color: white;
     border-radius: 20px;
     box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.10);
+    width: calc(100% - 40px);
+} */
+
+.detailsSlide_box {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.10);
+    overflow: hidden;
+    margin-bottom: 10px;
     width: calc(100% - 40px);
 }
 

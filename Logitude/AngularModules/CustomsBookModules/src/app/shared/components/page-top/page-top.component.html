@@ -1,58 +1,35 @@
 <div class="pageTop">
 	<div class="centeredContent">
-		<!-- <h1 *ngIf="currentSearchState">ספר מכס: {{currentSearchState}}</h1> -->
 		<div class="pageSearch">
 			<strong style="text-align: start;">חיפוש פרט מכס</strong>
 			<div class="pageSearch_toggle">
 				<ul>
 					<li>
-						<label
-							><input
-								[defaultChecked]="true"
-								type="radio"
-								(input)="search('searchBy_form01')"
-								name="search_toggle"
-								class="fst-btn"
-								aria-controls="pageSearch_form01"
-							/><span class="fst-btn">{{ searchBy.Classification }}</span></label
-
-						>
+						<label><input [defaultChecked]="true" type="radio" (input)="search('searchBy_form01')"
+								name="search_toggle" class="fst-btn" aria-controls="pageSearch_form01" /><span
+								class="fst-btn">{{ searchBy.Classification }}</span></label>
 					</li>
 					<li>
-						<label
-							><input
-								[checked]="checked === 'pageSearch_form02'"
-								type="radio"
-								name="search_toggle"
-								(input)="search('pageSearch_form02')"
-								class="lst-btn"
-								aria-controls="pageSearch_form02"
-							/><span class="lst-btn">{{searchBy.WordCombination}}</span></label
-
-						>
+						<label><input [checked]="checked === 'pageSearch_form02'" type="radio" name="search_toggle"
+								(input)="search('pageSearch_form02')" class="lst-btn"
+								aria-controls="pageSearch_form02" /><span
+								class="lst-btn">{{searchBy.WordCombination}}</span></label>
 					</li>
 				</ul>
 			</div>
 			<div class="pageSearch_form">
 				<fieldset>
 					<div class="pageSearch_formField shown" [id]="text">
-						<input 
-							type="text" 
-							(input)="onChange($event)" 
-							[(ngModel)]="textToSearch" 
-							[maxlength]="text === SearchByValidation ? 11 : 100" 
-							[placeholder]="text" 
-							(keyup.enter)="clickSearch()" 
-							[matAutocomplete]="auto"
-						/>
-
-						<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onCustomsItemSelected(textToSearch)" [panelWidth]="1000">
-							@for (item of customsItemsAutocomplateList | async; track item) {
-								<mat-option [value]="item.FullClassification" class="no-wrap" dir="rtl">
-									<span [dir]="'rtl'"[innerHTML]='item.text' ></span>
-								</mat-option>
-							}
-						</mat-autocomplete>
+						<input type="text" (input)="onChange($event)" [(ngModel)]="textToSearch"
+							[maxlength]="text === SearchByValidation ? 11 : 100" [placeholder]="text"
+							(keyup.enter)="clickSearch()" [matAutocomplete]="auto"/>
+							<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onCustomsItemSelected(textToSearch)" [panelWidth]="1000">
+								@for (item of customsItemsAutocomplateList | async; track item) {
+									<mat-option [value]="item.FullClassification" class="no-wrap" dir="rtl">
+										<span [dir]="'rtl'"[innerHTML]='item.text' ></span>
+									</mat-option>
+								}
+							</mat-autocomplete>
 					</div>
 
 					<button (click)="clickSearch()">חיפוש</button>
