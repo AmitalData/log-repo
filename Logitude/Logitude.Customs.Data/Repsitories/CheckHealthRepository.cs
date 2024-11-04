@@ -7,7 +7,7 @@ using System.Web;
 
 namespace WebFreight.Web.Helpers.CheckHealthHelper
 {
-    public class CheckHealthHelperService
+    public class CheckHealthRepository
     {
 
         public  void CheckHealth()

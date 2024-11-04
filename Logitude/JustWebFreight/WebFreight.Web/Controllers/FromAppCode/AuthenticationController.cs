@@ -3378,7 +3378,7 @@ namespace WebFreight.Web
             try
             {
                 stopwatch.Start();
-                CheckHealthHelperService checkHealthHelper = new CheckHealthHelperService();
+                CheckHealthRepository checkHealthHelper = new CheckHealthRepository();
 
                  checkHealthHelper.CheckHealth();
 
