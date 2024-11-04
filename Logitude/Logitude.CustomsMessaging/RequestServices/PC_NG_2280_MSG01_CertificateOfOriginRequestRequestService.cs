@@ -130,7 +130,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				CumulationGroupOfCountriesSpecified = true,
 				PlaceOfManufacture = string.IsNullOrEmpty(certificateOfOrigin.PlaceOfManufacture) ? null : (int?)Convert.ToInt32(certificateOfOrigin.PlaceOfManufacture),
 				PlaceOfManufactureSpecified = true,
-				ZipCodeOfManufacture = string.IsNullOrEmpty(certificateOfOrigin.ZipCodeOfManufacture) ? null : (int?)Convert.ToInt32(certificateOfOrigin.ZipCodeOfManufacture),
+				ZipCodeOfManufacture = string.IsNullOrWhiteSpace(certificateOfOrigin.ZipCodeOfManufacture) ? null : (int?)Convert.ToInt32(certificateOfOrigin.ZipCodeOfManufacture),
 				ZipCodeOfManufactureSpecified = true,
 				Observations = certificateOfOrigin.Observations,
 				IsExportDecForPrint = certificateOfOrigin.IsExportDecForPrint,
