@@ -26,6 +26,10 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     IsDisplayOnly: boolean = false;
     myDictionary: Record<string, string> = {};
     public ErrorsList: string[];
+    public ignoreFieldChecks = [
+        "TradeAgreementGroupOfCountries", "OriginGroupOfCountry", "DestinationGroupOfCountries",
+        "TradeAgreementCountry2", "OriginCountry", "DestinationCountry"
+    ];
 
     controlEnabled: boolean;
     constructor() {
@@ -162,8 +166,10 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
             if(item){
                 let field = this.entityPM[item.MappedCertificateFieldsName];
                 if (!field){
-                    var fieldName = TextCodeTranslator.Translate('Customs.CertificateOfOrigin.F.' + item.MappedCertificateFieldsName);  
-                    ValidationErrors.push(fieldName);
+                    var fieldName = TextCodeTranslator.Translate('Customs.CertificateOfOrigin.F.' + item.MappedCertificateFieldsName);
+                    if (fieldName != "" && this.ignoreFieldChecks.indexOf(item.MappedCertificateFieldsName) == -1) {
+                         ValidationErrors.push(fieldName);
+                    }
                 }
             }
         });
