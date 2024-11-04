@@ -65,6 +65,7 @@ using JWT.Algorithms;
 using JWT.Exceptions;
 using System.Runtime.Remoting.Contexts;
 using Stimulsoft.Base.Gauge.GaugeGeoms;
+using WebFreight.Web.Helpers.CheckHealthHelper;
 namespace WebFreight.Web
 {
 #if DEBUG
@@ -3379,24 +3380,20 @@ namespace WebFreight.Web
             Stopwatch stopwatch = new Stopwatch();
             try
             {
-                                
-
-
                 stopwatch.Start();
-                IWebFreightContext context = WebFreightContext.GetContext(0);
-                context.ObjectTables.FirstOrDefault();
+                CheckHealthHelperService checkHealthHelper = new CheckHealthHelperService();
+
+                 checkHealthHelper.CheckHealth();
 
                 stopwatch.Stop();
-
                 long elapsedTime = stopwatch.ElapsedMilliseconds;
-
                 string time = elapsedTime.ToString();
 
                 return Request.CreateResponse(HttpStatusCode.OK, time);
             }
             catch (Exception ex)
             {
-                stopwatch.Stop(); 
+                stopwatch.Stop();
 
                 NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, ex.Message);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
