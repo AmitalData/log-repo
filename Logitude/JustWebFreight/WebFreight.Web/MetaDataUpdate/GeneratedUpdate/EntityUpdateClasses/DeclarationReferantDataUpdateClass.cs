@@ -21,7 +21,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
-		public const string HashString = "4756a50d2069c117aff9feb3bea20a42";
+		public const string HashString = "a813a8b7d50cb43d18a67988883bcbfc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2224,8 +2224,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ClassifiedUserId",
-					  						DefaultTextBack_up =  "מסווג",
-					  						DefaultText =  "BS64:Itee16HXldeV15Ii",
+					  						DefaultText =  "Classified User Id",
 					  						FullLocalDefaultTextBack_up =  "מסווג",
 					  						FullLocalDefaultText =  "BS64:Itee16HXldeV15Ii",
 					  						ListFieldLable =  "ClassifiedUserIdListLable",
@@ -2296,8 +2295,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ControllerUserId",
-					  						DefaultTextBack_up =  "שם מבקר",
-					  						DefaultText =  "BS64:Itep150g157Xkden16gi",
+					  						DefaultText =  "Controller User Id",
 					  						FullLocalDefaultTextBack_up =  "שם מבקר",
 					  						FullLocalDefaultText =  "BS64:Itep150g157Xkden16gi",
 					  						ListFieldLable =  "ControllerUserIdListLable",
@@ -2368,8 +2366,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CollectorUserId",
-					  						DefaultTextBack_up =  "גובה",
-					  						DefaultText =  "BS64:IteS15XXkdeUIg==",
+					  						DefaultText =  "Collector User Id",
 					  						FullLocalDefaultTextBack_up =  "גובה",
 					  						FullLocalDefaultText =  "BS64:IteS15XXkdeUIg==",
 					  						ListFieldLable =  "CollectorUserIdListLable",
@@ -3795,8 +3792,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AEOImporter",
-					  						DefaultTextBack_up =  "לקוח AEO/יבואן מורשה",
-					  						DefaultText =  "BS64:Itec16fXldeXIEFFTy/XmdeR15XXkNefINee15XXqNep15Qi",
+					  						DefaultText =  "AEOImporter",
 					  						ListFieldLable =  "AEOImporterListLable",
 					  						ListLableDefaultText =  "AEOImporter",
 					  						ListLocalDefaultTextBack_up =  "לקוח AEO/יבואן מורשה",
