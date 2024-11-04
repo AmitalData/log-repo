@@ -22,6 +22,10 @@ using Logitude.BL.ShipmentsModel.APIDataContract;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using System.Security.Policy;
+using System.Windows.Forms;
+using Simplog.Server.Infrastructure;
+using NPOI.SS.Formula.Functions;
 
 
 namespace WebFreight.Web.Helpers.APIHelpers
@@ -78,8 +82,10 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 PaymentDateTime = cargoTrackingShipment.CustomsPaymentDate,
                 CustomsClearanceDateTime = cargoTrackingShipment.ClearanceDate,
                 IsPaymentRequired = shipment.IsPaymentRequired,
+                PaymentLink = shipment.IsPaymentRequired? GetPaymentLink(shipment.SecurityKey):null,
                 ChargesAmountInNIS = GetTotalChargesInNIS(shipment.PaymentRequestXML),
                 IsCustomerIDNumberRequired = shipment.IsUserIDNumberRequired,
+                CustomerIDNumberLink = shipment.IsUserIDNumberRequired ? GetCustomerIDNumberLink(shipment.SecurityKey) : null,
                 LastMileDetails = GetCardConnectedToShipment(shipment),
                 ShipmentMilestones = GetShipmentMilestones(cargoTrackingShipment),
                 StatusDetails= GetStatusDetails(shipment),
@@ -87,6 +93,18 @@ namespace WebFreight.Web.Helpers.APIHelpers
             };
         }
 
+        private string GetPaymentLink(string securityKey)
+        {
+            string p_url = string.Concat(LogitudeSettings.LogitudeURL, "/LinksGateway.aspx?Menu=PREQ&SecurityKey=", securityKey);
+            p_url = string.Concat(p_url, "&Tenant=", tenant);
+            return p_url;
+        }
+        private string GetCustomerIDNumberLink(string securityKey)
+        {
+            string p_url = string.Concat(LogitudeSettings.LogitudeURL, "/LinksGateway.aspx?Menu=UID&SecurityKey=", securityKey);
+            p_url = string.Concat(p_url, "&Tenant=", tenant);
+            return p_url;
+        }
         private ShipmentExceptions GetShipmentExceptions(CargoTrackingShipmentList cargoTrackingShipment)
         {
             return new ShipmentExceptions { Exception = cargoTrackingShipment.CurrentMilestoneExceptions };
