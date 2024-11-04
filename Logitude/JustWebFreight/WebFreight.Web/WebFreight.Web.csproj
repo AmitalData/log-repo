@@ -3630,6 +3630,7 @@
     <Compile Include="Helpers\CallBack\Handler\HandlerServiceFactory.cs" />
     <Compile Include="Helpers\CallBack\Handler\IHandlerService.cs" />
     <Compile Include="Helpers\ChangePasswordParameter.cs" />
+    <Compile Include="Helpers\CheckHealthHelper\CheckHealthHelperService.cs" />
     <Compile Include="Helpers\CrmWebServicesValidator.cs" />
     <Compile Include="Helpers\DataWarehouse\FactQuoteBusinessUnitFilter.cs" />
     <Compile Include="Helpers\DigitalPortalQueryToExcelExportService.cs" />
