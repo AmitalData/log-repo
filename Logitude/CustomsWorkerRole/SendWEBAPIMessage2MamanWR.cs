@@ -41,6 +41,8 @@ using System.Web;
 using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.Data;
 
 namespace CustomsWorkerRole
 {
@@ -518,7 +520,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
         {
             string myResultString = "";
             int retryCount = 2;
-
+            bool isSucceeded = false;
             try
             {
                 for (int attempt = 0; attempt < retryCount; attempt++)
@@ -550,21 +552,22 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                                 // If the request succeeds, return the result
                                 myResultString = response.Content.ReadAsStringAsync().Result;
                                 LogMessagingUtil.Instance.AppendLine($"PostAsyncResult={myResultString}");
-                                return myResultString;  // Success, return the response
+                                isSucceeded = true;
+								return myResultString;  // Success, return the response
                             }
                             else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-                            {
-                                NetCommonHelper.Logger.DevLog.Instance.WriteTrace("401 Unauthorized detected. Refreshing token...");
+							{
+								NetCommonHelper.Logger.DevLog.Instance.WriteTrace("401 Unauthorized detected. Refreshing token...");
                                 tokenManager.RefreshToken();
                             }
                             else
                             {
-                                NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"Request failed with status code: {response.StatusCode}");
+								NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"Request failed with status code: {response.StatusCode}");
                             }
                         }
                         catch (Exception ex)
                         {
-                            NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"Attempt {attempt + 1} failed with exception: {ex.Message}");
+							NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"Attempt {attempt + 1} failed with exception: {ex.Message}");
                             if (attempt == retryCount - 1)
                             {
                                 throw new Exception($"An error occurred on the last retry: {ex.Message}");
@@ -573,13 +576,13 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                     }
                 }
 
-                // After all attempts fail, throw an exception
-                throw new Exception("All retry attempts failed.");
+				// After all attempts fail, throw an exception
+				throw new Exception("All retry attempts failed.");
             }
             catch (Exception ex)
             {
-                // Log the basic exception message
-                NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"An error occurred: {ex.Message}");
+				// Log the basic exception message
+				NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"An error occurred: {ex.Message}");
                 if (ex.InnerException != null)
                 {
                     NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"Inner Exception: {ex.InnerException.Message}");
@@ -587,7 +590,39 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 LogMessagingUtil.Instance.AppendLine($"An error occurred: {ex.Message}");
                 throw;
             }
+            finally
+			{
+                if(!isSucceeded)
+				UpdateStatusDeclarationMamanSpecialActions(dataJson);
+			}
         }
+		private void UpdateStatusDeclarationMamanSpecialActions(string dataJson)
+        {
+            try { 
+			dynamic jsonObject = JsonConvert.DeserializeObject(dataJson);
+            if (jsonObject?.SpSpclCode != "2")  return;
+			var declarationId = _CourierHawbMamanCommunicationLogSettings.DeclarationId;
+			var tenant = _CourierHawbMamanCommunicationLogSettings.Tenant;
+
+			var context = CustomContext.GetContext(tenant);
+			DeclarationMamanSpecialActionUpdateService service = new DeclarationMamanSpecialActionUpdateService(context, new Dictionary<string, IContext>(), tenant);
+			DeclarationMamanSpecialActionQueryService declarationMamanSpecialActionQueryService = new DeclarationMamanSpecialActionQueryService(tenant);
+            var declarationMamanSpecialActionPM = declarationMamanSpecialActionQueryService.GetSingle(declarationId, "2", false, false);
+                if (declarationMamanSpecialActionPM != null)
+                {
+                    declarationMamanSpecialActionPM.MamanSpecialActionStatusCode = "2";
+                    declarationMamanSpecialActionPM.ChangeSetOp = ChangeSetOperation.Update;
+                    service.Update(declarationMamanSpecialActionPM, true);
+                }
+			}
+            catch(Exception ex)
+            {
+				NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"UpdateStatusDeclarationMamanSpecialActions: {ex.Message}");
+			}
+
+		}
+
+
         private static void Wait4Finsh(Task
           task, int TimeOutInMin)
         {
