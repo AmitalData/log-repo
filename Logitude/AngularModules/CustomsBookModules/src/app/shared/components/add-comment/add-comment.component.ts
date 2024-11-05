@@ -5,11 +5,12 @@ import { API_MainService } from '../../../core/API_MainService';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 import { FormsModule } from '@angular/forms';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-add-comment',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, NgIf],
   templateUrl: './add-comment.component.html',
   styleUrls: ['./add-comment.component.css']
 })
