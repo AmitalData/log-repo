@@ -71,6 +71,7 @@
 	display: flex;
 	align-items: baseline;
 	justify-content: space-between;
+	width: 97%;
 }
 
 .detailsSlide_title {
@@ -80,7 +81,7 @@
 	direction: rtl;
 	justify-content: start;
 	max-width: 880px;
-	padding-left: 25px;
+	/* padding-left: 25px; */
 	text-align: justify;
 }
 
@@ -119,7 +120,8 @@
 .detailsSlide_topActions ul {
 	display: flex;
 	justify-content: flex-end;
-	margin-left: 100px;
+	/* margin-left: 100px; */
+	margin-left: 10px;
 }
 
 .detailsSlide_topActions li {
