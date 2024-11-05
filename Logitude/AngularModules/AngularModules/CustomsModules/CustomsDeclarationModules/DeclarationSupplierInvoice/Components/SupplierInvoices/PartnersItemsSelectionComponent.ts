@@ -205,6 +205,7 @@ export class PartnersItemsSelectionComponent extends BaseComponent {
                     if (IsMatchUnifreightCallbackCommand) {
                         sub.unsubscribe();
                         let XMLResponse = UnifreightMessageM.GetStringValue(message, "XMLResponse");
+                        alert(XMLResponse);
                         const xmlData = (xml: string) => xml.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
                         const result = this.parseXml(xmlData(XMLResponse));
                         SessionLocator.SelectedSession.StopBusyIndicator();
@@ -218,6 +219,7 @@ export class PartnersItemsSelectionComponent extends BaseComponent {
             AmitalGatewayUtil.Instance.
                 DeclarationMessaging.GetMessage(this.declarationPM.CustomFileNo, this.declarationPM.Id, "PartnersItemsSelectionComponent.ts-GetGITITEMS", AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
         unifreightMessageM.Requset.push(["XMLRequest", this.convertToXML(vendorId, customerCode, searchText, top, searchBy,searchNULLVendor)]);
+        alert(this.convertToXML(vendorId, customerCode, searchText, top, searchBy,searchNULLVendor));     
 
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
             "AmitalGatewayUtil.GetGITITEMS",
@@ -278,6 +280,9 @@ export class PartnersItemsSelectionComponent extends BaseComponent {
     }
     
     convertToXML(vendorId: string, customerCode: string, searchText: string, top: number, searchBy: string, searchNULLVendor: boolean) {      
+        if(AppTool.IsNullOrUndefined(searchText)){
+            searchText = "";
+        }
          return `<GITITEMS>
          <PARTNERID>${customerCode}</PARTNERID>
          <SAPAKID>${vendorId}</SAPAKID>
@@ -285,8 +290,8 @@ export class PartnersItemsSelectionComponent extends BaseComponent {
          <ITEMNO></ITEMNO>
          <SEARCHBY>${searchBy}</SEARCHBY>
          <TOP>${top}</TOP>
-         <SEARCHNULLVENDOR>${searchNULLVendor}</SEARCHNULLVENDOR>
-         </GITITEMS>`;        
+         <SEARCHNULLVENDOR>${false}</SEARCHNULLVENDOR>
+         </GITITEMS>`;   
       
     }
 
