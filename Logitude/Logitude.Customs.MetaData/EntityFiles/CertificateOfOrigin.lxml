@@ -6593,7 +6593,7 @@
     <TextCode
       Code="&quot;Customs.CertificateOfOrigin.O.IsChange&quot;"
       DefaultText="&quot;Is Change&quot;"
-      LocalDefaultText="&quot;בוצעו שינויים בתעודה - יש לשדר למכס&quot;"
+      LocalDefaultText="&quot;בוצעו שינויים בתעודה שלא נקלטו במכס&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -6621,11 +6621,11 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-  Code="&quot;Customs.CertificateOfOrigin.O.NotDeclaration&quot;"
-  DefaultText="&quot;Can't send certificate because declaration not sent.&quot;"
-  LocalDefaultText="&quot;לא ניתן לשלוח תעודה לפני שההצהרה נשלחה למכס&quot;"
-  TextCodeTypeCode="&quot;O&quot;"
-  IsSpellChecked="false" />
+      Code="&quot;Customs.CertificateOfOrigin.O.NotDeclaration&quot;"
+      DefaultText="&quot;Can't send certificate because declaration not sent.&quot;"
+      LocalDefaultText="&quot;לא ניתן לשלוח תעודה לפני שההצהרה נשלחה למכס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
