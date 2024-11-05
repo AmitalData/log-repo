@@ -451,7 +451,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 				#endregion
 
 				#region allRoleFeatures
-				RoleFeatureQuery roleFeatureQuery = new RoleFeatureQuery();
+				RoleFeatureQuery roleFeatureQuery = new RoleFeatureQuery(tenant);
 
                 if (myRole.IsCustomRole)
                 {

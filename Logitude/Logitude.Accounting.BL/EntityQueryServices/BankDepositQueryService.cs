@@ -266,7 +266,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 Notes = notes,
 
                 AccountingDate = DateTime.Now,                //depositPM.AccountingDate,
-                DueDate = depositPM.AccountingDate,
+                DueDate = depositLinePM.DueDate,
                 DocumentDate = depositPM.AccountingDate,
                 ForeignAmount = chequePM.ForeignAmount,
                 LocalAmount = chequePM.LocalAmount,
@@ -329,7 +329,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 Notes = notes,
 
                 AccountingDate = DateTime.Now,                //depositPM.AccountingDate,
-                DueDate = depositPM.AccountingDate,
+                DueDate = depositLinePM.DueDate,
                 DocumentDate = depositPM.AccountingDate,
                 ForeignAmount = chequePM.ForeignAmount,
                 LocalAmount = chequePM.LocalAmount,
