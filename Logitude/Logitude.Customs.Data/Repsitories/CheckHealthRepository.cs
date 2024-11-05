@@ -57,9 +57,9 @@ namespace WebFreight.Web.Helpers.CheckHealthHelper
 
                 //return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new Exception("Health check failed");
+                throw new Exception("Health check failed" ,e);
             }
         }
     }
