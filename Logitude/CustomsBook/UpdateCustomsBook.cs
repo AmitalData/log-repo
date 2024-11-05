@@ -171,7 +171,7 @@ namespace CustomsBook
 
         static void TruncateTables()
         {
-            string sqlConnectionString = ConfigurationManager.ConnectionStrings[0].ConnectionString;
+            string sqlConnectionString = ConfigurationManager.ConnectionStrings["LogitudeStr"].ConnectionString;
 
             using (SqlConnection sqlConnection = new SqlConnection(sqlConnectionString))
             {
@@ -205,7 +205,7 @@ namespace CustomsBook
         {
             // Get the path to the XML file and the SQL database
             string xmlFilePath = Path.Combine("C:\\CustomsBook\\ExtractedFiles\\", fileName);
-            string sqlConnectionString = ConfigurationManager.ConnectionStrings[0].ConnectionString;
+            string sqlConnectionString = ConfigurationManager.ConnectionStrings["LogitudeStr"].ConnectionString;
             string xmlTableName = GetNameFromFilename(fileName);
             string sqlTableName = GetSqlTableName(xmlTableName); // Map XML table name to SQL table name
             XDocument xmlDoc = new XDocument();
@@ -350,7 +350,7 @@ namespace CustomsBook
 
         static void SwapTempToMainTable(string tempTableName)
         {
-            string sqlConnectionString = ConfigurationManager.ConnectionStrings[0].ConnectionString;
+            string sqlConnectionString = ConfigurationManager.ConnectionStrings["LogitudeStr"].ConnectionString;
             string sqlTableName = tempTableName.Replace("TEMP_", ""); // הסר את prefix של TEMP כדי לקבל את שם הטבלה הראשית
 
             using (SqlConnection sqlConnection = new SqlConnection(sqlConnectionString))
@@ -476,7 +476,7 @@ namespace CustomsBook
             List<string> columns = new List<string>();
             string tableNameAfterDot = tableName.Substring(tableName.LastIndexOf('.') + 1);
 
-            string strConnect = ConfigurationManager.ConnectionStrings[0].ConnectionString;
+            string strConnect = ConfigurationManager.ConnectionStrings["LogitudeStr"].ConnectionString;
             using (SqlConnection con = new SqlConnection(strConnect))
             {
                 con.Open();
