@@ -10,6 +10,7 @@
 	border-radius: 20px;
 	padding-right: 10px;
 }
+
 /* .mainTable_item:hover {
 	background-color: var(--greyRO);
 } */
@@ -81,12 +82,20 @@ i[role='img'][aria-hidden='true'] {
 }
 
 .mainTable_itemName a {
-	display: block;
-	/* width: 90%; */
+	/* display: block;
 	width: 125px;
 	height: 100%;
-	/* padding-top: 15px; */
 	padding: 8px 0;
+	font-size: 14px;
+	text-decoration: none;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis; */
+
+	display: block;
+	width: 20%;
+	height: 100%;
+	padding: 10px;
 	font-size: 14px;
 	text-decoration: none;
 	overflow: hidden;
@@ -189,3 +198,19 @@ i[role='img'][aria-hidden='true'] {
 	line-height: 14px;
 	display: inline-block;
 }
+
+@media (max-width: 1399px) {
+	.item_details {
+		display: none;
+	}
+}
+
+@media (min-width: 1400px) {
+	.item_details {
+		display: flex;
+	}
+	/* .mainTable_itemName a {
+		width: 17% !important;
+	} */
+}
+/* add  fit contnent for width witoud get out from the boundries of the comoent */
