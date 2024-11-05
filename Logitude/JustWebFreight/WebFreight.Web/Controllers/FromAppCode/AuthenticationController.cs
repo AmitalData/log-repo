@@ -66,6 +66,7 @@ using JWT.Exceptions;
 using System.Runtime.Remoting.Contexts;
 using Stimulsoft.Base.Gauge.GaugeGeoms;
 using WebFreight.Web.Helpers.CheckHealthHelper;
+using Logitude.Customs.BL.BL;
 namespace WebFreight.Web
 {
 #if DEBUG
@@ -3381,9 +3382,8 @@ namespace WebFreight.Web
             try
             {
                 stopwatch.Start();
-                CheckHealthHelperService checkHealthHelper = new CheckHealthHelperService();
-
-                 checkHealthHelper.CheckHealth();
+                CheckHealthService checkHealthService = new CheckHealthService();
+                checkHealthService.CheckHealth();
 
                 stopwatch.Stop();
                 long elapsedTime = stopwatch.ElapsedMilliseconds;

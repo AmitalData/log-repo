@@ -1657,6 +1657,7 @@
     <Compile Include="Repsitories\CertificateOfOriginStatusCodeEnumRepository.cs" />
     <Compile Include="Repsitories\CertificateOfOriginTypeCodeEnumRepository.cs" />
     <Compile Include="Repsitories\ChangeTypeRepository.cs" />
+    <Compile Include="Repsitories\CheckHealthRepository.cs" />
     <Compile Include="Repsitories\ClaimReasonTypeRepository.cs" />
     <Compile Include="Repsitories\ClaimsRelatedEntitiesRefundRepository.cs" />
     <Compile Include="Repsitories\ClaimsRelatedEntitiesSeizureRepository.cs" />

@@ -207,6 +207,7 @@
     <Compile Include="AzureSearch\CustomsBookAzureSearchService.cs" />
     <Compile Include="BL\AutoPaymentService.cs" />
     <Compile Include="BL\CalculateDeclarationCourierStatus.cs" />
+    <Compile Include="BL\CheckHealthService.cs" />
     <Compile Include="BL\CreateContainerization.cs" />
     <Compile Include="BL\CancelOldCommunicationLogs.cs" />
     <Compile Include="BL\EFIFILEMDataInExportDeclarationClosing.cs" />
