@@ -82,29 +82,21 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 PaymentDateTime = cargoTrackingShipment.CustomsPaymentDate,
                 CustomsClearanceDateTime = cargoTrackingShipment.ClearanceDate,
                 IsPaymentRequired = shipment.IsPaymentRequired,
-                PaymentLink = shipment.IsPaymentRequired? GetPaymentLink(shipment.SecurityKey):null,
+                PaymentLink = shipment.IsPaymentRequired? BuildUrl(shipment.SecurityKey,"PREQ") :null,
                 ChargesAmountInNIS = GetTotalChargesInNIS(shipment.PaymentRequestXML),
                 IsCustomerIDNumberRequired = shipment.IsUserIDNumberRequired,
-                CustomerIDNumberLink = shipment.IsUserIDNumberRequired ? GetCustomerIDNumberLink(shipment.SecurityKey) : null,
+                CustomerIDNumberLink = shipment.IsUserIDNumberRequired ? BuildUrl(shipment.SecurityKey, "UID") : null,
                 LastMileDetails = GetCardConnectedToShipment(shipment),
                 ShipmentMilestones = GetShipmentMilestones(cargoTrackingShipment),
                 StatusDetails= GetStatusDetails(shipment),
                 ShipmentExceptions = cargoTrackingShipment.CurrentMilestoneExceptions != null ?  GetShipmentExceptions(cargoTrackingShipment) : null,
             };
         }
-
-        private string GetPaymentLink(string securityKey)
+        private string BuildUrl( string securityKey,string menu)
         {
-            string p_url = string.Concat(LogitudeSettings.LogitudeURL, "/LinksGateway.aspx?Menu=PREQ&SecurityKey=", securityKey);
-            p_url = string.Concat(p_url, "&Tenant=", tenant);
-            return p_url;
+            return string.Concat(LogitudeSettings.LogitudeURL, "/LinksGateway.aspx?Menu=", menu, "&SecurityKey=", securityKey, "&Tenant=", tenant);
         }
-        private string GetCustomerIDNumberLink(string securityKey)
-        {
-            string p_url = string.Concat(LogitudeSettings.LogitudeURL, "/LinksGateway.aspx?Menu=UID&SecurityKey=", securityKey);
-            p_url = string.Concat(p_url, "&Tenant=", tenant);
-            return p_url;
-        }
+        
         private ShipmentExceptions GetShipmentExceptions(CargoTrackingShipmentList cargoTrackingShipment)
         {
             return new ShipmentExceptions { Exception = cargoTrackingShipment.CurrentMilestoneExceptions };
