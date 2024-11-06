@@ -122,23 +122,26 @@ export class DataRowComponent implements OnInit {
 			if (value) this.dynamicDivClick(); // when window open
 			else {
 
-				// if (!this.showTaxData) this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "90%");
-				if (!(!this.isShowDetailsOpen && (this.TariffListCount > 0 && this.data?.CI_Parent_CustomsItemIDNum && this.ClassificationNoDisplay(this.data, this.data?.FullClassification).length > 2 && this.state === 'search'))) {
-					this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "90%");
-				}
+				
+				// if (!(!this.isShowDetailsOpen && (this.TariffListCount > 0 && this.data?.CI_Parent_CustomsItemIDNum && this.ClassificationNoDisplay(this.data, this.data?.FullClassification).length > 2 && this.state === 'search'))) {
+				// 	this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "90%");
+				// }
+				if (!this.showTaxData) this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "90%");
 				else { // if close display window tax
 					if (!this.isShowDetailsOpen && this.TariffListData?.length == 0) {// if display close and not exist data in tax list
 						this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "90%")
 					}
 					else {
-						this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "27%");
-						this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'white-space', 'nowrap');
-						this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'text-overflow', 'ellipsis');
+						if (this.screenWidth <= 1900) {
+							this.buildSetWidth();
+						}
+						else{
+							this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "27%");
+							this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'white-space', 'nowrap');
+							this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'text-overflow', 'ellipsis');
+						}
 					}
 				}
-			}
-			if (this.screenWidth <= 600) {
-				this.buildSetWidth();
 			}
 		});
 	}
@@ -209,7 +212,7 @@ export class DataRowComponent implements OnInit {
 	// Get current screen width
 	@HostListener('window:resize', ['$event'])
 	onResize(event: Event): void {
-		this.screenWidth = (event.target as Window).innerWidth;
+		this.screenWidth = (event.target as Window).innerWidth;	
 		this.buildSetWidth();
 	}
 
