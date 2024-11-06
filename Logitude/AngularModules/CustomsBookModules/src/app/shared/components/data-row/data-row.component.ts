@@ -121,26 +121,12 @@ export class DataRowComponent implements OnInit {
 			this.isShowDetailsOpen = value;
 			if (value) this.dynamicDivClick(); // when window open
 			else {
-
-				
-				// if (!(!this.isShowDetailsOpen && (this.TariffListCount > 0 && this.data?.CI_Parent_CustomsItemIDNum && this.ClassificationNoDisplay(this.data, this.data?.FullClassification).length > 2 && this.state === 'search'))) {
-				// 	this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "90%");
-				// }
-				if (!this.showTaxData) this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "90%");
-				else { // if close display window tax
-					if (!this.isShowDetailsOpen && this.TariffListData?.length == 0) {// if display close and not exist data in tax list
-						this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "90%")
-					}
-					else {
-						if (this.screenWidth <= 1900) {
-							this.buildSetWidth();
-						}
-						else{
-							this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "27%");
-							this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'white-space', 'nowrap');
-							this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'text-overflow', 'ellipsis');
-						}
-					}
+				if (!this.showTaxData || (!this.isShowDetailsOpen && this.TariffListData?.length === 0) || this.screenWidth <= 1900) 
+					this.buildSetWidth();
+				else {
+					this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "27%");
+					this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'white-space', 'nowrap');
+					this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'text-overflow', 'ellipsis');
 				}
 			}
 		});
@@ -212,31 +198,36 @@ export class DataRowComponent implements OnInit {
 	// Get current screen width
 	@HostListener('window:resize', ['$event'])
 	onResize(event: Event): void {
-		this.screenWidth = (event.target as Window).innerWidth;	
+		this.screenWidth = (event.target as Window).innerWidth;
+		console.log(this.screenWidth);
+		// if(this.isShowDetailsOpen) this.dynamicDivClick();
+		// else this.buildSetWidth();
 		this.buildSetWidth();
 	}
 
 	buildSetWidth() {
-		if (this.screenWidth <= 600) this.widthSmaller = true;
+		if (this.screenWidth <= 620) this.widthSmaller = true;
 		else this.widthSmaller = false;
 
 		// Set width:
 		if (this.showTaxData && this.screenWidth > 1399 && this.screenWidth < 1610) {
-			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "2%");
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "10%");
 		}
 		else if (this.showTaxData && this.screenWidth >= 1611 && this.screenWidth < 1750) {
-			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "8%");
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "16%");
 		}
 		else if (this.showTaxData && this.screenWidth >= 1751 && this.screenWidth < 1900) {
-			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "13%");
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "22%");
 		}
 		else if (this.showTaxData && this.screenWidth >= 1901 && this.screenWidth < 2100) {
-			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "20%");
-		}
-		else if (this.showTaxData && this.screenWidth >= 2101) {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "35%");
 		}
-
+		else if (this.showTaxData && this.screenWidth >= 2101 && this.screenWidth < 2250) {
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "40%");
+		}
+		else if (this.showTaxData && this.screenWidth >= 2250) {
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "50%");
+		}
 		else if (this.screenWidth <= 550) {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "60%");
 		}
@@ -250,7 +241,7 @@ export class DataRowComponent implements OnInit {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "80%");
 		}
 		else if (this.screenWidth > 990 && this.screenWidth <= 1350) {
-			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "85%");
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "83%");
 		}
 		else if (this.screenWidth > 1350 && this.screenWidth <= 1550) {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "90%");
