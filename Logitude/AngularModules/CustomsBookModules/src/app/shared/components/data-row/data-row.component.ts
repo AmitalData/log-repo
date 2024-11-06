@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, Input, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, Output, EventEmitter, Input, OnInit, ViewChild, ElementRef, Renderer2, HostListener } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faStar as faStarBold, faChevronLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { faStar, faCommentDots, faSquareCaretRight, faFileText } from '@fortawesome/free-regular-svg-icons';
@@ -44,8 +44,12 @@ export class DataRowComponent implements OnInit {
 	isSearchItemExistRemark: boolean = false;
 	showAddComment = this.addCommentService.getIsOpened();
 	selectedSearchBy: SearchBy = SearchBy.searchBy_form01;
+	screenWidth: number;
+	widthSmaller: boolean = false;
 
-	constructor(private addCommentService: AddCommentService, private renderer: Renderer2, private API_MainService: API_MainService, private searchService: SearchService) { }
+	constructor(private addCommentService: AddCommentService, private renderer: Renderer2, private API_MainService: API_MainService, private searchService: SearchService) {
+		this.screenWidth = window.innerWidth;
+	}
 
 	ngOnInit() {
 		this.getCustomsBookAgreementLevelData();
@@ -117,16 +121,24 @@ export class DataRowComponent implements OnInit {
 			this.isShowDetailsOpen = value;
 			if (value) this.dynamicDivClick(); // when window open
 			else {
-				if (!this.showTaxData) this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "90%");
+
+				// if (!this.showTaxData) this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "90%");
+				if (!(!this.isShowDetailsOpen && (this.TariffListCount > 0 && this.data?.CI_Parent_CustomsItemIDNum && this.ClassificationNoDisplay(this.data, this.data?.FullClassification).length > 2 && this.state === 'search'))) {
+					this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "90%");
+				}
 				else { // if close display window tax
 					if (!this.isShowDetailsOpen && this.TariffListData?.length == 0) {// if display close and not exist data in tax list
 						this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "90%")
-						return;
 					}
-					this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "27%");
-					this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'white-space', 'nowrap');
-					this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'text-overflow', 'ellipsis');
+					else {
+						this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "27%");
+						this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'white-space', 'nowrap');
+						this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'text-overflow', 'ellipsis');
+					}
 				}
+			}
+			if (this.screenWidth <= 600) {
+				this.buildSetWidth();
 			}
 		});
 	}
@@ -191,6 +203,59 @@ export class DataRowComponent implements OnInit {
 	showRulesClick() {
 		this.showRules = !this.showRules;
 		this.showRulesOpen.emit(true);
+	}
+
+
+	// Get current screen width
+	@HostListener('window:resize', ['$event'])
+	onResize(event: Event): void {
+		this.screenWidth = (event.target as Window).innerWidth;
+		this.buildSetWidth();
+	}
+
+	buildSetWidth() {
+		if (this.screenWidth <= 600) this.widthSmaller = true;
+		else this.widthSmaller = false;
+
+		// Set width:
+		if (this.showTaxData && this.screenWidth > 1399 && this.screenWidth < 1610) {
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "2%");
+		}
+		else if (this.showTaxData && this.screenWidth >= 1611 && this.screenWidth < 1750) {
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "8%");
+		}
+		else if (this.showTaxData && this.screenWidth >= 1751 && this.screenWidth < 1900) {
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "13%");
+		}
+		else if (this.showTaxData && this.screenWidth >= 1901 && this.screenWidth < 2100) {
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "20%");
+		}
+		else if (this.showTaxData && this.screenWidth >= 2101) {
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "35%");
+		}
+
+		else if (this.screenWidth <= 550) {
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "60%");
+		}
+		else if (this.screenWidth > 550 && this.screenWidth <= 800) {
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "65%");
+		}
+		else if (this.screenWidth > 800 && this.screenWidth <= 900) {
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "70%");
+		}
+		else if (this.screenWidth > 900 && this.screenWidth <= 990) {
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "80%");
+		}
+		else if (this.screenWidth > 990 && this.screenWidth <= 1350) {
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "85%");
+		}
+		else if (this.screenWidth > 1350 && this.screenWidth <= 1550) {
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "90%");
+		}
+		else if (this.screenWidth > 1550) {
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "95%");
+		}
+
 	}
 }
 
