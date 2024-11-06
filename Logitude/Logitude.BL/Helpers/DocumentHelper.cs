@@ -708,7 +708,7 @@ namespace Logitude.BL.Helpers
                                     {
                                         string email = HttpContext.Current.User.Identity.Name;
                                         UserRepository userRep = new UserRepository(tenant);
-                                        User printedBy = userRep.GetSingleUserByCodeOrEmailForTenant(null, email, tenant, false);
+                                        User printedBy = userRep.GetSingleUserByCodeOrEmail(null, email, tenant, false);
                                         copy.LastPrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                                         copy.LastPrintedByUserId = printedBy.Id;
                                         documentoutCopyRep.Update(copy);
