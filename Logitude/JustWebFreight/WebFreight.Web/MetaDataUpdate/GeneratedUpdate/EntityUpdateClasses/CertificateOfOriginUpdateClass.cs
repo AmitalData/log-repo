@@ -21,7 +21,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginUpdateClass
    {  		
-		public const string HashString = "04da9bcb636341f7c9c44f631ee30365";
+		public const string HashString = "2a421bebb59e981512c583a0b241c981";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5638,7 +5638,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode CertificateOfOriginTextCode_CustomsCertificateOfOriginOUpdatedItemInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.UpdatedItemInvoice", DefaultText = "The certificate tax has been updated in the accounts in the statement, but has not yet been approved",LocalDefaultText = @"מס התעודה עודכן בחשבונות בהצהרה , אך טרם אושר", ObjectTableId = CertificateOfOriginObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode CertificateOfOriginTextCode_CustomsCertificateOfOriginOIsChange = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.IsChange", DefaultText = "Is Change",LocalDefaultText = @"בוצעו שינויים בתעודה - יש לשדר למכס", ObjectTableId = CertificateOfOriginObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CertificateOfOriginTextCode_CustomsCertificateOfOriginOIsChange = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.IsChange", DefaultText = "Is Change",LocalDefaultText = @"בוצעו שינויים בתעודה שלא נקלטו במכס", ObjectTableId = CertificateOfOriginObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CertificateOfOriginTextCode_CustomsCertificateOfOriginOMarkIsReq = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.MarkIsReq", DefaultText = "Mark Is Req",LocalDefaultText = @"שדה סימונים ומספרים חובה למילוי", ObjectTableId = CertificateOfOriginObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
