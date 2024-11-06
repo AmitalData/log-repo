@@ -487,6 +487,23 @@ export class DeclarationSupplierInvoiceTabComponent
             } else {
                 this.IsAccumulated = false;
             }
+
+            if (this.EntityPM.Direction == 'E') {
+                // display the invoice document in the split screen
+                console.log(" --->> Getting related document filing ...");
+                this.supplierInvoiceExtendedPMService.GetDocumentFilingIdForForInvoice(this.EntityPM.Id, itemComponent.InvoiceCounterKey).subscribe((response:any) => {
+                    console.log("[Reponse] GetDocumentFilingIdForForInvoice: ", response);
+                    var result = response.Result;
+                    if (result) {
+                        let documentFilingId = response.Result;
+                        console.log("sending document filing document filing ...");
+                        DeclarationEventManager.DeclarationSplitDocumentSelection.emit(documentFilingId);
+                    }
+                    else {
+                        console.log("[!] No related document filing found!!");
+                    }
+                });
+            }
         }
         this.SelectedRow = itemComponent;
         this.SelectedRowB4Refresh = this.SelectedRow;
