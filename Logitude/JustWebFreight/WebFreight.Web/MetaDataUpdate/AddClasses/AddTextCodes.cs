@@ -51,7 +51,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                         LocalDefaultText = textCodeDetails.LocalDefaultText,
                         IsSpellChecked = textCodeDetails.IsSpellChecked,
                     };
-                    newTextCode.LocalDefaultText = TryConvertFromBase64(newTextCode.LocalDefaultText);
+                   // newTextCode.LocalDefaultText = TryConvertFromBase64(newTextCode.LocalDefaultText);
 
                     textCodeRepository.Add(newTextCode);
                     AddedTextCodes.Add(textCodeDetails.Code, newTextCode);
@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     IsSpellChecked = textCodeDetails.IsSpellChecked,
                 };
               
-                newTextCode.LocalDefaultText = TryConvertFromBase64(newTextCode.LocalDefaultText);
+                //newTextCode.LocalDefaultText = TryConvertFromBase64(newTextCode.LocalDefaultText);
 
                 addedTextCodes.Add(newTextCode);
                 return newTextCode;
