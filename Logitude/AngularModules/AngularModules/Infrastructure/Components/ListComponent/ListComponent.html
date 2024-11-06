@@ -313,32 +313,6 @@
             <td style="height: 21px; vertical-align:middle;">
                 <table>
                     <tr>
-
-                        <td *ngIf="IsSelectAllCheckboxVisible" style="height:26px;width:53px; ">
-                            <div style="border:1px solid #6A8299;width: 47px;border-radius: 3px;max-height: 26px;">
-                                <table>
-                                    <tr>
-
-                                        <td>
-                                            <div class="ActionButton" style="width: 35px;height:23px; ">
-                                                <CheckBox [IsChecked]="IsSelected" (Checked)="SelectAllRowsChecked($event)"></CheckBox>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="ToggleButton" tabindex="-1" style="width: 20px;height:23px;left:10px; border: none;">
-                                                <img src="./Images/ToggleIcon.png" style="float:left;" />
-                                                <div class="ToggleButtonMenu" style="width: 70px;top:26px;text-align:right">
-                                                    <button  style="text-align:right" (click)="SelectAllRowsChecked(true)">{{'Customs.General.O.SelectAll' | TextCodeTranslationPipe}}</button>
-                                                    <button  style="text-align:right" (click)="SelectAllRowsChecked(false)">{{'Customs.General.O.CancelSelect' | TextCodeTranslationPipe}}</button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </td>
-                        
                         <td *ngIf="IsSelectAllCheckboxVisible" style="height:26px;width:53px; ">
                             <div style="border:1px solid #6A8299;width: 47px;border-radius: 3px;max-height: 26px;">
                                 <table>
