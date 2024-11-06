@@ -710,7 +710,7 @@ namespace Logitude.BL.Helpers
                                         UserRepository userRep = new UserRepository(tenant);
                                         User printedBy = userRep.GetSingleUserByCodeOrEmail(null, email, tenant, false);
                                         copy.LastPrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                                        copy.LastPrintedByUserId = printedBy.Id;
+                                        copy.LastPrintedByUserId = printedBy?.Id;
                                         documentoutCopyRep.Update(copy);
                                         documentoutCopyRep.SubmitChanges();
                                     }
