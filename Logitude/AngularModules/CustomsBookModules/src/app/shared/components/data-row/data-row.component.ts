@@ -121,13 +121,14 @@ export class DataRowComponent implements OnInit {
 			this.isShowDetailsOpen = value;
 			if (value) this.dynamicDivClick(); // when window open
 			else {
-				if (!this.showTaxData || (!this.isShowDetailsOpen && this.TariffListData?.length === 0) || this.screenWidth <= 1900) 
-					this.buildSetWidth();
-				else {
-					this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "27%");
-					this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'white-space', 'nowrap');
-					this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'text-overflow', 'ellipsis');
-				}
+				this.buildSetWidth();
+				// if (!this.showTaxData || (!this.isShowDetailsOpen && this.TariffListData?.length === 0) || this.screenWidth <= 1900) 
+					// this.buildSetWidth();
+				// else {
+				// 	this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "27%");
+				// 	this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'white-space', 'nowrap');
+				// 	this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'text-overflow', 'ellipsis');
+				// }
 			}
 		});
 	}
@@ -199,7 +200,6 @@ export class DataRowComponent implements OnInit {
 	@HostListener('window:resize', ['$event'])
 	onResize(event: Event): void {
 		this.screenWidth = (event.target as Window).innerWidth;
-		console.log(this.screenWidth);
 		// if(this.isShowDetailsOpen) this.dynamicDivClick();
 		// else this.buildSetWidth();
 		this.buildSetWidth();
