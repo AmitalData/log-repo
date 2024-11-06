@@ -1,13 +1,13 @@
-<div class="mainTable_top">
+<div class="mainTable_top" [ngStyle]="{'right': (showDetails && screenWidth < 610)? '14px':'100px'}">
 	<h2>{{ service?.getTableTop(searchMode) }}
 		<span *ngIf="searchMode == 'search'">({{countSearchResult}}) </span>
 	</h2>
-	<ul class="CategoriesTable"  *ngIf="!showDetails">
+	<ul class="CategoriesTable" *ngIf="!showDetails">
 		<li *ngFor="let item of service?.getCategories()">
 			{{ item }}
 		</li>
 	</ul>
-	<div class="searchResults_top"  *ngIf="!showDetails">
+	<div class="searchResults_top" *ngIf="!showDetails">
 		<div class="searchResults_close">
 			<a role="button" (click)="clearResults.emit()">
 				<i role="img" aria-hidden="true" class="icon-close"></i>

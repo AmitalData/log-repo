@@ -148,12 +148,13 @@ a.searchResults_filterPop_clear {
 }
 
 .mainTable_list {
-	display: flex;
-	flex-direction: row;
-	width: 100%;
-	gap: 60px;
-	justify-content: space-between;
-	white-space: nowrap;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 60px;
+  /* gap: 3%;
+	justify-content: space-between; */
+  white-space: nowrap;
 }
 
 .mainTable_list .data_row_container {
@@ -181,6 +182,7 @@ a.searchResults_filterPop_clear {
 	min-height: 100vh;
 	max-height: 110vh;
 	overflow: auto;
+	/* overflow: hidden; */
 
 	&.active {
 		width: 100%;

@@ -200,9 +200,8 @@ export class DataRowComponent implements OnInit {
 	@HostListener('window:resize', ['$event'])
 	onResize(event: Event): void {
 		this.screenWidth = (event.target as Window).innerWidth;
-		// if(this.isShowDetailsOpen) this.dynamicDivClick();
-		// else this.buildSetWidth();
-		this.buildSetWidth();
+		if(this.isShowDetailsOpen) this.dynamicDivClick();
+		else this.buildSetWidth();
 	}
 
 	buildSetWidth() {
