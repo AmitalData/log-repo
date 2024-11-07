@@ -173,9 +173,12 @@ li {
 }
 
 ::ng-deep .mat-mdc-snack-bar-container {
-    position: absolute !important;
+    position: fixed !important;
+    right: 15% !important;
+    bottom: 15% !important;
+    /* position: absolute !important;
     top: 85vh !important;
-    left: 81vh !important;
+    left: 81vh !important; */
     background: #0071CE !important;
     width: fit-content !important;
     height: fit-content !important;

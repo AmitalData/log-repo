@@ -47,8 +47,10 @@ h1 {
 }
 
 .pageSearch_toggle {
-	min-width: 27vh;
-	width: 29vh;
+	/* min-width: 27vh;
+	width: 29vh; */
+	min-width: 212px;
+    max-width: 212px;
 	height: 30px;
 	margin-left: 15px;
 	background-color: white;
