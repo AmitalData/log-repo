@@ -4935,6 +4935,14 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"INVOICE_NO")
                     .HasMaxLength(50)
                     .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVDOC>()
+                .Property(p => p.SELLERID)
+                .HasMaxLength(36)
+                .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVDOC>()
+                .Property(p => p.SELLERNAME)
+                    .HasMaxLength(50)
+                    .HasColumnType("varchar2");
             #endregion
 
             #region GTBDOC
@@ -10967,6 +10975,125 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnType("varchar2");
 
             #endregion
+
+            #region GGGEXTSRVACT
+
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .HasKey(p => new { p.EXTSRVID, p.INST })
+                .ToTable("GGGEXTSRVACTs", "V5122");
+            // Properties:
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.EXTSRVID)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.INST)
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("bool");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PORT)
+                    .HasMaxLength(8)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.SERVER)
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.REFERENCE)
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.WINDOWSUSER)
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.BASEPATH)
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM1DESC)
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM1VALUE)
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM2DESC)
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM2VALUE)
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM3DESC)
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM3VALUE)
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM4DESC)
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM4VALUE)
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM5DESC)
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM5VALUE)
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.BASELOGPATH1)
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.BASELOGPATH2)
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.CONFIGURATIONPARAMS)
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.ENVID)
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.WINDOWSDOMAIN)
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM6DESC)
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM7DESC)
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM6VALUE)
+                    .HasColumnType("clob");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM7VALUE)
+                    .HasColumnType("clob");
+
+            #endregion
+
 
 
             #region Disabled conventions
