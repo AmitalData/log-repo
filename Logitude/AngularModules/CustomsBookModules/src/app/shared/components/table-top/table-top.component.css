@@ -98,3 +98,10 @@
 		display: flex !important;
 	}
 }
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+	.mainTable_top{
+		top: 230px;
+	}
+}

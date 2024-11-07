@@ -429,8 +429,7 @@ export class MainDisplayComponent implements OnInit {
 	@HostListener('window:resize', ['$event'])
 	onResize(event: Event): void {
 		this.screenWidth = (event.target as Window).innerWidth;
-		console.log(this.screenWidth);
-		
+		// console.log(this.screenWidth);
 	}
 }
 
