@@ -5,7 +5,7 @@
 }
 
 .mainTable_top>ul {
-	display: flex;
+	/* display: flex;
 	position: sticky;
 	align-items: center;
 	justify-content: center;
@@ -14,7 +14,25 @@
 	gap: 110px;
 	margin-top: 10px;
 	font-size: 12px;
+	overflow: hidden; */
+	
+	align-items: center;
+	font-weight: 700;
+	margin-top: 10px;
+	font-size: 12px;
 	overflow: hidden;
+	justify-content: space-evenly;
+	position: absolute;
+	/* bottom: 13px;
+	left: 62vh;
+	width: 82vh;
+	height: 22px; */
+	bottom: 5px;
+    /* left: 60vh; */
+    left: 40vh;
+    width: 82vh;
+    height: 22px;
+    gap: 20px;
 }
 
 .mainTable_top>ul>li {
@@ -53,9 +71,11 @@
 	top: -3px;
 	align-items: center;
 	text-decoration: none;
+
 	& i {
 		font-size: 15px;
 	}
+
 	span {
 		left: -20px;
 	}
@@ -63,5 +83,25 @@
 	&:hover {
 		color: var(--blue);
 		cursor: pointer;
+	}
+}
+
+
+@media (max-width: 1399px) {
+	.CategoriesTable {
+		display: none !important;
+	}
+}
+
+@media (min-width: 1400px) {
+	.CategoriesTable {
+		display: flex !important;
+	}
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+	.mainTable_top{
+		top: 230px;
 	}
 }

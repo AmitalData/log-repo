@@ -1,8 +1,8 @@
-import { AfterViewInit, Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, HostListener, Input, OnInit, SimpleChanges } from '@angular/core';
 import { DataRowComponent } from '../data-row/data-row.component';
 import { DetailsFrameComponent } from '../details-frame/details-frame.component';
 import { TableTopComponent, TableTopState } from '../table-top/table-top.component';
-import { NgFor, NgForOf, NgIf } from '@angular/common';
+import { NgFor, NgForOf, NgIf, NgStyle } from '@angular/common';
 import { trigger, style, animate, transition } from '@angular/animations';
 //@ts-ignore
 import { mockData } from '../../../../../mock_data';
@@ -17,7 +17,7 @@ import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo'
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
-	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent, FormsModule],
+	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent, FormsModule, NgStyle],
 	templateUrl: './main-display.component.html',
 	styleUrl: './main-display.component.css',
 	animations: [
@@ -55,7 +55,9 @@ export class MainDisplayComponent implements OnInit {
 	cbRequirementComputedDataList: CB_RequirementComputedDataList[];
 	isExpand: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService, private filterPopupService: FilterPopupService) { }
+	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService, private filterPopupService: FilterPopupService) {
+		this.screenWidth = window.innerWidth;
+	}
 	searchState: string = searchState.יבוא;
 
 	ngOnInit() {
@@ -420,6 +422,14 @@ export class MainDisplayComponent implements OnInit {
 	// Function to sort the list based on FullClassification
 	sortByFullClassification(items: CB_CustomsItemComputedDataList[]): CB_CustomsItemComputedDataList[] {
 		return items.sort((a, b) => this.romanToInt(a.FullClassification) - this.romanToInt(b.FullClassification));
+	}
+
+	screenWidth: number;
+	// Get current screen width
+	@HostListener('window:resize', ['$event'])
+	onResize(event: Event): void {
+		this.screenWidth = (event.target as Window).innerWidth;
+		// console.log(this.screenWidth);
 	}
 }
 

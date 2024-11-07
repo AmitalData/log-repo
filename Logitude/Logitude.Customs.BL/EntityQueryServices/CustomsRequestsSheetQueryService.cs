@@ -205,6 +205,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "DCAOCR",//פתיחת חשבון יצואן - OCR
 "2280",//תעודת מקור
 "2281",//משוב תעודת מקור
+"8317",//הנחיות סיווג
 
 
             };
@@ -379,7 +380,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8235", // תיקון הצהרה ברקע
 "2280",//תעודת מקור
 "2281",//משוב תעודת מקור
-            };
+    "8317",//הנחיות סיווג
+       
+                };
 
             //var settingPm = CustomsSettingQueryService.GetSettingByTenant(requestInProgressParams.Tenant);
             //if (settingPm.IsConnectedToUniFreight && 
@@ -545,6 +548,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB2715", // שידור מסמכים שגויים ראשי - מפצל
 "2280",//תעודת מקור
 "2281",//משוב תעודת מקור
+"8317",//הנחיות סיווג
 };
 
 
