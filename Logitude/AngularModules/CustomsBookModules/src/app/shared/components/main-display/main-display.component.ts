@@ -14,6 +14,7 @@ import { HeaderService, searchState } from '../app-header/service/header.service
 import { FilterPopupService, FiltersSearch } from '../filter-popup/service/filter-popup.service';
 import { AddCommentComponent } from '../add-comment/add-comment.component';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
+import { RomanToolService } from '../../services/roman-tool.service';
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
@@ -55,7 +56,7 @@ export class MainDisplayComponent implements OnInit {
 	cbRequirementComputedDataList: CB_RequirementComputedDataList[];
 	isExpand: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService, private filterPopupService: FilterPopupService) { }
+	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService, private filterPopupService: FilterPopupService, private romanTool: RomanToolService) { }
 	searchState: string = searchState.יבוא;
 
 	ngOnInit() {
@@ -362,7 +363,8 @@ export class MainDisplayComponent implements OnInit {
 		if (rootItems.length === 0) {
 			rootItems = data;
 		}
-		this.sortByFullClassification(rootItems);
+		
+		this.romanTool.sortArry(rootItems, 'FullClassification');
 
 		const orderedData = rootItems.map((rootItem) => {
 			const children = getChildren(rootItem);
@@ -399,8 +401,7 @@ export class MainDisplayComponent implements OnInit {
 		let rootItems = data.filter((item) => !item?.CI_Parent_CustomsItemIDNum);
 		if (rootItems.length == 0) return;
 
-		// order by FullClassification number
-		this.sortByFullClassification(rootItems);
+		this.romanTool.sortArry(rootItems, 'FullClassification');
 
 		const orderedData = rootItems.map((rootItem) => {
 			const children = getChildren(rootItem);
@@ -409,18 +410,6 @@ export class MainDisplayComponent implements OnInit {
 
 		return orderedData;
 	};
-
-	// Function to convert Roman numeral to integer
-	private romanToInt(roman: string): number {
-		const romanMap: { [key: string]: number } = { I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000 };
-		return roman.split('').reduce((num, char, i, arr) =>
-			num + (romanMap[char] < romanMap[arr[i + 1]] ? -romanMap[char] : romanMap[char]), 0);
-	}
-
-	// Function to sort the list based on FullClassification
-	sortByFullClassification(items: CB_CustomsItemComputedDataList[]): CB_CustomsItemComputedDataList[] {
-		return items.sort((a, b) => this.romanToInt(a.FullClassification) - this.romanToInt(b.FullClassification));
-	}
 }
 
 export enum FilterOption {

@@ -24,11 +24,20 @@
 							[maxlength]="text === SearchByValidation ? 11 : 100" [placeholder]="text"
 							(keyup.enter)="clickSearch()" [matAutocomplete]="auto"/>
 							<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onCustomsItemSelected(textToSearch)" [panelWidth]="1000">
-								@for (item of customsItemsAutocomplateList | async; track item) {
+							@for (classificationName of groupCustomsItemsAutocomplateList | async; track groupedItems) {
+								<mat-optgroup [label]="romanTool.romanToInt(classificationName).toString()">
+									<mat-option *ngFor="let item of groupedItems[classificationName]" [value]="item.FullClassification" class="no-wrap" dir="rtl">
+										<span [dir]="'rtl'"[innerHTML]='item.text' ></span>
+									</mat-option>
+								</mat-optgroup>
+							}
+							
+								<!-- @for (item of customsItemsAutocomplateList | async; track item) {
 									<mat-option [value]="item.FullClassification" class="no-wrap" dir="rtl">
 										<span [dir]="'rtl'"[innerHTML]='item.text' ></span>
 									</mat-option>
-								}
+									
+								} -->
 							</mat-autocomplete>
 					</div>
 
