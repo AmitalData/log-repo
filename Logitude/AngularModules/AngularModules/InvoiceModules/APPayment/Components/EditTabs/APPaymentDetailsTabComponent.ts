@@ -1394,13 +1394,13 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 this.UpdateCurrencyRates();
                 this.IsTaxUpdated = true;
                 this.LoadTaxPercentage();
-                if (value != null && DateTool.GetDateFromDate(value) > DateTool.GetDateFromDate(this.ValueDate) && this.PaymentMethodCode == "BT") {
-                    var msg = TextCodeTranslator.Translate("APPayment.M.ValueDateBiggerOrEqualRegisterDate");
-                    this.UIProperties.SetValidity("RegisterDate", this.ObjectTableName, false, msg);
-                } else {
-                    this.UIProperties.SetValidity("RegisterDate", this.ObjectTableName, true, '');
-                    this.UIProperties.SetValidity("ValueDate", this.ObjectTableName, true, '');
-                }
+                // if (value != null && DateTool.GetDateFromDate(value) > DateTool.GetDateFromDate(this.ValueDate) && this.PaymentMethodCode == "BT") {
+                //     var msg = TextCodeTranslator.Translate("APPayment.M.ValueDateBiggerOrEqualRegisterDate");
+                //     this.UIProperties.SetValidity("RegisterDate", this.ObjectTableName, false, msg);
+                // } else {
+                //     this.UIProperties.SetValidity("RegisterDate", this.ObjectTableName, true, '');
+                //     this.UIProperties.SetValidity("ValueDate", this.ObjectTableName, true, '');
+                // }
             }
         }
     }
@@ -1652,13 +1652,13 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                     this.UIProperties.SetRequired("ValueDate", this.ObjectTableName, true);
                 }
                 
-                if (value != null && DateTool.GetDateFromDate(value) < DateTool.GetDateFromDate(this.RegisterDate) && this.PaymentMethodCode == "BT") {
-                    var msg = TextCodeTranslator.Translate("APPayment.M.ValueDateBiggerOrEqualRegisterDate");
-                    this.UIProperties.SetValidity("ValueDate", this.ObjectTableName, false, msg);
-                } else {
-                    this.UIProperties.SetValidity("ValueDate", this.ObjectTableName, true, '');
-                    this.UIProperties.SetValidity("RegisterDate", this.ObjectTableName, true, '');
-                }
+                // if (value != null && DateTool.GetDateFromDate(value) < DateTool.GetDateFromDate(this.RegisterDate) && this.PaymentMethodCode == "BT") {
+                //     var msg = TextCodeTranslator.Translate("APPayment.M.ValueDateBiggerOrEqualRegisterDate");
+                //     this.UIProperties.SetValidity("ValueDate", this.ObjectTableName, false, msg);
+                // } else {
+                //     this.UIProperties.SetValidity("ValueDate", this.ObjectTableName, true, '');
+                //     this.UIProperties.SetValidity("RegisterDate", this.ObjectTableName, true, '');
+                // }
             }
         }
     }
