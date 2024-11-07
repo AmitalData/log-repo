@@ -2777,6 +2777,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             item.ContactId = glaccount.ContactId;
                             item.SalesmanUserId = glaccount.SalesmanUserId;
                             item.CollectorId = glaccount.CollectorId;
+                            item.ChangeSetOp = ChangeSetOperation.Update;
+
                             Update(item, true);
                         }
                     }
