@@ -1145,7 +1145,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
     LoadAllScreenData() {
         this.GetLTB();
-        this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
+       // this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
         this.GetNonReconciledTransactionsCount();
     }
 
