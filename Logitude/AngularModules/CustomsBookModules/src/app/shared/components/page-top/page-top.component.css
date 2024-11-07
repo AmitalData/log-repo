@@ -1,188 +1,192 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	-webkit-tap-highlight-color: transparent;
 }
 
 ul {
-    display: block;
-    list-style-type: disc;
-    margin: 0;
-    padding: 0;
+	display: block;
+	list-style-type: disc;
+	margin: 0;
+	padding: 0;
 }
 
 .pageTop {
-    display: flex;
-    flex-direction: column;
-    direction: rtl;
-    height: 68px;
-    background-color: transparent;
+	display: flex;
+	flex-direction: column;
+	direction: rtl;
+	height: 68px;
+	background-color: transparent;
 }
 
 .pageSearch {
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    flex-direction: row;
-    padding-top: 20px;
-    gap: 15px;
+	display: flex;
+	justify-content: end;
+	align-items: center;
+	flex-direction: row;
+	padding-top: 20px;
+	gap: 15px;
 }
 
 .pageTop h1 {
-    color: var(--blue);
-    font-size: 24px;
+	color: var(--blue);
+	font-size: 24px;
 }
 
 h1 {
-    text-align: right;
-    color: var(--blue);
+	text-align: right;
+	color: var(--blue);
 }
 
 .centeredContent {
-    display: flex;
-    justify-content: end;
-    flex-direction: column;
-    padding: 0 50px;
+	display: flex;
+	justify-content: end;
+	flex-direction: column;
+	padding: 0 50px;
 }
 
 .pageSearch_toggle {
-    min-width: 29vh;
-    height: 30px;
-    margin-left: 15px;
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.1);
+	/* min-width: 27vh;
+	width: 29vh; */
+	min-width: 212px;
+    max-width: 212px;
+	height: 30px;
+	margin-left: 15px;
+	background-color: white;
+	border-radius: 15px;
+	box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.1);
 }
 
 .pageSearch_toggle ul {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    border-radius: 15px;
+	display: flex;
+	width: 100%;
+	height: 100%;
+	border-radius: 15px;
 }
 
 ul,
 li {
-    list-style: none;
+	list-style: none;
 }
 
 .pageSearch_toggle li {
-    width: 50%;
-    outline: none !important;
+	width: 50%;
+	outline: none !important;
 }
 
 .pageSearch_toggle li label {
-    position: relative;
-    display: block;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-    outline: none !important;
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+	outline: none !important;
 }
 
 .pageSearch_toggle li label input {
-    position: absolute;
-    opacity: 0;
-    outline: none !important;
+	position: absolute;
+	opacity: 0;
+	outline: none !important;
 }
 
 .pageSearch_toggle li label input:checked+span {
-    background-color: var(--blue);
-    color: white;
-    font-weight: 700;
+	background-color: var(--blue);
+	color: white;
+	font-weight: 700;
 }
 
 .pageSearch_toggle li label span {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    font-size: 14px;
-    outline: none !important;
-    transition: all 0.2s ease-in-out;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	font-size: 14px;
+	outline: none !important;
+	transition: all 0.2s ease-in-out;
 }
 
 .pageSearch_toggle li label span.fst-btn {
-    border-radius: 0 15px 15px 0;
+	border-radius: 0 15px 15px 0;
 }
 
 .pageSearch_toggle li label span.lst-btn {
-    border-radius: 15px 0 0 15px;
+	border-radius: 15px 0 0 15px;
 }
 
 .pageSearch_toggle li label span:hover {
-    cursor: pointer;
-    box-shadow: 0px 0px 14px 5px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+	box-shadow: 0px 0px 14px 5px rgba(0, 0, 0, 0.1);
 }
 
 .pageSearch_form {
-    width: 450px;
-    height: 30px;
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.1);
+	min-width: 200px;
+	width: 450px;
+	height: 30px;
+	background-color: white;
+	border-radius: 15px;
+	box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.1);
 }
 
 .pageSearch_form fieldset {
-    padding-left: 76px;
-    position: relative;
-    border-radius: 15px;
+	padding-left: 76px;
+	position: relative;
+	border-radius: 15px;
 }
 
 .pageSearch_form fieldset>div.pageSearch_formField.shown {
-    opacity: 1;
+	opacity: 1;
 }
 
 .pageSearch_form fieldset>div.pageSearch_formField {
-    transition: opacity 0.4s ease-in-out;
-    opacity: 0;
+	transition: opacity 0.4s ease-in-out;
+	opacity: 0;
 }
 
 .pageSearch_form fieldset>div.pageSearch_formField input {
-    border: 1px solid transparent;
-    width: 100%;
-    height: 30px;
-    border-radius: 0 15px 15px 0;
-    padding-top: 2px;
-    font-size: 14px;
-    text-indent: 15px;
+	border: 1px solid transparent;
+	width: 100%;
+	height: 30px;
+	border-radius: 0 15px 15px 0;
+	padding-top: 2px;
+	font-size: 14px;
+	text-indent: 15px;
 }
 
 .pageSearch_form fieldset>button {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 76px;
-    height: 30px;
-    border: 0;
-    padding-top: 2px;
-    border-radius: 15px 0 0 15px;
-    background-color: var(--blue);
-    color: white;
-    font-weight: 700;
-    font-size: 14px;
-    transition: all 0.2s ease-in-out;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 76px;
+	height: 30px;
+	border: 0;
+	padding-top: 2px;
+	border-radius: 15px 0 0 15px;
+	background-color: var(--blue);
+	color: white;
+	font-weight: 700;
+	font-size: 14px;
+	transition: all 0.2s ease-in-out;
 }
 
 button {
-    cursor: pointer;
-    font-family: 'Rubik', sans-serif;
+	cursor: pointer;
+	font-family: 'Rubik', sans-serif;
 }
 
 fieldset {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    display: block;
-    width: 100%;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	display: block;
+	width: 100%;
 }
 
 [type='checkbox'],
 [type='radio'] {
-    box-sizing: border-box;
-    padding: 0;
+	box-sizing: border-box;
+	padding: 0;
 }
 
 a,
@@ -195,49 +199,64 @@ button,
 select,
 textarea,
 li {
-    outline: none !important;
+	outline: none !important;
 }
 
 .pageSearch_toggle li label {
-    position: relative;
-    display: block;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
 }
 
 ::ng-deep mat-option.no-wrap span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap !important;
-    margin-left: auto;
-    margin-right: inherit !important;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap !important;
+	margin-left: auto;
+	margin-right: inherit !important;
 }
 
 /* Media Queries for Responsive Design */
-@media (max-width: 768px) {
-    .pageTop {
-        height: auto;
-    }
+@media (max-width: 800px) {
+	.pageTop {
+		height: auto;
+	}
 
-    .centeredContent {
-        padding: 0 20px;
+	.centeredContent {
+		padding: 0 20px;
 		/* width: 62vh; */
 		width: 428px;
-    }
+	}
 
-    .pageSearch {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
+	.pageSearch {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 10px;
+	}
 
-    .pageSearch_toggle {
-        width: 100%;
-        margin-left: 0;
-    }
+	.pageSearch_toggle {
+		width: 100%;
+		margin-left: 0;
+	}
 
-    .pageSearch_form {
-        width: 100%;
-    }
+	.pageSearch_form {
+		width: 100%;
+	}
+}
+
+@media (min-width: 801px) {
+	.centeredContent {
+		padding: 0;
+	}
+	.pageSearch_form{
+		width: 350px;
+	}
+}
+
+@media (min-width: 1105px) {
+	.centeredContent {
+		padding: 0 50px;
+	}
 }

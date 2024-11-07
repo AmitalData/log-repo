@@ -22,7 +22,6 @@ export class TableTopComponent {
 
 	constructor() {
 		this.service = new TableTopService();
-		this.screenWidth = window.innerWidth;
 	}
 
 	filterClickEvent(filters: FiltersSearch) {
@@ -30,12 +29,6 @@ export class TableTopComponent {
 	}
 
 
-	screenWidth: number;
-	// Get current screen width
-	@HostListener('window:resize', ['$event'])
-	onResize(event: Event): void {
-		this.screenWidth = (event.target as Window).innerWidth;
-	}
 }
 export enum TableTopState {
 	Search = 'search',

@@ -1,4 +1,4 @@
-<div class="mainTable_top" [ngStyle]="{'right': (showDetails && screenWidth < 610)? '14px':'100px'}">
+<div class="mainTable_top">
 	<h2>{{ service?.getTableTop(searchMode) }}
 		<span *ngIf="searchMode == 'search'">({{countSearchResult}}) </span>
 	</h2>
