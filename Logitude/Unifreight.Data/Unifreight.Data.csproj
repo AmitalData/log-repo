@@ -264,6 +264,7 @@
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUCRREQ.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUCUSTITEM.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQTEAM.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GGGEXTSRVACT.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.UNIFBASICPOCO.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUFILEM.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUMESSAGE.cs" />
