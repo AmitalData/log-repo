@@ -2108,7 +2108,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("APPayment.M.InvalidSelectedTransctionsDifference"));
         }
 
-        if (this.GLAccountPM.CardId === undefined && this.GLAccountPM.ParentCurrencyGLAccountCardId === undefined) {
+        if (AppTool.IsNullOrEmpty(this.GLAccountPM.CardId) && AppTool.IsNullOrEmpty(this.GLAccountPM.ParentCurrencyGLAccountCardId)) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("TaxDeductionReport.O.AccountWithoutVendor"));
         }
 
