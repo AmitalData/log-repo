@@ -19,27 +19,21 @@ using RequestContentHeader = UnifreightIIG.Common.CustomItemDetailsServiceRefere
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
-    public class Get_CB_MSG_8317_CustomItemClassifGuidanceRequestService : RequestServiceBase<CB_NG_8317_CustomItemClassifGuidanceIn, GenericRequestParams>
+    public class Get_CB_MSG_8317_CustomItemClassifGuidanceRequestService : RequestServiceBase<CB_NG_8317_CustomItemClassifGuidanceIn, GetCustomItemClassifGuidanceRequestParams>
     {
-        public override CB_NG_8317_CustomItemClassifGuidanceIn GetRequest(GenericRequestParams requestParams)
+        public override CB_NG_8317_CustomItemClassifGuidanceIn GetRequest(GetCustomItemClassifGuidanceRequestParams requestParams)
         {
-            var myMsg = new CB_NG_8317_CustomItemClassifGuidanceIn();
-            //myMsg.RequestContentHeader = new RequestContentHeader() { Convertor = "1", RecieverID = new int[] { 1 } };
+            CB_NG_8317_CustomItemClassifGuidanceIn myMsg = new CB_NG_8317_CustomItemClassifGuidanceIn();
+           
+            myMsg.CIClassifGuidanceIn = new UnifreightIIG.Common.CustomItemClassifGuidanceServiceReference.CustomsBookItemHeaderIn();
+           
+            myMsg.CIClassifGuidanceIn.customsItemId = requestParams.CustomItemId;
+            myMsg.CIClassifGuidanceIn.customsItemIdSpecified = true;
+            myMsg.CIClassifGuidanceIn.validToDate= requestParams.ValidToDate;
 
-            //myMsg.CIDetailsHeaderIn = new CustomsBookItemHeaderIn();
-            //if (requestParams.Classification.Length > 10)
-            //{
-            //    requestParams.Classification = requestParams.Classification.Substring(0, 10);
-            //}
-            //myMsg.CIDetailsHeaderIn.classification = requestParams.Classification;
-            //myMsg.CIDetailsHeaderIn.customsBookType = requestParams.CustomsBookType;
-            //myMsg.CIDetailsHeaderIn.validToDate = requestParams.ValidToDate;
-            //myMsg.CIDetailsHeaderIn.customsBookTypeSpecified = true;
-            //this.MyRequestSheetParam = new RequestSheetParam();
-            //this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.CustomsItem");
-            //this.MyRequestSheetParam.EntityId1 = requestParams.LoggingEntityId2;
-            ////this.MyRequestSheetParam.CustomFileNo= requestParams.c
-            //this.MyRequestSheetParam.RequestDescription = "נתוני פרט מכס";
+
+            this.MyRequestSheetParam = new RequestSheetParam();
+            this.MyRequestSheetParam.RequestDescription = "הנחיות סיווג";
             return myMsg;
 
         }

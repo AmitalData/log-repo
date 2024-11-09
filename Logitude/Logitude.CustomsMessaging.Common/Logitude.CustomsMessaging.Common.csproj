@@ -79,6 +79,7 @@
     <Compile Include="RequestParams\GuaranteeRequestParams.Shared.cs" />
     <Compile Include="RequestParams\CreditQueryRequestParams.Shared.cs" />
     <Compile Include="RequestParams\MessageWaitingRequestParams.cs" />
+    <Compile Include="RequestParams\GetCustomItemClassifGuidanceRequestParams.Shared.cs" />
     <Compile Include="RequestParams\NewVehicleRequestParams.Shared.cs" />
     <Compile Include="RequestParams\RTGSInfoQueryRequestParams.Shared.cs" />
     <Compile Include="RequestParams\SendALLDelayFormParams.Shared.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="RequestParams\VE_MSG010_VendorInsertUpdateDeleteMessageRequestParams.Shared.cs" />
     <Compile Include="RequestParams\VE_MSG013_VendorAddCommunicationDeviceRequestParams.Shared.cs" />
     <Compile Include="RequestParams\VE_MSG051_VendorSearchByCustomsAgentRequestParams.Shared.cs" />
+    <Compile Include="ResponseData\CustomItemClassifGuidanceResponseData.Shared.cs" />
     <Compile Include="ResponseData\UpsertSupplierInvioceByOcrResponseData.Shared .cs" />
     <Compile Include="ResponseData\AddAttachmentResponseData.Shared.cs" />
     <Compile Include="ResponseData\BlockListInWarehouseResponseData.Shared.cs" />
