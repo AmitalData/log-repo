@@ -123,7 +123,7 @@ export class DataRowComponent implements OnInit {
 			else {
 				this.buildSetWidth();
 				// if (!this.showTaxData || (!this.isShowDetailsOpen && this.TariffListData?.length === 0) || this.screenWidth <= 1900) 
-					// this.buildSetWidth();
+				// this.buildSetWidth();
 				// else {
 				// 	this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "27%");
 				// 	this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'white-space', 'nowrap');
@@ -200,31 +200,31 @@ export class DataRowComponent implements OnInit {
 	@HostListener('window:resize', ['$event'])
 	onResize(event: Event): void {
 		this.screenWidth = (event.target as Window).innerWidth;
-		if(this.isShowDetailsOpen) this.dynamicDivClick();
+		if (this.isShowDetailsOpen) this.dynamicDivClick();
 		else this.buildSetWidth();
 	}
 
 	buildSetWidth() {
 		if (this.screenWidth <= 620) this.widthSmaller = true;
 		else this.widthSmaller = false;
-
+		let listLength = this.TariffListData?.length > 0 ? true : false;
 		// Set width:
-		if (this.showTaxData && this.screenWidth > 1399 && this.screenWidth < 1610) {
+		if (this.showTaxData && listLength && this.screenWidth > 1199 && this.screenWidth < 1300) {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "10%");
 		}
-		else if (this.showTaxData && this.screenWidth >= 1611 && this.screenWidth < 1750) {
+		else if (this.showTaxData && listLength && this.screenWidth >= 1301 && this.screenWidth < 1350) {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "16%");
 		}
-		else if (this.showTaxData && this.screenWidth >= 1751 && this.screenWidth < 1900) {
-			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "22%");
+		else if (this.showTaxData && listLength && this.screenWidth >= 1351 && this.screenWidth < 1700) {
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "25%");
 		}
-		else if (this.showTaxData && this.screenWidth >= 1901 && this.screenWidth < 2100) {
-			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "35%");
-		}
-		else if (this.showTaxData && this.screenWidth >= 2101 && this.screenWidth < 2250) {
+		else if (this.showTaxData && listLength && this.screenWidth >= 1701 && this.screenWidth < 1900) {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "40%");
 		}
-		else if (this.showTaxData && this.screenWidth >= 2250) {
+		else if (this.showTaxData && listLength && this.screenWidth >= 1901 && this.screenWidth < 2250) {
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "45%");
+		}
+		else if (this.showTaxData && listLength && this.screenWidth >= 2250) {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "50%");
 		}
 		else if (this.screenWidth <= 550) {

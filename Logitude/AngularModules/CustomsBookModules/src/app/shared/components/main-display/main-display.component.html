@@ -2,7 +2,7 @@
 	<app-add-comment class="addCommentSlider" />
 	<div class="centeredContent">
 		<div class="mainTable_list">
-			<div class="data_row_container" [class.active]="!showDetails"  [ngStyle]="{'display': (showDetails && (screenWidth < 1260)) ? 'none' : 'flex'}">
+			<div class="data_row_container" [class.active]="!showDetails"  [ngStyle]="{'display': (showDetails && (screenWidth < 750)) ? 'none' : 'flex'}">
 				<app-table-top class="app-table-top" [class.active]="!showDetails"
 					(clearResults)="handleClearResultsClick()" (filterClick)="filtersSearchClick($event)"
 					[countSearchResult]="countSearchResult" [searchMode]="searchMode" [showDetails]="showDetails" />
@@ -151,6 +151,7 @@
 				</ng-container>
 				<!-- </div> -->
 			</div>
+			<div style="width: 60px;" [ngStyle]="{'display': (showDetails && (screenWidth < 1300)) ? 'none' : 'flex'}"></div>
 			<div class="details_frame_container" [class.active]="showDetails">
 				<app-details-frame (showDetails)="updateShowDetailsClick()" [showDetailsStatus]="showDetails"
 					[currentItem]="currentItem" [showCommentsIsOpen]="showCommentsIsOpen"

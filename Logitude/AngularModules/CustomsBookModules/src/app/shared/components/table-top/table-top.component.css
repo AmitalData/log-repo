@@ -5,17 +5,6 @@
 }
 
 .mainTable_top>ul {
-	/* display: flex;
-	position: sticky;
-	align-items: center;
-	justify-content: center;
-	width: 50%;
-	font-weight: 700;
-	gap: 110px;
-	margin-top: 10px;
-	font-size: 12px;
-	overflow: hidden; */
-	
 	align-items: center;
 	font-weight: 700;
 	margin-top: 10px;
@@ -23,16 +12,14 @@
 	overflow: hidden;
 	justify-content: space-evenly;
 	position: absolute;
-	/* bottom: 13px;
-	left: 62vh;
-	width: 82vh;
-	height: 22px; */
 	bottom: 5px;
-    /* left: 60vh; */
-    left: 40vh;
-    width: 82vh;
-    height: 22px;
-    gap: 20px;
+	/* left: 40vh; */
+	/* width: 82vh; */
+	left: 353px;
+	max-width: 543px;
+    min-width: 543px;
+	height: 22px;
+	gap: 20px;
 }
 
 .mainTable_top>ul>li {
@@ -45,7 +32,8 @@
 	/* top: 220px; */
 	position: absolute;
 	top: 75px;
-	right: 100px;
+	margin-right: 100px;
+	/* right: 100px; */
 	width: 100%;
 	display: flex;
 	align-items: center;
@@ -87,14 +75,32 @@
 }
 
 
-@media (max-width: 1399px) {
+@media (max-width: 1199px) {
 	.CategoriesTable {
 		display: none !important;
 	}
 }
 
-@media (min-width: 1400px) {
+@media (min-width: 1200px) {
 	.CategoriesTable {
 		display: flex !important;
+	}
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 800px) {
+	.mainTable_top {
+		top: 230px;
+	}
+}
+
+@media (min-width: 801px) {
+	.mainTable_top {
+		top: 176px;
+	}
+}
+@media (min-width: 1010px) {
+	.mainTable_top {
+		top: 75px;
 	}
 }

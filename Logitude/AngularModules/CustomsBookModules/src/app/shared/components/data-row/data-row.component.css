@@ -115,7 +115,9 @@ i[role='img'][aria-hidden='true'] {
 	bottom: 13px;
 	/* left: 38vh; */
 	left: 150px;
-	width: 82vh;
+	/* width: 82vh; */
+	max-width: 543px;
+    min-width: 543px;
 	height: 22px;
 }
 
@@ -199,13 +201,13 @@ i[role='img'][aria-hidden='true'] {
 	display: inline-block;
 }
 
-@media (max-width: 1399px) {
+@media (max-width: 1199px) {
 	.item_details {
 		display: none;
 	}
 }
 
-@media (min-width: 1400px) {
+@media (min-width: 1200px) {
 	.item_details {
 		display: flex;
 	}
