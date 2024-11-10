@@ -14,15 +14,15 @@ using UnifreightIIG.Common.TheGateway;
 namespace Logitude.CustomsMessaging.MessagingServices
 {
     public class DCAInGet_CB_MSG_8317_CustomItemClassifGuidanceMessagingService : MessagingServiceBase<
-        GenericRequestParams,
-        INF_MSG_GenericResponseData,
+        GetCustomItemClassifGuidanceRequestParams,
+        CustomItemClassifGuidanceResponseData,
         CB_NG_8317_CustomItemClassifGuidanceIn,
         CB_NG_8317_CustomItemClassifGuidanceOut,
         Get_CB_MSG_8317_CustomItemClassifGuidanceRequestService,
         Get_CB_MSG_8317_CustomItemClassifGuidanceResponseService, 
         DCAInRequestHeader>
     {
-        protected override CB_NG_8317_CustomItemClassifGuidanceOut CallWS(CB_NG_8317_CustomItemClassifGuidanceIn customRequest, GenericRequestParams requestParams, out string exceptionMessage)
+        protected override CB_NG_8317_CustomItemClassifGuidanceOut CallWS(CB_NG_8317_CustomItemClassifGuidanceIn customRequest, GetCustomItemClassifGuidanceRequestParams requestParams, out string exceptionMessage)
         {
             exceptionMessage = null; // to check            
             var response = new CB_NG_8317_CustomItemClassifGuidanceOut();
@@ -46,16 +46,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
             get { return "8317"; }
         }
 
-        protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(CB_NG_8317_CustomItemClassifGuidanceOut customsResponse)
+        protected override GetCustomItemClassifGuidanceRequestParams CreateDefaultRequestParamsFromCustomsResponse(CB_NG_8317_CustomItemClassifGuidanceOut customsResponse)
         {
-            var tableName = "Customs.Declaration";
-
-            var myGenericRequestParams = new GenericRequestParams()
-            {
-                LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName(tableName),
-                //LoggingEntityId = customsResponse.DebtNotificationMessag.debtNotificationID.ToString()
-            };
-            return myGenericRequestParams;
+            return null;
         }
     }
 }

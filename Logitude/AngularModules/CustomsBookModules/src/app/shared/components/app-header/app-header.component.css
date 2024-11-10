@@ -153,16 +153,19 @@ i[role='img'][aria-hidden='true'] {
 		display: flex;
 		width: 60%;
 	}
-	.app-page-top-box{
+
+	.app-page-top-box {
 		width: 50%;
 	}
 }
+
 @media (min-width: 1320px) {
 	.page-top-box {
 		display: block;
 		width: 100%;
 	}
-	.app-page-top-box{
+
+	.app-page-top-box {
 		width: 50%;
 	}
 }
