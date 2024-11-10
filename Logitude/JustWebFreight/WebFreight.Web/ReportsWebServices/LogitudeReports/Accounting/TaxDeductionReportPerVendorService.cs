@@ -85,7 +85,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private TaxDeductionReportData BuildDataProvider()
         {
             TaxDeductionReportData deductionReportPerVendorDataProvider = new TaxDeductionReportData();
-            TaxDeductionReportDataProvider deductionReportDataProvider = new TaxDeductionReportDataProvider(new TaxDeductionReportPM() , tenant, taxDeductionPerVendorReportParameters);
+            TaxDeductionReportDataProvider deductionReportDataProvider = new TaxDeductionReportDataProvider(new Logitude.Accounting.Def.EntityPMs.TaxDeductionReportPM() , tenant, taxDeductionPerVendorReportParameters);
 
             deductionReportPerVendorDataProvider = deductionReportDataProvider.GetTaxDeductionReportData();
 
