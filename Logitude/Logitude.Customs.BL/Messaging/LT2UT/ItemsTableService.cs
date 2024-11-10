@@ -4,6 +4,7 @@ using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.Customs.BL.TraceEvents;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Def.Messaging.Customs;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -112,9 +113,10 @@ namespace Logitude.Customs.BL.Messaging.LT2UT
    )
 ));
                 requestData = doc.ToString(SaveOptions.None);
-
+                var id=CommCounterUtil.GetUnique30(DateTime.Now);
                 var myYCULTASKPM = new YCULTASKPM()
                 {
+                    TASKID= id,
                     ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                     STATUS = "W",
                     REQUESTDATA = requestData,
@@ -141,6 +143,7 @@ namespace Logitude.Customs.BL.Messaging.LT2UT
 
                 var myGGGQPM = new GGGQPM()
                 {
+                    QUEID = id,
                     ChangeSetOp = ChangeSetOperation.Insert,
                     ORIGINQUE = "LGT", //LugitudeRequest
                     STATUS = "1",
