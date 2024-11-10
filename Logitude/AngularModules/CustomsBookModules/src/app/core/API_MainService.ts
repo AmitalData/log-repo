@@ -49,6 +49,10 @@ export class API_MainService extends BaseService {
 	}
 
 
+	GetTenantFromCustomsSettings() {
+		const url = `${this._apiUrl}CB_CustomsItemExtended/GetTenantFromCustomsSettings`;
+		return this.Get(url);
+	}
 	GetCustomItemClassifGuidance(customsItemId: number, tenant: number) {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomItemClassifGuidance?customsItemId=${customsItemId}&tenant=${tenant}`;
 		return this.Get(url);

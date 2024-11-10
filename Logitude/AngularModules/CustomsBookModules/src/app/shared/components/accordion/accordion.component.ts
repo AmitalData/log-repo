@@ -52,8 +52,20 @@ export class AccordionComponent implements OnInit {
         this.resetData();
         this.buildAgreementsList(data?.agreementsList);
         this.buildRegularityRequirementList();
-        // TODO: Cancel the hard coded tenant and use the logged in user tenant:
-        this.GetDataCustomItemClassifGuidance(this.customsItemId, SessionInfo.LoggedUserTenant == 0 ? 6 : SessionInfo.LoggedUserTenant);
+
+        if (SessionInfo.LoggedUserTenant != 0)
+          this.GetDataCustomItemClassifGuidance(this.customsItemId, SessionInfo.LoggedUserTenant);
+        else {
+          this.API_MainService.GetTenantFromCustomsSettings().subscribe(
+            (data: any) => {
+              const tenant: number = data?.body;              
+              this.GetDataCustomItemClassifGuidance(this.customsItemId, tenant);
+            },
+            (error) => {
+              console.log(error.message);
+            }
+          );
+        }
       }
     });
   }
@@ -145,7 +157,6 @@ export class AccordionComponent implements OnInit {
   GetDataCustomItemClassifGuidance(customsItemId: number, tenant: number) {
     this.API_MainService.GetCustomItemClassifGuidance(customsItemId, tenant).subscribe(
       (data: any) => {
-        console.log(data);
         const result: CustomItemClassifGuidanceResult[] = data?.body?.CustomItemClassifGuidanceList;
         if (!result) return;
         this.MainEntity.CustomItemClassifGuidanceResult = result;
