@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.BL.Helpers;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Def.EntityPMs;
@@ -19,8 +20,12 @@ namespace WebFreight.Web.Controllers.WebServices.Services
     {
         public static HttpResponseMessage Send(int tenant, string interfacename, object body, Dictionary<string, string> prameters)
         {
-            CustomsPartnerFtpPM cpftp = new CustomsPartnerFtpQueryService(tenant).GetBy(tenant, interfacename);
-            WebApiDefinitionDTO dtoWebApiDefinition = ProxyUtil.JsonConvertDeserializeTyped<WebApiDefinitionDTO>(cpftp.CommunicationDetails);
+            WebApiDefinitionDTO dtoWebApiDefinition = CacheHelper.GetFromCache("MamanInterfaceData", () =>
+            {
+                CustomsPartnerFtpPM cpftp = new CustomsPartnerFtpQueryService(tenant).GetBy(tenant, interfacename);
+                return ProxyUtil.JsonConvertDeserializeTyped<WebApiDefinitionDTO>(cpftp.CommunicationDetails);
+            });
+
             string bodyString = JsonConvert.SerializeObject(new 
             {
                 Url = dtoWebApiDefinition.WEBAPIURL,
