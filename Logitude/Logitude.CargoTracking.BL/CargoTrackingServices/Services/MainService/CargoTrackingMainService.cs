@@ -540,6 +540,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 dataRow[((DataColumn)listCols[i])] = bulkDataPreperation.SqlDataReader[i];
             }
             CargoTrackingSearchService.CreateSearchReferencesForShipment(dataRow, bulkDataPreperation, tableName);
+            if (dataRow != null) {
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("AddValidRecoredToDataTable!!!   ShipmentNumber: " + dataRow["ShipmentNumber"] + ",Tenant: " + dataRow["Tenant"]);
+            }
+
+
             bulkDataPreperation.MainDataTable.Rows.Add(dataRow);
         }
 
@@ -549,6 +554,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             for (int i = 0; i < listCols.Count; i++)
             {
                 dataRow[((DataColumn)listCols[i])] = bulkDataPreperation.SqlDataReader[i];
+            }
+            if (dataRow != null)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("AddNotValidRecoredToRecoredsNotValidatedList!!!   ShipmentNumber: " + dataRow["ShipmentNumber"] + ",Tenant: " + dataRow["Tenant"]);
             }
             KeysForRecoredsNotValidated.Add((string)dataRow[bulkDataPreperation.CargoTrackingTable.KeyName]);
         }
