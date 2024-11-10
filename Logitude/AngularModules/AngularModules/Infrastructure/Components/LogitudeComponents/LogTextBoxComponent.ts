@@ -1581,8 +1581,11 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                                         this.DataContext[this.ObjectFieldName] = customFieldClass;
                                     }
                                     else {
-
-                                        this.DataContext[this.ObjectFieldName] = value;
+                                        if (!this.compareAndActIfEqual(value, this.DataContext[this.ObjectFieldName], this.DigitsAfterPoint)) 
+                                           this.DataContext[this.ObjectFieldName] = value;
+                                        else{
+                                            this.TextValue=value
+                                        }
                                     }
                                 }
                             }
@@ -1666,7 +1669,15 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
             this.ValueChanged.emit(this.TextValue);
         }
     }
-
+    private compareAndActIfEqual(value1: number, value2: number, digitsAfterPoint: number) {
+        // Round both values to the specified number of digits after the decimal point
+        if(AppTool.IsNullOrEmpty(digitsAfterPoint)) return false
+        const factor = Math.pow(10, digitsAfterPoint);
+        const roundedValue1 = Math.round(value1 * factor) / factor;
+        const roundedValue2 = Math.round(value2 * factor) / factor;
+        return roundedValue1 === roundedValue2;
+       
+    }
     private ValidateNumberCustomField(customFieldClass: CustomFieldClass, fieldValidator: FieldValidator) {
         customFieldClass.IsNotValid = !fieldValidator.IsValidCustomNumberValue(this.ObjectField, this.TextValue);
         customFieldClass.Value = customFieldClass.IsNotValid ? this.TextValue : customFieldClass.SetFieldDataType(this.ObjectField, this.TextValue);
