@@ -5,6 +5,8 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools.Utils;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -15,20 +17,35 @@ namespace WebFreight.Web.Controllers.WebServices.Services
 {
     public class MamanService
     {
-        public static HttpResponseMessage Send(int tenant, string interfacename, object body)
+        public static HttpResponseMessage Send(int tenant, string interfacename, object body, Dictionary<string, string> prameters)
         {
             CustomsPartnerFtpPM cpftp = new CustomsPartnerFtpQueryService(tenant).GetBy(tenant, interfacename);
             WebApiDefinitionDTO dtoWebApiDefinition = ProxyUtil.JsonConvertDeserializeTyped<WebApiDefinitionDTO>(cpftp.CommunicationDetails);
             string bodyString = JsonConvert.SerializeObject(new 
             {
                 Url = dtoWebApiDefinition.WEBAPIURL,
+                UrlReplacment = GetReplacmentUrl(interfacename, tenant),
                 Username = dtoWebApiDefinition.User,
                 dtoWebApiDefinition.Password,
                 Body = body
             });
 
-            HttpResponseMessage res = Send(dtoWebApiDefinition.ServiceUrl, bodyString, tenant, HttpMethod.Post);
+            string serviceUrl = dtoWebApiDefinition.ServiceUrl + "?" + string.Join("&", prameters.ToList().Select(p => $"{p.Key}={p.Value}"));
+
+            HttpResponseMessage res = Send(serviceUrl, bodyString, tenant, HttpMethod.Post);
             return res;
+        }
+
+        private static string GetReplacmentUrl(string interfacename, int tenant)
+        {
+            if(interfacename == "IMPORT_ADD_OWNER")
+            {
+                CustomsPartnerFtpPM cpftp = new CustomsPartnerFtpQueryService(tenant).GetBy(tenant, "IMPORT_PRINT_TRACKING");
+                WebApiDefinitionDTO dtoWebApiDefinition = ProxyUtil.JsonConvertDeserializeTyped<WebApiDefinitionDTO>(cpftp.CommunicationDetails);
+                return dtoWebApiDefinition.WEBAPIURL;
+            }
+
+            return null;
         }
 
         public static HttpResponseMessage Send(string url, string body, int tenant, HttpMethod method)
