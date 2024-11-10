@@ -93,7 +93,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             bool addAllChatOfAccountTyps = true;
             if (addAllChatOfAccountTyps)
             {
-                _QUnionAllMoneyData = AddAllChatOfAccountTypEmptyRows(_QUnionAllMoneyData);
+                _QUnionAllMoneyData = AddAllChatOfAccountTypEmptyRows(_QUnionAllMoneyData, _TrailReportParam.ChartOfAccountsTypeCodeList);
             }
 
             if (testNow)
@@ -709,10 +709,21 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
 
-        IQueryable<TrailReportTemp> AddAllChatOfAccountTypEmptyRows(IQueryable<TrailReportTemp> _QUnionAllMoneyData)
+        IQueryable<TrailReportTemp> AddAllChatOfAccountTypEmptyRows(IQueryable<TrailReportTemp> _QUnionAllMoneyData, List<string> chartOfAccountsTypes)
         {
+            var allChartTypes = _AccountingContext.ChartOfAccountsTypes.AsQueryable();
+            IQueryable<Data.EntityPOCOs.ChartOfAccountsType> chartTypes = null;
+            if (chartOfAccountsTypes != null && chartOfAccountsTypes.Count > 0)
+            {
+                chartTypes = allChartTypes.Where(coa => chartOfAccountsTypes.Contains(coa.Code));
+            }
+            else
+            {
+                chartTypes = allChartTypes;
+            }
+
             _QUnionAllMoneyData = _QUnionAllMoneyData.Concat(
-            _AccountingContext.ChartOfAccountsTypes.Select(r => new TrailReportTemp()
+            chartTypes.Select(r => new TrailReportTemp()
             {
                 AccountId_COAType = r.Code,
 

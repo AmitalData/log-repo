@@ -136,7 +136,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             var qsChartOfAccount = new ChartOfAccountQueryService(_AccountingContext);
             _QAllChartOfAccountFlattenBy5LevelofHierarchy = //Flatten ChartOfAccount By 5 Level hierarchy
                 qsChartOfAccount
-                .GetQChartOfAccount5LevelM(_TrailReportParam.Tenant, null, null
+                .GetQChartOfAccount5LevelM(_TrailReportParam.Tenant, _TrailReportParam.ChartOfAccountsTypeCodeList, _TrailReportParam.ChartOfAccountsIdList
                 ///,_TrailReportParam.MyTrailReportLevel == TrailReportLevel.ChartofaccountType
                 );
             QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy =
