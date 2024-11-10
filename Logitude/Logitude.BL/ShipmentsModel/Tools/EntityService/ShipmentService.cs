@@ -783,6 +783,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             myAmitalCustom.TransportModeId = shipmentPM.TransportModeId;
             myAmitalCustom.ReferentUserId = shipmentPM.ReferantUserId;
             myAmitalCustom.SystemConnection = "N";
+            myAmitalCustom.ShipmentId = shipmentPM.Id;
             //DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
             var objDefult = "";//defaultValueQueryService.GetDefault("ISRAEL", "CGG_PAYHAND_FIL", "NON", "NON", tenant);//ביטול הזרמת ח.פ להצהרה
             if (!string.IsNullOrEmpty(objDefult))

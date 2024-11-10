@@ -220,9 +220,10 @@ public partial class LogitudeCustomsFile
 	private string flightVoyageNumberField;
 	private string carrierCodeField;
 	private string originCountryCodeRefField;
+    private string shipmentId;
 
-	/// <remarks/>
-	public string CustomFileNo
+    /// <remarks/>
+    public string CustomFileNo
     {
         get
         {
@@ -1317,6 +1318,17 @@ public partial class LogitudeCustomsFile
 		set
 		{
 			this.originCountryCodeRefField = value;
+		}
+	}
+	public string ShipmentId
+    {
+		get
+		{
+			return this.shipmentId;
+		}
+		set
+		{
+			this.shipmentId = value;
 		}
 	}
 	[System.Xml.Serialization.XmlElementAttribute("Invoices")]
