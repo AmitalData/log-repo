@@ -136,7 +136,8 @@ namespace Logitude.Accounting.BL.DataContract
                 taxDeductionReportline.VendorId = payment.VendorCard!= null? payment.VendorCard.GLAccountId: null;
                 if (taxDeductionReportline.VendorId == null)
                 {
-                    throw new ApplicationException("הוראת תשלום :" + payment.PaymentNo+"\n"+ "הכרטיס התפעולי לא מחובר לכרטיס ההנח\"ש");
+                    if(taxDeductionReport != null) 
+                        taxDeductionReport.ErrorMessage = taxDeductionReport.ErrorMessage + Environment.NewLine + "הוראת תשלום :" + payment.PaymentNo + "\n" + "הכרטיס התפעולי לא מחובר לכרטיס ההנח\"ש";
 
                 }
                 taxDeductionReportline.MonthOfRegisterDate = cancelled? payment.AccountingCancelationDate.Value.Month : payment.RegisterDate.Value.Month;
