@@ -260,7 +260,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     Tenant = tenant
                 };
                 DCAInGet_CB_MSG_8317_CustomItemClassifGuidanceMessagingService messagingService = new DCAInGet_CB_MSG_8317_CustomItemClassifGuidanceMessagingService();
-                 var responseData = messagingService.Send(requestParamsData);
+                 CustomItemClassifGuidanceResponseData responseData = messagingService.Send(requestParamsData);
                 return Request.CreateResponse(HttpStatusCode.OK, responseData);
 
             }
@@ -277,6 +277,27 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             RemarkAndCustomsBook res = await CustomsBookAzureSearchService.SearchItmesAndRemark(searchValue, customsBookType, tenant);
 
             return Request.CreateResponse(HttpStatusCode.OK, res);
+        }
+
+        public HttpResponseMessage GetTenantFromCustomsSettings()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                
+                CustomsSettingQueryService customsSettingQueryService = new CustomsSettingQueryService(authToken.Tenant);
+               int tenant = customsSettingQueryService.GetTheFirstTenantWithCustomsAgentId();
+                return Request.CreateResponse(HttpStatusCode.OK, tenant);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
         }
     }
 
