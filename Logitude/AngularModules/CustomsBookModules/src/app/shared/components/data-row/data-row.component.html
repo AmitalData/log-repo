@@ -4,8 +4,8 @@
 			<i role="img" aria-hidden="true"> <fa-icon [icon]="faArrowAltCircleLeft"></fa-icon> </i>
 		</button>
 	</div>
-	<div class="mainTable_itemName" (click)="showCommentsClick()" #dynamicDiv>
-		<a href="#" role="button" [ngClass]="{'selectedLink': isSelected}" (click)="$event.preventDefault()">
+	<div class="mainTable_itemName" (click)="showCommentsClicked($event)" #dynamicDiv>
+		<a role="button" [ngClass]="{'selectedLink': isSelected}" (click)="$event.preventDefault()">
 			<span class="full_classification" *ngIf="data?.CI_Parent_CustomsItemIDNum"
 				[innerHTML]="highlight(ClassificationNoDisplay(data,data?.FullClassification), searchItem)"
 				[title]="data.CIH_GoodsDescription">

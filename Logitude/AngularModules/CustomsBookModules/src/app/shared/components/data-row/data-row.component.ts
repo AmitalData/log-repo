@@ -183,6 +183,13 @@ export class DataRowComponent implements OnInit {
 	}
 
 
+	showCommentsClicked(event: MouseEvent) {
+		let selection = window.getSelection();
+		let isTextSelected = selection && selection?.toString().length > 0;
+		if (isTextSelected) return;
+		this.showCommentsClick();
+	}
+
 	showCommentsClick() {
 		this.showComments = !this.showComments;
 		this.data.remarksClassificationList = this.comments;
