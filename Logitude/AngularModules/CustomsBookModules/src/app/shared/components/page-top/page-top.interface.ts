@@ -55,7 +55,7 @@ export interface CustomsItemsAutocomplate {
 }
 
 export interface CustomClassification {
-	[classification: string]: string
+	[classification: string]: string | string[];
 }
 
 export interface AllClassification {

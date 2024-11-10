@@ -78,6 +78,7 @@ export class PageTopComponent {
 			if(customsItemsAutocomplateList.length < 10) {
 				this.autocompleateShortList.next(true);
 				this.customsItemsAutocomplateList.next(customsItemsAutocomplateList);
+				this.groupCustomsItemsAutocomplateList.next([]);
 			} else {
 				this.autocompleateShortList.next(false);
 
@@ -88,15 +89,16 @@ export class PageTopComponent {
 				// let group = 
 				// const groupedItems: GroupedCustomsItems[] = classification.map((item) => { return { name: item.Name, classification: item.Classification, items: [] } });
 				const groupedItems: GroupedCustomsItems =  {};
-				Object.values(classifications).forEach((key) => groupedItems[key] = []);
+				(classifications.sortedClassifications as string[]).forEach((key: string) => groupedItems[key] = []);
 
 				customsItemsAutocomplateList.forEach((item) => {
-					const classification = classifications[item.BaseCustomsItemID] || "-"; // classifications ={["090000000"]:"XV"}
+					const classification: string = classifications[item.BaseCustomsItemID]  as string || "-"; // classifications ={["090000000"]:"XV"}
 					groupedItems[classification].push(item);
 				});
 				// this.customsItemsAutocomplateList.next(customsItemsAutocomplateList);
 				this.groupedItems = groupedItems;
-				this.groupCustomsItemsAutocomplateList.next(Object.keys(groupedItems).reverse());
+				this.groupCustomsItemsAutocomplateList.next(classifications.sortedClassifications as string[]);
+				this.customsItemsAutocomplateList.next([]);
 			}
 
 			// this.groupedItems[0].items = customsItemsAutocomplateList;
@@ -116,12 +118,7 @@ export class PageTopComponent {
 				const classifications = allClassifications[bookType];
 				delete classifications["$id"];
 				classifications["-"] = "-";		
-				
-				allClassifications[bookType] = Object.values(classifications).sort(this.romanTool.comparetor).reduce((acc, key) => {
-					acc[key] = classifications[key];
-					return acc;
-				}, {});
-				let a = allClassifications[bookType];
+				allClassifications[bookType].sortedClassifications = Object.values(classifications).sort(this.romanTool.comparetor) as string[];				
 			}
 
 			return allClassifications;

@@ -46,11 +46,11 @@
 		}
 
 		&:nth-child(1) {
-			border-radius: 15px 0 0 15px;
-		}
-
-		&:nth-last-child(1) {
 			border-radius: 0 15px 15px 0;
+		}
+		
+		&:nth-last-child(1) {
+			border-radius: 15px 0 0 15px;
 		}
 
 		&.checked {

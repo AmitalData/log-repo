@@ -218,3 +218,7 @@ li {
 	margin-left: auto;
     margin-right: inherit !important;
 }
+
+::ng-deep .mat-mdc-optgroup-label {
+	font-weight: bold !important;
+}
