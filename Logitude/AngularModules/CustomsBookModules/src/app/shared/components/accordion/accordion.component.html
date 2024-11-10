@@ -43,3 +43,20 @@
 		</section>
 	</div>
 </div>
+<div class="detailsSlide_box" *ngIf="tableData4?.data?.length > 0">
+	<div class="detailsSlide_toggle" (click)="expandedArea3 = !expandedArea3">
+		<div>
+			<h3 class="main_title">הנחיות סיווג</h3>
+		</div>
+		<div class="toggle" [class.active]="expandedArea3">
+			<fa-icon [size]="'xl'" class="toggle-close" [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>
+		</div>
+	</div>
+	<div class="detailsSlide_ddown" [class.active]="expandedArea3" id="detailsSlide_ddown01" >
+		<section class="title">
+			<div class="tableContainer">
+				<app-generic-table *ngIf="!expandedArea3" [tableData]="tableData4"></app-generic-table>
+			</div>
+		</section>
+	</div>
+</div>
