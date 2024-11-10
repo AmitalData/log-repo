@@ -451,11 +451,13 @@ export class MainEntity {
 	CB_CustomsItemComputedDataList: CB_CustomsItemComputedDataList[];
 	CB_TariffList: CB_TariffList[];
 	CB_RequirementComputedDataList: CB_RequirementComputedDataList[];
+	CustomItemClassifGuidanceResult: CustomItemClassifGuidanceResult[];
 
-	constructor(CB_CustomsItemComputedDataList: CB_CustomsItemComputedDataList[], CB_TariffList: CB_TariffList[], CB_RequirementComputedDataList: CB_RequirementComputedDataList[]) {
+	constructor(CB_CustomsItemComputedDataList: CB_CustomsItemComputedDataList[], CB_TariffList: CB_TariffList[], CB_RequirementComputedDataList: CB_RequirementComputedDataList[], CustomItemClassifGuidanceResult: CustomItemClassifGuidanceResult[]) {
 		this.CB_CustomsItemComputedDataList = CB_CustomsItemComputedDataList;
 		this.CB_TariffList = CB_TariffList;
 		this.CB_RequirementComputedDataList = CB_RequirementComputedDataList;
+		this.CustomItemClassifGuidanceResult = CustomItemClassifGuidanceResult;
 	}
 }
 
@@ -567,4 +569,13 @@ export interface RulesDetailsList {
 	OrderinalPostion: number;
 	EntityStatusID: string;
 	Parent_RuleDetailsHistoryID: number;
+}
+
+export class CustomItemClassifGuidanceResult {
+	classificationGuidanceNumber: string;
+	title: string;
+	classificationGuidanceTypeName: string;
+	fullClassification: string;
+	publicationDate?: Date;
+	customsItemId?: number;
 }
