@@ -17,6 +17,7 @@ using System.Data.Entity.Infrastructure;
 using System.Runtime.Remoting.Contexts;
 using Logitude.Customs.Data;
 using System.Data.Entity;
+using NPOI.Util;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
 {
@@ -40,13 +41,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
 
         public byte[] GetData()
         {
-            ExportDeclarationDataProvider myDataProvider = new ExportDeclarationDataProvider();
-           
             BuildDataProvider();
             
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(ExportDeclarationDataProvider));
             MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, myDataProvider);
+            xmlSerializer.Serialize(memoryStream, dataProvider);
             memoryStream.Seek(0, SeekOrigin.Begin);
             StreamReader streamReader = new StreamReader(memoryStream);
             string content = streamReader.ReadToEnd();
@@ -69,6 +68,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
             ICustomContext context = CustomContext.GetContext(tenant);
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
 
+            bool showInvoices = false;
+            QueryFilterItem ShowInvoicesFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ShowInvoices").FirstOrDefault();
+            if (ShowInvoicesFilter != null && ShowInvoicesFilter.FieldValue.ToString() == "True")
+            {
+                showInvoices = true;
+            }
+
             var declarations = (from a in context.Declarations
                                                    .Include(a => a.CustomsTransportMode)
                                                    .Include(a => a.DeclarationType)
@@ -80,7 +86,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                 on a.Id equals de.DeclarationId into deJoin
             from der in deJoin.DefaultIfEmpty().Take(1)
 
-                                join s in context.SupplierInvoices on a.Id equals s.DeclarationId into sJoin
+                                join s in context.SupplierInvoices.Include(a => a.CurrencyType) 
+                                on a.Id equals showInvoices? s.DeclarationId : default(string) into sJoin
             from si in sJoin.DefaultIfEmpty()
 
                                 join item in context.SupplierInvoiceItems
@@ -93,16 +100,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                 .Select(x => new { x.DeclarationId, x.FinalCargoTypeCode, x.FinalManifestNumber, x.FinalSecondCargoId, x.FinalThirdCargoId, x.FinalCargoType.LocalName })
                                 on a.Id equals c.DeclarationId into cJoin
             from closing in cJoin.DefaultIfEmpty()
-
-                                join con in context.Consignments
-                                .Include(a => a.CargoType)
-                                .Include(a => a.FinalDestinationPort)
-                                .Select(x => new { x.DeclarationId, x.ConsignmentNumber, x.ConsignmentType, CargoTypeName = x.CargoType.LocalName, x.ManifestNumber, x.SecondCargoID, x.ThirdCargoID, x.CargoDescription, FinalDestinationPort = x.FinalDestinationPort.LocalName })
-                                on a.Id equals con.DeclarationId into conJoin
-                                from consignment in conJoin.DefaultIfEmpty()
-
-                                join cp in context.ConsignmentPackages on new { DeclarationId = a.Id, ConsignmentNumber = consignment.ConsignmentNumber } equals new { DeclarationId = cp.DeclarationId, ConsignmentNumber = cp.ConsignmentNumber } into cpJoin
-                                from cPackage in cpJoin.DefaultIfEmpty().Take(1)
 
                                 where a.Tenant == tenant && a.Direction == "E"
                                 select new
@@ -130,22 +127,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                     FinalManifestNumber = closing != null && !string.IsNullOrEmpty(closing.FinalManifestNumber) ? closing.FinalManifestNumber : null,
                                     FinalSecondCargoId = closing != null && !string.IsNullOrEmpty(closing.FinalSecondCargoId) ? closing.FinalSecondCargoId : null,
                                     FinalThirdCargoId = closing != null && !string.IsNullOrEmpty(closing.FinalThirdCargoId) ? closing.FinalThirdCargoId : null,
-                                    //consignment
-                                    ConsignmentType = consignment != null ? consignment.ConsignmentType : null,
-                                    ConsignmentNumber = consignment != null ? consignment.ConsignmentNumber : null,
-                                    CargoTypeName = consignment != null ? consignment.CargoTypeName : null,
-                                    ManifestNumber = consignment != null ? consignment.ManifestNumber : null,
-                                    SecondCargoID = consignment != null ? consignment.SecondCargoID : null,
-                                    ThirdCargoID = consignment != null ? consignment.ThirdCargoID : null,
-                                    CargoDescription = consignment != null ? consignment.CargoDescription : null,
-                                    FinalDestinationPortName = consignment != null ? consignment.FinalDestinationPort : null,
-                                    cPackage.PackageQuantity,
-                                    cPackage.GrossMassMeasure,
+
                                     //supplierInvoice
                                     si.InvoiceNumber,
                                     si.IssueDate,
                                     si.IncotermCode,
                                     si.InvoiceAmount,
+                                    InvoiceCurrencyTypeName = si != null  && si.CurrencyType != null ? si.CurrencyType.LocalName: si.InvoiceCurrencyTypeCode,
                                     InvoiceCounterKey = si != null ? si.InvoiceCounterKey : 0,
                                     //supplierInvoiceItem
                                     sItem.ItemCode,
@@ -160,8 +148,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
 
 
             #region  ApplyCustomFilters
-
-            bool showInvoices = false;
             bool showConsignments = false;
 
             QueryFilterItem CreateDateFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDate").FirstOrDefault();
@@ -209,11 +195,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                 declarations = declarations.Where(x => x.CustomerId == CustomerFilter.FieldValue.ToString());
             }
 
-            QueryFilterItem ShowInvoicesFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ShowInvoices").FirstOrDefault();
-            if (ShowInvoicesFilter != null && ShowInvoicesFilter.FieldValue.ToString() == "True")
-            {
-                showInvoices = true;
-            }
             QueryFilterItem ShowConsignmentsFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ShowConsignments").FirstOrDefault();
             if (ShowConsignmentsFilter != null && ShowConsignmentsFilter.FieldValue.ToString() == "True")
             {
@@ -223,105 +204,133 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
 
             #region map to data provider
 
-
-            dataProvider.ExportDeclaration = declarations.GroupBy(d => new
-            {
-                d.Id,
-                //d.CreateDateTime,
-                d.TaxationDateTime,
-                d.ExportFile,
-                //d.TransportModeId,
-                d.TransportModeName,
-                d.CustomFileNo,
-                d.DeclarationNumber,
-                d.DeclarationTypeName,
-                d.ProcedureCurrentName,
-                d.ExporterImporterCode,
-                d.RecipientName,
-                d.DestinationCountryName,
-                //d.DestinationCountryCode,
-                //d.DeclarationStatusTypeCode,
-                //d.DeclarationTypeCode,
-                d.DeclarationStatusTypeName,
-                //d.ReferentUserId,
-                //d.CustomerId,
-                d.FinalCargoTypeName,
-                d.FinalManifestNumber,
-                d.FinalSecondCargoId,
-                d.FinalThirdCargoId,
-            })
+            var query = declarations
             .Select(g => new ExportDeclaration()
             {
-                DeclarationId = g.Key.Id,
+                DeclarationId = g.Id,
                 //g.Key.CreateDateTime,
-                TaxationDateTime = g.Key.TaxationDateTime,
-                ExportFile = g.Key.ExportFile,
+                TaxationDateTime = g.TaxationDateTime,
+                ExportFile = g.ExportFile,
                 //g.Key.TransportModeId,
-                TransportModeName = g.Key.TransportModeName,
-                CustomFileNo = g.Key.CustomFileNo,
-                DeclarationNumber = g.Key.DeclarationNumber,
-                DeclarationTypeName = g.Key.DeclarationTypeName,
-                ProcedureCurrentName = g.Key.ProcedureCurrentName,
-                ExporterImporterCode = g.Key.ExporterImporterCode,
-                RecipientName = g.Key.RecipientName,
-                DestinationCountryName = g.Key.DestinationCountryName,
+                TransportModeName = g.TransportModeName,
+                CustomFileNo = g.CustomFileNo,
+                DeclarationNumber = g.DeclarationNumber,
+                DeclarationTypeName = g.DeclarationTypeName,
+                ProcedureCurrentName = g.ProcedureCurrentName,
+                ExporterImporterCode = g.ExporterImporterCode,
+                RecipientName = g.RecipientName,
+                DestinationCountryName = g.DestinationCountryName,
                 //g.Key.DestinationCountryCode,
                 // g.Key.DeclarationStatusTypeCode,
                 // g.Key.DeclarationTypeCode,
-                DeclarationStatusTypeName = g.Key.DeclarationStatusTypeName,
+                DeclarationStatusTypeName = g.DeclarationStatusTypeName,
                 //g.Key.ReferentUserId,
                 // g.Key.CustomerId,
-                FinalCargoTypeName = g.Key.FinalCargoTypeName,
-                FinalManifestNumber = g.Key.FinalManifestNumber,
-                FinalSecondCargoId = g.Key.FinalSecondCargoId,
-                FinalThirdCargoId = g.Key.FinalThirdCargoId,
-                Consignment = g.GroupBy(d => new { d.ConsignmentNumber, d.ConsignmentType, d.CargoTypeName, d.ManifestNumber, d.SecondCargoID, d.ThirdCargoID, d.CargoDescription, d.FinalDestinationPortName, d.PackageQuantity, d.GrossMassMeasure })
-                .Select(con => new Consignment()
+                FinalCargoTypeName = g.FinalCargoTypeName,
+                FinalManifestNumber = g.FinalManifestNumber,
+                FinalSecondCargoId = g.FinalSecondCargoId,
+                FinalThirdCargoId = g.FinalThirdCargoId,
+
+                SupplierInvoiceAmount = g.InvoiceAmount,
+                SupplierInvoiceIncotermCode = g.IncotermCode,
+                SupplierInvoiceIssueDate = g.IssueDate,
+                SupplierInvoiceNumber = g.InvoiceNumber,
+                SupplierInvoiceCurrencyTypeName = g.InvoiceCurrencyTypeName,
+
+                SupplierInvoiceItemCode = g.ItemCode,
+                SupplierInvoiceItemClassificationCode = g.ClassificationCode,
+                SupplierInvoiceItemInvoiceQuantityType = g.InvoiceQuantityType,
+                SupplierInvoiceItemPrice = g.ItemPrice,
+                SupplierInvoiceItemOriginCountryName = g.OriginCountryName,
+                SupplierInvoiceItemPackageQuantity = g  .itemPackageQuantity,
+                SupplierInvoiceItemTransactionNatureName = g.TransactionNatureName,
+                SupplierInvoiceItemLineNumber = g.LineNumber
+            });
+
+            var exportDeclarations = query.ToList();
+
+            if (showConsignments)
+            {
+                List<string> DeclarationIds = exportDeclarations.Select(x => x.DeclarationId).Distinct().ToList();
+
+                // get the consignments for the retrieved declarations
+                var consignments = (from consignment in context.Consignments
+                                    .Include(a => a.CargoType)
+                                    .Include(a => a.FinalDestinationPort)
+                                    .Select(x => new { x.DeclarationId, x.ConsignmentNumber, x.ConsignmentType, CargoTypeName = x.CargoType.LocalName, x.ManifestNumber, x.SecondCargoID, x.ThirdCargoID, x.CargoDescription, FinalDestinationPort = x.FinalDestinationPort.LocalName })
+
+                                    join cp in context.ConsignmentPackages on new { DeclarationId = consignment.DeclarationId, ConsignmentNumber = consignment.ConsignmentNumber } equals new { DeclarationId = cp.DeclarationId, ConsignmentNumber = cp.ConsignmentNumber } into cpJoin
+                                    from cPackage in cpJoin.DefaultIfEmpty().Take(1)
+
+                                    where DeclarationIds.Contains(consignment.DeclarationId) && consignment.ConsignmentNumber != null
+                                    select new
+                                    {
+                                        DeclarationId = consignment.DeclarationId,
+                                        ConsignmentType = consignment != null ? consignment.ConsignmentType : null,
+                                        ConsignmentNumber = consignment != null ? consignment.ConsignmentNumber : null,
+                                        CargoTypeName = consignment != null? consignment.CargoTypeName: null,
+                                        ManifestNumber = consignment != null ? consignment.ManifestNumber : null,
+                                        SecondCargoID = consignment != null ? consignment.SecondCargoID : null,
+                                        ThirdCargoID = consignment != null ? consignment.ThirdCargoID : null,
+                                        CargoDescription = consignment != null ? consignment.CargoDescription : null,
+                                        FinalDestinationPortName = consignment != null? consignment.FinalDestinationPort : null,
+                                        cPackage.PackageQuantity,
+                                        cPackage.GrossMassMeasure,
+                                    }).ToList();
+
+                foreach (var declarationId in DeclarationIds)
                 {
-                    ConsignmentNumber = con.Key.ConsignmentNumber,
-                    ConsignmentType = con.Key.ConsignmentType,
-                    CargoTypeName = con.Key.CargoTypeName,
-                    ManifestNumber = con.Key.ManifestNumber,
-                    SecondCargoID = con.Key.SecondCargoID,
-                    ThirdCargoID = con.Key.ThirdCargoID,
-                    CargoDescription = con.Key.CargoDescription,
-                    FinalDestinationPortName = con.Key.FinalDestinationPortName,
-                    PackageQuantity = con.Key.PackageQuantity,
-                    GrossMassMeasure = con.Key.GrossMassMeasure,
-                })
-                .Where(c => c.ConsignmentNumber != null && showConsignments)
-                .ToList(),
-                SupplierInvoices = g.GroupBy(d => new { d.InvoiceNumber, d.IssueDate, d.IncotermCode, d.InvoiceAmount, d.InvoiceCounterKey })
-                            .Select(groupedInvoice => new SupplierInvoices()
-                            {
-                                InvoiceNumber = groupedInvoice.Key.InvoiceNumber,
-                                IssueDate = groupedInvoice.Key.IssueDate,
-                                IncotermCode =groupedInvoice.Key.IncotermCode,
-                                InvoiceAmount = groupedInvoice.Key.InvoiceAmount,
-                                InvoiceCounterKey = groupedInvoice.Key.InvoiceCounterKey,
-                                InvoiceItems = groupedInvoice
-                                                .Where(item => item.LineNumber != 0)
-                                                .Select(item => new InvoiceItems()
-                                                {
-                                                    ItemCode = item.ItemCode,
-                                                    ClassificationCode = item.ClassificationCode,
-                                                    InvoiceQuantityType = item.InvoiceQuantityType,
-                                                    ItemPrice = item.ItemPrice,
-                                                    OriginCountryName = item.OriginCountryName,
-                                                    PackageQuantity = item.PackageQuantity,
-                                                    TransactionNatureName = item.TransactionNatureName,
-                                                    LineNumber = item.LineNumber
-                                                }).Distinct().ToList()
-                            }).Where(i => i.InvoiceCounterKey != 0 && showInvoices)
-                            .ToList()
-            }).ToList();
+                    var declarationRows = exportDeclarations.Where(x => x.DeclarationId == declarationId);
+                    var consignmentRows = consignments.Where(x => x.DeclarationId == declarationId);
+
+                    int declarationRowsCount = declarationRows.Count();
+                    int consignmentRowsCount = consignmentRows.Count();
+
+                    // according to spec, all consignment rows must be shown on declaration rows
+                    // if there is more consignment rows than declaration rows, we must add declaration rows
+                    if (declarationRowsCount < consignmentRowsCount)
+                    {
+                        // duplicate the last declaration row as many times it is needed and insert them after all the declaration rows
+                        int rowCountToAdd = consignmentRowsCount - declarationRowsCount;
+
+                        ExportDeclaration lastDeclaration = exportDeclarations.Where(x => x.DeclarationId == declarationId).LastOrDefault();
+                        int lastDeclarationIndex = exportDeclarations.IndexOf(lastDeclaration);
+
+                        for (var i = 1; i < rowCountToAdd + 1; i++)
+                        {
+                            exportDeclarations.Insert(lastDeclarationIndex + i, lastDeclaration.Copy());
+                        }
+                    }
+
+                    // add the consignment data to the declaration rows
+                    for (var i = 0; i < consignmentRowsCount; i++)
+                    {
+                        var consignment = consignmentRows.ElementAtOrDefault(i);
+
+                        ExportDeclaration dec = exportDeclarations.Where(x => x.DeclarationId == declarationId).ElementAtOrDefault(i);
+
+                        dec.ConsignmentCargoDescription = consignment.CargoDescription;
+                        dec.ConsignmentCargoTypeName = consignment.CargoTypeName;
+                        dec.ConsignmentFinalDestinationPortName = consignment.FinalDestinationPortName;
+                        dec.ConsignmentGrossMassMeasure = consignment.GrossMassMeasure;
+                        dec.ConsignmentManifestNumber = consignment.ManifestNumber;
+                        dec.ConsignmentNumber = consignment.ConsignmentNumber;
+                        dec.ConsignmentPackageQuantity = consignment.PackageQuantity;
+                        dec.ConsignmentSecondCargoID = consignment.SecondCargoID;
+                        dec.ConsignmentThirdCargoID = consignment.ThirdCargoID;
+                        dec.ConsignmentType = consignment.ConsignmentType;
+                    }
+                }
+            }
+
+            dataProvider.ExportDeclaration = exportDeclarations;
             #endregion
 
         }
 
 
 
-    
+
 
         private QueryOperations DeserializeQueryOperationFromXml(byte[] xmlFilters)
         {

@@ -34,51 +34,36 @@ namespace WebFreight.Web.DataProviders
         public string FinalSecondCargoId { get; set; }
         public string FinalThirdCargoId { get; set; }
         #endregion
-        public List<SupplierInvoices> SupplierInvoices { get; set; }//חשבונות
-        public List<Consignment> Consignment { get; set; }//נתוני סגירה
-
-    }
 
 
-    public class SupplierInvoices
-    {
-        public string InvoiceNumber { get; set; }
-        public DateTime? IssueDate { get; set; }
-        public string IncotermCode { get; set; }
-        public decimal? InvoiceAmount { get; set; }
-        public int InvoiceCounterKey { get; set; }
-        public List<InvoiceItems> InvoiceItems { get; set; }
+        // supplier invoice
+        public string SupplierInvoiceNumber { get; set; }
+        public DateTime? SupplierInvoiceIssueDate { get; set; }
+        public string SupplierInvoiceIncotermCode { get; set; }
+        public decimal? SupplierInvoiceAmount { get; set; }
+        public int SupplierInvoiceCounterKey { get; set; }
+        public string SupplierInvoiceCurrencyTypeName { get; set; }
 
+        // supplier invoice item
+        public string SupplierInvoiceItemCode { get; set; }
+        public string SupplierInvoiceItemClassificationCode { get; set; }
+        public int? SupplierInvoiceItemPackageQuantity { get; set; }
+        public string SupplierInvoiceItemInvoiceQuantityType { get; set; }
+        public decimal? SupplierInvoiceItemPrice { get; set; }
+        public string SupplierInvoiceItemOriginCountryName { get; set; }
+        public string SupplierInvoiceItemTransactionNatureName { get; set; }//אופי עסקה
+        public int SupplierInvoiceItemLineNumber { get; set; }//אופי עסקה
 
-
-    }
-
-    public class InvoiceItems
-    {
-        public string ItemCode { get; set; }
-        public string ClassificationCode { get; set; }
-        public int? PackageQuantity { get; set; }
-        public string InvoiceQuantityType { get; set; }
-        public decimal? ItemPrice { get; set; }
-        public string OriginCountryName { get; set; }
-        public string TransactionNatureName { get; set; }//אופי עסקה
-        public int LineNumber { get; set; }//אופי עסקה
-        
-    }
-
-    
-    public class Consignment
-    {
+        // consignment
         public int? ConsignmentNumber { get; set; }
         public string ConsignmentType { get; set; }
-        public string CargoTypeName { get; set; }
-        public string ManifestNumber { get; set; }
-        public string SecondCargoID { get; set; }
-        public string ThirdCargoID { get; set; }
-        public string CargoDescription { get; set; }
-        public string FinalDestinationPortName { get; set; }
-        public int? PackageQuantity { get; set; }//כמות מטבלת Customs.ConsignmentPackage
-        public decimal? GrossMassMeasure { get; set; }//משקל מטבלת Customs.ConsignmentPackage
-
+        public string ConsignmentCargoTypeName { get; set; }
+        public string ConsignmentManifestNumber { get; set; }
+        public string ConsignmentSecondCargoID { get; set; }
+        public string ConsignmentThirdCargoID { get; set; }
+        public string ConsignmentCargoDescription { get; set; }
+        public string ConsignmentFinalDestinationPortName { get; set; }
+        public int? ConsignmentPackageQuantity { get; set; }//כמות מטבלת Customs.ConsignmentPackage
+        public decimal? ConsignmentGrossMassMeasure { get; set; }//משקל מטבלת Customs.ConsignmentPackage
     }
 }
