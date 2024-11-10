@@ -70,11 +70,19 @@ namespace Logitude.Accounting.Data.Repositories
 
         public decimal GetClosedBalanceOfLastInvoicedOrClosedWithoutInvoiceInterestReport(int tenant,string glaccountId)
         {
+            var acc = (from ga in context.GLAccounts
+                         where ga.Tenant == tenant
+                         where ga.Id == glaccountId
+                         select ga
+                        );
+
             decimal? closedBalance = (from a in context.InterestReports
-                                     where a.Tenant == tenant 
+                                      join ga in acc on a.GLAccountId equals ga.Id
+                                      where a.Tenant == tenant 
                                      && (a.InterestReportStatusCode == InterestReportStatusCodes.Invoiced
                                      || a.InterestReportStatusCode == InterestReportStatusCodes.ClosedWithoutInvoice) 
                                      && a.GLAccountId==glaccountId
+                                     && ((a.InterestCalculationDate >= ga.InterestCalculationStartDate) || ga.InterestCalculationStartDate == null)
                                      orderby a.InterestCalculationDate descending
                                      select a.CloseBalance).FirstOrDefault();
             return closedBalance != null ? closedBalance.Value : 0;
@@ -82,8 +90,16 @@ namespace Logitude.Accounting.Data.Repositories
 
        public CloseBalanceInterestReportData GetCloseBalanceCalculationDateAndStatusOfTheLastInterestReport(int tenant,string glaccountId)
         {
+            var acc = (from ga in context.GLAccounts
+                       where ga.Tenant == tenant
+                       where ga.Id == glaccountId
+                       select ga
+            );
+
             CloseBalanceInterestReportData result = (from a in context.InterestReports
-                          where a.Tenant == tenant && a.GLAccountId == glaccountId
+                                                     join ga in acc on a.GLAccountId equals ga.Id
+                                                     where a.Tenant == tenant && a.GLAccountId == glaccountId
+                           && ((a.InterestCalculationDate >= ga.InterestCalculationStartDate) || ga.InterestCalculationStartDate == null)
                            && (a.InterestReportStatusCode == InterestReportStatusCodes.Invoiced
                            || a.InterestReportStatusCode == InterestReportStatusCodes.ClosedWithoutInvoice)
                           orderby a.InterestCalculationDate descending
