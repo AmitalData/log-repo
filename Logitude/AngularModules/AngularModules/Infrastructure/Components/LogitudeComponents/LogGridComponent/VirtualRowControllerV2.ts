@@ -160,7 +160,7 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
         this.fetchedPages.add(page);
         //this.mycachedData = [];
         //this.pageSize = 17;
-        this.dataSource.getRows(page * this.pageSize, this.pageSize, this.myMetaData.sortingCol, this.myMetaData.sortingDir, false, this.myMetaData.searchFields, this.myMetaData.Filters).then(res => {
+        this.dataSource.getRows(page * this.pageSize, this.pageSize, this.myMetaData.sortingCol, this.myMetaData.sortingDir, true, this.myMetaData.searchFields, this.myMetaData.Filters).then(res => {
             res.subscribe((viewResponse: ServiceResponse) => {
                 if (!viewResponse.HasError) {
                     //if (this.MyCallTime == null || viewResponse.CallTime > this.MyCallTime) {
