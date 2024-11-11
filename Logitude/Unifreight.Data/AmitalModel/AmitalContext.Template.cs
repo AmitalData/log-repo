@@ -4937,10 +4937,12 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnType("varchar2");
             modelBuilder.Entity<CFIMSVDOC>()
                 .Property(p => p.SELLERID)
+                .HasColumnName("SELLER_ID")
                 .HasMaxLength(36)
                 .HasColumnType("varchar2");
             modelBuilder.Entity<CFIMSVDOC>()
                 .Property(p => p.SELLERNAME)
+                .HasColumnName("SELLER_NAME")
                     .HasMaxLength(50)
                     .HasColumnType("varchar2");
             #endregion
@@ -10985,6 +10987,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<GGGEXTSRVACT>()
                 .Property(p => p.EXTSRVID)
                     .IsRequired()
+                    .HasColumnName(@"EXTSRV_ID")
                     .HasMaxLength(32)
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
                     .HasColumnType("varchar2");
@@ -11007,89 +11010,111 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnType("varchar2");
             modelBuilder.Entity<GGGEXTSRVACT>()
                 .Property(p => p.WINDOWSUSER)
+                .HasColumnName(@"WINDOWS_USER")
                     .HasMaxLength(256)
                     .HasColumnType("varchar2");
             modelBuilder.Entity<GGGEXTSRVACT>()
                 .Property(p => p.BASEPATH)
+                .HasColumnName(@"BASE_PATH")
                     .HasMaxLength(1024)
                     .HasColumnType("varchar2");
             modelBuilder.Entity<GGGEXTSRVACT>()
                 .Property(p => p.PARAM1DESC)
+                .HasColumnName(@"PARAM1_DESC")
                     .HasMaxLength(32)
                     .HasColumnType("varchar2");
             modelBuilder.Entity<GGGEXTSRVACT>()
                 .Property(p => p.PARAM1VALUE)
+                .HasColumnName(@"PARAM1_VALUE")
                     .HasMaxLength(1024)
                     .HasColumnType("varchar2");
             modelBuilder.Entity<GGGEXTSRVACT>()
                 .Property(p => p.PARAM2DESC)
+                .HasColumnName(@"PARAM2_DESC")
                     .HasMaxLength(32)
                     .HasColumnType("varchar2");
             modelBuilder.Entity<GGGEXTSRVACT>()
                 .Property(p => p.PARAM2VALUE)
+                .HasColumnName(@"PARAM2_VALUE")
                     .HasMaxLength(1024)
                     .HasColumnType("varchar2");
             modelBuilder.Entity<GGGEXTSRVACT>()
                 .Property(p => p.PARAM3DESC)
+                .HasColumnName(@"PARAM3_DESC")
                     .HasMaxLength(32)
                     .HasColumnType("varchar2");
             modelBuilder.Entity<GGGEXTSRVACT>()
                 .Property(p => p.PARAM3VALUE)
+                .HasColumnName(@"PARAM3_VALUE")
                     .HasMaxLength(1024)
                     .HasColumnType("varchar2");
             modelBuilder.Entity<GGGEXTSRVACT>()
                 .Property(p => p.PARAM4DESC)
+                .HasColumnName(@"PARAM4_DESC")
                     .HasMaxLength(32)
                     .HasColumnType("varchar2");
             modelBuilder.Entity<GGGEXTSRVACT>()
                 .Property(p => p.PARAM4VALUE)
+                .HasColumnName(@"PARAM4_VALUE")
                     .HasMaxLength(1024)
                     .HasColumnType("varchar2");
             modelBuilder.Entity<GGGEXTSRVACT>()
                 .Property(p => p.PARAM5DESC)
+                .HasColumnName(@"PARAM5_DESC")
                     .HasMaxLength(32)
                     .HasColumnType("varchar2");
             modelBuilder.Entity<GGGEXTSRVACT>()
                 .Property(p => p.PARAM5VALUE)
+                .HasColumnName(@"PARAM5_VALUE")
                     .HasMaxLength(1024)
                     .HasColumnType("varchar2");
             modelBuilder.Entity<GGGEXTSRVACT>()
                 .Property(p => p.BLOCKRECORD)
+                .HasColumnName(@"BLOCK_RECORD")
                     .HasMaxLength(1)
                     .HasColumnType("char");
             modelBuilder.Entity<GGGEXTSRVACT>()
                 .Property(p => p.BASELOGPATH1)
+                .HasColumnName(@"BASE_LOG_PATH1")
                     .HasMaxLength(1024)
                     .HasColumnType("varchar2");
             modelBuilder.Entity<GGGEXTSRVACT>()
                 .Property(p => p.BASELOGPATH2)
+                .HasColumnName(@"BASE_LOG_PATH2")
                     .HasMaxLength(1024)
                     .HasColumnType("varchar2");
             modelBuilder.Entity<GGGEXTSRVACT>()
                 .Property(p => p.CONFIGURATIONPARAMS)
+                .HasColumnName(@"CONFIGURATION_PARAMS")
                     .HasMaxLength(1024)
                     .HasColumnType("varchar2");
             modelBuilder.Entity<GGGEXTSRVACT>()
                 .Property(p => p.ENVID)
+                .HasColumnName(@"ENV_ID")
                     .HasMaxLength(30)
                     .HasColumnType("varchar2");
             modelBuilder.Entity<GGGEXTSRVACT>()
                 .Property(p => p.WINDOWSDOMAIN)
+                .HasColumnName(@"WINDOWS_DOMAIN")
                     .HasMaxLength(256)
                     .HasColumnType("varchar2");
             modelBuilder.Entity<GGGEXTSRVACT>()
                 .Property(p => p.PARAM6DESC)
+                .HasColumnName(@"PARAM6_DESC")
                     .HasMaxLength(32)
                     .HasColumnType("varchar2");
             modelBuilder.Entity<GGGEXTSRVACT>()
                 .Property(p => p.PARAM7DESC)
+                    .HasColumnName(@"PARAM7_DESC")
                     .HasMaxLength(32)
                     .HasColumnType("varchar2");
             modelBuilder.Entity<GGGEXTSRVACT>()
                 .Property(p => p.PARAM6VALUE)
+                .HasColumnName(@"PARAM6_VALUE")
                     .HasColumnType("clob");
             modelBuilder.Entity<GGGEXTSRVACT>()
                 .Property(p => p.PARAM7VALUE)
+                .HasColumnName(@"PARAM7_VALUE")
                     .HasColumnType("clob");
 
             #endregion
