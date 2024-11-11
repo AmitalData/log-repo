@@ -250,10 +250,10 @@ export class DataRowComponent implements OnInit {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "83%");
 		}
 		else if (this.screenWidth > 1350 && this.screenWidth <= 1550) {
-			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "90%");
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "88%");
 		}
 		else if (this.screenWidth > 1550) {
-			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "95%");
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "90%");
 		}
 
 	}
