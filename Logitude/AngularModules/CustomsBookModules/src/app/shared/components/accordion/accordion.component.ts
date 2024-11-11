@@ -31,9 +31,11 @@ export class AccordionComponent implements OnInit {
 
   expandedArea1: boolean = false;
   expandedArea2: boolean = false;
-  expandedArea3: boolean = false;
+  expandedArea3: boolean = true;
   faChevronLeft = faChevronLeft;
   faChevronDown = faChevronDown;
+  noExistMessageClasisificationGuidance = "לא התקבלו הנחיות סיווג";
+  isLoadingClasisificationGuidance = false;
 
   constructor(private API_MainService: API_MainService) {
     this.MainEntity = new MainEntity([], [], [], []);
@@ -47,25 +49,17 @@ export class AccordionComponent implements OnInit {
 
   listenToChanges() {
     this.currentItem.subscribe((data: CB_CustomsItemComputedDataList) => {
+      // init expandedAreas:
+      this.expandedArea1 = false;
+      this.expandedArea2 = false;
+      this.expandedArea3 = true;
+
       this.customsItemId = data?.CustomsItemID;
       if (this.customsItemId) {
         this.resetData();
         this.buildAgreementsList(data?.agreementsList);
         this.buildRegularityRequirementList();
-
-        if (SessionInfo.LoggedUserTenant != 0)
-          this.GetDataCustomItemClassifGuidance(this.customsItemId, SessionInfo.LoggedUserTenant);
-        else {
-          this.API_MainService.GetTenantFromCustomsSettings().subscribe(
-            (data: any) => {
-              const tenant: number = data?.body;              
-              this.GetDataCustomItemClassifGuidance(this.customsItemId, tenant);
-            },
-            (error) => {
-              console.log(error.message);
-            }
-          );
-        }
+        this.buildClasisificationGuidance();
       }
     });
   }
@@ -154,18 +148,37 @@ export class AccordionComponent implements OnInit {
     );
   }
 
+  // הנחיות סיווג
   GetDataCustomItemClassifGuidance(customsItemId: number, tenant: number) {
     this.API_MainService.GetCustomItemClassifGuidance(customsItemId, tenant).subscribe(
       (data: any) => {
         const result: CustomItemClassifGuidanceResult[] = data?.body?.CustomItemClassifGuidanceList;
-        if (!result) return;
+        if (!result) return;;
         this.MainEntity.CustomItemClassifGuidanceResult = result;
         this.tableData4.data = this.MainEntity.CustomItemClassifGuidanceResult;
-
+        this.isLoadingClasisificationGuidance = false;
+        // this.expandedArea3 = false;
       },
       (error) => {
         console.log(error.message);
       }
     );
+  }
+
+  buildClasisificationGuidance() {
+    this.isLoadingClasisificationGuidance = true;
+    if (SessionInfo.LoggedUserTenant != 0)
+      this.GetDataCustomItemClassifGuidance(this.customsItemId, SessionInfo.LoggedUserTenant);
+    else {
+      this.API_MainService.GetTenantFromCustomsSettings().subscribe(
+        (data: any) => {
+          const tenant: number = data?.body;
+          this.GetDataCustomItemClassifGuidance(this.customsItemId, tenant);
+        },
+        (error) => {
+          console.log(error.message);
+        }
+      );
+    }
   }
 }
