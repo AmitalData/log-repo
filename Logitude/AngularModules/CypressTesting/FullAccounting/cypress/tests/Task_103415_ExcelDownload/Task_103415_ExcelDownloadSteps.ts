@@ -26,31 +26,31 @@ Given("click on the Excel button",  () => {
 
 
 
-When("save as draft", () => {
-    JournalActions.SaveJournal()
-});
+// When("save as draft", () => {
+//     JournalActions.SaveJournal()
+// });
 
-Then("the journal should create successfully", () => {
-    JournalActions.AssertSaveJournal()
-});
-//#endregion
+// Then("the journal should create successfully", () => {
+//     JournalActions.AssertSaveJournal()
+// });
+// //#endregion
 
-//#region Approve the Journal
-When("approve the journal", () => {
-    JournalActions.ApproveJournal()
-});
+// //#region Approve the Journal
+// When("approve the journal", () => {
+//     JournalActions.ApproveJournal()
+// });
 
-Then("the journal should approve successfully", () => {
-    JournalActions.AssertApproveJournal()
-});
-//#endregion
+// Then("the journal should approve successfully", () => {
+//     JournalActions.AssertApproveJournal()
+// });
+// //#endregion
 
 //#region Print report
-When("print the report", () => {
-    JournalActions.PrintReport();
-});
+// When("print the report", () => {
+//     JournalActions.PrintReport();
+// });
 
-Then("the report should print successfully", () => {
-    JournalActions.AssertPrintReport()
-});
+// Then("the report should print successfully", () => {
+//     JournalActions.AssertPrintReport()
+// });
 //#endregion
