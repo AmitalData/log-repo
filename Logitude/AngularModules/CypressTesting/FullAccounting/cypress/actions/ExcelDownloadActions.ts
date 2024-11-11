@@ -23,32 +23,32 @@ export function Excel() {
 
 
 
-export function SaveJournal() {
-    cy.DefineRequestWait(RestAPI.POST, URLs.Journals, RequestAliases.PostJournal)
-    cy.Click(JournalSelectors.SaveAsDraftButton, null)
-}
+// export function SaveJournal() {
+//     cy.DefineRequestWait(RestAPI.POST, URLs.Journals, RequestAliases.PostJournal)
+//     cy.Click(JournalSelectors.SaveAsDraftButton, null)
+// }
 
-export function AssertSaveJournal() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PostJournal, 200)
-}
+// export function AssertSaveJournal() {
+//     BaseAssertion.AssertStatusCode(RequestAliases.PostJournal, 200)
+// }
 
-export function ApproveJournal() {
-    cy.DefineRequestWait(RestAPI.PUT, URLs.Journals, RequestAliases.PutJournal)
-    cy.Click(JournalSelectors.ApproveButton, null)
-}
+// export function ApproveJournal() {
+//     cy.DefineRequestWait(RestAPI.PUT, URLs.Journals, RequestAliases.PutJournal)
+//     cy.Click(JournalSelectors.ApproveButton, null)
+// }
 
-export function AssertApproveJournal() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PutJournal, 200)
-    cy.wait(5000)
-}
+// export function AssertApproveJournal() {
+//     BaseAssertion.AssertStatusCode(RequestAliases.PutJournal, 200)
+//     cy.wait(5000)
+// }
 
-export function PrintReport() {
-    cy.DefineWindowOpen(RequestAliases.PrintReportWindowOpen);
-    cy.Click(JournalSelectors.MenuButtons, null);
-    cy.Click(JournalSelectors.JournalPrint, null);
-    cy.Click(JournalSelectors.Printbutton, null,true);
-}
+// export function PrintReport() {
+//     cy.DefineWindowOpen(RequestAliases.PrintReportWindowOpen);
+//     cy.Click(JournalSelectors.MenuButtons, null);
+//     cy.Click(JournalSelectors.JournalPrint, null);
+//     cy.Click(JournalSelectors.Printbutton, null,true);
+// }
 
-export function AssertPrintReport() {
-    BaseAssertion.AssertWindowOpen(RequestAliases.PrintReportWindowOpen);
-}
+// export function AssertPrintReport() {
+//     BaseAssertion.AssertWindowOpen(RequestAliases.PrintReportWindowOpen);
+// }
