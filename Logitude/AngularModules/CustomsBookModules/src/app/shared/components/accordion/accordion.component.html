@@ -7,7 +7,7 @@
 			<fa-icon [size]="'xl'" class="toggle-close" [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>
 		</div>
 	</div>
-	<div class="detailsSlide_ddown" [class.active]="expandedArea1" id="detailsSlide_ddown01" >
+	<div class="detailsSlide_ddown" [class.active]="expandedArea1" id="detailsSlide_ddown01">
 		<!-- First section: מכס -->
 		<section class="title" *ngIf="!expandedArea1">
 			<h4 class="title">מכס</h4>
@@ -35,7 +35,7 @@
 			<fa-icon [size]="'xl'" class="toggle-close" [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>
 		</div>
 	</div>
-	<div class="detailsSlide_ddown" [class.active]="expandedArea2" id="detailsSlide_ddown01" >
+	<div class="detailsSlide_ddown" [class.active]="expandedArea2" id="detailsSlide_ddown01">
 		<section class="title">
 			<div class="tableContainer">
 				<app-generic-table *ngIf="!expandedArea2" [tableData]="tableData3"></app-generic-table>
@@ -43,7 +43,7 @@
 		</section>
 	</div>
 </div>
-<div class="detailsSlide_box" *ngIf="tableData4?.data?.length > 0">
+<div class="detailsSlide_box">
 	<div class="detailsSlide_toggle" (click)="expandedArea3 = !expandedArea3">
 		<div>
 			<h3 class="main_title">הנחיות סיווג</h3>
@@ -52,10 +52,16 @@
 			<fa-icon [size]="'xl'" class="toggle-close" [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>
 		</div>
 	</div>
-	<div class="detailsSlide_ddown" [class.active]="expandedArea3" id="detailsSlide_ddown01" >
+	<div class="detailsSlide_ddown" [class.active]="expandedArea3" id="detailsSlide_ddown01" *ngIf="tableData4?.data">
 		<section class="title">
-			<div class="tableContainer">
+			<div class="tableContainer" *ngIf="!isLoadingClasisificationGuidance && tableData4?.data?.length > 0">
 				<app-generic-table *ngIf="!expandedArea3" [tableData]="tableData4"></app-generic-table>
+			</div>
+			<div class="dataLoadingBox"  *ngIf="!expandedArea3 && tableData4?.data?.length == 0">
+				<span *ngIf="isLoadingClasisificationGuidance; else noData">טוען נתונים ...</span>
+				<ng-template #noData>
+					<span>{{noExistMessageClasisificationGuidance}}</span>
+				</ng-template>
 			</div>
 		</section>
 	</div>
