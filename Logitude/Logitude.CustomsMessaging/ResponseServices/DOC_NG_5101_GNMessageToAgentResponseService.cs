@@ -242,6 +242,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         notificationDescription = agentTalkBackTypePM.LocalName + "\n" + notificationDescription;
                     }
+
+                    this._MyDeclarationPM = myQueryService.GetSingle(dec.Id, false, true);
+                    if (this._MyDeclarationPM != null)
+                    {
+                        RaiseEvent(this._MyDeclarationPM, "DMR", null);
+                    }
+                    else {
+                        LogMessagingUtil.Instance.AppendLine("not found declaration: " + dec.Id);
+                    }
                     break;
 
                 default:
