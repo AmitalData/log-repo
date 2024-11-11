@@ -159,10 +159,17 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
                 aRInvoiceLinePM.LocalCurrencyAmount = (double?)(interestReport.TotalAmount + CreditAllotmentCommission + calculatedPostponedChequesCommision);
             }
             aRInvoiceLinePM.Quantity = 1;
-            //aRInvoiceLinePM.Description = "Interest For Date " + interestReport.InterestCalculationDate.ToString("dd/MM/yyyy");
-            //aRInvoiceLinePM.LocalDescription = "חישוב ריבית לתאריך " + interestReport.InterestCalculationDate.ToString("dd/MM/yyyy");
-            aRInvoiceLinePM.Description = string.Concat("Interest  For", " ", interestReport.InterestReportLinesByDates.Last().ToDate.ToString("dd/MM/yyyy"));
-            aRInvoiceLinePM.LocalDescription = string.Concat("ריבית ל", " ", interestReport.InterestReportLinesByDates.Last().ToDate.ToString("dd/MM/yyyy"));
+            string interest_date = "";
+            if (interestReport.InterestReportLinesByDates != null && interestReport.InterestReportLinesByDates.Count > 0)
+            {
+                interest_date = interestReport.InterestReportLinesByDates.OrderBy(ln => ln.ToDate).Last().ToDate.ToString("dd/MM/yyyy");
+            }
+            else
+            {
+                interest_date = interestReport.InterestCalculationDate.ToString("dd/MM/yyyy");
+            }
+            aRInvoiceLinePM.Description = string.Concat("Interest  For", " ", interest_date);
+            aRInvoiceLinePM.LocalDescription = string.Concat("ריבית ל", " ", interest_date);
             aRInvoiceLinePM.ChargesTypeId = chargesType.Id;
             aRInvoiceLinePM.VatTypeId = chargesType.VatTypeId;
             aRInvoiceLinePM.VatPercentage = vatTypePercentagePM.Percentage;
