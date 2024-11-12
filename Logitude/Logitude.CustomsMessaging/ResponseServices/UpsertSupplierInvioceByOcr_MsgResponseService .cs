@@ -422,7 +422,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //mapping more from SupplierInvioceExportDefaults
 
             SupplierInvioceExportDefaultQueryService supplierInvioceExportDefaultQueryService = new SupplierInvioceExportDefaultQueryService(context);
-            SupplierInvioceExportDefault myInvoiceDefaults = supplierInvioceExportDefaultQueryService.GetSupplierInvoiceExportDefaultByTenant(customResponse.tenant);
+            SupplierInvioceExportDefaultPM myInvoiceDefaults = supplierInvioceExportDefaultQueryService.GetSupplierInvoiceExportDefaultByTenant(customResponse.tenant);
 
             if (myInvoiceDefaults != null)
             {
@@ -572,7 +572,26 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             supplierInvoiceItemPM.ItemAdditionalStatus = true;
                         }
-                    }
+                        if (myInvoiceDefaults.SupplierInvItemCertificatDefs != null && myInvoiceDefaults.SupplierInvItemCertificatDefs.Count > 0) 
+                        { 
+                             foreach(var CerDef in myInvoiceDefaults.SupplierInvItemCertificatDefs)
+                             {
+                                 var supplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM()
+                                 {
+						     		 ChangeSetOp = ChangeSetOperation.Insert,
+			                         CertificateNumber = CerDef.CertificateNumber,
+			                         ReqConfirmationTypeCode = CerDef.CertificateNumber,
+						     		 CertificateExemptionTypeCode = CerDef.CertificateExemptionTypeCode,
+						     		 AttachmentTypeCode = CerDef.AttachmentTypeCode,
+			                         ResConfirmationTypeCode = CerDef.ResConfirmationTypeCode,
+			                         CustomsAttachmentID = CerDef.CustomsAttachmentID,
+			                         SequenceNumeric = CerDef.SequenceNumeric,
+                             
+						     	};
+					             supplierInvoiceItemPM.SupplierInvioceItemCertificats.Add(supplierInvioceItemCertificatPM);
+						     }
+						}
+					}
                     // update ocr column position: page_no, ymin, ymax - #94509
                     if (ocrPosition.Count > counter)
                     {

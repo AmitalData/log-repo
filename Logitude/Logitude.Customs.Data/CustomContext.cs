@@ -890,6 +890,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new SupplierInvioceItemCertificatMap());
 	
+            modelBuilder.Configurations.Add(new SupplierInvioceItemCertificatDefaultMap());
+	
             modelBuilder.Configurations.Add(new SupplierInvoiceMap());
 	
             modelBuilder.Configurations.Add(new SupplierInvoiceFreightAmountMap());
@@ -3996,6 +3998,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<SupplierInvioceItemCertificat> SupplierInvioceItemCertificats 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SupplierInvioceItemCertificatDefault> SupplierInvioceItemCertificatDefaults 
 	 {
 	      get; set;
 	 
