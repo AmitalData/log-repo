@@ -61,6 +61,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<UserPermittedProductPM> GetContactFromUserPermittedProductPMsByUserId(string id, int tenant)
         {
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(" before GetContactFromUserPermittedProductPMsByUserId  repository.context.GetConnection().Database" + repository.context.GetConnection()?.Database);
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(" GetContactFromUserPermittedProductPMsByUserId  id:" + id + ",tenant:" + tenant);
+
             IQueryable<UserPermittedProductPM> UserPermittedProducts = (from a in repository.context.UserPermittedProducts.Include("Contact")
                                       where a.UserId == id
                                       select new UserPermittedProductPM()
@@ -70,6 +73,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           ProductTypeCode = a.ProductTypeCode,
                                           UserId = a.UserId,
                                       });
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(" after GetContactFromUserPermittedProductPMsByUserId  repository.context.GetConnection().Database" + repository.context.GetConnection()?.Database);
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("  GetContactFromUserPermittedProductPMsByUserId UserPermittedProducts.count()" + UserPermittedProducts?.Count());
+
             return UserPermittedProducts;
         }
     }

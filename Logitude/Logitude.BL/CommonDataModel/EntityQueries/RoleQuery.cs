@@ -260,6 +260,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (myRolesIds.Count > 0)
             {
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("GetCustomRolesByIds myRolesIds: " + string.Join(", ", myRolesIds));
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"Before GetCustomRolesByIds repository.context.GetConnection().Database: {repository.context.GetConnection()?.Database}");
+
                 myResult = (from a in repository.context.Roles
                             where myRolesIds.Contains(a.Id) && a.IsCustomRole == true
                             select new RolePM()
@@ -275,7 +278,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                 SearchFields = a.SearchFields,
                                 Inactive = a.Inactive,
                             }).ToList();
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"GetCustomRolesByIds myResult: {string.Join(", ", myResult?.Select(a => a.Id))}");
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"After GetCustomRolesByIds repository.context.GetConnection().Database: {repository.context.GetConnection()?.Database}");
+
             }
+
 
             return myResult;
         }

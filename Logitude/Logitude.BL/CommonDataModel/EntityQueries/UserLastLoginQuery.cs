@@ -9,6 +9,8 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
+using Microsoft.WindowsAzure.ServiceRuntime;
+using System.Runtime.Remoting.Contexts;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -33,6 +35,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public UserLastLoginPM GetSinglePM(string id, int tenant)
         {
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("UserLastLoginQuery GetSinglePM id:" + id+ ",tenant:"+ tenant);
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(" before UserLastLoginQuery GetSinglePM  repository.context.GetConnection().Database" + repository. context.GetConnection()?.Database);
+
             UserLastLoginPM entity = (from a in repository.context.UserLastLogins.Include("User")
                                       where a.Tenant == tenant
                                       && a.Id == id
@@ -45,6 +50,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           WorkEnvironment = a.WorkEnvironment,
                                           IP = a.IP,
                                       }).FirstOrDefault();
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(" before UserLastLoginQuery GetSinglePM  repository.context.GetConnection().Database" + repository.context.GetConnection()?.Database);
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("  UserLastLoginQuery GetSinglePM entity" + entity?.Id);
+
             return entity;
         }
 
