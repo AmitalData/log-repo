@@ -54,7 +54,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                
+                SecurityUtility.CheckContactFeature("Customs.CB_CustomsItemComputedData", "READ", authToken.Tenant);
+	                
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CB_CustomsItemComputedDataQueryService cB_CustomsItemComputedDataQuery = new CB_CustomsItemComputedDataQueryService(MyContext);
 				cB_CustomsItemComputedDataQuery.InitializeSettings();
