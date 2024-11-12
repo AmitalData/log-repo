@@ -365,11 +365,14 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     MoreDataValidationErrors = [];
 
     async SendButtonClicked(customSendOptionsArgs: any) {
-        
         // init lists:
         this.ValidationErrors = [];
         this.GeneralValidationErrors = [];
         this.MoreDataValidationErrors = [];
+        if(AppTool.IsNullOrEmpty(this.DecalarationData.DeclarationNumber))
+        {
+            this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.NotDeclaration"));
+        }
          if (this.EntityPM.RequestReasonCode != "10" && this.EntityPM.RequestReasonCode != "13" && this.EntityPM.RequestReasonCode != "14") {
             this.checkRequestReasonCode();
             if (this.SelectedTabCode == "GENERAL"){
