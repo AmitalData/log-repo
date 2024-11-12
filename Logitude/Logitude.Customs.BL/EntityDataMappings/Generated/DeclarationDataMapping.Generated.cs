@@ -442,7 +442,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         UNFCourier, 
 	         EffectiveFlight, 
 	         AutoSending, 
-	         DiamondsDeclarationFilter,
+	         DiamondsDeclarationFilter, 
+	         CooStatusCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

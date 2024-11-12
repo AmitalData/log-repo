@@ -1579,6 +1579,11 @@ export class DeclarationPM {
     public set DiamondsDeclarationFilter(newValue: string) { if (this.diamondsDeclarationFilter != newValue) { this.diamondsDeclarationFilter = newValue; this.MarkAsDirty("DiamondsDeclarationFilter"); } }
        
 	 
+    private cooStatusCode: string;
+    public get CooStatusCode() { return this.cooStatusCode; }
+    public set CooStatusCode(newValue: string) { if (this.cooStatusCode != newValue) { this.cooStatusCode = newValue; this.MarkAsDirty("CooStatusCode"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		
