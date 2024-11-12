@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BaseService } from './Services/BaseService';
 import { AppTool } from './Infrastructure/Tools';
+import { FeatureLocator } from './Infrastructure/Utilities/FeatureLocator';
 
 export interface Filters {
 	SearchFields?: string;
@@ -26,7 +27,17 @@ export class API_MainService extends BaseService {
 		// this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain';
 		// this.ApiURL = this.BaseURL + 'api/ShipmentDomain';
 	}
-
+	
+	// TODO: Add in all the requests the check for the feature permission:
+	checkIsFeaturePermessionCustomsBook(): boolean {
+		if (!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedDatas", "CustomsBookFeature")) {
+			// TODO: להחזיר שגיאה שאין הרשאה בדומה למערכת לוגיטיוד
+			alert("You have no permission to access this feature");
+			return false;
+		}
+		return true;
+	}
+	
 	AddNEWRemarksClassification(data) {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/AddNEWRemarksClassification`;
 		// const url = `${this._apiUrl}RemarksClassifications/Post`;
@@ -36,14 +47,15 @@ export class API_MainService extends BaseService {
 	EditRemarksClassification(data) {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/EditRemarksClassification`;
 		return this.Post(url, data);
-  }
+	}
 
 	DeleteRemarksClassification(data) {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/DeleteRemarksClassification`;
 		return this.Post(url, data);
 	}
-	
+
 	GetCustomsBookMainView(filters: Filters) {
+		if (!this.checkIsFeaturePermessionCustomsBook()) return;
 		const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomsBookMainView?customsBookType=${filters.CustomsBookType}&Tenant=${filters.Tenant ? filters.Tenant : 0}`;
 		return this.Get(url);
 	}
@@ -74,11 +86,13 @@ export class API_MainService extends BaseService {
 	}
 
 	GetCustomsBookMainViewSearchByClassification(filters: Filters) {
+		if (!this.checkIsFeaturePermessionCustomsBook()) return;
 		const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomsBookMainViewSearchByClassification`;
 		return this.Post(url, filters);
 	}
 
 	GetCustomsBookMainViewSearchByText(filters: Filters) {
+		if (!this.checkIsFeaturePermessionCustomsBook()) return;
 		const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomsBookMainViewSearchByText`;
 		return this.Post(url, filters);
 	}

@@ -14,6 +14,7 @@ import { HeaderService, searchState } from '../app-header/service/header.service
 import { FilterPopupService, FiltersSearch } from '../filter-popup/service/filter-popup.service';
 import { AddCommentComponent } from '../add-comment/add-comment.component';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
+import { FeatureLocator } from '../../../core/Infrastructure/Utilities/FeatureLocator';
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
@@ -77,6 +78,7 @@ export class MainDisplayComponent implements OnInit {
 		};
 		this.isLoadingMode.next(true);
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: any) => {
+			// if (!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedDatas", "CustomsBookFeature")) return;
 			const result: CB_CustomsItemComputedDataList[] = data.body;
 			if (!result) return; // TODO: add error message
 			this.countSearchResult = 0;
@@ -91,7 +93,7 @@ export class MainDisplayComponent implements OnInit {
 		this.isLoadingMode.subscribe((isLoading) => {
 			this.isLoading = isLoading;
 		});
-	}
+  }
 
 	isLoading: boolean = false;
 	searchValue: string = '';

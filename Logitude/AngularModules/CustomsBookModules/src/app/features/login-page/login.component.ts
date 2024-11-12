@@ -5,10 +5,11 @@ import { SessionInfo } from '../../core/Infrastructure/Utilities/SessionInfo';
 import { AuthService } from '../../core/Services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { FeatureLocator } from '../../core/Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     selector: 'app-login',
-	standalone: true,
+    standalone: true,
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css'],
     imports: [FormsModule, CommonModule],
@@ -35,17 +36,17 @@ export class LoginComponent implements OnInit {
 
 
     constructor(private router: Router,
-        public routeReuseStrategy:RouteReuseStrategy,
+        public routeReuseStrategy: RouteReuseStrategy,
         private loginExtendedService: LoginExtendedService,
         private authService: AuthService,
-        ) {
+    ) {
         this.RouteToMainPage();
 
         // close the session
         this.authService.closeSession();
     }
 
-    RedirectAppToHttps(){
+    RedirectAppToHttps() {
         const isLocally = window.location.origin.indexOf('localhost') > -1;
 
         if (!isLocally && location.protocol === 'http:') {
@@ -56,7 +57,7 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         this.initComponent();
     }
-    
+
     clearRouteReuseStrategy() {
         // TODO?
         // (this.routeReuseStrategy as CustomRouteReuseStrategy).clear();
@@ -73,7 +74,11 @@ export class LoginComponent implements OnInit {
     }
 
     public LogInClicked() {
-        
+        if(!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedDatas", "CustomsBookFeature")){
+            // TODO: להחזיר שגיאה שאין הרשאה בדומה למערכת לוגיטיוד
+            alert("You have no permission to access this feature");
+            return;
+        }
         this.clearRouteReuseStrategy();
 
         this.ShowbusyIndicator = true;
@@ -99,7 +104,7 @@ export class LoginComponent implements OnInit {
         };
 
         this.loginExtendedService.PostUserValidation(LoginParams).subscribe((userData: any) => {
-            
+
             if ((userData && (userData.HasError == true || userData.ExceptionMessage)) || !userData) {
                 this.LoginFailed(userData);
                 this.ShowbusyIndicator = false;
@@ -111,7 +116,7 @@ export class LoginComponent implements OnInit {
     private IsCustomsBookDomain() {
         const cargoTrackingDomainKeyword = "customs-book";
         const domain = window.location.href;
-        if (domain.indexOf(cargoTrackingDomainKeyword)>-1) {
+        if (domain.indexOf(cargoTrackingDomainKeyword) > -1) {
             return true;
         }
 
@@ -159,24 +164,24 @@ export class LoginComponent implements OnInit {
     }
 
     private Login(LoginParams: any, userData: any) {
-        this.Tenant =  userData.Tenant;
+        this.Tenant = userData.Tenant;
         this.errorMessage = "";
         let tenantList = userData.CompanyLogins;
-        let LogInToTenant  = tenantList.filter(tenan => tenan.Tenant == this.Tenant)[0];
-        SessionInfo.DisplayCookies=true;
-        sessionStorage.setItem("DisplayCookies",JSON.stringify(true));
-        if(!LogInToTenant) {
+        let LogInToTenant = tenantList.filter(tenan => tenan.Tenant == this.Tenant)[0];
+        SessionInfo.DisplayCookies = true;
+        sessionStorage.setItem("DisplayCookies", JSON.stringify(true));
+        if (!LogInToTenant) {
             this.errorMessage = "Login failed! unauthorized user.";
             this.ShowbusyIndicator = false;
         }
         else {
-            
+
             SessionInfo.LoggedUserCompanyLogins = userData.CompanyLogins;
             sessionStorage.setItem("LoggedUserCompanyLogins", JSON.stringify(userData.CompanyLogins));
 
             this.loginExtendedService.PostLoginData(LoginParams, LogInToTenant.Tenant).subscribe((userData: any) => {
                 this.ShowbusyIndicator = false;
-                SessionInfo.IsAdmin=userData.IsAdmin;
+                SessionInfo.IsAdmin = userData.IsAdmin;
                 if (userData) {
                     this.FillSessionInfoData(userData);
                     this.RouteToMainPage();
@@ -186,21 +191,18 @@ export class LoginComponent implements OnInit {
             this.GetLoggedUserPM(LoginParams.Email, LogInToTenant.Tenant);
         }
     }
-    
-    private GetLoggedUserPM(email: any, tenant: any)
-    {
-        this.loginExtendedService.GetLoggedUser(email, tenant).subscribe((loggedUserPM: any) =>
-        {
+
+    private GetLoggedUserPM(email: any, tenant: any) {
+        this.loginExtendedService.GetLoggedUser(email, tenant).subscribe((loggedUserPM: any) => {
             if (loggedUserPM) {
                 SessionInfo.LoggedUserPM = loggedUserPM;
-            }else{
+            } else {
                 this.GetLoggedContact();
             }
         });
     }
 
-    private GetLoggedContact()
-    {
+    private GetLoggedContact() {
         // this.cargoTrackingBrandingDataExtendedService.GetLoggedContact().subscribe((loggedContact: any) =>
         // {
         //     if (loggedContact) {
@@ -210,7 +212,7 @@ export class LoginComponent implements OnInit {
     }
 
     private FillSessionInfoData(userData: any) {
-       
+
         sessionStorage.setItem("Token", userData.Token);
         sessionStorage.setItem("LoggedUserTenant", userData.CurrentTenant);
         sessionStorage.setItem("LoggedUserEmail", userData.UserName);
@@ -222,14 +224,14 @@ export class LoginComponent implements OnInit {
         SessionInfo.LoggedUserTenant = userData.CurrentTenant;
         SessionInfo.Token = userData.Token;
         SessionInfo.DocumentDownloadToken = userData.DocumentDownloadToken;
-       
-       }
 
-    private RouteToMainPage(){
+    }
+
+    private RouteToMainPage() {
         if (this.authService.redirectUrl) {
             this.router.navigate([this.authService.redirectUrl]);
             this.authService.redirectUrl = null;
-          }
+        }
         else if (sessionStorage.getItem("Token")) {
             this.router.navigate([this.authService.DefaultPageCustomsBook])
         }
@@ -237,7 +239,7 @@ export class LoginComponent implements OnInit {
 
     public ForgotPasswordClicked() {
         //this.Tenant = this.route.snapshot.queryParams?.tenant;
-        if(this.Tenant)
+        if (this.Tenant)
 
             this.router.navigate(["customs-book/resetpassword"]);//,{ queryParams: {tenant: this.Tenant}}
         else
