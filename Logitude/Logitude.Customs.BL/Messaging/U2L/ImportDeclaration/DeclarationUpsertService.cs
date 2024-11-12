@@ -847,6 +847,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     _MyDeclarationPM.AutoSending = false;
                 }
 
+				if (_MyDeclarationPM.IsDiamondDeclaration && _MyDeclarationPM.AutoSending && _AmitalCustomsFile.ProcedureCurrentCode == "1000041")
+                {
+					_MyDeclarationPM.ExcludeConsignment = true;
+                }
+
                 //  UpdateTrucker();
                 AppendLogLine("ExportDeclarationInsert");
 				ExportDeclarationInsert();
