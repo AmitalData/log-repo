@@ -251,6 +251,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     }
 
                     double? localtotal = 0;
+                    double? totallines = 0;
                     if (expenses != null && expenses.Count > 0)
                     {
                         foreach (APInvoiceLinePM line in activeLines)
@@ -261,18 +262,21 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                                 localtotal += line.LocalCurrencyAmount;
                             }
                         }
+                        totallines = activeLines.Sum(ln => ln.LocalCurrencyAmount);
                     }
                     else
+                    {
                         localtotal = activeLines.Sum(ln => ln.LocalCurrencyAmount);
-
+                        totallines = localtotal;
+                    }
                     double totalVat = activeTotalVats.Sum(tv => tv.LocalVATAmount);
                     if (localtotal > 0 && totalVat < 0)
                     {
-                        throw new ApplicationException("Reference " + entityPM.InvoiceNumber + "   total " + localtotal.ToString() + " is positive,  but VAT " + totalVat + " is negative");
+                        throw new ApplicationException("Reference " + entityPM.InvoiceNumber + ":   total lines is " + totallines.ToString() + ", of which reportable amount " + localtotal.ToString() + " is positive,  but VAT " + totalVat + " is negative");
                     }
                     else if (localtotal < 0 && totalVat > 0)
                     {
-                        throw new ApplicationException("Reference " + entityPM.InvoiceNumber + "   total " + localtotal.ToString() + " is negaive,  but VAT " + totalVat + " is positive");
+                        throw new ApplicationException("Reference " + entityPM.InvoiceNumber + ":   total lines is " + totallines.ToString() + ", of which reportable amount " + localtotal.ToString() + " is negaive,  but VAT " + totalVat + " is positive");
                     }
                 }
             }
