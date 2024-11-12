@@ -356,14 +356,25 @@ export class MainDisplayComponent implements OnInit {
 			const children = data.filter((item) => item?.CI_Parent_CustomsItemIDNum === parentItem?.CustomsItemID);
 			children.forEach((child) => {
 				child.children = getChildren(child);
+				// delete from rootItems value the children :
+				rootItems = deleteFromRootChildrens(child.CustomsItemID);
 			});
 			return children;
 		};
 
-		let rootItems = data.filter((item) => !item?.CI_Parent_CustomsItemIDNum);
-		if (rootItems.length === 0) {
-			rootItems = data;
-		}
+		//let rootItems = data.filter((item) => !item?.CI_Parent_CustomsItemIDNum);
+		//if (rootItems.length === 0) {
+		//  rootItems = data;
+		//}
+
+		const deleteFromRootChildrens = (CustomsItemID) => {
+			rootItems = rootItems.filter((x) => x.CustomsItemID != CustomsItemID);
+			return rootItems;
+		};
+
+
+		let rootItems = data;
+		if (rootItems?.length == 0) return;
 		this.sortByFullClassification(rootItems);
 
 		const orderedData = rootItems.map((rootItem) => {
