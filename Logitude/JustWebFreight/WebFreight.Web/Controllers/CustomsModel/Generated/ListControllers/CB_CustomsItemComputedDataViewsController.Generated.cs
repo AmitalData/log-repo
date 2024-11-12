@@ -59,7 +59,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Customs.CB_CustomsItemComputedData", "READ", authToken.Tenant);
+	                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CB_CustomsItemComputedDataListQueryService cB_CustomsItemComputedDataQuery = new CB_CustomsItemComputedDataListQueryService(MyContext);
                 CB_CustomsItemComputedDataList cB_CustomsItemComputedDataList = cB_CustomsItemComputedDataQuery.GetSingle(cb_id);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -81,7 +82,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Customs.CB_CustomsItemComputedData", "READ", authToken.Tenant);
+	                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CB_CustomsItemComputedDataListQueryService cB_CustomsItemComputedDataQuery = new CB_CustomsItemComputedDataListQueryService(MyContext);
                 List<CB_CustomsItemComputedDataList> result = cB_CustomsItemComputedDataQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -103,7 +105,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                
+                SecurityUtility.CheckContactFeature("Customs.CB_CustomsItemComputedData", "READ", authToken.Tenant);
+	                
 				int tenant = authToken.Tenant;
 
                 QueryOperations queryOperations = new QueryOperations()
