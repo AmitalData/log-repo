@@ -25,10 +25,23 @@ export class DocumentDownloadService {
     }
 
     async ExternalDownloadAllDocuments(securityId: string, forwardingShipmentId: string, tenant: number) {
-
-        var mylink = ServiceHelper.GetAppURL(this.baseUrl)
-            + `api/CorrespondenceDownload/ValidateAndDownloadDocument?DA=1&securitykey=${securityId}::CS:${tenant}:${forwardingShipmentId ? forwardingShipmentId : ""}:cargo`;
-        await this.downloadFile(mylink)
+        if(SessionInfo.Token != null)
+        {
+           var mylink = ServiceHelper.GetAppURL(this.baseUrl)
+               + `api/CorrespondenceDownload/ValidateAndDownloadDocument?DA=1&securitykey=${securityId}::CS:${tenant}:${forwardingShipmentId ? forwardingShipmentId : ""}:cargo`;
+           await this.downloadFile(mylink)
+        
+        }
+        else 
+        {
+            var link = ServiceHelper.GetAppURL(this.baseUrl)
+            + `WebPages/CorrespondenceDownloadpage.aspx?DA=1&securitykey=${securityId}::CS:${tenant}:${forwardingShipmentId ? forwardingShipmentId : ""}:cargo`;
+            var win = window.open(link, '_blank');
+    
+            if (win) {
+                win.focus();
+            }
+        }
     }
 
 
@@ -59,8 +72,21 @@ export class DocumentDownloadService {
 
 
     async ExternalDownloadPage(securityId: string, tenant: number, fileName: string ) {
-        var mylink = ServiceHelper.GetAppURL(this.baseUrl) + `api/CorrespondenceDownload/ValidateAndDownloadDocument?Id=${securityId}~${tenant}~${null}~${fileName}`;
-        await this.downloadFile(mylink)
+        if(SessionInfo.Token != null)
+        {
+           var mylink = ServiceHelper.GetAppURL(this.baseUrl) + `api/CorrespondenceDownload/ValidateAndDownloadDocument?Id=${securityId}~${tenant}~${null}~${fileName}`;
+           await this.downloadFile(mylink)
+        }
+        else 
+        {
+            var link = ServiceHelper.GetAppURL(this.baseUrl)
+            + `WebPages/CorrespondenceDownloadpage.aspx?Id=${securityId}~${tenant}~${null}~${fileName}`;
+            var win = window.open(link, '_blank');
+    
+            if (win) {
+                win.focus();
+            }
+        }
     }
 
     async downloadFile(mylink: string ) {
