@@ -380,7 +380,7 @@
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                 <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;" [class.red]='item.OpenAmount<0'>
-                                    <span>{{ item.OriginalAmount | NumbersPipe:'N2'  }} {{item.CalculatOriginalCurruncy()}}</span>
+                                    <span>{{ item.OriginalAmount | NumbersPipe:'N2'  }} {{item.CalculateOriginalCurrency()}}</span>
                                 </div>
                             </log-cell-template>
                         </ng-template>
@@ -538,7 +538,7 @@
                     </div>
 
                     <div class="footer-cell " float-start style="padding-left: 30px;">
-                        <div style="font-size: 15px; color:#0f9776;" [class.red]="TotalCredit>TotalDebit" class="notranslate">{{TotalsDeference | NumbersPipe:'N2'}}</div>
+                        <div style="font-size: 15px; color:#0f9776;" [class.red]="TotalCredit>TotalDebit" class="notranslate">{{TotalDifference | NumbersPipe:'N2'}}</div>
                         <div style="font-size: 13px; color: #6f6f6f;">{{'Accounting.General.O.Difference' | TextCodeTranslationPipe}} </div>
                     </div>
                 </div>
@@ -558,7 +558,7 @@
                     </td>
 
                     <td style="width: 80px; padding-left: 5px;">
-                        <!--<button class="Button" [disabled]="!(SelectedLines.Length > 0 && TotalsDeference != 0)" (click)="AdjustButton()">{{'Accounting.General.O.Adjust' | TextCodeTranslationPipe}}</button>-->
+                        <!--<button class="Button" [disabled]="!(SelectedLines.Length > 0 && TotalDifference != 0)" (click)="AdjustButton()">{{'Accounting.General.O.Adjust' | TextCodeTranslationPipe}}</button>-->
                     </td>
                     <td style="width: 57px; padding-left: 5px;">
                         <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
