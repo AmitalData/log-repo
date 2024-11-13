@@ -577,6 +577,7 @@ export interface RulesDetailsList {
 	RuleID: number;
 	Title: string;
 	Rules: string;
+	RulesRTF: string;
 	UpdateDate: Date;
 	ChangeRequestTypePriority: number;
 	OrderinalPostion: number;
