@@ -32,6 +32,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public ContactTenantPM GetContactTenantForUser(string contactId, int tenant)
         {
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("GetContactTenantForUser: contactId:" + contactId + "tenant: " + tenant.ToString());
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("GetContactTenantForUser before repository.context.GetConnection().Database" + repository.context.GetConnection()?.Database);
+
             var contactTenant = (from a in repository.context.ContactTenants
                                  where a.ContactId == contactId && a.TenantId == tenant
                                  select new ContactTenantPM()
@@ -40,8 +43,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      Id = a.Id,
                                      TenantId = a.TenantId,
                                  }).FirstOrDefault();
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("GetContactTenantForUser vafter repository.context.GetConnection().Database" + repository.context.GetConnection()?.Database);
 
-         
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("GetContactTenantForUser contactTenant" + contactTenant?.Id);
+
             return contactTenant;
         }
 

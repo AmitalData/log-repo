@@ -12,6 +12,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.BL.Security;
+using System.Runtime.Remoting.Contexts;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -37,11 +38,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public UserPM GetSinglePM(string id, int tenant)
         {
             string entityName = "UserPM" + id + tenant;
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("user query GetSinglePM entityName" + entityName);
+
             UserPM entity;
             if (HttpContext.Current != null)
             {
                 if (CacheManager.CacheWrapper.Get(entityName) == null)
                 {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo("user query GetSinglePM before  repository.context.GetConnection().Database" + repository.context.GetConnection()?.Database);
+
                     entity = (from a in repository.context.Users.Include("Branch").Include("Contact").Include("Department").Include("Freelancer").Include("ProductType")
                               where (a.Tenant == tenant || a.Tenant == 0)
                               && a.Id == id 
@@ -100,6 +105,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   LayoutDirection = a.LayoutDirection,
                                   SignatureImageId = a.SignatureImageId,
                              }).FirstOrDefault();
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo("user query GetSinglePM after  repository.context.GetConnection().Database" + repository.context.GetConnection()?.Database);
 
                     if (entity != null)
                     {
@@ -130,11 +136,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 }
                 else
                 {
+
                     entity = (UserPM)CacheManager.CacheWrapper.Get(entityName);
                 }
             }
             else
             {
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("user query GetSinglePM before  repository.context.GetConnection().Database" + repository.context.GetConnection().Database);
+
                 entity = (from a in repository.context.Users.Include("Contact").Include("Freelancer")
                           where (a.Tenant == tenant || a.Tenant == 0)
                           && a.Id == id
@@ -190,6 +199,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               LayoutDirection= a.LayoutDirection,
                               SignatureImageId = a.SignatureImageId,
                           }).FirstOrDefault();
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("user query GetSinglePM after  repository.context.GetConnection().Database" + repository.context.GetConnection().Database);
 
                 if (entity != null)
                 {
@@ -209,6 +219,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     entity.UserPermittedProducts = perProductQuery.GetContactFromUserPermittedProductPMsByUserId(entity.Id, entity.Tenant).ToList();
                 }
             }
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("user query GetSinglePM entity" + entity?.Id);
 
             return entity;
         }
@@ -1791,11 +1802,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             ContactTenantRepository contactTenantRepository = new ContactTenantRepository(entity.Tenant);
 
             Role role = roleRepository.GetSingleByCode("HRAD", 0);
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("CheckIfIsHRUser role" + role?.Id);
+
             ContactTenant contactTenant = contactTenantRepository.GetContactTenantForContactId(entity.Id, entity.Tenant);
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("GetContactTenantForContactId contactTenant" + contactTenant?.Id);
+
             if (role != null && contactTenant != null)
             {
                 ContactTenantRoleRepository contactTenantRoleRepository = new ContactTenantRoleRepository(entity.Tenant);
                 ContactTenantRole contactTenantRole = contactTenantRoleRepository.GetContactTenantRoleByRoleIdAndContactTenant(role.Id, contactTenant.Id, entity.Tenant);
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("GetContactTenantRoleByRoleIdAndContactTenant contactTenantRole" + contactTenantRole?.Id);
+
                 isHR = contactTenantRole == null ? false : true;
             }
 
