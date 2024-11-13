@@ -149,6 +149,9 @@
 						</ul>
 					</ul>
 				</ng-container>
+				<div *ngIf="errorPermessionCustomsBook != ''" _ngcontent-ng-c2045826007="" class="text-center" style="margin: 20px; margin-bottom: 10px;">
+					<p _ngcontent-ng-c2045826007="" class="txt1" style="color: red;"> {{errorPermessionCustomsBook}} </p>
+				</div>
 				<!-- </div> -->
 			</div>
 			<div style="width: 60px;" [ngStyle]="{'display': (showDetails && (screenWidth < 1300)) ? 'none' : 'flex'}"></div>

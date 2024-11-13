@@ -1,3 +1,4 @@
+declare var window: any;
 import { AfterViewInit, Component, HostListener, Input, OnInit, SimpleChanges } from '@angular/core';
 import { DataRowComponent } from '../data-row/data-row.component';
 import { DetailsFrameComponent } from '../details-frame/details-frame.component';
@@ -15,6 +16,9 @@ import { FilterPopupService, FiltersSearch } from '../filter-popup/service/filte
 import { AddCommentComponent } from '../add-comment/add-comment.component';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 import { FeatureLocator } from '../../../core/Infrastructure/Utilities/FeatureLocator';
+import { InfrastructureDomainService } from '../../../core/Infrastructure/Services/InfrastructureDomainService';
+import { LoginService } from '../../../core/Infrastructure/Services/LoginService';
+import { Router } from '@angular/router';
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
@@ -56,7 +60,9 @@ export class MainDisplayComponent implements OnInit {
 	cbRequirementComputedDataList: CB_RequirementComputedDataList[];
 	isExpand: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService, private filterPopupService: FilterPopupService) {
+	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService, private filterPopupService: FilterPopupService,
+		private loginService: LoginService, private myInfrastructureDomainService: InfrastructureDomainService, private router: Router
+	) {
 		this.screenWidth = window.innerWidth;
 	}
 	searchState: string = searchState.יבוא;
@@ -71,14 +77,46 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 	InitData() {
+
+		this.isLoadingMode.next(true);
+
+		if (SessionInfo.LoggedUserTenant == 0) this.GetAllCustomsBookMainView();
+		else this.checkIsFeaturePermessionCustomsBook();
+
+		// listen to loading mode changes:
+		this.isLoadingMode.subscribe((isLoading) => {
+			this.isLoading = isLoading;
+		});
+	}
+	errorPermessionCustomsBook: string = "";
+	checkIsFeaturePermessionCustomsBook() {
+		this.loginService.GetObjectTables().subscribe((myResult: any) => {
+			if (!myResult) return true;
+			window.ObjectTables = myResult;
+			this.myInfrastructureDomainService.GetAllowedFeaturesForLoggedUser().subscribe((myResponse: any) => {
+				if (!myResponse) return true;
+				if (!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedData", "CustomsBookFeature")) {
+					// TODO: fix the style of the error message and check if do redirect to login page:
+					this.errorPermessionCustomsBook = "You have no permission to access this feature";
+					this.isLoadingMode.next(false);
+					// this.router.navigate(['/Customs-Book/login']);
+				}
+				else {
+					this.errorPermessionCustomsBook = "";
+					this.GetAllCustomsBookMainView();
+				}
+			});
+		});
+	}
+
+	GetAllCustomsBookMainView() {
 		let filters: Filters = {
 			CustomsBookType: this.searchState,
 			Tenant: SessionInfo.LoggedUserTenant,
 			SearchFields: ''
 		};
-		this.isLoadingMode.next(true);
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: any) => {
-			// if (!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedDatas", "CustomsBookFeature")) return;
+			// if (!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedData", "CustomsBookFeature")) return;
 			const result: CB_CustomsItemComputedDataList[] = data.body;
 			if (!result) return; // TODO: add error message
 			this.countSearchResult = 0;
@@ -87,13 +125,9 @@ export class MainDisplayComponent implements OnInit {
 			this.data = this.fullData;
 			this.searchMode = TableTopState.ViewAll;
 			this.isLoadingMode.next(false);
+			this.errorPermessionCustomsBook = "";
 		});
-
-		// listen to loading mode changes:
-		this.isLoadingMode.subscribe((isLoading) => {
-			this.isLoading = isLoading;
-		});
-  }
+	}
 
 	isLoading: boolean = false;
 	searchValue: string = '';

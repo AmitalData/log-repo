@@ -1,3 +1,4 @@
+declare var window: any;
 import { Component, OnInit } from '@angular/core';
 import { Router, RouteReuseStrategy } from '@angular/router';
 import { LoginExtendedService } from '../../core/Services/login-extended.service';
@@ -6,6 +7,8 @@ import { AuthService } from '../../core/Services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FeatureLocator } from '../../core/Infrastructure/Utilities/FeatureLocator';
+import { LoginService } from '../../core/Infrastructure/Services/LoginService';
+import { InfrastructureDomainService } from '../../core/Infrastructure/Services/InfrastructureDomainService';
 
 @Component({
     selector: 'app-login',
@@ -39,7 +42,8 @@ export class LoginComponent implements OnInit {
         public routeReuseStrategy: RouteReuseStrategy,
         private loginExtendedService: LoginExtendedService,
         private authService: AuthService,
-    ) {
+        private loginService: LoginService,
+        private myInfrastructureDomainService: InfrastructureDomainService) {
         this.RouteToMainPage();
 
         // close the session
@@ -74,11 +78,6 @@ export class LoginComponent implements OnInit {
     }
 
     public LogInClicked() {
-        if(!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedDatas", "CustomsBookFeature")){
-            // TODO: להחזיר שגיאה שאין הרשאה בדומה למערכת לוגיטיוד
-            alert("You have no permission to access this feature");
-            return;
-        }
         this.clearRouteReuseStrategy();
 
         this.ShowbusyIndicator = true;
@@ -183,8 +182,34 @@ export class LoginComponent implements OnInit {
                 this.ShowbusyIndicator = false;
                 SessionInfo.IsAdmin = userData.IsAdmin;
                 if (userData) {
-                    this.FillSessionInfoData(userData);
-                    this.RouteToMainPage();
+
+                    SessionInfo.LoggedUserTenant = userData.Tenant;
+                    if (SessionInfo.LoggedUserTenant != 0) {
+                        SessionInfo.Token = userData.Token;
+                        this.loginService
+                            .GetObjectTables()
+                            .subscribe((myResult: any) => {
+                                window.ObjectTables = myResult;
+                                this.myInfrastructureDomainService
+                                    .GetAllowedFeaturesForLoggedUser()
+                                    .subscribe((myResponse: any) => {
+                                        if (!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedData", "CustomsBookFeature")) {
+                                            // TODO: להחזיר שגיאה שאין הרשאה בדומה למערכת לוגיטיוד
+                                            // alert("You have no permission to access this feature");
+                                            this.errorMessage = "You have no permission to access this feature";
+                                            return;
+                                        }
+                                        else {
+                                            this.FillSessionInfoData(userData);
+                                            this.RouteToMainPage();
+                                        }
+                                    });
+                            });
+                    }
+                    else {
+                        this.FillSessionInfoData(userData);
+                        this.RouteToMainPage();
+                    }
                 }
             });
 
