@@ -78,19 +78,27 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 		public List<RoleFeature> GetRoleFeaturesForRoleFromCache(string roleId, int tenant)
 		{
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(message: $"After GetRoleFeaturesForRoleFromCache roleId: {roleId},tenant: {tenant}");
+
             string cacheKey = $"RoleFeature_{roleId}_{tenant}";
             List<RoleFeature> entity= (List<RoleFeature>)CacheManager.CacheWrapper.Get(cacheKey);
             if (entity == null)
             {
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(message: $"Before GetAllowedFeaturesForRole repository.context.RoleFeatures.GetConnection().Database: {repository.context.GetConnection()?.Database}");
+
                 entity = (from a in repository.context.RoleFeatures
                           where (a.Tenant == tenant || a.Tenant == 0) && a.RoleId == roleId
                           select a).ToList();
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(message: $"After GetAllowedFeaturesForRole repository.context.RoleFeatures.GetConnection().Database: {repository.context.GetConnection()?.Database}");
+
                 if (entity != null)
                 {
                     CacheManager.CacheWrapper.Insert(cacheKey, entity);
                 }
             }
-			return entity;
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(message: $"Before GetAllowedFeaturesForRole entity: {string.Join(",",entity?.Select(a=>a.Id))}");
+
+            return entity;
 		}
 	}
 }

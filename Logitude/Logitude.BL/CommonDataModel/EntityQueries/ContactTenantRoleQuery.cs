@@ -60,6 +60,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public List<ContactTenantRolePM> GetContactTenantRolesForContactTenant(string contactTenantId, int tenant)
         {
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("  GetContactTenantRolesForContactTenant contactTenantId:" + contactTenantId+"tenant"+tenant);
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(" before GetContactTenantRolesForContactTenant  repository.context.GetConnection().Database" + repository.context.GetConnection()?.Database);
+
             var contactTenantRole = (from a in repository.context.ContactTenantRoles
                                                            where a.ContactTenantId == contactTenantId && a.Tenant == tenant
                                                            select new ContactTenantRolePM()
@@ -69,6 +72,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                RoleId = a.RoleId,
                                                                Tenant = a.Tenant,
                                                            });
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(" after GetContactTenantRolesForContactTenant  repository.context.GetConnection().Database" + repository.context.GetConnection()?.Database);
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("  GetContactTenantRolesForContactTenant  contactTenantRole" + contactTenantRole?.Count());
 
             if (contactTenantRole==null)
             {
