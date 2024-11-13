@@ -4,7 +4,7 @@ import { FormsModule, } from '@angular/forms';
 import { HeaderService, searchState } from '../app-header/service/header.service';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { catchError, debounceTime, EMPTY, Subject, switchMap } from 'rxjs';
+import { catchError, debounceTime, EMPTY, filter, iif, of, Subject, switchMap } from 'rxjs';
 import { API_MainService } from '../../../core/API_MainService';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 import { FilterPopupService } from '../filter-popup/service/filter-popup.service';
@@ -42,22 +42,28 @@ export class PageTopComponent {
 	}
 
 	private applyAutocomplate() {		
-		this.searchService.searchText$.pipe(
+		this.searchService.searchText$.pipe(			
 			debounceTime(100),
-			switchMap((searchText) =>
-				this.API_MainService.GetFromTypesense(searchText, this.headerService.getSearchState(true), SessionInfo.LoggedUserTenant).pipe(catchError((error) => EMPTY)))
+			switchMap((searchText: string) =>
+					!!this.textToSearch ?
+						this.API_MainService.GetFromTypesense(searchText, this.headerService.getSearchState(true), SessionInfo.LoggedUserTenant).pipe(catchError((error) => EMPTY)) :
+					 	of(() => {
+							this.customsItemsAutocomplateList.next([]);
+							return EMPTY;
+						})					
+			)
 		).subscribe(async (res: any) => {
-			const regex = new RegExp(`(${this.textToSearch})`, 'gi');
-			const result: GetFromTypesenseResponse = res.body;
+				const regex = new RegExp(`(${this.textToSearch})`, 'gi');
+				const result: GetFromTypesenseResponse = res.body;
 
-			let customsItems = [...result.CustomsItems, ...result.Remarks.map((remark) => { return { ...remark.CustomsItem, remark: remark.Remark.RemarkDescription } })];
-			let customsItemsAutocomplateList: CustomsItemsAutocomplate[] = customsItems.map((item) => {
-				let text = item.FullClassification + ' | ' + ((<any>item).remark || item.CIH_GoodsDescription);
-				text = text.replace(regex, `<mark>$1</mark>`);
-				return { FullClassification: item.FullClassification, text: text }
-			});
+				let customsItems = [...result.CustomsItems, ...result.Remarks.map((remark) => { return { ...remark.CustomsItem, remark: remark.Remark.RemarkDescription } })];
+				let customsItemsAutocomplateList: CustomsItemsAutocomplate[] = customsItems.map((item) => {
+					let text = item.FullClassification + ' | ' + ((<any>item).remark || item.CIH_GoodsDescription);
+					text = text.replace(regex, `<mark>$1</mark>`);
+					return { FullClassification: item.FullClassification, text: text }
+				});
 
-			this.customsItemsAutocomplateList.next(customsItemsAutocomplateList);
+				this.customsItemsAutocomplateList.next(customsItemsAutocomplateList);
 		});
 	}
 
