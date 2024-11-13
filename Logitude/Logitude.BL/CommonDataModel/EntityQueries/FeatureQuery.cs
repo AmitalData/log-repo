@@ -380,6 +380,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             {
                 contactTenantRoles = contactTenantRoleQuery.GetContactTenantRolesForContactTenant(contactTenant.Id, tenant);
             }
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("  GetContactTenantRolesForContactTenant  contactTenantRole" + contactTenantRoles?.Count());
 
             if (contactTenantRoles.Count > 0)
             {

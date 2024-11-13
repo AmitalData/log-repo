@@ -96,7 +96,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     CacheManager.CacheWrapper.Insert(cacheKey, entity);
                 }
             }
-            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(message: $"Before GetAllowedFeaturesForRole entity: {string.Join(",",entity?.Select(a=>a.Id))}");
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(message: $"Before GetAllowedFeaturesForRole entity: {entity?.Count()}");
 
             return entity;
 		}

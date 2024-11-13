@@ -73,7 +73,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                Tenant = a.Tenant,
                                                            });
             NetCommonHelper.Logger.DevLog.Instance.WriteInfo(" after GetContactTenantRolesForContactTenant  repository.context.GetConnection().Database" + repository.context.GetConnection()?.Database);
-            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("  GetContactTenantRolesForContactTenant  contactTenantRole" + contactTenantRole?.Count());
 
             if (contactTenantRole==null)
             {
