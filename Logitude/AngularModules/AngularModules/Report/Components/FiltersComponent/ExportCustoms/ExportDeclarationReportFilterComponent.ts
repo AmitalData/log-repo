@@ -9,6 +9,12 @@ import { AdvancedDatePickerResolverComponent } from 'Infrastructure/Components/L
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
+import { DeclarationStatusTypeListService } from 'Customs/Services/StandardLists/DeclarationStatusTypeListService';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
+import { LeadDocumentTypeListService } from 'Customs/Services/StandardLists/LeadDocumentTypeListService';
+import { CustomsCountryListService } from 'Customs/Services/StandardLists/CustomsCountryListService';
+import { UserListService } from 'Common/Services/StandardLists/UserListService';
+import { CardListService } from 'Common/Services/StandardLists/CardListService';
 
 @Component({
     
@@ -27,6 +33,11 @@ export class ExportDeclarationReportFilterComponent extends BaseComponent {
     TransportFilter_I: string;
     errors: any[];
     isReady: boolean = false;
+    cardListService: CardListService = new CardListService();
+    declarationStatusTypeListService: DeclarationStatusTypeListService = new DeclarationStatusTypeListService();
+    leadDocumentTypeListService: LeadDocumentTypeListService = new LeadDocumentTypeListService();
+    customsCountryListService: CustomsCountryListService = new CustomsCountryListService();
+    userListService: UserListService = new UserListService();
 
     constructor(private EntityResourceService: EntityResourceService, private CD: ChangeDetectorRef) {
         super();
@@ -96,43 +107,60 @@ export class ExportDeclarationReportFilterComponent extends BaseComponent {
             this.showConsignments = value;
         }
     }
-
+    public customerName: string;
     private customerId: string;
     public get CustomerId() { return this.customerId; }
     public set CustomerId(value: string) {
         if (this.customerId != value) {
             this.customerId = value;
+            this.cardListService.getSingleFromCache(this.customerId).subscribe((response: ServiceResponse) => {
+                this.customerName = response.Result.LocalName;
+            });
         }
     }
+    public declarationStatusTypeName: string;
     private declarationStatusTypeCode: string;
     public get DeclarationStatusTypeCode() { return this.declarationStatusTypeCode; }
     public set DeclarationStatusTypeCode(value: string) {
         if (this.declarationStatusTypeCode != value) {
-            this.declarationStatusTypeCode = value;
+            this.declarationStatusTypeCode = value;           
+            this.declarationStatusTypeListService.getSingleFromCache(this.declarationStatusTypeCode).subscribe((response: ServiceResponse) => {
+                this.declarationStatusTypeName = response.Result.LocalName;
+            });
         }
     }
-
+    public declarationTypeName: string;
     private declarationTypeCode: string;
     public get DeclarationTypeCode() { return this.declarationTypeCode; }
     public set DeclarationTypeCode(value: string) {
         if (this.declarationTypeCode != value) {
             this.declarationTypeCode = value;
+            this.leadDocumentTypeListService.getSingleFromCache(this.declarationTypeCode).subscribe((response: ServiceResponse) => {
+                this.declarationTypeName = response.Result.LocalName;
+            });
         }
     }
-
+    public destinationCountryName: string;
     private destinationCountryCode: string;
     public get DestinationCountryCode() { return this.destinationCountryCode; }
     public set DestinationCountryCode(value: string) {
         if (this.destinationCountryCode != value) {
             this.destinationCountryCode = value;
+            this.customsCountryListService.getSingleFromCache(this.destinationCountryCode).subscribe((response: ServiceResponse) => {
+                this.destinationCountryName =  response.Result.LocalName;
+            });
+            
         }
     }
-
+    public referentUserName: string;
     private referentUserId: string;
     public get ReferentUserId() { return this.referentUserId; }
     public set ReferentUserId(value: string) {
         if (this.referentUserId != value) { 
             this.referentUserId = value;
+            this.userListService.getSingleFromCache(this.referentUserId).subscribe((response: ServiceResponse) => {
+                this.referentUserName =  response.Result.LocalName;
+            });
         }
     }
 
@@ -305,25 +333,25 @@ export class ExportDeclarationReportFilterComponent extends BaseComponent {
         }
         //-----------------------------------------------------------------------------3
         if(!AppTool.IsNullOrEmpty(this.DeclarationStatusTypeCode)) {
-            this.queryFilterItems.push(this.GetNewQueryFilterItem("DeclarationStatusTypeCode", this.DeclarationStatusTypeCode, null, "string"));
+            this.queryFilterItems.push(this.GetNewQueryFilterItem("DeclarationStatusTypeCode", this.DeclarationStatusTypeCode, this.declarationStatusTypeName, "string"));
         }
         //-----------------------------------------------------------------------------4
         if(!AppTool.IsNullOrEmpty(this.DeclarationTypeCode)) {
-            this.queryFilterItems.push(this.GetNewQueryFilterItem("DeclarationTypeCode", this.DeclarationTypeCode, null, "string"));
+            this.queryFilterItems.push(this.GetNewQueryFilterItem("DeclarationTypeCode", this.DeclarationTypeCode, this.declarationTypeName, "string"));
         }
         //-----------------------------------------------------------------------------5
          if(!AppTool.IsNullOrEmpty(this.ReferentUserId)) {
-            this.queryFilterItems.push(this.GetNewQueryFilterItem("ReferentUserId", this.ReferentUserId, null, "string"));
+            this.queryFilterItems.push(this.GetNewQueryFilterItem("ReferentUserId", this.ReferentUserId, this.referentUserName, "string"));
         }
 
         //-----------------------------------------------------------------------------6
         if(!AppTool.IsNullOrEmpty(this.DestinationCountryCode)) {
-            this.queryFilterItems.push(this.GetNewQueryFilterItem("DestinationCountryCode", this.DestinationCountryCode, null, "string"));
+            this.queryFilterItems.push(this.GetNewQueryFilterItem("DestinationCountryCode", this.DestinationCountryCode, this.destinationCountryName, "string"));
         }
 
         //-----------------------------------------------------------------------------7
         if(!AppTool.IsNullOrEmpty(this.CustomerId)) {
-            this.queryFilterItems.push(this.GetNewQueryFilterItem("Customer", this.CustomerId, null, "string"));
+            this.queryFilterItems.push(this.GetNewQueryFilterItem("Customer", this.CustomerId, this.customerName, "string"));
         }
         //-----------------------------------------------------------------------------8
         

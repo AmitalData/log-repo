@@ -9,8 +9,8 @@ namespace WebFreight.Web.DataProviders
 {
     public class ExportDeclarationDataProvider : BaseDataProvider
     {
-
-        public List<ExportDeclaration> ExportDeclaration { get; set; }//הצהרות
+		
+		public List<ExportDeclaration> ExportDeclaration { get; set; }//הצהרות
 
 
     }
@@ -25,7 +25,8 @@ namespace WebFreight.Web.DataProviders
         public string DeclarationTypeName { get; set; }
         public string ProcedureCurrentName { get; set; }
         public string ExporterImporterCode { get; set; }
-        public string RecipientName { get; set; }// שם המקבל טבלת Customs.DeclarationExportRecipient
+		public string ExporterImporterName { get; set; }
+		public string RecipientName { get; set; }// שם המקבל טבלת Customs.DeclarationExportRecipient
         public string DestinationCountryName { get; set; }//ארץ יעד
         public string DeclarationStatusTypeName { get; set; }
         #region נתונים מסגירת הצהרה
@@ -55,6 +56,7 @@ namespace WebFreight.Web.DataProviders
         public int SupplierInvoiceItemLineNumber { get; set; }//אופי עסקה
 
         // consignment
+
         public int? ConsignmentNumber { get; set; }
         public string ConsignmentType { get; set; }
         public string ConsignmentCargoTypeName { get; set; }
