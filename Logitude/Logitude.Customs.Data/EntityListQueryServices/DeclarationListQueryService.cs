@@ -189,6 +189,16 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                 into qStatusAmendJoin
                                                      from myJoinAmendmentRequest in qStatusAmendJoin.DefaultIfEmpty()
 
+                                                     let coo = (from certificateOfOrigins in context.CertificateOfOrigins // .Include(a => a.CertificateOfOriginStatusCodeEnumsad)
+
+                                                                join CertificateOfOriginStatusCodeEnum in context.CertificateOfOriginStatusCodeEnums
+                                                                on certificateOfOrigins.CooStatusCode equals CertificateOfOriginStatusCodeEnum.Code
+                                                                into CertificateOfOriginStatusCodeEnumJoin
+                                                                from myJoinCooStatusCodeEnumJoin in CertificateOfOriginStatusCodeEnumJoin.DefaultIfEmpty()
+
+                                                                where certificateOfOrigins.DeclarationId == a.Id
+                                                                select new { certificateOfOrigins.CooStatusCode, certificateOfOrigins.COONumber, CooStatusCodeName = myJoinCooStatusCodeEnumJoin.LocalName }).ToList()
+
                                                      select new DeclarationList()
                                                      {
                                                          Id = a.Id,
@@ -339,7 +349,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          ExcludeManifest = a.ExcludeManifest,
 														 AmendmentRejectionReason = a.AmendmentRejectionReason,
 
-													 });
+                                                         CooStatusCode = coo.Count  <= 1 ? coo.FirstOrDefault().CooStatusCodeName :
+                                                                                            (from sii in context.SupplierInvoiceItems
+                                                                                             join cooJoin in coo on sii.PreferenceDocumentNumber equals cooJoin.COONumber
+                                                                                             where sii.DeclarationId == a.Id
+                                                                                             select cooJoin.CooStatusCodeName).FirstOrDefault(),
+                                                     });
 
                 return query;
 
