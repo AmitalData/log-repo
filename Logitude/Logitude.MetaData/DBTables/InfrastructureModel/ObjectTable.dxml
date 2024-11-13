@@ -500,6 +500,12 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="AvailableInDocumentTypes"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="DBTableShortName"
     OldNames="DBTableShortName1"
     Type="varchar"
@@ -508,10 +514,31 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="AvailableInDocumentTypes"
+    Name="IsLock"
     Type="bit">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RelatedEntity"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ThisKey"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RelatedKey"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="HeaderScreenId"
