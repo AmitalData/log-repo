@@ -25,7 +25,6 @@ namespace WebFreight.Web.DataProviders
         public string CustomerName { get; set; }
         public bool IsShowInvoices { get; set; }
         public bool IsShowConsignments { get; set; }
-
         public List<ExportDeclaration> ExportDeclaration { get; set; }//הצהרות
 
 
