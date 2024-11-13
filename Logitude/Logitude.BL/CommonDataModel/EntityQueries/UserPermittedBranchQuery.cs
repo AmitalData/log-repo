@@ -73,7 +73,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           UserId = a.UserId,
                                       });
             NetCommonHelper.Logger.DevLog.Instance.WriteInfo(" after GetContactFromUserPermittedBranchPMsByUserId  repository.context.GetConnection().Database" + repository.context.GetConnection()?.Database);
-            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("  GetContactFromUserPermittedBranchPMsByUserId UserPermittedBranchs.count()" + UserPermittedBranchs?.Count());
 
             return UserPermittedBranchs;
         }
