@@ -75,13 +75,17 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
         public List<SyncRecord> GetUnsyncAndMarkAsInProcess(int tenant, string item)
         {
+            DateTime yesterday = DateTime.Now.AddDays(-1);
             DateTime date = DateTime.Now;
 
-            IQueryable<SyncRecord> records = context.SyncRecord.Where(syncRecord =>
+            IQueryable<SyncRecord> recordsQurey = context.SyncRecord.Where(syncRecord =>
                 syncRecord.Tenant == tenant &&
                 (syncRecord.IsSync == SyncRecordStatus.InQueue || syncRecord.IsSync == SyncRecordStatus.Synced) &&
-                (syncRecord.FileNo == item || syncRecord.Entname == item)
+                (syncRecord.FileNo == item || syncRecord.Entname == item) &&
+                syncRecord.CreateDate > yesterday
             );
+
+            List<SyncRecord> records = recordsQurey.ToList();
 
             foreach (SyncRecord syncRecord in records)
             {
@@ -91,10 +95,9 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
             context.SaveChanges();
 
-            List<SyncRecord> groupRecord =
-                records.GroupBy(record => new { record.Entname, record.KeyVal, record.TrigAction })
-                .Select(group => group.FirstOrDefault())
-                .ToList();
+            IEnumerable<SyncRecord> q = records.GroupBy(record => new { record.Entname, record.KeyVal, record.TrigAction })
+                .Select(group => group.FirstOrDefault());
+            List<SyncRecord> groupRecord = q.ToList();
 
             return groupRecord;
         }
