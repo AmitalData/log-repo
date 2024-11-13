@@ -25,6 +25,65 @@
     <Constraints
       Nullable="false" />
   </Column>
-	<Index
-   Columns="CreatedAt" />
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EntityId1"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ObjectTableId1"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EntityId2"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ObjectTableId2"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="UserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SessionId"
+    Type="nvarchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="ObjectTableId1,ObjectTableId2"
+    ReferencedTable="ObjectTables"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="UserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Index
+    Columns="CreatedAt" />
 </Table>

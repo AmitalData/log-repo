@@ -641,7 +641,6 @@
   <Column
     Name="AgentSharedLogisticsStatisticsLastDate"
     ShortName="AgentSharedLogisticsLastDate"
-
     Type="datetime">
     <Constraints
       Nullable="true" />
@@ -649,7 +648,6 @@
   <Column
     Name="AgentSharedLogisticsStatisticsLastWeek"
     ShortName="AgentSharedLogisticsLastWeek"
-
     Type="int"
     DefaultValue="0">
     <Constraints
@@ -658,7 +656,6 @@
   <Column
     Name="AgentSharedLogisticsStatisticsLastMonth"
     ShortName="AgentSharedLogisticsLastMonth"
-
     Type="int"
     DefaultValue="0">
     <Constraints
@@ -959,14 +956,7 @@
     <Constraints
       Nullable="true" />
   </Column>
-   <Column
-    Name="AmitalApiToken"
-    Type="varchar"
-    Size="200">
-    <Constraints
-      Nullable="true" />
-  </Column>
-   <Column
+  <Column
     Name="WhatsAppMessagingPhoneNumber"
     Type="varchar"
     Size="15">
@@ -1118,13 +1108,20 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="AmitalApiToken"
+    Type="varchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="HeaderColor"
     Type="varchar"
     Size="20">
     <Constraints
       Nullable="true" />
   </Column>
-   <Column
+  <Column
     Name="ExportLoginCredintial"
     Type="varchar"
     Size="50">
@@ -1149,9 +1146,14 @@
     <Constraints
       Nullable="false" />
   </Column>
-
+  <Column
+    Name="MinutsTimeOutSession"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
-     ForeignKeyColumn="Id"
+    ForeignKeyColumn="Id"
     ReferencedTable="GlobalTenants"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
