@@ -33,6 +33,7 @@ import { forEach } from 'cypress/types/lodash';
 import { SupplierInvioceItemCertificatsService } from 'Customs/Services/WebServices/SupplierInvioceItemCertificatsService';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
+import { SupplierInvioceItemCertificatDefaultPM } from 'Customs/EntityPMs/SupplierInvioceItemCertificatDefaultPM';
 
 @Component({
     selector: 'OcrDefaultsSettingsComponent',
@@ -60,12 +61,13 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     private buyerRoleCodeChecked: boolean = false;
     private partyRelationshipCodeChecked: boolean = false;
     private accountTypeCodeChecked: boolean = false;
+    private supplierInvioceItemCertificatDefaultChecked: boolean = false;
     public IsChecked: boolean = false;
 
     public disableSubmit: boolean = this.IsFromSupplierInvoice;
     FIELD_IS_REQUIERD: string;
     public ProcessTypeCodeFilterItems: ApiQueryFilters;
-
+    private entityResourceService: EntityResourceService = new EntityResourceService();
 
 
     OnAllBtnClicked() {
@@ -76,6 +78,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
         this.BuyerRoleCodeChecked = true
         this.PartyRelationshipCodeChecked = true
         this.AccountTypeCodeChecked = true
+        this.SupplierInvioceItemCertificatDefaultChecked = true
     }
 
     OnNoneBtnClicked() {
@@ -86,20 +89,24 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
         this.BuyerRoleCodeChecked = false
         this.PartyRelationshipCodeChecked = false
         this.AccountTypeCodeChecked = false
+        this.SupplierInvioceItemCertificatDefaultChecked = false
     }
 
 
 
     constructor() {
         super();
-        this.ItemsSource = new ObservableCollection([]);
-        this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-
-        this.CurrentSession.StartBusyIndicator('Loading...');
-        
-        this.ProcessTypeCodeFilterItems = new ApiQueryFilters();
-
-        this.LoadDefaults();
+        this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceItemCertificat").subscribe((res: any) => {
+            this.ItemsSource = new ObservableCollection([]);
+            this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+    
+            this.CurrentSession.StartBusyIndicator('Loading...');
+            
+            this.ProcessTypeCodeFilterItems = new ApiQueryFilters();
+    
+            this.LoadDefaults();
+            this.IsVisibile = true;
+        });
 
     }
     SetWindowArgs(args: any) {
@@ -124,7 +131,22 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
                 this.SupplierInvioceExportDefaultPM = new SupplierInvioceExportDefaultPM();
                 this.DefaultsSupplierInvioceExportDefaultPM()
             }
-            this.IsVisibile = true;
+            else {
+                this.SupplierInvioceExportDefaultPM.SupplierInvItemCertificatDefs.forEach(x =>{
+                    var item: SupplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM(null);
+                    item.CertificateNumber = x.CertificateNumber
+                    item.Tenant = x.Tenant
+                    item.ReqConfirmationTypeCode = x.ReqConfirmationTypeCode
+                    item.CertificateExemptionTypeCode = x.CertificateExemptionTypeCode
+                    item.AttachmentTypeCode = x.AttachmentTypeCode
+                    item.ResConfirmationTypeCode = x.ResConfirmationTypeCode
+                    item.CustomsAttachmentID = x.CustomsAttachmentID
+                    item.SequenceNumeric = x.SequenceNumeric
+                    this.ItemsSource.Insert(new InvoiceItemCertificateLine(item, null));
+
+                });             
+            }
+            
             this.CurrentSession.StopBusyIndicator();
 
         });
@@ -304,6 +326,10 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
 
     }
 
+    get SupplierInvioceItemCertificatDefaultChecked() { return this.supplierInvioceItemCertificatDefaultChecked }
+    set SupplierInvioceItemCertificatDefaultChecked(value: boolean) {
+        this.supplierInvioceItemCertificatDefaultChecked = value
+    }
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
@@ -331,35 +357,38 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
         var inValid = false;
         const decPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
         const isExport: boolean = decPM.direction == 'E'
-        for (let item of multiUpdateOcrParams.SupplierInvioceItemCertificats) {
-
-            if (item.AttachmentTypeCode == null) {
-                //var translatedRequiredError: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-                //var fieldError: string = translatedRequiredError.replace("%FieldName", "AttachmentTypeCode");
-                errors.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Customs.SupplierInvioceItemCertificat.F.AttachmentTypeCode")));
-                isValid = false;
-                break;
-            }
-            else {
-                if (item.AttachmentTypeCode == "1" || item.AttachmentTypeCode == "2") {
-                    if (AppTool.IsNullOrEmpty(item.CertificateNumber) || AppTool.IsNullOrEmpty(item.ReqConfirmationTypeCode) || AppTool.IsNullOrEmpty(item.ResConfirmationTypeCode)) {
-                        isValid = false;
-                        inValid = true;
-                    }
-                    if (!AppTool.IsNullOrEmpty(item.CertificateExemptionTypeCode) || (!isExport && !AppTool.IsNullOrEmpty(item.CustomsAttachmentID))) {
-                        inValid = true;
-                        this.notMandatoryIsNotEmpty = true;
-                    }
+        if(multiUpdateOcrParams.SupplierInvioceItemCertificats != null) {
+            
+            for (let item of multiUpdateOcrParams.SupplierInvioceItemCertificats) {
+    
+                if (item.AttachmentTypeCode == null) {
+                    //var translatedRequiredError: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+                    //var fieldError: string = translatedRequiredError.replace("%FieldName", "AttachmentTypeCode");
+                    errors.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Customs.SupplierInvioceItemCertificat.F.AttachmentTypeCode")));
+                    isValid = false;
+                    break;
                 }
                 else {
-                    if (item.AttachmentTypeCode == "4") {
-                        if (AppTool.IsNullOrEmpty(item.CertificateExemptionTypeCode) || AppTool.IsNullOrEmpty(item.ReqConfirmationTypeCode)) {
+                    if (item.AttachmentTypeCode == "1" || item.AttachmentTypeCode == "2") {
+                        if (AppTool.IsNullOrEmpty(item.CertificateNumber) || AppTool.IsNullOrEmpty(item.ReqConfirmationTypeCode) || AppTool.IsNullOrEmpty(item.ResConfirmationTypeCode)) {
                             isValid = false;
                             inValid = true;
                         }
-                        if (!AppTool.IsNullOrEmpty(item.CertificateNumber) || !AppTool.IsNullOrEmpty(item.ResConfirmationTypeCode) || (!isExport && !AppTool.IsNullOrEmpty(item.CustomsAttachmentID))) {
+                        if (!AppTool.IsNullOrEmpty(item.CertificateExemptionTypeCode) || (!isExport && !AppTool.IsNullOrEmpty(item.CustomsAttachmentID))) {
                             inValid = true;
                             this.notMandatoryIsNotEmpty = true;
+                        }
+                    }
+                    else {
+                        if (item.AttachmentTypeCode == "4") {
+                            if (AppTool.IsNullOrEmpty(item.CertificateExemptionTypeCode) || AppTool.IsNullOrEmpty(item.ReqConfirmationTypeCode)) {
+                                isValid = false;
+                                inValid = true;
+                            }
+                            if (!AppTool.IsNullOrEmpty(item.CertificateNumber) || !AppTool.IsNullOrEmpty(item.ResConfirmationTypeCode) || (!isExport && !AppTool.IsNullOrEmpty(item.CustomsAttachmentID))) {
+                                inValid = true;
+                                this.notMandatoryIsNotEmpty = true;
+                            }
                         }
                     }
                 }
@@ -434,33 +463,50 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
         var currRequestParams = new MultiUpdateOcrParams();
         currRequestParams.DeclarationId = this.CurrentSession.CurrentEditComponent.EntityPM.Id;
         currRequestParams.SupplierInvoiceList = this.SupplierInvoiceComprehensiveUpdate.map(p => p.InvoiceCounterKey).join(',');
-        currRequestParams.SupplierInvioceItemCertificats = []
         currRequestParams.SupplierInvioceExportDefault = this.SupplierInvioceExportDefaultIsChecked;
-        this.ItemsSource.Collection.forEach(element => {
-            var supplierInvioceItemCertificat: SupplierInvioceItemCertificat = new SupplierInvioceItemCertificat();
-            supplierInvioceItemCertificat.CertificateNumber = element.CertificateNumber;
-            supplierInvioceItemCertificat.ReqConfirmationTypeCode = element.ConfirmationTypeCode;
-            supplierInvioceItemCertificat.CertificateExemptionTypeCode = element.CertificateExemptionTypeCode;
-            supplierInvioceItemCertificat.AttachmentTypeCode = element.AttachmentTypeCode;
-            supplierInvioceItemCertificat.ResConfirmationTypeCode = element.ResConfirmationTypeCode;
-            supplierInvioceItemCertificat.CustomsAttachmentID = element.CustomsAttachmentID;
-            supplierInvioceItemCertificat.ReqConfirmationTypeName = element.ConfirmationTypeName;
-            supplierInvioceItemCertificat.CertificateExemptionTypeName = element.CertificateExemptionTypeName;
-            supplierInvioceItemCertificat.AttachmentTypeName = element.AttachmentTypeName;
-            supplierInvioceItemCertificat.ResConfirmationTypeName = element.ResConfirmationTypeName;
-            supplierInvioceItemCertificat.SequenceNumeric = element.SequenceNumeric;
-            supplierInvioceItemCertificat.ExternalCertificatCode = element.ExternalCertificatCode;
-            supplierInvioceItemCertificat.ExternalRequestTypeCode = element.ExternalRequestTypeCode;
-            supplierInvioceItemCertificat.ApprovalRequestNumber = element.ApprovalRequestNumber;
-            currRequestParams.SupplierInvioceItemCertificats.push(supplierInvioceItemCertificat)
-
-        });
+        currRequestParams.SupplierInvioceItemCertificats = null;
+        if (this.SupplierInvioceItemCertificatDefaultChecked) {
+            currRequestParams.SupplierInvioceItemCertificats = []
+            this.ItemsSource.Collection.forEach(element => {
+                var supplierInvioceItemCertificat: SupplierInvioceItemCertificat = new SupplierInvioceItemCertificat();
+                supplierInvioceItemCertificat.CertificateNumber = element.CertificateNumber;
+                supplierInvioceItemCertificat.ReqConfirmationTypeCode = element.ConfirmationTypeCode;
+                supplierInvioceItemCertificat.CertificateExemptionTypeCode = element.CertificateExemptionTypeCode;
+                supplierInvioceItemCertificat.AttachmentTypeCode = element.AttachmentTypeCode;
+                supplierInvioceItemCertificat.ResConfirmationTypeCode = element.ResConfirmationTypeCode;
+                supplierInvioceItemCertificat.CustomsAttachmentID = element.CustomsAttachmentID;
+                supplierInvioceItemCertificat.ReqConfirmationTypeName = element.ConfirmationTypeName;
+                supplierInvioceItemCertificat.CertificateExemptionTypeName = element.CertificateExemptionTypeName;
+                supplierInvioceItemCertificat.AttachmentTypeName = element.AttachmentTypeName;
+                supplierInvioceItemCertificat.ResConfirmationTypeName = element.ResConfirmationTypeName;
+                supplierInvioceItemCertificat.SequenceNumeric = element.SequenceNumeric;
+                supplierInvioceItemCertificat.ExternalCertificatCode = element.ExternalCertificatCode;
+                supplierInvioceItemCertificat.ExternalRequestTypeCode = element.ExternalRequestTypeCode;
+                supplierInvioceItemCertificat.ApprovalRequestNumber = element.ApprovalRequestNumber;
+                currRequestParams.SupplierInvioceItemCertificats.push(supplierInvioceItemCertificat);
+    
+            });
+        }
         this.Update(currRequestParams)
 
 
     }
 
-
+    MapSupplierInvioceItemCertificatsDefault() {
+        var SupplierInvioceItemCertificatsDefault = []
+        this.ItemsSource.Collection.forEach(element => {
+            var supplierInvioceItemCertificatDefaultPM: SupplierInvioceItemCertificatDefaultPM = new SupplierInvioceItemCertificatDefaultPM(null);
+            supplierInvioceItemCertificatDefaultPM.CertificateNumber = element.CertificateNumber;
+            supplierInvioceItemCertificatDefaultPM.ReqConfirmationTypeCode = element.ConfirmationTypeCode;
+            supplierInvioceItemCertificatDefaultPM.CertificateExemptionTypeCode = element.CertificateExemptionTypeCode;
+            supplierInvioceItemCertificatDefaultPM.AttachmentTypeCode = element.AttachmentTypeCode;
+            supplierInvioceItemCertificatDefaultPM.ResConfirmationTypeCode = element.ResConfirmationTypeCode;
+            supplierInvioceItemCertificatDefaultPM.CustomsAttachmentID = element.CustomsAttachmentID;
+            supplierInvioceItemCertificatDefaultPM.SequenceNumeric = element.SequenceNumeric;
+            SupplierInvioceItemCertificatsDefault.push(supplierInvioceItemCertificatDefaultPM);
+        });
+        return SupplierInvioceItemCertificatsDefault
+    }
 
 
     SubmitChanges() {
@@ -468,6 +514,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
 
         var myService: SupplierInvioceExportDefaultPMService = new SupplierInvioceExportDefaultPMService();
         this.SupplierInvioceExportDefaultPM.Tenant = SessionLocator.Tenant;
+        this.SupplierInvioceExportDefaultPM.SupplierInvItemCertificatDefs = this.MapSupplierInvioceItemCertificatsDefault();
         if (this.SupplierInvioceExportDefaultPM?.Id == null) {
             myService.insert(this.SupplierInvioceExportDefaultPM).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse != null) {

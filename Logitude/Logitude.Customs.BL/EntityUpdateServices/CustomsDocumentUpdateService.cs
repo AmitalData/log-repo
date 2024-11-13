@@ -396,7 +396,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         public const string LoadTestSendMessageToQueue = "LoadTestSendMessageToQueue";
         public const string WhileAnalayzeCostomResponseSendDEC = "WhileAnalayzeCostomResponseSendDEC";
-        public const int HugeFileSizeSendToDCA = 10 * 1000000;
+        public const int HugeFileSizeSendToDCA = 25 * 1000000;
         public const int MaxFileSizeDONOTSendToDCA = 200 * 1000000;
 
         protected override void OnUpdating(CustomsDocumentPM entityPM)

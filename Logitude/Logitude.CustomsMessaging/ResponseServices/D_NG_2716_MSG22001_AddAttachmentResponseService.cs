@@ -371,7 +371,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             // for the Diamonds declaration in export, send it automatically to the mehes
             if (declarationPM != null) {
-                if (declarationPM.IsDiamondDeclaration && declarationPM.Direction == "E" && declarationPM.AutoSending)
+                if (declarationPM.IsDiamondDeclaration && declarationPM.Direction == "E" && declarationPM.AutoSending && declarationPM.IsSubmitDeclaration != true)
                 {
                     try
                     {

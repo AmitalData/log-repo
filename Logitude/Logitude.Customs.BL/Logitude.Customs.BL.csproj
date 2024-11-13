@@ -1088,6 +1088,7 @@
     <Compile Include="EntityDataMappings\Generated\SuppInvoiceItemsAbachStatementDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvioceExportDefaultDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvioceItemCertificatDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SupplierInvioceItemCertificatDefaultDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceDataMapping.Generated.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1293,6 +1294,7 @@
     <Compile Include="EntityDataMappings\SuppInvoiceItemsAbachStatementDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvioceExportDefaultDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvioceItemCertificatDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SupplierInvioceItemCertificatDefaultDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvoiceDataMapping.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1440,6 +1442,7 @@
     <Compile Include="EntityQueryServices\Generated\RequestToAdvanceAQueueQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\OriginCriterionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RequestReasonCodeEnumQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SupplierInvioceItemCertificatDefaultQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TarifRelatedToQuotaQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TradeLevyStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\GovernmentProcedureTypeTenantQueryService.cs" />
@@ -2051,6 +2054,7 @@
     <Compile Include="EntityUpdateServices\Generated\CertificateOfOriginUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\OriginCriterionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RequestReasonCodeEnumUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SupplierInvioceItemCertificatDefaultUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TarifRelatedToQuotaUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TradeLevyStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\OcrDocumentUpdateService.cs" />
@@ -2083,6 +2087,7 @@
     <Compile Include="EntityUpdateServices\Generated\DefaultValueUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\SupplierInvioceExportDefaultUpdateService.cs" />
     <Compile Include="EntityUpdateServices\OriginCriterionUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\SupplierInvioceItemCertificatDefaultUpdateService.cs" />
     <Compile Include="EntityUpdateServices\VendorCurrencyUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationFollowUpUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\VendorCurrencyUpdateService.Generated.cs" />
