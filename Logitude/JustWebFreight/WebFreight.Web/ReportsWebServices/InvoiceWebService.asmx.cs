@@ -1978,7 +1978,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                                 if (!vattype.IsMultiPercentage)
                                 {
-                                    List<VatTypePercentage> vattypepercentageList = (from percentage in commonContext.VatTypePercentages where percentage.VatTypeId == vattype.Id orderby percentage.FromDate descending select percentage).ToList();
+                                    List<VatTypePercentage> vattypepercentageList = (from percentage in commonContext.VatTypePercentages where percentage.VatTypeId == vattype.Id && percentage.FromDate <= invoicePM.InvoiceDate orderby percentage.FromDate descending select percentage).ToList();
 
                                     if (vattypepercentageList.Count > 0)
                                     {
