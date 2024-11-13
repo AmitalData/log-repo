@@ -9,8 +9,24 @@ namespace WebFreight.Web.DataProviders
 {
     public class ExportDeclarationDataProvider : BaseDataProvider
     {
-		
-		public List<ExportDeclaration> ExportDeclaration { get; set; }//הצהרות
+        public DateTime? CreateDateFrom { get; set; }
+        public DateTime? CreateDateTo { get; set; }
+
+        public string TransportModeId { get; set; }
+        public string DeclarationStatusTypeCode { get; set; }
+        public string DeclarationStatusTypeName { get; set; }
+        public string DeclarationTypeCode { get; set; }
+        public string DeclarationTypeName { get; set; }
+        public string ReferentUserId { get; set; }
+        public string ReferentUserName { get; set; }
+        public string DestinationCountryCode { get; set; }
+        public string DestinationCountryName { get; set; }
+        public string Customer { get; set; }
+        public string CustomerName { get; set; }
+        public bool IsShowInvoices { get; set; }
+        public bool IsShowConsignments { get; set; }
+
+        public List<ExportDeclaration> ExportDeclaration { get; set; }//הצהרות
 
 
     }
