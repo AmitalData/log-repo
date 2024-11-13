@@ -3,7 +3,6 @@ using System.Linq;
 using Simplog.Server.Infrastructure;
 using System;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
-using System.Runtime.InteropServices;
 
 namespace Unifreight.Data.AmitalModel.Repsitories
 {
