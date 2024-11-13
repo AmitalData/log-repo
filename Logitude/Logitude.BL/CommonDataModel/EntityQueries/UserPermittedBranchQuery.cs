@@ -61,6 +61,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<UserPermittedBranchPM> GetContactFromUserPermittedBranchPMsByUserId(string id, int tenant)
         {
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(" before GetContactFromUserPermittedBranchPMsByUserId  repository.context.GetConnection().Database" + repository.context.GetConnection()?.Database);
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(" GetContactFromUserPermittedBranchPMsByUserId  id:" + id+",tenant:"+tenant);
             IQueryable<UserPermittedBranchPM> UserPermittedBranchs = (from a in repository.context.UserPermittedBranches.Include("Contact")
                                       where a.UserId == id
                                       select new UserPermittedBranchPM()
@@ -70,6 +72,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           BranchId = a.BranchId,
                                           UserId = a.UserId,
                                       });
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(" after GetContactFromUserPermittedBranchPMsByUserId  repository.context.GetConnection().Database" + repository.context.GetConnection()?.Database);
+
             return UserPermittedBranchs;
         }
     }
