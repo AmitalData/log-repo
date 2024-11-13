@@ -438,6 +438,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
                     }
 
+                    // get all certificateoforigins and update them
+                    var context = CustomContext.GetContext(entityPM.Tenant);
+                    CertificateOfOriginQueryService certificateOfOriginQueryService = new CertificateOfOriginQueryService(context);
+                    List<CertificateOfOriginPM> certificateOfOrigins = certificateOfOriginQueryService.GetCertificateOfOriginsByDeclarationId(entityPM.Id, null, entityPM.Tenant);
+                    foreach (var certificateOfOrigin in certificateOfOrigins)
+                    {
+                        CertificateOfOriginUpdateService certificateOfOriginUpdateService = new CertificateOfOriginUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        certificateOfOrigin.DestinationCountry = entityPM.DestinationCountryCode;
+                        certificateOfOrigin.ChangeSetOp = ChangeSetOperation.Update;
+                        certificateOfOriginUpdateService.Update(certificateOfOrigin, true);
+                    }
 
                     foreach (var con in entityPM.Consignments)
                     {
