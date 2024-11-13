@@ -365,33 +365,29 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     MoreDataValidationErrors = [];
 
     async SendButtonClicked(customSendOptionsArgs: any) {
-        
         // init lists:
         this.ValidationErrors = [];
         this.GeneralValidationErrors = [];
         this.MoreDataValidationErrors = [];
+        if(AppTool.IsNullOrEmpty(this.DecalarationData.DeclarationNumber))
+        {
+            this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.NotDeclaration"));
+        }
          if (this.EntityPM.RequestReasonCode != "10" && this.EntityPM.RequestReasonCode != "13" && this.EntityPM.RequestReasonCode != "14") {
             this.checkRequestReasonCode();
             if (this.SelectedTabCode == "GENERAL"){
                 this.GeneralValidationErrors = this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);            
+
+                this.ValidationErrors = this.ValidationErrors.concat(this.GeneralValidationErrors);
             }
             else if(this.SelectedTabCode == "MOREDATA"){
+                this.GeneralValidationErrors = this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);            
                 this.MOREDATA.CheckMandatoryCustomsFields(this.MoreDataValidationErrors);
+
+                this.ValidationErrors = this.ValidationErrors.concat(this.GeneralValidationErrors)
+                    .concat(this.MoreDataValidationErrors);
             }
-            this.GeneralValidationErrors?.forEach(i => {
-                const isUniqueElement = !this.MoreDataValidationErrors.includes(i);
-                if (isUniqueElement && i != "" ) {
-                    this.ValidationErrors.push(i);
-                }
-            });
-    
-            this.MoreDataValidationErrors?.forEach(j => {
-                const isUniqueElement = !this.GeneralValidationErrors.includes(j);
-                if (isUniqueElement && j != "") {
-                    this.ValidationErrors.push(j);
-                }
-            });
-    
+
             // check duplicates items: 
             if(this.ValidationErrors.length > 0){
                 this.ValidationErrors = Array.from(new Set(this.ValidationErrors));

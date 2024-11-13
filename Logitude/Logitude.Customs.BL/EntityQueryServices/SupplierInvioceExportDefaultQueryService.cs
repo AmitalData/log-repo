@@ -15,18 +15,26 @@ namespace Logitude.Customs.BL.EntityQueryServices
 {
    public partial class SupplierInvioceExportDefaultQueryService
     {
-       public SupplierInvioceExportDefault GetSupplierInvoiceExportDefaultByTenant( int  tenant)
+		public override void GetComposition(EntityKeyFields entityKeys, SupplierInvioceExportDefaultPM entityPM)
+		{
+			SupplierInvioceItemCertificatDefaultQueryService supplierInvoiceItemsPriceQueryService = new SupplierInvioceItemCertificatDefaultQueryService(context);
+			SupplierInvioceExportDefaultKeys supplierInvioceExportDefaultKeys = entityKeys as SupplierInvioceExportDefaultKeys;
+
+			entityPM.SupplierInvItemCertificatDefs = supplierInvoiceItemsPriceQueryService.GetMulti(supplierInvioceExportDefaultKeys, false);
+		}
+
+	   public SupplierInvioceExportDefaultPM GetSupplierInvoiceExportDefaultByTenant(int tenant)
        {
-            SupplierInvioceExportDefault supplierInvioceExportDefault = null;
-           if (tenant!=null )
+            SupplierInvioceExportDefaultPM supplierInvioceExportDefaultPM = null;
+           if (tenant != null)
            {
 
                 SupplierInvioceExportDefaultRepository supplierInvioceExportDefaultRepository = new SupplierInvioceExportDefaultRepository(context);
-                 supplierInvioceExportDefault = supplierInvioceExportDefaultRepository.GetSupplierInvoiceExportDefaultByTenant( tenant);
-             
+				var supplierInvioceExportDefault = supplierInvioceExportDefaultRepository.GetSupplierInvoiceExportDefaultByTenant( tenant);
+				supplierInvioceExportDefaultPM = GetEntityPM(supplierInvioceExportDefault,true,new SupplierInvioceExportDefaultKeys { Id = supplierInvioceExportDefault?.Id} );
 
-           }
-           return supplierInvioceExportDefault;
+			}
+			return supplierInvioceExportDefaultPM;
        }
 
       

@@ -106,6 +106,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
         }
 
 
-        public override string MainInterfaceCode { get { return "2281"; } }
+        public override string MainInterfaceCode { get { return "2280"; } }
     }
 }

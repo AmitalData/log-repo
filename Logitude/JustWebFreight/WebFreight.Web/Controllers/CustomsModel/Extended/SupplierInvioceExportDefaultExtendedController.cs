@@ -43,11 +43,11 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+				SupplierInvioceExportDefaultQueryService queryService = new SupplierInvioceExportDefaultQueryService(customContext);
+               
+                var supplierInvioceExportDefaultPM = queryService.GetSupplierInvoiceExportDefaultByTenant(tenant);                       
 
-                SupplierInvioceExportDefaultQueryService queryService = new SupplierInvioceExportDefaultQueryService(customContext);
-                SupplierInvioceExportDefault supplierInvioceExportDefault = queryService.GetSupplierInvoiceExportDefaultByTenant( tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, supplierInvioceExportDefault);
+                return Request.CreateResponse(HttpStatusCode.OK, supplierInvioceExportDefaultPM);
             }
 
             catch (Exception ex)

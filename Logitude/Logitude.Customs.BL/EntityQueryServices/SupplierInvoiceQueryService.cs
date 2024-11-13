@@ -873,7 +873,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
 				}
 
-				if (supplierInvioceItemCertificats?.Length>0)
+				if (supplierInvioceItemCertificats != null)
                 {
                     SupplierInvioceItemCertificatUpdateService updateService = new SupplierInvioceItemCertificatUpdateService(context, new Dictionary<string, IContext>(), supplierInvoice.Tenant);
 
