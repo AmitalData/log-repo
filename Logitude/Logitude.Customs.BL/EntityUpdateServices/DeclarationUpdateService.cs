@@ -438,6 +438,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
                     }
 
+
                     foreach (var con in entityPM.Consignments)
                     {
                         if (con.ConsignmentType == "E")
