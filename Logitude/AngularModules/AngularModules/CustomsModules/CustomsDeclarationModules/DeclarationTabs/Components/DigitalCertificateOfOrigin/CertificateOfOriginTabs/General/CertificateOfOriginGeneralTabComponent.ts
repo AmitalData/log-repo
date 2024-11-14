@@ -562,7 +562,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                     if (!response.HasError && response.Result) {
                         this.currentDeclaration.SupplierInvoices = response.Result;
                     }
-                    const oldItems = this.entityPM.CertificateOriginItemItems;
+                    const oldItems = this.entityPM.CertificateOriginItemItems.filter(a => !AppTool.IsNullOrEmpty(a.Id));
                     this.InitilizeNewCertificateWithConsignments(this.entityPM);
                     oldItems.forEach(item => {
                         item.ChangeSetOp = "Delete";
@@ -593,7 +593,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 //     if (!myResponse.HasError && myResponse.Result) {
                 //         this.currentDeclaration = myResponse.Result;
                 // this.entityPM.CertificateOriginInvoiceItems.forEach(item => this.entityPM.DeletedCertificateOriginInvoiceItems.push(item));
-                const oldItems = this.entityPM.CertificateOriginInvoiceItems;
+                const oldItems = this.entityPM.CertificateOriginInvoiceItems.filter(a => !AppTool.IsNullOrEmpty(a.Id));
 
                 this.InitilizeNewCertificateWithSupplierInvoices(this.entityPM);
                 oldItems.forEach(item => {
