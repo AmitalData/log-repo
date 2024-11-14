@@ -22,7 +22,7 @@ export class PageTopComponent {
 	@Output() searchClick = new EventEmitter<string | number>();
 	customsItemsAutocomplateList: Subject<CustomsItemsAutocomplate[]> = new Subject<CustomsItemsAutocomplate[]>();
 	textToSearch: string = '';
-	
+	searchHeader: string = 'חיפוש פרט מכס/מילה/צירוף מילים';
 	constructor(public searchService: SearchService, private headerService: HeaderService, private API_MainService: API_MainService, private filterPopupService: FilterPopupService,) { }
 
 	public text: string = '';
@@ -32,7 +32,8 @@ export class PageTopComponent {
 	public currentSearchState: string = searchState.יבוא;
 	public SearchByValidation: SearchBy = SearchBy.searchBy_form01;
 	ngOnInit() {
-		this.text = this.searchService.SearchBy('searchBy_form01');
+		// this.text = this.searchService.SearchBy('searchBy_form01'); // #112160 
+		this.text = this.searchHeader;
 		this.checked = this.searchService.GetDefaultValue();
 		this.headerService.searchState$.subscribe((searchText) => {
 			this.currentSearchState = searchText;
@@ -41,7 +42,7 @@ export class PageTopComponent {
 		this.applyAutocomplate();
 	}
 
-	private applyAutocomplate() {		
+	private applyAutocomplate() {
 		this.searchService.searchText$.pipe(
 			debounceTime(100),
 			switchMap((searchText) =>
@@ -59,6 +60,14 @@ export class PageTopComponent {
 
 			this.customsItemsAutocomplateList.next(customsItemsAutocomplateList);
 		});
+  }
+  // #112160
+	searchByNumOrText: SearchBy = SearchBy.searchBy_form01;
+	isNumeric(value: string): boolean {
+		// save to value the boolean result of the check:
+		let res = /^\d*$/.test(value);
+		this.searchByNumOrText =  res ? SearchBy.searchBy_form01 : SearchBy.pageSearch_form02;
+		return /^\d*$/.test(value); // Returns true if value contains only digits
 	}
 
 	public search(id: string) {
@@ -75,8 +84,9 @@ export class PageTopComponent {
 			this.textToSearch = "";
 			return;
 		}
-
-		this.searchClick.emit(this.searchService.selectSearchBy);
+		
+		this.searchClick.emit(this.searchByNumOrText);
+    // this.searchClick.emit(this.searchService.selectSearchBy);// #112160
 		this.filterPopupService.toggleFilterPopup(false);
 
 		this.searchService.searchText$.subscribe((searchText) => {
