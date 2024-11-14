@@ -60,14 +60,20 @@ export class PageTopComponent {
 
 			this.customsItemsAutocomplateList.next(customsItemsAutocomplateList);
 		});
-  }
-  // #112160
+	}
+	// #112160
 	searchByNumOrText: SearchBy = SearchBy.searchBy_form01;
 	isNumeric(value: string): boolean {
-		// save to value the boolean result of the check:
 		let res = /^\d*$/.test(value);
-		this.searchByNumOrText =  res ? SearchBy.searchBy_form01 : SearchBy.pageSearch_form02;
-		return /^\d*$/.test(value); // Returns true if value contains only digits
+		if (res) {
+			this.search('searchBy_form01');
+			this.searchByNumOrText = SearchBy.searchBy_form01
+		}
+		else {
+			this.search('pageSearch_form02');
+			this.searchByNumOrText = SearchBy.pageSearch_form02
+		}
+		return res; // Returns true if value contains only digits
 	}
 
 	public search(id: string) {
@@ -84,9 +90,9 @@ export class PageTopComponent {
 			this.textToSearch = "";
 			return;
 		}
-		
+
 		this.searchClick.emit(this.searchByNumOrText);
-    // this.searchClick.emit(this.searchService.selectSearchBy);// #112160
+		// this.searchClick.emit(this.searchService.selectSearchBy);// #112160
 		this.filterPopupService.toggleFilterPopup(false);
 
 		this.searchService.searchText$.subscribe((searchText) => {
