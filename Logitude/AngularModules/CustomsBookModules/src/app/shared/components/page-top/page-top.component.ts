@@ -66,11 +66,11 @@ export class PageTopComponent {
 	isNumeric(value: string): boolean {
 		let res = /^\d*$/.test(value);
 		if (res) {
-			this.search('searchBy_form01');
+			this.searchService.SearchBy('searchBy_form01');
 			this.searchByNumOrText = SearchBy.searchBy_form01
 		}
 		else {
-			this.search('pageSearch_form02');
+			this.searchService.SearchBy('pageSearch_form02');
 			this.searchByNumOrText = SearchBy.pageSearch_form02
 		}
 		return res; // Returns true if value contains only digits
