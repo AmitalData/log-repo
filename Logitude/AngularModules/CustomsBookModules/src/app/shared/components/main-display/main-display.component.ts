@@ -42,6 +42,7 @@ export class MainDisplayComponent implements OnInit {
 	@Input() showChiledren: boolean = false;
 	@Input() itemsData: BehaviorSubject<CB_CustomsItemComputedDataList[]>;
 	@Input() isLoadingMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	@Input() isFeaturePermessionCB: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	selectSearchBy: string = SearchBy.searchBy_form01;
 	showDetails: boolean = false;
 	showCommentsIsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -77,39 +78,42 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 	InitData() {
-
-		this.isLoadingMode.next(true);
-
 		if (SessionInfo.LoggedUserTenant == 0) this.GetAllCustomsBookMainView();
-		else this.checkIsFeaturePermessionCustomsBook();
+		else this.checkIsFeaturePermessionCustomsBook(() => this.GetAllCustomsBookMainView());
 
 		// listen to loading mode changes:
 		this.isLoadingMode.subscribe((isLoading) => {
 			this.isLoading = isLoading;
 		});
+		this.isFeaturePermessionCB.subscribe((isFeaturePermessionCB) => {
+			this.isFeaturePermessionCBMsg = isFeaturePermessionCB;
+		});
 	}
-	errorPermessionCustomsBook: string = "";
-	checkIsFeaturePermessionCustomsBook() {
+
+	errorPermessionCustomsBook: string = "You have no permission to access this feature";
+	checkIsFeaturePermessionCustomsBook(onSuccess: () => void) {
 		this.loginService.GetObjectTables().subscribe((myResult: any) => {
 			if (!myResult) return true;
 			window.ObjectTables = myResult;
 			this.myInfrastructureDomainService.GetAllowedFeaturesForLoggedUser().subscribe((myResponse: any) => {
 				if (!myResponse) return true;
 				if (!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedData", "CustomsBookFeature")) {
-					// TODO: fix the style of the error message and check if do redirect to login page:
-					this.errorPermessionCustomsBook = "You have no permission to access this feature";
+					this.data = [];
+					this.fullData = [];
 					this.isLoadingMode.next(false);
+					this.isFeaturePermessionCB.next(true);
 					// this.router.navigate(['/Customs-Book/login']);
 				}
 				else {
-					this.errorPermessionCustomsBook = "";
-					this.GetAllCustomsBookMainView();
+					this.isFeaturePermessionCB.next(false);
+					onSuccess();
 				}
 			});
 		});
 	}
 
 	GetAllCustomsBookMainView() {
+		this.isLoadingMode.next(true);
 		let filters: Filters = {
 			CustomsBookType: this.searchState,
 			Tenant: SessionInfo.LoggedUserTenant,
@@ -125,11 +129,12 @@ export class MainDisplayComponent implements OnInit {
 			this.data = this.fullData;
 			this.searchMode = TableTopState.ViewAll;
 			this.isLoadingMode.next(false);
-			this.errorPermessionCustomsBook = "";
+			this.isFeaturePermessionCB.next(false);
 		});
 	}
 
 	isLoading: boolean = false;
+	isFeaturePermessionCBMsg: boolean = false;
 	searchValue: string = '';
 	countSearchResult: number = 0;
 	ListenToItemsSearched() {
@@ -309,6 +314,11 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 	filtersSearchClick(filtersSearch: FiltersSearch) {
+		if (SessionInfo.LoggedUserTenant == 0) this.getSearchDataByFilter(filtersSearch);
+		else this.checkIsFeaturePermessionCustomsBook(() => this.getSearchDataByFilter(filtersSearch));
+	}
+
+	getSearchDataByFilter(filtersSearch: FiltersSearch) {
 		let filters: Filters = {
 			SearchFields: this.searchService.GetSearchText(),
 			CustomsBookType: this.searchState,
