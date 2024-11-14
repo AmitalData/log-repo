@@ -270,6 +270,33 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
 
         }
+
+        public HttpResponseMessage GetClassifGuidanceDetails(string classificationGuidanceNumber, int tenant)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+
+                GetClassifGuidanceDetailsRequestParams requestParamsData = new GetClassifGuidanceDetailsRequestParams()
+                {
+                    ClassificationGuidanceNumber = classificationGuidanceNumber,
+                    Tenant = tenant
+                };
+                DCAInGet_CB_MSG_8323_ClassifGuidanceDetailsMessagingService messagingService = new DCAInGet_CB_MSG_8323_ClassifGuidanceDetailsMessagingService();
+                GetClassifGuidanceDetailsResponseData responseData = messagingService.Send(requestParamsData);
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
         public async Task<HttpResponseMessage> GetFromTypesense(string searchValue, string customsBookType)
         {
             int tenant = HeaderHelper.Authenticate().Tenant;
