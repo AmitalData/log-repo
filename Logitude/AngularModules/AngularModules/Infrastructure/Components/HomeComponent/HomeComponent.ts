@@ -55,11 +55,18 @@ export class HomeComponent implements OnDestroy{
     private IsINTTRAPackage = false;
     public PaymentChanelCode: string;
     public AccountingActivated=false;
+    private InactivityTimeout: any;
+    private InactivityLimit: number = 0;
+    private readonly LogoutTime: number = 300; // 5 דקות אחרי אזהרה
+    private WarningShown = false; 
+    private MinutsTimeOutSession = SessionLocator.TenantManagementJS.MinutsTimeOutSession
     constructor() {
         this.Tenant = SessionLocator.Tenant;
         SessionLocator.Index = 0;
         SessionLocator.AllSessions = new Array<SessionComponent>();
         SessionLocator.HomeComponent = this;
+        this.MinutsTimeOutSession = (AppTool.IsNullOrEmpty(this.MinutsTimeOutSession) ? 60 : this.MinutsTimeOutSession )
+        this.InactivityLimit =  this.MinutsTimeOutSession  * 60 * 1000; // 15 דקות
         this.ChangeHeaderColor = ObjectsLocator.TenantManagementJS.ChangeHeaderColor;
         if (this.ChangeHeaderColor)
         {
@@ -1119,15 +1126,85 @@ export class HomeComponent implements OnDestroy{
                 if (!this.IsShowUserDetailsArea) this.IsShowUserDetailsArea = true;
             }
         }
-    }
+    } 
+    ngOnInit() {
+        this.StartTimer();
 
+        window.addEventListener('mousemove', () => this.ResetTimer());
+        window.addEventListener('keypress', () => this.ResetTimer());
+    }
     private SaveCompletedEvent: any = null;
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         this.SaveCompletedEvent = null;
+        clearTimeout(this.InactivityTimeout);
 
+        window.removeEventListener('mousemove', this.ResetTimer);
+        window.removeEventListener('keypress', this.ResetTimer);
+    }
+    StartTimer() {
+        this.InactivityTimeout = setTimeout(() => {
+          this.ShowWarning();
+        }, this.InactivityLimit);
+    }
+        
+    ResetTimer() {
+        if (!this.WarningShown) {
+           clearTimeout(this.InactivityTimeout);
+           this.StartTimer();
+        }
     }
 
+     ShowWarning() {
+        let remainingTime = this.LogoutTime;
+        var confirmWindow = new ConfirmWindow();
+        var warningMessage = '';
+        const hoursTimeOut = Math.floor(this.MinutsTimeOutSession / 60);
+        const minutesTimeOut = this.MinutsTimeOutSession % 60;
+        const displayWarningMessage = () => {
+            const minutes = Math.floor(remainingTime / 60);
+            const seconds = remainingTime % 60;
+            warningMessage = TextCodeTranslator.Translate("General.O.MessageSession");
+            warningMessage =  warningMessage.replace("%", `${String(hoursTimeOut).padStart(2, '0')}:${String(minutesTimeOut).padStart(2, '0')}`);
+            warningMessage =  warningMessage.replace("$", `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`);
+
+           
+
+            if (this.WarningShown) {
+                confirmWindow.message = warningMessage; // עדכן את תוכן ההודעה
+                return
+            }
+           confirmWindow.Title = TextCodeTranslator.Translate("General.O.SessionTimedOut");
+           confirmWindow.Width = 400;
+           confirmWindow.Height = 180;
+           confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.O.Continue");
+           confirmWindow.ShowNoButton = false;
+           confirmWindow.IsMultipleMessages = true;
+           confirmWindow.Show(warningMessage);
+      
+           confirmWindow.WindowClosed.subscribe((event: any) => {
+               if (confirmWindow.Yes) {
+                   this.WarningShown = false;
+                   clearInterval(timer);
+                   this.ResetTimer();                  
+               }
+           
+           });
+        }
+        
+        const timer = setInterval(() => {
+  
+                if (remainingTime > 0) {
+                    displayWarningMessage();
+                    this.WarningShown = true; // עדכן שההודעה הוצגה
+                    remainingTime--;
+                } else {
+                    clearInterval(timer);
+                    this.SignoutClicked();
+                }
+        }, 1000);  // כל שנייה
+    }
+        
     RunSignupWizard() {
         SessionLocator.DynamicLoader.Load("./Infrastructure/Components/Maintenance/Wizard/WizardBaseComponent", this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {

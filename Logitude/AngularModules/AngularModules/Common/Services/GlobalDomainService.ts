@@ -527,6 +527,8 @@ export class GlobalDomainService {
         myResult.TenantManagementLicenses = entityPM.TenantManagementLicenses;
         myResult.CustomerURL = entityPM.CustomerURL;
         myResult.IsContainerTrackingPrepaid = entityPM.IsContainerTrackingPrepaid;
+        myResult.MinutsTimeOutSession = entityPM.MinutsTimeOutSession;
+
         ObjectsUpdater.UpdateTenantManagementJS(myResult);
     }
 

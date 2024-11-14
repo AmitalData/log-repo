@@ -88,7 +88,11 @@ export class ConfirmWindow {
 
         this.InstanceComponent = null;
     }
-
+   
+    public set message(newValue) {
+       if(this.InstanceComponent != null)
+          this.InstanceComponent.MultipleMessages = newValue.split('<br>');
+    }
 
 }
 

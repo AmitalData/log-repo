@@ -182,6 +182,8 @@ export class TenantManagementList {
 		EcommerceSupportEmail: string;
 		EcommerceTenant: boolean;
 		SearchAbsoluteValuePublic:boolean;
+		MinutsTimeOutSession:number;
+
 	
 }
  
