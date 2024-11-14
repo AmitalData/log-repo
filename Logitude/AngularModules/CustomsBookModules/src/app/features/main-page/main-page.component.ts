@@ -1,3 +1,4 @@
+declare var window: any;
 import { Component } from '@angular/core';
 import { PageTopComponent } from '../../shared/components/page-top/page-top.component';
 import { CB_CustomsItemComputedDataList, FilterOption, MainDisplayComponent } from '../../shared/components/main-display/main-display.component';
@@ -10,6 +11,9 @@ import { SearchBy, SearchService } from '../../shared/components/page-top/servic
 import { HeaderService } from '../../shared/components/app-header/service/header.service';
 import { AppHeaderComponent } from '../../shared/components/app-header/app-header.component';
 import { SessionInfo } from '../../core/Infrastructure/Utilities/SessionInfo';
+import { LoginService } from '../../core/Infrastructure/Services/LoginService';
+import { InfrastructureDomainService } from '../../core/Infrastructure/Services/InfrastructureDomainService';
+import { FeatureLocator } from '../../core/Infrastructure/Utilities/FeatureLocator';
 
 @Component({
 	selector: 'app-main-page',
@@ -24,10 +28,14 @@ export class MainPageComponent {
 	filterService = new FilterPopupService();
 	itemsData: BehaviorSubject<CB_CustomsItemComputedDataList[]> = new BehaviorSubject<CB_CustomsItemComputedDataList[]>([]);
 	isLoadingMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);;
+	isFeaturePermessionCB: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);;
 	private _filters;
 	selectSearchBy: string;
 
-	constructor(private API_MainService: API_MainService, private headerService: HeaderService, private searchService: SearchService, private filterPopupService: FilterPopupService) {
+	constructor(private API_MainService: API_MainService, private searchService: SearchService, private filterPopupService: FilterPopupService,
+		private loginService: LoginService, private myInfrastructureDomainService: InfrastructureDomainService
+
+	) {
 		this._filters = this.filterService.getFilters();
 	}
 
@@ -44,6 +52,11 @@ export class MainPageComponent {
 	}
 
 	SearchByText(searchBy: any) {
+		if (SessionInfo.LoggedUserTenant == 0) this.getSearchData(searchBy);
+		else this.checkIsFeaturePermessionCustomsBook(() => this.getSearchData(searchBy));
+	}
+
+	getSearchData(searchBy: any) {
 		this.selectSearchBy = searchBy;
 		let filtersSearch: FiltersSearch = this.filterPopupService.getFilters();
 
@@ -57,7 +70,7 @@ export class MainPageComponent {
 			PageSize: 0,
 			Tenant: SessionInfo.LoggedUserTenant
 		};
-		
+
 		if (filters.CustomsItemHierarchic === '') {
 			filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
 			filters.Reamarks = true;
@@ -68,7 +81,7 @@ export class MainPageComponent {
 		if (this.isLoadingMode.getValue()) {
 			return;
 		}
-		
+
 		if (filters.SearchFields === "") return;
 		if (SearchBy.searchBy_form01 == this.selectSearchBy) {
 			this.isLoadingMode.next(true); // update loading mode
@@ -105,5 +118,24 @@ export class MainPageComponent {
 				}
 			);
 		}
+	}
+
+	checkIsFeaturePermessionCustomsBook(onSuccess: () => void) {
+		this.loginService.GetObjectTables().subscribe((myResult: any) => {
+			if (!myResult) return true;
+			window.ObjectTables = myResult;
+			this.myInfrastructureDomainService.GetAllowedFeaturesForLoggedUser().subscribe((myResponse: any) => {
+				if (!myResponse) return true;
+				if (!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedData", "CustomsBookFeature")) {
+					this.itemsData.next([]);
+					this.isLoadingMode.next(false);
+					this.isFeaturePermessionCB.next(true);
+				}
+				else {
+					this.isFeaturePermessionCB.next(false);
+					onSuccess();
+				}
+			});
+		});
 	}
 }

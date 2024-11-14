@@ -1,8 +1,9 @@
 <div class="pageTop">
 	<div class="centeredContent">
 		<div class="pageSearch">
-			<strong style="text-align: start; min-width: 73px;">חיפוש פרט מכס</strong>
-			<div class="pageSearch_toggle">
+			<strong style="text-align: start; min-width: 220px;">{{searchHeader}}</strong>
+			<!-- #112160 -->
+			<!-- <div class="pageSearch_toggle">
 				<ul>
 					<li>
 						<label><input [defaultChecked]="true" type="radio" (input)="search('searchBy_form01')"
@@ -16,20 +17,25 @@
 								class="lst-btn">{{searchBy.WordCombination}}</span></label>
 					</li>
 				</ul>
-			</div>
+			</div> -->
 			<div class="pageSearch_form">
 				<fieldset>
 					<div class="pageSearch_formField shown" [id]="text">
 						<input type="text" (input)="onChange($event)" [(ngModel)]="textToSearch"
+							[maxlength]="isNumeric(textToSearch) ? 11 : 100" [placeholder]="text"
+							(keyup.enter)="clickSearch()" [matAutocomplete]="auto" />
+						<!-- #112160 -->
+						<!-- <input type="text" (input)="onChange($event)" [(ngModel)]="textToSearch"
 							[maxlength]="text === SearchByValidation ? 11 : 100" [placeholder]="text"
-							(keyup.enter)="clickSearch()" [matAutocomplete]="auto"/>
-							<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onCustomsItemSelected(textToSearch)" [panelWidth]="1000">
-								@for (item of customsItemsAutocomplateList | async; track item) {
-									<mat-option [value]="item.FullClassification" class="no-wrap" dir="rtl">
-										<span [dir]="'rtl'"[innerHTML]='item.text' ></span>
-									</mat-option>
-								}
-							</mat-autocomplete>
+							(keyup.enter)="clickSearch()" [matAutocomplete]="auto" /> -->
+						<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onCustomsItemSelected(textToSearch)"
+							[panelWidth]="1000">
+							@for (item of customsItemsAutocomplateList | async; track item) {
+							<mat-option [value]="item.FullClassification" class="no-wrap" dir="rtl">
+								<span [dir]="'rtl'" [innerHTML]='item.text'></span>
+							</mat-option>
+							}
+						</mat-autocomplete>
 					</div>
 
 					<button (click)="clickSearch()">חיפוש</button>

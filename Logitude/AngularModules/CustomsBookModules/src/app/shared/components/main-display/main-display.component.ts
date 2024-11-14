@@ -1,3 +1,4 @@
+declare var window: any;
 import { AfterViewInit, Component, HostListener, Input, OnInit, SimpleChanges } from '@angular/core';
 import { DataRowComponent } from '../data-row/data-row.component';
 import { DetailsFrameComponent } from '../details-frame/details-frame.component';
@@ -15,6 +16,9 @@ import { FilterPopupService, FiltersSearch } from '../filter-popup/service/filte
 import { AddCommentComponent } from '../add-comment/add-comment.component';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 import { FeatureLocator } from '../../../core/Infrastructure/Utilities/FeatureLocator';
+import { InfrastructureDomainService } from '../../../core/Infrastructure/Services/InfrastructureDomainService';
+import { LoginService } from '../../../core/Infrastructure/Services/LoginService';
+import { Router } from '@angular/router';
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
@@ -38,6 +42,7 @@ export class MainDisplayComponent implements OnInit {
 	@Input() showChiledren: boolean = false;
 	@Input() itemsData: BehaviorSubject<CB_CustomsItemComputedDataList[]>;
 	@Input() isLoadingMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	@Input() isFeaturePermessionCB: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	selectSearchBy: string = SearchBy.searchBy_form01;
 	showDetails: boolean = false;
 	showCommentsIsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -56,7 +61,9 @@ export class MainDisplayComponent implements OnInit {
 	cbRequirementComputedDataList: CB_RequirementComputedDataList[];
 	isExpand: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService, private filterPopupService: FilterPopupService) {
+	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService, private filterPopupService: FilterPopupService,
+		private loginService: LoginService, private myInfrastructureDomainService: InfrastructureDomainService, private router: Router
+	) {
 		this.screenWidth = window.innerWidth;
 	}
 	searchState: string = searchState.יבוא;
@@ -71,14 +78,49 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 	InitData() {
+		if (SessionInfo.LoggedUserTenant == 0) this.GetAllCustomsBookMainView();
+		else this.checkIsFeaturePermessionCustomsBook(() => this.GetAllCustomsBookMainView());
+
+		// listen to loading mode changes:
+		this.isLoadingMode.subscribe((isLoading) => {
+			this.isLoading = isLoading;
+		});
+		this.isFeaturePermessionCB.subscribe((isFeaturePermessionCB) => {
+			this.isFeaturePermessionCBMsg = isFeaturePermessionCB;
+		});
+	}
+
+	errorPermessionCustomsBook: string = "You have no permission to access this feature";
+	checkIsFeaturePermessionCustomsBook(onSuccess: () => void) {
+		this.loginService.GetObjectTables().subscribe((myResult: any) => {
+			if (!myResult) return true;
+			window.ObjectTables = myResult;
+			this.myInfrastructureDomainService.GetAllowedFeaturesForLoggedUser().subscribe((myResponse: any) => {
+				if (!myResponse) return true;
+				if (!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedData", "CustomsBookFeature")) {
+					this.data = [];
+					this.fullData = [];
+					this.isLoadingMode.next(false);
+					this.isFeaturePermessionCB.next(true);
+					// this.router.navigate(['/Customs-Book/login']);
+				}
+				else {
+					this.isFeaturePermessionCB.next(false);
+					onSuccess();
+				}
+			});
+		});
+	}
+
+	GetAllCustomsBookMainView() {
+		this.isLoadingMode.next(true);
 		let filters: Filters = {
 			CustomsBookType: this.searchState,
 			Tenant: SessionInfo.LoggedUserTenant,
 			SearchFields: ''
 		};
-		this.isLoadingMode.next(true);
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: any) => {
-			// if (!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedDatas", "CustomsBookFeature")) return;
+			// if (!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedData", "CustomsBookFeature")) return;
 			const result: CB_CustomsItemComputedDataList[] = data.body;
 			if (!result) return; // TODO: add error message
 			this.countSearchResult = 0;
@@ -87,15 +129,12 @@ export class MainDisplayComponent implements OnInit {
 			this.data = this.fullData;
 			this.searchMode = TableTopState.ViewAll;
 			this.isLoadingMode.next(false);
+			this.isFeaturePermessionCB.next(false);
 		});
-
-		// listen to loading mode changes:
-		this.isLoadingMode.subscribe((isLoading) => {
-			this.isLoading = isLoading;
-		});
-  }
+	}
 
 	isLoading: boolean = false;
+	isFeaturePermessionCBMsg: boolean = false;
 	searchValue: string = '';
 	countSearchResult: number = 0;
 	ListenToItemsSearched() {
@@ -275,6 +314,11 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 	filtersSearchClick(filtersSearch: FiltersSearch) {
+		if (SessionInfo.LoggedUserTenant == 0) this.getSearchDataByFilter(filtersSearch);
+		else this.checkIsFeaturePermessionCustomsBook(() => this.getSearchDataByFilter(filtersSearch));
+	}
+
+	getSearchDataByFilter(filtersSearch: FiltersSearch) {
 		let filters: Filters = {
 			SearchFields: this.searchService.GetSearchText(),
 			CustomsBookType: this.searchState,
