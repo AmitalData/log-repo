@@ -74,7 +74,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           UserId = a.UserId,
                                       });
             NetCommonHelper.Logger.DevLog.Instance.WriteInfo(" after GetContactFromUserPermittedProductPMsByUserId  repository.context.GetConnection().Database" + repository.context.GetConnection()?.Database);
-            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("  GetContactFromUserPermittedProductPMsByUserId UserPermittedProducts.count()" + UserPermittedProducts?.Count());
 
             return UserPermittedProducts;
         }

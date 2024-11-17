@@ -380,6 +380,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             {
                 contactTenantRoles = contactTenantRoleQuery.GetContactTenantRolesForContactTenant(contactTenant.Id, tenant);
             }
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("  GetContactTenantRolesForContactTenant  contactTenantRole" + contactTenantRoles?.Count());
 
             if (contactTenantRoles.Count > 0)
             {
@@ -467,8 +468,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 NetCommonHelper.Logger.DevLog.Instance.WriteInfo(message: $"After GetAllowedFeaturesForRole allFeatures: {allFeatures?.Count()}");
 
                 #region allRoleFeatures
-				RoleFeatureQuery roleFeatureQuery = new RoleFeatureQuery(tenant);
-
+ 				RoleFeatureQuery roleFeatureQuery = new RoleFeatureQuery(tenant);
+ 
                 if (myRole.IsCustomRole)
                 {
 

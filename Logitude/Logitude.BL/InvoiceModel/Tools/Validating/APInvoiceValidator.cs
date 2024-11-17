@@ -250,6 +250,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         }
                     }
 
+
+
                     double? localtotal = 0;
                     double? totallines = 0;
                     if (expenses != null && expenses.Count > 0)
@@ -776,7 +778,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
                 #endregion
 
-               
             }
         }
 
