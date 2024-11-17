@@ -879,6 +879,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   ViewOrder = a.ViewOrder, 
                                                   ChargesGroupId = a.ChargesGroupId,
                                                   QuoteChargesGroupId = a.QuoteChargesGroupId,
+                                                  IsExpense = a.IsExpense,
                                                 };
             return charges;
         }
