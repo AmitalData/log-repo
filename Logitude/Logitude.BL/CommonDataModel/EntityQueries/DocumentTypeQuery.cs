@@ -1444,6 +1444,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             TenantRepository tenantRepository = new TenantRepository(tenant);
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+            if (tenantPOCO == null) return false;
             bool isFullAccountingActivated = tenantPOCO.AccountingActivated;
             return isFullAccountingActivated;
         }
