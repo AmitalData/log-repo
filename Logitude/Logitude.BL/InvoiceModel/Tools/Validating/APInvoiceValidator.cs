@@ -250,33 +250,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         }
                     }
 
-                    double? localtotal = 0;
-                    if (expenses != null && expenses.Count > 0)
-                    {
-                        foreach (APInvoiceLinePM line in activeLines)
-                        {
-                            var chTypeId = line.ChargesTypeId;
-                            if (chTypeId == null || (chTypeId != null && !expenses.Contains(chTypeId)))
-                            {
-                                localtotal += line.LocalCurrencyAmount;
-                            }
-                        }
-                    }
-                    else
-                        localtotal = activeLines.Sum(ln => ln.LocalCurrencyAmount);
 
-                    double totalVat = activeTotalVats.Sum(tv => tv.LocalVATAmount);
-                    if (localtotal > 0 && totalVat < 0)
-                    {
-                        throw new ApplicationException("Reference " + entityPM.InvoiceNumber + "   total " + localtotal.ToString() + " is positive,  but VAT " + totalVat + " is negative");
-                    }
-                    else if (localtotal < 0 && totalVat > 0)
-                    {
-                        throw new ApplicationException("Reference " + entityPM.InvoiceNumber + "   total " + localtotal.ToString() + " is negaive,  but VAT " + totalVat + " is positive");
-                    }
-                }
-            }
-        }
 
                     double? localtotal = 0;
                     double? totallines = 0;
