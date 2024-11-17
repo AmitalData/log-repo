@@ -206,6 +206,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "2280",//תעודת מקור
 "2281",//משוב תעודת מקור
 "8317",//הנחיות סיווג
+"8323",//פרטי הנחיות סיווג
+"8319",//כללים - ספר סיווג
 
 
             };
@@ -380,8 +382,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8235", // תיקון הצהרה ברקע
 "2280",//תעודת מקור
 "2281",//משוב תעודת מקור
-    "8317",//הנחיות סיווג
-       
+"8317",//הנחיות סיווג
+"8323",//פרטי הנחיות סיווג
+"8319",//כללים - ספר סיווג
+
                 };
 
             //var settingPm = CustomsSettingQueryService.GetSettingByTenant(requestInProgressParams.Tenant);
@@ -549,6 +553,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "2280",//תעודת מקור
 "2281",//משוב תעודת מקור
 "8317",//הנחיות סיווג
+"8323",//פרטי הנחיות סיווג
+"8319",//כללים - ספר סיווג
+
 };
 
 
