@@ -11,19 +11,15 @@ using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
-using System.Web.Script.Serialization;
-using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using System.Transactions;
-using Logitude.Server.Tools;
+using Logitude.Customs.BL.AzureSearch;
 using System.Threading.Tasks;
-using ConsoleDevFramwork.AzureSearch;
 
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
@@ -38,7 +34,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 Filters filters = new Filters();
                 filters.CustomsBookType = customsBookType;
                 filters.Tenant = Tenant;
-
+               
                 string token = HttpContext.Current.Request.Headers["Token"];
                 if (token == null)
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(new Exception("Token is missing")));
@@ -83,7 +79,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
+        
         [HttpPost]
         public HttpResponseMessage GetCustomsBookMainViewSearchByText([FromBody] Filters filters)
         {
@@ -183,7 +179,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
         [HttpPost]
         public HttpResponseMessage DeleteRemarksClassification(RemarksClassificationPM entityPM)
-        {
+    {
             if (ModelState.IsValid)
             {
                 try
@@ -232,7 +228,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 RemarksClassificationQueryService remarksClassificationQuery = new RemarksClassificationQueryService(MyContext);
                 remarksClassificationQuery.InitializeSettings();
 
-                List<RemarksClassificationList> remarksClassificationPMList = remarksClassificationQuery.GetAllCommentsByCustomsItemId(customsItemId, tenant);
+                List<RemarksClassificationList> remarksClassificationPMList = remarksClassificationQuery.GetAllCommentsByCustomsItemId(customsItemId,tenant);
 
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 

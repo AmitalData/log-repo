@@ -12,6 +12,8 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
 using System.Data;
 using Simplog.Server.Infrastructure;
+using NetCommonHelper.Logger;
+using Newtonsoft.Json;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -20,7 +22,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void OnCreating(ClientPM entityPM, EntityPM entityParentPM)
         {
             entityPM.Id = IdCounter.GetNumber("Customs.Client", entityPM.Tenant);
-            if (string.IsNullOrEmpty(entityPM.FullName))
+
+            WriteLog(entityPM);
+
+			if (string.IsNullOrEmpty(entityPM.FullName))
             {
                 entityPM.FullName = "Empty";
             }
@@ -29,7 +34,38 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 entityPM.Code = "Empty";
             }
         }
-        protected override void OnUpdating(ClientPM entityPM)
+        public void WriteLog(ClientPM entityPM)
+        {
+            try
+            {
+				string[] stacklines = GetStack(0);
+				NetCommonHelper.Logger.DevLog.Instance.WriteDebug("ClientUpdateService FullName: " + entityPM.FullName + " Code: " + entityPM.Code, new RelatedLogEntity { EntityID = entityPM.Id.ToString(), EntityType = "Client" });
+				NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(stacklines), new RelatedLogEntity { EntityID = entityPM.Id.ToString(), EntityType = "Client" });
+
+			}
+			catch (Exception ex)
+			{
+				NetCommonHelper.Logger.DevLog.Instance.WriteError("Error in WriteLog: " + ex.Message, new RelatedLogEntity { EntityID = entityPM.Id.ToString(), EntityType = "Client" });
+			}
+        }
+        private static string[] GetStack(int removeLines)
+		{
+			string[] stack = Environment.StackTrace.Split(
+				new string[] { Environment.NewLine },
+				StringSplitOptions.RemoveEmptyEntries);
+
+			if (stack.Length <= removeLines)
+				return new string[0];
+
+			string[] actualResult = new string[stack.Length - removeLines];
+			for (int i = removeLines; i < stack.Length; i++)
+				// Remove 6 characters (e.g. "  at ") from the beginning of the line
+				// This might be different for other languages and platforms
+				actualResult[i - removeLines] = stack[i].Substring(6);
+
+			return actualResult;
+		}
+		protected override void OnUpdating(ClientPM entityPM)
         {
             string[] InActiveStatues  = { "40", "50", "60" };
             bool isExportPoaActive_before = entityPM.IsExportPoaActive.GetValueOrDefault();

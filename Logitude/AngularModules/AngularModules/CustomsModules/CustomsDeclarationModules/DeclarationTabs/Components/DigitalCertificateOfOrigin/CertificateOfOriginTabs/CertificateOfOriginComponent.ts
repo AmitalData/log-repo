@@ -377,24 +377,17 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
             this.checkRequestReasonCode();
             if (this.SelectedTabCode == "GENERAL"){
                 this.GeneralValidationErrors = this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);            
+
+                this.ValidationErrors = this.ValidationErrors.concat(this.GeneralValidationErrors);
             }
             else if(this.SelectedTabCode == "MOREDATA"){
+                this.GeneralValidationErrors = this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);            
                 this.MOREDATA.CheckMandatoryCustomsFields(this.MoreDataValidationErrors);
+
+                this.ValidationErrors = this.ValidationErrors.concat(this.GeneralValidationErrors)
+                    .concat(this.MoreDataValidationErrors);
             }
-            this.GeneralValidationErrors?.forEach(i => {
-                const isUniqueElement = !this.MoreDataValidationErrors.includes(i);
-                if (isUniqueElement && i != "" ) {
-                    this.ValidationErrors.push(i);
-                }
-            });
-    
-            this.MoreDataValidationErrors?.forEach(j => {
-                const isUniqueElement = !this.GeneralValidationErrors.includes(j);
-                if (isUniqueElement && j != "") {
-                    this.ValidationErrors.push(j);
-                }
-            });
-    
+
             // check duplicates items: 
             if(this.ValidationErrors.length > 0){
                 this.ValidationErrors = Array.from(new Set(this.ValidationErrors));

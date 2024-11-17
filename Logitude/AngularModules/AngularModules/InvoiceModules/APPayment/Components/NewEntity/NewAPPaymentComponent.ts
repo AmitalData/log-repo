@@ -606,9 +606,9 @@ export class NewAPPaymentComponent extends BaseComponent implements OnInit {
             if (DateTool.GetDateParts(this.RegisterDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation(SessionLocator.TenantPM.TimeZoneOffset).valueOf()) {
                 errors.push(TextCodeTranslator.Translate("APPayment.M.CantSetFutureDatePayment"));
             }
-            if (DateTool.GetDateFromDate(this.RegisterDate) > DateTool.GetDateFromDate(this.newAPPaymentPM.ValueDate) && this.PaymentMethodCode == "BT") {
-                errors.push(TextCodeTranslator.Translate("APPayment.M.ValueDateBiggerOrEqualRegisterDate"));
-            }
+            // if (DateTool.GetDateFromDate(this.RegisterDate) > DateTool.GetDateFromDate(this.newAPPaymentPM.ValueDate) && this.PaymentMethodCode == "BT") {
+            //     errors.push(TextCodeTranslator.Translate("APPayment.M.ValueDateBiggerOrEqualRegisterDate"));
+            // }
         }
 
         if (AppTool.IsNullOrEmpty(this.newAPPaymentPM.AccountingPaymentMethodId)) {

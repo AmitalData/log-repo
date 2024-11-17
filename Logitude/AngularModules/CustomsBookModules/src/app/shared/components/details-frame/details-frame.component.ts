@@ -28,6 +28,7 @@ export class DetailsFrameComponent implements OnInit {
   @Input() showAddComment: boolean = false;
   @Input() showCommentsIsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   @Input() showRulesIsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  @Input() showDetailsStatus: boolean;
   // @Input() itemData: BehaviorSubject<ItemData> = new BehaviorSubject<ItemData>(null);
   @Input() currentItem: BehaviorSubject<CB_CustomsItemComputedDataList>;
   item: CB_CustomsItemComputedDataList;

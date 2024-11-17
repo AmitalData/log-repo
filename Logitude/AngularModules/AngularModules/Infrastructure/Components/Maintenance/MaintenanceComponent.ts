@@ -1271,17 +1271,24 @@ export class MaintenanceComponent {
             item.ObjectTableName = "NLog Settings";
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
-        if (FeatureLocator.HasFeaturePermession('General', 'CacheLogMenu')) {
-            var item = new MenusTablePM();
+         if (FeatureLocator.HasFeaturePermession('General', 'CacheLogMenu')) {
+             var item = new MenusTablePM();
             item.CategoryTypeCode = 'OTH';
             item.Icon = 'List';
             item.Code = 'CCHL';
             item.ObjectTableName = 'Cache Log';
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
-
-        if (FeatureLocator.HasFeaturePermession('General', 'CARGOTRACKING')) {
+  if (FeatureLocator.HasFeaturePermession("General", "GeneralSearchMenu")) {
             var item = new MenusTablePM();
+            item.CategoryTypeCode = "OTH";
+            item.Icon = "List"
+            item.Code = "SEE";
+            item.ObjectTableName = "General Search";
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        }
+         if (FeatureLocator.HasFeaturePermession('General', 'CARGOTRACKING')) {
+             var item = new MenusTablePM();
             item.CategoryTypeCode = 'OTH';
             item.Icon = 'Settings';
             item.Code = 'CARGO';

@@ -94,9 +94,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  
  
- 		public const string HashString = "7967d941810307676873a3d1281456gdf5";
+ 
+ 
+ 		public const string HashString = "8927c24f6f4563f561742f9ee5d9b713";
    	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
-        {                     
+         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
@@ -734,9 +736,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 		   Feature GeneralFeature_CONFIRMATIONNUMBERDEFAULTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONFIRMATIONNUMBERDEFAULTS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CONFIRMATIONNUMBERDEFAULTS", NameTextCodeDefaultText = @"Confirmation number defaults" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
- 		   Feature GeneralFeature_CUSTOMSSHIPMENTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSSHIPMENTS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CUSTOMSSHIPMENTS", NameTextCodeDefaultText = @"Customs Shipments" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+  		   Feature GeneralFeature_CUSTOMSSHIPMENTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSSHIPMENTS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CUSTOMSSHIPMENTS", NameTextCodeDefaultText = @"Customs Shipments" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+ 
 		   Feature GeneralFeature_GeneralSearchMenu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GeneralSearchMenu", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.GeneralSearchMenu", NameTextCodeDefaultText = @"General Search" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
-            Feature GeneralFeature_NLogSettings = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NLogSettings", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.NLogSettings", NameTextCodeDefaultText = @"NLog Settings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes, GeneralObjectTable);
+             Feature GeneralFeature_NLogSettings = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NLogSettings", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.NLogSettings", NameTextCodeDefaultText = @"NLog Settings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes, GeneralObjectTable);
+     
+	    
         }
 
         public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
@@ -2869,23 +2874,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_AccountingGeneralOPostponedCheques = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.PostponedCheques", DefaultText = "Postponed Cheques",LocalDefaultText = @"המחאות דחויות", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
 
- 		   TextCode GeneralTextCode_GeneralOMine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Mine", DefaultText = "Mine",LocalDefaultText = @"שלי", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+  		   TextCode GeneralTextCode_GeneralOMine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Mine", DefaultText = "Mine",LocalDefaultText = @"שלי", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_CustomsGeneralBCancelReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.B.CancelReport", DefaultText = "Canceling stuck reports",LocalDefaultText = @"ביטול דוחות תקועים", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingOYear = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Year", DefaultText = "Year",LocalDefaultText = @"שנה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
            TextCode GeneralTextCode_GeneralMHCustomsShipments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.CustomsShipments", DefaultText = "Customs Shipments", LocalDefaultText = @"עמילות מכס", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
- 
+  
 
             TextCode GeneralTextCode_GeneralMCMine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Mine", DefaultText = "Mine", LocalDefaultText = @"שלי", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingGeneralOConfirmationNumberValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.ConfirmationNumberValidation", DefaultText = "Confirmation Number is required for a apinvoice",LocalDefaultText = @"עבור חשבונית ספק נדרש מספר הקצאה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingGeneralOVatNumberExisted = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.VatNumberExisted", DefaultText = "VatNumber existed in code",LocalDefaultText = "ח''פ קיים בקוד", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
+  		   TextCode GeneralTextCode_AccountingGeneralOVatNumberExisted = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.VatNumberExisted", DefaultText = "VatNumber existed in code",LocalDefaultText = "ח''פ קיים בקוד", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
  
-}
+  }
 
     
 

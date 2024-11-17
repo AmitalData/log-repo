@@ -232,15 +232,15 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     }
                 }
 
-                
+
                 List<APInvoiceLinePM> activeLines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
                 if (activeLines != null && activeLines.Count > 0 && activeTotalVats != null && activeTotalVats.Count > 0)
                 {
-                    List<string> expenses = new List<string>(); 
-                    
+                    List<string> expenses = new List<string>();
+
                     List<string> chTypeIds = activeLines.Select(ln => ln.ChargesTypeId).ToList();
                     if (chTypeIds != null && chTypeIds.Count > 0)
-                    { 
+                    {
 
                         ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(entityPM.Tenant);
                         IQueryable<ChargesTypeList> query = chargesTypeQuery.GetChargesTypeListsByTenant(entityPM.Tenant);
@@ -250,27 +250,35 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         }
                     }
 
+
+
                     double? localtotal = 0;
+                    double? totallines = 0;
                     if (expenses != null && expenses.Count > 0)
                     {
                         foreach (APInvoiceLinePM line in activeLines)
                         {
                             var chTypeId = line.ChargesTypeId;
-                            if (chTypeId == null && (chTypeId != null && !expenses.Contains(chTypeId)) || line.VatPercentage > 0)
+                            if (chTypeId == null || (chTypeId != null && !expenses.Contains(chTypeId)))
                             {
                                 localtotal += line.LocalCurrencyAmount;
                             }
                         }
+                        totallines = activeLines.Sum(ln => ln.LocalCurrencyAmount);
                     }
-
+                    else
+                    {
+                        localtotal = activeLines.Sum(ln => ln.LocalCurrencyAmount);
+                        totallines = localtotal;
+                    }
                     double totalVat = activeTotalVats.Sum(tv => tv.LocalVATAmount);
                     if (localtotal > 0 && totalVat < 0)
                     {
-                        throw new ApplicationException("Reference " + entityPM.InvoiceNumber + "   total " + localtotal.ToString()  + " is positive,  but VAT " + totalVat + " is negative");
+                        throw new ApplicationException("Reference " + entityPM.InvoiceNumber + ":   total lines is " + totallines.ToString() + ", of which reportable amount " + localtotal.ToString() + " is positive,  but VAT " + totalVat + " is negative");
                     }
                     else if (localtotal < 0 && totalVat > 0)
                     {
-                        throw new ApplicationException("Reference " + entityPM.InvoiceNumber + "   total " + localtotal.ToString() + " is negaive,  but VAT " + totalVat + " is positive");
+                        throw new ApplicationException("Reference " + entityPM.InvoiceNumber + ":   total lines is " + totallines.ToString() + ", of which reportable amount " + localtotal.ToString() + " is negaive,  but VAT " + totalVat + " is positive");
                     }
                 }
             }
@@ -313,6 +321,54 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                             throw new ApplicationException(msgRequired.Replace("%FieldName", field));
                         }
                     }
+                }
+            }
+
+
+
+
+            List<APInvoiceTotalVATPM> activeTotalVats = entityPM.TotalVATs.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
+
+            List<APInvoiceLinePM> activeLines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
+            if (activeLines != null && activeLines.Count > 0 && activeTotalVats != null && activeTotalVats.Count > 0)
+            {
+                List<string> expenses = new List<string>();
+
+                List<string> chTypeIds = activeLines.Select(ln => ln.ChargesTypeId).ToList();
+                if (chTypeIds != null && chTypeIds.Count > 0)
+                {
+
+                    ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(entityPM.Tenant);
+                    IQueryable<ChargesTypeList> query = chargesTypeQuery.GetChargesTypeListsByTenant(entityPM.Tenant);
+                    if (query != null)
+                    {
+                        expenses = query.Where(ch => ch.IsExpense == true).Select(ch => ch.Id).ToList();
+                    }
+                }
+
+                double? localtotal = 0;
+                if (expenses != null && expenses.Count > 0)
+                {
+                    foreach (APInvoiceLinePM line in activeLines)
+                    {
+                        var chTypeId = line.ChargesTypeId;
+                        if (chTypeId == null || (chTypeId != null && !expenses.Contains(chTypeId)))
+                        {
+                            localtotal += line.LocalCurrencyAmount;
+                        }
+                    }
+                }
+                else
+                    localtotal = activeLines.Sum(ln => ln.LocalCurrencyAmount);
+
+                double totalVat = activeTotalVats.Sum(tv => tv.LocalVATAmount);
+                if (localtotal > 0 && totalVat < 0)
+                {
+                    throw new ApplicationException("Reference " + entityPM.InvoiceNumber + "   total " + localtotal.ToString() + " is positive,  but VAT " + totalVat + " is negative");
+                }
+                else if (localtotal < 0 && totalVat > 0)
+                {
+                    throw new ApplicationException("Reference " + entityPM.InvoiceNumber + "   total " + localtotal.ToString() + " is negaive,  but VAT " + totalVat + " is positive");
                 }
             }
 
@@ -721,10 +777,14 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     throw new ApplicationException("Wrong Invoice Total Local Amount");
                 }
                 #endregion
+ 
+
+
+            }
+ 
 
                 
                
-            }
         }
 
         private static void ValidateAirlineRestriction(string myCardId, int tenant)
@@ -882,7 +942,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
             else return null;
         }
-        public static string ValidateConfirmationNumber(DateTime? invoiceDate, decimal localVATAmount,int tenant, string email)
+        public static string ValidateConfirmationNumber(DateTime? invoiceDate, decimal localVATAmount, int tenant, string email)
         {
             TenantRepository tenantRepository = new TenantRepository(tenant);
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
@@ -890,17 +950,17 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             {
 
                 bool useLocal = !(GetLoggedContact(tenant, email).DontShowLocal);
-                IInvoiceContext objectContext=InvoiceContext.GetContext(tenant);
+                IInvoiceContext objectContext = InvoiceContext.GetContext(tenant);
                 var confirmationNumberDefault = (from a in objectContext.ConfirmationNumberDefaults
-                                                 where a.Tenant == tenant && a.FromDate <= invoiceDate &&a.InActive==false
+                                                 where a.Tenant == tenant && a.FromDate <= invoiceDate && a.InActive == false
                                                  orderby a.FromDate descending
                                                  select a
                                             ).FirstOrDefault();
-              if ( localVATAmount >= confirmationNumberDefault?.AmountForConfirmationNumber)
-               {
-                return TranslateTextsClass.Translate("Accounting.General.O.ConfirmationNumberValidation", tenant, useLocal);
-               }
-            else return null;
+                if (localVATAmount >= confirmationNumberDefault?.AmountForConfirmationNumber)
+                {
+                    return TranslateTextsClass.Translate("Accounting.General.O.ConfirmationNumberValidation", tenant, useLocal);
+                }
+                else return null;
             }
             else return null;
         }

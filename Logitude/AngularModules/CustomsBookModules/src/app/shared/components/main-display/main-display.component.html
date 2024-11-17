@@ -11,7 +11,7 @@
 					<span>לא נמצאות תוצאות לחיפוש</span>
 				</div>
 				<ng-template #loading>
-					<div class="loadingBox" *ngIf="data?.length <= 0 || isLoading">
+					<div class="loadingBox" *ngIf="isLoading">
 						<img src="assets/images/loadingProgressBar.gif" alt="">
 					</div>
 				</ng-template>
@@ -139,7 +139,7 @@
 				</ng-container>
 			</div>
 			<div class="details_frame_container" [class.active]="showDetails">
-				<app-details-frame (showDetails)="updateShowDetailsClick()" [currentItem]="currentItem" [showCommentsIsOpen]="showCommentsIsOpen" [showRulesIsOpen]="showRulesIsOpen"/>
+				<app-details-frame (showDetails)="updateShowDetailsClick()" [showDetailsStatus]="showDetails" [currentItem]="currentItem" [showCommentsIsOpen]="showCommentsIsOpen" [showRulesIsOpen]="showRulesIsOpen"/>
 			</div>
 		</div>
 	</div>

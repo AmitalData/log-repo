@@ -328,6 +328,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
         LoggedUserFeatures GetAllowedFeaturesForLoggedUserBL(string loggedUserId, int tenant)
         {
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("GetAllowedFeaturesForLoggedUserBL: loggedUserId:" + loggedUserId+"tenant: "+tenant.ToString());
+
+
             LoggedUserFeatures myResult = new LoggedUserFeatures();
 
             bool isDistributor = false;
@@ -377,10 +380,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             {
                 contactTenantRoles = contactTenantRoleQuery.GetContactTenantRolesForContactTenant(contactTenant.Id, tenant);
             }
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("  GetContactTenantRolesForContactTenant  contactTenantRole" + contactTenantRoles?.Count());
 
             if (contactTenantRoles.Count > 0)
             {
                 List<string> allRolesIds = contactTenantRoles.Select(s => s.RoleId).ToList();
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("GetAllowedFeaturesForLoggedUserBL allRolesIds.Count" + allRolesIds?.Count());
 
                 RoleRepository myRoleRepository = new RoleRepository(this.repository.context);
                 RoleQuery myRoleQuery = new RoleQuery(myRoleRepository);
@@ -395,7 +400,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 }
 
                 var isTenantZeroAccess = isCustomerCare || isDistributor ? true : false;
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"GetAllPackagesCodes loggedUserId: {loggedUserId} ,tenant : {tenant}, isTenantZeroAccess: {isTenantZeroAccess}");
+
                 allowedPackages = this.GetAllPackagesCodes(loggedUserId, tenant, isTenantZeroAccess);
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"GetAllPackagesCodes allowedPackages: { allowedPackages?.Count()}");
 
                 foreach (string myRoleId in allRolesIds)
                 {
@@ -419,17 +427,24 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public List<FeaturePM> GetAllowedFeaturesForRole(string myRoleId, List<string> allowedPackages, int tenant)
         {
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"GetAllowedFeaturesForRole myRoleId: {myRoleId} , tenant: {tenant}");
+
             List<FeaturePM> myResult = new List<FeaturePM>();
 
             if (!string.IsNullOrEmpty(myRoleId))
             {
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(message: $"Before GetAllowedFeaturesForRole repository.context.Roles.GetConnection().Database: {repository.context.GetConnection()?.Database}");
                 Role myRole = (from d in repository.context.Roles where d.Id == myRoleId select d).FirstOrDefault();
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(message: $"After GetAllowedFeaturesForRole repository.context.Roles.GetConnection().Database: {repository.context.GetConnection()?.Database}");
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(message: $" GetAllowedFeaturesForRole myRole: {myRole?.Id}");
 
                 List<FeaturePM> allFeatures = new List<FeaturePM>();
                 List<RoleFeature> allRoleFeatures = new List<RoleFeature>();
                 List<PackageFeature> allPackageFeatures = new List<PackageFeature>();
 
                 #region allFeatures
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(message: $"Before GetAllowedFeaturesForRole repository.context.Features.GetConnection().Database: {repository.context.GetConnection()?.Database}");
+
                 allFeatures = (from a in repository.context.Features.Include("NameTextCode")
                                where (a.Tenant == 0 || a.Tenant == tenant)
                                select new FeaturePM()
@@ -448,11 +463,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    ToggleCode = a.ToggleCode,
                                    FeatureUniqeCode = a.FeatureUniqeCode
                                }).ToList();
-				#endregion
+                #endregion
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(message: $"After GetAllowedFeaturesForRole repository.context.Features.GetConnection().Database: {repository.context.GetConnection()?.Database}");
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(message: $"After GetAllowedFeaturesForRole allFeatures: {allFeatures?.Count()}");
 
-				#region allRoleFeatures
-				RoleFeatureQuery roleFeatureQuery = new RoleFeatureQuery();
-
+                #region allRoleFeatures
+ 				RoleFeatureQuery roleFeatureQuery = new RoleFeatureQuery(tenant);
+ 
                 if (myRole.IsCustomRole)
                 {
 
@@ -490,7 +507,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 #endregion
 
                 #region allPackageFeatures
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(message: $"Before GetAllowedFeaturesForRole repository.context.PackageFeatures.GetConnection().Database: {repository.context.GetConnection()?.Database}");
+
                 allPackageFeatures = (from a in repository.context.PackageFeatures where allowedPackages.Contains(a.PackageCode) && (a.Tenant == tenant || a.Tenant == 0) select a).ToList();
+
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(message: $"After GetAllowedFeaturesForRole repository.context.PackageFeatures.GetConnection().Database: {repository.context.GetConnection()?.Database}");
+
                 #endregion
 
                 List<FeaturePM> allAllowedPackageFeatures = new List<FeaturePM>();

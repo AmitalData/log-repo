@@ -894,7 +894,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         this.filterAgrs.Tenant = SessionLocator.Tenant;
         let logboxShipmentExportExcelArgs: LogboxShipmentExportExcelArgs = new LogboxShipmentExportExcelArgs();
         logboxShipmentExportExcelArgs.Tenant = SessionLocator.Tenant;
-        this.filterAgrs.addAdditionalFilter("ColumnName?", this.SelectedFilter, null, null, "Equals", true, true, false, "String");
+        this.filterAgrs.addAdditionalFilter("ColumnName?", this.SelectedFilter.replace(" ",""), null, null, "Equals", true, true, false, "String");
         logboxShipmentExportExcelArgs.AdditionalFilters = this.filterAgrs.AdditionalFilters;
         logboxShipmentExportExcelArgs.PageIndex = this.filterAgrs.PageIndex;
         logboxShipmentExportExcelArgs.PageSize = this.filterAgrs.PageSize;

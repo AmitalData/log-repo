@@ -2,12 +2,12 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { SearchBy, SearchService } from './service/top-page.service';
 import { FormsModule, } from '@angular/forms';
 import { HeaderService, searchState } from '../app-header/service/header.service';
-import { FilterPopupService } from '../filter-popup/service/filter-popup.service';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { catchError, debounceTime, EMPTY, Subject, switchMap } from 'rxjs';
 import { API_MainService } from '../../../core/API_MainService';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
+import { FilterPopupService } from '../filter-popup/service/filter-popup.service';
 
 
 @Component({
@@ -23,7 +23,7 @@ export class PageTopComponent {
 	customsItemsAutocomplateList: Subject<CustomsItemsAutocomplate[]> = new Subject<CustomsItemsAutocomplate[]>();
 	textToSearch: string = '';
 	
-	constructor(public searchService: SearchService, private headerService: HeaderService, private filterPopupService: FilterPopupService, private API_MainService: API_MainService,) { }
+	constructor(public searchService: SearchService, private headerService: HeaderService, private API_MainService: API_MainService, private filterPopupService: FilterPopupService,) { }
 
 	public text: string = '';
 	public checked: string | number = '';
