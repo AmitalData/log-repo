@@ -233,38 +233,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
         }
 
-                    double? localtotal = 0;
-                    double? totallines = 0;
-                    if (expenses != null && expenses.Count > 0)
-                    {
-                        foreach (APInvoiceLinePM line in activeLines)
-                        {
-                            var chTypeId = line.ChargesTypeId;
-                            if (chTypeId == null || (chTypeId != null && !expenses.Contains(chTypeId)))
-                            {
-                                localtotal += line.LocalCurrencyAmount;
-                            }
-                        }
-                        totallines = activeLines.Sum(ln => ln.LocalCurrencyAmount);
-                    }
-                    else
-                    {
-                        localtotal = activeLines.Sum(ln => ln.LocalCurrencyAmount);
-                        totallines = localtotal;
-                    }
-                    double totalVat = activeTotalVats.Sum(tv => tv.LocalVATAmount);
-                    if (localtotal > 0 && totalVat < 0)
-                    {
-                        throw new ApplicationException("Reference " + entityPM.InvoiceNumber + ":   total lines is " + totallines.ToString() + ", of which reportable amount " + localtotal.ToString() + " is positive,  but VAT " + totalVat + " is negative");
-                    }
-                    else if (localtotal < 0 && totalVat > 0)
-                    {
-                        throw new ApplicationException("Reference " + entityPM.InvoiceNumber + ":   total lines is " + totallines.ToString() + ", of which reportable amount " + localtotal.ToString() + " is negaive,  but VAT " + totalVat + " is positive");
-                    }
-                }
-            }
-        }
-
         private static void ValidateInvoiceLinesVAT(APInvoicePM entityPM, ICommonDataContext commonContext, AccountingSetting accountingSetting, string msgRequired)
         {
             List<VatType> allVatTypes = (from f in commonContext.VatTypes where f.Tenant == entityPM.Tenant select f).ToList();
