@@ -101,3 +101,31 @@ th, td {
     padding: 8px;
     box-sizing: border-box;
 } */
+
+
+
+/* Style for the "link button" */
+.link-button {
+    display: inline-block;
+    padding: 8px 12px; /* Add padding for a button-like look */
+    border: 1px solid #007bff; /* Border similar to a button */
+    background-color: transparent; /* Transparent background like a link */
+    color: #007bff; /* Link color */
+    text-decoration: none; /* Remove underline */
+    font-size: 14px; /* Adjust font size */
+    text-align: center; /* Center text */
+    border-radius: 4px; /* Rounded corners like a button */
+    cursor: pointer; /* Pointer cursor for interactivity */
+    transition: background-color 0.2s, color 0.2s; /* Smooth transition */
+  }
+  
+  .link-button:hover {
+    background-color: #007bff; /* Highlight background on hover */
+    color: #fff; /* White text on hover */
+  }
+  
+  .link-button:focus {
+    outline: 2px solid #0056b3; /* Focus outline for accessibility */
+    outline-offset: 2px;
+  }
+  
