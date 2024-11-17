@@ -67,7 +67,7 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
             this.sortingCol = this.dataSource.sortingCol;
         }
     }
-
+ 
     ngOnChanges() {
         if (this.dataSource) {
             this.pageSize = this.dataSource.pageSize;
@@ -95,20 +95,20 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
                 if (this.timer) {
                     clearTimeout(this.timer);
                 }
-                this.timer = setTimeout(() => this.HandleRange(range), 400);
+                this.timer = setTimeout(() => this.HandleRange(range,false), 400);
             }); 
         return this.dataStream;
     }
-    HandleRange(range: any) {
+    HandleRange(range: any, reloadData: boolean=false) {
         if (this.myMetaData.DontApplyVirtualization) {
             //this.fetchedPages.delete(0);
-            this._fetchPage(0);
+            this._fetchPage(0,reloadData);
         }
         else {
             const startPage = this._getPageForIndex(range.start);
             const endPage = this._getPageForIndex(range.end - 1);
             for (let i = startPage; i <= endPage; i++) {
-                this._fetchPage(i);
+                this._fetchPage(i,reloadData);
             }
         }
         //if (this.myMetaData.cd) {
@@ -131,7 +131,7 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
         return page;
     }
     timer = null;
-    private _fetchPage(page: number) {
+    private _fetchPage(page: number, reloadData: boolean = false) {
         if (this.fetchedPages.has(page) && !this.myMetaData.DontApplyVirtualization) {
             if (!this.fetchedPages.has(page + 1)) {
                 this._fetchPage(page + 1);
@@ -150,17 +150,17 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
         }
         else {
             if (!this.fetchedPages.has(page)) {
-                this.getPageData(page)
+                this.getPageData(page, reloadData);
             }
         }
     }
 
-
-    private getPageData(page: number) {
+    private pageLenght = 0;
+    private getPageData(page: number,reload:boolean=false) {
         this.fetchedPages.add(page);
         //this.mycachedData = [];
         //this.pageSize = 17;
-        this.dataSource.getRows(page * this.pageSize, this.pageSize, this.myMetaData.sortingCol, this.myMetaData.sortingDir, true, this.myMetaData.searchFields, this.myMetaData.Filters).then(res => {
+        this.dataSource.getRows(page * this.pageSize, this.pageSize, this.myMetaData.sortingCol, this.myMetaData.sortingDir, reload, this.myMetaData.searchFields, this.myMetaData.Filters).then(res => {
             res.subscribe((viewResponse: ServiceResponse) => {
                 if (!viewResponse.HasError) {
                     //if (this.MyCallTime == null || viewResponse.CallTime > this.MyCallTime) {
@@ -168,13 +168,16 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
                     console.log("this.MyCallTime " + this.MyCallTime);
                     this.RecievedDataCount = viewResponse.Result.length;
                     var jsonlist = viewResponse.Result;
+                    if(reload)
+                        this.pageLenght = viewResponse.Count;
+                    
                     if (jsonlist.length < this.pageSize && page == 0) {
-                        this.mycachedData = Array.from<any>({ length: jsonlist.length });
-                        this.cachedData = Array.from<any>({ length: jsonlist.length });
+                        this.mycachedData = Array.from<any>({ length: this.pageLenght});
+                        this.cachedData = Array.from<any>({ length: this.pageLenght});
                     }
                     else if (this.cachedData.length < this.pageSize && page == 0) {
-                        this.mycachedData = Array.from<any>({ length: this.length });
-                        this.cachedData = Array.from<any>({ length: this.length });
+                        this.mycachedData = Array.from<any>({ length: viewResponse.Count });
+                        this.cachedData = Array.from<any>({ length: viewResponse.Count });
                     }
                     this.dataStream.next(this.cachedData);
                     for (var i = 0; i < jsonlist.length; i++) {
@@ -188,7 +191,8 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
                     }
                     this.cachedData = this.mycachedData;//[...this.mycachedData]
                     this.dataStream.next(this.cachedData);
-                    this.requestedRowCount.emit(viewResponse.Count);  
+                    if(reload)
+                       this.requestedRowCount.emit(viewResponse.Count);  
 
                     if (this.myMetaData.cd) {
                         this.myMetaData.cd.detectChanges();
@@ -297,7 +301,7 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
     public ReloadDataSource(Count:number) {
         //this.fetchedPages = new Set<number>();
         //this.cachedData = Array.from<any>({ length: Count });
-        this._fetchPage(0);
+        this._fetchPage(0,true);
     }
 
 }
