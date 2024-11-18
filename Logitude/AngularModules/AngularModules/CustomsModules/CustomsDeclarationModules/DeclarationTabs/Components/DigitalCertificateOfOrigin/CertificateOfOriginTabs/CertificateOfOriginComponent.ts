@@ -429,7 +429,21 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         requestParams.LoggingUserId = SessionLocator.LoggedUserId;
         requestParams.LoggingObjectTableId = window.ObjectTables.filter(d => d.Name === 'Customs.CertificateOfOrigin')[0].Id;
         requestParams.LoggingEntityId = this.EntityPM.Id;
-        requestParams.RequestVIA = customSendOptionsArgs.SendRequestVIA;
+
+        // #112254
+        //requestParams.RequestVIA = customSendOptionsArgs.SendRequestVIA;
+        if(customSendOptionsArgs.RequestVIA == "1"){
+            requestParams.RequestVIA = SendRequestVIA.WebServiceInteractive;
+        }
+        else if(customSendOptionsArgs.RequestVIA == "2"){
+            requestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
+        }
+        else if(customSendOptionsArgs.RequestVIA == "3"){
+            requestParams.RequestVIA = SendRequestVIA.DCABatch;
+        }
+        else{
+            requestParams.RequestVIA = SendRequestVIA.Default;
+        }
         requestParams.Tenant = SessionLocator.Tenant;
         requestParams.CertificateOfOriginId = this.EntityPM.Id;
         requestParams.DeclarationId = this.DecalarationData.Id;
