@@ -568,6 +568,13 @@ namespace Logitude.Server.Tools.Helpers
                         }
                     }
                 }
+                if (contactPassword == null)
+                {
+                    string unfPassword =  PasswordGenerator.GetUnfPassword(password);
+                    contactPassword = globalContext.ContactPasswords
+                                                   .Where(c => c.Email == email && c.Password == unfPassword && !c.IsBCrypt)
+                                                   .FirstOrDefault();
+                }
             }
 
             return contactPassword;
