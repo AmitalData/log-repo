@@ -215,7 +215,7 @@ export class LineModel extends BaseComponent {
     }
     //#endregion
 
-    CalculatOriginalCurruncy() {
+    CalculateOriginalCurrency() {
         //
         // [i] copied from list template
         //
@@ -857,7 +857,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         //     return;
         // }
 
-        if (this.SelectedLines.Length > 0 && this.TotalsDeference != 0) {
+        if (this.SelectedLines.Length > 0 && this.TotalDifference != 0) {
             if (this.IsMultiWithReconcileMethodCodeEqualOne) {
                 errors.push(TextCodeTranslator.Translate("Reconciliations.O.ErrorsInMultiWithRecOne"));
             }
@@ -866,7 +866,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         if (this.ValidationErrorsList.length == 0) {
 
             //Adjust
-            if (this.SelectedLines.Length > 0 && this.TotalsDeference != 0) {
+            if (this.SelectedLines.Length > 0 && this.TotalDifference != 0) {
 
                 //var chartType = this.GLAccountPM.ChartOfAccountsTypeCode; // 6 == Works
                 //if (chartType == "6") {
@@ -1078,7 +1078,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
     AdjustWithNewJournalScreen() {
         //this.ReloadScreen();
-        if (this.SelectedLines.Length > 0 && this.TotalsDeference != 0) {
+        if (this.SelectedLines.Length > 0 && this.TotalDifference != 0) {
 
             //this.ToSend()
             var next = true;
@@ -1092,7 +1092,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                         logitudeWindow.WindowArgs = {
                             "SelectedLines": this.SelectedLines,
                             "GLAccountPMId": this.GLAccountPM.Id,
-                            TotalDifference: this.TotalsDeference,
+                            TotalDifference: this.TotalDifference,
                             TotalCredit: this.TotalCredit,
                             TotalDebit: this.TotalDebit
                         };
@@ -1115,7 +1115,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         } else {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.RTL = this.isRTL;
-            myMessageWindow.Show("!(this.SelectedLines.Length > 0 && this.TotalsDeference) ");
+            myMessageWindow.Show("!(this.SelectedLines.Length > 0 && this.TotalDifference) ");
         }
 
     }
@@ -1562,17 +1562,39 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     //#region Totals Work
     TotalCredit: number = 0;
     TotalDebit: number = 0;
-    TotalsDeference: number = 0;
+    TotalDifference: number = 0;
+
+    TotalCurrCredit: number = 0;
+    TotalCurrDebit: number = 0;
+    TotalCurrDifference: number = 0; 
+
     OriginalDifference: number = 0;
+
     CalculateTotals() {
         this.TotalCredit = 0;
         this.TotalDebit = 0;
         for (let line of this.SelectedLines.Collection) {
-
-            if (line.AmountToReconcile < 0)
-                this.TotalCredit += +line.AmountToReconcile * -1; //cast number
+            let rate: number = +line.ledgerTransaction.ExchangeRate;;
+            let lineCurrAmountToReconcile: number = 0;  // if GLAccountPM.CurrencyId != TenantPM.CurrencyId  => lineCurrAmountToReconcile is in GLAccountPM.CurrencyId 
+            if (rate != 0 && !AppTool.IsNullOrEmpty(this.GLAccountPM.ReconcileMethodCode) && this.GLAccountPM.ReconcileMethodCode == "0" // NIS
+                && !AppTool.IsNullOrEmpty(this.GLAccountPM.CurrencyId) && this.GLAccountPM.CurrencyId != this.TenantPM.CurrencyId) {     // GLAcc is not multi, not NIS (say, USD)
+                    lineCurrAmountToReconcile = +line.AmountToReconcile / rate;  // lineCurrAmountToReconcile in USD, because GLAcc is USD, so all lines are
+            } 
+            else if (rate != 0 && !AppTool.IsNullOrEmpty(this.GLAccountPM.ReconcileMethodCode) && this.GLAccountPM.ReconcileMethodCode == "1" // let's say, USD
+            && !AppTool.IsNullOrEmpty(this.GLAccountPM.CurrencyId) && this.GLAccountPM.CurrencyId != this.TenantPM.CurrencyId) {     // GLAcc is not multi, not NIS (say, USD)
+                lineCurrAmountToReconcile = line.AmountToReconcile;  // lineCurrAmountToReconcile is already in USD 
+            } 
             else
+                lineCurrAmountToReconcile = +line.AmountToReconcile;
+    
+            if (line.AmountToReconcile < 0) {
+                this.TotalCredit += +line.AmountToReconcile * -1; //cast number
+                this.TotalCurrCredit += +lineCurrAmountToReconcile * -1; //cast number
+            }
+            else {
                 this.TotalDebit += +line.AmountToReconcile;
+                this.TotalCurrDebit += +lineCurrAmountToReconcile;
+            }
 
             //if (line.OpenAmount < 0)
             //    this.TotalCredit += +line.OpenAmount * -1; //cast number
@@ -1582,12 +1604,16 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             // due this.TotalCredit + amountToReconcile;  == 335.78999999999996 <>335.79
             this.TotalDebit = AppTool.Round(this.TotalDebit, 2);
             this.TotalCredit = AppTool.Round(this.TotalCredit, 2);
+            this.TotalCurrDebit = AppTool.Round(this.TotalCurrDebit, 2);
+            this.TotalCurrCredit = AppTool.Round(this.TotalCurrCredit, 2);
 
 
         }
-        var def = (this.TotalCredit - this.TotalDebit)
-        this.OriginalDifference = def * -1;
-        this.TotalsDeference = def < 0 ? def * -1 : def
+        var dif = (this.TotalCredit - this.TotalDebit)
+        var currdif = (this.TotalCurrCredit - this.TotalCurrDebit)
+        this.OriginalDifference = dif * -1;
+        this.TotalDifference = dif < 0 ? dif * -1 : dif;        
+        this.TotalCurrDifference = currdif < 0 ? currdif * -1 : currdif ; // if GLAccountPM.CurrencyId != TenantPM.CurrencyId  => TotalCurrDifference is in GLAccountPM.CurrencyId 
     }
     //#endregion
 
@@ -2099,7 +2125,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     }
 
     public get EnableCreateAPPaymentButton(): boolean {
-        return this.TotalsDeference >= 0 && this.SelectedLines.Length > 0;
+        return this.TotalDifference >= 0 && this.SelectedLines.Length > 0;
     }
 
     CreatePaymentButtonClicked() {
@@ -2119,12 +2145,19 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
     NewAPPaymentMethod() {
         var newApPaymentPM: APPaymentPM = new APPaymentPM();
+        let paymcurr: string = this.CurrencyId != null ? this.CurrencyId : this.TenantPM.CurrencyId;
+    
+        // let recocurr: string = this.TenantPM.CurrencyId;
+        // if (!AppTool.IsNullOrEmpty(this.GLAccountPM.ReconcileMethodCode) && this.GLAccountPM.ReconcileMethodCode == "1")
+        //     recocurr = this.GLAccountPM.CurrencyId;  
+
         newApPaymentPM.ReconcileInternalTrans = this.GetSelectedPageLines();
         newApPaymentPM.StatusCode = "DR";
         newApPaymentPM.StatusName = "Draft";
         console.log('this.GLAccountPM', this.GLAccountPM);
         newApPaymentPM.VendorId = this.GLAccountPM.CardId != null ? this.GLAccountPM.CardId : this.GLAccountPM.ParentCurrencyGLAccountCardId;
-        newApPaymentPM.AmountInPaymentCurrency = this.TotalsDeference;
+        newApPaymentPM.AmountInLocalCurrency = this.TotalDifference;
+        newApPaymentPM.AmountInPaymentCurrency = paymcurr != this.TenantPM.CurrencyId ? this.TotalCurrDifference : this.TotalDifference;
         newApPaymentPM.Tenant = this.TenantPM.Id;
         newApPaymentPM.IsClosed = false;
         newApPaymentPM.CreatedByUserId = SessionLocator.LoggedUserId;
@@ -2136,7 +2169,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         newApPaymentPM.ValueDate = DateTool.GetCurrentDateAsUtc();
         newApPaymentPM.RegisterDate = DateTool.GetCurrentDateAsUtc();
         newApPaymentPM.DontDisplayAPInvoices=true;
-        newApPaymentPM.PaymentCurrencyId = this.CurrencyId != null ? this.CurrencyId : this.TenantPM.CurrencyId;
+        newApPaymentPM.PaymentCurrencyId = paymcurr;
         newApPaymentPM.IsFromReconcilePage = true;
         newApPaymentPM.IsMultiCurrency = this.GLAccountPM.IsMultiCurrency;
         if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
