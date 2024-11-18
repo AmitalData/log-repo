@@ -242,6 +242,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         notificationDescription = agentTalkBackTypePM.LocalName + "\n" + notificationDescription;
                     }
+
+                    DeclarationPM decPM = new DeclarationPM { Id = dec.Id, Tenant = dec.Tenant, DeclarationNumber = dec.DeclarationNumber, CustomFileNo = dec.CustomFileNo };
+                    RaiseEvent(decPM, "DMR", null);
                     break;
 
                 default:
