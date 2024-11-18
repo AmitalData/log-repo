@@ -51,6 +51,8 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.Server.Tools.Utils;
+using CsvHelper.Configuration;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 
 namespace Logitude.Accounting.BL.CoreBL
@@ -272,6 +274,14 @@ namespace Logitude.Accounting.BL.CoreBL
             throw new NotImplementedException();
         }
 
+
+        private static string GetTenantCurrencyId(int tenant)
+        {
+            TenantQuery tenantQuery = new TenantQuery(tenant);
+            var tenantPM = tenantQuery.GetSinglePM(tenant);
+            return tenantPM.CurrencyId;
+        }
+
         private ResultApproveJournalM CheckJournal(MyActions actions, ref List<LedgerTransactionPM> myLedgerTransactionsWithCounters, out List<GLAccountAgingDataPM> gLAccountAgingDataPMs)
         {
             gLAccountAgingDataPMs = new List<GLAccountAgingDataPM>();
@@ -334,6 +344,18 @@ namespace Logitude.Accounting.BL.CoreBL
                     //if (!_ExecAsSP)
                     {
                         FillIdCountersUseNewDBTransaction(myLedgerTransactionsWithCounters);
+                    }
+                    string tenant_curr_id = JournalApproveService.GetTenantCurrencyId(_JournalPM.Tenant);
+                    if (myLedgerTransactionsWithCounters != null && myLedgerTransactionsWithCounters.Count > 0)
+                    {
+                        myLedgerTransactionsWithCounters.ForEach(lt =>
+                        {
+                            if (lt.OpenAmount == 0m && 
+                                    ((lt.LocalAmountDebit == lt.LocalAmountCredit && lt.OpenAmountCurrencyId == tenant_curr_id) || 
+                                     (lt.ForeignAmountDebit == lt.ForeignAmountCredit && lt.OpenAmountCurrencyId != tenant_curr_id))) 
+                                lt.IsReconciled = true; 
+                            // else the value of lt.IsReconciled is conserved
+                        });
                     }
                 }
                 //scope.Complete();//Please do not commit !!!!
