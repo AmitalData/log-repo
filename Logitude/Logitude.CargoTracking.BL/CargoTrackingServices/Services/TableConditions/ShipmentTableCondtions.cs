@@ -187,8 +187,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableConditio
             if (cargoTrackingDataBaseArgs.CargoTrackingArguments == null)
             {
                 LastUpdate = cargoTrackingDataBaseArgs.ShipmentsWaterMark;
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("CargoTrackingDataBaseArgs.ShipmentsWaterMark" + LastUpdate);
 
-                string lastUpdateCondition = $" C.CreateDateTime >= DATEADD(M, -6, GETDATE()) AND (C.AutomaticLastUpdateDate > '{LastUpdate}')";
+                string lastUpdateCondition = $" C.CreateDateTime >= DATEADD(M, -6, GETDATE()) AND (C.AutomaticLastUpdateDate >= '{LastUpdate}')";
                 whereConditions.Add(lastUpdateCondition);
             }
             else
@@ -633,7 +634,9 @@ end)
             if (cargoTrackingDataBaseArgs.CargoTrackingArguments == null)
             {
                 LastUpdate = cargoTrackingDataBaseArgs.ShipmentsWaterMark;
-                string lastUpdateCondition = $" SHO.CreateDate >= DATEADD(M, -6, GETDATE()) AND (SHO.AutomaticLastUpdateDate > '{LastUpdate}')";
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("CargoTrackingDataBaseArgs.ShipmentsWaterMark" + LastUpdate);
+
+                string lastUpdateCondition = $" SHO.CreateDate >= DATEADD(M, -6, GETDATE()) AND (SHO.AutomaticLastUpdateDate >= '{LastUpdate}')";
                 whereConditions.Add(lastUpdateCondition);
             }
             else
