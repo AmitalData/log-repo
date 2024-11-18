@@ -439,8 +439,8 @@ end)
             if (cargoTrackingDataBaseArgs.CargoTrackingArguments == null)
             {
                 LastUpdate = cargoTrackingDataBaseArgs.ShipmentsWaterMark;
-
-                string lastUpdateCondition = $" P.CreateDateTime >= DATEADD(M, -6, GETDATE()) AND (P.AutomaticLastUpdateDate > '{LastUpdate}')";
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("CargoTrackingDataBaseArgs.ShipmentsWaterMark" + LastUpdate);
+               string lastUpdateCondition = $" P.CreateDateTime >= DATEADD(M, -6, GETDATE()) AND (P.AutomaticLastUpdateDate >='{LastUpdate}')";
                 whereConditions.Add(lastUpdateCondition);
             }
             else
