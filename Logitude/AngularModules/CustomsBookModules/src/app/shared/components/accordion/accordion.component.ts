@@ -8,11 +8,12 @@ import { CommonModule } from '@angular/common';
 import { NgFor, NgForOf } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
+import { ClasisificationGuidanceComponent } from "../clasisification-guidance/clasisification-guidance.component";
 
 @Component({
   selector: 'app-accordion',
   standalone: true,
-  imports: [FontAwesomeModule, GenericTableComponent, CommonModule, NgFor, NgForOf],
+  imports: [FontAwesomeModule, GenericTableComponent, ClasisificationGuidanceComponent, CommonModule, NgFor, NgForOf],
   templateUrl: './accordion.component.html',
   styleUrl: './accordion.component.css',
 })
@@ -68,7 +69,7 @@ export class AccordionComponent implements OnInit {
     this.tableData1 = {
       columns: [
         { key: 'Logo', displayName: '', dataType: 'img', visible: false },
-        { key: 'TradeAgreementName', displayName: 'שם ההסכם', dataType: 'string', visible: true, notEqual: `'מס קנייה'` },
+        { key: 'TradeAgreementName', displayName: 'שם ההסכם', dataType: 'string', visible: true },
         { key: 'CustomsRate', displayName: 'שיעור מכס', dataType: 'number', visible: true },
         { key: 'CustomsRateWithinQuota', displayName: 'שיעור מכס במסגרת מכסה', dataType: 'number', visible: true },
         { key: 'QuotaID', displayName: 'מס\' מכסה', dataType: 'number', visible: true },
@@ -107,7 +108,7 @@ export class AccordionComponent implements OnInit {
     };
     this.tableData4 = {
       columns: [
-        { key: 'classificationGuidanceNumber', displayName: 'מספר הנחיה', dataType: 'string', visible: true },
+        { key: 'classificationGuidanceNumber', displayName: 'מספר הנחיה', dataType: 'button', visible: true },
         { key: 'title', displayName: 'כותרת', dataType: 'string', visible: true },
         { key: 'classificationGuidanceTypeName', displayName: 'סוג הנחיה', dataType: 'string', visible: true },
         { key: 'fullClassification', displayName: 'חלק/פרק/פרט מכס', dataType: 'string', visible: true },
@@ -124,6 +125,16 @@ export class AccordionComponent implements OnInit {
     this.tableData3.data = [];
     this.tableData4.data = [];
   }
+
+  handleButtonClick(data: { event: Event, row: any, key: string }): void {
+    const { event, row, key } = data;
+    // console.log('Button clicked:', { event, row, key });
+    // console.log('Row data:', row[key]);
+    this.isShowTableClassificationGuidance = true;
+    this.ClassificationGuidanceData = row;
+  }
+  isShowTableClassificationGuidance: boolean = false;
+  ClassificationGuidanceData: any;
 
   // שיעורי מס
   buildAgreementsList(agreementsList: CB_TariffList[]) {
