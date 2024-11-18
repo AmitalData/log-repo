@@ -137,6 +137,7 @@
     <Compile Include="EntityPMs\Generated\CB_RegularityRequiredCertificatePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_RegularityRequirementPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_RequirementComputedDataPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CB_RuleClassificationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_RuleDetailsHistoryPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_RulePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_TariffComputedDataPM.Generated.cs" />
