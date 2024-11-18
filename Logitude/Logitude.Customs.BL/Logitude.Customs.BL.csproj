@@ -422,6 +422,7 @@
     <Compile Include="EntityDataMappings\CB_RegularityRequiredCertificateDataMapping.cs" />
     <Compile Include="EntityDataMappings\CB_RegularityRequirementDataMapping.cs" />
     <Compile Include="EntityDataMappings\CB_RequirementComputedDataDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CB_RuleClassificationDataMapping.cs" />
     <Compile Include="EntityDataMappings\CB_RuleDataMapping.cs" />
     <Compile Include="EntityDataMappings\CB_RuleDetailsHistoryDataMapping.cs" />
     <Compile Include="EntityDataMappings\CB_TariffComputedDataDataMapping.cs" />
@@ -693,6 +694,7 @@
     <Compile Include="EntityDataMappings\Generated\CB_RegularityRequiredCertificateDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CB_RegularityRequirementDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CB_RequirementComputedDataDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CB_RuleClassificationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CB_RuleDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CB_RuleDetailsHistoryDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CB_TariffComputedDataDataMapping.Generated.cs" />
@@ -1320,6 +1322,7 @@
     <Compile Include="EntityQueryServiceExt\CustomsDocumentQueryServiceExt.cs" />
     <Compile Include="EntityQueryServices\CargoIdentifireTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\CB_RuleDetailsHistoryQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\CB_RuleClassificationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\RemarksClassificationQueryService.cs" />
     <Compile Include="EntityQueryServices\CB_CustomsItemComputedDataQueryService.cs" />
     <Compile Include="EntityQueryServices\CB_RequirementComputedDataQueryService.cs" />
@@ -1974,6 +1977,7 @@
     <Compile Include="EntityUpdateServices\Generated\CB_RegularityRequiredCertificateUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CB_RegularityRequirementUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CB_RequirementComputedDataUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CB_RuleClassificationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CB_RuleDetailsHistoryUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CB_RuleUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CB_TariffComputedDataUpdateService.Generated.cs" />

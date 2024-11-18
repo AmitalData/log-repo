@@ -92,6 +92,7 @@
     <Compile Include="EntityPMs\Generated\CB_RegularityRequiredCertificatePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_RegularityRequirementPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_RequirementComputedDataPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CB_RuleClassificationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_RuleDetailsHistoryPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_RulePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_TariffComputedDataPM.Generated.cs" />
@@ -133,8 +134,7 @@
     <Compile Include="EntityPMs\Generated\RequestReasonCodeEnumPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TarifRelatedToQuotaPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TradeLevyStatusPM.Generated.cs" />
-
-     <Compile Include="EntityPMs\InternalBorderSiteTypePM.cs" />
+    <Compile Include="EntityPMs\InternalBorderSiteTypePM.cs" />
     <Compile Include="EntityPMs\Generated\AmedmentTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmendCancellRequestInitiatorPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmendmentFieldStatusTypePM.Generated.cs" />
