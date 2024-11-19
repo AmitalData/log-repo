@@ -9,7 +9,11 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
-
+using Intuit.Ipp.LinqExtender;
+using Intuit.Ipp.Data;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -98,7 +102,23 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
             NetCommonHelper.Logger.DevLog.Instance.WriteInfo(message: $"Before GetAllowedFeaturesForRole entity: {entity?.Count()}");
 
-            return entity;
+            List<RoleFeature> roleFeatures = DeepCopy(entity);
+
+
+            return roleFeatures;
 		}
-	}
+
+        List<T> DeepCopy<T>(List<T> originalList) where T : ICloneable
+        {
+            List<T> deepCopy = new List<T>();
+            foreach (T item in originalList)
+            {
+                deepCopy.Add((T)item.Clone());
+            }
+            return deepCopy;
+        }
+ 
+
+
+    }
 }
