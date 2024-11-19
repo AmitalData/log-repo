@@ -73,7 +73,7 @@ namespace WebFreight.Web.Controllers.WebServices
             return TryCatchWrapper((tenant) =>
             {
                 string data = Convert.ToString(body);
-                HttpClienResponse apiToShaamRes = shaamService.CancelInvoice(data, tenant.Value);
+                HttpClienResponse apiToShaamRes = allocateInvoiceService.CancelInvoice(data, tenant.Value);
                 return apiToShaamRes;
             }, ReturnContent.JSON);
         }
