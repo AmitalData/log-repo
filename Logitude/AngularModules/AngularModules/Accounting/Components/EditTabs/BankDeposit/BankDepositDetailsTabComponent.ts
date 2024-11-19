@@ -894,20 +894,39 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     ReturnChequeButtonClicked(line: BankDepositLinePM) {
 
         // validate redeemed cheque
+       //CANCELLED BY TASK  112261
+        // if (line.ChequeStatusCode == "6") { // 6- Redeemed
+        //     var msg = new MessageWindow();
+        //     msg.Show(TextCodeTranslator.Translate("Accounting.O.RedeemedChequeMSG"));
+        //     this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+        //     this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.O.RedeemedChequeMSG"));
 
-        if (line.ChequeStatusCode == "6") { // 6- Redeemed
-            var msg = new MessageWindow();
-            msg.Show(TextCodeTranslator.Translate("Accounting.O.RedeemedChequeMSG"));
-            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-            this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.O.RedeemedChequeMSG"));
-
-            return;
-        } else {
-
-            this.showReturnChequeWindow(line);
-
+        //     return;
+        // } 
+       
+        if (line.ChequeStatusCode == "6"){
+              this.showRedeemedWarningWindow(line);
         }
+        else{
+            this.showReturnChequeWindow(line);
+        }
+        
 
+       
+
+    }
+    showRedeemedWarningWindow(line){
+        var myConfirmWindow = new ConfirmWindow();
+        myConfirmWindow.Width = 400;
+        myConfirmWindow.ShowNoButton = true;
+        
+        myConfirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.AlreadyRedeemed"));
+        myConfirmWindow.WindowClosed.subscribe(event => {
+            if (myConfirmWindow.Yes) {
+                this.showReturnChequeWindow(line);
+            }
+     
+        });
     }
     showReturnChequeWindow(line){
 
