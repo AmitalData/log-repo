@@ -75,6 +75,7 @@ namespace Logitude.Accounting.BL.Utils
 
                     int tenant = gLAccountRecalculateArg.Tenant;
                     string myGLAccountId = gLAccountRecalculateArg.AccountId;
+                    string myUserId = gLAccountRecalculateArg.UserId;
                     if (gLAccountRecalculateArg.BatchTask != null)
                     {
                         BatchTaskExecutionPM batchTaskExecutionPM = gLAccountRecalculateArg.BatchTask;
@@ -106,21 +107,11 @@ namespace Logitude.Accounting.BL.Utils
                     {
                     }
 
-                    string userid = "";
-                    if (gLAccountRecalculateArg.BatchTask != null && !String.IsNullOrEmpty(gLAccountRecalculateArg.BatchTask.CreatedByUserId))
-                        userid = gLAccountRecalculateArg.BatchTask.CreatedByUserId;
-                    else
-                    {
-                        ContactRepository contactRep = new ContactRepository(tenant);
-                        string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(tenant);
-                        Simplog.Data.CommonDataModel.EntityPOCOs.Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, tenant);
-                    }
-
                     EventTracer.CreateTraceEvent(new EventTracerArgs()
                     {
                         EntityId = myGLAccountId,
                         Tenant = tenant,
-                        UserId = userid,
+                        UserId = myUserId,
                         ObjectTableName = "GLAccount",
                         IsAddedManually = false,
                         EventTypeCode = "RCLC",
@@ -156,5 +147,6 @@ namespace Logitude.Accounting.BL.Utils
         public string AccountId { get; set; }
         public bool Batch { get; set; }
         public BatchTaskExecutionPM BatchTask { get; set; }
+        public string UserId { get; set; }
     }
 }

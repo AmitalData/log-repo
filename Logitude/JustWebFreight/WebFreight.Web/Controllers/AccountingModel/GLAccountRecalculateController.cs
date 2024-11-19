@@ -18,6 +18,10 @@ using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.Accounting.Data.EntityLists;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.Resolvers;
 
 namespace WebFreight.Web.Controllers.AccountingModel
 {
@@ -38,9 +42,10 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.AuthenticationOnTenant(tenant);
+                ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
                 GLAccountRecalculateArg args = null;
                 string message = "";
-                bool isSuccess = CreateArgs(tenant, accountId, batch, ref args, message);
+                bool isSuccess = CreateArgs(tenant, accountId, loggedContact.Id, batch, ref args, message);
                 if (!isSuccess)
                 {
                     throw new Exception(message);
@@ -59,7 +64,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                         {
                             Tenant = tenant,
                             AccountId = args.AccountId,
-
+                            UserId = args.UserId,
                         }, tenant, subj, false);
 
 
@@ -73,7 +78,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                     {
                         Tenant = tenant,
                         AccountId = args.AccountId,
-
+                        UserId = args.UserId,
                     };
                     gLAccountRecalculateBatch.RunGLAccountRecalculate(gLAccountRecalculateArg);
                     string responseText = gLAccountRecalculateBatch.ResponseText();
@@ -91,13 +96,19 @@ namespace WebFreight.Web.Controllers.AccountingModel
         }
 
 
-        private bool CreateArgs(int tenant, string accountId, string batch, ref GLAccountRecalculateArg args, string message)
+        private bool CreateArgs(int tenant, string accountId, string userId, string batch, ref GLAccountRecalculateArg args, string message)
         {
             bool isSuccess = false;
             bool v_batch = false;
             if (String.IsNullOrWhiteSpace(accountId))
             {
                 message = "AccountId is a must";
+                return isSuccess;
+            }
+
+            if (String.IsNullOrWhiteSpace(userId))
+            {
+                message = "UserId is a must";
                 return isSuccess;
             }
 
@@ -121,6 +132,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 Tenant = tenant,
                 AccountId = accountId,
                 Batch = v_batch,
+                UserId = userId,
             };
             isSuccess = true;
             return isSuccess;
