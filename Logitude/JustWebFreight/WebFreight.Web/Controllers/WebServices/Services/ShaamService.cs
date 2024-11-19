@@ -42,9 +42,9 @@ namespace WebFreight.Web.Controllers.WebServices.Services
             return res;
         }
 
-        public HttpClienResponse CancelInvoice(string data, int tenant)
+        public HttpClienResponse CancelInvoice(string data, int tenant, string confirmationTokenLogId, string communicationLogId)
         {
-            string url = $"taxes/CancelInvoice";
+            string url = $"taxes/CancelInvoice?confirmationTokenLogId={confirmationTokenLogId}&communicationLogId={communicationLogId}";
             HttpClienResponse res = SendShaamApiHttpRequest(tenant, url, HttpMethod.Post, data);
             return res;
         }
