@@ -42,6 +42,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public Role GetSingleByCode(string code, int tenant)
         {
+
             var role = (from a in context.Roles
                         where a.Code == code && (a.Tenant == tenant || a.Tenant == 0)
                         select a).FirstOrDefault();

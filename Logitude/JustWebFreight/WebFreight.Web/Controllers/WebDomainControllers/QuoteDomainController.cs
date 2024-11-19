@@ -399,6 +399,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         CopyDelivery = myPOCO.CopyDelivery,
                         CopyChargesTypes = myPOCO.CopyChargesTypes,
                         CopyChargesCost = myPOCO.CopyChargesCost,
+                        CostChargesMust = myPOCO.CostChargesMust,
+
                         CopyChargesSale = myPOCO.CopyChargesSale,
                         EditMainCarriage = myPOCO.EditMainCarriage,
                         CopyAgent = myPOCO.CopyAgent,

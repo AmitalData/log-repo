@@ -179,6 +179,13 @@ export class QuoteSettingsComponent extends BaseComponent {
         }
     }
 
+    get CostChargesMust() { return this.EntityPM.CostChargesMust; }
+    set CostChargesMust(value: boolean) {
+        if (this.EntityPM.CostChargesMust != value) {
+            this.EntityPM.CostChargesMust = value;
+        }
+    }
+
     private selectedSaleCurrencySetting: CodeNameClass;
     get SelectedSaleCurrencySetting() { return this.selectedSaleCurrencySetting; }
     set SelectedSaleCurrencySetting(value: CodeNameClass) {
