@@ -777,8 +777,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     throw new ApplicationException("Wrong Invoice Total Local Amount");
                 }
                 #endregion
-
+ 
             }
+ 
+
+                
+               
         }
 
         private static void ValidateAirlineRestriction(string myCardId, int tenant)
