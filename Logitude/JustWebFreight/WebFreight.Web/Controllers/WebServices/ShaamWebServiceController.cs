@@ -66,6 +66,18 @@ namespace WebFreight.Web.Controllers.WebServices
             }, ReturnContent.JSON);
         }
 
+        [HttpPost]
+        [Route("cancelInvoice")]
+        public HttpResponseMessage CancelInvoice([FromBody] dynamic body)
+        {
+            return TryCatchWrapper((tenant) =>
+            {
+                string data = Convert.ToString(body);
+                HttpClienResponse apiToShaamRes = shaamService.CancelInvoice(data, tenant.Value);
+                return apiToShaamRes;
+            }, ReturnContent.JSON);
+        }
+
         [HttpPut]
         [Route("UpdateSettings")]
         public HttpResponseMessage UpdateSettings([FromBody] UpdateSettingsData body)
@@ -100,7 +112,7 @@ namespace WebFreight.Web.Controllers.WebServices
                 HttpClienResponse apiToShaamRes = func(tenant);
 
                 if (apiToShaamRes.Res.StatusCode != HttpStatusCode.OK)
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(new Exception(apiToShaamRes.Content)));
+                    return Request.CreateResponse(apiToShaamRes.Res.StatusCode, ApiExceptionBuilder.BuildException(new Exception(apiToShaamRes.Content)));
 
                 if (returnContent == ReturnContent.VALUE)
                     responseData = apiToShaamRes.Content;

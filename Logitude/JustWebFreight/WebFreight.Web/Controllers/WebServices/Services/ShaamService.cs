@@ -41,6 +41,14 @@ namespace WebFreight.Web.Controllers.WebServices.Services
             HttpClienResponse res = SendShaamApiHttpRequest(tenant, url, HttpMethod.Post, invoiceJson);
             return res;
         }
+
+        public HttpClienResponse CancelInvoice(string data, int tenant)
+        {
+            string url = $"taxes/CancelInvoice";
+            HttpClienResponse res = SendShaamApiHttpRequest(tenant, url, HttpMethod.Post, data);
+            return res;
+        }
+
         public HttpClienResponse UpdateSettings(UpdateSettingsData body, int tenant)
         {
             string url = $"taxes/company";
