@@ -5,7 +5,7 @@ import { HeaderService, searchState } from '../app-header/service/header.service
 import { FilterPopupService } from '../filter-popup/service/filter-popup.service';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { catchError, debounceTime, EMPTY, Subject, switchMap } from 'rxjs';
+import { catchError, debounceTime, EMPTY, filter, iif, of, Subject, switchMap } from 'rxjs';
 import { API_MainService } from '../../../core/API_MainService';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 
@@ -23,13 +23,14 @@ export class PageTopComponent {
 	customsItemsAutocomplateList: Subject<CustomsItemsAutocomplate[]> = new Subject<CustomsItemsAutocomplate[]>();
 	textToSearch: string = '';
 	searchHeader: string = 'חיפוש פרט מכס/מילה/צירוף מילים';
-	constructor(public searchService: SearchService, private headerService: HeaderService, private API_MainService: API_MainService, private filterPopupService: FilterPopupService,) { }
+	
+constructor(public searchService: SearchService, private headerService: HeaderService, private API_MainService: API_MainService, private filterPopupService: FilterPopupService,) { }
 
 	public text: string = '';
 	public checked: string | number = '';
 	public searchBy = SearchByParam;
 	public selectedSearchOption: SearchByParam = this.searchBy.Classification;
-	public currentSearchState: string = searchState.יבום;
+	public currentSearchState: string = searchState.יבוא;
 	public SearchByValidation: SearchBy = SearchBy.searchBy_form01;
 	ngOnInit() {
 		// this.text = this.searchService.SearchBy('searchBy_form01'); // #112160 
@@ -45,9 +46,15 @@ export class PageTopComponent {
 	private applyAutocomplate() {
 		this.searchService.searchText$.pipe(
 			debounceTime(100),
-			switchMap((searchText) =>
-				this.API_MainService.GetFromTypesense(searchText, this.headerService.getSearchState(true), SessionInfo.LoggedUserTenant).pipe(catchError((error) => EMPTY)))
+			switchMap((searchText: string) =>
+				!!this.textToSearch ?
+					this.API_MainService.GetFromTypesense(searchText, this.headerService.getSearchState(true), SessionInfo.LoggedUserTenant).pipe(catchError((error) => EMPTY)) :
+					of(() => EMPTY)
+			)
 		).subscribe(async (res: any) => {
+			if (!res.body)
+				return this.customsItemsAutocomplateList.next([]);
+
 			const regex = new RegExp(`(${this.textToSearch})`, 'gi');
 			const result: GetFromTypesenseResponse = res.body;
 
