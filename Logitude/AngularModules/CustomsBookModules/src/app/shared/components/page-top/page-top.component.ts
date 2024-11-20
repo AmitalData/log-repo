@@ -71,6 +71,8 @@ export class PageTopComponent {
 	}
 
 	clickSearch() {
+		this.customsItemsAutocomplateList.next([]);
+		
 		if (this.textToSearch.trim() === "") {
 			this.textToSearch = "";
 			return;
