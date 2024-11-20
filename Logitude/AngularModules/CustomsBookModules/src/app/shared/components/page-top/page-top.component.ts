@@ -93,6 +93,8 @@ constructor(public searchService: SearchService, private headerService: HeaderSe
 	}
 
 	clickSearch() {
+		this.customsItemsAutocomplateList.next([]);
+		
 		if (this.textToSearch.trim() === "") {
 			this.textToSearch = "";
 			return;
