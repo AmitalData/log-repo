@@ -40,10 +40,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				certificateID = certificateOfOrigin.COONumber,
 				certificateIdToCancel = certificateOfOrigin.COONumberToCancel,
 				replacementReason = certificateOfOrigin.ReplacementReason,
-				exportDeclarationNum = declarationPM?.DeclarationNumber,
+                exportDeclarationNum = declarationPM?.DeclarationNumber,
 
-			};
-			
+            };
+
+			string decId = declarationPM.IsAmendment != true ? declarationPM.Id : declarationPM.AmendmentOriginalDeclartation;
+            if (string.IsNullOrEmpty(myMsg.AgentRequest.exportDeclarationNum) && !string.IsNullOrEmpty(decId))
+			{
+                string decNo = declarationQueryService.GetDeclarationNumberByDecId(decId, requestParams.Tenant);
+                if (!string.IsNullOrEmpty(decNo)) myMsg.AgentRequest.exportDeclarationNum = decNo;
+            }
+           
 			if (certificateOfOrigin.CooTypeCode != "5" && !RequestReasonCodeList.Contains(requestParams.RequestReasonCode.ToString())) 
 			{
 
