@@ -164,7 +164,9 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
     AddNewCertificateOfOrigin(isNewOrEditCertificateOfOrigin: StatusCertificateOfOrigin) {
         // initilize new certificatgetCertificateOfOriginse:
         const newCertificateOfOriginPM = new CertificateOfOriginPM();
-        newCertificateOfOriginPM.DeclarationId = AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation)? this.EntityPM.Id:this.EntityPM.AmendmentOriginalDeclartation;
+        newCertificateOfOriginPM.DeclarationId = AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation) ? this.EntityPM.Id : this.EntityPM.AmendmentOriginalDeclartation;
+        // newCertificateOfOriginPM.DeclarationId = AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation) ? this.EntityPM.Id : this.EntityPM.AmendmentOriginalDeclartation
+        newCertificateOfOriginPM.DeclarationId =  this.EntityPM.Id;
         newCertificateOfOriginPM.Tenant = this.EntityPM.Tenant;
 
         // on click item get one CertificateOfOrigin
@@ -252,7 +254,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
 
     getCertificateOfOrigins() {
         
-        var amendmentOriginalDeclartation = AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation) ? "" : this.EntityPM.AmendmentOriginalDeclartation
+        var amendmentOriginalDeclartation = AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation) ? "" : this.EntityPM.AmendmentOriginalDeclartation;
         this.certificateOfOriginWebService.GetCertificateOfOriginByID(this.EntityPM.Id,amendmentOriginalDeclartation ,this.EntityPM.Tenant).subscribe(myResult => {
 
             if (myResult == null) {
@@ -354,7 +356,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
                 newCertificateOfOriginPM.CooStatusCodeName = null;
                 newCertificateOfOriginPM.IsSubmitted = false;                
                 newCertificateOfOriginPM.RequestReasonCode = null;
-
+                newCertificateOfOriginPM.DeclarationId = this.EntityPM.Id; // #112428
                 
                 newCertificateOfOriginPM.IsUnitedInvoices ? newCertificateOfOriginPM.IsUnitedInvoices : newCertificateOfOriginPM.IsUnitedInvoices = false;
                 this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
@@ -504,7 +506,8 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
     }
     public get IsAllowChange(): boolean {
         return (AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation) && !this.EntityPM.AmendmentDontDisplayInList )||
-        (!AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation) && (!this.EntityPM.AmendmentDontDisplayInList ||AppTool.IsNullOrEmpty(this.EntityPM.AmendmentStatus)))
+        (!AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation) &&
+            (!this.EntityPM.AmendmentDontDisplayInList || AppTool.IsNullOrEmpty(this.EntityPM.AmendmentStatus) || this.EntityPM.AmendmentStatus == "3"));
     }
 }
 

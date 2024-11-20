@@ -32,12 +32,14 @@ namespace Logitude.Customs.Data.Repsitories
 
 		public List<CertificateOfOrigin> GetCertificateOfOriginsByDeclarationId(string declarationId, int tenant)
 		{
-			return (from a in context.CertificateOfOrigins
-					where a.Tenant == tenant && a.DeclarationId == declarationId 
-					select a).ToList();
-
-		}
-		public CertificateOfOrigin GetCertificateOfOriginsByDeclarationIdIncludeChildrens(string certificateId, string declarationId, int tenant)
+            //return (from a in context.CertificateOfOrigins
+            //		where a.Tenant == tenant && a.DeclarationId == declarationId
+            //		select a).ToList();
+            return context.CertificateOfOrigins
+               .Where(co => co.Tenant == tenant && context.Declarations.Where(d => d.Id == declarationId || d.AmendmentOriginalDeclartation == declarationId)
+                                   .Select(d => d.Id).Contains(co.DeclarationId)).ToList();
+        }
+        public CertificateOfOrigin GetCertificateOfOriginsByDeclarationIdIncludeChildrens(string certificateId, string declarationId, int tenant)
 		{
 			return (from a in context.CertificateOfOrigins
 					where a.Tenant == tenant && a.DeclarationId == declarationId && a.Id == certificateId
