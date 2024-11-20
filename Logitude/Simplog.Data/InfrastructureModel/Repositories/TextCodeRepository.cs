@@ -7,6 +7,7 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Transactions;
 using Simplog.Server.Infrastructure;
+using System.Text;
 
 namespace Simplog.Data.InfrastructureModel.Repositories
 {
@@ -263,6 +264,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
      
         public void Add(TextCode entity)
         {
+            entity.LocalDefaultText = TryConvertFromBase64(entity.LocalDefaultText);
+
             context.TextCodes.Add(entity);
         }
 
@@ -274,6 +277,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public void Update(TextCode entity)
         {
+            entity.LocalDefaultText = TryConvertFromBase64(entity.LocalDefaultText);
+
             try { context.TextCodes.Attach(entity); }
             catch { }
             context.SetAsModified(entity);
@@ -316,6 +321,50 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                             select a).ToList().Count();
 
             return textcodes;
+        }
+        public static string TryConvertFromBase64(string input)
+        {
+            try
+            {
+                if (input == null)
+                {
+                    return null;
+                }
+                if (input.StartsWith("BS64:") || input.StartsWith("\"BS64:"))
+                {
+
+                    return ConvertFromBase64(input);
+
+
+                }
+                return input;
+
+            }
+            catch (FormatException)
+            {
+                return input;
+            }
+        }
+
+        private static string ConvertFromBase64(string input)
+        {
+            string substringToRemove = "\"";
+            string backUp = input;
+            try
+            {
+                input = input.Trim('\"');
+                input = input.Substring(5);//REMOVE BS64:
+                byte[] data = Convert.FromBase64String(input);
+                string decodedString = Encoding.UTF8.GetString(data);
+                decodedString = decodedString.Trim('\"');
+                return decodedString;
+
+            }
+            catch (FormatException)
+            {
+                return backUp;
+            }
+
         }
 
     }
