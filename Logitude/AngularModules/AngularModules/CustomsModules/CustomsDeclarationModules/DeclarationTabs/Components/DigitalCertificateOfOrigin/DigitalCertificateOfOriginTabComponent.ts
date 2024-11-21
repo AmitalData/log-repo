@@ -506,8 +506,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
     }
     public get IsAllowChange(): boolean {
         return (AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation) && !this.EntityPM.AmendmentDontDisplayInList )||
-        (!AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation) &&
-            (!this.EntityPM.AmendmentDontDisplayInList || AppTool.IsNullOrEmpty(this.EntityPM.AmendmentStatus) || this.EntityPM.AmendmentStatus == "3"));
+        (!AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation) && (!this.EntityPM.AmendmentDontDisplayInList || AppTool.IsNullOrEmpty(this.EntityPM.AmendmentStatus)));
     }
 }
 
