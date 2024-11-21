@@ -97,7 +97,7 @@
                     </tr>
 
                     <!-- Second Row -->
-                    <tr class="FieldRow"  [ngClass]="{ 'opacityDimBox': disableOpacityBox }">
+                    <tr class="FieldRow" [ngClass]="{ 'opacityDimBox': disableOpacityBox }">
                         <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'TradeAgreementCountry1'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
@@ -106,8 +106,9 @@
                             <table>
                                 <tr>
                                     <td style="width: 22px;">
-                                        <HelpIcon *ngIf="myDictionary['TradeAgreementCountry1']!=null" [HideHeader]="true"
-                                            [Text]="" [BackgroundImage]="myDictionary['TradeAgreementCountry1']"></HelpIcon>
+                                        <HelpIcon *ngIf="myDictionary['TradeAgreementCountry1']!=null"
+                                            [HideHeader]="true" [Text]=""
+                                            [BackgroundImage]="myDictionary['TradeAgreementCountry1']"></HelpIcon>
                                     </td>
                                     <td>
                                         <LogLov [ObjectFieldName]="'TradeAgreementCountry1'"
@@ -309,7 +310,7 @@
                             <LogLabel [ObjectFieldName]="'ExporterAddress'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td style="width:180px;" rowspan="1" class="AddressBox">
+                        <td style="width:180px;" rowspan="1" class="LogTextBoxMultiLine">
                             <table>
                                 <tr>
                                     <td style="width:22px;">
@@ -400,12 +401,12 @@
                     </tr>
 
                     <!-- Fifth Row -->
-                    <tr class="FieldRow"  [ngClass]="{ 'opacityDimBox': disableOpacityBox }">
+                    <tr class="FieldRow" [ngClass]="{ 'opacityDimBox': disableOpacityBox }">
                         <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'Observations'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td style="width:180px">
+                        <td style="width:180px;" rowspan="1" class="LogTextBoxMultiLine">
                             <table>
                                 <tr>
                                     <td style="width: 22px;">
@@ -413,9 +414,10 @@
                                             [Text]="" [BackgroundImage]="myDictionary['Observations']"></HelpIcon>
                                     </td>
                                     <td>
-                                        <LogTextBox [ObjectFieldName]="'Observations'" [DataContext]="DataContext"
-                                            [ObjectTableName]="ObjectTableName" [HideColumns]="true"
-                                            [IsMultiline]="true">
+                                        <LogTextBox style="width:240px;max-height: 50px;" [IsMultiline]="true"
+                                            [ObjectFieldName]="'Observations'" [HideColumns]="true"
+                                            [ObjectTableName]="ObjectTableName" [InputType]="'nText'"
+                                            [DataContext]="DataContext" [Direction]="'LTR'">
                                         </LogTextBox>
                                     </td>
                                 </tr>
@@ -513,7 +515,7 @@
                                 <div style="height: 5px;"></div>
                             </div>
                         </td>
-                        <td style="width:180px;" rowspan="1" class="AddressBox">
+                        <td style="width:180px;" rowspan="1" class="LogTextBoxMultiLine">
                             <table>
                                 <tr>
                                     <td style="width: 22px;">
@@ -524,8 +526,8 @@
                                     <td>
                                         <LogTextBox style="width:240px;max-height: 50px;" [IsMultiline]="true"
                                             [ObjectFieldName]="'ConsigneeAddress'" [HideColumns]="true"
-                                            [ObjectTableName]="ObjectTableName" [InputType]="'nText'" [DataContext]="DataContext"
-                                            [Direction]="'LTR'">
+                                            [ObjectTableName]="ObjectTableName" [InputType]="'nText'"
+                                            [DataContext]="DataContext" [Direction]="'LTR'">
                                         </LogTextBox>
                                     </td>
                                 </tr>
