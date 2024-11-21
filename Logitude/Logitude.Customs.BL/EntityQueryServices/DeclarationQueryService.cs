@@ -438,6 +438,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return declarationPM;
         }
 
+        public string GetDeclarationNumberByDecId(string id, int tenant)
+        {
+            return repository.GetDeclarationNumberByDecId(id, tenant);
+        }
 
         public DeclarationPM GetAcceptDeclarationAmendment(string id, int tenant)
         {
