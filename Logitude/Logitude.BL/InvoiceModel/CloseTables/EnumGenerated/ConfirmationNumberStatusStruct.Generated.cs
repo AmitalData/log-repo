@@ -15,6 +15,7 @@ namespace Logitude.BL.InvoiceModel.CloseTables
        public const string לאהתקבלההקצאה = "3";  
        public const string לאנדרשהקצאה = "4";  
        public const string כשלוןבקבלתהקצאה = "5";  
+       public const string חשבוניתמעוכבת = "6";  
     }
 }
 

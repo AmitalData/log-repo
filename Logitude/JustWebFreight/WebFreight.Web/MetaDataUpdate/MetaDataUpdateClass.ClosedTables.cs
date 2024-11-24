@@ -2605,6 +2605,13 @@ namespace WebFreight.Web.MetaDataUpdate
                 LocalName = "כשלון בקבלת הקצאה",
                 InActive = false
             }, confirmationNumberStatusRepository);
+            AddClosedTables.AddConfirmationNumberStatus(new ConfirmationNumberStatusDetails()
+            {
+                Code = "6",
+                Name = "Delayed invoice",
+                LocalName = "חשבונית מעוכבת",
+                InActive = false
+            }, confirmationNumberStatusRepository);
 
             confirmationNumberStatusRepository.SubmitChanges();
         }

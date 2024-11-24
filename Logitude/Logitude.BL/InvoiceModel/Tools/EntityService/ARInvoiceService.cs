@@ -514,6 +514,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         entityPM.ConfirmationNumberStatus = "2";
                         entityPM.ConfirmationNumber = res.confirmationNumber;
                     }
+                    else if (res != null && res.status == 460)
+                    {
+                        entityPM.ConfirmationNumberStatus = "6";
+                    }
                     else
                     {
                         NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("apiResponse.Msg :{0}", apiResponse.Msg));
