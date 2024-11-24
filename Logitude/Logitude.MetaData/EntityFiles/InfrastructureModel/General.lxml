@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;e165&quot;"
+  Code="&quot;906d&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5995,7 +5995,7 @@
     <TextCode
       Code="&quot;Accounting.O.AlreadyRedeemed&quot;"
       DefaultText="&quot;A check has already been cashed and adjusted by bank reconciliation. Should I mark it as &amp;quot;check returned from bank&quot;"
-      LocalDefaultText="&quot;צ'ק כבר נפרע והותאם בהתאמת בנק. האם לסמן בתור&quot;"
+      LocalDefaultText="&quot;צ'ק כבר נפרע והותאם בהתאמת בנק. האם לסמן בתור &quot;צ'ק חזר מהבנק&quot;?&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
