@@ -75,9 +75,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             //   Debit Cashbook and Credit Bank -See Here
             //   Debit Customer Credit Cashbook - See here
             //   Refresh the page
-
-            bool isValid = CheckCheque(arpChequeId, tenant);
-            if (!isValid) return;
+            //cancel by  TASK 112261
+            //bool isValid = CheckCheque(arpChequeId, tenant);
+            //if (!isValid) return;
 
             if (returnType == "Cashbook")
             {
@@ -141,7 +141,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
             ARPaymentQuery paymentQuery = new ARPaymentQuery(tenant);
             ARPaymentPM paymentPM = paymentQuery.GetSinglePM(chequePM.PaymentId, tenant);
-
+            
             // 2- Update StatusCode.ARPaymentCheques = 4 - Cheque out of deposit
             chequePM.StatusCode = "4"; // 4- Returned From Bank
             chequePM.ChangeSetOp = ChangeSetOperation.Update;
