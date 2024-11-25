@@ -38,15 +38,31 @@ namespace AmitalTestConsoleApp
             //string tableName = "GGGQ";
             //string itemUpdate =  fileNo;
             //bool isCloseTable = false;
+            
+            GetRecordJson("e7c36fc9-902c-4c0a-9646-fd54afb7df9d");
+            GetSyncData("167981194");
 
-            CreateNewRecord(tenant, fileNo, tableName, isCloseTable);
-            WRSendTaskToQueueMessage();
-            Envelope task = GetTaskFromQueue(tenant);
-            List<EntityRecord> dataSync = APIGetSyncData(tenant, itemUpdate);
-            APIMarkSyncFinished(tenant, itemUpdate, dataSync);
-            EnqueueTask(task.CommunicationLogId, tenant);
+            //CreateNewRecord(tenant, fileNo, tableName, isCloseTable);
+            //WRSendTaskToQueueMessage();
+            //Envelope task = GetTaskFromQueue(tenant);
+            //List<EntityRecord> dataSync = APIGetSyncData(tenant, itemUpdate);
+            //APIMarkSyncFinished(tenant, itemUpdate, dataSync);
+            //EnqueueTask(task.CommunicationLogId, tenant);
 
             Console.WriteLine("************ finish TestSyncRecord ************");
+        }
+
+        private static void GetRecordJson(string id)
+        {
+            var record = new SyncRecordRepository(102).Context.SyncRecord.Where(x => x.Id == id).First();
+            var res = new SyncRecordQuery(102).GetRecordOfRowNeedSync(record);
+            Console.WriteLine("GetRecordJson result: " + res);
+        }
+        
+        private static void GetSyncData(string item)
+        {
+            var res = new SyncRecordQuery(102).GetUnsyncRecordsAndMarkAsInProcess(102, item);
+            res.ForEach(x => Console.WriteLine($"entname: {x.Entname}, data: {x.RecordAsJson}"));            
         }
 
         private static void CreateNewRecord(int tenant, string fileNo, string tableName, bool isCloseTable)

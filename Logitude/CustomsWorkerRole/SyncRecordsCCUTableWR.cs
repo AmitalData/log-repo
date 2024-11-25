@@ -10,6 +10,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
+using Unifreight.Data.AmitalModel.Repsitories;
 
 namespace CustomsWorkerRole
 {
@@ -50,7 +51,6 @@ namespace CustomsWorkerRole
 
                 DevLog.Instance.WriteDebug("SendSyncRecoredToUnifreightQueue, records count: " + records.Count);
 
-                records = records.Concat(AddGGGQC(syncRecordQuery, records)).ToList();
                 records = records.Concat(InsertRecordsForCloseTables(syncRecordQuery, records)).ToList();
 
                 IEnumerable<IGrouping<int, SyncRecord>> RecordsGroupByTenants = records.GroupBy(record => record.Tenant);
@@ -72,7 +72,7 @@ namespace CustomsWorkerRole
                     }
                 }
 
-                syncRecordQuery.UpdateStatusInQueue(syncRecordsInQueueList);
+                syncRecordQuery.UpdateStatus(syncRecordsInQueueList, SyncRecordStatus.InQueue);
 
                 Unlock();
             }
@@ -104,41 +104,6 @@ namespace CustomsWorkerRole
         private static void Unlock()
         {
             new ConcurrentKiller().FreeLock(lockKey, 0);
-        }
-
-        private static List<SyncRecord> AddGGGQC(SyncRecordQuery syncRecordQuery, List<SyncRecord> syncRecords)
-        {
-            List<SyncRecord> newRecords = new List<SyncRecord>();
-            try
-            {
-
-                List<SyncRecord> gggqRecords = syncRecords.Where(record => record.Entname.ToLower() == "gggq").ToList();
-
-                if (gggqRecords.Count == 0) return newRecords;
-
-
-                gggqRecords.ForEach(gggqRecord =>
-                    newRecords.Add(new SyncRecord
-                    {
-                        Id = Guid.NewGuid().ToString(),
-                        FileNo = gggqRecord.FileNo,
-                        KeyVal = gggqRecord.KeyVal,
-                        Tenant = gggqRecord.Tenant,
-                        IsSync = gggqRecord.IsSync,
-                        CreateDate = gggqRecord.CreateDate,
-                        Entname = "GGGQC",
-                        SyncDT = gggqRecord.SyncDT,
-                        TrigAction = gggqRecord.TrigAction,
-                    }));
-
-                syncRecordQuery.Add(newRecords);
-            }
-            catch (Exception e)
-            {
-                DevLog.Instance.WriteFatal(e, "error on SendToUnifreightQueue when add GGGQC table");
-            }
-
-            return newRecords;
         }
 
         private static List<SyncRecord> InsertRecordsForCloseTables(SyncRecordQuery syncRecordQuery, List<SyncRecord> records)
