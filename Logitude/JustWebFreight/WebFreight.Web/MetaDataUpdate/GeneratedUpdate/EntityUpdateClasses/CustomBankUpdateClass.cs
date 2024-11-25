@@ -21,7 +21,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomBankUpdateClass
    {  		
-		public const string HashString = "93ec12c3bfc5b7b7c56bd089e1bf4814";
+		public const string HashString = "daf290e3bdf684b91aea7e87c7fb0f57";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -67,7 +67,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "Logitude.Customs.Views.NewCustomBankControlCommand",
-			      				    LocalDefaultText =  "בנקים סוכן / יבואן",
+			      				    LocalDefaultTextBack_up =  "בנקים סוכן / יבואן",
+			      				    LocalDefaultText =  "BS64:IteR16DXp9eZ150g16HXldeb158gLyDXmdeR15XXkNefIg==",
 			      				    DefaultText =  "Custom Bank",
 			      				    Code =  "CSBK",
 			      				    Name =  "Customs.CustomBank",
@@ -146,6 +147,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -208,6 +210,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -259,10 +262,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InternalCode",
 					  						DefaultText =  "Internal Code",
-					  						FullLocalDefaultText =  "קוד פנימי",
+					  						FullLocalDefaultTextBack_up =  "קוד פנימי",
+					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXpNeg15nXnteZIg==",
 					  						ListFieldLable =  "InternalCodeListLable",
 					  						ListLableDefaultText =  "Internal Code",
-					  						ListLocalDefaultText =  "קוד פנימי",
+					  						ListLocalDefaultTextBack_up =  "קוד פנימי",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXpNeg15nXnteZIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -273,6 +278,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -325,10 +331,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "BankCode",
 					  						DefaultText =  "Bank",
-					  						FullLocalDefaultText =  "בנק",
+					  						FullLocalDefaultTextBack_up =  "בנק",
+					  						FullLocalDefaultText =  "BS64:IteR16DXpyI=",
 					  						ListFieldLable =  "BankCodeListLable",
 					  						ListLableDefaultText =  "Bank",
-					  						ListLocalDefaultText =  "בנק",
+					  						ListLocalDefaultTextBack_up =  "בנק",
+					  						ListLocalDefaultText =  "BS64:IteR16DXpyI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Bank",
 					  						NavigationPropertyName =  "Bank",
@@ -341,6 +349,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -393,10 +402,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "BranchCode",
 					  						DefaultText =  "Branch",
-					  						FullLocalDefaultText =  "סניף",
+					  						FullLocalDefaultTextBack_up =  "סניף",
+					  						FullLocalDefaultText =  "BS64:Iteh16DXmdejIg==",
 					  						ListFieldLable =  "BranchCodeListLable",
 					  						ListLableDefaultText =  "Branch",
-					  						ListLocalDefaultText =  "סניף",
+					  						ListLocalDefaultTextBack_up =  "סניף",
+					  						ListLocalDefaultText =  "BS64:Iteh16DXmdejIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -407,6 +418,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -458,10 +470,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountNumber",
 					  						DefaultText =  "Account Number",
-					  						FullLocalDefaultText =  "מספר חשבון",
+					  						FullLocalDefaultTextBack_up =  "מספר חשבון",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeX16nXkdeV158i",
 					  						ListFieldLable =  "AccountNumberListLable",
 					  						ListLableDefaultText =  "Account Number",
-					  						ListLocalDefaultText =  "מספר חשבון",
+					  						ListLocalDefaultTextBack_up =  "מספר חשבון",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeX16nXkdeV158i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -472,6 +486,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -523,10 +538,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocalName",
 					  						DefaultText =  "Local Name",
-					  						FullLocalDefaultText =  "שם מקומי",
+					  						FullLocalDefaultTextBack_up =  "שם מקומי",
+					  						FullLocalDefaultText =  "BS64:Itep150g157Xp9eV157XmSI=",
 					  						ListFieldLable =  "LocalNameListLable",
 					  						ListLableDefaultText =  "Local Name",
-					  						ListLocalDefaultText =  "שם מקומי",
+					  						ListLocalDefaultTextBack_up =  "שם מקומי",
+					  						ListLocalDefaultText =  "BS64:Itep150g157Xp9eV157XmSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -537,6 +554,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -588,10 +606,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "English Name",
-					  						FullLocalDefaultText =  "שם אנגלית",
+					  						FullLocalDefaultTextBack_up =  "שם אנגלית",
+					  						FullLocalDefaultText =  "BS64:Itep150g15DXoNeS15zXmdeqIg==",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultText =  "שם אנגלית",
+					  						ListLocalDefaultTextBack_up =  "שם אנגלית",
+					  						ListLocalDefaultText =  "BS64:Itep150g15DXoNeS15zXmdeqIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -602,6 +622,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -653,10 +674,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InActive",
 					  						DefaultText =  "InActive",
-					  						FullLocalDefaultText =  "לא פעיל",
+					  						FullLocalDefaultTextBack_up =  "לא פעיל",
+					  						FullLocalDefaultText =  "BS64:Itec15Ag16TXoteZ15wi",
 					  						ListFieldLable =  "InActiveListLable",
 					  						ListLableDefaultText =  "InActive",
-					  						ListLocalDefaultText =  "לא פעיל",
+					  						ListLocalDefaultTextBack_up =  "לא פעיל",
+					  						ListLocalDefaultText =  "BS64:Itec15Ag16TXoteZ15wi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -667,6 +690,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -719,10 +743,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PayerTypeCode",
 					  						DefaultText =  "Payer Type",
-					  						FullLocalDefaultText =  "סוג המשלם",
+					  						FullLocalDefaultTextBack_up =  "סוג המשלם",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXlNee16nXnNedIg==",
 					  						ListFieldLable =  "PayerTypeCodeListLable",
 					  						ListLableDefaultText =  "Payer Type",
-					  						ListLocalDefaultText =  "סוג המשלם",
+					  						ListLocalDefaultTextBack_up =  "סוג המשלם",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXlNee16nXnNedIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CustomerActivityType",
 					  						NavigationPropertyName =  "CustomerActivityType",
@@ -735,6 +761,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -786,10 +813,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "BankAddress",
 					  						DefaultText =  "Bank Address",
-					  						FullLocalDefaultText =  "כתובת בנק",
+					  						FullLocalDefaultTextBack_up =  "כתובת בנק",
+					  						FullLocalDefaultText =  "BS64:Iteb16rXldeR16og15HXoNenIg==",
 					  						ListFieldLable =  "BankAddressListLable",
 					  						ListLableDefaultText =  "Bank Address",
-					  						ListLocalDefaultText =  "כתובת בנק",
+					  						ListLocalDefaultTextBack_up =  "כתובת בנק",
+					  						ListLocalDefaultText =  "BS64:Iteb16rXldeR16og15HXoNenIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -800,6 +829,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -850,10 +880,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PayerTypeName",
 					  						DefaultText =  "Payer Type Name",
-					  						FullLocalDefaultText =  "סוג המשלם",
+					  						FullLocalDefaultTextBack_up =  "סוג המשלם",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXlNee16nXnNedIg==",
 					  						ListFieldLable =  "PayerTypeNameListLable",
 					  						ListLableDefaultText =  "Payer Type Name",
-					  						ListLocalDefaultText =  "סוג המשלם",
+					  						ListLocalDefaultTextBack_up =  "סוג המשלם",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXlNee16nXnNedIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -864,6 +896,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -915,10 +948,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ClientBank",
 					  						DefaultText =  "Client's Bank",
-					  						FullLocalDefaultText =  "מס”ב לקוח",
+					  						FullLocalDefaultTextBack_up =  "מס”ב לקוח",
+					  						FullLocalDefaultText =  "BS64:Itee16HigJ3XkSDXnNen15XXlyI=",
 					  						ListFieldLable =  "ClientBankListLable",
 					  						ListLableDefaultText =  "Client's Bank",
-					  						ListLocalDefaultText =  "מס”ב לקוח",
+					  						ListLocalDefaultTextBack_up =  "מס”ב לקוח",
+					  						ListLocalDefaultText =  "BS64:Itee16HigJ3XkSDXnNen15XXlyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -929,6 +964,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -978,10 +1014,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CardId",
 					  						DefaultText =  "Related clients",
-					  						FullLocalDefaultText =  "לקוחות קשורים",
+					  						FullLocalDefaultTextBack_up =  "לקוחות קשורים",
+					  						FullLocalDefaultText =  "BS64:Itec16fXldeX15XXqiDXp9ep15XXqNeZ150i",
 					  						ListFieldLable =  "CardIdListLable",
 					  						ListLableDefaultText =  "Related clients",
-					  						ListLocalDefaultText =  "לקוחות קשורים",
+					  						ListLocalDefaultTextBack_up =  "לקוחות קשורים",
+					  						ListLocalDefaultText =  "BS64:Itec16fXldeX15XXqiDXp9ep15XXqNeZ150i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -992,6 +1030,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1054,6 +1093,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1103,10 +1143,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search",
-					  						FullLocalDefaultText =  "חיפוש",
+					  						FullLocalDefaultTextBack_up =  "חיפוש",
+					  						FullLocalDefaultText =  "BS64:IteX15nXpNeV16ki",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Search ",
-					  						ListLocalDefaultText =  "חיפוש",
+					  						ListLocalDefaultTextBack_up =  "חיפוש",
+					  						ListLocalDefaultText =  "BS64:IteX15nXpNeV16ki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1117,6 +1159,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1167,10 +1210,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "BankName",
 					  						DefaultText =  "Bank Name",
-					  						FullLocalDefaultText =  "שם בנק",
+					  						FullLocalDefaultTextBack_up =  "שם בנק",
+					  						FullLocalDefaultText =  "BS64:Itep150g15HXoNenIg==",
 					  						ListFieldLable =  "BankNameListLable",
 					  						ListLableDefaultText =  "Bank Name",
-					  						ListLocalDefaultText =  "שם בנק",
+					  						ListLocalDefaultTextBack_up =  "שם בנק",
+					  						ListLocalDefaultText =  "BS64:Itep150g15HXoNenIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1181,6 +1226,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1231,10 +1277,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "BranchName",
 					  						DefaultText =  "Branch Name",
-					  						FullLocalDefaultText =  "שם סניף",
+					  						FullLocalDefaultTextBack_up =  "שם סניף",
+					  						FullLocalDefaultText =  "BS64:Itep150g16HXoNeZ16Mi",
 					  						ListFieldLable =  "BranchNameListLable",
 					  						ListLableDefaultText =  "Branch Name",
-					  						ListLocalDefaultText =  "שם סניף",
+					  						ListLocalDefaultTextBack_up =  "שם סניף",
+					  						ListLocalDefaultText =  "BS64:Itep150g16HXoNeZ16Mi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1245,6 +1293,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1304,6 +1353,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1365,6 +1415,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1416,10 +1467,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Name",
 					  						DefaultText =  "Name",
-					  						FullLocalDefaultText =  "שם",
+					  						FullLocalDefaultTextBack_up =  "שם",
+					  						FullLocalDefaultText =  "BS64:Itep150i",
 					  						ListFieldLable =  "NameListLable",
 					  						ListLableDefaultText =  "Name",
-					  						ListLocalDefaultText =  "שם",
+					  						ListLocalDefaultTextBack_up =  "שם",
+					  						ListLocalDefaultText =  "BS64:Itep150i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1430,6 +1483,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1461,14 +1515,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode CustomBankTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomBank.Q.CustomBankQuery", DefaultText = @"Custom Banks",LocalDefaultText = "בנקים מותאמים אישית", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode CustomBankTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomBank.Q.CustomBankQuery", DefaultText = @"Custom Banks",LocalDefaultText = "BS64:IteR16DXp9eZ150g157Xldeq15DXnteZ150g15DXmdep15nXqiI=", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature CustomBankFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMBANKS", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomBank.Features.CustomBanks", NameTextCodeDefaultText = "Custom Banks", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomBankObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CustomBanksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomBankTextCode_0.Id, NameTextCodeCode = CustomBankTextCode_0.Code, ObjectTableName = "Customs.CustomBank", Code = "CustomBanks",  QueryGroupCode = "CSBK", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomBankObjectTable.Id, QuerySection = "CustomBanks", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomBankFeature_0.Id,FeatureUniqeCode= CustomBankFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query CustomBanksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomBankTextCode_0.Id, NameTextCodeCode = CustomBankTextCode_0.Code, ObjectTableName = "Customs.CustomBank", Code = "CustomBanks",  QueryGroupCode = "CSBK", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomBankObjectTable.Id, QuerySection = "Customs.CustomBank", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomBankFeature_0.Id,FeatureUniqeCode= CustomBankFeature_0.FeatureUniqeCode, DefaultSortName = "InternalCode", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn CustomBanksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomBanksQuery.Id,QueryCode = CustomBanksQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CustomBank.Id" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -1559,11 +1613,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
 			   ObjectTable CustomBankObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomBank" && d.Tenant == 0).FirstOrDefault();  
                  
-			   TextCode CustomBankGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomBank.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode CustomBankGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomBank.TH.General", DefaultText = "General",LocalDefaultText = "BS64:Iteb15zXnNeZIg==", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature CustomBankGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomBank.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomBankObjectTable);
  
                  
-			   TextCode CustomBankEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomBank.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode CustomBankEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomBank.TH.Events", DefaultText = "Events",LocalDefaultText = "BS64:IteQ15nXqNeV16LXmdedIg==", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature CustomBankEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomBank.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomBankObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
@@ -1641,13 +1695,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable CustomBankObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomBank" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode CustomBankTextCode_CustomsCustomBankORequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomBank.O.Required", DefaultText = "Related Client value is required",LocalDefaultText = @"ערך לקוח קשור נדרש", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomBankTextCode_CustomsCustomBankORequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomBank.O.Required", DefaultText = "Related Client value is required",LocalDefaultText = @"BS64:Itei16jXmiDXnNen15XXlyDXp9ep15XXqCDXoNeT16jXqSI=", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode CustomBankTextCode_CustomsCustomBankOExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomBank.O.Exist", DefaultText = "Sorry you can't choose an existing client",LocalDefaultText = @"לא ניתן לבחור קוד לקוח קיים", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomBankTextCode_CustomsCustomBankOExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomBank.O.Exist", DefaultText = "Sorry you can't choose an existing client",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXkdeX15XXqCDXp9eV15Mg15zXp9eV15cg16fXmdeZ150i", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode CustomBankTextCode_CustomsCustomBankOBankNotConnectedToCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomBank.O.BankNotConnectedToCustomer", DefaultText = "This bank is not connected to this customer",LocalDefaultText = @"בנק זה לא מקושר ללקוח - לא ניתן לבחור", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomBankTextCode_CustomsCustomBankOBankNotConnectedToCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomBank.O.BankNotConnectedToCustomer", DefaultText = "This bank is not connected to this customer",LocalDefaultText = @"BS64:IteR16DXpyDXlteUINec15Ag157Xp9eV16nXqCDXnNec16fXldeXIC0g15zXkCDXoNeZ16rXnyDXnNeR15fXldeoIg==", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode CustomBankTextCode_CustomsCustomBankOInternalCodekAlreadyExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomBank.O.InternalCodekAlreadyExist", DefaultText = "This internal code already exists",LocalDefaultText = @"קוד פנימי זה כבר קיים", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomBankTextCode_CustomsCustomBankOInternalCodekAlreadyExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomBank.O.InternalCodekAlreadyExist", DefaultText = "This internal code already exists",LocalDefaultText = @"BS64:Iten15XXkyDXpNeg15nXnteZINeW15Qg15vXkdeoINen15nXmdedIg==", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
