@@ -21,7 +21,15 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-   }
+        public List<CB_RuleClassification> GetRulesByCustomsItemId(int customsItemId)
+        {
+
+            return (from a in context.CB_RuleClassifications
+                    where a.CustomsItemID == customsItemId
+                    select a).ToList();
+        }
+
+    }
 
 }
    

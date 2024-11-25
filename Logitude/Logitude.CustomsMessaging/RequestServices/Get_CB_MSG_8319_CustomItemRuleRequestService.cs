@@ -29,8 +29,6 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             myMsg.CIRuleIn = new UnifreightIIG.Common.CustomItemRuleServiceReference.CustomsBookItemHeaderIn() 
             {
-                customsBookType = requestParams.customsBookType,
-                customsBookTypeSpecified = true,
                 customsItemId = requestParams.customsItemId,
                 customsItemIdSpecified = true,
                 validToDate = requestParams.validToDate

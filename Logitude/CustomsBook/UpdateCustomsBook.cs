@@ -11,6 +11,23 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Net;
+using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.CustomsMessaging.Common.RequestParams;
+using Logitude.Server.Tools;
+using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Server.Infrastructure.Azure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure;
+using System.Globalization;
+using Logitude.SystemLogs;
+using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Server.Tools.TreeFilterQuery;
+using System.Web.Caching;
+using System.Web;
 
 namespace CustomsBook
 {
@@ -20,6 +37,8 @@ namespace CustomsBook
         static readonly Logger logger = Program.logger;
 
         static List<string> tempTables = new List<string>();
+        static string sqlConnectionString = ConfigurationManager.ConnectionStrings["LogitudeStr"].ConnectionString;
+
         public static async Task Run()
         {
             await DownloadFile();
@@ -70,7 +89,9 @@ namespace CustomsBook
 
                     //מחיקת נתוני טבלאות זמניות
                     TruncateTables();
-
+                    // Get rules from WS 8319
+                    GetRulesFromWS8319();
+                    
                     List<string> fileNames = FindFileNames();
                     foreach (string fileName in fileNames)
                     {
@@ -198,8 +219,64 @@ namespace CustomsBook
             }
 
         }
+        public static HttpRuntime _httpRuntime { get; set; }
+
+       
+        static void GetRulesFromWS8319()
+        {
+
+           
+            string query = "SELECT CustomsItemId FROM [dbo].[NewCustomsBookMainView] " +
+                      "WHERE (ItemHierarchicLocationID = 1 OR ItemHierarchicLocationID = 2) AND Rules = 1";
+
+            List<int> customsItemIds = new List<int>();
+
+            using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        customsItemIds.Add(reader.GetInt32(0));
+                    }
+                }
+            }
+            StartStatic();
 
 
+            string query2 = "select top 1 TENANT from customs.CUSTOMSSETTINGS where CUSTOMSAGENTID is not null";
+
+            int tenant = 0;
+
+            using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+            {
+                SqlCommand command = new SqlCommand(query2, connection);
+                connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        tenant = reader.GetInt32(0);
+                    }
+                }
+            }
+            foreach (var id in customsItemIds)
+            {
+                CustomItemRuleRequestParams requestParamsData = new CustomItemRuleRequestParams()
+                {
+                    Tenant = tenant,
+                    customsItemId = id,
+                    validToDate = DateTime.Now,
+                };
+                DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService messagingService = new DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService();
+                CustomItemRuleResponseData responseData = messagingService.Send(requestParamsData);
+            }
+            tempTables.Add("TEMP_CB_RuleClassification");
+        }
 
         static void MapXmlTempTable(string fileName)
         {
@@ -499,8 +576,139 @@ namespace CustomsBook
             }
             return columns;
         }
+        public static void EnsureHttpRuntime()
+        {
+            try
+            {
+                if (null == _httpRuntime)
+                {
+                    try
+                    {
+                        //Monitor.Enter(typeof(State));
+                        if (null == _httpRuntime)
+                        {
+                            // Create an Http Content to give us access to the cache.
+                            _httpRuntime = new HttpRuntime();
+
+                        }
+                    }
+                    finally
+                    {
+                        //Monitor.Exit(typeof(State));
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                //Logger.LogMe(e.ToString(), true);
+            }
+        }
+        public static Cache Cache
+        {
+            get
+            {
+                try
+                {
+                    EnsureHttpRuntime();
+                    return HttpRuntime.Cache;
+                }
+                catch (Exception e)
+                {
+                    //Logger.LogMe(e.ToString(), true);
+                }
+                return null;
+
+            }
 
 
+
+        }
+        public static void StartStatic(Action<bool, bool> BuildObjectTablesZipFilesDataAction = null, string ProductInfo = null)
+        {
+            InjectionUtil.Init(CreateAmitalRestrictOwnerModelService: null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null, null, () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
+
+            if (string.IsNullOrEmpty(LogitudeSettings.DeploymentStage))
+            {
+                string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+                LogitudeSettings.DatabaseManagementSystem = dbms;
+                LogitudeSettings.DebugKey = System.Configuration.ConfigurationManager.AppSettings.Get("DebugKey");
+                SettingRepository settingRepository = new SettingRepository();
+                Setting setting = settingRepository.GetSingleSetting("1");
+                LogitudeSettings.Id = setting.Id;
+                LogitudeSettings.ChampEnv = setting.ChampEnv;
+                LogitudeSettings.ChampURL = setting.ChampURL;
+                LogitudeSettings.ChampTestAPIURL = setting.ChampTestAPIURL;
+                LogitudeSettings.ChampTestAPIPassword = setting.ChampTestAPIPassword;
+                LogitudeSettings.ChampProdAPIURL = setting.ChampProdAPIURL;
+                LogitudeSettings.ChampProdAPIPassword = setting.ChampProdAPIPassword;
+                LogitudeSettings.CustomerCareIP = setting.CustomerCareIP;
+                LogitudeSettings.DeploymentStage = setting.DeploymentStage;
+                LogitudeSettings.IsLogEnabled = setting.IsLogEnabled;
+                LogitudeSettings.LogitudeURL = setting.LogitudeURL;
+                LogitudeSettings.TotangoServiceId = setting.TotangoServiceId;
+                LogitudeSettings.UsingAzure = setting.UsingAzure;
+                LogitudeSettings.StorageAccountKey = setting.StorageAccountKey;
+                LogitudeSettings.StorageAccountName = setting.StorageAccountName;
+                LogitudeSettings.StorageType = setting.StorageType;
+                LogitudeSettings.LogitudeCRMTenantNumber = setting.LogitudeCRMTenantNumber;
+                LogitudeSettings.AutoSignupEmail = setting.AutoSignupEmail;
+                LogitudeSettings.AutoSignupPassword = setting.AutoSignupPassword;
+                LogitudeSettings.ForceHttps = setting.ForceHttps;
+                LogitudeSettings.CheckConnectionURL = setting.CheckConnectionURL;
+                LogitudeSettings.IOSSharedAppMinimumVersion = setting.IOSSharedAppMinimumVersion;
+                LogitudeSettings.WorkEnvironment = setting.WorkEnvironment;
+                LogitudeSettings.LogoCode = setting.LogoCode;
+                LogitudeSettings.EnableHybridQueue = setting.EnableHybridQueue;
+
+                //LogitudeSettings.IsCostomsDeploy = Logitude.Customs.BL.Utils.CustomsSettingUtil.ForceDownloadXapFromIIS();
+                //LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject = CustomsSettingQueryService.GetUnfDBConnectionInfo;
+                LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
+
+                LogitudeSettings.HandleDbExceptionInject = ExceptionHandler.HandleDbException;
+                LogitudeSettings.HandleBuildObjectTablesZipFilesData_Inject = BuildObjectTablesZipFilesDataAction;
+                LogitudeSettings.GetUserNameInject = AuthenticationUtil.ResolveUserIdentityName;
+
+                LogitudeSettings.StorageServiceMode = setting.StorageServiceMode;
+                LogitudeSettings.QueueServiceMode = setting.QueueServiceMode;
+                LogitudeSettings.ABMProductId = setting.ABMProductId;
+                LogitudeSettings.AzureFolderName = setting.AzureFolderName;
+                LogitudeSettings.CPUIntensiveWebServicesURL = setting.CPUIntensiveWebServicesURL;
+
+
+            }
+
+            //  CommunicationWorkerRole.ThreadedRoleEntryPoint.SetWorkerRoleName();
+
+
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                LogitudeSettings.ProductInfo = ProductInfo;
+
+                var he = new CultureInfo("he-IL");// '("en-US") '    "he-IL")
+                he.DateTimeFormat.DateSeparator = ".";
+                he.DateTimeFormat.ShortDatePattern = "dd-MM-yy";// ' "yyyy/MM/dd" '  ' "DD/MM/YYYY"
+                System.Threading.Thread.CurrentThread.CurrentCulture = he;
+
+
+
+                LogitudeSettings.RunWorkerRoleAutomaticBreakPoint = false;
+
+                LogitudeSettings.WorkerRoleName = LogitudeSettings.WorkerRoleName ?? "production";
+            }
+            // string storageServiceMode = System.Configuration.ConfigurationManager.AppSettings.Get("StorageServiceMode");
+            //string queueServiceMode = System.Configuration.ConfigurationManager.AppSettings.Get("QueueServiceMode");
+            ContainerAccessor.InitContainer();
+
+            CacheManager.CacheWrapper = CacheManager.CacheWrapper ?? new CacheWrapper(Cache);
+            var storageAccount = StorageAcountDetails.StorageAccount; 
+            LogitudeSettings.HandleLogMe = new Action<string, bool, string, DateTime>((mess, err, suffix, stopLogAt) =>
+            {
+                if (DateTime.Now > stopLogAt) return;
+            });
+
+
+        }
 
     }
 }
