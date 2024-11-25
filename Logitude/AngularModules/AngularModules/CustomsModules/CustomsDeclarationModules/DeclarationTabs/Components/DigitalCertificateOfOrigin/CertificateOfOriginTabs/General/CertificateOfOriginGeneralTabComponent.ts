@@ -877,6 +877,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         }
 
         this.entityPM.DestinationCountry = !AppTool.IsNullOrEmpty(this.currentDeclaration.DestinationCountryCode) ? this.currentDeclaration.DestinationCountryCode : "";
+        this.entityPM.TradeAgreementCountry2 = !AppTool.IsNullOrEmpty(this.currentDeclaration.DestinationCountryCode) ? this.currentDeclaration.DestinationCountryCode : "";
 
         if (this.currentDeclaration.SupplierInvoices.length > 0) {
             let supplierInvoices = this.currentDeclaration.SupplierInvoices[0];
