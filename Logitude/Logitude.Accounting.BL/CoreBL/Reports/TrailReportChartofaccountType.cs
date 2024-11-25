@@ -470,12 +470,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             {
                 chartTypes = allChartTypes.Where(coa => chartOfAccountsTypes.Contains(coa.Code));
             }
-            else
-            {
-                chartTypes = allChartTypes;
+             else
+             {
+                chartTypes = allChartTypes; 
             }
 
-            _QUnionAllMoneyData = _QUnionAllMoneyData.Concat(
+             _QUnionAllMoneyData = _QUnionAllMoneyData.Concat(
             chartTypes.Select(r => new TrailReportTemp()
             {
                 AccountId_COAType = r.Code,
