@@ -148,11 +148,11 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             return records.ToList();
         }
 
-        public void UpdateStatusInQueue(List<SyncRecord> records)
+        public void UpdateStatus(List<SyncRecord> records, int status)
         {
             for (int i = 0; i < records.Count; i++)
             {
-                records[i].IsSync = SyncRecordStatus.InQueue;
+                records[i].IsSync = status;
                 context.SyncRecord.Attach(records[i]);
                 context.SetAsModified(records[i]);
             }

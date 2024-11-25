@@ -34,7 +34,7 @@ namespace Unifreight.BL.EntityQueryServices
             });
             repository = new SyncRecordRepository(tenant);
         }
-        
+
         public SyncRecordQuery(int tenant)
         {
             repository = new SyncRecordRepository(tenant);
@@ -53,13 +53,15 @@ namespace Unifreight.BL.EntityQueryServices
 
         public List<EntityRecord> GetUnsyncRecordsAndMarkAsInProcess(int tenant, string item)
         {
+            List<SyncRecord> notExistsRecord = new List<SyncRecord>();
             List<SyncRecord> groupRecord = repository.GetUnsyncAndMarkAsInProcess(tenant, item);
+            AddGGGQC(groupRecord);
 
             List<EntityRecord> entityRecords = groupRecord.Select(syncRecord =>
             {
                 string recordAsJson = GetRecordOfRowNeedSync(syncRecord);
                 if (recordAsJson == null)
-                    return null;
+                    notExistsRecord.Add(syncRecord);
 
                 return new EntityRecord
                 {
@@ -68,11 +70,39 @@ namespace Unifreight.BL.EntityQueryServices
                     Entname = syncRecord.Entname,
                     RecordAsJson = recordAsJson,
                     UpdateDate = syncRecord.SyncDT,
-                    CraeteDate = syncRecord.CreateDate                
+                    CraeteDate = syncRecord.CreateDate
                 };
-            }).Where(x => x != null).ToList();
+            }).ToList();
+
+            repository.UpdateStatus(notExistsRecord, SyncRecordStatus.SyncedAndUpdated);
 
             return entityRecords;
+        }
+
+        private static void AddGGGQC(List<SyncRecord> syncRecords)
+        {
+            try
+            {
+                List<SyncRecord> gggqRecords = syncRecords.Where(record => record.Entname.ToLower() == "gggq").ToList();
+
+                gggqRecords.ForEach(gggqRecord =>
+                    syncRecords.Add(new SyncRecord
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        FileNo = gggqRecord.FileNo,
+                        KeyVal = gggqRecord.KeyVal,
+                        Tenant = gggqRecord.Tenant,
+                        IsSync = gggqRecord.IsSync,
+                        CreateDate = gggqRecord.CreateDate,
+                        Entname = "GGGQC",
+                        SyncDT = gggqRecord.SyncDT,
+                        TrigAction = gggqRecord.TrigAction,
+                    }));
+            }
+            catch (Exception e)
+            {
+                DevLog.Instance.WriteFatal(e, "error on SendToUnifreightQueue when add GGGQC table");
+            }
         }
 
         public void UpdateSyncData(int tenant, string itemUpdate, DateTime syncDT)
@@ -81,7 +111,7 @@ namespace Unifreight.BL.EntityQueryServices
             SyncRecordCache.ClearCacheLastSync(itemUpdate, tenant);
         }
 
-        private string GetRecordOfRowNeedSync(SyncRecord syncRecord)
+        public string GetRecordOfRowNeedSync(SyncRecord syncRecord)
         {
             if (syncRecord == null || string.IsNullOrEmpty(syncRecord.KeyVal))
             {
@@ -91,14 +121,14 @@ namespace Unifreight.BL.EntityQueryServices
 
             bool isCloseTeable = syncRecord.KeyVal == "ALL";
 
-            string query = $"SELECT * FROM {syncRecord.Entname}"; 
+            string query = $"SELECT * FROM {syncRecord.Entname}";
 
-            if(syncRecord.Entname.ToLower() == "ccumshgr")
+            if (syncRecord.Entname.ToLower() == "ccumshgr")
                 query += " WHERE FILE_NO = '" + syncRecord.FileNo + "'";
             else if (!isCloseTeable)
-                query += " WHERE " + syncRecord.KeyVal.Replace(",", " and ");
+                query += " WHERE " + syncRecord.KeyVal.Replace(",", " and ").Replace("=NULL", " is null ");
 
-            SqlConnection conn = 
+            SqlConnection conn =
                 (isCloseTeable ? CommonDataContext.GetContext(syncRecord.Tenant) as IContext : repository.Context as IContext)
                 .GetActiveDbContext().Database.Connection as SqlConnection;
             conn.Open();
@@ -123,11 +153,11 @@ namespace Unifreight.BL.EntityQueryServices
             return recordAsJson;
         }
 
-        public DateTime? GetLastSyncDate(int tenant, string fileNo) => SyncRecordCache.GetLastSyncDate(fileNo, tenant);         
+        public DateTime? GetLastSyncDate(int tenant, string fileNo) => SyncRecordCache.GetLastSyncDate(fileNo, tenant);
 
         public List<SyncRecord> GetAndMarkNewSyncRecord() => repository.GetAndMarkNewSyncRecord();
 
-        public void UpdateStatusInQueue(List<SyncRecord> records) => repository.UpdateStatusInQueue(records);
+        public void UpdateStatus(List<SyncRecord> records, int status) => repository.UpdateStatus(records, status);
 
         public void Add(List<SyncRecord> records)
         {
