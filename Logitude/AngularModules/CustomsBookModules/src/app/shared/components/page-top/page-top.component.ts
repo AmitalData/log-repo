@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Output } from '@angular/core';
 import { SearchBy, SearchService } from './service/top-page.service';
 import { FormsModule, } from '@angular/forms';
 import { HeaderService, searchState } from '../app-header/service/header.service';
@@ -8,35 +8,36 @@ import { BehaviorSubject, catchError, debounceTime, EMPTY, Subject, switchMap } 
 import { API_MainService } from '../../../core/API_MainService';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 import { FilterPopupService } from '../filter-popup/service/filter-popup.service';
-import { AllClassification, CustomClassification, CustomsItemsAutocomplate, GetFromTypesenseResponse, GroupedCustomsItems } from './page-top.interface';
-import {MatSelectModule} from '@angular/material/select';
+import { AllClassification, Classification, CustomClassification, CustomsItemsAutocomplate, GetFromTypesenseResponse, GroupedCustomsItems } from './page-top.interface';
+import { MatSelectModule } from '@angular/material/select';
 import { CacheService } from '../../../core/Services/cache.service';
-import { HttpEvent, HttpResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { RomanToolService } from '../../services/roman-tool.service';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 @Component({
 	selector: 'app-page-top',
 	standalone: true,
-	imports: [FormsModule, NgIf, MatAutocompleteModule, AsyncPipe, MatSelectModule, CommonModule],
+	imports: [FormsModule, NgIf, MatAutocompleteModule, AsyncPipe, MatSelectModule, CommonModule, MatExpansionModule],
 	templateUrl: './page-top.component.html',
 	styleUrl: './page-top.component.css',
 })
 export class PageTopComponent {
-	// @Output() searchClick = new EventEmitter();
 	@Output() searchClick = new EventEmitter<string | number>();
 	customsItemsAutocomplateList: Subject<CustomsItemsAutocomplate[]> = new Subject<CustomsItemsAutocomplate[]>();
-	groupCustomsItemsAutocomplateList: Subject<string[]> = new Subject<string[]>();
+	groupCustomsItemsAutocomplateList: Subject<Classification[]> = new Subject<Classification[]>();
 	autocompleateShortList: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 	textToSearch: string = '';
-	
+
 	constructor(
-		public searchService: SearchService, 
-		private headerService: HeaderService, 
-		private API_MainService: API_MainService, 
+		public searchService: SearchService,
+		private headerService: HeaderService,
+		private API_MainService: API_MainService,
 		private filterPopupService: FilterPopupService,
 		private cacheService: CacheService,
 		public romanTool: RomanToolService,
+		private cdr: ChangeDetectorRef,
 	) { }
 
 	public text: string = '';
@@ -45,6 +46,7 @@ export class PageTopComponent {
 	public selectedSearchOption: SearchByParam = this.searchBy.Classification;
 	public currentSearchState: string = searchState.יבוא;
 	public SearchByValidation: SearchBy = SearchBy.searchBy_form01;
+	public groupedItems: GroupedCustomsItems = {};
 
 	ngOnInit() {
 		this.text = this.searchService.SearchBy('searchBy_form01');
@@ -57,7 +59,7 @@ export class PageTopComponent {
 		this.applyAutocomplate();
 	}
 
-	private applyAutocomplate() {		
+	private applyAutocomplate() {
 		this.searchService.searchText$.pipe(
 			debounceTime(100),
 			switchMap((searchText) =>
@@ -65,7 +67,7 @@ export class PageTopComponent {
 		).subscribe(async (res: any) => {
 			const regex = new RegExp(`(${this.textToSearch})`, 'gi');
 			const result: GetFromTypesenseResponse = res.body;
-
+			result.Remarks.forEach((remark) => remark.CustomsItem.BaseCustomsItemID = -1);
 			let customsItems = [...result.CustomsItems, ...result.Remarks.map((remark) => { return { ...remark.CustomsItem, remark: remark.Remark.RemarkDescription } })];
 			let customsItemsAutocomplateList: CustomsItemsAutocomplate[] = customsItems.map((item) => {
 				let text = item.FullClassification + ' | ' + ((<any>item).remark || item.CIH_GoodsDescription);
@@ -73,12 +75,10 @@ export class PageTopComponent {
 				return { FullClassification: item.FullClassification, text: text, BaseCustomsItemID: item.BaseCustomsItemID };
 			});
 
-			this.customsItemsAutocomplateList.next(customsItemsAutocomplateList);
-			
-			if(customsItemsAutocomplateList.length < 10) {
-				this.autocompleateShortList.next(true);
+			if (customsItemsAutocomplateList.length < 10) {
 				this.customsItemsAutocomplateList.next(customsItemsAutocomplateList);
 				this.groupCustomsItemsAutocomplateList.next([]);
+				this.autocompleateShortList.next(true);
 			} else {
 				this.autocompleateShortList.next(false);
 
@@ -86,39 +86,36 @@ export class PageTopComponent {
 				const customsBookType: string = this.headerService.getSearchState(true);
 				const classifications: CustomClassification = classificationType[customsBookType];
 
-				// let group = 
-				// const groupedItems: GroupedCustomsItems[] = classification.map((item) => { return { name: item.Name, classification: item.Classification, items: [] } });
-				const groupedItems: GroupedCustomsItems =  {};
-				(classifications.sortedClassifications as string[]).forEach((key: string) => groupedItems[key] = []);
+				const groupedItems: GroupedCustomsItems = {};
+				(classifications.sortedClassifications as any[]).forEach((key: Classification) => groupedItems[key.Classification] = []);
 
 				customsItemsAutocomplateList.forEach((item) => {
-					const classification: string = classifications[item.BaseCustomsItemID]  as string || "-"; // classifications ={["090000000"]:"XV"}
-					groupedItems[classification].push(item);
+					const classification: Classification = classifications[item.BaseCustomsItemID] as any || "Unrecognised"; // classifications ={["090000000"]:"XV"}
+					groupedItems[classification.Classification].push(item);
 				});
-				// this.customsItemsAutocomplateList.next(customsItemsAutocomplateList);
+
 				this.groupedItems = groupedItems;
-				this.groupCustomsItemsAutocomplateList.next(classifications.sortedClassifications as string[]);
+				this.groupCustomsItemsAutocomplateList.next(classifications.sortedClassifications as any[]);
 				this.customsItemsAutocomplateList.next([]);
 			}
-
-			// this.groupedItems[0].items = customsItemsAutocomplateList;
-			// console.log(this.groupedItems);
 		});
 	}
-	groupedItems: GroupedCustomsItems =  {};
-
 
 	private async getClassifications() {
 		return await this.cacheService.getByPromise('classifications', async () => {
 			const respnse = await this.API_MainService.GetClassifications().toPromise();
 			const allClassifications: AllClassification = (respnse as HttpResponse<any>).body;
 			delete allClassifications["$id"];
-			
+
 			for (const bookType in allClassifications) {
 				const classifications = allClassifications[bookType];
 				delete classifications["$id"];
-				classifications["-"] = "-";		
-				allClassifications[bookType].sortedClassifications = Object.values(classifications).sort(this.romanTool.comparetor) as string[];				
+				allClassifications[bookType].sortedClassifications = Object.values(classifications).sort((a, b) => this.romanTool.comparetorObject(a, b, 'Classification')) as any[];
+
+				(<any>classifications)[-1] = { Classification: "Remark", Description: "הערות משתמש" };
+				(<Classification[]>allClassifications[bookType].sortedClassifications).unshift(<any>classifications[-1]);
+				(<any>classifications)["-"] = { Classification: "Unrecognised", Description: "אחר" };
+				(<Classification[]>allClassifications[bookType].sortedClassifications).push(<any>classifications['-']);
 			}
 
 			return allClassifications;
@@ -160,4 +157,3 @@ export enum SearchByParam {
 	Classification = "פרט מכס",
 	WordCombination = "מילה/צירוף מילים"
 }
-

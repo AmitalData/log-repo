@@ -54,8 +54,10 @@ export interface CustomsItemsAutocomplate {
 	BaseCustomsItemID?: number;
 }
 
+export interface Classification { Classification: string, Description: string }
+
 export interface CustomClassification {
-	[classification: string]: string | string[];
+	[classification: string]: Classification[] | string;
 }
 
 export interface AllClassification {

@@ -14,7 +14,7 @@ namespace Logitude.Customs.Data.AzureSearch.Repo
             : base(
                   serviceName,
                   apiKey,
-                  "customs-book-test",
+                  "customs-book",
                   new string[] { "FullClassification", "CIH_GoodsDescription" }
             )
         { }
@@ -37,6 +37,7 @@ namespace Logitude.Customs.Data.AzureSearch.Repo
             options.Select.Add("CustomsItemID");
             options.Select.Add("FullClassification");
             options.Select.Add("CI_CustomsBookTypeIDNum");
+            options.Select.Add("CIH_GoodsDescription");
 
             return await SearchAsync("*", options);
         }

@@ -253,7 +253,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         [TokenAutherize]
         public async Task<HttpResponseMessage> GetClassifications()
         {
-            Dictionary<string, Dictionary<int, string>> res = await CustomsBookAzureSearchService.GetClassifications();
+            Dictionary<string, Dictionary<int, ClassificationCustomsBook>> res = await CustomsBookAzureSearchService.GetClassifications();
 
             return Request.CreateResponse(HttpStatusCode.OK, res);
         }

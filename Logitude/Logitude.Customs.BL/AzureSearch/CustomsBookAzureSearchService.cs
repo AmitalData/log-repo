@@ -30,18 +30,18 @@ namespace Logitude.Customs.BL.AzureSearch
             return res;
         }
 
-        public static async Task<Dictionary<string, Dictionary<int, string>>> GetClassifications()
+        public static async Task<Dictionary<string, Dictionary<int, ClassificationCustomsBook>>> GetClassifications()
         {
             return await CacheHelper.GetFromCache("ClassificationCustomsBook", async () =>
             {
                 List<CustomsItemASEntity> data = await new CustomsBookAzureSearchRepo(serviceName, apiKey).GetClassifications();
-                var classificationData = new Dictionary<string, Dictionary<int, string>>();
+                var classificationData = new Dictionary<string, Dictionary<int, ClassificationCustomsBook>>();
                 data.ForEach(item =>
                 {
                     if (!classificationData.ContainsKey(item.CI_CustomsBookTypeIDNum))
-                        classificationData.Add(item.CI_CustomsBookTypeIDNum, new Dictionary<int, string>());
+                        classificationData.Add(item.CI_CustomsBookTypeIDNum, new Dictionary<int, ClassificationCustomsBook>());
 
-                    classificationData[item.CI_CustomsBookTypeIDNum].Add(item.CustomsItemID, item.FullClassification);
+                    classificationData[item.CI_CustomsBookTypeIDNum].Add(item.CustomsItemID, new ClassificationCustomsBook() { Classification = item.FullClassification, Description = item.CIH_GoodsDescription });
                 });
 
                 return classificationData;
@@ -87,7 +87,7 @@ namespace Logitude.Customs.BL.AzureSearch
 
     public class ClassificationCustomsBook
     {
-        public string Name { get; set; }
+        public string Description { get; set; }
         public string Classification { get; set; }
     }
 

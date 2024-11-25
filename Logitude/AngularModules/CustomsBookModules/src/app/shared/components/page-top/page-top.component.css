@@ -219,6 +219,39 @@ li {
     margin-right: inherit !important;
 }
 
-::ng-deep .mat-mdc-optgroup-label {
+.ddl-group-description {
+	max-width: 750px;
+    text-wrap: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+mat-expansion-panel{
+	box-shadow: none !important;
+}
+
+mat-expansion-panel-header {
+	text-align: right;
 	font-weight: bold !important;
+}
+
+::ng-deep mat-expansion-panel-header span.mat-content {	
+	flex: none;
+}
+
+::ng-deep div.mat-mdc-autocomplete-panel {
+	max-height: 460px !important;
+}
+
+::ng-deep .mat-mdc-optgroup-label {
+	min-height: auto !important;
+}
+
+mat-expansion-panel-header {
+	height: 35px !important;
+}
+
+mat-option {
+	min-height: auto !important;
+	height: 35px !important;
 }

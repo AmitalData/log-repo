@@ -21,6 +21,6 @@ export class CacheService {
     this.cache[key] = { value: null, status: ChacheStatus.WAITING, waitingPromise: promise };
     this.cache[key].value = await promise;
 
-    return [...this.cache[key].value];
+    return this.cache[key].value;
   }
 }
