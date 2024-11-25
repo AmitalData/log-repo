@@ -16,18 +16,10 @@ namespace WebFreight.Web.Controllers.HybridModel
     public class FreelancerGroupTypeHybridController : ApiController
     {
         [System.Web.Http.HttpPost]
-        public Response Upsert([FromBody] object[] t)//(UserPM entityPM, bool batch)
+        public Response Upsert(FreelancerGroupTypePM entityPM)//(UserPM entityPM, bool batch)
         {
-            var jsonSerializerSettings = new JsonSerializerSettings();
-            jsonSerializerSettings.MissingMemberHandling = MissingMemberHandling.Ignore;
-
-
-            FreelancerGroupTypePM freelancerGroupTypePM = JsonConvert.DeserializeObject<FreelancerGroupTypePM>(JsonConvert.SerializeObject(t[0]), jsonSerializerSettings);
-            bool batch = JsonConvert.DeserializeObject<bool>(JsonConvert.SerializeObject(t[1]), jsonSerializerSettings);
-
-
             FreelancerGroupTypeWcfService freelancerGroupTypeWcfService = new FreelancerGroupTypeWcfService();
-            Response response = freelancerGroupTypeWcfService.Upsert(freelancerGroupTypePM, batch);
+            Response response = freelancerGroupTypeWcfService.Upsert(entityPM, false);
             return response;
         }
 

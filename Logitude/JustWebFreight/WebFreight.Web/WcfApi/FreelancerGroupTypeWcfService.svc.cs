@@ -60,6 +60,7 @@ namespace WebFreight.Web.WcfApi
                     }
                     else
                     {
+                        entityPM.Id = freelancerGroupType.Id;
                         service.Update(entityPM);
                     }
 
