@@ -756,7 +756,7 @@ namespace AmitalCustomsWindowsService.Tester
                 case "ReportExecutionLogWR":
                     {
                         var reportExecutionLogWR = new ReportExecutionLogWR();
-                        reportExecutionLogWR.Run();
+                        reportExecutionLogWR.DebugStep();
 
                     }
                     break;

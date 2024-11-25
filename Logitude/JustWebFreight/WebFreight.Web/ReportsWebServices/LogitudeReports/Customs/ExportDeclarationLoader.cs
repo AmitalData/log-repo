@@ -17,6 +17,7 @@ using System.Data.Entity.Infrastructure;
 using System.Runtime.Remoting.Contexts;
 using Logitude.Customs.Data;
 using System.Data.Entity;
+using WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
 {
@@ -40,13 +41,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
 
         public byte[] GetData()
         {
-            ExportDeclarationDataProvider myDataProvider = new ExportDeclarationDataProvider();
            
             BuildDataProvider();
             
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(ExportDeclarationDataProvider));
             MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, myDataProvider);
+            xmlSerializer.Serialize(memoryStream, dataProvider);
             memoryStream.Seek(0, SeekOrigin.Begin);
             StreamReader streamReader = new StreamReader(memoryStream);
             string content = streamReader.ReadToEnd();
@@ -56,15 +56,35 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
         private void BuildDataProvider()
         {
             dataProvider = new ExportDeclarationDataProvider();
+			SetReportHeaderFields();
 
-
-            SetExportDeclaration(tenant, reportQueryOperations);
+			SetExportDeclaration(tenant, reportQueryOperations);
 
         }
-        
+		private void SetReportHeaderFields()
+		{
+			QueryOperationsFilterValueGetter valueGetter = new QueryOperationsFilterValueGetter(this.reportQueryOperations);
+	
+			dataProvider.CreateDateFrom = valueGetter.GetFilterValue<DateTime?>("CreateDate");
+			dataProvider.CreateDateTo = valueGetter.GetFilterValue2<DateTime?>("CreateDate");
+			dataProvider.TransportModeId = valueGetter.GetFilterValue<string>("TransportModeId");
+			dataProvider.DeclarationStatusTypeCode = valueGetter.GetFilterValue<string>("DeclarationStatusTypeCode");
+			dataProvider.DeclarationStatusTypeName = valueGetter.GetFilterValue2<string>("DeclarationStatusTypeCode");
+			dataProvider.DeclarationTypeCode = valueGetter.GetFilterValue<string>("DeclarationTypeCode");
+			dataProvider.DeclarationTypeName = valueGetter.GetFilterValue2<string>("DeclarationTypeCode");
+			dataProvider.ReferentUserId = valueGetter.GetFilterValue<string>("ReferentUserId");
+			dataProvider.ReferentUserName = valueGetter.GetFilterValue2<string>("ReferentUserId");
+			dataProvider.DestinationCountryCode = valueGetter.GetFilterValue<string>("DestinationCountryCode");
+			dataProvider.DestinationCountryName = valueGetter.GetFilterValue2<string>("DestinationCountryCode");
+			dataProvider.Customer = valueGetter.GetFilterValue<string>("Customer");
+			dataProvider.CustomerName = valueGetter.GetFilterValue2<string>("Customer");
+			dataProvider.IsShowInvoices = Convert.ToBoolean(valueGetter.GetFilterValue<string>("ShowInvoices"));
+			dataProvider.IsShowConsignments = Convert.ToBoolean(valueGetter.GetFilterValue<string>("ShowConsignments"));
+
+		}
 
 
-        public void SetExportDeclaration(int tenant, QueryOperations queryOperations)
+		public void SetExportDeclaration(int tenant, QueryOperations queryOperations)
         {
             ICustomContext context = CustomContext.GetContext(tenant);
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
@@ -118,7 +138,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                     DeclarationTypeName = a.DeclarationType != null ? a.DeclarationType.LocalName : null,
                                     ProcedureCurrentName = a.GovernmentProcedureCurrent != null ? a.GovernmentProcedureCurrent.LocalName : null,
                                     ExporterImporterCode = a.ImporterCode,
-                                    RecipientName = der != null && !string.IsNullOrEmpty(der.RecipientName) ? der.RecipientName : null,
+									ExporterImporterName = a.Importer != null ? a.Importer.FullName : null,
+									RecipientName = der != null && !string.IsNullOrEmpty(der.RecipientName) ? der.RecipientName : null,
                                     DestinationCountryName = a.CustomsCountry != null ? a.CustomsCountry.LocalName : null,
                                     a.DestinationCountryCode,
                                     a.DeclarationStatusTypeCode,
@@ -146,9 +167,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                     si.IssueDate,
                                     si.IncotermCode,
                                     si.InvoiceAmount,
-                                    InvoiceCounterKey = si != null ? si.InvoiceCounterKey : 0,
-                                    //supplierInvoiceItem
-                                    sItem.ItemCode,
+									InvoiceCounterKey = si != null ? si.InvoiceCounterKey : 0,
+									InvoiceCurrencyTypeName = si.CurrencyType != null ? si.CurrencyType.LocalName : null,
+									//supplierInvoiceItem
+									sItem.ItemCode,
                                     sItem.ClassificationCode,
                                     itemPackageQuantity = sItem.PackageQuantity,
                                     sItem.InvoiceQuantityType,
@@ -237,6 +259,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                 d.DeclarationTypeName,
                 d.ProcedureCurrentName,
                 d.ExporterImporterCode,
+                d.ExporterImporterName,
                 d.RecipientName,
                 d.DestinationCountryName,
                 //d.DestinationCountryCode,
@@ -263,7 +286,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                 DeclarationTypeName = g.Key.DeclarationTypeName,
                 ProcedureCurrentName = g.Key.ProcedureCurrentName,
                 ExporterImporterCode = g.Key.ExporterImporterCode,
-                RecipientName = g.Key.RecipientName,
+				ExporterImporterName = g.Key.ExporterImporterName,
+				RecipientName = g.Key.RecipientName,
                 DestinationCountryName = g.Key.DestinationCountryName,
                 //g.Key.DestinationCountryCode,
                 // g.Key.DeclarationStatusTypeCode,
@@ -291,7 +315,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                 })
                 .Where(c => c.ConsignmentNumber != null && showConsignments)
                 .ToList(),
-                SupplierInvoices = g.GroupBy(d => new { d.InvoiceNumber, d.IssueDate, d.IncotermCode, d.InvoiceAmount, d.InvoiceCounterKey })
+                SupplierInvoices = g.GroupBy(d => new { d.InvoiceNumber, d.IssueDate, d.IncotermCode, d.InvoiceAmount, d.InvoiceCounterKey , d.InvoiceCurrencyTypeName })
                             .Select(groupedInvoice => new SupplierInvoices()
                             {
                                 InvoiceNumber = groupedInvoice.Key.InvoiceNumber,
@@ -299,7 +323,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                 IncotermCode =groupedInvoice.Key.IncotermCode,
                                 InvoiceAmount = groupedInvoice.Key.InvoiceAmount,
                                 InvoiceCounterKey = groupedInvoice.Key.InvoiceCounterKey,
-                                InvoiceItems = groupedInvoice
+								InvoiceCurrencyTypeName = groupedInvoice.Key.InvoiceCurrencyTypeName,
+								InvoiceItems = groupedInvoice
                                                 .Where(item => item.LineNumber != 0)
                                                 .Select(item => new InvoiceItems()
                                                 {

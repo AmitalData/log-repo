@@ -1,0 +1,173 @@
+﻿
+<style>
+
+    :host ::ng-deep .isBold .Label {
+        font-size: 12px;
+        font-weight: bold;
+    }
+</style>
+
+<table *ngIf="isReady">
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height:60px;">
+        <td>
+            <table>
+                <tr style="height:5px;">
+                    <!-- כיוון-->
+
+                    <td style="width: 100px;">
+                        <LogLabel class="isBold"
+                                [ObjectFieldName]="'Direction'"
+                                [ObjectTableName]="'Customs.Declaration'"
+                                [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width: 150px;">
+                        <ul float-start class="FiltersMenu">
+                            <li (click)="DirectionClicked('All')"
+                                [class.SelectedFilter]="ImportExport === 'All'">
+                                הכל
+                            </li>
+                            <li (click)="DirectionClicked('I')"
+                                [class.SelectedFilter]="ImportExport === 'I'" title="Import">
+                                יבוא
+                            </li>
+                            <li (click)="DirectionClicked('E')"
+                                [class.SelectedFilter]="ImportExport === 'E'" title="Export">
+                                יצוא
+                            </li>
+                            
+                        </ul>
+                    </td>
+                   
+
+                   
+                    <!-- תאריך יצירה -->
+                    <td  style="width: 100px;" > 
+                        <LogLabel class="isBold" [ObjectTableName]="ObjectTableName" 
+                        [ObjectFieldName]="'CreateDateTime'" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td style="width: 7px;" > 
+                        <LogLabel  [ObjectTableName]="ObjectTableName" 
+                        [ObjectFieldName]="'FromDate'" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:60px;">מתאריך: </td>
+                    <td style="width: 110px;" >
+
+                        <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
+                                [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
+                                [HideColumns]="true" [SelectedDateValue]="FromDate"></LogDatePicker>
+                    </td>
+
+
+                    <td style="width:10px;">
+                        <div></div>
+                    </td> 
+                    <!-- לקוח -->
+                    <td style="width: 100px;">
+                        <LogLabel class="isBold"
+                                [ObjectFieldName]="'CustomerId'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                        <td style="width:150px">
+                            <LogLov [ObjectFieldName]="'CustomerId'"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [SelectedValue]="CustomerId"
+                                    [DisplayMemberPath]="'LocalName'"
+                                    [HideAddLink]="true"
+                                    [HideAdd]="true"
+                                    [LookUpTableName]="'Card'"
+                                    [DisplayFieldsFromList]="'Code,LocalName,EnglishName'">
+                            </LogLov>
+                        </td>
+                   
+                   
+                    <td><div></div></td>
+                </tr>
+                <tr style="height:5px;">
+                   
+                  
+ <!-- סוג הובלה -->
+
+                    <td style="width: 100px;">
+                        <LogLabel class="isBold"
+                                [ObjectFieldName]="'TransportModeId'"
+                                [ObjectTableName]="'Customs.Declaration'"
+                                [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width: 150px;">
+                        <ul float-start class="FiltersMenu">
+                            <li (click)="itemClicked('All')" (mouseover)="itemMouseOver('All')"
+                                [class.SelectedFilter]="SelectedTransportModeId === 'All'">
+                                הכל
+                            </li>
+                            <li (click)="itemClicked('A')" (mouseover)="itemMouseOver('A')" (mouseleave)="itemMouseLeave('A')"
+                                [class.SelectedFilter]="SelectedTransportModeId === 'A'" title="Air">
+                                <img [id]="TransportFilter_A" class="CenterCenter" src="./Images/TransportModes/A_g.png"
+                                    style="top: 1px;" />
+                            </li>
+                            <li (click)="itemClicked('O')" (mouseover)="itemMouseOver('O')" (mouseleave)="itemMouseLeave('O')"
+                                [class.SelectedFilter]="SelectedTransportModeId === 'O'" title="Ocean">
+                                <img [id]="TransportFilter_O" class="CenterCenter" src="./Images/TransportModes/O_g.png"
+                                    style="top: 1px;" />
+                            </li>
+                            <li (click)="itemClicked('L')" (mouseover)="itemMouseOver('L')" (mouseleave)="itemMouseLeave('L')"
+                                [class.SelectedFilter]="SelectedTransportModeId === 'L'" title="Inland">
+                                <img [id]="TransportFilter_I" class="CenterCenter" src="./Images/TransportModes/I_g.png"
+                                    style="top: 1px;" />
+                            </li>
+                        </ul>
+                    </td>
+                   
+                    <!-- תאריך יצירה / עד תאריך-->
+                    <td style="width:10px;"><div></div></td>
+ 
+                    <td style="width: 7px;" > 
+                        <LogLabel  [ObjectTableName]="ObjectTableName" 
+                        [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:60px;">עד תאריך: </td>
+                    
+                    <td style="width: 110px;" >
+                    
+                        <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
+                                   [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
+                                   [HideColumns]="true" [SelectedDateValue]="ToDate"></LogDatePicker>
+                    </td>
+                    <td style="width:10px;">
+                        <div></div>
+                    </td> 
+                   
+                    <td style="width:10px;">
+                        <div></div>
+                    </td>
+                    
+                    <!--run button-->
+                    <td style="width: 90px;">
+                        <button style="width:114px;" class="GreenButton" (click)="RunReport()">Run Report</button>
+                    </td>
+
+                    <td style="width:10px;">
+                        <div></div>
+                    </td> 
+                   
+
+                    <td style="width:10px;">
+                        <div></div>
+                    </td> 
+                    <td><div></div></td>
+            
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
