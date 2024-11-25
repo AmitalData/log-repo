@@ -33,6 +33,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
         DateTime _FromBeginOfMonth;
+        DateTime _ToBeginOfMonth;
 
         DateTime _ToBeginOfMonthByDays;
 
