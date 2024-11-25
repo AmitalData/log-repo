@@ -87,6 +87,15 @@ namespace Logitude.Customs.Data.Repsitories
                     && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
+
+        public string GetDeclarationNumberByDecId(string id, int tenant)
+        {
+            //SELECT * FROM AMINEt_MAIN.Declarations Extent1 WHERE((Extent1.DeclarationNumber = :p__linq__0) OR ((Extent1.DeclarationNumber IS NULL) AND(:p__linq__0 IS NULL))) AND(Extent1.Tenant = :p__linq__1)
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+            return context.Declarations.Where(d => d.DeclarationNumber != null && (d.Id == id || d.AmendmentOriginalDeclartation == id))?.FirstOrDefault()?.DeclarationNumber;
+        }
+
         public Declaration GetAcceptDeclarationAmendment(string id, int tenant)
         {
 

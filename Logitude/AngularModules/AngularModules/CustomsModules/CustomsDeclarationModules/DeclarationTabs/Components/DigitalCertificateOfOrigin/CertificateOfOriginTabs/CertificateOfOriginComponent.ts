@@ -430,7 +430,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         requestParams.LoggingEntityId = this.EntityPM.Id;
 
         //requestParams.RequestVIA = customSendOptionsArgs.SendRequestVIA;
-        requestParams.RequestVIA = customSendOptionsArgs.RequestVIA == 0 ?  SendRequestVIA.WebServiceInteractive : customSendOptionsArgs.RequestVIA; // #112254
+        requestParams.RequestVIA = customSendOptionsArgs.RequestVIA == 0 ? SendRequestVIA.WebServiceInteractive : customSendOptionsArgs.RequestVIA; // #112254
         requestParams.Tenant = SessionLocator.Tenant;
         requestParams.CertificateOfOriginId = this.EntityPM.Id;
         requestParams.DeclarationId = this.DecalarationData.Id;
