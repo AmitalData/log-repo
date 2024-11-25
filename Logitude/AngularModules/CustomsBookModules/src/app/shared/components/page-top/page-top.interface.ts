@@ -54,14 +54,14 @@ export interface CustomsItemsAutocomplate {
 	BaseCustomsItemID?: number;
 }
 
-export interface Classification { Classification: string, Description: string }
+export interface CustomsClassification { Classification: string, Description: string }
 
-export interface CustomClassification {
-	[classification: string]: Classification[] | string;
+export interface CustomBookClassification {
+	[classification: string]: CustomsClassification[];
 }
 
 export interface AllClassification {
-	[customsBookType: string]: CustomClassification;
+	[customsBookType: string]: CustomBookClassification;
 }
 export type GroupedCustomsItems = {
 	[classification: string]: CustomsItemsAutocomplate[]
