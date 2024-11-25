@@ -60,9 +60,13 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             IQueryable<TrailReportTemp> _QUnionAllMoneyData = qAccumulateLocalAmountOnly_TotalStart_JoinAccounts_GroupByChartOfAccountsTypeCode.Union(qAccumulate_LocalAmount_TransStart_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode_All).Union(qAccumulateLocalAmountOnly_TotalDelta2End_JoinAccounts_GroupByChartOfAccountsTypeCode).Union(qAccumulate_LocalAmount_TransEnd_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode_All);
 
             bool addAllChatOfAccountTyps = true;
+            if (_TrailReportParam.ChartOfAccountsIdList != null && _TrailReportParam.ChartOfAccountsIdList.Count > 0)
+            {
+                addAllChatOfAccountTyps = false;
+            }
             if (addAllChatOfAccountTyps)
             {
-                _QUnionAllMoneyData = AddAllChatOfAccountTypEmptyRows(_QUnionAllMoneyData);
+                _QUnionAllMoneyData = AddAllChatOfAccountTypEmptyRows(_QUnionAllMoneyData, _TrailReportParam.ChartOfAccountsTypeCodeList);
             }
 
 
@@ -458,10 +462,21 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             return qAccumulateTotalsFrom0BCTilNotIncludeStartOfMonthFromDate;
         }
 
-        IQueryable<TrailReportTemp> AddAllChatOfAccountTypEmptyRows(IQueryable<TrailReportTemp> _QUnionAllMoneyData)
+        IQueryable<TrailReportTemp> AddAllChatOfAccountTypEmptyRows(IQueryable<TrailReportTemp> _QUnionAllMoneyData, List<string> chartOfAccountsTypes)
         {
+            var allChartTypes = _AccountingContext.ChartOfAccountsTypes.AsQueryable();
+            IQueryable<Data.EntityPOCOs.ChartOfAccountsType> chartTypes = null;
+            if (chartOfAccountsTypes != null && chartOfAccountsTypes.Count > 0)
+            {
+                chartTypes = allChartTypes.Where(coa => chartOfAccountsTypes.Contains(coa.Code));
+            }
+            else
+            {
+                chartTypes = allChartTypes;
+            }
+
             _QUnionAllMoneyData = _QUnionAllMoneyData.Concat(
-            _AccountingContext.ChartOfAccountsTypes.Select(r => new TrailReportTemp()
+            chartTypes.Select(r => new TrailReportTemp()
             {
                 AccountId_COAType = r.Code,
 

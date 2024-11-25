@@ -25,10 +25,23 @@ export class DocumentDownloadService {
     }
 
     async ExternalDownloadAllDocuments(securityId: string, forwardingShipmentId: string, tenant: number) {
-
-        var mylink = ServiceHelper.GetAppURL(this.baseUrl)
-            + `api/CorrespondenceDownload/ValidateAndDownloadDocument?DA=1&securitykey=${securityId}::CS:${tenant}:${forwardingShipmentId ? forwardingShipmentId : ""}:cargo`;
-        await this.downloadFile(mylink)
+        if(SessionInfo.Token != null)
+        {
+           var mylink = ServiceHelper.GetAppURL(this.baseUrl)
+               + `api/CorrespondenceDownload/ValidateAndDownloadDocument?DA=1&securitykey=${securityId}::CS:${tenant}:${forwardingShipmentId ? forwardingShipmentId : ""}:cargo`;
+           await this.downloadFile(mylink)
+        
+        }
+        else 
+        {
+            var link = ServiceHelper.GetAppURL(this.baseUrl)
+            + `WebPages/CorrespondenceDownloadpage.aspx?DA=1&securitykey=${securityId}::CS:${tenant}:${forwardingShipmentId ? forwardingShipmentId : ""}:cargo`;
+            var win = window.open(link, '_blank');
+    
+            if (win) {
+                win.focus();
+            }
+        }
     }
 
 
@@ -59,8 +72,21 @@ export class DocumentDownloadService {
 
 
     async ExternalDownloadPage(securityId: string, tenant: number, fileName: string ) {
-        var mylink = ServiceHelper.GetAppURL(this.baseUrl) + `api/CorrespondenceDownload/ValidateAndDownloadDocument?Id=${securityId}~${tenant}~${null}~${fileName}`;
-        await this.downloadFile(mylink)
+        if(SessionInfo.Token != null)
+        {
+           var mylink = ServiceHelper.GetAppURL(this.baseUrl) + `api/CorrespondenceDownload/ValidateAndDownloadDocument?Id=${securityId}~${tenant}~${null}~${fileName}`;
+           await this.downloadFile(mylink)
+        }
+        else 
+        {
+            var link = ServiceHelper.GetAppURL(this.baseUrl)
+            + `WebPages/CorrespondenceDownloadpage.aspx?Id=${securityId}~${tenant}~${null}~${fileName}`;
+            var win = window.open(link, '_blank');
+    
+            if (win) {
+                win.focus();
+            }
+        }
     }
 
     async downloadFile(mylink: string ) {
@@ -74,12 +100,7 @@ export class DocumentDownloadService {
             const downloadURL = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = downloadURL;
-            const filename2 = contentDisposition
-                    .split(';')[1]
-                    .split('filename')[1]
-                    .split('=')[1]
-                    .trim()
-                    .match(/"([^"]+)"/)[1];
+            const filename2 = this.decodeBase64(contentDisposition);
             link.download = filename2;
             link.click();
             link.remove();
@@ -90,8 +111,37 @@ export class DocumentDownloadService {
 
         RootContext.StopBusyIndicator();
     }
+    decodeBase64(str: string): string {
+        // בדוק אם המחרוזת היא קידוד ב-Base64
+        if (/^data:[^;]+;base64,/.test(str)) {
+            return atob(str.split(',')[1]);
+        }
 
+        // במקרה של קידוד MIME
+        const regex = /filename="=\?utf-8\?B\?(.+?)\?="/;
+        const match = str.match(regex);
+        if (match && match[1]) {
+            const base64 = match[1];
+            return this.decodeUTF8(atob(base64));
+        }
 
+        str = str
+        .split(';')[1]
+        .split('filename')[1]
+        .split('=')[1]
+        .trim()
+        .match(/"([^"]+)"/)[1];
+        return str; // אם אין קידוד, החזר את השם המקורי
+    }
+    decodeUTF8(str: string): string {
+        // המרת תוים מקודדים ל-UTF-8
+        try {
+            return decodeURIComponent(escape(str));
+        } catch (e) {
+            console.error('Error decoding UTF-8', e);
+            return str; // החזר את הקלט המקורי במקרה של שגיאה
+        }
+    }
     OnSignoutClicked() {
 
         CargoTrackingBrandingData.Tenant = +sessionStorage.getItem("LoggedUserTenant");

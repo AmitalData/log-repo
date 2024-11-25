@@ -23,7 +23,7 @@ namespace Logitude.Customs.Data.Repsitories
         public SupplierInvioceExportDefault GetSupplierInvoiceExportDefaultByTenant( int tenant)
         {
             return (from a in context.SupplierInvioceExportDefaults
-                    where a.Tenant==tenant
+                    where a.Tenant == tenant
                     select a).FirstOrDefault();
         }
     }

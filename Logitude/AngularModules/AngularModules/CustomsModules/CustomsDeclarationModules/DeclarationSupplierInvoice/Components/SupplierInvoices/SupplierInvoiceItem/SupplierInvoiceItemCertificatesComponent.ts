@@ -610,6 +610,24 @@ export class InvoiceItemCertificateLine extends BaseComponent {
                 this.ConfirmationType = req.Result;
             }
         });
+        confirmationTypeService.getSingleFromCache(EntityPM.ResConfirmationTypeCode).subscribe((req: any) => {
+            if (req.Result != null) {
+                this.ResConfirmationType = req.Result;
+            }
+        });
+        var certificateExemptionTypeService = new CertificateExemptionTypeListService();
+        certificateExemptionTypeService.getSingleFromCache(EntityPM.CertificateExemptionTypeCode).subscribe((req: any) => {
+            if (req.Result != null) {
+                this.CertificateExemptionType = req.Result;
+            }
+        });
+        var attachmentTypeService = new AttachmentTypeListService();
+        attachmentTypeService.getSingleFromCache(EntityPM.AttachmentTypeCode).subscribe((req: any) => {
+            if (req.Result != null) {
+                this.AttachmentType = req.Result;
+            }
+        });
+      
     }
 
     //#region properties

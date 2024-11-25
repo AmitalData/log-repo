@@ -23,9 +23,9 @@ export class APPaymentValidator {
             if (DateTool.GetDateParts(entityPm.RegisterDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation(SessionLocator.TenantPM.TimeZoneOffset).valueOf()) {
                 validationResults.push(TextCodeTranslator.Translate("APPayment.M.CantSetFutureDatePayment"));
             }
-            if (DateTool.GetDateFromDate(entityPm.RegisterDate) > DateTool.GetDateFromDate(entityPm.ValueDate) && entityPm.PaymentMethodCode == "BT") { 
-                validationResults.push(TextCodeTranslator.Translate("APPayment.M.ValueDateBiggerOrEqualRegisterDate"));
-            }
+            // if (DateTool.GetDateFromDate(entityPm.RegisterDate) > DateTool.GetDateFromDate(entityPm.ValueDate) && entityPm.PaymentMethodCode == "BT") { 
+            //     validationResults.push(TextCodeTranslator.Translate("APPayment.M.ValueDateBiggerOrEqualRegisterDate"));
+            // }
         }
 
 

@@ -1050,7 +1050,9 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 if (glaAccount != null && glaAccount.IsMultiCurrency.Value)
                 {
                     string splitByCurrencyAccountId = GetAccountIdForGLAccountCurrency(glaAccount, paymentPM.PaymentCurrencyId);
-                    glaAccount = glAccountQuery.GetSingleGLAccountPM(splitByCurrencyAccountId, tenant);
+                    GLAccountPM glaAccountByCurr = glAccountQuery.GetSingleGLAccountPM(splitByCurrencyAccountId, tenant);
+                    if (glaAccountByCurr != null && glaAccountByCurr.Inactive != true)
+                        glaAccount = glaAccountByCurr;
                 }
                 else return glaAccount;
             }

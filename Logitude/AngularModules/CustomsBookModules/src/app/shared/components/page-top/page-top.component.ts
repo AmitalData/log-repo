@@ -4,7 +4,7 @@ import { FormsModule, } from '@angular/forms';
 import { HeaderService, searchState } from '../app-header/service/header.service';
 import { AsyncPipe, CommonModule, NgIf } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { BehaviorSubject, catchError, debounceTime, EMPTY, Subject, switchMap } from 'rxjs';
+import { BehaviorSubject, catchError, debounceTime, EMPTY, of, Subject, switchMap } from 'rxjs';
 import { API_MainService } from '../../../core/API_MainService';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 import { FilterPopupService } from '../filter-popup/service/filter-popup.service';
@@ -62,9 +62,15 @@ export class PageTopComponent {
 	private applyAutocomplate() {
 		this.searchService.searchText$.pipe(
 			debounceTime(100),
-			switchMap((searchText) =>
-				this.API_MainService.GetFromTypesense(searchText, this.headerService.getSearchState(true), SessionInfo.LoggedUserTenant).pipe(catchError((error) => EMPTY)))
+			switchMap((searchText: string) =>
+				!!this.textToSearch ?
+					this.API_MainService.GetFromTypesense(searchText, this.headerService.getSearchState(true), SessionInfo.LoggedUserTenant).pipe(catchError((error) => EMPTY)) :
+					of(() => EMPTY)
+			)
 		).subscribe(async (res: any) => {
+			if (!res.body)
+				return this.customsItemsAutocomplateList.next([]);
+
 			const regex = new RegExp(`(${this.textToSearch})`, 'gi');
 			const result: GetFromTypesenseResponse = res.body;
 			result.Remarks.forEach((remark) => remark.CustomsItem.BaseCustomsItemID = -1);
@@ -132,6 +138,8 @@ export class PageTopComponent {
 	}
 
 	clickSearch() {
+		this.customsItemsAutocomplateList.next([]);
+		
 		if (this.textToSearch.trim() === "") {
 			this.textToSearch = "";
 			return;

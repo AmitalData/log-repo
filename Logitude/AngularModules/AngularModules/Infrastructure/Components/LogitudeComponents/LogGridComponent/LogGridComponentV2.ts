@@ -1464,42 +1464,36 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
         if (this.requestedRowCountSub) {
             this.requestedRowCountSub.unsubscribe();
         }
-        this.requestedRowCountSub = this.controllerForCount.requestedRowCount.subscribe((res) => {
+        this.virtualRowMetaData.rowsCount = 0;
+        this.virtualRowMetaData.Filters = this.Filters;
+        this.virtualRowMetaData.searchFields = this.searchFields;
+        this.virtualRowMetaData.sortingCol = AppTool.IsNullOrEmpty(this.dataSource.sortingCol) ? this.sortingCol : this.dataSource.sortingCol
+        this.virtualRowMetaData.sortingDir = AppTool.IsNullOrEmpty(this.dataSource.sortingDir) ? this.sortingDir : this.dataSource.sortingDir
+        this.virtualRowMetaData.IsSpotLight = this.IsSpotLight;
+        this.virtualRowMetaData.SpotlightDataTemplate = this.SpotlightDataTemplate;
+        this.virtualRowMetaData.DetailsIcon = "./Images/SpotLightPlusIcon.png";
+        this.virtualRowMetaData.cd = this.cd;//
+        this.virtualRowMetaData.DontApplyVirtualization = this.DontApplyVirtualization;
+        if (this.DontApplyVirtualization) {
+            this.dataSource.pageSize = this.rowCount;
+        }
+        else {
+            this.dataSource.pageSize = this.viewportSize * 3;
+        }
+        if (this.controller) {
+            this.controller.disconnect();
+        }
 
-            //this.CurrentSession.StopBusyIndicator();
+        this.controller = new VirtualRowControllerV2(this.virtualRowMetaData);
+        
+
+        this.requestedRowCountSub = this.controller.requestedRowCount.subscribe((res) => {
             this.rowCount = res;
-            this.virtualRowMetaData.rowsCount = res;
-            this.virtualRowMetaData.Filters = this.Filters;
-            this.virtualRowMetaData.searchFields = this.searchFields;
-            this.virtualRowMetaData.sortingCol = AppTool.IsNullOrEmpty(this.dataSource.sortingCol) ? this.sortingCol : this.dataSource.sortingCol
-            this.virtualRowMetaData.sortingDir = AppTool.IsNullOrEmpty(this.dataSource.sortingDir) ? this.sortingDir : this.dataSource.sortingDir
-            this.virtualRowMetaData.IsSpotLight = this.IsSpotLight;
-            this.virtualRowMetaData.SpotlightDataTemplate = this.SpotlightDataTemplate;
-            this.virtualRowMetaData.DetailsIcon = "./Images/SpotLightPlusIcon.png";
-            this.virtualRowMetaData.cd = this.cd;//
-            this.virtualRowMetaData.DontApplyVirtualization = this.DontApplyVirtualization;
-            if (this.DontApplyVirtualization) {
-                this.dataSource.pageSize = this.rowCount;
-            }
-            else {
-                this.dataSource.pageSize = this.viewportSize * 3;
-            }
-            if (this.controller) {
-                this.controller.disconnect();
-            }
-
-            this.controller = new VirtualRowControllerV2(this.virtualRowMetaData);
-            this.controller.setDataSource(this.dataSource);
-            //this.controller.ClearCache();
-            //if (!this.DontApplyVirtualization) {
-                this.controller.ReloadDataSource(res);
-            //}
-
             if (this.cd) {
                 //this.cd.reattach();
                 this.cd.detectChanges();
             }
-            this.CountReady.emit(res);
+
             this.dataSource.rowCount = res;
             this.canvasHeight = {
                 height: this.rowCount * this.rowHeight + 'px',
@@ -1516,10 +1510,21 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
             this.height = this.rowCount * this.rowHeight;
             this.numberOfTotalPages = this.rowCount / this.rowsPerPage;
             if (this.MyScrollTop != 0) {
-                setTimeout(()=> elem.scrollTop = this.MyScrollTop, 1000);
+                setTimeout(() => elem.scrollTop = this.MyScrollTop, 1000);
             }
+
         });
-        this.GetRowCount(reload);
+        this.controller.setDataSource(this.dataSource);
+        //this.controller.ClearCache();
+        //if (!this.DontApplyVirtualization) {
+        this.controller.ReloadDataSource(0);
+        //this.CurrentSession.StopBusyIndicator();
+       
+        //}
+
+
+
+        // this.GetRowCount(reload);
     };
     rowsBuffer: IRow[] = [];
     SpotLightHeight: number = 116;

@@ -32,13 +32,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public IQueryable<ChartOfAccount5LevelM> GetQChartOfAccount5LevelM(int tenant, List<string> chartOfAccountsTypes, List<string>  chartOfAccounts, bool topMostOnly = false)
         {
             var qBase = this.repository.GetAll(tenant);
-            if (chartOfAccountsTypes != null)
+            if (chartOfAccountsTypes != null && chartOfAccountsTypes.Count > 0)
             {
                 qBase = qBase.Where(coa => chartOfAccountsTypes.Contains(coa.TypeCode));
             }
             // filter by id from table chartofaccounts #192454 (#195781)
             // chartOfAccounts ids list are selected from filter in UI.
-            if (chartOfAccounts != null)
+            if (chartOfAccounts != null && chartOfAccounts.Count > 0)
             {
                 qBase = qBase.Where(i => chartOfAccounts.Any(item => item == i.Id));
             }

@@ -136,7 +136,8 @@ namespace Logitude.Accounting.BL.DataContract
                 taxDeductionReportline.VendorId = payment.VendorCard!= null? payment.VendorCard.GLAccountId: null;
                 if (taxDeductionReportline.VendorId == null)
                 {
-                    throw new ApplicationException("הוראת תשלום :" + payment.PaymentNo+"\n"+ "הכרטיס התפעולי לא מחובר לכרטיס ההנח\"ש");
+                    if(taxDeductionReport != null) 
+                        taxDeductionReport.ErrorMessage = taxDeductionReport.ErrorMessage + Environment.NewLine + "הוראת תשלום :" + payment.PaymentNo + "\n" + "הכרטיס התפעולי לא מחובר לכרטיס ההנח\"ש";
 
                 }
                 taxDeductionReportline.MonthOfRegisterDate = cancelled? payment.AccountingCancelationDate.Value.Month : payment.RegisterDate.Value.Month;
@@ -175,10 +176,12 @@ namespace Logitude.Accounting.BL.DataContract
           
             List<LedgerTransaction> transactions = (from a in accountingContext.LedgerTransactions
                     join j in accountingContext.Journals on a.JournalId equals j.Id
-                    where (EntityFunctions.TruncateTime(a.AccountingDate) >= startDate.Date && EntityFunctions.TruncateTime(a.AccountingDate) <= endDate.Date)
+                    join g in accountingContext.GLAccounts on a.OppositeAccountId equals g.Id
+                                                    where (EntityFunctions.TruncateTime(a.AccountingDate) >= startDate.Date && EntityFunctions.TruncateTime(a.AccountingDate) <= endDate.Date)
                     && a.Tenant == Tenant &&  a.AccountId == setting.TaxWithholdingGLAccountId
                     && j.ExternalSystem != null && a.LocalAmountDebit == 0
-                   select a).ToList();
+                    &&  g.AccountTypeCode == "3"
+                                                    select a).ToList();
             List<string> journalIds = transactions.Select(d => d.JournalId).ToList();
             journalLines = GetJournalLinesByJournalds(journalIds);
             List<string> accountsIds_1 = transactions.Where(d=> d.OppositeAccountId != null).Select(d => d.OppositeAccountId ).ToList();
