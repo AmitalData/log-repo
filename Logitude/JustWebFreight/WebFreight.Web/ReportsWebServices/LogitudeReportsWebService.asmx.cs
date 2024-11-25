@@ -11099,19 +11099,10 @@ namespace WebFreight.Web.ReportsWebServices
                     string fvalue = (string)filterItem_ChartOfAccountsIdList.FieldValue;
                     if (!String.IsNullOrEmpty(fvalue)) chartOfAccountsIdList = fvalue.Split(',').ToList();
                 }
-                 }
             }
+           
 
-            //ChartOfAccountsIdList
-            List<string> chartOfAccountsIdList = null;
-            if (filterItem_ChartOfAccountsIdList != null)
-            {
-                if (filterItem_ChartOfAccountsIdList.FieldValue != null)
-                {
-                    string fvalue = (string)filterItem_ChartOfAccountsIdList.FieldValue;
-                    if (!String.IsNullOrEmpty(fvalue)) chartOfAccountsIdList = fvalue.Split(',').ToList();
-                }
-            }
+    
             #endregion
 
 
