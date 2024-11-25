@@ -2791,7 +2791,7 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-    <Feature
+     <Feature
       Code="&quot;LoanReportsByEmail&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
       FeatureTextCodeCode="&quot;Report.Features.LoanReportsByEmail&quot;"
@@ -2809,5 +2809,14 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-  </AdditionalFeatures>
+     <Feature
+      Code="&quot;CustomsCollateralReport&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Report.Features.CustomsCollateralReport&quot;"
+      FeatureDefaultText="&quot;Customs Collateral Report&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+   </AdditionalFeatures>
 </entity>

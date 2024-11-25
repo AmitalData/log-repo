@@ -647,6 +647,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         private bool CanSendQuoteToIntegratedSystem()
         {
             bool canSendQuote = false;
+            QuoteSettingRepository iQuoteSettingRepository = new QuoteSettingRepository(initializer.Context);
+            this.iQuoteSetting = iQuoteSettingRepository.GetSingleQuoteSetting(tenant);
 
             TenantQuery tenantQuery = new TenantQuery(tenant);
             TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
@@ -662,12 +664,24 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 if ((tenantPM?.TransferQuotationsToUnifreightTrigger == "OnSend" && quoteStatusChangedToSent)
                     || (tenantPM?.TransferQuotationsToUnifreightTrigger == "OnAccept" && quoteStatusChangedAccept))
                 {
+                    if (iQuoteSetting.CostChargesMust)
+                    {
+                        ValidateQuoteChargesCostPrice(entityPM);
+                    }
                     canSendQuote = true;
                 }
             }
 
             return canSendQuote;
         }
+        public void ValidateQuoteChargesCostPrice(QuotePM entityPM)
+        {
+            if (entityPM.QuoteCharges.Any(qc => !qc.CostUnitPrice.HasValue && qc.SaleUnitPrice.HasValue))
+            {
+                throw new InvalidOperationException("One or more Cost Prices are missing in charges screen.");
+            }
+        }
+
         private CommunicationsParams GetQuotationDocumentCommunicationsParams(string objectTableId)
         {
             return new CommunicationsParams()

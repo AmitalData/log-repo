@@ -580,7 +580,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                  {
 						     		 ChangeSetOp = ChangeSetOperation.Insert,
 			                         CertificateNumber = CerDef.CertificateNumber,
-			                         ReqConfirmationTypeCode = CerDef.CertificateNumber,
+			                         ReqConfirmationTypeCode = CerDef.ReqConfirmationTypeCode,
 						     		 CertificateExemptionTypeCode = CerDef.CertificateExemptionTypeCode,
 						     		 AttachmentTypeCode = CerDef.AttachmentTypeCode,
 			                         ResConfirmationTypeCode = CerDef.ResConfirmationTypeCode,

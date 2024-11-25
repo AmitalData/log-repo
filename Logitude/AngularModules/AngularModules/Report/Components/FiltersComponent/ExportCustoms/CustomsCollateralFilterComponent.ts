@@ -9,41 +9,32 @@ import { AdvancedDatePickerResolverComponent } from 'Infrastructure/Components/L
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
-import { DeclarationStatusTypeListService } from 'Customs/Services/StandardLists/DeclarationStatusTypeListService';
-import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
-import { LeadDocumentTypeListService } from 'Customs/Services/StandardLists/LeadDocumentTypeListService';
-import { CustomsCountryListService } from 'Customs/Services/StandardLists/CustomsCountryListService';
-import { UserListService } from 'Common/Services/StandardLists/UserListService';
-import { CardListService } from 'Common/Services/StandardLists/CardListService';
 
 @Component({
     
-    templateUrl: './ExportDeclarationReportFilterComponent.html',
+    templateUrl: './CustomsCollateralFilterComponent.html',
 })
 
-export class ExportDeclarationReportFilterComponent extends BaseComponent {
+export class CustomsCollateralFilterComponent extends BaseComponent {
 
     public ReportsPreview: ReportsPreviewComponent;
     reportFliter: ReportFliter;
     public ValidationErrorsList: string[];
-    public ObjectTableName: string = "Customs.Declaration";
-    public DataContext: ExportDeclarationReportFilterComponent = this;
+    public ObjectTableName: string = "Customs.CustomsCollateral";
+    public DataContext: CustomsCollateralFilterComponent = this;
     TransportFilter_A: string;
     TransportFilter_O: string;
     TransportFilter_I: string;
     errors: any[];
     isReady: boolean = false;
-    cardListService: CardListService = new CardListService();
-    declarationStatusTypeListService: DeclarationStatusTypeListService = new DeclarationStatusTypeListService();
-    leadDocumentTypeListService: LeadDocumentTypeListService = new LeadDocumentTypeListService();
-    customsCountryListService: CustomsCountryListService = new CustomsCountryListService();
-    userListService: UserListService = new UserListService();
 
     constructor(private EntityResourceService: EntityResourceService, private CD: ChangeDetectorRef) {
         super();
          
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
-            this.isReady = true;
+        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe((response: any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
+                this.isReady = true;
+            }); 
         });
 
         this.DataContext.UIProperties.SetRequired("FromDate", this.ObjectTableName, true)
@@ -92,78 +83,22 @@ export class ExportDeclarationReportFilterComponent extends BaseComponent {
         }
     }
 
-    private showInvoices: string = "True";
-    public get ShowInvoices() { return this.showInvoices; }
-    public set ShowInvoices(value: string) {
-        if (this.showInvoices != value) {
-            this.showInvoices = value;
+    private importExport: string = "All";
+    public get ImportExport() { return this.importExport; }
+    public set ImportExport(value: string) {
+        if (this.importExport != value) {
+            this.importExport = value;
         }
     }
 
-    private showConsignments: string = "False";
-    public get ShowConsignments() { return this.showConsignments; }
-    public set ShowConsignments(value: string) {
-        if (this.showConsignments != value) {
-            this.showConsignments = value;
-        }
-    }
-    public customerName: string;
     private customerId: string;
     public get CustomerId() { return this.customerId; }
     public set CustomerId(value: string) {
         if (this.customerId != value) {
             this.customerId = value;
-            this.cardListService.getSingleFromCache(this.customerId).subscribe((response: ServiceResponse) => {
-                this.customerName = response.Result.LocalName;
-            });
         }
     }
-    public declarationStatusTypeName: string;
-    private declarationStatusTypeCode: string;
-    public get DeclarationStatusTypeCode() { return this.declarationStatusTypeCode; }
-    public set DeclarationStatusTypeCode(value: string) {
-        if (this.declarationStatusTypeCode != value) {
-            this.declarationStatusTypeCode = value;           
-            this.declarationStatusTypeListService.getSingleFromCache(this.declarationStatusTypeCode).subscribe((response: ServiceResponse) => {
-                this.declarationStatusTypeName = response.Result.LocalName;
-            });
-        }
-    }
-    public declarationTypeName: string;
-    private declarationTypeCode: string;
-    public get DeclarationTypeCode() { return this.declarationTypeCode; }
-    public set DeclarationTypeCode(value: string) {
-        if (this.declarationTypeCode != value) {
-            this.declarationTypeCode = value;
-            this.leadDocumentTypeListService.getSingleFromCache(this.declarationTypeCode).subscribe((response: ServiceResponse) => {
-                this.declarationTypeName = response.Result.LocalName;
-            });
-        }
-    }
-    public destinationCountryName: string;
-    private destinationCountryCode: string;
-    public get DestinationCountryCode() { return this.destinationCountryCode; }
-    public set DestinationCountryCode(value: string) {
-        if (this.destinationCountryCode != value) {
-            this.destinationCountryCode = value;
-            this.customsCountryListService.getSingleFromCache(this.destinationCountryCode).subscribe((response: ServiceResponse) => {
-                this.destinationCountryName =  response.Result.LocalName;
-            });
-            
-        }
-    }
-    public referentUserName: string;
-    private referentUserId: string;
-    public get ReferentUserId() { return this.referentUserId; }
-    public set ReferentUserId(value: string) {
-        if (this.referentUserId != value) { 
-            this.referentUserId = value;
-            this.userListService.getSingleFromCache(this.referentUserId).subscribe((response: ServiceResponse) => {
-                this.referentUserName =  response.Result.LocalName;
-            });
-        }
-    }
-
+   
     ValidateDate() {
         var advancedDatePickerResolverComponent: AdvancedDatePickerResolverComponent = new AdvancedDatePickerResolverComponent();
         if (!advancedDatePickerResolverComponent.SetValidityBetweenTwoDateOptions(this.FromDate, this.ToDate)) {
@@ -198,15 +133,7 @@ export class ExportDeclarationReportFilterComponent extends BaseComponent {
 
 
     itemClicked(itemValue: string) {
-        //var RemoveFilter = false;
         this.SelectedTransportModeId = itemValue;
-
-        // this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "TransportmodeId")
-
-        // const operator: string = (itemValue !== "All") ? "Equals" : "NotEqual";
-        // this.apiQueryFilters.addAdditionalFilter("TransportmodeId", itemValue, null, null, operator, false, false, false, "string");
-
-        // this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
     }
 
 
@@ -260,17 +187,12 @@ export class ExportDeclarationReportFilterComponent extends BaseComponent {
         }
     }
 
-    showInvoicesClicked(itemValue: string) {
-        if (this.showInvoices != itemValue) {
-            this.showInvoices = itemValue;
+    DirectionClicked(itemValue: string) {
+        if (this.importExport != itemValue) {
+            this.importExport = itemValue;
         }
     }
 
-    showConsigmentsClicked(itemValue: string) {
-        if (this.showConsignments != itemValue) {
-            this.showConsignments = itemValue;
-        }
-    }
 
     queryFilterItems: QueryFilterItem[];
     queryFilterItem: QueryFilterItem;
@@ -332,34 +254,14 @@ export class ExportDeclarationReportFilterComponent extends BaseComponent {
             this.queryFilterItems.push(this.GetNewQueryFilterItem("TransportModeId", this.SelectedTransportModeId, null, "string"));
         }
         //-----------------------------------------------------------------------------3
-        if(!AppTool.IsNullOrEmpty(this.DeclarationStatusTypeCode)) {
-            this.queryFilterItems.push(this.GetNewQueryFilterItem("DeclarationStatusTypeCode", this.DeclarationStatusTypeCode, this.declarationStatusTypeName, "string"));
+        if(AppTool.IsNullOrEmpty(this.ImportExport != 'All')) {
+            this.queryFilterItems.push(this.GetNewQueryFilterItem("ImportExport", this.ImportExport, null, "string"));
         }
-        //-----------------------------------------------------------------------------4
-        if(!AppTool.IsNullOrEmpty(this.DeclarationTypeCode)) {
-            this.queryFilterItems.push(this.GetNewQueryFilterItem("DeclarationTypeCode", this.DeclarationTypeCode, this.declarationTypeName, "string"));
-        }
-        //-----------------------------------------------------------------------------5
-         if(!AppTool.IsNullOrEmpty(this.ReferentUserId)) {
-            this.queryFilterItems.push(this.GetNewQueryFilterItem("ReferentUserId", this.ReferentUserId, this.referentUserName, "string"));
-        }
-
-        //-----------------------------------------------------------------------------6
-        if(!AppTool.IsNullOrEmpty(this.DestinationCountryCode)) {
-            this.queryFilterItems.push(this.GetNewQueryFilterItem("DestinationCountryCode", this.DestinationCountryCode, this.destinationCountryName, "string"));
-        }
-
-        //-----------------------------------------------------------------------------7
+        
         if(!AppTool.IsNullOrEmpty(this.CustomerId)) {
-            this.queryFilterItems.push(this.GetNewQueryFilterItem("Customer", this.CustomerId, this.customerName, "string"));
+            this.queryFilterItems.push(this.GetNewQueryFilterItem("Customer", this.CustomerId, null, "string"));
         }
-        //-----------------------------------------------------------------------------8
         
-        this.queryFilterItems.push(this.GetNewQueryFilterItem("ShowInvoices", this.ShowInvoices , null, "string"));
-
-        //-----------------------------------------------------------------------------8
-        
-        this.queryFilterItems.push(this.GetNewQueryFilterItem("ShowConsignments", this.ShowConsignments, null, "string"));
         
     } 
 

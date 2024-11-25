@@ -87,6 +87,15 @@ namespace Logitude.Customs.Data.Repsitories
                     && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
+
+        public string GetDeclarationNumberByDecId(string id, int tenant)
+        {
+            //SELECT * FROM AMINEt_MAIN.Declarations Extent1 WHERE((Extent1.DeclarationNumber = :p__linq__0) OR ((Extent1.DeclarationNumber IS NULL) AND(:p__linq__0 IS NULL))) AND(Extent1.Tenant = :p__linq__1)
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+            return context.Declarations.Where(d => d.DeclarationNumber != null && (d.Id == id || d.AmendmentOriginalDeclartation == id))?.FirstOrDefault()?.DeclarationNumber;
+        }
+
         public Declaration GetAcceptDeclarationAmendment(string id, int tenant)
         {
 
@@ -1030,15 +1039,17 @@ namespace Logitude.Customs.Data.Repsitories
                  from rec in context.Declarations
                  where rec.AmendmentOriginalDeclartation == id && rec.Tenant == tenant && ((IsDCA == true && (rec.AmendmentStatus == "6" || rec.AmendmentStatus == null)) ||(IsDCA == false && rec.AmendmentStatus == null))
                  select rec
-                 ).OrderByDescending(x => x.CreateDateTime)
-                 .FirstOrDefault();
+                 ).OrderBy(x => x.AmendmentStatus == "6" ? 0 : 1)
+				  .ThenByDescending(x => x.CreateDateTime)
+				 .FirstOrDefault();
             }
             return
                   (
                   from rec in context.Declarations
                   where rec.AmendmentOriginalDeclartation == id && rec.Tenant == tenant && ((IsDCA == true && (rec.AmendmentStatus == "1" || rec.AmendmentStatus == null)) || (IsDCA == false))
 				  select rec
-                  ).OrderByDescending(x => x.CreateDateTime)
+                  ).OrderBy(x => x.AmendmentStatus == "1" ? 0 : 1)
+                  .ThenByDescending(x => x.CreateDateTime)
                   .FirstOrDefault();
         }
 

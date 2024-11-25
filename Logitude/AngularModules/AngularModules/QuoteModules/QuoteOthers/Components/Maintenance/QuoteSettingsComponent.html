@@ -276,7 +276,7 @@
                         </td>
                     </tr>
 
-                    <tr style="height: 140px;">
+                    <tr style="height: 170px;">
                         <td>
                             <div class="MediaFill">
                                 <SectionBox>
@@ -324,6 +324,20 @@
 
                                                 <td>
                                                     <LogTextBox [InputType]="'unsinteger'" [ObjectFieldName]="'QuoteExpirationDays'" [Text]="QuoteExpirationDays" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'CostChargesMust'" [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogCheckBox [ObjectFieldName]="'CostChargesMust'" [Checked]="CostChargesMust" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                 </td>
 
                                                 <td>
