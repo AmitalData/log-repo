@@ -34,6 +34,8 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.AutomaticallyCloseDays = entityPM.AutomaticallyCloseDays;
             entityPoco.IsMultiCurrency = entityPM.IsMultiCurrency;
             entityPoco.QuoteExpirationDays = entityPM.QuoteExpirationDays;
+            entityPoco.CostChargesMust = entityPM.CostChargesMust;
+
         }
     }
 }
