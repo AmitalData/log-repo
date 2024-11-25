@@ -4,7 +4,7 @@ import { FormsModule, } from '@angular/forms';
 import { HeaderService, searchState } from '../app-header/service/header.service';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { catchError, debounceTime, EMPTY, Subject, switchMap } from 'rxjs';
+import { catchError, debounceTime, EMPTY, filter, iif, of, Subject, switchMap } from 'rxjs';
 import { API_MainService } from '../../../core/API_MainService';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 import { FilterPopupService } from '../filter-popup/service/filter-popup.service';
@@ -22,7 +22,7 @@ export class PageTopComponent {
 	@Output() searchClick = new EventEmitter<string | number>();
 	customsItemsAutocomplateList: Subject<CustomsItemsAutocomplate[]> = new Subject<CustomsItemsAutocomplate[]>();
 	textToSearch: string = '';
-	
+
 	constructor(public searchService: SearchService, private headerService: HeaderService, private API_MainService: API_MainService, private filterPopupService: FilterPopupService,) { }
 
 	public text: string = '';
@@ -41,12 +41,18 @@ export class PageTopComponent {
 		this.applyAutocomplate();
 	}
 
-	private applyAutocomplate() {		
+	private applyAutocomplate() {
 		this.searchService.searchText$.pipe(
 			debounceTime(100),
-			switchMap((searchText) =>
-				this.API_MainService.GetFromTypesense(searchText, this.headerService.getSearchState(true), SessionInfo.LoggedUserTenant).pipe(catchError((error) => EMPTY)))
+			switchMap((searchText: string) =>
+				!!this.textToSearch ?
+					this.API_MainService.GetFromTypesense(searchText, this.headerService.getSearchState(true), SessionInfo.LoggedUserTenant).pipe(catchError((error) => EMPTY)) :
+					of(() => EMPTY)
+			)
 		).subscribe(async (res: any) => {
+			if (!res.body)
+				return this.customsItemsAutocomplateList.next([]);
+
 			const regex = new RegExp(`(${this.textToSearch})`, 'gi');
 			const result: GetFromTypesenseResponse = res.body;
 
