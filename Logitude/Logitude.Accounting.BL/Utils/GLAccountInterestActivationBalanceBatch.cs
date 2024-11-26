@@ -145,7 +145,7 @@ namespace Logitude.Accounting.BL.Utils
                                 _MyResult.LastMadeGLAccountId = gLAccountIdList.Last();
                                 gLAccountIdList.ForEach(accId =>
                                 {
-                                    ActivationBalanceCalculation(accId, gLAccountInterestActivationBalanceArgs.InterestActivationDate, ActionDate, tenant);
+                                    ActivationBalanceCalculation(accId, null, gLAccountInterestActivationBalanceArgs.InterestActivationDate, ActionDate, tenant);
                                 });
                             }
                         }
@@ -160,14 +160,14 @@ namespace Logitude.Accounting.BL.Utils
                                 _MyResult.LastMadeGLAccountId = gLAccountIdList.Last();
                                 gLAccountIdList.ForEach(accId =>
                                 {
-                                    ActivationBalanceCalculation(accId, gLAccountInterestActivationBalanceArgs.InterestActivationDate, ActionDate, tenant);
+                                    ActivationBalanceCalculation(accId, null, gLAccountInterestActivationBalanceArgs.InterestActivationDate, ActionDate, tenant);
                                 });
                             }
                         }
                     }
                     else
                     {
-                        ActivationBalanceCalculation(myGLAccountId, gLAccountInterestActivationBalanceArgs.InterestActivationDate, ActionDate, tenant);
+                        ActivationBalanceCalculation(myGLAccountId, gLAccountPM, gLAccountInterestActivationBalanceArgs.InterestActivationDate, ActionDate, tenant);
                     }
                 }
 
@@ -175,9 +175,9 @@ namespace Logitude.Accounting.BL.Utils
 
             }
 
-            catch (Exception e)
+            catch //(Exception e)
             {
-                throw new Exception($"InterestTransactionsCheckBRun failure {e.Message} Inner Exception: {e.InnerException.Message}", e);
+                throw; // new Exception($"InterestTransactionsCheckBRun failure {e.Message} Inner Exception: {e.InnerException.Message}", e);
             }
         }
 
@@ -204,7 +204,7 @@ namespace Logitude.Accounting.BL.Utils
 
 
 
-        public void ActivationBalanceCalculation(string gLAccountId, DateTime interestActivationDate, DateTime actionDate, int _Tenant)
+        public void ActivationBalanceCalculation(string gLAccountId, GLAccountPM accPM, DateTime interestActivationDate, DateTime actionDate, int _Tenant)
         {
             const string OPEN_ = "OPEN_";
             IAccountingContext context = AccountingContext.GetContext(_Tenant);
@@ -232,42 +232,15 @@ namespace Logitude.Accounting.BL.Utils
 
                     if (!ReportExists(gLAccountId, context, _Tenant))
                     {
-
-
                         ClearPreviousActivation(gLAccountId, myInterestTransactionRepository, myInterestTransactionService, myInterestTransactionUpdateService, gLAccountQueryService, gLAccountUpdateService, OPEN_, _Tenant);
 
-
-
                         var myGLAccountRepo = new GLAccountRepository(context);
-                        // var myGLAccountMoreDataRepo = new GLAccountMoreDataRepository(context);
-
-                        //    var myInterestReportRepo = new InterestReportRepository(context);
 
                         var myJournalRepository = new JournalRepository(context);
 
                         TenantQuery tenantQuery = new TenantQuery(_Tenant);
                         TenantPM tPM = tenantQuery.GetSinglePM(_Tenant);
                         string accountingCurrencyId = tPM.CurrencyId;
-
-                        //////////////// 
-                        ///// 1. Compute BalanceInLocalCurrency
-                        //string totalDateType = "1"; // accounting date 
-                        //bool SumOpenTransactions = false;
-                        //bool IncludeRelatedCurrenciesAccount = false;
-                        //AccountBalanceByDateCodeService ac = new AccountBalanceByDateCodeService(null, _Tenant, gLAccountId, null);
-                        //ac.ReSetAccountList(false, IncludeRelatedCurrenciesAccount);
-                        //bool openBalancePlease_ReCalcYearTransfer = //true;//Yaron said this is Default !!!
-                        //    (interestActivationDate.Day == 1 && interestActivationDate.Month == 1);
-                        //ac.CalculateBalance(
-                        //    openBalancePlease_ReCalcYearTransfer,
-                        //    totalDateType, interestActivationDate, false, true, false,
-                        //    false, SumOpenTransactions);
-
-                        //ac.AccountBalance.LogMessage = null;
-
-
-                        //decimal? balance_qm = ac.AccountBalance.GetBalanceOfLocalAmount().GetValueOrDefault();
-                        //decimal balance_on_act_date = balance_qm.HasValue ? balance_qm.Value : 0m;
 
 
                         ///// 1. Compute future AMITAL BalanceInLocalCurrency
@@ -282,10 +255,11 @@ namespace Logitude.Accounting.BL.Utils
                                      lt.LocalAmountDebit - lt.LocalAmountCredit;
 
                         decimal ledgerTransAmt = 0m;
-                        if (qLedgerTrans != null)
+                        List<decimal> ledgerTrans_list = qLedgerTrans != null ? qLedgerTrans.ToList() : new List<decimal>();
+                        if (ledgerTrans_list != null && ledgerTrans_list.Count > 0)
                         {
-                            List<Decimal> ledgerTransAmounts = qLedgerTrans.ToList();
-                            if (ledgerTransAmounts.Count > 0)    ledgerTransAmt = ledgerTransAmounts.Sum();
+                            decimal? ledgerTransAmt_qm = ledgerTrans_list.Sum();
+                            ledgerTransAmt = ledgerTransAmt_qm.HasValue ? ledgerTransAmt_qm.Value : 0m;
                         }
 
 
@@ -315,13 +289,12 @@ namespace Logitude.Accounting.BL.Utils
                                      }
                                   );
                         decimal amount_after = 0m;
-                        List<InterestTransactionBefore> after_list = calcAfterInterestTrans.ToList();
+                        List<InterestTransactionBefore> after_list = calcAfterInterestTrans != null ? calcAfterInterestTrans.ToList() : new List<InterestTransactionBefore>();
                         if (after_list != null && after_list.Count > 0)
                         {
                             decimal? amount_after_qm = after_list.Select(c => c.LocalAmount).Sum();
                             amount_after = amount_after_qm.HasValue ? amount_after_qm.Value : 0m;
                         }
-
 
 
                         ////////////
@@ -341,7 +314,7 @@ namespace Logitude.Accounting.BL.Utils
                                     }
                                  );
                         decimal amount_before = 0m;
-                        List<InterestTransactionBefore> before_list = calcBeforeInterestTrans.ToList();
+                        List<InterestTransactionBefore> before_list = calcBeforeInterestTrans != null ? calcBeforeInterestTrans.ToList() : new List<InterestTransactionBefore>();
                         if (before_list != null && before_list.Count > 0)
                         {
                             decimal? amount_before_qm = before_list.Select(c => c.LocalAmount).Sum();
@@ -352,7 +325,6 @@ namespace Logitude.Accounting.BL.Utils
                         ////////////////
                         /// 4.Compute interestOpenBalance
                         decimal interestOpenBalance = ledgerTransAmt - amount_after + amount_before; // nis
-
 
 
 
@@ -380,42 +352,17 @@ namespace Logitude.Accounting.BL.Utils
                                 );
                         }
 
-
-
                         ////////////////
                         /// 6.Update GLAccount.InterestOpenBalance and create new InterestTransaction
 
 
-                        GLAccountPM gLAccountPM = gLAccountQueryService.GetSinglePM(gLAccountId, _Tenant);
-                        gLAccountQueryService.GetComposition(new GLAccountKeys() { Id = gLAccountId }, gLAccountPM);
+                        GLAccountPM gLAccountPM = accPM != null ? accPM : gLAccountQueryService.GetSinglePM(gLAccountId, _Tenant);
+                        if (accPM == null) gLAccountQueryService.GetComposition(new GLAccountKeys() { Id = gLAccountId }, gLAccountPM);
                         if (gLAccountPM != null)
                         {
-                            //if (!String.IsNullOrWhiteSpace(gLAccountPM.ParentAccountId))
-                            //{
-                            //    InterestTransactionPM interestTransaction = new InterestTransactionPM()
-                            //    {
-                            //        InterestEntityTypeCode = "4", // Open Balance 
-                            //        EntityId = gLAccountPM.Id,
-                            //        AccountingEntityCode = "1", // GLAccount ?
-                            //        OriginalEntityLineNumber = 1,
-                            //        LocalAmount = interestOpenBalance,
-                            //        GLAccountId = gLAccountPM.ParentAccountId,
-                            //        ForeignAmount = interestOpenBalance,
-                            //        InterestValueDate = actionDate,
-                            //        Tenant = _Tenant,
-                            //        ChangeSetOp = ChangeSetOperation.Insert,
-                            //        CurrencyId = accountingCurrencyId,  // NIS
-                            //    };
-                            //    IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
-                            //    interestTransactionUpdateService.Create(interestTransaction);
-
-                            //}
-
-
                             gLAccountPM.InterestOpenBalance = interestOpenBalance;
                             gLAccountPM.ChangeSetOp = ChangeSetOperation.Update;
                             gLAccountUpdateService.Update(gLAccountPM, true);
-
                         }
 
                     }
