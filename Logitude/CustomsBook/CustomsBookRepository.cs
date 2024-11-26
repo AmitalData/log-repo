@@ -35,6 +35,7 @@ namespace CustomsBook
                 catch (Exception ex)
                 {
                     logger.Debug($"Error occurred: {ex.Message}");
+                    throw ex;
                 }
                 finally
                 {
@@ -131,6 +132,7 @@ namespace CustomsBook
                 catch (Exception ex)
                 {
                     logger.Debug($"Error occurred: {ex.Message}");
+                    throw ex;
                 }
                 finally
                 {

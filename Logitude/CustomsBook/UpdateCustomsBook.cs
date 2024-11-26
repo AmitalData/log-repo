@@ -235,7 +235,7 @@ namespace CustomsBook
                 {
                     logger.Debug($"Exception in Table {xmlTableName} migrated to {sqlTableName} --- Error --- \n Error occurred: {ex.Message}");
                     Console.WriteLine($"Exception in Table {xmlTableName} migrated to {sqlTableName} --- Error --- \n Error occurred: {ex.Message}");
-                    return;
+                    throw ex;
                 }
             }
             else
@@ -252,11 +252,10 @@ namespace CustomsBook
                     tempTables.Add(tempTableName);
                 }
 
-
+              
                 foreach (XElement tableElement in xmlDoc.Root.Elements())
                 {
-                    try
-                    {
+                    
                         DataTable dataTable = new DataTable(sqlTableName);
 
                         foreach (XElement rowElement in tableElement.Elements())
@@ -282,13 +281,9 @@ namespace CustomsBook
                         logger.Debug(message: $"Table {xmlTableName} migrated to {sqlTableName} successfully.");
                         Console.WriteLine($"Table {fileName} migrated to {sqlTableName} successfully.");
                     }
-                    catch (Exception ex)
-                    {
-                        logger.Debug(message: $"Error occurred: {ex.Message}");
-                        continue;
-                    }
+                    
                
-            }
+           
         }
         static string GetSqlTableName(string accessTableName)
         {
@@ -365,47 +360,25 @@ namespace CustomsBook
 
         public static void EnsureHttpRuntime()
         {
-            try
-            {
+           
                 if (null == _httpRuntime)
                 {
-                    try
-                    {
-                        //Monitor.Enter(typeof(State));
+                    
                         if (null == _httpRuntime)
                         {
-                            // Create an Http Content to give us access to the cache.
                             _httpRuntime = new HttpRuntime();
-
                         }
-                    }
-                    finally
-                    {
-                        //Monitor.Exit(typeof(State));
-                    }
-
+              
                 }
-            }
-            catch (Exception e)
-            {
-                //Logger.LogMe(e.ToString(), true);
-            }
+           
         }
         public static Cache Cache
         {
             get
             {
-                try
-                {
                     EnsureHttpRuntime();
                     return HttpRuntime.Cache;
-                }
-                catch (Exception e)
-                {
-                    //Logger.LogMe(e.ToString(), true);
-                }
-                return null;
-
+                
             }
 
 
