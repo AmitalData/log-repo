@@ -549,7 +549,7 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
         if (key == 17) this.isCtrlKeyDown = true;
         if (key != 13 && key != 9 && key != 17) this.isTextChanged = true; //9: Tab, 13: Enter, 17: Ctrl
         if (this.IsCalendarOpen) this.ToggleCalendar(false);
-        if (key == 9) this.CalendarMouseInArea = false;
+        if (key == 9 || this.isTextChanged) this.CalendarMouseInArea = false;
         
         success = this.IsAllowedKey(key, keyChar);
 
