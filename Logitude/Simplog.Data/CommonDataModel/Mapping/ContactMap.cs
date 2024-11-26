@@ -9,7 +9,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
         public ContactMap()
         {
             this.HasKey(t => t.Id);
-            this.Property(t => t.EnglishName).IsRequired().HasMaxLength(60).IsUnicode(false);
+            this.Property(t => t.EnglishName).IsRequired().HasMaxLength(120).IsUnicode(true);
             this.Property(t => t.Email).HasMaxLength(70).IsUnicode(false);
             this.Property(t => t.BusinessPhone).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.Mobile).HasMaxLength(25).IsUnicode(false);
