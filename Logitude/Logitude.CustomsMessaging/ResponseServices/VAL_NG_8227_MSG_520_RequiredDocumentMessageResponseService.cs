@@ -339,7 +339,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if (myDeclarationPM.Direction == "E")
                 {
-                    RaiseEvent(myDeclarationPM, requestParams.LoggingUserId, "CON", null, customResponse.RequiredDocumentDetails.requiredDocumentMessageType.ToString());
+                    RaiseEvent(myDeclarationPM, requestParams.LoggingUserId, "DON", null, customResponse.RequiredDocumentDetails.requiredDocumentMessageType.ToString());
                 }
 
                     DeclarationUpdateService declarationUpdateService1 = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
@@ -485,7 +485,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             };
 
-            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true, iscustomUser: true);
+            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true, iscustomUser: true, isExport: true);
         }
     }
 }
