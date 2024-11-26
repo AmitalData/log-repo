@@ -40,8 +40,8 @@ namespace WebFreight.Web.DataProviders
         public string DeclarationTypeName { get; set; }
         public string ProcedureCurrentName { get; set; }
         public string ExporterImporterCode { get; set; }
-		public string ExporterImporterName { get; set; }
-		public string RecipientName { get; set; }// שם המקבל טבלת Customs.DeclarationExportRecipient
+        public string ExporterImporterName { get; set; }
+        public string RecipientName { get; set; }// שם המקבל טבלת Customs.DeclarationExportRecipient
         public string DestinationCountryName { get; set; }//ארץ יעד
         public string DeclarationStatusTypeName { get; set; }
         #region נתונים מסגירת הצהרה
