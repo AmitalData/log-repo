@@ -1016,7 +1016,10 @@ export class AppTool {
                 myResult = "Occasion";
                 break;
             }
-
+            case "General.MH.Cards": {
+                myResult = "Card";
+                break;
+            }
             case "General.MH.Operations": {
                 myResult = "Box";
                 break;

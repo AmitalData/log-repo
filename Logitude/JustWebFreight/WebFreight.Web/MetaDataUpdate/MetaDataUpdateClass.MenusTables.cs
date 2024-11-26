@@ -121,6 +121,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature crossDocksFeature = tenantFeatures.Where(d => d.Code == "CROSSDOCKS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature AccountingPaymentMethodFeature = tenantFeatures.Where(d => d.Code == "ACCOUNTINGPAYMENTMETHODS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature ConfirmationNumberDefaultFeature = tenantFeatures.Where(d => d.Code == "CONFIRMATIONNUMBERDEFAULTS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature allCardsFeature = tenantFeatures.Where(d => d.Code == "Menu.AllCards" && d.FeatureTypeCode == "MENU").FirstOrDefault();
 
             Feature APPaymentMethodFeature = tenantFeatures.Where(d => d.Code == "APPAYMENTMETHODS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature BankAccountLiteMenuFeature = tenantFeatures.Where(d => d.Code == "BANKACCOUNTLITE" && d.FeatureTypeCode == "MENU").FirstOrDefault();            
@@ -200,6 +201,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "TAAP", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 31, CategoryTypeCode = null, TextCode = "General.MH.TasksApp", Icon = "DashboardPath", FeatureId = tasksAppFeature.Id, FeatureUniqeCode = tasksAppFeature.FeatureUniqeCode, }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CDSH", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 18, CategoryTypeCode = null, TextCode = "General.MH.ClassicDashboard", Icon = "DashboardPath", FeatureId = dashFeature.Id, FeatureUniqeCode = dashFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CONT", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 1, CategoryTypeCode = null, TextCode = "General.MH.Containers", Icon = "OperationsPath", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Container").FirstOrDefault().Id, FeatureId = containerFeature.Id, FeatureUniqeCode = containerFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSMT", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 31, CategoryTypeCode = null, TextCode = "General.MH.Cards", Icon = "CustomersPath", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Card").FirstOrDefault().Id, FeatureId = allCardsFeature.Id, FeatureUniqeCode = allCardsFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
 
             #endregion
 
