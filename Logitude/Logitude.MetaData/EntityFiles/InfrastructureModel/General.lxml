@@ -39,8 +39,8 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-   Code="&quot;6e82&quot;"
-      Name="&quot;General&quot;"
+  Code="&quot;fa74&quot;"
+  Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
   ServerModuleName="&quot;Generals&quot;"
@@ -4973,7 +4973,7 @@
       DefaultText="&quot;The selected operational card is connected to a client-type account and therefore will not be included in the tax withholding report&quot;"
       LocalDefaultText="&quot;הכרטיס התפעולי שנבחר מחובר לחשבון מסוג לקוח ולכן לא ייכלל בדוח ניכוי מס במקור&quot;"
       TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />    
+      IsSpellChecked="false" />
     <TextCode
       Code="&quot;Accounting.General.O.VendorWithCustomerGLAccount&quot;"
       DefaultText="&quot;The selected operational card is connected to a client-type account and therefore will not be included in the tax withholding report&quot;"
@@ -5147,7 +5147,7 @@
       LocalDefaultText="&quot; הצעות מחיר (OP)&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
-     <TextCode
+    <TextCode
       Code="&quot;General.MC.ShaamTokenManagement&quot;"
       DefaultText="&quot;SHAAM Token Management&quot;"
       LocalDefaultText="&quot;&quot;"
@@ -5183,7 +5183,7 @@
       LocalDefaultText="&quot;Client API כבר קיים&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-     <TextCode
+    <TextCode
       Code="&quot;General.MH.ShipmentOrders&quot;"
       DefaultText="&quot;Shipment Orders&quot;"
       LocalDefaultText="&quot;Shipment Orders&quot;"
@@ -5992,8 +5992,14 @@
       LocalDefaultText="&quot;עבור חשבונית ספק נדרש מספר הקצאה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MH.Cards&quot;"
+      DefaultText="&quot;Cards&quot;"
+      LocalDefaultText="&quot;כרטיסים&quot;"
+      TextCodeTypeCode="&quot;MH&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
-   <AdditionalFeatures>
+  <AdditionalFeatures>
     <Feature
       Code="&quot;DASHBOARD&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
@@ -8029,7 +8035,7 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-     <Feature
+    <Feature
       Code="&quot;InvoiceConfirmationNumber&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.SHAAMTOKEN&quot;"
@@ -8038,7 +8044,7 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-     <Feature
+    <Feature
       Code="&quot;SHIPMENTORDERS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.SHIPMENTORDERS&quot;"
@@ -8416,5 +8422,14 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;Menu.AllCards&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.Menu.AllCards&quot;"
+      FeatureDefaultText="&quot;AllCards&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
- </entity>
+</entity>

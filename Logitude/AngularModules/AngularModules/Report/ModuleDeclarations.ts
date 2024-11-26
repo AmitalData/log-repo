@@ -189,7 +189,6 @@ export const Components =
         SpotRateQuoteReportFilterComponent,
         ControlInvoiceLinesReportFilterComponent,
         ExportDeclarationReportFilterComponent,
-
         MonthlyBalancesReportFilterComponent
 
     ];
