@@ -88,8 +88,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ReportUpdateClass
    {  		
+
+
 		public const string HashString = "b9f1f3f5ac3ef1412418481cd5e79e22";
-	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+ 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -2002,7 +2004,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 		   Feature ReportFeature_ExportDeclarationReport = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportDeclarationReport", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.ExportDeclarationReport", NameTextCodeDefaultText = @"Export declaration report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportObjectTable);
 
-		   Feature ReportFeature_LoanReportsByEmail = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LoanReportsByEmail", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.LoanReportsByEmail", NameTextCodeDefaultText = @"Loan Reports By Email" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportObjectTable);
+ 		   Feature ReportFeature_LoanReportsByEmail = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LoanReportsByEmail", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.LoanReportsByEmail", NameTextCodeDefaultText = @"Loan Reports By Email" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportObjectTable);
 
 		   Feature ReportFeature_MonthlyBalancesReport = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MonthlyBalancesReport", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.MonthlyBalancesReport", NameTextCodeDefaultText = @"Monthly Balances Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportObjectTable);
 

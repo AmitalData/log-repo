@@ -11076,7 +11076,7 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     files = (bool)filterItem_DetailedFiles.FieldValue;
 
-                }
+                 }
             }
 
             //ChartOfAccountsTypeCodeList
@@ -11101,7 +11101,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
                
             }
-
+           
 
             #endregion
 

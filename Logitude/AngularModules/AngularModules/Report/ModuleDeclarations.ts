@@ -186,18 +186,19 @@ export const Components =
         BluesnapPaymentsReportFilterComponent,
         ExternalReconciliationLinesReportFilterControl,
         UserDefinedReportFilterControl,
-        LogitudeCRMReportFilterComponent,
+         LogitudeCRMReportFilterComponent,
         ExcelReportTemplateComponent,
         PerVendorReportFilterComponent,
         ARinvoiceSequencesReportFilterComponent,
         SpotRateQuoteReportFilterComponent,
         ControlInvoiceLinesReportFilterComponent,
         ExportDeclarationReportFilterComponent,
+
         CertificateOfOriginReportFilterComponent,
         CertificateOfOriginCountReportFilterComponent,
         MonthlyBalancesReportFilterComponent,
         CustomsCollateralFilterComponent,
-
+ 
     ];
 
 export class ModuleDeclarations {
@@ -289,7 +290,7 @@ export class ModuleDeclarations {
             case "SpotRateQuoteReportFilterComponent": { myResult = SpotRateQuoteReportFilterComponent; break; }
             case "ControlInvoiceLinesReportFilterComponent": { myResult = ControlInvoiceLinesReportFilterComponent; break; }
             case "ExportDeclarationReportFilterComponent": { myResult = ExportDeclarationReportFilterComponent; break; }
-            case "MonthlyBalancesReportFilterComponent": { myResult = MonthlyBalancesReportFilterComponent; break; }
+             case "MonthlyBalancesReportFilterComponent": { myResult = MonthlyBalancesReportFilterComponent; break; }
             case "CustomsCollateralFilterComponent": { myResult = CustomsCollateralFilterComponent; break; }
             case "CertificateOfOriginReportFilterComponent": { myResult = CertificateOfOriginReportFilterComponent; break; }
             case "CertificateOfOriginCountReportFilterComponent": { myResult = CertificateOfOriginCountReportFilterComponent; break; }
