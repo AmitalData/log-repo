@@ -161,8 +161,8 @@ export class MainDisplayComponent implements OnInit {
 				this.countSearchResult = data.length;
 				// update list:
 				this.data = this.orderedDataForSearch(data);
-				this.searchToggleAllChildren(true); // expand all 
-
+				// this.searchToggleAllChildren(true); // expand all 
+				this.toggleVisibility(true, this.data);
 				this.searchMode = TableTopState.Search;
 				this.searchValue = this.searchService.GetSearchText();
 				if (this.showDetails) {
@@ -394,7 +394,8 @@ export class MainDisplayComponent implements OnInit {
 		this.countSearchResult = 0;
 		this.filterPopupService.toggleFilterPopup(false);
 		this.data = this.fullData;
-		this.searchToggleAllChildren(false);
+		// this.searchToggleAllChildren(false);
+		this.toggleVisibility(false, this.data)
 	}
 
 	public orderedDataForSearch = (data) => {
