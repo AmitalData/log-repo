@@ -101,6 +101,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                 on a.Id equals c.DeclarationId into cJoin
             from closing in cJoin.DefaultIfEmpty()
 
+                                join cl in context.Clients
+                                .Select(x => new { x.Code, x.FullName})
+                                on a.ImporterCode equals cl.Code into clJoin
+                                from importer in clJoin.DefaultIfEmpty().Take(1)
+
                                 where a.Tenant == tenant && a.Direction == "E"
                                 select new
                                 {
@@ -114,7 +119,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                     a.DeclarationNumber,
                                     DeclarationTypeName = a.DeclarationType != null ? a.DeclarationType.LocalName : null,
                                     ProcedureCurrentName = a.GovernmentProcedureCurrent != null ? a.GovernmentProcedureCurrent.LocalName : null,
-                                    ExporterImporterName = a.ImporterCode,
+                                    ExporterImporterCode = a.ImporterCode,
+                                    ExporterImporterName = importer != null ? importer.FullName : null,
                                     RecipientName = der != null && !string.IsNullOrEmpty(der.RecipientName) ? der.RecipientName : null,
                                     DestinationCountryName = a.CustomsCountry != null ? a.CustomsCountry.LocalName : null,
                                     a.DestinationCountryCode,
@@ -217,6 +223,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                 DeclarationNumber = g.DeclarationNumber,
                 DeclarationTypeName = g.DeclarationTypeName,
                 ProcedureCurrentName = g.ProcedureCurrentName,
+                ExporterImporterCode = g.ExporterImporterCode,
                 ExporterImporterName = g.ExporterImporterName,
                 RecipientName = g.RecipientName,
                 DestinationCountryName = g.DestinationCountryName,
