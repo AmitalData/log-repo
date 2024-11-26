@@ -1127,6 +1127,7 @@
     <Compile Include="Controllers\HybridModel\VesselHybridController.cs" />
     <Compile Include="Controllers\HybridModel\WarehouseHybridController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\NLogController.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\CB_RuleClassificationExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_RuleClassificationViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_RuleClassificationController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\QueueMessagesViewsController.cs" />

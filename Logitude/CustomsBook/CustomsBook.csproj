@@ -51,6 +51,7 @@
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=8.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.5.2.8\lib\net46\NLog.dll</HintPath>
     </Reference>
@@ -138,16 +139,27 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnifreightIIG.4.0.4\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnifreightIIG.4.0.4\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+    </Reference>
+    <Reference Include="UnifreightIIG.UServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnifreightIIG.4.0.4\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
+    </Reference>
     <Reference Include="ZstdSharp, Version=0.7.4.0, Culture=neutral, PublicKeyToken=8d151af33a4ad5cf, processorArchitecture=MSIL">
       <HintPath>..\packages\ZstdSharp.Port.0.7.4\lib\net462\ZstdSharp.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomsBookRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UpdateAzureSearchAIData.cs" />
@@ -161,9 +173,29 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Logitude.Customs.BL\Logitude.Customs.BL.csproj">
+      <Project>{D2951C0F-8A2B-4EE2-933A-8B6B4134F766}</Project>
+      <Name>Logitude.Customs.BL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.Customs.Data\Logitude.Customs.Data.csproj">
       <Project>{643F92C9-7CF1-4429-B79E-1E354B758ABF}</Project>
       <Name>Logitude.Customs.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.CustomsMessaging.Common\Logitude.CustomsMessaging.Common.csproj">
+      <Project>{f0039dbe-4a1a-4755-8f37-e4005ea74746}</Project>
+      <Name>Logitude.CustomsMessaging.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.CustomsMessaging\Logitude.CustomsMessaging.csproj">
+      <Project>{7994D6F2-00A7-4C0D-A7D3-FD7D5304B665}</Project>
+      <Name>Logitude.CustomsMessaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
+      <Project>{9B477A08-8EE2-4457-88FE-17E8A6EC4D00}</Project>
+      <Name>Logitude.Server.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.SystemLogs\Logitude.SystemLogs.csproj">
+      <Project>{9FFC5B97-F09A-4EED-A66E-D4160374AE6E}</Project>
+      <Name>Logitude.SystemLogs</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
       <Project>{78EC8434-E6AD-4E93-9B17-C746F5403F7B}</Project>

@@ -123,6 +123,7 @@
     <Reference Include="RtfPipe, Version=2.0.7677.4303, Culture=neutral, PublicKeyToken=5f6ab4ce530296d2, processorArchitecture=MSIL">
       <HintPath>..\packages\RtfPipe.2.0.7677.4303\lib\net45\RtfPipe.dll</HintPath>
     </Reference>
+
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -1391,6 +1392,7 @@
     <Compile Include="EntityDataMappings\VendorTypeDataMapping.cs" />
     <Compile Include="EntityQueryServiceExt\CustomsDocumentQueryServiceExt.cs" />
     <Compile Include="EntityQueryServices\CargoIdentifireTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\CB_RuleClassificationQueryService.cs" />
     <Compile Include="EntityQueryServices\CB_RuleDetailsHistoryQueryService.cs" />
      <Compile Include="EntityQueryServices\RemarksClassificationQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_RuleClassificationQueryService.Generated.cs" />
