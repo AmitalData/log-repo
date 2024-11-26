@@ -114,7 +114,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                     a.DeclarationNumber,
                                     DeclarationTypeName = a.DeclarationType != null ? a.DeclarationType.LocalName : null,
                                     ProcedureCurrentName = a.GovernmentProcedureCurrent != null ? a.GovernmentProcedureCurrent.LocalName : null,
-                                    ExporterImporterCode = a.ImporterCode,
+                                    ExporterImporterName = a.ImporterCode,
                                     RecipientName = der != null && !string.IsNullOrEmpty(der.RecipientName) ? der.RecipientName : null,
                                     DestinationCountryName = a.CustomsCountry != null ? a.CustomsCountry.LocalName : null,
                                     a.DestinationCountryCode,
@@ -217,7 +217,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                 DeclarationNumber = g.DeclarationNumber,
                 DeclarationTypeName = g.DeclarationTypeName,
                 ProcedureCurrentName = g.ProcedureCurrentName,
-                ExporterImporterCode = g.ExporterImporterCode,
+                ExporterImporterName = g.ExporterImporterName,
                 RecipientName = g.RecipientName,
                 DestinationCountryName = g.DestinationCountryName,
                 //g.Key.DestinationCountryCode,
@@ -266,7 +266,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                     select new
                                     {
                                         DeclarationId = consignment.DeclarationId,
-                                        ConsignmentType = consignment != null ? consignment.ConsignmentType : null,
+                                        ConsignmentType = consignment != null ? (consignment.ConsignmentType == "E"? "יצוא": consignment.ConsignmentType) : null,
                                         ConsignmentNumber = consignment != null ? consignment.ConsignmentNumber : null,
                                         CargoTypeName = consignment != null? consignment.CargoTypeName: null,
                                         ManifestNumber = consignment != null ? consignment.ManifestNumber : null,
