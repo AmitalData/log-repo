@@ -524,7 +524,7 @@ namespace Logitude.Server.Tools
                         OracleDbType = OracleDbType.NVarChar,
                         //Size = -1,
                         ParameterName = "iv_pLog",
-                        Value = log
+                        Value = (log.ToString().Length  >2000) ?log.ToString().Substring(0,2000):log
                     };
                     cmd.Parameters.Add(pLog);
                     var pExceptionMessage = new OracleParameter()

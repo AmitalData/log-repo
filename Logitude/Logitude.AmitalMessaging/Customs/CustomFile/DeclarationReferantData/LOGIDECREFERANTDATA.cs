@@ -83,7 +83,6 @@
         private string orderMoneyField;
 
         private string lastStatusRemarksField;
-        private string vesselField;
 
         public string CollectorUserId { get; set; }
 
@@ -279,19 +278,6 @@
             set
             {
                 this.lastStatusRemarksField = value;
-            }
-        }
-
-        /// <remarks/>
-        public string Vessel
-        {
-            get
-            {
-                return this.vesselField;
-            }
-            set
-            {
-                this.vesselField = value;
             }
         }
     }

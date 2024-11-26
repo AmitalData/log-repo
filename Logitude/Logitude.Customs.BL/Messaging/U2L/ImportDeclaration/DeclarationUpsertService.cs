@@ -1978,15 +1978,15 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 			this._DeclarationReferantDataPM.Hawb = _AmitalCustomsFile.ReferentHAWB;
 			this._DeclarationReferantDataPM.Mawb = _AmitalCustomsFile.ReferentMAWB;
 			this._DeclarationReferantDataPM.Tenant = ResolvedTenant();
+            this._DeclarationReferantDataPM.Vessel = TranslateVessel(_AmitalCustomsFile.Vessel);
 
-			if (this._MyDeclarationPM.SystemConnection == "N" && this._DeclarationReferantDataPM.ChangeSetOp == ChangeSetOperation.Update)
+            if (this._MyDeclarationPM.SystemConnection == "N" && this._DeclarationReferantDataPM.ChangeSetOp == ChangeSetOperation.Update)
 			{
 				this._DeclarationReferantDataPM.MawbDate = !String.IsNullOrWhiteSpace(_AmitalCustomsFile.MawbDate) ? DateTime.Parse(_AmitalCustomsFile.MawbDate) : this._DeclarationReferantDataPM.MawbDate;
 				this._DeclarationReferantDataPM.EstimatedArrivalDate = !String.IsNullOrWhiteSpace(_AmitalCustomsFile.EstimatedArrivalDate) ? DateTime.Parse(_AmitalCustomsFile.EstimatedArrivalDate) : this._DeclarationReferantDataPM.EstimatedArrivalDate;
 				this._DeclarationReferantDataPM.PackageTypeCode = _AmitalCustomsFile.PackageTypeCode;
 				this._DeclarationReferantDataPM.ArrivalDate = !String.IsNullOrWhiteSpace(_AmitalCustomsFile.ArrivalDate) ? DateTime.Parse(_AmitalCustomsFile.ArrivalDate) : this._DeclarationReferantDataPM.ArrivalDate;
 				this._DeclarationReferantDataPM.Commodity = _AmitalCustomsFile.Commodity;
-				this._DeclarationReferantDataPM.Vessel = _AmitalCustomsFile.Vessel;
 				this._DeclarationReferantDataPM.FlightVoyageNumber = _AmitalCustomsFile.FlightVoyageNumber;
 				this._DeclarationReferantDataPM.CarrierCode = _AmitalCustomsFile.CarrierCode;
 				this._DeclarationReferantDataPM.Mawb = _AmitalCustomsFile.MAWB;
@@ -2018,6 +2018,24 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				}
 			}
 			AppendLogLine("No forwarder found for forwarderId " + forwarderId);
+			return null;
+        }
+
+		private string TranslateVessel(string vesselId)
+		{
+			if (!string.IsNullOrWhiteSpace(vesselId))
+			{
+				VesselRepository vesselRepository = new VesselRepository(ResolvedTenant());
+				Vessel vessel = vesselRepository.GetSingleVesselByCode(vesselId, ResolvedTenant());
+				if (vessel != null)
+				{
+					return vessel.Id;
+				}
+				else
+				{
+					NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"Not found vessel for code: {vesselId}");
+				}
+			}
 			return null;
 		}
 
