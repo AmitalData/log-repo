@@ -622,12 +622,14 @@ export interface RulesDetailsList {
 	RuleID: number;
 	Title: string;
 	Rules: string;
-	RulesRTF: string;
+	Index: string;
+	ParentID: number;
 	UpdateDate: Date;
 	ChangeRequestTypePriority: number;
 	OrderinalPostion: number;
 	EntityStatusID: string;
-	Parent_RuleDetailsHistoryID: number;
+	customsItemId?: number;
+	CB_ID?: number;
 }
 
 export class CustomItemClassifGuidanceResult {
