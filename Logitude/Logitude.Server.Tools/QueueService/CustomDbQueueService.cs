@@ -144,7 +144,7 @@ namespace Logitude.Server.Tools.QueueService
             LogMessagingUtil.Instance.AppendLine("CustomDbQueueService:SafeComplete:DbQueueName=" + CustomDbQueueParams.QueueCode + "QMId=" + base.CurrentMessageId);
 
         }
-        public bool SafeAbandon()
+        public bool SafeAbandon(bool isLockes = false)
         {
             bool safcomplete = false;
             if (CurrentCustomQueueResponse.Retries > 10)
@@ -166,7 +166,7 @@ namespace Logitude.Server.Tools.QueueService
             }
             if (!safcomplete)
             {
-                if (CurrentCustomQueueResponse.Retries < 8)
+                if (!isLockes && CurrentCustomQueueResponse.Retries < 8)
                 {
                     this.Delay(TimeSpan.FromMinutes(1));
                 }
