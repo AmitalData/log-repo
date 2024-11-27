@@ -1,0 +1,29 @@
+<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onCustomsItemSelected()" [panelWidth]="1000">
+
+    @for (item of customsItemsAutocomplateList | async; track item) {
+    <mat-option [value]="item.FullClassification" class="no-wrap" dir="rtl">
+        <span [dir]="'rtl'" [innerHTML]='item.text'></span>
+    </mat-option>
+    }
+
+    @for (classificationItem of groupCustomsItemsAutocomplateList | async; track groupedItems) {
+    <mat-optgroup dir="rtl" *ngIf="groupedItems[classificationItem.Classification].length > 0" class="bold">
+        <mat-accordion dir="rtl">
+            <mat-expansion-panel dir="rtl">
+                <mat-expansion-panel-header dir="rtl">
+                    <mat-panel-title>
+                        <span class="ddl-group-description">{{classificationItem.Description}}
+                        </span>
+                        &nbsp;({{groupedItems[classificationItem.Classification].length}} תוצאות)
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                @for (item of groupedItems[classificationItem.Classification]; track groupedItems) {
+                <mat-option [value]="item.FullClassification" class="no-wrap" dir="rtl">
+                    <span [dir]="'rtl'" [innerHTML]='item.text'></span>
+                </mat-option>
+                }
+            </mat-expansion-panel>
+        </mat-accordion>
+    </mat-optgroup>
+    }
+</mat-autocomplete>

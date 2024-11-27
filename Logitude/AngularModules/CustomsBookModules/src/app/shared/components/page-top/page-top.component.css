@@ -210,11 +210,3 @@ li {
 	height: 100%;
 	cursor: pointer;
 }
-
-::ng-deep mat-option.no-wrap span  {
-	overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap !important;
-	margin-left: auto;
-    margin-right: inherit !important;
-}

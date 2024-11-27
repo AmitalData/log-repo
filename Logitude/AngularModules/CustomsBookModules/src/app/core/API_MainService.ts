@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent } from '@angular/common/http';
 import { BaseService } from './Services/BaseService';
 import { AppTool } from './Infrastructure/Tools';
+import { Observable } from 'rxjs';
 
 export interface Filters {
 	SearchFields?: string;
@@ -85,6 +86,11 @@ export class API_MainService extends BaseService {
 
 	GetFromTypesense(searchValue: string, customsBookType: string, tenant: number) {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/GetFromTypesense?searchValue=${searchValue}&customsBookType=${customsBookType}&tenant=${tenant}`;
+		return this.Get(url);
+	}
+
+	GetClassifications(): Observable<HttpEvent<Object>> {
+		const url = `${this._apiUrl}CB_CustomsItemExtended/GetClassifications`;
 		return this.Get(url);
 	}
 }

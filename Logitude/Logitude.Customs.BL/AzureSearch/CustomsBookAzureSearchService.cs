@@ -19,7 +19,7 @@ namespace Logitude.Customs.BL.AzureSearch
 
         public static async Task<RemarkAndCustomsBook> SearchItmesAndRemark(string searchValue, string customsBookType, int tenant)
         {
-            if(string.IsNullOrEmpty(apiKey))
+            if (string.IsNullOrEmpty(apiKey))
                 throw new System.Exception("Please provide the Azure Search API Key in the apiKey variable in CustomsBookAzureSearchService.cs file");
 
             Task<List<CustomsItemASEntity>> customsBookListTask = new CustomsBookAzureSearchRepo(serviceName, apiKey).SearchCustomsItemAsync(customsBookType, searchValue);
@@ -28,6 +28,24 @@ namespace Logitude.Customs.BL.AzureSearch
             RemarkAndCustomsBook res = new RemarkAndCustomsBook { CustomsItems = await customsBookListTask, Remarks = await remarkCustomsBookListTask };
 
             return res;
+        }
+
+        public static async Task<Dictionary<string, Dictionary<int, ClassificationCustomsBook>>> GetClassifications()
+        {
+            return await CacheHelper.GetFromCache("ClassificationCustomsBook", async () =>
+            {
+                List<CustomsItemASEntity> data = await new CustomsBookAzureSearchRepo(serviceName, apiKey).GetClassifications();
+                var classificationData = new Dictionary<string, Dictionary<int, ClassificationCustomsBook>>();
+                data.ForEach(item =>
+                {
+                    if (!classificationData.ContainsKey(item.CI_CustomsBookTypeIDNum))
+                        classificationData.Add(item.CI_CustomsBookTypeIDNum, new Dictionary<int, ClassificationCustomsBook>());
+
+                    classificationData[item.CI_CustomsBookTypeIDNum].Add(item.CustomsItemID, new ClassificationCustomsBook() { Classification = item.FullClassification, Description = item.CIH_GoodsDescription });
+                });
+
+                return classificationData;
+            });
         }
 
         public static async Task ReCreateRemarkTable()
@@ -65,6 +83,12 @@ namespace Logitude.Customs.BL.AzureSearch
 
             return dataTable;
         }
+    }
+
+    public class ClassificationCustomsBook
+    {
+        public string Description { get; set; }
+        public string Classification { get; set; }
     }
 
     public class RemarkAndCustomsBook
