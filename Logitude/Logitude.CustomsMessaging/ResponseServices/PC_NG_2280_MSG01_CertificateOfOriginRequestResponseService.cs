@@ -365,8 +365,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 							   supplierInvoiceItem.PreferenceDocumentNumber = certificateOfOriginPM.COONumber;
 							   supplierInvoiceItem.ChangeSetOp = ChangeSetOperation.Update;
 							   supplierInvoiceItemUpdateService.Update(supplierInvoiceItem, true);
-							   IsUpdated = true;
 							}
+							IsUpdated = true;
 						}
 					}
 				}
