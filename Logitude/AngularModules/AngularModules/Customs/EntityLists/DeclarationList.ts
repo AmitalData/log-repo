@@ -242,6 +242,7 @@ export class DeclarationList {
 	EffectiveFlight: boolean;
 	SystemConnection: string;
 	ShipmentId: string;
+	CooStatusCode: string;
 	
 }
  

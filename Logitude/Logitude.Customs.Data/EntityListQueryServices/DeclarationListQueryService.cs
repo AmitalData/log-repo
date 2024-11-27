@@ -189,6 +189,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                 into qStatusAmendJoin
                                                      from myJoinAmendmentRequest in qStatusAmendJoin.DefaultIfEmpty()
 
+                                                     join cooStatusViews in context.CooStatusViews
+                                                     on a.Id equals cooStatusViews.DeclarationId into cooStatusViewsJoin
+                                                     from MyDeclarationCooStatusViews in cooStatusViewsJoin.DefaultIfEmpty()
+
                                                      select new DeclarationList()
                                                      {
                                                          Id = a.Id,
@@ -339,6 +343,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          ExcludeManifest = a.ExcludeManifest,
 														 AmendmentRejectionReason = a.AmendmentRejectionReason,
                                                          ShipmentId = a.ShipmentId,
+                                                         CooStatusCode = MyDeclarationCooStatusViews.Status,
 													 });
 
                 return query;

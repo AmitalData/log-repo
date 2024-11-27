@@ -131,6 +131,7 @@
     <None Include="DBOthers\Procedures\usp_UpdateQueueMessagePriority.dxml" />
     <None Include="DBOthers\Procedures\usp_UpdateQueueMessagePrio2.dxml" />
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
+    <None Include="DBOthers\Views\CooStatusViews.dxml" />
     <None Include="DBOthers\Views\NewCustomsBookMainView.dxml" />
     <None Include="DBOthers\Views\CustomsBookMainView.dxml" />
     <None Include="DBOthers\Views\RequestSheetInQueueMesView.dxml" />

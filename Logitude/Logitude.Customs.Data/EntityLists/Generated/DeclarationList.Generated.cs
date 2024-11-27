@@ -489,6 +489,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string SystemConnection  { get; set; }
        [DataMember]
        public string ShipmentId  { get; set; }
+       [DataMember]
+       public string CooStatusCode  { get; set; }
    }
 
 }

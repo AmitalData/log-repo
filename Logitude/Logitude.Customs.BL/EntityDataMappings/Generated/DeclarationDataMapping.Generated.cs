@@ -454,6 +454,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SystemConnection, 
 	         IsFromUpdateShipment, 
 	         ShipmentId,
+	         CooStatusCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
