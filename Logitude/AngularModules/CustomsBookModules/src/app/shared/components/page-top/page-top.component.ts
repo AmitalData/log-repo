@@ -19,7 +19,7 @@ export class PageTopComponent {
 	@ViewChild(SearchCustomsItemAutocomplateComponent) searchCustomsItemAutocomplateComponent: SearchCustomsItemAutocomplateComponent;
 	@Output() searchClick = new EventEmitter<string | number>();
 	textToSearch: string = '';
-	searchHeader: string = '????? ??? ???/????/????? ?????';
+	searchHeader: string = 'חיפוש פרט מכס/מילה/צירוף מילים';
 	
 	constructor(
 		public searchService: SearchService,
@@ -32,7 +32,7 @@ export class PageTopComponent {
 	public checked: string | number = '';
 	public searchBy = SearchByParam;
 	public selectedSearchOption: SearchByParam = this.searchBy.Classification;
-	public currentSearchState: string = searchState.????;
+	public currentSearchState: string = searchState.יבוא;
 	public SearchByValidation: SearchBy = SearchBy.searchBy_form01;
 
 	ngOnInit() {
@@ -95,6 +95,6 @@ export class PageTopComponent {
 }
 
 export enum SearchByParam {
-	Classification = "??? ???",
-	WordCombination = "????/????? ?????"
+	Classification = "פרט מכס",
+	WordCombination = "מילה/צירוף מילים"
 }

@@ -67,7 +67,8 @@ export class MainDisplayComponent implements OnInit {
 	) {
 		this.screenWidth = window.innerWidth;
 	}
-	searchState: string = searchState.????;
+	searchState: string = searchState.יבוא;
+
 
 	ngOnInit() {
 		this.headerService.searchState$.subscribe((data) => {
