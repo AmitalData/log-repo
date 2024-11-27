@@ -11745,27 +11745,12 @@
       <QueryColumn
         QueryCode="&quot;All Cards&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;CreateDate&quot;"
-        ColumnWidth="250" />
-      <QueryColumn
-        QueryCode="&quot;All Cards&quot;"
-        IndexOrder="3"
-        ObjectFieldName="&quot;GLAccountDisplayNumber&quot;"
-        ColumnWidth="150" />
-      <QueryColumn
-        QueryCode="&quot;All Cards&quot;"
-        IndexOrder="4"
         ObjectFieldName="&quot;CityName&quot;"
         ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;All Cards&quot;"
-        IndexOrder="5"
+        IndexOrder="3"
         ObjectFieldName="&quot;CountryName&quot;"
-        ColumnWidth="150" />
-      <QueryColumn
-        QueryCode="&quot;All Cards&quot;"
-        IndexOrder="6"
-        ObjectFieldName="&quot;UpdateDate&quot;"
         ColumnWidth="150" />
     </QueryColumns>
     <QueryFilters />

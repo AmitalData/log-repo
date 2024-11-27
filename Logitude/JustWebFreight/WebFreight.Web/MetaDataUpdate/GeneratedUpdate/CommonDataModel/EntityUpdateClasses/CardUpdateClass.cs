@@ -91,7 +91,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
    public class CardUpdateClass
    {  		
  
-		public const string HashString = "7bdf9a674b2f374772f1cb6fea04700c";
+		public const string HashString = "1577b27acf2dffa811a05297c1b99e77";
  	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -10067,15 +10067,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn AllCardsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCardsQuery.Id,QueryCode = AllCardsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Card.EnglishName" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn AllCardsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCardsQuery.Id,QueryCode = AllCardsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Card.CreateDate" , ColumnWidth = 250 }, addedQueryColumns);
+			 QueryColumn AllCardsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCardsQuery.Id,QueryCode = AllCardsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Card.CityName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllCardsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCardsQuery.Id,QueryCode = AllCardsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Card.GLAccountDisplayNumber" , ColumnWidth = 150 }, addedQueryColumns);
-
-			 QueryColumn AllCardsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCardsQuery.Id,QueryCode = AllCardsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Card.CityName" , ColumnWidth = 150 }, addedQueryColumns);
-
-			 QueryColumn AllCardsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCardsQuery.Id,QueryCode = AllCardsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Card.CountryName" , ColumnWidth = 150 }, addedQueryColumns);
-
-			 QueryColumn AllCardsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCardsQuery.Id,QueryCode = AllCardsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Card.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn AllCardsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCardsQuery.Id,QueryCode = AllCardsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Card.CountryName" , ColumnWidth = 150 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
