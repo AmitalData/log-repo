@@ -44,34 +44,8 @@ LEFT JOIN
 	  <![CDATA[
 CREATE OR REPLACE VIEW CooStatusViews
     AS
-WITH CertificateStatus AS (
-	SELECT 
-		distinct c.declarationId,
-		CASE
-			-- If only one certificate exists for the declaration, select its status
-			WHEN COUNT(*) OVER (PARTITION BY c.declarationId) = 1 THEN c.CooStatusCode
-
-			-- If multiple certificates exist, join with SupplierInvoiceItems
-			ELSE (
-				SELECT TOP 1 co.CooStatusCode
-				FROM customs.CertificateOfOrigins co
-				INNER JOIN customs.SupplierInvoiceItems sii
-					ON sii.PreferenceDocumentNumber = co.COONumber
-				WHERE co.declarationId = c.declarationId
-			)
-		END AS StatusCode
-	FROM 
-		customs.CertificateOfOrigins c
-)
-SELECT 
-    cs.declarationId as DeclarationId,
-    coosce.LocalName as Status
-FROM 
-    CertificateStatus cs
-LEFT JOIN 
-    customs.CertificateOfOriginStatusCodeEnums coosce
-    ON cs.StatusCode = coosce.Code;
- 
+    
+    select null; 
 
 ]]>
   </OracleScript>
