@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, Input, OnInit, SimpleChanges } from '@angular/core';
+declare var window: any;
+import { AfterViewInit, Component, HostListener, Input, OnInit, SimpleChanges } from '@angular/core';
 import { DataRowComponent } from '../data-row/data-row.component';
 import { DetailsFrameComponent } from '../details-frame/details-frame.component';
 import { TableTopComponent, TableTopState } from '../table-top/table-top.component';
-import { NgFor, NgForOf, NgIf } from '@angular/common';
+import { NgFor, NgForOf, NgIf, NgStyle } from '@angular/common';
 import { trigger, style, animate, transition } from '@angular/animations';
 //@ts-ignore
 import { mockData } from '../../../../../mock_data';
@@ -14,11 +15,15 @@ import { HeaderService, searchState } from '../app-header/service/header.service
 import { FilterPopupService, FiltersSearch } from '../filter-popup/service/filter-popup.service';
 import { AddCommentComponent } from '../add-comment/add-comment.component';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
+import { FeatureLocator } from '../../../core/Infrastructure/Utilities/FeatureLocator';
+import { InfrastructureDomainService } from '../../../core/Infrastructure/Services/InfrastructureDomainService';
+import { LoginService } from '../../../core/Infrastructure/Services/LoginService';
+import { Router } from '@angular/router';
 import { RomanToolService } from '../../services/roman-tool.service';
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
-	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent, FormsModule],
+	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent, FormsModule, NgStyle],
 	templateUrl: './main-display.component.html',
 	styleUrl: './main-display.component.css',
 	animations: [
@@ -38,6 +43,7 @@ export class MainDisplayComponent implements OnInit {
 	@Input() showChiledren: boolean = false;
 	@Input() itemsData: BehaviorSubject<CB_CustomsItemComputedDataList[]>;
 	@Input() isLoadingMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	@Input() isFeaturePermessionCB: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	selectSearchBy: string = SearchBy.searchBy_form01;
 	showDetails: boolean = false;
 	showCommentsIsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -56,8 +62,12 @@ export class MainDisplayComponent implements OnInit {
 	cbRequirementComputedDataList: CB_RequirementComputedDataList[];
 	isExpand: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService, private filterPopupService: FilterPopupService, private romanTool: RomanToolService) { }
-	searchState: string = searchState.יבוא;
+	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService, private filterPopupService: FilterPopupService,
+		private loginService: LoginService, private myInfrastructureDomainService: InfrastructureDomainService, private router: Router, private romanTool: RomanToolService
+	) {
+		this.screenWidth = window.innerWidth;
+	}
+	searchState: string = searchState.????;
 
 	ngOnInit() {
 		this.headerService.searchState$.subscribe((data) => {
@@ -69,13 +79,49 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 	InitData() {
+		if (SessionInfo.LoggedUserTenant == 0) this.GetAllCustomsBookMainView();
+		else this.checkIsFeaturePermessionCustomsBook(() => this.GetAllCustomsBookMainView());
+
+		// listen to loading mode changes:
+		this.isLoadingMode.subscribe((isLoading) => {
+			this.isLoading = isLoading;
+		});
+		this.isFeaturePermessionCB.subscribe((isFeaturePermessionCB) => {
+			this.isFeaturePermessionCBMsg = isFeaturePermessionCB;
+		});
+	}
+
+	errorPermessionCustomsBook: string = "You have no permission to access this feature";
+	checkIsFeaturePermessionCustomsBook(onSuccess: () => void) {
+		this.loginService.GetObjectTables().subscribe((myResult: any) => {
+			if (!myResult) return true;
+			window.ObjectTables = myResult;
+			this.myInfrastructureDomainService.GetAllowedFeaturesForLoggedUser().subscribe((myResponse: any) => {
+				if (!myResponse) return true;
+				if (!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedData", "CustomsBookFeature")) {
+					this.data = [];
+					this.fullData = [];
+					this.isLoadingMode.next(false);
+					this.isFeaturePermessionCB.next(true);
+					// this.router.navigate(['/Customs-Book/login']);
+				}
+				else {
+					this.isFeaturePermessionCB.next(false);
+					onSuccess();
+				}
+			});
+		});
+	}
+
+	GetAllCustomsBookMainView() {
+		this.isLoadingMode.next(true);
 		let filters: Filters = {
 			CustomsBookType: this.searchState,
 			Tenant: SessionInfo.LoggedUserTenant,
 			SearchFields: ''
 		};
-		this.isLoadingMode.next(true);
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: any) => {
+			// if (!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedData", "CustomsBookFeature")) return;
 			const result: CB_CustomsItemComputedDataList[] = data.body;
 			if (!result) return; // TODO: add error message
 			this.countSearchResult = 0;
@@ -84,15 +130,12 @@ export class MainDisplayComponent implements OnInit {
 			this.data = this.fullData;
 			this.searchMode = TableTopState.ViewAll;
 			this.isLoadingMode.next(false);
-		});
-
-		// listen to loading mode changes:
-		this.isLoadingMode.subscribe((isLoading) => {
-			this.isLoading = isLoading;
+			this.isFeaturePermessionCB.next(false);
 		});
 	}
 
 	isLoading: boolean = false;
+	isFeaturePermessionCBMsg: boolean = false;
 	searchValue: string = '';
 	countSearchResult: number = 0;
 	ListenToItemsSearched() {
@@ -119,8 +162,8 @@ export class MainDisplayComponent implements OnInit {
 				this.countSearchResult = data.length;
 				// update list:
 				this.data = this.orderedDataForSearch(data);
-				this.searchToggleAllChildren(true); // expand all 
-
+				// this.searchToggleAllChildren(true); // expand all 
+				this.toggleVisibility(true, this.data);
 				this.searchMode = TableTopState.Search;
 				this.searchValue = this.searchService.GetSearchText();
 				if (this.showDetails) {
@@ -272,6 +315,11 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 	filtersSearchClick(filtersSearch: FiltersSearch) {
+		if (SessionInfo.LoggedUserTenant == 0) this.getSearchDataByFilter(filtersSearch);
+		else this.checkIsFeaturePermessionCustomsBook(() => this.getSearchDataByFilter(filtersSearch));
+	}
+
+	getSearchDataByFilter(filtersSearch: FiltersSearch) {
 		let filters: Filters = {
 			SearchFields: this.searchService.GetSearchText(),
 			CustomsBookType: this.searchState,
@@ -347,7 +395,8 @@ export class MainDisplayComponent implements OnInit {
 		this.countSearchResult = 0;
 		this.filterPopupService.toggleFilterPopup(false);
 		this.data = this.fullData;
-		this.searchToggleAllChildren(false);
+		// this.searchToggleAllChildren(false);
+		this.toggleVisibility(false, this.data)
 	}
 
 	public orderedDataForSearch = (data) => {
@@ -355,14 +404,25 @@ export class MainDisplayComponent implements OnInit {
 			const children = data.filter((item) => item?.CI_Parent_CustomsItemIDNum === parentItem?.CustomsItemID);
 			children.forEach((child) => {
 				child.children = getChildren(child);
+				// delete from rootItems value the children :
+				rootItems = deleteFromRootChildrens(child.CustomsItemID);
 			});
 			return children;
 		};
 
-		let rootItems = data.filter((item) => !item?.CI_Parent_CustomsItemIDNum);
-		if (rootItems.length === 0) {
-			rootItems = data;
-		}
+		//let rootItems = data.filter((item) => !item?.CI_Parent_CustomsItemIDNum);
+		//if (rootItems.length === 0) {
+		//  rootItems = data;
+		//}
+
+		const deleteFromRootChildrens = (CustomsItemID) => {
+			rootItems = rootItems.filter((x) => x.CustomsItemID != CustomsItemID);
+			return rootItems;
+		};
+
+
+		let rootItems = data;
+		if (rootItems?.length == 0) return;
 		
 		this.romanTool.sortArry(rootItems, 'FullClassification');
 
@@ -410,6 +470,14 @@ export class MainDisplayComponent implements OnInit {
 
 		return orderedData;
 	};
+
+	screenWidth: number;
+	// Get current screen width
+	@HostListener('window:resize', ['$event'])
+	onResize(event: Event): void {
+		this.screenWidth = (event.target as Window).innerWidth;
+		// console.log(this.screenWidth);
+	}
 }
 
 export enum FilterOption {
@@ -430,11 +498,13 @@ export class MainEntity {
 	CB_CustomsItemComputedDataList: CB_CustomsItemComputedDataList[];
 	CB_TariffList: CB_TariffList[];
 	CB_RequirementComputedDataList: CB_RequirementComputedDataList[];
+	CustomItemClassifGuidanceResult: CustomItemClassifGuidanceResult[];
 
-	constructor(CB_CustomsItemComputedDataList: CB_CustomsItemComputedDataList[], CB_TariffList: CB_TariffList[], CB_RequirementComputedDataList: CB_RequirementComputedDataList[]) {
+	constructor(CB_CustomsItemComputedDataList: CB_CustomsItemComputedDataList[], CB_TariffList: CB_TariffList[], CB_RequirementComputedDataList: CB_RequirementComputedDataList[], CustomItemClassifGuidanceResult: CustomItemClassifGuidanceResult[]) {
 		this.CB_CustomsItemComputedDataList = CB_CustomsItemComputedDataList;
 		this.CB_TariffList = CB_TariffList;
 		this.CB_RequirementComputedDataList = CB_RequirementComputedDataList;
+		this.CustomItemClassifGuidanceResult = CustomItemClassifGuidanceResult;
 	}
 }
 
@@ -541,9 +611,21 @@ export interface RulesDetailsList {
 	RuleID: number;
 	Title: string;
 	Rules: string;
+	Index: string;
+	ParentID: number;
 	UpdateDate: Date;
 	ChangeRequestTypePriority: number;
 	OrderinalPostion: number;
 	EntityStatusID: string;
-	Parent_RuleDetailsHistoryID: number;
+	customsItemId?: number;
+	CB_ID?: number;
+}
+
+export class CustomItemClassifGuidanceResult {
+	classificationGuidanceNumber: string;
+	title: string;
+	classificationGuidanceTypeName: string;
+	fullClassification: string;
+	publicationDate?: Date;
+	customsItemId?: number;
 }

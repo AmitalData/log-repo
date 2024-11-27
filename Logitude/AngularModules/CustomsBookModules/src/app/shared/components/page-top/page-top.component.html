@@ -1,8 +1,9 @@
 <div class="pageTop">
 	<div class="centeredContent">
 		<div class="pageSearch">
-			<strong style="text-align: start;">חיפוש פרט מכס</strong>
-			<div class="pageSearch_toggle">
+			<strong style="text-align: start; min-width: 220px;">{{searchHeader}}</strong>
+			<!-- #112160 -->
+			<!-- <div class="pageSearch_toggle">
 				<ul>
 					<li>
 						<label>
@@ -20,19 +21,18 @@
 						</label>
 					</li>
 				</ul>
-			</div>
+			</div> -->
 			<div class="pageSearch_form">
 				<fieldset>
 					<div class="pageSearch_formField shown" [id]="text">
 						<input type="text" (input)="onChange($event)" [(ngModel)]="textToSearch"
-							[maxlength]="text === SearchByValidation ? 11 : 100" [placeholder]="text"
-							(keyup.enter)="clickSearch()"
-							[matAutocomplete]="searchCustomsItemAutocomplateComponent?.auto" />
+							[maxlength]="isNumeric(textToSearch) ? 11 : 100" [placeholder]="text"
+							(keyup.enter)="clickSearch()" [matAutocomplete]="searchCustomsItemAutocomplateComponent?.auto" />
 						<app-search-customs-item-autocomplate
 							(optionSelected)="onCustomsItemSelected(textToSearch)"></app-search-customs-item-autocomplate>
 					</div>
 
-					<button (click)="clickSearch()">חיפוש</button>
+					<button (click)="clickSearch()">?????</button>
 				</fieldset>
 			</div>
 		</div>

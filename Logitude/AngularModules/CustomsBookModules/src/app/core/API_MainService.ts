@@ -37,18 +37,27 @@ export class API_MainService extends BaseService {
 	EditRemarksClassification(data) {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/EditRemarksClassification`;
 		return this.Post(url, data);
-  }
+	}
 
 	DeleteRemarksClassification(data) {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/DeleteRemarksClassification`;
 		return this.Post(url, data);
 	}
-	
-	GetCustomsBookMainView(filters: Filters) {
+
+	GetCustomsBookMainView(filters: Filters) {	
 		const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomsBookMainView?customsBookType=${filters.CustomsBookType}&Tenant=${filters.Tenant ? filters.Tenant : 0}`;
 		return this.Get(url);
 	}
 
+
+	GetTenantFromCustomsSettings() {
+		const url = `${this._apiUrl}CB_CustomsItemExtended/GetTenantFromCustomsSettings`;
+		return this.Get(url);
+	}
+	GetCustomItemClassifGuidance(customsItemId: number, tenant: number) {
+		const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomItemClassifGuidance?customsItemId=${customsItemId}&tenant=${tenant}`;
+		return this.Get(url);
+	}
 
 	GetCustomsBookAgreementLevelData(customsItemId: number, measurementUnitMalamId: number) {
 		const url = `${this._apiUrl}CB_TariffExtended/GetCustomsBookAgreementLevelData?customsItemId=${customsItemId}&measurementUnitMalamId=${measurementUnitMalamId}`;
@@ -61,16 +70,18 @@ export class API_MainService extends BaseService {
 	}
 
 	GetCustomsBookRulesData(customsItemId: number) {
-		const url = `${this._apiUrl}CB_TariffExtended/GetCustomsBookRulesData?customsItemId=${customsItemId}`;
+		const url = `${this._apiUrl}CB_RuleClassificationExtended/GetCustomsBookRulesData?customsItemId=${customsItemId}`;
 		return this.Get(url);
 	}
 
 	GetCustomsBookMainViewSearchByClassification(filters: Filters) {
+		// if (!this.checkIsFeaturePermessionCustomsBook()) return;
 		const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomsBookMainViewSearchByClassification`;
 		return this.Post(url, filters);
 	}
 
 	GetCustomsBookMainViewSearchByText(filters: Filters) {
+		// if (!this.checkIsFeaturePermessionCustomsBook()) return;
 		const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomsBookMainViewSearchByText`;
 		return this.Post(url, filters);
 	}

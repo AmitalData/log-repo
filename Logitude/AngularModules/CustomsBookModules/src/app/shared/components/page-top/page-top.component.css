@@ -47,7 +47,10 @@ h1 {
 }
 
 .pageSearch_toggle {
-	width: 260px;
+	/* min-width: 27vh;
+	width: 29vh; */
+	min-width: 212px;
+	max-width: 212px;
 	height: 30px;
 	margin-left: 15px;
 	background-color: white;
@@ -118,6 +121,8 @@ li {
 }
 
 .pageSearch_form {
+	/* min-width: 200px;  *//*#112160*/
+	min-width: 283px;
 	width: 450px;
 	height: 30px;
 	background-color: white;
@@ -164,11 +169,6 @@ li {
 	font-weight: 700;
 	font-size: 14px;
 	transition: all 0.2s ease-in-out;
-
-	&:hover {
-		cursor: pointer;
-		box-shadow: 0px 0px 14px 5px rgba(0, 0, 0, 0.1);
-	}
 }
 
 button {
@@ -209,4 +209,49 @@ li {
 	width: 100%;
 	height: 100%;
 	cursor: pointer;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 800px) {
+	.pageTop {
+		height: auto;
+	}
+
+	.centeredContent {
+		padding: 0 20px;
+		/* width: 62vh; */
+		width: 428px;
+	}
+
+	.pageSearch {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 10px;
+	}
+
+	.pageSearch_toggle {
+		width: 100%;
+		margin-left: 0;
+	}
+
+	.pageSearch_form {
+		width: 100%;
+	}
+}
+
+@media (min-width: 801px) {
+	.centeredContent {
+		padding: 0;
+	}
+
+	.pageSearch_form {
+		width: 57.5%;
+		/* width: 350px; */
+	}
+}
+
+@media (min-width: 1105px) {
+	.centeredContent {
+		padding: 0 50px;
+	}
 }

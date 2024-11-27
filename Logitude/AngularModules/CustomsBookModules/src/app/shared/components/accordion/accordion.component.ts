@@ -2,16 +2,18 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faChevronLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { GenericTableComponent, TableData } from '../generic-table/generic-table.component';
-import { CB_CustomsItemComputedDataList, CB_RequirementComputedDataList, CB_TariffList, ItemData, MainEntity } from '../main-display/main-display.component';
+import { CB_CustomsItemComputedDataList, CB_RequirementComputedDataList, CB_TariffList, CustomItemClassifGuidanceResult, ItemData, MainEntity } from '../main-display/main-display.component';
 import { API_MainService, Filters } from '../../../core/API_MainService';
 import { CommonModule } from '@angular/common';
 import { NgFor, NgForOf } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
+import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
+import { ClasisificationGuidanceComponent } from "../clasisification-guidance/clasisification-guidance.component";
 
 @Component({
   selector: 'app-accordion',
   standalone: true,
-  imports: [FontAwesomeModule, GenericTableComponent, CommonModule, NgFor, NgForOf],
+  imports: [FontAwesomeModule, GenericTableComponent, ClasisificationGuidanceComponent, CommonModule, NgFor, NgForOf],
   templateUrl: './accordion.component.html',
   styleUrl: './accordion.component.css',
 })
@@ -25,15 +27,19 @@ export class AccordionComponent implements OnInit {
   tableData1: TableData;
   tableData2: TableData;
   tableData3: TableData;
-  MainEntity: MainEntity = new MainEntity([], [], []);
+  tableData4: TableData;
+  MainEntity: MainEntity = new MainEntity([], [], [], []);
 
   expandedArea1: boolean = false;
   expandedArea2: boolean = false;
+  expandedArea3: boolean = true;
   faChevronLeft = faChevronLeft;
   faChevronDown = faChevronDown;
+  noExistMessageClasisificationGuidance = "לא התקבלו הנחיות סיווג";
+  isLoadingClasisificationGuidance = false;
 
   constructor(private API_MainService: API_MainService) {
-    this.MainEntity = new MainEntity([], [], []);
+    this.MainEntity = new MainEntity([], [], [], []);
   }
 
   ngOnInit() {
@@ -44,12 +50,17 @@ export class AccordionComponent implements OnInit {
 
   listenToChanges() {
     this.currentItem.subscribe((data: CB_CustomsItemComputedDataList) => {
+      // init expandedAreas:
+      this.expandedArea1 = false;
+      this.expandedArea2 = false;
+      this.expandedArea3 = true;
+
       this.customsItemId = data?.CustomsItemID;
       if (this.customsItemId) {
         this.resetData();
         this.buildAgreementsList(data?.agreementsList);
         this.buildRegularityRequirementList();
-        // this.getData();
+        this.buildClasisificationGuidance();
       }
     });
   }
@@ -58,7 +69,7 @@ export class AccordionComponent implements OnInit {
     this.tableData1 = {
       columns: [
         { key: 'Logo', displayName: '', dataType: 'img', visible: false },
-        { key: 'TradeAgreementName', displayName: 'שם ההסכם', dataType: 'string', visible: true, notEqual: `'מס קנייה'` },
+        { key: 'TradeAgreementName', displayName: 'שם ההסכם', dataType: 'string', visible: true },
         { key: 'CustomsRate', displayName: 'שיעור מכס', dataType: 'number', visible: true },
         { key: 'CustomsRateWithinQuota', displayName: 'שיעור מכס במסגרת מכסה', dataType: 'number', visible: true },
         { key: 'QuotaID', displayName: 'מס\' מכסה', dataType: 'number', visible: true },
@@ -95,13 +106,35 @@ export class AccordionComponent implements OnInit {
       ],
       data: []
     };
+    this.tableData4 = {
+      columns: [
+        { key: 'classificationGuidanceNumber', displayName: 'מספר הנחיה', dataType: 'button', visible: true },
+        { key: 'title', displayName: 'כותרת', dataType: 'string', visible: true },
+        { key: 'classificationGuidanceTypeName', displayName: 'סוג הנחיה', dataType: 'string', visible: true },
+        { key: 'fullClassification', displayName: 'חלק/פרק/פרט מכס', dataType: 'string', visible: true },
+        { key: 'publicationDate', displayName: 'תאריך פרסום', dataType: 'date', visible: true },
+        { key: 'customsItemId', displayName: 'מספר פריט מכס', dataType: 'number', visible: false },
+      ],
+      data: []
+    };
   }
 
   resetData() {
     this.tableData1.data = [];
     this.tableData2.data = [];
     this.tableData3.data = [];
+    this.tableData4.data = [];
   }
+
+  handleButtonClick(data: { event: Event, row: any, key: string }): void {
+    const { event, row, key } = data;
+    // console.log('Button clicked:', { event, row, key });
+    // console.log('Row data:', row[key]);
+    this.isShowTableClassificationGuidance = true;
+    this.ClassificationGuidanceData = row;
+  }
+  isShowTableClassificationGuidance: boolean = false;
+  ClassificationGuidanceData: any;
 
   // שיעורי מס
   buildAgreementsList(agreementsList: CB_TariffList[]) {
@@ -126,38 +159,37 @@ export class AccordionComponent implements OnInit {
     );
   }
 
-  // getData() {
-  //   // דרישות חוקיות
-  //   this.API_MainService.GetCustomsBookRegularityRequirementData(this.customsItemId).subscribe(
-  //     (data: any) => {
-  //       const result: CB_RequirementComputedDataList[] = data.body;
-  //       if (!result) return;
-  //       this.MainEntity.CB_RequirementComputedDataList = result;
-  //       this.tableData3.data = this.MainEntity.CB_RequirementComputedDataList;
+  // הנחיות סיווג
+  GetDataCustomItemClassifGuidance(customsItemId: number, tenant: number) {
+    this.API_MainService.GetCustomItemClassifGuidance(customsItemId, tenant).subscribe(
+      (data: any) => {
+        const result: CustomItemClassifGuidanceResult[] = data?.body?.CustomItemClassifGuidanceList;
+        if (!result) return;;
+        this.MainEntity.CustomItemClassifGuidanceResult = result;
+        this.tableData4.data = this.MainEntity.CustomItemClassifGuidanceResult;
+        this.isLoadingClasisificationGuidance = false;
+        // this.expandedArea3 = false;
+      },
+      (error) => {
+        console.log(error.message);
+      }
+    );
+  }
 
-
-  //     },
-  //     (error) => {
-  //       console.log(error.message);
-  //     }
-  //   );
-
-  //   // שיעורי מס
-  //   if (!this.currentItem?.getValue()?.PH_MeasurementUnitID) return;
-  //   this.API_MainService.GetCustomsBookAgreementLevelData(this.customsItemId, this.currentItem.getValue().PH_MeasurementUnitID).subscribe(
-  //     (data: any) => {
-  //       const result: CB_TariffList[] = data.body;
-  //       if (!result) return;
-  //       this.MainEntity.CB_TariffList = result;
-  //       this.tableData1.data = this.MainEntity.CB_TariffList.filter(x => x.TradeAgreementName != 'מס קניה');
-  //       this.tableData2.data = this.MainEntity.CB_TariffList.filter(x => x.TradeAgreementName == 'מס קניה');
-
-
-  //     },
-  //     (error) => {
-  //       console.log(error.message);
-  //     }
-  //   );
-  // }
-
+  buildClasisificationGuidance() {
+    this.isLoadingClasisificationGuidance = true;
+    if (SessionInfo.LoggedUserTenant != 0)
+      this.GetDataCustomItemClassifGuidance(this.customsItemId, SessionInfo.LoggedUserTenant);
+    else {
+      this.API_MainService.GetTenantFromCustomsSettings().subscribe(
+        (data: any) => {
+          const tenant: number = data?.body;
+          this.GetDataCustomItemClassifGuidance(this.customsItemId, tenant);
+        },
+        (error) => {
+          console.log(error.message);
+        }
+      );
+    }
+  }
 }

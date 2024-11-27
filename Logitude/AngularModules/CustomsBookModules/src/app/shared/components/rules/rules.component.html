@@ -26,16 +26,17 @@
                 </div>
                 <div class="rulesItem_DDown" [class.shown]="group.expanded">
                     <div class="rulesItem_section">
-                        <table class="boxRuleData">
+                        <table >
                             <tr *ngFor="let rule of group.rules; let i = index" class="parentLine">
-                                <td>{{ i + 1 }}</td>
+                                <td>{{ rule.Index }}</td>
                                 <td>
-                                    <span [innerHTML]="orderText(rule.Rules)"> {{ orderText(rule.Rules) }} </span>
+                                    <span [innerHTML]="sanitizeHTML(highlight(rule.Rules))"></span> 
                                     <table class="boxRuleDataChild">
                                         <tr *ngFor="let childItem of rule.childrens; let j = index">
-                                            <td>{{ alephBetHelper.getLetterFromNumber(j + 1) }}</td>
-                                            <td [innerHTML]="orderText(childItem.Rules)">{{ orderText(childItem.Rules) }}</td>
-                                        </tr>
+                                            <!-- <td>{{ alephBetHelper.getLetterFromNumber(j + 1) }}</td> -->
+                                            <td>{{ childItem.Index }}</td>
+                                            <td [innerHTML]="sanitizeHTML(highlight(childItem.Rules))"></td>
+                                        </tr> 
                                     </table>
                                 </td>
                             </tr>
