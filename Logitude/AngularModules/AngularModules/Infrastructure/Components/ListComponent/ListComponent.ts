@@ -107,6 +107,8 @@ export class ListComponent implements OnInit, AfterViewInit {
     customsSettingListService: CustomsSettingListService = new CustomsSettingListService();
      public HasCustomsFilterMenu: boolean = false;
     public IsPhysicalCheckObjectTable: boolean = false;
+    public IsReportExecutionLogObjectTable: boolean = false;
+
     public IsLogisticActionRequestObjectTable: boolean = false;
      WorkFlowPMService: WorkFlowPMService = new WorkFlowPMService();
     private _declarationWebService: DeclarationWebService = new DeclarationWebService();
@@ -757,6 +759,9 @@ export class ListComponent implements OnInit, AfterViewInit {
 
         if (this.ObjectTableName == "Customs.PhysicalCheck") {
             this.IsPhysicalCheckObjectTable = true;
+        }
+        else if (this.ObjectTableName == 'ReportExecutionLog') {
+            this.IsReportExecutionLogObjectTable = true;
         }
         else if (this.ObjectTableName == "Customs.LogisticActionRequest") {
             this.IsLogisticActionRequestObjectTable = true;
