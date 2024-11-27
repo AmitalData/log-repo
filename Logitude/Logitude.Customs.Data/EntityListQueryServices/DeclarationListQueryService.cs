@@ -189,15 +189,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                 into qStatusAmendJoin
                                                      from myJoinAmendmentRequest in qStatusAmendJoin.DefaultIfEmpty()
 
-                                                     let coo = (from certificateOfOrigins in context.CertificateOfOrigins // .Include(a => a.CertificateOfOriginStatusCodeEnumsad)
-
-                                                                join CertificateOfOriginStatusCodeEnum in context.CertificateOfOriginStatusCodeEnums
-                                                                on certificateOfOrigins.CooStatusCode equals CertificateOfOriginStatusCodeEnum.Code
-                                                                into CertificateOfOriginStatusCodeEnumJoin
-                                                                from myJoinCooStatusCodeEnumJoin in CertificateOfOriginStatusCodeEnumJoin.DefaultIfEmpty()
-
-                                                                where certificateOfOrigins.DeclarationId == a.Id
-                                                                select new { certificateOfOrigins.CooStatusCode, certificateOfOrigins.COONumber, CooStatusCodeName = myJoinCooStatusCodeEnumJoin.LocalName }).ToList()
+                                                     join cooStatusViews in context.CooStatusViews
+                                                     on a.Id equals cooStatusViews.DeclarationId into cooStatusViewsJoin
+                                                     from MyDeclarationCooStatusViews in cooStatusViewsJoin.DefaultIfEmpty()
 
                                                      select new DeclarationList()
                                                      {
@@ -348,12 +342,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          LoadingPortName = a.ExportLoadingPort.LocalName,
                                                          ExcludeManifest = a.ExcludeManifest,
 														 AmendmentRejectionReason = a.AmendmentRejectionReason,
-
-                                                         CooStatusCode = coo.Count  <= 1 ? coo.FirstOrDefault().CooStatusCodeName :
-                                                                                            (from sii in context.SupplierInvoiceItems
-                                                                                             join cooJoin in coo on sii.PreferenceDocumentNumber equals cooJoin.COONumber
-                                                                                             where sii.DeclarationId == a.Id
-                                                                                             select cooJoin.CooStatusCodeName).FirstOrDefault(),
+                                                         CooStatusCode = MyDeclarationCooStatusViews.Status,
                                                      });
 
                 return query;

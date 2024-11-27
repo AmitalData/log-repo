@@ -20,6 +20,7 @@ namespace Logitude.Customs.Data
         public IDbSet<RequestSheetInQueueMesView> RequestSheetInQueueMesViews { get; set; }
 
         public IDbSet<DecTaxesByTaxTypeCodeView> DecTaxesByTaxTypeCodeViews { get; set; }
+        public IDbSet<CooStatusView> CooStatusViews { get; set; }
         public IDbSet<CustomsBookMainView> CustomsBookMainViews { get; set; }
 
          
@@ -34,6 +35,7 @@ namespace Logitude.Customs.Data
         IDbSet<RequestSheetInQueueMesView> RequestSheetInQueueMesViews { get; set; }
 
         IDbSet<DecTaxesByTaxTypeCodeView> DecTaxesByTaxTypeCodeViews { get; set; }
+        IDbSet<CooStatusView> CooStatusViews { get; set; }
         IDbSet<CustomsBookMainView> CustomsBookMainViews { get; set; }
 
 
