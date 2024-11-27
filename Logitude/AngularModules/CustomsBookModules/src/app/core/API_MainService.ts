@@ -69,7 +69,7 @@ export class API_MainService extends BaseService {
 	}
 
 	GetCustomsBookRulesData(customsItemId: number) {
-		const url = `${this._apiUrl}CB_TariffExtended/GetCustomsBookRulesData?customsItemId=${customsItemId}`;
+		const url = `${this._apiUrl}CB_RuleClassificationExtended/GetCustomsBookRulesData?customsItemId=${customsItemId}`;
 		return this.Get(url);
 	}
 
