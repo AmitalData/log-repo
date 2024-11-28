@@ -5,6 +5,7 @@
 	height: 100%;
 	width: 100%;
 	background-color: #f3f5f7;
+	direction: ltr;
 }
 
 .centeredContent>.headerFlex {
@@ -44,18 +45,18 @@
 .centeredContent .headerFlex .headerToggle ul li:nth-child(1) {
 	border-radius: 15px 0 0 15px;
 
-	&:nth-child(1) {
+ 	&:nth-child(1) {
 		border-radius: 0 15px 15px 0;
-	}
+ 	}
 }
 
 .centeredContent .headerFlex .headerToggle ul li:nth-last-child(1) {
 	border-radius: 0 15px 15px 0;
 
-	&:nth-last-child(1) {
+ 	&:nth-last-child(1) {
 		border-radius: 15px 0 0 15px;
 	}
-}
+ }
 
 .centeredContent .headerFlex .headerToggle ul li.checked {
 	background-color: var(--blue);

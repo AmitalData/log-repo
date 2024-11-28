@@ -6,6 +6,7 @@ import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { faChevronLeft, faSquareCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { SearchService } from '../page-top/service/top-page.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-rules',
@@ -25,7 +26,7 @@ export class RulesComponent implements OnInit, OnChanges {
   clickPin: boolean = true;
   searchText: string = '';
 
-  constructor(private API_MainService: API_MainService, private searchService: SearchService) { }
+  constructor(private API_MainService: API_MainService, private searchService: SearchService, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.currentItem.subscribe((data: CB_CustomsItemComputedDataList) => {
@@ -38,6 +39,10 @@ export class RulesComponent implements OnInit, OnChanges {
     if (changes['showRules']) {
       this.showRules = changes['showRules'].currentValue;
     }
+  }
+
+  sanitizeHTML(content: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(content);
   }
 
   // Method to fetch rules data from the API and build the rules hierarchy
@@ -79,7 +84,15 @@ export class RulesComponent implements OnInit, OnChanges {
     // Function to get children of a parent rule recursively
     const getChildren = (parentRule: CB_RulesDetailsList): CB_RulesDetailsList[] => {
       // Filter for children of the current parent rule
-      const children = rulesList.filter(rule => rule.Parent_RuleDetailsHistoryID === parentRule.ID);
+      const children = rulesList.filter(rule => rule.ParentID === parentRule.ID);
+      // order the children by Index. if the index is a number from the string index "1.", "2." "3.", sort by number don't sort by string:
+      children.sort((a, b) => {
+        if (a.Index.match(/^\d+\./) && b.Index.match(/^\d+\./)) {
+          return parseInt(a.Index) - parseInt(b.Index);
+        }
+        return a.Index.localeCompare(b.Index);
+      });
+
       // For each child, get its own children recursively
       children.forEach(child => {
         child.childrens = getChildren(child);
@@ -88,7 +101,7 @@ export class RulesComponent implements OnInit, OnChanges {
     };
 
     // Find root rules
-    const rootRules = rulesList.filter(rule => rule.Parent_RuleDetailsHistoryID == 0 || rule.Parent_RuleDetailsHistoryID == null);
+    const rootRules = rulesList.filter(rule => rule.ParentID == 0 || rule.ParentID == null || rule.Index == "-");
     // Build the hierarchy for root rules
     const rulesListData = rootRules.map(rootRule => {
       const children = getChildren(rootRule);
@@ -100,17 +113,19 @@ export class RulesComponent implements OnInit, OnChanges {
 
     // Group rules by title
     const grouped: GroupedRules[] = rulesListData.reduce((acc: GroupedRules[], rule) => {
-      const key = rule.Title;
-      let group = acc.find(g => g.title === key);
+      const key = rule.CB_ID;
+      let group = acc.find(g => g.id === key);
 
       // If the group doesn't exist, create a new one
       if (!group) {
         group = new GroupedRules();
-        group.title = key;
+        group.id = rule.CB_ID;
+        group.title = rule.Rules;
         acc.push(group);
       }
       // Add the current rule to the group's rules
-      group.rules.push(rule);
+      // group.rules.push(rule);
+      group.rules = rule.childrens;
       return acc;
     }, []);
     this.groupRulesList = grouped;
@@ -145,6 +160,7 @@ interface CB_RulesDetailsList extends RulesDetailsList {
 
 // Class defining a structure for grouped rules
 class GroupedRules {
+  id: number = 0;
   title: string;
   rules: CB_RulesDetailsList[] = [];
   expanded?: boolean = false;

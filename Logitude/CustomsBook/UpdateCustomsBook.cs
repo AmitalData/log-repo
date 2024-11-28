@@ -212,8 +212,12 @@ namespace CustomsBook
                 };
                 DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService messagingService = new DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService();
                 CustomItemRuleResponseData responseData = messagingService.Send(requestParamsData);
+                if (responseData != null && !responseData.Succeeded)
+                {
+                    throw new Exception(responseData.UserMessage);
+                }
             }
-            tempTables.Add("TEMP_CB_RuleClassification");
+            tempTables.Add("TEMP_CB_RuleClassifications");
         }
 
         static void MapXmlTempTable(string fileName)

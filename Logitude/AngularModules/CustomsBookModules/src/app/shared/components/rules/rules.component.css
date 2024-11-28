@@ -187,7 +187,8 @@ a.detailsSlide_commentsPinned[aria-checked='true'] i:nth-child(2) {
 }
 
 .rulesItem_DDown.shown {
-    max-height: 900px;
+    /* max-height: 900px; */
+    max-height: 100%;
 }
 
 .rulesItem_DDown[aria-hidden="false"] {
@@ -209,7 +210,7 @@ a.detailsSlide_commentsPinned[aria-checked='true'] i:nth-child(2) {
     padding: 0 10px;
 }
 
-.parentLine{
+.parentLine {
     /* position: relative;
     left: 60px; */
 }
