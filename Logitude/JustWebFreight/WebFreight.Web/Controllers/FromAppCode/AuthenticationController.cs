@@ -67,6 +67,7 @@ using System.Runtime.Remoting.Contexts;
 using Stimulsoft.Base.Gauge.GaugeGeoms;
 using WebFreight.Web.Helpers.CheckHealthHelper;
 using Logitude.Customs.BL.BL;
+using System.Threading.Tasks;
 namespace WebFreight.Web
 {
 #if DEBUG
@@ -3376,7 +3377,7 @@ namespace WebFreight.Web
 
         [HttpGet]
         [ActionName("CheckHealth")]
-        public HttpResponseMessage CheckHealth()
+        public async Task<HttpResponseMessage> CheckHealth()
         {
             Stopwatch stopwatch = new Stopwatch();
             try
@@ -3388,8 +3389,17 @@ namespace WebFreight.Web
                 stopwatch.Stop();
                 long elapsedTime = stopwatch.ElapsedMilliseconds;
                 string time = elapsedTime.ToString();
+                var cpuPercentage = await checkHealthService.GetCpuPercentageAsync();
+                if (cpuPercentage > 80)
+                {
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError, $"Machine is not healthy \n Time of query {time}"); 
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError, $"Machine is  healthy \n Time of query {time}");
 
-                return Request.CreateResponse(HttpStatusCode.OK, time);
+                 
+                }
             }
             catch (Exception ex)
             {
