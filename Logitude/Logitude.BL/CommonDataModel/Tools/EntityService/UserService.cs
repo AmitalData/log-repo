@@ -48,7 +48,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.objectContext = objectContext;
             this.entityRepository = new UserRepository(objectContext);
             this.userPermittedBranchRepository = new UserPermittedBranchRepository(objectContext);
-            this.userPermittedProductRepository = new UserPermittedProductRepository(objectContext);            
+            this.userPermittedProductRepository = new UserPermittedProductRepository(objectContext); 
+            this.userFreelancerGroupRepository = new UserFreelancerGroupRepository(objectContext);
         }
 
         private List<UserPermittedBranchPM> userPermittedBranchPMChangeSet;
@@ -125,7 +126,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             foreach (UserFreelancerGroupPM itemPM in entityPM.FreelancerGroups)
             {
-                this.CreateUserFreelancerGroup(itemPM);
+                this.CreateUserFreelancerGroup(itemPM, entityPM);
             }
 
             ContactQuery contactQuery = new ContactQuery(contactRepository);
@@ -238,7 +239,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             this.UpdateUserPermittedPermitions();
-            this.UpdateUserFreelancerGroups();
+            this.UpdateUserFreelancerGroups(entityPM);
 
             if (entityPM.IsBranchRestricted)
             {
@@ -783,17 +784,18 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
         }
-        private void UpdateUserFreelancerGroups()
+        private void UpdateUserFreelancerGroups(UserPM entityPM)
         {
             if (userFreelancerGroupPMChangeSet != null)
             {
                 foreach (UserFreelancerGroupPM itemPM in userFreelancerGroupPMChangeSet)
                 {
+                    itemPM.UserId = entityPM.Id;
                     switch (itemPM.ChangeSetOp)
                     {
                         case ChangeSetOperation.Insert:
                             {
-                                this.CreateUserFreelancerGroup(itemPM);
+                                this.CreateUserFreelancerGroup(itemPM, entityPM);
                                 break;
                             }
 
@@ -851,10 +853,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             userPermittedProductRepository.Add(Poco);
         }
 
-        private void CreateUserFreelancerGroup(UserFreelancerGroupPM entityPM)
+        private void CreateUserFreelancerGroup(UserFreelancerGroupPM entityPM, UserPM userPM)
         {
             entityPM.Id = IdCounter.GetNumber("UserFreelancerGroup", tenant).ToString();
             UserFreelancerGroup Poco = new UserFreelancerGroup();
+            Poco.UserId = userPM.Id;
             Poco.Id = entityPM.Id;
 
             UserFreelancerGroupMapping.MapEntity(entityPM, Poco, true);
