@@ -499,6 +499,7 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<ReferenceType> ReferenceTypes { get; set; }
         public IDbSet<ShipmentReferance> ShipmentReferances { get; set; }
         public IDbSet<FreightForwarderReference> FreightForwarderReferences { get; set; }
+        public IDbSet<Responsibility> Responsibilities { get; set; }
 
         public void SetAsModified(object entity)
         {

@@ -42,7 +42,7 @@
   <Column
     Name="PackageTypeCode"
     Type="varchar"
-    Size="4">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>

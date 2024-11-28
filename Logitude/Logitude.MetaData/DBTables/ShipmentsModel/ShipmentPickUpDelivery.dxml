@@ -302,7 +302,7 @@
   <Column
     Name="PackageTypeCode"
     Type="varchar"
-    Size="4">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -310,31 +310,31 @@
     Name="Quantity"
     Type="int">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="GrossWeight"
     Type="float">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="Volume"
     Type="float">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="CustomerChargeableWeight"
     Type="float">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="TruckerChargeableWeight"
     Type="float">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="DescriptionOfGoods"
@@ -354,7 +354,7 @@
     Name="CreateDate"
     Type="datetime">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="ToAddressCityId"

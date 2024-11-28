@@ -43,6 +43,13 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ParentPickUpDeliveryId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.StandaloneShipmentId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.StandaloneShipmentNumber).HasMaxLength(20).IsUnicode(false);
+            this.Property(t => t.DeliveryContact).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.PackageTypeCode).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.DescriptionOfGoods).HasMaxLength(2000).IsUnicode(false);
+            this.Property(t => t.Commodity).HasMaxLength(5).IsUnicode(false);
+            this.Property(t => t.ToAddressCityId).HasMaxLength(5).IsUnicode(false);
+            this.Property(t => t.FromAddressCityId).HasMaxLength(5).IsUnicode(false);
+            this.Property(t => t.ResponsibilityCode).HasMaxLength(1).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ShipmentPickUpDeliveries");
@@ -87,6 +94,19 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ChildDeliveryIndex).HasColumnName("ChildDeliveryIndex");
             this.Property(t => t.StandaloneShipmentId).HasColumnName("StandaloneShipmentId");
             this.Property(t => t.StandaloneShipmentNumber).HasColumnName("StandaloneShipmentNumber");
+            this.Property(t => t.DeliveryContact).HasColumnName("DeliveryContact");
+            this.Property(t => t.PackageTypeCode).HasColumnName("PackageTypeCode");
+            this.Property(t => t.DeliveryContact).HasColumnName("Quantity");
+            this.Property(t => t.DeliveryContact).HasColumnName("GrossWeight");
+            this.Property(t => t.DeliveryContact).HasColumnName("Volume");
+            this.Property(t => t.DeliveryContact).HasColumnName("CustomerChargeableWeight");
+            this.Property(t => t.DeliveryContact).HasColumnName("TruckerChargeableWeight");
+            this.Property(t => t.DescriptionOfGoods).HasColumnName("DescriptionOfGoods");
+            this.Property(t => t.Commodity).HasColumnName("Commodity");
+            this.Property(t => t.DeliveryContact).HasColumnName("CreateDate");
+            this.Property(t => t.ToAddressCityId).HasColumnName("ToAddressCityId");
+            this.Property(t => t.FromAddressCityId).HasColumnName("FromAddressCityId");
+            this.Property(t => t.ResponsibilityCode).HasColumnName("ResponsibilityCode");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -120,6 +140,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.TransportMode).WithMany().HasForeignKey(d => d.TransportModeCode);
             this.HasOptional(t => t.ParentPickUpDelivery).WithMany().HasForeignKey(d => d.ParentPickUpDeliveryId);
             this.HasOptional(t => t.StandaloneShipment).WithMany().HasForeignKey(d => d.StandaloneShipmentId);
+            this.HasOptional(t => t.ShipmentDeliveryContact).WithMany().HasForeignKey(d => d.DeliveryContact);
+            this.HasOptional(t => t.PackageType).WithMany().HasForeignKey(d => d.PackageTypeCode);
+            this.HasOptional(t => t.Responsibility).WithMany().HasForeignKey(d => d.ResponsibilityCode);
         }
     }
 }
