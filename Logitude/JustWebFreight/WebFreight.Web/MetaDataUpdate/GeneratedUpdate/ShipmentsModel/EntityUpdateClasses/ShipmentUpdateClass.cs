@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "f1e27832048fb2c561fc923659362b32";
+		public const string HashString = "33e5c865a388519d265d9e219c91e77b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -92928,6 +92928,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
                  
 			   TextCode ShipmentCustomsFileTextCode_TH22 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.CustomsFile", DefaultText = "Customs File",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature ShipmentCustomsFileFeature_TH22 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSFILE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.CustomsFile", NameTextCodeDefaultText = "Customs File", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
+ 
+                 
+			   TextCode ShipmentInlandTransportTextCode_TH23 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.InlandTransport", DefaultText = "Inland Transport",LocalDefaultText = "BS64:IteU15XXkdec15Qg15nXkdep16rXmdeqIg==", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ShipmentInlandTransportFeature_TH23 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Tab.InlandTransport", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentFeatures.INTR", NameTextCodeDefaultText = "Inland Transport", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -92978,6 +92982,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHFF",HtmlComponentName = "FreightFilesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/FreightFiles/FreightFilesTabComponent", FeatureId = ShipmentFreightFilesFeature_TH21.Id,FeatureUniqeCode = ShipmentFreightFilesFeature_TH21.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.CustomsLib.FreightFilesTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentFreightFilesTextCode_TH21.Id, TabNameTextCodeCode = ShipmentFreightFilesTextCode_TH21.Code, Tenant = 0, IndexOrder = 19 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCF",HtmlComponentName = "CustomsFileTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/CustomsFile/CustomsFileTabComponent", FeatureId = ShipmentCustomsFileFeature_TH22.Id,FeatureUniqeCode = ShipmentCustomsFileFeature_TH22.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.CustomsLib.CustomsFileTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentCustomsFileTextCode_TH22.Id, TabNameTextCodeCode = ShipmentCustomsFileTextCode_TH22.Code, Tenant = 0, IndexOrder = 20 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "INTR",HtmlComponentName = "InlandTransportTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/InlandTransport/InlandTransportTabComponent", FeatureId = ShipmentInlandTransportFeature_TH23.Id,FeatureUniqeCode = ShipmentInlandTransportFeature_TH23.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.InlandTransport.InlandTransportControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentInlandTransportTextCode_TH23.Id, TabNameTextCodeCode = ShipmentInlandTransportTextCode_TH23.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

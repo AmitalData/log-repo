@@ -39,4 +39,17 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="CityCode"
+    OldNames="City"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="CityCode"
+    ReferencedTable="Cities"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
 </Table>

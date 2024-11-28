@@ -13,6 +13,7 @@ export class DeliverySiteTypeList {
 	EnglishName: string;
 	SearchFields: string;
 	Inactive: boolean;
+	CityCode: string;
 	
 }
  

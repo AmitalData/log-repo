@@ -111526,6 +111526,20 @@
     FeatureDefaultText="&quot;Customs File&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Inland Transport&quot;"
+    TabLocalNameBack_up="&quot;הובלה יבשתית&quot;"
+    TabLocalName="&quot;BS64:IteU15XXkdec15Qg15nXkdep16rXmdeqIg==&quot;"
+    ObjectTableName="&quot;Shipment&quot;"
+    Code="&quot;INTR&quot;"
+    ControlPath="&quot;Simplog.ShipmentLib.Views.InlandTransport.InlandTransportControl&quot;"
+    TextCode="&quot;Shipment.TH.InlandTransport&quot;"
+    IsPackagable="true"
+    IndexOrder="2"
+    HtmlComponentURL="&quot;./ShipmentModules/ShipmentTabs/Components/InlandTransport/InlandTransportTabComponent&quot;"
+    HtmlComponentName="&quot;InlandTransportTabComponent&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;CUTO&quot;"

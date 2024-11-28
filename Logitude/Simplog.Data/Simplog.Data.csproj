@@ -903,6 +903,7 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\PayableProratedAmount.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\PickUpDeliveryPackageHarmonize.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\PickUpDeliveryTransportMode.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\Responsibility.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ReferenceType.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentAnalytic.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentAssembly.cs" />
@@ -1383,6 +1384,7 @@
     <Compile Include="ShipmentsModel\Repositories\PayableProratedAmountRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\PickUpDeliveryPackageHarmonizeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\PickUpDeliveryTransportModeRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\ResponsibilityRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ReferenceTypeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentAdditionalCloudDataRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentAssemblyRepository.cs" />

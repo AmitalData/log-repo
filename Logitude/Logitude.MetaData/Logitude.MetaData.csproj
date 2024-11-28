@@ -1859,6 +1859,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\ShipmentsModel\PickUpDeliveryTransportMode.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\Responsibility.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ReferenceType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\Shipment.lxml">
       <SubType>Designer</SubType>

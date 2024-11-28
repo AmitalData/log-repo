@@ -1200,6 +1200,11 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                         if (indexOfTab > -1) {
                             allTabs.splice(indexOfTab, 1);
                         }
+
+                        var indexOfTab = allTabs.findIndex(t => t.Code == "INTR");
+                        if (indexOfTab > -1) {
+                            allTabs.splice(indexOfTab, 1);
+                        }
                     }
 
 

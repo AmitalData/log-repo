@@ -30,6 +30,7 @@ import { ShipmentPackagesTabComponent } from './Components/ShipmentPackages/Ship
 import { ShipmentDataTabComponent } from './Components/ShipmentData/ShipmentDataTabComponent';
 import { ShipmentReferenceDetailsComponent } from './Components/ShipmentData/ShipmentReferenceDetails/ShipmentReferenceDetailsComponent';
 import { FreightForwarderReferenceDetailsComponent } from './Components/ShipmentData/FreightForwarderReferenceDetails/FreightForwarderReferenceDetailsComponent';
+import { InlandTransportTabComponent } from './Components/InlandTransport/InlandTransportTabComponent';
 
 export const Components =
     [
@@ -45,6 +46,7 @@ export const Components =
         CustomsTabComponent,
         ShipmentPackagesTabComponent,
         ShipmentDataTabComponent,
+        InlandTransportTabComponent,
         ShipmentReferenceDetailsComponent,
         ExportFileComponent,
         OrdersTabComponent,
@@ -103,6 +105,7 @@ export class ModuleDeclarations {
             case "EditCustomerProductItemComponent": { myResult = EditCustomerProductItemComponent; break; }
             case "ShipmentPackagesTabComponent" : { myResult = ShipmentPackagesTabComponent; break; }
             case "ShipmentDataTabComponent" : { myResult = ShipmentDataTabComponent; break; }
+            case "InlandTransportTabComponent" : { myResult = InlandTransportTabComponent; break; }
             case "ShipmentReferenceDetailsComponent" : { myResult = ShipmentReferenceDetailsComponent; break; }
             case "FreightForwarderReferenceDetailsComponent" : { myResult = FreightForwarderReferenceDetailsComponent; break; }
 

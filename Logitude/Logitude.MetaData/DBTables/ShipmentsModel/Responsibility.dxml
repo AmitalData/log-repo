@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="PackingTypes"
-  Schema="Customs"
+  Name="Responsibilities"
+  Schema="dbo"
   DBType="Main"
-  Module="Customs">
+  Module="Shipment">
   <Column
     Name="Code"
     Type="varchar"
-    Size="4">
+    Size="1">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -15,14 +15,14 @@
   <Column
     Name="LocalName"
     Type="nvarchar"
-    Size="100">
+    Size="60">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="EnglishName"
     Type="varchar"
-    Size="100">
+    Size="60">
     <Constraints
       Nullable="true" />
   </Column>
@@ -39,16 +39,4 @@
     <Constraints
       Nullable="false" />
   </Column>
-  <Column
-    Name="PackageTypeCode"
-    Type="varchar"
-    Size="4">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Relation
-    ForeignKeyColumn="PackageTypeCode"
-    ReferencedTable="PackageTypes"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
 </Table>
