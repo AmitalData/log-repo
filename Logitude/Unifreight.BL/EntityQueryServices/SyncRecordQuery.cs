@@ -61,7 +61,12 @@ namespace Unifreight.BL.EntityQueryServices
             {
                 string recordAsJson = GetRecordOfRowNeedSync(syncRecord);
                 if (recordAsJson == null)
-                    notExistsRecord.Add(syncRecord);
+                {
+                    if(syncRecord.Entname == "GGGQC")
+                        return null;
+                    else
+                        notExistsRecord.Add(syncRecord);
+                }
 
                 return new EntityRecord
                 {
@@ -72,7 +77,7 @@ namespace Unifreight.BL.EntityQueryServices
                     UpdateDate = syncRecord.SyncDT,
                     CraeteDate = syncRecord.CreateDate
                 };
-            }).ToList();
+            }).Where(x => x != null).ToList();
 
             repository.UpdateStatus(notExistsRecord, SyncRecordStatus.SyncedAndUpdated);
 
