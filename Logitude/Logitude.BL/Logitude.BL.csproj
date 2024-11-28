@@ -923,7 +923,10 @@
     <Compile Include="InfrastructureModel\EntityQueries\QuoteChargesGroupQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ReferenceCustomObjectQuery.cs" />
     <Compile Include="Security\ContactInfo.cs" />
+    <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\ResponsibilityDetails.Generated.cs" />
+    <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\ResponsibilityStruct.Generated.cs" />
     <Compile Include="ShipmentsModel\EntityLists\FreightForwarderReferenceList.cs" />
+    <Compile Include="ShipmentsModel\EntityLists\ResponsibilityList.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\FreightForwarderReferencePM.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ReferenceTypeListQueryService.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ScreenSectionQuery.cs" />
@@ -1123,6 +1126,7 @@
     <Compile Include="ShipmentsModel\EntityPMs\OceanInsightsStatusLogPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ReferenceTypePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentReferancePM.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\ResponsibilityQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ReferenceTypeQueryService.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\FreightForwarderReferenceQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentReferanceQuery.cs" />

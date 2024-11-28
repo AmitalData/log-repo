@@ -142,6 +142,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string cityCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CityCode  
+	   {
+	    
+	     get
+		{
+		   return cityCode;
+		 }
+		 set
+		 {
+		   if(cityCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CityCode",OldValue=cityCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cityCode=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

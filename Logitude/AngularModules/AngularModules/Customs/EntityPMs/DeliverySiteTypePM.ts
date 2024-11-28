@@ -49,6 +49,11 @@ export class DeliverySiteTypePM {
     public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
        
 	 
+    private cityCode: string;
+    public get CityCode() { return this.cityCode; }
+    public set CityCode(newValue: string) { if (this.cityCode != newValue) { this.cityCode = newValue; this.MarkAsDirty("CityCode"); } }
+       
+	 
 
     public OldEntityPM: DeliverySiteTypePM;
 		

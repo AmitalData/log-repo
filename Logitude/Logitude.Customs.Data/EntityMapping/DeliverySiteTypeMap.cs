@@ -39,6 +39,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
 
             this.Property(t => t.Inactive).HasColumnName("Inactive");
+
+            this.Property(t => t.CityCode).HasColumnName("CityCode").HasMaxLength(5).IsUnicode(false);
         }
     }
 }

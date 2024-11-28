@@ -292,6 +292,92 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="DeliveryContact"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PackageTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Quantity"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="GrossWeight"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Volume"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CustomerChargeableWeight"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TruckerChargeableWeight"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DescriptionOfGoods"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Commodity"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ToAddressCityId"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FromAddressCityId"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ResponsibilityCode"
+    OldNames="Responsibility"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ToAddressId"
     ReferencedTable="Addresses"
@@ -381,5 +467,30 @@
     ForeignKeyColumn="StandaloneShipmentId"
     ReferencedTable="Shipments"
     ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DeliveryContact"
+    ReferencedTable="Contacts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PackageTypeCode"
+    ReferencedTable="PackageTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ToAddressCityId"
+    ReferencedTable="Cities"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="FromAddressCityId"
+    ReferencedTable="Cities"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ResponsibilityCode"
+    ReferencedTable="Responsibilities"
+    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
 </Table>

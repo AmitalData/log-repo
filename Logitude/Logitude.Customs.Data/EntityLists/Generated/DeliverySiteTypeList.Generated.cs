@@ -31,6 +31,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string SearchFields  { get; set; }
        [DataMember]
        public bool Inactive  { get; set; }
+       [DataMember]
+       public string CityCode  { get; set; }
    }
 
 }
