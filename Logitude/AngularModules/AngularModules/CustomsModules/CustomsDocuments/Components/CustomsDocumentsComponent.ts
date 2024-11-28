@@ -641,7 +641,7 @@ export class CustomsDocumentsComponent
                         this.CurrentSession.StopBusyIndicator();
                         if (!resp.HasError) {
                             var customsDoc = resp.Result;
-                            if(CustomsDocumentTicketViewModel.IsOcrDocument && this.EntityPM.DeclarationStatusTypeCode != "45"){
+                            if(CustomsDocumentTicketViewModel.IsOcrDocument && !this.EntityPM.IsSubmitDeclaration){
                                 this.UpsertSupplierInvioceByOcr(customsDoc.DocumentsFilingId, isThereRequests, customsDocumentsTicket.customsDocumentsTicketPM, customsDoc);
                                 CustomsDocumentTicketViewModel.IsOcrDocument = false;
                             }
