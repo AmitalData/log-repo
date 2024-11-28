@@ -18,7 +18,10 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 itemPoco.Id = itemPM.Id;
                 itemPoco.Tenant = itemPM.Tenant;
             }
-            itemPoco.UserId = itemPM.UserId;
+            if(itemPoco.UserId == null && itemPM.UserId != null)
+            {
+                itemPoco.UserId = itemPM.UserId;
+            }
             itemPoco.GroupID = itemPM.GroupID;
 
 
