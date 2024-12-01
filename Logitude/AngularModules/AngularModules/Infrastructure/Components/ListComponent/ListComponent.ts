@@ -2802,6 +2802,27 @@ export class ListComponent implements OnInit, AfterViewInit {
                             });
 
                     }
+                    else if (myObjectTableName == "Card") {
+                       
+                        this._entityListService.getAllFromCache("PartnerType", new ApiQueryFilters()).then((res3: any) => {
+                            res3.subscribe(res4 => {
+                                this.PartnerTypes = res4.Result;
+                                var id = $event.rowData['Id'];
+                                var table = this.GetObjectTableNameForDependency($event.rowData["PartnerTypeId"], "Card");
+                                if (!AppTool.IsNullOrEmpty(id)) {
+                                    var logWindow = new LogitudeWindow();
+                                    logWindow.Title = "Edit " + TextCodeTranslator.TranslateTable(table);
+                                    logWindow.ShowEditComponent(id, table);
+                                    logWindow.WindowClosed.subscribe(($event: any) => {
+                                        this.isEditControlOpened = false;
+                                        this.OnBackFromEdit(selectedEntityId, $event)
+                                    });
+                                }
+
+                            })
+                        });
+                       
+                    }
                     else {
 
                         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
@@ -4460,5 +4481,29 @@ export class ListComponent implements OnInit, AfterViewInit {
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
             this.RefreshBtnClick();
         });
+    }
+    private PartnerTypes: Array<any> = [];
+
+    private GetObjectTableNameForDependency(dependency: string, parentObjectName: string) {
+
+        if (parentObjectName == "Card" && dependency == "PO") {
+            dependency = "CS";
+        }
+
+        var partnerType = this.PartnerTypes.filter(p => p.Id.toLowerCase() == dependency.toLowerCase())[0];
+        if (partnerType != null && partnerType != undefined) {
+            var name: string = partnerType.Name.replace(" ", "");
+            var table: ObjectTablePM = window.ObjectTables.filter(d => d.Name.toLowerCase() === name.toLocaleLowerCase())[0];
+            if (table != null) {
+                return table.Name;
+            }
+            else {
+                return parentObjectName;
+            }
+        }
+        else {
+            return parentObjectName;
+        }
+       
     }
 }

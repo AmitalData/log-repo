@@ -103,6 +103,8 @@ import { ReportVariablesComponent } from './Components/ReportVariablesComponent'
 
 //Export Customs
 import { ExportDeclarationReportFilterComponent } from './Components/FiltersComponent/ExportCustoms/ExportDeclarationReportFilterComponent';
+import { CustomsCollateralFilterComponent } from './Components/FiltersComponent/ExportCustoms/CustomsCollateralFilterComponent';
+
 
 export const Components =
     [
@@ -182,7 +184,7 @@ export const Components =
         BluesnapPaymentsReportFilterComponent,
         ExternalReconciliationLinesReportFilterControl,
         UserDefinedReportFilterControl,
-        LogitudeCRMReportFilterComponent,
+         LogitudeCRMReportFilterComponent,
         ExcelReportTemplateComponent,
         PerVendorReportFilterComponent,
         ARinvoiceSequencesReportFilterComponent,
@@ -190,8 +192,9 @@ export const Components =
         ControlInvoiceLinesReportFilterComponent,
         ExportDeclarationReportFilterComponent,
 
-        MonthlyBalancesReportFilterComponent
-
+        MonthlyBalancesReportFilterComponent,
+         CustomsCollateralFilterComponent,
+ 
     ];
 
 export class ModuleDeclarations {
@@ -283,8 +286,9 @@ export class ModuleDeclarations {
             case "SpotRateQuoteReportFilterComponent": { myResult = SpotRateQuoteReportFilterComponent; break; }
             case "ControlInvoiceLinesReportFilterComponent": { myResult = ControlInvoiceLinesReportFilterComponent; break; }
             case "ExportDeclarationReportFilterComponent": { myResult = ExportDeclarationReportFilterComponent; break; }
-            case "MonthlyBalancesReportFilterComponent": { myResult = MonthlyBalancesReportFilterComponent; break; }
-
+             case "MonthlyBalancesReportFilterComponent": { myResult = MonthlyBalancesReportFilterComponent; break; }
+             case "CustomsCollateralFilterComponent": { myResult = CustomsCollateralFilterComponent; break; }
+ 
         }
 
         return myResult;

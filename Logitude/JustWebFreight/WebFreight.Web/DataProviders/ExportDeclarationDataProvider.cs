@@ -9,8 +9,23 @@ namespace WebFreight.Web.DataProviders
 {
     public class ExportDeclarationDataProvider : BaseDataProvider
     {
+		public DateTime? CreateDateFrom { get; set; }
+		public DateTime? CreateDateTo { get; set; }
 
-        public List<ExportDeclaration> ExportDeclaration { get; set; }//הצהרות
+		public string TransportModeId { get; set; }
+		public string DeclarationStatusTypeCode { get; set; }
+		public string DeclarationStatusTypeName { get; set; }
+		public string DeclarationTypeCode { get; set; }
+        public string DeclarationTypeName { get; set; }
+		public string ReferentUserId { get; set; }
+        public string ReferentUserName { get; set; }
+		public string DestinationCountryCode { get; set; }
+        public string DestinationCountryName { get; set; }
+		public string Customer { get; set; }
+        public string CustomerName { get; set; }
+		public bool IsShowInvoices { get; set; }
+		public bool IsShowConsignments { get; set; }
+		public List<ExportDeclaration> ExportDeclaration { get; set; }//הצהרות
 
 
     }
@@ -25,7 +40,8 @@ namespace WebFreight.Web.DataProviders
         public string DeclarationTypeName { get; set; }
         public string ProcedureCurrentName { get; set; }
         public string ExporterImporterCode { get; set; }
-        public string RecipientName { get; set; }// שם המקבל טבלת Customs.DeclarationExportRecipient
+		public string ExporterImporterName { get; set; }
+		public string RecipientName { get; set; }// שם המקבל טבלת Customs.DeclarationExportRecipient
         public string DestinationCountryName { get; set; }//ארץ יעד
         public string DeclarationStatusTypeName { get; set; }
         #region נתונים מסגירת הצהרה
@@ -47,7 +63,8 @@ namespace WebFreight.Web.DataProviders
         public string IncotermCode { get; set; }
         public decimal? InvoiceAmount { get; set; }
         public int InvoiceCounterKey { get; set; }
-        public List<InvoiceItems> InvoiceItems { get; set; }
+		public string InvoiceCurrencyTypeName { get; set; }
+		public List<InvoiceItems> InvoiceItems { get; set; }
 
 
 

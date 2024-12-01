@@ -321,8 +321,9 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         }
 
         else if (this.IsNewOrEdit == StatusCertificateOfOrigin.IsEdit) {
+            const isDirtyInvoiceItems = this.hasDirtyInvoiceItems(this.EntityPM.CertificateOriginInvoiceItems);
 
-            if (!this.EntityPM.IsDirty) {
+            if (!this.EntityPM.IsDirty && !isDirtyInvoiceItems) {
                 this.CurrentSession.StopBusyIndicator();
                 this.Send(customSendOptionsArgs);
                 return;
@@ -343,6 +344,10 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
                 }
             });
         }
+    }
+
+    hasDirtyInvoiceItems(items: { IsDirty: boolean }[]): boolean {
+        return items.some(item => item.IsDirty);
     }
 
     Send(customSendOptionsArgs = null) {
@@ -430,7 +435,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         requestParams.LoggingEntityId = this.EntityPM.Id;
 
         //requestParams.RequestVIA = customSendOptionsArgs.SendRequestVIA;
-        requestParams.RequestVIA = customSendOptionsArgs.RequestVIA == 0 ?  SendRequestVIA.WebServiceInteractive : customSendOptionsArgs.RequestVIA; // #112254
+        requestParams.RequestVIA = customSendOptionsArgs.RequestVIA == 0 ? SendRequestVIA.WebServiceInteractive : customSendOptionsArgs.RequestVIA; // #112254
         requestParams.Tenant = SessionLocator.Tenant;
         requestParams.CertificateOfOriginId = this.EntityPM.Id;
         requestParams.DeclarationId = this.DecalarationData.Id;

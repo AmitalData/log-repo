@@ -83,16 +83,18 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
 
             if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20230102.SuppressRestoreWaitingImportSaveInDB"]))
             {
-                Debug.WriteLine($"Suppress RestoreWaitingImportSaveInDB");
-                return;
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Suppress RestoreWaitingImportSaveInDB");
+
+                 return;
             }
-            Debug.WriteLine($"RestoreWaitingImportService.RestoreWaitingImportSaveInDB()");
+ 
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RestoreWaitingImportService.RestoreWaitingImportSaveInDB()");
 
             var dcaFilterByEnvironmentService = new DcaFilterByEnvironmentService();
             if (dcaFilterByEnvironmentService.GetDCAEnvPerTenant(_CustomsSettingPM.Tenant) != DcaFilterByEnvironment.Export)
             {
-                Debug.WriteLine($"RestoreWaitingImportSaveInDB-only in export cloud");
-                return;
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RestoreWaitingImportSaveInDB-only in export cloud");
+                 return;
             }
             try
             {
@@ -105,17 +107,21 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
             }
                 var request = GetRequest(_LastRetrive.Value);
                 var sw = Stopwatch.StartNew();
-                Debug.WriteLine($"RestoreWaitingImportSaveInDB-Send 9100 restore fromDate {request.GetOptions.fromDate}");
-                var response = SendOutgoingMessageRequest(request);
-                Debug.WriteLine($"RestoreWaitingImportSaveInDB-Send 9100 took {sw.Elapsed}");
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"t{_CustomsSettingPM.Tenant};fromDate {request.GetOptions.fromDate}; OutgoingMessage={response?.OutgoingMessage?.Length}");
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RestoreWaitingImportSaveInDB-Send 9100 restore fromDate {request.GetOptions.fromDate}");
+
+                 var response = SendOutgoingMessageRequest(request);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RestoreWaitingImportSaveInDB-Send 9100 took {sw.Elapsed}");
+
+                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"t{_CustomsSettingPM.Tenant};fromDate {request.GetOptions.fromDate}; OutgoingMessage={response?.OutgoingMessage?.Length}");
                 if (response?.OutgoingMessage?.Length == null || response?.OutgoingMessage?.Length == 0)
                 {
-                    Debug.WriteLine($"RestoreWaitingImportSaveInDB-OutgoingMessage == 0 - nothing todo");
-                    return;
-                }
-                Debug.WriteLine($"RestoreWaitingImportSaveInDB-OutgoingMessage == {response?.OutgoingMessage?.Length}");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RestoreWaitingImportSaveInDB-OutgoingMessage == 0 - nothing todo");
 
+                     return;
+                }
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RestoreWaitingImportSaveInDB-OutgoingMessage == {response?.OutgoingMessage?.Length}");
+
+               
                 var dOnlyNewImportMessagges = FilterOnlyNewImportMessagges(response);
 
 
@@ -165,10 +171,20 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
         {
             var onlyImportMessages = response.OutgoingMessage.Where(r => !r.Filename.Contains("_EX_")).ToList();
 
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"onlyImportMessages-OutgoingMessage == {string.Join(",", onlyImportMessages)}");
+
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"_MessageCorrelationSavedInDBList-OutgoingMessage == {string.Join(",", _MessageCorrelationSavedInDBList)}");
+
             var listLast15MinImportCorrelationId = _MessageCorrelationSavedInDBList
                 .Where(r => r.Tenant == _CustomsSettingPM.Tenant)
                 .Select(r => r.CorrelationId).ToList();
+
+
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"listLast15MinImportCorrelationId-OutgoingMessage == {string.Join(",", listLast15MinImportCorrelationId)}");
+
             var newImportMessages = onlyImportMessages.Where(r => !listLast15MinImportCorrelationId.Contains(r.CorrelationId)).ToList();
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"newImportMessages-OutgoingMessage == {string.Join(",", newImportMessages)}");
+
             return newImportMessages;
             
         }

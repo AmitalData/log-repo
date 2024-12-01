@@ -10931,7 +10931,6 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_ChartOfAccountsTypeCodeList = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountsTypeCodeList").FirstOrDefault();
             QueryFilterItem filterItem_ChartOfAccountsIdList = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountsIdList").FirstOrDefault();
 
-
             //ChartOfAccountId
             string ChartOfAccountId = null;
             if (filterItem_ChartOfAccountId != null)
@@ -11077,7 +11076,7 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     files = (bool)filterItem_DetailedFiles.FieldValue;
 
-                }
+                 }
             }
 
             //ChartOfAccountsTypeCodeList
@@ -11101,6 +11100,9 @@ namespace WebFreight.Web.ReportsWebServices
                     if (!String.IsNullOrEmpty(fvalue)) chartOfAccountsIdList = fvalue.Split(',').ToList();
                 }
             }
+           
+
+    
             #endregion
 
 

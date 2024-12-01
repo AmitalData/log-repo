@@ -83,11 +83,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             return default(T);
         }
-        public string GetOperatorByFieldName(string FieldName)
+         public string GetOperatorByFieldName(string FieldName)
         {
             return queryOperations.QueryFilterItems.Where(d => d.FieldName == FieldName).Select(x=>x.Operator).FirstOrDefault();
         }
-        private QueryFilterItem GetFilterItemByFieldName(string FieldName)
+ 		private QueryFilterItem GetFilterItemByFieldName(string FieldName)
         {
             return queryOperations.QueryFilterItems.Where(d => d.FieldName == FieldName).FirstOrDefault();
         }

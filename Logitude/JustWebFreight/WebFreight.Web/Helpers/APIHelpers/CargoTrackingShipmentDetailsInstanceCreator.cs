@@ -22,6 +22,10 @@ using Logitude.BL.ShipmentsModel.APIDataContract;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using System.Security.Policy;
+using System.Windows.Forms;
+using Simplog.Server.Infrastructure;
+using NPOI.SS.Formula.Functions;
 
 
 namespace WebFreight.Web.Helpers.APIHelpers
@@ -78,15 +82,21 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 PaymentDateTime = cargoTrackingShipment.CustomsPaymentDate,
                 CustomsClearanceDateTime = cargoTrackingShipment.ClearanceDate,
                 IsPaymentRequired = shipment.IsPaymentRequired,
+                PaymentLink = shipment.IsPaymentRequired? BuildUrl(shipment.SecurityKey,"PREQ") :null,
                 ChargesAmountInNIS = GetTotalChargesInNIS(shipment.PaymentRequestXML),
                 IsCustomerIDNumberRequired = shipment.IsUserIDNumberRequired,
+                CustomerIDNumberLink = shipment.IsUserIDNumberRequired ? BuildUrl(shipment.SecurityKey, "UID") : null,
                 LastMileDetails = GetCardConnectedToShipment(shipment),
                 ShipmentMilestones = GetShipmentMilestones(cargoTrackingShipment),
                 StatusDetails= GetStatusDetails(shipment),
                 ShipmentExceptions = cargoTrackingShipment.CurrentMilestoneExceptions != null ?  GetShipmentExceptions(cargoTrackingShipment) : null,
             };
         }
-
+        private string BuildUrl( string securityKey,string menu)
+        {
+            return string.Concat(LogitudeSettings.LogitudeURL, "/LinksGateway.aspx?Menu=", menu, "&SecurityKey=", securityKey, "&Tenant=", tenant);
+        }
+        
         private ShipmentExceptions GetShipmentExceptions(CargoTrackingShipmentList cargoTrackingShipment)
         {
             return new ShipmentExceptions { Exception = cargoTrackingShipment.CurrentMilestoneExceptions };
