@@ -20,7 +20,7 @@
   <Column
     Name="ItemDescription"
     Type="nvarchar"
-    Size="100">
+    Size="256">
     <Constraints
       Nullable="true" />
   </Column>
