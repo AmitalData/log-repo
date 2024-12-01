@@ -535,9 +535,24 @@ namespace CustomsWorkerRole
 
                             LastActivity = DateTime.UtcNow;
                             proccesDone = true;
-                            LogMessagingUtilWR.Instance.AppendLine("ProcessMessage_Db");
-                            bool successProcessMessage = ProcessMessage_Db(response);
-                            LogMessagingUtilWR.Instance.AppendLine("successProcessMessage");
+                            bool isLocked = false;
+							bool successProcessMessage = false;
+						    LogMessagingUtilWR.Instance.AppendLine("ProcessMessage_Db");
+                            try
+                            {
+                                 successProcessMessage = ProcessMessage_Db(response);
+
+                            }
+                            catch (Exception e)
+                            {
+                                if(e.Message == "AlreadyLock")
+								{
+									isLocked = true;
+								}
+
+							}
+
+							LogMessagingUtilWR.Instance.AppendLine("successProcessMessage");
                             if (successProcessMessage)
                             {
                                 _CustomDbQueueService.SafeComplete();
@@ -573,7 +588,7 @@ namespace CustomsWorkerRole
                                 using (var Abandon_Queue_scope = new TransactionScope(TransactionScopeOption.RequiresNew))
                                 {
 
-                                    _CustomDbQueueService.SafeAbandon();//if (CurrentCustomQueueResponse.Retries > 10)
+                                    _CustomDbQueueService.SafeAbandon(isLocked);//if (CurrentCustomQueueResponse.Retries > 10)
                                     Abandon_Queue_scope.Complete();
                                 }
 
@@ -807,9 +822,9 @@ namespace CustomsWorkerRole
             catch (CustomsRequestsSheetDomainModelServiceException customsRequestsSheetServiceException)
             {
 
-                //ExceptionHandler.HandleException(customsRequestsSheetServiceException, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage() Method/CustomsRequestsSheetServiceException ", null);
-                
-                if (customsRequestsSheetServiceException.What2Do == CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue)
+				//ExceptionHandler.HandleException(customsRequestsSheetServiceException, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage() Method/CustomsRequestsSheetServiceException ", null);
+				
+			    if (customsRequestsSheetServiceException.What2Do == CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue)
                 {
                     //message.SafeComplete();
                     //_CustomDbQueueService.SafeComplete();
@@ -817,8 +832,12 @@ namespace CustomsWorkerRole
                 }
                 else
                 {
-                    //_CustomDbQueueService.SafeAbandon();
-                    return false;  
+					if (customsRequestsSheetServiceException.InnerException.ToString().Contains("ORA-00054"))
+					{
+						throw new Exception("AlreadyLock");
+					}
+					//_CustomDbQueueService.SafeAbandon();
+					return false;  
                 }
                 
 
