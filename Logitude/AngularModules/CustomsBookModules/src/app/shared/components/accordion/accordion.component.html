@@ -59,7 +59,7 @@
 			</div>
 			<div></div>
 			<div class="tableContainer" *ngIf="isShowTableClassificationGuidance">
-				<app-clasisification-guidance [ClassificationGuidanceData]="ClassificationGuidanceData"></app-clasisification-guidance>
+				<app-clasisification-guidance [expandedArea]="expandedArea3" [ClassificationGuidanceId]="ClassificationGuidanceId"></app-clasisification-guidance>
 			</div>
 			<div class="dataLoadingBox"  *ngIf="!expandedArea3 && tableData4?.data?.length == 0">
 				<span *ngIf="isLoadingClasisificationGuidance; else noData">טוען נתונים ...</span>

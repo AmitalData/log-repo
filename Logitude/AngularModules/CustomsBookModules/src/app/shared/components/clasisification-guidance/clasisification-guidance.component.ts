@@ -1,22 +1,49 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { GenericTableComponent, TableData } from '../generic-table/generic-table.component';
+import { BehaviorSubject } from 'rxjs';
+import { API_MainService } from '../../../core/API_MainService';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { CommonModule, DatePipe, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-clasisification-guidance',
   standalone: true,
-  imports: [GenericTableComponent],
+  imports: [GenericTableComponent,CommonModule,NgIf],
   templateUrl: './clasisification-guidance.component.html',
-  styleUrl: './clasisification-guidance.component.css'
+  styleUrl: './clasisification-guidance.component.css',
+  providers: [DatePipe]
 })
 export class ClasisificationGuidanceComponent implements OnInit {
-  @Input() ClassificationGuidanceData: any;
+  @Input() expandedArea: boolean;
+  @Input() ClassificationGuidanceId: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+
+  data: any = null; // TODO: add TYPE
   tableData: TableData;
 
   ngOnInit(): void {
     this.buildTable();
+    this.listenToChanges();
   }
-  constructor() { }
+  constructor(private api_MainService: API_MainService, private sanitizer: DomSanitizer,private datePipe: DatePipe) { }
+  sanitizeHTML(content: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(content) ? this.sanitizer.bypassSecurityTrustHtml(content) : '';
+  }
+  
 
+  listenToChanges() {
+    this.ClassificationGuidanceId.subscribe((data: any) => {
+      this.data=null;
+      if (data) {
+        this.api_MainService.GetClassifGuidanceDetails(this.ClassificationGuidanceId.getValue().toString(), 6).subscribe((data: any) => {
+          if (!data.body) return; // TODO: add error message
+          this.data = data.body;
+          console.log(data.body);
+          
+          this.tableData.data = data.body;
+        });
+      }
+    });
+  }
   buildTable() {
     this.tableData = {
       columns: [
@@ -30,43 +57,7 @@ export class ClasisificationGuidanceComponent implements OnInit {
         { key: 'relatedGuidance', displayName: 'הנחיה זו מתייחסת', dataType: 'string', visible: true },
         { key: 'description', displayName: 'תאור הנחיה', dataType: 'string', visible: true },
       ],
-      // moke data
-      // TODO: remove this data and use the real data from the API
-      data: [
-        {
-          classificationGuidanceNumber: '101',
-          title: 'הנחיה לדוגמה 1',
-          classificationGuidanceTypeName: 'סוג 1',
-          fullClassification: 'חלק 01 / פרק 02 / פרט 03',
-          openDate: '2024-01-01',
-          endDate: '2024-12-31',
-          publicationDate: '2024-01-10',
-          relatedGuidance: 'נחיה קודמת',
-          description: 'תיאור ההנחיה לדוגמה הראשונה'
-        },
-        {
-          classificationGuidanceNumber: '102',
-          title: 'הנחיה לדוגמה 2',
-          classificationGuidanceTypeName: 'סוג 2',
-          fullClassification: 'חלק 04 / פרק 05 / פרט 06',
-          openDate: '2023-07-01',
-          endDate: '2025-07-01',
-          publicationDate: '2023-07-15',
-          relatedGuidance: 'נחיה אחרת',
-          description: 'תיאור ההנחיה לדוגמה השנייה'
-        },
-        {
-          classificationGuidanceNumber: '103',
-          title: 'הנחיה לדוגמה 3',
-          classificationGuidanceTypeName: 'סוג 3',
-          fullClassification: 'חלק 07 / פרק 08 / פרט 09',
-          openDate: '2022-03-15',
-          endDate: '2024-03-15',
-          publicationDate: '2022-03-20',
-          relatedGuidance: 'נחיה כללית',
-          description: 'תיאור ההנחיה לדוגמה השלישית'
-        }
-      ]
+      data: []
     };
   }
 
