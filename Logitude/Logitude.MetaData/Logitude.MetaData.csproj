@@ -340,6 +340,8 @@
     <None Include="EntityFiles\CommonDataModel\CarrierServiceLine.lxml" />
     <None Include="EntityFiles\CommonDataModel\CustomerGroup.lxml" />
     <None Include="EntityFiles\CommonDataModel\FreelancerGroupType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\Responsibility.lxml" />
+    <None Include="EntityFiles\CommonDataModel\TruckerSetting.lxml" />
     <None Include="EntityFiles\CommonDataModel\UserFreelancerGroup.lxml" />
     <None Include="EntityFiles\InfrastructureModel\DeploymentPackageExecutionLog.lxml" />
     <None Include="EntityFiles\CommonDataModel\HorseGender.lxml" />
