@@ -45,8 +45,14 @@ export class RulesComponent implements OnInit, OnChanges {
     return this.sanitizer.bypassSecurityTrustHtml(content);
   }
 
+
+  resetRulesData() {
+    this.allRules = [];
+    this.groupRulesList = [];
+  }
   // Method to fetch rules data from the API and build the rules hierarchy
   initData(customsItemID: number) {
+    this.resetRulesData();
     this.API_MainService.GetCustomsBookRulesData(customsItemID).subscribe((data: any) => {
       if (!data.body) return; // TODO: add error message
       // Clean up spaces by replacing multiple &nbsp; with a single space, then condense extra spaces

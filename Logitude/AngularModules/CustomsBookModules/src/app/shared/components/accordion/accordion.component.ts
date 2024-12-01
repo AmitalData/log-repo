@@ -130,7 +130,7 @@ export class AccordionComponent implements OnInit {
     const { event, row, key } = data;
     // console.log('Button clicked:', { event, row, key });
     // console.log('Row data:', row[key]);
-    this.isShowTableClassificationGuidance = true;
+    this.isShowTableClassificationGuidance = !this.isShowTableClassificationGuidance;
     this.ClassificationGuidanceData = row;
   }
   isShowTableClassificationGuidance: boolean = false;
