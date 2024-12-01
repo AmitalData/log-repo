@@ -716,7 +716,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     TransactionBuildColumns() {
         this.TransactionsColumns = [];
         this.TransactionsColumns.push({
-            FieldName: 'SelectCheckBox',
+            FieldName: 'SelectCheckBoxExternal',
             DataTypeCode: 'Boolean',
             Display: '',
             Styles: { width: '60px' },
