@@ -493,6 +493,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 throw new ApplicationException("Unable to UpdateLedgerTransaction  due there is any ReconciliationLines");
             }
+            foreach (var item in LedgerTransactionPMsUpdated)
+            {
+                if (item.OpenAmount == 0)
+                {
+                    item.IsReconciled = true;
+                }
+            }
             foreach (var reconciliationLine in entityPM.ReconciliationLines)
             {
                 var ledgerTransactionPM = LedgerTransactionPMsUpdated.First(r => r.Id == reconciliationLine.TransactionId);
