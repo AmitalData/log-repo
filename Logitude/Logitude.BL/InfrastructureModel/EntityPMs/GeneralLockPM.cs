@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 {
-    public class GeneralLock
+    public class GeneralLockPM
     {
         [Key]
         [Column("GeneralKey", Order = 1)]
@@ -33,6 +33,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 		[ForeignKey("UserId")]
 		public virtual User UsedByUser { get; set; }
 		public string SessionId { get; set; }
+		public string UserName { get; set; }
 
 	}
 }

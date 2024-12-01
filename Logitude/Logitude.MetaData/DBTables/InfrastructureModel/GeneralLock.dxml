@@ -75,10 +75,15 @@
       Nullable="true" />
   </Column>
   <Relation
-    ForeignKeyColumn="ObjectTableId1,ObjectTableId2"
+    ForeignKeyColumn="ObjectTableId1"
     ReferencedTable="ObjectTables"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+   ForeignKeyColumn="ObjectTableId2"
+   ReferencedTable="ObjectTables"
+   ReferencedColumn="Id"
+   ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="UserId"
     ReferencedTable="Users"

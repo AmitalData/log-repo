@@ -351,6 +351,7 @@
     <None Include="EntityFiles\InfrastructureModel\DataCustomObject.lxml" />
     <None Include="EntityFiles\InfrastructureModel\DeploymentPackagesVersion.lxml" />
     <None Include="EntityFiles\InfrastructureModel\EventRemark.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\GeneralLock.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ImageLibrary.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ReferenceCustomObject.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ScreenSection.lxml" />
