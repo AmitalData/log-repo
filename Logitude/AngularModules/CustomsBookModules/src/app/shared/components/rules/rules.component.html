@@ -16,7 +16,6 @@
                 </a>
             </div>
         </div>
-
         <ul class="rulesList">
             <li class="rulesItem" *ngFor="let group of groupRulesList">
                 <div class="rulesItem_toggle">
@@ -26,7 +25,7 @@
                 </div>
                 <div class="rulesItem_DDown" [class.shown]="group.expanded">
                     <div class="rulesItem_section">
-                        <table >
+                        <table>
                             <tr *ngFor="let rule of group.rules; let i = index" class="parentLine">
                                 <td>{{ rule.Index }}</td>
                                 <td>
@@ -36,7 +35,7 @@
                                             <!-- <td>{{ alephBetHelper.getLetterFromNumber(j + 1) }}</td> -->
                                             <td>{{ childItem.Index }}</td>
                                             <td [innerHTML]="sanitizeHTML(highlight(childItem.Rules))"></td>
-                                        </tr> 
+                                        </tr>
                                     </table>
                                 </td>
                             </tr>
