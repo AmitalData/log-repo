@@ -1888,12 +1888,46 @@ namespace MeatadataGeneratorTool
                 FirePropertyChanged("SelectedObjectField");
             }
         }
+		bool isLock;
+		public bool IsLock
+		{
+			get { return isLock; }
+			set { isLock = value; FirePropertyChanged("IsLock"); FirePropertyChanged("IsLockFontWeight"); }
+		}
+		string relatedEntity;
+		public string RelatedEntity
+		{
+			get { return relatedEntity; }
+			set { relatedEntity = value; FirePropertyChanged("RelatedEntity"); FirePropertyChanged("IsLockFontWeight"); }
+		}
+		string thisKey;
+		public string ThisKey
+		{
+			get { return thisKey; }
+			set { thisKey = value; FirePropertyChanged("ThisKey"); }
+		}
+		string relatedKey;
+		public string RelatedKey
+		{
+			get { return relatedKey; }
+			set { relatedKey = value; FirePropertyChanged("RelatedKey"); }
+		}
 
-
-
-
-        // commands
-        public RelayCommand<ObjectFieldsViewModel> RemoveFieldCommand
+		public string IsLockFontWeight
+		{
+			get
+			{
+				string result = "Normal";
+				if (IsLock && !string.IsNullOrEmpty(RelatedEntity))
+				{
+					result = "Bold";
+				}
+				return result;
+			}
+			set { }
+		}
+		// commands
+		public RelayCommand<ObjectFieldsViewModel> RemoveFieldCommand
         {
             get { return new RelayCommand<ObjectFieldsViewModel>(m => this.RemoveFieldMethod(m)); }
         }
@@ -2719,7 +2753,29 @@ namespace MeatadataGeneratorTool
                 ErrorsVisibility = Visibility.Visible;
                 return false;
             }
+            if (IsLock && !string.IsNullOrEmpty(RelatedEntity) && (string.IsNullOrEmpty(ThisKey) || string.IsNullOrEmpty(RelatedKey)))
+            {
+                ErrorMessages = "Is RelatedEntity, fields is required ..";
+                ErrorsVisibility = Visibility.Visible;
+                return false;
+            }
+            if(IsLock && !string.IsNullOrEmpty(RelatedEntity) && !string.IsNullOrEmpty(ThisKey) && !string.IsNullOrEmpty(RelatedKey)) { 
+                string[] thisKeys = ThisKey.Split(',');
+                string[] relatedKeys = RelatedKey.Split(',');
+                if(thisKeys.Length != 2 || relatedKeys.Length != 2) { 
+					ErrorMessages = "This Key and Related Key should be in the format of 'Key1,Key2'";
+					ErrorsVisibility = Visibility.Visible;
+					return false;
+				}
 
+			}
+            if (IsLock && string.IsNullOrEmpty(RelatedEntity) && string.IsNullOrEmpty(ThisKey)) 
+            {
+				ErrorMessages = "IsLock must parameter1";
+				ErrorsVisibility = Visibility.Visible;
+				return false;
+
+			}
             try
             {
                 ErrorsVisibility = Visibility.Collapsed;

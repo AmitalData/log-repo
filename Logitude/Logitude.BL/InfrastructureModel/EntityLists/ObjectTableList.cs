@@ -70,5 +70,11 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string FullNameTextCodeCode { get; set; }
         public string FullNameTextCodeDefaultText { get; set; }
         public bool AvailableInDocumentTypes { get; set; }
-    }
+		public bool IsLock { get; set; }
+		public string RelatedEntity { get; set; }
+		public string ThisKey { get; set; }
+		public string RelatedKey { get; set; }
+
+
+	}
 }

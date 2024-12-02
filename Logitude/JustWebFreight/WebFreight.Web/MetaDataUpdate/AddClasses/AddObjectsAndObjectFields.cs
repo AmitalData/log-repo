@@ -168,8 +168,12 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 objectTable.SupportSubEntity = objectTablesDetails.SupportSubEntity;
                 objectTable.ApplyGenericCustomFields = objectTablesDetails.ApplyGenericCustomFields;
                 objectTable.AvailableInDocumentTypes = objectTablesDetails.AvailableInDocumentTypes;
+				objectTable.IsLock = objectTablesDetails.IsLock;
+				objectTable.RelatedEntity = objectTablesDetails.RelatedEntity;
+				objectTable.ThisKey = objectTablesDetails.ThisKey;
+				objectTable.RelatedKey = objectTablesDetails.RelatedKey;
 
-                return objectTable;
+				return objectTable;
                 #endregion
             }
 
@@ -328,8 +332,12 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectTable.SupportSubEntity = objectTablesDetails.SupportSubEntity;
                 updatedObjectTable.ApplyGenericCustomFields = objectTablesDetails.ApplyGenericCustomFields;
                 updatedObjectTable.AvailableInDocumentTypes = objectTablesDetails.AvailableInDocumentTypes;
+				updatedObjectTable.IsLock = objectTablesDetails.IsLock;
+				updatedObjectTable.RelatedEntity = objectTablesDetails.RelatedEntity;
+				updatedObjectTable.ThisKey = objectTablesDetails.ThisKey;
+				updatedObjectTable.RelatedKey = objectTablesDetails.RelatedKey;
 
-                objectTableRepository.Update(updatedObjectTable);
+				objectTableRepository.Update(updatedObjectTable);
                 return updatedObjectTable;
                 #endregion
             }

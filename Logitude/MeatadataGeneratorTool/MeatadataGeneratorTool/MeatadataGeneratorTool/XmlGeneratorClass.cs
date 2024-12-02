@@ -1021,6 +1021,10 @@ namespace MeatadataGeneratorTool
             SetAttribute("SupportSubEntity", table.SupportSubEntity.ToString().ToLower(), entityElement);
             SetAttribute("ApplyGenericCustomFields", table.ApplyGenericCustomFields.ToString().ToLower(), entityElement);
             SetAttribute("AvailableInDocumentTypes", table.AvailableInDocumentTypes.ToString().ToLower(), entityElement);
+			SetAttribute("IsLock", table.IsLock.ToString().ToLower(), entityElement);
+			SetAttribute("RelatedEntity", GetStringValue(table.RelatedEntity), entityElement);
+			SetAttribute("ThisKey", GetStringValue(table.ThisKey), entityElement);
+			SetAttribute("RelatedKey", GetStringValue(table.RelatedKey), entityElement);
 
             SetAttribute("HasHelper", table.HasHelper.ToString().ToLower(), entityElement);
             SetAttribute("HasShortTitle", table.HasShortTitle.ToString().ToLower(), entityElement);

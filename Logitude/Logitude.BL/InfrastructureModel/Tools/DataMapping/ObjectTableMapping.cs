@@ -72,6 +72,11 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectTable.FullNameTextCodeId = objectTablePM.FullNameTextCodeId;
             objectTable.FullNameTextCodeCode = objectTablePM.FullNameTextCodeCode;
             objectTable.AvailableInDocumentTypes = objectTablePM.AvailableInDocumentTypes;
-        }
-    }
+			objectTable.IsLock = objectTablePM.IsLock;
+			objectTable.RelatedEntity = objectTablePM.RelatedEntity;
+			objectTable.ThisKey = objectTablePM.ThisKey;
+			objectTable.RelatedKey = objectTablePM.RelatedKey;
+
+		}
+	}
 }
