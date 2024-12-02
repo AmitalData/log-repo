@@ -1946,6 +1946,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     onRowSelected($event) {
+        debugger
         if (this.ObjectTableName == "Customs.ConfirmationNumberTokenLog") return;
 
         if (this.listArgs.SuppressOnRowSelected == true) {
@@ -1957,7 +1958,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             this._ListComponentArgs.SuppressOnRowSelectedField = true;
         }
 
-        if (this.SelectedQuery.Code == "LedgerTransactions") {
+        if (this.ObjectTableName == "LedgerTransaction") {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
