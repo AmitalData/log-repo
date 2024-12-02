@@ -1946,7 +1946,6 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     onRowSelected($event) {
-        debugger
         if (this.ObjectTableName == "Customs.ConfirmationNumberTokenLog") return;
 
         if (this.listArgs.SuppressOnRowSelected == true) {
