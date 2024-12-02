@@ -43,7 +43,6 @@ namespace Simplog.Data.AzureSearch.Repo
         public async Task DropAsync()
         {
             await adminClient.DeleteIndexAsync(indexName);
-            //await adminClient.GetSearchClient(indexName).Suggest DeleteSuggesterAsync(suggesterName);
         }
 
         public async Task CreateAsync()
@@ -70,8 +69,12 @@ namespace Simplog.Data.AzureSearch.Repo
 
         public async Task<List<T>> SearchAsync(string searchText = "*", SearchOptions options = null)
         {
+            searchText = System.Text.RegularExpressions.Regex.Replace(searchText, @"\s+", " ").Trim();
+
             if (options == null)
                 options = new SearchOptions();
+
+            options.SearchMode = options.SearchMode ?? SearchMode.All;
 
             Response<SearchResults<T>> response = await new SearchClient(serviceEndpoint, indexName, credential)
                 .SearchAsync<T>(searchText, options);
