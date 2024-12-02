@@ -648,6 +648,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string entityLockId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EntityLockId  
+	   {
+	    
+	     get
+		{
+		   return entityLockId;
+		 }
+		 set
+		 {
+		   if(entityLockId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EntityLockId",OldValue=entityLockId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   entityLockId=value;
+		   }
+			
+		 }
+	   }
+	  private string entityLockName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EntityLockName  
+	   {
+	    
+	     get
+		{
+		   return entityLockName;
+		 }
+		 set
+		 {
+		   if(entityLockName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EntityLockName",OldValue=entityLockName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   entityLockName=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

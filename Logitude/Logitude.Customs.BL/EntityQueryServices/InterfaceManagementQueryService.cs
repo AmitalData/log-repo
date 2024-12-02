@@ -54,8 +54,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                              SignatureTypeCode = a.SignatureTypeCode,
                                                              SignatureTypeName = a.SignatureType != null? a.SignatureType.LocalName : null,
                                                              SendTime = s.SendTime, 
+                                                             EntityLockId = a.EntityLockId,
+                                                             EntityLockName = a.EntityLock != null ? a.EntityLock.Name : null,
 
-                                                         }).ToList();
+														 }).ToList();
 
             //foreach (InterfaceManagementList item in managements)
             //{

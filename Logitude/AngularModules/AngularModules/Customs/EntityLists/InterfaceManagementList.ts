@@ -36,6 +36,8 @@ export class InterfaceManagementList {
 	UseRabbitMQ: boolean;
 	SendTime: string;
 	Environment: string;
+	EntityLockId: string;
+	EntityLockName: string;
 	
 }
  

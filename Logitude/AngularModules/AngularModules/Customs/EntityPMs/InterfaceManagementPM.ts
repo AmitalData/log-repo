@@ -159,6 +159,16 @@ export class InterfaceManagementPM {
     public set Environment(newValue: string) { if (this.environment != newValue) { this.environment = newValue; this.MarkAsDirty("Environment"); } }
        
 	 
+    private entityLockId: string;
+    public get EntityLockId() { return this.entityLockId; }
+    public set EntityLockId(newValue: string) { if (this.entityLockId != newValue) { this.entityLockId = newValue; this.MarkAsDirty("EntityLockId"); } }
+       
+	 
+    private entityLockName: string;
+    public get EntityLockName() { return this.entityLockName; }
+    public set EntityLockName(newValue: string) { if (this.entityLockName != newValue) { this.entityLockName = newValue; this.MarkAsDirty("EntityLockName"); } }
+       
+	 
 
     public OldEntityPM: InterfaceManagementPM;
 		
