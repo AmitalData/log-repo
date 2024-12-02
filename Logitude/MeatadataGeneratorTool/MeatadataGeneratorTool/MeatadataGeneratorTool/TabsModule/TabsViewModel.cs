@@ -171,8 +171,21 @@ namespace MeatadataGeneratorTool.TabsModule
                 FirePropertyChanged("IndexOrder");
             }
         }
+		private bool isLocked;
+		public bool IsLocked
+		{
+			get
+			{
+				return isLocked;
+			}
+			set
+			{
+				isLocked = value;
+				FirePropertyChanged("IsLocked");
+			}
+		}
 
-        private Visibility buttonsVisibility = Visibility.Collapsed;
+		private Visibility buttonsVisibility = Visibility.Collapsed;
         public Visibility ButtonsVisibility
         {
             get

@@ -690,8 +690,9 @@ namespace MeatadataGeneratorTool.Helpers
             tab.IndexOrder = GetAttributeIntegerValue(fieldNode.Attributes["IndexOrder"]);
             tab.HtmlComponentName = GetAttributeStringValue(fieldNode.Attributes["HtmlComponentName"]);
             tab.HtmlComponentURL = GetAttributeStringValue(fieldNode.Attributes["HtmlComponentURL"]);
+			tab.IsLocked = GetAttributeBoolValue(fieldNode.Attributes["IsLocked"]);
 
-            if (fieldNode.Attributes["FeatureCode"] != null)
+			if (fieldNode.Attributes["FeatureCode"] != null)
             {
                 tab.FeatureCode = GetAttributeStringValue(fieldNode.Attributes["FeatureCode"]);
             }
@@ -1072,7 +1073,7 @@ namespace MeatadataGeneratorTool.Helpers
 					objectTable.IsLock = false;
 				}
 
-                if (entity.Attributes["NoViewController"] != null)
+				if (entity.Attributes["NoViewController"] != null)
                 {
                     objectTable.NoViewController = GetAttributeBoolValue(entity.Attributes["NoViewController"]);
                 }

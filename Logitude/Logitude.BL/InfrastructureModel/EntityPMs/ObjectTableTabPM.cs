@@ -36,7 +36,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool CreateDefaultTextCode { get; set; }
         public string TabNameTextCodeType { get; set; }
 
-        
+		public bool IsLocked { get; set; }
 
-    }
+
+	}
 }

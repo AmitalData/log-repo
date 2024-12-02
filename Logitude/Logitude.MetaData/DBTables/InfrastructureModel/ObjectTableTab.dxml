@@ -119,12 +119,18 @@
 		<Constraints
 		  Nullable="false" />
 	</Column>
+  <Column
+      Name="IsLocked"
+      Type="bit">
+    <Constraints
+		  Nullable="false" />
+  </Column>
 
 
 
 
 
-    <Relation
+  <Relation
     ForeignKeyColumn="ObjectTableId"
     ReferencedTable="ObjectTables"
     ReferencedColumn="Id"

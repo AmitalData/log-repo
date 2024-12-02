@@ -30,6 +30,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectTableTab.Type = objectTableTabPM.Type;
             objectTableTab.OriginalTabCode = objectTableTabPM.OriginalTabCode;
             objectTableTab.HideTabNameInScreen = objectTableTabPM.HideTabNameInScreen;
+            objectTableTab.IsLocked = objectTableTabPM.IsLocked;
             if (objectTableTabPM.HasTabModification) return;   
 
             objectTableTab.IndexOrder = objectTableTabPM.IndexOrder;

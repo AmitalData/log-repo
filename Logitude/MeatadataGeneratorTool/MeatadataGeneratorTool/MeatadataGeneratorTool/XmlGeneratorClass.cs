@@ -1026,7 +1026,7 @@ namespace MeatadataGeneratorTool
 			SetAttribute("ThisKey", GetStringValue(table.ThisKey), entityElement);
 			SetAttribute("RelatedKey", GetStringValue(table.RelatedKey), entityElement);
 
-            SetAttribute("HasHelper", table.HasHelper.ToString().ToLower(), entityElement);
+			SetAttribute("HasHelper", table.HasHelper.ToString().ToLower(), entityElement);
             SetAttribute("HasShortTitle", table.HasShortTitle.ToString().ToLower(), entityElement);
             SetAttribute("HasFiltersMenu", table.HasFiltersMenu.ToString().ToLower(), entityElement);
 
@@ -1702,14 +1702,15 @@ namespace MeatadataGeneratorTool
                 SetAttribute("IsPackagable", f.IsPackagable.ToString().ToLower(), TabElement, null);
                 SetAttribute("IsSpellChecked", f.IsSpellChecked.ToString().ToLower(), TabElement, null);
                 SetAttribute("HasGeneralFeature", f.HasGeneralFeature.ToString().ToLower(), TabElement, null);
+				SetAttribute("IsLocked", f.IsLocked.ToString().ToLower(), TabElement, null);
 
-            }
+			}
 
-            #endregion
+			#endregion
 
-            #region Event Types Properties
+			#region Event Types Properties
 
-            XmlElement TypesElement = doc.CreateElement("EventTypes");
+			XmlElement TypesElement = doc.CreateElement("EventTypes");
             entityElement.AppendChild(TypesElement);
 
             foreach (EventTypesViewModel f in table.EventTypesObsList)

@@ -48,9 +48,10 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                .HasMaxLength(120)
                .IsUnicode(false);
             this.Property(t => t.HideTabNameInScreen);
+			this.Property(t => t.IsLocked);
 
-            // Table & Column Mappings
-            this.ToTable("ObjectTableTabs");
+			// Table & Column Mappings
+			this.ToTable("ObjectTableTabs");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.Code).HasColumnName("Code");
@@ -62,19 +63,20 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.TabNameTextCodeCode).HasColumnName("TabNameTextCodeCode");
             this.Property(t => t.FeatureUniqeCode).HasColumnName("FeatureUniqeCode");
             this.Property(t => t.HideTabNameInScreen).HasColumnName("HideTabNameInScreen");
+			this.Property(t => t.IsLocked).HasColumnName("IsLocked");
 
-            // Relationships
-            //this.HasOptional(t => t.Feature)
-            //    .WithMany()
-            //    .HasForeignKey(d => d.FeatureId);
-            //this.HasRequired(t => t.ObjectTable)
-            //    .WithMany(t => t.ObjectTableTabs)
-            //    .HasForeignKey(d => d.ObjectTableId);
-            //this.HasRequired(t => t.TabNameTextCode)
-            //    .WithMany(t => t.ObjectTableTabs)
-            //    .HasForeignKey(d => d.TabNameTextCodeId);
+			// Relationships
+			//this.HasOptional(t => t.Feature)
+			//    .WithMany()
+			//    .HasForeignKey(d => d.FeatureId);
+			//this.HasRequired(t => t.ObjectTable)
+			//    .WithMany(t => t.ObjectTableTabs)
+			//    .HasForeignKey(d => d.ObjectTableId);
+			//this.HasRequired(t => t.TabNameTextCode)
+			//    .WithMany(t => t.ObjectTableTabs)
+			//    .HasForeignKey(d => d.TabNameTextCodeId);
 
-            this.Property(t => t.HtmlComponentName)
+			this.Property(t => t.HtmlComponentName)
                 .HasMaxLength(100)
                 .IsUnicode(false);
 
