@@ -31,7 +31,7 @@ namespace WebFreight.Web.InfrastructureModel.DomainServices
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
 
-            IInfrastructureContext objectContext = InfrastructureContext.GetContext(0);
+            IInfrastructureContext objectContext = InfrastructureContext.GetContext(tenant);
             BIReportsTypeListQueryService listService = new BIReportsTypeListQueryService(objectContext);
             return listService.GetList(tenant);
         }
@@ -40,7 +40,7 @@ namespace WebFreight.Web.InfrastructureModel.DomainServices
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
 
-            IInfrastructureContext objectContext = InfrastructureContext.GetContext(0);
+            IInfrastructureContext objectContext = InfrastructureContext.GetContext(tenant);
             BIReportsTypeListQueryService listService = new BIReportsTypeListQueryService(objectContext);
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
             return listService.GetList(queryOperations, tenant);
@@ -51,7 +51,7 @@ namespace WebFreight.Web.InfrastructureModel.DomainServices
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
 
-            IInfrastructureContext objectContext = InfrastructureContext.GetContext(0);
+            IInfrastructureContext objectContext = InfrastructureContext.GetContext(tenant);
 
             BIReportsTypeListQueryService queryService = new BIReportsTypeListQueryService(objectContext);
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);

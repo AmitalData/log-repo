@@ -125,7 +125,7 @@ namespace WebFreight.Web.WebServices
                 GlobalContact contactZero = globalContext.GlobalContacts.Where(d => d.GlobalTenantId == 0 && d.Email == email).FirstOrDefault(); //mohammad
                 if (contact != null)
                 {
-                    ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
+                    ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
                     logitudeUser = (from a in commonDataContext.Users
                                     where a.Id == contact.Id
                                     select a).FirstOrDefault();

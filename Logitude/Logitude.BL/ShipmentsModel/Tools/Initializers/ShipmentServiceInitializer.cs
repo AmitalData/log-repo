@@ -116,7 +116,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             this.ShipmentPackageHarmonizeRepository = new ShipmentPackageHarmonizeRepository(ShipmentContext);
             this.ShipmentOrderPackageRepository = new ShipmentOrderPackageRepository(ShipmentContext);
             this.ShipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(ShipmentContext);
-            this.IInfrastructureContext = InfrastructureContext.GetContext(0);
+            this.IInfrastructureContext = InfrastructureContext.GetContext(entityPM.Tenant);
             this.CardRepository = new CardRepository(this.CommonContext);
             this.AddressRepository = new AddressRepository(this.CommonContext);
             this.ContactRepository = new ContactRepository(this.CommonContext);

@@ -100,7 +100,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
 
         //    if (accountingContext == null)
         //    {
-        //        accountingContext = AccountingContext.GetContext(0);//entityPm.Tenant);
+        //        accountingContext = AccountingContext.GetContext(tenant);//entityPm.Tenant);
         //    }
 
 
@@ -117,7 +117,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
         //    var sssss = this.ChangeSet.ChangeSetEntries;
         //    if (accountingContext == null)
         //    {
-        //        accountingContext = AccountingContext.GetContext(0);//currententityPm.Tenant);
+        //        accountingContext = AccountingContext.GetContext(tenant);//currententityPm.Tenant);
         //    }
         //    //currententityPm.MarkAsChanged = true;
 

@@ -50,7 +50,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         SecurityUtility.AuthenticationOnEntityTenant("ChartOfAccountsTypes", 0, 0);
                         ChartOfAccountsTypeQueryService ChartOfAccountsTypesQuery = new ChartOfAccountsTypeQueryService(0);
                         var chartOfAccountsTypes = ChartOfAccountsTypesQuery.GetAllChartOfAccounts().OrderBy(x=>x.Code).ToList();
-                        IAccountingContext MyContext = AccountingContext.GetContext(0);
+                        IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                         ChartOfAccountsTypeUpdateService service = new ChartOfAccountsTypeUpdateService(MyContext, new Dictionary<string, IContext>(), 0);
                         
 

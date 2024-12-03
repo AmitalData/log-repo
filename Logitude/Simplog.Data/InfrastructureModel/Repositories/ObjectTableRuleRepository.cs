@@ -68,7 +68,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    IWebFreightContext context = WebFreightContext.GetContext(0);
+                    IWebFreightContext context = WebFreightContext.GetContext(tenant);
                     zeroObjectTableRules = (from a in context.ObjectTableRules.Include("ObjectTable").Include("RuleType")
 											where a.Tenant == 0
                                             select a).ToList();

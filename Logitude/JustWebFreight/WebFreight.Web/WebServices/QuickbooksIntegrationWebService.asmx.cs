@@ -272,7 +272,7 @@ namespace WebFreight.Web.WebServices
             if (contactPassword != null)
             {
                 authReturn[1] = "";
-                IInvoiceContext context = InvoiceContext.GetContext(0);
+                IInvoiceContext context = InvoiceContext.GetContext(tenant);
                 QuickbooksSyncRequestTicketService ticketService = new QuickbooksSyncRequestTicketService(context);
                 QuickbooksSyncRequestTicketPM ticketPM = new QuickbooksSyncRequestTicketPM() { Ticket = authReturn[0], UserName = userName, Password = contactPassword.Password, Tenant = tenant };
                 ticketService.Create(ticketPM);
@@ -608,7 +608,7 @@ namespace WebFreight.Web.WebServices
                 }
 
             }
-            IInvoiceContext context = InvoiceContext.GetContext(0);
+            IInvoiceContext context = InvoiceContext.GetContext(tenant);
             QuickbooksSyncRequestTicketService service = new QuickbooksSyncRequestTicketService(context);
             service.Update(ticketPM);
 
@@ -821,7 +821,7 @@ namespace WebFreight.Web.WebServices
                 ticketPM.IsCurrentInvoiceChecked = false;
             }
 
-            IInvoiceContext context = InvoiceContext.GetContext(0);
+            IInvoiceContext context = InvoiceContext.GetContext(tenant);
             QuickbooksSyncRequestTicketService service = new QuickbooksSyncRequestTicketService(context);
             service.Update(ticketPM);
 
@@ -1226,7 +1226,7 @@ namespace WebFreight.Web.WebServices
                 }
             }
 
-            IInvoiceContext invoiceContext = InvoiceContext.GetContext(0);
+            IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
             QuickbooksSyncRequestTicketService service = new QuickbooksSyncRequestTicketService(invoiceContext);
             service.Update(ticketPM);
             return invoiceXML;

@@ -244,10 +244,10 @@ namespace Logitude.BL.Helpers
                 }
             }
         }
-        public static void UpdateCacheTableHistory()
+        public static void UpdateCacheTableHistory(int tenant)
         {
             string sqlDDL_NoNeedCommit = "delete objecttablelastupdates where objecttableid   in ( select id From  objecttables where id in (select objecttableid from objecttablelastupdates ) and name not like 'Custom%') ";
-            ((CustomContext.GetContext(0)) as DbContextBase).ExecuteReaderSingleResult<int>(sqlDDL_NoNeedCommit,
+            ((CustomContext.GetContext(tenant)) as DbContextBase).ExecuteReaderSingleResult<int>(sqlDDL_NoNeedCommit,
 (dr) =>
 {
 
@@ -309,9 +309,9 @@ return 0;
         }
 
 
-        public static void UpdateAllClosedTablesHistory()
+        public static void UpdateAllClosedTablesHistory(int tenant)
         {
-            IWebFreightContext context = WebFreightContext.GetContext(0);
+            IWebFreightContext context = WebFreightContext.GetContext(tenant);
             ObjectTableLastUpdateRepository tableLastUpdateRepository = new ObjectTableLastUpdateRepository(context);
             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(context);
             ContactRepository contactRepository = new ContactRepository(0);

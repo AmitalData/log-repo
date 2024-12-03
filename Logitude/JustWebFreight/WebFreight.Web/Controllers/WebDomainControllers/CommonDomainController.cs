@@ -3018,8 +3018,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 int crmTenant = 341;
-                ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
-                ICRMContext crmContext = CRMContext.GetContext(0);
+                ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+                ICRMContext crmContext = CRMContext.GetContext(tenant);
                 string tenantString = tenant.ToString();
 
                 var customer = (from a in commonDataContext.Cards.Include("Customer")
@@ -3078,8 +3078,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         private CustomerPM GetCRMCustomer(ChargifyAWBStock chargifyAWBStock)
         {
             int crmTenant = 341;
-            var commonDataContext = CommonDataContext.GetContext(0);
-            var crmContext = CRMContext.GetContext(0);
+            var commonDataContext = CommonDataContext.GetContext(chargifyAWBStock.Tenant);
+            var crmContext = CRMContext.GetContext(chargifyAWBStock.Tenant);
             int tenant = chargifyAWBStock.Tenant;
             var userId = chargifyAWBStock.UserId;
             var tenantString = tenant.ToString();
@@ -3114,7 +3114,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
         private void CreateMessagingStock(ChargifyAWBStock chargifyAWBStock)
         {
-            IShipmentsContext iContext = ShipmentsContext.GetContext(0);
+            IShipmentsContext iContext = ShipmentsContext.GetContext(chargifyAWBStock.Tenant);
             var todayDate = TenantServerConfigration.GetCurrentDateTime(chargifyAWBStock.Tenant);
             MessagingStockPM messagingStock = new MessagingStockPM()
             {
@@ -3134,8 +3134,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             var newChargifyAWBStock = chargifyAWBStock;
             int crmTenant = 341;
-            ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
-            ICRMContext crmContext = CRMContext.GetContext(0);
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(chargifyAWBStock.Tenant);
+            ICRMContext crmContext = CRMContext.GetContext(chargifyAWBStock.Tenant);
             int tenant = chargifyAWBStock.Tenant;
             string userId = chargifyAWBStock.UserId;
             string tenantString = tenant.ToString();

@@ -90,10 +90,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 )
             {
 
-                //var customContext = CustomContext.GetContext(0);
+                //var customContext = CustomContext.GetContext(tenant);
                 //closedTableService can dispose the customContext
                 var closedTableService = Logitude.CustomsMessaging.Helpers.ClosedTable.ClosedTableServiceFactory.CreateNew(
-                    CustomContext.GetContext(0),//closedTableService can dispose the customContext //customContext,
+                    CustomContext.GetContext(requestParams.Tenant),//closedTableService can dispose the customContext //customContext,
                                                 //requestParams.TableId,
                     customResponse.tableName,
                     //customResponse.TableData.ToList(),
@@ -112,7 +112,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         throw;
                     }
 
-                    CustomsClosedTableRepository closedTableRep = new CustomsClosedTableRepository(CustomContext.GetContext(0));
+                    CustomsClosedTableRepository closedTableRep = new CustomsClosedTableRepository(CustomContext.GetContext(requestParams.Tenant));
                     CustomsClosedTable table = closedTableRep.GetSingle(new CustomsClosedTableKeys() { Id = requestParams.TableId });
                     ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
 
@@ -310,7 +310,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                             LogMessagingUtil.Instance.Append(
                             @"1344:InternationalSite:Calc=
  if (!string.IsNullOrWhiteSpace(dr[""extraNumericData""].ToString()))
-     CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(CustomContext.GetContext(0));
+     CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(CustomContext.GetContext(tenant));
         var myCountry = customsCountryQueryService.GetSingleByMalamID(newResponseTableData.extraNumericData.ToString());
         if (myCountry != null && !string.IsNullOrWhiteSpace(myCountry.Code))
         {
@@ -324,7 +324,7 @@ ID List :
                                                         if (!string.IsNullOrWhiteSpace(dr["ExtraNumericData"].ToString()))
                                                         {
                                                             LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                            CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(CustomContext.GetContext(0));
+                                                            CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(CustomContext.GetContext(tenant));
                                                             if (!string.IsNullOrWhiteSpace(newResponseTableData.extraNumericData.ToString()))
                                                             {
                                                                 var myCountry = customsCountryQueryService.GetSingleByMalamID(newResponseTableData.extraNumericData.ToString());
@@ -1485,7 +1485,7 @@ ID List :
         }
         public override void OnRequestFail(SYSTBL_NG_9001_MSG_SystemTablesResponse customResponse, SystemTableRequestParams requestParams)
         {
-            CustomsClosedTableRepository closedTableRep = new CustomsClosedTableRepository(CustomContext.GetContext(0));
+            CustomsClosedTableRepository closedTableRep = new CustomsClosedTableRepository(CustomContext.GetContext(requestParams.Tenant));
             CustomsClosedTable table = closedTableRep.GetSingle(new CustomsClosedTableKeys() { Id = requestParams.TableId });
             ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
 

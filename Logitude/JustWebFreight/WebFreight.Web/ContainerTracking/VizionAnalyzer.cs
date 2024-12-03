@@ -21,9 +21,10 @@ namespace WebFreight.Web.ContainerTracking
 
         public VizionAnalyzer(VisionContainerStatus visionContainerStatus)
         {
+            int tenant = 0;
             this.visionContainerStatus = visionContainerStatus;
             containerUpdatedFields = new ContainerUpdatedFields();
-            containerUpdatedFields.ShipmentContext = ShipmentsContext.GetContext(0);
+            containerUpdatedFields.ShipmentContext = ShipmentsContext.GetContext(tenant);
             containerUpdatedFields.ContainerRepository = new ContainerRepository(containerUpdatedFields.ShipmentContext);
         }
 

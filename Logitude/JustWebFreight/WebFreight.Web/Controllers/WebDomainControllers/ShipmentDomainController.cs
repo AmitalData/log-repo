@@ -643,7 +643,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Shipment", "UPDATE", tenant);
 
-                IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(0);
+                IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
                 ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(shipmentsContext);
                 ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDeliveryByStandaloneShipmentId(shipmentId, tenant);
@@ -1852,7 +1852,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    IShipmentsContext iContext = ShipmentsContext.GetContext(0);
+                    IShipmentsContext iContext = ShipmentsContext.GetContext(authToken.Tenant);
                     ShipmentRepository iShipmentRepository = new ShipmentRepository(iContext);
                     ShipmentQuery iShipmentQuery = new ShipmentQuery(iShipmentRepository);
 

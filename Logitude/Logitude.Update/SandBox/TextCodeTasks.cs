@@ -27,7 +27,7 @@ namespace Logitude.Update.SandBox
             //"Amital1_Main,sa,Saas256,.";
         public static  void SaveTextCodeToDisk(string fileName = @"c:\TextCodeDTO.xml")
         {
-            
+            int tenant = 0;
             Dictionary<string, TextCode> LocalDefaultTextSource = new Dictionary<string, TextCode>();
             List<TextCode> LocalDefaultTextTarget = new List<TextCode>();
 
@@ -36,7 +36,7 @@ namespace Logitude.Update.SandBox
                 //DbConnection connection = DatabaseInitializer.GetConnection(SourceConnection);
 
                 IWebFreightContext context = //new WebFreightContext(connection);
-                    WebFreightContext.GetContext(0);
+                    WebFreightContext.GetContext(tenant);
                 TextCodeRepository textCodeRepository = new TextCodeRepository(context);
 
                 LocalDefaultTextSource = (from a in textCodeRepository.GetTextCodes()
@@ -67,7 +67,7 @@ namespace Logitude.Update.SandBox
         }
         public static void LoadTextCodeFromDisk(string fileName = @"c:\TextCodeDTO.xml")
         {
-            
+            int tenant = 0;
             Dictionary<string, TextCodeDTO> LocalDefaultTextSource = new Dictionary<string, TextCodeDTO>();
 
 
@@ -88,7 +88,7 @@ namespace Logitude.Update.SandBox
                 //DbConnection connection = DatabaseInitializer.GetConnection(TargetConnection);
                 IWebFreightContext context = 
                     //new WebFreightContext(connection);
-                     WebFreightContext.GetContext(0);
+                     WebFreightContext.GetContext(tenant);
                 TextCodeRepository textCodeRepository = new TextCodeRepository(context);
                 LocalDefaultTextTarget = (from a in textCodeRepository.GetTextCodes()
                                           where LocalDefaultTextSource.Keys.Contains(a.Code)

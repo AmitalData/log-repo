@@ -909,7 +909,7 @@ namespace CommunicationWorkerRole
             else if (tableName == "Shipment")
             {
                 ShipmentPM shipmentPM = (ShipmentPM)theEntity;
-                IShipmentsContext objectContext = ShipmentsContext.GetContext(0);
+                IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
 
                 ContactQuery contactQuery = new ContactQuery(tenant);
                 string email = contactQuery.GetContactEmailById(userId, tenant);
@@ -939,8 +939,9 @@ namespace CommunicationWorkerRole
 
         private static void UpdateContainer(object theEntity)
         {
+            int tenant = 0;
             ContainerPM containerPM = (ContainerPM)theEntity;
-            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(0);
+            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
             ContainerService service = new ContainerService(shipmentsContext, containerPM.Tenant);
             containerPM.IsUpdateByAutomation = true;
             service.Update(containerPM);
@@ -948,8 +949,9 @@ namespace CommunicationWorkerRole
 
         private static void UpdateWarehouseEntry(object theEntity)
         {
+            int tenant = 0;
             WarehouseEntryPM warehouseEntryPM = (WarehouseEntryPM)theEntity;
-            IWarehouseContext warehouseContext = WarehouseContext.GetContext(0);
+            IWarehouseContext warehouseContext = WarehouseContext.GetContext(tenant);
             WarehouseEntryUpdateService service = new WarehouseEntryUpdateService(warehouseContext, new Dictionary<string, IContext>(), warehouseEntryPM.Tenant);
             warehouseEntryPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             warehouseEntryPM.IsUpdateByAutomation = true;
@@ -958,8 +960,9 @@ namespace CommunicationWorkerRole
 
         private static void UpdateWarehouseRelease(object theEntity)
         {
+            int tenant = 0;
             WarehouseReleasePM warehouseReleasePM = (WarehouseReleasePM)theEntity;
-            IWarehouseContext warehouseContext = WarehouseContext.GetContext(0);
+            IWarehouseContext warehouseContext = WarehouseContext.GetContext(tenant);
             WarehouseReleaseUpdateService service = new WarehouseReleaseUpdateService(warehouseContext, new Dictionary<string, IContext>(), warehouseReleasePM.Tenant);
             warehouseReleasePM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             warehouseReleasePM.IsUpdateByAutomation = true;

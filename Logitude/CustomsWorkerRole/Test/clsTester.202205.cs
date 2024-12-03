@@ -531,7 +531,8 @@ namespace CustomsWorkerRole.Test
         }
         public void CheckCustomContext()
         {
-            var customContext = CustomContext.GetContext(0);
+            int tenant = 0;
+            var customContext = CustomContext.GetContext(tenant);
             customContext.AcceptanceStatuses.Take(100).ToList();
             customContext.AccumalationStates.Take(100).ToList();
             customContext.ActionCodes.Take(100).ToList();

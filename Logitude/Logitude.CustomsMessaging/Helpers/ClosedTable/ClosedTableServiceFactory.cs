@@ -35,7 +35,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
             int tenant) 
         {
             IUpdateSingleClosedTable closedTableService = null;
-            //var customContext = CustomContext.GetContext(0);
+            //var customContext = CustomContext.GetContext(tenant);
             switch (tableName)
             {
 

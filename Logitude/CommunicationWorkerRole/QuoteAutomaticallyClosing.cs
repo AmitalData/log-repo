@@ -29,7 +29,7 @@ namespace CommunicationWorkerRole
             //        if (DateTime.Now >= date1 && DateTime.Now <= date2)
             //        {
             //            LastActivity = DateTime.UtcNow;
-            //            ICommonDataContext iContext = CommonDataContext.GetContext(0);
+            //            ICommonDataContext iContext = CommonDataContext.GetContext(tenant);
             //            List<int> AllTenants = (from d in iContext.Tenants select d.Id).ToList();
             //            if (AllTenants != null)
             //            {

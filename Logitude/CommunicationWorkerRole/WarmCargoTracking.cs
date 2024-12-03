@@ -53,7 +53,7 @@ namespace CommunicationWorkerRole
 
         public override bool OnStart()
         {
-            MyContext = CargoTrackingContext.GetContext(0);
+            MyContext = CargoTrackingContext.GetContext((int)Tenant);
             ShipmentSearchQuery = new CargoTrackingShipmentSearchListQueryService(MyContext);
             cargoTrackingShipmentQueryService = new CargoTrackingShipmentQueryService(MyContext);
             return base.OnStart();

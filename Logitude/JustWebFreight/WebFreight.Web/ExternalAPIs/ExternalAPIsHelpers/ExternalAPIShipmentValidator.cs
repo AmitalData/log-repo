@@ -595,7 +595,7 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
         private bool IsOceanInsightFeatureToggleExistInTenant()
         {
             string ocaenInsightFeatureToggleCode = "OIC";
-            IInfrastructureContext context = InfrastructureContext.GetContext(0);
+            IInfrastructureContext context = InfrastructureContext.GetContext(tenant);
             FeatureToggleRepository repository = new FeatureToggleRepository(context);
             IQueryable<FeatureToggle> featureToggles = repository.GetAll(0);
             List<FeatureToggle> featureTogglesList = featureToggles.ToList();

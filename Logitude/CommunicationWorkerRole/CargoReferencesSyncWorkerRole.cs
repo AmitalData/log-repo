@@ -40,7 +40,7 @@ namespace CommunicationWorkerRole
             ServicePointManager.DefaultConnectionLimit = MaximumNumberOfConcurrentConnections;
             ThreadId = Guid.NewGuid().ToString();
             BatchServiceCode = "CargoReferencesSync";
-            cargoContext = CargoTrackingContext.GetContext(0);
+            cargoContext = CargoTrackingContext.GetContext((int)Tenant);
             return base.OnStart();
         }
         public override void Run()
@@ -452,7 +452,7 @@ namespace CommunicationWorkerRole
                              ON SHO.ShipmentId = F.Id 
                              where C.Id in ({ids}) 
                         ";
-            var shipmentsContext = ShipmentsContext.GetContext(0);
+            var shipmentsContext = ShipmentsContext.GetContext((int)Tenant);
             var data = shipmentsContext.GetActiveDbContext().Database.SqlQuery<CustomerReferenceSyncModel>( query, new object[0]).ToListAsync().Result;
             return data;
         }
@@ -473,7 +473,7 @@ namespace CommunicationWorkerRole
                              ON SHO.ShipmentId = F.Id 
                              where F.Id in ({ids}) 
                         ";
-            var shipmentsContext = ShipmentsContext.GetContext(0);
+            var shipmentsContext = ShipmentsContext.GetContext((int)Tenant);
             var data = shipmentsContext.GetActiveDbContext().Database.SqlQuery<CustomerReferenceSyncModel>(query, new object[0]).ToListAsync().Result;
             return data;
         }

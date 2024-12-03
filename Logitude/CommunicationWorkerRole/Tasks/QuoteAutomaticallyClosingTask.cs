@@ -25,7 +25,7 @@ namespace CommunicationWorkerRole.Tasks
             try
             {
                 QuoteSchedulerTaskService quoteSchedulerTaskService = new QuoteSchedulerTaskService(this);
-                quoteSchedulerTaskService.ExecuteDailyAutomaticallyClosing();
+                quoteSchedulerTaskService.ExecuteDailyAutomaticallyClosing(Tenant);
             }
             catch (Exception ex)
             {

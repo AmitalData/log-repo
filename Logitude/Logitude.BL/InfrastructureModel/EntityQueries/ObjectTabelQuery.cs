@@ -119,7 +119,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             }
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-             WebFreightContext   webFreightContext = (WebFreightContext)WebFreightContext.GetContext(0);
+             WebFreightContext   webFreightContext = (WebFreightContext)WebFreightContext.GetContext(tenant);
 
              zeroLastUpdates = (from a in repository.context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
                                 where a.Tenant == 0 && a.LastUpdateDate > sinceDate
@@ -600,7 +600,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        IWebFreightContext context = WebFreightContext.GetContext(0);
+                        IWebFreightContext context = WebFreightContext.GetContext(tenant);
                         zeroTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
                                             where (a.Tenant == 0 && a.InActive == false)
                                                select new ObjectTablePM()
@@ -694,7 +694,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    IWebFreightContext context = WebFreightContext.GetContext(0);
+                    IWebFreightContext context = WebFreightContext.GetContext(tenant);
                     zeroTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
                                         where (a.Tenant == 0 && a.InActive == false)
                                         select new ObjectTablePM()

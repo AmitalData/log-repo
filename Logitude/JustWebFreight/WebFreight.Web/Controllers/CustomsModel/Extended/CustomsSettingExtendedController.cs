@@ -404,7 +404,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                  SecurityUtility.AuthenticationOnTenant(tenant);
 
 
-                ICustomContext MyContext = CustomContext.GetContext(tenant);
+                ICustomContext MyContext = CustomContext.GetContext(0);
 
                 CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(MyContext);
 

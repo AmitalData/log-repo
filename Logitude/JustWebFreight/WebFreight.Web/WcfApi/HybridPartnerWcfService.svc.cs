@@ -33,7 +33,7 @@ namespace WebFreight.Web.WcfApi
             {
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 List<HybridPartnerList> result = new List<HybridPartnerList>();
-                ICommonDataContext commoncontext = CommonDataContext.GetContext(0);
+                ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
                 HybridPartnerRepository hybridPartnerRepository = new HybridPartnerRepository(commoncontext);
 
                 result = (from b in hybridPartnerRepository.context.HybridPartners

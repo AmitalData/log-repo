@@ -141,7 +141,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         //        }
         //        else
         //        {
-        //            ICommonDataContext context = CommonDataContext.GetContext(0);
+        //            ICommonDataContext context = CommonDataContext.GetContext(tenant);
         //            var entity = (from a in context.AuthenticationTokens
         //                          where a.Token == token
         //                          select a).FirstOrDefault();
@@ -153,7 +153,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         //    }
         //    else
         //    {
-        //        ICommonDataContext context = CommonDataContext.GetContext(0);
+        //        ICommonDataContext context = CommonDataContext.GetContext(tenant);
         //        return (from a in context.AuthenticationTokens
         //                where a.Token == token
         //                select a).FirstOrDefault();

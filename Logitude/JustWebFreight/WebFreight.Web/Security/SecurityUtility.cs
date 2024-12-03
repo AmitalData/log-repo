@@ -564,7 +564,7 @@ namespace WebFreight.Web.Security
                 else
                 {
                     string token = null;
-                    ICommonDataContext context = CommonDataContext.GetContext(0);
+                    ICommonDataContext context = CommonDataContext.GetContext(tenant);
                     AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(context);
                     AuthenticationToken authToken = null;
                     if (HttpContext.Current != null)

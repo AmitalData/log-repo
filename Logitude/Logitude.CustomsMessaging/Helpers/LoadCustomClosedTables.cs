@@ -35,7 +35,7 @@ namespace Logitude.CustomsMessaging.Helpers
         {
 
             InitializeSettings();
-            ICustomContext customContext = CustomContext.GetContext(0);
+            ICustomContext customContext = CustomContext.GetContext((int)tenant);
 
             var myMehesSystemTables = new SystemTables();
 
@@ -223,7 +223,7 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
         public static void FillCustomsClosedTablesInDb(int tenant, ClientProgressBarIndicatorService clientProgressBarIndicatorService=null)
         {
             InitializeSettings();
-            ICustomContext customContext = CustomContext.GetContext(0);
+            ICustomContext customContext = CustomContext.GetContext(tenant);
             var myMehesSystemTables = new SystemTables();
             if (clientProgressBarIndicatorService != null) clientProgressBarIndicatorService.StartBroadcast("ממתין לתשובת המכס (סכמת טבלאות מכס)");
             var closedSystemTables = myMehesSystemTables.GetTableData("TableConfiguration", tenant);
@@ -2244,7 +2244,7 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
 
                 Stopwatch stopwatch = new Stopwatch();
                 InitializeSettings();
-                ICustomContext customContext = CustomContext.GetContext(0);
+                ICustomContext customContext = CustomContext.GetContext(tenant);
                 CustomsClosedTableRepository closedTableRep = new CustomsClosedTableRepository(customContext);
                 ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
                 Dictionary<string, ObjectTable> objectTables = objectTableRepository.GetObjectsByTenant(0).ToDictionary(d => d.Id, o => o);
