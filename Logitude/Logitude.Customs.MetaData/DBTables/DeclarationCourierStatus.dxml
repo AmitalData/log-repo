@@ -186,7 +186,7 @@
   <Column
     Name="CrateNumber"
     Type="varchar"
-    Size="50">
+    Size="30">
     <Constraints
       Nullable="true" />
   </Column>
