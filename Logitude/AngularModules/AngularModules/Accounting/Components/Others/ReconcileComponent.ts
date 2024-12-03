@@ -540,7 +540,6 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         this.InitTextCodes();
         this.BuildColumns();
         this.Listen();
-        this.GetFirstXLedgerForReconciliationByParam(true);
         //this.ColumnsReady.emit("");
     }
 
@@ -614,7 +613,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             //this.GetFirst5000LedgerForReconciliation();
 
             // Take selcted lines by defualt = 500 ; if toggle feature is active = 2000
-            this.GetFirstXLedgerForReconciliationByParam(false);
+            this.GetFirstXLedgerForReconciliationByParam();
             if (this.isFullAccounting) {
                 this.NumberOfselectedlines = this.DataSource.rowCount;
                 this.NumberOfFilteredlines = this.DataSource.rowCount;
@@ -777,6 +776,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             this.timerToken = setTimeout(() => {
                 var OpenAmountFilterOperator = this.OpenAmountSelectedOperator.EnglishName.replace(/ /g, ''); // remove white spaces
                 if (OpenAmountFilterOperator == "Equals") {
+                    this.openAmountFilter = new FilterItem("OpenAmount", searchtext, null, null, OpenAmountFilterOperator, false, false, false, "number", false);
                 }
                 else if (OpenAmountFilterOperator == "LessThan") {
                     this.openAmountFilter = new FilterItem("OpenAmount", searchtext, null, null, "LessThan", false, false, false, "number", false);
@@ -1639,7 +1639,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     }
 
 
-    GetFirstXLedgerForReconciliationByParam(filterByOpenAmount: boolean = false) {
+    GetFirstXLedgerForReconciliationByParam() {
         this.ValidationErrorsList = [];
         var filters = this.GetAPIFilters();
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.PrepareTransactions")); //"Preparing Transactions..."
@@ -1648,9 +1648,6 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             var first100Transactions = mm.Result;
             if (!mm.HasError) {
                 if (!AppTool.IsNullOrEmpty(first100Transactions)) {
-                     if(filterByOpenAmount){
-                        first100Transactions=first100Transactions.filter((x:LedgerTransactionPM)=>x.OpenAmount==0);
-                     }
                     this.SelectLines(first100Transactions);
                     this.CalculateTotals();
                 }
