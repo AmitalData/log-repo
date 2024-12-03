@@ -115,7 +115,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     if (declarationPM.PaymentDate == null)
                     {
+
                         var messagingService = new DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService();
+                        DeclarationRestoreRequestParams =  new DeclarationRestoreRequestParams()
+                        {
+                            DeclarationNumber = declarationPM.DeclarationNumber,
+                            CustomFileNo = declarationPM.CustomFileNo,
+                            Tenant = declarationPM.Tenant,
+                            RequestName = "Restore Declaration " + declarationPM.DeclarationNumber,
+                            ResponseName = "Restore Declaration " + declarationPM.DeclarationNumber,
+                            RequestVIA = SendRequestVIA.WebServiceBatch,
+                            InterfaceTypeCode = "8373",
+                            LoggingEntityId = declarationPM.Id,
+                            LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+                            LoggingUserId = AuthenticationUtil.ResolveUserId(declarationPM.Tenant),
+                        };
                         responseData = messagingService.Send(requestParams);
                     }
 
