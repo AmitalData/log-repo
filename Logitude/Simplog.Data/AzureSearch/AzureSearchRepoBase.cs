@@ -70,6 +70,8 @@ namespace Simplog.Data.AzureSearch.Repo
         public async Task<List<T>> SearchAsync(string searchText = "*", SearchOptions options = null)
         {
             searchText = System.Text.RegularExpressions.Regex.Replace(searchText, @"\s+", " ").Trim();
+            if (searchText.EndsWith(" *"))
+                searchText = searchText.Substring(0, searchText.Length - 2) + "*";
 
             if (options == null)
                 options = new SearchOptions();
