@@ -58,7 +58,7 @@
 				<app-generic-table *ngIf="!expandedArea3" [tableData]="tableData4" (buttonClicked)="handleButtonClick($event)"></app-generic-table>
 			</div>
 			<div></div>
-			<div class="tableContainer" *ngIf="isShowTableClassificationGuidance">
+			<div class="tableContainer clasisificationGuidance" *ngIf="isShowTableClassificationGuidance">
 				<app-clasisification-guidance [expandedArea]="expandedArea3" [ClassificationGuidanceId]="ClassificationGuidanceId"></app-clasisification-guidance>
 			</div>
 			<div class="dataLoadingBox"  *ngIf="!expandedArea3 && tableData4?.data?.length == 0">

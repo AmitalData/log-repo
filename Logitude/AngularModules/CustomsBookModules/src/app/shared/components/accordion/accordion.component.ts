@@ -129,12 +129,10 @@ export class AccordionComponent implements OnInit {
 
   handleButtonClick(data: { event: Event, row: any, key: string }): void {
     const { event, row, key } = data;
-    if (row.classificationGuidanceNumber != this.ClassificationGuidanceId.getValue()) {
+    if (row.classificationGuidanceNumber != this.ClassificationGuidanceId.getValue())
       this.isShowTableClassificationGuidance = true;
-    }
-    else {
+    else
       this.isShowTableClassificationGuidance = !this.isShowTableClassificationGuidance;
-    }
     this.ClassificationGuidanceId.next(row.classificationGuidanceNumber);
   }
 

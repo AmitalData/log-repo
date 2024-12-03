@@ -29,12 +29,19 @@
                             <tr *ngFor="let rule of group.rules; let i = index" class="parentLine">
                                 <td>{{ rule.Index }}</td>
                                 <td>
-                                    <span [innerHTML]="sanitizeHTML(highlight(rule.Rules))"></span> 
+                                    <span [innerHTML]="sanitizeHTML(highlight(rule.Rules))"></span>
                                     <table class="boxRuleDataChild">
                                         <tr *ngFor="let childItem of rule.childrens; let j = index">
-                                            <!-- <td>{{ alephBetHelper.getLetterFromNumber(j + 1) }}</td> -->
                                             <td>{{ childItem.Index }}</td>
-                                            <td [innerHTML]="sanitizeHTML(highlight(childItem.Rules))"></td>
+                                            <div>
+                                                <td [innerHTML]="sanitizeHTML(highlight(childItem.Rules))"></td>
+                                                <table class="boxRuleDataChild" *ngIf="childItem?.childrens.length > 0">
+                                                    <tr *ngFor="let childItem2 of childItem?.childrens; let j2 = index">
+                                                        <td>{{ childItem2.Index }}</td>
+                                                        <td [innerHTML]="sanitizeHTML(highlight(childItem2.Rules))"></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
                                         </tr>
                                     </table>
                                 </td>
