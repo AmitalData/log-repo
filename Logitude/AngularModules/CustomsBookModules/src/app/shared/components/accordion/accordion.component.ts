@@ -22,7 +22,8 @@ export class AccordionComponent implements OnInit {
   // @Input() itemData: BehaviorSubject<ItemData> = new BehaviorSubject<ItemData>(null);
   @Input() currentItem: BehaviorSubject<CB_CustomsItemComputedDataList> = new BehaviorSubject<CB_CustomsItemComputedDataList>(null);
   itemData: CB_CustomsItemComputedDataList;
-
+  isShowTableClassificationGuidance: boolean = false;
+  ClassificationGuidanceId: BehaviorSubject<string> = new BehaviorSubject<string>("");
   customsItemId: number;
   tableData1: TableData;
   tableData2: TableData;
@@ -128,20 +129,14 @@ export class AccordionComponent implements OnInit {
 
   handleButtonClick(data: { event: Event, row: any, key: string }): void {
     const { event, row, key } = data;
-    // console.log('Button clicked:', { event, row, key });
-    // console.log('Row data:', row[key]);
-    
-    if(row.classificationGuidanceNumber != this.ClassificationGuidanceId.getValue()){
+    if (row.classificationGuidanceNumber != this.ClassificationGuidanceId.getValue()) {
       this.isShowTableClassificationGuidance = true;
-    } 
-    else{
-      this.isShowTableClassificationGuidance = true;
+    }
+    else {
+      this.isShowTableClassificationGuidance = !this.isShowTableClassificationGuidance;
     }
     this.ClassificationGuidanceId.next(row.classificationGuidanceNumber);
   }
-  isShowTableClassificationGuidance: boolean = false;
-  // ClassificationGuidanceData: any;
-  ClassificationGuidanceId: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   // שיעורי מס
   buildAgreementsList(agreementsList: CB_TariffList[]) {

@@ -16,7 +16,7 @@ import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo'
 })
 export class ClasisificationGuidanceComponent implements OnInit {
   @Input() expandedArea: boolean;
-  @Input() ClassificationGuidanceId: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  @Input() ClassificationGuidanceId: BehaviorSubject<string> = new BehaviorSubject<string>("");
 
   data: any = null; // TODO: add TYPE
   tableData: TableData;
@@ -46,14 +46,12 @@ export class ClasisificationGuidanceComponent implements OnInit {
   }
 
   GetClassifGuidanceFullDetails(tenant: number) {
-    this.ClassificationGuidanceId.subscribe((data: any) => {
+    this.ClassificationGuidanceId.subscribe((ClassificationGuidanceNo: any) => {     
       this.data = null;
-      if (data) {
+      if (ClassificationGuidanceNo) {
         this.api_MainService.GetClassifGuidanceDetails(this.ClassificationGuidanceId.getValue().toString(), tenant).subscribe((data: any) => {
           if (!data.body) return; // TODO: add error message
           this.data = data.body;
-          console.log(data.body);
-
           this.tableData.data = data.body;
         });
       }
