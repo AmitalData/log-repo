@@ -130,11 +130,18 @@ export class AccordionComponent implements OnInit {
     const { event, row, key } = data;
     // console.log('Button clicked:', { event, row, key });
     // console.log('Row data:', row[key]);
-    this.isShowTableClassificationGuidance = true;
-    this.ClassificationGuidanceData = row;
+    
+    if(row.classificationGuidanceNumber != this.ClassificationGuidanceId.getValue()){
+      this.isShowTableClassificationGuidance = true;
+    } 
+    else{
+      this.isShowTableClassificationGuidance = true;
+    }
+    this.ClassificationGuidanceId.next(row.classificationGuidanceNumber);
   }
   isShowTableClassificationGuidance: boolean = false;
-  ClassificationGuidanceData: any;
+  // ClassificationGuidanceData: any;
+  ClassificationGuidanceId: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   // שיעורי מס
   buildAgreementsList(agreementsList: CB_TariffList[]) {

@@ -386,3 +386,7 @@ li {
     white-space: normal;
     text-align: right;
 }
+
+tr {
+    display: flex;
+}

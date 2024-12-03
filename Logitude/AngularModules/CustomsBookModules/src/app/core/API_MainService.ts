@@ -58,6 +58,10 @@ export class API_MainService extends BaseService {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomItemClassifGuidance?customsItemId=${customsItemId}&tenant=${tenant}`;
 		return this.Get(url);
 	}
+	GetClassifGuidanceDetails(classificationGuidanceNumber: string, tenant: number) {
+		const url = `${this._apiUrl}CB_CustomsItemExtended/GetClassifGuidanceDetails?classificationGuidanceNumber=${classificationGuidanceNumber}&tenant=${tenant}`;
+		return this.Get(url);
+	}
 
 	GetCustomsBookAgreementLevelData(customsItemId: number, measurementUnitMalamId: number) {
 		const url = `${this._apiUrl}CB_TariffExtended/GetCustomsBookAgreementLevelData?customsItemId=${customsItemId}&measurementUnitMalamId=${measurementUnitMalamId}`;

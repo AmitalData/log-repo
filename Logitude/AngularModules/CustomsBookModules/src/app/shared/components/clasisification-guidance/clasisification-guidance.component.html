@@ -1,2 +1,48 @@
-<div>{{ClassificationGuidanceData.classificationGuidanceNumber}}</div>
-<app-generic-table [tableData]="tableData" ></app-generic-table>
+<div class="instruction-container" *ngIf="data && !expandedArea">
+    <h3 class="instruction-header">פרטי הנחיה</h3>
+    <div class="instruction-row" >
+        <div class="instruction-cell">
+        <span class="label">שם הנחיה:</span>
+        <span class="value">{{ data.title }}</span>
+        </div>
+    </div>
+    <div class="instruction-row">
+        <div class="instruction-cell">
+        <span class="label">סוג הנחיה:</span>
+        <span class="value">{{ data.classificationGuidanceTypeName }}</span>
+        </div>
+        <div class="instruction-cell">
+            <span class="label">חלק/פרק/פרט מכס:</span>
+            <span class="value">{{ data.fullClassificationItem }}</span>
+        </div>
+        <div class="instruction-cell">
+            <span class="label">תאריך פתיחה:</span>
+            <span class="value">{{ data.createDate | date: 'dd/MM/yyyy' }}</span>
+
+            <span class="value">{{ data.createDate | date: 'dd/MM/yyyy' }}</span>
+        </div>
+    </div>
+    <div class="instruction-row">
+        <div class="instruction-cell">
+            <span class="label">תאריך פרסום:</span>
+            <span class="value">{{ data.publicationDate | date: 'dd/MM/yyyy' }}</span>
+        </div>
+        <div class="instruction-cell">
+        <span class="label">תאריך סיום תוקף:</span>
+        <span class="value">{{ data.expirationDate | date: 'dd/MM/yyyy' }}</span>
+        </div>
+        <div class="instruction-cell">
+        <span class="label"></span>
+        <span class="value"></span>
+        </div>
+    </div>
+    <h3 class="instruction-header">תוכן הנחיה</h3>
+    <div class="instruction-row">
+        <div class="instruction-cell">
+            <span [innerHTML]="sanitizeHTML(data?.classificationGuidanceTextRTF)"></span>
+        </div>
+    </div>
+</div>
+<div class="instruction-container" *ngIf="!data">
+    טוען נתונים ...
+</div>
