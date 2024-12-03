@@ -35,7 +35,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(MN_MSG2791_ExportDeliveryAnswerMessage customsResponse)
         {
-            ExportStoragePM entity = new ExportStorageQueryService(CustomContext.GetContext(0)).GetByCargoKeys(
+            ExportStoragePM entity = new ExportStorageQueryService(CustomContext.GetContext(RequestParams.Tenant)).GetByCargoKeys(
                 customsResponse.CargoIdentifier.cargoIdentifierKey1,
                 customsResponse.CargoIdentifier.cargoIdentifierKey2,
                 customsResponse.CargoIdentifier.cargoIdentifierKey3,

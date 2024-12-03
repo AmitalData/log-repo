@@ -449,8 +449,9 @@ namespace WebFreight.Web.WebServices
         [WebMethod]
         public byte[] ExportFeaturesToCSVFile()
         {
-            ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
-            IWebFreightContext webFreightContext = WebFreightContext.GetContext(0);
+            int tenant = 0;
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+            IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
             var List = (from PackageFeature in commonDataContext.PackageFeatures
                         join Feature in commonDataContext.Features on PackageFeature.FeatureId equals Feature.Id into FeaturePackages
                         from FeaturePackage in FeaturePackages.DefaultIfEmpty()

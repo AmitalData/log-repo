@@ -40,8 +40,8 @@ namespace CommunicationWorkerRole
             ServicePointManager.DefaultConnectionLimit = MaximumNumberOfConcurrentConnections;
             ThreadId = Guid.NewGuid().ToString();
             BatchServiceCode = "CargoDisconnec";
-            cargoContext = CargoTrackingContext.GetContext(0);
-            shipmentsContext = ShipmentsContext.GetContext(0);
+            cargoContext = CargoTrackingContext.GetContext((int)Tenant);
+            shipmentsContext = ShipmentsContext.GetContext((int)Tenant);
             return base.OnStart();
         }
         public override void Run()

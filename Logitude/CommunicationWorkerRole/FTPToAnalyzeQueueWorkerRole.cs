@@ -38,7 +38,7 @@ namespace CommunicationWorkerRole
                             ReadFTPFiles(ftpDetail, "Artemus");
                         }
 
-                        ICommonDataContext myCommonContext = CommonDataContext.GetContext(0);
+                        ICommonDataContext myCommonContext = CommonDataContext.GetContext((int)Tenant);
                         List<INTTRASetting> allINTTRASetting = myCommonContext.INTTRASettings.Where(d => d.InSettingsId != null).ToList();
                         foreach (INTTRASetting item in allINTTRASetting)
                         {

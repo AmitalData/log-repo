@@ -603,7 +603,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     AzureLog.SaveLogsInStorage("(" + message + ")" + " Update Tenant 0 Elapsed Time : " + ts.ToString(), "P", DateTime.Now, "", "", 0, null, null, null);
 
                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Updating All closed tables history ...");
-                    TableLastUpdateClass.UpdateAllClosedTablesHistory();
+                    TableLastUpdateClass.UpdateAllClosedTablesHistory(tenant);
 
                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Updateing System metadata history ...");
                     TableLastUpdateClass.UpdateSystemMetaDataHistory();

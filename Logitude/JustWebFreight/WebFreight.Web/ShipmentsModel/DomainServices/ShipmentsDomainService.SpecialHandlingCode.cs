@@ -225,7 +225,6 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
         {
             SecurityUtility.AuthenticationOnTenant(0);
             //SecurityUtility.CheckContactFeature("AWBSpecialHandlingCode", "NEW", 0);
-
             if (objectContext == null)
             {
                 objectContext = ShipmentsContext.GetContext(0);

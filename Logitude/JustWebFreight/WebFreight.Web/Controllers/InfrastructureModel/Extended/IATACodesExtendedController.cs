@@ -33,7 +33,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                     SecurityUtility.AuthenticationOnTenant(0);
                     SecurityUtility.CheckContactFeature("IATACode", "NEW", 0);
 
-                    IWebFreightContext objectContext = WebFreightContext.GetContext(0);
+                    IWebFreightContext objectContext = WebFreightContext.GetContext(tenant);
                     IATACodeService service = new IATACodeService(objectContext, entityPM);
                     service.Create();
 
@@ -74,7 +74,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                         CacheManager.CacheWrapper.Invalidate(entityPmName);
                     }
 
-                    IWebFreightContext objectContext = WebFreightContext.GetContext(0);
+                    IWebFreightContext objectContext = WebFreightContext.GetContext(tenant);
                     IATACodeService service = new IATACodeService(objectContext, entityPM);
                     service.Update();
 

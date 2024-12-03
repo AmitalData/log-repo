@@ -89,7 +89,7 @@ namespace Logitude.BL.Helpers
                 var isDemoTenant = false;
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
                 {
-                    commonDataContext = CommonDataContext.GetContext(0);
+                    commonDataContext = CommonDataContext.GetContext(tenant);
                     loggedContact = commonDataContext.Contacts.Where(c => c.Email == email && c.Tenant == 0).FirstOrDefault();
                     if (loggedContact != null)
                     {

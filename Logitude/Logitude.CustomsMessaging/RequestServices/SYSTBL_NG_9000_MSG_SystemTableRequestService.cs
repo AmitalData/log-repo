@@ -31,7 +31,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
             if (!requestParams.Pseudo)
             {
-                ICustomContext customContext = CustomContext.GetContext(0);
+                ICustomContext customContext = CustomContext.GetContext(requestParams.Tenant);
                 CustomsClosedTableRepository closedTableRep = new CustomsClosedTableRepository(customContext);
                 CustomsClosedTable table = closedTableRep.GetSingle(new CustomsClosedTableKeys() { Id = requestParams.TableId });
                 ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);

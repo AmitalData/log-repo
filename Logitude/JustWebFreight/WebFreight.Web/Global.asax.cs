@@ -600,7 +600,7 @@ namespace WebFreight.Web
             //string token = HttpContext.Current.Request.Headers["Token"];
             //if (!string.IsNullOrEmpty(token))
             //{
-            //    ICommonDataContext context = CommonDataContext.GetContext(0);
+            //    ICommonDataContext context = CommonDataContext.GetContext(tenant);
             //    AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(context);
             //    AuthenticationToken authToken = tokenRep.GetSingleToken(token);
             //    if (authToken != null)

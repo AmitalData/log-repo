@@ -34,7 +34,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                     SecurityUtility.AuthenticationOnTenant(0);
                     SecurityUtility.CheckContactFeature("AWBSpecialHandlingCode", "NEW", 0);
 
-                    IShipmentsContext objectContext = ShipmentsContext.GetContext(0);
+                    IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
                     AWBSpecialHandlingCodeService service = new AWBSpecialHandlingCodeService(objectContext, entityPM);
                     service.Create();
 
@@ -75,7 +75,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                         CacheManager.CacheWrapper.Invalidate(entityPmName);
                     }
 
-                    IShipmentsContext objectContext = ShipmentsContext.GetContext(0);
+                    IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
                     AWBSpecialHandlingCodeService service = new AWBSpecialHandlingCodeService(objectContext, entityPM);
                     service.Update();
 

@@ -108,7 +108,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-               //    WebFreightContext  webFreightContext = (WebFreightContext)WebFreightContext.GetContext(0);
+               //    WebFreightContext  webFreightContext = (WebFreightContext)WebFreightContext.GetContext(tenant);
                     tenantZeroQuery = (from a in repository.context.ObjectFieldValidations
                                        where (a.Tenant == 0) && a.ObjectFieldCode == objectFieldCode
                                        select new ObjectFieldValidationPM()
@@ -172,7 +172,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    IWebFreightContext context = WebFreightContext.GetContext(0);
+                    IWebFreightContext context = WebFreightContext.GetContext(tenant);
                     tenantZeroQuery = (from a in context.ObjectFieldValidations
                                        where (a.Tenant == 0)
                                        select new ObjectFieldValidationPM()

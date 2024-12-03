@@ -22,7 +22,6 @@ namespace WebFreight.Web.Helpers
         public InboundEmailGeneralHelperMethods(HttpRequest request)
         {
             this.request = request;
-
         }
 
         public List<FileAttachment> FillAttachments()

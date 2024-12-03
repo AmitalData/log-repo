@@ -35,7 +35,7 @@ namespace WebFreight.Web.Controllers.BookingModel.Extended
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("BookingProduct", "NEW", authToken.Tenant);
 
-                        IBookingContext MyContext = BookingContext.GetContext(0);
+                        IBookingContext MyContext = BookingContext.GetContext(authToken.Tenant);
                         BookingProductUpdateService service = new BookingProductUpdateService(MyContext, new Dictionary<string, IContext>(), 0);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
                         service.Update(entityPM, true);
@@ -86,7 +86,7 @@ namespace WebFreight.Web.Controllers.BookingModel.Extended
                             CacheManager.CacheWrapper.Invalidate(entityPmName);
                         }
 
-                        IBookingContext MyContext = BookingContext.GetContext(0);
+                        IBookingContext MyContext = BookingContext.GetContext(authToken.Tenant);
                         BookingProductUpdateService service = new BookingProductUpdateService(MyContext, new Dictionary<string, IContext>(), 0);
                         service.InitializeEntityPM(entityPM);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;

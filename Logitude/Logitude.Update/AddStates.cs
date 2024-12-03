@@ -67,7 +67,8 @@ namespace Logitude.Update
                             AllDataLines.Add(myItem);
                         }
                     }
-                    Thread thread = new Thread(() => this.RunAddingStatesPORTS(AllDataLines, countryCode));
+                    int tenant = 0;
+                    Thread thread = new Thread(() => this.RunAddingStatesPORTS(AllDataLines, countryCode,tenant));
                     thread.IsBackground = true;
                     thread.Start();
 
@@ -76,7 +77,7 @@ namespace Logitude.Update
        
         }
 
-        private void RunAddingStatesPORTS(List<StatesPorts> allDataLines, string countryCode)
+        private void RunAddingStatesPORTS(List<StatesPorts> allDataLines, string countryCode,int tenant)
         {
             
             if (countryCode == "US")
@@ -94,7 +95,7 @@ namespace Logitude.Update
             {
                 
 
-                ICommonDataContext myCommonContext = CommonDataContext.GetContext(0);
+                ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
                 List<Tenant> tenants = myCommonContext.Tenants.ToList();
                 if (tenants.Count > 0)
                 {
@@ -123,7 +124,7 @@ namespace Logitude.Update
             }
             else
             {
-                int tenant = int.Parse(this.textBox1.Text);
+                tenant = int.Parse(this.textBox1.Text);
 
                 this.StartAddingStatesPorts(allDataLines, countryCode, tenant);
             }
@@ -302,7 +303,7 @@ namespace Logitude.Update
                             AllDataLines.Add(myItem);
                         }
                     }
-                    Thread thread = new Thread(() => this.RunAddingStates(AllDataLines, "IndiaStates"));
+                    Thread thread = new Thread(() => this.RunAddingStates(AllDataLines, "IndiaStates",0));
                     thread.IsBackground = true;
                     thread.Start();
 
@@ -310,14 +311,14 @@ namespace Logitude.Update
             }
         }
 
-        private void RunAddingStates(List<StatesPorts> allDataLines, string v)
+        private void RunAddingStates(List<StatesPorts> allDataLines, string v,int tenant)
         {
 
             if (checkBox1.Checked)
             {
 
 
-                ICommonDataContext myCommonContext = CommonDataContext.GetContext(0);
+                ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
                 List<Tenant> tenants = myCommonContext.Tenants.ToList();
                 if (tenants.Count > 0)
                 {
@@ -338,7 +339,7 @@ namespace Logitude.Update
 
             else
             {
-                int tenant = int.Parse(this.textBox1.Text);
+                tenant = int.Parse(this.textBox1.Text);
                 InsertStates(allDataLines, v, tenant);
             }    
             }
@@ -440,7 +441,7 @@ namespace Logitude.Update
                             AllDataLines.Add(myItem);
                         }
                     }
-                    Thread thread = new Thread(() => this.RunAddingStatesQBO(AllDataLines));
+                    Thread thread = new Thread(() => this.RunAddingStatesQBO(AllDataLines,0));
                     thread.IsBackground = true;
                     thread.Start();
 
@@ -449,13 +450,13 @@ namespace Logitude.Update
             }
         }
 
-        private void RunAddingStatesQBO(List<StatesQBOCode> allDataLines)
+        private void RunAddingStatesQBO(List<StatesQBOCode> allDataLines,int tenant)
         {
             allDataLines = allDataLines.Where(d => !string.IsNullOrEmpty(d.State)).ToList();
             if (this.checkBox1.Checked)
             {
                 SetControlPropertyValue(InsertStatesQBOLbl, "Text", "Updating ...");
-                ICommonDataContext myCommonContext = CommonDataContext.GetContext(0);
+                ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
                 List<Tenant> tenants = myCommonContext.Tenants.ToList();
                 if (tenants.Count > 0)
                 {
@@ -470,7 +471,7 @@ namespace Logitude.Update
             }
             else
             {
-                int tenant = int.Parse(this.textBox1.Text);
+                tenant = int.Parse(this.textBox1.Text);
                 this.ComputeStatesQBO(tenant, allDataLines);
             }
            

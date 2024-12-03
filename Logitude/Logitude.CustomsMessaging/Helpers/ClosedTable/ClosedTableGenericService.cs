@@ -66,7 +66,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         }
         public void UpdateSingleClosedTable()
         {
-            //_CustomContext = CustomContext.GetContext(0);
+            //_CustomContext = CustomContext.GetContext(tenant);
             if (false)
             {
                 CustomsClosedTableRepository closedTableRep = new CustomsClosedTableRepository(_CustomContext);

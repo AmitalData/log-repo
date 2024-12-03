@@ -206,7 +206,7 @@ namespace WebFreight.Web.InfrastructureModel.DomainServices
 
             if (objectContext == null)
             {
-                objectContext = WebFreightContext.GetContext(0);
+                objectContext = WebFreightContext.GetContext(  0);
             }
 
             IATACodeService service = new IATACodeService(objectContext, entityPM);

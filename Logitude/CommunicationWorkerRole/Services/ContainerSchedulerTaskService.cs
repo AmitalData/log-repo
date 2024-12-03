@@ -32,18 +32,18 @@ namespace CommunicationWorkerRole.Services
             this.currentTask = task;
         }
 
-        public void ExecuteDailyAutomaticallyClosingContainers()
+        public void ExecuteDailyAutomaticallyClosingContainers(int tenant)
         {
-            this.GetAllContainers();
+            this.GetAllContainers(tenant);
             foreach (Container container in allContainers)
             {
                 this.ManageClosedContainer(container);
             }
         }
 
-        private void GetAllContainers()
+        private void GetAllContainers(int tenant)
         {
-            shipmentsContext = ShipmentsContext.GetContext(0);
+            shipmentsContext = ShipmentsContext.GetContext(tenant);
             allContainers = (from d in shipmentsContext.Containers
                              where !d.IsClosed
                              select d);

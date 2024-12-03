@@ -195,7 +195,7 @@ namespace WebFreight.Web.App_Code
                 User logitudeUser = null;
                 if (contact != null)
                 {
-                    ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
+                    ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
                     logitudeUser = (from a in commonDataContext.Users
                                     where a.Id == contact.Id
                                     select a).FirstOrDefault();

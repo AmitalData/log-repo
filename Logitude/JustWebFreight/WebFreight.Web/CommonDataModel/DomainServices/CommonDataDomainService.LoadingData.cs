@@ -704,10 +704,10 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
         {
             //0         1          2       3      4       5         6
             //Code,EnglishName,LocalName,IsAir,IsOcean,IsInland,CountryCode
-
+            int tenant = 0;
             if (objectContext == null)
             {
-                objectContext = CommonDataContext.GetContext(0);
+                objectContext = CommonDataContext.GetContext(tenant);
             }
             countryRepository = new CountryRepository(objectContext);
             portRepository = new PortRepository(objectContext);

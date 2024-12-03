@@ -33,7 +33,7 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                 {
 
 
-                    IGlobalContext MyGlContext = GlobalContext.GetContext(0);
+                    IGlobalContext MyGlContext = GlobalContext.GetContext(entityPM.Id);
                     TenantManagementLicenseRepository tenantManagementLicenseRepository = new TenantManagementLicenseRepository(MyGlContext);
                     var tenantManagementLicenseQuery = tenantManagementLicenseRepository.GetTenantManagementLicenses(entityPM.Id);
                     if (tenantManagementLicenseQuery != null)
@@ -229,7 +229,7 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
 
                         if (entityPM.BluesnapContractId != poco.BluesnapContractId)
                         {
-                            IGlobalContext context = GlobalContext.GetContext(0);
+                            IGlobalContext context = GlobalContext.GetContext(entityPM.Id);
                             BluesnapContractRepository repo = new BluesnapContractRepository(context);
                             BluesnapContract entity_Pm = repo.GetSingleBluesnapContract(entityPM.BluesnapContractId, 0);
 

@@ -18,9 +18,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             webFreightContext = context;
         }
 
-        public InboundEmailLineRepository()
+        public InboundEmailLineRepository() : this(0)
         {
-            webFreightContext = WebFreightContext.GetContext(0);
         }
 
         public InboundEmailLineRepository(int tenant)

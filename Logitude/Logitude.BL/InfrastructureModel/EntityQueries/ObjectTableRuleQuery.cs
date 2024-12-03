@@ -156,7 +156,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 {
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
-                        WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(0);
+                        WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(tenant);
                         zeroTenantobjectTableRulePMs = (from a in repository.context.ObjectTableRules.Include("RuleType")
                                                         where a.Tenant == 0
                                                         select new ObjectTableRulePM()

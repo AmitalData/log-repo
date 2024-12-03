@@ -41,7 +41,7 @@ namespace WebFreight.Web.WcfApi
                 //AzureLog.SaveLogsInStorage("( Token : " + token + " ) => myEmail is null or empty ", "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
                 if (!string.IsNullOrEmpty(token))
                 {
-                    ICommonDataContext context = CommonDataContext.GetContext(0);
+                    ICommonDataContext context = CommonDataContext.GetContext(tenant);
                     AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(context);
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     if (authToken != null)

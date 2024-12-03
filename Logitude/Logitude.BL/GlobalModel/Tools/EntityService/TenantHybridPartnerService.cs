@@ -25,7 +25,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
         public TenantHybridPartnerService(int tenant)
         {
             hybridPartnerQuery = new HybridPartnerQuery(tenant);
-            iCommonDataContext = CommonDataContext.GetContext(0);
+            iCommonDataContext = CommonDataContext.GetContext(tenant);
             hybridPartnerService = new HybridPartnerService(iCommonDataContext);
             this.tenant = tenant;
         }

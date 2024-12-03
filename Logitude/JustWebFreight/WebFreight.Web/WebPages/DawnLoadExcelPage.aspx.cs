@@ -100,7 +100,7 @@ namespace WebFreight.Web.WebPages
 
             if (isValid)
             {
-                ICommonDataContext context = CommonDataContext.GetContext(0);
+                ICommonDataContext context = CommonDataContext.GetContext((int)tenant);
 
 
                 //StiReport stiReport = new StiReport();

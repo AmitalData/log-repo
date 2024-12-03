@@ -441,7 +441,7 @@ namespace WebFreight.Web.InfrastructureModel
                     tenantZeroPackageTypes = packageTypeQuery.GetPackageTypePMsByTenant(0).ToList();
                     tenantZeroCustomFields = documentTypeCustomFieldRepository.GetDocumentTypeCustomFields(0).ToList();
 
-                    ITariffModuleContext iTariffContext = TariffModuleContext.GetContext(0);
+                    ITariffModuleContext iTariffContext = TariffModuleContext.GetContext(tenant);
                     if (setting.WorkEnvironment != "customs") zeroTariffSetting = (from d in iTariffContext.TariffSettings where d.Tenant == 0 select d).FirstOrDefault();
 
                     zeroAccountingSettings = accountingSettingsRepository.GetSingleAccountSetting(0);
@@ -1469,7 +1469,7 @@ namespace WebFreight.Web.InfrastructureModel
             entityPM.Name = signUpInfo.Company;
             entityPM.PartnerTenant = newTenant.Id;
             entityPM.LocalName = signUpInfo.Company;
-            ICommonDataContext Context = CommonDataContext.GetContext(0);
+            ICommonDataContext Context = CommonDataContext.GetContext(tenant);
             HybridPartnerService hybridPartnerService = new HybridPartnerService(Context, 0);
             hybridPartnerService.Create(entityPM);
             return newTenant;

@@ -66,7 +66,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         //            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
         //            {
-        //                WebFreightContext context = WebFreightContext.GetContext(0);
+        //                WebFreightContext context = WebFreightContext.GetContext(tenant);
         //                zeroquery = (from a in context.ObjectTableRuleFields
         //                             where (a.Tenant == 0) && a.ObjectTableRuleId == objectTableRuleId
         //                             select a).ToList();
@@ -94,7 +94,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         //        using (TransactionScope scope = TransactionFactory.GetNewTransaction())
         //        {
-        //            WebFreightContext context = WebFreightContext.GetContext(0);
+        //            WebFreightContext context = WebFreightContext.GetContext(tenant);
         //            zeroquery = (from a in context.ObjectTableRuleFields
         //                         where (a.Tenant == 0) && a.ObjectTableRuleId == objectTableRuleId
         //                         select a).ToList();
@@ -129,7 +129,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        IWebFreightContext context = WebFreightContext.GetContext(0);
+                        IWebFreightContext context = WebFreightContext.GetContext(tenant);
                         zeroquery = (from a in context.ObjectTableRuleFields.Include("ObjectField").Include("ObjectTableRule")
                                      where (a.Tenant == 0)
                                      select a).ToList();
@@ -157,7 +157,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                   IWebFreightContext context = WebFreightContext.GetContext(0);
+                   IWebFreightContext context = WebFreightContext.GetContext(tenant);
                    zeroquery = (from a in context.ObjectTableRuleFields.Include("ObjectField").Include("ObjectTableRule")
                                  where (a.Tenant == 0) 
                                  select a).ToList();

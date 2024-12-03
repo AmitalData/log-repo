@@ -254,7 +254,7 @@ namespace WebFreight.Web.InfrastructureModel.DomainServices
 
         public void InsertChargesGroup(ChargesGroupPM entity)
         {
-            if (objectContext == null) objectContext = WebFreightContext.GetContext(0);
+            if (objectContext == null) objectContext = WebFreightContext.GetContext(entity.Tenant);
      
             ChargesGroupService ChargesGroupService = new ChargesGroupService(objectContext, entity.Tenant);
             ChargesGroupService.Create(entity);
@@ -263,7 +263,7 @@ namespace WebFreight.Web.InfrastructureModel.DomainServices
 
         public void UpdateChargesGroup(ChargesGroupPM currentEntity)
         {
-            if (objectContext == null) objectContext = WebFreightContext.GetContext(0);
+            if (objectContext == null) objectContext = WebFreightContext.GetContext(currentEntity.Tenant);
             ChargesGroupService ChargesGroupService = new ChargesGroupService(objectContext, currentEntity.Tenant);
             ChargesGroupService.Update(currentEntity);
            

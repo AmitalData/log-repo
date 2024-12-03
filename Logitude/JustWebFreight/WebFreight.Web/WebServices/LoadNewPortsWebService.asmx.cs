@@ -22,7 +22,8 @@ namespace WebFreight.Web.WebServices
         [WebMethod]
         public string LoadPorts(string file)
         {
-            ICommonDataContext objectContext = CommonDataContext.GetContext(0);
+            int tenant = 0;
+            ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
 
             Simplog.Data.CommonDataModel.Repositories.CountryRepository countryRepository = new Simplog.Data.CommonDataModel.Repositories.CountryRepository(objectContext);
             PortRepository portRepository = new PortRepository(objectContext);

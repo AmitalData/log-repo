@@ -17,7 +17,7 @@ namespace WebFreight.Web.InfrastructureModel.DomainServices
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
 
-            IInfrastructureContext objectContext = InfrastructureContext.GetContext(0);
+            IInfrastructureContext objectContext = InfrastructureContext.GetContext(tenant);
             ToggleListQueryService listService = new ToggleListQueryService(objectContext);
             return listService.GetList(tenant);
         }
@@ -26,7 +26,7 @@ namespace WebFreight.Web.InfrastructureModel.DomainServices
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
 
-            IInfrastructureContext objectContext = InfrastructureContext.GetContext(0);
+            IInfrastructureContext objectContext = InfrastructureContext.GetContext(tenant);
             ToggleListQueryService listService = new ToggleListQueryService(objectContext);
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
             return listService.GetList(queryOperations, tenant);
@@ -37,7 +37,7 @@ namespace WebFreight.Web.InfrastructureModel.DomainServices
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
 
-            IInfrastructureContext objectContext = InfrastructureContext.GetContext(0);
+            IInfrastructureContext objectContext = InfrastructureContext.GetContext(tenant);
 
             ToggleListQueryService queryService = new ToggleListQueryService(objectContext);
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);

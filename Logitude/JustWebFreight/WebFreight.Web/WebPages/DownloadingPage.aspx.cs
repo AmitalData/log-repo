@@ -51,7 +51,7 @@ namespace WebFreight.Web.WebPages
                 string fileName = null;
                 bool IsValid = true;
 
-                ICommonDataContext context = CommonDataContext.GetContext(0);
+                ICommonDataContext context = CommonDataContext.GetContext((int)tenant);
                 if (!string.IsNullOrEmpty(securityKey))
                 {
                     var securityArray = securityKey.Split('~');

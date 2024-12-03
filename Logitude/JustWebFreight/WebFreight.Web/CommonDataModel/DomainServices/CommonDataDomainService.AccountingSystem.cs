@@ -197,19 +197,19 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             return count;
         }
 
-        public void UpdateAccountingSystem(AccountingSystemPM entityPM)
+        public void UpdateAccountingSystem(AccountingSystemPM entityPM, int tenant)
         {
-            SecurityUtility.CheckContactFeature("AccountingSystem", "UPDATE", 0);
+            SecurityUtility.CheckContactFeature("AccountingSystem", "UPDATE", tenant);
 
             if (objectContext == null)
             {
-                objectContext = CommonDataContext.GetContext(0);
+                objectContext = CommonDataContext.GetContext(tenant);
             }
 
-            AccountingSystemService service = new AccountingSystemService(objectContext, 0);
+            AccountingSystemService service = new AccountingSystemService(objectContext, tenant);
             service.Update(entityPM);
 
-            TableLastUpdateClass.UpdateTableHistory(0, "AccountingSystem");
+            TableLastUpdateClass.UpdateTableHistory(tenant, "AccountingSystem");
         }
 
         public void UpdateAccountingSystemList(AccountingSystemList currentEntity)

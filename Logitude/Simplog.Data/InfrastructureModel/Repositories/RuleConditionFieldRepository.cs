@@ -70,7 +70,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    IWebFreightContext context = WebFreightContext.GetContext(0);
+                    IWebFreightContext context = WebFreightContext.GetContext(tenant);
                     zeroRuleConditionField = (from a in context.RuleConditionFields.Include("ObjectField") 
                                             where a.Tenant == 0
                                             select a).ToList();
