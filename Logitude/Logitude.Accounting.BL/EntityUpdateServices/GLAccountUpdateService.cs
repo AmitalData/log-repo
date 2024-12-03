@@ -966,7 +966,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private void FillSearchFields(GLAccountPM entityPM)
         {
-            entityPM.SearchFields = entityPM.DisplayNumber + "," + entityPM.EnglishName + "," + entityPM.LocalName;
+            GLAccountCardsDataRepository repo = new GLAccountCardsDataRepository(entityPM.Tenant);
+            GLAccountCardsData card = repo.GetSingle(entityPM.CardsDataId, entityPM.Tenant);
+           
+            entityPM.SearchFields = entityPM.DisplayNumber + "," + entityPM.EnglishName + "," + entityPM.LocalName+","+ card?.VatNumber;
         }
 
         private void FillForeignFields(GLAccountPM entityPM)
