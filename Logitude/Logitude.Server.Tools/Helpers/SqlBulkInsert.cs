@@ -25,7 +25,7 @@ namespace Logitude.Server.Tools.Helpers
             {
                 for (int i = 0; i < list.Count; i++)
                 {
-                    var item=list[i];
+                    var item = list[i];
                     var property = item.GetType().GetProperty("LocalDefaultText");
                     if (property != null && property.PropertyType == typeof(string))
                     {
@@ -213,7 +213,6 @@ namespace Logitude.Server.Tools.Helpers
             return shortfieldName;
         }
 
-
         public static string TryConvertFromBase64(string input)
         {
             try
@@ -259,5 +258,6 @@ namespace Logitude.Server.Tools.Helpers
             }
 
         }
+
     }
 }
