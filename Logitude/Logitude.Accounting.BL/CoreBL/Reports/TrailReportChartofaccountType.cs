@@ -21,9 +21,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         protected override void AdjustTrailReportFull()
         {
-            var testNow = false; // true;// (new DateTime(2016, 12, 30) > DateTime.Now);
-
-
+     
 
 
             IQueryable<TrailReportTemp> qAccumulateLocalAmountOnly_TotalStart_JoinAccounts_GroupByChartOfAccountsTypeCode =
@@ -70,18 +68,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             }
 
 
-            if (testNow)
-            {
-                var test1111 = _QUnionAllMoneyData.ToList();
-            }
+    
 
             IQueryable<TrailReportM> qMapAllCurrencySum2TRail = GroupBy_AccountId_COAType_SumLocalAmount(_QUnionAllMoneyData);
 
             _QBaseTrailReportFull = qMapAllCurrencySum2TRail;
-            if (testNow)
-            {
-                var tettt = _QBaseTrailReportFull.ToList();
-            }
+           
 
         }
 
