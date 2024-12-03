@@ -93,14 +93,27 @@ export class RulesComponent implements OnInit, OnChanges {
     const getChildren = (parentRule: CB_RulesDetailsList): CB_RulesDetailsList[] => {
       // Filter for children of the current parent rule
       const children = rulesList.filter(rule => rule.ParentID === parentRule.ID);
-      // order the children by Index. if the index is a number from the string index "1.", "2." "3.", sort by number don't sort by string:
       children.sort((a, b) => {
-        if (a.Index.match(/^\d+\./) && b.Index.match(/^\d+\./)) {
-          return parseInt(a.Index) - parseInt(b.Index);
+        // Handle items with '...' - they should come last
+        const aHasEllipsis = a.Index.includes('...');
+        const bHasEllipsis = b.Index.includes('...');
+      
+        if (aHasEllipsis && bHasEllipsis) return 0;
+        if (aHasEllipsis) return 1;
+        if (bHasEllipsis) return -1;
+      
+        // If neither has '...', sort numerically if the Index starts with a number followed by a dot
+        const aIsNumeric = /^\d+\./.test(a.Index);
+        const bIsNumeric = /^\d+\./.test(b.Index);
+      
+        if (aIsNumeric && bIsNumeric) {
+          return parseInt(a.Index, 10) - parseInt(b.Index, 10);
         }
+      
+        // Fallback to string-based sorting
         return a.Index.localeCompare(b.Index);
       });
-
+      
       // For each child, get its own children recursively
       children.forEach(child => {
         child.childrens = getChildren(child);
