@@ -117,6 +117,10 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.OppositeAccountNumber).HasColumnName("OppositeAccountNumber");
 
             this.Property(t => t.TenantForConfirmationNumberApi).HasColumnName("TenantForConfirmationNumberApi").IsRequired().HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.InvoiceNotes).HasColumnName("InvoiceNotes").HasMaxLength(40).IsUnicode(true);
+
+            this.Property(t => t.InterestInvoiceNotes).HasColumnName("InterestInvoiceNotes").HasMaxLength(40).IsUnicode(true);
         }
     }
 }

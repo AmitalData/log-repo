@@ -64,6 +64,8 @@ export class FullAccountingSettingList {
 	AllowEditingExchangeRate: boolean;
 	OppositeAccountNumber: boolean;
 	TenantForConfirmationNumberApi: string;
+	InvoiceNotes: string;
+	InterestInvoiceNotes: string;
 	
 }
  
