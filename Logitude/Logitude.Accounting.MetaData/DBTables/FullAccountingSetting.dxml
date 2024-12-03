@@ -304,9 +304,23 @@
     Name="TenantForConfirmationNumberApi"
     Type="varchar"
     Size="2"
-     DefaultValue="-1">
+    DefaultValue="-1">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="InvoiceNotes"
+    Type="nvarchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InterestInvoiceNotes"
+    Type="nvarchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="DefaultVATTypeId"

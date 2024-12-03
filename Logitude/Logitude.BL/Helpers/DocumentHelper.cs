@@ -49,6 +49,7 @@ using DocumentsFiling = Simplog.Data.CommonDataModel.EntityPOCOs.DocumentsFiling
 using Customer = Simplog.Data.CommonDataModel.EntityPOCOs.Customer;
 using DocumentType = Simplog.Data.CommonDataModel.EntityPOCOs.DocumentType;
 using Contact = Simplog.Data.CommonDataModel.EntityPOCOs.Contact;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
 
 namespace Logitude.BL.Helpers
 {
@@ -347,7 +348,7 @@ namespace Logitude.BL.Helpers
                         storageservice.Write(signBytes, fileInfo);
                         APInvoiceHelper.AddCommunicationLog("D", invocie, signBytes.ToString(), "ARInvoice", invocie?.Id, "signBytes is ok", Tenant);
 
-                        this.HSMSignatureSucceeded(invocie, repository, contactEmail, document, myDocumentFilings.Id);
+                        this.HSMSignatureSucceeded(invocie, repository, contactEmail, document, myDocumentFilings.Id, accountingSettings);
                        
                         
                     }
@@ -391,7 +392,7 @@ namespace Logitude.BL.Helpers
         }
 
 
-        private void HSMSignatureSucceeded(ARInvoice invocie, ARInvoiceRepository repository,string contactEmail,Document document,string  DocumentFilingId )
+        private void HSMSignatureSucceeded(ARInvoice invocie, ARInvoiceRepository repository,string contactEmail,Document document,string  DocumentFilingId ,FullAccountingSettingPM accountingSettings)
         {
 
             invocie.IsSigned = "1";
@@ -399,7 +400,7 @@ namespace Logitude.BL.Helpers
             repository.SubmitChanges();
             this.CreateEvent("HSMS", invocie, DocumentFilingId + "החשבונית נחתמה בהצלחה :");
          //   this.SendEmailAlert("libby@amital.co.il", "  חתימה בHSM נכשלה", " חתימת החשבונית נכשלה &ensp;&ensp;&ensp; חשבונית מספר" + invocie.InvoiceNumber + "<br /><br />מצורפת השגיאה " );
-            this.SendToEmailContact(contactEmail, invocie, document, DocumentFilingId, repository, invocie.Tenant);
+            this.SendToEmailContact(contactEmail, invocie, document, DocumentFilingId, repository, invocie.Tenant, accountingSettings);
 
         }
         private void CreateEvent(string eventCode,ARInvoice arinvocie, string Notes = null)
@@ -448,7 +449,7 @@ namespace Logitude.BL.Helpers
         }
 
 
-        private void SendToEmailContact(string email, ARInvoice arinvocie,Document document,string DocumentFilingId, ARInvoiceRepository repository,int tenant)
+        private void SendToEmailContact(string email, ARInvoice arinvocie,Document document,string DocumentFilingId, ARInvoiceRepository repository,int tenant,FullAccountingSettingPM accountingSettings)
         {
             string loggedUserEmail = null;
             try
@@ -466,7 +467,7 @@ namespace Logitude.BL.Helpers
             }
             UserRepository userRepository = new UserRepository(Tenant);
             User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, loggedUserEmail, tenant, true);
-            System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
+              System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
              EncodedHtmlHelper encodedHtmlHelper = new EncodedHtmlHelper();
             string htmlstring = "";
             string userId = null;
@@ -482,14 +483,16 @@ namespace Logitude.BL.Helpers
                 userId = loggedUser.Id;
             }
             try {
+                 string subject = accountingSettings?.InvoiceNotes?? "חשבונית חתומה";
                 Document documentInterestReport = new Document();
                 string documentInterestReportId = "";
                 if (this.isInterestReport && arinvocie.ARInvoiceTypeCode=="IT")
                 {
                     documentInterestReportId = this.GetDocumentInterestReportId(arinvocie.Id, tenant);
-                  
+                    subject = accountingSettings?.InterestInvoiceNotes;
                 }
-                string documentId=this.SendHtmlDocument(bytedata, DocumentFilingId, null, tenant, email, "חשבונית חתומה", null, null, userId, arinvocie.Id, LoggingObjectTableId, document.Id+","+ documentInterestReportId, null, null, null);
+                
+                string documentId=this.SendHtmlDocument(bytedata, DocumentFilingId, null, tenant, email, subject += " " + arinvocie.InvoiceNumber, null, null, userId, arinvocie.Id, LoggingObjectTableId, document.Id+","+ documentInterestReportId, null, null, null);
                 if (!string.IsNullOrEmpty(documentId))
                 {
                     arinvocie.IsSigned = "3";

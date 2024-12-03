@@ -164,6 +164,10 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public bool OppositeAccountNumber { get; set; }
         [Column("TenantForConfirmationNumberApi")]
 	    public string TenantForConfirmationNumberApi { get; set; }
+        [Column("InvoiceNotes")]
+	    public string InvoiceNotes { get; set; }
+        [Column("InterestInvoiceNotes")]
+	    public string InterestInvoiceNotes { get; set; }
     }
 }
 	 
