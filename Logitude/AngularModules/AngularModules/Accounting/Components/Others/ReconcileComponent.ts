@@ -1573,6 +1573,14 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     CalculateTotals() {
         this.TotalCredit = 0;
         this.TotalDebit = 0;
+        this.TotalDifference = 0;
+
+        this.TotalCurrCredit = 0;
+        this.TotalCurrDebit = 0;
+        this.TotalCurrDifference = 0;
+
+        this.OriginalDifference = 0;
+        
         for (let line of this.SelectedLines.Collection) {
             let rate: number = +line.ledgerTransaction.ExchangeRate;;
             let lineCurrAmountToReconcile: number = 0;  // if GLAccountPM.CurrencyId != TenantPM.CurrencyId  => lineCurrAmountToReconcile is in GLAccountPM.CurrencyId 
