@@ -1962,7 +1962,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             this._ListComponentArgs.SuppressOnRowSelectedField = true;
         }
 
-        if (this.SelectedQuery.Code == "LedgerTransactions") {
+        if (this.ObjectTableName == "LedgerTransaction") {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
