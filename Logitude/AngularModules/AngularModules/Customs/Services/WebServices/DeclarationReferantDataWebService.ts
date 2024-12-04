@@ -54,6 +54,19 @@ export class DeclarationReferantDataWebService {
         });
     }
 
+    GetDeclarationReferandDateByDeclarationIdToDisplay(declarationId:string, tenant: number) {
+
+        var url = this._apiUrl + '/GetDeclarationReferandDateByDeclarationIdToDisplay?' + 'declarationId=' +  declarationId +'&tenant=' + tenant;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = response;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
 
 
     GetDeclarationReferantDataDashBoard(Tenant: number) {
