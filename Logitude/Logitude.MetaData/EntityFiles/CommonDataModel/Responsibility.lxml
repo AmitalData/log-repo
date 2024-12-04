@@ -41,7 +41,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Responsibility&quot;"
-  Code="&quot;d9fc&quot;"
+  Code="&quot;COGR&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Code&quot;"
@@ -448,6 +448,47 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Query
+    Code="&quot;Responsibility&quot;"
+    TextCode="&quot;Responsibilities&quot;"
+    LocalTextCode="&quot;BS64:IteQ15fXqNeZ15XXqiI=&quot;"
+    QueryGroupCode="&quot;COGR&quot;"
+    IndexOrder="0"
+    ObjectTableName="&quot;Responsibility&quot;"
+    QuerySection="&quot;Responsibility&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    QueryGroupName="&quot;Responsibility&quot;"
+    TextCodeCode="&quot;Responsibility.Q.ResponsibilityQuery&quot;"
+    FeatureCode="&quot;RESPONSIBILITY&quot;"
+    FeatureTextCodeCode="&quot;Responsibility.Features.Responsibilitys&quot;"
+    FeatureDefaultText="&quot;Responsibility&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;Responsibility&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;Code&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Responsibility&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Responsibility&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;LocalName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Responsibility&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;Inactive&quot;"
+        ColumnWidth="130" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <Screen
     Name="&quot;ResponsibilityHeaderScreen&quot;"
     ObjectTableName="&quot;Responsibility&quot;"
