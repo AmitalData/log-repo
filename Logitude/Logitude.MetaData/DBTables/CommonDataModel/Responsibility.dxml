@@ -3,7 +3,7 @@
   Name="Responsibilities"
   Schema="dbo"
   DBType="Main"
-  Module="Shipment">
+  Module="Common">
   <Column
     Name="Code"
     Type="varchar"
@@ -13,14 +13,8 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="LocalName"
-    Type="nvarchar"
-    Size="60">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="EnglishName"
+    OldNames="Name"
     Type="varchar"
     Size="60">
     <Constraints
@@ -29,7 +23,14 @@
   <Column
     Name="SearchFields"
     Type="nvarchar"
-    Size="1000">
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="60">
     <Constraints
       Nullable="true" />
   </Column>
