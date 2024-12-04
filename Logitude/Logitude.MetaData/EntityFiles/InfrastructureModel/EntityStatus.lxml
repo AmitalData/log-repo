@@ -1386,7 +1386,7 @@
     IsHeaderScreen="false"
     Code="&quot;EntityStatus.GeneralTabScreen&quot;"
     NumberOfColumns="1"
-    NumberOfRows="7">
+    NumberOfRows="8">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -1401,26 +1401,31 @@
       <ScreenField
         Column="0"
         Row="2"
-        ObjectFieldName="&quot;ObjectTableName&quot;"
+        ObjectFieldName="&quot;DisplayName&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
         Row="3"
-        ObjectFieldName="&quot;EntityStatusTypeCode&quot;"
+        ObjectFieldName="&quot;ObjectTableName&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
         Row="4"
-        ObjectFieldName="&quot;StatusWeight&quot;"
+        ObjectFieldName="&quot;EntityStatusTypeCode&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
         Row="5"
-        ObjectFieldName="&quot;StatusLocalWeight&quot;"
+        ObjectFieldName="&quot;StatusWeight&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
         Row="6"
+        ObjectFieldName="&quot;StatusLocalWeight&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="7"
         ObjectFieldName="&quot;InActive&quot;"
         ScreenName="General Tab Screen" />
     </ScreenFields>
