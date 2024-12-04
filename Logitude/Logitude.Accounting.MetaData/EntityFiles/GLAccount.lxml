@@ -18425,6 +18425,12 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
+      Code="&quot;Reconciliations.O.ZeroNotAllowed&quot;"
+      DefaultText="&quot;Zero amount is not allowed; instead delete the line from the reconciliation&quot;"
+      LocalDefaultText="&quot;לא ניתן להזין אפס, במקום זה יש למחוק את השורה מההתאמה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
       Code="&quot;Reconciliations.O.ErrorsInSelectedLines&quot;"
       DefaultText="&quot;There are errors in the selected reconciliation lines&quot;"
       LocalDefaultText="&quot;קיימת הודעת שגיאה בשורת ההתאמה&quot;"

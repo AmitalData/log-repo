@@ -27,8 +27,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "09cab16e74da49832a915e541de4280f";
-	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+		public const string HashString = "bc10f564f6ea042bfc7e865b21d5a056";
+        public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -14078,7 +14078,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_ReconciliationsOAmountMustBSmaller2OpenAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.O.AmountMustBSmaller2OpenAmount", DefaultText = "The amount must be smaller or equal to open amount",LocalDefaultText = @"הסכום חייב להיות קטן או שווה לסכום הפתוח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GLAccountTextCode_ReconciliationsOErrorsInSelectedLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.O.ErrorsInSelectedLines", DefaultText = "There are errors in the selected reconciliation lines",LocalDefaultText = @"קיימת הודעת שגיאה בשורת ההתאמה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+           TextCode GLAccountTextCode_ReconciliationsOZeroNotAllowed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.O.ZeroNotAllowed", DefaultText = "Zero amount is not allowed; instead delete the line from the reconciliation", LocalDefaultText = @"לא ניתן להזין אפס, במקום זה יש למחוק את השורה מההתאמה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+           TextCode GLAccountTextCode_ReconciliationsOErrorsInSelectedLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.O.ErrorsInSelectedLines", DefaultText = "There are errors in the selected reconciliation lines",LocalDefaultText = @"קיימת הודעת שגיאה בשורת ההתאמה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_ChequesQChequeNotDeposited = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Cheques.Q.ChequeNotDeposited", DefaultText = "Cheque has not been deposited",LocalDefaultText = @"המחאה לא הופקדה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
