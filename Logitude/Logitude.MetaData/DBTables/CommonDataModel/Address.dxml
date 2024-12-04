@@ -165,7 +165,7 @@
   <Column
     Name="Responsibility"
     Type="varchar"
-    Size="20">
+    Size="1">
     <Constraints
       Nullable="true" />
   </Column>
@@ -191,9 +191,9 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="CityId"
-    ReferencedTable="Cities"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTable="CountryCities"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="TruckerId"
     ReferencedTable="Truckers"

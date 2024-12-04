@@ -316,6 +316,7 @@
     <None Include="DBScripts\ShipmentModel\202205160324_UpdateContainerStatusWorkerRole.sxml" />
     <None Include="DBTables\CommonDataModel\HTSCode.dxml" />
     <None Include="DBTables\CommonDataModel\PortGroup.dxml" />
+    <None Include="DBTables\CommonDataModel\Responsibility.dxml" />
     <None Include="DBTables\CommonDataModel\UserFreelancerGroup.dxml" />
     <None Include="DBTables\InfrastructureModel\ChildEntitiesCustomField.dxml" />
     <None Include="DBTables\InfrastructureModel\CustomChildObject.dxml" />
@@ -1861,7 +1862,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\ShipmentsModel\PickUpDeliveryTransportMode.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\Responsibility.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ReferenceType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\Shipment.lxml">
       <SubType>Designer</SubType>

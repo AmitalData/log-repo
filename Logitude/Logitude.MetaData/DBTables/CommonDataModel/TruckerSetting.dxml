@@ -63,7 +63,7 @@
   <Column
     Name="Responsibility"
     Type="varchar"
-    Size="20">
+    Size="1">
     <Constraints
       Nullable="true" />
   </Column>
