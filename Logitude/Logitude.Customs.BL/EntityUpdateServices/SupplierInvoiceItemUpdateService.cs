@@ -322,7 +322,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             else
             {
-                foreach (SupplierInvioceItemCertificatPM item in entityPM.SupplierInvioceItemCertificats)
+                foreach (SupplierInvioceItemCertificatPM item in entityPM.SupplierInvioceItemCertificats.Where(x => x.ChangeSetOp != ChangeSetOperation.Delete))
                 {
                     if (!string.IsNullOrEmpty(item.ApprovalRequestNumber))
                     {
