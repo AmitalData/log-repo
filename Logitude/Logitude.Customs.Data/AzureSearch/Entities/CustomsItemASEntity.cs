@@ -1,5 +1,6 @@
 ﻿using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
+using Logitude.Customs.Data.EntityPOCOs;
 using System;
 
 namespace Logitude.Customs.Data.AzureSearch.Entities
@@ -46,5 +47,25 @@ namespace Logitude.Customs.Data.AzureSearch.Entities
         public int CustomsItemEntityStatusIDNum { get; set; }
         public bool PH_IsCarItem { get; set; }
         public string FullGoodsDescription { get; set; }
+        public int BaseCustomsItemID { get; set; }
+
+        public CustomsItemASEntity()
+        {
+        }
+
+        public CustomsItemASEntity(CB_CustomsItemComputedData origin)
+        {
+            var originType = origin.GetType();
+            var cloneType = GetType();
+            var properties = originType.GetProperties();
+
+            foreach (var property in properties)
+            {
+                var value = property.GetValue(origin);
+                var cloneProperty = cloneType.GetProperty(property.Name);
+                if (cloneProperty != null)
+                    cloneProperty.SetValue(this, value);
+            }
+        }
     }
 }
