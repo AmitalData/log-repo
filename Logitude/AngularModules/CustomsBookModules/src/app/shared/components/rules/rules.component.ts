@@ -61,7 +61,7 @@ export class RulesComponent implements OnInit, OnChanges {
       rules.forEach(rule => {
         rule.Rules = rule.Rules.replace(/(&nbsp;)+/g, ' ').replace(/\s+/g, ' ').trim();
       });
-      
+
       this.allRules = this.buildRulesHierarchy(rules);
       this.allRules.length > 0 ? this.showRules = true : this.showRules = false;
     });
@@ -93,27 +93,9 @@ export class RulesComponent implements OnInit, OnChanges {
     const getChildren = (parentRule: CB_RulesDetailsList): CB_RulesDetailsList[] => {
       // Filter for children of the current parent rule
       const children = rulesList.filter(rule => rule.ParentID === parentRule.ID);
-      children.sort((a, b) => {
-        // Handle items with '...' - they should come last
-        const aHasEllipsis = a.Index.includes('...');
-        const bHasEllipsis = b.Index.includes('...');
-      
-        if (aHasEllipsis && bHasEllipsis) return 0;
-        if (aHasEllipsis) return 1;
-        if (bHasEllipsis) return -1;
-      
-        // If neither has '...', sort numerically if the Index starts with a number followed by a dot
-        const aIsNumeric = /^\d+\./.test(a.Index);
-        const bIsNumeric = /^\d+\./.test(b.Index);
-      
-        if (aIsNumeric && bIsNumeric) {
-          return parseInt(a.Index, 10) - parseInt(b.Index, 10);
-        }
-      
-        // Fallback to string-based sorting
-        return a.Index.localeCompare(b.Index);
-      });
-      
+
+      this.sortingItems(children);
+
       // For each child, get its own children recursively
       children.forEach(child => {
         child.childrens = getChildren(child);
@@ -151,6 +133,44 @@ export class RulesComponent implements OnInit, OnChanges {
     }, []);
     this.groupRulesList = grouped;
     return rulesListData;
+  }
+
+  sortingItems(rules) {
+    rules.sort((a, b) => {
+      // Handle items with '...' - they should come last
+      const aHasEllipsis = a.Index.includes('...');
+      const bHasEllipsis = b.Index.includes('...');
+
+      if (aHasEllipsis && bHasEllipsis) return 0;
+      if (aHasEllipsis) return 1;
+      if (bHasEllipsis) return -1;
+      // Extract the sortable part from Index
+      const extractSortablePart = (index: string) => {
+        const numericMatch = index.match(/^\d+/); // Match numbers
+        if (numericMatch) return { type: 'number', value: parseInt(numericMatch[0], 10) };
+        const hebrewMatch = index.match(/^[א-ת]/); // Match Hebrew letters
+        if (hebrewMatch) return { type: 'hebrew', value: hebrewMatch[0] };
+        const parenthesisMatch = index.match(/^\((.*?)\)/); // Match text inside parentheses
+        if (parenthesisMatch) return { type: 'parentheses', value: parenthesisMatch[1] };
+
+        return { type: 'string', value: index }; // Default to full string
+      };
+      const aSortable = extractSortablePart(a.Index);
+      const bSortable = extractSortablePart(b.Index);
+      // Define type priority: numbers > Hebrew > parentheses > strings
+      const typePriority = { number: 1, hebrew: 2, parentheses: 3, string: 4 };
+      if (aSortable.type !== bSortable.type) {
+        return typePriority[aSortable.type] - typePriority[bSortable.type];
+      }
+      // Sort within the same type
+      const aValue = aSortable.value.toString();
+      const bValue = bSortable.value.toString();
+      if (aSortable.type === 'number') {
+        return parseInt(aValue, 10) - parseInt(bValue, 10);
+      }
+      // Use localeCompare for strings (including Hebrew)
+      return aValue.localeCompare(bValue, 'he', { numeric: true });
+    });
   }
 
   // Method to trim the start of the given text
