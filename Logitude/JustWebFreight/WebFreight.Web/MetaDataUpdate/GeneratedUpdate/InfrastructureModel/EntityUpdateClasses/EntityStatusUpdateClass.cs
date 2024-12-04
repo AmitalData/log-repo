@@ -21,7 +21,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class EntityStatusUpdateClass
    {  		
-		public const string HashString = "4b032b3e5c22af708413274a17aed1ab";
+		public const string HashString = "3915ed55fa9bb0418cd0ca5bc5acd981";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1225,21 +1225,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	   		  
 	      
 
-	         Screen EntityStatusGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "EntityStatus.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = EntityStatusObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 7, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen EntityStatusGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "EntityStatus.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = EntityStatusObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 8, IsReadOnly = true }, screensRepository, tenantScreens);
       
              ScreenField EntityStatusEntityStatusGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = EntityStatusGeneralTabScreenScreen1.Id,ScreenCode = EntityStatusGeneralTabScreenScreen1.Code, ObjectFieldCode = "EntityStatus.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField EntityStatusEntityStatusGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = EntityStatusGeneralTabScreenScreen1.Id,ScreenCode = EntityStatusGeneralTabScreenScreen1.Code, ObjectFieldCode = "EntityStatus.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField EntityStatusEntityStatusGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = EntityStatusGeneralTabScreenScreen1.Id,ScreenCode = EntityStatusGeneralTabScreenScreen1.Code, ObjectFieldCode = "EntityStatus.ObjectTableName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField EntityStatusEntityStatusGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = EntityStatusGeneralTabScreenScreen1.Id,ScreenCode = EntityStatusGeneralTabScreenScreen1.Code, ObjectFieldCode = "EntityStatus.DisplayName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField EntityStatusEntityStatusGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = EntityStatusGeneralTabScreenScreen1.Id,ScreenCode = EntityStatusGeneralTabScreenScreen1.Code, ObjectFieldCode = "EntityStatus.EntityStatusTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField EntityStatusEntityStatusGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = EntityStatusGeneralTabScreenScreen1.Id,ScreenCode = EntityStatusGeneralTabScreenScreen1.Code, ObjectFieldCode = "EntityStatus.ObjectTableName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField EntityStatusEntityStatusGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = EntityStatusGeneralTabScreenScreen1.Id,ScreenCode = EntityStatusGeneralTabScreenScreen1.Code, ObjectFieldCode = "EntityStatus.StatusWeight", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField EntityStatusEntityStatusGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = EntityStatusGeneralTabScreenScreen1.Id,ScreenCode = EntityStatusGeneralTabScreenScreen1.Code, ObjectFieldCode = "EntityStatus.EntityStatusTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField EntityStatusEntityStatusGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = EntityStatusGeneralTabScreenScreen1.Id,ScreenCode = EntityStatusGeneralTabScreenScreen1.Code, ObjectFieldCode = "EntityStatus.StatusLocalWeight", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField EntityStatusEntityStatusGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = EntityStatusGeneralTabScreenScreen1.Id,ScreenCode = EntityStatusGeneralTabScreenScreen1.Code, ObjectFieldCode = "EntityStatus.StatusWeight", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField EntityStatusEntityStatusGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = EntityStatusGeneralTabScreenScreen1.Id,ScreenCode = EntityStatusGeneralTabScreenScreen1.Code, ObjectFieldCode = "EntityStatus.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField EntityStatusEntityStatusGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = EntityStatusGeneralTabScreenScreen1.Id,ScreenCode = EntityStatusGeneralTabScreenScreen1.Code, ObjectFieldCode = "EntityStatus.StatusLocalWeight", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField EntityStatusEntityStatusGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ScreenId = EntityStatusGeneralTabScreenScreen1.Id,ScreenCode = EntityStatusGeneralTabScreenScreen1.Code, ObjectFieldCode = "EntityStatus.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	            
 
 	    }
