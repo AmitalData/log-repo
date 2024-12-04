@@ -1,8 +1,0 @@
-﻿<Script DBType="Main" Module="Shipment"  AOT="true" TargetTableName="Containers">
-	<Sql Version="2">
-		<![CDATA[
-     update  Containers set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null and $LastCounterWhere$
-
-    ]]>
-	</Sql>
-</Script>
