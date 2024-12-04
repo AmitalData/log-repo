@@ -83,7 +83,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                     MyRequestSheetParam.RequestDescription = "התרה לתיק- מספר הצהרה: " + declarationNumber;
 
-                    DeclarationPM declarationPM = declarationUpdateService.GetSertByConvertedDeclarationNumber(declarationNumber, requestParams.Tenant,true);
+                    DeclarationPM declarationPM = declarationUpdateService.GetSertByConvertedDeclarationNumber(declarationNumber, requestParams.Tenant, true);
                     if (declarationPM == null || string.IsNullOrWhiteSpace(declarationPM.Id))
                     {
                         var errMess = "DeclarationPM not found: DeclarationNumber=" + declarationNumber;
@@ -106,10 +106,31 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         statusDateTime = customResponse.RequestContentHeader.TransmitionDateTime;
                     }
 
-                    if (declarationPM.Direction == "E") { 
+                    if (declarationPM.Direction == "E")
+                    {
                         declarationPM.ReleaseStatusTypeCode = customResponse.GeneralData?.ReleaseMessageCode.ToString();
-                        if (declarationPM.IsSubmitDeclaration == false ||declarationPM.IsSubmitDeclaration==null)
-                            declarationPM.IsSubmitDeclaration = true; 
+                        if (declarationPM.IsSubmitDeclaration == false || declarationPM.IsSubmitDeclaration == null)
+                            declarationPM.IsSubmitDeclaration = true;
+                    }
+
+                    if (declarationPM.PaymentDate == null && declarationPM.Direction != "E")
+                    {
+
+                        var messagingService = new DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService();
+                        DeclarationRestoreRequestParams =  new DeclarationRestoreRequestParams()
+                        {
+                            DeclarationNumber = declarationPM.DeclarationNumber,
+                            CustomFileNo = declarationPM.CustomFileNo,
+                            Tenant = declarationPM.Tenant,
+                            RequestName = "Restore Declaration " + declarationPM.DeclarationNumber,
+                            ResponseName = "Restore Declaration " + declarationPM.DeclarationNumber,
+                            RequestVIA = SendRequestVIA.WebServiceBatch,
+                            InterfaceTypeCode = "8373",
+                            LoggingEntityId = declarationPM.Id,
+                            LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+                            LoggingUserId = AuthenticationUtil.ResolveUserId(declarationPM.Tenant),
+                        };
+                        responseData = messagingService.Send(requestParams);
                     }
 
                     var myCourierMasterQueryService = new CourierMasterQueryService(dbContext);
@@ -119,7 +140,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
                     }
 
-                    if(declarationPM.IsCourierDeclaration && declarationPM.PaymentDate == null && customResponse.GeneralData.releaseDate != null)
+                    if (declarationPM.IsCourierDeclaration && declarationPM.PaymentDate == null && customResponse.GeneralData.releaseDate != null)
                     {
                         declarationPM.PaymentDate = customResponse.GeneralData.releaseDate;
                     }
@@ -135,17 +156,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             declarationPM.DeclarationStatusTypeCode = "7";
 
                             this.CloseCustomsCollateral(declarationPM);
-                           
+
                             ICommonDataContext commonDbContext = CommonDataContext.GetContext(declarationPM.Tenant);
                             UserRepository userRepository = new UserRepository(commonDbContext);
                             var user = userRepository.GetSingleUserByCode("MEHES", declarationPM.Tenant, true);
-
-
-                      
+                       
                                 if (declarationPM.Direction == "E")
                                 {
                                     RaiseEvent(declarationPM, user?.Id, status_id: "HTR", status_DateTime: statusDateTime);
-                                 
+
                                     SendSoyStatusToUnifreight(declarationPM, user?.Id);
 
                                 }
@@ -153,7 +172,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
-                                if (declarationPM.IsCourierDeclaration)
+                            if (declarationPM.IsCourierDeclaration)
                             {
                                 // update NoOfCourierHawbwWithoutHatara
                                 IUpdateOpenDeclarationInCourierMasterService myIUpdateOpenDeclarationInCourierMasterService = ContainerAccessor.Container.Resolve(typeof(IUpdateOpenDeclarationInCourierMasterService), "UpdateOpenDeclarationInCourierMasterService", new ParameterOverride("", declarationPM.Tenant)) as IUpdateOpenDeclarationInCourierMasterService;
@@ -188,13 +207,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                 }
                             }
-                          if(declarationPM.Direction!="E")  declarationPM.IsClose = true;
+                            if (declarationPM.Direction != "E") declarationPM.IsClose = true;
                             MyRequestSheetParam.RequestDescription = "התרה לתיק. מספר הצהרה: " + declarationNumber;//eitan h 26/2/15 task 11525
                             break;
                         case 4 when declarationPM.Direction == "E":
-                           
-                                myEventContextTagModel.EventCode = "TAS";
-                                myEventContextTagModel.StatusDateTime = statusDateTime;
+
+                            myEventContextTagModel.EventCode = "TAS";
+                            myEventContextTagModel.StatusDateTime = statusDateTime;
                             break;
 
 
@@ -208,9 +227,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             MyRequestSheetParam.RequestDescription = "ביטול התרה. תיק מספר: " + declarationPM.CustomFileNo;//eitan h 26/2/15 task 11525
                             break;
                         case 8 when declarationPM.Direction == "E":
-                            
-                                myEventContextTagModel.EventCode = "TAC";
-                                myEventContextTagModel.StatusDateTime = statusDateTime;
+
+                            myEventContextTagModel.EventCode = "TAC";
+                            myEventContextTagModel.StatusDateTime = statusDateTime;
                             break;
 
                         case 9: // Pre clearance
@@ -236,7 +255,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             this.MyResponseData.HasException = true;
                             this.MyResponseData.UserMessage = errMess;
                             LogMessagingUtil.Instance.AppendLine(errMess);
-                            return;                            
+                            return;
                     }
 
 
@@ -247,7 +266,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     declarationPM.ChangeSetOp = ChangeSetOperation.Update;
                     declarationUpdateService.Update(declarationPM, true);
-                    LogMessagingUtil.Instance.AppendLine($"declarationUpdateService.Update(IsClose={declarationPM.IsClose},CourierCustomStatusCode ={declarationPM.CourierCustomStatusCode}),Time: "+ DateTime.Now.ToString("hh:mm:ss.fff tt"));
+                    LogMessagingUtil.Instance.AppendLine($"declarationUpdateService.Update(IsClose={declarationPM.IsClose},CourierCustomStatusCode ={declarationPM.CourierCustomStatusCode}),Time: " + DateTime.Now.ToString("hh:mm:ss.fff tt"));
 
                     MyRequestSheetParam.EntityId1 = declarationPM.Id;
                     if (declarationPM.IsConvertedDeclaration)
@@ -261,7 +280,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             SendDeclarationStatusRequest(declarationPM);
                         }
 
-                        
+
                     }
                     requestParams.LoggingEntityId = declarationPM.Id;
                     this.MyResponseData = new ReleaseGoodsResponseData()
@@ -302,20 +321,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 string declarationStatus = declarationPM.DeclarationStatusTypeCode;
                 string declarationStatusLabel = "";
-           
-                    // get the declaration status label
-                    DeclarationStatusTypeQueryService declarationStatusTypeQueryService = new DeclarationStatusTypeQueryService(declarationPM.Tenant);
-                    DeclarationStatusTypePM declarationStatusType = declarationStatusTypeQueryService.GetSingle(declarationPM.DeclarationStatusTypeCode, false, true);
-                    declarationStatusLabel = declarationStatusType?.LocalName ?? "לא ידוע";
-                
+
+                // get the declaration status label
+                DeclarationStatusTypeQueryService declarationStatusTypeQueryService = new DeclarationStatusTypeQueryService(declarationPM.Tenant);
+                DeclarationStatusTypePM declarationStatusType = declarationStatusTypeQueryService.GetSingle(declarationPM.DeclarationStatusTypeCode, false, true);
+                declarationStatusLabel = declarationStatusType?.LocalName ?? "לא ידוע";
+
                 string statusSoyRemarks = $"CODE-{declarationStatus}-{declarationStatusLabel}-";
 
                 if (!string.IsNullOrEmpty(declarationPM.DeclarationNumber))
                 {
                     statusSoyRemarks += declarationPM.DeclarationNumber;
                 }
-              
- 
+
+
 
                 RaiseEvent(declarationPM, userId,
                     status_id: "SOY",
@@ -394,7 +413,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (customResponse.GeneralData.releaseDate != null)
                     {
                         MyResponseData.releaseDate = customResponse.GeneralData.releaseDate.GetValueOrDefault().Date.ToString("dd/MM/yyyy");
-                        if (customResponse.GeneralData.releaseDate.GetValueOrDefault().TimeOfDay.Hours != 0 || 
+                        if (customResponse.GeneralData.releaseDate.GetValueOrDefault().TimeOfDay.Hours != 0 ||
                             customResponse.GeneralData.releaseDate.GetValueOrDefault().TimeOfDay.Minutes != 0 ||
                             customResponse.GeneralData.releaseDate.GetValueOrDefault().TimeOfDay.Seconds != 0)
                         {
@@ -433,7 +452,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
 
         }
-        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id, DateTime? status_DateTime, string  comments=null)
+        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id, DateTime? status_DateTime, string comments = null)
         {
             //primary_number = $"{dirtyDeclarationPM.CustomFileNo},{dirtyDeclarationPM.TransportModeId == "A" ? "EFIFILEM" : "MFIFILEM" }",
             string primary_number = $"{dirtyDeclarationPM.CustomFileNo},EFIFILEM";
@@ -461,7 +480,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     xml_status = "new",
                     status_id = status_id,
                     status_DateTime = status_DateTime ?? DateTime.Now,
-                    comments = !string.IsNullOrEmpty(comments)? comments:dirtyDeclarationPM.DeclarationNumber,
+                    comments = !string.IsNullOrEmpty(comments) ? comments : dirtyDeclarationPM.DeclarationNumber,
 
 
 
@@ -488,24 +507,24 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (CollList != null && CollList.Count > 0)
             {
-                foreach(var Coll in CollList)
+                foreach (var Coll in CollList)
                 {
                     if (!Coll.IsClosed)
                     {
                         Coll.IsClosed = true;
                         Coll.ChangeSetOp = ChangeSetOperation.Update;
-                        customsCollateralUpdateService.Update(Coll,true);
+                        customsCollateralUpdateService.Update(Coll, true);
 
                     }
                 }
             }
         }
 
-       
+
 
         void SendDeclarationStatusRequest(DeclarationPM myDeclarationPM)
         {
-           
+
 
             var newSearchDeclarationStatusRequestParams = new DeclarationStatusRequestParams()
             {
