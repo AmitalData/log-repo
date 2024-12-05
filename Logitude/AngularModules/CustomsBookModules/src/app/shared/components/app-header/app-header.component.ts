@@ -3,6 +3,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { HeaderService } from './service/header.service';
 import { PageTopComponent } from '../page-top/page-top.component';
+import { SearchService } from '../page-top/service/top-page.service';
 
 @Component({
 	selector: 'app-header',
@@ -16,7 +17,7 @@ export class AppHeaderComponent {
 	selected: string = 'יבוא';
 	@Output() searchClick = new EventEmitter<string | number>();
 
-	constructor(private headerService: HeaderService) { }
+	constructor(private headerService: HeaderService, private searchService: SearchService) { }
 
 	ngOnInit(): void {
 		this.selected = this.headerService.getSearchState();
@@ -25,6 +26,7 @@ export class AppHeaderComponent {
 	selectState = (state: string) => {
 		this.selected = state;
 		this.headerService.setSearchState(state);
+		this.searchService.SetSearchText("");
 	};
 
 	SearchByText(searchBy: any) {

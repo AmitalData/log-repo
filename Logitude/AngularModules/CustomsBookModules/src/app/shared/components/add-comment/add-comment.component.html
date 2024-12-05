@@ -1,15 +1,16 @@
 <div class="sidePanel" [class.active]="showAddComment">
     <div class="sidePanel_frame active">
-        <!-- <div class="sidePanel_close">
-            <a href="#" role="button" (click)="showAddComment = !showAddComment" aria-controls="commentPanel"
-                class="icon-close"></a>
-        </div> -->
+       
         <div class="sidePanel_title">
+            <div class="sidePanel_close" *ngIf="showAddComment">
+                <a href="#" role="button" (click)="showAddComment = !showAddComment" aria-controls="commentPanel"
+                    class="icon-close"></a>
+            </div>
             <h3>כתיבת הערה חדשה ל:</h3>
             <div class="commentWritesTo">
                 <div class="commentWritesTo_read">
                     <div>
-                        <span>{{currentItem?.FullClassification}}</span><span>{{currentItem?.CIH_GoodsDescription}}</span>
+                        <span>{{currentItem?.FullClassification}}</span><span class="descriptionItemBox" [title]="currentItem?.CIH_GoodsDescription">{{currentItem?.CIH_GoodsDescription}}</span>
                     </div>
                 </div>
             </div>

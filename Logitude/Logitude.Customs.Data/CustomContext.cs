@@ -180,6 +180,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CB_RuleMap());
 	
+            modelBuilder.Configurations.Add(new CB_RuleClassificationMap());
+	
             modelBuilder.Configurations.Add(new CB_RuleDetailsHistoryMap());
 	
             modelBuilder.Configurations.Add(new CB_TariffMap());
@@ -1868,6 +1870,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CB_Rule> CB_Rules 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_RuleClassification> CB_RuleClassifications 
 	 {
 	      get; set;
 	 

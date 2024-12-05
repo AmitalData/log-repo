@@ -6,6 +6,7 @@ import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { faChevronLeft, faSquareCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { SearchService } from '../page-top/service/top-page.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-rules',
@@ -25,7 +26,7 @@ export class RulesComponent implements OnInit, OnChanges {
   clickPin: boolean = true;
   searchText: string = '';
 
-  constructor(private API_MainService: API_MainService, private searchService: SearchService) { }
+  constructor(private API_MainService: API_MainService, private searchService: SearchService, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.currentItem.subscribe((data: CB_CustomsItemComputedDataList) => {
@@ -40,8 +41,19 @@ export class RulesComponent implements OnInit, OnChanges {
     }
   }
 
+  sanitizeHTML(content: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(content);
+  }
+
+
+  resetRulesData() {
+    this.allRules = [];
+    this.groupRulesList = [];
+  }
   // Method to fetch rules data from the API and build the rules hierarchy
   initData(customsItemID: number) {
+    this.resetRulesData();
+    this.showRules = false;
     this.API_MainService.GetCustomsBookRulesData(customsItemID).subscribe((data: any) => {
       if (!data.body) return; // TODO: add error message
       // Clean up spaces by replacing multiple &nbsp; with a single space, then condense extra spaces
@@ -51,6 +63,7 @@ export class RulesComponent implements OnInit, OnChanges {
       });
 
       this.allRules = this.buildRulesHierarchy(rules);
+      this.allRules.length > 0 ? this.showRules = true : this.showRules = false;
     });
   }
 
@@ -79,7 +92,10 @@ export class RulesComponent implements OnInit, OnChanges {
     // Function to get children of a parent rule recursively
     const getChildren = (parentRule: CB_RulesDetailsList): CB_RulesDetailsList[] => {
       // Filter for children of the current parent rule
-      const children = rulesList.filter(rule => rule.Parent_RuleDetailsHistoryID === parentRule.ID);
+      const children = rulesList.filter(rule => rule.ParentID === parentRule.ID);
+
+      this.sortingItems(children);
+
       // For each child, get its own children recursively
       children.forEach(child => {
         child.childrens = getChildren(child);
@@ -88,7 +104,7 @@ export class RulesComponent implements OnInit, OnChanges {
     };
 
     // Find root rules
-    const rootRules = rulesList.filter(rule => rule.Parent_RuleDetailsHistoryID == 0 || rule.Parent_RuleDetailsHistoryID == null);
+    const rootRules = rulesList.filter(rule => rule.ParentID == 0 || rule.ParentID == null || rule.Index == "-");
     // Build the hierarchy for root rules
     const rulesListData = rootRules.map(rootRule => {
       const children = getChildren(rootRule);
@@ -100,21 +116,61 @@ export class RulesComponent implements OnInit, OnChanges {
 
     // Group rules by title
     const grouped: GroupedRules[] = rulesListData.reduce((acc: GroupedRules[], rule) => {
-      const key = rule.Title;
-      let group = acc.find(g => g.title === key);
+      const key = rule.CB_ID;
+      let group = acc.find(g => g.id === key);
 
       // If the group doesn't exist, create a new one
       if (!group) {
         group = new GroupedRules();
-        group.title = key;
+        group.id = rule.CB_ID;
+        group.title = rule.Rules;
         acc.push(group);
       }
       // Add the current rule to the group's rules
-      group.rules.push(rule);
+      // group.rules.push(rule);
+      group.rules = rule.childrens;
       return acc;
     }, []);
     this.groupRulesList = grouped;
     return rulesListData;
+  }
+
+  sortingItems(rules) {
+    rules.sort((a, b) => {
+      // Handle items with '...' - they should come last
+      const aHasEllipsis = a.Index.includes('...');
+      const bHasEllipsis = b.Index.includes('...');
+
+      if (aHasEllipsis && bHasEllipsis) return 0;
+      if (aHasEllipsis) return 1;
+      if (bHasEllipsis) return -1;
+      // Extract the sortable part from Index
+      const extractSortablePart = (index: string) => {
+        const numericMatch = index.match(/^\d+/); // Match numbers
+        if (numericMatch) return { type: 'number', value: parseInt(numericMatch[0], 10) };
+        const hebrewMatch = index.match(/^[א-ת]/); // Match Hebrew letters
+        if (hebrewMatch) return { type: 'hebrew', value: hebrewMatch[0] };
+        const parenthesisMatch = index.match(/^\((.*?)\)/); // Match text inside parentheses
+        if (parenthesisMatch) return { type: 'parentheses', value: parenthesisMatch[1] };
+
+        return { type: 'string', value: index }; // Default to full string
+      };
+      const aSortable = extractSortablePart(a.Index);
+      const bSortable = extractSortablePart(b.Index);
+      // Define type priority: numbers > Hebrew > parentheses > strings
+      const typePriority = { number: 1, hebrew: 2, parentheses: 3, string: 4 };
+      if (aSortable.type !== bSortable.type) {
+        return typePriority[aSortable.type] - typePriority[bSortable.type];
+      }
+      // Sort within the same type
+      const aValue = aSortable.value.toString();
+      const bValue = bSortable.value.toString();
+      if (aSortable.type === 'number') {
+        return parseInt(aValue, 10) - parseInt(bValue, 10);
+      }
+      // Use localeCompare for strings (including Hebrew)
+      return aValue.localeCompare(bValue, 'he', { numeric: true });
+    });
   }
 
   // Method to trim the start of the given text
@@ -145,6 +201,7 @@ interface CB_RulesDetailsList extends RulesDetailsList {
 
 // Class defining a structure for grouped rules
 class GroupedRules {
+  id: number = 0;
   title: string;
   rules: CB_RulesDetailsList[] = [];
   expanded?: boolean = false;

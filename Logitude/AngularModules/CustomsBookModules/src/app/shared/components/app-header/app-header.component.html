@@ -8,8 +8,8 @@
 			
 		</div>
 		<!-- Search area -->
-		<div>
-			<app-page-top (searchClick)="SearchByText($event)"></app-page-top>
+		<div class="page-top-box">
+			<app-page-top class="app-page-top-box" (searchClick)="SearchByText($event)"></app-page-top>
 		</div>
 		<!-- header area -->
 		<div class="headerToggle">
@@ -22,11 +22,10 @@
 					<label><input type="radio" checked="" name="pageSearch_toggle" [checked]="selected === 'יצוא'"
 							class="fst-btn" aria-controls="sectionSelect1" /><span>יצוא</span></label>
 				</li>
-				<li (click)="selectState('יבוא')" [class.checked]="selected === 'יבוא'">
+				<li class="importBox" (click)="selectState('יבוא')" [class.checked]="selected === 'יבוא'">
 					<label><input type="radio" checked="" name="pageSearch_toggle" [checked]="selected === 'יבוא'"
 							class="fst-btn" aria-controls="sectionSelect1" /><span>יבוא</span></label>
 				</li>
 			</ul>
 		</div>
 	</div>
-</div>

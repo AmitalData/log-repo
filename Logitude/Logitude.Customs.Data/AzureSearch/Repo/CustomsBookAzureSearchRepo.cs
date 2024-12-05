@@ -28,6 +28,20 @@ namespace Logitude.Customs.Data.AzureSearch.Repo
 
         public async Task<List<CustomsItemASEntity>> SearchCustomsItemAsync(string customsBookType, string searchText = "*") => await SearchAsync(customsBookType, searchText, new SearchOptions());
 
+        public async Task<List<CustomsItemASEntity>> GetClassifications()
+        {
+            SearchOptions options = new SearchOptions();
+            options.Filter = $"ItemHierarchicLocationID eq '1' and CI_CustomsItemCategoryIDNum eq '1' and CustomsItemEntityStatusIDNum eq 2 and EndDate ge {DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ")} and StartDate le {DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ")}";
+            options.Size = 1000;
+            options.Select.Clear();
+            options.Select.Add("CustomsItemID");
+            options.Select.Add("FullClassification");
+            options.Select.Add("CI_CustomsBookTypeIDNum");
+            options.Select.Add("CIH_GoodsDescription");
+
+            return await SearchAsync("*", options);
+        }
+
         public async Task<List<CustomsItemASEntity>> SearchAsync(string customsBookType, string searchText = "*", SearchOptions options = null)
         {
             if (options == null)
@@ -39,12 +53,16 @@ namespace Logitude.Customs.Data.AzureSearch.Repo
             if (options.Filter != null)
                 options.Filter += " and ";
 
-            options.Filter += $"CI_CustomsItemCategoryIDNum eq '1' and CustomsItemEntityStatusIDNum eq 2 and CI_CustomsBookTypeIDNum eq '{customsBookType}' and EndDate ge {DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ")} and StartDate le {DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ")}"; ;
+            string filter = string.IsNullOrEmpty(customsBookType) ? "" : $"CI_CustomsBookTypeIDNum eq '{customsBookType}' and ";
+            filter +=$"CI_CustomsItemCategoryIDNum eq '1' and CustomsItemEntityStatusIDNum eq 2 and EndDate ge {DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ")} and StartDate le {DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ")}";
+
+            options.Filter += filter;
             options.Size = 1000;
             options.Select.Clear();
             options.Select.Add("CustomsItemID");
             options.Select.Add("FullClassification");
             options.Select.Add("CIH_GoodsDescription");
+            options.Select.Add("BaseCustomsItemID");
 
             return await SearchAsync(searchText, options);
         }
