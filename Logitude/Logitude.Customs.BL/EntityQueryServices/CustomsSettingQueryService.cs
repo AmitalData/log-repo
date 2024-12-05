@@ -251,6 +251,16 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         }
 
+        public int GetTheFirstTenantWithCustomsAgentId()
+        {
+            var poco = repository.GetRealAll().Where(rec => !String.IsNullOrEmpty(rec.CustomsAgentId)).FirstOrDefault();
+            if (poco == null)
+            {
+                return 0;
+            }
+            return poco.Tenant;
+        }   
+
 
 
     }

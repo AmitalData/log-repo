@@ -3453,8 +3453,51 @@ namespace Logitude.Customs.Def.ClosedTable
 				SendAsDual = false,
 				ResponseInterfaceCode = null,
 			});
-			//C:\LogitudeWorld\Amital\Logitude.Customs.BL\EntityPMs\InterfaceManagementPM.cs
-			var pm = new Logitude.Customs.Def.EntityPMs.InterfaceManagementPM();
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "8317",
+                InOut = InOutEnum.O.ToString(),
+                Description = "הנחיות סיווג",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                DcaPrefixName = "",
+                DcaPrefixName2 = "",
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
+            });
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "8323",
+                InOut = InOutEnum.O.ToString(),
+                Description = "פרטי הנחיות סיווג",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                DcaPrefixName = "",
+                DcaPrefixName2 = "",
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
+            });
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "8319",
+                InOut = InOutEnum.O.ToString(),
+                Description = "כללים - ספר סיווג",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                DcaPrefixName = "",
+                DcaPrefixName2 = "",
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
+            });
+            //C:\LogitudeWorld\Amital\Logitude.Customs.BL\EntityPMs\InterfaceManagementPM.cs
+            var pm = new Logitude.Customs.Def.EntityPMs.InterfaceManagementPM();
             var myRequestCode = pm.ResponseInterfaceCode;
             if (LogitudeSettings.IsCostomsDeploy)
             {
