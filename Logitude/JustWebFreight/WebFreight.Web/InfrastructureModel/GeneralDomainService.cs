@@ -3777,6 +3777,7 @@ namespace WebFreight.Web.InfrastructureModel
             foreach (ObjectTable objectTable in objectTables)
             {
                 TextCode textCode = textCodesList.Where(d => d.ObjectTableId == objectTable.Id && d.Id != objectTable.DescriptionTextCodeId).FirstOrDefault();
+                if (textCode != null)
                 textCodes.Add(textCode);
             }
 
