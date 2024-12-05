@@ -337,9 +337,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                       on acc.Id equals applCard.GLAccountId into applCardsJoinT
 
                       from applCard in applCardsJoinT.DefaultIfEmpty()
+                      join opf in _AccountingContext.CustomerOpenFilesAmounts.Where(r => r.Tenant == _Param.Tenant)
+                       on applCard.Id equals opf.CustomerId into cardJoinF
+                      from opf in cardJoinF.DefaultIfEmpty()
                       join card in _AccountingContext.GLAccountCardsDatas.Where(r => r.Tenant == _Param.Tenant)
                        on acc.CardsDataId equals card.Id into cardJoinT
-                      from card in cardJoinT.DefaultIfEmpty() 
+                      from card in cardJoinT.DefaultIfEmpty()
 
                       let glaPeriod = _AccountingContext.GLAccountInterestPeriods.Where(r => r.Tenant == _Param.Tenant && r.GLAccountId == acc.Id && r.PeriodStartDate <= currentDate && acc.ActiveForInterest)
                       .OrderByDescending(d => d.PeriodStartDate).FirstOrDefault()
@@ -374,7 +377,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                           Category3LocalName = acc.Category3LocalName,
                           Category4LocalName = acc.Category4LocalName,
                           Category5LocalName = acc.Category5LocalName,
-
+                           
                           ChartOfAccountsLocalName = acc.ChartOfAccountsLocalName,
                           ChartOfAccountsEnglishName = acc.ChartOfAccountsEnglishName,
                           ChartOfAccountsTypeEnglishName = acc.ChartOfAccountsTypeEnglishName,
@@ -392,7 +395,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                           CustomerVatNumber = card.VatNumber,
                           GLAccountStandardInterestRate = (decimal)(glaPeriod.StandardAddInterestPercent == null ? 0 : basePeriod.InterestRate == null ? glaPeriod.StandardAddInterestPercent : glaPeriod.StandardAddInterestPercent + basePeriod.InterestRate),
 
-                          TotalOpenShipments = card != null ? card.TotalOpenShipments : 0,
+                          TotalOpenShipments = card != null ? card.TotalOpenShipments : (applCard != null ? (opf != null ? opf.TotalOpenFilesAmount : 0) : 0),
                           TotalFutureOpenCheques = moredata != null ? (decimal)moredata.TotFutureOpenChequesInLocalCur : 0,
                           TotalOpenCheques = moredata != null ? (decimal)moredata.TotalOpenChequesInLocalCur : 0,
                           IsMultiCurrency = acc.IsMultiCurrency,
