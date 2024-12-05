@@ -67,7 +67,7 @@
 
     .x-button-drop-menu {
         position: absolute;
-        top: 22px;
+        
         right: 0;
         z-index: 1000;
         /*display: none;*/
@@ -107,7 +107,7 @@
 
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-        <td colspan="13">
+        <td colspan="16">
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
         </td>
     </tr>
@@ -156,6 +156,18 @@
                 {{'InterestReport.O.ShowReportsWithPrintedInvoices' | TextCodeTranslationPipe}}
             </div>
         </td>
+        <td style="width:10px"></td>
+        <td style="width: 35px;height:23px;">
+            <div>
+                <CheckBox [IsChecked]="ShowSignedInvoice" (Checked)="ShowSignedInvoice = $event "></CheckBox>
+
+            </div>
+        </td>
+        <td style="width: 250px;">
+            <div>
+                {{'InterestReport.O.ShowSignedAndSentInvoices' | TextCodeTranslationPipe}}
+            </div>
+        </td>
         <td style="width: 300px; padding: 4px;">
             <div>
                 <div style="padding: 0 5px; width: 250px;" [style.float]="isRTL ? 'left' : 'right'">
@@ -169,7 +181,7 @@
     </tr>
     <tr style="height:5px"></tr>
     <tr>
-        <td colspan="13" style="height: 100%; padding-bottom: 3px; vertical-align: top;">
+        <td colspan="16" style="height: 100%; padding-bottom: 3px; vertical-align: top;">
             <div class="GeneratedGridContainer" style="height: calc(100% - 20px)" *ngIf="LoadGrids">
                 <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'ARInvoice'"
                                [dataSource]="DataSource" [FireCheckBoxChecked]="FireCheckBoxChecked"
@@ -183,7 +195,7 @@
     </tr>
 
     <tr style="height: 22px;">
-        <td colspan="13">
+        <td colspan="16">
             <table>
                 <tr>
                     <td style="width: 57px;">
@@ -193,7 +205,7 @@
                     <td style="width: 72.5%">
                         <div></div>
                     </td>
-                    <td colspan="13" style="width:242px">
+                    <td colspan="16" style="width:242px">
                         <div [attr.id]="'printbutton'">
                             <span style="display:inline" class="x-split-button">
                                 <button (click)="GetNumberOfDocumentNotPrinted(true)"
@@ -209,9 +221,13 @@
                                 <div [attr.id]="'dropdowmenu'"
                                      [ngStyle]="{'display': dropdownDisplay  }"
                                      style="position: fixed;z-index: 1;background-color : whitesmoke;width:280px; ">
-                                    <ul class="x-button-drop-menu">
-                                        <li>
+                                    <ul class="x-button-drop-menu" [ngStyle]="{'top': ShowSignedInvoice ? '0px' : '22px'}">
+                                       
+                                        <li >
                                             <span style="width: 217px" [style.text-align]="isRTL ? 'right' : 'left'"  (click)="GetNumberOfDocumentNotPrinted(false)">{{'InterestReport.O.PrintInvoicesAlone' | TextCodeTranslationPipe}}</span>
+                                        </li>
+                                        <li *ngIf="ShowSignedInvoice">
+                                            <span style="width: 217px" [style.text-align]="isRTL ? 'right' : 'left'"  (click)="SendSignedInvoices()">{{'InterestReport.O.ResendDigitalInvoices' | TextCodeTranslationPipe}}</span>
                                         </li>
                                     </ul>
                                 </div>

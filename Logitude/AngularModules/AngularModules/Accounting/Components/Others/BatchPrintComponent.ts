@@ -211,7 +211,16 @@ private selectedItems:ObservableCollection;
           ColumnHeaderTemplateName: 'PrintedListHeaderTemplate',
           ColumnHeaderTemplateUrl: './Accounting/Components/ListTemplates/PrintedListHeaderTemplate',
       });
-        
+      this.Columns.push({
+        FieldName: 'IsSigned',
+        Display:TextCodeTranslator.Translate("ARInvoice.O.DigitalInvoice"),
+        DataTypeCode: 'String',
+        IsCustomTemplate: true,
+        HtmlListComponentName: 'InterestInvoiceListTemplate',
+        HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestInvoiceListTemplate',
+        Styles: { width: '100px' },             
+       
+    });
         
         this.ColumnsReady.emit(this.Columns); 
         this.CurrentSession.InterestReportCheckBoxCheckedEvent.subscribe(($event) => {
@@ -295,7 +304,17 @@ private selectedItems:ObservableCollection;
 
         }
   }
-  
+  private showSignedinvoice: boolean = false;
+  public get ShowSignedInvoice() { return this.showSignedinvoice; }
+  public set ShowSignedInvoice(value: boolean) {
+    if (this.showSignedinvoice != value) {
+        this.showSignedinvoice = value;
+ 
+         this.BuildColumns();
+         this.ValidateDate(null);
+
+    }
+    }
   private showPrintedInvoice: boolean = false;
   public get ShowPrintedInvoice() { return this.showPrintedInvoice; }
   public set ShowPrintedInvoice(value: boolean) {
@@ -361,6 +380,9 @@ private selectedItems:ObservableCollection;
    
     if (this.ShowPrintedInvoice) {
       filters.addAdditionalFilter("IsPrinted", true, null, null, "Equal", false, false, false, "Boolean")
+    }
+    if (this.ShowSignedInvoice) {
+      filters.addAdditionalFilter("IsSigned", "3", null, null, "Equal", false, false, false, "string")
     }
     filters.addAdditionalFilter("InvoiceDate", this.fromDate, this.toDate, null, "Between", false, false, false, "DateTime"); 
     filters.addAdditionalFilter("ARInvoiceTypeCode", "IT", null ,null, "Equal", false, false, false, "string"); 
@@ -524,7 +546,36 @@ GetNumberOfDocumentNotPrinted(isReportsAttached: boolean) {
     this.DropdownClose();
     }
 
-
+SendSignedInvoices() {
+      this.ValidationErrorsList = [];
+      if (this.SelectedItemsCount == 0) {
+        this.ValidationErrorsList.push(TextCodeTranslator.Translate("InterestReport.O.SelectAtLeastOnLine"));
+      } else { 
+        
+        var selectedList = this.selectedItems.Collection.map(item => item.Id);
+        this.interestReportExtendedListService.SendSignedInvoices(selectedList).subscribe((response: ServiceResponse) => {
+        this.CurrentSession.StopBusyIndicator();
+        var mm: ServiceResponse = response;
+        if (!mm.HasError) {
+          var msg = new MessageWindow();
+          msg.RTL = this.isRTL;
+          msg.Width = 400;
+          msg.Show("Sent successfully");     
+        }
+         else {
+            if(mm.ErrorsArray){
+              var msg = new MessageWindow();
+              msg.RTL = this.isRTL;
+              msg.Width = 400;
+              msg.Show(mm.ErrorsArray[0]);
+          }
+         }    
+             
+    
+      });
+    }
+    this.DropdownClose();
+}
 // public newWindow:any;
 
  ShowBtatchPrintWarningComponent(DataContext:PDFDocumentInvoices,interestReportArgs: InterestReportArguments) {

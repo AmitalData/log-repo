@@ -402,6 +402,43 @@ namespace Logitude.BL.Helpers
             this.SendToEmailContact(contactEmail, invocie, document, DocumentFilingId, repository, invocie.Tenant);
 
         }
+        public void SendSignInterestInvoices(string[] selectedList ,int tenant)
+        {
+            ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
+            ARInvoiceRepository repository = new ARInvoiceRepository();
+            DocumentRepository documentRepository = new DocumentRepository(commoncontext);
+            DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(commoncontext);
+            DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
+            DocumentOutCopyQuery DocumentOutCopyQuery = new DocumentOutCopyQuery(tenant);
+            List<string> failedItems = new List<string>();
+            try
+            {
+                foreach (var item in selectedList)
+                {
+                    try
+                    {
+                        ARInvoice invocie = repository.GetSingleARInvoice(item, tenant);
+                        DocumentsFilingPM myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(invocie?.Id, tenant).FirstOrDefault();
+                        DocumentOutCopyPM documentOutCopyPM = DocumentOutCopyQuery.GetDocumentOutCopiesForDocumentOutAndType(myDocumentFilings?.Id, tenant, "999G");
+                        Document document = documentRepository.GetSingleDocument(tenant, documentOutCopyPM?.DocumentId);
+                        string contactEmail = this.IsSignatureHtmlPresentByBillToId(invocie?.BillToId, tenant);
+                        if (!string.IsNullOrEmpty(contactEmail))
+                            this.SendToEmailContact(contactEmail, invocie, document, myDocumentFilings?.Id, repository, tenant);
+                    }
+                    catch (Exception ex)
+                    {
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError($"SendSignInterestInvoices  ARInvoiceId :{item}   , Err:{ex} ");
+                        failedItems.Add(item);
+                    }
+                 }
+             }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+                    
+        }
         private void CreateEvent(string eventCode,ARInvoice arinvocie, string Notes = null)
         {
             ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(Tenant);
