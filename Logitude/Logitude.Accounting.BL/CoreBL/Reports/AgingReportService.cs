@@ -331,12 +331,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                       on acc.Id equals moredata.AccountId into moredataJoinT
                       from moredata in moredataJoinT.DefaultIfEmpty()
 
-                      join opcard in _AccountingContext.Cards.Where(r => r.Tenant == _Param.Tenant)
-                        on acc.Id equals opcard.GLAccountId into cardJoinC
-                      from opcard in cardJoinC.DefaultIfEmpty()
+                      join applCard in _AccountingContext.Cards.Where(r => r.Tenant == _Param.Tenant)
+                      on acc.Id equals applCard.GLAccountId into applCardsJoinT
 
+                      from applCard in applCardsJoinT.DefaultIfEmpty()
                       join opf in _AccountingContext.CustomerOpenFilesAmounts.Where(r => r.Tenant == _Param.Tenant)
-                       on opcard.Id equals opf.CustomerId into cardJoinF
+                       on applCard.Id equals opf.CustomerId into cardJoinF
                       from opf in cardJoinF.DefaultIfEmpty()
 
                       join card in _AccountingContext.GLAccountCardsDatas.Where(r => r.Tenant == _Param.Tenant)
@@ -394,7 +394,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                           CustomerVatNumber = card.VatNumber,
                           GLAccountStandardInterestRate = (decimal)(glaPeriod.StandardAddInterestPercent == null ? 0 : basePeriod.InterestRate == null ? glaPeriod.StandardAddInterestPercent : glaPeriod.StandardAddInterestPercent + basePeriod.InterestRate),
 
-                          TotalOpenShipments = card != null ? card.TotalOpenShipments : (opcard != null ? (opf != null ? opf.TotalOpenFilesAmount : 0) : 0),
+                          TotalOpenShipments = card != null ? card.TotalOpenShipments : (applCard != null ? (opf != null ? opf.TotalOpenFilesAmount : 0) : 0),
                           TotalFutureOpenCheques = moredata != null ? (decimal)moredata.TotFutureOpenChequesInLocalCur : 0,
                           TotalOpenCheques = moredata != null ? (decimal)moredata.TotalOpenChequesInLocalCur : 0,
                           IsMultiCurrency = acc.IsMultiCurrency,
