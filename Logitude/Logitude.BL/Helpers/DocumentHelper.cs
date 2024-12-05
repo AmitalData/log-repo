@@ -469,6 +469,10 @@ namespace Logitude.BL.Helpers
             DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(commoncontext);
             DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
             DocumentOutCopyQuery DocumentOutCopyQuery = new DocumentOutCopyQuery(tenant);
+            IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
+            FullAccountingSettingPM accountingSettings = query.GetFullAccountingSettingByTenant(tenant);
+
+
             List<string> failedItems = new List<string>();
             try
             {
@@ -482,7 +486,7 @@ namespace Logitude.BL.Helpers
                         Document document = documentRepository.GetSingleDocument(tenant, documentOutCopyPM?.DocumentId);
                         string contactEmail = this.IsSignatureHtmlPresentByBillToId(invocie?.BillToId, tenant);
                         if (!string.IsNullOrEmpty(contactEmail))
-                            this.SendToEmailContact(contactEmail, invocie, document, myDocumentFilings?.Id, repository, tenant);
+                            this.SendToEmailContact(contactEmail, invocie, document, myDocumentFilings?.Id, repository, tenant, accountingSettings);
                     }
                     catch (Exception ex)
                     {
