@@ -36,6 +36,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.AmitalMessaging.Customs.CustomFile;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -117,21 +118,30 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
 
                         var messagingService = new DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService();
-                        DeclarationRestoreRequestParams =  new DeclarationRestoreRequestParams()
-                        {
-                            DeclarationNumber = declarationPM.DeclarationNumber,
-                            CustomFileNo = declarationPM.CustomFileNo,
-                            Tenant = declarationPM.Tenant,
-                            RequestName = "Restore Declaration " + declarationPM.DeclarationNumber,
-                            ResponseName = "Restore Declaration " + declarationPM.DeclarationNumber,
-                            RequestVIA = SendRequestVIA.WebServiceBatch,
-                            InterfaceTypeCode = "8373",
-                            LoggingEntityId = declarationPM.Id,
-                            LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
-                            LoggingUserId = AuthenticationUtil.ResolveUserId(declarationPM.Tenant),
-                        };
-                        responseData = messagingService.Send(requestParams);
+                        messagingService.Send(
+                           new Logitude.CustomsMessaging.Common.RequestParams.DeclarationRestoreRequestParams()
+                           {
+                               CustomsFile = declarationPM.CustomFileNo,
+                               DeclarationNumber = declarationPM.DeclarationNumber,
+                               DeclarationId = declarationPM.Id,
+                               IsUpdateDB = true,
+                               ShowData = true,
+                               Tenant = declarationPM.Tenant,
+                               LoggingEnabled = true,
+                               LoggingEntityId = declarationPM.Id,
+                               LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+                               LoggingUserId = AuthenticationUtil.ResolveUserId(declarationPM.Tenant),
+                               RequestName = "Retrieve Import Declaration " + declarationPM.DeclarationNumber,
+                               ResponseName = "Retrieve Import Declaration " + declarationPM.DeclarationNumber,
+                               RequestVIA = SendRequestVIA.WebServiceBatch,
+                               InterfaceTypeCode = "8373",
+                           });
+
                     }
+
+
+
+
 
                     var myCourierMasterQueryService = new CourierMasterQueryService(dbContext);
                     CourierMasterPM _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationPM.Id, requestParams.Tenant);
