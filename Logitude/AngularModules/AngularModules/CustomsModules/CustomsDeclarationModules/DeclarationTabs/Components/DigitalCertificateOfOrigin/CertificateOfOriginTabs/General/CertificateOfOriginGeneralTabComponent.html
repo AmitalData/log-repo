@@ -561,27 +561,18 @@
 
                                             <log-column
                                                 [header]="'Customs.CertificateOfOrigin.O.InvoiceNumber' | TextCodeTranslationPipe"
-                                                [binding]="'InvoiceNumber'" [width]="'90'" [Alignment]="'right'" [Editable]="true">
+                                                [binding]="'InvoiceNumber'" [width]="'90'" [Alignment]="'right'">
                                                 <ng-template let-item>
-                                                    <log-cell-template #logcelltemplate
-                                                        (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                                        [RIndex]="item.InvoicesIdUry" [IsEnabled]="!IsDisplayOnly">
-                                                        <div class="TextTrimming" style="text-align:right"
-                                                            *ngIf="logcelltemplate.IsDisplayMode">
+                                                    <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
+                                                        #logcelltemplate>
+                                                        <div style="text-align:right">
                                                             <span>{{item.InvoiceNumber}}</span>
                                                         </div>
-                                                        <div *ngIf="logcelltemplate.IsEditMode">
-                                                            <LogTextBox #InvoiceNumberTextBox [ObjectFieldName]="'InvoiceNumber'"
-                                                                [DataContext]="item" [InputType]="'nText'"
-                                                                [IsAccumulative]="true" [Text]="item.InvoiceNumber"
-                                                                [ObjectTableName]="'Customs.CertificateOfOriginInvoice'"
-                                                                [HideColumns]="true">
-                                                            </LogTextBox>
-                                                        </div>
+
                                                     </log-cell-template>
                                                 </ng-template>
                                             </log-column>
-                                           
+
                                             <log-column
                                                 [header]="'Customs.CertificateOfOrigin.O.InvoiceDate' | TextCodeTranslationPipe"
                                                 [binding]="'InvoiceDate'" [width]="'100'" [Alignment]="'right'">
