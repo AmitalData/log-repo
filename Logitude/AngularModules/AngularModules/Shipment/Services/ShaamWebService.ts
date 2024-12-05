@@ -52,10 +52,10 @@ export class ShaamWebService {
         return this.http.get(this.apiUrl + '/settings', { headers: this.headers }).toPromise() as Promise<ShaamSettings>;
     }
 
-    postShaamSettings(key: string, secret: string, isTestEnvironment: boolean, invoiceV2: boolean): Promise<any> {
+    postShaamSettings(key: string, secret: string, isTestEnvironment: boolean, approvalInvoiceVersion: number): Promise<any> {
         return this.http.put(
             this.apiUrl + '/UpdateSettings',
-            { clientId: key, secret, isTestEnvironment, invoiceV2 },
+            { clientId: key, secret, isTestEnvironment, approvalInvoiceVersion },
             { headers: this.headers }).toPromise();
     }
 }
@@ -93,5 +93,5 @@ export interface ShaamSettings {
     updateDate: string;
     tenant: number;
     isTestEnvironment: boolean;
-    invoiceV2: boolean;
+    approvalInvoiceVersion: number;
 }

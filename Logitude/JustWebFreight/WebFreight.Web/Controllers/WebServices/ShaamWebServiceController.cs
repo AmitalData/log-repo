@@ -140,7 +140,7 @@ namespace WebFreight.Web.Controllers.WebServices
             public string secret { get; set; }
             public string companyName { get; set; }
             public bool isTestEnvironment { get; set; }
-            public bool InvoiceV2 { get; set; }
+            public int approvalInvoiceVersion { get; set; }
         }
 
         enum ReturnContent { NONE, VALUE, JSON }
