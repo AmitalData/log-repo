@@ -922,7 +922,7 @@ namespace AmitalCustomsWindowsService.Tester
 
         private void clearCacheToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Logitude.BL.Helpers.TableLastUpdateClass.UpdateCacheTableHistory();
+            Logitude.BL.Helpers.TableLastUpdateClass.UpdateCacheTableHistory(0);
             Logitude.BL.Helpers.TableLastUpdateClass.UpdateSystemMetaDataHistory();
         }
 
