@@ -110,6 +110,7 @@ namespace WebFreight.Web.Helpers
         {
             try
             {
+                return;
                 Contact loggedContact = null;
                 User loggedUser = null;
                 ICommonDataContext commonDataContext;

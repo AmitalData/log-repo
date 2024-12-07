@@ -1192,7 +1192,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
                 if (entityPM.PackageCode != null)
                 {
-                    PackageRepository pckgRep = new PackageRepository(entityPM.Id);
+                    PackageRepository pckgRep = new PackageRepository(tenant);
                     Package pckg = pckgRep.GetSinglePackage(entityPM.PackageCode);
 
                     if (!entityPM.IsMultiPackage)

@@ -240,6 +240,21 @@ namespace Simplog.Server.Infrastructure
         }
         private void InitLog()
         {
+            base.Database.Log = delegate (string s)
+            {
+                if (s == Environment.NewLine)
+                {
+                    return;
+                }
+                if (s.Contains("SELECT") || s.Contains("connection"))
+                {
+                    Debug.WriteLine(base.GetType().Name + " ***** " + base.Database.Connection.ConnectionString);
+
+                }
+                //StackTrace st = new StackTrace(true);
+                Debug.WriteLine(s);
+            };
+            //this.Database.Log += EnqueueLog;
             if (LogitudeSettings.DatabaseManagementSystem != "oracle")
             {
                 return;

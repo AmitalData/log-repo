@@ -659,7 +659,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                         //string manifestXML = LogitudeXmlSerializer.SerializeObjectToXmlString(manifestSL);
                         byte[] manifestXML = LogitudeXmlSerializer.SerializeObject(manifestSL);
                         ObjectTableQuery tablesQuery = new ObjectTableQuery(tenant);
-                        ObjectTablePM table = tablesQuery.GetObjectTableByName("Shipment", 0);
+                        ObjectTablePM table = tablesQuery.GetObjectTableByName("Shipment", tenant);
                         CommunicationsParams logParams = new CommunicationsParams()
                         {
                             Tenant = tenant,
@@ -1118,7 +1118,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                     bool addedManually = false;
                     if (cardPM.PartnerTypeId == "TR")
                     {
-                        TruckerQuery truckerQuery = new TruckerQuery(0);
+                        TruckerQuery truckerQuery = new TruckerQuery(tenant);
                         addedManually = truckerQuery.CheckTruckerAddedManually(cardPM.Id, cardPM.Tenant);
                         if (!addedManually) cardCode = cardPM.Code;
 
@@ -1126,14 +1126,14 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
 
                     if (cardPM.PartnerTypeId == "AL")
                     {
-                        AirlineQuery airlineQuery = new AirlineQuery(0);
+                        AirlineQuery airlineQuery = new AirlineQuery(tenant);
                         addedManually = airlineQuery.CheckAirlinesAddedManually(cardPM.Id, cardPM.Tenant);
                         if (!addedManually) cardCode = cardPM.Code;
                     }
 
                     if (cardPM.PartnerTypeId == "SL")
                     {
-                        ShippingLineQuery shippingLineQuery = new ShippingLineQuery(0);
+                        ShippingLineQuery shippingLineQuery = new ShippingLineQuery(tenant);
                         addedManually = shippingLineQuery.CheckShippingLinesAddedManually(cardPM.Id, cardPM.Tenant);
                         if (!addedManually) cardCode = cardPM.Code;
                     }
@@ -1278,7 +1278,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
             if (manifestSL != null && !string.IsNullOrEmpty(interlineId))
             {
                 CardQuery cardQuery = new CardQuery(tenant);
-                AirlineQuery airlineQuery = new AirlineQuery(0);
+                AirlineQuery airlineQuery = new AirlineQuery(tenant);
                 bool addedManually = airlineQuery.CheckAirlinesAddedManually(interlineId, tenant);
                 CardPM cardPM = null;
                 if (!addedManually)

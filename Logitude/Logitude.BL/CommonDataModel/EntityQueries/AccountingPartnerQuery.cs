@@ -27,14 +27,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         AccountingPartnerRepository repository;
 
-        public AccountingPartnerQuery()
-        {
-            repository = new AccountingPartnerRepository();
-        }
-
+        //public AccountingPartnerQuery()
+        //{
+        //    repository = new AccountingPartnerRepository();
+        //}
+        int Tenant;
         public AccountingPartnerQuery(int tenant)
         {
             repository = new AccountingPartnerRepository(tenant);
+            Tenant = tenant;
         }
 
         public AccountingPartnerQuery(AccountingPartnerRepository repository)
@@ -461,7 +462,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<AccountingPartnerList> GetIQueryableEntityList(IQueryable<AccountingPartner> iQueryable)
         {
-            string objcetTableId = new ObjectTableQuery(0).GetObjectTableIdByName("Card");
+            string objcetTableId = new ObjectTableQuery(Tenant).GetObjectTableIdByName("Card");
             IQueryable<AccountingPartnerList> result = (from a in iQueryable.Include("Card").Include("Card")
                                                         join customFieldsMainObject in repository.context.CustomFieldsMainObjects.Where(d => d.ObjectTableId == objcetTableId) on a.Id equals customFieldsMainObject.EntityId into customFieldsMainObjectJoin
                                                         from customFieldsMainObject in customFieldsMainObjectJoin.DefaultIfEmpty()

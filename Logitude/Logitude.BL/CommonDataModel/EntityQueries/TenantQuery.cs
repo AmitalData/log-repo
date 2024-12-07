@@ -1988,7 +1988,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 if (currency == null)
                 {
-                    currency = currencyRepository.GetSingleCurrencyById(entityPM.CurrencyId, 0, true);
+                    currency = currencyRepository.GetSingleCurrencyById(entityPM.CurrencyId, entityPM.Id, true);
                 }
 
                 if (currency != null)
@@ -2024,7 +2024,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 if (currency == null)
                 {
-                    currency = currencyRepository.GetSingleCurrencyById(entityPM.CurrencyId, 0, true);
+                    currency = currencyRepository.GetSingleCurrencyById(entityPM.CurrencyId, entityPM.Id, true);
                 }
 
                 if (currency != null)

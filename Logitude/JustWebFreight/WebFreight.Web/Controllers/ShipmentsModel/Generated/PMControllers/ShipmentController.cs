@@ -678,9 +678,15 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
                 //SecurityUtility.AuthenticationOnTenant(tenant);
                 //SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
+                if (tenant == null)
+                { 
+                    if (HttpContext.Current.Items.Contains("Tenant"))
+                    tenant = (int) HttpContext.Current.Items["Tenant"];
+                }
+
                  if (key == testKey)
                 {
-                    shipmentQuery = new ShipmentQuery(0);
+                    shipmentQuery = new ShipmentQuery((int)tenant);
                     var listOfTenantsWithAdditionalData = TADR.All().Select(x=>x.Tenant).Distinct().ToList();
                     CustomData = shipmentQuery.GetSingleShipmentAdditionalCloudCustomDataTest(listOfTenantsWithAdditionalData);
                     tenant = CustomData.Tenant;
@@ -761,6 +767,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
         {
             try
             {
+
+
                 ShipmentQuery shipmentQuery = new ShipmentQuery(0);
                 int? tenantNumber = shipmentQuery.GetTenantBySecurityKey(securityKey);
 
@@ -955,10 +963,15 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 ShipmentQuery shipmentQuery;
                 ShipmentPM RequestedShipment;
                 const string testKey = "d5e6d15f4cb24f12a8ac9c5e8c54a06d";
-             
-                    if (key == testKey)
+                if (tenant == null)
+                {
+                    if (HttpContext.Current.Items.Contains("Tenant"))
+                        tenant = (int)HttpContext.Current.Items["Tenant"];
+                }
+
+                if (key == testKey)
                     {
-                        shipmentQuery = new ShipmentQuery(0);
+                        shipmentQuery = new ShipmentQuery((int)tenant);
                         RequestedShipment = shipmentQuery.GetSingleShipmentPMBySecurityKeyTenantTest();
                     }
                     else

@@ -74,6 +74,14 @@ namespace Simplog.Data.CommonDataModel
 
         }
 
+        public CommonDataContext(string nameOrConnectionString) : base(nameOrConnectionString)
+        {
+            Database.SetInitializer<CommonDataContext>(null);
+            this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.AutoDetectChangesEnabled = false;
+            Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
+        }
+
         public static ICommonDataContext GetContext(int tenant)
         {
             GlobalDB currentDb;
@@ -81,13 +89,16 @@ namespace Simplog.Data.CommonDataModel
             //{
             currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             //}
-            string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+            //string dbConnectionInfo = currentDb.DBConnection;
+            //string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+            return new CommonDataContext(DatabaseInitializer.GetConnectionString(currentDb.DBConnection, currentDb.SecondaryAzureDBConnection));
 
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
-            CommonDataContext context = new CommonDataContext(connection);
 
-            return context;
+
+            //DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
+            //CommonDataContext context = new CommonDataContext(connection);
+
+            //return context;
         }
         public static CommonDataContext GetFullContext(int tenant)
         {
