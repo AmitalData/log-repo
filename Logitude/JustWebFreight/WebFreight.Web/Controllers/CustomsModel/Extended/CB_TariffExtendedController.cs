@@ -44,10 +44,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(0);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
 
-                CB_TariffQueryService tariffQueryService = new CB_TariffQueryService(0);
+                CB_TariffQueryService tariffQueryService = new CB_TariffQueryService(authToken.Tenant);
                 List<CB_TariffList> result = tariffQueryService.GetCustomsBookAgreementLevelData(customsItemId, measurementUnitMalamId);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -69,9 +69,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(0);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                CB_RequirementComputedDataQueryService requirementComputedDataQueryService = new CB_RequirementComputedDataQueryService(0);
+                CB_RequirementComputedDataQueryService requirementComputedDataQueryService = new CB_RequirementComputedDataQueryService(authToken.Tenant);
                 List<CB_RequirementComputedDataList> result = requirementComputedDataQueryService.GetCustomsBookRegularityRequirementData(customsItemId);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -93,11 +93,11 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(0);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
 
 
-                CB_RuleDetailsHistoryQueryService ruleDetailsHistoryQueryService = new CB_RuleDetailsHistoryQueryService(0);
+                CB_RuleDetailsHistoryQueryService ruleDetailsHistoryQueryService = new CB_RuleDetailsHistoryQueryService(authToken.Tenant);
                 List<CB_RuleDetailsHistoryList> result = ruleDetailsHistoryQueryService.GetCustomsBookRulesData(customsItemId);
 
 
@@ -118,9 +118,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 
                 string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(0);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                CB_TariffQueryService tariffQueryService = new CB_TariffQueryService(0);
+                CB_TariffQueryService tariffQueryService = new CB_TariffQueryService(authToken.Tenant);
                 List<CB_TariffList> result = tariffQueryService.GetCustomsBookTaxRates(customsItemId);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);

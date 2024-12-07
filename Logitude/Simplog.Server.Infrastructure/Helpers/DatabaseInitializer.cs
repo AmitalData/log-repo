@@ -28,61 +28,35 @@ namespace Simplog.Server.Infrastructure
             }
         }
 
+        public static string GetConnectionString(string dbConnectionInfo, string SeconderyDBConnectionInfo)//SeconderyDBConnectionInfo = null
+        {
+            if (RunOnSeconderyDB == true && !string.IsNullOrEmpty(SeconderyDBConnectionInfo))
+            {
+                return GetConnectionString(SeconderyDBConnectionInfo, null, null);
+            }
+            else
+            {
+                return GetConnectionString(dbConnectionInfo, null, null);
+            }
+        }
+        public static string GetConnectionString(string dbConnectionInfo, int? connectionLifetime = null, bool? suppressPool = null)
+        {
+            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            {
+                return GetOracleConnectionString(dbConnectionInfo, connectionLifetime, suppressPool);
+            }
+            else
+            {
+                return GetSQLServerConnectionString(dbConnectionInfo, connectionLifetime);
+
+            }
+
+        }
+
+
 
         public static DbConnection GetConnection(string dbConnectionInfo, int? connectionLifetime = null, bool? suppressPool = null)
         {
-
-
-            // Specify the provider name, server and database.
-            //string providerName = "System.Data.SqlClient";
-
-            //
-            //if (dbConnectionInfo.Contains("Global"))
-            //{
-
-            //    return GetSQLServerConnecttion(dbConnectionInfo);
-            //}
-            //else
-            //{
-
-
-
-            //#if ORACLE_DB
-            //             Console.WriteLine("oracle data");
-
-            //             var config = Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance;
-            //                config.Workarounds.ColumnTypeCasingConventionCompatibility = true; //if 
-            //                config.Workarounds.DisableQuoting = true;
-            //                config.QueryOptions.UseCSharpNullComparisonBehavior = true;
-            //                // Apply the IgnoreSchemaName workaround
-            //                config.Workarounds.IgnoreSchemaName = true;
-            //                config.CodeFirstOptions.TruncateLongDefaultNames = true;
-            //                config.QueryOptions.CaseInsensitiveComparison = true;
-            //                config.QueryOptions.CaseInsensitiveLike = true;
-            //                Devart.Data.Oracle.Entity.OracleEntityProviderServices.HandleNullStringsAsEmptyStrings = false;  
-
-
-            //              if (dbConnectionInfo.Contains("Global"))
-            //            {
-
-            //                DbConnection con = new Devart.Data.Oracle.OracleConnection("User Id=global;  Password=global;Direct=True;Data Source=localhost;port=1521;sid=xe");
-            //                return con;
-            //               // return GetSQLServerConnecttion("Oracle_Global,sa,Saas256,.");
-            //            }
-            //            else
-            //            {
-
-            //                DbConnection con = new Devart.Data.Oracle.OracleConnection("User Id=logitude7;  Password=logitude7;Direct=True;Data Source=localhost;port=1521;sid=xe");
-            //                return con;
-            //            }
-
-
-            //#else
-            //            Console.WriteLine("sql data");
-            //            return GetSQLServerConnecttion(dbConnectionInfo);
-            //#endif
-
-
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
                 return GeOracleDbConn(dbConnectionInfo, connectionLifetime, suppressPool);
@@ -96,6 +70,14 @@ namespace Simplog.Server.Infrastructure
         }
 
         private static DbConnection GeOracleDbConn(string dbConnectionInfo, int? connectionLifetime, bool? suppressPool)
+        {
+            string connString = GetOracleConnectionString(dbConnectionInfo, connectionLifetime, suppressPool);
+
+            DbConnection con = new Devart.Data.Oracle.OracleConnection(connString);
+            return con;
+        }
+
+        private static string GetOracleConnectionString(string dbConnectionInfo, int? connectionLifetime, bool? suppressPool)
         {
             string connString = dbConnectionInfo;
             bool bLifeTime = false;
@@ -116,8 +98,7 @@ namespace Simplog.Server.Infrastructure
 
             }
 
-            DbConnection con = new Devart.Data.Oracle.OracleConnection(connString);
-            return con;
+            return connString;
         }
 
         private static string LifeTime(int? connectionLifetime, OracleConnectionStringBuilder main_ocsb)
@@ -146,6 +127,14 @@ namespace Simplog.Server.Infrastructure
 
         private static DbConnection GetSQLServerConnecttion(string dbConnectionInfo,int? connectionLifetime = null)
         {
+            string providerString = GetSQLServerConnectionString(dbConnectionInfo, connectionLifetime);
+
+            DbConnection connection = new SqlConnection(providerString);
+            return connection;
+        }
+
+        private static string GetSQLServerConnectionString(string dbConnectionInfo, int? connectionLifetime = null)
+        {
             string[] information = dbConnectionInfo.Split(',');
             string databaseName = information[0];
             string userName = information[1];
@@ -153,7 +142,7 @@ namespace Simplog.Server.Infrastructure
             //< add name = "Globalstr" connectionString = "Logitude2-5_Global,sa,Saas256!,10.10.10.48,49172\ITZIK" />
             //< add name = "Globalstr" connectionString = "Logitude2-5_Global,sa,Saas256!,10.10.10.48:49172\ITZIK" />
             //< add name = "Globalstr" connectionString = "Logitude2-5_Global,sa,Saas256!,servername:port\Instance" />
-            string servername = information[3].Replace(":",",");
+            string servername = information[3].Replace(":", ",");
             string applicationIntent = information.Length > 4 ? information[4] : "";
             // Initialize the connection string builder for the
             // underlying provider.
@@ -190,25 +179,9 @@ namespace Simplog.Server.Infrastructure
             // Initialize the EntityConnectionStringBuilder.
             EntityConnectionStringBuilder entityBuilder =
                 new EntityConnectionStringBuilder();
-
-            DbConnection connection = new SqlConnection(providerString);
-            //if (WebFreightEntryPoint.CheckConnectionStrategy)
-            //{
-            //    DateTime checkDate = DateTime.UtcNow;
-            //    DateTime endCheckDate = WebFreightEntryPoint.CheckConnectionStartDate.AddMinutes(5);
-            //    if (checkDate <= endCheckDate)
-            //    {
-            //        RetryConnectionClass.CheckConnection(connection);
-            //    }
-            //    else
-            //    {
-            //        WebFreightEntryPoint.CheckConnectionStrategy = false;
-            //    }
-            //}
-            return connection;
+            return providerString;
         }
 
-       
 
 
     }

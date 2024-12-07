@@ -299,16 +299,16 @@ namespace Logitude.BL.Security
                         }
 
                         bool isLogitudeAdmin = false;
-                        if (tenant != 0)
-                        {
-                            UserRepository userRep = new UserRepository(LogitudeSettings.LogitudeCRMTenantNumber);
-                            User user = userRep.GetSingleUserByEmail(email, LogitudeSettings.LogitudeCRMTenantNumber, true);
-                            if (user != null)
-                            {
-                                tenant = LogitudeSettings.LogitudeCRMTenantNumber;
-                                isLogitudeAdmin = true;
-                            }
-                        }
+                        //if (tenant != 0)
+                        //{
+                        //    UserRepository userRep = new UserRepository(LogitudeSettings.LogitudeCRMTenantNumber);
+                        //    User user = userRep.GetSingleUserByEmail(email, LogitudeSettings.LogitudeCRMTenantNumber, true);
+                        //    if (user != null)
+                        //    {
+                        //        tenant = LogitudeSettings.LogitudeCRMTenantNumber;
+                        //        isLogitudeAdmin = true;
+                        //    }
+                        //}
 
                         RoleQuery roleQuery = new RoleQuery(tenant);
                         List<RolePM> allRoles = roleQuery.GetRolesForContact(contact.Id, contact.Tenant).ToList();
@@ -445,16 +445,16 @@ namespace Logitude.BL.Security
                             }
 
                             bool isLogitudeAdmin = false;
-                            if (tenant != 0)
-                            {
-                                UserRepository userRep = new UserRepository(LogitudeSettings.LogitudeCRMTenantNumber);
-                                User user = userRep.GetSingleUserByEmail(email, LogitudeSettings.LogitudeCRMTenantNumber, true);
-                                if (user != null)
-                                {
-                                    tenant = LogitudeSettings.LogitudeCRMTenantNumber;
-                                    isLogitudeAdmin = true;
-                                }
-                            }
+                            //if (tenant != 0)
+                            //{
+                            //    UserRepository userRep = new UserRepository(LogitudeSettings.LogitudeCRMTenantNumber);
+                            //    User user = userRep.GetSingleUserByEmail(email, LogitudeSettings.LogitudeCRMTenantNumber, true);
+                            //    if (user != null)
+                            //    {
+                            //        tenant = LogitudeSettings.LogitudeCRMTenantNumber;
+                            //        isLogitudeAdmin = true;
+                            //    }
+                            //}
 
                             RoleQuery roleQuery = new RoleQuery(tenant);
                             List<RolePM> allRoles = roleQuery.GetRolesForContact(contact.Id, contact.Tenant).ToList();
@@ -948,12 +948,12 @@ namespace Logitude.BL.Security
                     }
 
 
-                    bool isBlocking;
-
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
                         IGlobalContext globalcontext = GlobalContext.GetContext();
-                        isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;
+                        bool isBlocking = (from a in globalcontext.GlobalDBs
+                                           where a.IsBlocking == true
+                                           select a.IsBlocking).Count() > 0;
 
                         if (isBlocking)
                         {

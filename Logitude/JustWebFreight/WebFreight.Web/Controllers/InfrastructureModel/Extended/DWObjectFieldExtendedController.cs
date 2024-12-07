@@ -99,7 +99,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 DWObjectFieldQuery dWObjectFieldQuery = new DWObjectFieldQuery(authToken.Tenant);
-                List<DWObjectFieldPM> dWObjectFieldPM = dWObjectFieldQuery.GetDWObjectFieldWithChildrenFieldsPMsByTenant(0).ToList();
+                List<DWObjectFieldPM> dWObjectFieldPM = dWObjectFieldQuery.GetDWObjectFieldWithChildrenFieldsPMsByTenant(authToken.Tenant).ToList();
 
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey); 
                 return Request.CreateResponse(HttpStatusCode.OK, dWObjectFieldPM);

@@ -39,7 +39,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         public List<DeclarationList> GetList(QueryOperations queryOperations, int tenant , TreeFilterQueryArgs treeFilterQueryArgs)
         {
             GenericFilter filter = new GenericFilter();
-            GenericSort sortClass = new GenericSort();
+            GenericSort sortClass = new GenericSort(tenant);
 
             IQueryable<POCO.Declaration> iQueryable = (from a in context.Declarations
                                               

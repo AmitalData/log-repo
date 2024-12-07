@@ -32,15 +32,14 @@ namespace Logitude.Global.OracleMigration.GlobalModel
             this.Configuration.LazyLoadingEnabled = false;
             this.Configuration.AutoDetectChangesEnabled = false;
             Database.SetInitializer<GlobalContext>(null);//(new MigrateDatabaseToLatestVersion<GlobalContext, Simplog.Global.Data.Migrations.Configuration>());
-            //bool exists = Database.CreateIfNotExists();
-            //var configuration = new Simplog.Global.Data.Migrations.Configuration();
-            //configuration.AutomaticMigrationDataLossAllowed = true;
-            //configuration.TargetDatabase = new DbConnectionInfo(connection.ConnectionString, "System.Data.SqlClient");
-            //var migrator = new DbMigrator(configuration);
-            
-            //migrator.Update();
+ 
         }
-               
+
+        public GlobalContext(string nameOrConnectionString) : base(nameOrConnectionString)
+        {
+            Database.SetInitializer<GlobalContext>(new MigrateDatabaseToLatestVersion<GlobalContext, Logitude.Global.OracleMigration.Migrations.Configuration>());
+        }
+
         public void SetAsModified(object entity)
         {
             this.Entry(entity).State = EntityState.Modified;
@@ -49,13 +48,12 @@ namespace Logitude.Global.OracleMigration.GlobalModel
         public static IGlobalContext GetContext()
         {
             
-            string dbConnectionInfo = ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString; 
-            if (dbConnectionInfo.Contains("Main"))
-            { }
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
-            GlobalContext context = new GlobalContext(connection);
-          
-            return context;
+            string dbConnectionInfo = ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString;
+            return  new GlobalContext(dbConnectionInfo);
+
+            //DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
+            //GlobalContext context = new GlobalContext(connection);
+            //return context;
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

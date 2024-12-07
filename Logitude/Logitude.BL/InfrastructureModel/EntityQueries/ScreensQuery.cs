@@ -41,7 +41,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
              WebFreightContext   webFreightContext = (WebFreightContext)WebFreightContext.GetContext(tenant);
-                ScreenFieldsRepository screenfieldsRep = new ScreenFieldsRepository(0);
+                ScreenFieldsRepository screenfieldsRep = new ScreenFieldsRepository(tenant);
                 zeroscreens = (from a in repository.context.Screens.Include("ObjectTable")
                                where a.Tenant == 0
                                select new ScreenPM()

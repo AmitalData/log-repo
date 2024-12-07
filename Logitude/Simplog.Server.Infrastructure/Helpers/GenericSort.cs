@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Transactions;
+using System.Web;
+
 
 namespace Simplog.Server.Infrastructure.Helpers
 {
@@ -21,6 +23,10 @@ namespace Simplog.Server.Infrastructure.Helpers
         public GenericSort()
         {
 
+            if( HttpContext.Current.Items.Contains("Tenant"))
+            {
+                this.tenant = (int)HttpContext.Current.Items["Tenant"];
+            }
         }
 
         public IQueryable<T> GetSorterQuery<T, N>(QueryOperations queryOperations, IQueryable<T> querableData)
@@ -84,8 +90,14 @@ namespace Simplog.Server.Infrastructure.Helpers
             return sortExpression;
         }
 
-        private string GetObjectTableKeyName(QueryOperations queryOperations , int tenant = 0)
+        private string GetObjectTableKeyName(QueryOperations queryOperations , int tenant = -100)
         {
+
+            if (tenant == -100)
+            {
+                tenant = this.tenant;
+            }
+
             string keyName = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {

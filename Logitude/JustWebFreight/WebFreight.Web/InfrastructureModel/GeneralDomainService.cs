@@ -5480,7 +5480,14 @@ namespace WebFreight.Web.InfrastructureModel
                 //if (connection.Contains("Main"))
                 //{ }
 
-                isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;
+                //isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;
+
+                isBlocking = (from a in globalcontext.GlobalDBs
+                                   where a.IsBlocking == true
+                                   select a.IsBlocking).Count() > 0;
+
+
+
                 GlobalContactRepository repository = new GlobalContactRepository(globalcontext);
                 GlobalContact contact = repository.GetGlobalContactByEmailAndTenant(authEmail,tenant);
                 if (contact != null && contact.InActive)

@@ -29,10 +29,10 @@ namespace WebFreight.Web.Controllers.GlobalModel
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
+                //SecurityUtility.AuthenticationOnTenant(tenant);
 
 
-                var metadatalastUpdates = GetSystemMetadataLastUpdatesCacheHandle(tenant);
+                var metadatalastUpdates = GetSystemMetadataLastUpdatesCacheHandle(authToken.Tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, metadatalastUpdates);
             }
             catch (Exception ex)

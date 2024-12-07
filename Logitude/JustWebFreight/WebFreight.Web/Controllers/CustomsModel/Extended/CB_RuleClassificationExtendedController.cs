@@ -44,11 +44,11 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(0);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
 
 
-                CB_RuleClassificationQueryService ruleDetailsHistoryQueryService = new CB_RuleClassificationQueryService(0);
+                CB_RuleClassificationQueryService ruleDetailsHistoryQueryService = new CB_RuleClassificationQueryService(authToken.Tenant);
                 List<CB_RuleClassification> result = ruleDetailsHistoryQueryService.GetCustomsBookRulesData(customsItemId);
 
 

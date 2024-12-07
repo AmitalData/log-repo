@@ -19,6 +19,16 @@ namespace AmitalCloud.Infrastructure.Data.Security
     {
         [ThreadStatic]
         public static bool IsWorkerRoleCall = false;
+
+        public static int GetTenant()
+        {
+            if (HttpContext.Current.Items.Contains("Tenant"))
+                return (int)HttpContext.Current.Items["Tenant"];
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            return authToken.Tenant;
+        }
+
         public static string GetAuthenticatedUser()
         {
             if (IsWorkerRoleCall && !string.IsNullOrEmpty(AuthenticationUtil.AuthenticatedUserEmail)) //for calling the excel export data from WR 

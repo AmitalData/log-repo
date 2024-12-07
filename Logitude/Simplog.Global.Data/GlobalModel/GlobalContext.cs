@@ -40,6 +40,13 @@ namespace Simplog.Global.Data.GlobalModel
             //migrator.Update();
         }
 
+        public GlobalContext(string nameOrConnectionString) : base(nameOrConnectionString)
+        {
+            this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.AutoDetectChangesEnabled = false;
+            Database.SetInitializer<GlobalContext>(null);
+        }
+
         public void SetAsModified(object entity)
         {
             this.Entry(entity).State = EntityState.Modified;
@@ -64,10 +71,12 @@ namespace Simplog.Global.Data.GlobalModel
             if (dbConnectionInfo.Contains("Main"))
             { }
             dbConnectionInfo = DbContextBaseUtil.GetConnectionStringWithAmitalNetRole(dbConnectionInfo);
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, ConnectionLifetime, suppressPool);
-            GlobalContext context = new GlobalContext(connection);
+            dbConnectionInfo = DatabaseInitializer.GetConnectionString(dbConnectionInfo, ConnectionLifetime, suppressPool);
+            return new GlobalContext(dbConnectionInfo);
+            //DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, ConnectionLifetime, suppressPool);
+            //GlobalContext context = new GlobalContext(connection);
 
-            return context;
+            //return context;
         }
 
         public static GlobalContext GetContextByDBId(string dbId)

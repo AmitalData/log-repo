@@ -120,7 +120,7 @@ namespace WebFreight.Web
             }
             else
             {
-                ShipmentQuery shipmentQuery = new ShipmentQuery(0);
+                ShipmentQuery shipmentQuery = new ShipmentQuery((int)this.Tenant);
                 this.Tenant = shipmentQuery.GetTenantBySecurityKey(linkParameters[0]);
             }
         }
