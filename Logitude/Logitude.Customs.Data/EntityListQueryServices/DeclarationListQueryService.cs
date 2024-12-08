@@ -343,7 +343,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          ExcludeManifest = a.ExcludeManifest,
 														 AmendmentRejectionReason = a.AmendmentRejectionReason,
                                                          ShipmentId = a.ShipmentId,
-                                                         CooStatusCode = MyDeclarationCooStatusViews.Status,
+                                                         // CooStatusName = MyDeclarationCooStatusViews.CooStatusName,
 													 });
 
                 return query;
