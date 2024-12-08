@@ -339,7 +339,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if (myDeclarationPM.Direction == "E")
                 {
-                    RaiseEvent(myDeclarationPM, requestParams.LoggingUserId, "CON", null, customResponse.RequiredDocumentDetails.requiredDocumentMessageType.ToString());
+                    string documentTypeId = customResponse.RequiredDocumentDetails.typeID.ToString();
+                    string comments = "";
+                    if (!string.IsNullOrWhiteSpace(documentTypeId))
+                    {
+                        comments = documentTypeId;
+                        var documentTypeName = GetDocumentTypeName(documentTypeId, requestParams.Tenant);
+                        if (!string.IsNullOrWhiteSpace(documentTypeName))
+                        {
+                            comments += " - " + documentTypeName;
+                        }
+                    }
+
+                    RaiseEvent(myDeclarationPM, requestParams.LoggingUserId, "DON", null, comments);
                 }
 
                     DeclarationUpdateService declarationUpdateService1 = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
