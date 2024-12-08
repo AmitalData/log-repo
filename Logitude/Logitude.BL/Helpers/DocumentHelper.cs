@@ -591,7 +591,7 @@ namespace Logitude.BL.Helpers
                     subject = accountingSettings?.InterestInvoiceNotes;
                 }
                 
-                string documentId=this.SendHtmlDocument(bytedata, DocumentFilingId, null, tenant, email, subject += " " + arinvocie.InvoiceNumber, null, null, userId, arinvocie.Id, LoggingObjectTableId, document.Id+","+ documentInterestReportId, null, null, null);
+                string documentId=this.SendHtmlDocument(bytedata, DocumentFilingId, null, tenant, email, subject += " " + arinvocie.InvoiceNumber, null, null, userId, arinvocie.Id, LoggingObjectTableId, document.Id+","+ documentInterestReportId, null, null, null,loggedUserEmail);
                 if (!string.IsNullOrEmpty(documentId))
                 {
                     arinvocie.IsSigned = "3";
@@ -617,7 +617,7 @@ namespace Logitude.BL.Helpers
                 NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
             }
         }
-        public string SendHtmlDocument(byte[] htmlData, string internalDocumentId, string externalDocumentId, int tenant, string toEmail, string subject, string cc, string bcc, string userId, string entityId, string objectTableId, string attachments, string entityReference, string from, string replyTo)
+        public string SendHtmlDocument(byte[] htmlData, string internalDocumentId, string externalDocumentId, int tenant, string toEmail, string subject, string cc, string bcc, string userId, string entityId, string objectTableId, string attachments, string entityReference, string from, string replyTo,string loggedUserEmail)
         {
             ICommonDataContext context = CommonDataContext.GetContext(tenant);
             //ShipmentsContext shipmentsContext = new ShipmentsContext();
@@ -808,9 +808,9 @@ namespace Logitude.BL.Helpers
                                     }
                                     if (copy != null && copy.DocumentTypeCopyId == documentType.LimitedPrintCopyId)
                                     {
-                                        string email = HttpContext.Current.User.Identity.Name;
+                                        //string email = HttpContext.Current.User.Identity.Name;
                                         UserRepository userRep = new UserRepository(tenant);
-                                        User printedBy = userRep.GetSingleUserByCodeOrEmail(null, email, tenant, false);
+                                        User printedBy = userRep.GetSingleUserByCodeOrEmail(null, loggedUserEmail, tenant, false);
                                         copy.LastPrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                                         copy.LastPrintedByUserId = printedBy?.Id;
                                         documentoutCopyRep.Update(copy);
