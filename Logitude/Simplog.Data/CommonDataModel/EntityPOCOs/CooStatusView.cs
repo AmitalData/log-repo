@@ -12,5 +12,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [Key]
         public string DeclarationId { get; set; }
         public string Status { get; set; }
+        public string StatusCode { get; set; }
     }
 }

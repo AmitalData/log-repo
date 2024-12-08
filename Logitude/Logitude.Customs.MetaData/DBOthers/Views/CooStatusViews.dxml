@@ -29,6 +29,7 @@ WITH CertificateStatus AS (
 )
 SELECT 
     cs.declarationId as DeclarationId,
+    cs.StatusCode as StatusCode
     coosce.LocalName as Status
 FROM 
     CertificateStatus cs
@@ -47,6 +48,7 @@ CREATE OR REPLACE VIEW CooStatusViews
 
 SELECT 
   null  as DeclarationId,
+  null  as StatusCode,
   null as Status
 FROM DUAL;
 

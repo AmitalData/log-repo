@@ -190,6 +190,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      from myJoinAmendmentRequest in qStatusAmendJoin.DefaultIfEmpty()
 
                                                      join cooStatusViews in context.CooStatusViews
+                                                     .Select(x => new { x.DeclarationId, CooStatusName = x.Status, CooStatusCode = x.StatusCode })
                                                      on a.Id equals cooStatusViews.DeclarationId into cooStatusViewsJoin
                                                      from MyDeclarationCooStatusViews in cooStatusViewsJoin.DefaultIfEmpty()
 
@@ -342,7 +343,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          LoadingPortName = a.ExportLoadingPort.LocalName,
                                                          ExcludeManifest = a.ExcludeManifest,
 														 AmendmentRejectionReason = a.AmendmentRejectionReason,
-                                                         // CooStatusName = MyDeclarationCooStatusViews.CooStatusName,
+                                                         CooStatusName = MyDeclarationCooStatusViews.CooStatusName,
                                                      });
 
                 return query;
