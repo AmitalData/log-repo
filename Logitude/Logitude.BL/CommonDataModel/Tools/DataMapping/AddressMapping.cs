@@ -38,6 +38,11 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.InActive = entityPM.InActive;
             entityPOCO.IsLocalLanguage = entityPM.IsLocalLanguage;
             entityPOCO.ExternalId = entityPM.ExternalId;
+            entityPOCO.Responsibility = entityPM.Responsibility;
+            entityPOCO.TruckerId = entityPM.TruckerId;
+            entityPOCO.TransportationInstructions = entityPM.TransportationInstructions;
+            entityPOCO.CityId   = entityPM.CityId;
+
 
             BuildSearchFields(entityPM, entityPOCO);
         }

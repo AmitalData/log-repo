@@ -23,7 +23,6 @@ namespace Simplog.Data.ShipmentsModel
 
         IDbSet<Shipment> Shipments { get; }
         IDbSet<ReferenceType> ReferenceTypes { get; }
-        IDbSet<Responsibility> Responsibilities { get; }
         IDbSet<ShipmentDocsField> ShipmentDocsFields { get; }
         IDbSet<ShipmentType> ShipmentTypes { get; }
         IDbSet<ShipmentMasterData> ShipmentMasterDatas { get; }

@@ -2903,6 +2903,30 @@ namespace Simplog.Data.CommonDataModel.Mocks
             }
         }
 
+        public IDbSet<TruckerSetting> TruckerSettings
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+        public IDbSet<Responsibility> Responsibilities
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+
 
         //public IDbSet<CardContactAdditionalService> CardContactAdditionalServices { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 

@@ -1,38 +1,37 @@
- 
-using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure.Helpers;
+
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.ShipmentsModel;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using System;
 
-namespace Simplog.Data.ShipmentsModel.Repositories
+namespace Simplog.Data.CommonDataModel.Repositories
 {
-   public class ResponsibilityRepository : IRepository<Responsibility>
-   {
-   
-        IShipmentsContext currentContext;
+    public class ResponsibilityRepository : IRepository<Responsibility>
+    {
+        ICommonDataContext commonDataContext;
+
+        public ResponsibilityRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
+
+        public ResponsibilityRepository(ICommonDataContext context)
+        {
+            commonDataContext = context;
+        }
 
         public ResponsibilityRepository(int tenant)
         {
-            currentContext = new ShipmentsContext();
+            commonDataContext = CommonDataContext.GetContext(tenant);
         }
 
-        public ResponsibilityRepository(IShipmentsContext context)
-        {
-            currentContext = context;
-        }
-
-		 
-		
-		public Responsibility GetSingleResponsibility(string code)
+        public Responsibility GetSingleResponsibility(string code)
         {
             return (from a in context.Responsibilities
-                    where a.Code == code 
+                    where a.Code == code
                     select a).FirstOrDefault();
         }
 
@@ -78,9 +77,9 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return context.Responsibilities.ToList();
         }
 
-        public IShipmentsContext context
+        public ICommonDataContext context
         {
-            get { return currentContext; }
+            get { return commonDataContext; }
         }
 
         public void SubmitChanges()
@@ -93,8 +92,5 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
             throw new NotImplementedException();
         }
-
-
     }
 }
-	 

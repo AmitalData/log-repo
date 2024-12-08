@@ -166,5 +166,17 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public string BranchId { get; set; }
+
+        [DataMember]
+        public string CityId { get; set; }
+
+        [DataMember]
+        public string TransportationInstructions { get; set; }
+
+        [DataMember]
+        public string Responsibility { get; set; }
+        [DataMember]
+        public string TruckerId { get; set; }
+
     }
 }

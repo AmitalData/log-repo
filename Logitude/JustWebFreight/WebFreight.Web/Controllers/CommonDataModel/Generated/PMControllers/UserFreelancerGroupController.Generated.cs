@@ -45,11 +45,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
 { 
 
     
-    public partial class AddressesController : ApiController
+    public partial class UserFreelancerGroupsController : ApiController
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string id, string userid)
         {
 		  try
             {
@@ -57,12 +57,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                AddressQuery addressQuery = new AddressQuery(authToken.Tenant);
-                AddressPM addressPM = addressQuery.GetSinglePM(id, authToken.Tenant);
+                UserFreelancerGroupQuery userFreelancerGroupQuery = new UserFreelancerGroupQuery(authToken.Tenant);
+                UserFreelancerGroupPM userFreelancerGroupPM = userFreelancerGroupQuery.GetSinglePM(id, userid, authToken.Tenant);
                 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
-                return Request.CreateResponse(HttpStatusCode.OK, addressPM);
+                return Request.CreateResponse(HttpStatusCode.OK, userFreelancerGroupPM);
 			 
 			}
             catch (Exception ex)
@@ -75,7 +75,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
          
 		
 
-        public HttpResponseMessage Post(AddressPM entityPM)
+        public HttpResponseMessage Post(UserFreelancerGroupPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -89,11 +89,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
-                        AddressService service = new AddressService(MyContext, entityPM.Tenant);
+                        UserFreelancerGroupService service = new UserFreelancerGroupService(MyContext, entityPM.Tenant);
                         service.Create(entityPM);
 				
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Address", 0, true);
+                        // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("UserFreelancerGroup", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
                         // ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
@@ -121,7 +121,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
         }
 
 
-        public HttpResponseMessage Put(AddressPM entityPM)
+        public HttpResponseMessage Put(UserFreelancerGroupPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -134,8 +134,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                        string entityName = "Address" + entityPM.Id + entityPM.Tenant;
-                        string entityPmName = "AddressPM" + entityPM.Id + entityPM.Tenant;
+                        string entityName = "UserFreelancerGroup" + entityPM.Id + entityPM.Tenant;
+                        string entityPmName = "UserFreelancerGroupPM" + entityPM.Id + entityPM.Tenant;
                         if (CacheManager.CacheWrapper.Get(entityName) != null)
                         {
                             CacheManager.CacheWrapper.Invalidate(entityName);
@@ -146,12 +146,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         }
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
-                        AddressService service = new AddressService(MyContext, entityPM.Tenant);
+                        UserFreelancerGroupService service = new UserFreelancerGroupService(MyContext, entityPM.Tenant);
  
                         service.Update(entityPM);
 
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Address", 0, true);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("UserFreelancerGroup", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
                         //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);

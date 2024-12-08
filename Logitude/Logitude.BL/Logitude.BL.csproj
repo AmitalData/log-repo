@@ -560,6 +560,7 @@
     <Compile Include="CommonDataModel\APIDataContract\Vendor.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Vessel.Generated.cs" />
     <Compile Include="CommonDataModel\Args\CustomReferenceDocumentsMetaDataType.cs" />
+    <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\ResponsibilityDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\AccountingSystemDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\AddressTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\CheckDigitControlAlgorithmDetails.Generated.cs" />
@@ -624,6 +625,7 @@
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\RateClassStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\RegimenFiscalStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\RegistryDateTypeStruct.Generated.cs" />
+    <Compile Include="CommonDataModel\CloseTables\EnumGenerated\ResponsibilityStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\TarrifFromToTypeStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\TarrifTypeStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\TemperatureUnitStruct.Generated.cs" />
@@ -658,6 +660,8 @@
     <Compile Include="CommonDataModel\EntityLists\ProductItemList.cs" />
     <Compile Include="CommonDataModel\EntityLists\PostalCodeList.cs" />
     <Compile Include="CommonDataModel\EntityLists\ReportExecutionLogList.cs" />
+    <Compile Include="CommonDataModel\EntityLists\ResponsibilityList.cs" />
+    <Compile Include="CommonDataModel\EntityLists\TruckerSettingList.cs" />
     <Compile Include="CommonDataModel\EntityLists\UnassignedEntityList.cs" />
     <Compile Include="CommonDataModel\EntityLists\RegimenFiscalList.cs" />
     <Compile Include="CommonDataModel\EntityPMs\AddressTypePM.cs" />
@@ -677,6 +681,7 @@
     <Compile Include="CommonDataModel\EntityPMs\ReportExecutionLogPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\HTSCodePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\ProductItemPM.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\TruckerSettingPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\UserFreelancerGroupPM.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ProductTypeModificationQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\QuoteGroupSectionQuery.cs" />
@@ -695,6 +700,8 @@
     <Compile Include="CommonDataModel\EntityQueries\ProductItemQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\PostalCodeQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ReportExecutionLogQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\ResponsibilityQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\TruckerSettingQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\UnassignedEntityQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\RegimenFiscalQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\UserFreelancerGroupQuery.cs" />
@@ -770,6 +777,7 @@
     <Compile Include="CommonDataModel\Tools\DataMapping\CustomerTeamMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CustomerOpenFilesAmountMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\DocumentsExecutionLogMapping.cs" />
+    <Compile Include="CommonDataModel\Tools\DataMapping\TruckerSettingMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\FreelancerGroupTypeMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\HorseMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\MentionMapping.cs" />
@@ -795,6 +803,7 @@
     <Compile Include="CommonDataModel\Tools\EntityService\CustomerTeamService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\CustomerStatusQueueService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\DocumentsExecutionLogService.cs" />
+    <Compile Include="CommonDataModel\Tools\EntityService\TruckerSettingService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\FreelancerGroupTypeService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\GLAccountCardDataService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\HorseService.cs" />
@@ -923,10 +932,7 @@
     <Compile Include="InfrastructureModel\EntityQueries\QuoteChargesGroupQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ReferenceCustomObjectQuery.cs" />
     <Compile Include="Security\ContactInfo.cs" />
-    <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\ResponsibilityDetails.Generated.cs" />
-    <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\ResponsibilityStruct.Generated.cs" />
     <Compile Include="ShipmentsModel\EntityLists\FreightForwarderReferenceList.cs" />
-    <Compile Include="ShipmentsModel\EntityLists\ResponsibilityList.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\FreightForwarderReferencePM.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ReferenceTypeListQueryService.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ScreenSectionQuery.cs" />
@@ -1126,7 +1132,6 @@
     <Compile Include="ShipmentsModel\EntityPMs\OceanInsightsStatusLogPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ReferenceTypePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentReferancePM.cs" />
-    <Compile Include="ShipmentsModel\EntityQueries\ResponsibilityQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ReferenceTypeQueryService.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\FreightForwarderReferenceQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentReferanceQuery.cs" />

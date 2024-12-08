@@ -264,6 +264,8 @@
     <Compile Include="CommonDataModel\EntityPOCOs\ChargesExternalAccountsByProduct.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CheckDigitControlAlgorithm.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomsBookMainView.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\Responsibility.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\TruckerSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UserFreelancerGroup.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\FreelancerGroupType.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CooStatusView.cs" />
@@ -294,6 +296,7 @@
     <Compile Include="CommonDataModel\Mapping\CustomerGroupMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerTeamMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DigitalContactLastSettingMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\TruckerSettingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\UserFreelancerGroupMap.cs" />
     <Compile Include="CommonDataModel\Mapping\FreelancerGroupTypeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\HorseGenderMap.cs" />
@@ -305,6 +308,8 @@
     <Compile Include="CommonDataModel\Repositories\CustomerGroupRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CustomerTeamRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\DigitalContactLastSettingRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\ResponsibilityRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\TruckerSettingRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\UserFreelancerGroupRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\FreelancerGroupTypeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\HorseGenderRepository.cs" />
@@ -903,7 +908,6 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\PayableProratedAmount.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\PickUpDeliveryPackageHarmonize.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\PickUpDeliveryTransportMode.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\Responsibility.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ReferenceType.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentAnalytic.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentAssembly.cs" />
@@ -1384,7 +1388,6 @@
     <Compile Include="ShipmentsModel\Repositories\PayableProratedAmountRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\PickUpDeliveryPackageHarmonizeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\PickUpDeliveryTransportModeRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\ResponsibilityRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ReferenceTypeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentAdditionalCloudDataRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentAssemblyRepository.cs" />

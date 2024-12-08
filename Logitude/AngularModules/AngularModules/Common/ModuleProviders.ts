@@ -229,6 +229,7 @@ import { MentionListService } from './Services/StandardLists/MentionListService'
 import { MentionPMService } from './Services/StandardPMs/MentionPMService';
 import { CarrierServiceLineListService } from './Services/StandardLists/CarrierServiceLineListService';
 import { WarehouseMenuButtonsHandler } from './Components/MenuButtons/WarehouseMenuButtonsHandler';
+import {ResponsibilityListService } from './Services/StandardLists/ResponsibilityListService';
  
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -462,6 +463,7 @@ export class ModuleProviders {
             case "HorseGenderListService": { myResult = new HorseGenderListService(); break; }
             case "PortGroupListService": { myResult = new PortGroupListService(); break; }
             case "PortGroupPMService": { myResult = new PortGroupPMService(); break; }
+            case "ResponsibilityListService": { myResult = new ResponsibilityListService(); break; }
          }
 
         return myResult;
