@@ -82,6 +82,11 @@ export class CertificateOfOriginInvoicePM {
     public set IsInvoicesForPrint(newValue: boolean) { if (this.isInvoicesForPrint != newValue) { this.isInvoicesForPrint = newValue; this.MarkAsDirty("IsInvoicesForPrint"); } }
        
 	 
+    private isInvoiceConnected: boolean;
+    public get IsInvoiceConnected() { return this.isInvoiceConnected; }
+    public set IsInvoiceConnected(newValue: boolean) { if (this.isInvoiceConnected != newValue) { this.isInvoiceConnected = newValue; this.MarkAsDirty("IsInvoiceConnected"); } }
+       
+	 
 
     public OldEntityPM: CertificateOfOriginInvoicePM;
 	

@@ -47,6 +47,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string DescriptionOfInvoice { get; set; }
         [Column("IsInvoicesForPrint")]
 	    public bool IsInvoicesForPrint { get; set; }
+        [Column("IsInvoiceConnected")]
+	    public bool IsInvoiceConnected { get; set; }
     }
 }
 	 

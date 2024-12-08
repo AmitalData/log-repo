@@ -987,7 +987,9 @@
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ChequeCounterSerialViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\APInvoiceStatusUpdateController.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountMultiToCurrencyController.cs" />
-     <Compile Include="Controllers\HybridModel\AccountingPartnerHybridController.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginConnectionViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CertificateOfOriginConnectionController.Generated.cs" />
+    <Compile Include="Controllers\HybridModel\AccountingPartnerHybridController.cs" />
     <Compile Include="Controllers\HybridModel\ActivityDWHybridController.cs" />
     <Compile Include="Controllers\HybridModel\ActivityHybridController.cs" />
     <Compile Include="Controllers\HybridModel\AddressHybridController.cs" />
@@ -1057,10 +1059,10 @@
     <Compile Include="Controllers\HybridModel\VendorHybridController.cs" />
     <Compile Include="Controllers\HybridModel\VesselHybridController.cs" />
     <Compile Include="Controllers\HybridModel\WarehouseHybridController.cs" />
-     <Compile Include="Controllers\CustomsModel\Extended\CB_RuleClassificationExtendedController.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\CB_RuleClassificationExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_RuleClassificationViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_RuleClassificationController.Generated.cs" />
-     <Compile Include="Controllers\InfrastructureModel\QueueMessagesViewsController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\QueueMessagesViewsController.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\CardAPiHelper.cs" />
     <!-- <Compile Include="ContainerTracking\ContainerTrackingHelper.cs" /> -->
     <Compile Include="Controllers\AccountingModel\CopyFromTenant0ExtendedController.cs" />
@@ -2039,12 +2041,12 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferantTeamController.Generated.cs" />
     <Compile Include="DataContracts\PrivateLabelsBrandingData.cs" />
     <Compile Include="DataContracts\PrivateLabelsBrandingDataRequest.cs" />
-     <Compile Include="DataProviders\MonthlyBalancesReportDataProvider.cs" />
+    <Compile Include="DataProviders\MonthlyBalancesReportDataProvider.cs" />
     <Compile Include="DataProviders\CustomFieldDataProviedr.cs" />
     <Compile Include="DataProviders\ControlForInvoiceLinesDataProvider.cs" />
     <Compile Include="DataProviders\LogitudeCRMReportDataProvider.cs" />
-     <Compile Include="DataProviders\CustomsCollateralDataProvider.cs" />
-     <Compile Include="DataProviders\ExportDeclarationDataProvider.cs" />
+    <Compile Include="DataProviders\CustomsCollateralDataProvider.cs" />
+    <Compile Include="DataProviders\ExportDeclarationDataProvider.cs" />
     <Compile Include="DataProviders\ProductItemLine.Shared.cs" />
     <Compile Include="DataProviders\RoutingDataProvider.cs" />
     <Compile Include="DataProviders\SpotRateQuoteReportDataProvider.cs" />
@@ -4164,6 +4166,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_TradeAgreementUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_TradeLevyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_VendorUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CertificateOfOriginConnectionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CertificateOfOriginInvoiceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CertificateOfOriginItemUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CertificateOfOriginMandatoryFieldsUpdateClass.cs" />

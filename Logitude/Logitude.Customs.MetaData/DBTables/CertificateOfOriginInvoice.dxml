@@ -79,6 +79,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="IsInvoiceConnected"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CertificateOfOriginId"
     ReferencedTable="CertificateOfOrigins"

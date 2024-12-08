@@ -202,6 +202,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CertificateOfOriginMap());
 	
+            modelBuilder.Configurations.Add(new CertificateOfOriginConnectionMap());
+	
             modelBuilder.Configurations.Add(new CertificateOfOriginInvoiceMap());
 	
             modelBuilder.Configurations.Add(new CertificateOfOriginItemMap());
@@ -1936,6 +1938,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CertificateOfOrigin> CertificateOfOrigins 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CertificateOfOriginConnection> CertificateOfOriginConnections 
 	 {
 	      get; set;
 	 

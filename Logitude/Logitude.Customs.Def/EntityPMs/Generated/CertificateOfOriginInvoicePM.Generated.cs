@@ -273,6 +273,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isInvoiceConnected ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsInvoiceConnected  
+	   {
+	    
+	     get
+		{
+		   return isInvoiceConnected;
+		 }
+		 set
+		 {
+		   if(isInvoiceConnected != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsInvoiceConnected",OldValue=isInvoiceConnected,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isInvoiceConnected=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

@@ -471,6 +471,7 @@
     <Compile Include="EntityDataMappings\CB_TradeLevyDataMapping.cs" />
     <Compile Include="EntityDataMappings\CB_VendorDataMapping.cs" />
     <Compile Include="EntityDataMappings\CertificateExemptionTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CertificateOfOriginConnectionDataMapping.cs" />
     <Compile Include="EntityDataMappings\CertificateOfOriginDataMapping.cs" />
     <Compile Include="EntityDataMappings\CertificateOfOriginInvoiceDataMapping.cs" />
     <Compile Include="EntityDataMappings\CertificateOfOriginItemDataMapping.cs" />
@@ -743,6 +744,7 @@
     <Compile Include="EntityDataMappings\Generated\CB_TradeLevyDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CB_VendorDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CertificateExemptionTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CertificateOfOriginConnectionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CertificateOfOriginDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CertificateOfOriginInvoiceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CertificateOfOriginItemDataMapping.Generated.cs" />
@@ -1364,6 +1366,7 @@
     <Compile Include="EntityQueryServices\CB_RuleClassificationQueryService.cs" />
     <Compile Include="EntityQueryServices\CB_RuleDetailsHistoryQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_RuleClassificationQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CertificateOfOriginConnectionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\RemarksClassificationQueryService.cs" />
     <Compile Include="EntityQueryServices\CB_CustomsItemComputedDataQueryService.cs" />
     <Compile Include="EntityQueryServices\CB_RequirementComputedDataQueryService.cs" />
@@ -2029,6 +2032,7 @@
     <Compile Include="EntityUpdateServices\Generated\CB_TradeAgreementUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CB_TradeLevyUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CB_VendorUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CertificateOfOriginConnectionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ChangeTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ComputationMethodUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ConditionalExemptionTypeUpdateService.Generated.cs" />
