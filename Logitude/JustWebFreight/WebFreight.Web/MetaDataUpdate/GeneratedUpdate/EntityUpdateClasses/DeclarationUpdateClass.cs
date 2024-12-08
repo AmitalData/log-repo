@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "0c3c86693515d209e18fe2fa37116790";
+		public const string HashString = "1b7ea3eeafdfd6f791e11a1e40dbf7f5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -18767,7 +18767,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "CooStatusCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Customs.CertificateOfOrigin",
+					  						LookUpTableName =  "Customs.CertificateOfOriginStatusCodeEnum",
 					  						MinLength =  0,
 					  						MaxLength =  2,
 					  						IsRequired =  false,
@@ -18778,15 +18778,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  2,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
-					  						IsListFilter =  false,
+					  						IsListFilter =  true,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CooStatusCode",
 					  						ListPropertyPath =  "CooStatusCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

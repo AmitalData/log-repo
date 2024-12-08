@@ -240,6 +240,7 @@ export class DeclarationList {
 	ComputerFee: number;
 	EffectiveFlight: boolean;
 	CooStatusName: string;
+	CooStatusCode: string;
 	
 }
  
