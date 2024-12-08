@@ -1065,6 +1065,8 @@
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\FreightForwarderReferenceViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ReferenceTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\HybridModel\AccountingPartnerHybridController.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginConnectionViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CertificateOfOriginConnectionController.Generated.cs" />
     <Compile Include="Controllers\HybridModel\ActivityDWHybridController.cs" />
     <Compile Include="Controllers\HybridModel\ActivityHybridController.cs" />
     <Compile Include="Controllers\HybridModel\AddressHybridController.cs" />
@@ -4249,6 +4251,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_TradeAgreementUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_TradeLevyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_VendorUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CertificateOfOriginConnectionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CertificateOfOriginInvoiceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CertificateOfOriginItemUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CertificateOfOriginMandatoryFieldsUpdateClass.cs" />

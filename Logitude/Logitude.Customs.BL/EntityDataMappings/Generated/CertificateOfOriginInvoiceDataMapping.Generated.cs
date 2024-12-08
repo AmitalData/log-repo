@@ -38,7 +38,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         InvoiceSum, 
 	         CurrencyTypeCode, 
 	         DescriptionOfInvoice, 
-	         IsInvoicesForPrint,
+	         IsInvoicesForPrint, 
+	         IsInvoiceConnected,
 	      }
 
 
@@ -55,7 +56,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         InvoiceSum, 
 	         CurrencyTypeCode, 
 	         DescriptionOfInvoice, 
-	         IsInvoicesForPrint,
+	         IsInvoicesForPrint, 
+	         IsInvoiceConnected,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -112,6 +114,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsInvoicesForPrint))
             {
 				entityPOCO.IsInvoicesForPrint = entityPM.IsInvoicesForPrint;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsInvoiceConnected))
+            {
+				entityPOCO.IsInvoiceConnected = entityPM.IsInvoiceConnected;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -175,6 +182,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsInvoicesForPrint = entityPOCO.IsInvoicesForPrint;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsInvoiceConnected))
+            {
+					entityPM.IsInvoiceConnected = entityPOCO.IsInvoiceConnected;
+            }
+
 		}
 
 		public void PMToOldPM(CertificateOfOriginInvoicePM entityPM, CertificateOfOriginInvoicePM oldEntityPM)
@@ -229,6 +241,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsInvoicesForPrint))
             {
                 oldEntityPM.IsInvoicesForPrint = entityPM.IsInvoicesForPrint;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsInvoiceConnected))
+            {
+                oldEntityPM.IsInvoiceConnected = entityPM.IsInvoiceConnected;
             }
 			
 		}
