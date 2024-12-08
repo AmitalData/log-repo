@@ -342,7 +342,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          LoadingPortName = a.ExportLoadingPort.LocalName,
                                                          ExcludeManifest = a.ExcludeManifest,
 														 AmendmentRejectionReason = a.AmendmentRejectionReason,
-                                                         CooStatusCode = MyDeclarationCooStatusViews.Status,
+                                                         // CooStatusName = MyDeclarationCooStatusViews.CooStatusName,
                                                      });
 
                 return query;
