@@ -551,7 +551,8 @@ SendSignedInvoices() {
       if (this.SelectedItemsCount == 0) {
         this.ValidationErrorsList.push(TextCodeTranslator.Translate("InterestReport.O.SelectAtLeastOnLine"));
       } else { 
-        
+        this.CurrentSession.StartBusyIndicatorLoading();
+
         var selectedList = this.selectedItems.Collection.map(item => item.Id);
         this.interestReportExtendedListService.SendSignedInvoices(selectedList).subscribe((response: ServiceResponse) => {
         this.CurrentSession.StopBusyIndicator();
