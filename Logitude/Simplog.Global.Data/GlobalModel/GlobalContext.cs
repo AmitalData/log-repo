@@ -68,15 +68,17 @@ namespace Simplog.Global.Data.GlobalModel
             {
                 dbConnectionInfo = ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString;
             }
-            if (dbConnectionInfo.Contains("Main"))
-            { }
             dbConnectionInfo = DbContextBaseUtil.GetConnectionStringWithAmitalNetRole(dbConnectionInfo);
-            dbConnectionInfo = DatabaseInitializer.GetConnectionString(dbConnectionInfo, ConnectionLifetime, suppressPool);
-            return new GlobalContext(dbConnectionInfo);
-            //DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, ConnectionLifetime, suppressPool);
-            //GlobalContext context = new GlobalContext(connection);
-
-            //return context;
+            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            {
+                DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, ConnectionLifetime, suppressPool);
+                return new GlobalContext(connection);
+            }
+            else
+            {
+                dbConnectionInfo = DatabaseInitializer.GetConnectionString(dbConnectionInfo, ConnectionLifetime, suppressPool);
+                return new GlobalContext(dbConnectionInfo);
+            }
         }
 
         public static GlobalContext GetContextByDBId(string dbId)
