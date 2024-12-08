@@ -640,7 +640,7 @@
                                                                             [LookUpTableName]="'Card'"
                                                                             [DisplayMemberPath]="'LocalName'"
                                                                             [ColumnsWidths]="ColumnsWidths"
-                                                                            [DependencyFilter1Value]="CustomerDependencyProperty1"
+                                                                            [DependencyFilter1Value]="EntityPM.IsCustomShipment? null: CustomerDependencyProperty1"
                                                                             [DependencyFilter1IsList]="CustomerDependencyProperty1IsList"
                                                                             [HideLastColumn]="EntityPM.IsCustomShipment"
                                                                             [HideAddLink]="true"

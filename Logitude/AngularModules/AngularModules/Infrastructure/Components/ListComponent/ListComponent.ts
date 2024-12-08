@@ -3064,6 +3064,9 @@ export class ListComponent implements OnInit, AfterViewInit {
             else if (this.ObjectTableName == "Customs.LogisticActionRequest") {
                 this.NewEntityButtonLabel = TextCodeTranslator.Translate('Customs.General.O.OpenLogisticActionRequest')
             }
+            else if (this.MenuTableQuerySection == 'CustomsShipments') {
+                this.NewEntityButtonLabel = TextCodeTranslator.Translate('Shipment.O.OpenNewCustomShipment')
+            }
             else if (this.ObjectTableName == "Currency") {
                 this.NewEntityButtonLabel = TextCodeTranslator.Translate("General.B.Add");
             }
@@ -3629,6 +3632,19 @@ export class ListComponent implements OnInit, AfterViewInit {
 
             if (this.ObjectTableName == "InterestBasesType") {
                 str = TextCodeTranslator.Translate("Accounting.General.O.NewInterestBases");
+            }
+
+            if (this.ObjectTableName == 'Shipment') {
+                var args = new NewEntityArgs();
+                args.QueryNameTextCode = AppTool.IsNullOrEmpty(this.SelectedQuery)? null: this.SelectedQuery.QuerySection;
+                logWindow.WindowArgs = args;
+
+                str = TextCodeTranslator.Translate('Shipment.O.NewShipment');
+
+                if (this.MenuTableQuerySection == 'CustomsShipments') {
+                    logWindow.Width = 650;
+                    logWindow.Height = 300;
+                }
             }
 
             if (!AppTool.IsNullOrEmpty(this.NewButtonLable)) {
