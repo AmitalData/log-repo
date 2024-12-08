@@ -443,6 +443,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         EffectiveFlight, 
 	         AutoSending, 
 	         DiamondsDeclarationFilter, 
+	         CooStatusName, 
 	         CooStatusCode,
 	      }
 

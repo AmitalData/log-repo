@@ -239,7 +239,7 @@ export class DeclarationList {
 	SecurityFee: number;
 	ComputerFee: number;
 	EffectiveFlight: boolean;
-	CooStatusCode: string;
+	CooStatusName: string;
 	
 }
  

@@ -475,7 +475,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool EffectiveFlight  { get; set; }
        [DataMember]
-       public string CooStatusCode  { get; set; }
+       public string CooStatusName  { get; set; }
    }
 
 }
