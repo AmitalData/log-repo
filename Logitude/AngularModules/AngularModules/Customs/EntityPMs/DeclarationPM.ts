@@ -1592,6 +1592,10 @@ export class DeclarationPM {
     private shipmentId: string;
     public get ShipmentId() { return this.shipmentId; }
     public set ShipmentId(newValue: string) { if (this.shipmentId != newValue) { this.shipmentId = newValue; this.MarkAsDirty("ShipmentId"); } }
+
+    private cooStatusName: string;
+    public get CooStatusName() { return this.cooStatusName; }
+    public set CooStatusName(newValue: string) { if (this.cooStatusName != newValue) { this.cooStatusName = newValue; this.MarkAsDirty("CooStatusName"); } }
        
 	 
     private cooStatusCode: string;

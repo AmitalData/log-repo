@@ -454,6 +454,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SystemConnection, 
 	         IsFromUpdateShipment, 
 	         ShipmentId,
+	         CooStatusName, 
 	         CooStatusCode,
 	      }
 
