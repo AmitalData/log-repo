@@ -53,13 +53,16 @@ namespace Logitude.Infrastructure.Data
         {           
             GlobalDB currentDb;
 			currentDb = GlobalDbHelper.GetGlobalDB(tenant);
-            string dbConnectionInfo = DatabaseInitializer.GetConnectionString(  currentDb.DBConnection);
-            return new InfrastructureContext(dbConnectionInfo);
-
-
-            //DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
-            //InfrastructureContext context = new InfrastructureContext(connection);
-            //return context;
+            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            {
+                DbConnection connection = DatabaseInitializer.GetConnection(currentDb.DBConnection);
+                return new InfrastructureContext(connection);
+            }
+            else
+            {
+                string dbConnectionInfo = DatabaseInitializer.GetConnectionString(currentDb.DBConnection);
+                return new InfrastructureContext(dbConnectionInfo);
+            }
         }
 		public override LogitudeDBSchema LogitudeDBSchema
         {

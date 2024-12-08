@@ -84,21 +84,15 @@ namespace Simplog.Data.CommonDataModel
 
         public static ICommonDataContext GetContext(int tenant)
         {
-            GlobalDB currentDb;
-            //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            //{
-            currentDb = GlobalDbHelper.GetGlobalDB(tenant);
-            //}
-            //string dbConnectionInfo = currentDb.DBConnection;
-            //string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-            return new CommonDataContext(DatabaseInitializer.GetConnectionString(currentDb.DBConnection, currentDb.SecondaryAzureDBConnection));
-
-
-
-            //DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
-            //CommonDataContext context = new CommonDataContext(connection);
-
-            //return context;
+            GlobalDB currentDb = GlobalDbHelper.GetGlobalDB(tenant);
+            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            {
+                return new CommonDataContext(DatabaseInitializer.GetConnection(currentDb.DBConnection, currentDb.SecondaryAzureDBConnection));
+            }
+            else
+            {
+                return new CommonDataContext(DatabaseInitializer.GetConnectionString(currentDb.DBConnection, currentDb.SecondaryAzureDBConnection));
+            }
         }
         public static CommonDataContext GetFullContext(int tenant)
         {
