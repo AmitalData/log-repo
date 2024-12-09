@@ -21931,7 +21931,7 @@
     FullLocalDefaultText="&quot;תעודת מקור&quot;"
     ListFieldLable="&quot;CooStatusCodeListLable&quot;"
     ListLableDefaultText="&quot;Coo Status Code&quot;"
-    ListLocalDefaultText="&quot;תעודת מקור&quot;"
+    ListLocalDefaultText="&quot;קוד תעודת מקור&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
