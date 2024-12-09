@@ -23,7 +23,7 @@ namespace Simplog.Server.Infrastructure.Helpers
         public GenericSort()
         {
 
-            if( HttpContext.Current.Items.Contains("Tenant"))
+            if(HttpContext.Current != null && HttpContext.Current.Items.Contains("Tenant"))
             {
                 this.tenant = (int)HttpContext.Current.Items["Tenant"];
             }
