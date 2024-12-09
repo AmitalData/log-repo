@@ -243,6 +243,7 @@ export class DeclarationList {
 	SystemConnection: string;
 	ShipmentId: string;
 	CooStatusName: string;
+	CooStatusCode: string;
 	
 }
  
