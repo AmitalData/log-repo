@@ -229,6 +229,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ForbiddenSigns"
+    Type="varchar"
+    Size="128">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="DefaultNotificationAssignee"
     ReferencedTable="Users"

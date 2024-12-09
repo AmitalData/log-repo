@@ -209,6 +209,11 @@ export class CustomsSettingPM {
     public set MaxSISendInteractive(newValue: number) { if (this.maxSISendInteractive != newValue) { this.maxSISendInteractive = newValue; this.MarkAsDirty("MaxSISendInteractive"); } }
        
 	 
+    private forbiddenSigns: string;
+    public get ForbiddenSigns() { return this.forbiddenSigns; }
+    public set ForbiddenSigns(newValue: string) { if (this.forbiddenSigns != newValue) { this.forbiddenSigns = newValue; this.MarkAsDirty("ForbiddenSigns"); } }
+       
+	 
 
     public OldEntityPM: CustomsSettingPM;
 		
