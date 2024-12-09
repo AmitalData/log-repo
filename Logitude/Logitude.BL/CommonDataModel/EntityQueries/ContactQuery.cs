@@ -1701,7 +1701,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            Mobile = a.Mobile,
                                            Fax = a.Fax,
                                            BusinessPhone = a.BusinessPhone,
-
+                                           Email = a.Email,
                                        }).FirstOrDefault();
             return contactList;
         }
