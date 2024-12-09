@@ -12199,24 +12199,27 @@ namespace WebFreight.Web.ReportsWebServices
                     // Handle or log the exception
                 }
 
-                if (totalData.ResultList.Any(res => res.ParentId != null && res.ParentId != "" && res.Type == "ChartOfAccount" && res.ParentId.Length > 2))
+                List<string> typeIdList = new List<string> { "1", "2", "3", "4", "5", "6", "7" };
+
+                if (totalData.ResultList.Any(res => res.ParentId != null && res.ParentId != "" && res.Type == "ChartOfAccount" 
+                            && !typeIdList.Contains(res.ParentId)))
                 {
                     try
                     {
-                        List<string> parentChartIds = totalData.ResultList.Where(res => res.ParentId != null && res.ParentId != "" && res.Type == "ChartOfAccount" && res.ParentId.Length <= 2).Select(res => res.Id).ToList();
+                        List<string> parentChartIds = totalData.ResultList.Where(res => res.ParentId != null && res.ParentId != "" && res.Type == "ChartOfAccount" && typeIdList.Contains(res.ParentId)).Select(res => res.Id).ToList();
 
-                        var children = totalData.ResultList.Where(res => parentChartIds.Contains(res.ParentId) && res.Type == "ChartOfAccount" && res.ParentId.Length > 2);
+                        var children = totalData.ResultList.Where(res => parentChartIds.Contains(res.ParentId) && res.Type == "ChartOfAccount" && !typeIdList.Contains(res.ParentId));
                         List<string> childrenIds = children.Select(res => res.Id).ToList();
 
-                        if (childrenIds != null && childrenIds.Count > 0 && totalData.ResultList.Any(res => childrenIds.Contains(res.ParentId) && res.Type == "ChartOfAccount" && res.ParentId.Length > 2))
+                        if (childrenIds != null && childrenIds.Count > 0 && totalData.ResultList.Any(res => childrenIds.Contains(res.ParentId) && res.Type == "ChartOfAccount" && !typeIdList.Contains(res.ParentId)))
                         {
-                            var grandChildren = totalData.ResultList.Where(res => childrenIds.Contains(res.ParentId) && res.Type == "ChartOfAccount" && res.ParentId.Length > 2);
+                            var grandChildren = totalData.ResultList.Where(res => childrenIds.Contains(res.ParentId) && res.Type == "ChartOfAccount" && !typeIdList.Contains(res.ParentId));
                             List<string> grandChildrenIds = grandChildren.Select(res => res.Id).ToList();
 
 
-                            if (grandChildrenIds != null && grandChildrenIds.Count > 0 && totalData.ResultList.Any(res => grandChildrenIds.Contains(res.ParentId) && res.Type == "ChartOfAccount" && res.ParentId.Length > 2))
+                            if (grandChildrenIds != null && grandChildrenIds.Count > 0 && totalData.ResultList.Any(res => grandChildrenIds.Contains(res.ParentId) && res.Type == "ChartOfAccount" && !typeIdList.Contains(res.ParentId)))
                             {
-                                var grandGrandChildren = totalData.ResultList.Where(res => grandChildrenIds.Contains(res.ParentId) && res.Type == "ChartOfAccount" && res.ParentId.Length > 2);
+                                var grandGrandChildren = totalData.ResultList.Where(res => grandChildrenIds.Contains(res.ParentId) && res.Type == "ChartOfAccount" && !typeIdList.Contains(res.ParentId));
                                 List<string> grandGrandChildrenIds = grandGrandChildren.Select(res => res.Id).ToList();
 
                                 try
@@ -12261,7 +12264,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 try
                 {
-                    var groupedRecords_Parents = totalData.ResultList.Where(res => res.ParentId != null && res.ParentId != "" && res.Type == "ChartOfAccount" && res.ParentId.Length <= 2).GroupBy(c => c.ParentId);
+                    var groupedRecords_Parents = totalData.ResultList.Where(res => res.ParentId != null && res.ParentId != "" && res.Type == "ChartOfAccount" && typeIdList.Contains(res.ParentId)).GroupBy(c => c.ParentId);
                     RecalcOneGroupLevel(totalData, groupedRecords_Parents);
                 }
                 catch (OverflowException ex)
