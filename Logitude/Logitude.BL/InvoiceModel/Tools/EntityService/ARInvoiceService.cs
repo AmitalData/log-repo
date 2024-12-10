@@ -555,7 +555,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(entityPM.Tenant);
             Tenant myTenant = TenantRepository.GetSingleTenant(tenant, true);
-
+            var InActiveV2 = FeatureToggleHelper.HasFeatureToggle("AV2", entityPM.Tenant);
             int ConsolidationVAT;
             int.TryParse(fullAccountingSettingRepository.GetSingleFullAccountingSetting(entityPM.Tenant).ConsolidationVAT, out ConsolidationVAT);
             ConfirmationNumberAPI confirmationNumberAPI = new ConfirmationNumberAPI()
@@ -569,14 +569,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 Customer_Name = entityPM.BillToLocalName,
                 Invoice_Date = entityPM.InvoiceDate?.ToString("yyyy-MM-dd"),
                 Invoice_Issuance_Date = entityPM.CreateDate?.ToString("yyyy-MM-dd"),
-                Accounting_Software_Number = FeatureToggleHelper.HasFeatureToggle("AV2", entityPM.Tenant) ?99999999 : int.Parse(myTenant.VatNumber ?? "0"),
+                Accounting_Software_Number = InActiveV2 ? 99999999 : int.Parse(myTenant.VatNumber ?? "0"),
                 Client_Software_Key = "99999",
                 Amount_Before_Discount = (decimal)entityPM.InvoiceLines.Where(d => d.VatPercentage != 0 && d.LineActionCode == "1").Sum(a => a.LocalCurrencyAmount),
                 Discount = 0,
                 Payment_Amount = (decimal)entityPM.InvoiceLines.Where(d => d.VatPercentage != 0 && d.LineActionCode == "1").Sum(a => a.LocalCurrencyAmount),
                 VAT_Amount = totalVat,
                 Payment_Amount_Including_VAT = (decimal)entityPM.AmountInLocalCurrency,
-                User_Name = englishName,
+                User_Name = InActiveV2 ? null: englishName,
             };
 
             return JsonConvert.SerializeObject(confirmationNumberAPI,
