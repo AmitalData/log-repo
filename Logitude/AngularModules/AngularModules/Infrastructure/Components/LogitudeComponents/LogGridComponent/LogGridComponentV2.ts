@@ -1475,7 +1475,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
         this.virtualRowMetaData.cd = this.cd;//
         this.virtualRowMetaData.DontApplyVirtualization = this.DontApplyVirtualization;
         if (this.DontApplyVirtualization) {
-            this.dataSource.pageSize = this.rowCount;
+            this.dataSource.pageSize = this.rowCount??0;
         }
         else {
             this.dataSource.pageSize = this.viewportSize * 3;
