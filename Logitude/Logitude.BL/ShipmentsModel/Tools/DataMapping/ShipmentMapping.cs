@@ -268,6 +268,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             if (entityPM.IsCustomShipment)
             {
+                entityPoco.ShipmentTypeId = entityPM.ShipmentTypeId;
+                entityPoco.TransportModeId = entityPM.TransportModeId;
                 entityPoco.NumberOfPackages = entityPM.NumberOfPackages;
                 entityPoco.FromPortId = entityPM.MainCarriageFromPortId;
             }
