@@ -940,18 +940,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     // addd on OnChanged for IsInvoicesForPrint
     OnChangedInvoiceForPrint($event, item) {
         item.IsInvoicesForPrint = !item.IsInvoicesForPrint;
-        // this.ErrorsList = [];
-        // var prevIsInvoicesForPrint = item.IsInvoicesForPrint;
-        // item.IsInvoicesForPrint = !item.IsInvoicesForPrint;
-
-        // var InvoicesForPrintList = this.CertificateOriginInvoiceItems.Collection.filter(x => x.IsInvoicesForPrint);
-        // if (this.IsUnitedInvoices && InvoicesForPrintList.length < 2) {
-        //     this.IsUnitedInvoices = false;
-        // }
-        // else if (this.IsUnitedInvoices && InvoicesForPrintList.find(x => x.CurrencyTypeCode != item.CurrencyTypeCode)) {
-        //     item.IsInvoicesForPrint = prevIsInvoicesForPrint == false ? null : false;
-        //     this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.DifferentNotUnited')];
-        // }
     }
 
     // addd on OnChanged for IsInvoiceConnected
