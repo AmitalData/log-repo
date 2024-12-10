@@ -289,6 +289,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
 
 
     private CheckInterestReportStatusCodeAndCreateInvoice(){
+        
         this.CurrentSession.StartBusyIndicatorLoading();
         this.interestReportExtendedListService.IsCreateInvoicedValid(this.EntityPM).subscribe((myResult: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
@@ -352,8 +353,12 @@ public GetARInvoicePMWithLine(): ARInvoicePM {
         _ARInvoiceLinePM.LocalCurrencyAmount = this.EntityPM.TotalAmount + CreditAllotmentCommission + CalculatedPostponedChequesCommision;
         _ARInvoiceLinePM.InvoiceCurrencyCode = this.TenantPM.CurrencyCode;
         var length = this.EntityPM.InterestReportLinesByDates.length;
-        _ARInvoiceLinePM.Description = "Interest  For" + " " + this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[length - 1].ToDate);
-        _ARInvoiceLinePM.LocalDescription = "ריבית ל" + " " + this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[length - 1].ToDate);
+        const toDate = this.EntityPM.InterestReportLinesByDates.sort()[length - 1].ToDate;
+        const month = DateTool.GetDateParts(toDate).Month;
+        const year = DateTool.GetDateParts(toDate).Year;
+        const formattedMonth = month < 10 ? `0${month}` : month;
+        _ARInvoiceLinePM.Description = `Interest For ${formattedMonth}/${year}`;
+        _ARInvoiceLinePM.LocalDescription =`ריבית ל ${formattedMonth}/${year}` ;//`ריבית`"ריבית ל" + " " + this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[length - 1].ToDate);
         _ARInvoiceLinePM.ChargesTypeId = this.chargesTypeList ? this.chargesTypeList.Id : null;
         _ARInvoiceLinePM.VatTypeId = this.chargesTypeList.VatTypeId;
         _ARInvoiceLinePM.GLAccountId = this.chargesTypeList.ReceivableCreditGLAccountId;
