@@ -367,6 +367,65 @@ namespace Logitude.Accounting.BL.Utils
 
                     }
 
+                    else 
+                    {
+                        ////////////
+                        /// 2.7. Compute our InterestReportId 
+                        string actionDateStr = actionDate.ToString("dd.MM.yyyy").Replace(".", String.Empty);
+                        string ourInterestReportId = OPEN_ + actionDateStr;
+
+                        ////////////
+                        /// 3. Compute "Before" that are still open (to "close" them with "OPEN_")
+
+                        var calcBeforeInterestTrans =
+                                 (
+                                    from intTrans in myInterestTransactionRepository.GetAll(_Tenant)
+                                        .Where(intTrans => intTrans.GLAccountId == gLAccountId
+                                        && !intTrans.IsClosed
+                                        && intTrans.InterestValueDate < interestActivationDate
+                                        && (intTrans.InterestReportId == null || intTrans.InterestReportId == "null"))
+                                    select new InterestTransactionBefore
+                                    {
+                                        Tenant = intTrans.Tenant,
+                                        Id = intTrans.Id,
+                                        LocalAmount = intTrans.LocalAmount,
+                                    }
+                                 );
+                        decimal amount_before = 0m;
+                        List<InterestTransactionBefore> before_list = calcBeforeInterestTrans != null ? calcBeforeInterestTrans.ToList() : new List<InterestTransactionBefore>();
+                        if (before_list != null && before_list.Count > 0)
+                        {
+                            decimal? amount_before_qm = before_list.Select(c => c.LocalAmount).Sum();
+                            amount_before = amount_before_qm.HasValue ? amount_before_qm.Value : 0m;
+                        }
+
+
+
+                        ////////////////
+                        /// 5.Update InterestTransaction
+                        if (before_list != null && before_list.Count > 0)
+                        {
+                            int total_count = before_list.Count;
+                            int count = 0;
+                            int each = 100;
+
+                            before_list.ForEach(intt =>
+                            {
+                                count++;
+                                bool commit = (count >= total_count || count % each == 0);
+                                InterestTransactionPM interestTransactionPM = myInterestTransactionService.GetSingle(intt.Id, false, false);
+                                if (interestTransactionPM != null)
+                                {
+                                    interestTransactionPM.IsClosed = true;
+                                    interestTransactionPM.ChangeSetOp = ChangeSetOperation.Update;
+                                    interestTransactionPM.InterestReportId = ourInterestReportId;
+                                    myInterestTransactionUpdateService.Update(interestTransactionPM, commit);
+                                }
+                            }
+                                );
+                        }
+                    }
+
                     if (!String.IsNullOrEmpty(_AggregateKey))
                     {
                         TryDeleteLockRow(_Tenant);
