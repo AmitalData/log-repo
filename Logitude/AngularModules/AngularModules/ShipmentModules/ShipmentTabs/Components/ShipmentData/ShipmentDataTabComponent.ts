@@ -11,6 +11,7 @@ import { MessageWindow } from "Controls/Windows/MessageWindow";
 import { ColumnsWidths } from "Infrastructure/Components/LogitudeComponents/LogLovV2Component";
 import { FreightForwarderReferencePM } from "Shipment/EntityPMs/FreightForwarderReferencePM";
 import { EntityResourceService } from "Infrastructure/Services/EntityResourceService";
+import { ConfirmWindow } from "Controls/Windows/ConfirmWindow";
 
 @Component({    
     templateUrl: './ShipmentDataTabComponent.html',
@@ -22,6 +23,11 @@ export class ShipmentDataTabComponent extends BaseComponent {
     public DataContext = this;
     public ColumnsWidths: ColumnsWidths[];
     public entityResourceService: EntityResourceService = new EntityResourceService();
+    public ShipmentTypes = {
+        "FCL": "FCLD",
+        "LCL": "LCLD"
+    };
+    public ShipmentTypeList: string[];
 
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -41,6 +47,11 @@ export class ShipmentDataTabComponent extends BaseComponent {
             { ColumnName: 'CityName', Width: 50 },
             { ColumnName: 'CountryCode', Width: 60 },
         ];        
+
+        this.ShipmentTypeList = [];
+        for (var shipmentType in this.ShipmentTypes) {
+            this.ShipmentTypeList.push(shipmentType);
+        }
     }
 
     InitializeShipmentReferance() {
@@ -442,6 +453,45 @@ export class ShipmentDataTabComponent extends BaseComponent {
         if (this.EntityPM.TransportModeId != newValue) {
             this.EntityPM.TransportModeId = newValue;
             this.OnChanged();
+        }
+    }
+    public get ShipmentTypeId() { return this.EntityPM.ShipmentTypeId; }
+    public set ShipmentTypeId(newValue: string) {
+        if (this.EntityPM.ShipmentTypeId != newValue) {
+            this.EntityPM.ShipmentTypeId = newValue;
+            this.OnChanged();
+        }
+    }
+    public get ShipmentTypeName() { return this.EntityPM.ShipmentTypeName; }
+    public set ShipmentTypeName(newValue: string) {
+        if (this.EntityPM.ShipmentTypeName != newValue) {
+            this.EntityPM.ShipmentTypeName = newValue;
+            this.ShipmentTypeId = this.ShipmentTypes[this.EntityPM.ShipmentTypeName];
+            this.OnChanged();
+        }
+    }
+
+    ShipmentTypeChanged(value: string) {
+        if (this.ShipmentTypeName == "FCL" && value == "LCL" && this.EntityPM.ShipmentPackages.length > 0) {
+
+            var confirmWindow = new ConfirmWindow();
+            var confirmMsg = "בוצע שינוי סוג משלוח נא אשר למחוק את המכולות";
+            confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
+            confirmWindow.Width = 400;
+            confirmWindow.Height = 180;
+            confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+            confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.Cancel");
+            confirmWindow.Show(confirmMsg);
+
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.ShipmentTypeName = value;
+                    this.EntityPM.ShipmentPackages = [];
+                }
+            });
+        }
+        else {
+            this.ShipmentTypeName = value;
         }
     }
 

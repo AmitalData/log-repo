@@ -536,6 +536,29 @@
                     </td>
                     <td></td>
                 </tr>
+
+                <tr class="FormFieldRow">
+                    <!-- ShipmentType -->
+                    <td style="width: 180px;">
+                        <LogLabel [NoObjectField]="true" [Text]="'FCL/LCL'" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    
+                    <td class="field">
+                        <table>
+                            <tr>
+
+                                <td style="width: 214px;">
+                                    <ComboBox [ItemsSource]="ShipmentTypeList" [SelectedItem]="ShipmentTypeName" [class.readonly] = "TransportModeId == 'O'"
+                                        (SelectedItemChanged)="ShipmentTypeChanged($event)"></ComboBox>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="columnBetweenFields"></td>
+                </tr>
             </table>
         </div>
     </table>
