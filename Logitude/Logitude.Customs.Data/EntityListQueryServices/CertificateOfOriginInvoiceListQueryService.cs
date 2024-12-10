@@ -46,8 +46,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                          DescriptionOfInvoice = a.DescriptionOfInvoice,
 					
 					                          IsInvoicesForPrint = a.IsInvoicesForPrint,
-					
-		                    	            });
+
+											  IsInvoiceConnected = a.IsInvoiceConnected,
+
+                                            });
             return query;
 		}
 

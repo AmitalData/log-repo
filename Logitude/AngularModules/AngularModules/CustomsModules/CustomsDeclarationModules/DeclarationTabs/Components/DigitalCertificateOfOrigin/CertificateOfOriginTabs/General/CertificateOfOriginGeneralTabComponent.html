@@ -540,7 +540,7 @@
                     <tr class="FieldRow"  [ngClass]="{ 'opacityDimBox': disableOpacityBox }">
                         <td colspan="5">
                             <!-- Part 2: -->
-                            <table style="width:580px">
+                            <table style="width:590px">
                                 <tr class="FieldRow" style="width: 600px ; height : 120px">
                                     <div class="GeneratedGridContainer" style="width: 100% ; height : 100%;">
                                         <logitude-edit-grid style="min-width: 500px;" GridWidth="500px"
@@ -561,7 +561,7 @@
 
                                             <log-column
                                                 [header]="'Customs.CertificateOfOrigin.O.InvoiceNumber' | TextCodeTranslationPipe"
-                                                [binding]="'InvoiceNumber'" [width]="'90'" [Alignment]="'right'">
+                                                [binding]="'InvoiceNumber'" [width]="'80'" [Alignment]="'right'">
                                                 <ng-template let-item>
                                                     <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
                                                         #logcelltemplate>
@@ -589,7 +589,7 @@
 
                                             <log-column
                                                 [header]="'Customs.CertificateOfOrigin.O.InvoiceSum' | TextCodeTranslationPipe"
-                                                [binding]="'InvoiceSum'" [width]="'280'" [Alignment]="'right'">
+                                                [binding]="'InvoiceSum'" [width]="'260'" [Alignment]="'right'">
                                                 <!-- [binding]="'InvoiceSum'" [width]="'120'" [Alignment]="'right'"> -->
                                                 <ng-template let-item>
                                                     <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
@@ -641,8 +641,26 @@
                                                                 [Checked]="item.IsInvoicesForPrint"
                                                                 [ObjectTableName]="'Customs.CertificateOriginInvoice'"
                                                                 [DataContext]="DataContext"
-                                                                (Changed)="OnChanged($event,item)"
+                                                                (Changed)="OnChangedInvoiceForPrint($event,item)"
                                                                 [Value]="item.IsInvoicesForPrint"
+                                                                [IsDisabled]="IsDisplayOnly"></LogCheckBox>
+                                                        </div>
+                                                    </log-cell-template>
+                                                </ng-template>
+                                            </log-column>
+                                            <log-column
+                                                [header]="'Customs.CertificateOfOriginInvoice.F.IsInvoiceConnected' | TextCodeTranslationPipe"
+                                                [binding]="'IsInvoiceConnected'" [width]="'50'" [Alignment]="'right'">
+                                                <ng-template let-item>
+                                                    <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
+                                                        #logcelltemplate>
+                                                        <div style="text-align:right">
+                                                            <LogCheckBox [ObjectFieldName]="'IsInvoiceConnected'"
+                                                                [Checked]="item.IsInvoiceConnected"
+                                                                [ObjectTableName]="'Customs.CertificateOriginInvoice'"
+                                                                [DataContext]="DataContext"
+                                                                (Changed)="OnChangedInvoiceConnected($event,item)"
+                                                                [Value]="item.IsInvoiceConnected"
                                                                 [IsDisabled]="IsDisplayOnly"></LogCheckBox>
                                                         </div>
                                                     </log-cell-template>
