@@ -47,7 +47,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 { 
 
     
-    public partial class AddressViewsController : ApiController
+    public partial class TruckerSettingViewsController : ApiController
     {
 	  
        
@@ -61,17 +61,17 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
-				AddressRepository  addressRepository = new AddressRepository(MyContext);
-				AddressList entityList = null;
-				Address entityPoco = addressRepository.GetSingleAddress(id , authToken.Tenant);
+				TruckerSettingRepository  truckerSettingRepository = new TruckerSettingRepository(MyContext);
+				TruckerSettingList entityList = null;
+				TruckerSetting entityPoco = truckerSettingRepository.GetSingleTruckerSetting(id , authToken.Tenant);
                 if (entityPoco != null)
 				{
-									List<Address> singleEntityList = new List<Address>();
+									List<TruckerSetting> singleEntityList = new List<TruckerSetting>();
 					singleEntityList.Add(entityPoco);
 
-					AddressQuery addressQuery = new AddressQuery(addressRepository);
-					IQueryable<Address> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<AddressList> iQueryableEntityList = addressQuery.GetIQueryableEntityList(iQueryable);
+					TruckerSettingQuery truckerSettingQuery = new TruckerSettingQuery(truckerSettingRepository);
+					IQueryable<TruckerSetting> iQueryable = singleEntityList.AsQueryable();
+					IQueryable<TruckerSettingList> iQueryableEntityList = truckerSettingQuery.GetIQueryableEntityList(iQueryable);
 				    entityList = iQueryableEntityList.FirstOrDefault();
 
 			    }
@@ -98,13 +98,13 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 
 				ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
-				AddressRepository  addressRepository = new AddressRepository(MyContext);
-				IQueryable<Address> entityPocos = addressRepository.GetAddresses(authToken.Tenant);
+				TruckerSettingRepository  truckerSettingRepository = new TruckerSettingRepository(MyContext);
+				IQueryable<TruckerSetting> entityPocos = truckerSettingRepository.GetTruckerSettings(authToken.Tenant);
 
-				AddressQuery addressQuery = new AddressQuery(addressRepository);
-			    IQueryable<AddressList> entityLists = addressQuery.GetIQueryableEntityList(entityPocos);
-				entityLists = entityLists.OrderBy(d => d.Description);
-				List<AddressList> listResult = entityLists.ToList();
+				TruckerSettingQuery truckerSettingQuery = new TruckerSettingQuery(truckerSettingRepository);
+			    IQueryable<TruckerSettingList> entityLists = truckerSettingQuery.GetIQueryableEntityList(entityPocos);
+				entityLists = entityLists.OrderByDescending(d => d.Id);
+				List<TruckerSettingList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
@@ -128,16 +128,16 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "Address",
+                    ObjectTableName = "TruckerSetting",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "Addresses",
+                    QuerySection = "TruckerSettings",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
-				List<ObjectField> AddressObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Address",tenant);
+				List<ObjectField> TruckerSettingObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("TruckerSetting",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -160,7 +160,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                             //}
                         //}
                         //ToDo: Get object field by name and set the remained filter properties
-						ObjectField field = AddressObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = TruckerSettingObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                         if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -187,7 +187,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = AddressObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = TruckerSettingObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -215,7 +215,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
                  { 
                      AdditionalTreeFilter = filters.TreeFilters,
-                     ObjectTableName = "Address",
+                     ObjectTableName = "TruckerSetting",
                      ParentEntityId = filters.ParentEntityId,
                      ParentObjectTableName = filters.ParentObjectTableName, 
                      Tenant = tenant ,
@@ -224,31 +224,31 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 								
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
-                AddressRepository  addressRepository = new AddressRepository(MyContext);
-                IQueryable<Address> entityPocos = addressRepository.GetAddresses(tenant);
+                TruckerSettingRepository  truckerSettingRepository = new TruckerSettingRepository(MyContext);
+                IQueryable<TruckerSetting> entityPocos = truckerSettingRepository.GetTruckerSettings(tenant);
 
-                AddressQuery addressQuery = new AddressQuery(addressRepository);
+                TruckerSettingQuery truckerSettingQuery = new TruckerSettingQuery(truckerSettingRepository);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 				
-                entityPocos = genericFilter.GetFilteredQuery<Address>(nonListQueryOperation, entityPocos);
+                entityPocos = genericFilter.GetFilteredQuery<TruckerSetting>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
-                IQueryable<AddressList> entityLists = addressQuery.GetIQueryableEntityList(entityPocos);
+                IQueryable<TruckerSettingList> entityLists = truckerSettingQuery.GetIQueryableEntityList(entityPocos);
 
-                entityLists = genericFilter.GetFilteredQuery<AddressList>(listQueryOperation, entityLists);
-                entityLists = new TreeFilterQueryService().Apply<AddressList>(entityLists , treeFilterQueryArgs);
+                entityLists = genericFilter.GetFilteredQuery<TruckerSettingList>(listQueryOperation, entityLists);
+                entityLists = new TreeFilterQueryService().Apply<TruckerSettingList>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
-                   PropertyInfo propInfo = typeof(AddressList).GetProperty(queryOperations.SortByColumnName);
+                   PropertyInfo propInfo = typeof(TruckerSettingList).GetProperty(queryOperations.SortByColumnName);
                    
 
-                   ObjectField objectField = (from a in AddressObjectFields
+                   ObjectField objectField = (from a in TruckerSettingObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
 
@@ -256,7 +256,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                    {
                     if (objectField.IsCustom)
                     {
-                        entityLists = sortClass.GetSorterQuery<AddressList, string>(queryOperations, entityLists);
+                        entityLists = sortClass.GetSorterQuery<TruckerSettingList, string>(queryOperations, entityLists);
                     }
                     else
                     {
@@ -266,41 +266,41 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                         case "text":
 						case "lookup":
                             {
-                                entityLists = sortClass.GetSorterQuery<AddressList, string>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<TruckerSettingList, string>(queryOperations, entityLists);
                                 break;
                             }
 						case "sigdouble":
 						case "double":
                             {
-                                entityLists = sortClass.GetSorterQuery<AddressList, double>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<TruckerSettingList, double>(queryOperations, entityLists);
                                 break;
                             }
 						case "date":
                         case "datetime":
                             {
-                                entityLists = sortClass.GetSorterQuery<AddressList, DateTime>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<TruckerSettingList, DateTime>(queryOperations, entityLists);
                                 break;
                             }
 						case "unsinteger":
                         case "integer":
                             {
-                                entityLists = sortClass.GetSorterQuery<AddressList, int>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<TruckerSettingList, int>(queryOperations, entityLists);
                                 break;
                             }
                         case "boolean":
                             {
-                                entityLists = sortClass.GetSorterQuery<AddressList, bool>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<TruckerSettingList, bool>(queryOperations, entityLists);
                                 break;
                             }
 						case "unsdecimal":
 						case "decimal":
                             {
-                                entityLists = sortClass.GetSorterQuery<AddressList, decimal>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<TruckerSettingList, decimal>(queryOperations, entityLists);
                                 break;
                             }
                         default:
                             {
-                                entityLists = entityLists.OrderBy(d => d.Description);
+                                entityLists = entityLists.OrderByDescending(d => d.Id);
                                 break;
                             }
                     }
@@ -309,7 +309,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
             }					  						
 	       else
             {
-                entityLists = entityLists.OrderBy(d => d.Description);
+                entityLists = entityLists.OrderByDescending(d => d.Id);
             } 
 
 			ServiceResponse response = new ServiceResponse();
@@ -325,7 +325,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				  entityLists = entityLists.Take(queryOperations.PageSize);
 
 				}
-			   List<AddressList> listResult = entityLists.ToList();
+			   List<TruckerSettingList> listResult = entityLists.ToList();
 
                response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);

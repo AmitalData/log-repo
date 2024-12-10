@@ -508,6 +508,8 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new CustomFieldsMainObjectMap());
             modelBuilder.Configurations.Add(new FreelancerGroupTypeMap());
             modelBuilder.Configurations.Add( new UserFreelancerGroupMap());
+            modelBuilder.Configurations.Add(new TruckerSettingMap());
+
 
 
             base.OnModelCreating(modelBuilder);
@@ -1099,6 +1101,10 @@ namespace Simplog.Data.CommonDataModel
 
         public IDbSet<FreelancerGroupType> FreelancerGroupTypes { get; set; }
         public IDbSet<UserFreelancerGroup> UserFreelancerGroups { get; set; }
+
+        public IDbSet<TruckerSetting> TruckerSettings { get; set; }
+        public IDbSet<Responsibility> Responsibilities { get; set; }
+
 
 
         public DbConnection GetConnection()

@@ -317,6 +317,7 @@
     <None Include="DBTables\CommonDataModel\HTSCode.dxml" />
     <None Include="DBTables\CommonDataModel\PortGroup.dxml" />
     <None Include="DBTables\CommonDataModel\Responsibility.dxml" />
+    <None Include="DBTables\CommonDataModel\TruckerSetting.dxml" />
     <None Include="DBTables\CommonDataModel\UserFreelancerGroup.dxml" />
     <None Include="DBTables\InfrastructureModel\ChildEntitiesCustomField.dxml" />
     <None Include="DBTables\InfrastructureModel\CustomChildObject.dxml" />

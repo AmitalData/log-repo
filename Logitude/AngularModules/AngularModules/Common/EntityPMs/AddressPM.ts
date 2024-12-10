@@ -232,7 +232,23 @@ export class AddressPM {
 	 
     private branchId: string;
     public get BranchId() { return this.branchId; }
-    public set BranchId(newValue: string) { if (this.branchId != newValue) { this.branchId = newValue; this.MarkAsDirty("BranchId"); } }
+    public set BranchId(newValue: string) { if (this.branchId != newValue) { this.branchId = newValue; this.MarkAsDirty("BranchId"); } } 
+
+    private cityId: string;
+    public set CityId(newValue: string) { debugger; if (this.cityId != newValue) { this.cityId = newValue; this.MarkAsDirty("CityId"); } }
+    public get CityId() { return this.cityId; }
+
+    private transportationInstructions:string;
+    public set TransportationInstructions(newValue: string) { if (this.transportationInstructions != newValue) { this.transportationInstructions = newValue; this.MarkAsDirty("TransportationInstructions"); } }
+    public get TransportationInstructions() { return this.transportationInstructions; }
+
+    private responsibility:string;
+    public set Responsibility(newValue: string) { if (this.responsibility != newValue) { this.responsibility = newValue; this.MarkAsDirty("Responsibility"); } }
+    public get Responsibility() { return this.responsibility; }
+
+    private truckerId:string;
+    public set TruckerId(newValue: string) { if (this.truckerId != newValue) { this.truckerId = newValue; this.MarkAsDirty("TruckerId"); } }
+    public get TruckerId() { return this.truckerId; }
        
 	 
 
@@ -262,4 +278,4 @@ export class AddressPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

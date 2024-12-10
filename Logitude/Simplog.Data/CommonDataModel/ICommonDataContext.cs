@@ -255,8 +255,8 @@ namespace Simplog.Data.CommonDataModel
 
         IDbSet<FreelancerGroupType> FreelancerGroupTypes { get; set; }
         IDbSet<UserFreelancerGroup> UserFreelancerGroups { get; set; }
-
-
+        IDbSet<TruckerSetting> TruckerSettings { get; set;}
+        IDbSet<Responsibility> Responsibilities { get; set; }
         IDbSet<AllActiveGLAccountsView> AllActiveGLAccountsViews { get; set; }
 
         void SetAsModified(object entity);

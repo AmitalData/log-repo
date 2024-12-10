@@ -7,9 +7,9 @@
 //------------------------------------------------------------------------------
 
 export class ResponsibilityList {
-   		Code: string;
-		LocalName: string;
-		EnglishName: string;
-		SearchFields: string;
-		Inactive: boolean;
+    Code: string;
+ LocalName: string;
+ EnglishName: string;
+ SearchFields: string;
+ Inactive: boolean;
 }

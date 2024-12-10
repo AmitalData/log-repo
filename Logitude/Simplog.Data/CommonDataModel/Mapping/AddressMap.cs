@@ -80,6 +80,18 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ExternalId)
                 .HasMaxLength(10)
                 .IsUnicode(false);
+            this.Property(t=> t.CityId)
+                .HasMaxLength(15)
+                .IsUnicode(false);
+            this.Property(t => t.TruckerId)
+               .HasMaxLength(15)
+               .IsUnicode(false);
+            this.Property(t => t.TransportationInstructions)
+                .HasMaxLength(4000)
+                .IsUnicode(true);
+            this.Property(t => t.Responsibility)
+                .HasMaxLength(1)
+                .IsUnicode(false);
 
 
             // Table & Column Mappings
@@ -104,6 +116,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.ExternalId).HasColumnName("ExternalId");
             this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
+            this.Property(t => t.CityId).HasColumnName("CityId");
+            this.Property(t => t.TruckerId).HasColumnName("TruckerId");
+            this.Property(t => t.TransportationInstructions).HasColumnName("TransportationInstructions");
+            this.Property(t => t.Responsibility).HasColumnName("Responsibility");
 
             // Relationships
             this.HasOptional(t => t.Card)
