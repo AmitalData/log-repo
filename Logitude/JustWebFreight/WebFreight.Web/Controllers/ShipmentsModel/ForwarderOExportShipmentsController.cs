@@ -7,7 +7,7 @@ using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.EntityAMs; 
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries; 
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel; 
 using Logitude.Server.Tools; 
 using WebFreight.Web.Helpers;

@@ -14,7 +14,8 @@ using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.BL.Messaging.Customs;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {

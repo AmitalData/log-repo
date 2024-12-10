@@ -347,7 +347,6 @@
     <Compile Include="CommonDataModel\EntityPOCOs\Agent.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\Airline.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AirlineStatistics.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\AuthenticationToken.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AWBDescriptionOfGoods.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\BlobFile.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\Branch.cs" />
@@ -1147,7 +1146,6 @@
     <Compile Include="CommonDataModel\Mapping\AddressMap.cs" />
     <Compile Include="CommonDataModel\Mapping\AgentMap.cs" />
     <Compile Include="CommonDataModel\Mapping\AirlineMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\AuthenticationTokenMap.cs" />
     <Compile Include="CommonDataModel\Mapping\BranchMap.cs" />
     <Compile Include="CommonDataModel\Mapping\BusinessUnitMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CardContactMap.cs" />
@@ -1281,7 +1279,6 @@
     <Compile Include="CommonDataModel\Repositories\AddressRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AgentRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AirlineRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\AuthenticationTokenRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\BranchRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\BusinessUnitRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CardContactRepository.cs" />

@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Server.Tools;  
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.InfrastructureModel.EntityPMs; 
 using Simplog.Data.InfrastructureModel;
 

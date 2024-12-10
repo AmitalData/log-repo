@@ -301,7 +301,7 @@ void SaveEntityDomainServiceOutput(string outputFileName)
 //     the code is regenerated.
 // </auto-generated> <#= Path.GetFileName(Host.TemplateFile) #>
 //---
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -324,7 +324,7 @@ using System.ServiceModel.DomainServices.Hosting;
 using System.ServiceModel.DomainServices.Server;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using <#= pocosspacestring #>
 using <#= pmsspacestring #>
 using <#= dataspacestring #>
@@ -916,7 +916,7 @@ public  string FirstServiceCharacterToLower(string str)
 //     the code is regenerated.
 // </auto-generated> <#= Path.GetFileName(Host.TemplateFile) #>
 //---
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -1091,7 +1091,7 @@ namespace <#= domainservicenamespacestring + ".DomainServicesUpdateClasses" #>
 //     the code is regenerated.
 // </auto-generated> <#= Path.GetFileName(Host.TemplateFile) #>
 //---
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -1141,7 +1141,7 @@ namespace <#= domainservicenamespacestring + ".DomainServicesUpdateClassesRegist
 private void WriteEntityDomainServiceRegistrationManager(string sourceFolder,string modelname,dynamic contextName,string domainserivcename)
 {
 #>
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;

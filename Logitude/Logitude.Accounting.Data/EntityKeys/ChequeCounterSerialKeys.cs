@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated> C:\amital_main\Logitude\Logitude.Accounting.MetaData\AutoGenerators\AccountingClassesGenerator.tt
 //---
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;

@@ -2,7 +2,7 @@
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.SystemLogs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using WebFreight.Web.WebServices;
 using System.Web;
 

@@ -7,7 +7,7 @@ using Logitude.Workflow.Data;
 using Logitude.Workflow.Data.EntityListQueryServices;
 using Logitude.Workflow.Data.EntityLists;
 using Marvin.JsonPatch;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;

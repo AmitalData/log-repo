@@ -7,7 +7,7 @@ using Logitude.Server.Tools;
 using Logitude.ShipmentOrderModule.Data.EntityPOCOs;
 using Logitude.ShipmentOrderModule.Def.EntityPMs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;

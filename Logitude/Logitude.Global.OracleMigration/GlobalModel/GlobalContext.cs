@@ -14,7 +14,7 @@ using Simplog.Global.Data.GlobalModel;
 using Logitude.Global.OracleMigration.Migrations;
 using System.Configuration;
 using System;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.Global.OracleMigration.GlobalModel
 {
@@ -161,5 +161,7 @@ namespace Logitude.Global.OracleMigration.GlobalModel
         public IDbSet<BluesnapContractType> BluesnapContractTypes { get; set; }
 
         public IDbSet<BluesnapTransaction> BluesnapTransactions { get; set; }
+
+        public IDbSet<AuthenticationToken> AuthenticationTokens { get; set; }
     }
 }

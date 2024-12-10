@@ -21,7 +21,7 @@ using Microsoft.WindowsAzure.Storage.Queue;
 using Logitude.SystemLogs;
 using System.Diagnostics;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Server.Tools;
 using CommunicationWorkerRole.Services.Logbox;
 using System.Net.Http;

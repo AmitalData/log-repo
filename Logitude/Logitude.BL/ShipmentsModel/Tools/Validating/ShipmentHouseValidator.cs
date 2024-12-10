@@ -7,7 +7,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Logitude.BL.Helpers;
 using System.Data;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 using System.Transactions;
 using Simplog.Global.Data.GlobalModel.Repositories;

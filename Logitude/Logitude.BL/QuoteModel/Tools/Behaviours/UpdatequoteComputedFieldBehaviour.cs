@@ -1,7 +1,7 @@
 ﻿using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.QuoteModel.Tools.Initializers;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Interfaces;

@@ -12,7 +12,7 @@ using System.Data.Entity.Infrastructure;
 using System.Data;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Helpers;
 using Devart.Data.Oracle.Entity.Configuration;
 namespace Simplog.Global.Data.GlobalModel
@@ -240,7 +240,7 @@ namespace Simplog.Global.Data.GlobalModel
         public IDbSet<CaptchaKey> CaptchaKeys { get; set; }
         public IDbSet<InvalidEmailResetPassword> InvalidEmailResetPasswords { get; set; }
         public IDbSet<WebhookKeys> WebhookKeys { get; set; }
-
+        public IDbSet<AuthenticationToken> AuthenticationTokens { get; set; }
 
 
     }

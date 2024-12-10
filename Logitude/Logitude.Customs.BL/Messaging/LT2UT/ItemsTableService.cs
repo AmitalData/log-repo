@@ -6,7 +6,7 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Def.Messaging.Customs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;

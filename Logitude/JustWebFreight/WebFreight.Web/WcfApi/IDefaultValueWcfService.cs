@@ -1,5 +1,5 @@
 ﻿using Logitude.Server.Tools;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 using System.ServiceModel;
 

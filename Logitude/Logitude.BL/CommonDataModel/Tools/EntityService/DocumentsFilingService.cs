@@ -1,6 +1,6 @@
 ﻿using Microsoft.WindowsAzure.Storage.Blob;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
@@ -33,7 +33,7 @@ using Logitude.SystemLogs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.SystemLogs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Configuration;
 using System.Xml.Serialization;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;

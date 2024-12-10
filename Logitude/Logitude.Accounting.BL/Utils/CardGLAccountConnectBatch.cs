@@ -23,7 +23,7 @@ using Logitude.Accounting.Data.Repositories;
 using System.Diagnostics;
 using System.Data.SqlTypes;
 using Logitude.Accounting.BL.CoreBL.Batch;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.Accounting.BL.Utils
 {

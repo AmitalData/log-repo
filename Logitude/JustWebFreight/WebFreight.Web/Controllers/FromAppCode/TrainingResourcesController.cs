@@ -11,7 +11,7 @@ using WebFreight.Web.Helpers;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using WebFreight.Web.Security;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 
 namespace WebFreight.Web.App_Code

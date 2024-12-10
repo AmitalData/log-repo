@@ -6,7 +6,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using WebFreight.Web.Security;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using WebFreight.Web.DataContracts;
 using Logitude.SystemLogs.Repositories;
 using Logitude.SystemLogs.POCOs;

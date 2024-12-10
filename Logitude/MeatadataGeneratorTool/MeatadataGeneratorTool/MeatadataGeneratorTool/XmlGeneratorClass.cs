@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml;
-//using Simplog.Data.InfrastructureModel.EntityPOCOs;
+//using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using MeatadataGeneratorTool.QueryModule;
 using MeatadataGeneratorTool.ScreensModule;
 using MeatadataGeneratorTool.TabsModule;

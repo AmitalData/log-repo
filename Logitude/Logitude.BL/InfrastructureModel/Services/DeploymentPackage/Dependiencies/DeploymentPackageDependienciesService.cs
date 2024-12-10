@@ -4,7 +4,7 @@ using Logitude.BL.InfrastructureModel.Services.DeploymentPackage;
 using Logitude.BL.InfrastructureModel.Services.DeploymentPackage.Dependiencies.ObjectFields;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;

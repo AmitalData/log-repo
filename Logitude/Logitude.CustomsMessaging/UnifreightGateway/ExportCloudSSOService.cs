@@ -39,7 +39,8 @@ using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Simplog.Data.CommonDataModel;
 using System.Web;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.CustomsMessaging.UnifreightGateway
 {

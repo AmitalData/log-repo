@@ -16,7 +16,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Simplog.Data.Helpers;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Server.Tools.Helpers;

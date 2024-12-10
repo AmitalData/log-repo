@@ -4,7 +4,7 @@ using Logitude.Customs.Data;
 using Logitude.Customs.Data.DataContracts;
 using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Data.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;

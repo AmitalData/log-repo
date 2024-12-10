@@ -795,7 +795,7 @@
     <None Include="DBTables\CommonDataModel\Airline.dxml" />
     <None Include="DBTables\CommonDataModel\AirlineMessagingRule.dxml" />
     <None Include="DBTables\CommonDataModel\AirlineStatistics.dxml" />
-    <None Include="DBTables\CommonDataModel\AuthenticationToken.dxml" />
+    <None Include="DBTables\GlobalModel\AuthenticationToken.dxml" />
     <None Include="DBTables\CommonDataModel\Automation.dxml" />
     <None Include="DBTables\CommonDataModel\AutomationHistory.dxml" />
     <None Include="DBTables\CommonDataModel\AutomationLastUpdate.dxml" />

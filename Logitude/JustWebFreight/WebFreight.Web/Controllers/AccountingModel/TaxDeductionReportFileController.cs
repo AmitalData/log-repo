@@ -1,7 +1,7 @@
 ﻿using Logitude.Accounting.BL.CoreBL;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Infrastructure.BL.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;

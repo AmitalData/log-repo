@@ -39,7 +39,7 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.Accounting.BL.CloseTables;
 using Microsoft.SqlServer.Server;
 using System.Transactions;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.Accounting.BL.Utils
 {

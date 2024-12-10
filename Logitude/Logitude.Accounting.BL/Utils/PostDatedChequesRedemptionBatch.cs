@@ -16,7 +16,7 @@ using System.Transactions;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using System.Text;
 using Logitude.Customs.BL.Messaging.Customs;

@@ -1,7 +1,8 @@
 ﻿using Logitude.Server.Tools;
 using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
@@ -14,6 +15,7 @@ using System.Text;
 using System.Web;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Security;
+using Simplog.Global.Data.GlobalModel;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -41,8 +43,7 @@ namespace WebFreight.Web.WcfApi
                 //AzureLog.SaveLogsInStorage("( Token : " + token + " ) => myEmail is null or empty ", "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
                 if (!string.IsNullOrEmpty(token))
                 {
-                    ICommonDataContext context = CommonDataContext.GetContext(tenant);
-                    AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(context);
+                    AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(GlobalContext.GetContext());
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     if (authToken != null)
                     {

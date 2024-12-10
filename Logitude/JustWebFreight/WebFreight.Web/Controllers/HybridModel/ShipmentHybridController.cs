@@ -8,7 +8,7 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Microsoft.ServiceBus.Messaging;
 using Newtonsoft.Json;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;

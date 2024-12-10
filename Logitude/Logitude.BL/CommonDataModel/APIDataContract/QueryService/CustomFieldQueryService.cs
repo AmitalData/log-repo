@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using System.Reflection;

@@ -7,7 +7,7 @@ using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.ShipmentsModel.Tools.DataMapping

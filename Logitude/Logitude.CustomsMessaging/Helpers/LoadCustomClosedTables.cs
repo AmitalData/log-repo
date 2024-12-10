@@ -10,7 +10,7 @@ using Logitude.Customs.Data.Repsitories;
 using Logitude.CustomsMessaging.Helpers;
 using UnifreightIIG.Common.SystemTableServiceReference;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using System.Reflection;
 using System.Collections;

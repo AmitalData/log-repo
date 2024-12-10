@@ -20,7 +20,7 @@ using Logitude.Accounting.Data.DataContract;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Simplog.Server.Infrastructure.DataContracts;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Runtime.InteropServices;
 using Logitude.Server.Tools;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;

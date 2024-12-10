@@ -37,7 +37,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using System.Threading.Tasks;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Logitude.Customs.Data.EntityPOCOs;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Server.Tools;
 using Logitude.Customs.Data.EntityMapping;
 using System.Text.Json;

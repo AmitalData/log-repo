@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.XSD.FSR;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;

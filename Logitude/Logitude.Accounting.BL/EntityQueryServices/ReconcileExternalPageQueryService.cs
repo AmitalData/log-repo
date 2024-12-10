@@ -16,7 +16,7 @@ using Logitude.Accounting.Data.EntityKeys;
 using Logitude.Accounting.Data;
 using Simplog.Server.Infrastructure;
 using Logitude.Accounting.Data.EntityListQueryServices;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace Logitude.Accounting.BL.EntityQueryServices

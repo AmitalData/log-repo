@@ -1,4 +1,5 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
+﻿using Simplog.Global.Data.GlobalModel;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -12,20 +13,20 @@ namespace Simplog.Data.CommonDataModel.Repositories
 {
     public class AuthenticationTokenRepository : IRepository<AuthenticationToken>
     {
-        ICommonDataContext commonDataContext;
-        public AuthenticationTokenRepository(ICommonDataContext context)
+        IGlobalContext commonDataContext;
+        public AuthenticationTokenRepository(IGlobalContext context)
         {
             commonDataContext = context;
         }
 
         public AuthenticationTokenRepository()
         {
-            commonDataContext=new CommonDataContext();
+            commonDataContext=new GlobalContext();
         }
 
         public AuthenticationTokenRepository(int tenant)
         {
-            commonDataContext = CommonDataContext.GetContext(tenant);
+            commonDataContext = GlobalContext.GetContext(tenant);
         }
         
         public void Add(AuthenticationToken entity)
@@ -58,7 +59,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return context.AuthenticationTokens.ToList();
         }
 
-        public ICommonDataContext context
+        public IGlobalContext context
         {
             get { return commonDataContext; }
         }

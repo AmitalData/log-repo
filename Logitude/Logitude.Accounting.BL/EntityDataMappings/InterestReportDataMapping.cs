@@ -17,7 +17,7 @@ using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Logitude.Server.Tools.Counters;
 

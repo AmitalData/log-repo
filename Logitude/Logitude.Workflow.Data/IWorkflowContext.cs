@@ -9,7 +9,7 @@ using Simplog.Server.Infrastructure;
 using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Workflow.Data; 
 using Logitude.Workflow.Data.EntityMapping;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.Workflow.Data
 {

@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
@@ -9,7 +9,7 @@ using System.Web.Http;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using Simplog.Server.Infrastructure.DataContracts.Models;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.SystemLogs;
 using Syncfusion.XlsIO;
 using System.Collections.Generic;

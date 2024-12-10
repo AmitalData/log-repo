@@ -1,12 +1,12 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace Simplog.Data.CommonDataModel.Mapping
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+namespace Simplog.Global.Data.GlobalModel.Mapping
 {
     public class AuthenticationTokenMap : EntityTypeConfiguration<AuthenticationToken>
     {

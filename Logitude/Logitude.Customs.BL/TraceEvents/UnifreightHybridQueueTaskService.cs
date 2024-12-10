@@ -16,7 +16,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using System.Web;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Def.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Customs.Data.EntityPOCOs;
 
 namespace Logitude.Customs.BL.TraceEvents

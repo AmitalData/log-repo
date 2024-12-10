@@ -7,7 +7,7 @@ using System.ServiceModel.DomainServices.Server;
 using System.Xml.Serialization;
 
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 using Logitude.BL.CommonDataModel.EntityPMs;

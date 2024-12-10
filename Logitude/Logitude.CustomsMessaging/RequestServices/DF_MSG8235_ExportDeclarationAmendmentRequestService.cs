@@ -13,7 +13,7 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Customs.BL.TraceEvents;
 using Logitude.AmitalMessaging.Infrastructure;
 
@@ -27,7 +27,7 @@ using System;
 using Logitude.AmitalMessaging.Customs.CustomFile;
 using Logitude.Customs.BL.Messaging.Amital.CustomFile;
 using Logitude.Customs.BL.Models;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Server.Tools.Models;
 using Logitude.CustomsMessaging.MessagingServices;
