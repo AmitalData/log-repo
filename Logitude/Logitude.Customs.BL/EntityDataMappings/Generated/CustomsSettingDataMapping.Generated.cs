@@ -661,40 +661,42 @@ namespace Logitude.Customs.BL.EntityDataMappings
 		}
 
 
-	}
 
-	public void EncodeBase64NVARCHARFields(CustomsSettingPM entityPM)
-	{
-		if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy))
+
+		public void EncodeBase64NVARCHARFields(CustomsSettingPM entityPM)
 		{
-			return;
+			if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy))
+			{
+				return;
 
+			}
+			if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
+			{
+				entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+			}
+			entityPM.EncodeBase64NVARCHARFieldsBy = null;
 		}
-		if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
+
+
+		public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
 		{
-			entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+			CustomMappedPOCOProperties.Add(pocoPropertyName);
 		}
-		entityPM.EncodeBase64NVARCHARFieldsBy = null;
+
+		public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+		{
+			CustomMappedPMProperties.Add(pocoPropertyName);
+		}
+
+		private void BuildSearchFieldsGenerated(CustomsSettingPM entityPM, POCO.CustomsSetting entityPOCO, bool isNewEntity)
+		{
+			string mySearchFields = "";
+
+
+			entityPM.SearchFields += mySearchFields;
+			entityPOCO.SearchFields += mySearchFields;
+		}
 	}
+}
 
-
-	public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
-	{
-		CustomMappedPOCOProperties.Add(pocoPropertyName);
-	}
-
-	public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
-	{
-		CustomMappedPMProperties.Add(pocoPropertyName);
-	}
-
-	private void BuildSearchFieldsGenerated(CustomsSettingPM entityPM, POCO.CustomsSetting entityPOCO, bool isNewEntity)
-	{
-		string mySearchFields = "";
-
-
-		entityPM.SearchFields += mySearchFields;
-		entityPOCO.SearchFields += mySearchFields;
-	}
-}		  
  
