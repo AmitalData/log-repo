@@ -41,9 +41,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     int tenant = authToken.Tenant;
-
+                    customEntityPM.Tenant = authToken.Tenant;
                     SecurityUtility.AuthenticationOnTenant(tenant);
-                    SecurityUtility.AuthenticationOnEntityTenant("Shipment", customEntityPM.Tenant, authToken.Tenant);
 
                     if (customEntityPM.ActionCode == ActionCode.Disconnect || customEntityPM.ActionCode == ActionCode.CheckAndConnect)
                     {
