@@ -232,6 +232,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             mappedInvoice.CurrencyTypeCode = supplierInvoice.InvoiceCurrencyTypeCode;
             mappedInvoice.DescriptionOfInvoice = !AppTool.IsNullOrEmpty(this.cargoDescription) ? this.cargoDescription : "";
             mappedInvoice.IsInvoicesForPrint = true;
+            mappedInvoice.IsInvoiceConnected = true;
 
             // add to collection
             this.CertificateOriginInvoiceItems.Insert(new CertificateOfOriginInvoiceLine(mappedInvoice, this));
@@ -681,6 +682,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("IsUnitedInvoices", this.ObjectTableName, enabled);
         this.UIProperties.SetEnabled("TradeAgreementGroupOfCountries", this.ObjectTableName, enabled);
         this.UIProperties.SetEnabled("IsInvoicesForPrint", "Customs.CertificateOriginInvoice", enabled);
+        this.UIProperties.SetEnabled("IsInvoiceConnected", "Customs.CertificateOriginInvoice", enabled);
         this.UIProperties.SetEnabled("Observations", this.ObjectTableName, enabled);
 
         // this.disableElementById("selectedValueTradeAgreementBox", enabled);
@@ -943,25 +945,25 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.SelectionCompleted.emit(args);
     }
 
-    OnChanged($event, item) {
-
-        this.ErrorsList = [];
-        var prevIsInvoicesForPrint = item.IsInvoicesForPrint;
+    // addd on OnChanged for IsInvoicesForPrint
+    OnChangedInvoiceForPrint($event, item) {
         item.IsInvoicesForPrint = !item.IsInvoicesForPrint;
-
-        var InvoicesForPrintList = this.CertificateOriginInvoiceItems.Collection.filter(x => x.IsInvoicesForPrint);
-
-        if (this.IsUnitedInvoices && InvoicesForPrintList.length < 2) {
-            this.IsUnitedInvoices = false;
-        }
-        else if (this.IsUnitedInvoices && InvoicesForPrintList.find(x => x.CurrencyTypeCode != item.CurrencyTypeCode)) {
-            item.IsInvoicesForPrint = prevIsInvoicesForPrint == false ? null : false;
-            this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.DifferentNotUnited')];
-
-        }
-
     }
 
+    // addd on OnChanged for IsInvoiceConnected
+    OnChangedInvoiceConnected($event, item) {
+        this.ErrorsList = [];
+        var prevIsInvoiceConnected = item.IsInvoiceConnected;
+        item.IsInvoiceConnected = !item.IsInvoiceConnected;
+        item.IsInvoicesForPrint = item.IsInvoiceConnected;
+
+        var InvoiceConnectedList = this.CertificateOriginInvoiceItems.Collection.filter(x => x.IsInvoiceConnected);
+        if (this.IsUnitedInvoices && InvoiceConnectedList.length < 2) this.IsUnitedInvoices = false;
+        else if (this.IsUnitedInvoices && InvoiceConnectedList.find(x => x.CurrencyTypeCode != item.CurrencyTypeCode)) {
+            item.IsInvoiceConnected = prevIsInvoiceConnected == false ? null : false;
+            this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.DifferentNotUnited')];
+        }
+    }
 
 
     // Edit Mode region:
@@ -994,8 +996,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         } else {
             this.checkWarningsCouples();
         }
-
-
     }
 
     public CheckMandatoryCustomsFields(ValidationErrors = []) {
@@ -1650,12 +1650,14 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         this.entityPM.IsDirty = true;
     }
+   
     ValidateIsUnitedInvoices() {
-        var InvoicesForPrintList = this.CertificateOriginInvoiceItems.Collection.filter(x => x.IsInvoicesForPrint);
+        // change to IsInvoiceConnected
+        var InvoiceConnectedList = this.CertificateOriginInvoiceItems.Collection.filter(x => x.IsInvoiceConnected);
 
-        if (InvoicesForPrintList.length < 2)
+        if (InvoiceConnectedList.length < 2)
             this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.OneNotUnited')];
-        else if (InvoicesForPrintList.find(x => x.CurrencyTypeCode != InvoicesForPrintList[0].CurrencyTypeCode))
+        else if (InvoiceConnectedList.find(x => x.CurrencyTypeCode != InvoiceConnectedList[0].CurrencyTypeCode))
             this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.DifferentNotUnited')];
     }
 
@@ -2009,6 +2011,12 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
     public set IsInvoicesForPrint(newValue: boolean) {
         this.entityPM.IsInvoicesForPrint = newValue;
+    }
+    public get IsInvoiceConnected(): boolean {
+        return this.entityPM.IsInvoiceConnected;
+    }
+    public set IsInvoiceConnected(newValue: boolean) {
+        this.entityPM.IsInvoiceConnected = newValue;
     }
 }
 
