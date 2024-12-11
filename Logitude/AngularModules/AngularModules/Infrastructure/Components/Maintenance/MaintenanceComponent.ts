@@ -1297,7 +1297,18 @@ export class MaintenanceComponent {
             item.ObjectTableName = 'Queue Messages';
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
-
+        if (FeatureLocator.HasFeaturePermession('General', 'GENERALLOCK')) {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = 'MNG';
+            item.Icon = 'List';
+            item.Code = 'GLGL';
+            item.ObjectTableName = 'GeneralLock';
+            item.TextCode
+             item.ObjectTableId = window.ObjectTables.filter(
+                 (d) => d.Name == 'GeneralLock'
+             )[0].Id;
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        }
         if (SessionLocator.Tenant == 0) {
             var item = new MenusTablePM();
             item.CategoryTypeCode = 'CMS';
@@ -2941,6 +2952,18 @@ export class MaintenanceComponent {
                                 './Common/Components/Maintenance/OcrDefaultsSettingsComponent'
                             );
                         });
+                    break;
+                }
+                case 'GLGL': {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Title = 'General Lock'
+                    logitudeWindow.ShowCloseButton = true;
+                    logitudeWindow.Height = 650;
+                    logitudeWindow.Width = 800;
+
+                    logitudeWindow.Show(
+                        './Infrastructure/Components/Maintenance/GeneralLockComponent'
+                    );
                     break;
                 }
                 default: {
