@@ -899,6 +899,7 @@
     <Compile Include="InfrastructureModel\EntityPMs\DeploymentPackagesVersionPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\DeploymentPackageExecutionLogPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\EntityStatusTypePM.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\GeneralLockPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\ImageLibraryPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\MultiEntityUpdateLogPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\ObjectCustomFieldPM.cs" />
@@ -918,6 +919,7 @@
     <Compile Include="InfrastructureModel\EntityQueries\EntityStatusTypeQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ImageLibraryQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\MultiEntityUpdateLogQuery.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\GeneralLockQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\QueueMessageQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\QuoteChargesGroupQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ReferenceCustomObjectQuery.cs" />

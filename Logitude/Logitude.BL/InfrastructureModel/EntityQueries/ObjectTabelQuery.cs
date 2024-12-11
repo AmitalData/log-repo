@@ -856,8 +856,18 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             }
 
             return table;
-        }        
-        public ObjectTablePM GetObjectTablePMById(string id, int tenant)
+        }
+		public ObjectTablePM GetObjectTableByDBName(string name, int tenant)
+		{
+			ObjectTablePM table = null;
+			if (!string.IsNullOrEmpty(name))
+			{
+				table = GetObjectTablesWithTenantZero(tenant).Where(t => t.DBTableName?.ToLower() == name.ToLower()).FirstOrDefault();
+			}
+
+			return table;
+		}
+		public ObjectTablePM GetObjectTablePMById(string id, int tenant)
         {
             ObjectTablePM table = null;
             if (!string.IsNullOrEmpty(id))

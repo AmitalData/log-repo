@@ -141,6 +141,10 @@
         color: gray;
         font-family: sans-serif;
     }
+    .disabled {
+      pointer-events: none; 
+      opacity: 0.5;
+    }
 </style>
  
 <LogitudeHotKeysComponent  (CTRL_S_HotKey)="OnSaveHotKeyPressed()" (RightArrowHotKey)="OnArrowRightHotKeyPressed()"
@@ -265,7 +269,16 @@
                                                     <div #ShortTitle *ngIf="HasShortTitle"></div>
                                                 </div>
                                             </td>
-
+                                            <td>
+                                                <div *ngIf="IsLocked" style="width: 100%;text-align:center;position: absolute; top:0;z-index: 1;">
+                                                    <div class="DisbleBox">
+                                                       {{ DisplayLockMessage}}
+                                                        <span style="padding: 0px 16px;">-</span>
+                                                        <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">רענן</span>
+                                                
+                                                    </div>
+                                                </div>  
+                                            </td>
                                             <td style="width: 10px; min-width: 10px;">
                                                 <div></div>
                                             </td>
@@ -285,20 +298,20 @@
                                             <td style="width: 55px; min-width: 55px;" *ngIf="IsSaveBtnVisible">
 
  
-                                                <button id="{{ ObjectTableName+'-Save' | IdGeneratorAsyncPipe | async}}" [disabled]="IsSaveBtnDisable" *ngIf="!IsEntityLoaded" class="Button">
+                                                <button id="{{ ObjectTableName+'-Save' | IdGeneratorAsyncPipe | async}}" [disabled]="IsSaveBtnDisable || IsLocked" *ngIf="!IsEntityLoaded" class="Button">
                                                     <img [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '2px'} : {'margin-left': '2px'}" src="./Images/Buttons/Save.png" [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" />
                                                     <span style="line-height: 19px;" [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '17px'} : {'margin-left': '17px'}">{{'General.B.Save' | TextCodeTranslationPipe}}</span>
                                                  </button>
 
                                                 <div *ngIf="IsEntityLoaded">
  
-                                                    <button id="{{ ObjectTableName+'-Save' | IdGeneratorAsyncPipe | async}}" [disabled]="IsSaveBtnDisable" *ngIf="EntityPM && !EntityPM.IsDirty" class="Button">
+                                                    <button id="{{ ObjectTableName+'-Save' | IdGeneratorAsyncPipe | async}}" [disabled]="IsSaveBtnDisable || IsLocked" *ngIf="EntityPM && !EntityPM.IsDirty" class="Button">
                                                         <img [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '2px'} : {'margin-left': '2px'}" src="./Images/Buttons/Save.png" [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" />
                                                         <span style="line-height: 19px;" [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '17px'} : {'margin-left': '17px'}">{{'General.B.Save' | TextCodeTranslationPipe}}</span>
                                                      </button>
 
  
-                                                    <button [attr.data-cy]="'Edit'+ObjectTableName+'_Save'" id="{{ ObjectTableName+'-Save' | IdGeneratorAsyncPipe | async}}" [disabled]="IsSaveBtnDisable" *ngIf="EntityPM && EntityPM.IsDirty" class="EntityChangesButton" (click)="SaveChanges()">
+                                                    <button [attr.data-cy]="'Edit'+ObjectTableName+'_Save'" id="{{ ObjectTableName+'-Save' | IdGeneratorAsyncPipe | async}}" [disabled]="IsSaveBtnDisable || IsLocked" *ngIf="EntityPM && EntityPM.IsDirty" class="EntityChangesButton" (click)="SaveChanges()">
                                                         <img src="./Images/Buttons/Save.Red.png" [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '2px'} : {'margin-left': '2px'}" />
                                                         <span style="line-height: 19px;" [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '17px'} : {'margin-left': '17px'}">{{'General.B.Save' | TextCodeTranslationPipe}}</span>
                                                      </button>
@@ -312,7 +325,7 @@
                                             <!-- Save & Close -->
                                             <td style="width: 25px; min-width: 25px;" *ngIf="IsSaveBtnVisible">
  
-                                                <button id="{{ ObjectTableName+'-SaveClose' | IdGeneratorAsyncPipe | async}}" [disabled]="IsSaveBtnDisable" *ngIf="!IsEntityLoaded" class="Button" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe" (click)="SaveChangesAndClose()">
+                                                <button id="{{ ObjectTableName+'-SaveClose' | IdGeneratorAsyncPipe | async}}" [disabled]="IsSaveBtnDisable || IsLocked" *ngIf="!IsEntityLoaded" class="Button" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe" (click)="SaveChangesAndClose()">
                                                      <img class="CenterCenter" src="./Images/Buttons/Save.png" />
                                                     <img src="./Images/RedX2.png"
                                                         style="width: 7px; height: 7px; position: absolute; top:1px; "
@@ -321,7 +334,7 @@
 
                                                 <div *ngIf="IsEntityLoaded">
  
-                                                    <button id="{{ ObjectTableName+'-SaveClose' | IdGeneratorAsyncPipe | async}}" [disabled]="IsSaveBtnDisable" *ngIf="EntityPM && !EntityPM.IsDirty" class="Button" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe" (click)="SaveChangesAndClose()">
+                                                    <button id="{{ ObjectTableName+'-SaveClose' | IdGeneratorAsyncPipe | async}}" [disabled]="IsSaveBtnDisable || IsLocked" *ngIf="EntityPM && !EntityPM.IsDirty" class="Button" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe" (click)="SaveChangesAndClose()">
                                                          <img class="CenterCenter" src="./Images/Buttons/Save.png" />
                                                         <img src="./Images/RedX2.png"
                                                             style="width: 7px; height: 7px; position: absolute; top:1px;"
@@ -329,7 +342,7 @@
                                                     </button>
 
  
-                                                    <button id="{{ ObjectTableName+'-SaveClose' | IdGeneratorAsyncPipe | async}}" [disabled]="IsSaveBtnDisable" *ngIf="EntityPM && EntityPM.IsDirty" class="EntityChangesButton" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe" (click)="SaveChangesAndClose()">
+                                                    <button id="{{ ObjectTableName+'-SaveClose' | IdGeneratorAsyncPipe | async}}" [disabled]="IsSaveBtnDisable || IsLocked" *ngIf="EntityPM && EntityPM.IsDirty" class="EntityChangesButton" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe" (click)="SaveChangesAndClose()">
                                                          <img class="CenterCenter" src="./Images/Buttons/Save.Red.png" />
                                                         <img src="./Images/RedX2.png"
                                                             style="width: 7px; height: 7px; position: absolute; top:1px;"
@@ -435,7 +448,7 @@
                                                     </td>
 
                                                     <td>
-                                                        <div class="MediaFill">
+                                                        <div class="MediaFill" [ngClass]="{'disabled': IsLocked}">
                                                             <div #TabControlBody></div>
                                                         </div>
                                                     </td>

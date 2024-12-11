@@ -748,10 +748,21 @@ private void WriteAddTabMethod(XElement entity,XElement Tab,string TblName)
 	   }
 	   //var HtmlComponentURL = Tab.Attributes().Where(a => a.Name == "HtmlComponentURL").FirstOrDefault().Value;
 	   var IsPackagable = Tab.Attributes().Where(a => a.Name == "IsPackagable").FirstOrDefault();
+	   var IsLocked = Tab.Attributes().Where(a => a.Name == "IsLocked").FirstOrDefault();
+	   string Locked;
+       if (IsLocked == null)
+       {
+	   	 Locked = "false";
+       }
+       else
+       {
+	         Locked =  IsPackagable.Value;  
+       }
 	  
+
 #>
 
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = <#= Code #>,HtmlComponentName = <#= string.IsNullOrEmpty(HtmlComponentName) ? "\"\"" :  HtmlComponentName#>,HtmlComponentUrl = <#= string.IsNullOrEmpty(HtmlComponentURL) ? "\"\"" : HtmlComponentURL #>, FeatureId = tenantFeatures.Where(d => d.Code == "<#= TblName.Trim('"') #>.Tab.<#= Name.Trim(new char[]{' ','"'}).Replace(" ","") #>" && d.ObjectTableId == <#= TblName.Trim('"') #>ObjectTable.Id).FirstOrDefault().Id,FeatureUniqeCode = tenantFeatures.Where(d => d.Code == "<#= TblName.Trim('"') #>.Tab.<#= Name.Trim(new char[]{' ','"'}).Replace(" ","") #>" && d.ObjectTableId == <#= TblName.Trim('"') #>ObjectTable.Id).FirstOrDefault().FeatureUniqeCode, ControlPath = <#= ControlPath #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "<#= TableNameFull.Trim('"') #>.TH.<#= Name.Trim(new char[]{' ','"'}).Replace(" ","") #>" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = <#= IndexOrder #> }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = <#= Code #>,HtmlComponentName = <#= string.IsNullOrEmpty(HtmlComponentName) ? "\"\"" :  HtmlComponentName#>,HtmlComponentUrl = <#= string.IsNullOrEmpty(HtmlComponentURL) ? "\"\"" : HtmlComponentURL #>, FeatureId = tenantFeatures.Where(d => d.Code == "<#= TblName.Trim('"') #>.Tab.<#= Name.Trim(new char[]{' ','"'}).Replace(" ","") #>" && d.ObjectTableId == <#= TblName.Trim('"') #>ObjectTable.Id).FirstOrDefault().Id,FeatureUniqeCode = tenantFeatures.Where(d => d.Code == "<#= TblName.Trim('"') #>.Tab.<#= Name.Trim(new char[]{' ','"'}).Replace(" ","") #>" && d.ObjectTableId == <#= TblName.Trim('"') #>ObjectTable.Id).FirstOrDefault().FeatureUniqeCode, ControlPath = <#= ControlPath #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "<#= TableNameFull.Trim('"') #>.TH.<#= Name.Trim(new char[]{' ','"'}).Replace(" ","") #>" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = <#= IndexOrder #> ,IsLocked = <#= Locked #>}, objectTableTabsRepository, TenantObjectTableTabs);
    <#+
 }
 

@@ -10,6 +10,7 @@ import {LogitudeErrorHandler} from '../Utilities/LogitudeErrorHandler';
 import { LoginService } from '../Services/LoginService';
 import { of } from 'rxjs';
 import { isNullOrUndefined } from 'util';
+import { GeneralLockService } from 'Infrastructure/Services/ExtendedLists/GeneralLockService';
 declare var window: any;
 
 export class ServiceHelper {
@@ -502,12 +503,27 @@ export class ServiceHelper {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'Token': ServiceHelper.GetLoggedUserToken()
+                'Token': ServiceHelper.GetLoggedUserToken()                
             })
         };
 
         if (!AppTool.IsNullOrEmpty(SessionLocator.WorkerRoleName))
             httpOptions.headers = httpOptions.headers.append('workerrolename', SessionLocator.WorkerRoleName);
+
+        return httpOptions;
+    }
+    public static GetHttpHeadersGeneralLock() {
+
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Token': ServiceHelper.GetLoggedUserToken()
+                
+            })
+        };
+
+        if (!AppTool.IsNullOrEmpty(sessionStorage.getItem('SessionId')))
+            httpOptions.headers = httpOptions.headers.append('SessionId', sessionStorage.getItem('SessionId') + '_' + SessionLocator.Index);
 
         return httpOptions;
     }
@@ -584,6 +600,32 @@ export class ServiceHelper {
         document.body.appendChild(mapForm);
         mapForm.submit();
         document.body.removeChild(mapForm);
+    }
+
+    public static CheckIsLock(entityId: string, objectTableName: string, isFromCahnge: boolean = false) {
+
+        var generalLockService = new GeneralLockService();
+
+        generalLockService.PostCheckLock(entityId, objectTableName,isFromCahnge).subscribe(myResult => {
+           if(myResult.Result != null) 
+           {
+              var generalLock = myResult.Result;
+              this.CurrentSession.CurrentEditComponent.IsLock.emit([true, objectTableName, entityId, generalLock.UserName]);
+           }
+           else 
+           {
+              this.CurrentSession.CurrentEditComponent.IsLock.emit([false, objectTableName, entityId,null]);
+           }
+           
+        });
+    }
+    public static DeleteGeneralLock(entityId: string, objectTableName: string) {
+
+        var generalLockService = new GeneralLockService();
+
+        generalLockService.DeleteGeneralLock(entityId, objectTableName).subscribe(myResult => {
+
+        });
     }
 }
 

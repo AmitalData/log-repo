@@ -21,10 +21,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-
-		public const string HashString = "5343427f6e7ef94b111973473f2dc2e1";
- 
- 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+		public const string HashString = "030b1dadbb9ca340fb3604fc8cda9d2f";
+	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -41,6 +39,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
 			      				    AvailableInDocumentTypes =  false,
+			      				    IsLock =  true,
+			      				    RelatedEntity =  "Shipments",
+			      				    ThisKey =  "Id,CustomFileNo",
+			      				    RelatedKey =  "Id,ShipmentNumber",
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  true,
@@ -67,7 +69,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "Logitude.Customs.NewDeclarationControlCommand",
-			      				    LocalDefaultText =  "הצהרות",
+			      				    LocalDefaultTextBack_up =  "הצהרות",
+			      				    LocalDefaultText =  "BS64:IteU16bXlNeo15XXqiI=",
 			      				    DefaultText =  "Declaration",
 			      				    Code =  "DECL",
 			      				    Name =  "Customs.CourierMaster",
@@ -268,10 +271,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomFileNo",
 					  						DefaultText =  "Custom File No",
-					  						FullLocalDefaultText =  "תיק עמילות",
+					  						FullLocalDefaultTextBack_up =  "תיק עמילות",
+					  						FullLocalDefaultText =  "BS64:Iteq15nXpyDXotee15nXnNeV16oi",
 					  						ListFieldLable =  "CustomFileNoListLable",
 					  						ListLableDefaultText =  "Custom File No",
-					  						ListLocalDefaultText =  "תיק עמילות",
+					  						ListLocalDefaultTextBack_up =  "תיק עמילות",
+					  						ListLocalDefaultText =  "BS64:Iteq15nXpyDXotee15nXnNeV16oi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -336,10 +341,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerId",
 					  						DefaultText =  "Customer ",
-					  						FullLocalDefaultText =  "לקוח",
+					  						FullLocalDefaultTextBack_up =  "לקוח",
+					  						FullLocalDefaultText =  "BS64:Itec16fXldeXIg==",
 					  						ListFieldLable =  "CustomerIdListLable",
 					  						ListLableDefaultText =  "Customer ",
-					  						ListLocalDefaultText =  "לקוח",
+					  						ListLocalDefaultTextBack_up =  "לקוח",
+					  						ListLocalDefaultText =  "BS64:Itec16fXldeXIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Card",
 					  						NavigationPropertyName =  "CustomerCard",
@@ -407,10 +414,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterId",
 					  						DefaultText =  "Importer Id",
-					  						FullLocalDefaultText =  "מספר יבואן",
+					  						FullLocalDefaultTextBack_up =  "מספר יבואן",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeZ15HXldeQ158i",
 					  						ListFieldLable =  "ImporterIdListLable",
 					  						ListLableDefaultText =  "Importer",
-					  						ListLocalDefaultText =  "מספר יבואן",
+					  						ListLocalDefaultTextBack_up =  "מספר יבואן",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeZ15HXldeQ158i",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Client",
 					  						NavigationPropertyName =  "Importer",
@@ -477,12 +486,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search",
-					  						FullLocalDefaultText =  "תיק/הצהרה/מזהה מטען/לקוח",
+					  						FullLocalDefaultTextBack_up =  "תיק/הצהרה/מזהה מטען/לקוח",
+					  						FullLocalDefaultText =  "BS64:Iteq15nXpy/XlNem15TXqNeUL9ee15bXlNeUINee15jXotefL9ec16fXldeXIg==",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "SearchField",
 					  						HelpTextCode =  "SearchFields",
 					  						HelpTextDefaultText =  "Searching by :\n1: Tenant \n2: File No \n3: Custom File No",
-					  						HelpLocalDefaultText =  "חיפוש על ידי: \n1: הדייר \n2: קובץ לא \n3: קובץ מותאם אישית לא",
+					  						HelpLocalDefaultTextBack_up =  "חיפוש על ידי: \n1: הדייר \n2: קובץ לא \n3: קובץ מותאם אישית לא",
+					  						HelpLocalDefaultText =  "BS64:IteX15nXpNeV16kg16LXnCDXmdeT15k6IAoxOiDXlNeT15nXmdeoIAoyOiDXp9eV15HXpSDXnNeQIAozOiDXp9eV15HXpSDXnteV16rXkNedINeQ15nXqdeZ16og15zXkCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -545,10 +556,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationNumber",
 					  						DefaultText =  "Declaration Number",
-					  						FullLocalDefaultText =  "מספר הצהרה",
+					  						FullLocalDefaultTextBack_up =  "מספר הצהרה",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeU16bXlNeo15Qi",
 					  						ListFieldLable =  "DeclarationNumberListLable",
 					  						ListLableDefaultText =  "Declaration Number",
-					  						ListLocalDefaultText =  "מספר הצהרה",
+					  						ListLocalDefaultTextBack_up =  "מספר הצהרה",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeU16bXlNeo15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -613,10 +626,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerName",
 					  						DefaultText =  "Customer Name",
-					  						FullLocalDefaultText =  "לקוח",
+					  						FullLocalDefaultTextBack_up =  "לקוח",
+					  						FullLocalDefaultText =  "BS64:Itec16fXldeXIg==",
 					  						ListFieldLable =  "CustomerNameListLable",
 					  						ListLableDefaultText =  "Customer Name",
-					  						ListLocalDefaultText =  "לקוח",
+					  						ListLocalDefaultTextBack_up =  "לקוח",
+					  						ListLocalDefaultText =  "BS64:Itec16fXldeXIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -681,10 +696,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VersionId",
 					  						DefaultText =  "Version ",
-					  						FullLocalDefaultText =  "מספר גירסה להצהרה",
+					  						FullLocalDefaultTextBack_up =  "מספר גירסה להצהרה",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeS15nXqNeh15Qg15zXlNem15TXqNeUIg==",
 					  						ListFieldLable =  "VersionIdListLable",
 					  						ListLableDefaultText =  "Version ",
-					  						ListLocalDefaultText =  "מספר גירסה להצהרה",
+					  						ListLocalDefaultTextBack_up =  "מספר גירסה להצהרה",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeS15nXqNeh15Qg15zXlNem15TXqNeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -748,10 +765,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExternalDeclarationNumber",
 					  						DefaultText =  "External Declaration Number",
-					  						FullLocalDefaultText =  "מזהה רשומת סוכן",
+					  						FullLocalDefaultTextBack_up =  "מזהה רשומת סוכן",
+					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINeo16nXldee16og16HXldeb158i",
 					  						ListFieldLable =  "ExternalDeclarationNumberListLable",
 					  						ListLableDefaultText =  "External Declaration Number",
-					  						ListLocalDefaultText =  "מזהה רשומת סוכן",
+					  						ListLocalDefaultTextBack_up =  "מזהה רשומת סוכן",
+					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINeo16nXldee16og16HXldeb158i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -817,10 +836,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationOfficeCode",
 					  						DefaultText =  "Declaration Office",
-					  						FullLocalDefaultText =  "בית מכס",
+					  						FullLocalDefaultTextBack_up =  "בית מכס",
+					  						FullLocalDefaultText =  "BS64:IteR15nXqiDXnteb16Ei",
 					  						ListFieldLable =  "DeclarationOfficeCodeListLable",
 					  						ListLableDefaultText =  "Declaration Office",
-					  						ListLocalDefaultText =  "בית מכס",
+					  						ListLocalDefaultTextBack_up =  "בית מכס",
+					  						ListLocalDefaultText =  "BS64:IteR15nXqiDXnteb16Ei",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CustomsHouseType",
 					  						NavigationPropertyName =  "DeclarationOffice",
@@ -888,10 +909,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TaxationDateTime",
 					  						DefaultText =  "Taxation Date Time",
-					  						FullLocalDefaultText =  "תאריך חישוב מיסים  ",
+					  						FullLocalDefaultTextBack_up =  "תאריך חישוב מיסים  ",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15fXmdep15XXkSDXnteZ16HXmdedICAi",
 					  						ListFieldLable =  "TaxationDateTimeListLable",
 					  						ListLableDefaultText =  "Taxation Date Time",
-					  						ListLocalDefaultText =  "תאריך חישוב מיסים  ",
+					  						ListLocalDefaultTextBack_up =  "תאריך חישוב מיסים  ",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15fXmdep15XXkSDXnteZ16HXmdedICAi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -955,10 +978,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AgentId",
 					  						DefaultText =  "Agent ",
-					  						FullLocalDefaultText =  "מספר סוכן",
+					  						FullLocalDefaultTextBack_up =  "מספר סוכן",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeh15XXm9efIg==",
 					  						ListFieldLable =  "AgentIdListLable",
 					  						ListLableDefaultText =  "Agent",
-					  						ListLocalDefaultText =  "מספר סוכן",
+					  						ListLocalDefaultTextBack_up =  "מספר סוכן",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeh15XXm9efIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1023,10 +1048,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ProcedureCurrentCode",
 					  						DefaultText =  "Government Procedure Type",
-					  						FullLocalDefaultText =  "קוד סוג תהליך",
+					  						FullLocalDefaultTextBack_up =  "קוד סוג תהליך",
+					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXodeV15Ig16rXlNec15nXmiI=",
 					  						ListFieldLable =  "ProcedureCurrentCodeListLable",
 					  						ListLableDefaultText =  "Procedure Current ",
-					  						ListLocalDefaultText =  "קוד סוג תהליך",
+					  						ListLocalDefaultTextBack_up =  "קוד סוג תהליך",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXodeV15Ig16rXlNec15nXmiI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "GovernmentProcedureType",
 					  						NavigationPropertyName =  "GovernmentProcedureCurrent",
@@ -1093,10 +1120,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ProcedureCurrentName",
 					  						DefaultText =  "Government Procedure Type",
-					  						FullLocalDefaultText =  "סוג תהליך",
+					  						FullLocalDefaultTextBack_up =  "סוג תהליך",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXqteU15zXmdeaIg==",
 					  						ListFieldLable =  "ProcedureCurrentNameListLable",
 					  						ListLableDefaultText =  "Procedure Current Name",
-					  						ListLocalDefaultText =  "סוג תהליך ",
+					  						ListLocalDefaultTextBack_up =  "סוג תהליך ",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXqteU15zXmdeaICI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1162,10 +1191,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AutonomyRegionTypeCode",
 					  						DefaultText =  "Autonomy Region Type",
-					  						FullLocalDefaultText =  "קוד איזור אוטונומיה",
+					  						FullLocalDefaultTextBack_up =  "קוד איזור אוטונומיה",
+					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXkNeZ15bXldeoINeQ15XXmNeV16DXldee15nXlCI=",
 					  						ListFieldLable =  "AutonomyRegionTypeCodeListLable",
 					  						ListLableDefaultText =  "Autonomy Region Type ",
-					  						ListLocalDefaultText =  "קוד איזור אוטונומיה",
+					  						ListLocalDefaultTextBack_up =  "קוד איזור אוטונומיה",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXkNeZ15bXldeoINeQ15XXmNeV16DXldee15nXlCI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "AutonomyType",
 					  						NavigationPropertyName =  "AutonomyRegionType",
@@ -1231,10 +1262,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AutonomyRegionTypeName",
 					  						DefaultText =  "Autonomy Region Type Name",
-					  						FullLocalDefaultText =  "שם סוג אזור האוטונומיה",
+					  						FullLocalDefaultTextBack_up =  "שם סוג אזור האוטונומיה",
+					  						FullLocalDefaultText =  "BS64:Itep150g16HXldeSINeQ15bXldeoINeU15DXldeY15XXoNeV157XmdeUIg==",
 					  						ListFieldLable =  "AutonomyRegionTypeNameListLable",
 					  						ListLableDefaultText =  "Autonomy Region Type Name",
-					  						ListLocalDefaultText =  "סוג אזור אוטונומיה",
+					  						ListLocalDefaultTextBack_up =  "סוג אזור אוטונומיה",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXkNeW15XXqCDXkNeV15jXldeg15XXnteZ15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1299,10 +1332,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterPassCountryCode",
 					  						DefaultText =  "Importer Pass Country",
-					  						FullLocalDefaultText =  "מדינת דרכון יבואן",
+					  						FullLocalDefaultTextBack_up =  "מדינת דרכון יבואן",
+					  						FullLocalDefaultText =  "BS64:Itee15PXmdeg16og15PXqNeb15XXnyDXmdeR15XXkNefIg==",
 					  						ListFieldLable =  "ImporterPassCountryCodeListLable",
 					  						ListLableDefaultText =  "Importer Pass Country ",
-					  						ListLocalDefaultText =  "מדינת דרכון יבואן",
+					  						ListLocalDefaultTextBack_up =  "מדינת דרכון יבואן",
+					  						ListLocalDefaultText =  "BS64:Itee15PXmdeg16og15PXqNeb15XXnyDXmdeR15XXkNefIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CustomsCountry",
 					  						NavigationPropertyName =  "ImporterPassCountry",
@@ -1368,10 +1403,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterPassCountryName",
 					  						DefaultText =  "Importer Pass Country Name",
-					  						FullLocalDefaultText =  "מדינה שם יבואן יבואן",
+					  						FullLocalDefaultTextBack_up =  "מדינה שם יבואן יבואן",
+					  						FullLocalDefaultText =  "BS64:Itee15PXmdeg15Qg16nXnSDXmdeR15XXkNefINeZ15HXldeQ158i",
 					  						ListFieldLable =  "ImporterPassCountryNameListLable",
 					  						ListLableDefaultText =  "Importer Pass Country Name",
-					  						ListLocalDefaultText =  "המדינה יבואן",
+					  						ListLocalDefaultTextBack_up =  "המדינה יבואן",
+					  						ListLocalDefaultText =  "BS64:IteU157Xk9eZ16DXlCDXmdeR15XXkNefIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1436,10 +1473,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransferImporterId",
 					  						DefaultText =  "Transfer Importer Id",
-					  						FullLocalDefaultText =  "מספר יבואן מעביר",
+					  						FullLocalDefaultTextBack_up =  "מספר יבואן מעביר",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeZ15HXldeQ158g157XoteR15nXqCI=",
 					  						ListFieldLable =  "TransferImporterIdListLable",
 					  						ListLableDefaultText =  "Transfer Importer ",
-					  						ListLocalDefaultText =  "מספר יבואן מעביר",
+					  						ListLocalDefaultTextBack_up =  "מספר יבואן מעביר",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeZ15HXldeQ158g157XoteR15nXqCI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Client",
 					  						NavigationPropertyName =  "TransferImporter",
@@ -1506,10 +1545,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransferImporterCountryCode",
 					  						DefaultText =  "Transfer Importer Country",
-					  						FullLocalDefaultText =  "מדינת דרכון יבואן מעביר",
+					  						FullLocalDefaultTextBack_up =  "מדינת דרכון יבואן מעביר",
+					  						FullLocalDefaultText =  "BS64:Itee15PXmdeg16og15PXqNeb15XXnyDXmdeR15XXkNefINee16LXkdeZ16gi",
 					  						ListFieldLable =  "TransferImporterCountryCodeListLable",
 					  						ListLableDefaultText =  "Transfer Importer Country ",
-					  						ListLocalDefaultText =  "מדינת דרכון יבואן מעביר",
+					  						ListLocalDefaultTextBack_up =  "מדינת דרכון יבואן מעביר",
+					  						ListLocalDefaultText =  "BS64:Itee15PXmdeg16og15PXqNeb15XXnyDXmdeR15XXkNefINee16LXkdeZ16gi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CustomsCountry",
 					  						NavigationPropertyName =  "TransferImporterCountry",
@@ -1575,10 +1616,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransferImporterCountryName",
 					  						DefaultText =  "Transfer Importer Country Name",
-					  						FullLocalDefaultText =  "מדינה שם יבואן ההעברה",
+					  						FullLocalDefaultTextBack_up =  "מדינה שם יבואן ההעברה",
+					  						FullLocalDefaultText =  "BS64:Itee15PXmdeg15Qg16nXnSDXmdeR15XXkNefINeU15TXoteR16jXlCI=",
 					  						ListFieldLable =  "TransferImporterCountryNameListLable",
 					  						ListLableDefaultText =  "Transfer Importer Country Name",
-					  						ListLocalDefaultText =  "העבר את המדינה יבואן",
+					  						ListLocalDefaultTextBack_up =  "העבר את המדינה יבואן",
+					  						ListLocalDefaultText =  "BS64:IteU16LXkdeoINeQ16og15TXnteT15nXoNeUINeZ15HXldeQ158i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1642,10 +1685,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EntitleImporterId",
 					  						DefaultText =  "Entitle Importer Id",
-					  						FullLocalDefaultText =  "מספר יבואן זכאי",
+					  						FullLocalDefaultTextBack_up =  "מספר יבואן זכאי",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeZ15HXldeQ158g15bXm9eQ15ki",
 					  						ListFieldLable =  "EntitleImporterIdListLable",
 					  						ListLableDefaultText =  "Entitle Importer ",
-					  						ListLocalDefaultText =  "מספר יבואן זכאי",
+					  						ListLocalDefaultTextBack_up =  "מספר יבואן זכאי",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeZ15HXldeQ158g15bXm9eQ15ki",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Client",
 					  						NavigationPropertyName =  "EntitleImporter",
@@ -1712,10 +1757,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterEntitlementTypeCode",
 					  						DefaultText =  "Importer Entitlement Type",
-					  						FullLocalDefaultText =  "סוג זכאות יבואן זכאי",
+					  						FullLocalDefaultTextBack_up =  "סוג זכאות יבואן זכאי",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXlteb15DXldeqINeZ15HXldeQ158g15bXm9eQ15ki",
 					  						ListFieldLable =  "ImporterEntitlementTypeCodeListLable",
 					  						ListLableDefaultText =  "Importer Entitlement Type ",
-					  						ListLocalDefaultText =  "סוג זכאות יבואן זכאי",
+					  						ListLocalDefaultTextBack_up =  "סוג זכאות יבואן זכאי",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXlteb15DXldeqINeZ15HXldeQ158g15bXm9eQ15ki",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "EntitlementType",
 					  						NavigationPropertyName =  "ImporterEntitlementType",
@@ -1781,10 +1828,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterEntitlementTypeName",
 					  						DefaultText =  "Importer Entitlement Type Name",
-					  						FullLocalDefaultText =  "מדינה שם יבואן ההעברה",
+					  						FullLocalDefaultTextBack_up =  "מדינה שם יבואן ההעברה",
+					  						FullLocalDefaultText =  "BS64:Itee15PXmdeg15Qg16nXnSDXmdeR15XXkNefINeU15TXoteR16jXlCI=",
 					  						ListFieldLable =  "ImporterEntitlementTypeNameListLable",
 					  						ListLableDefaultText =  "Importer Entitlement Type Name",
-					  						ListLocalDefaultText =  "סוג זכאות יבואן",
+					  						ListLocalDefaultTextBack_up =  "סוג זכאות יבואן",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXlteb15DXldeqINeZ15HXldeQ158i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1849,10 +1898,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EntitleImporterCountryCode",
 					  						DefaultText =  "Entitle Importer Country",
-					  						FullLocalDefaultText =  "מדינת דרכון יבואן זכאי",
+					  						FullLocalDefaultTextBack_up =  "מדינת דרכון יבואן זכאי",
+					  						FullLocalDefaultText =  "BS64:Itee15PXmdeg16og15PXqNeb15XXnyDXmdeR15XXkNefINeW15vXkNeZIg==",
 					  						ListFieldLable =  "EntitleImporterCountryCodeListLable",
 					  						ListLableDefaultText =  "Entitle Importer Country ",
-					  						ListLocalDefaultText =  "מדינת דרכון יבואן זכאי",
+					  						ListLocalDefaultTextBack_up =  "מדינת דרכון יבואן זכאי",
+					  						ListLocalDefaultText =  "BS64:Itee15PXmdeg16og15PXqNeb15XXnyDXmdeR15XXkNefINeW15vXkNeZIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CustomsCountry",
 					  						NavigationPropertyName =  "EntitleImporterCountry",
@@ -1918,10 +1969,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EntitleImporterCountryName",
 					  						DefaultText =  "Entitle Importer Country Name",
-					  						FullLocalDefaultText =  "מזכה את המדינה שם יבואן",
+					  						FullLocalDefaultTextBack_up =  "מזכה את המדינה שם יבואן",
+					  						FullLocalDefaultText =  "BS64:Itee15bXm9eUINeQ16og15TXnteT15nXoNeUINep150g15nXkdeV15DXnyI=",
 					  						ListFieldLable =  "EntitleImporterCountryNameListLable",
 					  						ListLableDefaultText =  "Entitle Importer Country Name",
-					  						ListLocalDefaultText =  "מזכה את המדינה יבואן",
+					  						ListLocalDefaultTextBack_up =  "מזכה את המדינה יבואן",
+					  						ListLocalDefaultText =  "BS64:Itee15bXm9eUINeQ16og15TXnteT15nXoNeUINeZ15HXldeQ158i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1985,10 +2038,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationDocumentId",
 					  						DefaultText =  "Declaration Document ",
-					  						FullLocalDefaultText =  "מספר הצהרה קשורה",
+					  						FullLocalDefaultTextBack_up =  "מספר הצהרה קשורה",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeU16bXlNeo15Qg16fXqdeV16jXlCI=",
 					  						ListFieldLable =  "DeclarationDocumentIdListLable",
 					  						ListLableDefaultText =  "Declaration Document ",
-					  						ListLocalDefaultText =  "מספר הצהרה קשורה",
+					  						ListLocalDefaultTextBack_up =  "מספר הצהרה קשורה",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeU16bXlNeo15Qg16fXqdeV16jXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2054,10 +2109,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationDocumentTypeCode",
 					  						DefaultText =  "Declaration Document Type",
-					  						FullLocalDefaultText =  "סוג הצהרה קשורה",
+					  						FullLocalDefaultTextBack_up =  "סוג הצהרה קשורה",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXlNem15TXqNeUINen16nXldeo15Qi",
 					  						ListFieldLable =  "DeclarationDocumentTypeCodeListLable",
 					  						ListLableDefaultText =  "Declaration Document Type ",
-					  						ListLocalDefaultText =  "סוג הצהרה קשורה",
+					  						ListLocalDefaultTextBack_up =  "סוג הצהרה קשורה",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXlNem15TXqNeUINen16nXldeo15Qi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "LeadDocumentType",
 					  						NavigationPropertyName =  "DeclarationDocumentType",
@@ -2124,10 +2181,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationDocumentTypeName",
 					  						DefaultText =  "Declaration Document Type Name",
-					  						FullLocalDefaultText =  "שם סוג מסמך ההצהרה",
+					  						FullLocalDefaultTextBack_up =  "שם סוג מסמך ההצהרה",
+					  						FullLocalDefaultText =  "BS64:Itep150g16HXldeSINee16HXnteaINeU15TXpteU16jXlCI=",
 					  						ListFieldLable =  "DeclarationDocumentTypeNameListLable",
 					  						ListLableDefaultText =  "Declaration Document Type Name",
-					  						ListLocalDefaultText =  "סוג מסמך הצהרה",
+					  						ListLocalDefaultTextBack_up =  "סוג מסמך הצהרה",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXnteh157XmiDXlNem15TXqNeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2192,10 +2251,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserId",
 					  						DefaultText =  "Created By User ",
-					  						FullLocalDefaultText =  "משתמש פותח תיק",
+					  						FullLocalDefaultTextBack_up =  "משתמש פותח תיק",
+					  						FullLocalDefaultText =  "BS64:Itee16nXqtee16kg16TXldeq15cg16rXmdenIg==",
 					  						ListFieldLable =  "CreatedByUserIdListLable",
 					  						ListLableDefaultText =  "CreatedByUser",
-					  						ListLocalDefaultText =  "משתמש פותח תיק",
+					  						ListLocalDefaultTextBack_up =  "משתמש פותח תיק",
+					  						ListLocalDefaultText =  "BS64:Itee16nXqtee16kg16TXldeq15cg16rXmdenIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "CreatedByUser",
@@ -2262,10 +2323,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsChanged",
 					  						DefaultText =  "Is Changed",
-					  						FullLocalDefaultText =  "בוצע שינוי",
+					  						FullLocalDefaultTextBack_up =  "בוצע שינוי",
+					  						FullLocalDefaultText =  "BS64:IteR15XXpteiINep15nXoNeV15ki",
 					  						ListFieldLable =  "IsChangedListLable",
 					  						ListLableDefaultText =  "Is Changed",
-					  						ListLocalDefaultText =  "בוצע שינוי",
+					  						ListLocalDefaultTextBack_up =  "בוצע שינוי",
+					  						ListLocalDefaultText =  "BS64:IteR15XXpteiINep15nXoNeV15ki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2330,10 +2393,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentDate",
 					  						DefaultText =  "Payment Date",
-					  						FullLocalDefaultText =  "תאריך תשלום",
+					  						FullLocalDefaultTextBack_up =  "תאריך תשלום",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16rXqdec15XXnSI=",
 					  						ListFieldLable =  "PaymentDateListLable",
 					  						ListLableDefaultText =  "Payment Date",
-					  						ListLocalDefaultText =  "תאריך תשלום",
+					  						ListLocalDefaultTextBack_up =  "תאריך תשלום",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16rXqdec15XXnSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2398,10 +2463,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "HatraDate",
 					  						DefaultText =  "Hatra Date",
-					  						FullLocalDefaultText =  "תאריך התרה",
+					  						FullLocalDefaultTextBack_up =  "תאריך התרה",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15TXqteo15Qi",
 					  						ListFieldLable =  "HatraDateListLable",
 					  						ListLableDefaultText =  "Hatra Date",
-					  						ListLocalDefaultText =  "תאריך התרה",
+					  						ListLocalDefaultTextBack_up =  "תאריך התרה",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15TXqteo15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2467,10 +2534,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationStatusTypeCode",
 					  						DefaultText =  "Declaration Status Type ",
-					  						FullLocalDefaultText =  "סטטוס הצהרה",
+					  						FullLocalDefaultTextBack_up =  "סטטוס הצהרה",
+					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg15TXpteU16jXlCI=",
 					  						ListFieldLable =  "DeclarationStatusTypeCodeListLable",
 					  						ListLableDefaultText =  "Declaration Status Type",
-					  						ListLocalDefaultText =  "סטטוס הצהרה",
+					  						ListLocalDefaultTextBack_up =  "סטטוס הצהרה",
+					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg15TXpteU16jXlCI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "DeclarationStatusType",
 					  						NavigationPropertyName =  "DeclarationStatusType",
@@ -2539,10 +2608,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LoadingFactor",
 					  						DefaultText =  "Loading Factor",
-					  						FullLocalDefaultText =  "מקדם העמסה",
+					  						FullLocalDefaultTextBack_up =  "מקדם העמסה",
+					  						FullLocalDefaultText =  "BS64:Itee16fXk9edINeU16LXnteh15Qi",
 					  						ListFieldLable =  "LoadingFactorListLable",
 					  						ListLableDefaultText =  "Loading Factor",
-					  						ListLocalDefaultText =  "מקדם העמסה",
+					  						ListLocalDefaultTextBack_up =  "מקדם העמסה",
+					  						ListLocalDefaultText =  "BS64:Itee16fXk9edINeU16LXnteh15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2609,10 +2680,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DealValue",
 					  						DefaultText =  "Deal Value",
-					  						FullLocalDefaultText =  "סה\\\"כ ערך עסקה",
+					  						FullLocalDefaultTextBack_up =  "סה\\\"כ ערך עסקה",
+					  						FullLocalDefaultText =  "BS64:Iteh15RcItebINei16jXmiDXoteh16fXlCI=",
 					  						ListFieldLable =  "DealValueListLable",
 					  						ListLableDefaultText =  "Deal Value",
-					  						ListLocalDefaultText =  "סה\\\"כ ערך עסקה",
+					  						ListLocalDefaultTextBack_up =  "סה\\\"כ ערך עסקה",
+					  						ListLocalDefaultText =  "BS64:Iteh15RcItebINei16jXmiDXoteh16fXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2678,10 +2751,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CIFValue",
 					  						DefaultText =  "CIF Value",
-					  						FullLocalDefaultText =  "סה\\\"כ ערך CIF",
+					  						FullLocalDefaultTextBack_up =  "סה\\\"כ ערך CIF",
+					  						FullLocalDefaultText =  "BS64:Iteh15RcItebINei16jXmiBDSUYi",
 					  						ListFieldLable =  "CIFValueListLable",
 					  						ListLableDefaultText =  "CIF Value",
-					  						ListLocalDefaultText =  "סה\\\"כ ערך CIF",
+					  						ListLocalDefaultTextBack_up =  "סה\\\"כ ערך CIF",
+					  						ListLocalDefaultText =  "BS64:Iteh15RcItebINei16jXmiBDSUYi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2747,10 +2822,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TotalTax",
 					  						DefaultText =  "Total Tax",
-					  						FullLocalDefaultText =  "סה\\\"כ מיסים",
+					  						FullLocalDefaultTextBack_up =  "סה\\\"כ מיסים",
+					  						FullLocalDefaultText =  "BS64:Iteh15RcItebINee15nXodeZ150i",
 					  						ListFieldLable =  "TotalTaxListLable",
 					  						ListLableDefaultText =  "Total Tax",
-					  						ListLocalDefaultText =  "סה\\\"כ מיסים",
+					  						ListLocalDefaultTextBack_up =  "סה\\\"כ מיסים",
+					  						ListLocalDefaultText =  "BS64:Iteh15RcItebINee15nXodeZ150i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2815,7 +2892,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationNumberandVersionId",
 					  						DefaultText =  "Declaration Number",
-					  						FullLocalDefaultText =  "מספר הצהרה ",
+					  						FullLocalDefaultTextBack_up =  "מספר הצהרה ",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeU16bXlNeo15QgIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3073,10 +3151,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FileState",
 					  						DefaultText =  "File State",
-					  						FullLocalDefaultText =  "קובץ מדינה",
+					  						FullLocalDefaultTextBack_up =  "קובץ מדינה",
+					  						FullLocalDefaultText =  "BS64:Iten15XXkdelINee15PXmdeg15Qi",
 					  						ListFieldLable =  "FileStateListLable",
 					  						ListLableDefaultText =  "File State",
-					  						ListLocalDefaultText =  "קובץ מדינה",
+					  						ListLocalDefaultTextBack_up =  "קובץ מדינה",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkdelINee15PXmdeg15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3140,10 +3220,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransportModeId",
 					  						DefaultText =  "Transport Mode ",
-					  						FullLocalDefaultText =  "סוג הובלה",
+					  						FullLocalDefaultTextBack_up =  "סוג הובלה",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXlNeV15HXnNeUIg==",
 					  						ListFieldLable =  "TransportModeIdListLable",
 					  						ListLableDefaultText =  "Transport Mode ",
-					  						ListLocalDefaultText =  "סוג הובלה",
+					  						ListLocalDefaultTextBack_up =  "סוג הובלה",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXlNeV15HXnNeUIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "TransportMode",
 					  						NavigationPropertyName =  "TransportMode",
@@ -3208,10 +3290,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ErrosXml",
 					  						DefaultText =  "Erros Xml",
-					  						FullLocalDefaultText =  "שגיאות להצהרה",
+					  						FullLocalDefaultTextBack_up =  "שגיאות להצהרה",
+					  						FullLocalDefaultText =  "BS64:Itep15LXmdeQ15XXqiDXnNeU16bXlNeo15Qi",
 					  						ListFieldLable =  "ErrosXmlListLable",
 					  						ListLableDefaultText =  "Erros Xml",
-					  						ListLocalDefaultText =  "שגיאות להצהרה",
+					  						ListLocalDefaultTextBack_up =  "שגיאות להצהרה",
+					  						ListLocalDefaultText =  "BS64:Itep15LXmdeQ15XXqiDXnNeU16bXlNeo15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  true,
 					  						NoMetaDataField =  false,
@@ -3273,10 +3357,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationOfficeName",
 					  						DefaultText =  "Declaration Office ",
-					  						FullLocalDefaultText =  "בית מכס",
+					  						FullLocalDefaultTextBack_up =  "בית מכס",
+					  						FullLocalDefaultText =  "BS64:IteR15nXqiDXnteb16Ei",
 					  						ListFieldLable =  "DeclarationOfficeNameListLable",
 					  						ListLableDefaultText =  "Declaration Office Name",
-					  						ListLocalDefaultText =  "בית מכס",
+					  						ListLocalDefaultTextBack_up =  "בית מכס",
+					  						ListLocalDefaultText =  "BS64:IteR15nXqiDXnteb16Ei",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3338,10 +3424,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterName",
 					  						DefaultText =  "Importer Name",
-					  						FullLocalDefaultText =  "שם יבואן",
+					  						FullLocalDefaultTextBack_up =  "שם יבואן",
+					  						FullLocalDefaultText =  "BS64:Itep150g15nXkdeV15DXnyI=",
 					  						ListFieldLable =  "ImporterNameListLable",
 					  						ListLableDefaultText =  "Importer Name",
-					  						ListLocalDefaultText =  "שם יבואן",
+					  						ListLocalDefaultTextBack_up =  "שם יבואן",
+					  						ListLocalDefaultText =  "BS64:Itep150g15nXkdeV15DXnyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3405,10 +3493,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DepartmentId",
 					  						DefaultText =  "Department ",
-					  						FullLocalDefaultText =  "מחלקה",
+					  						FullLocalDefaultTextBack_up =  "מחלקה",
+					  						FullLocalDefaultText =  "BS64:Itee15fXnNen15Qi",
 					  						ListFieldLable =  "DepartmentIdListLable",
 					  						ListLableDefaultText =  "Department ",
-					  						ListLocalDefaultText =  "מחלקה",
+					  						ListLocalDefaultTextBack_up =  "מחלקה",
+					  						ListLocalDefaultText =  "BS64:Itee15fXnNen15Qi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Department",
 					  						NavigationPropertyName =  "Department",
@@ -3472,10 +3562,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DepartmentName",
 					  						DefaultText =  "Department",
-					  						FullLocalDefaultText =  "חוליה",
+					  						FullLocalDefaultTextBack_up =  "חוליה",
+					  						FullLocalDefaultText =  "BS64:IteX15XXnNeZ15Qi",
 					  						ListFieldLable =  "DepartmentNameListLable",
 					  						ListLableDefaultText =  "Department",
-					  						ListLocalDefaultText =  "חוליה",
+					  						ListLocalDefaultTextBack_up =  "חוליה",
+					  						ListLocalDefaultText =  "BS64:IteX15XXnNeZ15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3539,10 +3631,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReferentUserId",
 					  						DefaultText =  "Referent User ",
-					  						FullLocalDefaultText =  "קוד רפרנט",
+					  						FullLocalDefaultTextBack_up =  "קוד רפרנט",
+					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXqNek16jXoNeYIg==",
 					  						ListFieldLable =  "ReferentUserIdListLable",
 					  						ListLableDefaultText =  "Referent User ",
-					  						ListLocalDefaultText =  "קוד רפרנט",
+					  						ListLocalDefaultTextBack_up =  "קוד רפרנט",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXqNek16jXoNeYIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "ReferentUser",
@@ -3609,10 +3703,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationStatusTypeName",
 					  						DefaultText =  "Declaration Status Type",
-					  						FullLocalDefaultText =  "סטטוס הצהרה",
+					  						FullLocalDefaultTextBack_up =  "סטטוס הצהרה",
+					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg15TXpteU16jXlCI=",
 					  						ListFieldLable =  "DeclarationStatusTypeNameListLable",
 					  						ListLableDefaultText =  "Declaration Status Type Name",
-					  						ListLocalDefaultText =  "סטטוס הצהרה",
+					  						ListLocalDefaultTextBack_up =  "סטטוס הצהרה",
+					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg15TXpteU16jXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3677,10 +3773,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StorageSiteCode",
 					  						DefaultText =  "Storage Site",
-					  						FullLocalDefaultText =  "אתר אחסון",
+					  						FullLocalDefaultTextBack_up =  "אתר אחסון",
+					  						FullLocalDefaultText =  "BS64:IteQ16rXqCDXkNeX16HXldefIg==",
 					  						ListFieldLable =  "StorageSiteCodeListLable",
 					  						ListLableDefaultText =  "Storage Site Code",
-					  						ListLocalDefaultText =  "אתר אחסון",
+					  						ListLocalDefaultTextBack_up =  "אתר אחסון",
+					  						ListLocalDefaultText =  "BS64:IteQ16rXqCDXkNeX16HXldefIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "DeliverySiteType",
 					  						NavigationPropertyName =  "DeliverySiteType",
@@ -3748,10 +3846,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PlatformFee",
 					  						DefaultText =  "PlatformFee",
-					  						FullLocalDefaultText =  "אגרת רציף",
+					  						FullLocalDefaultTextBack_up =  "אגרת רציף",
+					  						FullLocalDefaultText =  "BS64:IteQ15LXqNeqINeo16bXmdejIg==",
 					  						ListFieldLable =  "PlatformFeeListLable",
 					  						ListLableDefaultText =  "PlatformFee",
-					  						ListLocalDefaultText =  "אגרת רציף",
+					  						ListLocalDefaultTextBack_up =  "אגרת רציף",
+					  						ListLocalDefaultText =  "BS64:IteQ15LXqNeqINeo16bXmdejIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3878,7 +3978,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Customer Code",
 					  						ListFieldLable =  "CustomerCodeListLable",
 					  						ListLableDefaultText =  "Customer Code",
-					  						ListLocalDefaultText =  "קוד לקוח",
+					  						ListLocalDefaultTextBack_up =  "קוד לקוח",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXnNen15XXlyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3942,10 +4043,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDateTime",
 					  						DefaultText =  "Create Date Time",
-					  						FullLocalDefaultText =  "תאריך יצירה",
+					  						FullLocalDefaultTextBack_up =  "תאריך יצירה",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15nXpteZ16jXlCI=",
 					  						ListFieldLable =  "CreateDateTimeListLable",
 					  						ListLableDefaultText =  "Create Date Time",
-					  						ListLocalDefaultText =  "תאריך יצירה",
+					  						ListLocalDefaultTextBack_up =  "תאריך יצירה",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15nXpteZ16jXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4010,10 +4113,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdateDateTime",
 					  						DefaultText =  "Update Date Time",
-					  						FullLocalDefaultText =  "תאריך שעת עדכון",
+					  						FullLocalDefaultTextBack_up =  "תאריך שעת עדכון",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16nXoteqINei15PXm9eV158i",
 					  						ListFieldLable =  "UpdateDateTimeListLable",
 					  						ListLableDefaultText =  "Update Date Time",
-					  						ListLocalDefaultText =  "תאריך שעת עדכון",
+					  						ListLocalDefaultTextBack_up =  "תאריך שעת עדכון",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16nXoteqINei15PXm9eV158i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4076,10 +4181,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsCancelled",
 					  						DefaultText =  "Is Cancelled",
-					  						FullLocalDefaultText =  "תיק מבוטל",
+					  						FullLocalDefaultTextBack_up =  "תיק מבוטל",
+					  						FullLocalDefaultText =  "BS64:Iteq15nXpyDXnteR15XXmNecIg==",
 					  						ListFieldLable =  "IsCancelledListLable",
 					  						ListLableDefaultText =  "Is Cancelled",
-					  						ListLocalDefaultText =  "תיק מבוטל",
+					  						ListLocalDefaultTextBack_up =  "תיק מבוטל",
+					  						ListLocalDefaultText =  "BS64:Iteq15nXpyDXnteR15XXmNecIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4141,10 +4248,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EntitleImporterName",
 					  						DefaultText =  "Entitle Importer Name",
-					  						FullLocalDefaultText =  "מספר יבואן זכאי",
+					  						FullLocalDefaultTextBack_up =  "מספר יבואן זכאי",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeZ15HXldeQ158g15bXm9eQ15ki",
 					  						ListFieldLable =  "EntitleImporterNameListLable",
 					  						ListLableDefaultText =  "Entitle Importer Name",
-					  						ListLocalDefaultText =  "מספר יבואן זכאי",
+					  						ListLocalDefaultTextBack_up =  "מספר יבואן זכאי",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeZ15HXldeQ158g15bXm9eQ15ki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4206,10 +4315,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransportModeName",
 					  						DefaultText =  "Transport Mode Name",
-					  						FullLocalDefaultText =  "מצב תחבורה",
+					  						FullLocalDefaultTextBack_up =  "מצב תחבורה",
+					  						FullLocalDefaultText =  "BS64:Itee16bXkSDXqteX15HXldeo15Qi",
 					  						ListFieldLable =  "TransportModeNameListLable",
 					  						ListLableDefaultText =  "Transport Mode Name",
-					  						ListLocalDefaultText =  "מצב תחבורה",
+					  						ListLocalDefaultTextBack_up =  "מצב תחבורה",
+					  						ListLocalDefaultText =  "BS64:Itee16bXkSDXqteX15HXldeo15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4337,10 +4448,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DealValueWithoutFactor",
 					  						DefaultText =  "Deal Value Without Factor",
-					  						FullLocalDefaultText =  "ערך טובין בש”ח",
+					  						FullLocalDefaultTextBack_up =  "ערך טובין בש”ח",
+					  						FullLocalDefaultText =  "BS64:Itei16jXmiDXmNeV15HXmdefINeR16nigJ3XlyI=",
 					  						ListFieldLable =  "DealValueWithoutFactorListLable",
 					  						ListLableDefaultText =  "Deal Value Without Factor",
-					  						ListLocalDefaultText =  "ערך טובין בש”ח",
+					  						ListLocalDefaultTextBack_up =  "ערך טובין בש”ח",
+					  						ListLocalDefaultText =  "BS64:Itei16jXmiDXmNeV15HXmdefINeR16nigJ3XlyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4403,10 +4516,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterCode",
 					  						DefaultText =  "Importer ",
-					  						FullLocalDefaultText =  "מספר יבואן",
+					  						FullLocalDefaultTextBack_up =  "מספר יבואן",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeZ15HXldeQ158i",
 					  						ListFieldLable =  "ImporterCodeListLable",
 					  						ListLableDefaultText =  "Importer",
-					  						ListLocalDefaultText =  "מספר יבואן",
+					  						ListLocalDefaultTextBack_up =  "מספר יבואן",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeZ15HXldeQ158i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4469,10 +4584,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransferImporterCode",
 					  						DefaultText =  "Transfer Importer ",
-					  						FullLocalDefaultText =  "מספר יבואן מעביר",
+					  						FullLocalDefaultTextBack_up =  "מספר יבואן מעביר",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeZ15HXldeQ158g157XoteR15nXqCI=",
 					  						ListFieldLable =  "TransferImporterCodeListLable",
 					  						ListLableDefaultText =  "Transfer Importer",
-					  						ListLocalDefaultText =  "מספר יבואן מעביר",
+					  						ListLocalDefaultTextBack_up =  "מספר יבואן מעביר",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeZ15HXldeQ158g157XoteR15nXqCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4535,10 +4652,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EntitleImporterCode",
 					  						DefaultText =  "Entitle Importer ",
-					  						FullLocalDefaultText =  "מספר יבואן זכאי",
+					  						FullLocalDefaultTextBack_up =  "מספר יבואן זכאי",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeZ15HXldeQ158g15bXm9eQ15ki",
 					  						ListFieldLable =  "EntitleImporterCodeListLable",
 					  						ListLableDefaultText =  "Entitle Importer",
-					  						ListLocalDefaultText =  "מספר יבואן זכאי",
+					  						ListLocalDefaultTextBack_up =  "מספר יבואן זכאי",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeZ15HXldeQ158g15bXm9eQ15ki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4659,7 +4778,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomsTapagNumeral",
 					  						DefaultText =  "Customs Tapag File/Customs Numeral",
-					  						FullLocalDefaultText =  "מספר תיק תפ\\\"ג",
+					  						FullLocalDefaultTextBack_up =  "מספר תיק תפ\\\"ג",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeq15nXpyDXqtekXCLXkiI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4902,10 +5022,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserName",
 					  						DefaultText =  "Created By",
-					  						FullLocalDefaultText =  "משתמש פותח תיק",
+					  						FullLocalDefaultTextBack_up =  "משתמש פותח תיק",
+					  						FullLocalDefaultText =  "BS64:Itee16nXqtee16kg16TXldeq15cg16rXmdenIg==",
 					  						ListFieldLable =  "CreatedByUserNameListLable",
 					  						ListLableDefaultText =  "Created By",
-					  						ListLocalDefaultText =  "משתמש פותח תיק",
+					  						ListLocalDefaultTextBack_up =  "משתמש פותח תיק",
+					  						ListLocalDefaultText =  "BS64:Itee16nXqtee16kg16TXldeq15cg16rXmdenIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4970,10 +5092,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterTypeCode",
 					  						DefaultText =  "Importer Type",
-					  						FullLocalDefaultText =  "סוג יבואן",
+					  						FullLocalDefaultTextBack_up =  "סוג יבואן",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXmdeR15XXkNefIg==",
 					  						ListFieldLable =  "ImporterTypeCodeListLable",
 					  						ListLableDefaultText =  "Importer Type Code",
-					  						ListLocalDefaultText =  "סוג יבואן",
+					  						ListLocalDefaultTextBack_up =  "סוג יבואן",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXmdeR15XXkNefIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CustomerIdentifyType",
 					  						NavigationPropertyName =  "ImporterType",
@@ -5039,10 +5163,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransferImporterTypeCode",
 					  						DefaultText =  "Transfer Importer Type",
-					  						FullLocalDefaultText =  "סוג יבואן מעביר",
+					  						FullLocalDefaultTextBack_up =  "סוג יבואן מעביר",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXmdeR15XXkNefINee16LXkdeZ16gi",
 					  						ListFieldLable =  "TransferImporterTypeCodeListLable",
 					  						ListLableDefaultText =  "Transfer Importer Type Code",
-					  						ListLocalDefaultText =  "סוג יבואן מעביר",
+					  						ListLocalDefaultTextBack_up =  "סוג יבואן מעביר",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXmdeR15XXkNefINee16LXkdeZ16gi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CustomerIdentifyType",
 					  						NavigationPropertyName =  "TransferImporterType",
@@ -5108,10 +5234,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EntitleImporterTypeCode",
 					  						DefaultText =  "Entitle Importer Type",
-					  						FullLocalDefaultText =  "סוג יבואן זכאי",
+					  						FullLocalDefaultTextBack_up =  "סוג יבואן זכאי",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXmdeR15XXkNefINeW15vXkNeZIg==",
 					  						ListFieldLable =  "EntitleImporterTypeCodeListLable",
 					  						ListLableDefaultText =  "Entitle Importer Type Code",
-					  						ListLocalDefaultText =  "סוג יבואן זכאי",
+					  						ListLocalDefaultTextBack_up =  "סוג יבואן זכאי",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXmdeR15XXkNefINeW15vXkNeZIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CustomerIdentifyType",
 					  						NavigationPropertyName =  "EntitleImporterType",
@@ -5175,10 +5303,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterTypeName",
 					  						DefaultText =  "Importer Type",
-					  						FullLocalDefaultText =  "סוג יבואן",
+					  						FullLocalDefaultTextBack_up =  "סוג יבואן",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXmdeR15XXkNefIg==",
 					  						ListFieldLable =  "ImporterTypeNameListLable",
 					  						ListLableDefaultText =  "Importer Type Name",
-					  						ListLocalDefaultText =  "סוג יבואן",
+					  						ListLocalDefaultTextBack_up =  "סוג יבואן",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXmdeR15XXkNefIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -5240,10 +5370,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransferImporterTypeName",
 					  						DefaultText =  "Transfer Importer Type",
-					  						FullLocalDefaultText =  "סוג יבואן מעביר",
+					  						FullLocalDefaultTextBack_up =  "סוג יבואן מעביר",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXmdeR15XXkNefINee16LXkdeZ16gi",
 					  						ListFieldLable =  "TransferImporterTypeNameListLable",
 					  						ListLableDefaultText =  "Transfer Importer Type Name",
-					  						ListLocalDefaultText =  "סוג יבואן מעביר",
+					  						ListLocalDefaultTextBack_up =  "סוג יבואן מעביר",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXmdeR15XXkNefINee16LXkdeZ16gi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -5305,10 +5437,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EntitleImporterTypeName",
 					  						DefaultText =  "Entitle Importer Type",
-					  						FullLocalDefaultText =  "סוג יבואן זכאי",
+					  						FullLocalDefaultTextBack_up =  "סוג יבואן זכאי",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXmdeR15XXkNefINeW15vXkNeZIg==",
 					  						ListFieldLable =  "EntitleImporterTypeNameListLable",
 					  						ListLableDefaultText =  "Entitle Importer Type Name",
-					  						ListLocalDefaultText =  "סוג יבואן זכאי",
+					  						ListLocalDefaultTextBack_up =  "סוג יבואן זכאי",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXmdeR15XXkNefINeW15vXkNeZIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -5370,10 +5504,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UserNotes",
 					  						DefaultText =  "User Notes",
-					  						FullLocalDefaultText =  "הערות משתמש",
+					  						FullLocalDefaultTextBack_up =  "הערות משתמש",
+					  						FullLocalDefaultText =  "BS64:IteU16LXqNeV16og157Xqdeq157XqSI=",
 					  						ListFieldLable =  "UserNotesListLable",
 					  						ListLableDefaultText =  "User Notes",
-					  						ListLocalDefaultText =  "הערות משתמש",
+					  						ListLocalDefaultTextBack_up =  "הערות משתמש",
+					  						ListLocalDefaultText =  "BS64:IteU16LXqNeV16og157Xqdeq157XqSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  true,
 					  						NoMetaDataField =  false,
@@ -5676,7 +5812,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PrimaryInvoiceCounterKey",
 					  						DefaultText =  "PrimaryInvoiceCounterKey",
-					  						FullLocalDefaultText =  "חשבון עיקרי",
+					  						FullLocalDefaultTextBack_up =  "חשבון עיקרי",
+					  						FullLocalDefaultText =  "BS64:IteX16nXkdeV158g16LXmden16jXmSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -5739,10 +5876,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentOrderNumber",
 					  						DefaultText =  "Payment Order Number",
-					  						FullLocalDefaultText =  "הוראת תשלום",
+					  						FullLocalDefaultTextBack_up =  "הוראת תשלום",
+					  						FullLocalDefaultText =  "BS64:IteU15XXqNeQ16og16rXqdec15XXnSI=",
 					  						ListFieldLable =  "PaymentOrderNumberListLable",
 					  						ListLableDefaultText =  "Payment Order Number",
-					  						ListLocalDefaultText =  "הוראת תשלום",
+					  						ListLocalDefaultTextBack_up =  "הוראת תשלום",
+					  						ListLocalDefaultText =  "BS64:IteU15XXqNeQ16og16rXqdec15XXnSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -5805,10 +5944,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentStatusCode",
 					  						DefaultText =  "Payment Status Code",
-					  						FullLocalDefaultText =  "סטטוס הוראת תשלום",
+					  						FullLocalDefaultTextBack_up =  "סטטוס הוראת תשלום",
+					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg15TXldeo15DXqiDXqtep15zXldedIg==",
 					  						ListFieldLable =  "PaymentStatusCodeListLable",
 					  						ListLableDefaultText =  "Payment Status Code",
-					  						ListLocalDefaultText =  "סטטוס הוראת תשלום",
+					  						ListLocalDefaultTextBack_up =  "סטטוס הוראת תשלום",
+					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg15TXldeo15DXqiDXqtep15zXldedIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "PaymentOrderStatus",
 					  						NavigationPropertyName =  "PaymentOrderStatus",
@@ -5871,7 +6012,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsSignedVersion",
 					  						DefaultText =  "Is Signed Version",
-					  						FullLocalDefaultText =  "גרסה חתומה",
+					  						FullLocalDefaultTextBack_up =  "גרסה חתומה",
+					  						FullLocalDefaultText =  "BS64:IteS16jXodeUINeX16rXldee15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -5932,7 +6074,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SignedByUserId",
 					  						DefaultText =  "Signed By User",
-					  						FullLocalDefaultText =  "משתמש חותם",
+					  						FullLocalDefaultTextBack_up =  "משתמש חותם",
+					  						FullLocalDefaultText =  "BS64:Itee16nXqtee16kg15fXldeq150i",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "SignedByUser",
@@ -5997,10 +6140,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StorageSiteName",
 					  						DefaultText =  "Storage Site",
-					  						FullLocalDefaultText =  "אתר אחסון",
+					  						FullLocalDefaultTextBack_up =  "אתר אחסון",
+					  						FullLocalDefaultText =  "BS64:IteQ16rXqCDXkNeX16HXldefIg==",
 					  						ListFieldLable =  "StorageSiteNameListLable",
 					  						ListLableDefaultText =  "Storage Site Name",
-					  						ListLocalDefaultText =  "שם אתר אחסון",
+					  						ListLocalDefaultTextBack_up =  "שם אתר אחסון",
+					  						ListLocalDefaultText =  "BS64:Itep150g15DXqteoINeQ15fXodeV158i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -6123,10 +6268,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SignerPersonalId",
 					  						DefaultText =  "Signer Personal ID",
-					  						FullLocalDefaultText =  "ת\\\"ז חותם",
+					  						FullLocalDefaultTextBack_up =  "ת\\\"ז חותם",
+					  						FullLocalDefaultText =  "BS64:IteqXCLXliDXl9eV16rXnSI=",
 					  						ListFieldLable =  "SignerPersonalIdListLable",
 					  						ListLableDefaultText =  "Signer Personal ID",
-					  						ListLocalDefaultText =  "ת\\\"ז חותם",
+					  						ListLocalDefaultTextBack_up =  "ת\\\"ז חותם",
+					  						ListLocalDefaultText =  "BS64:IteqXCLXliDXl9eV16rXnSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -6249,10 +6396,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsConvertedDeclaration",
 					  						DefaultText =  "Converted Declaration",
-					  						FullLocalDefaultText =  "הצהרה מוסבת",
+					  						FullLocalDefaultTextBack_up =  "הצהרה מוסבת",
+					  						FullLocalDefaultText =  "BS64:IteU16bXlNeo15Qg157Xldeh15HXqiI=",
 					  						ListFieldLable =  "IsConvertedDeclarationListLable",
 					  						ListLableDefaultText =  "Converted Declaration",
-					  						ListLocalDefaultText =  "הצהרה מוסבת",
+					  						ListLocalDefaultTextBack_up =  "הצהרה מוסבת",
+					  						ListLocalDefaultText =  "BS64:IteU16bXlNeo15Qg157Xldeh15HXqiI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -6315,10 +6464,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CorrectionsXml",
 					  						DefaultText =  "Corrections Xml",
-					  						FullLocalDefaultText =  "תיקונים בהצהרה",
+					  						FullLocalDefaultTextBack_up =  "תיקונים בהצהרה",
+					  						FullLocalDefaultText =  "BS64:Iteq15nXp9eV16DXmdedINeR15TXpteU16jXlCI=",
 					  						ListFieldLable =  "CorrectionsXmlListLable",
 					  						ListLableDefaultText =  "Corrections Xml",
-					  						ListLocalDefaultText =  "תיקונים בהצהרה",
+					  						ListLocalDefaultTextBack_up =  "תיקונים בהצהרה",
+					  						ListLocalDefaultText =  "BS64:Iteq15nXp9eV16DXmdedINeR15TXpteU16jXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  true,
 					  						NoMetaDataField =  false,
@@ -6499,7 +6650,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RequestFileNumber",
 					  						DefaultText =  "Request File Number",
-					  						FullLocalDefaultText =  "מספר תיק בקשה",
+					  						FullLocalDefaultTextBack_up =  "מספר תיק בקשה",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeq15nXpyDXkden16nXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -6562,10 +6714,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsReleaseFile",
 					  						DefaultText =  "Is Release File",
-					  						FullLocalDefaultText =  "תיק שחרור",
+					  						FullLocalDefaultTextBack_up =  "תיק שחרור",
+					  						FullLocalDefaultText =  "BS64:Iteq15nXpyDXqdeX16jXldeoIg==",
 					  						ListFieldLable =  "IsReleaseFileListLable",
 					  						ListLableDefaultText =  "Is Release File",
-					  						ListLocalDefaultText =  "תיק שחרור",
+					  						ListLocalDefaultTextBack_up =  "תיק שחרור",
+					  						ListLocalDefaultText =  "BS64:Iteq15nXpyDXqdeX16jXldeoIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -6686,7 +6840,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsConnectedToUnifreight",
 					  						DefaultText =  "Is Connected To Unifreight",
-					  						FullLocalDefaultText =  "תיק יוניפרייט",
+					  						FullLocalDefaultTextBack_up =  "תיק יוניפרייט",
+					  						FullLocalDefaultText =  "BS64:Iteq15nXpyDXmdeV16DXmdek16jXmdeZ15gi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -6748,7 +6903,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MainImporterEntitlemntTypeCode",
 					  						DefaultText =  "Main Importer Entitlement Type Code",
-					  						FullLocalDefaultText =  "סוג זכאות יבואן",
+					  						FullLocalDefaultTextBack_up =  "סוג זכאות יבואן",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXlteb15DXldeqINeZ15HXldeQ158i",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "EntitlementType",
 					  						NavigationPropertyName =  "EntitlementType",
@@ -6812,7 +6968,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransImporterEntitleTypeCode",
 					  						DefaultText =  "TransImporter Entitlemnt Type Code",
-					  						FullLocalDefaultText =  "סוג זכאות יבואן מעביר",
+					  						FullLocalDefaultTextBack_up =  "סוג זכאות יבואן מעביר",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXlteb15DXldeqINeZ15HXldeQ158g157XoteR15nXqCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -6875,10 +7032,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterAddress",
 					  						DefaultText =  "Importer Address",
-					  						FullLocalDefaultText =  "כתובת יבואן",
+					  						FullLocalDefaultTextBack_up =  "כתובת יבואן",
+					  						FullLocalDefaultText =  "BS64:Iteb16rXldeR16og15nXkdeV15DXnyI=",
 					  						ListFieldLable =  "ImporterAddressListLable",
 					  						ListLableDefaultText =  "Importer Address",
-					  						ListLocalDefaultText =  "כתובת יבואן",
+					  						ListLocalDefaultTextBack_up =  "כתובת יבואן",
+					  						ListLocalDefaultText =  "BS64:Iteb16rXldeR16og15nXkdeV15DXnyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -6941,10 +7100,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransferImporterAddress",
 					  						DefaultText =  "Transfer Importer Address",
-					  						FullLocalDefaultText =  "כתובת יבואן מעביר",
+					  						FullLocalDefaultTextBack_up =  "כתובת יבואן מעביר",
+					  						FullLocalDefaultText =  "BS64:Iteb16rXldeR16og15nXkdeV15DXnyDXntei15HXmdeoIg==",
 					  						ListFieldLable =  "TransferImporterAddressListLable",
 					  						ListLableDefaultText =  "Transfer Importer Address",
-					  						ListLocalDefaultText =  "כתובת יבואן מעביר",
+					  						ListLocalDefaultTextBack_up =  "כתובת יבואן מעביר",
+					  						ListLocalDefaultText =  "BS64:Iteb16rXldeR16og15nXkdeV15DXnyDXntei15HXmdeoIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -7007,10 +7168,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EntitleImporterAddress",
 					  						DefaultText =  "Entitle Importer Address",
-					  						FullLocalDefaultText =  "כתובת יבואן זכאי",
+					  						FullLocalDefaultTextBack_up =  "כתובת יבואן זכאי",
+					  						FullLocalDefaultText =  "BS64:Iteb16rXldeR16og15nXkdeV15DXnyDXlteb15DXmSI=",
 					  						ListFieldLable =  "EntitleImporterAddressListLable",
 					  						ListLableDefaultText =  "Entitle Importer Address",
-					  						ListLocalDefaultText =  "כתובת יבואן זכאי",
+					  						ListLocalDefaultTextBack_up =  "כתובת יבואן זכאי",
+					  						ListLocalDefaultText =  "BS64:Iteb16rXldeR16og15nXkdeV15DXnyDXlteb15DXmSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -7073,10 +7236,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterPassportNumber",
 					  						DefaultText =  "Importer Passport Number",
-					  						FullLocalDefaultText =  "מס' דרכון יבואן",
+					  						FullLocalDefaultTextBack_up =  "מס' דרכון יבואן",
+					  						FullLocalDefaultText =  "BS64:Itee16EnINeT16jXm9eV158g15nXkdeV15DXnyI=",
 					  						ListFieldLable =  "ImporterPassportNumberListLable",
 					  						ListLableDefaultText =  "Importer Passport Number",
-					  						ListLocalDefaultText =  "מס' דרכון יבואן",
+					  						ListLocalDefaultTextBack_up =  "מס' דרכון יבואן",
+					  						ListLocalDefaultText =  "BS64:Itee16EnINeT16jXm9eV158g15nXkdeV15DXnyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -7139,10 +7304,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransferPassportNumber",
 					  						DefaultText =  "Transfer Passport Number",
-					  						FullLocalDefaultText =  "מס' תעודה יבואן מעביר",
+					  						FullLocalDefaultTextBack_up =  "מס' תעודה יבואן מעביר",
+					  						FullLocalDefaultText =  "BS64:Itee16EnINeq16LXldeT15Qg15nXkdeV15DXnyDXntei15HXmdeoIg==",
 					  						ListFieldLable =  "TransferPassportNumberListLable",
 					  						ListLableDefaultText =  "Transfer Passport Number",
-					  						ListLocalDefaultText =  "מס' תעודה יבואן מעביר",
+					  						ListLocalDefaultTextBack_up =  "מס' תעודה יבואן מעביר",
+					  						ListLocalDefaultText =  "BS64:Itee16EnINeq16LXldeT15Qg15nXkdeV15DXnyDXntei15HXmdeoIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -7205,10 +7372,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EntitlePassportNumber",
 					  						DefaultText =  "Entitle Passport Number",
-					  						FullLocalDefaultText =  "מס' תעודה יבואן זכאי",
+					  						FullLocalDefaultTextBack_up =  "מס' תעודה יבואן זכאי",
+					  						FullLocalDefaultText =  "BS64:Itee16EnINeq16LXldeT15Qg15nXkdeV15DXnyDXlteb15DXmSI=",
 					  						ListFieldLable =  "EntitlePassportNumberListLable",
 					  						ListLableDefaultText =  "Entitle Passport Number",
-					  						ListLocalDefaultText =  "מס' תעודה יבואן זכאי",
+					  						ListLocalDefaultTextBack_up =  "מס' תעודה יבואן זכאי",
+					  						ListLocalDefaultText =  "BS64:Itee16EnINeq16LXldeT15Qg15nXkdeV15DXnyDXlteb15DXmSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -7819,10 +7988,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StorageStatusCode",
 					  						DefaultText =  "Storage Status",
-					  						FullLocalDefaultText =  "סטטוס אחסנה",
+					  						FullLocalDefaultTextBack_up =  "סטטוס אחסנה",
+					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg15DXl9eh16DXlCI=",
 					  						ListFieldLable =  "StorageStatusCodeListLable",
 					  						ListLableDefaultText =  "Storage Status",
-					  						ListLocalDefaultText =  "סטטוס אחסנה",
+					  						ListLocalDefaultTextBack_up =  "סטטוס אחסנה",
+					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg15DXl9eh16DXlCI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "StorageStatus",
 					  						NavigationPropertyName =  "StorageStatus",
@@ -8015,10 +8186,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsCourierDeclaration",
 					  						DefaultText =  "Is Courier Declaration",
-					  						FullLocalDefaultText =  "הצהרת בלדר",
+					  						FullLocalDefaultTextBack_up =  "הצהרת בלדר",
+					  						FullLocalDefaultText =  "BS64:IteU16bXlNeo16og15HXnNeT16gi",
 					  						ListFieldLable =  "IsCourierDeclarationListLable",
 					  						ListLableDefaultText =  "Is Courier Declaration",
-					  						ListLocalDefaultText =  "הצהרת בלדר",
+					  						ListLocalDefaultTextBack_up =  "הצהרת בלדר",
+					  						ListLocalDefaultText =  "BS64:IteU16bXlNeo16og15HXnNeT16gi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -8082,10 +8255,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ManifestCargoStatusCode",
 					  						DefaultText =  "Manifest Cargo Status ",
-					  						FullLocalDefaultText =  "קוד משוב למצהר",
+					  						FullLocalDefaultTextBack_up =  "קוד משוב למצהר",
+					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXntep15XXkSDXnNee16bXlNeoIg==",
 					  						ListFieldLable =  "ManifestCargoStatusCodeListLable",
 					  						ListLableDefaultText =  "Manifest Cargo Status",
-					  						ListLocalDefaultText =  "קוד סטטוס מצהר",
+					  						ListLocalDefaultTextBack_up =  "קוד סטטוס מצהר",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXodeY15jXldehINee16bXlNeoIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "ManifestCargoStatus",
 					  						NavigationPropertyName =  "ManifestCargoStatus",
@@ -8149,10 +8324,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ManifestErrorXml",
 					  						DefaultText =  "Manifest Error Xml",
-					  						FullLocalDefaultText =  "משוב למצהר",
+					  						FullLocalDefaultTextBack_up =  "משוב למצהר",
+					  						FullLocalDefaultText =  "BS64:Itee16nXldeRINec157XpteU16gi",
 					  						ListFieldLable =  "ManifestErrorXmlListLable",
 					  						ListLableDefaultText =  "Manifest Error Xml",
-					  						ListLocalDefaultText =  "משוב למצהר",
+					  						ListLocalDefaultTextBack_up =  "משוב למצהר",
+					  						ListLocalDefaultText =  "BS64:Itee16nXldeRINec157XpteU16gi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  true,
 					  						NoMetaDataField =  false,
@@ -8215,10 +8392,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CourierHAWB",
 					  						DefaultText =  "Courier HAWB",
-					  						FullLocalDefaultText =  "שטר מטען בלדר",
+					  						FullLocalDefaultTextBack_up =  "שטר מטען בלדר",
+					  						FullLocalDefaultText =  "BS64:Itep15jXqCDXnteY16LXnyDXkdec15PXqCI=",
 					  						ListFieldLable =  "CourierHAWBListLable",
 					  						ListLableDefaultText =  "Courier HAWB",
-					  						ListLocalDefaultText =  "שטר מטען בלדר",
+					  						ListLocalDefaultTextBack_up =  "שטר מטען בלדר",
+					  						ListLocalDefaultText =  "BS64:Itep15jXqCDXnteY16LXnyDXkdec15PXqCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -8280,10 +8459,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ManifestNumber",
 					  						DefaultText =  "Manifest Number",
-					  						FullLocalDefaultText =  "מזהה מטען",
+					  						FullLocalDefaultTextBack_up =  "מזהה מטען",
+					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINee15jXotefIg==",
 					  						ListFieldLable =  "ManifestNumberListLable",
 					  						ListLableDefaultText =  "Manifest Number",
-					  						ListLocalDefaultText =  "מזהה מטען",
+					  						ListLocalDefaultTextBack_up =  "מזהה מטען",
+					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINee15jXotefIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -8346,10 +8527,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StorageStatusName",
 					  						DefaultText =  "Storage Status",
-					  						FullLocalDefaultText =  "שם סטטוס אחסנה",
+					  						FullLocalDefaultTextBack_up =  "שם סטטוס אחסנה",
+					  						FullLocalDefaultText =  "BS64:Itep150g16HXmNeY15XXoSDXkNeX16HXoNeUIg==",
 					  						ListFieldLable =  "StorageStatusNameListLable",
 					  						ListLableDefaultText =  "Storage Status Name",
-					  						ListLocalDefaultText =  "שם סטטוס אחסנה",
+					  						ListLocalDefaultTextBack_up =  "שם סטטוס אחסנה",
+					  						ListLocalDefaultText =  "BS64:Itep150g16HXmNeY15XXoSDXkNeX16HXoNeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -8471,9 +8654,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExcludeConsignment",
 					  						DefaultText =  "Exclude Consignment From Interface",
-					  						FullLocalDefaultText =  "שדר ללא משגור",
+					  						FullLocalDefaultTextBack_up =  "שדר ללא משגור",
+					  						FullLocalDefaultText =  "BS64:Itep15PXqCDXnNec15Ag157XqdeS15XXqCI=",
 					  						ListFieldLable =  "ExcludeConsignmentListLable",
-					  						ListLableDefaultText =  "שדר ללא משגור",
+					  						ListLableDefaultText =  "Exclude Consignment",
+					  						ListLocalDefaultTextBack_up =  "שדר ללא משגור",
+					  						ListLocalDefaultText =  "BS64:Itep15PXqCDXnNec15Ag157XqdeS15XXqCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -8537,10 +8723,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CourierCustomStatusCode",
 					  						DefaultText =  "Courier Custom Status",
-					  						FullLocalDefaultText =  " קוד סטטוס הצהרת בלדר",
+					  						FullLocalDefaultTextBack_up =  " קוד סטטוס הצהרת בלדר",
+					  						FullLocalDefaultText =  "BS64:IiDXp9eV15Mg16HXmNeY15XXoSDXlNem15TXqNeqINeR15zXk9eoIg==",
 					  						ListFieldLable =  "CourierCustomStatusCodeListLable",
 					  						ListLableDefaultText =  "CourierCustomStatusCode",
-					  						ListLocalDefaultText =  "קוד סטטוס הצהרת בלדר",
+					  						ListLocalDefaultTextBack_up =  "קוד סטטוס הצהרת בלדר",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXodeY15jXldehINeU16bXlNeo16og15HXnNeT16gi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CourierCustomStatus",
 					  						NavigationPropertyName =  "CourierCustomStatus",
@@ -8606,10 +8794,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CourierSuspentionReasonCode",
 					  						DefaultText =  "Courier Suspention Reason Code",
-					  						FullLocalDefaultText =  "קוד סיבת עיכוב",
+					  						FullLocalDefaultTextBack_up =  "קוד סיבת עיכוב",
+					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXodeZ15HXqiDXoteZ15vXldeRIg==",
 					  						ListFieldLable =  "CourierSuspentionReasonCodeListLable",
 					  						ListLableDefaultText =  "Courier Suspention Reason Code",
-					  						ListLocalDefaultText =  "קוד סיבת עיכוב",
+					  						ListLocalDefaultTextBack_up =  "קוד סיבת עיכוב",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXodeZ15HXqiDXoteZ15vXldeRIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "AgentTalkBackType",
 					  						NavigationPropertyName =  "AgentTalkBackType",
@@ -8673,10 +8863,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CourierReleaseStatusCode",
 					  						DefaultText =  "Courier Release Status ",
-					  						FullLocalDefaultText =  "סטטוס שחרור",
+					  						FullLocalDefaultTextBack_up =  "סטטוס שחרור",
+					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg16nXl9eo15XXqCI=",
 					  						ListFieldLable =  "CourierReleaseStatusCodeListLable",
 					  						ListLableDefaultText =  "Courier Release Status Code",
-					  						ListLocalDefaultText =  "סטטוס שחרור",
+					  						ListLocalDefaultTextBack_up =  "סטטוס שחרור",
+					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg16nXl9eo15XXqCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -8737,10 +8929,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CourierHataraStatusCode",
 					  						DefaultText =  "Courier Hatara Status Code",
-					  						FullLocalDefaultText =  "סטטוס התרה",
+					  						FullLocalDefaultTextBack_up =  "סטטוס התרה",
+					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg15TXqteo15Qi",
 					  						ListFieldLable =  "CourierHataraStatusCodeListLable",
 					  						ListLableDefaultText =  "Courier Hatara Status Code",
-					  						ListLocalDefaultText =  "סטטוס התרה",
+					  						ListLocalDefaultTextBack_up =  "סטטוס התרה",
+					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg15TXqteo15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -8801,7 +8995,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CourierData",
 					  						DefaultText =  "Courier Data",
-					  						FullLocalDefaultText =  "ש.מ.ר",
+					  						FullLocalDefaultTextBack_up =  "ש.מ.ר",
+					  						FullLocalDefaultText =  "BS64:ItepLteeLteoIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -8925,10 +9120,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DealValueWithFactor",
 					  						DefaultText =  "Deal Value With Factor",
-					  						FullLocalDefaultText =  "ערך טובין בש''ח",
+					  						FullLocalDefaultTextBack_up =  "ערך טובין בש''ח",
+					  						FullLocalDefaultText =  "BS64:Itei16jXmiDXmNeV15HXmdefINeR16knJ9eXIg==",
 					  						ListFieldLable =  "DealValueWithFactorListLable",
 					  						ListLableDefaultText =  "Deal Value With Factor",
-					  						ListLocalDefaultText =  "ערך טובין בש''ח",
+					  						ListLocalDefaultTextBack_up =  "ערך טובין בש''ח",
+					  						ListLocalDefaultText =  "BS64:Itei16jXmiDXmNeV15HXmdefINeR16knJ9eXIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -8990,10 +9187,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsValueForCustomsOnly",
 					  						DefaultText =  "Is value for customs only",
-					  						FullLocalDefaultText =  "ערך לצרכי מכס",
+					  						FullLocalDefaultTextBack_up =  "ערך לצרכי מכס",
+					  						FullLocalDefaultText =  "BS64:Itei16jXmiDXnNem16jXm9eZINee15vXoSI=",
 					  						ListFieldLable =  "IsValueForCustomsOnlyListLable",
 					  						ListLableDefaultText =  "Is value for customs only",
-					  						ListLocalDefaultText =  "ערך לצרכי מכס",
+					  						ListLocalDefaultTextBack_up =  "ערך לצרכי מכס",
+					  						ListLocalDefaultText =  "BS64:Itei16jXmiDXnNem16jXm9eZINee15vXoSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -9057,10 +9256,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "WeightValue",
 					  						DefaultText =  "Weight Value",
-					  						FullLocalDefaultText =  "תנאי תשלום",
+					  						FullLocalDefaultTextBack_up =  "תנאי תשלום",
+					  						FullLocalDefaultText =  "BS64:Iteq16DXkNeZINeq16nXnNeV150i",
 					  						ListFieldLable =  "WeightValueListLable",
 					  						ListLableDefaultText =  "WeightValue",
-					  						ListLocalDefaultText =  "תנאי תשלום",
+					  						ListLocalDefaultTextBack_up =  "תנאי תשלום",
+					  						ListLocalDefaultText =  "BS64:Iteq16DXkNeZINeq16nXnNeV150i",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "FreightPaymentMethod",
 					  						NavigationPropertyName =  "FreightPaymentMethod",
@@ -9125,10 +9326,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "WeightValueName",
 					  						DefaultText =  "Weight Value Name",
-					  						FullLocalDefaultText =  "תנאי תשלום",
+					  						FullLocalDefaultTextBack_up =  "תנאי תשלום",
+					  						FullLocalDefaultText =  "BS64:Iteq16DXkNeZINeq16nXnNeV150i",
 					  						ListFieldLable =  "WeightValueNameListLable",
 					  						ListLableDefaultText =  "Weight Value Name",
-					  						ListLocalDefaultText =  "תנאי תשלום",
+					  						ListLocalDefaultTextBack_up =  "תנאי תשלום",
+					  						ListLocalDefaultText =  "BS64:Iteq16DXkNeZINeq16nXnNeV150i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -9257,13 +9460,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CourierSearchFields",
 					  						DefaultText =  "CourierSearchFields",
-					  						FullLocalDefaultText =  "תיק/הצהרה/שטר מטען בלדר/לקוח",
+					  						FullLocalDefaultTextBack_up =  "תיק/הצהרה/שטר מטען בלדר/לקוח",
+					  						FullLocalDefaultText =  "BS64:Iteq15nXpy/XlNem15TXqNeUL9ep15jXqCDXnteY16LXnyDXkdec15PXqC/XnNen15XXlyI=",
 					  						ListFieldLable =  "CourierSearchFieldsListLable",
 					  						ListLableDefaultText =  "CourierSearchFields",
-					  						ListLocalDefaultText =  "שדה חיפוש בלדרות",
+					  						ListLocalDefaultTextBack_up =  "שדה חיפוש בלדרות",
+					  						ListLocalDefaultText =  "BS64:Itep15PXlCDXl9eZ16TXldepINeR15zXk9eo15XXqiI=",
 					  						HelpTextCode =  "CourierSearchFields",
 					  						HelpTextDefaultText =  "Courier Search By:",
-					  						HelpLocalDefaultText =  "שדה חיפוש בלדרות",
+					  						HelpLocalDefaultTextBack_up =  "שדה חיפוש בלדרות",
+					  						HelpLocalDefaultText =  "BS64:Itep15PXlCDXl9eZ16TXldepINeR15zXk9eo15XXqiI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -9327,10 +9533,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CourierCustomStatusName",
 					  						DefaultText =  "Courier Custom Status",
-					  						FullLocalDefaultText =  "סטטוס הצהרת בלדר",
+					  						FullLocalDefaultTextBack_up =  "סטטוס הצהרת בלדר",
+					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg15TXpteU16jXqiDXkdec15PXqCI=",
 					  						ListFieldLable =  "CourierCustomStatusNameListLable",
 					  						ListLableDefaultText =  "Courier Custom Status",
-					  						ListLocalDefaultText =  "סטטוס הצהרת בלדר",
+					  						ListLocalDefaultTextBack_up =  "סטטוס הצהרת בלדר",
+					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg15TXpteU16jXqiDXkdec15PXqCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -9393,10 +9601,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ManifestCargoStatusName",
 					  						DefaultText =  "Manifest Cargo Status ",
-					  						FullLocalDefaultText =  "משוב למצהר",
+					  						FullLocalDefaultTextBack_up =  "משוב למצהר",
+					  						FullLocalDefaultText =  "BS64:Itee16nXldeRINec157XpteU16gi",
 					  						ListFieldLable =  "ManifestCargoStatusNameListLable",
 					  						ListLableDefaultText =  "Manifest Cargo Status ",
-					  						ListLocalDefaultText =  "סטטוס מצהר",
+					  						ListLocalDefaultTextBack_up =  "סטטוס מצהר",
+					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg157XpteU16gi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -9459,10 +9669,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MAWBCourierMaster",
 					  						DefaultText =  "MAWB Courier Master",
-					  						FullLocalDefaultText =  "שטר מטען ראשי",
+					  						FullLocalDefaultTextBack_up =  "שטר מטען ראשי",
+					  						FullLocalDefaultText =  "BS64:Itep15jXqCDXnteY16LXnyDXqNeQ16nXmSI=",
 					  						ListFieldLable =  "MAWBCourierMasterListLable",
 					  						ListLableDefaultText =  "MAWB Courier Master",
-					  						ListLocalDefaultText =  "שטר מטען ראשי",
+					  						ListLocalDefaultTextBack_up =  "שטר מטען ראשי",
+					  						ListLocalDefaultText =  "BS64:Itep15jXqCDXnteY16LXnyDXqNeQ16nXmSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -9525,10 +9737,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CourierSuspentionReasonName",
 					  						DefaultText =  "Courier Suspention Reason",
-					  						FullLocalDefaultText =  "סיבת עיכוב",
+					  						FullLocalDefaultTextBack_up =  "סיבת עיכוב",
+					  						FullLocalDefaultText =  "BS64:Iteh15nXkdeqINei15nXm9eV15Ei",
 					  						ListFieldLable =  "CourierSuspentionReasonNameListLable",
 					  						ListLableDefaultText =  "Courier Suspention Reason",
-					  						ListLocalDefaultText =  "סיבת עיכוב",
+					  						ListLocalDefaultTextBack_up =  "סיבת עיכוב",
+					  						ListLocalDefaultText =  "BS64:Iteh15nXkdeqINei15nXm9eV15Ei",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -9592,10 +9806,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AcceptanceStatusCode",
 					  						DefaultText =  "Acceptance Status",
-					  						FullLocalDefaultText =  "סטטוס זמינות",
+					  						FullLocalDefaultTextBack_up =  "סטטוס זמינות",
+					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg15bXnteZ16DXldeqIg==",
 					  						ListFieldLable =  "AcceptanceStatusCodeListLable",
 					  						ListLableDefaultText =  "Acceptance Status",
-					  						ListLocalDefaultText =  "סטטוס זמינות",
+					  						ListLocalDefaultTextBack_up =  "סטטוס זמינות",
+					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg15bXnteZ16DXldeqIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "AcceptanceStatus",
 					  						NavigationPropertyName =  "AcceptanceStatus",
@@ -9660,10 +9876,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CasualImporterAddress1",
 					  						DefaultText =  "Casual Importer Address",
-					  						FullLocalDefaultText =  "כתובת לקוח",
+					  						FullLocalDefaultTextBack_up =  "כתובת לקוח",
+					  						FullLocalDefaultText =  "BS64:Iteb16rXldeR16og15zXp9eV15ci",
 					  						ListFieldLable =  "CasualImporterAddress1ListLable",
 					  						ListLableDefaultText =  "Casual Importer Address",
-					  						ListLocalDefaultText =  "כתובת לקוח",
+					  						ListLocalDefaultTextBack_up =  "כתובת לקוח",
+					  						ListLocalDefaultText =  "BS64:Iteb16rXldeR16og15zXp9eV15ci",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -9726,10 +9944,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CasualImporterAddress2",
 					  						DefaultText =  "Casual Importer Address 2",
-					  						FullLocalDefaultText =  "כתובת לקוח 2",
+					  						FullLocalDefaultTextBack_up =  "כתובת לקוח 2",
+					  						FullLocalDefaultText =  "BS64:Iteb16rXldeR16og15zXp9eV15cgMiI=",
 					  						ListFieldLable =  "CasualImporterAddress2ListLable",
 					  						ListLableDefaultText =  "Casual Importer Address 2",
-					  						ListLocalDefaultText =  "כתובת לקוח 2",
+					  						ListLocalDefaultTextBack_up =  "כתובת לקוח 2",
+					  						ListLocalDefaultText =  "BS64:Iteb16rXldeR16og15zXp9eV15cgMiI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -9792,10 +10012,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CasualImporterCity",
 					  						DefaultText =  "Casual Importer City",
-					  						FullLocalDefaultText =  "עיר",
+					  						FullLocalDefaultTextBack_up =  "עיר",
+					  						FullLocalDefaultText =  "BS64:Itei15nXqCI=",
 					  						ListFieldLable =  "CasualImporterCityListLable",
 					  						ListLableDefaultText =  "Casual Importer City",
-					  						ListLocalDefaultText =  "עיר",
+					  						ListLocalDefaultTextBack_up =  "עיר",
+					  						ListLocalDefaultText =  "BS64:Itei15nXqCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -9858,10 +10080,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CasualImporterZipCode",
 					  						DefaultText =  "Casual Importer Zip Code",
-					  						FullLocalDefaultText =  "מיקוד",
+					  						FullLocalDefaultTextBack_up =  "מיקוד",
+					  						FullLocalDefaultText =  "BS64:Itee15nXp9eV15Mi",
 					  						ListFieldLable =  "CasualImporterZipCodeListLable",
 					  						ListLableDefaultText =  "Casual Importer Zip Code",
-					  						ListLocalDefaultText =  "מיקוד",
+					  						ListLocalDefaultTextBack_up =  "מיקוד",
+					  						ListLocalDefaultText =  "BS64:Itee15nXp9eV15Mi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -9924,10 +10148,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CasualImporterFax",
 					  						DefaultText =  "Casual Importer Fax",
-					  						FullLocalDefaultText =  "פקס",
+					  						FullLocalDefaultTextBack_up =  "פקס",
+					  						FullLocalDefaultText =  "BS64:Itek16fXoSI=",
 					  						ListFieldLable =  "CasualImporterFaxListLable",
 					  						ListLableDefaultText =  "Casual Importer Fax",
-					  						ListLocalDefaultText =  "פקס",
+					  						ListLocalDefaultTextBack_up =  "פקס",
+					  						ListLocalDefaultText =  "BS64:Itek16fXoSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -9990,10 +10216,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CasualImporterEmail",
 					  						DefaultText =  "Casual Importer Email",
-					  						FullLocalDefaultText =  "מייל",
+					  						FullLocalDefaultTextBack_up =  "מייל",
+					  						FullLocalDefaultText =  "BS64:Itee15nXmdecIg==",
 					  						ListFieldLable =  "CasualImporterEmailListLable",
 					  						ListLableDefaultText =  "Casual Importer Email",
-					  						ListLocalDefaultText =  "מייל",
+					  						ListLocalDefaultTextBack_up =  "מייל",
+					  						ListLocalDefaultText =  "BS64:Itee15nXmdecIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -10056,10 +10284,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CasualImporterTel",
 					  						DefaultText =  "Casual Importer Tel",
-					  						FullLocalDefaultText =  "טלפון",
+					  						FullLocalDefaultTextBack_up =  "טלפון",
+					  						FullLocalDefaultText =  "BS64:IteY15zXpNeV158i",
 					  						ListFieldLable =  "CasualImporterTelListLable",
 					  						ListLableDefaultText =  "Casual Importer Tel",
-					  						ListLocalDefaultText =  "טלפון",
+					  						ListLocalDefaultTextBack_up =  "טלפון",
+					  						ListLocalDefaultText =  "BS64:IteY15zXpNeV158i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -10122,10 +10352,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CasualImporterContact",
 					  						DefaultText =  "Casual Importer Contact",
-					  						FullLocalDefaultText =  "איש קשר",
+					  						FullLocalDefaultTextBack_up =  "איש קשר",
+					  						FullLocalDefaultText =  "BS64:IteQ15nXqSDXp9ep16gi",
 					  						ListFieldLable =  "CasualImporterContactListLable",
 					  						ListLableDefaultText =  "Casual Importer Contact",
-					  						ListLocalDefaultText =  "איש קשר",
+					  						ListLocalDefaultTextBack_up =  "איש קשר",
+					  						ListLocalDefaultText =  "BS64:IteQ15nXqSDXp9ep16gi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -10188,10 +10420,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ItemsProcessTypesList",
 					  						DefaultText =  "Items Process Types List",
-					  						FullLocalDefaultText =  "רשימת קודי תהליך",
+					  						FullLocalDefaultTextBack_up =  "רשימת קודי תהליך",
+					  						FullLocalDefaultText =  "BS64:Iteo16nXmdee16og16fXldeT15kg16rXlNec15nXmiI=",
 					  						ListFieldLable =  "ItemsProcessTypesListListLable",
 					  						ListLableDefaultText =  "Items Process Types List",
-					  						ListLocalDefaultText =  "רשימת קודי תהליך",
+					  						ListLocalDefaultTextBack_up =  "רשימת קודי תהליך",
+					  						ListLocalDefaultText =  "BS64:Iteo16nXmdee16og16fXldeT15kg16rXlNec15nXmiI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  true,
 					  						NoMetaDataField =  false,
@@ -10253,10 +10487,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsClose",
 					  						DefaultText =  "Is Close",
-					  						FullLocalDefaultText =  "סגור",
+					  						FullLocalDefaultTextBack_up =  "סגור",
+					  						FullLocalDefaultText =  "BS64:Iteh15LXldeoIg==",
 					  						ListFieldLable =  "IsCloseListLable",
 					  						ListLableDefaultText =  "Is Close",
-					  						ListLocalDefaultText =  "סגור",
+					  						ListLocalDefaultTextBack_up =  "סגור",
+					  						ListLocalDefaultText =  "BS64:Iteh15LXldeoIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -10322,7 +10558,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "Customs.Declaration",
 					  						ListFieldLable =  "AcceptanceStatusNameListLable",
 					  						ListLableDefaultText =  "Acceptance Status",
-					  						ListLocalDefaultText =  "סטטוס זמינות",
+					  						ListLocalDefaultTextBack_up =  "סטטוס זמינות",
+					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg15bXnteZ16DXldeqIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -10386,10 +10623,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CourierSuspentionCode",
 					  						DefaultText =  "Courier Suspention Code",
-					  						FullLocalDefaultText =  "קוד עיכוב מכס",
+					  						FullLocalDefaultTextBack_up =  "קוד עיכוב מכס",
+					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXoteZ15vXldeRINee15vXoSI=",
 					  						ListFieldLable =  "CourierSuspentionCodeListLable",
 					  						ListLableDefaultText =  "Courier Suspention Code",
-					  						ListLocalDefaultText =  "קוד עיכוב מכס",
+					  						ListLocalDefaultTextBack_up =  "קוד עיכוב מכס",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXoteZ15vXldeRINee15vXoSI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "DeclarationStatusType",
 					  						NavigationPropertyName =  "CourierSuspention",
@@ -10454,10 +10693,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CourierSuspentionName",
 					  						DefaultText =  "Courier Suspention Name",
-					  						FullLocalDefaultText =  "תאור קוד עיכוב מכס",
+					  						FullLocalDefaultTextBack_up =  "תאור קוד עיכוב מכס",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXldeoINen15XXkyDXoteZ15vXldeRINee15vXoSI=",
 					  						ListFieldLable =  "CourierSuspentionNameListLable",
 					  						ListLableDefaultText =  "Courier Suspention Name",
-					  						ListLocalDefaultText =  "תאור קוד עיכוב מכס",
+					  						ListLocalDefaultTextBack_up =  "תאור קוד עיכוב מכס",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXldeoINen15XXkyDXoteZ15vXldeRINee15vXoSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -10520,10 +10761,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DepositionStatusCode",
 					  						DefaultText =  "Deposition Status Code",
-					  						FullLocalDefaultText =  "סטטוס תצהיר",
+					  						FullLocalDefaultTextBack_up =  "סטטוס תצהיר",
+					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg16rXpteU15nXqCI=",
 					  						ListFieldLable =  "DepositionStatusCodeListLable",
 					  						ListLableDefaultText =  "Deposition Status Code",
-					  						ListLocalDefaultText =  "סטטוס תצהיר",
+					  						ListLocalDefaultTextBack_up =  "סטטוס תצהיר",
+					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg16rXpteU15nXqCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -10646,10 +10889,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsClosedForFollowUp",
 					  						DefaultText =  "Is Closed For Follow Up",
-					  						FullLocalDefaultText =  "סגור/פתוח",
+					  						FullLocalDefaultTextBack_up =  "סגור/פתוח",
+					  						FullLocalDefaultText =  "BS64:Iteh15LXldeoL9ek16rXldeXIg==",
 					  						ListFieldLable =  "IsClosedForFollowUpListLable",
 					  						ListLableDefaultText =  "Is Closed For Follow Up",
-					  						ListLocalDefaultText =  "סגור/פתוח",
+					  						ListLocalDefaultTextBack_up =  "סגור/פתוח",
+					  						ListLocalDefaultText =  "BS64:Iteh15LXldeoL9ek16rXldeXIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -10711,10 +10956,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FastIndividualProcessCode",
 					  						DefaultText =  "Fast Individual Process",
-					  						FullLocalDefaultText =  "מהיר/פרטני",
+					  						FullLocalDefaultTextBack_up =  "מהיר/פרטני",
+					  						FullLocalDefaultText =  "BS64:Itee15TXmdeoL9ek16jXmNeg15ki",
 					  						ListFieldLable =  "FastIndividualProcessCodeListLable",
 					  						ListLableDefaultText =  "Fast Individual Process",
-					  						ListLocalDefaultText =  "מהיר/פרטני",
+					  						ListLocalDefaultTextBack_up =  "מהיר/פרטני",
+					  						ListLocalDefaultText =  "BS64:Itee15TXmdeoL9ek16jXmNeg15ki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -10779,10 +11026,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TotalInvoiceAmountInUSD",
 					  						DefaultText =  "Total Invoice Amount",
-					  						FullLocalDefaultText =  "ערך סחורה ב-$",
+					  						FullLocalDefaultTextBack_up =  "ערך סחורה ב-$",
+					  						FullLocalDefaultText =  "BS64:Itei16jXmiDXodeX15XXqNeUINeRLSQi",
 					  						ListFieldLable =  "TotalInvoiceAmountInUSDListLable",
 					  						ListLableDefaultText =  "Total Invoice Amount",
-					  						ListLocalDefaultText =  "ערך סחורה ב-$",
+					  						ListLocalDefaultTextBack_up =  "ערך סחורה ב-$",
+					  						ListLocalDefaultText =  "BS64:Itei16jXmiDXodeX15XXqNeUINeRLSQi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -10909,10 +11158,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsCourierMissingClassification",
 					  						DefaultText =  "Courier Missing Classification",
-					  						FullLocalDefaultText =  "ללא סיווג",
+					  						FullLocalDefaultTextBack_up =  "ללא סיווג",
+					  						FullLocalDefaultText =  "BS64:Itec15zXkCDXodeZ15XXldeSIg==",
 					  						ListFieldLable =  "IsCourierMissingClassificationListLable",
 					  						ListLableDefaultText =  "Courier Missing Classification",
-					  						ListLocalDefaultText =  "ללא סיווג",
+					  						ListLocalDefaultTextBack_up =  "ללא סיווג",
+					  						ListLocalDefaultText =  "BS64:Itec15zXkCDXodeZ15XXldeSIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -10974,10 +11225,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MAWB",
 					  						DefaultText =  "MAWB",
-					  						FullLocalDefaultText =  "שטר מטען ראשי",
+					  						FullLocalDefaultTextBack_up =  "שטר מטען ראשי",
+					  						FullLocalDefaultText =  "BS64:Itep15jXqCDXnteY16LXnyDXqNeQ16nXmSI=",
 					  						ListFieldLable =  "MAWBListLable",
 					  						ListLableDefaultText =  "MAWB",
-					  						ListLocalDefaultText =  "שטר מטען ראשי",
+					  						ListLocalDefaultTextBack_up =  "שטר מטען ראשי",
+					  						ListLocalDefaultText =  "BS64:Itep15jXqCDXnteY16LXnyDXqNeQ16nXmSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11105,10 +11358,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CourierPendingReasonList",
 					  						DefaultText =  "Courier Pending Reason List",
-					  						FullLocalDefaultText =  "קוד PENDING",
+					  						FullLocalDefaultTextBack_up =  "קוד PENDING",
+					  						FullLocalDefaultText =  "BS64:Iten15XXkyBQRU5ESU5HIg==",
 					  						ListFieldLable =  "CourierPendingReasonListListLable",
 					  						ListLableDefaultText =  "Courier Pending Reason List",
-					  						ListLocalDefaultText =  "קוד PENDING",
+					  						ListLocalDefaultTextBack_up =  "קוד PENDING",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyBQRU5ESU5HIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11170,10 +11425,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CargoDescription",
 					  						DefaultText =  "Cargo Description",
-					  						FullLocalDefaultText =  "תאור טובין",
+					  						FullLocalDefaultTextBack_up =  "תאור טובין",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXldeoINeY15XXkdeZ158i",
 					  						ListFieldLable =  "CargoDescriptionListLable",
 					  						ListLableDefaultText =  "Cargo Description",
-					  						ListLocalDefaultText =  "תאור טובין",
+					  						ListLocalDefaultTextBack_up =  "תאור טובין",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXldeoINeY15XXkdeZ158i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11236,10 +11493,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsPaymentProtested",
 					  						DefaultText =  "Is Payment Protested",
-					  						FullLocalDefaultText =  "בוצעה הגשה אגב מחאה",
+					  						FullLocalDefaultTextBack_up =  "בוצעה הגשה אגב מחאה",
+					  						FullLocalDefaultText =  "BS64:IteR15XXptei15Qg15TXktep15Qg15DXkteRINee15fXkNeUIg==",
 					  						ListFieldLable =  "IsPaymentProtestedListLable",
 					  						ListLableDefaultText =  "Is Payment Protested",
-					  						ListLocalDefaultText =  "בוצעה הגשה אגב מחאה",
+					  						ListLocalDefaultTextBack_up =  "בוצעה הגשה אגב מחאה",
+					  						ListLocalDefaultText =  "BS64:IteR15XXptei15Qg15TXktep15Qg15DXkteRINee15fXkNeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11301,10 +11560,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FastIndividualProcessName",
 					  						DefaultText =  "Fast Individual Process Name",
-					  						FullLocalDefaultText =  "מהיר/פרטני",
+					  						FullLocalDefaultTextBack_up =  "מהיר/פרטני",
+					  						FullLocalDefaultText =  "BS64:Itee15TXmdeoL9ek16jXmNeg15ki",
 					  						ListFieldLable =  "FastIndividualProcessNameListLable",
 					  						ListLableDefaultText =  "Fast Individual Process Name",
-					  						ListLocalDefaultText =  "מהיר/פרטני",
+					  						ListLocalDefaultTextBack_up =  "מהיר/פרטני",
+					  						ListLocalDefaultText =  "BS64:Itee15TXmdeoL9ek16jXmNeg15ki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11367,7 +11628,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DecDangersContacts",
 					  						DefaultText =  "Declaration Dangers Contacts",
-					  						FullLocalDefaultText =  "אנשי קשר לחומרים מסוכנים",
+					  						FullLocalDefaultTextBack_up =  "אנשי קשר לחומרים מסוכנים",
+					  						FullLocalDefaultText =  "BS64:IteQ16DXqdeZINen16nXqCDXnNeX15XXnteo15nXnSDXnteh15XXm9eg15nXnSI=",
 					  						ListFieldLable =  "DecDangersContactsListLable",
 					  						ListLableDefaultText =  "Declaration Dangers Contact",
 					  						IsForeignKey =  false,
@@ -11433,10 +11695,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AmendmentRequestNumber",
 					  						DefaultText =  "Amendment Request Number",
-					  						FullLocalDefaultText =  "מס' בקשה",
+					  						FullLocalDefaultTextBack_up =  "מס' בקשה",
+					  						FullLocalDefaultText =  "BS64:Itee16EnINeR16fXqdeUIg==",
 					  						ListFieldLable =  "AmendmentRequestNumberListLable",
 					  						ListLableDefaultText =  "Amendment Request Number",
-					  						ListLocalDefaultText =  "מס' בקשה",
+					  						ListLocalDefaultTextBack_up =  "מס' בקשה",
+					  						ListLocalDefaultText =  "BS64:Itee16EnINeR16fXqdeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11498,7 +11762,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AmendmentStatus",
 					  						DefaultText =  "Amendment Status",
-					  						FullLocalDefaultText =  "סטטוס תיקון הצהרה",
+					  						FullLocalDefaultTextBack_up =  "סטטוס תיקון הצהרה",
+					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg16rXmden15XXnyDXlNem15TXqNeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11560,10 +11825,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AmendmentissueDate",
 					  						DefaultText =  "Amendment Issue Date",
-					  						FullLocalDefaultText =  "תאריך יצירת הבקשה",
+					  						FullLocalDefaultTextBack_up =  "תאריך יצירת הבקשה",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15nXpteZ16jXqiDXlNeR16fXqdeUIg==",
 					  						ListFieldLable =  "AmendmentissueDateListLable",
 					  						ListLableDefaultText =  "Amendment Issue Date",
-					  						ListLocalDefaultText =  "תאריך יצירת הבקשה",
+					  						ListLocalDefaultTextBack_up =  "תאריך יצירת הבקשה",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15nXpteZ16jXqiDXlNeR16fXqdeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11624,7 +11891,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AmendmentRemarks",
 					  						DefaultText =  "Amendment Remarks",
-					  						FullLocalDefaultText =  "הערות לתיקון בקשה",
+					  						FullLocalDefaultTextBack_up =  "הערות לתיקון בקשה",
+					  						FullLocalDefaultText =  "BS64:IteU16LXqNeV16og15zXqteZ16fXldefINeR16fXqdeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11685,7 +11953,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AmendmentDeficitInitiated",
 					  						DefaultText =  "Amendment DeficitInitiated",
-					  						FullLocalDefaultText =  "גרעון יזום",
+					  						FullLocalDefaultTextBack_up =  "גרעון יזום",
+					  						FullLocalDefaultText =  "BS64:IteS16jXoteV158g15nXlteV150i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11746,7 +12015,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AmendDeficitInitiatedReasTo",
 					  						DefaultText =  "Amendment DeficitInitiated Reason To",
-					  						FullLocalDefaultText =  "נימוקים לגרעון יזום",
+					  						FullLocalDefaultTextBack_up =  "נימוקים לגרעון יזום",
+					  						FullLocalDefaultText =  "BS64:Iteg15nXnteV16fXmdedINec15LXqNei15XXnyDXmdeW15XXnSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11807,7 +12077,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AmendmentCorrectedByUserId",
 					  						DefaultText =  "Amendment Corrected By User Id",
-					  						FullLocalDefaultText =  "תיקון נפתח עי",
+					  						FullLocalDefaultTextBack_up =  "תיקון נפתח עי",
+					  						FullLocalDefaultText =  "BS64:Iteq15nXp9eV158g16DXpNeq15cg16LXmSI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "AmendmentCorrectedByUser",
@@ -11870,7 +12141,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AmendmentRejectionReason",
 					  						DefaultText =  "Amendment Rejection Reason",
-					  						FullLocalDefaultText =  "סיבת דחיה",
+					  						FullLocalDefaultTextBack_up =  "סיבת דחיה",
+					  						FullLocalDefaultText =  "BS64:Iteh15nXkdeqINeT15fXmdeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11931,7 +12203,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsAmendment",
 					  						DefaultText =  "Is Amendment",
-					  						FullLocalDefaultText =  "הצהרת תיקון",
+					  						FullLocalDefaultTextBack_up =  "הצהרת תיקון",
+					  						FullLocalDefaultText =  "BS64:IteU16bXlNeo16og16rXmden15XXnyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11992,7 +12265,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AmendmentOriginalDeclartation",
 					  						DefaultText =  "Amendment Original Declartation",
-					  						FullLocalDefaultText =  "הצהרה מקורית",
+					  						FullLocalDefaultTextBack_up =  "הצהרה מקורית",
+					  						FullLocalDefaultText =  "BS64:IteU16bXlNeo15Qg157Xp9eV16jXmdeqIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -12054,10 +12328,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AmendmentCorrectedByUserName",
 					  						DefaultText =  "Amendment Corrected By ",
-					  						FullLocalDefaultText =  "תיקון נפתח עי",
+					  						FullLocalDefaultTextBack_up =  "תיקון נפתח עי",
+					  						FullLocalDefaultText =  "BS64:Iteq15nXp9eV158g16DXpNeq15cg16LXmSI=",
 					  						ListFieldLable =  "AmendmentCorrectedByUserNameListLable",
 					  						ListLableDefaultText =  "Amendment Corrected By ",
-					  						ListLocalDefaultText =  "תיקון נפתח עי",
+					  						ListLocalDefaultTextBack_up =  "תיקון נפתח עי",
+					  						ListLocalDefaultText =  "BS64:Iteq15nXp9eV158g16DXpNeq15cg16LXmSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -12120,10 +12396,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AmendmentStatusName",
 					  						DefaultText =  "Amendment Status Name",
-					  						FullLocalDefaultText =  "סטטוס תיקון הצהרה",
+					  						FullLocalDefaultTextBack_up =  "סטטוס תיקון הצהרה",
+					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg16rXmden15XXnyDXlNem15TXqNeUIg==",
 					  						ListFieldLable =  "AmendmentStatusNameListLable",
 					  						ListLableDefaultText =  "Amendment Status Name",
-					  						ListLocalDefaultText =  "סטטוס תיקון הצהרה",
+					  						ListLocalDefaultTextBack_up =  "סטטוס תיקון הצהרה",
+					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg16rXmden15XXnyDXlNem15TXqNeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -12186,10 +12464,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CourierManifestStatusCode",
 					  						DefaultText =  "Courier Manifest Status",
-					  						FullLocalDefaultText =  "מצהר",
+					  						FullLocalDefaultTextBack_up =  "מצהר",
+					  						FullLocalDefaultText =  "BS64:Itee16bXlNeoIg==",
 					  						ListFieldLable =  "CourierManifestStatusCodeListLable",
 					  						ListLableDefaultText =  "Courier Manifest Status",
-					  						ListLocalDefaultText =  "מצהר",
+					  						ListLocalDefaultTextBack_up =  "מצהר",
+					  						ListLocalDefaultText =  "BS64:Itee16bXlNeoIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -12252,10 +12532,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CourierPaymentStatusCode",
 					  						DefaultText =  "Courier Payment Status",
-					  						FullLocalDefaultText =  "תשלום",
+					  						FullLocalDefaultTextBack_up =  "תשלום",
+					  						FullLocalDefaultText =  "BS64:Iteq16nXnNeV150i",
 					  						ListFieldLable =  "CourierPaymentStatusCodeListLable",
 					  						ListLableDefaultText =  "Courier Payment Status",
-					  						ListLocalDefaultText =  "תשלום",
+					  						ListLocalDefaultTextBack_up =  "תשלום",
+					  						ListLocalDefaultText =  "BS64:Iteq16nXnNeV150i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -12381,7 +12663,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsDiamondDeclaration",
 					  						DefaultText =  "Is Diamond Declaration",
-					  						FullLocalDefaultText =  "הצהרת יהלומים",
+					  						FullLocalDefaultTextBack_up =  "הצהרת יהלומים",
+					  						FullLocalDefaultText =  "BS64:IteU16bXlNeo16og15nXlNec15XXnteZ150i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -12444,10 +12727,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AmendmentDontDisplayInList",
 					  						DefaultText =  "Amendment Dont Display In List",
-					  						FullLocalDefaultText =  "הצהרת תיקון לא להצגה",
+					  						FullLocalDefaultTextBack_up =  "הצהרת תיקון לא להצגה",
+					  						FullLocalDefaultText =  "BS64:IteU16bXlNeo16og16rXmden15XXnyDXnNeQINec15TXpteS15Qi",
 					  						ListFieldLable =  "AmendmentDontDisplayInListListLable",
 					  						ListLableDefaultText =  "Amendment Dont Display In List",
-					  						ListLocalDefaultText =  "הצהרת תיקון לא להצגה",
+					  						ListLocalDefaultTextBack_up =  "הצהרת תיקון לא להצגה",
+					  						ListLocalDefaultText =  "BS64:IteU16bXlNeo16og16rXmden15XXnyDXnNeQINec15TXpteS15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -12629,10 +12914,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsMissMandatoryDiamond",
 					  						DefaultText =  "Is Missing Mandatory Fields",
-					  						FullLocalDefaultText =  "שדות חובה בהצהרה",
+					  						FullLocalDefaultTextBack_up =  "שדות חובה בהצהרה",
+					  						FullLocalDefaultText =  "BS64:Itep15PXldeqINeX15XXkdeUINeR15TXpteU16jXlCI=",
 					  						ListFieldLable =  "IsMissMandatoryDiamondListLable",
 					  						ListLableDefaultText =  "Is Missing Mandatory Fields",
-					  						ListLocalDefaultText =  "שדות חובה בהצהרה",
+					  						ListLocalDefaultTextBack_up =  "שדות חובה בהצהרה",
+					  						ListLocalDefaultText =  "BS64:Itep15PXldeqINeX15XXkdeUINeR15TXpteU16jXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -12694,10 +12981,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsValidTicketsDiamond",
 					  						DefaultText =  "Document Status - Diamond",
-					  						FullLocalDefaultText =  "סטטוס מסמכים - יהלומים",
+					  						FullLocalDefaultTextBack_up =  "סטטוס מסמכים - יהלומים",
+					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg157Xodee15vXmdedIC0g15nXlNec15XXnteZ150i",
 					  						ListFieldLable =  "IsValidTicketsDiamondListLable",
 					  						ListLableDefaultText =  "Document Status Diamond",
-					  						ListLocalDefaultText =  "סטטוס מסמכים - יהלומים",
+					  						ListLocalDefaultTextBack_up =  "סטטוס מסמכים - יהלומים",
+					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg157Xodee15vXmdedIC0g15nXlNec15XXnteZ150i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -12760,10 +13049,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomFileAmendment",
 					  						DefaultText =  "Custom File No.",
-					  						FullLocalDefaultText =  "מספר תיק",
+					  						FullLocalDefaultTextBack_up =  "מספר תיק",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeq15nXpyI=",
 					  						ListFieldLable =  "CustomFileAmendmentListLable",
 					  						ListLableDefaultText =  "Custom File No.",
-					  						ListLocalDefaultText =  "מספר תיק",
+					  						ListLocalDefaultTextBack_up =  "מספר תיק",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeq15nXpyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -12825,10 +13116,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationNoAmendment",
 					  						DefaultText =  "Declaration Number",
-					  						FullLocalDefaultText =  "מספר הצהרה",
+					  						FullLocalDefaultTextBack_up =  "מספר הצהרה",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeU16bXlNeo15Qi",
 					  						ListFieldLable =  "DeclarationNoAmendmentListLable",
 					  						ListLableDefaultText =  "Declaration Number",
-					  						ListLocalDefaultText =  "מספר הצהרה",
+					  						ListLocalDefaultTextBack_up =  "מספר הצהרה",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeU16bXlNeo15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -12889,7 +13182,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AvailabilityDate",
 					  						DefaultText =  "Availability Date",
-					  						FullLocalDefaultText =  "תאריך זמינות",
+					  						FullLocalDefaultTextBack_up =  "תאריך זמינות",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15bXnteZ16DXldeqIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -12951,10 +13245,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AmendmentNumber",
 					  						DefaultText =  "Amendment Number",
-					  						FullLocalDefaultText =  "מספר תיקון",
+					  						FullLocalDefaultTextBack_up =  "מספר תיקון",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeq15nXp9eV158i",
 					  						ListFieldLable =  "AmendmentNumberListLable",
 					  						ListLableDefaultText =  "Amendment Number",
-					  						ListLocalDefaultText =  "מספר תיקון",
+					  						ListLocalDefaultTextBack_up =  "מספר תיקון",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeq15nXp9eV158i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -13016,10 +13312,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CourierPendingReasonName",
 					  						DefaultText =  "Courier Pending Reason Name",
-					  						FullLocalDefaultText =  "רשימת קודי עיכובים",
+					  						FullLocalDefaultTextBack_up =  "רשימת קודי עיכובים",
+					  						FullLocalDefaultText =  "BS64:Iteo16nXmdee16og16fXldeT15kg16LXmdeb15XXkdeZ150i",
 					  						ListFieldLable =  "CourierPendingReasonNameListLable",
 					  						ListLableDefaultText =  "Courier Pending Reason Name",
-					  						ListLocalDefaultText =  "רשימת קודי עיכובים",
+					  						ListLocalDefaultTextBack_up =  "רשימת קודי עיכובים",
+					  						ListLocalDefaultText =  "BS64:Iteo16nXmdee16og16fXldeT15kg16LXmdeb15XXkdeZ150i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -13144,10 +13442,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LoadingDateTime",
 					  						DefaultText =  "Loading Date",
-					  						FullLocalDefaultText =  "תאריך טעינה",
+					  						FullLocalDefaultTextBack_up =  "תאריך טעינה",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15jXoteZ16DXlCI=",
 					  						ListFieldLable =  "LoadingDateTimeListLable",
 					  						ListLableDefaultText =  "Loading Date",
-					  						ListLocalDefaultText =  "תאריך טעינה",
+					  						ListLocalDefaultTextBack_up =  "תאריך טעינה",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15jXoteZ16DXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -13211,7 +13511,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShipCode",
 					  						DefaultText =  "Ship Id",
-					  						FullLocalDefaultText =  "כלי הובלה ימי",
+					  						FullLocalDefaultTextBack_up =  "כלי הובלה ימי",
+					  						FullLocalDefaultText =  "BS64:Iteb15zXmSDXlNeV15HXnNeUINeZ157XmSI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CustomsShip",
 					  						NavigationPropertyName =  "CustomsShip",
@@ -13276,10 +13577,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsExporterConfirmation",
 					  						DefaultText =  "Exporter Confirmation",
-					  						FullLocalDefaultText =  "אישור יצואן",
+					  						FullLocalDefaultTextBack_up =  "אישור יצואן",
+					  						FullLocalDefaultText =  "BS64:IteQ15nXqdeV16gg15nXpteV15DXnyI=",
 					  						ListFieldLable =  "IsExporterConfirmationListLable",
 					  						ListLableDefaultText =  "Exporter Confirmation",
-					  						ListLocalDefaultText =  "אישור יצואן",
+					  						ListLocalDefaultTextBack_up =  "אישור יצואן",
+					  						ListLocalDefaultText =  "BS64:IteQ15nXqdeV16gg15nXpteV15DXnyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -13343,7 +13646,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Ship",
 					  						ListFieldLable =  "ShipNameListLable",
 					  						ListLableDefaultText =  "Ship",
-					  						ListLocalDefaultText =  "ספינה",
+					  						ListLocalDefaultTextBack_up =  "ספינה",
+					  						ListLocalDefaultText =  "BS64:Iteh16TXmdeg15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -13405,10 +13709,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DestinationCountryName",
 					  						DefaultText =  "Destination Country",
-					  						FullLocalDefaultText =  "ארץ יעד",
+					  						FullLocalDefaultTextBack_up =  "ארץ יעד",
+					  						FullLocalDefaultText =  "BS64:IteQ16jXpSDXmdei15Mi",
 					  						ListFieldLable =  "DestinationCountryNameListLable",
 					  						ListLableDefaultText =  "Destination Country",
-					  						ListLocalDefaultText =  "ארץ יעד",
+					  						ListLocalDefaultTextBack_up =  "ארץ יעד",
+					  						ListLocalDefaultText =  "BS64:IteQ16jXpSDXmdei15Mi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -13537,10 +13843,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Direction",
 					  						DefaultText =  "Direction",
-					  						FullLocalDefaultText =  "כיוון ",
+					  						FullLocalDefaultTextBack_up =  "כיוון ",
+					  						FullLocalDefaultText =  "BS64:Iteb15nXldeV158gIg==",
 					  						ListFieldLable =  "DirectionListLable",
 					  						ListLableDefaultText =  "Direction",
-					  						ListLocalDefaultText =  "כיוון ",
+					  						ListLocalDefaultTextBack_up =  "כיוון ",
+					  						ListLocalDefaultText =  "BS64:Iteb15nXldeV158gIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -13603,10 +13911,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AgentRoleCode",
 					  						DefaultText =  "Agent Role ",
-					  						FullLocalDefaultText =  "תפקיד סוכן",
+					  						FullLocalDefaultTextBack_up =  "תפקיד סוכן",
+					  						FullLocalDefaultText =  "BS64:Iteq16TXp9eZ15Mg16HXldeb158i",
 					  						ListFieldLable =  "AgentRoleCodeListLable",
 					  						ListLableDefaultText =  "Agent Role ",
-					  						ListLocalDefaultText =  "תפקיד סוכן",
+					  						ListLocalDefaultTextBack_up =  "תפקיד סוכן",
+					  						ListLocalDefaultText =  "BS64:Iteq16TXp9eZ15Mg16HXldeb158i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -13669,10 +13979,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExportFile",
 					  						DefaultText =  "Export File",
-					  						FullLocalDefaultText =  "מס' תיק יצוא תפעולי",
+					  						FullLocalDefaultTextBack_up =  "מס' תיק יצוא תפעולי",
+					  						FullLocalDefaultText =  "BS64:Itee16EnINeq15nXpyDXmdem15XXkCDXqtek16LXldec15ki",
 					  						ListFieldLable =  "ExportFileListLable",
 					  						ListLableDefaultText =  "Export File",
-					  						ListLocalDefaultText =  "מס' תיק יצוא תפעולי",
+					  						ListLocalDefaultTextBack_up =  "מס' תיק יצוא תפעולי",
+					  						ListLocalDefaultText =  "BS64:Itee16EnINeq15nXpyDXmdem15XXkCDXqtek16LXldec15ki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -13736,10 +14048,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DestinationCountryCode",
 					  						DefaultText =  "Destination Country",
-					  						FullLocalDefaultText =  "ארץ יעד",
+					  						FullLocalDefaultTextBack_up =  "ארץ יעד",
+					  						FullLocalDefaultText =  "BS64:IteQ16jXpSDXmdei15Mi",
 					  						ListFieldLable =  "DestinationCountryCodeListLable",
 					  						ListLableDefaultText =  "Destination Country",
-					  						ListLocalDefaultText =  "ארץ יעד",
+					  						ListLocalDefaultTextBack_up =  "ארץ יעד",
+					  						ListLocalDefaultText =  "BS64:IteQ16jXpSDXmdei15Mi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CustomsCountry",
 					  						NavigationPropertyName =  "CustomsCountry",
@@ -13806,10 +14120,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExportAutonomyRegionTypeCode",
 					  						DefaultText =  "Export Autonomy Region Type",
-					  						FullLocalDefaultText =  "קוד איזור אוטונומיה",
+					  						FullLocalDefaultTextBack_up =  "קוד איזור אוטונומיה",
+					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXkNeZ15bXldeoINeQ15XXmNeV16DXldee15nXlCI=",
 					  						ListFieldLable =  "ExportAutonomyRegionTypeCodeListLable",
 					  						ListLableDefaultText =  "Export Autonomy Region Type",
-					  						ListLocalDefaultText =  "קוד איזור אוטונומיה",
+					  						ListLocalDefaultTextBack_up =  "קוד איזור אוטונומיה",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXkNeZ15bXldeoINeQ15XXmNeV16DXldee15nXlCI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "AutonomyRegionType",
 					  						NavigationPropertyName =  "ExportAutonomyRegionType",
@@ -13876,10 +14192,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationTypeCode",
 					  						DefaultText =  "Declaration Type",
-					  						FullLocalDefaultText =  "סוג הצהרה",
+					  						FullLocalDefaultTextBack_up =  "סוג הצהרה",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXlNem15TXqNeUIg==",
 					  						ListFieldLable =  "DeclarationTypeCodeListLable",
 					  						ListLableDefaultText =  "Declaration Type",
-					  						ListLocalDefaultText =  "סוג הצהרה",
+					  						ListLocalDefaultTextBack_up =  "סוג הצהרה",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXlNem15TXqNeUIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "LeadDocumentType",
 					  						NavigationPropertyName =  "DeclarationType",
@@ -13946,10 +14264,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CancelRequestReasonCode",
 					  						DefaultText =  "Cancel Request Reason Code",
-					  						FullLocalDefaultText =  "סיבת ביטול",
+					  						FullLocalDefaultTextBack_up =  "סיבת ביטול",
+					  						FullLocalDefaultText =  "BS64:Iteh15nXkdeqINeR15nXmNeV15wi",
 					  						ListFieldLable =  "CancelRequestReasonCodeListLable",
 					  						ListLableDefaultText =  "Cancel Request Reason Code",
-					  						ListLocalDefaultText =  "קוד סיבת ביטול",
+					  						ListLocalDefaultTextBack_up =  "קוד סיבת ביטול",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXodeZ15HXqiDXkdeZ15jXldecIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CancellationReasonRequestType",
 					  						NavigationPropertyName =  "CancelRequestReason",
@@ -14014,10 +14334,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CancelRequestReasonExplanation",
 					  						DefaultText =  "Cancel Request Reason Explanation",
-					  						FullLocalDefaultText =  "נימוק ",
+					  						FullLocalDefaultTextBack_up =  "נימוק ",
+					  						FullLocalDefaultText =  "BS64:Iteg15nXnteV16cgIg==",
 					  						ListFieldLable =  "CancelRequestReasonExplanationListLable",
 					  						ListLableDefaultText =  "Cancel Request Reason Explanation",
-					  						ListLocalDefaultText =  "נימוק",
+					  						ListLocalDefaultTextBack_up =  "נימוק",
+					  						ListLocalDefaultText =  "BS64:Iteg15nXnteV16ci",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -14080,10 +14402,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CancelRequestNumber",
 					  						DefaultText =  "Cancel Request Number",
-					  						FullLocalDefaultText =  "מס' בקשה",
+					  						FullLocalDefaultTextBack_up =  "מס' בקשה",
+					  						FullLocalDefaultText =  "BS64:Itee16EnINeR16fXqdeUIg==",
 					  						ListFieldLable =  "CancelRequestNumberListLable",
 					  						ListLableDefaultText =  "Cancel Request Number",
-					  						ListLocalDefaultText =  "מס' בקשה",
+					  						ListLocalDefaultTextBack_up =  "מס' בקשה",
+					  						ListLocalDefaultText =  "BS64:Itee16EnINeR16fXqdeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -14145,10 +14469,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomCancelRequestRemarks",
 					  						DefaultText =  "Custom Cancel Request Remarks",
-					  						FullLocalDefaultText =  "הערות מכס",
+					  						FullLocalDefaultTextBack_up =  "הערות מכס",
+					  						FullLocalDefaultText =  "BS64:IteU16LXqNeV16og157Xm9ehIg==",
 					  						ListFieldLable =  "CustomCancelRequestRemarksListLable",
 					  						ListLableDefaultText =  "Custom Cancel Request Remarks",
-					  						ListLocalDefaultText =  "הערות מכס לביטול",
+					  						ListLocalDefaultTextBack_up =  "הערות מכס לביטול",
+					  						ListLocalDefaultText =  "BS64:IteU16LXqNeV16og157Xm9ehINec15HXmdeY15XXnCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -14211,10 +14537,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CancelRequestStatusCode",
 					  						DefaultText =  "Cancel Request Status Code",
-					  						FullLocalDefaultText =  "סטטוס הבקשה",
+					  						FullLocalDefaultTextBack_up =  "סטטוס הבקשה",
+					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg15TXkden16nXlCI=",
 					  						ListFieldLable =  "CancelRequestStatusCodeListLable",
 					  						ListLableDefaultText =  "Cancel Request Status Code",
-					  						ListLocalDefaultText =  "סטטוס ביטול הבקשה",
+					  						ListLocalDefaultTextBack_up =  "סטטוס ביטול הבקשה",
+					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg15HXmdeY15XXnCDXlNeR16fXqdeUIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CancellationRequestStatus",
 					  						NavigationPropertyName =  "CancelRequestStatus",
@@ -14279,10 +14607,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CancelRequestRejectionReason",
 					  						DefaultText =  "Cancel Request Rejection Reason",
-					  						FullLocalDefaultText =  "סיבת דחיה",
+					  						FullLocalDefaultTextBack_up =  "סיבת דחיה",
+					  						FullLocalDefaultText =  "BS64:Iteh15nXkdeqINeT15fXmdeUIg==",
 					  						ListFieldLable =  "CancelRequestRejectionReasonListLable",
 					  						ListLableDefaultText =  "Cancel Request Rejection Reason",
-					  						ListLocalDefaultText =  "סיבת דחיה",
+					  						ListLocalDefaultTextBack_up =  "סיבת דחיה",
+					  						ListLocalDefaultText =  "BS64:Iteh15nXkdeqINeT15fXmdeUIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CancelRequestRejectReasonType",
 					  						NavigationPropertyName =  "CancelRequestRejectReasonType",
@@ -14346,10 +14676,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CancelRequestApproveDate",
 					  						DefaultText =  "Cancel Request Approve Date",
-					  						FullLocalDefaultText =  "תאריך ביטול",
+					  						FullLocalDefaultTextBack_up =  "תאריך ביטול",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15HXmdeY15XXnCI=",
 					  						ListFieldLable =  "CancelRequestApproveDateListLable",
 					  						ListLableDefaultText =  "Cancel Request Approve Date",
-					  						ListLocalDefaultText =  "תאריך ביטול",
+					  						ListLocalDefaultTextBack_up =  "תאריך ביטול",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15HXmdeY15XXnCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -14411,10 +14743,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsClaimable",
 					  						DefaultText =  "Is Claimable",
-					  						FullLocalDefaultText =  "ניתן להגיש תביעה",
+					  						FullLocalDefaultTextBack_up =  "ניתן להגיש תביעה",
+					  						FullLocalDefaultText =  "BS64:Iteg15nXqtefINec15TXkteZ16kg16rXkdeZ16LXlCI=",
 					  						ListFieldLable =  "IsClaimableListLable",
 					  						ListLableDefaultText =  "Is Claimable",
-					  						ListLocalDefaultText =  "ניתן להגיש תביעה",
+					  						ListLocalDefaultTextBack_up =  "ניתן להגיש תביעה",
+					  						ListLocalDefaultText =  "BS64:Iteg15nXqtefINec15TXkteZ16kg16rXkdeZ16LXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -14475,7 +14809,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CancelRequestStatusName",
 					  						DefaultText =  "Cancel Request Status Code",
-					  						FullLocalDefaultText =  "סטטוס ביטול הבקשה",
+					  						FullLocalDefaultTextBack_up =  "סטטוס ביטול הבקשה",
+					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg15HXmdeY15XXnCDXlNeR16fXqdeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -14536,7 +14871,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReplacingRepairRequest",
 					  						DefaultText =  "Replacing Repair Request",
-					  						FullLocalDefaultText =  "מס' בקשה מוחלפת",
+					  						FullLocalDefaultTextBack_up =  "מס' בקשה מוחלפת",
+					  						FullLocalDefaultText =  "BS64:Itee16EnINeR16fXqdeUINee15XXl9ec16TXqiI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -14598,10 +14934,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AmendmentErrorXml",
 					  						DefaultText =  "Amendment Error Xml",
-					  						FullLocalDefaultText =  "שגיאות - תיקון הצהרה",
+					  						FullLocalDefaultTextBack_up =  "שגיאות - תיקון הצהרה",
+					  						FullLocalDefaultText =  "BS64:Itep15LXmdeQ15XXqiAtINeq15nXp9eV158g15TXpteU16jXlCI=",
 					  						ListFieldLable =  "AmendmentErrorXmlListLable",
 					  						ListLableDefaultText =  "Amendment Error Xml",
-					  						ListLocalDefaultText =  "שגיאות - תיקון הצהרה",
+					  						ListLocalDefaultTextBack_up =  "שגיאות - תיקון הצהרה",
+					  						ListLocalDefaultText =  "BS64:Itep15LXmdeQ15XXqiAtINeq15nXp9eV158g15TXpteU16jXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  true,
 					  						NoMetaDataField =  false,
@@ -14666,10 +15004,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FOBValueNIS",
 					  						DefaultText =  "FOB Value NIS",
-					  						FullLocalDefaultText =  "סה\\\"כ ערך FOB",
+					  						FullLocalDefaultTextBack_up =  "סה\\\"כ ערך FOB",
+					  						FullLocalDefaultText =  "BS64:Iteh15RcItebINei16jXmiBGT0Ii",
 					  						ListFieldLable =  "FOBValueNISListLable",
 					  						ListLableDefaultText =  "FOB Value NIS",
-					  						ListLocalDefaultText =  "סה\\\"כ ערך FOB",
+					  						ListLocalDefaultTextBack_up =  "סה\\\"כ ערך FOB",
+					  						ListLocalDefaultText =  "BS64:Iteh15RcItebINei16jXmiBGT0Ii",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -14735,10 +15075,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FOBValueDollar",
 					  						DefaultText =  "FOB Value Dollar",
-					  						FullLocalDefaultText =  "סה\\\"כ ערך FOB בדולר",
+					  						FullLocalDefaultTextBack_up =  "סה\\\"כ ערך FOB בדולר",
+					  						FullLocalDefaultText =  "BS64:Iteh15RcItebINei16jXmiBGT0Ig15HXk9eV15zXqCI=",
 					  						ListFieldLable =  "FOBValueDollarListLable",
 					  						ListLableDefaultText =  "FOB Value Dollar",
-					  						ListLocalDefaultText =  "סה\\\"כ ערך FOB בדולר",
+					  						ListLocalDefaultTextBack_up =  "סה\\\"כ ערך FOB בדולר",
+					  						ListLocalDefaultText =  "BS64:Iteh15RcItebINei16jXmiBGT0Ig15HXk9eV15zXqCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -14803,10 +15145,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDateForExport",
 					  						DefaultText =  "Create Date Time",
-					  						FullLocalDefaultText =  "תאריך פתיחה",
+					  						FullLocalDefaultTextBack_up =  "תאריך פתיחה",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16TXqteZ15fXlCI=",
 					  						ListFieldLable =  "CreateDateForExportListLable",
 					  						ListLableDefaultText =  "Create Date Time",
-					  						ListLocalDefaultText =  "תאריך פתיחה",
+					  						ListLocalDefaultTextBack_up =  "תאריך פתיחה",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16TXqteZ15fXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -14934,10 +15278,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomFileForExport",
 					  						DefaultText =  "Custom File",
-					  						FullLocalDefaultText =  "תיק מכס",
+					  						FullLocalDefaultTextBack_up =  "תיק מכס",
+					  						FullLocalDefaultText =  "BS64:Iteq15nXpyDXnteb16Ei",
 					  						ListFieldLable =  "CustomFileForExportListLable",
 					  						ListLableDefaultText =  "Custom File",
-					  						ListLocalDefaultText =  "תיק מכס",
+					  						ListLocalDefaultTextBack_up =  "תיק מכס",
+					  						ListLocalDefaultText =  "BS64:Iteq15nXpyDXnteb16Ei",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -14998,7 +15344,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AmendmentRejectionReasonName",
 					  						DefaultText =  "Amendment Rejection Reason",
-					  						FullLocalDefaultText =  "סיבת דחיה",
+					  						FullLocalDefaultTextBack_up =  "סיבת דחיה",
+					  						FullLocalDefaultText =  "BS64:Iteh15nXkdeqINeT15fXmdeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -15062,10 +15409,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransshipmentApprovalDateTime",
 					  						DefaultText =  "Transshipment Approval Date",
-					  						FullLocalDefaultText =  "תאריך אישור שטעון באתר הראשון",
+					  						FullLocalDefaultTextBack_up =  "תאריך אישור שטעון באתר הראשון",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15DXmdep15XXqCDXqdeY16LXldefINeR15DXqteoINeU16jXkNep15XXnyI=",
 					  						ListFieldLable =  "TransshipmentApprovalDateTimeListLable",
 					  						ListLableDefaultText =  "Transshipment Approval Date",
-					  						ListLocalDefaultText =  "תאריך אישור שטעון באתר הראשון",
+					  						ListLocalDefaultTextBack_up =  "תאריך אישור שטעון באתר הראשון",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15DXmdep15XXqCDXqdeY16LXldefINeR15DXqteoINeU16jXkNep15XXnyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -15130,10 +15479,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FinalLoadingSite",
 					  						DefaultText =  "Final Loading Site",
-					  						FullLocalDefaultText =  "אתר טעינה אחרון בפועל",
+					  						FullLocalDefaultTextBack_up =  "אתר טעינה אחרון בפועל",
+					  						FullLocalDefaultText =  "BS64:IteQ16rXqCDXmNei15nXoNeUINeQ15fXqNeV158g15HXpNeV16LXnCI=",
 					  						ListFieldLable =  "FinalLoadingSiteListLable",
 					  						ListLableDefaultText =  "Final Loading Site",
-					  						ListLocalDefaultText =  "אתר טעינה אחרון בפועל",
+					  						ListLocalDefaultTextBack_up =  "אתר טעינה אחרון בפועל",
+					  						ListLocalDefaultText =  "BS64:IteQ16rXqCDXmNei15nXoNeUINeQ15fXqNeV158g15HXpNeV16LXnCI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "LoadingSiteType",
 					  						NavigationPropertyName =  "LoadingSiteType",
@@ -15197,7 +15548,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PalestinianCode",
 					  						DefaultText =  "Palestinian Code",
-					  						FullLocalDefaultText =  "מס' יבואן פלסטינאי",
+					  						FullLocalDefaultTextBack_up =  "מס' יבואן פלסטינאי",
+					  						FullLocalDefaultText =  "BS64:Itee16EnINeZ15HXldeQ158g16TXnNeh15jXmdeg15DXmSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -15260,10 +15612,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RequestedCustomsDocId",
 					  						DefaultText =  "Requested Customs DocId",
-					  						FullLocalDefaultText =  "מסמך נדרש",
+					  						FullLocalDefaultTextBack_up =  "מסמך נדרש",
+					  						FullLocalDefaultText =  "BS64:Itee16HXnteaINeg15PXqNepIg==",
 					  						ListFieldLable =  "RequestedCustomsDocIdListLable",
-					  						ListLableDefaultText =  "מסמך נדרש",
-					  						ListLocalDefaultText =  "Requested Customs DocId",
+					  						ListLableDefaultText =  "Requested Customs DocId",
+					  						ListLocalDefaultTextBack_up =  "מסמך נדרש",
+					  						ListLocalDefaultText =  "BS64:Itee16HXnteaINeg15PXqNepIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -15327,10 +15681,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExportDeclarationOfficeCode",
 					  						DefaultText =  "Export Declaration Office Code",
-					  						FullLocalDefaultText =  "בית מכס מייצא",
+					  						FullLocalDefaultTextBack_up =  "בית מכס מייצא",
+					  						FullLocalDefaultText =  "BS64:IteR15nXqiDXnteb16Eg157XmdeZ16bXkCI=",
 					  						ListFieldLable =  "ExportDeclarationOfficeCodeListLable",
 					  						ListLableDefaultText =  "Export Declaration Office Code",
-					  						ListLocalDefaultText =  "בית מכס מייצא",
+					  						ListLocalDefaultTextBack_up =  "בית מכס מייצא",
+					  						ListLocalDefaultText =  "BS64:IteR15nXqiDXnteb16Eg157XmdeZ16bXkCI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CustomsHouseType",
 					  						NavigationPropertyName =  "ExportDeclarationOffice",
@@ -15398,10 +15754,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PhysicalCheck",
 					  						DefaultText =  "Physical Check",
-					  						FullLocalDefaultText =  "בדיקה פיזית",
+					  						FullLocalDefaultTextBack_up =  "בדיקה פיזית",
+					  						FullLocalDefaultText =  "BS64:IteR15PXmden15Qg16TXmdeW15nXqiI=",
 					  						ListFieldLable =  "PhysicalCheckListLable",
 					  						ListLableDefaultText =  "Physical Check",
-					  						ListLocalDefaultText =  "בדיקה פיזית",
+					  						ListLocalDefaultTextBack_up =  "בדיקה פיזית",
+					  						ListLocalDefaultText =  "BS64:IteR15PXmden15Qg16TXmdeW15nXqiI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "PhysicalCheckCode",
 					  						NavigationPropertyName =  "PhysicalCheckCode",
@@ -15527,10 +15885,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShipCodeName",
 					  						DefaultText =  "Ship Name",
-					  						FullLocalDefaultText =  "כלי הובלה ימי",
+					  						FullLocalDefaultTextBack_up =  "כלי הובלה ימי",
+					  						FullLocalDefaultText =  "BS64:Iteb15zXmSDXlNeV15HXnNeUINeZ157XmSI=",
 					  						ListFieldLable =  "ShipCodeNameListLable",
 					  						ListLableDefaultText =  "Ship Name",
-					  						ListLocalDefaultText =  "כלי הובלה ימי",
+					  						ListLocalDefaultTextBack_up =  "כלי הובלה ימי",
+					  						ListLocalDefaultText =  "BS64:Iteb15zXmSDXlNeV15HXnNeUINeZ157XmSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -15591,7 +15951,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CancelRejectionReasonName",
 					  						DefaultText =  "Cancel Request Rejection Reason Name",
-					  						FullLocalDefaultText =  "סיבת דחיה",
+					  						FullLocalDefaultTextBack_up =  "סיבת דחיה",
+					  						FullLocalDefaultText =  "BS64:Iteh15nXkdeqINeT15fXmdeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -15653,10 +16014,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CargoTypeName",
 					  						DefaultText =  "Cargo Type Name",
-					  						FullLocalDefaultText =  "סוג מזהה מטען",
+					  						FullLocalDefaultTextBack_up =  "סוג מזהה מטען",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXnteW15TXlCDXnteY16LXnyI=",
 					  						ListFieldLable =  "CargoTypeNameListLable",
 					  						ListLableDefaultText =  "Cargo Type Name",
-					  						ListLocalDefaultText =  "סוג מזהה מטען",
+					  						ListLocalDefaultTextBack_up =  "סוג מזהה מטען",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXnteW15TXlCDXnteY16LXnyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -15718,10 +16081,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SecondCargoID",
 					  						DefaultText =  "Second Cargo ID",
-					  						FullLocalDefaultText =  "מזהה מטען שני",
+					  						FullLocalDefaultTextBack_up =  "מזהה מטען שני",
+					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINee15jXotefINep16DXmSI=",
 					  						ListFieldLable =  "SecondCargoIDListLable",
 					  						ListLableDefaultText =  "Second Cargo ID",
-					  						ListLocalDefaultText =  "מזהה מטען שני",
+					  						ListLocalDefaultTextBack_up =  "מזהה מטען שני",
+					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINee15jXotefINep16DXmSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -15783,10 +16148,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ThirdCargoID",
 					  						DefaultText =  "Third Cargo ID",
-					  						FullLocalDefaultText =  "מזהה מטען שלישי",
+					  						FullLocalDefaultTextBack_up =  "מזהה מטען שלישי",
+					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINee15jXotefINep15zXmdep15ki",
 					  						ListFieldLable =  "ThirdCargoIDListLable",
 					  						ListLableDefaultText =  "Third Cargo ID",
-					  						ListLocalDefaultText =  "מזהה מטען שלישי",
+					  						ListLocalDefaultTextBack_up =  "מזהה מטען שלישי",
+					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINee15jXotefINep15zXmdep15ki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -15908,10 +16275,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsSubmitDeclaration",
 					  						DefaultText =  "Is Submit Declaration ",
-					  						FullLocalDefaultText =  "האם הצהרה הוגשה",
+					  						FullLocalDefaultTextBack_up =  "האם הצהרה הוגשה",
+					  						FullLocalDefaultText =  "BS64:IteU15DXnSDXlNem15TXqNeUINeU15XXktep15Qi",
 					  						ListFieldLable =  "IsSubmitDeclarationListLable",
 					  						ListLableDefaultText =  "Is Submit Declaration ",
-					  						ListLocalDefaultText =  "האם הצהרה הוגשה",
+					  						ListLocalDefaultTextBack_up =  "האם הצהרה הוגשה",
+					  						ListLocalDefaultText =  "BS64:IteU15DXnSDXlNem15TXqNeUINeU15XXktep15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -15975,7 +16344,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Importer Address",
 					  						ListFieldLable =  "ImporterAddressForExportListLable",
 					  						ListLableDefaultText =  "Importer Address",
-					  						ListLocalDefaultText =  "כתובת יצואן",
+					  						ListLocalDefaultTextBack_up =  "כתובת יצואן",
+					  						ListLocalDefaultText =  "BS64:Iteb16rXldeR16og15nXpteV15DXnyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -16039,10 +16409,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterPassCountryForExport",
 					  						DefaultText =  "Importer Pass Country",
-					  						FullLocalDefaultText =  "מדינת דרכון יצואן",
+					  						FullLocalDefaultTextBack_up =  "מדינת דרכון יצואן",
+					  						FullLocalDefaultText =  "BS64:Itee15PXmdeg16og15PXqNeb15XXnyDXmdem15XXkNefIg==",
 					  						ListFieldLable =  "ImporterPassCountryForExportListLable",
 					  						ListLableDefaultText =  "Importer Pass Country ",
-					  						ListLocalDefaultText =  "מדינת דרכון יצואן",
+					  						ListLocalDefaultTextBack_up =  "מדינת דרכון יצואן",
+					  						ListLocalDefaultText =  "BS64:Itee15PXmdeg16og15PXqNeb15XXnyDXmdem15XXkNefIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -16106,7 +16478,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Importer Name",
 					  						ListFieldLable =  "ImporterNameForExportListLable",
 					  						ListLableDefaultText =  "Importer Name",
-					  						ListLocalDefaultText =  "שם היצואן",
+					  						ListLocalDefaultTextBack_up =  "שם היצואן",
+					  						ListLocalDefaultText =  "BS64:Itep150g15TXmdem15XXkNefIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -16170,10 +16543,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExportTaxationDateTime",
 					  						DefaultText =  "Taxation Date Time",
-					  						FullLocalDefaultText =  "תאריך חישוב",
+					  						FullLocalDefaultTextBack_up =  "תאריך חישוב",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15fXmdep15XXkSI=",
 					  						ListFieldLable =  "ExportTaxationDateTimeListLable",
 					  						ListLableDefaultText =  "Taxation Date Time",
-					  						ListLocalDefaultText =  "תאריך חישוב",
+					  						ListLocalDefaultTextBack_up =  "תאריך חישוב",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15fXmdep15XXkSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -16236,10 +16611,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExporterImporterCode",
 					  						DefaultText =  "Importer ",
-					  						FullLocalDefaultText =  "מספר יצואן",
+					  						FullLocalDefaultTextBack_up =  "מספר יצואן",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeZ16bXldeQ158i",
 					  						ListFieldLable =  "ExporterImporterCodeListLable",
 					  						ListLableDefaultText =  "Importer",
-					  						ListLocalDefaultText =  "מספר יצואן",
+					  						ListLocalDefaultTextBack_up =  "מספר יצואן",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeZ16bXldeQ158i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -16302,7 +16679,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AmedmentType",
 					  						DefaultText =  "Amedment Type",
-					  						FullLocalDefaultText =  "מהות פנייה ",
+					  						FullLocalDefaultTextBack_up =  "מהות פנייה ",
+					  						FullLocalDefaultText =  "BS64:Itee15TXldeqINek16DXmdeZ15QgIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "AmedmentType",
 					  						NavigationPropertyName =  "CustomsAmedmentType",
@@ -16365,7 +16743,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AmendmentTypeName",
 					  						DefaultText =  "Amendment Type Name",
-					  						FullLocalDefaultText =  "מהות הפנייה",
+					  						FullLocalDefaultTextBack_up =  "מהות הפנייה",
+					  						FullLocalDefaultText =  "BS64:Itee15TXldeqINeU16TXoNeZ15nXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -16491,10 +16870,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TerminalReleaseDate",
 					  						DefaultText =  "TerminalReleaseDate",
-					  						FullLocalDefaultText =  "תאריך יציאה ממסוף",
+					  						FullLocalDefaultTextBack_up =  "תאריך יציאה ממסוף",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15nXpteZ15DXlCDXntee16HXldejIg==",
 					  						ListFieldLable =  "TerminalReleaseDateListLable",
 					  						ListLableDefaultText =  "TerminalReleaseDate",
-					  						ListLocalDefaultText =  "תאריך יציאה ממסוף",
+					  						ListLocalDefaultTextBack_up =  "תאריך יציאה ממסוף",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15nXpteZ15DXlCDXntee16HXldejIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -16560,7 +16941,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Integrator Code",
 					  						ListFieldLable =  "IntegratorCodeListLable",
 					  						ListLableDefaultText =  "Integrator Code",
-					  						ListLocalDefaultText =  " קוד אינטגרטור",
+					  						ListLocalDefaultTextBack_up =  " קוד אינטגרטור",
+					  						ListLocalDefaultText =  "BS64:IiDXp9eV15Mg15DXmdeg15jXkteo15jXldeoIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -16623,10 +17005,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsExportClosed",
 					  						DefaultText =  "Is Export Closed",
-					  						FullLocalDefaultText =  "סגירת הצהרה ביצוא",
+					  						FullLocalDefaultTextBack_up =  "סגירת הצהרה ביצוא",
+					  						FullLocalDefaultText =  "BS64:Iteh15LXmdeo16og15TXpteU16jXlCDXkdeZ16bXldeQIg==",
 					  						ListFieldLable =  "IsExportClosedListLable",
 					  						ListLableDefaultText =  "Is Export Closed",
-					  						ListLocalDefaultText =  "סגירת הצהרה ביצוא",
+					  						ListLocalDefaultTextBack_up =  "סגירת הצהרה ביצוא",
+					  						ListLocalDefaultText =  "BS64:Iteh15LXmdeo16og15TXpteU16jXlCDXkdeZ16bXldeQIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -16688,10 +17072,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExportClosedErrorXML",
 					  						DefaultText =  "Export Closed Error XML",
-					  						FullLocalDefaultText =  "שגיאות להצהרה",
+					  						FullLocalDefaultTextBack_up =  "שגיאות להצהרה",
+					  						FullLocalDefaultText =  "BS64:Itep15LXmdeQ15XXqiDXnNeU16bXlNeo15Qi",
 					  						ListFieldLable =  "ExportClosedErrorXMLListLable",
 					  						ListLableDefaultText =  "Export Closed Error XML",
-					  						ListLocalDefaultText =  "שגיאות להצהרה",
+					  						ListLocalDefaultTextBack_up =  "שגיאות להצהרה",
+					  						ListLocalDefaultText =  "BS64:Itep15LXmdeQ15XXqiDXnNeU16bXlNeo15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  true,
 					  						NoMetaDataField =  false,
@@ -16754,10 +17140,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationOfficeHandlerCode",
 					  						DefaultText =  "Declaration Office",
-					  						FullLocalDefaultText =  "בית מכס מטפל",
+					  						FullLocalDefaultTextBack_up =  "בית מכס מטפל",
+					  						FullLocalDefaultText =  "BS64:IteR15nXqiDXnteb16Eg157XmNek15wi",
 					  						ListFieldLable =  "DeclarationOfficeHandlerCodeListLable",
 					  						ListLableDefaultText =  "DeclarationOfficeHandlerCode",
-					  						ListLocalDefaultText =  "בית מכס מטפל",
+					  						ListLocalDefaultTextBack_up =  "בית מכס מטפל",
+					  						ListLocalDefaultText =  "BS64:IteR15nXqiDXnteb16Eg157XmNek15wi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -16819,7 +17207,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransferExporterCode",
 					  						DefaultText =  "Transfer Exporter",
-					  						FullLocalDefaultText =  "קוד סוג  יצואן מעביר",
+					  						FullLocalDefaultTextBack_up =  "קוד סוג  יצואן מעביר",
+					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXodeV15IgINeZ16bXldeQ158g157XoteR15nXqCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -16882,10 +17271,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationTypeName",
 					  						DefaultText =  "Declaration Type",
-					  						FullLocalDefaultText =  "סוג הצהרה",
+					  						FullLocalDefaultTextBack_up =  "סוג הצהרה",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXlNem15TXqNeUIg==",
 					  						ListFieldLable =  "DeclarationTypeNameListLable",
 					  						ListLableDefaultText =  "Declaration Type",
-					  						ListLocalDefaultText =  "סוג הצהרה",
+					  						ListLocalDefaultTextBack_up =  "סוג הצהרה",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXlNem15TXqNeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -16949,7 +17340,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Is Export Declaration Amendments",
 					  						ListFieldLable =  "IsExportDeclarationAmendmentsListLable",
 					  						ListLableDefaultText =  "Is Export Declaration Amendments",
-					  						ListLocalDefaultText =  "האם תיקון הצהרה ממתין",
+					  						ListLocalDefaultTextBack_up =  "האם תיקון הצהרה ממתין",
+					  						ListLocalDefaultText =  "BS64:IteU15DXnSDXqteZ16fXldefINeU16bXlNeo15Qg157Xnteq15nXnyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -17011,10 +17403,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CargoTypeCode",
 					  						DefaultText =  "CargoTypeCode",
-					  						FullLocalDefaultText =  "קוד מזהה מטען",
+					  						FullLocalDefaultTextBack_up =  "קוד מזהה מטען",
+					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXnteW15TXlCDXnteY16LXnyI=",
 					  						ListFieldLable =  "CargoTypeCodeListLable",
 					  						ListLableDefaultText =  "CargoTypeCode",
-					  						ListLocalDefaultText =  "קוד מזהה מטען",
+					  						ListLocalDefaultTextBack_up =  "קוד מזהה מטען",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXnteW15TXlCDXnteY16LXnyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -17077,10 +17471,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LoadingPortName",
 					  						DefaultText =  "Loading Port Name",
-					  						FullLocalDefaultText =  "נמל טעינה",
+					  						FullLocalDefaultTextBack_up =  "נמל טעינה",
+					  						FullLocalDefaultText =  "BS64:Iteg157XnCDXmNei15nXoNeUIg==",
 					  						ListFieldLable =  "LoadingPortNameListLable",
 					  						ListLableDefaultText =  "Loading Port Name",
-					  						ListLocalDefaultText =  "נמל טעינה",
+					  						ListLocalDefaultTextBack_up =  "נמל טעינה",
+					  						ListLocalDefaultText =  "BS64:Iteg157XnCDXmNei15nXoNeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -17144,10 +17540,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExportLoadingPortCode",
 					  						DefaultText =  "Export Loading Port",
-					  						FullLocalDefaultText =  "קוד נמל טעינה",
+					  						FullLocalDefaultTextBack_up =  "קוד נמל טעינה",
+					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXoNee15wg15jXoteZ16DXlCI=",
 					  						ListFieldLable =  "ExportLoadingPortCodeListLable",
 					  						ListLableDefaultText =  "Export Loading Port",
-					  						ListLocalDefaultText =  "קוד נמל טעינה",
+					  						ListLocalDefaultTextBack_up =  "קוד נמל טעינה",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXoNee15wg15jXoteZ16DXlCI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "LoadingSiteType",
 					  						NavigationPropertyName =  "ExportLoadingPort",
@@ -17211,10 +17609,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PhysicalCheckName",
 					  						DefaultText =  "Physical Check Name",
-					  						FullLocalDefaultText =  "בדיקה פיזית",
+					  						FullLocalDefaultTextBack_up =  "בדיקה פיזית",
+					  						FullLocalDefaultText =  "BS64:IteR15PXmden15Qg16TXmdeW15nXqiI=",
 					  						ListFieldLable =  "PhysicalCheckNameListLable",
 					  						ListLableDefaultText =  "Physical Check Name",
-					  						ListLocalDefaultText =  "בדיקה פיזית",
+					  						ListLocalDefaultTextBack_up =  "בדיקה פיזית",
+					  						ListLocalDefaultText =  "BS64:IteR15PXmden15Qg16TXmdeW15nXqiI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -17406,10 +17806,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReferentUserName",
 					  						DefaultText =  "Referent User name",
-					  						FullLocalDefaultText =  "רפרנט",
+					  						FullLocalDefaultTextBack_up =  "רפרנט",
+					  						FullLocalDefaultText =  "BS64:Iteo16TXqNeg15gi",
 					  						ListFieldLable =  "ReferentUserNameListLable",
 					  						ListLableDefaultText =  "Referent User name",
-					  						ListLocalDefaultText =  "רפרנט",
+					  						ListLocalDefaultTextBack_up =  "רפרנט",
+					  						ListLocalDefaultText =  "BS64:Iteo16TXqNeg15gi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -17474,7 +17876,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Export Declaration Office Name",
 					  						ListFieldLable =  "ExportDeclarationOfficeNameListLable",
 					  						ListLableDefaultText =  "Export Declaration Office Name",
-					  						ListLocalDefaultText =  "בית מכס מייצא",
+					  						ListLocalDefaultTextBack_up =  "בית מכס מייצא",
+					  						ListLocalDefaultText =  "BS64:IteR15nXqiDXnteb16Eg157XmdeZ16bXkCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -17539,7 +17942,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Declaration Office",
 					  						ListFieldLable =  "DeclarationOfficeNameForExportListLable",
 					  						ListLableDefaultText =  "Declaration Office",
-					  						ListLocalDefaultText =  "בית מכס המטפל",
+					  						ListLocalDefaultTextBack_up =  "בית מכס המטפל",
+					  						ListLocalDefaultText =  "BS64:IteR15nXqiDXnteb16Eg15TXnteY16TXnCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -17601,10 +18005,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ClosingXml",
 					  						DefaultText =  "Closing Xml",
-					  						FullLocalDefaultText =  "סגירת הצהרה",
+					  						FullLocalDefaultTextBack_up =  "סגירת הצהרה",
+					  						FullLocalDefaultText =  "BS64:Iteh15LXmdeo16og15TXpteU16jXlCI=",
 					  						ListFieldLable =  "ClosingXmlListLable",
 					  						ListLableDefaultText =  "Closing Xml",
-					  						ListLocalDefaultText =  "סגירת הצהרה",
+					  						ListLocalDefaultTextBack_up =  "סגירת הצהרה",
+					  						ListLocalDefaultText =  "BS64:Iteh15LXmdeo16og15TXpteU16jXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  true,
 					  						NoMetaDataField =  false,
@@ -17666,10 +18072,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExportCloseAmendRequestNumber",
 					  						DefaultText =  "Export Close Amendment Request Number",
-					  						FullLocalDefaultText =  "מס' בקשה לסגירה",
+					  						FullLocalDefaultTextBack_up =  "מס' בקשה לסגירה",
+					  						FullLocalDefaultText =  "BS64:Itee16EnINeR16fXqdeUINec16HXkteZ16jXlCI=",
 					  						ListFieldLable =  "ExportCloseAmendRequestNumberListLable",
 					  						ListLableDefaultText =  "Export Close Amendment Request Number",
-					  						ListLocalDefaultText =  "מס' בקשה לסגירה",
+					  						ListLocalDefaultTextBack_up =  "מס' בקשה לסגירה",
+					  						ListLocalDefaultText =  "BS64:Itee16EnINeR16fXqdeUINec16HXkteZ16jXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -17732,7 +18140,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExportCloseAmendmentStatus",
 					  						DefaultText =  "Export Close Amendment Status",
-					  						FullLocalDefaultText =  "סטטוס סגירה",
+					  						FullLocalDefaultTextBack_up =  "סטטוס סגירה",
+					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg16HXkteZ16jXlCI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "AmendmentRequestStatus",
 					  						NavigationPropertyName =  "AmendmentRequestStatus",
@@ -17858,10 +18267,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CasualImporterCountry",
 					  						DefaultText =  "Casual Importer Country",
-					  						FullLocalDefaultText =  "ארץ",
+					  						FullLocalDefaultTextBack_up =  "ארץ",
+					  						FullLocalDefaultText =  "BS64:IteQ16jXpSI=",
 					  						ListFieldLable =  "CasualImporterCountryListLable",
 					  						ListLableDefaultText =  "Casual Importer Country",
-					  						ListLocalDefaultText =  "ארץ",
+					  						ListLocalDefaultTextBack_up =  "ארץ",
+					  						ListLocalDefaultText =  "BS64:IteQ16jXpSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -17926,7 +18337,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Integrator",
 					  						ListFieldLable =  "IntegratorNameListLable",
 					  						ListLableDefaultText =  "Integrator",
-					  						ListLocalDefaultText =  "אינטגרטור",
+					  						ListLocalDefaultTextBack_up =  "אינטגרטור",
+					  						ListLocalDefaultText =  "BS64:IteQ15nXoNeY15LXqNeY15XXqCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -17989,10 +18401,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExportCloseAmendStatusName",
 					  						DefaultText =  "Export Close Amend Status Name",
-					  						FullLocalDefaultText =  "סטטוס סגירת הצהרה",
+					  						FullLocalDefaultTextBack_up =  "סטטוס סגירת הצהרה",
+					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg16HXkteZ16jXqiDXlNem15TXqNeUIg==",
 					  						ListFieldLable =  "ExportCloseAmendStatusNameListLable",
 					  						ListLableDefaultText =  "Export Close Amend Status Name",
-					  						ListLocalDefaultText =  "סטטוס סגירת הצהרה",
+					  						ListLocalDefaultTextBack_up =  "סטטוס סגירת הצהרה",
+					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg16HXkteZ16jXqiDXlNem15TXqNeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -18055,10 +18469,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsAramex",
 					  						DefaultText =  "Is Aramex",
-					  						FullLocalDefaultText =  "האם ארמקס",
+					  						FullLocalDefaultTextBack_up =  "האם ארמקס",
+					  						FullLocalDefaultText =  "BS64:IteU15DXnSDXkNeo157Xp9ehIg==",
 					  						ListFieldLable =  "IsAramexListLable",
 					  						ListLableDefaultText =  "Is Aramex",
-					  						ListLocalDefaultText =  "האם ארמקס",
+					  						ListLocalDefaultTextBack_up =  "האם ארמקס",
+					  						ListLocalDefaultText =  "BS64:IteU15DXnSDXkNeo157Xp9ehIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -18120,9 +18536,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExcludeManifest",
 					  						DefaultText =  "Exclude Manifest",
-					  						FullLocalDefaultText =  "שדר ללא נ.מצהר",
+					  						FullLocalDefaultTextBack_up =  "שדר ללא נ.מצהר",
+					  						FullLocalDefaultText =  "BS64:Itep15PXqCDXnNec15Ag16Au157XpteU16gi",
 					  						ListFieldLable =  "ExcludeManifestListLable",
-					  						ListLableDefaultText =  "שדר ללא נ.מצהר",
+					  						ListLableDefaultText =  "Exclude Manifest",
+					  						ListLocalDefaultTextBack_up =  "שדר ללא נ.מצהר",
+					  						ListLocalDefaultText =  "BS64:Itep15PXqCDXnNec15Ag16Au157XpteU16gi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -18185,10 +18604,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ForwarderFiles",
 					  						DefaultText =  "Forwarder Files",
-					  						FullLocalDefaultText =  "תיקים מקושרים",
+					  						FullLocalDefaultTextBack_up =  "תיקים מקושרים",
+					  						FullLocalDefaultText =  "BS64:Iteq15nXp9eZ150g157Xp9eV16nXqNeZ150i",
 					  						ListFieldLable =  "ForwarderFilesListLable",
 					  						ListLableDefaultText =  "Forwarder Files",
-					  						ListLocalDefaultText =  "תיקים מקושרים",
+					  						ListLocalDefaultTextBack_up =  "תיקים מקושרים",
+					  						ListLocalDefaultText =  "BS64:Iteq15nXp9eZ150g157Xp9eV16nXqNeZ150i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -18251,10 +18672,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShortProcedure",
 					  						DefaultText =  "Short Procedure",
-					  						FullLocalDefaultText =  "מקוצר",
+					  						FullLocalDefaultTextBack_up =  "מקוצר",
+					  						FullLocalDefaultText =  "BS64:Itee16fXldem16gi",
 					  						ListFieldLable =  "ShortProcedureListLable",
 					  						ListLableDefaultText =  "Short Procedure",
-					  						ListLocalDefaultText =  "מקוצר",
+					  						ListLocalDefaultTextBack_up =  "מקוצר",
+					  						ListLocalDefaultText =  "BS64:Itee16fXldem16gi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -18318,10 +18741,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExportFlightDate",
 					  						DefaultText =  "Export Flight Date",
-					  						FullLocalDefaultText =  "תאריך טיסה/הפלגה",
+					  						FullLocalDefaultTextBack_up =  "תאריך טיסה/הפלגה",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15jXmdeh15Qv15TXpNec15LXlCI=",
 					  						ListFieldLable =  "ExportFlightDateListLable",
 					  						ListLableDefaultText =  "Export Flight Date",
-					  						ListLocalDefaultText =  "תאריך טיסה/הפלגה",
+					  						ListLocalDefaultTextBack_up =  "תאריך טיסה/הפלגה",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15jXmdeh15Qv15TXpNec15LXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -18448,10 +18873,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MehesFee",
 					  						DefaultText =  "MehesFee",
-					  						FullLocalDefaultText =  "מכס ",
+					  						FullLocalDefaultTextBack_up =  "מכס ",
+					  						FullLocalDefaultText =  "BS64:Itee15vXoSAi",
 					  						ListFieldLable =  "MehesFeeListLable",
 					  						ListLableDefaultText =  "MehesFee",
-					  						ListLocalDefaultText =  "מכס ",
+					  						ListLocalDefaultTextBack_up =  "מכס ",
+					  						ListLocalDefaultText =  "BS64:Itee15vXoSAi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -18515,10 +18942,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VATReshimonFee",
 					  						DefaultText =  "VATReshimonFee",
-					  						FullLocalDefaultText =  "מעמ רשימון",
+					  						FullLocalDefaultTextBack_up =  "מעמ רשימון",
+					  						FullLocalDefaultText =  "BS64:Itee16LXniDXqNep15nXnteV158i",
 					  						ListFieldLable =  "VATReshimonFeeListLable",
 					  						ListLableDefaultText =  "VATReshimonFee",
-					  						ListLocalDefaultText =  "מעמ רשימון",
+					  						ListLocalDefaultTextBack_up =  "מעמ רשימון",
+					  						ListLocalDefaultText =  "BS64:Itee16LXniDXqNep15nXnteV158i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -18582,10 +19011,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SecurityFee",
 					  						DefaultText =  "SecurityFee",
-					  						FullLocalDefaultText =  "אגרת בטחון",
+					  						FullLocalDefaultTextBack_up =  "אגרת בטחון",
+					  						FullLocalDefaultText =  "BS64:IteQ15LXqNeqINeR15jXl9eV158i",
 					  						ListFieldLable =  "SecurityFeeListLable",
 					  						ListLableDefaultText =  "SecurityFee",
-					  						ListLocalDefaultText =  "אגרת בטחון",
+					  						ListLocalDefaultTextBack_up =  "אגרת בטחון",
+					  						ListLocalDefaultText =  "BS64:IteQ15LXqNeqINeR15jXl9eV158i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -18649,10 +19080,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ComputerFee",
 					  						DefaultText =  "ComputerFee",
-					  						FullLocalDefaultText =  "אגרת מחשב",
+					  						FullLocalDefaultTextBack_up =  "אגרת מחשב",
+					  						FullLocalDefaultText =  "BS64:IteQ15LXqNeqINee15fXqdeRIg==",
 					  						ListFieldLable =  "ComputerFeeListLable",
 					  						ListLableDefaultText =  "ComputerFee",
-					  						ListLocalDefaultText =  "אגרת מחשב",
+					  						ListLocalDefaultTextBack_up =  "אגרת מחשב",
+					  						ListLocalDefaultText =  "BS64:IteQ15LXqNeqINee15fXqdeRIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -18839,7 +19272,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AutoSending",
 					  						DefaultText =  "Auto Sending",
-					  						FullLocalDefaultText =  "שליחה אוטומטית",
+					  						FullLocalDefaultTextBack_up =  "שליחה אוטומטית",
+					  						FullLocalDefaultText =  "BS64:Itep15zXmdeX15Qg15DXldeY15XXnteY15nXqiI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -18963,10 +19397,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SystemConnection",
 					  						DefaultText =  "System Connection",
-					  						FullLocalDefaultText =  "מקושר לתיק",
+					  						FullLocalDefaultTextBack_up =  "מקושר לתיק",
+					  						FullLocalDefaultText =  "BS64:Itee16fXldep16gg15zXqteZ16ci",
 					  						ListFieldLable =  "SystemConnectionListLable",
 					  						ListLableDefaultText =  "System Connection",
-					  						ListLocalDefaultText =  "מקושר לתיק",
+					  						ListLocalDefaultTextBack_up =  "מקושר לתיק",
+					  						ListLocalDefaultText =  "BS64:Itee16fXldep16gg15zXqteZ16ci",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "NUnicloud",
 					  						NavigationPropertyName =  "SystemConnectionCode",
@@ -19052,7 +19488,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ShipmentId",
 					  						ObjectTableName =  "Customs.Declaration",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Shipment",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -19071,6 +19508,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ShipmentId",
 					  						ListPropertyPath =  "ShipmentId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -19089,11 +19527,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShipmentId",
 					  						DefaultText =  "Shipment Id",
-					  						FullLocalDefaultText =  "מזהה משלוח",
+					  						FullLocalDefaultTextBack_up =  "מזהה משלוח",
+					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINee16nXnNeV15ci",
 					  						ListFieldLable =  "ShipmentIdListLable",
 					  						ListLableDefaultText =  "ShipmentId",
-					  						ListLocalDefaultText =  "מזהה משלוח",
-					  						IsForeignKey =  false,
+					  						ListLocalDefaultTextBack_up =  "מזהה משלוח",
+					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINee16nXnNeV15ci",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "Shipment",
+					  						NavigationPropertyName =  "Shipment",
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
@@ -19135,35 +19577,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode DeclarationTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.CourierMasterOpen", DefaultText = @"Courier Master Open",LocalDefaultText = "שטרי מטען בלדר פתוחים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.CourierMasterOpen", DefaultText = @"Courier Master Open",LocalDefaultText = "BS64:Itep15jXqNeZINee15jXotefINeR15zXk9eoINek16rXldeX15nXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.OpenCourierMaster", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.OpenCourierMaster", NameTextCodeDefaultText = "OpenCourierMaster", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.UnReleasedFastProcess", DefaultText = @"UnReleased Fast Process",LocalDefaultText = "לא שוחררו מכס מהיר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.UnReleasedFastProcess", DefaultText = @"UnReleased Fast Process",LocalDefaultText = "BS64:Itec15Ag16nXldeX16jXqNeVINee15vXoSDXnteU15nXqCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.UnReleasedFastProcess", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.UnReleasedFastProcess", NameTextCodeDefaultText = "UnReleasedFastProcess", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.CourierMasterOpenIndividual", DefaultText = @"Courier Master Open Individual",LocalDefaultText = "שטרי מטען פרטניים פתוחים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.CourierMasterOpenIndividual", DefaultText = @"Courier Master Open Individual",LocalDefaultText = "BS64:Itep15jXqNeZINee15jXotefINek16jXmNeg15nXmdedINek16rXldeX15nXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.CourierMasterOpenIndividual", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.CourierMasterOpenIndividual", NameTextCodeDefaultText = "CourierMasterOpenIndividual", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.UnReleasedIndividual", DefaultText = @"UnReleased Fast Process",LocalDefaultText = "לא שוחררו מכס פרטני", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.UnReleasedIndividual", DefaultText = @"UnReleased Fast Process",LocalDefaultText = "BS64:Itec15Ag16nXldeX16jXqNeVINee15vXoSDXpNeo15jXoNeZIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.UnReleasedIndividual", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.UnReleasedIndividual", NameTextCodeDefaultText = "UnReleasedIndividual", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.WithoutId", DefaultText = @"Without Id",LocalDefaultText = "ללא תעודת זהות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.WithoutId", DefaultText = @"Without Id",LocalDefaultText = "BS64:Itec15zXkCDXqtei15XXk9eqINeW15TXldeqIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.WithoutId", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.WithoutId", NameTextCodeDefaultText = "WithoutId", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationTextCode_5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.WithoutClassification", DefaultText = @"Without Classification",LocalDefaultText = "ללא סיווג", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationTextCode_5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.WithoutClassification", DefaultText = @"Without Classification",LocalDefaultText = "BS64:Itec15zXkCDXodeZ15XXldeSIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationFeature_5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.WithoutClassification", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.WithoutClassification", NameTextCodeDefaultText = "WithoutClassification", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationTextCode_6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.PendingPayment", DefaultText = @"Pending Payment",LocalDefaultText = "מעוכב גביה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationTextCode_6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.PendingPayment", DefaultText = @"Pending Payment",LocalDefaultText = "BS64:Itee16LXldeb15Eg15LXkdeZ15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationFeature_6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.PendingPayment", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.PendingPayment", NameTextCodeDefaultText = "PendingPayment", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationTextCode_7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.PendingCustoms", DefaultText = @"Pending Customs",LocalDefaultText = "מעוכב מכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationTextCode_7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.PendingCustoms", DefaultText = @"Pending Customs",LocalDefaultText = "BS64:Itee16LXldeb15Eg157Xm9ehIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationFeature_7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.PendingCustoms", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.PendingCustoms", NameTextCodeDefaultText = "PendingCustoms", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
  
 
@@ -19171,51 +19613,51 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature DeclarationFeature_8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.Pending", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.CourierMasters", NameTextCodeDefaultText = "CourierMaster", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationTextCode_9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.Q.DeclarationWithoutReleaseQuery", DefaultText = @"Open Declarations",LocalDefaultText = "הצהרות פתוחות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationTextCode_9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.Q.DeclarationWithoutReleaseQuery", DefaultText = @"Open Declarations",LocalDefaultText = "BS64:IteU16bXlNeo15XXqiDXpNeq15XXl9eV16oi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationFeature_9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.DeclarationWithoutRelease", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.DeclarationWithoutRelease", NameTextCodeDefaultText = "DeclarationWithoutRelease", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationTextCode_10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.Q.DeclaratioInConstraintQuery", DefaultText = @"Declarations in Constraint",LocalDefaultText = " אילוצים ללא תשובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationTextCode_10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.Q.DeclaratioInConstraintQuery", DefaultText = @"Declarations in Constraint",LocalDefaultText = "BS64:IiDXkNeZ15zXldem15nXnSDXnNec15Ag16rXqdeV15HXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationFeature_10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.DeclarationInConstraint", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.DeclarationInConstraint", NameTextCodeDefaultText = "DeclarationInConstraint", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationTextCode_11 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.Q.PaidDeclarationWithoutReleaseQuery", DefaultText = @"Paid Declarations Without Release",LocalDefaultText = "הגשות ללא תשובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationTextCode_11 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.Q.PaidDeclarationWithoutReleaseQuery", DefaultText = @"Paid Declarations Without Release",LocalDefaultText = "BS64:IteU15LXqdeV16og15zXnNeQINeq16nXldeR15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationFeature_11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.PaidDeclaration", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.PaidDeclaration", NameTextCodeDefaultText = "PaidDeclaration", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationTextCode_12 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Declaration.Q.DeclarationAmendments", DefaultText = @"Declaration Amendments In Process",LocalDefaultText = "תיקוני הצהרה בתהליך", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationTextCode_12 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Declaration.Q.DeclarationAmendments", DefaultText = @"Declaration Amendments In Process",LocalDefaultText = "BS64:Iteq15nXp9eV16DXmSDXlNem15TXqNeUINeR16rXlNec15nXmiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationFeature_12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.DeclarationAmendments", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.DeclarationAmendments", NameTextCodeDefaultText = "DeclarationAmendments", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationTextCode_13 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.Q.DeclarationQuery", DefaultText = @"All Declarations",LocalDefaultText = "כל ההצהרות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationTextCode_13 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.Q.DeclarationQuery", DefaultText = @"All Declarations",LocalDefaultText = "BS64:Iteb15wg15TXlNem15TXqNeV16oi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationFeature_13 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.Declarations", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.Declarations", NameTextCodeDefaultText = "Declarations", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationTextCode_14 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.Q.ExportDeclarationQuery", DefaultText = @"Open Declarations",LocalDefaultText = "הצהרות פתוחות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationTextCode_14 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.Q.ExportDeclarationQuery", DefaultText = @"Open Declarations",LocalDefaultText = "BS64:IteU16bXlNeo15XXqiDXpNeq15XXl9eV16oi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationFeature_14 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.ExportDecWithoutRelease", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.ExportDecWithoutRelease", NameTextCodeDefaultText = "ExportDecWithoutRelease", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationTextCode_15 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Declaration.Q.AllCourierDeclarations", DefaultText = @"All Courier Declarations",LocalDefaultText = "כל ההצהרות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationTextCode_15 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Declaration.Q.AllCourierDeclarations", DefaultText = @"All Courier Declarations",LocalDefaultText = "BS64:Iteb15wg15TXlNem15TXqNeV16oi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationFeature_15 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.AllCourierDeclarations", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.AllCourierDeclarations", NameTextCodeDefaultText = "AllCourierDeclarations", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationTextCode_16 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Declaration.Q.ExportDeclarationInConstraint", DefaultText = @"Declarations in Constraint",LocalDefaultText = " אילוצים ללא תשובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationTextCode_16 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Declaration.Q.ExportDeclarationInConstraint", DefaultText = @"Declarations in Constraint",LocalDefaultText = "BS64:IiDXkNeZ15zXldem15nXnSDXnNec15Ag16rXqdeV15HXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationFeature_16 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.ExportDeclarationInConstraint", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.ExportDeclarationInConstraint", NameTextCodeDefaultText = "ExportDeclarationInConstraint", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationTextCode_17 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Declaration.Q.PaidExportDeclaration", DefaultText = @"Paid Declarations Without Release",LocalDefaultText = "הגשות ללא תשובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationTextCode_17 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Declaration.Q.PaidExportDeclaration", DefaultText = @"Paid Declarations Without Release",LocalDefaultText = "BS64:IteU15LXqdeV16og15zXnNeQINeq16nXldeR15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationFeature_17 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.PaidExportDeclaration", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.PaidExportDeclaration", NameTextCodeDefaultText = "PaidExportDeclaration", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationTextCode_18 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Declaration.Q.ExportDeclarationAmendments", DefaultText = @"Declaration Amendments In Process",LocalDefaultText = "תיקוני הצהרה בתהליך", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationTextCode_18 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Declaration.Q.ExportDeclarationAmendments", DefaultText = @"Declaration Amendments In Process",LocalDefaultText = "BS64:Iteq15nXp9eV16DXmSDXlNem15TXqNeUINeR16rXlNec15nXmiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationFeature_18 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.ExportDeclarationAmendments", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.ExportDeclarationAmendments", NameTextCodeDefaultText = "ExportDeclarationAmendments", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationTextCode_19 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Declaration.Q.AllExportDeclaration", DefaultText = @"All Declarations",LocalDefaultText = "כל ההצהרות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationTextCode_19 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Declaration.Q.AllExportDeclaration", DefaultText = @"All Declarations",LocalDefaultText = "BS64:Iteb15wg15TXlNem15TXqNeV16oi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationFeature_19 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.AllExportDeclaration", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.AllExportDeclaration", NameTextCodeDefaultText = "AllExportDeclaration", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationTextCode_20 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Declaration.Q.DiamondsDeclarations", DefaultText = @"Diamonds Declarations",LocalDefaultText = "הצהרות יהלומים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationTextCode_20 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Declaration.Q.DiamondsDeclarations", DefaultText = @"Diamonds Declarations",LocalDefaultText = "BS64:IteU16bXlNeo15XXqiDXmdeU15zXldee15nXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationFeature_20 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.DiamondsDeclarations", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.DiamondsDeclarations", NameTextCodeDefaultText = "DiamondsDeclarations", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
@@ -20000,166 +20442,166 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
 			   ObjectTable DeclarationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.Declaration" && d.Tenant == 0).FirstOrDefault();  
                  
-			   TextCode DeclarationCorrectionsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Corrections", DefaultText = "Corrections",LocalDefaultText = "תיקון הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationCorrectionsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Corrections", DefaultText = "Corrections",LocalDefaultText = "BS64:Iteq15nXp9eV158g15TXpteU16jXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationCorrectionsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CORRECTIONS", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Correction", NameTextCodeDefaultText = "Correction", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationGeneralTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.General", DefaultText = "General",LocalDefaultText = " כללי", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationGeneralTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.General", DefaultText = "General",LocalDefaultText = "BS64:IiDXm9ec15zXmSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationGeneralFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationWorkSheetFromExcelTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.WorkSpaceFromExcel", DefaultText = "WorkSheetFromExcel",LocalDefaultText = "מסך עבודה מאקסל", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationWorkSheetFromExcelTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.WorkSpaceFromExcel", DefaultText = "WorkSheetFromExcel",LocalDefaultText = "BS64:Itee16HXmiDXoteR15XXk9eUINee15DXp9eh15wi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationWorkSheetFromExcelFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Tab.WorkSheetFromExcel", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.DEUT", NameTextCodeDefaultText = "WorkSheetFromExcel", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationSupplierInvoicesTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Invoices", DefaultText = "Supplier Invoices",LocalDefaultText = "חשבונות ספק", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationSupplierInvoicesTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Invoices", DefaultText = "Supplier Invoices",LocalDefaultText = "BS64:IteX16nXkdeV16DXldeqINeh16TXpyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationSupplierInvoicesFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INVOICES", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Invoices", NameTextCodeDefaultText = "Invoices", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationCertificatesTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Certificates", DefaultText = "Certificates",LocalDefaultText = "הזנת אישורים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationCertificatesTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Certificates", DefaultText = "Certificates",LocalDefaultText = "BS64:IteU15bXoNeqINeQ15nXqdeV16jXmdedIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationCertificatesFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CERTIFICATE", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Certificates", NameTextCodeDefaultText = "Certificates", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationCustomsDocumentsTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.CustomDocuments", DefaultText = "Customs Documents",LocalDefaultText = "צרופות מכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationCustomsDocumentsTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.CustomDocuments", DefaultText = "Customs Documents",LocalDefaultText = "BS64:Item16jXldek15XXqiDXnteb16Ei", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationCustomsDocumentsFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMDOCUMENTS", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.CustomDocument", NameTextCodeDefaultText = "Custom Documents", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationCustomsReplyTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.CustomsAnswers", DefaultText = "Customs Reply",LocalDefaultText = "תשובה לתיק", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationCustomsReplyTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.CustomsAnswers", DefaultText = "Customs Reply",LocalDefaultText = "BS64:Iteq16nXldeR15Qg15zXqteZ16ci", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationCustomsReplyFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSANSWERS", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.CustomsAnswers", NameTextCodeDefaultText = "Customs Answers", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationTaxesTextCode_TH7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Taxes", DefaultText = "Taxes",LocalDefaultText = "מסים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationTaxesTextCode_TH7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Taxes", DefaultText = "Taxes",LocalDefaultText = "BS64:Itee16HXmdedIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationTaxesFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TAXES", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Taxes", NameTextCodeDefaultText = "Taxes", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationPaymentOrdersTextCode_TH8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.PaymentOrder", DefaultText = "Payment Orders",LocalDefaultText = "הוראות תשלום", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationPaymentOrdersTextCode_TH8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.PaymentOrder", DefaultText = "Payment Orders",LocalDefaultText = "BS64:IteU15XXqNeQ15XXqiDXqtep15zXldedIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationPaymentOrdersFeature_TH8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DECLARATIONPYORDER", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.PaymentOrder", NameTextCodeDefaultText = "Payment Order", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationPhysicalChecksTextCode_TH9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.PhysicalCheck", DefaultText = "Physical Checks",LocalDefaultText = "בדיקה פיזית", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationPhysicalChecksTextCode_TH9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.PhysicalCheck", DefaultText = "Physical Checks",LocalDefaultText = "BS64:IteR15PXmden15Qg16TXmdeW15nXqiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationPhysicalChecksFeature_TH9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DECLARATIONPHCHECK", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.PhysicalCheck", NameTextCodeDefaultText = "Physical Check", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationEventsTextCode_TH10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationEventsTextCode_TH10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Events", DefaultText = "Events",LocalDefaultText = "BS64:IteQ15nXqNeV16LXmdedIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationEventsFeature_TH10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationRequestSheetsTextCode_TH11 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.RequestSheet", DefaultText = "Request Sheets",LocalDefaultText = "גליון בקשות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationRequestSheetsTextCode_TH11 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.RequestSheet", DefaultText = "Request Sheets",LocalDefaultText = "BS64:IteS15zXmdeV158g15HXp9ep15XXqiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationRequestSheetsFeature_TH11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DECLARATIONSHEET", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.RequestSheet", NameTextCodeDefaultText = "Request Sheet", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationCommunicationsTextCode_TH12 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Communications", DefaultText = "Communications",LocalDefaultText = "תקשורות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationCommunicationsTextCode_TH12 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Communications", DefaultText = "Communications",LocalDefaultText = "BS64:Iteq16fXqdeV16jXldeqIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationCommunicationsFeature_TH12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COMMUNICATIONS", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Communication", NameTextCodeDefaultText = "Communication", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationMoreFieldsTextCode_TH13 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.MoreFields", DefaultText = "More Fields",LocalDefaultText = "שדות נוספים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationMoreFieldsTextCode_TH13 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.MoreFields", DefaultText = "More Fields",LocalDefaultText = "BS64:Itep15PXldeqINeg15XXodek15nXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationMoreFieldsFeature_TH13 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MOREFIELDS", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.MoreFields", NameTextCodeDefaultText = "More Fields", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationTapagsTextCode_TH14 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Tapags", DefaultText = "Tapags",LocalDefaultText = "תיקי תפ”ג", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationTapagsTextCode_TH14 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Tapags", DefaultText = "Tapags",LocalDefaultText = "BS64:Iteq15nXp9eZINeq16TigJ3XkiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationTapagsFeature_TH14 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TAPAGS", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Tapags", NameTextCodeDefaultText = "Tapags", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationNotificationReplyTextCode_TH15 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Notification", DefaultText = "Notification Reply",LocalDefaultText = "הודעות לסוכן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationNotificationReplyTextCode_TH15 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Notification", DefaultText = "Notification Reply",LocalDefaultText = "BS64:IteU15XXk9ei15XXqiDXnNeh15XXm9efIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationNotificationReplyFeature_TH15 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NOTIFICATION", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.NotificationReply", NameTextCodeDefaultText = "Notification Reply", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationNotificationsTextCode_TH16 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Notifications", DefaultText = "Notifications",LocalDefaultText = "התראות לתיק", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationNotificationsTextCode_TH16 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Notifications", DefaultText = "Notifications",LocalDefaultText = "BS64:IteU16rXqNeQ15XXqiDXnNeq15nXpyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationNotificationsFeature_TH16 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NOTIFICATIONS", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Notifications", NameTextCodeDefaultText = "Notifications", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationCustomsCollateralTextCode_TH17 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.TH.CustomsCollateral", DefaultText = "Customs Collateral",LocalDefaultText = "בטוחות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationCustomsCollateralTextCode_TH17 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.TH.CustomsCollateral", DefaultText = "Customs Collateral",LocalDefaultText = "BS64:IteR15jXldeX15XXqiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationCustomsCollateralFeature_TH17 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COLLATERAL", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Collateral", NameTextCodeDefaultText = "Collateral", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationCargoSplitTextCode_TH18 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.CargoSplit", DefaultText = "Cargo Split",LocalDefaultText = "בקשות פיצול מטען", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationCargoSplitTextCode_TH18 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.CargoSplit", DefaultText = "Cargo Split",LocalDefaultText = "BS64:IteR16fXqdeV16og16TXmdem15XXnCDXnteY16LXnyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationCargoSplitFeature_TH18 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DECLARATIONCASPLIT", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.CargoSplit", NameTextCodeDefaultText = "Cargo Split", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationClassificationTextCode_TH19 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Classification", DefaultText = "Classification",LocalDefaultText = "סיווג", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationClassificationTextCode_TH19 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Classification", DefaultText = "Classification",LocalDefaultText = "BS64:Iteh15nXldeV15Ii", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationClassificationFeature_TH19 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DECLARATIONCLASSIFICATION", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Classification", NameTextCodeDefaultText = "Declaration Classification", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationCargoSealTextCode_TH20 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.CargoSeal", DefaultText = "Cargo Seal",LocalDefaultText = "רשימת סגרים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationCargoSealTextCode_TH20 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.CargoSeal", DefaultText = "Cargo Seal",LocalDefaultText = "BS64:Iteo16nXmdee16og16HXkteo15nXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationCargoSealFeature_TH20 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DECLARATIONCARGOSEAL", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.CargoSeal", NameTextCodeDefaultText = "Declaration CargoSeal", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationExportStorageListTextCode_TH21 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.ExportStorageList", DefaultText = "Export Storage List",LocalDefaultText = "רשימת אחסנות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationExportStorageListTextCode_TH21 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.ExportStorageList", DefaultText = "Export Storage List",LocalDefaultText = "BS64:Iteo16nXmdee16og15DXl9eh16DXldeqIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationExportStorageListFeature_TH21 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Tab.ExportStorageList", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.DESL", NameTextCodeDefaultText = "Export Storage List", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationDeclarationAmendmentsTextCode_TH22 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.DeclarationAmendment", DefaultText = "Declaration Amendments",LocalDefaultText = "תיקוני הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationDeclarationAmendmentsTextCode_TH22 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.DeclarationAmendment", DefaultText = "Declaration Amendments",LocalDefaultText = "BS64:Iteq15nXp9eV16DXmSDXlNem15TXqNeUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationDeclarationAmendmentsFeature_TH22 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DECLARATIONAMENDMENT", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.DeclarationAmendment", NameTextCodeDefaultText = "Declaration Amendment", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationDocsInTextCode_TH23 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = "טעינת מסמכים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationDocsInTextCode_TH23 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = "BS64:IteY16LXmdeg16og157Xodee15vXmdedIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationDocsInFeature_TH23 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.DocsIn", NameTextCodeDefaultText = "DocsIn", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationDigitalCertificateOfOriginTextCode_TH24 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.DigitalCertificateOfOrigin", DefaultText = "Digital Certificate Of Origin",LocalDefaultText = "ת.מקור דיגיטלית", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationDigitalCertificateOfOriginTextCode_TH24 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.DigitalCertificateOfOrigin", DefaultText = "Digital Certificate Of Origin",LocalDefaultText = "BS64:IteqLtee16fXldeoINeT15nXkteZ15jXnNeZ16oi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationDigitalCertificateOfOriginFeature_TH24 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Tab.DigitalCertificateOfOrigin", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.DCOO", NameTextCodeDefaultText = "Digital Certificate Of Origin", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationCloseExportDeclarationTextCode_TH25 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.CloseExportDeclaration", DefaultText = "Close Export Declaration",LocalDefaultText = "סגירת הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationCloseExportDeclarationTextCode_TH25 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.CloseExportDeclaration", DefaultText = "Close Export Declaration",LocalDefaultText = "BS64:Iteh15LXmdeo16og15TXpteU16jXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationCloseExportDeclarationFeature_TH25 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Tab.CloseExportDeclaration", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.CloD", NameTextCodeDefaultText = "Close Export Declaration", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCR",HtmlComponentName = "DeclarationCorrectionsComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Corrections/DeclarationCorrectionsComponent", FeatureId = DeclarationCorrectionsFeature_TH0.Id,FeatureUniqeCode = DeclarationCorrectionsFeature_TH0.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCorrectionsTextCode_TH0.Id, TabNameTextCodeCode = DeclarationCorrectionsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCR",HtmlComponentName = "DeclarationCorrectionsComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Corrections/DeclarationCorrectionsComponent", FeatureId = DeclarationCorrectionsFeature_TH0.Id,FeatureUniqeCode = DeclarationCorrectionsFeature_TH0.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCorrectionsTextCode_TH0.Id, TabNameTextCodeCode = DeclarationCorrectionsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0,IsLocked = false }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DEGC",HtmlComponentName = "DeclarationGeneralComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/DeclarationGeneralComponent", FeatureId = DeclarationGeneralFeature_TH1.Id,FeatureUniqeCode = DeclarationGeneralFeature_TH1.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.DeclarationGeneralTabControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationGeneralTextCode_TH1.Id, TabNameTextCodeCode = DeclarationGeneralTextCode_TH1.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DEGC",HtmlComponentName = "DeclarationGeneralComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/DeclarationGeneralComponent", FeatureId = DeclarationGeneralFeature_TH1.Id,FeatureUniqeCode = DeclarationGeneralFeature_TH1.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.DeclarationGeneralTabControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationGeneralTextCode_TH1.Id, TabNameTextCodeCode = DeclarationGeneralTextCode_TH1.Code, Tenant = 0, IndexOrder = 0,IsLocked = true }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DEUT",HtmlComponentName = "CourierWorksheetFromExcelComponent",HtmlComponentUrl = "./CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetFromExcelComponent", FeatureId = DeclarationWorkSheetFromExcelFeature_TH2.Id,FeatureUniqeCode = DeclarationWorkSheetFromExcelFeature_TH2.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.CourierWorksheetFromExcelComponent", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationWorkSheetFromExcelTextCode_TH2.Id, TabNameTextCodeCode = DeclarationWorkSheetFromExcelTextCode_TH2.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DEUT",HtmlComponentName = "CourierWorksheetFromExcelComponent",HtmlComponentUrl = "./CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetFromExcelComponent", FeatureId = DeclarationWorkSheetFromExcelFeature_TH2.Id,FeatureUniqeCode = DeclarationWorkSheetFromExcelFeature_TH2.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.CourierWorksheetFromExcelComponent", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationWorkSheetFromExcelTextCode_TH2.Id, TabNameTextCodeCode = DeclarationWorkSheetFromExcelTextCode_TH2.Code, Tenant = 0, IndexOrder = 0,IsLocked = false }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DEIN",HtmlComponentName = "DeclarationSupplierInvoiceTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/DeclarationSupplierInvoiceTabComponent", FeatureId = DeclarationSupplierInvoicesFeature_TH3.Id,FeatureUniqeCode = DeclarationSupplierInvoicesFeature_TH3.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.DeclarationInvoicesTabControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationSupplierInvoicesTextCode_TH3.Id, TabNameTextCodeCode = DeclarationSupplierInvoicesTextCode_TH3.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DEIN",HtmlComponentName = "DeclarationSupplierInvoiceTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/DeclarationSupplierInvoiceTabComponent", FeatureId = DeclarationSupplierInvoicesFeature_TH3.Id,FeatureUniqeCode = DeclarationSupplierInvoicesFeature_TH3.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.DeclarationInvoicesTabControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationSupplierInvoicesTextCode_TH3.Id, TabNameTextCodeCode = DeclarationSupplierInvoicesTextCode_TH3.Code, Tenant = 0, IndexOrder = 0,IsLocked = true }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DECR",HtmlComponentName = "CertificateTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Certificate/CertificateTabComponent", FeatureId = DeclarationCertificatesFeature_TH4.Id,FeatureUniqeCode = DeclarationCertificatesFeature_TH4.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.DeclarationCertificatesTabControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCertificatesTextCode_TH4.Id, TabNameTextCodeCode = DeclarationCertificatesTextCode_TH4.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DECR",HtmlComponentName = "CertificateTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Certificate/CertificateTabComponent", FeatureId = DeclarationCertificatesFeature_TH4.Id,FeatureUniqeCode = DeclarationCertificatesFeature_TH4.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.DeclarationCertificatesTabControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCertificatesTextCode_TH4.Id, TabNameTextCodeCode = DeclarationCertificatesTextCode_TH4.Code, Tenant = 0, IndexOrder = 1,IsLocked = false }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCD",HtmlComponentName = "CustomsDocumentsComponent",HtmlComponentUrl = "./CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent", FeatureId = DeclarationCustomsDocumentsFeature_TH5.Id,FeatureUniqeCode = DeclarationCustomsDocumentsFeature_TH5.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Documents.DeclarationCustomDocumentsControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCustomsDocumentsTextCode_TH5.Id, TabNameTextCodeCode = DeclarationCustomsDocumentsTextCode_TH5.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCD",HtmlComponentName = "CustomsDocumentsComponent",HtmlComponentUrl = "./CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent", FeatureId = DeclarationCustomsDocumentsFeature_TH5.Id,FeatureUniqeCode = DeclarationCustomsDocumentsFeature_TH5.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Documents.DeclarationCustomDocumentsControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCustomsDocumentsTextCode_TH5.Id, TabNameTextCodeCode = DeclarationCustomsDocumentsTextCode_TH5.Code, Tenant = 0, IndexOrder = 2,IsLocked = false }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCA",HtmlComponentName = "CustomsAnswersComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/CustomsAnswers/CustomsAnswersComponent", FeatureId = DeclarationCustomsReplyFeature_TH6.Id,FeatureUniqeCode = DeclarationCustomsReplyFeature_TH6.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.DeclarationCustomsAnswersControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCustomsReplyTextCode_TH6.Id, TabNameTextCodeCode = DeclarationCustomsReplyTextCode_TH6.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCA",HtmlComponentName = "CustomsAnswersComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/CustomsAnswers/CustomsAnswersComponent", FeatureId = DeclarationCustomsReplyFeature_TH6.Id,FeatureUniqeCode = DeclarationCustomsReplyFeature_TH6.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.DeclarationCustomsAnswersControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCustomsReplyTextCode_TH6.Id, TabNameTextCodeCode = DeclarationCustomsReplyTextCode_TH6.Code, Tenant = 0, IndexOrder = 3,IsLocked = false }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DETX",HtmlComponentName = "DeclarationTaxesTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Taxes/DeclarationTaxesTabComponent", FeatureId = DeclarationTaxesFeature_TH7.Id,FeatureUniqeCode = DeclarationTaxesFeature_TH7.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.DeclarationTaxesTabControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationTaxesTextCode_TH7.Id, TabNameTextCodeCode = DeclarationTaxesTextCode_TH7.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DETX",HtmlComponentName = "DeclarationTaxesTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Taxes/DeclarationTaxesTabComponent", FeatureId = DeclarationTaxesFeature_TH7.Id,FeatureUniqeCode = DeclarationTaxesFeature_TH7.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.DeclarationTaxesTabControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationTaxesTextCode_TH7.Id, TabNameTextCodeCode = DeclarationTaxesTextCode_TH7.Code, Tenant = 0, IndexOrder = 4,IsLocked = false }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCPO",HtmlComponentName = "DeclarationPaymentOrderTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/PaymentOrder/DeclarationPaymentOrderTabComponent", FeatureId = DeclarationPaymentOrdersFeature_TH8.Id,FeatureUniqeCode = DeclarationPaymentOrdersFeature_TH8.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationPaymentOrdersTextCode_TH8.Id, TabNameTextCodeCode = DeclarationPaymentOrdersTextCode_TH8.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCPO",HtmlComponentName = "DeclarationPaymentOrderTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/PaymentOrder/DeclarationPaymentOrderTabComponent", FeatureId = DeclarationPaymentOrdersFeature_TH8.Id,FeatureUniqeCode = DeclarationPaymentOrdersFeature_TH8.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationPaymentOrdersTextCode_TH8.Id, TabNameTextCodeCode = DeclarationPaymentOrdersTextCode_TH8.Code, Tenant = 0, IndexOrder = 5,IsLocked = false }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCPC",HtmlComponentName = "DeclarationPhysicalCheckTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/PhysicalCheck/DeclarationPhysicalCheckTabComponent", FeatureId = DeclarationPhysicalChecksFeature_TH9.Id,FeatureUniqeCode = DeclarationPhysicalChecksFeature_TH9.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationPhysicalChecksTextCode_TH9.Id, TabNameTextCodeCode = DeclarationPhysicalChecksTextCode_TH9.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCPC",HtmlComponentName = "DeclarationPhysicalCheckTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/PhysicalCheck/DeclarationPhysicalCheckTabComponent", FeatureId = DeclarationPhysicalChecksFeature_TH9.Id,FeatureUniqeCode = DeclarationPhysicalChecksFeature_TH9.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationPhysicalChecksTextCode_TH9.Id, TabNameTextCodeCode = DeclarationPhysicalChecksTextCode_TH9.Code, Tenant = 0, IndexOrder = 6,IsLocked = false }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DEEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = DeclarationEventsFeature_TH10.Id,FeatureUniqeCode = DeclarationEventsFeature_TH10.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationEventsTextCode_TH10.Id, TabNameTextCodeCode = DeclarationEventsTextCode_TH10.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DEEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = DeclarationEventsFeature_TH10.Id,FeatureUniqeCode = DeclarationEventsFeature_TH10.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationEventsTextCode_TH10.Id, TabNameTextCodeCode = DeclarationEventsTextCode_TH10.Code, Tenant = 0, IndexOrder = 7,IsLocked = false }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCRS",HtmlComponentName = "RequestSheetTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent", FeatureId = DeclarationRequestSheetsFeature_TH11.Id,FeatureUniqeCode = DeclarationRequestSheetsFeature_TH11.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationRequestSheetsTextCode_TH11.Id, TabNameTextCodeCode = DeclarationRequestSheetsTextCode_TH11.Code, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCRS",HtmlComponentName = "RequestSheetTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent", FeatureId = DeclarationRequestSheetsFeature_TH11.Id,FeatureUniqeCode = DeclarationRequestSheetsFeature_TH11.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationRequestSheetsTextCode_TH11.Id, TabNameTextCodeCode = DeclarationRequestSheetsTextCode_TH11.Code, Tenant = 0, IndexOrder = 8,IsLocked = false }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DECM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = DeclarationCommunicationsFeature_TH12.Id,FeatureUniqeCode = DeclarationCommunicationsFeature_TH12.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCommunicationsTextCode_TH12.Id, TabNameTextCodeCode = DeclarationCommunicationsTextCode_TH12.Code, Tenant = 0, IndexOrder = 9 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DECM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = DeclarationCommunicationsFeature_TH12.Id,FeatureUniqeCode = DeclarationCommunicationsFeature_TH12.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCommunicationsTextCode_TH12.Id, TabNameTextCodeCode = DeclarationCommunicationsTextCode_TH12.Code, Tenant = 0, IndexOrder = 9,IsLocked = false }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCMF",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = DeclarationMoreFieldsFeature_TH13.Id,FeatureUniqeCode = DeclarationMoreFieldsFeature_TH13.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationMoreFieldsTextCode_TH13.Id, TabNameTextCodeCode = DeclarationMoreFieldsTextCode_TH13.Code, Tenant = 0, IndexOrder = 10 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCMF",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = DeclarationMoreFieldsFeature_TH13.Id,FeatureUniqeCode = DeclarationMoreFieldsFeature_TH13.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationMoreFieldsTextCode_TH13.Id, TabNameTextCodeCode = DeclarationMoreFieldsTextCode_TH13.Code, Tenant = 0, IndexOrder = 10,IsLocked = false }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCTP",HtmlComponentName = "DeclarationTapagTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Tapag/DeclarationTapagTabComponent", FeatureId = DeclarationTapagsFeature_TH14.Id,FeatureUniqeCode = DeclarationTapagsFeature_TH14.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationTapagsTextCode_TH14.Id, TabNameTextCodeCode = DeclarationTapagsTextCode_TH14.Code, Tenant = 0, IndexOrder = 11 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCTP",HtmlComponentName = "DeclarationTapagTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Tapag/DeclarationTapagTabComponent", FeatureId = DeclarationTapagsFeature_TH14.Id,FeatureUniqeCode = DeclarationTapagsFeature_TH14.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationTapagsTextCode_TH14.Id, TabNameTextCodeCode = DeclarationTapagsTextCode_TH14.Code, Tenant = 0, IndexOrder = 11,IsLocked = false }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCNT",HtmlComponentName = "NotificationReplyTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/NotificationReplyTabComponent", FeatureId = DeclarationNotificationReplyFeature_TH15.Id,FeatureUniqeCode = DeclarationNotificationReplyFeature_TH15.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationNotificationReplyTextCode_TH15.Id, TabNameTextCodeCode = DeclarationNotificationReplyTextCode_TH15.Code, Tenant = 0, IndexOrder = 12 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCNT",HtmlComponentName = "NotificationReplyTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/NotificationReplyTabComponent", FeatureId = DeclarationNotificationReplyFeature_TH15.Id,FeatureUniqeCode = DeclarationNotificationReplyFeature_TH15.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationNotificationReplyTextCode_TH15.Id, TabNameTextCodeCode = DeclarationNotificationReplyTextCode_TH15.Code, Tenant = 0, IndexOrder = 12,IsLocked = false }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCNF",HtmlComponentName = "NotificationComponent",HtmlComponentUrl = "./CustomsModules/CustomsControls/Components/NotificationComponent", FeatureId = DeclarationNotificationsFeature_TH16.Id,FeatureUniqeCode = DeclarationNotificationsFeature_TH16.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationNotificationsTextCode_TH16.Id, TabNameTextCodeCode = DeclarationNotificationsTextCode_TH16.Code, Tenant = 0, IndexOrder = 13 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCNF",HtmlComponentName = "NotificationComponent",HtmlComponentUrl = "./CustomsModules/CustomsControls/Components/NotificationComponent", FeatureId = DeclarationNotificationsFeature_TH16.Id,FeatureUniqeCode = DeclarationNotificationsFeature_TH16.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationNotificationsTextCode_TH16.Id, TabNameTextCodeCode = DeclarationNotificationsTextCode_TH16.Code, Tenant = 0, IndexOrder = 13,IsLocked = false }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCL",HtmlComponentName = "DeclarationCollateralsComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Collateral/DeclarationCollateralsComponent", FeatureId = DeclarationCustomsCollateralFeature_TH17.Id,FeatureUniqeCode = DeclarationCustomsCollateralFeature_TH17.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCustomsCollateralTextCode_TH17.Id, TabNameTextCodeCode = DeclarationCustomsCollateralTextCode_TH17.Code, Tenant = 0, IndexOrder = 14 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCL",HtmlComponentName = "DeclarationCollateralsComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Collateral/DeclarationCollateralsComponent", FeatureId = DeclarationCustomsCollateralFeature_TH17.Id,FeatureUniqeCode = DeclarationCustomsCollateralFeature_TH17.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCustomsCollateralTextCode_TH17.Id, TabNameTextCodeCode = DeclarationCustomsCollateralTextCode_TH17.Code, Tenant = 0, IndexOrder = 14,IsLocked = false }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCS",HtmlComponentName = "DeclarationCargoSplitTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/CargoSplit/DeclarationCargoSplitTabComponent", FeatureId = DeclarationCargoSplitFeature_TH18.Id,FeatureUniqeCode = DeclarationCargoSplitFeature_TH18.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCargoSplitTextCode_TH18.Id, TabNameTextCodeCode = DeclarationCargoSplitTextCode_TH18.Code, Tenant = 0, IndexOrder = 15 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCS",HtmlComponentName = "DeclarationCargoSplitTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/CargoSplit/DeclarationCargoSplitTabComponent", FeatureId = DeclarationCargoSplitFeature_TH18.Id,FeatureUniqeCode = DeclarationCargoSplitFeature_TH18.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCargoSplitTextCode_TH18.Id, TabNameTextCodeCode = DeclarationCargoSplitTextCode_TH18.Code, Tenant = 0, IndexOrder = 15,IsLocked = false }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCF",HtmlComponentName = "DeclarationClassificationComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Classification/DeclarationClassificationComponent", FeatureId = DeclarationClassificationFeature_TH19.Id,FeatureUniqeCode = DeclarationClassificationFeature_TH19.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationClassificationTextCode_TH19.Id, TabNameTextCodeCode = DeclarationClassificationTextCode_TH19.Code, Tenant = 0, IndexOrder = 16 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCF",HtmlComponentName = "DeclarationClassificationComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Classification/DeclarationClassificationComponent", FeatureId = DeclarationClassificationFeature_TH19.Id,FeatureUniqeCode = DeclarationClassificationFeature_TH19.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationClassificationTextCode_TH19.Id, TabNameTextCodeCode = DeclarationClassificationTextCode_TH19.Code, Tenant = 0, IndexOrder = 16,IsLocked = false }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCSE",HtmlComponentName = "DeclarationCargoSealTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/CargoSeal/DeclarationCargoSealTabComponent", FeatureId = DeclarationCargoSealFeature_TH20.Id,FeatureUniqeCode = DeclarationCargoSealFeature_TH20.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCargoSealTextCode_TH20.Id, TabNameTextCodeCode = DeclarationCargoSealTextCode_TH20.Code, Tenant = 0, IndexOrder = 17 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCSE",HtmlComponentName = "DeclarationCargoSealTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/CargoSeal/DeclarationCargoSealTabComponent", FeatureId = DeclarationCargoSealFeature_TH20.Id,FeatureUniqeCode = DeclarationCargoSealFeature_TH20.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCargoSealTextCode_TH20.Id, TabNameTextCodeCode = DeclarationCargoSealTextCode_TH20.Code, Tenant = 0, IndexOrder = 17,IsLocked = false }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DESL",HtmlComponentName = "DeclarationExportStorageComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/ExportStorageList/DeclarationExportStorageComponent", FeatureId = DeclarationExportStorageListFeature_TH21.Id,FeatureUniqeCode = DeclarationExportStorageListFeature_TH21.FeatureUniqeCode, ControlPath = "", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationExportStorageListTextCode_TH21.Id, TabNameTextCodeCode = DeclarationExportStorageListTextCode_TH21.Code, Tenant = 0, IndexOrder = 18 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DESL",HtmlComponentName = "DeclarationExportStorageComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/ExportStorageList/DeclarationExportStorageComponent", FeatureId = DeclarationExportStorageListFeature_TH21.Id,FeatureUniqeCode = DeclarationExportStorageListFeature_TH21.FeatureUniqeCode, ControlPath = "", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationExportStorageListTextCode_TH21.Id, TabNameTextCodeCode = DeclarationExportStorageListTextCode_TH21.Code, Tenant = 0, IndexOrder = 18,IsLocked = false }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCDA",HtmlComponentName = "DeclarationAmendmentComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DeclarationAmendment/DeclarationAmendmentComponent", FeatureId = DeclarationDeclarationAmendmentsFeature_TH22.Id,FeatureUniqeCode = DeclarationDeclarationAmendmentsFeature_TH22.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.DeclarationAmendmentControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationDeclarationAmendmentsTextCode_TH22.Id, TabNameTextCodeCode = DeclarationDeclarationAmendmentsTextCode_TH22.Code, Tenant = 0, IndexOrder = 19 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCDA",HtmlComponentName = "DeclarationAmendmentComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DeclarationAmendment/DeclarationAmendmentComponent", FeatureId = DeclarationDeclarationAmendmentsFeature_TH22.Id,FeatureUniqeCode = DeclarationDeclarationAmendmentsFeature_TH22.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.DeclarationAmendmentControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationDeclarationAmendmentsTextCode_TH22.Id, TabNameTextCodeCode = DeclarationDeclarationAmendmentsTextCode_TH22.Code, Tenant = 0, IndexOrder = 19,IsLocked = false }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCDI",HtmlComponentName = "DeclarationDocsInTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DocsIn/DeclarationDocsInTabComponent", FeatureId = DeclarationDocsInFeature_TH23.Id,FeatureUniqeCode = DeclarationDocsInFeature_TH23.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Documents.DeclarationDocsInControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationDocsInTextCode_TH23.Id, TabNameTextCodeCode = DeclarationDocsInTextCode_TH23.Code, Tenant = 0, IndexOrder = 20 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCDI",HtmlComponentName = "DeclarationDocsInTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DocsIn/DeclarationDocsInTabComponent", FeatureId = DeclarationDocsInFeature_TH23.Id,FeatureUniqeCode = DeclarationDocsInFeature_TH23.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Documents.DeclarationDocsInControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationDocsInTextCode_TH23.Id, TabNameTextCodeCode = DeclarationDocsInTextCode_TH23.Code, Tenant = 0, IndexOrder = 20,IsLocked = false }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCOO",HtmlComponentName = "DigitalCertificateOfOriginTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/DigitalCertificateOfOriginTabComponent", FeatureId = DeclarationDigitalCertificateOfOriginFeature_TH24.Id,FeatureUniqeCode = DeclarationDigitalCertificateOfOriginFeature_TH24.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.DigitalCertificateOfOriginTabControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationDigitalCertificateOfOriginTextCode_TH24.Id, TabNameTextCodeCode = DeclarationDigitalCertificateOfOriginTextCode_TH24.Code, Tenant = 0, IndexOrder = 21 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCOO",HtmlComponentName = "DigitalCertificateOfOriginTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/DigitalCertificateOfOriginTabComponent", FeatureId = DeclarationDigitalCertificateOfOriginFeature_TH24.Id,FeatureUniqeCode = DeclarationDigitalCertificateOfOriginFeature_TH24.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.DigitalCertificateOfOriginTabControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationDigitalCertificateOfOriginTextCode_TH24.Id, TabNameTextCodeCode = DeclarationDigitalCertificateOfOriginTextCode_TH24.Code, Tenant = 0, IndexOrder = 21,IsLocked = false }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CloD",HtmlComponentName = "ExportDeclarationClosureComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Closure/ExportDeclarationClosureComponent", FeatureId = DeclarationCloseExportDeclarationFeature_TH25.Id,FeatureUniqeCode = DeclarationCloseExportDeclarationFeature_TH25.FeatureUniqeCode, ControlPath = "", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCloseExportDeclarationTextCode_TH25.Id, TabNameTextCodeCode = DeclarationCloseExportDeclarationTextCode_TH25.Code, Tenant = 0, IndexOrder = 22 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CloD",HtmlComponentName = "ExportDeclarationClosureComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Closure/ExportDeclarationClosureComponent", FeatureId = DeclarationCloseExportDeclarationFeature_TH25.Id,FeatureUniqeCode = DeclarationCloseExportDeclarationFeature_TH25.FeatureUniqeCode, ControlPath = "", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCloseExportDeclarationTextCode_TH25.Id, TabNameTextCodeCode = DeclarationCloseExportDeclarationTextCode_TH25.Code, Tenant = 0, IndexOrder = 22,IsLocked = false }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCO",HtmlComponentName = "DeclarationCorrectionsComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Corrections/DeclarationCorrectionsComponent", FeatureId = DeclarationCorrectionsFeature_TH0.Id,FeatureUniqeCode = DeclarationCorrectionsFeature_TH0.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCorrectionsTextCode_TH0.Id, TabNameTextCodeCode = DeclarationCorrectionsTextCode_TH0.Code, Tenant = 0, IndexOrder = 23 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCO",HtmlComponentName = "DeclarationCorrectionsComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Corrections/DeclarationCorrectionsComponent", FeatureId = DeclarationCorrectionsFeature_TH0.Id,FeatureUniqeCode = DeclarationCorrectionsFeature_TH0.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCorrectionsTextCode_TH0.Id, TabNameTextCodeCode = DeclarationCorrectionsTextCode_TH0.Code, Tenant = 0, IndexOrder = 23,IsLocked = false }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -20216,21 +20658,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature DeclarationFeature_TaxExemptCode92 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxExemptCode92", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.TaxExemptCode92", NameTextCodeDefaultText = @"TaxExemptCode 92" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
-		   Feature DeclarationFeature_IntegratorFilter = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IntegratorFilter", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.IntegratorFilter", NameTextCodeDefaultText = @"חיתוך אינטגרטור" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+		   Feature DeclarationFeature_IntegratorFilter = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IntegratorFilter", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.IntegratorFilter", NameTextCodeDefaultText = @"BS64:IteX15nXqteV15og15DXmdeg15jXkteo15jXldeoIg==" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
 		   Feature DeclarationFeature_BULKUPLOADDOCUMENTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BULKUPLOADDOCUMENTS", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.BULKUPLOADDOCUMENTS", NameTextCodeDefaultText = @"Bulk Upload Documents" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
-		   Feature DeclarationFeature_MultiUpdateClassificationCodeWindow = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MultiUpdateClassificationCodeWindow", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.MultiUpdateClassificationCodeWindow", NameTextCodeDefaultText = @"הצגת כפתור עדכון קוד תהליך/הנחה פטור" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+		   Feature DeclarationFeature_MultiUpdateClassificationCodeWindow = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MultiUpdateClassificationCodeWindow", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.MultiUpdateClassificationCodeWindow", NameTextCodeDefaultText = @"BS64:IteU16bXkteqINeb16TXqteV16gg16LXk9eb15XXnyDXp9eV15Mg16rXlNec15nXmi/XlNeg15fXlCDXpNeY15XXqCI=" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
 		   Feature DeclarationFeature_IIGEXPORTIMPORTDECLARATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IIGEXPORTIMPORTDECLARATION", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.IIGEXPORTIMPORTDECLARATION", NameTextCodeDefaultText = @"Export & Import IIG Tenant" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
 		   Feature DeclarationFeature_CancelOldCommunication = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelOldCommunication", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.CancelOldCommunication", NameTextCodeDefaultText = @"CancelOldCommunication" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
-		   Feature DeclarationFeature_EntryExit = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EntryExit", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.EntryExit", NameTextCodeDefaultText = @"יציאה ממסוף / נמל" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+		   Feature DeclarationFeature_EntryExit = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EntryExit", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.EntryExit", NameTextCodeDefaultText = @"BS64:IteZ16bXmdeQ15Qg157Xnteh15XXoyAvINeg157XnCI=" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
 		   Feature DeclarationFeature_ISACTIVATEINSURANCE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ISACTIVATEINSURANCE", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ISACTIVATEINSURANCE", NameTextCodeDefaultText = @"Is Activate Insurance" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
-		   Feature DeclarationFeature_UploadExportInvoicesFromCsv = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UploadExportInvoicesFromCsv", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.UploadExportInvoicesFromCsv", NameTextCodeDefaultText = @"הצגת כפתור טעינת חשבונות יצואן מקובץ" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+		   Feature DeclarationFeature_UploadExportInvoicesFromCsv = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UploadExportInvoicesFromCsv", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.UploadExportInvoicesFromCsv", NameTextCodeDefaultText = @"BS64:IteU16bXkteqINeb16TXqteV16gg15jXoteZ16DXqiDXl9ep15HXldeg15XXqiDXmdem15XXkNefINee16fXldeR16Ui" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
 		   Feature DeclarationFeature_AUTOMATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTOMATION", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.AUTOMATION", NameTextCodeDefaultText = @"Automation" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
@@ -20246,13 +20688,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature DeclarationFeature_IsAutoInsuranceExportSubmit = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IsAutoInsuranceExportSubmit", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ISDefineToInsureFromSubmit", NameTextCodeDefaultText = @"Automatic insurance in export submission" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
-		   Feature DeclarationFeature_Pending900InDetainedOrPhysicalCheck = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Pending900InDetainedOrPhysicalCheck", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Pending900InDetainedOrPhysicalCheck", NameTextCodeDefaultText = @"גביה - בתהליך בדיקה פיזית/מעוכבים" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+		   Feature DeclarationFeature_Pending900InDetainedOrPhysicalCheck = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Pending900InDetainedOrPhysicalCheck", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Pending900InDetainedOrPhysicalCheck", NameTextCodeDefaultText = @"BS64:IteS15HXmdeUIC0g15HXqteU15zXmdeaINeR15PXmden15Qg16TXmdeW15nXqi/Xntei15XXm9eR15nXnSI=" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
-		   Feature DeclarationFeature_SlaReport = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SlaReport", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.SlaReport", NameTextCodeDefaultText = @"דוח SLA", ToggleCode = "" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+		   Feature DeclarationFeature_SlaReport = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SlaReport", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.SlaReport", NameTextCodeDefaultText = @"BS64:IteT15XXlyBTTEEi", ToggleCode = "" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
-		   Feature DeclarationFeature_LastMileReport = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LastMileReport", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.LastMileReport", NameTextCodeDefaultText = @"דוח הפצה" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+		   Feature DeclarationFeature_LastMileReport = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LastMileReport", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.LastMileReport", NameTextCodeDefaultText = @"BS64:IteT15XXlyDXlNek16bXlCI=" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
-		   Feature DeclarationFeature_WorkSheetFromExcel = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WorkSheetFromExcel", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.WorkSheetFromExcel", NameTextCodeDefaultText = @"מסך עבודה-הטענת אקסל" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+		   Feature DeclarationFeature_WorkSheetFromExcel = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WorkSheetFromExcel", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.WorkSheetFromExcel", NameTextCodeDefaultText = @"BS64:Itee16HXmiDXoteR15XXk9eULdeU15jXoteg16og15DXp9eh15wi" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
 		   Feature DeclarationFeature_ClosingAutoExpDec = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ClosingAutoExpDec", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ClosingAutoExpDec", NameTextCodeDefaultText = @"Closing an automatic export declaration" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
@@ -20260,9 +20702,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature DeclarationFeature_IsExportSign = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IsExportSign", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.IsExportSign", NameTextCodeDefaultText = @"Is Export Sign" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
-		   Feature DeclarationFeature_ViewDocumentAsPdf = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ViewDocumentAsPdf", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ViewDocumentAsPdf", NameTextCodeDefaultText = @"להציג את המסמך כ-PDF" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+		   Feature DeclarationFeature_ViewDocumentAsPdf = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ViewDocumentAsPdf", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ViewDocumentAsPdf", NameTextCodeDefaultText = @"BS64:Itec15TXpteZ15Ig15DXqiDXlNee16HXnteaINebLVBERiI=" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
-		   Feature DeclarationFeature_ExportDiamonds = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportDiamonds", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ExportDiamonds", NameTextCodeDefaultText = @"הצהרת יהלומים - יצוא" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+		   Feature DeclarationFeature_ExportDiamonds = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportDiamonds", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ExportDiamonds", NameTextCodeDefaultText = @"BS64:IteU16bXlNeo16og15nXlNec15XXnteZ150gLSDXmdem15XXkCI=" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
 		   Feature DeclarationFeature_CancelBuildSST = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelBuildSST", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.CancelBuildSST", NameTextCodeDefaultText = @"Cancel build AvailabilityDate/status in manifest query" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
@@ -20279,7 +20721,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "UPDT",
                 EnglishName =  "Updated",
-                LocalName =  "עודכן",
+                LocalNameBack_up =  "עודכן",
+                LocalName =  "BS64:Itei15XXk9eb158i",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20298,7 +20741,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CRET",
                 EnglishName =  "Created",
-                LocalName =  "חדש",
+                LocalNameBack_up =  "חדש",
+                LocalName =  "BS64:IteX15PXqSI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20317,7 +20761,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "RSG",
                 EnglishName =  "Declaration Release",
-                LocalName =  "הצהרה הותרה",
+                LocalNameBack_up =  "הצהרה הותרה",
+                LocalName =  "BS64:IteU16bXlNeo15Qg15TXldeq16jXlCI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20336,7 +20781,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "RSC",
                 EnglishName =  "Declaration Relase Cancelation",
-                LocalName =  "להצהרה בוטלה ההתרה",
+                LocalNameBack_up =  "להצהרה בוטלה ההתרה",
+                LocalName =  "BS64:Itec15TXpteU16jXlCDXkdeV15jXnNeUINeU15TXqteo15Qi",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20355,7 +20801,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "DEC",
                 EnglishName =  "Declaration Created",
-                LocalName =  "נוצרה הצהרת יבוא",
+                LocalNameBack_up =  "נוצרה הצהרת יבוא",
+                LocalName =  "BS64:Iteg15XXpteo15Qg15TXpteU16jXqiDXmdeR15XXkCI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20374,7 +20821,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "INR",
                 EnglishName =  "Declaration Sent To Customs",
-                LocalName =  "טיוטת הצהרה נשלחה למכס",
+                LocalNameBack_up =  "טיוטת הצהרה נשלחה למכס",
+                LocalName =  "BS64:IteY15nXldeY16og15TXpteU16jXlCDXoNep15zXl9eUINec157Xm9ehIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20393,7 +20841,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "PHF",
                 EnglishName =  "Declaration Payment Sent",
-                LocalName =  "הצהרה הוגשה לתשלום",
+                LocalNameBack_up =  "הצהרה הוגשה לתשלום",
+                LocalName =  "BS64:IteU16bXlNeo15Qg15TXldeS16nXlCDXnNeq16nXnNeV150i",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20412,7 +20861,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "DOK",
                 EnglishName =  "Draft OK",
-                LocalName =  "טיוטה תקינה",
+                LocalNameBack_up =  "טיוטה תקינה",
+                LocalName =  "BS64:IteY15nXldeY15Qg16rXp9eZ16DXlCI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20431,7 +20881,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "BRA",
                 EnglishName =  "Storage Approval",
-                LocalName =  "אישור אחסון",
+                LocalNameBack_up =  "אישור אחסון",
+                LocalName =  "BS64:IteQ15nXqdeV16gg15DXl9eh15XXnyI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20450,7 +20901,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "BRD",
                 EnglishName =  "Storage Denial",
-                LocalName =  "דחיית אחסון",
+                LocalNameBack_up =  "דחיית אחסון",
+                LocalName =  "BS64:IteT15fXmdeZ16og15DXl9eh15XXnyI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20469,7 +20921,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CGN",
                 EnglishName =  "Custom Guarantee Notification",
-                LocalName =  "הודעה על ערבות חדשה",
+                LocalNameBack_up =  "הודעה על ערבות חדשה",
+                LocalName =  "BS64:IteU15XXk9ei15Qg16LXnCDXoteo15HXldeqINeX15PXqdeUIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20488,7 +20941,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "DCA",
                 EnglishName =  "Deficit Customs Answer",
-                LocalName =  "תשובת מכס בגין גרעון עצמי",
+                LocalNameBack_up =  "תשובת מכס בגין גרעון עצמי",
+                LocalName =  "BS64:Iteq16nXldeR16og157Xm9ehINeR15LXmdefINeS16jXoteV158g16LXptee15ki",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20507,7 +20961,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "DFP",
                 EnglishName =  "Declaration Future Payment ",
-                LocalName =  "הגשה עתידית",
+                LocalNameBack_up =  "הגשה עתידית",
+                LocalName =  "BS64:IteU15LXqdeUINei16rXmdeT15nXqiI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20526,7 +20981,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "LIC",
                 EnglishName =  "ProceduralFault Cancelled ",
-                LocalName =  "בוטל ליקוי להצהרה",
+                LocalNameBack_up =  "בוטל ליקוי להצהרה",
+                LocalName =  "BS64:IteR15XXmNecINec15nXp9eV15kg15zXlNem15TXqNeUIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20545,7 +21001,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "LIK",
                 EnglishName =  "New ProceduralFault",
-                LocalName =  "התקבל ליקוי להצהרה",
+                LocalNameBack_up =  "התקבל ליקוי להצהרה",
+                LocalName =  "BS64:IteU16rXp9eR15wg15zXmden15XXmSDXnNeU16bXlNeo15Qi",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20564,7 +21021,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CRD",
                 EnglishName =  "Document Request By Customs",
-                LocalName =  "מסמך נדרש על ידי המכס",
+                LocalNameBack_up =  "מסמך נדרש על ידי המכס",
+                LocalName =  "BS64:Itee16HXnteaINeg15PXqNepINei15wg15nXk9eZINeU157Xm9ehIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20583,7 +21041,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "DCN",
                 EnglishName =  "Declaration Cancellation",
-                LocalName =  "ביטול הצהרה",
+                LocalNameBack_up =  "ביטול הצהרה",
+                LocalName =  "BS64:IteR15nXmNeV15wg15TXpteU16jXlCI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20602,7 +21061,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CAS",
                 EnglishName =  "Custom Documents Que",
-                LocalName =  "הודעה על המצאת מסמכים",
+                LocalNameBack_up =  "הודעה על המצאת מסמכים",
+                LocalName =  "BS64:IteU15XXk9ei15Qg16LXnCDXlNee16bXkNeqINee16HXnteb15nXnSI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20621,7 +21081,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CRC",
                 EnglishName =  "Document requested Cancelled by Customs",
-                LocalName =  "בוטלה דרישת מסמך",
+                LocalNameBack_up =  "בוטלה דרישת מסמך",
+                LocalName =  "BS64:IteR15XXmNec15Qg15PXqNeZ16nXqiDXnteh157XmiI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20640,7 +21101,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "VCD",
                 EnglishName =  "Constraint Declined by Customs",
-                LocalName =  "ממתין לבדיקת יסמ ובקרת מסמכים",
+                LocalNameBack_up =  "ממתין לבדיקת יסמ ובקרת מסמכים",
+                LocalName =  "BS64:Itee157XqteZ158g15zXkdeT15nXp9eqINeZ16HXniDXldeR16fXqNeqINee16HXnteb15nXnSI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20659,7 +21121,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "RAM",
                 EnglishName =  "Constraint Approved by Customs",
-                LocalName =  "אילוץ אושר במכס",
+                LocalNameBack_up =  "אילוץ אושר במכס",
+                LocalName =  "BS64:IteQ15nXnNeV16Ug15DXldep16gg15HXnteb16Ei",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20678,7 +21141,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "VCC",
                 EnglishName =  "Custom Check",
-                LocalName =  "הצהרה נותבה לתור בחינה",
+                LocalNameBack_up =  "הצהרה נותבה לתור בחינה",
+                LocalName =  "BS64:IteU16bXlNeo15Qg16DXldeq15HXlCDXnNeq15XXqCDXkdeX15nXoNeUIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20697,7 +21161,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "RCA",
                 EnglishName =  "Constraint Sent to Customs",
-                LocalName =  "אילוץ נקלט במחשב",
+                LocalNameBack_up =  "אילוץ נקלט במחשב",
+                LocalName =  "BS64:IteQ15nXnNeV16Ug16DXp9ec15gg15HXnteX16nXkSI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20716,7 +21181,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CDC",
                 EnglishName =  "Constraint Declined by Customs",
-                LocalName =  "אילוץ נדחה עי המכס",
+                LocalNameBack_up =  "אילוץ נדחה עי המכס",
+                LocalName =  "BS64:IteQ15nXnNeV16Ug16DXk9eX15Qg16LXmSDXlNee15vXoSI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20735,7 +21201,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "RSH",
                 EnglishName =  "Reshimon received",
-                LocalName =  "קבלת רשימון",
+                LocalNameBack_up =  "קבלת רשימון",
+                LocalName =  "BS64:Iten15HXnNeqINeo16nXmdee15XXnyI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20754,7 +21221,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "PRS",
                 EnglishName =  "Pre Clearancen",
-                LocalName =  "הודעה מוקדמת לסוכן מכס",
+                LocalNameBack_up =  "הודעה מוקדמת לסוכן מכס",
+                LocalName =  "BS64:IteU15XXk9ei15Qg157Xlden15PXnteqINec16HXldeb158g157Xm9ehIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20773,7 +21241,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "DCH",
                 EnglishName =  "Declaration Changed By Customs",
-                LocalName =  "בוצע תיקון הצהרה",
+                LocalNameBack_up =  "בוצע תיקון הצהרה",
+                LocalName =  "BS64:IteR15XXpteiINeq15nXp9eV158g15TXpteU16jXlCI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20792,7 +21261,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "RPD",
                 EnglishName =  "Declaration Re-Payment",
-                LocalName =  "הגשה חוזרת של הצהרה",
+                LocalNameBack_up =  "הגשה חוזרת של הצהרה",
+                LocalName =  "BS64:IteU15LXqdeUINeX15XXlteo16og16nXnCDXlNem15TXqNeUIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20811,7 +21281,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "INP",
                 EnglishName =  "Signed Declaration Sent",
-                LocalName =  "נשלחה הצהרה חתומה אישית",
+                LocalNameBack_up =  "נשלחה הצהרה חתומה אישית",
+                LocalName =  "BS64:Iteg16nXnNeX15Qg15TXpteU16jXlCDXl9eq15XXnteUINeQ15nXqdeZ16oi",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20830,7 +21301,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "LPA",
                 EnglishName =  "Logistic Permit Approved",
-                LocalName =  "היתר לוגיסטי אושר",
+                LocalNameBack_up =  "היתר לוגיסטי אושר",
+                LocalName =  "BS64:IteU15nXqteoINec15XXkteZ16HXmNeZINeQ15XXqdeoIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20849,7 +21321,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "LPC",
                 EnglishName =  "Logistic Permit Cancelled",
-                LocalName =  "היתר לוגיסטי בוטל",
+                LocalNameBack_up =  "היתר לוגיסטי בוטל",
+                LocalName =  "BS64:IteU15nXqteoINec15XXkteZ16HXmNeZINeR15XXmNecIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20868,7 +21341,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "DNR",
                 EnglishName =  "Declaration Number Reset",
-                LocalName =  "אופס מספר הצהרה",
+                LocalNameBack_up =  "אופס מספר הצהרה",
+                LocalName =  "BS64:IteQ15XXpNehINee16HXpNeoINeU16bXlNeo15Qi",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20887,7 +21361,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "VATC",
                 EnglishName =  "Vat Changed",
-                LocalName =  "חפ השתנה",
+                LocalNameBack_up =  "חפ השתנה",
+                LocalName =  "BS64:IteX16Qg15TXqdeq16DXlCI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20944,7 +21419,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "VCI",
                 EnglishName =  "Custom Documents Check",
-                LocalName =  "הצהרה נותבה לבקרת מסמכים",
+                LocalNameBack_up =  "הצהרה נותבה לבקרת מסמכים",
+                LocalName =  "BS64:IteU16bXlNeo15Qg16DXldeq15HXlCDXnNeR16fXqNeqINee16HXnteb15nXnSI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20963,7 +21439,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "VCR",
                 EnglishName =  "Custom Check",
-                LocalName =  "הצהרה נותבה לתור רשות",
+                LocalNameBack_up =  "הצהרה נותבה לתור רשות",
+                LocalName =  "BS64:IteU16bXlNeo15Qg16DXldeq15HXlCDXnNeq15XXqCDXqNep15XXqiI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -20982,7 +21459,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "VCB",
                 EnglishName =  "Custom Security Check",
-                LocalName =  "בדיקה בטחונית להצהרה",
+                LocalNameBack_up =  "בדיקה בטחונית להצהרה",
+                LocalName =  "BS64:IteR15PXmden15Qg15HXmNeX15XXoNeZ16og15zXlNem15TXqNeUIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21001,7 +21479,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "VCM",
                 EnglishName =  "BOL",
-                LocalName =  "התקבל מסר שטר מטען מאסטר",
+                LocalNameBack_up =  "התקבל מסר שטר מטען מאסטר",
+                LocalName =  "BS64:IteU16rXp9eR15wg157XodeoINep15jXqCDXnteY16LXnyDXnteQ16HXmNeoIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21020,7 +21499,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "VCP",
                 EnglishName =  "Loading/Unloading Confirmation",
-                LocalName =  "אישור פריקה/טעינה",
+                LocalNameBack_up =  "אישור פריקה/טעינה",
+                LocalName =  "BS64:IteQ15nXqdeV16gg16TXqNeZ16fXlC/XmNei15nXoNeUIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21039,7 +21519,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CDA",
                 EnglishName =  "Constraint Conditional Approval",
-                LocalName =  "אילוץ מאושר בתנאי",
+                LocalNameBack_up =  "אילוץ מאושר בתנאי",
+                LocalName =  "BS64:IteQ15nXnNeV16Ug157XkNeV16nXqCDXkdeq16DXkNeZIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21058,7 +21539,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "PRA",
                 EnglishName =  "Release When Arrived",
-                LocalName =  "תיק מאושר להתרה לאחר הגשת טובין",
+                LocalNameBack_up =  "תיק מאושר להתרה לאחר הגשת טובין",
+                LocalName =  "BS64:Iteq15nXpyDXnteQ15XXqdeoINec15TXqteo15Qg15zXkNeX16gg15TXktep16og15jXldeR15nXnyI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21077,7 +21559,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "VAN",
                 EnglishName =  "Agent Notification",
-                LocalName =  "הודעות לסוכן",
+                LocalNameBack_up =  "הודעות לסוכן",
+                LocalName =  "BS64:IteU15XXk9ei15XXqiDXnNeh15XXm9efIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21096,7 +21579,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "MNS",
                 EnglishName =  "Manifest Sent",
-                LocalName =  "מסר מצהר נשלח",
+                LocalNameBack_up =  "מסר מצהר נשלח",
+                LocalName =  "BS64:Itee16HXqCDXntem15TXqCDXoNep15zXlyI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21115,7 +21599,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "MNE",
                 EnglishName =  "Manifest Error",
-                LocalName =  "מסר מצהר שגוי",
+                LocalNameBack_up =  "מסר מצהר שגוי",
+                LocalName =  "BS64:Itee16HXqCDXntem15TXqCDXqdeS15XXmSI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21134,7 +21619,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "MNC",
                 EnglishName =  "Manifest Correct",
-                LocalName =  "מסר מצהר תקין",
+                LocalNameBack_up =  "מסר מצהר תקין",
+                LocalName =  "BS64:Itee16HXqCDXntem15TXqCDXqten15nXnyI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21153,7 +21639,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "MPOA",
                 EnglishName =  "Missing Power Of Attorney",
-                LocalName =  "חסר יפוי כח",
+                LocalNameBack_up =  "חסר יפוי כח",
+                LocalName =  "BS64:IteX16HXqCDXmdek15XXmSDXm9eXIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21172,7 +21659,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "MID",
                 EnglishName =  "Missing Impoter Declaration",
-                LocalName =  "חסר תצהיר יבואן",
+                LocalNameBack_up =  "חסר תצהיר יבואן",
+                LocalName =  "BS64:IteX16HXqCDXqtem15TXmdeoINeZ15HXldeQ158i",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21191,7 +21679,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "IDE",
                 EnglishName =  "Impoter Declaration about to expire",
-                LocalName =  "תצהיר יבואן עומד לפוג",
+                LocalNameBack_up =  "תצהיר יבואן עומד לפוג",
+                LocalName =  "BS64:Iteq16bXlNeZ16gg15nXkdeV15DXnyDXoteV157XkyDXnNek15XXkiI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21210,7 +21699,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "DCS",
                 EnglishName =  "Declaration Close",
-                LocalName =  "הצהרה נסגרה",
+                LocalNameBack_up =  "הצהרה נסגרה",
+                LocalName =  "BS64:IteU16bXlNeo15Qg16DXodeS16jXlCI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21229,7 +21719,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CDCS",
                 EnglishName =  "Cancel Declaration Close",
-                LocalName =  "ביטול סגירת הצהרה",
+                LocalNameBack_up =  "ביטול סגירת הצהרה",
+                LocalName =  "BS64:IteR15nXmNeV15wg16HXkteZ16jXqiDXlNem15TXqNeUIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21248,7 +21739,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CSA",
                 EnglishName =  "Cargo Split Approved",
-                LocalName =  "בקשת פיצול מטען אושרה",
+                LocalNameBack_up =  "בקשת פיצול מטען אושרה",
+                LocalName =  "BS64:IteR16fXqdeqINek15nXpteV15wg157XmNei158g15DXldep16jXlCI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21267,7 +21759,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CSJ",
                 EnglishName =  "Cargo Split Rejected",
-                LocalName =  "בקשת פיצול מטען נדחתה",
+                LocalNameBack_up =  "בקשת פיצול מטען נדחתה",
+                LocalName =  "BS64:IteR16fXqdeqINek15nXpteV15wg157XmNei158g16DXk9eX16rXlCI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21286,7 +21779,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CSC",
                 EnglishName =  "Cargo Split Canceled",
-                LocalName =  "בקשת פיצול מטען בוטלה",
+                LocalNameBack_up =  "בקשת פיצול מטען בוטלה",
+                LocalName =  "BS64:IteR16fXqdeqINek15nXpteV15wg157XmNei158g15HXldeY15zXlCI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21305,7 +21799,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CSD",
                 EnglishName =  "Cargo Split Done",
-                LocalName =  "בוצע פיצול מטען",
+                LocalNameBack_up =  "בוצע פיצול מטען",
+                LocalName =  "BS64:IteR15XXpteiINek15nXpteV15wg157XmNei158i",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21324,7 +21819,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "VCS",
                 EnglishName =  "Custom Documents Check",
-                LocalName =  "ממתין לבדיקת יסמ",
+                LocalNameBack_up =  "ממתין לבדיקת יסמ",
+                LocalName =  "BS64:Itee157XqteZ158g15zXkdeT15nXp9eqINeZ16HXniI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21343,7 +21839,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "VCE",
                 EnglishName =  "Custom Documents Check",
-                LocalName =  "ממתין ליחידת בטחון",
+                LocalNameBack_up =  "ממתין ליחידת בטחון",
+                LocalName =  "BS64:Itee157XqteZ158g15zXmdeX15nXk9eqINeR15jXl9eV158i",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21362,7 +21859,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "VCA",
                 EnglishName =  "Custom Documents Check",
-                LocalName =  "ממתין ליחידת בטחון ובקרת מסמכים",
+                LocalNameBack_up =  "ממתין ליחידת בטחון ובקרת מסמכים",
+                LocalName =  "BS64:Itee157XqteZ158g15zXmdeX15nXk9eqINeR15jXl9eV158g15XXkden16jXqiDXnteh157Xm9eZ150i",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21381,7 +21879,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "VCG",
                 EnglishName =  "Custom Documents Check",
-                LocalName =  "ממתין ליחידת הבטחון וליסמ",
+                LocalNameBack_up =  "ממתין ליחידת הבטחון וליסמ",
+                LocalName =  "BS64:Itee157XqteZ158g15zXmdeX15nXk9eqINeU15HXmNeX15XXnyDXldec15nXodeeIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21400,7 +21899,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "VCT",
                 EnglishName =  "Custom Documents Check",
-                LocalName =  "ממתין ליחידת הבטחון,ליסמ ולבקרת מסמכים",
+                LocalNameBack_up =  "ממתין ליחידת הבטחון,ליסמ ולבקרת מסמכים",
+                LocalName =  "BS64:Itee157XqteZ158g15zXmdeX15nXk9eqINeU15HXmNeX15XXnyzXnNeZ16HXniDXldec15HXp9eo16og157Xodee15vXmdedIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21419,7 +21919,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "DMA",
                 EnglishName =  "Declaration Amendment Approved",
-                LocalName =  "תיקון הצהרה אושרה",
+                LocalNameBack_up =  "תיקון הצהרה אושרה",
+                LocalName =  "BS64:Iteq15nXp9eV158g15TXpteU16jXlCDXkNeV16nXqNeUIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21438,7 +21939,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "DMP",
                 EnglishName =  "Declaration Amendment Partial Approval",
-                LocalName =  "תיקון הצהרה אושרה חלקית",
+                LocalNameBack_up =  "תיקון הצהרה אושרה חלקית",
+                LocalName =  "BS64:Iteq15nXp9eV158g15TXpteU16jXlCDXkNeV16nXqNeUINeX15zXp9eZ16oi",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21457,7 +21959,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "DMD",
                 EnglishName =  "Declaration Amendment Denial",
-                LocalName =  "תיקון הצהרה נדחתה",
+                LocalNameBack_up =  "תיקון הצהרה נדחתה",
+                LocalName =  "BS64:Iteq15nXp9eV158g15TXpteU16jXlCDXoNeT15fXqteUIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21476,7 +21979,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "DMC",
                 EnglishName =  "Declaration Amendment Cancelled",
-                LocalName =  "תיקון הצהרה בוטלה",
+                LocalNameBack_up =  "תיקון הצהרה בוטלה",
+                LocalName =  "BS64:Iteq15nXp9eV158g15TXpteU16jXlCDXkdeV15jXnNeUIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21495,7 +21999,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "DWR",
                 EnglishName =  "Amendment Waiting for customs",
-                LocalName =  "תיקון הצהרה ממתינה לטיפול מכס",
+                LocalNameBack_up =  "תיקון הצהרה ממתינה לטיפול מכס",
+                LocalName =  "BS64:Iteq15nXp9eV158g15TXpteU16jXlCDXntee16rXmdeg15Qg15zXmNeZ16TXldecINee15vXoSI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -21514,7 +22019,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CAP",
                 EnglishName =  "Declaration Canceled",
-                LocalName =  "הצהרה בוטלה",
+                LocalNameBack_up =  "הצהרה בוטלה",
+                LocalName =  "BS64:IteU16bXlNeo15Qg15HXldeY15zXlCI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -21532,7 +22038,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CRJ",
                 EnglishName =  "Declaration Cancel Denial",
-                LocalName =  "ביטול הצהרה נדחה",
+                LocalNameBack_up =  "ביטול הצהרה נדחה",
+                LocalName =  "BS64:IteR15nXmNeV15wg15TXpteU16jXlCDXoNeT15fXlCI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -21550,7 +22057,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CWR",
                 EnglishName =  "Declaration Cancel Waiting for customs",
-                LocalName =  "ביטול הצהרה ממתין לטיפול המכס",
+                LocalNameBack_up =  "ביטול הצהרה ממתין לטיפול המכס",
+                LocalName =  "BS64:IteR15nXmNeV15wg15TXpteU16jXlCDXntee16rXmdefINec15jXmdek15XXnCDXlNee15vXoSI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -21568,7 +22076,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CPO",
                 EnglishName =  "Declaration Cancel Sent",
-                LocalName =  "נשלחה בקשה לביטול הצהרה",
+                LocalNameBack_up =  "נשלחה בקשה לביטול הצהרה",
+                LocalName =  "BS64:Iteg16nXnNeX15Qg15HXp9ep15Qg15zXkdeZ15jXldecINeU16bXlNeo15Qi",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -21585,8 +22094,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "SCH",
-                EnglishName =  "נדרש לטפל בהזנת סגר",
-                LocalName =  "נדרש לטפל בהזנת סגר",
+                EnglishName =  "Required to handle closure entry",
+                LocalNameBack_up =  "נדרש לטפל בהזנת סגר",
+                LocalName =  "BS64:Iteg15PXqNepINec15jXpNecINeR15TXlteg16og16HXkteoIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -21604,7 +22114,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "RDA",
                 EnglishName =  "Required Document Verified",
-                LocalName =  "מסמך נדרש אומת",
+                LocalNameBack_up =  "מסמך נדרש אומת",
+                LocalName =  "BS64:Itee16HXnteaINeg15PXqNepINeQ15XXnteqIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -21622,7 +22133,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "RDR",
                 EnglishName =  "Required Document Rejected",
-                LocalName =  "מסמך נדרש נדחה",
+                LocalNameBack_up =  "מסמך נדרש נדחה",
+                LocalName =  "BS64:Itee16HXnteaINeg15PXqNepINeg15PXl9eUIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -21640,7 +22152,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "RDC",
                 EnglishName =  "Required Document Verified By Customer",
-                LocalName =  "מסמך נדרש אומת בנוכחות לקוח",
+                LocalNameBack_up =  "מסמך נדרש אומת בנוכחות לקוח",
+                LocalName =  "BS64:Itee16HXnteaINeg15PXqNepINeQ15XXnteqINeR16DXldeb15fXldeqINec16fXldeXIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -21658,7 +22171,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "DCR",
                 EnglishName =  "Declaration Created From Recovery",
-                LocalName =  "ההצהרה הוקמה כתוצאה משחזור",
+                LocalNameBack_up =  "ההצהרה הוקמה כתוצאה משחזור",
+                LocalName =  "BS64:IteU15TXpteU16jXlCDXlNeV16fXnteUINeb16rXldem15DXlCDXntep15fXlteV16gi",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -21676,7 +22190,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "EXT",
                 EnglishName =  "Exit from storage site",
-                LocalName =  "יציאה ממסוף מטען",
+                LocalNameBack_up =  "יציאה ממסוף מטען",
+                LocalName =  "BS64:IteZ16bXmdeQ15Qg157Xnteh15XXoyDXnteY16LXnyI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -21694,7 +22209,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "TAS",
                 EnglishName =  "Transshipment Approved",
-                LocalName =  "אישור שטעון",
+                LocalNameBack_up =  "אישור שטעון",
+                LocalName =  "BS64:IteQ15nXqdeV16gg16nXmNei15XXnyI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -21712,7 +22228,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "TAC",
                 EnglishName =  "Transshipment Approved Canceled",
-                LocalName =  "אישור שטעון בוטל",
+                LocalNameBack_up =  "אישור שטעון בוטל",
+                LocalName =  "BS64:IteQ15nXqdeV16gg16nXmNei15XXnyDXkdeV15jXnCI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -21730,7 +22247,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "LEX",
                 EnglishName =  "Last Exit From Storage Site",
-                LocalName =  "יציאה אחרונה ממסוף",
+                LocalNameBack_up =  "יציאה אחרונה ממסוף",
+                LocalName =  "BS64:IteZ16bXmdeQ15Qg15DXl9eo15XXoNeUINee157XodeV16Mi",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -21744,12 +22262,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, EventTypeRepository, tenantEventTypes);
 
 
- 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CAN",
                 EnglishName =  "Canceled",
-                LocalName =  "הצהרה בוטלה",
+                LocalNameBack_up =  "הצהרה בוטלה",
+                LocalName =  "BS64:IteU16bXlNeo15Qg15HXldeY15zXlCI=",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -21763,7 +22281,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, EventTypeRepository, tenantEventTypes);
 
 
- 	    }
+	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
@@ -21852,7 +22370,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "control",
 						FeatureId = DeclarationFeature_MB0.Id,
 						Style = null,
-						LocalDefaultText = "שלח הצהרה",
+						LocalDefaultText = "BS64:Itep15zXlyDXlNem15TXqNeUIg==",
 						FeatureUniqeCode = DeclarationFeature_MB0.FeatureUniqeCode,
 						HtmlComponentPath = "./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/SendDeclaration/SendDeclarationComponent",
 						Width = 0,
@@ -21872,7 +22390,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "button",
 						FeatureId = DeclarationFeature_MB1.Id,
 						Style = "",
-						LocalDefaultText = "המכלה חדשה",
+						LocalDefaultText = "BS64:IteU157Xm9ec15Qg15fXk9ep15Qi",
 						FeatureUniqeCode = DeclarationFeature_MB1.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
@@ -21892,7 +22410,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "control",
 						FeatureId = DeclarationFeature_MB2.Id,
 						Style = null,
-						LocalDefaultText = "שלח מצהר",
+						LocalDefaultText = "BS64:Itep15zXlyDXntem15TXqCI=",
 						FeatureUniqeCode = DeclarationFeature_MB2.FeatureUniqeCode,
 						HtmlComponentPath = "./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/SendDeclaration/SendManifestComponent",
 						Width = 0,
@@ -21912,7 +22430,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "button",
 						FeatureId = DeclarationFeature_MB3.Id,
 						Style = null,
-						LocalDefaultText = "הגשת תשלום",
+						LocalDefaultText = "BS64:IteU15LXqdeqINeq16nXnNeV150i",
 						FeatureUniqeCode = DeclarationFeature_MB3.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
@@ -21932,7 +22450,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "dropdownbutton",
 						FeatureId = DeclarationFeature_MB4.Id,
 						Style = null,
-						LocalDefaultText = "טפסים",
+						LocalDefaultText = "BS64:IteY16TXodeZ150i",
 						FeatureUniqeCode = DeclarationFeature_MB4.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
@@ -21952,7 +22470,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB40.Id,
 						Style = null,
-						LocalDefaultText = "צרופה",
+						LocalDefaultText = "BS64:Item16jXldek15Qi",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB40.FeatureUniqeCode,
@@ -21972,7 +22490,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB41.Id,
 						Style = null,
-						LocalDefaultText = "צרופה צבורה",
+						LocalDefaultText = "BS64:Item16jXldek15Qg16bXkdeV16jXlCI=",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB41.FeatureUniqeCode,
@@ -21992,7 +22510,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB42.Id,
 						Style = null,
-						LocalDefaultText = "טופס הצהרה",
+						LocalDefaultText = "BS64:IteY15XXpNehINeU16bXlNeo15Qi",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB42.FeatureUniqeCode,
@@ -22012,7 +22530,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB43.Id,
 						Style = null,
-						LocalDefaultText = "שחרור חלקי",
+						LocalDefaultText = "BS64:Itep15fXqNeV16gg15fXnNen15ki",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB43.FeatureUniqeCode,
@@ -22032,7 +22550,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "button",
 						FeatureId = DeclarationFeature_MB5.Id,
 						Style = null,
-						LocalDefaultText = "סגירת הצהרה",
+						LocalDefaultText = "BS64:Iteh15LXmdeo16og15TXpteU16jXlCI=",
 						FeatureUniqeCode = DeclarationFeature_MB5.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
@@ -22052,7 +22570,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "dropdownbutton",
 						FeatureId = DeclarationFeature_MB6.Id,
 						Style = null,
-						LocalDefaultText = "פעולות",
+						LocalDefaultText = "BS64:Itek16LXldec15XXqiI=",
 						FeatureUniqeCode = DeclarationFeature_MB6.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
@@ -22072,7 +22590,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB60.Id,
 						Style = null,
-						LocalDefaultText = "בדיקת סטטוס הצהרה",
+						LocalDefaultText = "BS64:IteR15PXmden16og16HXmNeY15XXoSDXlNem15TXqNeUIg==",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB60.FeatureUniqeCode,
@@ -22092,7 +22610,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB61.Id,
 						Style = null,
-						LocalDefaultText = "שחזור נתוני הצהרה",
+						LocalDefaultText = "BS64:Itep15fXlteV16gg16DXqteV16DXmSDXlNem15TXqNeUIg==",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB61.FeatureUniqeCode,
@@ -22112,7 +22630,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB62.Id,
 						Style = null,
-						LocalDefaultText = "איפוס מספר הצהרה",
+						LocalDefaultText = "BS64:IteQ15nXpNeV16Eg157Xodek16gg15TXpteU16jXlCI=",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB62.FeatureUniqeCode,
@@ -22132,7 +22650,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB63.Id,
 						Style = null,
-						LocalDefaultText = "העתקת הצהרה",
+						LocalDefaultText = "BS64:IteU16LXqten16og15TXpteU16jXlCI=",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB63.FeatureUniqeCode,
@@ -22152,7 +22670,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB64.Id,
 						Style = null,
-						LocalDefaultText = "העברה לגובה",
+						LocalDefaultText = "BS64:IteU16LXkdeo15Qg15zXkteV15HXlCI=",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB64.FeatureUniqeCode,
@@ -22172,7 +22690,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB65.Id,
 						Style = null,
-						LocalDefaultText = "הפחתות לשילדה",
+						LocalDefaultText = "BS64:IteU16TXl9eq15XXqiDXnNep15nXnNeT15Qi",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB65.FeatureUniqeCode,
@@ -22192,7 +22710,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB66.Id,
 						Style = null,
-						LocalDefaultText = "בקשה לפעולה מיוחדת",
+						LocalDefaultText = "BS64:IteR16fXqdeUINec16TXoteV15zXlCDXnteZ15XXl9eT16oi",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB66.FeatureUniqeCode,
@@ -22232,7 +22750,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB68.Id,
 						Style = null,
-						LocalDefaultText = "מחיקת Pending",
+						LocalDefaultText = "BS64:Itee15fXmden16ogUGVuZGluZyI=",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB68.FeatureUniqeCode,
@@ -22252,7 +22770,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB69.Id,
 						Style = null,
-						LocalDefaultText = "סגירת הצהרה",
+						LocalDefaultText = "BS64:Iteh15LXmdeo16og15TXpteU16jXlCI=",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB69.FeatureUniqeCode,
@@ -22272,7 +22790,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB610.Id,
 						Style = null,
-						LocalDefaultText = "סגירה תפעולית",
+						LocalDefaultText = "BS64:Iteh15LXmdeo15Qg16rXpNei15XXnNeZ16oi",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB610.FeatureUniqeCode,
@@ -22292,7 +22810,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB611.Id,
 						Style = null,
-						LocalDefaultText = "ביטול סגירת הצהרה",
+						LocalDefaultText = "BS64:IteR15nXmNeV15wg16HXkteZ16jXqiDXlNem15TXqNeUIg==",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB611.FeatureUniqeCode,
@@ -22312,7 +22830,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB612.Id,
 						Style = null,
-						LocalDefaultText = "ביטול סגירה תפעולית",
+						LocalDefaultText = "BS64:IteR15nXmNeV15wg16HXkteZ16jXlCDXqtek16LXldec15nXqiI=",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB612.FeatureUniqeCode,
@@ -22332,7 +22850,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB613.Id,
 						Style = null,
-						LocalDefaultText = "בקשות מכס",
+						LocalDefaultText = "BS64:IteR16fXqdeV16og157Xm9ehIg==",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB613.FeatureUniqeCode,
@@ -22352,7 +22870,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB614.Id,
 						Style = null,
-						LocalDefaultText = "ביטול הצהרה",
+						LocalDefaultText = "BS64:IteR15nXmNeV15wg15TXpteU16jXlCI=",
                         HtmlComponentPath="./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationCancellation/DeclarationCancellationComponent",
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB614.FeatureUniqeCode,
@@ -22372,7 +22890,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB615.Id,
 						Style = null,
-						LocalDefaultText = "קישור אחסנות להצהרה",
+						LocalDefaultText = "BS64:Iten15nXqdeV16gg15DXl9eh16DXldeqINec15TXpteU16jXlCI=",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB615.FeatureUniqeCode,
@@ -22392,7 +22910,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB616.Id,
 						Style = null,
-						LocalDefaultText = "שליחת הודעה יזומה",
+						LocalDefaultText = "BS64:Itep15zXmdeX16og15TXldeT16LXlCDXmdeW15XXnteUIg==",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB616.FeatureUniqeCode,
@@ -22412,7 +22930,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB617.Id,
 						Style = null,
-						LocalDefaultText = "הטענת חשבון ספק",
+						LocalDefaultText = "BS64:IteU15jXoteg16og15fXqdeR15XXnyDXodek16ci",
                         HtmlComponentPath="./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/LoadExcelSupplierInvoice/LoadExcelSupplierInvoicesComponent",
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB617.FeatureUniqeCode,
@@ -22432,7 +22950,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB618.Id,
 						Style = null,
-						LocalDefaultText = "עדכון ספר מכס אוטונומיה",
+						LocalDefaultText = "BS64:Itei15PXm9eV158g16HXpNeoINee15vXoSDXkNeV15jXldeg15XXnteZ15Qi",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB618.FeatureUniqeCode,
@@ -22452,7 +22970,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB619.Id,
 						Style = null,
-						LocalDefaultText = "ביטול הגשה",
+						LocalDefaultText = "BS64:IteR15nXmNeV15wg15TXktep15Qi",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB619.FeatureUniqeCode,
@@ -22472,7 +22990,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB620.Id,
 						Style = null,
-						LocalDefaultText = "ביטול הצבעות בפרטי מכס",
+						LocalDefaultText = "BS64:IteR15nXmNeV15wg15TXpteR16LXldeqINeR16TXqNeY15kg157Xm9ehIg==",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB620.FeatureUniqeCode,
@@ -22492,7 +23010,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB621.Id,
 						Style = null,
-						LocalDefaultText = "גייטפס העברות",
+						LocalDefaultText = "BS64:IteS15nXmdeY16TXoSDXlNei15HXqNeV16oi",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB621.FeatureUniqeCode,
@@ -22512,7 +23030,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "control",
 						FeatureId = DeclarationFeature_MB7.Id,
 						Style = null,
-						LocalDefaultText = "רשימת מסמכים",
+						LocalDefaultText = "BS64:Iteo16nXmdee16og157Xodee15vXmdedIg==",
 						FeatureUniqeCode = DeclarationFeature_MB7.FeatureUniqeCode,
 						HtmlComponentPath = "./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DocumentsPanel/DocumentsPanelComponent",
 						Width = 30,
@@ -22527,873 +23045,873 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable DeclarationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.Declaration" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationORequestedDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RequestedDocument", DefaultText = "Requested Document",LocalDefaultText = @"מסמך נדרש", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationORequestedDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RequestedDocument", DefaultText = "Requested Document",LocalDefaultText = @"BS64:Itee16HXnteaINeg15PXqNepIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSendAmendmentDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendAmendmentDeclaration", DefaultText = "Send Amendment",LocalDefaultText = @"שלח תיקון", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSendAmendmentDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendAmendmentDeclaration", DefaultText = "Send Amendment",LocalDefaultText = @"BS64:Itep15zXlyDXqteZ16fXldefIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOChangeAmendment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ChangeAmendment", DefaultText = "Change Amendment",LocalDefaultText = @"החלפת בקשה לתיקון", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOChangeAmendment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ChangeAmendment", DefaultText = "Change Amendment",LocalDefaultText = @"BS64:IteU15fXnNek16og15HXp9ep15Qg15zXqteZ16fXldefIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOConsignmentPackages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ConsignmentPackages", DefaultText = "Cargo Serial Data",LocalDefaultText = @"נתוני סידורי במטען", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOConsignmentPackages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ConsignmentPackages", DefaultText = "Cargo Serial Data",LocalDefaultText = @"BS64:Iteg16rXldeg15kg16HXmdeT15XXqNeZINeR157XmNei158i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOConsignmentDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ConsignmentDetails", DefaultText = "Consignment Details",LocalDefaultText = @"פרטי משלוח", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOConsignmentDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ConsignmentDetails", DefaultText = "Consignment Details",LocalDefaultText = @"BS64:Itek16jXmNeZINee16nXnNeV15ci", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODeletePackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeletePackage", DefaultText = "Delete this Package?",LocalDefaultText = @"מחק את החבילה הזו?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODeletePackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeletePackage", DefaultText = "Delete this Package?",LocalDefaultText = @"BS64:Itee15fXpyDXkNeqINeU15fXkdeZ15zXlCDXlNeW15U/Ig==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODeleteConsignment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeleteConsignment", DefaultText = "Delete this Consignment?",LocalDefaultText = @"האם למחוק את המשלוח הזה ? ", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODeleteConsignment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeleteConsignment", DefaultText = "Delete this Consignment?",LocalDefaultText = @"BS64:IteU15DXnSDXnNee15fXldenINeQ16og15TXntep15zXldeXINeU15bXlCA/ICI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationONewPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NewPackage", DefaultText = "New Package",LocalDefaultText = @"חבילה חדשה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationONewPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NewPackage", DefaultText = "New Package",LocalDefaultText = @"BS64:IteX15HXmdec15Qg15fXk9ep15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOPaymentMethod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.PaymentMethod", DefaultText = "Payment Method",LocalDefaultText = @"פירוט תשלום", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOPaymentMethod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.PaymentMethod", DefaultText = "Payment Method",LocalDefaultText = @"BS64:Itek15nXqNeV15gg16rXqdec15XXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsPaymentOrderOProtest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.Protest", DefaultText = "Protest",LocalDefaultText = @"אגב מחאה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsPaymentOrderOProtest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.Protest", DefaultText = "Protest",LocalDefaultText = @"BS64:IteQ15LXkSDXnteX15DXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSend = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Send", DefaultText = "Send",LocalDefaultText = @"שלח", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSend = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Send", DefaultText = "Send",LocalDefaultText = @"BS64:Itep15zXlyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOEditInvoiceItem = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.EditInvoiceItem", DefaultText = "Edit Invoice Item",LocalDefaultText = @"עריכת פריט חשבונית", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOEditInvoiceItem = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.EditInvoiceItem", DefaultText = "Edit Invoice Item",LocalDefaultText = @"BS64:Itei16jXmdeb16og16TXqNeZ15gg15fXqdeR15XXoNeZ16oi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Declarations", DefaultText = "Declarations",LocalDefaultText = @"הצהרות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Declarations", DefaultText = "Declarations",LocalDefaultText = @"BS64:IteU16bXlNeo15XXqiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOItems = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Items", DefaultText = "Items",LocalDefaultText = @"פרטי חשבון ספק", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOItems = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Items", DefaultText = "Items",LocalDefaultText = @"BS64:Itek16jXmNeZINeX16nXkdeV158g16HXpNenIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Details", DefaultText = "Details",LocalDefaultText = @"פרטים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Details", DefaultText = "Details",LocalDefaultText = @"BS64:Itek16jXmNeZ150i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOModifications = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Modifications", DefaultText = "Modifications",LocalDefaultText = @"שינויים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOModifications = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Modifications", DefaultText = "Modifications",LocalDefaultText = @"BS64:Itep15nXoNeV15nXmdedIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationONewInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NewInvoice", DefaultText = "New Invoice",LocalDefaultText = @"חשבונית חדשה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationONewInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NewInvoice", DefaultText = "New Invoice",LocalDefaultText = @"BS64:IteX16nXkdeV16DXmdeqINeX15PXqdeUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOEditInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.EditInvoice", DefaultText = "Edit Invoice",LocalDefaultText = @"חשבון ספק", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOEditInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.EditInvoice", DefaultText = "Edit Invoice",LocalDefaultText = @"BS64:IteX16nXkdeV158g16HXpNenIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODeleteInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeleteInvoice", DefaultText = "Delete this Invoice?",LocalDefaultText = @"האם למחוק את החשבון ושורות פרטי המכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODeleteInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeleteInvoice", DefaultText = "Delete this Invoice?",LocalDefaultText = @"BS64:IteU15DXnSDXnNee15fXldenINeQ16og15TXl9ep15HXldefINeV16nXldeo15XXqiDXpNeo15jXmSDXlNee15vXoSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOTotalmustbeequaltototaltax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Totalmustbeequaltototaltax", DefaultText = "Total must be equal to total tax.",LocalDefaultText = "סה''כ חייב להיות שווה למס הכולל.", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOTotalmustbeequaltototaltax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Totalmustbeequaltototaltax", DefaultText = "Total must be equal to total tax.",LocalDefaultText = @"BS64:Iteh15Qi15sg15fXmdeZ15Eg15zXlNeZ15XXqiDXqdeV15XXlCDXnNee16Eg15TXm9eV15zXnC4i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCertificates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Certificates", DefaultText = "Certificates",LocalDefaultText = @"תעודות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCertificates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Certificates", DefaultText = "Certificates",LocalDefaultText = @"BS64:Iteq16LXldeT15XXqiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOFreightAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.FreightAmount", DefaultText = "Freight Amount",LocalDefaultText = @"נתוני הובלה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOFreightAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.FreightAmount", DefaultText = "Freight Amount",LocalDefaultText = @"BS64:Iteg16rXldeg15kg15TXldeR15zXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOInsurance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Insurance", DefaultText = "Insurance",LocalDefaultText = @"נתוני ביטוח", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOInsurance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Insurance", DefaultText = "Insurance",LocalDefaultText = @"BS64:Iteg16rXldeg15kg15HXmdeY15XXlyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Amount", DefaultText = "Amount",LocalDefaultText = @"סכום", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Amount", DefaultText = "Amount",LocalDefaultText = @"BS64:Iteh15vXldedIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOPercentage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Percentage", DefaultText = "Percentage",LocalDefaultText = @"אחוז", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOPercentage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Percentage", DefaultText = "Percentage",LocalDefaultText = @"BS64:IteQ15fXldeWIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOAddCustomsDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AddCustomsDocument", DefaultText = "Add Customs Document",LocalDefaultText = @"הוסף מסמך המכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOAddCustomsDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AddCustomsDocument", DefaultText = "Add Customs Document",LocalDefaultText = @"BS64:IteU15XXodejINee16HXnteaINeU157Xm9ehIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOEditCustomsDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.EditCustomsDocument", DefaultText = "Edit Customs Document",LocalDefaultText = @"מסמך מכס עריכה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOEditCustomsDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.EditCustomsDocument", DefaultText = "Edit Customs Document",LocalDefaultText = @"BS64:Itee16HXnteaINee15vXoSDXoteo15nXm9eUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationONumbersAreOnlyAllowed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NumbersAreOnlyAllowed", DefaultText = "Numbers are only allowed",LocalDefaultText = @"מספרים מותר רק", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationONumbersAreOnlyAllowed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NumbersAreOnlyAllowed", DefaultText = "Numbers are only allowed",LocalDefaultText = @"BS64:Itee16HXpNeo15nXnSDXnteV16rXqCDXqNenIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODuplicatevaluesarenotAllowed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DuplicatevaluesarenotAllowed", DefaultText = "Duplicate values are not Allowed",LocalDefaultText = @"ערכים כפולים אינם מורשים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODuplicatevaluesarenotAllowed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DuplicatevaluesarenotAllowed", DefaultText = "Duplicate values are not Allowed",LocalDefaultText = @"BS64:Itei16jXm9eZ150g15vXpNeV15zXmdedINeQ15nXoNedINee15XXqNep15nXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationONumbersAndCommasAreOnlyAllowed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NumbersAndCommasAreOnlyAllowed", DefaultText = "Numbers and Commas are only allowed",LocalDefaultText = @"מספרים והפסיקים מותר רק", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationONumbersAndCommasAreOnlyAllowed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NumbersAndCommasAreOnlyAllowed", DefaultText = "Numbers and Commas are only allowed",LocalDefaultText = @"BS64:Itee16HXpNeo15nXnSDXldeU16TXodeZ16fXmdedINee15XXqteoINeo16ci", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSearchDeclarationStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SearchDeclarationStatus", DefaultText = "Search Declaration Status",LocalDefaultText = @"סטטוס הכרזת חיפוש", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSearchDeclarationStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SearchDeclarationStatus", DefaultText = "Search Declaration Status",LocalDefaultText = @"BS64:Iteh15jXmNeV16Eg15TXm9eo15bXqiDXl9eZ16TXldepIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODeclarationStatusRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeclarationStatusRequest", DefaultText = "Declaration Status Request",LocalDefaultText = @"בקשת סטטוס הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODeclarationStatusRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeclarationStatusRequest", DefaultText = "Declaration Status Request",LocalDefaultText = @"BS64:IteR16fXqdeqINeh15jXmNeV16Eg15TXpteU16jXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODeclarationMamanRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeclarationMamanRequest", DefaultText = "Declaration Maman Request",LocalDefaultText = @"מסר תת מצהר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODeclarationMamanRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeclarationMamanRequest", DefaultText = "Declaration Maman Request",LocalDefaultText = @"BS64:Itee16HXqCDXqteqINee16bXlNeoIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSendRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendRequest", DefaultText = "Send Request",LocalDefaultText = @"בדיקת סטטוס הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSendRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendRequest", DefaultText = "Send Request",LocalDefaultText = @"BS64:IteR15PXmden16og16HXmNeY15XXoSDXlNem15TXqNeUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSearchByDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SearchByDeclaration", DefaultText = "Search By Declaration",LocalDefaultText = @"חפש לפי הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSearchByDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SearchByDeclaration", DefaultText = "Search By Declaration",LocalDefaultText = @"BS64:IteX16TXqSDXnNek15kg15TXpteU16jXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODeclarationStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeclarationStatus", DefaultText = "Declaration Status:",LocalDefaultText = @"סטטוס הצהרה:", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODeclarationStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeclarationStatus", DefaultText = "Declaration Status:",LocalDefaultText = @"BS64:Iteh15jXmNeV16Eg15TXpteU16jXlDoi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSearchByCargo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SearchByCargo", DefaultText = "Search By Cargo",LocalDefaultText = @"חפש לפי מטענים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSearchByCargo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SearchByCargo", DefaultText = "Search By Cargo",LocalDefaultText = @"BS64:IteX16TXqSDXnNek15kg157XmNei16DXmdedIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOOldReshimonRadio = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.OldReshimonRadio", DefaultText = "Search By Old Reshimon",LocalDefaultText = @"חפש לפי רשימון ישן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOOldReshimonRadio = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.OldReshimonRadio", DefaultText = "Search By Old Reshimon",LocalDefaultText = @"BS64:IteX16TXqSDXnNek15kg16jXqdeZ157XldefINeZ16nXnyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOOldReshimon = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.OldReshimon", DefaultText = "Old Reshimon Number",LocalDefaultText = @"מספר רשימון ישן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOOldReshimon = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.OldReshimon", DefaultText = "Old Reshimon Number",LocalDefaultText = @"BS64:Itee16HXpNeoINeo16nXmdee15XXnyDXmdep158i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOOldReshimonIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.OldReshimonIsMandatory", DefaultText = "Old Reshimon is missing",LocalDefaultText = @"מספר רשימון ישן חסר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOOldReshimonIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.OldReshimonIsMandatory", DefaultText = "Old Reshimon is missing",LocalDefaultText = @"BS64:Itee16HXpNeoINeo16nXmdee15XXnyDXmdep158g15fXodeoIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSendDeclarationConstraint = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendDeclarationConstraint", DefaultText = "Send Declaration Constraint",LocalDefaultText = @"שלח אילוץ הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSendDeclarationConstraint = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendDeclarationConstraint", DefaultText = "Send Declaration Constraint",LocalDefaultText = @"BS64:Itep15zXlyDXkNeZ15zXldelINeU16bXlNeo15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Description", DefaultText = "Description",LocalDefaultText = @"תיאור", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Description", DefaultText = "Description",LocalDefaultText = @"BS64:Iteq15nXkNeV16gi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOErrorType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ErrorType", DefaultText = "Error Type",LocalDefaultText = @"קוד השגיאה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOErrorType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ErrorType", DefaultText = "Error Type",LocalDefaultText = @"BS64:Iten15XXkyDXlNep15LXmdeQ15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Field", DefaultText = "Field",LocalDefaultText = @"שדה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Field", DefaultText = "Field",LocalDefaultText = @"BS64:Itep15PXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Line", DefaultText = "Line",LocalDefaultText = @"קו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Line", DefaultText = "Line",LocalDefaultText = @"BS64:Iten15Ui", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOScreen = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Screen", DefaultText = "Screen",LocalDefaultText = @"מסך", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOScreen = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Screen", DefaultText = "Screen",LocalDefaultText = @"BS64:Itee16HXmiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOLink = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Link", DefaultText = "Link",LocalDefaultText = @"קשר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOLink = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Link", DefaultText = "Link",LocalDefaultText = @"BS64:Iten16nXqCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOConstraintIndication = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ConstraintIndication", DefaultText = "Constraint Indication",LocalDefaultText = @"הוריה אילוץ", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOConstraintIndication = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ConstraintIndication", DefaultText = "Constraint Indication",LocalDefaultText = @"BS64:IteU15XXqNeZ15Qg15DXmdec15XXpSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOConstraintData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ConstraintData", DefaultText = "Constraint Data",LocalDefaultText = @"נתונים אילוץ", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOConstraintData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ConstraintData", DefaultText = "Constraint Data",LocalDefaultText = @"BS64:Iteg16rXldeg15nXnSDXkNeZ15zXldelIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOEditDocumentMetaData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.EditDocumentMetaData", DefaultText = "Edit Document MetaData",LocalDefaultText = @"עריכת מסמך", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOEditDocumentMetaData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.EditDocumentMetaData", DefaultText = "Edit Document MetaData",LocalDefaultText = @"BS64:Itei16jXmdeb16og157Xodee15oi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOConnectedToDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ConnectedToDeclaration", DefaultText = "Connected To Declaration",LocalDefaultText = @"מחובר להכרזה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOConnectedToDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ConnectedToDeclaration", DefaultText = "Connected To Declaration",LocalDefaultText = @"BS64:Itee15fXldeR16gg15zXlNeb16jXlteUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODisconnectedDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DisconnectedDocument", DefaultText = "Disconnected  Document",LocalDefaultText = @"מסמך מנותק", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODisconnectedDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DisconnectedDocument", DefaultText = "Disconnected  Document",LocalDefaultText = @"BS64:Itee16HXnteaINee16DXldeq16ci", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODocumentPreview = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DocumentPreview", DefaultText = "Document Preview",LocalDefaultText = @"מסמך מקדימה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODocumentPreview = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DocumentPreview", DefaultText = "Document Preview",LocalDefaultText = @"BS64:Itee16HXnteaINee16fXk9eZ157XlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODocumentMetaData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DocumentMetaData", DefaultText = "Document MetaData",LocalDefaultText = @"נתוני מטה דאטה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODocumentMetaData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DocumentMetaData", DefaultText = "Document MetaData",LocalDefaultText = @"BS64:Iteg16rXldeg15kg157XmNeUINeT15DXmNeUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationORelatedDocuments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RelatedDocuments", DefaultText = "Related Documents",LocalDefaultText = @"מסמכים מקושרים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationORelatedDocuments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RelatedDocuments", DefaultText = "Related Documents",LocalDefaultText = @"BS64:Itee16HXnteb15nXnSDXnten15XXqdeo15nXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODocuments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Documents", DefaultText = "Documents",LocalDefaultText = @"מסמכים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODocuments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Documents", DefaultText = "Documents",LocalDefaultText = @"BS64:Itee16HXnteb15nXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODocumentAndCustomDocumentType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DocumentAndCustomDocumentType", DefaultText = "Document and custom Document must be the same type!",LocalDefaultText = @"מסמך ומסמך מותאם אישית חייב להיות מאותו הסוג!", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODocumentAndCustomDocumentType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DocumentAndCustomDocumentType", DefaultText = "Document and custom Document must be the same type!",LocalDefaultText = @"BS64:Itee16HXnteaINeV157Xodee15og157Xldeq15DXnSDXkNeZ16nXmdeqINeX15nXmdeRINec15TXmdeV16og157XkNeV16rXlSDXlNeh15XXkiEi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOMetaDataEdit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MetaDataEdit", DefaultText = "You must edit the metadata for the document first!",LocalDefaultText = @"עליך לערוך מטה של המסמך ראשון!", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOMetaDataEdit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MetaDataEdit", DefaultText = "You must edit the metadata for the document first!",LocalDefaultText = @"BS64:Itei15zXmdeaINec16LXqNeV15og157XmNeUINep15wg15TXnteh157XmiDXqNeQ16nXldefISI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOGeneralData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.GeneralData", DefaultText = "GeneralData",LocalDefaultText = @"נתונים כלליים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOGeneralData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.GeneralData", DefaultText = "GeneralData",LocalDefaultText = @"BS64:Iteg16rXldeg15nXnSDXm9ec15zXmdeZ150i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODeclarationTaxesLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeclarationTaxesLines", DefaultText = "Declaration Taxes Lines",LocalDefaultText = @"מיסים ברמת הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODeclarationTaxesLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeclarationTaxesLines", DefaultText = "Declaration Taxes Lines",LocalDefaultText = @"BS64:Itee15nXodeZ150g15HXqNee16og15TXpteU16jXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOItemTaxes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ItemTaxes", DefaultText = "Item Taxes",LocalDefaultText = @"מיסים ברמת פרט מכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOItemTaxes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ItemTaxes", DefaultText = "Item Taxes",LocalDefaultText = @"BS64:Itee15nXodeZ150g15HXqNee16og16TXqNeYINee15vXoSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCollateralData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CollateralData", DefaultText = "Collateral Data",LocalDefaultText = @"נתוני הבטוחה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCollateralData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CollateralData", DefaultText = "Collateral Data",LocalDefaultText = @"BS64:Iteg16rXldeg15kg15TXkdeY15XXl9eUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCollateralAnswer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CollateralAnswer", DefaultText = "Collateral Answer",LocalDefaultText = @"מענה לדרישה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCollateralAnswer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CollateralAnswer", DefaultText = "Collateral Answer",LocalDefaultText = @"BS64:Itee16LXoNeUINec15PXqNeZ16nXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCollateralCondition = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CollateralCondition", DefaultText = "Collateral Condition",LocalDefaultText = @"פירוט הסכום המבוקש", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCollateralCondition = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CollateralCondition", DefaultText = "Collateral Condition",LocalDefaultText = @"BS64:Itek15nXqNeV15gg15TXodeb15XXnSDXlNee15HXlden16ki", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOAddAnswer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AddAnswer", DefaultText = "Add Answer",LocalDefaultText = @"הוסף מענה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOAddAnswer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AddAnswer", DefaultText = "Add Answer",LocalDefaultText = @"BS64:IteU15XXodejINee16LXoNeUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOMultiCollateralsAnswer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiCollateralsAnswer", DefaultText = "Multi Answers",LocalDefaultText = @"מענה מרוכז", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOMultiCollateralsAnswer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiCollateralsAnswer", DefaultText = "Multi Answers",LocalDefaultText = @"BS64:Itee16LXoNeUINee16jXldeb15Yi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOEditCustomsCollateral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.EditCustomsCollateral", DefaultText = "Edit Customs Collateral",LocalDefaultText = @"בטוחות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOEditCustomsCollateral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.EditCustomsCollateral", DefaultText = "Edit Customs Collateral",LocalDefaultText = @"BS64:IteR15jXldeX15XXqiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCreateNewFileRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CreateNewFileRequest", DefaultText = "New File Request",LocalDefaultText = @"בקשה לפתיחת תיק תפ”ג", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCreateNewFileRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CreateNewFileRequest", DefaultText = "New File Request",LocalDefaultText = @"BS64:IteR16fXqdeUINec16TXqteZ15fXqiDXqteZ16cg16rXpOKAndeSIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOOpenDeclarationAmendment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.OpenDeclarationAmendment", DefaultText = "Open Declaration Amendment",LocalDefaultText = @"פתיחת בקשה לתיקון", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOOpenDeclarationAmendment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.OpenDeclarationAmendment", DefaultText = "Open Declaration Amendment",LocalDefaultText = @"BS64:Itek16rXmdeX16og15HXp9ep15Qg15zXqteZ16fXldefIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOInvoiceDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.InvoiceDetails", DefaultText = "Invoice Details",LocalDefaultText = @"פרטי חשבונית", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOInvoiceDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.InvoiceDetails", DefaultText = "Invoice Details",LocalDefaultText = @"BS64:Itek16jXmNeZINeX16nXkdeV16DXmdeqIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOEntity = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Entity", DefaultText = "Entity",LocalDefaultText = @"מקור השגיאה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOEntity = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Entity", DefaultText = "Entity",LocalDefaultText = @"BS64:Itee16fXldeoINeU16nXkteZ15DXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOListVersion = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ListVersion", DefaultText = "List Version",LocalDefaultText = @"סוג שגיאה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOListVersion = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ListVersion", DefaultText = "List Version",LocalDefaultText = @"BS64:Iteh15XXkiDXqdeS15nXkNeUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODifference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Difference", DefaultText = "Difference",LocalDefaultText = @"הפרש", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODifference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Difference", DefaultText = "Difference",LocalDefaultText = @"BS64:IteU16TXqNepIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOTotalForeignCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TotalForeignCurrency", DefaultText = "Total Foreign Currency",LocalDefaultText = "סה''כ מט''ח", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOTotalForeignCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TotalForeignCurrency", DefaultText = "Total Foreign Currency",LocalDefaultText = @"BS64:Iteh15Qi15sg157XmCLXlyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOExistingType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ExistingType", DefaultText = "Sorry you can't choose an existing type",LocalDefaultText = @"לא ניתן לבחור אותו קוד סוג יותר מפעם אחת", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOExistingType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ExistingType", DefaultText = "Sorry you can't choose an existing type",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXkdeX15XXqCDXkNeV16rXlSDXp9eV15Mg16HXldeSINeZ15XXqteoINee16TXotedINeQ15fXqiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOFillAgentExplanation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.FillAgentExplanation", DefaultText = "Fill agent explanation field first.",LocalDefaultText = @"מלא שדה הסבר הסוכן ראשון.", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOFillAgentExplanation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.FillAgentExplanation", DefaultText = "Fill agent explanation field first.",LocalDefaultText = @"BS64:Itee15zXkCDXqdeT15Qg15TXodeR16gg15TXodeV15vXnyDXqNeQ16nXldefLiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOHasMetaData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.HasMetaData", DefaultText = "This document has metadata",LocalDefaultText = @"מסמך זה יש מידע נוסף על הקובץ", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOHasMetaData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.HasMetaData", DefaultText = "This document has metadata",LocalDefaultText = @"BS64:Itee16HXnteaINeW15Qg15nXqSDXnteZ15PXoiDXoNeV16HXoyDXotecINeU16fXldeR16Ui", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOEmptyConsignmentPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.EmptyConsignmentPackage", DefaultText = "You can't add an empty consignment package!",LocalDefaultText = @"אתה לא יכול להוסיף חבילת משלוח ריקה!", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOEmptyConsignmentPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.EmptyConsignmentPackage", DefaultText = "You can't add an empty consignment package!",LocalDefaultText = @"BS64:IteQ16rXlCDXnNeQINeZ15vXldecINec15TXldeh15nXoyDXl9eR15nXnNeqINee16nXnNeV15cg16jXmden15QhIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOTotalAllocatedAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TotalAllocatedAmount", DefaultText = "Total Allocated Amount",LocalDefaultText = "סה''כ סכום מענה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOTotalAllocatedAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TotalAllocatedAmount", DefaultText = "Total Allocated Amount",LocalDefaultText = @"BS64:Iteh15Qi15sg16HXm9eV150g157Xoteg15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOTotalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TotalAmount", DefaultText = "Total  Amount",LocalDefaultText = "סה''כ סכום שהוזן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOTotalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TotalAmount", DefaultText = "Total  Amount",LocalDefaultText = @"BS64:Iteh15Qi15sg16HXm9eV150g16nXlNeV15bXnyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOTaxesModifications = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TaxesModifications", DefaultText = "Taxes Modifications",LocalDefaultText = @"שינויים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOTaxesModifications = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TaxesModifications", DefaultText = "Taxes Modifications",LocalDefaultText = @"BS64:Itep15nXoNeV15nXmdedIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCantAddToConnected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CantAddToConnected", DefaultText = "Document cannot be added to a connected Pointer!",LocalDefaultText = @"מסמך לא ניתן להוסיף לכרטיס מחובר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCantAddToConnected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CantAddToConnected", DefaultText = "Document cannot be added to a connected Pointer!",LocalDefaultText = @"BS64:Itee16HXnteaINec15Ag16DXmdeq158g15zXlNeV16HXmdejINec15vXqNeY15nXoSDXnteX15XXkdeoIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOByDeclarationOrFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ByDeclarationOrFile", DefaultText = "By File/Declaration",LocalDefaultText = @"לפי תיק/הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOByDeclarationOrFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ByDeclarationOrFile", DefaultText = "By File/Declaration",LocalDefaultText = @"BS64:Itec16TXmSDXqteZ16cv15TXpteU16jXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOByStorageSite = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ByStorageSite", DefaultText = "By Storage Site and Warehouse Block",LocalDefaultText = @"לפי אתר אחסון וגוש", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOByStorageSite = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ByStorageSite", DefaultText = "By Storage Site and Warehouse Block",LocalDefaultText = @"BS64:Itec16TXmSDXkNeq16gg15DXl9eh15XXnyDXldeS15XXqSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCodeShort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CodeShort", DefaultText = "Classification Code Too Short",LocalDefaultText = @"פרט מכס קצר מידי", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCodeShort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CodeShort", DefaultText = "Classification Code Too Short",LocalDefaultText = @"BS64:Itek16jXmCDXnteb16Eg16fXpteoINee15nXk9eZIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCodeLong = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CodeLong", DefaultText = "Classification Code Too Long",LocalDefaultText = @"פרט המכס ארוך מדי", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCodeLong = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CodeLong", DefaultText = "Classification Code Too Long",LocalDefaultText = @"BS64:Itek16jXmCDXlNee15vXoSDXkNeo15XXmiDXnteT15ki", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCorrectDigit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CorrectDigit", DefaultText = "Check digit is incorrect ,the correct digit is ",LocalDefaultText = @" ספרת הביקורת שגויה , הספרה הנכונה היא ", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCorrectDigit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CorrectDigit", DefaultText = "Check digit is incorrect ,the correct digit is ",LocalDefaultText = @"BS64:IiDXodek16jXqiDXlNeR15nXp9eV16jXqiDXqdeS15XXmdeUICwg15TXodek16jXlCDXlNeg15vXldeg15Qg15TXmdeQICI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOAmountsNotCompatableToIncoterm = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AmountsNotCompatableToIncoterm", DefaultText = "Insurance are not compitable to Incoterms ,Continue?",LocalDefaultText = @" אין התאמה לתנאי המכר , האם להמשיך ? ", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOAmountsNotCompatableToIncoterm = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AmountsNotCompatableToIncoterm", DefaultText = "Insurance are not compitable to Incoterms ,Continue?",LocalDefaultText = @"BS64:IiDXkNeZ158g15TXqteQ157XlCDXnNeq16DXkNeZINeU157Xm9eoICwg15TXkNedINec15TXntep15nXmiA/ICI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODifferentTotals = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DifferentTotals", DefaultText = "Tax to pay is different than File taxes , screen is display only",LocalDefaultText = @"המס לתשלום שונה מהמיסים לתיק , המסך לתצוגה בלבד", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODifferentTotals = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DifferentTotals", DefaultText = "Tax to pay is different than File taxes , screen is display only",LocalDefaultText = @"BS64:IteU157XoSDXnNeq16nXnNeV150g16nXldeg15Qg157XlNee15nXodeZ150g15zXqteZ16cgLCDXlNee16HXmiDXnNeq16bXldeS15Qg15HXnNeR15Mi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOPaidDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.PaidDeclaration", DefaultText = "Declaration was already paid , screen is display only",LocalDefaultText = @"הצהרה כבר שולמה , המסך לתצוגה בלבד", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOPaidDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.PaidDeclaration", DefaultText = "Declaration was already paid , screen is display only",LocalDefaultText = @"BS64:IteU16bXlNeo15Qg15vXkdeoINep15XXnNee15QgLCDXlNee16HXmiDXnNeq16bXldeS15Qg15HXnNeR15Mi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOWaitingApproval = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.WaitingApproval", DefaultText = "Declaration Paid , waiting for constraint approval",LocalDefaultText = @"טיוטה הוגשה , ממתינה לאילוץ הגשה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOWaitingApproval = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.WaitingApproval", DefaultText = "Declaration Paid , waiting for constraint approval",LocalDefaultText = @"BS64:IteY15nXldeY15Qg15TXldeS16nXlCAsINee157XqteZ16DXlCDXnNeQ15nXnNeV16Ug15TXktep15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOIsAmendmentDontDisplay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IsAmendmentDontDisplay", DefaultText = "Amendment Declaration , screen is display only",LocalDefaultText = @"לתצוגה בלבד - הצהרת תיקון", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOIsAmendmentDontDisplay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IsAmendmentDontDisplay", DefaultText = "Amendment Declaration , screen is display only",LocalDefaultText = @"BS64:Itec16rXpteV15LXlCDXkdec15HXkyAtINeU16bXlNeo16og16rXmden15XXnyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOIsAmendment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IsAmendment", DefaultText = "Amendment Declaration",LocalDefaultText = @"הצהרת תיקון", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOIsAmendment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IsAmendment", DefaultText = "Amendment Declaration",LocalDefaultText = @"BS64:IteU16bXlNeo16og16rXmden15XXnyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOFuturePayment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.FuturePayment", DefaultText = "Future payment was done",LocalDefaultText = @"בוצעה הגשה עתידית", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOFuturePayment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.FuturePayment", DefaultText = "Future payment was done",LocalDefaultText = @"BS64:IteR15XXptei15Qg15TXktep15Qg16LXqteZ15PXmdeqIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOChangedDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ChangedDeclaration", DefaultText = "Declaration data was changed , please send again before trying to pay",LocalDefaultText = @"בוצעו שינויים בהצהרה , יש לשדר שוב לפני הגשת תשלום", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOChangedDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ChangedDeclaration", DefaultText = "Declaration data was changed , please send again before trying to pay",LocalDefaultText = @"BS64:IteR15XXptei15Ug16nXmdeg15XXmdeZ150g15HXlNem15TXqNeUICwg15nXqSDXnNep15PXqCDXqdeV15Eg15zXpNeg15kg15TXktep16og16rXqdec15XXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationONewDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NewDeclaration", DefaultText = "New Declaration",LocalDefaultText = @"הצהרה חדשה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationONewDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NewDeclaration", DefaultText = "New Declaration",LocalDefaultText = @"BS64:IteU16bXlNeo15Qg15fXk9ep15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCustomFileIsAlreadyEntered = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CustomFileIsAlreadyEntered", DefaultText = "Custom file is already entered, can’t create new declaration",LocalDefaultText = @"הוזן תיק עמילות , לא ניתן לפתוח הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCustomFileIsAlreadyEntered = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CustomFileIsAlreadyEntered", DefaultText = "Custom file is already entered, can’t create new declaration",LocalDefaultText = @"BS64:IteU15XXltefINeq15nXpyDXotee15nXnNeV16ogLCDXnNeQINeg15nXqtefINec16TXqteV15cg15TXpteU16jXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOClientIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ClientIsMandatory", DefaultText = "Client is mandatory",LocalDefaultText = @"יש להזין לקוח", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOClientIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ClientIsMandatory", DefaultText = "Client is mandatory",LocalDefaultText = @"BS64:IteZ16kg15zXlNeW15nXnyDXnNen15XXlyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOMatch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Match", DefaultText = "Transport Mode not match to DeclarationOfficeCode",LocalDefaultText = @"סוג ההובלה לא תואם לתחנת המכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOMatch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Match", DefaultText = "Transport Mode not match to DeclarationOfficeCode",LocalDefaultText = @"BS64:Iteh15XXkiDXlNeU15XXkdec15Qg15zXkCDXqteV15DXnSDXnNeq15fXoNeqINeU157Xm9ehIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODeclarationOfficeCodeMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeclarationOfficeCodeMandatory", DefaultText = "DeclarationOfficeCode is mandatory",LocalDefaultText = @"יש להזין בית מכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODeclarationOfficeCodeMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeclarationOfficeCodeMandatory", DefaultText = "DeclarationOfficeCode is mandatory",LocalDefaultText = @"BS64:IteZ16kg15zXlNeW15nXnyDXkdeZ16og157Xm9ehIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOTransportModeIdMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TransportModeIdMandatory", DefaultText = "TransportModeId  is mandatory",LocalDefaultText = @"יש להזין סוג הובלה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOTransportModeIdMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TransportModeIdMandatory", DefaultText = "TransportModeId  is mandatory",LocalDefaultText = @"BS64:IteZ16kg15zXlNeW15nXnyDXodeV15Ig15TXldeR15zXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODidntfindcustomfile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Didntfindcustomfile", DefaultText = "Didn't find custom file",LocalDefaultText = @"לא נמצא תיק עמילות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODidntfindcustomfile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Didntfindcustomfile", DefaultText = "Didn't find custom file",LocalDefaultText = @"BS64:Itec15Ag16DXntem15Ag16rXmdenINei157Xmdec15XXqiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODeclarationTaxChanged = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeclarationTaxChanged", DefaultText = "Changes were made in declaration , Taxes are not up to date",LocalDefaultText = @"בוצעו שינויים בהצהרה , מסך מיסים אינו עדכני", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODeclarationTaxChanged = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeclarationTaxChanged", DefaultText = "Changes were made in declaration , Taxes are not up to date",LocalDefaultText = @"BS64:IteR15XXptei15Ug16nXmdeg15XXmdeZ150g15HXlNem15TXqNeUICwg157XodeaINee15nXodeZ150g15DXmdeg15Ug16LXk9eb16DXmSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODidntfindDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DidntfindDeclaration", DefaultText = "Didn't find Declaration",LocalDefaultText = @"לא נמצא מס' הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODidntfindDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DidntfindDeclaration", DefaultText = "Didn't find Declaration",LocalDefaultText = @"BS64:Itec15Ag16DXntem15Ag157XoScg15TXpteU16jXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOMetaDataReady = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MetaDataReady", DefaultText = "Metadata is ready",LocalDefaultText = @"נתוני מטה-דאטה מוכנים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOMetaDataReady = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MetaDataReady", DefaultText = "Metadata is ready",LocalDefaultText = @"BS64:Iteg16rXldeg15kg157XmNeULdeT15DXmNeUINee15XXm9eg15nXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOMetaDataNotReady = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MetaDataNotReady", DefaultText = "Metadata is not ready",LocalDefaultText = @"נתוני מטה-דאטה אינם מוכנים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOMetaDataNotReady = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MetaDataNotReady", DefaultText = "Metadata is not ready",LocalDefaultText = @"BS64:Iteg16rXldeg15kg157XmNeULdeT15DXmNeUINeQ15nXoNedINee15XXm9eg15nXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOConstraintType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ConstraintType", DefaultText = "Constraint Type",LocalDefaultText = @"אילוץ", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOConstraintType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ConstraintType", DefaultText = "Constraint Type",LocalDefaultText = @"BS64:IteQ15nXnNeV16Ui", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCustomConstraint = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CustomConstraint", DefaultText = "Custom Constraints",LocalDefaultText = @"אילוצים מותאמים אישית", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCustomConstraint = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CustomConstraint", DefaultText = "Custom Constraints",LocalDefaultText = @"BS64:IteQ15nXnNeV16bXmdedINee15XXqteQ157XmdedINeQ15nXqdeZ16oi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODeclarationNumberIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeclarationNumberIsMandatory", DefaultText = "Declaration Number is mandatory",LocalDefaultText = @"מספר הצהרה הוא חובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODeclarationNumberIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeclarationNumberIsMandatory", DefaultText = "Declaration Number is mandatory",LocalDefaultText = @"BS64:Itee16HXpNeoINeU16bXlNeo15Qg15TXldeQINeX15XXkdeUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOTotal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Total", DefaultText = "Total:",LocalDefaultText = @"סה”כ:", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOTotal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Total", DefaultText = "Total:",LocalDefaultText = @"BS64:Iteh15TigJ3Xmzoi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOPaymentMethodFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.PaymentMethodFields", DefaultText = "All fields must be filled",LocalDefaultText = @"יש למלא את כל השדות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOPaymentMethodFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.PaymentMethodFields", DefaultText = "All fields must be filled",LocalDefaultText = @"BS64:IteZ16kg15zXntec15Ag15DXqiDXm9ecINeU16nXk9eV16oi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSendPaymentOrder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendPaymentOrder", DefaultText = "Send Payment Order",LocalDefaultText = @"שלח להזמין תשלום", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSendPaymentOrder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendPaymentOrder", DefaultText = "Send Payment Order",LocalDefaultText = @"BS64:Itep15zXlyDXnNeU15bXnteZ158g16rXqdec15XXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationONo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.No", DefaultText = "No",LocalDefaultText = @"לא", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationONo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.No", DefaultText = "No",LocalDefaultText = @"BS64:Itec15Ai", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOYes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Yes", DefaultText = "Yes",LocalDefaultText = @"כן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOYes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Yes", DefaultText = "Yes",LocalDefaultText = @"BS64:Iteb158i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOLevies = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Levies", DefaultText = "Levies",LocalDefaultText = @"היטלים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOLevies = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Levies", DefaultText = "Levies",LocalDefaultText = @"BS64:IteU15nXmNec15nXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOPackages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Packages", DefaultText = "Packages",LocalDefaultText = @"נתוני אחסנה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOPackages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Packages", DefaultText = "Packages",LocalDefaultText = @"BS64:Iteg16rXldeg15kg15DXl9eh16DXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationORestoreMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RestoreMessage", DefaultText = "Restore Messages Request",LocalDefaultText = @"שיחזור מסרים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationORestoreMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RestoreMessage", DefaultText = "Restore Messages Request",LocalDefaultText = @"BS64:Itep15nXl9eW15XXqCDXnteh16jXmdedIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationORestoreByCorrelation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RestoreByCorrelation", DefaultText = "Restore By Correlation",LocalDefaultText = @"לפי קורולציה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationORestoreByCorrelation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RestoreByCorrelation", DefaultText = "Restore By Correlation",LocalDefaultText = @"BS64:Itec16TXmSDXp9eV16jXldec16bXmdeUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationORestoreByDates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RestoreByDates", DefaultText = "Restore By Dates",LocalDefaultText = @"לפי תאריכים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationORestoreByDates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RestoreByDates", DefaultText = "Restore By Dates",LocalDefaultText = @"BS64:Itec16TXmSDXqteQ16jXmdeb15nXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCorrelationNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CorrelationNo", DefaultText = "Correlation No.",LocalDefaultText = @"מספר קורולציה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCorrelationNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CorrelationNo", DefaultText = "Correlation No.",LocalDefaultText = @"BS64:Itee16HXpNeoINen15XXqNeV15zXpteZ15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationORestoreInterfaceName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RestoreInterfaceName", DefaultText = "Interface Name",LocalDefaultText = @"שם השירות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationORestoreInterfaceName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RestoreInterfaceName", DefaultText = "Interface Name",LocalDefaultText = @"BS64:Itep150g15TXqdeZ16jXldeqIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCorrelationNumberIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CorrelationNumberIsMandatory", DefaultText = "Corrlation Number is missing",LocalDefaultText = @"מספר הקורולציה חסר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCorrelationNumberIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CorrelationNumberIsMandatory", DefaultText = "Corrlation Number is missing",LocalDefaultText = @"BS64:Itee16HXpNeoINeU16fXldeo15XXnNem15nXlCDXl9eh16gi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOInterfaceManagementsCodeIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.InterfaceManagementsCodeIsMandatory", DefaultText = "Interface Name is missing",LocalDefaultText = @"שם השירות חסר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOInterfaceManagementsCodeIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.InterfaceManagementsCodeIsMandatory", DefaultText = "Interface Name is missing",LocalDefaultText = @"BS64:Itep150g15TXqdeZ16jXldeqINeX16HXqCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOFromDateIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.FromDateIsMandatory", DefaultText = "From Date is missing",LocalDefaultText = @"מ-תאריך חסר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOFromDateIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.FromDateIsMandatory", DefaultText = "From Date is missing",LocalDefaultText = @"BS64:IteeLdeq15DXqNeZ15og15fXodeoIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOToDateIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ToDateIsMandatory", DefaultText = "To Date is missing",LocalDefaultText = @"עד-תאריך חסר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOToDateIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ToDateIsMandatory", DefaultText = "To Date is missing",LocalDefaultText = @"BS64:Itei15Mt16rXkNeo15nXmiDXl9eh16gi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOAddNewCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AddNewCustomer", DefaultText = "Add New Customer",LocalDefaultText = @"להוסיף לקוחות חדשים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOAddNewCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AddNewCustomer", DefaultText = "Add New Customer",LocalDefaultText = @"BS64:Itec15TXldeh15nXoyDXnNen15XXl9eV16og15fXk9ep15nXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationONoPaymentDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NoPaymentDate", DefaultText = "Declaration was already paid , can’t send",LocalDefaultText = @"הצהרה כבר שולמה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationONoPaymentDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NoPaymentDate", DefaultText = "Declaration was already paid , can’t send",LocalDefaultText = @"BS64:IteU16bXlNeo15Qg15vXkdeoINep15XXnNee15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationONoImporterId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NoImporterId", DefaultText = "Need to retrieve client before sending",LocalDefaultText = @"יש לשלוף לקוח מהמכס לפני שליחה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationONoImporterId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NoImporterId", DefaultText = "Need to retrieve client before sending",LocalDefaultText = @"BS64:IteZ16kg15zXqdec15XXoyDXnNen15XXlyDXnteU157Xm9ehINec16TXoNeZINep15zXmdeX15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOConstraintsInProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ConstraintsInProgress", DefaultText = "Declaration Paid , waiting for constraint approval",LocalDefaultText = @"טיוטה ממתינה לאישור אילוץ הגשה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOConstraintsInProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ConstraintsInProgress", DefaultText = "Declaration Paid , waiting for constraint approval",LocalDefaultText = @"BS64:IteY15nXldeY15Qg157Xnteq15nXoNeUINec15DXmdep15XXqCDXkNeZ15zXldelINeU15LXqdeUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOFuturePaymentDone = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.FuturePaymentDone", DefaultText = "Future payment was done",LocalDefaultText = @"בוצעה הגשה עתידית", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOFuturePaymentDone = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.FuturePaymentDone", DefaultText = "Future payment was done",LocalDefaultText = @"BS64:IteR15XXptei15Qg15TXktep15Qg16LXqteZ15PXmdeqIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOTaxationDateTimeNotToday = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TaxationDateTimeNotToday", DefaultText = "Taxes date is different from today , continue ?",LocalDefaultText = @"תאריך חישוב מיסים שונה מהיום , האם לעדכן לתאריך של היום?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOTaxationDateTimeNotToday = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TaxationDateTimeNotToday", DefaultText = "Taxes date is different from today , continue ?",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og15fXmdep15XXkSDXnteZ16HXmdedINep15XXoNeUINee15TXmdeV150gLCDXlNeQ150g15zXoteT15vXnyDXnNeq15DXqNeZ15og16nXnCDXlNeZ15XXnT8i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOTaxationDateTimeCheck = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TaxationDateTimeCheck", DefaultText = "Taxation date validation",LocalDefaultText = @"בדיקת תאריך חישוב מיסים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOTaxationDateTimeCheck = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TaxationDateTimeCheck", DefaultText = "Taxation date validation",LocalDefaultText = @"BS64:IteR15PXmden16og16rXkNeo15nXmiDXl9eZ16nXldeRINee15nXodeZ150i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODocumetsUploaded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DocumetsUploaded", DefaultText = "Not all documets were uploaded , continue ?",LocalDefaultText = @"לא כל המסמכים הועלו למכס  האם להמשיך ?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODocumetsUploaded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DocumetsUploaded", DefaultText = "Not all documets were uploaded , continue ?",LocalDefaultText = @"BS64:Itec15Ag15vXnCDXlNee16HXnteb15nXnSDXlNeV16LXnNeVINec157Xm9ehICDXlNeQ150g15zXlNee16nXmdeaID8i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationONewFileRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NewFileRequest", DefaultText = "New File Request",LocalDefaultText = @"תנאי הבטוחה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationONewFileRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NewFileRequest", DefaultText = "New File Request",LocalDefaultText = @"BS64:Iteq16DXkNeZINeU15HXmNeV15fXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationONewFileExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NewFileExist", DefaultText = "New file data exist , delete it ?",LocalDefaultText = @"קיימים נתוני בקשה לתיק חדש , למחוק אותם?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationONewFileExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NewFileExist", DefaultText = "New file data exist , delete it ?",LocalDefaultText = @"BS64:Iten15nXmdee15nXnSDXoNeq15XXoNeZINeR16fXqdeUINec16rXmdenINeX15PXqSAsINec157Xl9eV16cg15DXldeq150/Ig==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCustomsFileNoExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CustomsFileNoExists", DefaultText = "File already Exist",LocalDefaultText = @"תיק כבר קיים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCustomsFileNoExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CustomsFileNoExists", DefaultText = "File already Exist",LocalDefaultText = @"BS64:Iteq15nXpyDXm9eR16gg16fXmdeZ150i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSentToDCA = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SentToDCA", DefaultText = "Successfully sent to Customs. Answer'll arrive via DCA",LocalDefaultText = @"נשלח למכס בהצלחה , משוב יתקבל בכספת", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSentToDCA = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SentToDCA", DefaultText = "Successfully sent to Customs. Answer'll arrive via DCA",LocalDefaultText = @"BS64:Iteg16nXnNeXINec157Xm9ehINeR15TXptec15fXlCAsINee16nXldeRINeZ16rXp9eR15wg15HXm9eh16TXqiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationORefreshConsignment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RefreshConsignment", DefaultText = "Refresh Consignment",LocalDefaultText = @"שאילתא למצהר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationORefreshConsignment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RefreshConsignment", DefaultText = "Refresh Consignment",LocalDefaultText = @"BS64:Itep15DXmdec16rXkCDXnNee16bXlNeoIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSerialNumbers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SerialNumbers", DefaultText = "Serial Numbers",LocalDefaultText = @"נתוני מוצר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSerialNumbers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SerialNumbers", DefaultText = "Serial Numbers",LocalDefaultText = @"BS64:Iteg16rXldeg15kg157Xldem16gi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSerialNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SerialNumber", DefaultText = "Serial Numbers",LocalDefaultText = @"סיראליים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSerialNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SerialNumber", DefaultText = "Serial Numbers",LocalDefaultText = @"BS64:Iteh15nXqNeQ15zXmdeZ150i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODescriptions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Descriptions", DefaultText = "Descriptions",LocalDefaultText = @"תיאור סחורה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODescriptions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Descriptions", DefaultText = "Descriptions",LocalDefaultText = @"BS64:Iteq15nXkNeV16gg16HXl9eV16jXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOProductIdentifications = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ProductIdentifications", DefaultText = "Product Identifications",LocalDefaultText = @"זיהוי סחורה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOProductIdentifications = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ProductIdentifications", DefaultText = "Product Identifications",LocalDefaultText = @"BS64:IteW15nXlNeV15kg16HXl9eV16jXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOProcessTypes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ProcessTypes", DefaultText = "Process Types",LocalDefaultText = @"סוגי תהליכים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOProcessTypes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ProcessTypes", DefaultText = "Process Types",LocalDefaultText = @"BS64:Iteh15XXkteZINeq15TXnNeZ15vXmdedIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCargoTypeCodeIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CargoTypeCodeIsMandatory", DefaultText = "Cargo Type is missing",LocalDefaultText = @"מזהה מטען חסר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCargoTypeCodeIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CargoTypeCodeIsMandatory", DefaultText = "Cargo Type is missing",LocalDefaultText = @"BS64:Itee15bXlNeUINee15jXotefINeX16HXqCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOFirstCargoIdIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.FirstCargoIdIsMandatory", DefaultText = "First Cargo ID is missing",LocalDefaultText = @"מזהה מטען ראשון חסר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOFirstCargoIdIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.FirstCargoIdIsMandatory", DefaultText = "First Cargo ID is missing",LocalDefaultText = @"BS64:Itee15bXlNeUINee15jXotefINeo15DXqdeV158g15fXodeoIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOTotalTaxes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TotalTaxes", DefaultText = "Total Taxes",LocalDefaultText = @"סה”כ מיסים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOTotalTaxes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TotalTaxes", DefaultText = "Total Taxes",LocalDefaultText = @"BS64:Iteh15TigJ3XmyDXnteZ16HXmdedIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Currency", DefaultText = "Currency",LocalDefaultText = @"מטבע", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Currency", DefaultText = "Currency",LocalDefaultText = @"BS64:Itee15jXkdeiIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCustomsDocumentRemarks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CustomsDocumentRemarks", DefaultText = "Remarks",LocalDefaultText = @"הערות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCustomsDocumentRemarks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CustomsDocumentRemarks", DefaultText = "Remarks",LocalDefaultText = @"BS64:IteU16LXqNeV16oi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOMissingFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MissingFields", DefaultText = "Missing fields",LocalDefaultText = @"שדות חסרים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOMissingFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MissingFields", DefaultText = "Missing fields",LocalDefaultText = @"BS64:Itep15PXldeqINeX16HXqNeZ150i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODragHere = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DragHere", DefaultText = "Drag Here",LocalDefaultText = @"גרור לכאן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODragHere = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DragHere", DefaultText = "Drag Here",LocalDefaultText = @"BS64:IteS16jXldeoINec15vXkNefIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOOr = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Or", DefaultText = "Or",LocalDefaultText = @"או", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOOr = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Or", DefaultText = "Or",LocalDefaultText = @"BS64:IteQ15Ui", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOViewDocumentsQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ViewDocumentsQuery", DefaultText = "View Documents",LocalDefaultText = @"שאילתא למסמכים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOViewDocumentsQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ViewDocumentsQuery", DefaultText = "View Documents",LocalDefaultText = @"BS64:Itep15DXmdec16rXkCDXnNee16HXnteb15nXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCalculatedFee = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CalculatedFee", DefaultText = "Please Choose Calculated Fee",LocalDefaultText = @"יש להשתמש בסוג אגרת נמל מוצהרת", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCalculatedFee = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CalculatedFee", DefaultText = "Please Choose Calculated Fee",LocalDefaultText = @"BS64:IteZ16kg15zXlNep16rXntepINeR16HXldeSINeQ15LXqNeqINeg157XnCDXnteV16bXlNeo16oi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODisconnectNotAllowed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DisconnectNotAllowed", DefaultText = "Can't disconnect a ticket with a request in progress.",LocalDefaultText = @".לא ניתן לנתק מסמך עם בקשה בתהליך", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODisconnectNotAllowed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DisconnectNotAllowed", DefaultText = "Can't disconnect a ticket with a request in progress.",LocalDefaultText = @"BS64:Ii7XnNeQINeg15nXqtefINec16DXqtenINee16HXnteaINei150g15HXp9ep15Qg15HXqteU15zXmdeaIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOOneInvoiceSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.OneInvoiceSelected", DefaultText = "One invoice must be selected",LocalDefaultText = @"ניתן לסמן חשבונית עיקרית אחת בלבד", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOOneInvoiceSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.OneInvoiceSelected", DefaultText = "One invoice must be selected",LocalDefaultText = @"BS64:Iteg15nXqtefINec16HXntefINeX16nXkdeV16DXmdeqINei15nXp9eo15nXqiDXkNeX16og15HXnNeR15Mi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSendDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendDocument", DefaultText = "Send",LocalDefaultText = @"שלח מסמך", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSendDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendDocument", DefaultText = "Send",LocalDefaultText = @"BS64:Itep15zXlyDXnteh157XmiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODeleteSite = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeleteSite", DefaultText = "Delete this internal site?",LocalDefaultText = @"למחוק את המעבר הפנימי ?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODeleteSite = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeleteSite", DefaultText = "Delete this internal site?",LocalDefaultText = @"BS64:Itec157Xl9eV16cg15DXqiDXlNee16LXkdeoINeU16TXoNeZ157XmSA/Ig==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCertificateMandatoryFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CertificateMandatoryFields", DefaultText = "Some lines are without Mandatory fields , Continue ?",LocalDefaultText = @"קיימים אישורים שלא הוזן בהם שדות חובה , להמשיך ?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCertificateMandatoryFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CertificateMandatoryFields", DefaultText = "Some lines are without Mandatory fields , Continue ?",LocalDefaultText = @"BS64:Iten15nXmdee15nXnSDXkNeZ16nXldeo15nXnSDXqdec15Ag15TXldeW158g15HXlNedINep15PXldeqINeX15XXkdeUICwg15zXlNee16nXmdeaID8i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Date", DefaultText = "Date",LocalDefaultText = @"תאריך", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Date", DefaultText = "Date",LocalDefaultText = @"BS64:Iteq15DXqNeZ15oi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOResetDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ResetDeclaration", DefaultText = "Are you sure you want to reset declaration number ?",LocalDefaultText = @"האם בטוח שברצונך לאפס את מספר ההצהרה ?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOResetDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ResetDeclaration", DefaultText = "Are you sure you want to reset declaration number ?",LocalDefaultText = @"BS64:IteU15DXnSDXkdeY15XXlyDXqdeR16jXpteV16DXmiDXnNeQ16TXoSDXkNeqINee16HXpNeoINeU15TXpteU16jXlCA/Ig==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODeclarationReset = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeclarationReset", DefaultText = "Declaration Number Was reset",LocalDefaultText = @"מספר הצהרה אופס בהצלחה - יש לעדכן נתונים ולשדר מחדש", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODeclarationReset = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeclarationReset", DefaultText = "Declaration Number Was reset",LocalDefaultText = @"BS64:Itee16HXpNeoINeU16bXlNeo15Qg15DXldek16Eg15HXlNem15zXl9eUIC0g15nXqSDXnNei15PXm9efINeg16rXldeg15nXnSDXldec16nXk9eoINee15fXk9epIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSearchItems = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SearchItems", DefaultText = "Search",LocalDefaultText = @"פרט/פריט/סכום", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSearchItems = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SearchItems", DefaultText = "Search",LocalDefaultText = @"BS64:Itek16jXmC/XpNeo15nXmC/Xodeb15XXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCantCopy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CantCopy", DefaultText = "Supplier invoice exist can't copy",LocalDefaultText = @"קיימים חשבונות ספק , לא ניתן לבצע העתקה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCantCopy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CantCopy", DefaultText = "Supplier invoice exist can't copy",LocalDefaultText = @"BS64:Iten15nXmdee15nXnSDXl9ep15HXldeg15XXqiDXodek16cgLCDXnNeQINeg15nXqtefINec15HXpteiINeU16LXqten15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCopyData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CopyData", DefaultText = "Copy Data from File",LocalDefaultText = @"העתק נתוני מתיק עמילות ", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCopyData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CopyData", DefaultText = "Copy Data from File",LocalDefaultText = @"BS64:IteU16LXqtenINeg16rXldeg15kg157XqteZ16cg16LXnteZ15zXldeqICI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOToFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ToFile", DefaultText = "To File",LocalDefaultText = @"לתיק עמילות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOToFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ToFile", DefaultText = "To File",LocalDefaultText = @"BS64:Itec16rXmdenINei157Xmdec15XXqiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODeleteAmounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeleteAmounts", DefaultText = "Freight And Insurance Values will be deleted",LocalDefaultText = @"נתוני ביטוח ימחקו, להמשיך ?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODeleteAmounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeleteAmounts", DefaultText = "Freight And Insurance Values will be deleted",LocalDefaultText = @"BS64:Iteg16rXldeg15kg15HXmdeY15XXlyDXmdee15fXp9eVLCDXnNeU157XqdeZ15ogPyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCorrectionGeneral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CorrectionGeneral", DefaultText = "General Data",LocalDefaultText = @"תיקון הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCorrectionGeneral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CorrectionGeneral", DefaultText = "General Data",LocalDefaultText = @"BS64:Iteq15nXp9eV158g15TXpteU16jXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCorrectionStatement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CorrectionStatement", DefaultText = "Statement",LocalDefaultText = @"נתוני תיקון", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCorrectionStatement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CorrectionStatement", DefaultText = "Statement",LocalDefaultText = @"BS64:Iteg16rXldeg15kg16rXmden15XXnyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOAmendments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Amendments", DefaultText = "Amendments",LocalDefaultText = @"שינויים שבוצעו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOAmendments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Amendments", DefaultText = "Amendments",LocalDefaultText = @"BS64:Itep15nXoNeV15nXmdedINep15HXldem16LXlSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOExistsAmendments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ExistsAmendments", DefaultText = "Exists declaration amendment in status ",LocalDefaultText = @"קיים תיקון הצהרה בסטטוס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOExistsAmendments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ExistsAmendments", DefaultText = "Exists declaration amendment in status ",LocalDefaultText = @"BS64:Iten15nXmdedINeq15nXp9eV158g15TXpteU16jXlCDXkdeh15jXmNeV16Ei", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOTime = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Time", DefaultText = "Time",LocalDefaultText = @"שעה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOTime = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Time", DefaultText = "Time",LocalDefaultText = @"BS64:Itep16LXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOVersion = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Version", DefaultText = "Version",LocalDefaultText = @"גרסה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOVersion = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Version", DefaultText = "Version",LocalDefaultText = @"BS64:IteS16jXodeUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOStatement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Statement", DefaultText = "Statement",LocalDefaultText = @"תיאור", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOStatement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Statement", DefaultText = "Statement",LocalDefaultText = @"BS64:Iteq15nXkNeV16gi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOContent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Content", DefaultText = "Content",LocalDefaultText = @"ערך", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOContent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Content", DefaultText = "Content",LocalDefaultText = @"BS64:Itei16jXmiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOVatChanged = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.VatChanged", DefaultText = "Customer VAT is different than Importer VAT , Continue anyway ?",LocalDefaultText = @"מספר החפ לא תואם ללקוח בתיק , להמשיך בכל זאת ?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOVatChanged = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.VatChanged", DefaultText = "Customer VAT is different than Importer VAT , Continue anyway ?",LocalDefaultText = @"BS64:Itee16HXpNeoINeU15fXpCDXnNeQINeq15XXkNedINec15zXp9eV15cg15HXqteZ16cgLCDXnNeU157XqdeZ15og15HXm9ecINeW15DXqiA/Ig==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSystemMessages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SystemMessages", DefaultText = "System Messages",LocalDefaultText = @"הודעות מערכת", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSystemMessages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SystemMessages", DefaultText = "System Messages",LocalDefaultText = @"BS64:IteU15XXk9ei15XXqiDXntei16jXm9eqIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationONoAmendments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NoAmendments", DefaultText = "There are no amendments in this declaration",LocalDefaultText = @"לא בוצעו תיקונים בהצהרה זו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationONoAmendments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NoAmendments", DefaultText = "There are no amendments in this declaration",LocalDefaultText = @"BS64:Itec15Ag15HXldem16LXlSDXqteZ16fXldeg15nXnSDXkdeU16bXlNeo15Qg15bXlSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSaveDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SaveDeclaration", DefaultText = "Data will be saved, continue?",LocalDefaultText = @"?יש לשמור את נתוני ההצהרה , המשך ", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSaveDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SaveDeclaration", DefaultText = "Data will be saved, continue?",LocalDefaultText = @"BS64:Ij/XmdepINec16nXnteV16gg15DXqiDXoNeq15XXoNeZINeU15TXpteU16jXlCAsINeU157XqdeaICI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCertificateNotMandatoryFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CertificateNotMandatoryFields", DefaultText = "Entered data fields are not mandatory, continue?",LocalDefaultText = @"?הוזנו נתונים בשדות שאינם חובה , האם להמשיך", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCertificateNotMandatoryFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CertificateNotMandatoryFields", DefaultText = "Entered data fields are not mandatory, continue?",LocalDefaultText = @"BS64:Ij/XlNeV15bXoNeVINeg16rXldeg15nXnSDXkdep15PXldeqINep15DXmdeg150g15fXldeR15QgLCDXlNeQ150g15zXlNee16nXmdeaIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCopyDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CopyDeclaration", DefaultText = "Copy Declaration",LocalDefaultText = @"העתקת הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCopyDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CopyDeclaration", DefaultText = "Copy Declaration",LocalDefaultText = @"BS64:IteU16LXqten16og15TXpteU16jXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOTransferToCollector = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TransferToCollector", DefaultText = "Aprove Transfer To Collector",LocalDefaultText = @"אשר העברה לגובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOTransferToCollector = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TransferToCollector", DefaultText = "Aprove Transfer To Collector",LocalDefaultText = @"BS64:IteQ16nXqCDXlNei15HXqNeUINec15LXldeR15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsGeneralOSendClaim = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.SendClaim", DefaultText = "SendClaim",LocalDefaultText = @"מסר תביעה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsGeneralOSendClaim = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.SendClaim", DefaultText = "SendClaim",LocalDefaultText = @"BS64:Itee16HXqCDXqteR15nXoteUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsGeneralOAnswerSent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.AnswerSent", DefaultText = "Answer Sent to Customs - display Only”",LocalDefaultText = @"לתצוגה בלבד - נשלח מענה לבטוחה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsGeneralOAnswerSent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.AnswerSent", DefaultText = "Answer Sent to Customs - display Only”",LocalDefaultText = @"BS64:Itec16rXpteV15LXlCDXkdec15HXkyAtINeg16nXnNeXINee16LXoNeUINec15HXmNeV15fXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsGeneralOEmptyVehicle = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.EmptyVehicle", DefaultText = "You can't add an empty vehicle",LocalDefaultText = @"אתה לא יכול להוסיף רכב ריקה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsGeneralOEmptyVehicle = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.EmptyVehicle", DefaultText = "You can't add an empty vehicle",LocalDefaultText = @"BS64:IteQ16rXlCDXnNeQINeZ15vXldecINec15TXldeh15nXoyDXqNeb15Eg16jXmden15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsGeneralOMessageError = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.MessageError", DefaultText = "Message Error",LocalDefaultText = @"מידע נוסף", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsGeneralOMessageError = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.MessageError", DefaultText = "Message Error",LocalDefaultText = @"BS64:Itee15nXk9eiINeg15XXodejIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsGeneralOOldValue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.OldValue", DefaultText = "Old Value",LocalDefaultText = @"ערך ישן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsGeneralOOldValue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.OldValue", DefaultText = "Old Value",LocalDefaultText = @"BS64:Itei16jXmiDXmdep158i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsGeneralONewValue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.NewValue", DefaultText = "New Value",LocalDefaultText = @"ערך חדש", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsGeneralONewValue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.NewValue", DefaultText = "New Value",LocalDefaultText = @"BS64:Itei16jXmiDXl9eT16ki", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsGeneralOCancelMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CancelMessage", DefaultText = "Are you sure you want to cancel? Your data may lost",LocalDefaultText = @"בוצעו שינויים שלא נשמרו , האם ברצונך לשמור אותם ?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsGeneralOCancelMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CancelMessage", DefaultText = "Are you sure you want to cancel? Your data may lost",LocalDefaultText = @"BS64:IteR15XXptei15Ug16nXmdeg15XXmdeZ150g16nXnNeQINeg16nXnteo15UgLCDXlNeQ150g15HXqNem15XXoNeaINec16nXnteV16gg15DXldeq150gPyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsGeneralONext = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.Next", DefaultText = "Next",LocalDefaultText = @"הבא", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsGeneralONext = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.Next", DefaultText = "Next",LocalDefaultText = @"BS64:IteU15HXkCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsGeneralOPrevious = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.Previous", DefaultText = "Previous",LocalDefaultText = @"הקודם", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsGeneralOPrevious = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.Previous", DefaultText = "Previous",LocalDefaultText = @"BS64:IteU16fXldeT150i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOProtest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Protest", DefaultText = "Protest",LocalDefaultText = @"אגב מחאה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOProtest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Protest", DefaultText = "Protest",LocalDefaultText = @"BS64:IteQ15LXkSDXnteX15DXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOEnterAtLeastInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.EnterAtLeastInvoice", DefaultText = "Please enter at least one invoice and item",LocalDefaultText = @"יש להזין לפחות חשבון ספק ופרט מכס אחד", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOEnterAtLeastInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.EnterAtLeastInvoice", DefaultText = "Please enter at least one invoice and item",LocalDefaultText = @"BS64:IteZ16kg15zXlNeW15nXnyDXnNek15fXldeqINeX16nXkdeV158g16HXpNenINeV16TXqNeYINee15vXoSDXkNeX15Mi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCertificateMultiEntry = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CertificateMultiEntry", DefaultText = "Certificate Multi Entry",LocalDefaultText = @"הזנת אישורים מרוכזת", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCertificateMultiEntry = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CertificateMultiEntry", DefaultText = "Certificate Multi Entry",LocalDefaultText = @"BS64:IteU15bXoNeqINeQ15nXqdeV16jXmdedINee16jXldeb15bXqiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODemandState = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DemandState", DefaultText = "Demand State",LocalDefaultText = @"סטטוס דרישה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODemandState = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DemandState", DefaultText = "Demand State",LocalDefaultText = @"BS64:Iteh15jXmNeV16Eg15PXqNeZ16nXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOLevel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Level", DefaultText = "Level",LocalDefaultText = @"רמה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOLevel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Level", DefaultText = "Level",LocalDefaultText = @"BS64:Iteo157XlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Invoice", DefaultText = "Invoice",LocalDefaultText = @"חשבון", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Invoice", DefaultText = "Invoice",LocalDefaultText = @"BS64:IteX16nXkdeV158i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOWithResponse = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.WithResponse", DefaultText = "With response",LocalDefaultText = @"עם תגובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOWithResponse = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.WithResponse", DefaultText = "With response",LocalDefaultText = @"BS64:Itei150g16rXkteV15HXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOWithoutResponse = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.WithoutResponse", DefaultText = "Without response",LocalDefaultText = @"ללא מענה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOWithoutResponse = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.WithoutResponse", DefaultText = "Without response",LocalDefaultText = @"BS64:Itec15zXkCDXntei16DXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationORequestedCerticate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RequestedCerticate", DefaultText = "Requested Certicate",LocalDefaultText = @"נדרש", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationORequestedCerticate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RequestedCerticate", DefaultText = "Requested Certicate",LocalDefaultText = @"BS64:Iteg15PXqNepIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODigital = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Digital", DefaultText = "Digital",LocalDefaultText = @"ממוחשב", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODigital = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Digital", DefaultText = "Digital",LocalDefaultText = @"BS64:Itee157XldeX16nXkSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOExempt = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Exempt", DefaultText = "Exempt",LocalDefaultText = @"פטור", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOExempt = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Exempt", DefaultText = "Exempt",LocalDefaultText = @"BS64:Itek15jXldeoIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOManual = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Manual", DefaultText = "Manual",LocalDefaultText = @"ידני", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOManual = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Manual", DefaultText = "Manual",LocalDefaultText = @"BS64:IteZ15PXoNeZIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCertificateResponse = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CertificateResponse", DefaultText = "Certificate Response for Demand",LocalDefaultText = @"הזנת מענה לדרישה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCertificateResponse = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CertificateResponse", DefaultText = "Certificate Response for Demand",LocalDefaultText = @"BS64:IteU15bXoNeqINee16LXoNeUINec15PXqNeZ16nXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOTicketAlreadyExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TicketAlreadyExist", DefaultText = "This Ticket already exist , do you want to move the items to the existing ticket ?",LocalDefaultText = @"המענה שהזנת כבר קיים , האם להעביר את פרטי המכס למענה הקיים ?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOTicketAlreadyExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TicketAlreadyExist", DefaultText = "This Ticket already exist , do you want to move the items to the existing ticket ?",LocalDefaultText = @"BS64:IteU157Xoteg15Qg16nXlNeW16DXqiDXm9eR16gg16fXmdeZ150gLCDXlNeQ150g15zXlNei15HXmdeoINeQ16og16TXqNeY15kg15TXnteb16Eg15zXntei16DXlCDXlNen15nXmdedID8i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCreate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Create", DefaultText = "Create",LocalDefaultText = @"צור חדש", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCreate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Create", DefaultText = "Create",LocalDefaultText = @"BS64:Item15XXqCDXl9eT16ki", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOMove = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Move", DefaultText = "Move",LocalDefaultText = @"העבר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOMove = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Move", DefaultText = "Move",LocalDefaultText = @"BS64:IteU16LXkdeoIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOMoreData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MoreData", DefaultText = "More Data",LocalDefaultText = @"נוספים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOMoreData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MoreData", DefaultText = "More Data",LocalDefaultText = @"BS64:Iteg15XXodek15nXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOVehiclesModifications = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.VehiclesModifications", DefaultText = "Vehicles Modifications",LocalDefaultText = @"התאמות ברמת שילדה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOVehiclesModifications = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.VehiclesModifications", DefaultText = "Vehicles Modifications",LocalDefaultText = @"BS64:IteU16rXkNee15XXqiDXkdeo157XqiDXqdeZ15zXk9eUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOChassisNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ChassisNumber", DefaultText = "Chassis Number",LocalDefaultText = @"סנן לפי שילדה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOChassisNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ChassisNumber", DefaultText = "Chassis Number",LocalDefaultText = @"BS64:Iteh16DXnyDXnNek15kg16nXmdec15PXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOAdjustmentType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AdjustmentType", DefaultText = "Adjustment Type",LocalDefaultText = @"סנן לפי התאמה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOAdjustmentType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AdjustmentType", DefaultText = "Adjustment Type",LocalDefaultText = @"BS64:Iteh16DXnyDXnNek15kg15TXqteQ157XlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCertificateNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CertificateNumber", DefaultText = "Certificate Number:",LocalDefaultText = @"מספר אישור:", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCertificateNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CertificateNumber", DefaultText = "Certificate Number:",LocalDefaultText = @"BS64:Itee16HXpNeoINeQ15nXqdeV16g6Ig==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsClientTHMoreData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.TH.MoreData", DefaultText = "MoreData",LocalDefaultText = @"נתונים נוספים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsClientTHMoreData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.TH.MoreData", DefaultText = "MoreData",LocalDefaultText = @"BS64:Iteg16rXldeg15nXnSDXoNeV16HXpNeZ150i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODeletingDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeletingDetails", DefaultText = "All Certificate data will be deleted , continue?",LocalDefaultText = @"נתוני האישור ימחקו , להמשיך ?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODeletingDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeletingDetails", DefaultText = "All Certificate data will be deleted , continue?",LocalDefaultText = @"BS64:Iteg16rXldeg15kg15TXkNeZ16nXldeoINeZ157Xl9en15UgLCDXnNeU157XqdeZ15ogPyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCancel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Cancel", DefaultText = "This supplier invoice has unsaved changes, do you want to save it?",LocalDefaultText = @"בחשבון ספק זה בוצעו שינויים שלא נשמרו, האם ברצונך לשמור אותם?  ", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCancel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Cancel", DefaultText = "This supplier invoice has unsaved changes, do you want to save it?",LocalDefaultText = @"BS64:IteR15fXqdeR15XXnyDXodek16cg15bXlCDXkdeV16bXoteVINep15nXoNeV15nXmdedINep15zXkCDXoNep157XqNeVLCDXlNeQ150g15HXqNem15XXoNeaINec16nXnteV16gg15DXldeq150/ICAi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOTooLongCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TooLongCode", DefaultText = "Importer code is too long",LocalDefaultText = @"מספר יבואן ארוך מדי", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOTooLongCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TooLongCode", DefaultText = "Importer code is too long",LocalDefaultText = @"BS64:Itee16HXpNeoINeZ15HXldeQ158g15DXqNeV15og157Xk9eZIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOImporterDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImporterDetails", DefaultText = "Importer Details",LocalDefaultText = @"נתונים נוספים ליבואן/יצואן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOImporterDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImporterDetails", DefaultText = "Importer Details",LocalDefaultText = @"BS64:Iteg16rXldeg15nXnSDXoNeV16HXpNeZ150g15zXmdeR15XXkNefL9eZ16bXldeQ158i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOFillAgentObjection = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.FillAgentObjection", DefaultText = "You must fill objection",LocalDefaultText = @"יש למלא ערעור לתשובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOFillAgentObjection = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.FillAgentObjection", DefaultText = "You must fill objection",LocalDefaultText = @"BS64:IteZ16kg15zXntec15Ag16LXqNei15XXqCDXnNeq16nXldeR15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSendPaymentSucceeded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendPaymentSucceeded", DefaultText = "Send Payment Succeeded",LocalDefaultText = @"הגשת תשלום בוצעה בהצלחה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSendPaymentSucceeded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendPaymentSucceeded", DefaultText = "Send Payment Succeeded",LocalDefaultText = @"BS64:IteU15LXqdeqINeq16nXnNeV150g15HXldem16LXlCDXkdeU16bXnNeX15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSendPaymentFailed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendPaymentFailed", DefaultText = "Send Payment Failed",LocalDefaultText = @"הגשת תשלום נכשלה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSendPaymentFailed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendPaymentFailed", DefaultText = "Send Payment Failed",LocalDefaultText = @"BS64:IteU15LXqdeqINeq16nXnNeV150g16DXm9ep15zXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSendTransferRequestSucceeded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendTransferRequestSucceeded", DefaultText = "Send Transfer Request Succeeded",LocalDefaultText = @"העברה לגובה בוצעה בהצלחה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSendTransferRequestSucceeded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendTransferRequestSucceeded", DefaultText = "Send Transfer Request Succeeded",LocalDefaultText = @"BS64:IteU16LXkdeo15Qg15zXkteV15HXlCDXkdeV16bXoteUINeR15TXptec15fXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSendTransferRequestFailed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendTransferRequestFailed", DefaultText = "Send Transfer Request Failed",LocalDefaultText = @"העברה לגובה נכשלה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSendTransferRequestFailed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendTransferRequestFailed", DefaultText = "Send Transfer Request Failed",LocalDefaultText = @"BS64:IteU16LXkdeo15Qg15zXkteV15HXlCDXoNeb16nXnNeUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSendReTransferRequestSucceeded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendReTransferRequestSucceeded", DefaultText = "Send ReTransfer Request Succeeded",LocalDefaultText = @"העברה חוזרת לגובה בוצעה בהצלחה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSendReTransferRequestSucceeded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendReTransferRequestSucceeded", DefaultText = "Send ReTransfer Request Succeeded",LocalDefaultText = @"BS64:IteU16LXkdeo15Qg15fXldeW16jXqiDXnNeS15XXkdeUINeR15XXptei15Qg15HXlNem15zXl9eUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSendReTransferRequestFailed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendReTransferRequestFailed", DefaultText = "Send ReTransfer Request Failed",LocalDefaultText = @"העברה חוזרת לגובה נכשלה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSendReTransferRequestFailed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendReTransferRequestFailed", DefaultText = "Send ReTransfer Request Failed",LocalDefaultText = @"BS64:IteU16LXkdeo15Qg15fXldeW16jXqiDXnNeS15XXkdeUINeg15vXqdec15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOServicereturnedanullresponse = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Servicereturnedanullresponse", DefaultText = "Service returned a null response",LocalDefaultText = @"התקבלה בסרוויס תשובה ריקה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOServicereturnedanullresponse = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Servicereturnedanullresponse", DefaultText = "Service returned a null response",LocalDefaultText = @"BS64:IteU16rXp9eR15zXlCDXkdeh16jXldeV15nXoSDXqtep15XXkdeUINeo15nXp9eUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOIsAccumulated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IsAccumulated", DefaultText = "Items are accumulated",LocalDefaultText = @"פרטי המכס בחשבון זה צבורים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOIsAccumulated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IsAccumulated", DefaultText = "Items are accumulated",LocalDefaultText = @"BS64:Itek16jXmNeZINeU157Xm9ehINeR15fXqdeR15XXnyDXlteUINem15HXldeo15nXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOAccumulated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Accumulated", DefaultText = "Accumulated",LocalDefaultText = @"צבור", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOAccumulated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Accumulated", DefaultText = "Accumulated",LocalDefaultText = @"BS64:Item15HXldeoIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationONotAccumulated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NotAccumulated", DefaultText = "Not Accumulated",LocalDefaultText = @"לא צבור", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationONotAccumulated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NotAccumulated", DefaultText = "Not Accumulated",LocalDefaultText = @"BS64:Itec15Ag16bXkdeV16gi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOOther = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Other", DefaultText = "Other",LocalDefaultText = @"אחר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOOther = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Other", DefaultText = "Other",LocalDefaultText = @"BS64:IteQ15fXqCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateProcessCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateProcessCode", DefaultText = "Update Process Code",LocalDefaultText = @"עדכון קוד תהליך", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateProcessCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateProcessCode", DefaultText = "Update Process Code",LocalDefaultText = @"BS64:Itei15PXm9eV158g16fXldeTINeq15TXnNeZ15oi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOProcessTypeRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ProcessTypeRequired", DefaultText = "Process type is empty",LocalDefaultText = @"קוד תהליך שדה חובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOProcessTypeRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ProcessTypeRequired", DefaultText = "Process type is empty",LocalDefaultText = @"BS64:Iten15XXkyDXqteU15zXmdeaINep15PXlCDXl9eV15HXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSelectItems = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SelectItems", DefaultText = "Please select items to update",LocalDefaultText = @"נא לבחור פריטים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSelectItems = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SelectItems", DefaultText = "Please select items to update",LocalDefaultText = @"BS64:Iteg15Ag15zXkdeX15XXqCDXpNeo15nXmNeZ150i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOMultiProcessCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiProcessCode", DefaultText = "This screen allows to multi update process code",LocalDefaultText = @"מסך זה מאפשר לעדכן את קוד התהליך באופן גורף לכל שורות פרטי המכס או לחלקן . אנא בחר בקוד התהליך ובפעולה הרצויה.", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOMultiProcessCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiProcessCode", DefaultText = "This screen allows to multi update process code",LocalDefaultText = @"BS64:Itee16HXmiDXlteUINee15DXpNep16gg15zXoteT15vXnyDXkNeqINen15XXkyDXlNeq15TXnNeZ15og15HXkNeV16TXnyDXkteV16jXoyDXnNeb15wg16nXldeo15XXqiDXpNeo15jXmSDXlNee15vXoSDXkNeVINec15fXnNen158gLiDXkNeg15Ag15HXl9eoINeR16fXldeTINeU16rXlNec15nXmiDXldeR16TXoteV15zXlCDXlNeo16bXldeZ15QuIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateAll = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateAll", DefaultText = "Update all items",LocalDefaultText = @"עדכן את כל הפריטים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateAll = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateAll", DefaultText = "Update all items",LocalDefaultText = @"BS64:Itei15PXm9efINeQ16og15vXnCDXlNek16jXmdeY15nXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateSelected", DefaultText = "Update select item lines from ",LocalDefaultText = @" עדכן את הפריטים הנבחרים מ", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateSelected", DefaultText = "Update select item lines from ",LocalDefaultText = @"BS64:IiDXoteT15vXnyDXkNeqINeU16TXqNeZ15jXmdedINeU16DXkdeX16jXmdedINeeIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOfuturedatecantbepast = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.futuredatecantbepast", DefaultText = "The field future date can't be past date",LocalDefaultText = @"השדה תאריך עתידי לא יכול להיות תאריך עבר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOfuturedatecantbepast = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.futuredatecantbepast", DefaultText = "The field future date can't be past date",LocalDefaultText = @"BS64:IteU16nXk9eUINeq15DXqNeZ15og16LXqteZ15PXmSDXnNeQINeZ15vXldecINec15TXmdeV16og16rXkNeo15nXmiDXoteR16gi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSendDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendDeclaration", DefaultText = "Send Declaration",LocalDefaultText = @"שלח הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSendDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendDeclaration", DefaultText = "Send Declaration",LocalDefaultText = @"BS64:Itep15zXlyDXlNem15TXqNeUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Declaration", DefaultText = "Declaration",LocalDefaultText = @"הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Declaration", DefaultText = "Declaration",LocalDefaultText = @"BS64:IteU16bXlNeo15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOManifest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Manifest", DefaultText = "Manifest",LocalDefaultText = @"מצהר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOManifest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Manifest", DefaultText = "Manifest",LocalDefaultText = @"BS64:Itee16bXlNeoIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOconsignmentShoudlnotSent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.consignmentShoudlnotSent", DefaultText = "This field is for cases when consignment shoudln’t be sent has part of declaration message.",LocalDefaultText = @"שדה זה מיועד למצבים בהם נדרש לשדה את ההצהרה ללא נתוני המשגור", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOconsignmentShoudlnotSent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.consignmentShoudlnotSent", DefaultText = "This field is for cases when consignment shoudln’t be sent has part of declaration message.",LocalDefaultText = @"BS64:Itep15PXlCDXlteUINee15nXldei15Mg15zXntem15HXmdedINeR15TXnSDXoNeT16jXqSDXnNep15PXlCDXkNeqINeU15TXpteU16jXlCDXnNec15Ag16DXqteV16DXmSDXlNee16nXkteV16gi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOConsignmentwillnotsent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Consignmentwillnotsent", DefaultText = "Consignment data will not be sent to customs",LocalDefaultText = @"נתוני משגור לא ישלחו במסר הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOConsignmentwillnotsent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Consignmentwillnotsent", DefaultText = "Consignment data will not be sent to customs",LocalDefaultText = @"BS64:Iteg16rXldeg15kg157XqdeS15XXqCDXnNeQINeZ16nXnNeX15Ug15HXnteh16gg15TXpteU16jXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOMoveTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MoveTo", DefaultText = "Move to line",LocalDefaultText = @"עבור לשורה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOMoveTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MoveTo", DefaultText = "Move to line",LocalDefaultText = @"BS64:Itei15HXldeoINec16nXldeo15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateCommision = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateCommision", DefaultText = "Commision changed , update ?",LocalDefaultText = @"נתוני עמלה השתנו , האם לעדכן ?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateCommision = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateCommision", DefaultText = "Commision changed , update ?",LocalDefaultText = @"BS64:Iteg16rXldeg15kg16LXntec15Qg15TXqdeq16DXlSAsINeU15DXnSDXnNei15PXm9efID8i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateCertificates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateCertificates", DefaultText = "Update certificates",LocalDefaultText = @"עדכן אישורים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateCertificates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateCertificates", DefaultText = "Update certificates",LocalDefaultText = @"BS64:Itei15PXm9efINeQ15nXqdeV16jXmdedIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOMultiCertificateUpdate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiCertificateUpdate", DefaultText = "Multi Certificate Update",LocalDefaultText = @"עדכון אישורים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOMultiCertificateUpdate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiCertificateUpdate", DefaultText = "Multi Certificate Update",LocalDefaultText = @"BS64:Itei15PXm9eV158g15DXmdep15XXqNeZ150i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSearchBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SearchBy", DefaultText = "Search By",LocalDefaultText = @"חפש לפי", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSearchBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SearchBy", DefaultText = "Search By",LocalDefaultText = @"BS64:IteX16TXqSDXnNek15ki", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateCertificateSubTitle = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateCertificateSubTitle", DefaultText = "Update Certificate",LocalDefaultText = @"עדכן אישור", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateCertificateSubTitle = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateCertificateSubTitle", DefaultText = "Update Certificate",LocalDefaultText = @"BS64:Itei15PXm9efINeQ15nXqdeV16gi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOMultiCertificateUpdateDescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiCertificateUpdateDescription", DefaultText = "This screen allows to multi update certificates",LocalDefaultText = @"מסך זה מאפשר לעדכן את נתוני האישור לפי מספר הבקשה וקוד האישור", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOMultiCertificateUpdateDescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiCertificateUpdateDescription", DefaultText = "This screen allows to multi update certificates",LocalDefaultText = @"BS64:Itee16HXmiDXlteUINee15DXpNep16gg15zXoteT15vXnyDXkNeqINeg16rXldeg15kg15TXkNeZ16nXldeoINec16TXmSDXnteh16TXqCDXlNeR16fXqdeUINeV16fXldeTINeU15DXmdep15XXqCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Update", DefaultText = "Update",LocalDefaultText = @"עדכן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Update", DefaultText = "Update",LocalDefaultText = @"BS64:Itei15PXm9efIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCancelButton = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CancelButton", DefaultText = "Cancel",LocalDefaultText = @"ביטול", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCancelButton = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CancelButton", DefaultText = "Cancel",LocalDefaultText = @"BS64:IteR15nXmNeV15wi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationONomatchinglineswerefound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Nomatchinglineswerefound", DefaultText = "No matching lines were found",LocalDefaultText = @"לא נמצאו שורות שתואמות לנתוני הבקשה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationONomatchinglineswerefound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Nomatchinglineswerefound", DefaultText = "No matching lines were found",LocalDefaultText = @"BS64:Itec15Ag16DXntem15DXlSDXqdeV16jXldeqINep16rXldeQ157XldeqINec16DXqteV16DXmSDXlNeR16fXqdeUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOitemswereupdated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.itemswereupdated", DefaultText = "#Number items were updated",LocalDefaultText = @"עודכנו #Number שורות פרטי מכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOitemswereupdated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.itemswereupdated", DefaultText = "#Number items were updated",LocalDefaultText = @"BS64:Itei15XXk9eb16DXlSAjTnVtYmVyINep15XXqNeV16og16TXqNeY15kg157Xm9ehIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOAllFieldsAreRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AllFieldsAreRequired", DefaultText = "All fields are required!",LocalDefaultText = @"כל השדות דרושים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOAllFieldsAreRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AllFieldsAreRequired", DefaultText = "All fields are required!",LocalDefaultText = @"BS64:Iteb15wg15TXqdeT15XXqiDXk9eo15XXqdeZ150i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODecCargoSplitCargoIdentifiers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DecCargoSplitCargoIdentifiers", DefaultText = "Cargo Split Identifier",LocalDefaultText = @"מזהה מטען מפוצל", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODecCargoSplitCargoIdentifiers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DecCargoSplitCargoIdentifiers", DefaultText = "Cargo Split Identifier",LocalDefaultText = @"BS64:Itee15bXlNeUINee15jXotefINee16TXldem15wi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCommissionChangedFromTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CommissionChangedFromTo", DefaultText = "Commission changed, old value: #oldValue , new value: #newValue, change?",LocalDefaultText = @"#typeCode עודכן מערך קודם #oldValue לערך עדכני #newValue", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCommissionChangedFromTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CommissionChangedFromTo", DefaultText = "Commission changed, old value: #oldValue , new value: #newValue, change?",LocalDefaultText = @"BS64:IiN0eXBlQ29kZSDXoteV15PXm9efINee16LXqNeaINen15XXk9edICNvbGRWYWx1ZSDXnNei16jXmiDXoteT15vXoNeZICNuZXdWYWx1ZSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCargoSealsQueryFCargoIdentifierKey3Mandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoSealsQuery.F.CargoIdentifierKey3Mandatory", DefaultText = "Cargo IdentifierKey 3 field is mandatory",LocalDefaultText = @"מזהה מטען שלישי הוא שדה חובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCargoSealsQueryFCargoIdentifierKey3Mandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoSealsQuery.F.CargoIdentifierKey3Mandatory", DefaultText = "Cargo IdentifierKey 3 field is mandatory",LocalDefaultText = @"BS64:Itee15bXlNeUINee15jXotefINep15zXmdep15kg15TXldeQINep15PXlCDXl9eV15HXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCargoSealsQueryFContainerNumberMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoSealsQuery.F.ContainerNumberMandatory", DefaultText = "Container Number field is mandatory",LocalDefaultText = @"מספר מכולה הוא שדה חובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCargoSealsQueryFContainerNumberMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoSealsQuery.F.ContainerNumberMandatory", DefaultText = "Container Number field is mandatory",LocalDefaultText = @"BS64:Itee16HXpNeoINee15vXldec15Qg15TXldeQINep15PXlCDXl9eV15HXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCargoSealsQueryFUpdateDateMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoSealsQuery.F.UpdateDateMandatory", DefaultText = "Update Date field is mandatory",LocalDefaultText = @"תאריך עדכון הוא שדה חובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCargoSealsQueryFUpdateDateMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoSealsQuery.F.UpdateDateMandatory", DefaultText = "Update Date field is mandatory",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og16LXk9eb15XXnyDXlNeV15Ag16nXk9eUINeX15XXkdeUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCargoSealsQueryFCargoSealItemsItemsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoSealsQuery.F.CargoSealItemsItemsMandatory", DefaultText = "Seals is mandatory",LocalDefaultText = @"חובה להזין פרטי סגר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCargoSealsQueryFCargoSealItemsItemsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoSealsQuery.F.CargoSealItemsItemsMandatory", DefaultText = "Seals is mandatory",LocalDefaultText = @"BS64:IteX15XXkdeUINec15TXlteZ158g16TXqNeY15kg16HXkteoIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCargoSealsQueryFSealNumberMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoSealsQuery.F.SealNumberMandatory", DefaultText = "Seal Number field is mandatory",LocalDefaultText = @"מספר סגר הוא שדה חובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCargoSealsQueryFSealNumberMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoSealsQuery.F.SealNumberMandatory", DefaultText = "Seal Number field is mandatory",LocalDefaultText = @"BS64:Itee16HXpNeoINeh15LXqCDXlNeV15Ag16nXk9eUINeX15XXkdeUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCargoSealsQueryFSealTypeCodeMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoSealsQuery.F.SealTypeCodeMandatory", DefaultText = "Seal Type field is mandatory",LocalDefaultText = @"סוג הסגר הוא שדה חובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCargoSealsQueryFSealTypeCodeMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoSealsQuery.F.SealTypeCodeMandatory", DefaultText = "Seal Type field is mandatory",LocalDefaultText = @"BS64:Iteh15XXkiDXlNeh15LXqCDXlNeV15Ag16nXk9eUINeX15XXkdeUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCargoSealsQueryFSealCompletenessStateCodeMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoSealsQuery.F.SealCompletenessStateCodeMandatory", DefaultText = "Seal CompletenessState is mandatory",LocalDefaultText = @"מצב שלמות הסגר הוא שדה חובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCargoSealsQueryFSealCompletenessStateCodeMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoSealsQuery.F.SealCompletenessStateCodeMandatory", DefaultText = "Seal CompletenessState is mandatory",LocalDefaultText = @"BS64:Itee16bXkSDXqdec157XldeqINeU16HXkteoINeU15XXkCDXqdeT15Qg15fXldeR15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCargoSealsQueryFUpdateReasonCodeMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoSealsQuery.F.UpdateReasonCodeMandatory", DefaultText = "Update Reason field is mandatory",LocalDefaultText = @"סיבת עדכון הסגר הוא שדה חובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCargoSealsQueryFUpdateReasonCodeMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoSealsQuery.F.UpdateReasonCodeMandatory", DefaultText = "Update Reason field is mandatory",LocalDefaultText = @"BS64:Iteh15nXkdeqINei15PXm9eV158g15TXodeS16gg15TXldeQINep15PXlCDXl9eV15HXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCargoSealsQueryFUpdateTypeCodeMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoSealsQuery.F.UpdateTypeCodeMandatory", DefaultText = "Update Type field is mandatory",LocalDefaultText = @"סוג עדכון של הסגר הוא שדה חובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCargoSealsQueryFUpdateTypeCodeMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoSealsQuery.F.UpdateTypeCodeMandatory", DefaultText = "Update Type field is mandatory",LocalDefaultText = @"BS64:Iteh15XXkiDXoteT15vXldefINep15wg15TXodeS16gg15TXldeQINep15PXlCDXl9eV15HXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateCountryOfOrigin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateCountryOfOrigin", DefaultText = "Update Country of Origin",LocalDefaultText = @"עדכון ארץ מקור", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateCountryOfOrigin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateCountryOfOrigin", DefaultText = "Update Country of Origin",LocalDefaultText = @"BS64:Itei15PXm9eV158g15DXqNelINee16fXldeoIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOMultiCountryOfOrigin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiCountryOfOrigin", DefaultText = "This screen allows to multi update Country of Origin",LocalDefaultText = @"מסך זה מאפשר לעדכן את ארץ המקור באופן גורף לכל שורות פרטי המכס או לחלקן . אנא בחר בקוד התהליך ובפעולה הרצויה.", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOMultiCountryOfOrigin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiCountryOfOrigin", DefaultText = "This screen allows to multi update Country of Origin",LocalDefaultText = @"BS64:Itee16HXmiDXlteUINee15DXpNep16gg15zXoteT15vXnyDXkNeqINeQ16jXpSDXlNee16fXldeoINeR15DXldek158g15LXldeo16Mg15zXm9ecINep15XXqNeV16og16TXqNeY15kg15TXnteb16Eg15DXlSDXnNeX15zXp9efIC4g15DXoNeQINeR15fXqCDXkden15XXkyDXlNeq15TXnNeZ15og15XXkdek16LXldec15Qg15TXqNem15XXmdeULiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOItemsWithNoCountrOfOrigin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ItemsWithNoCountrOfOrigin", DefaultText = "Update Items with no Country of Origin",LocalDefaultText = @"עדכן פריטים ללא ארץ מקור", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOItemsWithNoCountrOfOrigin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ItemsWithNoCountrOfOrigin", DefaultText = "Update Items with no Country of Origin",LocalDefaultText = @"BS64:Itei15PXm9efINek16jXmdeY15nXnSDXnNec15Ag15DXqNelINee16fXldeoIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentsMetaDataDifference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocuments.MetaDataDifference", DefaultText = "There is a difference between the meta data, do you wish to continue?",LocalDefaultText = @"קיים הבדלים בין נתוני המסמכים , האם לקשר בכל מקרה ?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentsMetaDataDifference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocuments.MetaDataDifference", DefaultText = "There is a difference between the meta data, do you wish to continue?",LocalDefaultText = @"BS64:Iten15nXmdedINeU15HXk9ec15nXnSDXkdeZ158g16DXqteV16DXmSDXlNee16HXnteb15nXnSAsINeU15DXnSDXnNen16nXqCDXkdeb15wg157Xp9eo15QgPyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentsDisconnectConfirm = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocuments.DisconnectConfirm", DefaultText = "a document is connected to this ticket , delete anyway ?",LocalDefaultText = @"קיים מסמך מקושר , למחוק ?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentsDisconnectConfirm = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocuments.DisconnectConfirm", DefaultText = "a document is connected to this ticket , delete anyway ?",LocalDefaultText = @"BS64:Iten15nXmdedINee16HXnteaINee16fXldep16ggLCDXnNee15fXldenID8i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentsNotReady = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocuments.NotReady", DefaultText = "Not Ready",LocalDefaultText = @"לא מוכן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentsNotReady = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocuments.NotReady", DefaultText = "Not Ready",LocalDefaultText = @"BS64:Itec15Ag157Xldeb158i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentsReady = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocuments.Ready", DefaultText = "Ready",LocalDefaultText = @"מוכן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentsReady = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocuments.Ready", DefaultText = "Ready",LocalDefaultText = @"BS64:Itee15XXm9efIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentsDocumentStatusNameLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocuments.DocumentStatusNameLabel", DefaultText = "Status",LocalDefaultText = @"סטטוס מסמך", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentsDocumentStatusNameLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocuments.DocumentStatusNameLabel", DefaultText = "Status",LocalDefaultText = @"BS64:Iteh15jXmNeV16Eg157Xodee15oi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentsCustomsDocIdLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocuments.CustomsDocIdLabel", DefaultText = "Customs Doc Id",LocalDefaultText = @"סימוכין", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentsCustomsDocIdLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocuments.CustomsDocIdLabel", DefaultText = "Customs Doc Id",LocalDefaultText = @"BS64:Iteh15nXnteV15vXmdefIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentsExternalId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocuments.ExternalId", DefaultText = "ExternalId",LocalDefaultText = @"מספרנו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentsExternalId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocuments.ExternalId", DefaultText = "ExternalId",LocalDefaultText = @"BS64:Itee16HXpNeo16DXlSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentsDocMetadataWarning = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocuments.DocMetadataWarning", DefaultText = "Irelavent Meta Data Values will be delete , continue ?",LocalDefaultText = @"נתוני מטה דאטה שאינם רלוונטים לסוג המסמך החדש ימחקו , להמשיך ?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentsDocMetadataWarning = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocuments.DocMetadataWarning", DefaultText = "Irelavent Meta Data Values will be delete , continue ?",LocalDefaultText = @"BS64:Iteg16rXldeg15kg157XmNeUINeT15DXmNeUINep15DXmdeg150g16jXnNeV15XXoNeY15nXnSDXnNeh15XXkiDXlNee16HXnteaINeU15fXk9epINeZ157Xl9en15UgLCDXnNeU157XqdeZ15ogPyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentExternalAttachmentIdLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.ExternalAttachmentIdLabel", DefaultText = "External Attachment",LocalDefaultText = @"מס פנימי", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentExternalAttachmentIdLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.ExternalAttachmentIdLabel", DefaultText = "External Attachment",LocalDefaultText = @"BS64:Itee16Eg16TXoNeZ157XmSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentAddDocumentsTicket = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.AddDocumentsTicket", DefaultText = "Add Ticket",LocalDefaultText = @"הוסף מסמך חדש", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentAddDocumentsTicket = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.AddDocumentsTicket", DefaultText = "Add Ticket",LocalDefaultText = @"BS64:IteU15XXodejINee16HXnteaINeX15PXqSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentAllTicketsLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.AllTicketsLabel", DefaultText = "All",LocalDefaultText = @"הכל", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentAllTicketsLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.AllTicketsLabel", DefaultText = "All",LocalDefaultText = @"BS64:IteU15vXnCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentNotSentToCustoms = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.NotSentToCustoms", DefaultText = "Not Uploaded",LocalDefaultText = @"לא עלו למכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentNotSentToCustoms = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.NotSentToCustoms", DefaultText = "Not Uploaded",LocalDefaultText = @"BS64:Itec15Ag16LXnNeVINec157Xm9ehIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentUploadedToCustoms = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.UploadedToCustoms", DefaultText = "Uploaded",LocalDefaultText = @"עלו למכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentUploadedToCustoms = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.UploadedToCustoms", DefaultText = "Uploaded",LocalDefaultText = @"BS64:Itei15zXlSDXnNee15vXoSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentRequiredDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.RequiredDocument", DefaultText = "Required Document",LocalDefaultText = @"מסמך נדרש", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentRequiredDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.RequiredDocument", DefaultText = "Required Document",LocalDefaultText = @"BS64:Itee16HXnteaINeg15PXqNepIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentMetaDataMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.MetaDataMissing", DefaultText = "Meta Data Missing",LocalDefaultText = @"מטה דאטה חסר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentMetaDataMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.MetaDataMissing", DefaultText = "Meta Data Missing",LocalDefaultText = @"BS64:Itee15jXlCDXk9eQ15jXlCDXl9eh16gi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentSearchDocTypeWaterMark = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.SearchDocTypeWaterMark", DefaultText = "Search By Doc Type...",LocalDefaultText = @"בחר סוג מסמך", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentSearchDocTypeWaterMark = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.SearchDocTypeWaterMark", DefaultText = "Search By Doc Type...",LocalDefaultText = @"BS64:IteR15fXqCDXodeV15Ig157Xodee15oi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentSupplierInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.SupplierInvoice", DefaultText = "Supplier Invoice",LocalDefaultText = @"חשבון ספק", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentSupplierInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.SupplierInvoice", DefaultText = "Supplier Invoice",LocalDefaultText = @"BS64:IteX16nXkdeV158g16HXpNenIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentSupplierInvoiceItem = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.SupplierInvoiceItem", DefaultText = "Supplier Invoice Item",LocalDefaultText = @"פרט מכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentSupplierInvoiceItem = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.SupplierInvoiceItem", DefaultText = "Supplier Invoice Item",LocalDefaultText = @"BS64:Itek16jXmCDXnteb16Ei", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentConnectTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.ConnectTo", DefaultText = "Connect To",LocalDefaultText = @"קשור ל", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentConnectTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.ConnectTo", DefaultText = "Connect To",LocalDefaultText = @"BS64:Iten16nXldeoINecIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentsCustomsDocNotSentYet = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocuments.CustomsDocNotSentYet", DefaultText = "Not send to customs yet",LocalDefaultText = @"טרם בוצעה שליחה למכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentsCustomsDocNotSentYet = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocuments.CustomsDocNotSentYet", DefaultText = "Not send to customs yet",LocalDefaultText = @"BS64:IteY16jXnSDXkdeV16bXoteUINep15zXmdeX15Qg15zXnteb16Ei", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentsCustomsDocSendInProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocuments.CustomsDocSendInProgress", DefaultText = "Send in progress",LocalDefaultText = @"בתהליך שליחה למכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentsCustomsDocSendInProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocuments.CustomsDocSendInProgress", DefaultText = "Send in progress",LocalDefaultText = @"BS64:IteR16rXlNec15nXmiDXqdec15nXl9eUINec157Xm9ehIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentsCustomsDocInVerificationProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocuments.CustomsDocInVerificationProgress", DefaultText = "In Verification Progress",LocalDefaultText = @"בתהליך אימות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentsCustomsDocInVerificationProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocuments.CustomsDocInVerificationProgress", DefaultText = "In Verification Progress",LocalDefaultText = @"BS64:IteR16rXlNec15nXmiDXkNeZ157XldeqIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentsNewVersionWarning = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocuments.NewVersionWarning", DefaultText = "Delete Customs reference and create a new version ?",LocalDefaultText = @" (מחיקת סימוכין המכס ויצירת גרסה חדשה ?)", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentsNewVersionWarning = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocuments.NewVersionWarning", DefaultText = "Delete Customs reference and create a new version ?",LocalDefaultText = @"BS64:IiAo157Xl9eZ16fXqiDXodeZ157Xldeb15nXnyDXlNee15vXoSDXldeZ16bXmdeo16og15LXqNeh15Qg15fXk9ep15QgPyki", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationTHMore = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.More", DefaultText = "More",LocalDefaultText = @"נוספים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationTHMore = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.More", DefaultText = "More",LocalDefaultText = @"BS64:Iteg15XXodek15nXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsImporterDeclarationQueryODeclarationConectDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ImporterDeclarationQuery.O.DeclarationConect.Declaration", DefaultText = "Declaration",LocalDefaultText = @"הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsImporterDeclarationQueryODeclarationConectDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ImporterDeclarationQuery.O.DeclarationConect.Declaration", DefaultText = "Declaration",LocalDefaultText = @"BS64:IteU16bXlNeo15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationTHDeclarationCancellation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.DeclarationCancellation", DefaultText = "Declaration Cancellation",LocalDefaultText = @"ביטול הצהרה במכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationTHDeclarationCancellation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.DeclarationCancellation", DefaultText = "Declaration Cancellation",LocalDefaultText = @"BS64:IteR15nXmNeV15wg15TXpteU16jXlCDXkdee15vXoSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationFExporterCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.ExporterCode", DefaultText = "Exporter Code",LocalDefaultText = @"מספר יצואן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationFExporterCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.ExporterCode", DefaultText = "Exporter Code",LocalDefaultText = @"BS64:Itee16HXpNeoINeZ16bXldeQ158i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationFTransferExporterCode2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.TransferExporterCode2", DefaultText = "Transfer Exporter Code",LocalDefaultText = @"סוג יצואן מעביר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationFTransferExporterCode2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.TransferExporterCode2", DefaultText = "Transfer Exporter Code",LocalDefaultText = @"BS64:Iteh15XXkiDXmdem15XXkNefINee16LXkdeZ16gi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationFExporterTypeCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.ExporterTypeCode", DefaultText = "Exporter Type Code",LocalDefaultText = @"קוד סוג יצואן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationFExporterTypeCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.ExporterTypeCode", DefaultText = "Exporter Type Code",LocalDefaultText = @"BS64:Iten15XXkyDXodeV15Ig15nXpteV15DXnyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationFExporterPassportNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.ExporterPassportNumber", DefaultText = "Exporter Passport Number",LocalDefaultText = @"מס דרכון יצואן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationFExporterPassportNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.ExporterPassportNumber", DefaultText = "Exporter Passport Number",LocalDefaultText = @"BS64:Itee16Eg15PXqNeb15XXnyDXmdem15XXkNefIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationFExporterCountryCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.ExporterCountryCode", DefaultText = "ImporterCountryCode",LocalDefaultText = @"מדינת דרכון יצואן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationFExporterCountryCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.ExporterCountryCode", DefaultText = "ImporterCountryCode",LocalDefaultText = @"BS64:Itee15PXmdeg16og15PXqNeb15XXnyDXmdem15XXkNefIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationFExporterName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.ExporterName", DefaultText = "Exporter Name",LocalDefaultText = @"שם יצואן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationFExporterName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.ExporterName", DefaultText = "Exporter Name",LocalDefaultText = @"BS64:Itep150g15nXpteV15DXnyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationFExporterAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.ExporterAddress", DefaultText = "Exporter Address",LocalDefaultText = @"כתובת יצואן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationFExporterAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.ExporterAddress", DefaultText = "Exporter Address",LocalDefaultText = @"BS64:Iteb16rXldeR16og15nXpteV15DXnyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationFTransferExporterPassportNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.TransferExporterPassportNumber", DefaultText = "Transfer Exporter Passport Number",LocalDefaultText = @"מס תעודה יצואן מעביר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationFTransferExporterPassportNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.TransferExporterPassportNumber", DefaultText = "Transfer Exporter Passport Number",LocalDefaultText = @"BS64:Itee16Eg16rXoteV15PXlCDXmdem15XXkNefINee16LXkdeZ16gi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationFTransferExporterCountryCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.TransferExporterCountryCode", DefaultText = "Transfer Exporter Country Code",LocalDefaultText = @"מדינת דרכון יצואן מעביר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationFTransferExporterCountryCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.TransferExporterCountryCode", DefaultText = "Transfer Exporter Country Code",LocalDefaultText = @"BS64:Itee15PXmdeg16og15PXqNeb15XXnyDXmdem15XXkNefINee16LXkdeZ16gi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationFTransferExporterName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.TransferExporterName", DefaultText = "Transfer Exporter Name",LocalDefaultText = @"שם יצואן מעביר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationFTransferExporterName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.TransferExporterName", DefaultText = "Transfer Exporter Name",LocalDefaultText = @"BS64:Itep150g15nXpteV15DXnyDXntei15HXmdeoIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationFTransferExporterAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.TransferExporterAddress", DefaultText = "Transfer Exporter Address",LocalDefaultText = @"כתובת יצואן מעביר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationFTransferExporterAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.TransferExporterAddress", DefaultText = "Transfer Exporter Address",LocalDefaultText = @"BS64:Iteb16rXldeR16og15nXpteV15DXnyDXntei15HXmdeoIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOExporterDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ExporterDetails", DefaultText = "Exporter Details",LocalDefaultText = @"נתונים נוספים ליצואן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOExporterDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ExporterDetails", DefaultText = "Exporter Details",LocalDefaultText = @"BS64:Iteg16rXldeg15nXnSDXoNeV16HXpNeZ150g15zXmdem15XXkNefIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOIsExporterConfirmation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IsExporterConfirmation", DefaultText = "שדה זה מיועד לאפשר סימון במידה והיצואן מאשר להעביר את נתוני ההצהרה למדינת היעד",LocalDefaultText = @"שדה זה מיועד לאפשר סימון במידה והיצואן מאשר להעביר את נתוני ההצהרה למדינת היעד", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOIsExporterConfirmation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IsExporterConfirmation", DefaultText = "BS64:Itep15PXlCDXlteUINee15nXldei15Mg15zXkNek16nXqCDXodeZ157XldefINeR157XmdeT15Qg15XXlNeZ16bXldeQ158g157XkNep16gg15zXlNei15HXmdeoINeQ16og16DXqteV16DXmSDXlNeU16bXlNeo15Qg15zXnteT15nXoNeqINeU15nXoteTIg==",LocalDefaultText = @"BS64:Itep15PXlCDXlteUINee15nXldei15Mg15zXkNek16nXqCDXodeZ157XldefINeR157XmdeT15Qg15XXlNeZ16bXldeQ158g157XkNep16gg15zXlNei15HXmdeoINeQ16og16DXqteV16DXmSDXlNeU16bXlNeo15Qg15zXnteT15nXoNeqINeU15nXoteTIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODeleteExportRecipient = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeleteExportRecipient", DefaultText = "Delete Recipient?",LocalDefaultText = @"למחוק פרטי מקבל?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODeleteExportRecipient = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeleteExportRecipient", DefaultText = "Delete Recipient?",LocalDefaultText = @"BS64:Itec157Xl9eV16cg16TXqNeY15kg157Xp9eR15w/Ig==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationTHExporterInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.ExporterInvoices", DefaultText = "Exporter Invoices",LocalDefaultText = @"חשבונות יצואן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationTHExporterInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.ExporterInvoices", DefaultText = "Exporter Invoices",LocalDefaultText = @"BS64:IteX16nXkdeV16DXldeqINeZ16bXldeQ158i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOExporterInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ExporterInvoice", DefaultText = "Exporter Invoice",LocalDefaultText = @"חשבון יצואן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOExporterInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ExporterInvoice", DefaultText = "Exporter Invoice",LocalDefaultText = @"BS64:IteX16nXkdeV158g15nXpteV15DXnyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOModificationsExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ModificationsExport", DefaultText = "Modifications",LocalDefaultText = @"הפחתות / התאמות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOModificationsExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ModificationsExport", DefaultText = "Modifications",LocalDefaultText = @"BS64:IteU16TXl9eq15XXqiAvINeU16rXkNee15XXqiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOUCR = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UCR", DefaultText = "UCR",LocalDefaultText = @"זיהוי מטען", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOUCR = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UCR", DefaultText = "UCR",LocalDefaultText = @"BS64:IteW15nXlNeV15kg157XmNei158i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOPaymentDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.PaymentDetails", DefaultText = "Payment Details",LocalDefaultText = @"פרטי תשלום", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOPaymentDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.PaymentDetails", DefaultText = "Payment Details",LocalDefaultText = @"BS64:Itek16jXmNeZINeq16nXnNeV150i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOPrices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Prices", DefaultText = "Prices",LocalDefaultText = @"מחירים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOPrices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Prices", DefaultText = "Prices",LocalDefaultText = @"BS64:Itee15fXmdeo15nXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOAbachStatement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AbachStatement", DefaultText = "Abach Declaration",LocalDefaultText = @"הצהרות אב'כ", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOAbachStatement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AbachStatement", DefaultText = "Abach Declaration",LocalDefaultText = @"BS64:IteU16bXlNeo15XXqiDXkNeRJ9ebIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOConnectedDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ConnectedDeclarations", DefaultText = "Connected Declarations",LocalDefaultText = @"הצהרות מקושרות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOConnectedDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ConnectedDeclarations", DefaultText = "Connected Declarations",LocalDefaultText = @"BS64:IteU16bXlNeo15XXqiDXnten15XXqdeo15XXqiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOAllCourierDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AllCourierDeclarations", DefaultText = "All Courier Declarations ",LocalDefaultText = @"כל ההצהרות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOAllCourierDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AllCourierDeclarations", DefaultText = "All Courier Declarations ",LocalDefaultText = @"BS64:Iteb15wg15TXlNem15TXqNeV16oi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOErrors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Errors", DefaultText = "Errors",LocalDefaultText = @"שגיאות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOErrors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Errors", DefaultText = "Errors",LocalDefaultText = @"BS64:Itep15LXmdeQ15XXqiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOReferences = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.References", DefaultText = "References",LocalDefaultText = @"אסמכתאות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOReferences = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.References", DefaultText = "References",LocalDefaultText = @"BS64:IteQ16HXnteb16rXkNeV16oi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOReferenceType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ReferenceType", DefaultText = "Reference Type",LocalDefaultText = @"סוג אסמכתא", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOReferenceType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ReferenceType", DefaultText = "Reference Type",LocalDefaultText = @"BS64:Iteh15XXkiDXkNeh157Xm9eq15Ai", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationORefernceStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RefernceStatus", DefaultText = "Refernce Status",LocalDefaultText = @"סטטוס אסמכתא", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationORefernceStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RefernceStatus", DefaultText = "Refernce Status",LocalDefaultText = @"BS64:Iteh15jXmNeV16Eg15DXodee15vXqteQIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationORefernceID = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RefernceID", DefaultText = "RefernceID",LocalDefaultText = @"מזהה אסמכתא", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationORefernceID = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RefernceID", DefaultText = "RefernceID",LocalDefaultText = @"BS64:Itee15bXlNeUINeQ16HXnteb16rXkCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationORemarks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Remarks", DefaultText = "Remarks",LocalDefaultText = @"הערות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationORemarks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Remarks", DefaultText = "Remarks",LocalDefaultText = @"BS64:IteU16LXqNeV16oi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationORefernceInputType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RefernceInputType", DefaultText = "Refernce Input Type",LocalDefaultText = @"תהליך הזנת אסמכתא", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationORefernceInputType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RefernceInputType", DefaultText = "Refernce Input Type",LocalDefaultText = @"BS64:Iteq15TXnNeZ15og15TXlteg16og15DXodee15vXqteQIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationsOUnSavedRemarks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declarations.O.UnSavedRemarks", DefaultText = "Remarks wont be saved",LocalDefaultText = @"ביציאה מהמסך לא ישמרו הערות לחשבונית שהוזנו במסך", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationsOUnSavedRemarks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declarations.O.UnSavedRemarks", DefaultText = "Remarks wont be saved",LocalDefaultText = @"BS64:IteR15nXpteZ15DXlCDXnteU157XodeaINec15Ag15nXqdee16jXlSDXlNei16jXldeqINec15fXqdeR15XXoNeZ16og16nXlNeV15bXoNeVINeR157XodeaIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOAmendmentFieldStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AmendmentFieldStatus", DefaultText = "Status",LocalDefaultText = @"סטטוס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOAmendmentFieldStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AmendmentFieldStatus", DefaultText = "Status",LocalDefaultText = @"BS64:Iteh15jXmNeV16Ei", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOAmendmentRequestInitiatorType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AmendmentRequestInitiatorType", DefaultText = "Amendment Request Initiator Type",LocalDefaultText = @"יוזם התיקון", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOAmendmentRequestInitiatorType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AmendmentRequestInitiatorType", DefaultText = "Amendment Request Initiator Type",LocalDefaultText = @"BS64:IteZ15XXltedINeU16rXmden15XXnyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOFieldAmendmentRejectReasonRemarks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.FieldAmendmentRejectReasonRemarks", DefaultText = "Amendment Reject Reason Remarks",LocalDefaultText = @"סיבת דחיה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOFieldAmendmentRejectReasonRemarks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.FieldAmendmentRejectReasonRemarks", DefaultText = "Amendment Reject Reason Remarks",LocalDefaultText = @"BS64:Iteh15nXkdeqINeT15fXmdeUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Export", DefaultText = "Export Declaration",LocalDefaultText = @"הצהרת יצוא", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Export", DefaultText = "Export Declaration",LocalDefaultText = @"BS64:IteU16bXlNeo16og15nXpteV15Ai", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCargoTypeCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CargoTypeCode", DefaultText = "Cargo Type Code",LocalDefaultText = @"סוג מזהה מטען", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCargoTypeCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CargoTypeCode", DefaultText = "Cargo Type Code",LocalDefaultText = @"BS64:Iteh15XXkiDXnteW15TXlCDXnteY16LXnyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationFCalculateDateTime = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.CalculateDateTime", DefaultText = "Calculate DateTime",LocalDefaultText = @"תאריך חישוב", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationFCalculateDateTime = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.CalculateDateTime", DefaultText = "Calculate DateTime",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og15fXmdep15XXkSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOPaidDeclarationExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.PaidDeclarationExport", DefaultText = "Declaration was already paid , screen is display only",LocalDefaultText = @"הצהרה כבר הוגשה , המסך לתצוגה בלבד", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOPaidDeclarationExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.PaidDeclarationExport", DefaultText = "Declaration was already paid , screen is display only",LocalDefaultText = @"BS64:IteU16bXlNeo15Qg15vXkdeoINeU15XXktep15QgLCDXlNee16HXmiDXnNeq16bXldeS15Qg15HXnNeR15Mi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOChangedDeclarationExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ChangedDeclarationExport", DefaultText = "Declaration data was changed , please send again before trying to pay",LocalDefaultText = @"בוצעו שינויים בהצהרה , יש לשדר שוב לפני הגשה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOChangedDeclarationExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ChangedDeclarationExport", DefaultText = "Declaration data was changed , please send again before trying to pay",LocalDefaultText = @"BS64:IteR15XXptei15Ug16nXmdeg15XXmdeZ150g15HXlNem15TXqNeUICwg15nXqSDXnNep15PXqCDXqdeV15Eg15zXpNeg15kg15TXktep15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCorrectedByUserName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CorrectedByUserName", DefaultText = "Corrected By User Name",LocalDefaultText = @"נפתח עי", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCorrectedByUserName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CorrectedByUserName", DefaultText = "Corrected By User Name",LocalDefaultText = @"BS64:Iteg16TXqteXINei15ki", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOExistsClosingAmendments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ExistsClosingAmendments", DefaultText = "Exists declaration closing amendment in status ",LocalDefaultText = @"קיים תיקון הצהרה מסוג סגירה בסטטוס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOExistsClosingAmendments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ExistsClosingAmendments", DefaultText = "Exists declaration closing amendment in status ",LocalDefaultText = @"BS64:Iten15nXmdedINeq15nXp9eV158g15TXpteU16jXlCDXnteh15XXkiDXodeS15nXqNeUINeR16HXmNeY15XXoSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentSupplierInvoiceItems = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.SupplierInvoiceItems", DefaultText = "Supplier Invoice Items",LocalDefaultText = @"פרטי מכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentSupplierInvoiceItems = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.SupplierInvoiceItems", DefaultText = "Supplier Invoice Items",LocalDefaultText = @"BS64:Itek16jXmNeZINee15vXoSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentBulkUploadDocuments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.BulkUploadDocuments", DefaultText = "Bulk Upload Documents",LocalDefaultText = @"העלאת מסמכים גורפת", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentBulkUploadDocuments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.BulkUploadDocuments", DefaultText = "Bulk Upload Documents",LocalDefaultText = @"BS64:IteU16LXnNeQ16og157Xodee15vXmdedINeS15XXqNek16oi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentMarkOriginalDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.MarkOriginalDocument", DefaultText = "Do mark an original document",LocalDefaultText = @"האם לסמן מסמך מקורי", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentMarkOriginalDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.MarkOriginalDocument", DefaultText = "Do mark an original document",LocalDefaultText = @"BS64:IteU15DXnSDXnNeh157XnyDXnteh157XmiDXnten15XXqNeZIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsCustomsDocumentMissingMetadataMsg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.MissingMetadataMsg", DefaultText = "There are documents with a lack of Metadata data and therefore such documents will not go up to customs",LocalDefaultText = @"ש מסמכים עם חוסר בנתוני Metadata ולכן מסמכים אילו לא יעלו למכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentMissingMetadataMsg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.MissingMetadataMsg", DefaultText = "There are documents with a lack of Metadata data and therefore such documents will not go up to customs",LocalDefaultText = @"BS64:ItepINee16HXnteb15nXnSDXotedINeX15XXodeoINeR16DXqteV16DXmSBNZXRhZGF0YSDXldec15vXnyDXnteh157Xm9eZ150g15DXmdec15Ug15zXkCDXmdei15zXlSDXnNee15vXoSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOUnSavedDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UnSavedDeclarations", DefaultText = "UnSavedDeclarations",LocalDefaultText = @"בהצהרה זו בוצעו שינויים שלא נשמרו האם ברצונך לשמור?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOUnSavedDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UnSavedDeclarations", DefaultText = "UnSavedDeclarations",LocalDefaultText = @"BS64:IteR15TXpteU16jXlCDXlteVINeR15XXptei15Ug16nXmdeg15XXmdeZ150g16nXnNeQINeg16nXnteo15Ug15TXkNedINeR16jXpteV16DXmiDXnNep157XldeoPyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOConnectedDelcaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ConnectedDelcaration", DefaultText = "Note a linked statement!",LocalDefaultText = @"שים לב האחסנה מקושרת !", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOConnectedDelcaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ConnectedDelcaration", DefaultText = "Note a linked statement!",LocalDefaultText = @"BS64:Itep15nXnSDXnNeRINeU15DXl9eh16DXlCDXnten15XXqdeo16ogISI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsExportDeclarationOInsurance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportDeclaration.O.Insurance", DefaultText = "Insurance",LocalDefaultText = @"ביטוח", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsExportDeclarationOInsurance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportDeclaration.O.Insurance", DefaultText = "Insurance",LocalDefaultText = @"BS64:IteR15nXmNeV15ci", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOFreightActualAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.FreightActualAmount", DefaultText = "Freight Actual Amount",LocalDefaultText = @"הובלה בפועל", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOFreightActualAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.FreightActualAmount", DefaultText = "Freight Actual Amount",LocalDefaultText = @"BS64:IteU15XXkdec15Qg15HXpNeV16LXnCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODidntFindExportCustomFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DidntFindExportCustomFile", DefaultText = "Didn't find export custom file",LocalDefaultText = @"תיק לא קיים ביצוא", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODidntFindExportCustomFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DidntFindExportCustomFile", DefaultText = "Didn't find export custom file",LocalDefaultText = @"BS64:Iteq15nXpyDXnNeQINen15nXmdedINeR15nXpteV15Ai", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOExportsStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ExportsStatus", DefaultText = "Exports Status",LocalDefaultText = @"סטטוס אחסנות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOExportsStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ExportsStatus", DefaultText = "Exports Status",LocalDefaultText = @"BS64:Iteh15jXmNeV16Eg15DXl9eh16DXldeqIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOTotal2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Total2", DefaultText = "Total",LocalDefaultText = "סה''כ", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOTotal2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Total2", DefaultText = "Total",LocalDefaultText = @"BS64:Iteh15Qi15si", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOConnect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Connect", DefaultText = "Connect",LocalDefaultText = @"מקושרות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOConnect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Connect", DefaultText = "Connect",LocalDefaultText = @"BS64:Itee16fXldep16jXldeqIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationONotConnect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NotConnect", DefaultText = "Not Connect",LocalDefaultText = @"לא מקושרות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationONotConnect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NotConnect", DefaultText = "Not Connect",LocalDefaultText = @"BS64:Itec15Ag157Xp9eV16nXqNeV16oi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOChargedStatusReceivedCorrect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ChargedStatusReceivedCorrect", DefaultText = "Charged Status Received - Correct",LocalDefaultText = @"סטטוס מטען נקלט - תקין", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOChargedStatusReceivedCorrect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ChargedStatusReceivedCorrect", DefaultText = "Charged Status Received - Correct",LocalDefaultText = @"BS64:Iteh15jXmNeV16Eg157XmNei158g16DXp9ec15ggLSDXqten15nXnyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCustomsLogisticalPermitHappiness = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CustomsLogisticalPermitHappiness", DefaultText = "Customs Logistical Permit - Happiness",LocalDefaultText = @"היתר לוגיסטי מיכסי - אושר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCustomsLogisticalPermitHappiness = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CustomsLogisticalPermitHappiness", DefaultText = "Customs Logistical Permit - Happiness",LocalDefaultText = @"BS64:IteU15nXqteoINec15XXkteZ16HXmNeZINee15nXm9eh15kgLSDXkNeV16nXqCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOChangeCargoId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ChangeCargoId", DefaultText = "Changed carge ID on save will be disconnected",LocalDefaultText = @"שונו מזהה המטען בשמירה יבוצע ניתוק", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOChangeCargoId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ChangeCargoId", DefaultText = "Changed carge ID on save will be disconnected",LocalDefaultText = @"BS64:Itep15XXoNeVINee15bXlNeUINeU157XmNei158g15HXqdee15nXqNeUINeZ15HXldem16Ig16DXmdeq15XXpyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODocumentAndDocumentWithDifferentCustomsReference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DocumentAndDocumentWithDifferentCustomsReference", DefaultText = "A document and a document with a different customs reference",LocalDefaultText = @"לא ניתן לקשר מסמך עם סימוכין מכס שונה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODocumentAndDocumentWithDifferentCustomsReference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DocumentAndDocumentWithDifferentCustomsReference", DefaultText = "A document and a document with a different customs reference",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXp9ep16gg157Xodee15og16LXnSDXodeZ157Xldeb15nXnyDXnteb16Eg16nXldeg15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationONoDeclarationWithTransportTypeSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NoDeclarationWithTransportTypeSelected", DefaultText = "No declaration with transport type selected",LocalDefaultText = @"אין הצהרה עם סוג הובלה נבחר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationONoDeclarationWithTransportTypeSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NoDeclarationWithTransportTypeSelected", DefaultText = "No declaration with transport type selected",LocalDefaultText = @"BS64:IteQ15nXnyDXlNem15TXqNeUINei150g16HXldeSINeU15XXkdec15Qg16DXkdeX16gi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateOneItem = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateOneItem", DefaultText = "Update one item",LocalDefaultText = @"עדכן פריט אחד", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateOneItem = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateOneItem", DefaultText = "Update one item",LocalDefaultText = @"BS64:Itei15PXm9efINek16jXmdeYINeQ15fXkyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOPossibleOpenInsurance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.PossibleOpenInsurance", DefaultText = "Is it possible to open an insurance case",LocalDefaultText = @"האם אפשרי לפתוח תיק ביטוח", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOPossibleOpenInsurance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.PossibleOpenInsurance", DefaultText = "Is it possible to open an insurance case",LocalDefaultText = @"BS64:IteU15DXnSDXkNek16nXqNeZINec16TXqteV15cg16rXmdenINeR15nXmNeV15ci", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOIsItForInsurance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IsItForInsurance", DefaultText = "The customer is set up for automatic insurance, is it for insurance?",LocalDefaultText = @"הלקוח מוגדר לביצוע ביטוח אוטומטי, האם לבטח ?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOIsItForInsurance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IsItForInsurance", DefaultText = "The customer is set up for automatic insurance, is it for insurance?",LocalDefaultText = @"BS64:IteU15zXp9eV15cg157XldeS15PXqCDXnNeR15nXpteV16Ig15HXmdeY15XXlyDXkNeV15jXldee15jXmSwg15TXkNedINec15HXmNeXID8i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCreatingInsurance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CreatingInsurance", DefaultText = "Creating insurance",LocalDefaultText = @"יצירת ביטוח", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCreatingInsurance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CreatingInsurance", DefaultText = "Creating insurance",LocalDefaultText = @"BS64:IteZ16bXmdeo16og15HXmdeY15XXlyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOInsuranceOpenNum = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.InsuranceOpenNum", DefaultText = "An additional insurance number was opened",LocalDefaultText = @"נפתחה תוספת ביטוח מס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOInsuranceOpenNum = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.InsuranceOpenNum", DefaultText = "An additional insurance number was opened",LocalDefaultText = @"BS64:Iteg16TXqteX15Qg16rXldeh16TXqiDXkdeZ15jXldeXINee16Ei", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCompletedUnifreight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CompletedUnifreight", DefaultText = "Must be completed manually in Unifreight",LocalDefaultText = @"יש להשלימה בתהליך ידני ביוניפרייט", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCompletedUnifreight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CompletedUnifreight", DefaultText = "Must be completed manually in Unifreight",LocalDefaultText = @"BS64:IteZ16kg15zXlNep15zXmdee15Qg15HXqteU15zXmdeaINeZ15PXoNeZINeR15nXldeg15nXpNeo15nXmdeYIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOOpeningInsuranceCase = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.OpeningInsuranceCase", DefaultText = "Opening an insurance case",LocalDefaultText = @"מבצע פתיחת תיק ביטוח", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOOpeningInsuranceCase = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.OpeningInsuranceCase", DefaultText = "Opening an insurance case",LocalDefaultText = @"BS64:Itee15HXpteiINek16rXmdeX16og16rXmdenINeR15nXmNeV15ci", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOOpenInsuranceFailed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.OpenInsuranceFailed", DefaultText = "The process of opening an automatic insurance supplement has failed",LocalDefaultText = @"תהליך פתיחת תוספת ביטוח אוטומטי נכשל", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOOpenInsuranceFailed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.OpenInsuranceFailed", DefaultText = "The process of opening an automatic insurance supplement has failed",LocalDefaultText = @"BS64:Iteq15TXnNeZ15og16TXqteZ15fXqiDXqteV16HXpNeqINeR15nXmNeV15cg15DXldeY15XXnteY15kg16DXm9ep15wi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOImporterIsTooShort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImporterIsTooShort", DefaultText = "ImporterId is too short",LocalDefaultText = @"מספר יבואן קצר מידי", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOImporterIsTooShort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImporterIsTooShort", DefaultText = "ImporterId is too short",LocalDefaultText = @"BS64:Itee16HXpNeoINeZ15HXldeQ158g16fXpteoINee15nXk9eZIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOExporterIsTooShort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ExporterIsTooShort", DefaultText = "ExporterId is too short",LocalDefaultText = @"מספר יצואן קצר מידי", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOExporterIsTooShort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ExporterIsTooShort", DefaultText = "ExporterId is too short",LocalDefaultText = @"BS64:Itee16HXpNeoINeZ16bXldeQ158g16fXpteoINee15nXk9eZIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOStoragesNotConnectToDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.StoragesNotConnectToDeclaration", DefaultText = "Note that there are storages that were not linked to the declaration, should we continue?",LocalDefaultText = @"שים לב יש אחסנות שלא קושרו להצהרה , האם להמשיך ?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOStoragesNotConnectToDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.StoragesNotConnectToDeclaration", DefaultText = "Note that there are storages that were not linked to the declaration, should we continue?",LocalDefaultText = @"BS64:Itep15nXnSDXnNeRINeZ16kg15DXl9eh16DXldeqINep15zXkCDXp9eV16nXqNeVINec15TXpteU16jXlCAsINeU15DXnSDXnNeU157XqdeZ15ogPyI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOMustCustomDocumentType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MustCustomDocumentType", DefaultText = "Must Custom Document Type",LocalDefaultText = @"יש לבחור סוג מסמך", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOMustCustomDocumentType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MustCustomDocumentType", DefaultText = "Must Custom Document Type",LocalDefaultText = @"BS64:IteZ16kg15zXkdeX15XXqCDXodeV15Ig157Xodee15oi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOExportDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ExportDeclarations", DefaultText = "Export Declarations",LocalDefaultText = @"הצהרות יצוא", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOExportDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ExportDeclarations", DefaultText = "Export Declarations",LocalDefaultText = @"BS64:IteU16bXlNeo15XXqiDXmdem15XXkCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOImportDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImportDeclarations", DefaultText = "Import Declarations",LocalDefaultText = @"הצהרות יבוא", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOImportDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImportDeclarations", DefaultText = "Import Declarations",LocalDefaultText = @"BS64:IteU16bXlNeo15XXqiDXmdeR15XXkCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODisplayOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DisplayOnly", DefaultText = "Display Only",LocalDefaultText = @"לתצוגה בלבד - ", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODisplayOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DisplayOnly", DefaultText = "Display Only",LocalDefaultText = @"BS64:Itec16rXpteV15LXlCDXkdec15HXkyAtICI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOStorageRequestStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.StorageRequestStatus", DefaultText = "Storage Request Status",LocalDefaultText = @"בקשת אחסנה הועברה למחסן - סטטוס הבקשה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOStorageRequestStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.StorageRequestStatus", DefaultText = "Storage Request Status",LocalDefaultText = @"BS64:IteR16fXqdeqINeQ15fXodeg15Qg15TXldei15HXqNeUINec157Xl9eh158gLSDXodeY15jXldehINeU15HXp9ep15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODesCountryFieldIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DesCountryFieldIsMandatory", DefaultText = "Destination Country Field Is Mandatory",LocalDefaultText = @"ארץ יעד הינו שדה חובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODesCountryFieldIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DesCountryFieldIsMandatory", DefaultText = "Destination Country Field Is Mandatory",LocalDefaultText = @"BS64:IteQ16jXpSDXmdei15Mg15TXmdeg15Ug16nXk9eUINeX15XXkdeUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOReceivesNameFieldIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ReceivesNameFieldIsMandatory", DefaultText = "Receives Name Field Is Mandatory",LocalDefaultText = @"שם המקבל הינו שדה חובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOReceivesNameFieldIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ReceivesNameFieldIsMandatory", DefaultText = "Receives Name Field Is Mandatory",LocalDefaultText = @"BS64:Itep150g15TXnten15HXnCDXlNeZ16DXlSDXqdeT15Qg15fXldeR15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOReceivesAddressFieldIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ReceivesAddressFieldIsMandatory", DefaultText = "Receives Address Field Is Mandatory",LocalDefaultText = @"כתובת המקבל הינו שדה חובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOReceivesAddressFieldIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ReceivesAddressFieldIsMandatory", DefaultText = "Receives Address Field Is Mandatory",LocalDefaultText = @"BS64:Iteb16rXldeR16og15TXnten15HXnCDXlNeZ16DXlSDXqdeT15Qg15fXldeR15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOReceivesCountryFieldIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ReceivesCountryFieldIsMandatory", DefaultText = "Receives Country Field Is Mandatory",LocalDefaultText = @"מדינת המקבל הינו שדה חובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOReceivesCountryFieldIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ReceivesCountryFieldIsMandatory", DefaultText = "Receives Country Field Is Mandatory",LocalDefaultText = @"BS64:Itee15PXmdeg16og15TXnten15HXnCDXlNeZ16DXlSDXqdeT15Qg15fXldeR15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCargoSplitRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CargoSplitRequest", DefaultText = "Cargo Split Request",LocalDefaultText = @"בקשת פיצול מטען", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCargoSplitRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CargoSplitRequest", DefaultText = "Cargo Split Request",LocalDefaultText = @"BS64:IteR16fXqdeqINek15nXpteV15wg157XmNei158i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSubmitForApproval = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SubmitForApproval", DefaultText = "Submit For Approval",LocalDefaultText = @"העבר לאישור", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSubmitForApproval = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SubmitForApproval", DefaultText = "Submit For Approval",LocalDefaultText = @"BS64:IteU16LXkdeoINec15DXmdep15XXqCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Selected", DefaultText = "Selected",LocalDefaultText = @"נבחרו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Selected", DefaultText = "Selected",LocalDefaultText = @"BS64:Iteg15HXl9eo15Ui", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOItemsFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ItemsFrom", DefaultText = "Items From",LocalDefaultText = @"פריטים מתוך", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOItemsFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ItemsFrom", DefaultText = "Items From",LocalDefaultText = @"BS64:Itek16jXmdeY15nXnSDXnteq15XXmiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODocumentForApproval = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DocumentForApproval", DefaultText = "Document For Approval",LocalDefaultText = @"לאישור קושר מסמך שעדיין לא הוזרם להיבריד", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODocumentForApproval = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DocumentForApproval", DefaultText = "Document For Approval",LocalDefaultText = @"BS64:Itec15DXmdep15XXqCDXp9eV16nXqCDXnteh157XmiDXqdei15PXmdeZ158g15zXkCDXlNeV15bXqNedINec15TXmdeR16jXmdeTIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOApprovalTypeDoesNotExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ApprovalTypeDoesNotExist", DefaultText = "Approval Type Does Not Exist",LocalDefaultText = @"סוג אישור לא קיים במערכת", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOApprovalTypeDoesNotExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ApprovalTypeDoesNotExist", DefaultText = "Approval Type Does Not Exist",LocalDefaultText = @"BS64:Iteh15XXkiDXkNeZ16nXldeoINec15Ag16fXmdeZ150g15HXntei16jXm9eqIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOAdditionalDataSupplier = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AdditionalDataSupplier", DefaultText = "Additional Data Supplier",LocalDefaultText = @"נתונים נוספים לספק", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOAdditionalDataSupplier = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AdditionalDataSupplier", DefaultText = "Additional Data Supplier",LocalDefaultText = @"BS64:Iteg16rXldeg15nXnSDXoNeV16HXpNeZ150g15zXodek16ci", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODeleteLineContinue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeleteLineContinue", DefaultText = "This line will be deleted, should I continue?",LocalDefaultText = @"שורה זו תמחק, האם להמשיך?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODeleteLineContinue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeleteLineContinue", DefaultText = "This line will be deleted, should I continue?",LocalDefaultText = @"BS64:Itep15XXqNeUINeW15Ug16rXnteX16csINeU15DXnSDXnNeU157XqdeZ15o/Ig==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationORecordDelayCodeExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RecordDelayCodeExists", DefaultText = "A record with a delay code already exists",LocalDefaultText = @"כבר קיימת רשומה עם קוד עיכוב", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationORecordDelayCodeExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RecordDelayCodeExists", DefaultText = "A record with a delay code already exists",LocalDefaultText = @"BS64:Iteb15HXqCDXp9eZ15nXnteqINeo16nXldee15Qg16LXnSDXp9eV15Mg16LXmdeb15XXkSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSendRrquestConsstraintApproval = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendRrquestConsstraintApproval", DefaultText = "Sending a request for constraint approval",LocalDefaultText = @"שליחת בקשה לאישור אילוץ", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSendRrquestConsstraintApproval = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendRrquestConsstraintApproval", DefaultText = "Sending a request for constraint approval",LocalDefaultText = @"BS64:Itep15zXmdeX16og15HXp9ep15Qg15zXkNeZ16nXldeoINeQ15nXnNeV16Ui", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSentTaskImporterDigital = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SentTaskImporterDigital", DefaultText = "A task was sent to the importer in digital",LocalDefaultText = @"נשלחה משימה ליבואן בדיגיטל", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSentTaskImporterDigital = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SentTaskImporterDigital", DefaultText = "A task was sent to the importer in digital",LocalDefaultText = @"BS64:Iteg16nXnNeX15Qg157XqdeZ157XlCDXnNeZ15HXldeQ158g15HXk9eZ15LXmdeY15wi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSentTaskImporterLogBox = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SentTaskImporterLogBox", DefaultText = "A task has been sent to the blogbox importer",LocalDefaultText = @"נשלחה משימה ליבואן בלוגבוקס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSentTaskImporterLogBox = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SentTaskImporterLogBox", DefaultText = "A task has been sent to the blogbox importer",LocalDefaultText = @"BS64:Iteg16nXnNeX15Qg157XqdeZ157XlCDXnNeZ15HXldeQ158g15HXnNeV15LXkdeV16fXoSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationONoNotificationsReceived = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NoNotificationsReceived", DefaultText = "No notifications have been received from customs for this declaration",LocalDefaultText = @"לא התקבלו הודעות מהמכס עבור הצהרה זו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationONoNotificationsReceived = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NoNotificationsReceived", DefaultText = "No notifications have been received from customs for this declaration",LocalDefaultText = @"BS64:Itec15Ag15TXqten15HXnNeVINeU15XXk9ei15XXqiDXnteU157Xm9ehINei15HXldeoINeU16bXlNeo15Qg15bXlSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSendReplyMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendReplyMessage", DefaultText = "Sending a reply to a message",LocalDefaultText = @"שליחת תשובה להודעה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSendReplyMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendReplyMessage", DefaultText = "Sending a reply to a message",LocalDefaultText = @"BS64:Itep15zXmdeX16og16rXqdeV15HXlCDXnNeU15XXk9ei15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOIsSendManifest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IsSendManifest", DefaultText = "This field is intended for situations where it is required to field the statement without declaration data",LocalDefaultText = @"את 4 השדות שלהלן אין חובה לשדר למכס ולכן הם לא ישודרו. אם ברצונכם לשדר אותם בכל זאת, אנא הסירו את ה V -  השדות הם: תאריך מזהה מטען, ארץ מוצא, נמל טעינה ותאריך גמר פריקה .", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOIsSendManifest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IsSendManifest", DefaultText = "This field is intended for situations where it is required to field the statement without declaration data",LocalDefaultText = @"BS64:IteQ16ogNCDXlNep15PXldeqINep15zXlNec158g15DXmdefINeX15XXkdeUINec16nXk9eoINec157Xm9ehINeV15zXm9efINeU150g15zXkCDXmdep15XXk9eo15UuINeQ150g15HXqNem15XXoNeb150g15zXqdeT16gg15DXldeq150g15HXm9ecINeW15DXqiwg15DXoNeQINeU16HXmdeo15Ug15DXqiDXlCBWIC0gINeU16nXk9eV16og15TXnTog16rXkNeo15nXmiDXnteW15TXlCDXnteY16LXnywg15DXqNelINee15XXpteQLCDXoNee15wg15jXoteZ16DXlCDXldeq15DXqNeZ15og15LXnteoINek16jXmden15QgLiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOManifestwillnotsent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Manifestwillnotsent", DefaultText = "Manifest data will not be sent to customs",LocalDefaultText = @"נתוני מצהר לא ישלחו במסר הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOManifestwillnotsent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Manifestwillnotsent", DefaultText = "Manifest data will not be sent to customs",LocalDefaultText = @"BS64:Iteg16rXldeg15kg157XpteU16gg15zXkCDXmdep15zXl9eVINeR157XodeoINeU16bXlNeo15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationONotCarriedInsurance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NotCarriedInsurance", DefaultText = "nsurance was not carried out due to differences in currency/shipping conditions between the accounts",LocalDefaultText = @"לא בוצע ביטוח בגלל שוני במטבע/תנאי משלוח בין החשבונות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationONotCarriedInsurance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NotCarriedInsurance", DefaultText = "nsurance was not carried out due to differences in currency/shipping conditions between the accounts",LocalDefaultText = @"BS64:Itec15Ag15HXldem16Ig15HXmdeY15XXlyDXkdeS15zXnCDXqdeV16DXmSDXkdee15jXkdeiL9eq16DXkNeZINee16nXnNeV15cg15HXmdefINeU15fXqdeR15XXoNeV16oi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOImporterCourierFromExcel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImporterCourierFromExcel", DefaultText = "Worksheet From Excel",LocalDefaultText = @"הטענת ש.מ.ב מאקסל", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOImporterCourierFromExcel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImporterCourierFromExcel", DefaultText = "Worksheet From Excel",LocalDefaultText = @"BS64:IteU15jXoteg16og16ku154u15Eg157XkNen16HXnCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOChoose = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Choose", DefaultText = "Choose",LocalDefaultText = @"בחר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOChoose = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Choose", DefaultText = "Choose",LocalDefaultText = @"BS64:IteR15fXqCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOStatusThatSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.StatusThatSelected", DefaultText = "Status that selected",LocalDefaultText = @"סטטוסים שנבחרו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOStatusThatSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.StatusThatSelected", DefaultText = "Status that selected",LocalDefaultText = @"BS64:Iteh15jXmNeV16HXmdedINep16DXkdeX16jXlSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODestantionThatSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DestantionThatSelected", DefaultText = "Destantion that selected",LocalDefaultText = @"יעדים שנבחרו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODestantionThatSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DestantionThatSelected", DefaultText = "Destantion that selected",LocalDefaultText = @"BS64:IteZ16LXk9eZ150g16nXoNeR15fXqNeVIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOImporterThatSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImporterThatSelected", DefaultText = "Importer that selected",LocalDefaultText = @"יצואנים שנבחרו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOImporterThatSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImporterThatSelected", DefaultText = "Importer that selected",LocalDefaultText = @"BS64:IteZ16bXldeQ16DXmdedINep16DXkdeX16jXlSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOReferentsThatSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ReferentsThatSelected", DefaultText = "Referents that selected",LocalDefaultText = @"רפרנטים שנבחרו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOReferentsThatSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ReferentsThatSelected", DefaultText = "Referents that selected",LocalDefaultText = @"BS64:Iteo16TXqNeg15jXmdedINep16DXkdeX16jXlSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOexportFilterMenu = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.exportFilterMenu", DefaultText = "Filters for multiple select",LocalDefaultText = @"סינון מתקדם", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOexportFilterMenu = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.exportFilterMenu", DefaultText = "Filters for multiple select",LocalDefaultText = @"BS64:Iteh15nXoNeV158g157Xqten15PXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCancelPayment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CancelPayment", DefaultText = "Please confirm sending a cancellation message",LocalDefaultText = @"נא אשר שליחה של מסר ביטול הגשה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCancelPayment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CancelPayment", DefaultText = "Please confirm sending a cancellation message",LocalDefaultText = @"BS64:Iteg15Ag15DXqdeoINep15zXmdeX15Qg16nXnCDXnteh16gg15HXmdeY15XXnCDXlNeS16nXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOAsmbli = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Asmbli", DefaultText = "Asmbli",LocalDefaultText = @"אסמבלי", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOAsmbli = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Asmbli", DefaultText = "Asmbli",LocalDefaultText = @"BS64:IteQ16HXnteR15zXmSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateClassificationCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateClassificationCode", DefaultText = "Update Classification Code",LocalDefaultText = @"עדכון פרט מכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateClassificationCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateClassificationCode", DefaultText = "Update Classification Code",LocalDefaultText = @"BS64:Itei15PXm9eV158g16TXqNeYINee15vXoSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOMultiClassificationCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiClassificationCode", DefaultText = "This screen allows to multi update Classification Code",LocalDefaultText = @"מסך זה מאפשר לעדכן את פרט המכס באופן גורף לכל שורות פרטי המכס או לחלקן . אנא בחר בפרט המכס ובפעולה הרצויה.", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOMultiClassificationCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiClassificationCode", DefaultText = "This screen allows to multi update Classification Code",LocalDefaultText = @"BS64:Itee16HXmiDXlteUINee15DXpNep16gg15zXoteT15vXnyDXkNeqINek16jXmCDXlNee15vXoSDXkdeQ15XXpNefINeS15XXqNejINec15vXnCDXqdeV16jXldeqINek16jXmNeZINeU157Xm9ehINeQ15Ug15zXl9ec16fXnyAuINeQ16DXkCDXkdeX16gg15HXpNeo15gg15TXnteb16Eg15XXkdek16LXldec15Qg15TXqNem15XXmdeULiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOItemsWithNoClassificationCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ItemsWithNoClassificationCode", DefaultText = "Update Items with no Classification Code",LocalDefaultText = @"עדכן פריטים ללא פרט מכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOItemsWithNoClassificationCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ItemsWithNoClassificationCode", DefaultText = "Update Items with no Classification Code",LocalDefaultText = @"BS64:Itei15PXm9efINek16jXmdeY15nXnSDXnNec15Ag16TXqNeYINee15vXoSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCantResetDeclarationNumberSubmissionExsist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CantResetDeclarationNumberSubmissionExsist", DefaultText = "Can not reset declaration number, there is a request of submission type ",LocalDefaultText = @"לא ניתן לאפס מספר הצהרה, קיימת בקשה מסוג הגשה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCantResetDeclarationNumberSubmissionExsist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CantResetDeclarationNumberSubmissionExsist", DefaultText = "Can not reset declaration number, there is a request of submission type ",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXkNek16Eg157Xodek16gg15TXpteU16jXlCwg16fXmdeZ157XqiDXkden16nXlCDXnteh15XXkiDXlNeS16nXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCantResetDeclarationNumberDifferentFromAnalyzed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CantResetDeclarationNumberDifferentFromAnalyzed", DefaultText = "Can not reset declaration number, there is a request of type different from analyzed",LocalDefaultText = @"לא ניתן לאפס מספר הצהרה ,קיימת בקשה מסוג הגשת תשלום בסטטוס שונה מתשובה נותחה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCantResetDeclarationNumberDifferentFromAnalyzed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CantResetDeclarationNumberDifferentFromAnalyzed", DefaultText = "Can not reset declaration number, there is a request of type different from analyzed",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXkNek16Eg157Xodek16gg15TXpteU16jXlCAs16fXmdeZ157XqiDXkden16nXlCDXnteh15XXkiDXlNeS16nXqiDXqtep15zXldedINeR16HXmNeY15XXoSDXqdeV16DXlCDXnteq16nXldeR15Qg16DXldeq15fXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCantResetDeclarationNumberPaymentDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CantResetDeclarationNumberPaymentDate", DefaultText = "Can not reset declaration number, there is a payment date",LocalDefaultText = @"לא ניתן לאפס מספר הצהרה, קיים תאריך תשלום", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCantResetDeclarationNumberPaymentDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CantResetDeclarationNumberPaymentDate", DefaultText = "Can not reset declaration number, there is a payment date",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXkNek16Eg157Xodek16gg15TXpteU16jXlCwg16fXmdeZ150g16rXkNeo15nXmiDXqtep15zXldedIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateProtocolCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateProtocolCode", DefaultText = "Update Protocol Code",LocalDefaultText = @"עדכון קוד פרוטוקול", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateProtocolCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateProtocolCode", DefaultText = "Update Protocol Code",LocalDefaultText = @"BS64:Itei15PXm9eV158g16fXldeTINek16jXldeY15XXp9eV15wi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOMultiProtocolCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiProtocolCode", DefaultText = "This screen allows to multi update Protocol Code",LocalDefaultText = @"מסך זה מאפשר לעדכן את קוד הפרוטוקול באופן גורף לכל שורות פרטי המכס או לחלקן . אנא בחר בקוד פרוטוקול ובפעולה הרצויה.", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOMultiProtocolCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiProtocolCode", DefaultText = "This screen allows to multi update Protocol Code",LocalDefaultText = @"BS64:Itee16HXmiDXlteUINee15DXpNep16gg15zXoteT15vXnyDXkNeqINen15XXkyDXlNek16jXldeY15XXp9eV15wg15HXkNeV16TXnyDXkteV16jXoyDXnNeb15wg16nXldeo15XXqiDXpNeo15jXmSDXlNee15vXoSDXkNeVINec15fXnNen158gLiDXkNeg15Ag15HXl9eoINeR16fXldeTINek16jXldeY15XXp9eV15wg15XXkdek16LXldec15Qg15TXqNem15XXmdeULiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOItemsWithNoProtocolCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ItemsWithNoProtocolCode", DefaultText = "Update Items with no Protocol Code",LocalDefaultText = @"עדכן פריטים ללא קוד פרוטוקול", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOItemsWithNoProtocolCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ItemsWithNoProtocolCode", DefaultText = "Update Items with no Protocol Code",LocalDefaultText = @"BS64:Itei15PXm9efINek16jXmdeY15nXnSDXnNec15Ag16fXldeTINek16jXldeY15XXp9eV15wi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateTradeAgreement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateTradeAgreement", DefaultText = "Update Trade Agreement",LocalDefaultText = @"עדכון קוד הסכם", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateTradeAgreement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateTradeAgreement", DefaultText = "Update Trade Agreement",LocalDefaultText = @"BS64:Itei15PXm9eV158g16fXldeTINeU16HXm9edIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOMultiTradeAgreement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiTradeAgreement", DefaultText = "This screen allows to multi update Trade Agreement",LocalDefaultText = @"מסך זה מאפשר לעדכן את קוד ההסכם באופן גורף לכל שורות פרטי המכס או לחלקן . אנא בחר בקוד הסכם ובפעולה הרצויה.", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOMultiTradeAgreement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiTradeAgreement", DefaultText = "This screen allows to multi update Trade Agreement",LocalDefaultText = @"BS64:Itee16HXmiDXlteUINee15DXpNep16gg15zXoteT15vXnyDXkNeqINen15XXkyDXlNeU16HXm9edINeR15DXldek158g15LXldeo16Mg15zXm9ecINep15XXqNeV16og16TXqNeY15kg15TXnteb16Eg15DXlSDXnNeX15zXp9efIC4g15DXoNeQINeR15fXqCDXkden15XXkyDXlNeh15vXnSDXldeR16TXoteV15zXlCDXlNeo16bXldeZ15QuIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOItemsWithNoTradeAgreement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ItemsWithNoTradeAgreement", DefaultText = "Update Items with no Trade Agreement",LocalDefaultText = @"עדכן פריטים ללא קוד הסכם", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOItemsWithNoTradeAgreement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ItemsWithNoTradeAgreement", DefaultText = "Update Items with no Trade Agreement",LocalDefaultText = @"BS64:Itei15PXm9efINek16jXmdeY15nXnSDXnNec15Ag16fXldeTINeU16HXm9edIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOMultiQantityType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiQantityType", DefaultText = "This screen allows to multi update Qantity Type",LocalDefaultText = @"מסך זה מאפשר לעדכן את סוג היחידה באופן גורף לכל שורות פרטי המכס או לחלקן . אנא בחר בסוג יחידה ובפעולה הרצויה.", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOMultiQantityType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiQantityType", DefaultText = "This screen allows to multi update Qantity Type",LocalDefaultText = @"BS64:Itee16HXmiDXlteUINee15DXpNep16gg15zXoteT15vXnyDXkNeqINeh15XXkiDXlNeZ15fXmdeT15Qg15HXkNeV16TXnyDXkteV16jXoyDXnNeb15wg16nXldeo15XXqiDXpNeo15jXmSDXlNee15vXoSDXkNeVINec15fXnNen158gLiDXkNeg15Ag15HXl9eoINeR16HXldeSINeZ15fXmdeT15Qg15XXkdek16LXldec15Qg15TXqNem15XXmdeULiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOItemsWithNoQuantityType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ItemsWithNoQuantityType", DefaultText = "Update Items with no Quantity Type",LocalDefaultText = @"עדכן פריטים ללא סוג יחידה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOItemsWithNoQuantityType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ItemsWithNoQuantityType", DefaultText = "Update Items with no Quantity Type",LocalDefaultText = @"BS64:Itei15PXm9efINek16jXmdeY15nXnSDXnNec15Ag16HXldeSINeZ15fXmdeT15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCancelPointers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CancelPointers", DefaultText = "Approve Cancellation of pointers on customs items",LocalDefaultText = @"נא אשר ביטול ההצבעות בכל שורות פרט המכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCancelPointers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CancelPointers", DefaultText = "Approve Cancellation of pointers on customs items",LocalDefaultText = @"BS64:Iteg15Ag15DXqdeoINeR15nXmNeV15wg15TXlNem15HXoteV16og15HXm9ecINep15XXqNeV16og16TXqNeYINeU157Xm9ehIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODeletePointer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeletePointer", DefaultText = "Pointers successfully deleted",LocalDefaultText = @"נתוני ההצבעה נמחקו בהצלחה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODeletePointer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeletePointer", DefaultText = "Pointers successfully deleted",LocalDefaultText = @"BS64:Iteg16rXldeg15kg15TXlNem15HXoteUINeg157Xl9en15Ug15HXlNem15zXl9eUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationTHDigitalCertificateOfOrigin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.DigitalCertificateOfOrigin", DefaultText = "Digital Certificates Of Origin",LocalDefaultText = @"תעודות מקור דיגיטליות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationTHDigitalCertificateOfOrigin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.DigitalCertificateOfOrigin", DefaultText = "Digital Certificates Of Origin",LocalDefaultText = @"BS64:Iteq16LXldeT15XXqiDXnten15XXqCDXk9eZ15LXmdeY15zXmdeV16oi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationTHNewCertificateOfOrigin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.NewCertificateOfOrigin", DefaultText = "New Certificate Of Origin",LocalDefaultText = @"תעודה חדשה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationTHNewCertificateOfOrigin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.NewCertificateOfOrigin", DefaultText = "New Certificate Of Origin",LocalDefaultText = @"BS64:Iteq16LXldeT15Qg15fXk9ep15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationTHCertificateOfOrigin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.CertificateOfOrigin", DefaultText = "Certificate Of Origin",LocalDefaultText = @"תעודת מקור", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationTHCertificateOfOrigin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.CertificateOfOrigin", DefaultText = "Certificate Of Origin",LocalDefaultText = @"BS64:Iteq16LXldeT16og157Xp9eV16gi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODeclarationReconstructionRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeclarationReconstructionRequired", DefaultText = "Please send a request for declaration reconstruction",LocalDefaultText = @"יש לבצע בקשה לשחזור נתוני הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODeclarationReconstructionRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeclarationReconstructionRequired", DefaultText = "Please send a request for declaration reconstruction",LocalDefaultText = @"BS64:IteZ16kg15zXkdem16Ig15HXp9ep15Qg15zXqdeX15bXldeoINeg16rXldeg15kg15TXpteU16jXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOtest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.test", DefaultText = "test",LocalDefaultText = @" אנאנאנ אני רוצה לבדוק האם הא והם מתחלפות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOtest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.test", DefaultText = "test",LocalDefaultText = @"BS64:IiDXkNeg15DXoNeQ16Ag15DXoNeZINeo15XXpteUINec15HXk9eV16cg15TXkNedINeU15Ag15XXlNedINee16rXl9ec16TXldeqIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOGroupingAccountLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.GroupingAccountLines", DefaultText = "Grouping Account Lines",LocalDefaultText = @"קיבוץ שורות חשבון", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOGroupingAccountLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.GroupingAccountLines", DefaultText = "Grouping Account Lines",LocalDefaultText = @"BS64:Iten15nXkdeV16Ug16nXldeo15XXqiDXl9ep15HXldefIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOGroupedAccountLinesResult = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.GroupedAccountLinesResult", DefaultText = "Grouped account lines Result",LocalDefaultText = @"שורות חשבון שיקובצו לקבוצות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOGroupedAccountLinesResult = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.GroupedAccountLinesResult", DefaultText = "Grouped account lines Result",LocalDefaultText = @"BS64:Itep15XXqNeV16og15fXqdeR15XXnyDXqdeZ16fXldeR16bXlSDXnNen15HXldem15XXqiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOGroupedEmptyLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.GroupedEmptyLines", DefaultText = "Grouped Empty Lines",LocalDefaultText = @"ריקים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOGroupedEmptyLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.GroupedEmptyLines", DefaultText = "Grouped Empty Lines",LocalDefaultText = @"BS64:Iteo15nXp9eZ150i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOGroupedNotFoundLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.GroupedNotFoundLines", DefaultText = "Grouped Not Found Lines",LocalDefaultText = @"לא נמצאו שורות לקיבוץ", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOGroupedNotFoundLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.GroupedNotFoundLines", DefaultText = "Grouped Not Found Lines",LocalDefaultText = @"BS64:Itec15Ag16DXntem15DXlSDXqdeV16jXldeqINec16fXmdeR15XXpSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Lines", DefaultText = "Lines",LocalDefaultText = @"שורות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Lines", DefaultText = "Lines",LocalDefaultText = @"BS64:Itep15XXqNeV16oi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationODeclarationsWithDeficiencies = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeclarationsWithDeficiencies", DefaultText = "Declarations With Deficiencies",LocalDefaultText = @"הצהרות עם חוסרים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODeclarationsWithDeficiencies = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeclarationsWithDeficiencies", DefaultText = "Declarations With Deficiencies",LocalDefaultText = @"BS64:IteU16bXlNeo15XXqiDXotedINeX15XXodeo15nXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOIncorrectDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IncorrectDeclarations", DefaultText = "Incorrect Declarations",LocalDefaultText = @"הצהרות שגויות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOIncorrectDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IncorrectDeclarations", DefaultText = "Incorrect Declarations",LocalDefaultText = @"BS64:IteU16bXlNeo15XXqiDXqdeS15XXmdeV16oi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCorrectDraft = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CorrectDraft", DefaultText = "Correct Draft",LocalDefaultText = @"טיוטה תקינה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCorrectDraft = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CorrectDraft", DefaultText = "Correct Draft",LocalDefaultText = @"BS64:IteY15nXldeY15Qg16rXp9eZ16DXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOPaidDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.PaidDeclarations", DefaultText = "Paid Declarations",LocalDefaultText = @"הצהרות שהוגשו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOPaidDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.PaidDeclarations", DefaultText = "Paid Declarations",LocalDefaultText = @"BS64:IteU16bXlNeo15XXqiDXqdeU15XXktep15Ui", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOReleasedDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ReleasedDeclarations", DefaultText = "Released Declarations",LocalDefaultText = @"הצהרות שהותרו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOReleasedDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ReleasedDeclarations", DefaultText = "Released Declarations",LocalDefaultText = @"BS64:IteU16bXlNeo15XXqiDXqdeU15XXqteo15Ui", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOErrCommCustoms = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ErrCommCustoms", DefaultText = "An error occurred, please verify communication with customs",LocalDefaultText = @"אירעה שגיאה נא לודא תקשורת מול המכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOErrCommCustoms = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ErrCommCustoms", DefaultText = "An error occurred, please verify communication with customs",LocalDefaultText = @"BS64:IteQ15nXqNei15Qg16nXkteZ15DXlCDXoNeQINec15XXk9eQINeq16fXqdeV16jXqiDXnteV15wg15TXnteb16Ei", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSendDeclarationAction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendDeclarationAction", DefaultText = "Send Declaration",LocalDefaultText = @"שידור הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSendDeclarationAction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendDeclarationAction", DefaultText = "Send Declaration",LocalDefaultText = @"BS64:Itep15nXk9eV16gg15TXpteU16jXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSendSignedDeclarationsAction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendSignedDeclarationsAction", DefaultText = "Send Signed Declarations",LocalDefaultText = @"שידור הצהרה חתומה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSendSignedDeclarationsAction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendSignedDeclarationsAction", DefaultText = "Send Signed Declarations",LocalDefaultText = @"BS64:Itep15nXk9eV16gg15TXpteU16jXlCDXl9eq15XXnteUIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOSendDeclarationPaymentsAction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendDeclarationPaymentsAction", DefaultText = "Send Declaration Payments",LocalDefaultText = @"שידור הגשת הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSendDeclarationPaymentsAction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendDeclarationPaymentsAction", DefaultText = "Send Declaration Payments",LocalDefaultText = @"BS64:Itep15nXk9eV16gg15TXktep16og15TXpteU16jXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCancelSelectedRowsConfirm = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CancelSelectedRowsConfirm", DefaultText = "The declaration selection will be removed, are you sure?",LocalDefaultText = @" שים לב, בחירת ההצהרות שבוצעה תימחק, האם להמשיך ?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCancelSelectedRowsConfirm = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CancelSelectedRowsConfirm", DefaultText = "The declaration selection will be removed, are you sure?",LocalDefaultText = @"BS64:IiDXqdeZ150g15zXkSwg15HXl9eZ16jXqiDXlNeU16bXlNeo15XXqiDXqdeR15XXptei15Qg16rXmdee15fXpywg15TXkNedINec15TXntep15nXmiA/Ig==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOScreenOnlyUNI = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ScreenOnlyUNI", DefaultText = "This screen in the cloud only works through Unifreight",LocalDefaultText = @"מסך זה בענן עובד רק דרך יוניפרייט", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOScreenOnlyUNI = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ScreenOnlyUNI", DefaultText = "This screen in the cloud only works through Unifreight",LocalDefaultText = @"BS64:Itee16HXmiDXlteUINeR16LXoNefINei15XXkdeTINeo16cg15PXqNeaINeZ15XXoNeZ16TXqNeZ15nXmCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

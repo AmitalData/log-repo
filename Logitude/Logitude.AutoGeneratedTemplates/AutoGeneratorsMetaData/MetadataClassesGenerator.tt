@@ -1367,10 +1367,20 @@ private void WriteAddTabMethod(XElement entity,XElement Tab,string TblName,int i
 
         var featureInstanceName= GeneratedTabFeatures[FeatureCode];
         var textCodeInstanceName= GeneratedTabTextCodes[TextCodeCode];
-	  
+	  	var IsLocked = Tab.Attributes().Where(a => a.Name == "IsLocked").FirstOrDefault();
+	    string Locked;
+        if (IsLocked == null)
+        {
+	    	 Locked = "false";
+        }
+        else
+        {
+	          Locked =  IsLocked.Value;  
+        }
+
 #>
 
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = <#= Code #>,HtmlComponentName = <#= string.IsNullOrEmpty(HtmlComponentName) ? "\"\"" :  HtmlComponentName#>,HtmlComponentUrl = <#= string.IsNullOrEmpty(HtmlComponentURL) ? "\"\"" : HtmlComponentURL #>, FeatureId = <#= featureInstanceName #>.Id,FeatureUniqeCode = <#= featureInstanceName #>.FeatureUniqeCode, ControlPath = <#= ControlPath #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, TabNameTextCodeId = <#= textCodeInstanceName #>.Id, TabNameTextCodeCode = <#= textCodeInstanceName #>.Code, Tenant = 0, IndexOrder = <#= IndexOrder #> }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = <#= Code #>,HtmlComponentName = <#= string.IsNullOrEmpty(HtmlComponentName) ? "\"\"" :  HtmlComponentName#>,HtmlComponentUrl = <#= string.IsNullOrEmpty(HtmlComponentURL) ? "\"\"" : HtmlComponentURL #>, FeatureId = <#= featureInstanceName #>.Id,FeatureUniqeCode = <#= featureInstanceName #>.FeatureUniqeCode, ControlPath = <#= ControlPath #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, TabNameTextCodeId = <#= textCodeInstanceName #>.Id, TabNameTextCodeCode = <#= textCodeInstanceName #>.Code, Tenant = 0, IndexOrder = <#= IndexOrder #>,IsLocked = <#= Locked #> }, objectTableTabsRepository, TenantObjectTableTabs);
    <#+
 }
 

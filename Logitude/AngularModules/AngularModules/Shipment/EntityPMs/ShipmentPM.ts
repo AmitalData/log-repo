@@ -25,6 +25,7 @@ import { CustomChildEntity } from '../../Infrastructure/EntityPMs/CustomChildEnt
 import { ShipmentAdditionalData } from '../DataContract/ShipmentAdditionalData';
 import { ShipmentReferancePM } from './ShipmentReferancePM';
 import { FreightForwarderReferencePM } from './FreightForwarderReferencePM';
+import { AppTool } from 'Infrastructure/Tools';
 
 export class ShipmentPM {
     public UIProperties: UIProperties;
@@ -6131,8 +6132,12 @@ export class ShipmentPM {
 
     public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName: string = null) {
+       
         if (!this.DisableMarkAsDirty) {
             this.IsDirty = true;
+            if(!AppTool.IsNullOrEmpty(this.Id)) {
+                ServiceHelper.CheckIsLock(this.Id, "Shipment", true);
+            }
             if (propertyName != null) {
                 this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
                 ShipmentPMCustomCode.ApplyEntityChanged(propertyName, this);

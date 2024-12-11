@@ -36,23 +36,34 @@ export class GeneralLockService {
 
         );
     }
-    PostCheckLock(entityId:string , objectTableName:string) {
-        debugger
-        var bb =  ServiceHelper.GetLoggedUserToken();
+    PostCheckLock(entityId:string , objectTableName:string, isFromCahnge: boolean = false) {
+        
         return defer(() => {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
             var url = this._apiUrl + '/PostCheckLock';
 
-            return this._http.post(url + '?userId=' + SessionInfo.LoggedUserId + '&entityId=' + entityId + '&objectTableName=' + objectTableName,null,  ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+            return this._http.post(url + '?userId=' + SessionInfo.LoggedUserId + '&entityId=' + entityId + '&objectTableName=' + objectTableName + '&isFromCahnge=' + isFromCahnge, null, ServiceHelper.GetHttpHeadersGeneralLock()).pipe(map((response) => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse.Result = response;
                 return serviceResponse;
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+    DeleteGeneralLock(entityId:string , objectTableName:string) {       
+        return defer(() => {
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            var url = this._apiUrl + '/DeleteGeneralLock';
 
-
+            return this._http.post(url + '?entityId=' + entityId + '&objectTableName=' + objectTableName, null, ServiceHelper.GetHttpHeadersGeneralLock()).pipe(map((response) => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = response;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+   
 
     MapJsonToEntityList(jsonList: any) {
         var entityList: CacheKey;

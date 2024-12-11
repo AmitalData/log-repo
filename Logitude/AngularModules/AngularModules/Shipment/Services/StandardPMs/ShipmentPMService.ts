@@ -561,6 +561,7 @@ export class ShipmentPMService {
     MapShipmentDeclaration(entity: ShipmentPM, jsonPM: any) {
 
         if (jsonPM.DeclarationPM) {
+            entity.DisableMarkAsDirty = true;
             let declarationPM: DeclarationPM = jsonPM.DeclarationPM;
             entity.DeclarationNumber = declarationPM?.DeclarationNumber;
             entity.DeclarationOfficeCode = declarationPM?.DeclarationOfficeCode;
@@ -571,9 +572,12 @@ export class ShipmentPMService {
             entity.ProcedureCurrentCode = declarationPM?.ProcedureCurrentCode;
             entity.ExternalDeclarationNumber = declarationPM?.ExternalDeclarationNumber;
             entity.DeclarationStatusTypeCode = declarationPM?.DeclarationStatusTypeCode;
+            entity.DisableMarkAsDirty = false;
         }
 
         if (jsonPM.DeclarationReferentDataPM) {
+            entity.DisableMarkAsDirty = true;
+
             let declarationReferentDataPM: DeclarationReferantDataPM = jsonPM.DeclarationReferentDataPM;
             if (declarationReferentDataPM.CarrierCode && declarationReferentDataPM.Mawb) {
                 entity.CarrierCodeMawb = declarationReferentDataPM.CarrierCode + "-" + declarationReferentDataPM.Mawb;
@@ -598,6 +602,7 @@ export class ShipmentPMService {
             entity.FlightVoyageNumber = declarationReferentDataPM.FlightVoyageNumber;
             entity.Commodity = declarationReferentDataPM.Commodity;
             entity.OriginCountryCode = declarationReferentDataPM.OriginCountryCode;
+            entity.DisableMarkAsDirty = false;
 
         }
 
@@ -649,7 +654,8 @@ export class ShipmentPMService {
         this.MapShipmentStoragePricings(entityPM, jsonPM, mapParent);
         this.MapShipmentProductItems(entityPM, jsonPM, mapParent);
         this.MapShipmentUnassignedFields(entityPM, jsonPM, mapParent);
-
+        
+        entityPM.DisableMarkAsDirty = true;
         let customChildObjectPMService: CustomChildObjectPMService = new CustomChildObjectPMService(entityPM, "Shipment");
         customChildObjectPMService.MapCustomChildEntities(jsonPM, mapParent);
 

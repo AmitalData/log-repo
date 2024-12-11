@@ -23,6 +23,7 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { AppTool } from 'Infrastructure/Tools';
 
 export class DeclarationPM {
       
@@ -1599,11 +1600,14 @@ export class DeclarationPM {
 		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
-    MarkAsDirty(propertyName:string = null) {
+    MarkAsDirty(propertyName:string = null) {        
        if(!this.DisableMarkAsDirty)
        {
         this.IsDirty = true;
 		  	
+		  if(!AppTool.IsNullOrEmpty(this.Id)) {
+            ServiceHelper.CheckIsLock(this.Id, "Customs.Declaration", true);
+        }	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.Declaration");

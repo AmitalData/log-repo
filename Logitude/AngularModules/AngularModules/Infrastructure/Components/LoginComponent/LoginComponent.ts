@@ -43,7 +43,8 @@ import { ObjectsUpdater } from '../../Locators/ObjectsUpdater';
 //import { DWObjectFieldExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/DWObjectFieldExtendedPMService';
 import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 import { GeneralDomainService } from '../../../Infrastructure/Services/GeneralDomainService';
- 
+import { v4 as uuidv4 } from 'uuid';
+
 import {
     AuthenticateService,
     LogitudeTokensService,
@@ -157,6 +158,8 @@ export class LoginComponent implements OnInit {
         this.UserExtendedPMService = new UserExtendedPMService();
         this.generalDomainService = new GeneralDomainService();
         //FileLoader.LoadFroalaResources();
+        sessionStorage.setItem('SessionId', uuidv4());
+
     }
 
     idxdb: IDBOpenDBRequest;
@@ -188,7 +191,7 @@ export class LoginComponent implements OnInit {
                     if (!userData.HasError) {
                         userData.AmitalBrowserInUse = true;
                         var data = JSON.stringify(userData);
-                        window.sessionStorage.setItem('userdata', data);
+                        window.sessionStorage.setItem('userdata', data);                        
                         SessionLocator.IsExternalParams = false;
                         this.StartLoginProcess();
                     }
@@ -200,7 +203,7 @@ export class LoginComponent implements OnInit {
         // if (isDevMode())
         //     this.developerLogin();       
     }
-
+   
     async developerLogin() {
         this.Email = 'itzik@amital.co.il'
         this.Password = 'xhx@word3';
