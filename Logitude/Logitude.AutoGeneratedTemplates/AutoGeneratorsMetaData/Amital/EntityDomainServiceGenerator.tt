@@ -780,7 +780,7 @@ public  string FirstServiceCharacterToLower(string str)
 //     the code is regenerated.
 // </auto-generated> EntityDomainServiceGenerator.tt from <#= Path.GetFileName(Host.TemplateFile) #>
 //---
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -959,7 +959,7 @@ namespace <#= domainservicenamespacestring + ".DomainServicesUpdateClasses" #>
 //     the code is regenerated.
 // </auto-generated> EntityDomainServiceGenerator.tt from<#= Path.GetFileName(Host.TemplateFile) #>
 //---
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -1009,7 +1009,7 @@ namespace <#= domainservicenamespacestring + ".DomainServicesUpdateClassesRegist
 private void WriteEntityDomainServiceRegistrationManager(string sourceFolder,string modelname,dynamic contextName,string domainserivcename)
 {
 #>
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;

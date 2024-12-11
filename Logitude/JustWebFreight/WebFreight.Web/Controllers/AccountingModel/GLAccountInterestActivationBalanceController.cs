@@ -8,7 +8,7 @@ using WebFreight.Web.Helpers;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.CoreBL.Batch;
 using System.Globalization;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using WebFreight.Web.Security;
 using Simplog.Data.CommonDataModel.Repositories;
 

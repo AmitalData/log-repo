@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Security; 
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Global.Data.GlobalModel;

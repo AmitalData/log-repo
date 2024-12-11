@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Logitude.CRM.Data.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.CRM.Data.Repsitories;
 using Simplog.Data.Helpers;
@@ -17,7 +17,7 @@ using Logitude.CRM.BL.Helpers;
 using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Data.Entity.Core;
 
 namespace Logitude.CRM.BL.EntityUpdateServices

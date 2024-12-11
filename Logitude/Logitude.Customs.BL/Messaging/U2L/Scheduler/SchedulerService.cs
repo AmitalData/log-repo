@@ -40,7 +40,7 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using System.Net;
 using System.Web;

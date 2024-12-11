@@ -8,7 +8,7 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.ShipmentsModel.EntityLists;
 
 namespace Logitude.BL.ShipmentsModel.CustomFilters

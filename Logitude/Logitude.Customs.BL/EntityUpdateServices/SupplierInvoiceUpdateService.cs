@@ -30,7 +30,7 @@ using System.Diagnostics;
 using Logitude.Customs.BL.Utils;
 using Logitude.Customs.BL.Messaging.Customs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Customs.Def.Messaging.Customs;
 using Logitude.Customs.BL.TraceEvents;
 using Unifreight.BL.EntityPMs.UGenerated;

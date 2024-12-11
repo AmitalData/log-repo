@@ -2,8 +2,8 @@ using System.Data.Entity.Core.EntityClient;
 using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
 using System.Transactions;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Data.Common;
 using System.Data.Entity;
 using Simplog.Data.CommonDataModel.Mapping;
@@ -518,7 +518,6 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<TariffCarrierTranslation> TariffCarrierTranslations { get; set; }
         public IDbSet<VatFormatType> VatFormatTypes { get; set; }
         public IDbSet<EmailProvider> EmailProviders { get; set; }
-        public IDbSet<AuthenticationToken> AuthenticationTokens { get; set; }
         public IDbSet<VatUniqueType> VatUniqueTypes { get; set; }
         public IDbSet<VatMandatoryType> VatMandatoryTypes { get; set; }
         public IDbSet<CustomerSalesNote> CustomerSalesNotes { get; set; }

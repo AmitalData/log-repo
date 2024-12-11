@@ -1,7 +1,7 @@
 ﻿using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.CRM.BL.DataContracts;
 using Logitude.CRM.BL.EntityQueryServices;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;

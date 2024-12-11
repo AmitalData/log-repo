@@ -6,7 +6,7 @@ using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
 using System.Transactions;
 using Simplog.Data.CommonDataModel.Mapping;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Mapping;
 using Simplog.Data.InvoiceModel.Mapping;
 using Simplog.Data.QuoteModel.EntityPOCOs;

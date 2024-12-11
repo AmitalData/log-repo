@@ -1,7 +1,7 @@
 ﻿using Logitude.BL.InvoiceModel.APIDataContract;
 using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
 using Logitude.Server.Tools;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Simplog.Data.CommonDataModel.EntityPOCOs
+namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
 {
     public class AuthenticationToken
     {

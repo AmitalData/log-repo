@@ -4,7 +4,7 @@ using Logitude.TariffModule.BL.DataContracts;
 using Logitude.TariffModule.BL.EntityPMs;
 using Logitude.TariffModule.BL.EntityQueryServices;
 using Logitude.TariffModule.Data;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Net;
@@ -45,7 +45,7 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers

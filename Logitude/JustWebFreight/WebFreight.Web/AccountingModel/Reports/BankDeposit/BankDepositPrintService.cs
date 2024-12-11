@@ -7,7 +7,7 @@ using Logitude.BL.Interfaces;
 using Logitude.BL.Resolvers;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Stimulsoft.Report;
 using Stimulsoft.Report.Dictionary;

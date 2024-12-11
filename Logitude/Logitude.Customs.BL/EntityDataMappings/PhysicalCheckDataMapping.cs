@@ -15,7 +15,7 @@ using Logitude.BL.CommonDataModel.EntityLists;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {

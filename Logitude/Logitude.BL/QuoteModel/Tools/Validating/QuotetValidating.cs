@@ -6,7 +6,7 @@ using Logitude.BL.QuoteModel.EntityPMs;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using System.Data;
 using Logitude.BL.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.Server.Tools.Helpers;

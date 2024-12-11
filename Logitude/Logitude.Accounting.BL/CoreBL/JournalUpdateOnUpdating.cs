@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Logitude.Accounting.BL.CoreBL;
 using Logitude.Accounting.BL.EntityUpdateServices;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Accounting.BL.Validators;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;

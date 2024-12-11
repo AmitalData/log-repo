@@ -2,7 +2,7 @@
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.Tools.EntityService;
 using Logitude.Server.Tools;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.QuoteModel;
 using System;

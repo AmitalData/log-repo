@@ -9,14 +9,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Simplog.Server.Infrastructure.Azure;
 using Microsoft.Practices.Unity;
 using Logitude.Server.Tools.StorageService;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.IO;
 using Simplog.Data.Helpers;
 

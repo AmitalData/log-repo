@@ -12,7 +12,7 @@ using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.NotificationBL;
 using System.Diagnostics;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Customs.BL.Models;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;

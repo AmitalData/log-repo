@@ -8,7 +8,7 @@ using Logitude.Customs.Def.Messaging.Customs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Models;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;

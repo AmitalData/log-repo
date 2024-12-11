@@ -26,7 +26,7 @@ using System.Transactions;
 using Logitude.Customs.BL.Messaging.U2L.Scheduler;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.Customs.BL.BL;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Server.Tools;
 using Logitude.BL.Security;
 using System.Net.Http;

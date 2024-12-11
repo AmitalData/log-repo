@@ -6,13 +6,13 @@ using System.Web.Http;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.DashboardModule.BL.EntityPMs;
 using Logitude.DashboardModule.BL.DataProviders;
 using Logitude.DashboardModule.BL.APIDataContract;
 using Logitude.DashboardModule.Data.Repositories;
 using Logitude.DashboardModule.Data.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace WebFreight.Web.Controllers.ShipmentsModel

@@ -10,7 +10,7 @@ using Logitude.BL.Resolvers;
 using Logitude.BL.Validators;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -252,8 +252,8 @@ namespace Logitude.BL.Security
             else
             {
                 string token = null;
-                ICommonDataContext context = CommonDataContext.GetContext(tenant);
-                AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(context);
+                IGlobalContext context = GlobalContext.GetContext(tenant);
+                AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(GlobalContext.GetContext());
                 AuthenticationToken authToken = null;
                 if (HttpContext.Current != null)
                 {
@@ -398,8 +398,8 @@ namespace Logitude.BL.Security
                 else
                 {
                     string token = null;
-                    ICommonDataContext context = CommonDataContext.GetContext(tenant);
-                    AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(context);
+                    IGlobalContext context = GlobalContext.GetContext(tenant);
+                    AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(GlobalContext.GetContext());
                     AuthenticationToken authToken = null;
                     if (HttpContext.Current != null)
                     {

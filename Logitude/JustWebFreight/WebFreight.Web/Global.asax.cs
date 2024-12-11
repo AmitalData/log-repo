@@ -20,7 +20,7 @@ using Logitude.SystemLogs.Repositories;
 //using WebFreight.Web.Azure.TopicQueues;
 using Microsoft.AspNet.SignalR;
 using Microsoft.ServiceBus.Messaging;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -593,7 +593,7 @@ namespace WebFreight.Web
             //if (!string.IsNullOrEmpty(token))
             //{
             //    ICommonDataContext context = CommonDataContext.GetContext(tenant);
-            //    AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(context);
+            //    AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(GlobalContext.GetContext());
             //    AuthenticationToken authToken = tokenRep.GetSingleToken(token);
             //    if (authToken != null)
             //    {

@@ -1,6 +1,6 @@
 ﻿
 
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 namespace WebFreight.Web.InfrastructureModel
 {
 	public class SignUpInfoClass

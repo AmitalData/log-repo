@@ -9,7 +9,7 @@ using Simplog.Data.InvoiceModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Text;
 using System.Threading.Tasks;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;

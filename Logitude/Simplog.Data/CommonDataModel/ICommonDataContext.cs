@@ -1,7 +1,7 @@
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
 //using Simplog.Server.Infrastructure;
@@ -121,7 +121,6 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<VatMandatoryType> VatMandatoryTypes { get; set; }
         IDbSet<VatUniqueType> VatUniqueTypes { get; set; }
         IDbSet<CustomerSalesNote> CustomerSalesNotes { get; set; }
-        IDbSet<AuthenticationToken> AuthenticationTokens { get; set; }
         IDbSet<CustomerStatus> CustomerStatus { get; set; }
         IDbSet<ProductTypeModification> ProductTypeModifications { get; set; }
         IDbSet<CustomerSalesmanByProduct> CustomerSalesmanByProducts { get; set; }

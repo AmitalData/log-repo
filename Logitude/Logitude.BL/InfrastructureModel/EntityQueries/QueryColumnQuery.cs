@@ -8,7 +8,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {

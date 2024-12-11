@@ -8,7 +8,7 @@ using Logitude.Server.Tools;
 using WebFreight.Web.Security;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.ServiceModel.Activation;
 
 namespace WebFreight.Web.WcfApi

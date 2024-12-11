@@ -31,7 +31,7 @@ using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityListQueryServices;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices

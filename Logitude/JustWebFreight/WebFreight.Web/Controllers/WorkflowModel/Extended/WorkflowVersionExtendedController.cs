@@ -5,7 +5,7 @@ using Logitude.Workflow.BL.EntityUpdateServices;
 using Logitude.Workflow.Data;
 using Logitude.Workflow.Data.WorkflowValidation.Exceptions;
 using Logitude.Workflow.Data.WorkflowValidation.Exceptions.Builders;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Logitude.BL.ExternalService;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.QuoteModel.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.QuoteModel.Repositories;
 

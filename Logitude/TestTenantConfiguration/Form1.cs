@@ -23,7 +23,7 @@ using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Logitude.BL.GlobalModel.Tools.DataMapping;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using System.Drawing;

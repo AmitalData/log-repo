@@ -5,7 +5,7 @@ using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;

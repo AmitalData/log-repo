@@ -11,7 +11,7 @@ using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.EntityPMs; 
 using Logitude.TariffModule.Data;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.TariffModule.BL.EntityDataMappings
 {

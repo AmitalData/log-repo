@@ -15,7 +15,7 @@ using Microsoft.Practices.Unity;
 using NPOI.OpenXmlFormats.Dml;
 using NPOI.SS.Formula.Functions;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;

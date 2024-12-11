@@ -6,7 +6,7 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -27,6 +27,7 @@ using System.Text;
 using Newtonsoft.Json;
 using System.Configuration;
 using static WebFreight.Web.Helpers.ReportHelper;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {

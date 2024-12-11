@@ -12,7 +12,7 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
 using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -24,7 +24,7 @@ using Unifreight.Data.AmitalModel;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Text.RegularExpressions;
 
 namespace Logitude.Customs.BL.Messaging.ILOVS

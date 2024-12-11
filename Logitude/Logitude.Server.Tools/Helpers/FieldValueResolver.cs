@@ -1,6 +1,6 @@
 using System;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Reflection;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System.Collections.Generic;

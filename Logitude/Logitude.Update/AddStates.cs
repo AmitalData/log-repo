@@ -1,7 +1,7 @@
 ﻿using Logitude.Server.Tools.Counters;
 using Microsoft.VisualBasic.FileIO;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

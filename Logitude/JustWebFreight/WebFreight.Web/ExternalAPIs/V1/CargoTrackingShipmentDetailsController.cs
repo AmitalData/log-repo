@@ -3,7 +3,7 @@ using Logitude.Accounting.BL;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.Server.Tools;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -17,6 +17,7 @@ using WebFreight.Web.Helpers.APIHelpers;
 using WebFreight.Web.Helpers.ExternalAPIHelpers;
 using WebFreight.Web.Security;
 using Logitude.CargoTracking.BL.APIDataContract;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 
 namespace WebFreight.Web.ExternalAPIs.V1

@@ -31,7 +31,7 @@ using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.CustomsMessaging.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 
 namespace Logitude.CustomsMessaging.ResponseServices
