@@ -239,6 +239,8 @@ export class DeclarationList {
 	SecurityFee: number;
 	ComputerFee: number;
 	EffectiveFlight: boolean;
+	CooStatusName: string;
+	CooStatusCode: string;
 	
 }
  
