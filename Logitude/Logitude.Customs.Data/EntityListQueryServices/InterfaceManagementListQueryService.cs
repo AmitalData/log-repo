@@ -84,7 +84,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                               InterfaceType= a.InterfaceType,
                                                              InterfaceTypeName = a.InterfaceType=="C"? "עמילות" : a.InterfaceType == "B" ? "בלדרות" : "הכל",
                                                              SendTime = s.SendTime,
-                                                            
+                                                             EntityLockId = a.EntityLockId,
+                                                             EntityLockName = a.EntityLock != null ? a.EntityLock.Name : null,
 
                                                          });
             return query;

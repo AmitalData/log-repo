@@ -197,7 +197,30 @@
 
                         </tr>
 
-
+                         <!--EntityLockId-->
+                         <tr class="FormFieldRow">
+                           <td class="tbl1Label">
+                               <LogLabel [ObjectFieldName]="'EntityLockId'"
+                                         [ObjectTableName]="ObjectTableName"
+                                         [DataContext]="DataContext">
+           
+                               </LogLabel>
+                           </td>
+                           <td class="tbl1Col0"></td>
+           
+                           <td class="tbl1Col1">
+                                <LogLov [ObjectFieldName]="'EntityLockId'"
+                                         [ObjectTableName]="ObjectTableName"
+                                         [DataContext]="DataContext"
+                                         [HideColumns]="true"
+                                         [LookUpTableName]="'ObjectTable'"
+                                         [DisplayMemberPath]="'Name'"
+                                         [SelectedValue]="EntityLockId"
+                                         [DefaultPageSize] = "2000">
+                                </LogLov>  
+                            </td>
+                            <td class="tbl1LastCol"><div></div></td>
+                        </tr>
 
 
                         <!--placeholder-->
