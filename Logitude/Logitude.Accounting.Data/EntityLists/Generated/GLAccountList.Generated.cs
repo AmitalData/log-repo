@@ -345,6 +345,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string ContactEmail  { get; set; }
        [DataMember]
        public string ContactPhone  { get; set; }
+        [DataMember]
+        public DateTime? MarkDate { get; set; }
     }
 
 }
