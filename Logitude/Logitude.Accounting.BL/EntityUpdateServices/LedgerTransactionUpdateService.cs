@@ -20,6 +20,7 @@ using System.Data.SqlClient;
 using Simplog.Data.Helpers;
 using System.Data;
 using Simplog.Data.CommonDataModel;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
