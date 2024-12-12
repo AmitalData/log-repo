@@ -33,6 +33,7 @@ export class ResponsibilityListService {
     }
 
 	getSingle(code: string) {
+		debugger;
 
 		var callTime = new Date();
 
@@ -62,7 +63,7 @@ export class ResponsibilityListService {
 	}
 
 	getAll() {
-
+		debugger;
 		var callTime = new Date();
 
 		return defer(() => {
@@ -94,7 +95,7 @@ export class ResponsibilityListService {
 	}
 	
 	getByFilters(filters: ApiQueryFilters) {
-
+		debugger;
 		var callTime = new Date();       
 		var urlparameters = '/getbyfilters?';
         var mykeys = Object.keys(filters);
@@ -162,6 +163,7 @@ export class ResponsibilityListService {
 	}
 
 	getSingleFromCache(code: string) {
+		debugger;
 
 		var callTime = new Date(); 	    
 
@@ -209,6 +211,7 @@ export class ResponsibilityListService {
     }
 
     getAllFromCache(filters: ApiQueryFilters= new ApiQueryFilters(true)) {
+		debugger;
 
 		var callTime = new Date();
 

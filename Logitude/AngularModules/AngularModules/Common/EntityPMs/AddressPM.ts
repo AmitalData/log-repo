@@ -13,6 +13,7 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { TruckerSettingPM } from './TruckerSettingPM';
 
 
 export class AddressPM {
@@ -249,6 +250,39 @@ export class AddressPM {
     private truckerId:string;
     public set TruckerId(newValue: string) { if (this.truckerId != newValue) { this.truckerId = newValue; this.MarkAsDirty("TruckerId"); } }
     public get TruckerId() { return this.truckerId; }
+
+    private truckerSettings: TruckerSettingPM[];
+    get  TruckerSettings() {
+        if (this.truckerSettings == null) {
+            this.truckerSettings = [];
+        }
+
+        return this.truckerSettings;
+    }
+    
+    set  TruckerSettings(newValue: TruckerSettingPM[]) {
+        if (this.truckerSettings != newValue) {
+            this.truckerSettings = newValue;
+        }
+    }
+    public AddTruckerSettings(item: TruckerSettingPM) {
+        if (item != null) {
+            var index = this. TruckerSettings.indexOf(item);
+            if (index == -1) {
+                this. TruckerSettings.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveTruckerSettingsitem(item: TruckerSettingPM) {
+        if (item != null) {
+            var index = this. TruckerSettings.indexOf(item);
+            if (index > -1) {
+                this. TruckerSettings.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
        
 	 
 

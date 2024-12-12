@@ -21,7 +21,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ResponsibilityUpdateClass
    {  		
-		public const string HashString = "9112000745f10c888732e7c65eb0ccb1";
+		public const string HashString = "1cfb075fa8d76101bbae5b69a093e8b2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -65,7 +65,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Responsibility",
-			      				    Code =  "d9fc",
+			      				    Code =  "COGR",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Code",
@@ -414,7 +414,50 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
-	    {    
+	    {  
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+	        QueryGroup ResponsibilityQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "COGR", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup ResponsibilityQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "1be6", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+				        queryGroupRepository.SubmitChanges();
+	        ObjectTable ResponsibilityObjectTable = objectTables.ContainsKey("Responsibility") ? objectTables["Responsibility"] : null;
+            if (ResponsibilityObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
+                ResponsibilityObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Responsibility" && d.Tenant == 0).FirstOrDefault();
+            }
+
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
+
+			   TextCode ResponsibilityTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Responsibility.Q.ResponsibilityQuery", DefaultText = @"Responsibilities",LocalDefaultText = "BS64:IteQ15fXqNeZ15XXqiI=", ObjectTableId = ResponsibilityObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ResponsibilityFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RESPONSIBILITY", ObjectTableId = ResponsibilityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Responsibility.Features.Responsibilitys", NameTextCodeDefaultText = "Responsibility", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ResponsibilityObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query ResponsibilityQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ResponsibilityTextCode_0.Id, NameTextCodeCode = ResponsibilityTextCode_0.Code, ObjectTableName = "Responsibility", Code = "Responsibility",  QueryGroupCode = "COGR", IndexOrder = 0, Tenant = 0, ObjectTableId = ResponsibilityObjectTable.Id, QuerySection = "Responsibility", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ResponsibilityFeature_0.Id,FeatureUniqeCode= ResponsibilityFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+	
+			 QueryColumn ResponsibilityQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ResponsibilityQuery.Id,QueryCode = ResponsibilityQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Responsibility.Code" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn ResponsibilityQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ResponsibilityQuery.Id,QueryCode = ResponsibilityQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Responsibility.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn ResponsibilityQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ResponsibilityQuery.Id,QueryCode = ResponsibilityQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Responsibility.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn ResponsibilityQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ResponsibilityQuery.Id,QueryCode = ResponsibilityQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Responsibility.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
