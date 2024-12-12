@@ -19,12 +19,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(CertificateOfOriginConnectionPM entityPM, CertificateOfOriginConnection entityPOCO)
         {
-            //throw new NotImplementedException();
+
+            entityPOCO.Id = entityPM.Id;
+            entityPOCO.Active = entityPM.Active;
+            entityPOCO.Tenant = entityPM.Tenant;
+            entityPOCO.CooReason = entityPM.CooReason;
+            entityPOCO.CooStatus = entityPM.CooStatus;
         }
 
         public void CustomPOCOToPM(CertificateOfOriginConnectionPM entityPM, CertificateOfOriginConnection entityPOCO)
         {
-            //throw new NotImplementedException();
+            entityPM.Id = entityPOCO.Id;
+            entityPM.Active = entityPOCO.Active;
+            entityPM.Tenant = entityPOCO.Tenant;
+            entityPM.CooReason = entityPOCO.CooReason;
+            entityPM.CooStatus = entityPOCO.CooStatus;
         }
    }
 

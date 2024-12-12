@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs">
+	<Sql Version="1">
+		<![CDATA[	
+      INSERT INTO Customs.CertificateOfOriginConnections
+      (
+          Id,
+          Tenant,
+          SearchFields,
+          CooStatus,
+          CooReason,
+          Active
+      )
+      SELECT
+          CAST(ROW_NUMBER() OVER (ORDER BY Status.Code, Reason.Code) AS VARCHAR(15)) AS Id, -- מזהה ייחודי
+         6 AS Tenant, -- Tenant קבוע
+          CONCAT(Status.Code, ',', Reason.Code, ',', CAST(CASE WHEN Status.Inactive = 0 THEN 1 ELSE 0 END AS VARCHAR)) AS SearchFields, -- ערכים בשדה SEARCHFIELDS
+          Status.Code AS CooStatus,
+          Reason.Code AS CooReason,
+          CASE WHEN Status.Inactive = 0 THEN 1 ELSE 0 END AS Active -- Active הפוך מהשדה Inactive
+      FROM
+          customs.CertificateOfOriginStatusCodeEnums AS Status
+      CROSS JOIN
+          customs.RequestReasonCodeEnums AS Reason
+      ORDER BY Status.Code;
+
+        ]]>
+	</Sql>
+  
+  <Oracle Version="1">    
+  </Oracle>
+</Script>

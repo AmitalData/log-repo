@@ -34,6 +34,8 @@ import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import * as xmlbuilder from 'xmlbuilder';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPMService';
+import { CertificateOfOriginConnectionListService } from 'Customs/Services/StandardLists/CertificateOfOriginConnectionListService';
+import { CertificateOfOriginConnectionList } from 'Customs/EntityLists/CertificateOfOriginConnectionList';
 
 
 class UpdateGeneralArgsParams {
@@ -122,6 +124,9 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                             currentDeclaration.SupplierInvoices = result;
                             this.currentDeclaration.SupplierInvoices = result;
                             this.InitNewCertificate(EntityPM);
+                            if(this.entityPM.CooStatusCode){
+                                this.getCertificateOfOriginConnection(this.entityPM.CooStatusCode);
+                            }
                             this.isReady = true;
 
                         }
@@ -131,6 +136,9 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         }
         else if (IsNewOrEdit === StatusCertificateOfOrigin.IsEdit) {
             this.InitilizeListsFromCertificateOfOrigin(EntityPM);
+            if(this.entityPM.CooStatusCode){
+                this.getCertificateOfOriginConnection(this.entityPM.CooStatusCode);
+            }
             this.isReady = true;
         }
         
@@ -141,8 +149,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.initSelectionValueFields();
         this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true : false;
          this.setDisplayMessage();
- 
-        
     }
     InitUrls() {
         for (const paramName in this.entityPM) {
@@ -610,6 +616,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     private measurmentUnitListService: MeasurmentUnitListService = new MeasurmentUnitListService();
     private packingTypeListService: PackingTypeListService = new PackingTypeListService();
     private originCriterionListService: OriginCriterionListService = new OriginCriterionListService();
+    private certificateOfOriginConnectionListService: CertificateOfOriginConnectionListService = new CertificateOfOriginConnectionListService();
 
     getMeasureNameFromCache(code, item) {
         this.measurmentUnitListService.getSingleFromCache(code).subscribe((myResponse: ServiceResponse) => {
@@ -646,6 +653,33 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             this.CriterionTypesFilterItems.addAdditionalFilter("CertificateOfOriginTypeCodeID", this.entityPM.CooTypeCode, null, null, "Equals", false, false, false, "number");
             this.updateOptionsMap["OriginCriterionCode"].Arguments.QueryFilterItems = this.CriterionTypesFilterItems;
             // this.UpdateOptionParams.OriginCriterionCode.QueryFilterItems = this.CriterionTypesFilterItems;
+        });
+    }
+
+    CooReasonFilterItems: ApiQueryFilters = new ApiQueryFilters();
+    getCertificateOfOriginConnection(code) {
+        let filters: ApiQueryFilters = new ApiQueryFilters();
+        filters.GetAll = true;
+        filters.addAdditionalFilter("CooStatus", code, null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("Active", true, null, null, "Equals", true, false, false, "boolean");
+        this.certificateOfOriginConnectionListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var result: CertificateOfOriginConnectionList[] = myResponse.Result;
+                if (result != null) {
+                    this.CooReasonFilterItems = new ApiQueryFilters();
+                    // this.CooReasonFilterItems.addAdditionalFilter("Code", result[2].CooReason, null, null, "Equals", false, false, false, "number"); // test
+
+                    // this.CooReasonFilterItems.addAdditionalFilter();
+                    // let filterItem: FilterItem[] = [];
+                    // result.forEach(item => {
+                    //     filterItem.push(new FilterItem("Code", item.CooReason, null, null, "Equals", false, false, false, "number"));
+                    // });
+                    // this.CooReasonFilterItems.AdditionalFilters = filterItem;
+                    // console.log(this.CooReasonFilterItems);
+                    // console.log(filterItem);
+                    // debugger
+                }
+            }
         });
     }
 
