@@ -2,7 +2,7 @@
 <Table
   Name="AuthenticationTokens"
   Schema="dbo"
-  DBType="Main"
+  DBType="Global"
   Module="Common">
   <Column
     Name="Token"
