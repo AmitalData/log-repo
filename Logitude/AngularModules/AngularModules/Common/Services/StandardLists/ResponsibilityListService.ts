@@ -33,7 +33,6 @@ export class ResponsibilityListService {
     }
 
 	getSingle(code: string) {
-		debugger;
 
 		var callTime = new Date();
 
@@ -63,7 +62,6 @@ export class ResponsibilityListService {
 	}
 
 	getAll() {
-		debugger;
 		var callTime = new Date();
 
 		return defer(() => {
