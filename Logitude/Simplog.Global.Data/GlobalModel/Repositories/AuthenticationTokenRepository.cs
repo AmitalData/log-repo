@@ -32,6 +32,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public void Add(AuthenticationToken entity)
         {
             context.AuthenticationTokens.Add(entity);
+            string cacheKey = $"Token_{entity.Token}";
+            CacheManager.CacheWrapper.Insert(cacheKey, entity, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
         }
 
         public void Remove(AuthenticationToken entity)

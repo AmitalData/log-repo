@@ -1,20 +1,12 @@
+using Devart.Data.Oracle.Entity.Configuration;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Helpers;
+using Simplog.Global.Data.GlobalModel.Mapping;
+using Simplog.Server.Infrastructure;
 using System.Configuration;
 using System.Data.Common;
 using System.Data.Entity;
-using System.Data.Entity.Core.EntityClient;
-using System.Data.Entity.Core.Objects;
-using System.Data.SqlClient;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Mapping;
-using Simplog.Server.Infrastructure;
-using System.Data.Entity.Migrations;
-using System.Data.Entity.Infrastructure;
-using System.Data;
-using System.Data.Entity.ModelConfiguration.Conventions;
-using System;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Helpers;
-using Devart.Data.Oracle.Entity.Configuration;
 namespace Simplog.Global.Data.GlobalModel
 {
     public class GlobalContext : DbContextBase, IGlobalContext
@@ -22,7 +14,7 @@ namespace Simplog.Global.Data.GlobalModel
         public GlobalContext()
             : base("LogitudeGlobalStr")
         {
-            Database.SetInitializer<GlobalContext>(new MigrateDatabaseToLatestVersion<GlobalContext, Simplog.Global.Data.Migrations.Configuration>());
+            Database.SetInitializer<GlobalContext>(null);
         }
         public GlobalContext(DbConnection connection)
             : base(connection, true)

@@ -23,7 +23,7 @@ namespace Logitude.Global.OracleMigration.GlobalModel
         public GlobalContext()
             : base("LogitudeGlobalStr")
         {
-            Database.SetInitializer<GlobalContext>(new MigrateDatabaseToLatestVersion<GlobalContext,Logitude.Global.OracleMigration.Migrations.Configuration>());
+            Database.SetInitializer<GlobalContext>(null);
         }
         public GlobalContext(DbConnection connection)
             : base(connection,true)
@@ -37,7 +37,7 @@ namespace Logitude.Global.OracleMigration.GlobalModel
 
         public GlobalContext(string nameOrConnectionString) : base(nameOrConnectionString)
         {
-            Database.SetInitializer<GlobalContext>(new MigrateDatabaseToLatestVersion<GlobalContext, Logitude.Global.OracleMigration.Migrations.Configuration>());
+            Database.SetInitializer<GlobalContext>(null);
         }
 
         public void SetAsModified(object entity)
