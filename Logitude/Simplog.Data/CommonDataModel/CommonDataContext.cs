@@ -1,26 +1,19 @@
-using System.Data.Entity.Core.EntityClient;
-using System.Data.Entity.Core.Objects;
-using System.Data.SqlClient;
-using System.Transactions;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using System.Data.Common;
-using System.Data.Entity;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Mapping;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Mapping;
+using Simplog.Data.InvoiceModel.Mapping;
+using Simplog.Data.QuoteModel.Mapping;
+using Simplog.Data.ShipmentsModel.Mapping;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Helpers;
-using Simplog.Server.Infrastructure;
-using Simplog.Data.InvoiceModel.Mapping;
-using Simplog.Data.ShipmentsModel.Mapping;
-using Simplog.Data.InfrastructureModel.Mapping;
-using Simplog.Data.QuoteModel.Mapping;
-using System;
-using System.Data;
-using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Linq;
-using System.Configuration;
 using Simplog.Global.Data.GlobalModel.Mapping;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Server.Infrastructure;
+using System.Configuration;
+using System.Data.Common;
+using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Data.SqlClient;
 
 namespace Simplog.Data.CommonDataModel
 {
