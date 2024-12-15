@@ -18,6 +18,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.MessageLib.Ransom;
 using Logitude.Server.Tools.Utils;
+using Logitude.Customs.BL.TraceEvents;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -336,8 +337,24 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                 }
 
+                if (myDeclarationPM.Direction == "E")
+                {
+                    string documentTypeId = customResponse.RequiredDocumentDetails.typeID.ToString();
+                    string comments = "";
+                    if (!string.IsNullOrWhiteSpace(documentTypeId))
+                    {
+                        comments = documentTypeId;
+                        var documentTypeName = GetDocumentTypeName(documentTypeId, requestParams.Tenant);
+                        if (!string.IsNullOrWhiteSpace(documentTypeName))
+                        {
+                            comments += " - " + documentTypeName;
+                        }
+                    }
 
-                DeclarationUpdateService declarationUpdateService1 = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+                    RaiseEvent(myDeclarationPM, requestParams.LoggingUserId, "DON", null, comments);
+                }
+
+                    DeclarationUpdateService declarationUpdateService1 = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
                 declarationUpdateService1.Update(myDeclarationPM, true);
 
                 if (customsDocumentPointerPM != null)
@@ -448,5 +465,39 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return this.MyResponseData;
         }
 
+        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id, DateTime? status_DateTime, string comments = null)
+        {
+            //primary_number = $"{dirtyDeclarationPM.CustomFileNo},{dirtyDeclarationPM.TransportModeId == "A" ? "EFIFILEM" : "MFIFILEM" }",
+            string primary_number = $"{dirtyDeclarationPM.CustomFileNo},EFIFILEM";
+            if (dirtyDeclarationPM.TransportModeId != "A")
+            {
+                primary_number = $"{dirtyDeclarationPM.CustomFileNo},MFIFILEM";
+            }
+
+            var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+            {
+                Tenant = dirtyDeclarationPM.Tenant,
+                objectTableName = "Customs.Declaration",
+                EventCode = status_id,
+                notes = "",
+                CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
+                EntityId = dirtyDeclarationPM.Id,
+                UserId = loggingUserId,
+
+                CommunicationSubject = "FU Status " + status_id + " from logitude",
+                MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                {
+                    entname = dirtyDeclarationPM.Direction == "E" ? "BFIFILE" : "CFIFILEM",
+                    primary_number = primary_number,
+                    status = "new",
+                    xml_status = "new",
+                    status_id = status_id,
+                    status_DateTime = status_DateTime ?? DateTime.Now,
+                    comments = !string.IsNullOrEmpty(comments) ? comments : null,
+                }
+            };
+
+            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true, iscustomUser: true);
+        }
     }
 }
