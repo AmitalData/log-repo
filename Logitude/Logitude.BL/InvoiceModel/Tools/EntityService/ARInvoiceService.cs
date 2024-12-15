@@ -504,7 +504,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 ContactQuery contactQuery = new ContactQuery(entityPM.Tenant);
                 var contactList = contactQuery.GetContactListsById(entityPM.CreatedByUserId, entityPM.Tenant);
-                ApiResponse apiResponse = ExportServerService.CreateConfirmationNumber(entityPM.Tenant, contactList?.Email, CreateBodyFromARInvoice(contactList?.EnglishName));
+                ApiResponse apiResponse = ExportServerService.CreateConfirmationNumber(entityPM.Tenant, contactList?.Email, CreateBodyFromARInvoice(loggedContactName));
 
                 if (apiResponse != null && apiResponse.Res?.StatusCode == System.Net.HttpStatusCode.OK)
                 {
