@@ -41,7 +41,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
 
         public byte[] GetData()
         {
-           
             BuildDataProvider();
             
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(ExportDeclarationDataProvider));

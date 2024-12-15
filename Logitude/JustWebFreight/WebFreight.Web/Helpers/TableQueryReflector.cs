@@ -69,7 +69,7 @@ namespace WebFreight.Web.Helpers
 
             var MethodsInfo = getMethodsInfo("WebFreight.Web.ShipmentsModel.DomainServices.ShipmentsDomainService", tableName);
             bool stop = false;
-            if (MethodsInfo != null && LogitudeSettings.WorkEnvironment!="customs")
+            if (MethodsInfo != null)
             {
                 getListMethodInfo = MethodsInfo.ListMethodInfo;
                 getCountMethodInfo = MethodsInfo.CountMethodInfo;

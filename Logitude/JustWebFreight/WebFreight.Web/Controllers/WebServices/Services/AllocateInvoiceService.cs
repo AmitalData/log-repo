@@ -37,6 +37,43 @@ namespace WebFreight.Web.Controllers.WebServices.Services
 
             return apiToShaamRes;
         }
+
+        public HttpClienResponse CancelInvoice(string json, int tenant)
+        {
+            ConfirmationNumberTokenLogRepository confirmationNumberTokenLogRepository = new ConfirmationNumberTokenLogRepository(tenant);
+            InvoiceCancelRequest data = JsonConvert.DeserializeObject<InvoiceCancelRequest>(json);
+            string confirmationTokenLogId = IdCounter.GetNumber("Customs.ConfirmationNumberTokenLog", tenant);
+            string communicationLogId = IdCounter.GetNumber("CommunicationLog", tenant);
+
+            confirmationNumberTokenLogRepository.Add(new ConfirmationNumberTokenLog()
+            {
+                Id = confirmationTokenLogId,
+                Tenant = tenant,
+                CreateDate = DateTime.Now,
+                InvoiceNumber = data.invoice_id,
+                CallType = "Cancel Invoice",
+                CommunicationType = 1,
+                CompanyIdInvoiceProducer = data.vat_number.ToString(),
+                CompanyIdInvoiceRecipient = "",
+                CommunicationLogId = communicationLogId,
+                SearchFields = data.vat_number.ToString() + "," + data.invoice_id
+            });
+            confirmationNumberTokenLogRepository.SubmitChanges();
+
+            HttpClienResponse apiToShaamRes = shaamService.CancelInvoice(json, tenant, confirmationTokenLogId, communicationLogId);
+
+            return apiToShaamRes;
+        }
+    }
+
+    public class InvoiceCancelRequest
+    {
+        public string invoice_id { get; set; }
+        public int vat_number { get; set; }
+        public int authorized_company { get; set; }
+        public int user_id { get; set; }
+        public string user_name { get; set; }
+        public int accounting_software_number { get; set; }
     }
 
     public class InvoiceRequest
