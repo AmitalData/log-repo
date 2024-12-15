@@ -312,6 +312,8 @@ namespace Logitude.Accounting.BL.Validators
           JournalPM myJournalPM,
           System.ComponentModel.DataAnnotations.ValidationContext accountingValidationContextServiceProvider)
         {
+            if (myJournalPM.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.Cancelled)
+                return ValidationResult.Success;
             decimal creditTotal = 0;
             decimal debitTotal = 0;
 
