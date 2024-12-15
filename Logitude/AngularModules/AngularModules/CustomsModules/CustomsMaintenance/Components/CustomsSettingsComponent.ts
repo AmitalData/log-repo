@@ -121,7 +121,7 @@ export class CustomsSettingsComponent
                 });
 
                 //this.RefreshBtnClick()
-                console.log(this.ObjectTableName)
+          
                 console.log(this.DataContext)
             });
 
@@ -265,7 +265,9 @@ export class CustomsSettingsComponent
 
     get LastNumOfMessagesDCAWS() { return this.entityPM != null ? this.entityPM.LastNumOfMessagesDCAWS : null; }
     set LastNumOfMessagesDCAWS(value) { this.entityPM.LastNumOfMessagesDCAWS = value; }
-
+    
+    get ForbiddenSigns() { return this.entityPM != null ? this.entityPM.ForbiddenSigns.replace(/([a-zA-Z])/g, '$1,') : null; }
+    set ForbiddenSigns(value) { this.entityPM.ForbiddenSigns = value.replace(/,/g, ''); }
 
     _LastRunningDCAWS: Date;
     get LastRunningDCAWS() {
@@ -299,9 +301,6 @@ export class CustomsSettingsComponent
     get HSMCompanyId() { return this.entityPM != null ? this.entityPM.HSMCompanyId : null; }
     set HSMCompanyId(value) { this.entityPM.HSMCompanyId = value; }
 
-
-
-
     
     get HSMToken() { return this.entityPM != null ? this.entityPM.HSMToken : null; }
     set HSMToken(value) { this.entityPM.HSMToken = value; }
@@ -309,8 +308,6 @@ export class CustomsSettingsComponent
     get OcrToken() { return this.entityPM != null ? this.entityPM.OcrToken : null; }
     set OcrToken(value) { this.entityPM.OcrToken = value; }
 
-    get ForbiddenSigns() { return this.entityPM != null ? this.entityPM.ForbiddenSigns : null; }
-    set ForbiddenSigns(value) { this.entityPM.ForbiddenSigns = value; }
 
     //#endregion
     ClearCache(){
