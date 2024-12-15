@@ -944,15 +944,25 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     // addd on OnChanged for IsInvoicesForPrint
     OnChangedInvoiceForPrint($event, item) {
         item.IsInvoicesForPrint = !item.IsInvoicesForPrint;
+        if(item.IsInvoicesForPrint) item.IsInvoiceConnected = item.IsInvoicesForPrint;
     }
 
-    // addd on OnChanged for IsInvoiceConnected
+    // add on OnClickInvoiceConnected for IsInvoiceConnected
+    OnClickInvoiceConnected($event, item) { 
+        var InvoiceConnectedList = this.CertificateOriginInvoiceItems.Collection.filter(x => x.IsInvoiceConnected);
+        if (item.IsInvoiceConnected && InvoiceConnectedList.length <= 1){
+            $event.preventDefault();
+            return;
+        }            
+    }
+
+    // add on OnChanged for IsInvoiceConnected
     OnChangedInvoiceConnected($event, item) {
         this.ErrorsList = [];
         var prevIsInvoiceConnected = item.IsInvoiceConnected;
         item.IsInvoiceConnected = !item.IsInvoiceConnected;
         item.IsInvoicesForPrint = item.IsInvoiceConnected;
-
+        
         var InvoiceConnectedList = this.CertificateOriginInvoiceItems.Collection.filter(x => x.IsInvoiceConnected);
         if (this.IsUnitedInvoices && InvoiceConnectedList.length < 2) this.IsUnitedInvoices = false;
         else if (this.IsUnitedInvoices && InvoiceConnectedList.find(x => x.CurrencyTypeCode != item.CurrencyTypeCode)) {

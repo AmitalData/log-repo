@@ -659,6 +659,7 @@
                                                                 [Checked]="item.IsInvoiceConnected"
                                                                 [ObjectTableName]="'Customs.CertificateOriginInvoice'"
                                                                 [DataContext]="DataContext"
+                                                                (click)="OnClickInvoiceConnected($event,item)"
                                                                 (Changed)="OnChangedInvoiceConnected($event,item)"
                                                                 [Value]="item.IsInvoiceConnected"
                                                                 [IsDisabled]="IsDisplayOnly"></LogCheckBox>
