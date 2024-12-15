@@ -27,6 +27,7 @@ import { CertificateOfOriginWebService } from 'Customs/Services/WebServices/Cert
 import { CertificateOfOriginRequestRequestParams } from 'Customs/DataContract/RequestParams/CertificateOfOriginRequestRequestParams';
 import { BaseRequestsSheetMassaging, IRequestsSheetMassagingComponent } from 'CustomsModules/CustomsRequests/Components/BaseRequestsSheetMassaging';
 import { CertificateOfOriginListService } from 'Customs/Services/StandardLists/CertificateOfOriginListService';
+import { CertificateOfOriginStatusCodeEnumListService } from 'Customs/Services/StandardLists/CertificateOfOriginStatusCodeEnumListService';
 import { BehaviorSubject } from 'rxjs';
 
 
@@ -45,6 +46,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     certificateOfOriginPMService: CertificateOfOriginPMService = new CertificateOfOriginPMService();
     certificateOfOriginWebService: CertificateOfOriginWebService = new CertificateOfOriginWebService();
     certificateOfOriginListService: CertificateOfOriginListService = new CertificateOfOriginListService();
+    certificateOfOriginStatusCodeEnumListService: CertificateOfOriginStatusCodeEnumListService = new CertificateOfOriginStatusCodeEnumListService();
 
 
     public entityResourceService: EntityResourceService = new EntityResourceService();
@@ -91,10 +93,10 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         this.isAllowChange = args.isAllowChange;
 
         this.isListenToChangeInCertificate(args.logWindow);
-
         this.InitMoreDataScreenValues();
         this.BuildTabs();
         this.RunComponent();
+        this.getCertificateOfOriginStatusCodeEnum();
         this.entityArgs.EntityPM = this.EntityPM;
         this.entityArgs.ObjectTableName = "Customs.CertificateOfOrigin";
     }
@@ -538,6 +540,8 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
                 }
                 else
                     this.UpdateIsChange(false);//#103474
+
+                this.getCertificateOfOriginStatusCodeEnum();
             }
         });
 
@@ -565,6 +569,16 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     CancelButtonClicked() {
         // this.EntityPM.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
+    }
+
+    IsDisplayOnlyByRecordEditable: boolean = false;
+    getCertificateOfOriginStatusCodeEnum(){
+        this.certificateOfOriginStatusCodeEnumListService.getSingle(this.EntityPM?.CooStatusCode).subscribe((response: any) => {
+            if (!response.HasError) {
+               console.log(response.Result);
+               this.IsDisplayOnlyByRecordEditable = response?.Result?.RecordEditable;
+            }
+        });
     }
 }
 
