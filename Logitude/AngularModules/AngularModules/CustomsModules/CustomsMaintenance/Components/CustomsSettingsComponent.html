@@ -657,11 +657,22 @@
                         <td style="padding:2px;">
                             <LogLabel [ObjectFieldName]="'UServerServiceAddress'"
                                       [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="DataContext">
+                                      [DataContext]="DataContext"
+                                      
+                                      >
 
                             </LogLabel>
                         </td>
-                        <!--UServerServiceAddress-->
+                        <!--ForbiddenSigns-->
+                        <td style="padding:2px;">
+                            <LogLabel [ObjectFieldName]="'ForbiddenSigns'"
+                                      [ObjectTableName]="ObjectTableName"
+                                      [DataContext]="DataContext"
+                                      [Text]="'תווים אסורים'"
+                                    >
+
+                            </LogLabel>
+                        </td>
                         <td style="padding:2px;">
                         </td>
                     </tr>
@@ -688,6 +699,16 @@
                                         [ObjectTableName]="ObjectTableName"
                                         [HideColumns]="true"
                                         [Text]="UServerServiceAddress"
+                                        [IsMultiline]="true"></LogTextBox>
+                        </td>
+                        <!--ForbiddenSigns-->
+                        <td style="padding:2px;">
+                            <LogTextBox [ObjectFieldName]="'ForbiddenSigns'"
+                                        [InputType]="'text'"
+                                        [DataContext]="DataContext"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [HideColumns]="true"
+                                        [Text]="ForbiddenSigns"
                                         [IsMultiline]="true"></LogTextBox>
                         </td>
 

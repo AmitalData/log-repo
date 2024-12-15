@@ -12,7 +12,6 @@ using UnifreightIIG.Common.CommonIIGInterface;
 using UnifreightIIG.Common.Faults;
 using UnifreightIIG.Common.ImportDeclarationServiceReference;
 using UnifreightIIG.Common.TheGateway;
-
 using System.Diagnostics;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Server.Tools.Helpers;

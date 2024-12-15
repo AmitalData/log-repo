@@ -120,9 +120,10 @@ export class CustomsSettingsComponent
                     }
                 });
 
-
-            //this.RefreshBtnClick()
-        });
+                //this.RefreshBtnClick()
+                console.log(this.ObjectTableName)
+                console.log(this.DataContext)
+            });
 
     }
     
@@ -308,6 +309,9 @@ export class CustomsSettingsComponent
     get OcrToken() { return this.entityPM != null ? this.entityPM.OcrToken : null; }
     set OcrToken(value) { this.entityPM.OcrToken = value; }
 
+    get ForbiddenSigns() { return this.entityPM != null ? this.entityPM.ForbiddenSigns : null; }
+    set ForbiddenSigns(value) { this.entityPM.ForbiddenSigns = value; }
+
     //#endregion
     ClearCache(){
 
@@ -356,7 +360,7 @@ export class CustomsSettingsComponent
         var windowArgs: EntityArgs = new EntityArgs();
         windowArgs.ObjectTableName =this.ObjectTableName;
         windowArgs.EntityPM = this.entityPM;
-      
+    
         var logWindow = new LogitudeWindow();
         logWindow.Width = 950;
         logWindow.Height = 600;

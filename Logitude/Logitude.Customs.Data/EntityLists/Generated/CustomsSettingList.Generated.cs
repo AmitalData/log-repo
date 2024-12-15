@@ -72,7 +72,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string OcrToken  { get; set; }
        [DataMember]
        public string ForbiddenSigns  { get; set; }
-   }
+ 
+    }
 
 }
 	 
