@@ -981,6 +981,31 @@ Line3
 
 
 
+    ButtonFutureOpenCheques_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _GLAccountOpUrl = ServiceHelper.GetLogitudeURL() + '/api/GLAccountOp/GetCalculateFutureChequesForTenant';
+        let myUrl = _GLAccountOpUrl + "?tenant=" + objToCheck1.Tenant;
+
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); this.CurrentSession.StopBusyIndicator();},
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+
+    } 
+
+
+
     ButtonAllOpenRevaluationsNoBatch_Click() {
         let defaultParam: any = {};
         defaultParam.Tenant = 1;
