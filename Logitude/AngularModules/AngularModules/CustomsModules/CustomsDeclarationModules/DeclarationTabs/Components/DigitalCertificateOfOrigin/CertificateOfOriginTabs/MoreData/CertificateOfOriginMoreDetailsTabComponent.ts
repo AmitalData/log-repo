@@ -24,6 +24,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     public currentDeclaration: DeclarationPM;
     IsNewOrEdit: StatusCertificateOfOrigin;
     IsDisplayOnly: boolean = false;
+    IsDisplayOnlyByRecordEditable: boolean = false;
     myDictionary: Record<string, string> = {};
     public ErrorsList: string[];
     public ignoreFieldChecks = [
@@ -34,30 +35,31 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     controlEnabled: boolean;
     constructor() {
         super();
-     
+
 
     }
 
     InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin, IsDisplayOnly: boolean) {
-
-       
-        this.entityPM = EntityPM;        
+        this.entityPM = EntityPM;
         this.currentDeclaration = currentDeclaration;
         this.IsDisplayOnly = IsDisplayOnly;
         this.IsNewOrEdit = IsNewOrEdit;
         this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true : false;
         this.InitUrls();
-        this.SetPropertiesEnabled();
+        this.SetPropertiesEnabled(!this.IsDisplayOnly);
         this.SetWarningByCooTypeCode(this.entityPM.CooTypeCode);
     }
+
     InitUrls() {
-        
+
         for (const paramName in this.entityPM) {
-            this.myDictionary[paramName]=localStorage.getItem(paramName+"_"+this.entityPM.CooTypeCode+".png");
+            this.myDictionary[paramName] = localStorage.getItem(paramName + "_" + this.entityPM.CooTypeCode + ".png");
         }
     }
-    SetPropertiesEnabled() {
-        var enabled = !this.IsDisplayOnly;
+
+    SetPropertiesEnabled(isEnabled: boolean = false) {
+        var enabled = isEnabled;
+        
         // Fields in the First table
         this.UIProperties.SetEnabled("IsCumulation", this.ObjectTableName, enabled);
         this.UIProperties.SetEnabled("CumulationCountry", this.ObjectTableName, enabled);
@@ -97,11 +99,16 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     updateEntity(EntityPM: CertificateOfOriginPM) {
         this.entityPM = EntityPM;
         this.InitUrls();
-
     }
-    
+
+    updateIsDisplay(IsDisplayOnlyByRecordEditable: boolean) {
+        this.IsDisplayOnlyByRecordEditable = IsDisplayOnlyByRecordEditable;
+        let enabled = !this.IsDisplayOnlyByRecordEditable && !this.IsDisplayOnly;
+        this.SetPropertiesEnabled(enabled);
+    }
+
     CheckMandatoryFields() {
-        
+
 
         if (!this.entityPM.CooTypeCode && !this.entityPM.RequestReasonCode) {
             this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.MandatoryFields')];
@@ -121,8 +128,8 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     tempCertificateOfOriginMandatoryFieldsList = [];
     certificateOfOriginWebService: CertificateOfOriginWebService = new CertificateOfOriginWebService();
     SetWarningByCooTypeCode(CooTypeCode) {
-        if(!CooTypeCode) {
-            this.tempCertificateOfOriginMandatoryFieldsList.forEach(i=>{
+        if (!CooTypeCode) {
+            this.tempCertificateOfOriginMandatoryFieldsList.forEach(i => {
                 this.UIProperties.SetWarning(i.MappedCertificateFieldsName, this.ObjectTableName, false);
             });
             this.tempCertificateOfOriginMandatoryFieldsList = [];
@@ -130,15 +137,15 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
         }
         this.certificateOfOriginWebService.GetMandatoryFieldsByCooTypeCode(CooTypeCode, this.entityPM.Tenant).subscribe((myResponse: any) => {
             if (!myResponse.HasError) {
-                if(this.tempCertificateOfOriginMandatoryFieldsList.length > 0) {
-                    this.tempCertificateOfOriginMandatoryFieldsList.forEach(i=>{
+                if (this.tempCertificateOfOriginMandatoryFieldsList.length > 0) {
+                    this.tempCertificateOfOriginMandatoryFieldsList.forEach(i => {
                         this.UIProperties.SetWarning(i.MappedCertificateFieldsName, this.ObjectTableName, false);
                     });
                 }
 
 
                 this.certificateOfOriginMandatoryFieldsList = myResponse?.Result;
-                
+
                 if (this.certificateOfOriginMandatoryFieldsList.length > 0) {
                     this.certificateOfOriginMandatoryFieldsList.forEach(item => {
                         if (item.IsMandatory) {
@@ -148,9 +155,9 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
 
                     this.tempCertificateOfOriginMandatoryFieldsList = this.certificateOfOriginMandatoryFieldsList;
                 }
-                else{        
-                                
-                    this.tempCertificateOfOriginMandatoryFieldsList.forEach(i=>{
+                else {
+
+                    this.tempCertificateOfOriginMandatoryFieldsList.forEach(i => {
                         this.UIProperties.SetWarning(i.MappedCertificateFieldsName, this.ObjectTableName, false);
                     });
                     this.tempCertificateOfOriginMandatoryFieldsList = [];
@@ -160,15 +167,15 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
         });
     }
 
-    
+
     CheckMandatoryCustomsFields(ValidationErrors = []) {
         this.tempCertificateOfOriginMandatoryFieldsList.forEach(item => {
-            if(item){
+            if (item) {
                 let field = this.entityPM[item.MappedCertificateFieldsName];
-                if (!field){
+                if (!field) {
                     var fieldName = TextCodeTranslator.Translate('Customs.CertificateOfOrigin.F.' + item.MappedCertificateFieldsName);
                     if (fieldName != "" && this.ignoreFieldChecks.indexOf(item.MappedCertificateFieldsName) == -1) {
-                         ValidationErrors.push(fieldName);
+                        ValidationErrors.push(fieldName);
                     }
                 }
             }

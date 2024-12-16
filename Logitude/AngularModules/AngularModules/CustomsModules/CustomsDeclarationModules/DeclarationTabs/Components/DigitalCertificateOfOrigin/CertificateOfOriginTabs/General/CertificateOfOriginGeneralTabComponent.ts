@@ -79,6 +79,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     public isReady: boolean;
     controlEnabled: boolean;
     IsDisplayOnly: boolean = false;
+    IsDisplayOnlyByCooConnection: boolean = false;
+    IsDisplayOnlyByRecordEditable: boolean = false;
     public IsActionButtonsEnabled: boolean = true;
     public originalItemSource: ObservableCollection = new ObservableCollection([]);
     public updateOptionsMap = new Map<string, UpdateGeneralParams>();
@@ -606,6 +608,14 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.InitilizeListsFromCertificateOfOrigin(EntityPM);
     }
 
+    updateIsDisplay(IsDisplayOnlyByCooConnection: boolean, IsDisplayOnlyByRecordEditable: boolean) {
+        this.IsDisplayOnlyByRecordEditable = IsDisplayOnlyByRecordEditable;
+        this.IsDisplayOnlyByCooConnection = IsDisplayOnlyByCooConnection;
+        let enabled = !this.IsDisplayOnlyByRecordEditable && !this.IsDisplayOnly;
+        this.SetPropertiesEnabledAllFields(enabled);
+        this.UIProperties.SetEnabled("RequestReasonCode", this.ObjectTableName, !this.IsDisplayOnlyByCooConnection && !this.IsDisplayOnly);
+    }
+
     private measurmentUnitListService: MeasurmentUnitListService = new MeasurmentUnitListService();
     private packingTypeListService: PackingTypeListService = new PackingTypeListService();
     private originCriterionListService: OriginCriterionListService = new OriginCriterionListService();
@@ -944,16 +954,16 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     // addd on OnChanged for IsInvoicesForPrint
     OnChangedInvoiceForPrint($event, item) {
         item.IsInvoicesForPrint = !item.IsInvoicesForPrint;
-        if(item.IsInvoicesForPrint) item.IsInvoiceConnected = item.IsInvoicesForPrint;
+        if (item.IsInvoicesForPrint) item.IsInvoiceConnected = item.IsInvoicesForPrint;
     }
 
     // add on OnClickInvoiceConnected for IsInvoiceConnected
-    OnClickInvoiceConnected($event, item) { 
+    OnClickInvoiceConnected($event, item) {
         var InvoiceConnectedList = this.CertificateOriginInvoiceItems.Collection.filter(x => x.IsInvoiceConnected);
-        if (item.IsInvoiceConnected && InvoiceConnectedList.length <= 1){
+        if (item.IsInvoiceConnected && InvoiceConnectedList.length <= 1) {
             $event.preventDefault();
             return;
-        }            
+        }
     }
 
     // add on OnChanged for IsInvoiceConnected
@@ -962,7 +972,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         var prevIsInvoiceConnected = item.IsInvoiceConnected;
         item.IsInvoiceConnected = !item.IsInvoiceConnected;
         item.IsInvoicesForPrint = item.IsInvoiceConnected;
-        
+
         var InvoiceConnectedList = this.CertificateOriginInvoiceItems.Collection.filter(x => x.IsInvoiceConnected);
         if (this.IsUnitedInvoices && InvoiceConnectedList.length < 2) this.IsUnitedInvoices = false;
         else if (this.IsUnitedInvoices && InvoiceConnectedList.find(x => x.CurrencyTypeCode != item.CurrencyTypeCode)) {

@@ -28,7 +28,10 @@ import { CertificateOfOriginRequestRequestParams } from 'Customs/DataContract/Re
 import { BaseRequestsSheetMassaging, IRequestsSheetMassagingComponent } from 'CustomsModules/CustomsRequests/Components/BaseRequestsSheetMassaging';
 import { CertificateOfOriginListService } from 'Customs/Services/StandardLists/CertificateOfOriginListService';
 import { CertificateOfOriginStatusCodeEnumListService } from 'Customs/Services/StandardLists/CertificateOfOriginStatusCodeEnumListService';
+import { CertificateOfOriginConnectionListService } from 'Customs/Services/StandardLists/CertificateOfOriginConnectionListService';
+import { CertificateOfOriginConnectionList } from 'Customs/EntityLists/CertificateOfOriginConnectionList';
 import { BehaviorSubject } from 'rxjs';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 
 
 @Component({
@@ -47,6 +50,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     certificateOfOriginWebService: CertificateOfOriginWebService = new CertificateOfOriginWebService();
     certificateOfOriginListService: CertificateOfOriginListService = new CertificateOfOriginListService();
     certificateOfOriginStatusCodeEnumListService: CertificateOfOriginStatusCodeEnumListService = new CertificateOfOriginStatusCodeEnumListService();
+    certificateOfOriginConnectionListService: CertificateOfOriginConnectionListService = new CertificateOfOriginConnectionListService();
 
 
     public entityResourceService: EntityResourceService = new EntityResourceService();
@@ -97,6 +101,8 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         this.BuildTabs();
         this.RunComponent();
         this.getCertificateOfOriginStatusCodeEnum();
+        this.getCertificateOfOriginConnection(this.EntityPM.CooStatusCode);
+
         this.entityArgs.EntityPM = this.EntityPM;
         this.entityArgs.ObjectTableName = "Customs.CertificateOfOrigin";
     }
@@ -118,7 +124,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         this.addTapagEnabled = newValue;
     }
     public get IsDisplayOnly() {
-        return this.isDispalyOnlyStatusList.includes(Number(this.EntityPM?.CooStatusCode)) || !this.isAllowChange
+        return this.isDispalyOnlyStatusList.includes(Number(this.EntityPM?.CooStatusCode)) || !this.isAllowChange;
     }
 
     BuildTabs() {
@@ -186,7 +192,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
                             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/General/CertificateOfOriginGeneralTabComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.GENERAL = cmpRef.instance;
-                                    this.GENERAL.InitTab(this.EntityPM, this.DecalarationData, this.IsNewOrEdit, this.IsDisplayOnly);
+                                    this.GENERAL.InitTab(this.EntityPM, this.DecalarationData, this.IsNewOrEdit, this.IsDisplayOnly, this.IsDisplayOnlyByCooConnection);
                                 });
                         }
                         break;
@@ -542,6 +548,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
                     this.UpdateIsChange(false);//#103474
 
                 this.getCertificateOfOriginStatusCodeEnum();
+                this.getCertificateOfOriginConnection(this.EntityPM.CooStatusCode);
             }
         });
 
@@ -572,13 +579,34 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     }
 
     IsDisplayOnlyByRecordEditable: boolean = false;
-    getCertificateOfOriginStatusCodeEnum(){
+    getCertificateOfOriginStatusCodeEnum() {
         this.certificateOfOriginStatusCodeEnumListService.getSingle(this.EntityPM?.CooStatusCode).subscribe((response: any) => {
             if (!response.HasError) {
-               console.log(response.Result);
-               this.IsDisplayOnlyByRecordEditable = response?.Result?.RecordEditable;
+                this.IsDisplayOnlyByRecordEditable = response?.Result?.RecordEditable;
+                this.updateDisplayByStatusAndConnection();
             }
         });
+    }
+    IsDisplayOnlyByCooConnection: boolean = false;
+    getCertificateOfOriginConnection(code) {
+        let filters: ApiQueryFilters = new ApiQueryFilters();
+        filters.GetAll = true;
+        filters.addAdditionalFilter("CooStatus", code, null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("Active", true, null, null, "Equals", true, false, false, "boolean");
+        this.certificateOfOriginConnectionListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var result: CertificateOfOriginConnectionList[] = myResponse.Result;
+                if (result != null) {
+                    this.IsDisplayOnlyByCooConnection = result.length > 0 ? false : true;
+                    this.updateDisplayByStatusAndConnection();
+                }
+            }
+        });
+    }
+
+    updateDisplayByStatusAndConnection() {
+        this.GENERAL.updateIsDisplay(this.IsDisplayOnlyByCooConnection, this.IsDisplayOnlyByRecordEditable);
+        this.MOREDATA.updateIsDisplay(this.IsDisplayOnlyByRecordEditable);
     }
 }
 

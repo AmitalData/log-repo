@@ -3,7 +3,7 @@
 </style>
 <table *ngIf="isReady">
     <tr style="height: 28px;">
-        <td *ngIf="IsDisplayOnly && CooTypeCode">
+        <td *ngIf="(IsDisplayOnly && CooTypeCode ) || (IsDisplayOnlyByCooConnection && IsDisplayOnlyByRecordEditable)">
             <div style="width:90%;text-align:center">
                 <div class="DisbleBox">
                     {{'Customs.CertificateOfOrigin.O.DisplayOnly'| TextCodeTranslationPipe}}
