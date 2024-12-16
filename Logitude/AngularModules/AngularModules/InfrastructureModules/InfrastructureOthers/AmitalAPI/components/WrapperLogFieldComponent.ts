@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, Output, SimpleChanges } from "@angular/core";
 import { UIProperties } from "Infrastructure/Components/LogitudeComponents/UIProperties";
 import { FieldType } from "./LogTexBoxFormComponent";
-import { AmitalAPIAddWindowService } from "../WindowsComponent/AmitalAPIAddWindowService";
+import { AmitalAPIAddWindowService, fieldsError } from "../WindowsComponent/AmitalAPIAddWindowService";
 
 @Component({
     selector: 'wrapper-log-field',
@@ -46,20 +46,21 @@ export class WrapperLogFieldComponent {
     @Input() name: string = 'why_you_dont_fill_value_name';
     @Input() params: any = {};
     _type!: FieldType;
-    @Input() set type (t: FieldType) {
-        if(this._type)
+    @Input() required: boolean = false;    
+    @Input() set type(t: FieldType) {
+        if (this._type)
             this._DataContext[this.name] = null;
-        
+
         this._type = t || 'text';
     };
     _DataContext: any = { UIProperties: new UIProperties() };
-    @Input() set DataContext(d: any) {  
-        this._DataContext = d || { UIProperties: new UIProperties() };        
+    @Input() set DataContext(d: any) {
+        this._DataContext = d || { UIProperties: new UIProperties() };
         this.refreshTextbox();
     }
     @Input() values?: any[];
     @Input() error?: boolean;
-    @Input() set value (val: any) {
+    @Input() set value(val: any) {
         this._DataContext[this.name] = val;
         this.refreshTextbox();
     }
@@ -74,17 +75,21 @@ export class WrapperLogFieldComponent {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if(changes.DataContext) 
+        if (changes.DataContext)
             this.refreshTextbox();
     }
 
-    constructor(private cd: ChangeDetectorRef) {}
+    constructor(private cd: ChangeDetectorRef) { }
 
     public get Value(): any {
-        return this.type === 'boolean' ? ('' + this._DataContext[this.name]).toLowerCase() === 'true' : this._DataContext[this.name];
+        return this._type === 'boolean' ? ('' + this._DataContext[this.name]).toLowerCase() === 'true' : this._DataContext[this.name];
     }
 
     public get valid(): boolean {
-        return this.amitalAPIAddWindowService.chekFormValidation([{name: this.name, error: this.error, label: '', type: this._type}], this._DataContext);
+        return this.amitalAPIAddWindowService.chekFormValidation([{ name: this.name, error: this.error, label: '', type: this._type, required: this.required }], this._DataContext);
+    }
+
+    public get errors(): fieldsError[] {
+        return this.amitalAPIAddWindowService.getValidationErrors([{ name: this.name, error: this.error, label: '', type: this._type, required: this.required }], this._DataContext);
     }
 }

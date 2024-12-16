@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from "@angular/core";
 import { FieldData } from "../amitalApiTypes";
 import { UIProperties } from "Infrastructure/Components/LogitudeComponents/UIProperties";
-import { AmitalAPIAddWindowService } from "../WindowsComponent/AmitalAPIAddWindowService";
+import { AmitalAPIAddWindowService, fieldsError } from "../WindowsComponent/AmitalAPIAddWindowService";
 
 @Component({
     selector: 'log-text-box-form',
@@ -12,7 +12,7 @@ import { AmitalAPIAddWindowService } from "../WindowsComponent/AmitalAPIAddWindo
             <ng-container *ngIf='showFields'>
                 <div *ngFor='let field of _fields' class='form-data-field-field'>
                     <LogLabel [DataContext]="DataContext" [Text]="field.label" [LayoutDirection]="dir"></LogLabel>
-                    <wrapper-log-field [DataContext]='DataContext' [dir]='dir' [name]='field.name' [type]='field.type' [error]='field.error' [values]='field.values' [disabled]='field.disabled' [params]='field.params' [value]='field.value' 
+                    <wrapper-log-field [DataContext]='DataContext' [dir]='dir' [name]='field.name' [type]='field.type' [error]='field.error' [values]='field.values' [disabled]='field.disabled' [params]='field.params' [value]='field.value' [required]='!!field.required'
                     (change)='valueChange.emit({field: field.name, value: DataContext[field.name]})' (changeEvent)='changeEvent.emit({field: field.name, value: $event})'></wrapper-log-field>
                 </div>
             </ng-container>
@@ -50,6 +50,11 @@ export class LogTexBoxFormComponent {
     public get valid(): boolean {
         const fields = this._fields.filter(field => (field.required && !this.DataContext[field.name]) || field.error);
         return this.amitalAPIAddWindowService.chekFormValidation(fields, this.DataContext);
+    }
+
+    public get errors(): fieldsError[] {
+        const fields = this._fields.filter(field => (field.required && !this.DataContext[field.name]) || field.error);
+        return this.amitalAPIAddWindowService.getValidationErrors(fields, this.DataContext);
     }
 
     constructor(private cd: ChangeDetectorRef) {}
