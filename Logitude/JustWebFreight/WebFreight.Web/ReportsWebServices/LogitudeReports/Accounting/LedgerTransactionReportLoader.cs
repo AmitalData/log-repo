@@ -21,6 +21,8 @@ using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.Global
 using WebFreight.Web.Security;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.Customs.BL.CloseTables;
+using System.Globalization;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 {
@@ -300,9 +302,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 CreateDate = transaction.CreateDate,
                 ControlAccountId = transaction.ControlAccountId,
                 AccountId = transaction.AccountId,
-                AccountingDate = transaction.AccountingDate.ToString("dd/MM/yyyy"),
-                DocumentDate = transaction.DocumentDate.ToString("dd/MM/yyyy"),
-                DueDate = transaction.DueDate.ToString("dd/MM/yyyy"),
+                AccountingDate = transaction.AccountingDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
+                DocumentDate = transaction.DocumentDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
+                DueDate = transaction.DueDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
                 LocalAmountDebit = transaction.LocalAmountDebit,
                 LocalAmountCredit = transaction.LocalAmountCredit,
                 CurrencyId = transaction.CurrencyId,
