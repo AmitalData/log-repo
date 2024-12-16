@@ -2070,12 +2070,23 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
                 // the declaration may be sent if documents about all its supplier invoices have been sent to the mehes and received simuhin
                 declarationReadyForSending = sentSupplierInvoices >= declarationSupplierInvoiceCount;
-                if (declarationReadyForSending && declarationPM.ProcedureCurrentCode == "1000041")
+                if (declarationReadyForSending)
                 {
-                    bool containsAllCodes = new List<string> { "IL_1003", "IL_506", "IL_1050" }
-                    .All(code => customsDocumentPMList.Any(document => document.DocumentTypeCode.Contains(code)));
+                    if (declarationPM.ProcedureCurrentCode == "1000041")
+                    {
+                        bool containsAllCodes = new List<string> { "IL_1003", "IL_506", "IL_1050" }
+                        .All(code => customsDocumentPMList.Any(document => document.DocumentTypeCode.Contains(code)));
 
-                    return containsAllCodes;
+                        return containsAllCodes;
+                    }
+                    else
+                    {
+                        int shtarMitanDocumentCount = customsDocumentPMList.Where(document => document.DocumentTypeCode == "419").Count();
+                        if (shtarMitanDocumentCount == 0)
+                        {
+                            declarationReadyForSending = false;
+                        }
+                    }
                 }
                 /* if need to check for every invoice, the relation between document and invoice is
                  * (invoice.SequenceNumeric == customsDocumentsTicketPM.ConnectedInvoicesSequences) */
