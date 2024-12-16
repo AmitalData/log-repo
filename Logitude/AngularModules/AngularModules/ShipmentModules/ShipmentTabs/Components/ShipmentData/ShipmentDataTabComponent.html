@@ -155,8 +155,7 @@
                         <LogLabel [ObjectFieldName]="'Vessel'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <LogLov 
-                            [IsDisabled]="TransportModeId==='A'"
+                        <LogLov [class.readonly]="TransportModeId == 'A'"
                             [ObjectFieldName]="'Vessel'" 
                             [SelectedValue]="Vessel"
                             [ObjectTableName]="ObjectTableName"
