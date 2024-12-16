@@ -34,6 +34,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                          CooStatus = a.CooStatus,
 					
 					                          CooReason = a.CooReason,
+											  
+												Active = a.Active
 					
 		                    	            });
             return query;
@@ -41,8 +43,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<CertificateOfOriginConnection> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CertificateOfOriginConnection> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
-		}
+            return iQueryable;
+        }
 			}
 
 

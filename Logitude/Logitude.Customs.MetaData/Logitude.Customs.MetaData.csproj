@@ -156,6 +156,7 @@
     <None Include="DBScripts\Post\20241006_UpdateTransportModeInTables.sxml" />
     <None Include="DBScripts\Post\202408150924_AddDocumentsMetaDataType.sxml" />
     <None Include="DBScripts\Post\202410071313_UpdateAccountingTablesForCustomsModule.sxml" />
+    <None Include="DBScripts\Post\202412121400_GetDataCooConnected.sxml" />
     <None Include="DBScripts\Post\202410120930_CooInvoicesIsInvoiceConnected.sxml" />
     <None Include="DBScripts\Post\202414041313_AddClientItemsSearchFields.sxml" />
     <None Include="DBScripts\Post\202208281500_UpdateLoadingOfDeclaration.sxml" />
@@ -316,6 +317,7 @@
     <None Include="DBTables\CB_Vendor.dxml" />
     <None Include="DBTables\CertificateExemptionType.dxml" />
     <None Include="DBTables\CertificateOfOrigin.dxml" />
+    <None Include="DBTables\CertificateOfOriginConnection.dxml" />
     <None Include="DBTables\CertificateOfOriginInvoice.dxml" />
     <None Include="DBTables\CertificateOfOriginItem.dxml" />
     <None Include="DBTables\CertificateOfOriginMandatoryFields.dxml" />
@@ -721,6 +723,7 @@
     <None Include="EntityFiles\CB_TradeLevy.lxml" />
     <None Include="EntityFiles\CB_Vendor.lxml" />
     <None Include="EntityFiles\NUnicloud.lxml" />
+    <None Include="EntityFiles\CertificateOfOriginConnection.lxml" />
     <None Include="EntityFiles\DiscountTypeRegulation.lxml" />
     <None Include="EntityFiles\CustomsItemGroup.lxml" />
     <None Include="EntityFiles\RegularityRequirementWarning.lxml" />

@@ -102,7 +102,7 @@
                 </div>
                 
                 <div style="width: 110px;vertical-align: bottom;">
-                    <custom-send-options [IsDisabled]="IsDisplayOnly" [AvoidDoubleClick]="true" #MyCustomSendOptionsComponent (SendButtonClicked)="SaveAndSendClick($event)">
+                    <custom-send-options [IsDisabled]="IsDisplayOnly && IsDisplayOnlyByCooConnection" [AvoidDoubleClick]="true" #MyCustomSendOptionsComponent (SendButtonClicked)="SaveAndSendClick($event)">
                     </custom-send-options>
                 </div>
                 

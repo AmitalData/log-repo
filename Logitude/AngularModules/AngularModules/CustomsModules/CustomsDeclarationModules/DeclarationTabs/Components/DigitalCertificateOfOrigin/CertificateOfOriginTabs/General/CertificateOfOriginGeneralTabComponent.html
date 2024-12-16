@@ -3,7 +3,7 @@
 </style>
 <table *ngIf="isReady">
     <tr style="height: 28px;">
-        <td *ngIf="IsDisplayOnly && CooTypeCode">
+        <td *ngIf="(IsDisplayOnly && CooTypeCode ) || (IsDisplayOnlyByCooConnection && IsDisplayOnlyByRecordEditable)">
             <div style="width:90%;text-align:center">
                 <div class="DisbleBox">
                     {{'Customs.CertificateOfOrigin.O.DisplayOnly'| TextCodeTranslationPipe}}
@@ -77,7 +77,7 @@
                                         <LogLov [ObjectFieldName]="'RequestReasonCode'"
                                             [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
                                             [LookUpTableName]="'Customs.RequestReasonCodeEnum'"
-                                            [SelectedValue]="RequestReasonCode" [HideColumns]="true"
+                                            [SelectedValue]="RequestReasonCode" [QueryFilterItems]="CooReasonFilterItems" [HideColumns]="true"
                                             [CustomizedWidth]="180">
                                         </LogLov>
                                     </td>
@@ -668,6 +668,7 @@
                                                                 [Checked]="item.IsInvoiceConnected"
                                                                 [ObjectTableName]="'Customs.CertificateOriginInvoice'"
                                                                 [DataContext]="DataContext"
+                                                                (click)="OnClickInvoiceConnected($event,item)"
                                                                 (Changed)="OnChangedInvoiceConnected($event,item)"
                                                                 [Value]="item.IsInvoiceConnected"
                                                                 [IsDisabled]="IsDisplayOnly"></LogCheckBox>
