@@ -102,6 +102,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
 
     updateIsDisplay(IsDisplayOnlyByRecordEditable: boolean) {
+        if(!this.entityPM.CooStatusCode) return;
         this.IsDisplayOnlyByRecordEditable = IsDisplayOnlyByRecordEditable;
         let enabled = !this.IsDisplayOnlyByRecordEditable && !this.IsDisplayOnly;
         this.SetPropertiesEnabled(enabled);
