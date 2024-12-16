@@ -122,7 +122,7 @@ export class CustomsSettingsComponent
 
                 //this.RefreshBtnClick()
           
-                console.log(this.DataContext)
+
             });
 
     }
