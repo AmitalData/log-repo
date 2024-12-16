@@ -95,10 +95,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.PickUpDeliveryFromTypeCode = itemPM.PickUpDeliveryFromTypeCode;
             itemPoco.PickUpDeliveryTypeCode = itemPM.PickUpDeliveryTypeCode;
             itemPoco.FromAddressId = itemPM.FromAddressId;
+            itemPoco.FromAddressCityId = itemPM.FromAddressCityId;
             itemPoco.FromAddressCity = itemPM.FromAddressCity;
             itemPoco.FromAddressZipCode = itemPM.FromAddressZipCode;
             itemPoco.FromAddressCountryId = itemPM.FromAddressCountryId;
             itemPoco.ToAddressId = itemPM.ToAddressId;
+            itemPoco.ToAddressCityId = itemPM.ToAddressCityId;
             itemPoco.ToAddressCity = itemPM.ToAddressCity;
             itemPoco.ToAddressZipCode = itemPM.ToAddressZipCode;
             itemPoco.ToAddressCountryId = itemPM.ToAddressCountryId;
@@ -111,6 +113,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.ChildDeliveryIndex = itemPM.ChildDeliveryIndex;
             itemPoco.StandaloneShipmentId = itemPM.StandaloneShipmentId;
             itemPoco.StandaloneShipmentNumber = itemPM.StandaloneShipmentNumber;
+            itemPoco.DeliveryContact = itemPM.DeliveryContact;
+            itemPoco.ResponsibilityCode = itemPM.ResponsibilityCode;
+            itemPoco.PackageTypeCode = itemPM.PackageTypeCode;
+            itemPoco.Quantity = itemPM.Quantity;
+            itemPoco.GrossWeight = itemPM.GrossWeight;
+            itemPoco.Volume = itemPM.Volume;
+            itemPoco.CustomerChargeableWeight = itemPM.CustomerChargeableWeight;
+            itemPoco.TruckerChargeableWeight = itemPM.TruckerChargeableWeight;
+            itemPoco.DescriptionOfGoods = itemPM.DescriptionOfGoods;
+            itemPoco.Commodity = itemPM.Commodity;
         }
 
         private static void SetPickupAddress(ShipmentPickUpPM itemPM, ICommonDataContext commonContext)

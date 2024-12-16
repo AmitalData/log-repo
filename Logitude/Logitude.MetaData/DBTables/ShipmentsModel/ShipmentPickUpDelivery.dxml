@@ -359,14 +359,14 @@
   <Column
     Name="ToAddressCityId"
     Type="varchar"
-    Size="5">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="FromAddressCityId"
     Type="varchar"
-    Size="5">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -478,16 +478,6 @@
     ReferencedTable="PackageTypes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ToAddressCityId"
-    ReferencedTable="Cities"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
-  <Relation
-    ForeignKeyColumn="FromAddressCityId"
-    ReferencedTable="Cities"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="ResponsibilityCode"
     ReferencedTable="Responsibilities"

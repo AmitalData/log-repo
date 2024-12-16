@@ -302,7 +302,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         public List<ShipmentDeliveryPM> GetShipmentDeliveryPMsByTenantAndShipment(string shipmentId, int tenant, bool getEmptyContainerReturn=false, bool byLocalName = false)
         {
-            IQueryable<ShipmentPickUpDelivery> iQueryable = (from d in repository.context.ShipmentPickUpDeliveries.Include("FromPort").Include("ToPort").Include("CarrierCard").Include("TransportMode")
+            IQueryable<ShipmentPickUpDelivery> iQueryable = (from d in repository.context.ShipmentPickUpDeliveries.Include("FromPort").Include("ToPort").Include("CarrierCard").Include("TransportMode").Include("PackageType").Include("Responsibility")
                                                              where d.ShipmentId == shipmentId && d.Tenant == tenant
                                                              select d);
 
@@ -350,6 +350,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                      FromAddressId = entityPOCO.FromAddressId,
                                                      FromAddress = entityPOCO.FromAddress,
                                                      FromAddressCity = entityPOCO.FromAddressCity,
+                                                     FromAddressCityId = entityPOCO.FromAddressCityId,
                                                      FromAddressZipCode = entityPOCO.FromAddressZipCode,
                                                      FromAddressCountryId = entityPOCO.FromAddressCountryId,
                                                      PickUpDeliveryToTypeCode = entityPOCO.PickUpDeliveryToTypeCode,
@@ -362,6 +363,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                      ToAddressId = entityPOCO.ToAddressId,
                                                      ToAddress = entityPOCO.ToAddress,
                                                      ToAddressCity = entityPOCO.ToAddressCity,
+                                                     ToAddressCityId = entityPOCO.ToAddressCityId,
                                                      ToAddressZipCode = entityPOCO.ToAddressZipCode,
                                                      ToAddressCountryId = entityPOCO.ToAddressCountryId,
                                                      EmptyPickupContainerPartnerId = entityPOCO.EmptyPickupContainerPartnerId,
@@ -374,6 +376,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                      ChildDeliveryIndex = entityPOCO.ChildDeliveryIndex,
                                                      StandaloneShipmentId = entityPOCO.StandaloneShipmentId,
                                                      StandaloneShipmentNumber = entityPOCO.StandaloneShipmentNumber,
+                                                     ResponsibilityCode = entityPOCO.ResponsibilityCode,
+                                                     Responsibility = entityPOCO.Responsibility != null ? entityPOCO.Responsibility.LocalName: null,
+                                                     PackageTypeCode = entityPOCO.PackageTypeCode,
+                                                     PackageTypeName = entityPOCO.PackageType != null ? entityPOCO.PackageType.LocalName : null,
+                                                     Quantity = entityPOCO.Quantity,
+                                                     GrossWeight = entityPOCO.GrossWeight,
+                                                     Volume = entityPOCO.Volume,
+                                                     CustomerChargeableWeight = entityPOCO.CustomerChargeableWeight,
+                                                     TruckerChargeableWeight = entityPOCO.TruckerChargeableWeight,
+                                                     DeliveryContact = entityPOCO.DeliveryContact,
+                                                     DescriptionOfGoods = entityPOCO.DescriptionOfGoods,
+                                                     Commodity = entityPOCO.Commodity,
+                                                     CreateDate = entityPOCO.CreateDate,
                                                  }).OrderBy(a => a.Id).ToList();
 
             if (dataList.Count > 0)

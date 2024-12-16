@@ -63,11 +63,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string Commodity { get; set; }
         public DateTime? CreateDate { get; set; }
         public string ToAddressCityId { get; set; }
-        //[ForeignKey("City")]
-        //public virtual City ToAddressCityTable { get; set; }
         public string FromAddressCityId { get; set; }
-        //[ForeignKey("City")]
-        //public virtual City FromAddressCityTable { get; set; }
         public string ResponsibilityCode { get; set; }
         [ForeignKey("Responsibility")]
         public virtual Responsibility Responsibility { get; set; }

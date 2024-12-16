@@ -1236,8 +1236,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     this.UpdateShipmentReferancesCollection();
 					this.UpdateFreightForwarderReferencesCollection();
+                    this.UpdateShipmentDeliveriesCollection();
+                    this.shipmentPickUpDeliveryPackageRepository.SubmitChanges();
 
-					if (additionalShipmentData?.ActionCode == ActionCode.CheckAndConnect)
+                    if (additionalShipmentData?.ActionCode == ActionCode.CheckAndConnect)
                     {
                         FreightForwarderReference freightForwarderReference = new FreightForwarderReference()
                         {
@@ -6325,12 +6327,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             itemPM.ShipmentNumber = entityPM.ShipmentNumber;
             itemPM.Tenant = tenant;
 
-            if (itemPM.PickUpDeliveryTypeCode == "EMPT")
+            if (this.entityPM.IsCustomShipment)
+            {
+                // todo:
+                // itemPM.PickUpDeliveryNumber = IdCounter.GetNumber("ShipmentPickUpDelivery", tenant).ToString();
+                itemPM.PickUpDeliveryNumber = TableCounter.GetNumber(tenant, "DECL", "DC", null);
+            }
+            else if (itemPM.PickUpDeliveryTypeCode == "EMPT")
             {
                 entityPM.ShipmentContainerReturnIndex += 1;
                 itemPM.PickUpDeliveryNumber = entityPM.ShipmentNumber + "/" + entityPM.ShipmentContainerReturnIndex;
             }
-
             else
             {
                 if (!string.IsNullOrEmpty(itemPM.ParentPickUpDeliveryId))
@@ -6365,6 +6372,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ShipmentPickUpDelivery itemPoco = new ShipmentPickUpDelivery()
             {
                 Id = itemPM.Id,
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
             };
 
             if (!entityPM.IsHybrid)
