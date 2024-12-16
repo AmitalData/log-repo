@@ -1036,7 +1036,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                         this.FiltersMenu = $event.Filters;
                                         this.MenuHeaderchangeevent.emit({ Filters: $event.Filters, RemoveFilter: $event.RemoveFilter });
                                     });
-                                    cmpRef.instance.CustomGetTotalCount.subscribe(($event: number) => {
+                                    cmpRef.instance?.CustomGetTotalCount?.subscribe(($event: number) => {
                                         this.CustomGetTotalCount = $event;
                                     });
                                 });

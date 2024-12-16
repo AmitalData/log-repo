@@ -55,6 +55,7 @@ export class HomeComponent implements OnDestroy{
     private IsINTTRAPackage = false;
     public PaymentChanelCode: string;
     public AccountingActivated=false;
+    public elementTempVar=false;
     constructor() {
         this.Tenant = SessionLocator.Tenant;
         SessionLocator.Index = 0;
