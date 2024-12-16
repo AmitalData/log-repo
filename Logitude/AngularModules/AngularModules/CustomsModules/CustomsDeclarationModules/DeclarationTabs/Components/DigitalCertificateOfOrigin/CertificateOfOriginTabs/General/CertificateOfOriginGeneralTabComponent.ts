@@ -616,6 +616,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
 
     updateIsDisplay(IsDisplayOnlyByCooConnection: boolean, IsDisplayOnlyByRecordEditable: boolean) {
+        if(!this.entityPM.CooStatusCode) return;
         this.IsDisplayOnlyByRecordEditable = IsDisplayOnlyByRecordEditable;
         this.IsDisplayOnlyByCooConnection = IsDisplayOnlyByCooConnection;
         let enabled = !this.IsDisplayOnlyByRecordEditable && !this.IsDisplayOnly;
