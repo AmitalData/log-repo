@@ -1005,8 +1005,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private void UpdateParentDec(DeclarationUpdateService myDeclarationUpdateService, DeclarationPM declarationParent)
         {
-            var _forbiddenSignsUtil = new ForbiddenSignsUtil();
-            var forbiddenSigns = _forbiddenSignsUtil.GetForbiddenSigns(declarationParent.Tenant);
 
             if (declarationParent != null)
             {
@@ -1014,10 +1012,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 declarationParent.AmendmentDontDisplayInList = true;
                 declarationParent.DeclarationNumber = null;
                 declarationParent.ExportCloseAmendmentStatus = null;
-
-                declarationParent.ImporterName = _forbiddenSignsUtil.ReplaceForbiddenChars(declarationParent.ImporterName, forbiddenSigns);
-                declarationParent.ImporterAddress = _forbiddenSignsUtil.ReplaceForbiddenChars(declarationParent.ImporterAddress, forbiddenSigns);
-                declarationParent.CargoDescription = _forbiddenSignsUtil.ReplaceForbiddenChars(declarationParent.CargoDescription, forbiddenSigns);
 
                 declarationParent.ChangeSetOp = ChangeSetOperation.Update;
 

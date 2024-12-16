@@ -1053,17 +1053,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private void UpdateReplacingDeclaration(GenericRequestParams requestParams, DeclarationQueryService myDeclarationQueryService, DeclarationUpdateService myDeclarationUpdateService)
         {
-            var _forbiddenSignsUtil = new ForbiddenSignsUtil();
-            var forbiddenSigns = _forbiddenSignsUtil.GetForbiddenSigns(requestParams.Tenant);
 
             if (!string.IsNullOrEmpty(_MyDeclarationPM.ReplacingRepairRequest))
             {
                 var declarationReplacing = myDeclarationQueryService.GetDeclarationAmendmentByIdAndAmendmentNo(requestParams.Tenant, _MyDeclarationPM.AmendmentOriginalDeclartation, _MyDeclarationPM.ReplacingRepairRequest);
                 declarationReplacing.AmendmentStatus = "7";
                 declarationReplacing.ChangeSetOp = ChangeSetOperation.Update;
-                declarationReplacing.ImporterName = _forbiddenSignsUtil.ReplaceForbiddenChars(declarationReplacing.ImporterName, forbiddenSigns);
-                declarationReplacing.ImporterAddress = _forbiddenSignsUtil.ReplaceForbiddenChars(declarationReplacing.ImporterAddress, forbiddenSigns);
-                declarationReplacing.CargoDescription = _forbiddenSignsUtil.ReplaceForbiddenChars(declarationReplacing.CargoDescription, forbiddenSigns);
                 myDeclarationUpdateService.Update(declarationReplacing, true);
 
             }

@@ -19,7 +19,7 @@ using RequestHeader = UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgR
 using Logitude.CustomsMessaging.FakeMessagingServices;
 using UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference;
 using Logitude.CustomsMessaging.Helpers;
-using ForbiddenSignsUtil= Logitude.CustomsMessaging.Helpers.ForbiddenSignsUtil;
+
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
