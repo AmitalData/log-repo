@@ -215,7 +215,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                                     }
                                 default:
                                     {
-                                        entityLists = entityLists.OrderByDescending(d => d.CreateDate).ThenBy(f => f.Code);
+                                        entityLists = entityLists.OrderByDescending(d => d.CreateDate);
                                         break;
                                     }
                             }
@@ -228,7 +228,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 }
                 else
                 {
-                    entityLists = entityLists.OrderByDescending(d => d.CreateDate).ThenBy(f=>f.Code);
+                    entityLists = entityLists.OrderByDescending(d => d.CreateDate);
                 }
 
                 ServiceResponse response = new ServiceResponse();
