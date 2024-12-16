@@ -9,11 +9,13 @@ import { LogtuideTableDataService } from 'Infrastructure/Services/logtuide-table
 import { DefaultAndConfigurationListService } from 'Infrastructure/Services/StandardLists/DefaultAndConfigurationListService';
 import { LogTab, LogTabsComponent } from 'Infrastructure/Components/LogitudeComponents/LogTabsComponent';
 import { Subject } from 'rxjs';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
+import { fieldsError } from 'InfrastructureModules/InfrastructureOthers/AmitalAPI/WindowsComponent/AmitalAPIAddWindowService';
 
 @Component({
     template: `
         <LogTabs #tabs [TabsSource]="tabsList" [IsFixedTabs]="'true'" [HideCloseButton]='true'></LogTabs>            
-        <p *ngIf='errorMaeasge' class='error-message'>{{'Customs.General.O.RequiredFields' | TextCodeTranslationPipe}}!</p>
+        <p *ngIf='errorMaeasge' class='error-message'>{{ errorMaeasge }}</p>
         <log-close-save-buttons (close)='close($event)'></log-close-save-buttons>
         `,
     styleUrls: ['../../AmitalAPI/fields.scss'],
@@ -30,7 +32,7 @@ export class DefaultAndConfigurationComponent {
     forms: { form: LogTexBoxFormComponent, value1: FieldByTypeComponent, value2: FieldByTypeComponent } = { form: null, value1: null, value2: null };
     isEdit: boolean = false;
     DataContext = { UIProperties: new UIProperties() };
-    errorMaeasge: boolean = false;
+    errorMaeasge: string = '';
     defaultAndConfigurationPMService: DefaultAndConfigurationPMService = new DefaultAndConfigurationPMService();
     tabsList: any[] = [
         {
@@ -43,13 +45,13 @@ export class DefaultAndConfigurationComponent {
             Header: 'Value 1',
             Code: 'Value1',
             ComponentPath: './InfrastructureModules/InfrastructureOthers/Components/DefaultAndConfiguration/DefaultAndConfigurationValueTabComponent',
-            EntityPM: { dataContext: this.DataContext, $setKeyChange: this.$setKeyChange, forms: this.forms, valueNumber: 1 }
+            EntityPM: { dataContext: this.DataContext, $setKeyChange: this.$setKeyChange, forms: this.forms, valueNumber: 1, required: true  }
         },
         {
             Header: 'Value 2',
             Code: 'Value2',
             ComponentPath: './InfrastructureModules/InfrastructureOthers/Components/DefaultAndConfiguration/DefaultAndConfigurationValueTabComponent',
-            EntityPM: { dataContext: this.DataContext, $setKeyChange: this.$setKeyChange, forms: this.forms, valueNumber: 2 }
+            EntityPM: { dataContext: this.DataContext, $setKeyChange: this.$setKeyChange, forms: this.forms, valueNumber: 2, required: true }
         },
     ];
 
@@ -72,10 +74,14 @@ export class DefaultAndConfigurationComponent {
     }
 
     async close(save: boolean) {
+        let res;
         if (save) {
             const forms = this.forms;
-            if (!forms.form.valid || !forms.value1.valid || !forms.value2.valid) {
-                this.errorMaeasge = true;
+            this.errorMaeasge = '';
+            let errors: fieldsError[] = forms.form.errors.concat(forms.value1.errors).concat(forms.value2.errors);
+
+            if (errors.length > 0) {                
+                this.errorMaeasge = errors.map(error => `${error.fieldName}: ${error.error}`).join(', ');
                 return;
             }
 
@@ -88,21 +94,24 @@ export class DefaultAndConfigurationComponent {
                 Tenant: SessionLocator.Tenant
             };
             SessionLocator.SelectedSession.StartBusyIndicator('');
-            await this.sendToServer(values);
+            res = await this.sendToServer(values);
             SessionLocator.SelectedSession.StopBusyIndicator();
         }
 
         SessionLocator.SelectedSession.CloseCurrentWindow();
     }
 
-    private async sendToServer(values: any): Promise<void> {
+    private async sendToServer(values: any): Promise<any> {
         const action = this.isEdit ? this.defaultAndConfigurationPMService.update(values) : this.defaultAndConfigurationPMService.insert(values);
-        return await new Promise<void>((resolve, reject) => action.subscribe(
-            () => resolve(),
+        return await new Promise<any>((resolve, reject) => action.subscribe((res: ServiceResponse) => {
+            if (res.HasError)
+                MessageWindow.showErrorMessage('an error accord: ' + res.ErrorsArray.join('\n'));
+            resolve(res.HasError)
+        },
             err => {
                 const msg: string = err ? JSON.stringify(err) : 'Error';
                 MessageWindow.showErrorMessage(msg);
-                reject();
+                reject(false);
             }));
     }
 }
