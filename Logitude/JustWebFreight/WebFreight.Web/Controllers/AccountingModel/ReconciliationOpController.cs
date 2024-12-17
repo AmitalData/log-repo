@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -19,7 +19,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -305,6 +305,30 @@ tenant);
             }
         }
 
+        [HttpPut]
+        [Route("ReconciliationOp/RecheckDraftReconciliationTransactions")]
+        public HttpResponseMessage RecheckDraftReconciliationTransactions(List<LedgerTransactionPM> transactions)
+        {
+            try
+            {
+                int tenant = GetAuthinticatedTenant();
+                foreach (var item in transactions)
+                {
+                    SecurityUtility.AuthenticationOnEntityTenant("LedgerTransaction", item.Tenant, tenant);
+                }
+
+                RecheckDraftRecoTrans(transactions, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, new { Ok = true });
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
         private static void UpdateDraftReconciliationTransactions(List<LedgerTransactionPM> transactions, int tenant)
         {
             var accountingContext = AccountingContext.GetContext(tenant);
@@ -312,6 +336,13 @@ tenant);
             query.DelSertOpenRecilationDrafts(transactions);
         }
 
+
+        private static void RecheckDraftRecoTrans(List<LedgerTransactionPM> transactions, int tenant)
+        {
+            var accountingContext = AccountingContext.GetContext(tenant);
+            LedgerTransactionUpdateService query = new LedgerTransactionUpdateService(accountingContext, new Dictionary<string, IContext>(), tenant);
+            query.RecheckOpenReconcilationDrafts(transactions);
+        }
 
         private static void BlockEmptyTransactions(List<LedgerTransactionPM> transactions)
         {

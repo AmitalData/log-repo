@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -43,7 +43,14 @@ namespace WebFreight.Web.Security
                 }
             }
         }
-
+        public  static int GetTenant()
+        {
+            if (HttpContext.Current.Items.Contains("Tenant"))
+                return (int)HttpContext.Current.Items["Tenant"];
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            return authToken.Tenant;
+       }
         public static void AuthenticateAccessibleAPI(string apiName, int tenant)
         {
             ExternalAPITemplatesBuilder externalAPIHelper = new ExternalAPITemplatesBuilder(tenant);
@@ -209,7 +216,10 @@ namespace WebFreight.Web.Security
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
                         IGlobalContext globalcontext = GlobalContext.GetContext();
-                        isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;
+                        //isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;
+                        isBlocking = (from a in globalcontext.GlobalDBs
+                                           where a.IsBlocking == true
+                                           select a.IsBlocking).Count() > 0;
 
                         if (isBlocking)
                         {
@@ -564,8 +574,8 @@ namespace WebFreight.Web.Security
                 else
                 {
                     string token = null;
-                    ICommonDataContext context = CommonDataContext.GetContext(0);
-                    AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(context);
+                    ICommonDataContext context = CommonDataContext.GetContext(tenant);
+                    AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(GlobalContext.GetContext());
                     AuthenticationToken authToken = null;
                     if (HttpContext.Current != null)
                     {
@@ -611,18 +621,18 @@ namespace WebFreight.Web.Security
                             }
 
                             bool isLogitudeAdmin = false;
-                            if (tenant != 0)
-                            {
-                                UserRepository userRep = new UserRepository(LogitudeSettings.LogitudeCRMTenantNumber);
-                                User user = userRep.GetSingleUserByEmail(email, LogitudeSettings.LogitudeCRMTenantNumber, true);
-                                if (user != null)
-                                {
-                                    tenant = LogitudeSettings.LogitudeCRMTenantNumber;
-                                    isLogitudeAdmin = true;
-                                }
-                            }
+                            //if (tenant != 0)
+                            //{
+                            //    UserRepository userRep = new UserRepository(LogitudeSettings.LogitudeCRMTenantNumber);
+                            //    User user = userRep.GetSingleUserByEmail(email, LogitudeSettings.LogitudeCRMTenantNumber, true);
+                            //    if (user != null)
+                            //    {
+                            //        tenant = LogitudeSettings.LogitudeCRMTenantNumber;
+                            //        isLogitudeAdmin = true;
+                            //    }
+                            //}
 
-                            RoleQuery roleQuery = new RoleQuery(tenant);
+                            RoleQuery roleQuery = new RoleQuery(contact.Tenant);
                             List<RolePM> allRoles = roleQuery.GetRolesForContact(contact.Id, contact.Tenant).ToList();
 
                             List<string> allRolesIds = allRoles.Select(s => s.Id).ToList();

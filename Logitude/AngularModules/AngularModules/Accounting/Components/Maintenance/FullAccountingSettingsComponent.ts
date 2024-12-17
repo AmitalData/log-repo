@@ -693,6 +693,22 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             this.EntityPM.HSMaddress = hsmAddress;
         }
     }
+    get InterestInvoiceNotes(){return this.EntityPM.InterestInvoiceNotes;}
+    set InterestInvoiceNotes(interestInvoiceNotes:string){
+        
+       
+        if(this.EntityPM.InterestInvoiceNotes != interestInvoiceNotes) {
+            this.EntityPM.InterestInvoiceNotes = interestInvoiceNotes;
+        }
+    }
+    get InvoiceNotes(){return this.EntityPM.InvoiceNotes;}
+    set InvoiceNotes(invoiceNotes:string){
+        
+       
+        if(this.EntityPM.InvoiceNotes != invoiceNotes) {
+            this.EntityPM.InvoiceNotes = invoiceNotes;
+        }
+    }
 
     ValidateHsm(hsm){
         var res={

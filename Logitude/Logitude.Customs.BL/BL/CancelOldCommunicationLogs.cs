@@ -7,7 +7,7 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.QueueService;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;

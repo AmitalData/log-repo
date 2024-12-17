@@ -4,12 +4,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Transactions;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.InfrastructureModel;
@@ -603,7 +603,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     AzureLog.SaveLogsInStorage("(" + message + ")" + " Update Tenant 0 Elapsed Time : " + ts.ToString(), "P", DateTime.Now, "", "", 0, null, null, null);
 
                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Updating All closed tables history ...");
-                    TableLastUpdateClass.UpdateAllClosedTablesHistory();
+                    TableLastUpdateClass.UpdateAllClosedTablesHistory(tenant);
 
                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Updateing System metadata history ...");
                     TableLastUpdateClass.UpdateSystemMetaDataHistory();

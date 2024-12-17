@@ -1,9 +1,0 @@
-﻿<Script DBType="Main" Module="Shipment" >
-  <Sql Version="1">
-    <![CDATA[
-    declare  @ObjectTableId  varchar(15)
-    set @ObjectTableId = (select Id from ObjectTables where Name = 'Shipment')
-    update EventTypes set LocalName = 'Container Tracker Shipment Update' , EnglishName = 'Container Tracker Shipment Update' , SearchFields = 'VZSU,Container Tracker Shipment Update' where code = 'VZSU' and ObjectTableId = @ObjectTableId 
-    ]]>
-  </Sql>
-</Script>

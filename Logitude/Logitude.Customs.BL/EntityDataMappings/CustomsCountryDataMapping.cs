@@ -13,8 +13,9 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.EntityQueryServices;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Web;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {

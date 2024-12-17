@@ -26,7 +26,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Customs.BL.Messaging.Customs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.CustomsMessaging.ResponseServices

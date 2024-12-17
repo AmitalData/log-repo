@@ -1,7 +1,7 @@
 ﻿using Logitude.BL.DataContracts;
 using Logitude.Server.Tools;
 using Profact.TimbraCFDI40;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;

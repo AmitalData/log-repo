@@ -65,7 +65,7 @@ namespace AmitalCustomsWindowsService
         {
 
             Program.ThreadStartStaticIsMustB4UsingTheDB();
-            if (!HaveDB() || IsOldDB())
+            if (!HaveDB()  )
             {
                 StopThreads();
                 return;

@@ -27,6 +27,9 @@ export class ContainerizationFiltersMenuComponent
 
     }
 
+    SetFiltersMenu(args: any) {
+    }
+
     itemMouseLeave(itemValue: string) {
         if (this.SelectedValue != itemValue) {
             var img_A = document.getElementById(this.TransportFilter_A);

@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated> CustomClassesGenerator.tt
 //---
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
 using POCO = Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data;
@@ -51,6 +51,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.DescriptionOfInvoice).HasColumnName("DescriptionOfInvoice").HasMaxLength(256).IsUnicode(true);
 
             this.Property(t => t.IsInvoicesForPrint).HasColumnName("IsInvoicesForPrint");
+
+            this.Property(t => t.IsInvoiceConnected).HasColumnName("IsInvoiceConnected");
         }
     }
 }

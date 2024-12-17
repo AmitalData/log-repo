@@ -695,18 +695,18 @@ namespace Logitude.DBMigrations.Models
                             oracleCommand.CommandText = (command.ToUpper().EndsWith(" END") || command.ToUpper().EndsWith("\nEND")) ? (command + ";") : command;
                             currentCommandText = oracleCommand.CommandText;
                             PrintExecutingScript(currentCommandText);
-                            // try
-                            // {
-                                oracleCommand.ExecuteNonQuery();
-                            // }
-                            /* catch (Exception ex)
+                            try
                             {
-                                if (!ex.Message.Contains("ORA-01442") && !ex.Message.Contains("ORA-02262") && !ex.Message.Contains("ORA-22858"))
+                                oracleCommand.ExecuteNonQuery();
+                            }
+                            catch (Exception ex)
+                            {
+                                // if (!ex.Message.Contains("ORA-01442") && !ex.Message.Contains("ORA-02262") && !ex.Message.Contains("ORA-22858"))
+                                if (!ex.Message.Contains("ORA-01442"))
                                 {
-                                    //  throw ex;
-                                    var t = ex;
+                                    throw ex;
                                 }
-                             }*/
+                             }
                         }
                     }
 

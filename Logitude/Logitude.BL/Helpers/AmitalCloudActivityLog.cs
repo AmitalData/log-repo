@@ -4,7 +4,7 @@ using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
@@ -89,7 +89,7 @@ namespace Logitude.BL.Helpers
                 var isDemoTenant = false;
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
                 {
-                    commonDataContext = CommonDataContext.GetContext(0);
+                    commonDataContext = CommonDataContext.GetContext(tenant);
                     loggedContact = commonDataContext.Contacts.Where(c => c.Email == email && c.Tenant == 0).FirstOrDefault();
                     if (loggedContact != null)
                     {

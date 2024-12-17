@@ -13,7 +13,7 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Customs.BL.TraceEvents;
 using Logitude.AmitalMessaging.Infrastructure;
 
@@ -27,7 +27,7 @@ using System;
 using Logitude.AmitalMessaging.Customs.CustomFile;
 using Logitude.Customs.BL.Messaging.Amital.CustomFile;
 using Logitude.Customs.BL.Models;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Server.Tools.Models;
 using Logitude.CustomsMessaging.MessagingServices;
@@ -56,6 +56,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         private AmitalContext _AmitalContext;
         private DeclarationDMExtensionsRecipientDetails declarationDMExtensionsRecipientDetails1;
         public bool IsFromOpenNewAmendment = false;
+        private ForbiddenSignsUtil ForbiddenSignsUtil;
 
 
         public override void OnRequestFail(GenericRequestParams requestParams)
@@ -197,15 +198,25 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private void CreateDeclarationPM(GenericRequestParams requestParams)
         {
+            
+            var forbiddenSigns = ForbiddenSignsUtil.GetForbiddenSigns(requestParams.Tenant); 
+
             if (this._context == null) this._context = CustomContext.GetContext(requestParams.Tenant);
             var declarationQueryService = new DeclarationQueryService(_context);
             declarationQueryService.LoadSupplierInvoicesItemsParentsOnly = true;
             _DeclarationPM = declarationQueryService.GetSingle(requestParams.AppicationId, true, false);
+
+            _DeclarationPM.ImporterAddress = ForbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.ImporterAddress, forbiddenSigns);
+            _DeclarationPM.ImporterName = ForbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.ImporterName, forbiddenSigns);
+            _DeclarationPM.CargoDescription = ForbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.CargoDescription, forbiddenSigns);
+
         }
 
 
         public override void PostGetRequest(DF_NG_2751_MSG10000_ExportDeclaration customRequest, GenericRequestParams requestParams)
         {
+            var forbiddenSigns = ForbiddenSignsUtil.GetForbiddenSigns(requestParams.Tenant);
+
             if (this._context == null)
             {
                 this._context = CustomContext.GetContext(requestParams.Tenant);
@@ -224,6 +235,9 @@ namespace Logitude.CustomsMessaging.RequestServices
                         Tenant = _DeclarationPM.Tenant,
                         IsClosedForFollowUp = false,
                         IsCourierMissingClassification = false,
+            
+                        ImporterName = ForbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.ImporterName, forbiddenSigns),
+                        CargoDescription = ForbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.CargoDescription, forbiddenSigns),
                     };
                     currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Insert;
                 }
@@ -231,11 +245,12 @@ namespace Logitude.CustomsMessaging.RequestServices
                 {
                     currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                 }
+;
                 currentDeclarationCourierStatusPM.CourierDeclarationStatusCode = "I";
                 declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
             }
 
-            
+
             ///moran please updat event "INR"
             //string loggingUserId = AuthenticationUtil.ResolveUserId(requestParams.Tenant);
             string loggingUserId = null;
@@ -245,7 +260,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         }
 
-       
+
 
         public override DF_NG_2751_MSG10000_ExportDeclaration GetRequest(GenericRequestParams requestParams)
         {
@@ -1002,11 +1017,11 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 //if (documentPointerItem.Child1EntityCode == "SupplierInvoice" && documentPointerItem.Child1EntityId == supplierInvoicePM.InvoiceCounterKey.ToString() && documentPointerItem.Child2EntityCode == null && documentPointerItem.Child3EntityCode == null)
                 //{
-                if(customsDocumentPM.OcrStatusCode == "3" && !string.IsNullOrEmpty(customsDocumentPM.OcrId))//הוצאה מתור קלדנים
+                if (customsDocumentPM.OcrStatusCode == "3" && !string.IsNullOrEmpty(customsDocumentPM.OcrId))//הוצאה מתור קלדנים
                 {
                     OcrDocumentQueryService ocrDocumentQueryService = new OcrDocumentQueryService(_context);
                     string RemoveFromTypingOcr = ocrDocumentQueryService.RemoveFromTypingQueue(customsDocumentPM.Tenant, customsDocumentPM.OcrId);
-                    LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "RemoveFromTypingOcr: "  + RemoveFromTypingOcr + Environment.NewLine);
+                    LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "RemoveFromTypingOcr: " + RemoveFromTypingOcr + Environment.NewLine);
 
 
                 }

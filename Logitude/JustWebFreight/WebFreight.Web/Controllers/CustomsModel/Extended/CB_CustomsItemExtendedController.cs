@@ -5,7 +5,7 @@ using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
@@ -43,9 +43,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(0);
+                SecurityUtility.AuthenticationOnTenant(Tenant);
 
-                CB_CustomsItemComputedDataQueryService customsItemComputedDataQueryService = new CB_CustomsItemComputedDataQueryService(0);
+                CB_CustomsItemComputedDataQueryService customsItemComputedDataQueryService = new CB_CustomsItemComputedDataQueryService(Tenant);
                 List<CB_CustomsItemComputedDataList> result = customsItemComputedDataQueryService.GetCustomsBookMainView(filters.CustomsBookType, filters.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -68,9 +68,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(0);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                CB_CustomsItemComputedDataQueryService customsItemComputedDataQueryService = new CB_CustomsItemComputedDataQueryService(0);
+                CB_CustomsItemComputedDataQueryService customsItemComputedDataQueryService = new CB_CustomsItemComputedDataQueryService(authToken.Tenant);
                 List<CB_CustomsItemComputedDataList> result = customsItemComputedDataQueryService.GetCustomsBookMainViewSearchByClassification(filters.CustomsBookType,
                     filters.SearchFields, filters.Tenant);
 
@@ -93,9 +93,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(0);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                CB_CustomsItemComputedDataQueryService customsItemComputedDataQueryService = new CB_CustomsItemComputedDataQueryService(0);
+                CB_CustomsItemComputedDataQueryService customsItemComputedDataQueryService = new CB_CustomsItemComputedDataQueryService(authToken.Tenant);
                 List<CB_CustomsItemComputedDataList> result = customsItemComputedDataQueryService.GetCustomsBookMainViewSearchByText(filters.SearchFields,
                     filters.CustomsBookType, filters.CustomsItemHierarchic, filters.Reamarks, filters.Rules, filters.Tenant);
 

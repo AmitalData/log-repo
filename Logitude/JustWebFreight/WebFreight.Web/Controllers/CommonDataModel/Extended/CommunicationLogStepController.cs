@@ -14,7 +14,7 @@ using System.Web.Http;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using WebFreight.Web.Helpers;
 using System.Web;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using WebFreight.Web.Security;
 using System.Linq;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Transactions;
 using System.Web;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 
@@ -90,7 +90,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        IWebFreightContext context = WebFreightContext.GetContext(0);
+                        IWebFreightContext context = WebFreightContext.GetContext(tenant);
                         zeroTenantObjectFields = (from a in context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable")
                                                   where (a.Tenant == 0) && a.ObjectTable.Name == objectTableName && a.InActive == false
                                                   select a).ToList();

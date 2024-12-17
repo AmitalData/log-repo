@@ -12,7 +12,7 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel; 
@@ -181,7 +181,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             if (apinvoicePM.TransferStatusCode == null)
                                 apinvoicePM.TransferStatusCode = "NR";
 
-                            this.MapLines(apinvoice, tenant, apinvoicePM);
+                            this.MapLines(apinvoice, tenant, apinvoicePM, isFullAccounting);
 
                             apinvoicePM.InvoiceCurrencyExchangeRate = apinvoicePM.AmountInLocalCurrency / apinvoicePM.AmountInInvoiceCurrency;
                         }
@@ -281,7 +281,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             return vendor;
         }
 
-        private void MapLines(APInvoice apinvoice, int tenant, APInvoicePM apinvoicePM)
+        private void MapLines(APInvoice apinvoice, int tenant, APInvoicePM apinvoicePM, bool isFullAccounting)
         {
             GLAccountQueryService gLAccountService = new GLAccountQueryService(tenant);
             foreach (APInvoiceLinePM line in apinvoicePM.InvoiceLines)
@@ -294,25 +294,37 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 if (line.ForiegnCurrencyId == null)
                     line.ForiegnCurrencyId = apinvoicePM.InvoiceCurrencyId;
 
-                if(line.ForiegnExchangeRate != null)
+                if (line.ForiegnExchangeRate != null)
                 {
-                    line.ProfitCurrencyAmount = line.ForiegnCurrencyAmount;
+                    if (!isFullAccounting || String.IsNullOrWhiteSpace(apinvoicePM.ExternalAccountingEntityId)) 
+                        line.ProfitCurrencyAmount = line.ForiegnCurrencyAmount;
                 }
+
                 else
                 {
-                    // ForiegnExchangeRate
-                    if (line.ForiegnCurrencyId == apinvoicePM.InvoiceCurrencyId)
+                    if (isFullAccounting && !String.IsNullOrWhiteSpace(apinvoicePM.ExternalAccountingEntityId))
                     {
-                        line.ForiegnExchangeRate = apinvoice.InvoiceCurrencyExchangeRate;
-                        line.ProfitCurrencyAmount = line.ForiegnCurrencyAmount;
+                        if (!line.ForiegnExchangeRate.HasValue && line.ForiegnCurrencyAmount.HasValue && line.ForiegnCurrencyAmount.Value != 0 && line.LocalCurrencyAmount.HasValue)
+                        {
+                            line.ForiegnExchangeRate = line.LocalCurrencyAmount / line.ForiegnCurrencyAmount;
+                        }
                     }
                     else
                     {
-                        line.ForiegnExchangeRate = GetRateByTenantAndCurrency(line.ForiegnCurrencyId, GetTenantPM(tenant));
-                        line.ProfitCurrencyAmount = line.LocalCurrencyAmount / apinvoice.ProfitCurrencyExchangeRate;
+                        // ForiegnExchangeRate
+                        if (line.ForiegnCurrencyId == apinvoicePM.InvoiceCurrencyId)
+                        {
+                            line.ForiegnExchangeRate = apinvoice.InvoiceCurrencyExchangeRate;
+                            line.ProfitCurrencyAmount = line.ForiegnCurrencyAmount;
+                        }
+                        else
+                        {
+                            line.ForiegnExchangeRate = GetRateByTenantAndCurrency(line.ForiegnCurrencyId, GetTenantPM(tenant));
+                            line.ProfitCurrencyAmount = line.LocalCurrencyAmount / apinvoice.ProfitCurrencyExchangeRate;
+                        }
                     }
                 }
-                
+
 
                 // vat
                 VatTypePercentageQuery vatTypePercentageQuery = new VatTypePercentageQuery(tenant);
@@ -321,19 +333,21 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                 VatTypeQuery vatTypeQuery = new VatTypeQuery(tenant);
                 VatTypePM vatType = vatTypeQuery.GetSinglePM(line.VatTypeId, line.Tenant);
-                line.VatRecognizedPercentage = vatType.RecognizedPercentage/100;
+                line.VatRecognizedPercentage = vatType.RecognizedPercentage / 100;
 
                 // LocalCurrencyAmount,ForiegnCurrencyAmount
-                double? valueInLocal = line.LocalCurrencyAmount == null ? ( line.InvoiceCurrencyAmount * apinvoice.InvoiceCurrencyExchangeRate) : line.LocalCurrencyAmount;
+                double? valueInLocal = line.LocalCurrencyAmount == null ? (line.InvoiceCurrencyAmount * apinvoice.InvoiceCurrencyExchangeRate) : line.LocalCurrencyAmount;
                 line.LocalCurrencyAmount = valueInLocal.Value;
-                line.ForiegnCurrencyAmount = valueInLocal / line.ForiegnExchangeRate;
+                if (!isFullAccounting || String.IsNullOrWhiteSpace(apinvoicePM.ExternalAccountingEntityId))
+                {
+                    line.ForiegnCurrencyAmount = valueInLocal / line.ForiegnExchangeRate;
 
-                // ProfitCurrencyAmount
-                if (line.ForiegnCurrencyId == apinvoicePM.InvoiceCurrencyId)
-                    line.ProfitCurrencyAmount = line.ForiegnCurrencyAmount;
-                else
-                    line.ProfitCurrencyAmount = line.LocalCurrencyAmount / apinvoice.ProfitCurrencyExchangeRate;
-
+                    // ProfitCurrencyAmount
+                    if (line.ForiegnCurrencyId == apinvoicePM.InvoiceCurrencyId)
+                        line.ProfitCurrencyAmount = line.ForiegnCurrencyAmount;
+                    else
+                        line.ProfitCurrencyAmount = line.LocalCurrencyAmount / apinvoice.ProfitCurrencyExchangeRate;
+                }
                 // charge types
                 // get charges
                 ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(tenant);

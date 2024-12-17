@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -46,8 +46,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                          DescriptionOfInvoice = a.DescriptionOfInvoice,
 					
 					                          IsInvoicesForPrint = a.IsInvoicesForPrint,
-					
-		                    	            });
+
+											  IsInvoiceConnected = a.IsInvoiceConnected,
+
+                                            });
             return query;
 		}
 

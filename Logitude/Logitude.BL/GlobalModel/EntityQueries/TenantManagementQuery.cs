@@ -3,7 +3,7 @@ using System.Linq;
 using System.Web;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel.EntityPMs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -1192,7 +1192,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
                 if (entityPM.PackageCode != null)
                 {
-                    PackageRepository pckgRep = new PackageRepository(entityPM.Id);
+                    PackageRepository pckgRep = new PackageRepository(tenant);
                     Package pckg = pckgRep.GetSinglePackage(entityPM.PackageCode);
 
                     if (!entityPM.IsMultiPackage)

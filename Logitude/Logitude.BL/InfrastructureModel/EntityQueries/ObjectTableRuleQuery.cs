@@ -9,7 +9,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
 using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -156,7 +156,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 {
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
-                        WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(0);
+                        WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(tenant);
                         zeroTenantobjectTableRulePMs = (from a in repository.context.ObjectTableRules.Include("RuleType")
                                                         where a.Tenant == 0
                                                         select new ObjectTableRulePM()

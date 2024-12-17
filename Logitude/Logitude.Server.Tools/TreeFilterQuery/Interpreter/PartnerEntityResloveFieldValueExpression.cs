@@ -2,7 +2,7 @@
 using Logitude.Server.Tools.TreeFilterQuery.Iterator;
 using Logitude.Server.Tools.TreeFilterQuery.Services;
 using Newtonsoft.Json;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;

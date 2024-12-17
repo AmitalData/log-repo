@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.GlobalModel.EntityQueries;
 using Newtonsoft.Json;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Net;
@@ -140,7 +140,7 @@ namespace WebFreight.Web.Controllers.WebServices
             public string secret { get; set; }
             public string companyName { get; set; }
             public bool isTestEnvironment { get; set; }
-            public bool InvoiceV2 { get; set; }
+            public int approvalInvoiceVersion { get; set; }
         }
 
         enum ReturnContent { NONE, VALUE, JSON }

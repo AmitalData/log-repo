@@ -17,7 +17,7 @@ namespace CommunicationWorkerRole.Tasks
             try
             {
                 ContainerSchedulerTaskService containerSchedulerTaskService = new ContainerSchedulerTaskService(this);
-                containerSchedulerTaskService.ExecuteDailyAutomaticallyClosingContainers();
+                containerSchedulerTaskService.ExecuteDailyAutomaticallyClosingContainers(base.Tenant);
             }
             catch (Exception exception)
             {

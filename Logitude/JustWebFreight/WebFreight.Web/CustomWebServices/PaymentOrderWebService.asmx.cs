@@ -36,7 +36,7 @@ namespace WebFreight.Web.CustomWebServices
             MemoryStream memorystream = new MemoryStream(requestParams);
             XmlSerializer serializer = new XmlSerializer(typeof(NewPaymentRequestParams));
             NewPaymentRequestParams newRequestParams = (NewPaymentRequestParams)serializer.Deserialize(memorystream);
-            ICustomContext customContext = CustomContext.GetContext(0);
+            ICustomContext customContext = CustomContext.GetContext(newRequestParams.Tenant);
             PaymentOrderUpdateService paymentOrderService = new PaymentOrderUpdateService(customContext, new Dictionary<string, IContext>(), newRequestParams.Tenant);
 
 

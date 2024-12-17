@@ -13,7 +13,7 @@ using Simplog.Data.InvoiceModel;
 using Logitude.Accounting.BL.DataContract;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.BL.CommonDataModel.EntityLists;

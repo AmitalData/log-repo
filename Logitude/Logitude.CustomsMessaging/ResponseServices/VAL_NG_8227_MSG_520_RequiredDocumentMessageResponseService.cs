@@ -7,7 +7,7 @@ using Logitude.Customs.Data;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -339,7 +339,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if (myDeclarationPM.Direction == "E")
                 {
-                    RaiseEvent(myDeclarationPM, requestParams.LoggingUserId, "DON", null, customResponse.RequiredDocumentDetails.requiredDocumentMessageType.ToString());
+                    string documentTypeId = customResponse.RequiredDocumentDetails.typeID.ToString();
+                    string comments = "";
+                    if (!string.IsNullOrWhiteSpace(documentTypeId))
+                    {
+                        comments = documentTypeId;
+                        var documentTypeName = GetDocumentTypeName(documentTypeId, requestParams.Tenant);
+                        if (!string.IsNullOrWhiteSpace(documentTypeName))
+                        {
+                            comments += " - " + documentTypeName;
+                        }
+                    }
+
+                    RaiseEvent(myDeclarationPM, requestParams.LoggingUserId, "DON", null, comments);
                 }
 
                     DeclarationUpdateService declarationUpdateService1 = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);

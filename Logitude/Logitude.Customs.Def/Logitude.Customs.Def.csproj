@@ -147,6 +147,7 @@
     <Compile Include="EntityPMs\Generated\CB_TradeAgreementPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_TradeLevyPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_VendorPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CertificateOfOriginConnectionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ChangeTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ComputationMethodPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ConditionalExemptionTypePM.Generated.cs" />

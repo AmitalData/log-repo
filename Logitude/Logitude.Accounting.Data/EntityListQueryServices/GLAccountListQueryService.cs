@@ -1,4 +1,4 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -15,7 +15,7 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.Repositories;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel;
 using Logitude.Accounting.Data.CustomFilters;
 using System.Web;
@@ -153,8 +153,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                              Category4LocalName = a.Category4.LocalName,
                              Category5LocalName = a.Category5.LocalName,
 
-
                              ActiveForInterest = a.ActiveForInterest,
+
+                             MarkDate = a.MarkDate,
                              ActiveForInterestCreditInvoice = a.ActiveForInterestCreditInvoice,
                              MinimumInterestInvoiceBilling = a.MinimumInterestInvoiceBilling,
                              InterestCalculationStartDate = a.InterestCalculationStartDate,
@@ -398,7 +399,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                              Category4LocalName = a.Category4.LocalName,
                              Category5LocalName = a.Category5.LocalName,
 
-
+                             MarkDate= a.MarkDate,
                              ActiveForInterest = a.ActiveForInterest,
                              ActiveForInterestCreditInvoice = a.ActiveForInterestCreditInvoice,
                              MinimumInterestInvoiceBilling = a.MinimumInterestInvoiceBilling,
@@ -742,8 +743,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                            Category3LocalName = glaccount.Category3LocalName,
                            Category4LocalName = glaccount.Category4LocalName,
                            Category5LocalName = glaccount.Category5LocalName,
-
-
+                           MarkDate = glaccount.MarkDate,
                            ActiveForInterest = glaccount.ActiveForInterest,
                            ActiveForInterestCreditInvoice = glaccount.ActiveForInterestCreditInvoice,
                            MinimumInterestInvoiceBilling = glaccount.MinimumInterestInvoiceBilling,
@@ -1162,6 +1162,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                               ContactEmail = a.Contact != null ? a.Contact.Email : null,
                                                               ContactName = a.ContactId != null ? (a.Contact.LocalName ?? a.Contact.EnglishName) : null,
                                                               ActiveForInterest = a.ActiveForInterest,
+                                                              MarkDate=a.MarkDate
                                                           });
             //var xxx = accountListQuery.ToList();
 

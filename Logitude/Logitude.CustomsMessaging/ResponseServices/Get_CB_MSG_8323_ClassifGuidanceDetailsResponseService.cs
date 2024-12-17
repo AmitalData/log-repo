@@ -1,15 +1,10 @@
-﻿using Logitude.CustomsMessaging.Common.RequestParams;
+﻿using Logitude.Customs.BL.BL;
+using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
-using Logitude.Server.Tools.Helpers;
-using Microsoft.Practices.ObjectBuilder2;
+using RtfPipe;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnifreightIIG.Common.ClassifGuidanceDetailsServiceReference;
-using UnifreightIIG.Common.CustomItemClassifGuidanceServiceReference;
-using UnifreightIIG.Common.CustomItemLegalDemandsServiceReference;
+
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -18,40 +13,66 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public override void Update(CB_NG_8323_ClassifGuidanceDetailsOut customResponse, GetClassifGuidanceDetailsRequestParams requestParams)
         {
 
-            //if(customResponse?.CIClassifGuidanceOut == null )
-            //{
-            //    this.MyResponseData = new GetClassifGuidanceDetailsResponseData();
-            //    this.MyResponseData.Succeeded = true;
-            //    this.MyResponseData.HasException = false;
-            //    this.MyResponseData.UserMessage = "לא התקבלו הנחיות סיווג";
-            //    return;
-            //}
-            //this.MyResponseData = new GetClassifGuidanceDetailsResponseData();
+            if (customResponse?.ClassifGuidanceDetailsOut == null)
+            {
+                this.MyResponseData = new GetClassifGuidanceDetailsResponseData();
+                this.MyResponseData.Succeeded = true;
+                this.MyResponseData.HasException = false;
+                this.MyResponseData.UserMessage = "לא התקבלו פרטי הנחיות סיווג";
+                return;
+            }
+            string rtf = customResponse.ClassifGuidanceDetailsOut?.ClassifGuidanceText;
 
-            //foreach (var x in customResponse.CIClassifGuidanceOut)
-            //{
-            //    var item = new CustomItemClassifGuidanceResult
-            //    {
-            //        classificationGuidanceNumber = x?.classificationGuidanceNumber,
-            //        title = x?.title,
-            //        classificationGuidanceTypeName = x?.classificationGuidanceTypeName,
-            //        fullClassification = x?.fullClassification,
-            //        publicationDate = x?.publicationDate,
-            //        customsItemId = x?.CustomsItemID
-            //    };
+            this.MyResponseData = new GetClassifGuidanceDetailsResponseData()
+            {
+                classificationGuidanceNumber = customResponse.ClassifGuidanceDetailsOut.GeneraClassifGuidanceDetailsOut.classificationGuidanceNumber,
+                title = customResponse.ClassifGuidanceDetailsOut.GeneraClassifGuidanceDetailsOut.title,
+                classificationGuidanceTypeName = customResponse.ClassifGuidanceDetailsOut.GeneraClassifGuidanceDetailsOut.classificationGuidanceTypeName,
+                fullClassificationItem = customResponse.ClassifGuidanceDetailsOut.GeneraClassifGuidanceDetailsOut.fullClassificationItem,
+                createDate = customResponse.ClassifGuidanceDetailsOut.GeneraClassifGuidanceDetailsOut.createDate,
+                expirationDate = customResponse.ClassifGuidanceDetailsOut.GeneraClassifGuidanceDetailsOut?.expirationDate,
+                publicationDate = customResponse.ClassifGuidanceDetailsOut.GeneraClassifGuidanceDetailsOut.publicationDate,
+                classificationGuidanceTextRTF = !string.IsNullOrEmpty(rtf) && IsValidRtf(rtf) ? ConvertRtfToHtml(rtf) : rtf
+        };
+            
+            if(customResponse.ClassifGuidanceDetailsOut?.ClassifGuidanceAttachedCI != null)
+            {
+                foreach (var item in customResponse.ClassifGuidanceDetailsOut.ClassifGuidanceAttachedCI)
+                {
+                    MyResponseData.classifGuidanceAttached.Add(new ClassifGuidanceAttached()
+                    {
+                        fullClassification = item.fullClassification,
+                        attachedCustomsItemID = item.attachedCustomsItemID
+                    });
+                }
+            }
+          
 
-            //    this.MyResponseData.CustomItemClassifGuidanceList.Add(item);
-            //}
+            this.MyResponseData.Succeeded = true;
+            this.MyResponseData.HasException = false;
+            this.MyResponseData.UserMessage = " פרטי הנחיות סיווג התקבלו בהצלחה";
 
-            //this.MyResponseData.Succeeded = true;
-            //this.MyResponseData.HasException = false;
-            //this.MyResponseData.UserMessage = "התקבלו הנחיות סיווג בהצלחה";
 
         }
+
+
+        public static bool IsValidRtf(string rtf)
+        {
+            // לבדוק אם הטקסט מתחיל ב-{rtf1 ומסתיים ב-} 
+            return rtf.Trim().StartsWith(@"{\rtf1") && rtf.Trim().EndsWith("}");
+        }
+        public string ConvertRtfToHtml(string rtf)
+        {
+            string html = Rtf.ToHtml(rtf);
+
+            return html;
+        }
+
 
         public override GetClassifGuidanceDetailsResponseData GetResponse(CB_NG_8323_ClassifGuidanceDetailsOut customResponse, GetClassifGuidanceDetailsRequestParams requestParams)
         {
             return this.MyResponseData;
         }
+       
     }
 }

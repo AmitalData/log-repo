@@ -1,6 +1,6 @@
 ﻿using Logitude.Server.Tools;
 using Logitude.Server.Tools.QueueService;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.DataContracts;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Server.Tools.EntityChanges;
 using WebFreight.Web.Helpers.CallBack;
 using Simplog.Data.Helpers;

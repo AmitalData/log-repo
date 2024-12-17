@@ -1,20 +1,12 @@
+using Devart.Data.Oracle.Entity.Configuration;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Helpers;
+using Simplog.Global.Data.GlobalModel.Mapping;
+using Simplog.Server.Infrastructure;
 using System.Configuration;
 using System.Data.Common;
 using System.Data.Entity;
-using System.Data.Entity.Core.EntityClient;
-using System.Data.Entity.Core.Objects;
-using System.Data.SqlClient;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Mapping;
-using Simplog.Server.Infrastructure;
-using System.Data.Entity.Migrations;
-using System.Data.Entity.Infrastructure;
-using System.Data;
-using System.Data.Entity.ModelConfiguration.Conventions;
-using System;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Helpers;
-using Devart.Data.Oracle.Entity.Configuration;
 namespace Simplog.Global.Data.GlobalModel
 {
     public class GlobalContext : DbContextBase, IGlobalContext
@@ -22,7 +14,7 @@ namespace Simplog.Global.Data.GlobalModel
         public GlobalContext()
             : base("LogitudeGlobalStr")
         {
-            Database.SetInitializer<GlobalContext>(new MigrateDatabaseToLatestVersion<GlobalContext, Simplog.Global.Data.Migrations.Configuration>());
+            Database.SetInitializer<GlobalContext>(null);
         }
         public GlobalContext(DbConnection connection)
             : base(connection, true)
@@ -38,6 +30,13 @@ namespace Simplog.Global.Data.GlobalModel
                                                          //var migrator = new DbMigrator(configuration);
 
             //migrator.Update();
+        }
+
+        public GlobalContext(string nameOrConnectionString) : base(nameOrConnectionString)
+        {
+            this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.AutoDetectChangesEnabled = false;
+            Database.SetInitializer<GlobalContext>(null);
         }
 
         public void SetAsModified(object entity)
@@ -61,13 +60,17 @@ namespace Simplog.Global.Data.GlobalModel
             {
                 dbConnectionInfo = ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString;
             }
-            if (dbConnectionInfo.Contains("Main"))
-            { }
             dbConnectionInfo = DbContextBaseUtil.GetConnectionStringWithAmitalNetRole(dbConnectionInfo);
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, ConnectionLifetime, suppressPool);
-            GlobalContext context = new GlobalContext(connection);
-
-            return context;
+            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            {
+                DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, ConnectionLifetime, suppressPool);
+                return new GlobalContext(connection);
+            }
+            else
+            {
+                dbConnectionInfo = DatabaseInitializer.GetConnectionString(dbConnectionInfo, ConnectionLifetime, suppressPool);
+                return new GlobalContext(dbConnectionInfo);
+            }
         }
 
         public static GlobalContext GetContextByDBId(string dbId)
@@ -229,7 +232,7 @@ namespace Simplog.Global.Data.GlobalModel
         public IDbSet<CaptchaKey> CaptchaKeys { get; set; }
         public IDbSet<InvalidEmailResetPassword> InvalidEmailResetPasswords { get; set; }
         public IDbSet<WebhookKeys> WebhookKeys { get; set; }
-
+        public IDbSet<AuthenticationToken> AuthenticationTokens { get; set; }
 
 
     }

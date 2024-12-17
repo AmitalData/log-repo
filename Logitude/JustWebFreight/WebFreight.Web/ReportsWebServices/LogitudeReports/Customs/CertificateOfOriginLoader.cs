@@ -65,7 +65,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                                    .Include(a => a.CertificateOfOriginStatusCodeEnum)
 
                                 join de in context.Declarations
-                                .Select(x => new { x.Id, x.CustomFileNo, x.CreateDateTime, x.DeclarationNumber, x.CustomerId, x.TransportModeId })
+                                .Select(x => new { x.Id, x.CustomFileNo, x.DeclarationNumber, x.CustomerId, x.TransportModeId })
                                 on a.DeclarationId equals de.Id into deJoin
                                 from der in deJoin.DefaultIfEmpty().Take(1)
 
@@ -75,7 +75,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                     a.COONumber,
                                     a.CooTypeCode,
                                     a.CooStatusCode,
-                                    der.CreateDateTime,
+                                    a.OpenDate,
                                     der.CustomFileNo,
                                     der.DeclarationNumber,
                                     der.CustomerId,
@@ -91,7 +91,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
             {
                 DateTime startDate = ((DateTime)CreateDateFilter.FieldValue).Date;
                 DateTime endDate = ((DateTime)CreateDateFilter.FieldValue2).Date.AddDays(1);
-                certificateOfOrigins = certificateOfOrigins.Where(x => x.CreateDateTime >= startDate && x.CreateDateTime < endDate);
+                certificateOfOrigins = certificateOfOrigins.Where(x => x.OpenDate >= startDate && x.OpenDate < endDate);
 
             }
 

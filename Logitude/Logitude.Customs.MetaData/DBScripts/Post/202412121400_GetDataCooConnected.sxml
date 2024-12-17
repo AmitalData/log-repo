@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs">
+	<Sql Version="1">
+		<![CDATA[	
+      INSERT INTO Customs.CertificateOfOriginConnections
+      (
+          Id,
+          Tenant,
+          SearchFields,
+          CooStatus,
+          CooReason,
+          Active
+      )
+      SELECT
+          CAST(ROW_NUMBER() OVER (ORDER BY Status.Code, Reason.Code) AS VARCHAR(15)) AS Id, -- מזהה ייחודי
+         6 AS Tenant, -- Tenant קבוע
+          CONCAT(Status.Code, ',', Reason.Code, ',', CAST(CASE WHEN Status.Inactive = 0 THEN 1 ELSE 0 END AS VARCHAR)) AS SearchFields, -- ערכים בשדה SEARCHFIELDS
+          Status.Code AS CooStatus,
+          Reason.Code AS CooReason,
+          CASE WHEN Status.Inactive = 0 THEN 1 ELSE 0 END AS Active -- Active הפוך מהשדה Inactive
+      FROM
+          customs.CertificateOfOriginStatusCodeEnums AS Status
+      CROSS JOIN
+          customs.RequestReasonCodeEnums AS Reason
+      ORDER BY Status.Code;
+      
+
+    update customs.CertificateOfOriginConnections
+    set Active = 
+        case
+            when (CooStatus = '1' and (CooReason = '12' or CooReason = '13' or CooReason = '14')) then 1
+            when (CooStatus = '2' and (CooReason = '1' or CooReason = '2' or CooReason = '4' or CooReason = '5' or CooReason = '12' or CooReason = '13')) then 1
+            when (CooStatus = '3' and (CooReason = '1' or CooReason = '2' or CooReason = '3' or CooReason = '4' or CooReason = '5' or CooReason = '13' or CooReason = '14')) then 1
+            when (CooStatus = '4' and CooReason = '13') then 1
+            when (CooStatus = '5' and (CooReason = '13' or CooReason = '14')) then 1
+            when (CooStatus = '6' and (CooReason = '13' or CooReason = '14')) then 1
+            when (CooStatus = '7' and (CooReason = '3' or CooReason = '4' or CooReason = '13' or CooReason = '14')) then 1
+            when (CooStatus = '8' and (CooReason = '13' or CooReason = '14')) then 1
+            else 0
+        end;
+        ]]>
+	</Sql>
+  
+  <Oracle Version="1">    
+  </Oracle>
+</Script>

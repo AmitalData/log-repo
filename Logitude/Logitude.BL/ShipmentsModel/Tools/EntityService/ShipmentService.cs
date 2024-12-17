@@ -58,11 +58,11 @@ using Logitude.WarehouseLib.Data.Repositories;
 using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.ShipmentsModel;
@@ -1337,7 +1337,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 myAmitalCustom.ManifestNumber = shipmentPM.IskaNumber;
             }
             myAmitalCustom.UnloadDate = declarationReferantDataPM?.ArrivalDate?.ToString();
-            myAmitalCustom.ManifestDate = shipmentPM.HAWBDate != null ? shipmentPM.HAWBDate?.ToString() : declarationReferantDataPM.MawbDate?.ToString();
+            myAmitalCustom.ManifestDate = shipmentPM.HAWBDate != null ? shipmentPM.HAWBDate?.ToString() : declarationReferantDataPM?.MawbDate?.ToString();
             myAmitalCustom.PackageTypeCode = declarationReferantDataPM?.PackageTypeCode;
             myAmitalCustom.PackageMeasureQualifierCode = "2";
             myAmitalCustom.PackageQuantity = shipmentPM.NumberOfPackages?.ToString();
@@ -1366,16 +1366,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
 
             #region declaration referant data fields
-            myAmitalCustom.MAWB = string.IsNullOrEmpty(declarationReferantDataPM.Mawb) || !updateEmptyValueOnly ? shipmentPM.Mawb : declarationReferantDataPM.Mawb;
-            myAmitalCustom.MawbDate = declarationReferantDataPM.MawbDate == null || !updateEmptyValueOnly ? shipmentPM.MawbDate?.ToString() : declarationReferantDataPM.MawbDate?.ToString();
-            myAmitalCustom.EstimatedArrivalDate = declarationReferantDataPM.EstimatedArrivalDate == null || !updateEmptyValueOnly ? shipmentPM.EstimatedArrivalDate?.ToString() : declarationReferantDataPM.EstimatedArrivalDate?.ToString();
-            myAmitalCustom.PackageTypeCode = string.IsNullOrEmpty(declarationReferantDataPM.PackageTypeCode) || !updateEmptyValueOnly ? shipmentPM.PackageTypeCode : declarationReferantDataPM.PackageTypeCode;
-            myAmitalCustom.ArrivalDate = declarationReferantDataPM.ArrivalDate == null || !updateEmptyValueOnly ? shipmentPM.ArrivalDate?.ToString() : declarationReferantDataPM.ArrivalDate?.ToString();
-            myAmitalCustom.Commodity = additionalShipmentData?.ActionCode == ActionCode.CheckAndConnect ? shipmentPM.Commodity : declarationReferantDataPM.Commodity;
-            myAmitalCustom.Vessel = string.IsNullOrEmpty(declarationReferantDataPM.Vessel) || !updateEmptyValueOnly ? shipmentPM.Vessel : declarationReferantDataPM.Vessel;
-            myAmitalCustom.FlightVoyageNumber = string.IsNullOrEmpty(declarationReferantDataPM.FlightVoyageNumber) || !updateEmptyValueOnly ? shipmentPM.FlightVoyageNumber : declarationReferantDataPM.FlightVoyageNumber;
-            myAmitalCustom.CarrierCode = string.IsNullOrEmpty(declarationReferantDataPM.CarrierCode) || !updateEmptyValueOnly ? shipmentPM.CarrierCode : declarationReferantDataPM.CarrierCode;
-			myAmitalCustom.OriginCountryCodeRef = string.IsNullOrEmpty(declarationReferantDataPM.OriginCountryCode) || !updateEmptyValueOnly ? shipmentPM.OriginCountryCode : declarationReferantDataPM.OriginCountryCode;
+            myAmitalCustom.MAWB = string.IsNullOrEmpty(declarationReferantDataPM?.Mawb) || !updateEmptyValueOnly ? shipmentPM.Mawb : declarationReferantDataPM.Mawb;
+            myAmitalCustom.MawbDate = declarationReferantDataPM?.MawbDate == null || !updateEmptyValueOnly ? shipmentPM.MawbDate?.ToString() : declarationReferantDataPM.MawbDate?.ToString();
+            myAmitalCustom.EstimatedArrivalDate = declarationReferantDataPM?.EstimatedArrivalDate == null || !updateEmptyValueOnly ? shipmentPM.EstimatedArrivalDate?.ToString() : declarationReferantDataPM.EstimatedArrivalDate?.ToString();
+            myAmitalCustom.PackageTypeCode = string.IsNullOrEmpty(declarationReferantDataPM?.PackageTypeCode) || !updateEmptyValueOnly ? shipmentPM.PackageTypeCode : declarationReferantDataPM.PackageTypeCode;
+            myAmitalCustom.ArrivalDate = declarationReferantDataPM?.ArrivalDate == null || !updateEmptyValueOnly ? shipmentPM.ArrivalDate?.ToString() : declarationReferantDataPM.ArrivalDate?.ToString();
+            myAmitalCustom.Commodity = additionalShipmentData?.ActionCode == ActionCode.CheckAndConnect ? shipmentPM.Commodity : declarationReferantDataPM?.Commodity;
+            myAmitalCustom.Vessel = string.IsNullOrEmpty(declarationReferantDataPM?.Vessel) || !updateEmptyValueOnly ? shipmentPM.Vessel : declarationReferantDataPM.Vessel;
+            myAmitalCustom.FlightVoyageNumber = string.IsNullOrEmpty(declarationReferantDataPM?.FlightVoyageNumber) || !updateEmptyValueOnly ? shipmentPM.FlightVoyageNumber : declarationReferantDataPM.FlightVoyageNumber;
+            myAmitalCustom.CarrierCode = string.IsNullOrEmpty(declarationReferantDataPM?.CarrierCode) || !updateEmptyValueOnly ? shipmentPM.CarrierCode : declarationReferantDataPM.CarrierCode;
+			myAmitalCustom.OriginCountryCodeRef = string.IsNullOrEmpty(declarationReferantDataPM?.OriginCountryCode) || !updateEmptyValueOnly ? shipmentPM.OriginCountryCode : declarationReferantDataPM.OriginCountryCode;
 			#endregion
 
 			var respnse = APIConnectionHelper.Instance.PostViaWebAPI<Response, LogitudeCustomsFile>("/api/Declarartion/UpdateDeclarationInU2L", myAmitalCustom);

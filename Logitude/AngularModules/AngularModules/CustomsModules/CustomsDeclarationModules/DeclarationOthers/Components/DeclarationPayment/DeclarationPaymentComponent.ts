@@ -2474,6 +2474,18 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         customFileCreditResponseData.PaymentDate = PaymentDate;
         customFileCreditResponseData.BillingTaxAmount = BillingTaxAmount;
         customFileCreditResponseData.IsTRansGove = false;
+
+        if(mode == "Check") {
+            if (CreditStatus == "1")
+            {
+                customFileCreditResponseData.IsTRansGove = true;
+            }
+            else if (CreditStatus == "6")
+            {
+                customFileCreditResponseData.IsReTRansGove = true;
+            }
+        }
+
         if (mode = 'GetBank') {
            if (!AppTool.IsNullOrEmpty(customFileCreditResponseData.PaymentTime) && PaymentTime.length >= 12)
            {

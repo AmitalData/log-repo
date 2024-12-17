@@ -63,7 +63,7 @@ namespace CommunicationWorkerRole
 
         private void CheckandRescheduleDeadThreads()
         {
-            var objectContext = WebFreightContext.GetContext(0);
+            var objectContext = WebFreightContext.GetContext((int)Tenant);
             TasksSchedulerRepository TasksSchedulerRepository = new TasksSchedulerRepository(objectContext);
             TasksSchedulerQuery TasksSchedulerQuery = new TasksSchedulerQuery(TasksSchedulerRepository);
             List<TasksSchedulerPM> InprogressTasks = TasksSchedulerQuery.GetAllInprogressTasksSchedulerPMs();

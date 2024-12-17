@@ -1,4 +1,4 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -15,7 +15,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Data.Repsitories;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Customs.Data.CustomFilters;
 using System.Web;
 using System.Data.Entity.SqlServer;
@@ -341,9 +341,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          ExportLoadingPortCode = a.ExportLoadingPortCode,
                                                          LoadingPortName = a.ExportLoadingPort.LocalName,
                                                          ExcludeManifest = a.ExcludeManifest,
-														 AmendmentRejectionReason = a.AmendmentRejectionReason,
+                                                         AmendmentRejectionReason = a.AmendmentRejectionReason,
                                                          ShipmentId = a.ShipmentId,
-                                                         CooStatusCode = MyDeclarationCooStatusViews.Status,
+                                                         CooStatusName = MyDeclarationCooStatusViews.Status,                                                         
+                                                         CooStatusCode = MyDeclarationCooStatusViews.StatusCode,
 													 });
 
                 return query;

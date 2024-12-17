@@ -10,10 +10,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.MetaDataUpdate.AddClasses;
 using WebFreight.Web.MetaDataUpdate.DetailClasses;
@@ -21,7 +21,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class EntityStatusUpdateClass
    {  		
-		public const string HashString = "aa324cf0b033c53cc654a90a4eb31984";
+		public const string HashString = "3915ed55fa9bb0418cd0ca5bc5acd981";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -62,7 +62,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  false,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
@@ -148,6 +148,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -213,6 +214,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -280,6 +282,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -348,6 +351,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Code",
@@ -414,6 +418,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -481,6 +486,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Name",
@@ -549,6 +555,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ObjectTableName",
@@ -617,6 +624,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "StatusWeight",
@@ -683,6 +691,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -748,6 +757,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -815,6 +825,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "DisplayName",
@@ -875,6 +886,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -942,6 +954,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1006,6 +1019,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1067,6 +1081,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1128,6 +1143,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1170,11 +1186,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	
 			 QueryColumn ALESQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALESQuery.Id,QueryCode = ALESQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "EntityStatus.ObjectTableName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn ALESQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALESQuery.Id,QueryCode = ALESQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "EntityStatus.DisplayName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn ALESQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALESQuery.Id,QueryCode = ALESQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "EntityStatus.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ALESQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALESQuery.Id,QueryCode = ALESQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "EntityStatus.Code" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ALESQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALESQuery.Id,QueryCode = ALESQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "EntityStatus.Name" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn ALESQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALESQuery.Id,QueryCode = ALESQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "EntityStatus.Name" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn ALESQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALESQuery.Id,QueryCode = ALESQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "EntityStatus.DisplayName" , ColumnWidth = 150 }, addedQueryColumns);
 
 			 QueryColumn ALESQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALESQuery.Id,QueryCode = ALESQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "EntityStatus.StatusWeight" , ColumnWidth = 120 }, addedQueryColumns);
 
@@ -1209,21 +1225,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	   		  
 	      
 
-	         Screen EntityStatusGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "EntityStatus.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = EntityStatusObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 7, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen EntityStatusGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "EntityStatus.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = EntityStatusObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 8, IsReadOnly = true }, screensRepository, tenantScreens);
       
              ScreenField EntityStatusEntityStatusGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = EntityStatusGeneralTabScreenScreen1.Id,ScreenCode = EntityStatusGeneralTabScreenScreen1.Code, ObjectFieldCode = "EntityStatus.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField EntityStatusEntityStatusGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = EntityStatusGeneralTabScreenScreen1.Id,ScreenCode = EntityStatusGeneralTabScreenScreen1.Code, ObjectFieldCode = "EntityStatus.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField EntityStatusEntityStatusGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = EntityStatusGeneralTabScreenScreen1.Id,ScreenCode = EntityStatusGeneralTabScreenScreen1.Code, ObjectFieldCode = "EntityStatus.ObjectTableName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField EntityStatusEntityStatusGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = EntityStatusGeneralTabScreenScreen1.Id,ScreenCode = EntityStatusGeneralTabScreenScreen1.Code, ObjectFieldCode = "EntityStatus.DisplayName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField EntityStatusEntityStatusGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = EntityStatusGeneralTabScreenScreen1.Id,ScreenCode = EntityStatusGeneralTabScreenScreen1.Code, ObjectFieldCode = "EntityStatus.EntityStatusTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField EntityStatusEntityStatusGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = EntityStatusGeneralTabScreenScreen1.Id,ScreenCode = EntityStatusGeneralTabScreenScreen1.Code, ObjectFieldCode = "EntityStatus.ObjectTableName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField EntityStatusEntityStatusGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = EntityStatusGeneralTabScreenScreen1.Id,ScreenCode = EntityStatusGeneralTabScreenScreen1.Code, ObjectFieldCode = "EntityStatus.StatusWeight", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField EntityStatusEntityStatusGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = EntityStatusGeneralTabScreenScreen1.Id,ScreenCode = EntityStatusGeneralTabScreenScreen1.Code, ObjectFieldCode = "EntityStatus.EntityStatusTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField EntityStatusEntityStatusGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = EntityStatusGeneralTabScreenScreen1.Id,ScreenCode = EntityStatusGeneralTabScreenScreen1.Code, ObjectFieldCode = "EntityStatus.StatusLocalWeight", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField EntityStatusEntityStatusGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = EntityStatusGeneralTabScreenScreen1.Id,ScreenCode = EntityStatusGeneralTabScreenScreen1.Code, ObjectFieldCode = "EntityStatus.StatusWeight", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField EntityStatusEntityStatusGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = EntityStatusGeneralTabScreenScreen1.Id,ScreenCode = EntityStatusGeneralTabScreenScreen1.Code, ObjectFieldCode = "EntityStatus.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField EntityStatusEntityStatusGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = EntityStatusGeneralTabScreenScreen1.Id,ScreenCode = EntityStatusGeneralTabScreenScreen1.Code, ObjectFieldCode = "EntityStatus.StatusLocalWeight", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField EntityStatusEntityStatusGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ScreenId = EntityStatusGeneralTabScreenScreen1.Id,ScreenCode = EntityStatusGeneralTabScreenScreen1.Code, ObjectFieldCode = "EntityStatus.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	            
 
 	    }

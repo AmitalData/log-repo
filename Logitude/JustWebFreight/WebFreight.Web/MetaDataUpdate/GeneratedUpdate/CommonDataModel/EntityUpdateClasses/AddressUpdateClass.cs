@@ -10,10 +10,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.MetaDataUpdate.AddClasses;
 using WebFreight.Web.MetaDataUpdate.DetailClasses;
@@ -21,8 +21,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class AddressUpdateClass
    {  		
-		public const string HashString = "c627737f361bb787186fff51b4052aed";
-	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+ 		public const string HashString = "c627737f361bb787186fff51b4052aed";
+ 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -66,8 +66,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Address",
-			      				    Code =  "be12",
-			      				    Name =  "Address",
+ 			      				    Code =  "be12",
+ 			      				    Name =  "Address",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
 			      				    NoTS =  false,
@@ -3102,11 +3102,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CityId",
 					  						DefaultText =  "City Id",
-					  						FullLocalDefaultTextBack_up =  "עיר",
 					  						FullLocalDefaultText =  "BS64:Itei15nXqCI=",
 					  						ListFieldLable =  "CityIdListLable",
 					  						ListLableDefaultText =  "CityId",
-					  						ListLocalDefaultTextBack_up =  "עיר",
 					  						ListLocalDefaultText =  "BS64:Itei15nXqCI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CountryCity",
@@ -3239,11 +3237,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransportationInstructions",
 					  						DefaultText =  "TransportationInstructions",
-					  						FullLocalDefaultTextBack_up =  "הנחיות הובלה",
 					  						FullLocalDefaultText =  "BS64:IteU16DXl9eZ15XXqiDXlNeV15HXnNeUIg==",
 					  						ListFieldLable =  "TransportationInstructionsListLable",
 					  						ListLableDefaultText =  "TransportationInstructions ",
-					  						ListLocalDefaultTextBack_up =  "הנחיות הובלה",
 					  						ListLocalDefaultText =  "BS64:IteU16DXl9eZ15XXqiDXlNeV15HXnNeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  true,
@@ -3307,11 +3303,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Responsibility",
 					  						DefaultText =  "Responsibility",
-					  						FullLocalDefaultTextBack_up =  "אחריות",
 					  						FullLocalDefaultText =  "BS64:IteQ15fXqNeZ15XXqiI=",
 					  						ListFieldLable =  "ResponsibilityListLable",
 					  						ListLableDefaultText =  "Responsibility",
-					  						ListLocalDefaultTextBack_up =  "אחריות",
 					  						ListLocalDefaultText =  "BS64:IteQ15fXqNeZ15XXqiI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Responsibility",

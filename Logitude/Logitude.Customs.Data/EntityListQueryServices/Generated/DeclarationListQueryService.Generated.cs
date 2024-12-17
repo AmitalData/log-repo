@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated> CustomClassesGenerator.tt
 //---
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -39,7 +39,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         public List<DeclarationList> GetList(QueryOperations queryOperations, int tenant , TreeFilterQueryArgs treeFilterQueryArgs)
         {
             GenericFilter filter = new GenericFilter();
-            GenericSort sortClass = new GenericSort();
+            GenericSort sortClass = new GenericSort(tenant);
 
             IQueryable<POCO.Declaration> iQueryable = (from a in context.Declarations
                                               

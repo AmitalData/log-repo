@@ -490,6 +490,8 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string ShipmentId  { get; set; }
        [DataMember]
+       public string CooStatusName  { get; set; }
+       [DataMember]
        public string CooStatusCode  { get; set; }
    }
 

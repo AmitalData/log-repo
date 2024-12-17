@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -45,7 +45,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                         AutoUnitMeasurement = a.AutoUnitMeasurement,
                                                         CompanyType = a.CompanyType,
                                                         HSMToken = a.HSMToken,
-                                                        HSMCompanyId = a.HSMCompanyId
+                                                        HSMCompanyId = a.HSMCompanyId,
+                                                        ForbiddenSigns = a.ForbiddenSigns
                                                     });
             return query;
 		}

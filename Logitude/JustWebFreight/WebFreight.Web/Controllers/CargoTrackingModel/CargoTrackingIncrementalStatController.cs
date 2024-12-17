@@ -2,7 +2,7 @@
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using Logitude.CargoTracking.BL.EntityQueryServices;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -19,7 +19,7 @@ using Logitude.CargoTracking.Data.EntityPOCOs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 
 namespace WebFreight.Web.Controllers.CargoTrackingModel

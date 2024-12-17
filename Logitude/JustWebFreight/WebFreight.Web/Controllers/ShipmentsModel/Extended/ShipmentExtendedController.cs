@@ -5,9 +5,9 @@ using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -41,9 +41,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     int tenant = authToken.Tenant;
-
+                    customEntityPM.Tenant = authToken.Tenant;
                     SecurityUtility.AuthenticationOnTenant(tenant);
-                    SecurityUtility.AuthenticationOnEntityTenant("Shipment", customEntityPM.Tenant, authToken.Tenant);
 
                     if (customEntityPM.ActionCode == ActionCode.Disconnect || customEntityPM.ActionCode == ActionCode.CheckAndConnect)
                     {

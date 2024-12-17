@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using Logitude.BL.Validators;
 using Logitude.Server.Tools;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.BL.CommonDataModel.EntityPMs
 {

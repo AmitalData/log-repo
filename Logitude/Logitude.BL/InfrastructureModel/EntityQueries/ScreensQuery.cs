@@ -5,7 +5,7 @@ using System.Transactions;
 using System.Web;
 
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -40,8 +40,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-             WebFreightContext   webFreightContext = (WebFreightContext)WebFreightContext.GetContext(0);
-                ScreenFieldsRepository screenfieldsRep = new ScreenFieldsRepository(0);
+             WebFreightContext   webFreightContext = (WebFreightContext)WebFreightContext.GetContext(tenant);
+                ScreenFieldsRepository screenfieldsRep = new ScreenFieldsRepository(tenant);
                 zeroscreens = (from a in repository.context.Screens.Include("ObjectTable")
                                where a.Tenant == 0
                                select new ScreenPM()
@@ -126,7 +126,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         public ScreenPM GetSinglePM( string id,int tenant)
         {
-            WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(0);
+            WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(tenant);
             ScreenFieldsRepository screenfieldsRep = new ScreenFieldsRepository(tenant);
             return (from a in repository.context.Screens.Include("ObjectTable")
                     where a.Tenant == tenant && a.Id == id
@@ -155,7 +155,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         public List<ScreenPM> GetByEntity(string entityId, int tenant)
         {
-            WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(0);
+            WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(tenant);
             ScreenFieldsRepository screenfieldsRep = new ScreenFieldsRepository(tenant);
             return (from a in repository.context.Screens.Include("ObjectTable")
                     where a.Tenant == tenant && a.ObjectTableId == entityId

@@ -18,6 +18,8 @@ using Logitude.Server.Tools.Helpers;
 using RequestHeader = UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference.RequestHeader;
 using Logitude.CustomsMessaging.FakeMessagingServices;
 using UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference;
+using Logitude.CustomsMessaging.Helpers;
+
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {

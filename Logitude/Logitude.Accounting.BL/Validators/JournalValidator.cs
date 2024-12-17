@@ -17,7 +17,7 @@ using Logitude.Server.Tools.Utils;
 using Microsoft.Practices.Unity;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -312,6 +312,8 @@ namespace Logitude.Accounting.BL.Validators
           JournalPM myJournalPM,
           System.ComponentModel.DataAnnotations.ValidationContext accountingValidationContextServiceProvider)
         {
+            if (myJournalPM.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.Cancelled)
+                return ValidationResult.Success;
             decimal creditTotal = 0;
             decimal debitTotal = 0;
 

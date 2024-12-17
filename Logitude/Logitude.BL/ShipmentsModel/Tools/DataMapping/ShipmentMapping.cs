@@ -10,11 +10,11 @@ using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InfrastructureModel;
 using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System.Reflection;
 using Simplog.Data.Helpers;
@@ -268,8 +268,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             if (entityPM.IsCustomShipment)
             {
+                entityPoco.ShipmentTypeId = entityPM.ShipmentTypeId;
+                entityPoco.TransportModeId = entityPM.TransportModeId;
                 entityPoco.NumberOfPackages = entityPM.NumberOfPackages;
                 entityPoco.FromPortId = entityPM.MainCarriageFromPortId;
+                entityPoco.TransportModeId = entityPM.TransportModeId;
             }
 
             if (entityPM.IsStatusChange)

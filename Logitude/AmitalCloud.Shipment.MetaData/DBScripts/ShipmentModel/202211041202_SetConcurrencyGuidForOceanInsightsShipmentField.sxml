@@ -1,9 +1,0 @@
-﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="Shipments">
-	<Sql Version="1">
-		<![CDATA[
-          update Shipments set OIConcurrencyGUID = NEWID() where OIConcurrencyGUID is null and $LastCounterWhere$    
-        ]]>
-	</Sql>
-</Script>
-
-

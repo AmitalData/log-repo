@@ -7,17 +7,38 @@ import { FieldByTypeComponent } from "./FieldByTypeComponent";
     selector: 'LogDefaultAndConfigurationValueTab',
     template: `
         <div>
-            <log-text-box-form *ngIf='dataInit' [fields]='[field]' [DataContext]='DataContext' [dir]="'ltr'"> 
+            <log-text-box-form [fields]='[field]' [DataContext]='DataContext' [dir]="'ltr'"> 
                 <ng-container end>
                     <div class='form-data-field-field' [ngClass]='{"is-array": typeIsArray}'>
-                        <LogLabel [DataContext]="DataContext" [Text]="'Value ' + valueNumber" [LayoutDirection]="'ltr'"></LogLabel>
-                        <app-field-by-type #value [type]='field.value' [dir]='"ltr"' [name]='"Value" + valueNumber' [DataContext]='DataContext'></app-field-by-type>
+                        <LogLabel class='label-value' [DataContext]="DataContext" [Text]="'Value ' + valueNumber" [LayoutDirection]="'ltr'"></LogLabel>
+                        <app-field-by-type #value [type]='field.value' [dir]='"ltr"' [name]='"Value" + valueNumber' [DataContext]='DataContext' [required]='required'></app-field-by-type>
                     </div>
                 </ng-container>
             </log-text-box-form>
-        </div>
+        </div> 
     `,
     styles: [`
+        :host ::ng-deep app-field-by-type wrapper-log-field {
+            display: inline-block;
+        }
+                        
+        :host ::ng-deep .label-value { 
+            padding-left: 30px;
+        }
+
+        :host ::ng-deep .form-data-field-field {
+            align-items: center;
+        }
+
+        :host ::ng-deep wrapper-log-field {
+            align-content: normal !important;
+        }
+
+        :host ::ng-deep wrapper-log-field, 
+        :host ::ng-deep app-field-by-type { 
+            height: 22px;
+        }
+
         :host ::ng-deep .is-array app-field-by-type .values-container {
             overflow-y: auto;
             overflow-x: hidden;
@@ -41,6 +62,7 @@ export class DefaultAndConfigurationValueTabComponent {
     DataContext = { UIProperties: new UIProperties() };
     typeIsArray: boolean = false;
     field: TextBoxField = { name: '', label: 'Set Value Type', type: 'text', value: 'System.String', disabled: true };
+    required: boolean = false;
 
     constructor(private readonly cd: ChangeDetectorRef) { }
 
@@ -49,7 +71,8 @@ export class DefaultAndConfigurationValueTabComponent {
         this.valueNumber = EntityPM.valueNumber;
         this.field.name = 'SetValueType' + this.valueNumber;
         EntityPM.$setKeyChange.subscribe((value) => this.setKeyChange(value));
-        this.dataInit = true;
+        this.dataInit = true;        
+        this.required = EntityPM.required;      
         this.cd.detectChanges();
 
         EntityPM.forms['value' + this.valueNumber] = this.value;

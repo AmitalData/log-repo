@@ -1,7 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -21,9 +21,10 @@ namespace WebFreight.Web.ContainerTracking
 
         public VizionAnalyzer(VisionContainerStatus visionContainerStatus)
         {
+            int tenant = 0;
             this.visionContainerStatus = visionContainerStatus;
             containerUpdatedFields = new ContainerUpdatedFields();
-            containerUpdatedFields.ShipmentContext = ShipmentsContext.GetContext(0);
+            containerUpdatedFields.ShipmentContext = ShipmentsContext.GetContext(tenant);
             containerUpdatedFields.ContainerRepository = new ContainerRepository(containerUpdatedFields.ShipmentContext);
         }
 

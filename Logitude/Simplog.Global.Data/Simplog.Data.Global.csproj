@@ -122,6 +122,7 @@
     <Compile Include="GlobalModel\EntityPOCOs\AnalyzeQueue.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\AnalyzeQueueStatus.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\ApiCredintials.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\AuthenticationToken.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\AutoSignupEmail.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\AWBMessagesCCSType.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\BatchServicesDefinition.cs" />
@@ -170,6 +171,7 @@
     <Compile Include="GlobalModel\Mapping\AgentSharedLogisticsKeyMap.cs" />
     <Compile Include="GlobalModel\Mapping\AnalyzeQueueMap.cs" />
     <Compile Include="GlobalModel\Mapping\AnalyzeQueueStatuMap.cs" />
+    <Compile Include="GlobalModel\Mapping\AuthenticationTokenMap.cs" />
     <Compile Include="GlobalModel\Mapping\AutoSignupEmailMap.cs" />
     <Compile Include="GlobalModel\Mapping\AWBMessagesCCSTypeMap.cs" />
     <Compile Include="GlobalModel\Mapping\BatchServicesDefinitionMap.cs" />
@@ -211,6 +213,7 @@
     <Compile Include="GlobalModel\Mocks\MockGlobalContext.cs" />
     <Compile Include="GlobalModel\Repositories\AgentSharedLogisticsKeyRepository.cs" />
     <Compile Include="GlobalModel\Repositories\AnalyzeQueueRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\AuthenticationTokenRepository.cs" />
     <Compile Include="GlobalModel\Repositories\AutoSignupEmailRepository.cs" />
     <Compile Include="GlobalModel\Repositories\AWBMessagesCCSTypeRepository.cs" />
     <Compile Include="GlobalModel\Repositories\BatchServicesDefinitionRepository.cs" />

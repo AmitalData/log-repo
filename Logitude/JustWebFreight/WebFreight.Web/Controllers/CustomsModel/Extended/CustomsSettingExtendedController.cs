@@ -4,7 +4,7 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.Messaging.Amital;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.Repsitories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -404,7 +404,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                  SecurityUtility.AuthenticationOnTenant(tenant);
 
 
-                ICustomContext MyContext = CustomContext.GetContext(tenant);
+                ICustomContext MyContext = CustomContext.GetContext(0);
 
                 CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(MyContext);
 

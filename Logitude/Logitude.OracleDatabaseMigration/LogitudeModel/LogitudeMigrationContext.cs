@@ -5,7 +5,7 @@ using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Mapping;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Mapping;
@@ -40,6 +40,8 @@ using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.EntityMapping;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.EntityMapping;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Mapping;
 
 namespace Logitude.OracleDatabaseMigration.LogitudeModel
 {

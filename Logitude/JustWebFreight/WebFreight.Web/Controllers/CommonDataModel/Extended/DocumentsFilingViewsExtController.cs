@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -19,14 +19,14 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
@@ -215,7 +215,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                                     }
                                 default:
                                     {
-                                        entityLists = entityLists.OrderByDescending(d => d.CreateDate).ThenBy(f => f.Code);
+                                        entityLists = entityLists.OrderByDescending(d => d.CreateDate);
                                         break;
                                     }
                             }
@@ -228,7 +228,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 }
                 else
                 {
-                    entityLists = entityLists.OrderByDescending(d => d.CreateDate).ThenBy(f=>f.Code);
+                    entityLists = entityLists.OrderByDescending(d => d.CreateDate);
                 }
 
                 ServiceResponse response = new ServiceResponse();

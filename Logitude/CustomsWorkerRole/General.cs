@@ -16,6 +16,9 @@ namespace CustomsWorkerRole
         {
             try
             {
+
+
+
                 IGlobalContext globalcontext = GlobalContext.GetContext();
                 bool isUpgrading = (from a in globalcontext.GlobalDBs
                                     select a).FirstOrDefault().IsUpgrading;

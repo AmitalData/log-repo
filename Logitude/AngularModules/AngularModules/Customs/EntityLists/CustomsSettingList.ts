@@ -37,6 +37,7 @@ export class CustomsSettingList {
 	StandAlone: boolean;
 	OcrToken: string;
 	CourierDocToken: string;
+	ForbiddenSigns: string;
 	
 }
  

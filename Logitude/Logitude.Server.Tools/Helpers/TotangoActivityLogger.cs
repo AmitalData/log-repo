@@ -12,7 +12,7 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Data.SqlClient;
 using System.Data;
 using Simplog.Data.InfrastructureModel;

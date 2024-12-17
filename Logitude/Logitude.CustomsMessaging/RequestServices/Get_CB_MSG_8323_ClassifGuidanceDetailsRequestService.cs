@@ -1,4 +1,5 @@
-﻿using Logitude.Customs.BL.EntityQueryServices;
+﻿using Logitude.Customs.BL.BL;
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.TraceEvents;
 using Logitude.Customs.Data;
@@ -29,6 +30,9 @@ namespace Logitude.CustomsMessaging.RequestServices
             myMsg.ClassifGuidanceDetailsIn = new UnifreightIIG.Common.ClassifGuidanceDetailsServiceReference.CB_NG_8323_ClassifGuidanceDetailsInClassifGuidanceDetailsIn();
 
             myMsg.ClassifGuidanceDetailsIn.classificationGuidanceNumber = requestParams.ClassificationGuidanceNumber;
+            myMsg.ClassifGuidanceDetailsIn.languageType = 1;
+            myMsg.ClassifGuidanceDetailsIn.languageTypeSpecified = true;
+
             
             this.MyRequestSheetParam = new RequestSheetParam();
             this.MyRequestSheetParam.RequestDescription = "פרטי הנחיות סיווג";

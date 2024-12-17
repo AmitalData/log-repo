@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.SystemLogs.POCOs;
@@ -12,7 +12,7 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using WebFreight.Web.WebServices;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
 using System.Transactions;
@@ -110,13 +110,14 @@ namespace WebFreight.Web.Helpers
         {
             try
             {
+                return;
                 Contact loggedContact = null;
                 User loggedUser = null;
                 ICommonDataContext commonDataContext;
                 var isDemoTenant = false;
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
                 {
-                    commonDataContext = CommonDataContext.GetContext(0);
+                    commonDataContext = CommonDataContext.GetContext(tenant);
                     loggedContact = commonDataContext.Contacts.Where(c => c.Email == email && c.Tenant == 0).FirstOrDefault();
                     if (loggedContact != null)
                     {

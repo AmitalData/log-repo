@@ -1,6 +1,6 @@
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 

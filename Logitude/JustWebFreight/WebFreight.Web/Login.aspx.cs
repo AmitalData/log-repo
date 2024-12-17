@@ -9,7 +9,7 @@ using System.Web.Security;
 using Simplog.Data.CommonDataModel;
 using WebFreight.Web.Security;
 using Simplog.Global.Data.GlobalModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;

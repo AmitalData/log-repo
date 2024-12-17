@@ -10,7 +10,7 @@ using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
 using Profact.TimbraCFDI40;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel;

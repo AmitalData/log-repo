@@ -44,3 +44,8 @@
 <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'IsPrinted' ">
     <img style="width:18px;height:15px;" *ngIf="rowData['IsPrinted']" class="CenterCenter" src="./Images/blue_printer.png" [title]="'Printed'" />
  </div>
+
+ <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'IsSigned' ">
+    <img style="width:12px;height:10px;" *ngIf="rowData['IsSigned']" class="CenterCenter" src="./Images/CheckBoxIcon.png"  />
+
+ </div>

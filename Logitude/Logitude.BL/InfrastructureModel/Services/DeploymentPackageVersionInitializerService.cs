@@ -4,7 +4,7 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using System;
@@ -14,7 +14,7 @@ using Logitude.Server.Tools.StorageService;
 using System.Collections.Generic;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 
 namespace Logitude.BL.InfrastructureModel.Services

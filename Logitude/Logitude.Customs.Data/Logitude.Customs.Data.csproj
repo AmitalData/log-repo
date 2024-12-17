@@ -245,6 +245,7 @@
     <Compile Include="EntityKeys\CB_TradeAgreementKeys.cs" />
     <Compile Include="EntityKeys\CB_TradeLevyKeys.cs" />
     <Compile Include="EntityKeys\CB_VendorKeys.cs" />
+    <Compile Include="EntityKeys\CertificateOfOriginConnectionKeys.cs" />
     <Compile Include="EntityKeys\CertificateOfOriginInvoiceKeys.cs" />
     <Compile Include="EntityKeys\CertificateOfOriginItemKeys.cs" />
     <Compile Include="EntityKeys\CertificateOfOriginKeys.cs" />
@@ -480,6 +481,7 @@
     <Compile Include="EntityListQueryServices\CB_TradeAgreementListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CB_TradeLevyListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CB_VendorListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CertificateOfOriginConnectionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CertificateOfOriginInvoiceListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CertificateOfOriginItemListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CertificateOfOriginListQueryService.cs" />
@@ -630,6 +632,7 @@
     <Compile Include="EntityListQueryServices\Generated\CB_TradeAgreementListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CB_TradeLevyListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CB_VendorListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginConnectionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginInvoiceListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginItemListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginListQueryService.Generated.cs" />
@@ -926,6 +929,7 @@
     <Compile Include="EntityLists\Generated\CB_TradeAgreementList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CB_TradeLevyList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CB_VendorList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CertificateOfOriginConnectionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CertificateOfOriginInvoiceList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CertificateOfOriginItemList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CertificateOfOriginList.Generated.cs" />
@@ -1186,6 +1190,7 @@
     <Compile Include="EntityMapping\CB_TradeAgreementMap.cs" />
     <Compile Include="EntityMapping\CB_TradeLevyMap.cs" />
     <Compile Include="EntityMapping\CB_VendorMap.cs" />
+    <Compile Include="EntityMapping\CertificateOfOriginConnectionMap.cs" />
     <Compile Include="EntityMapping\CertificateOfOriginInvoiceMap.cs" />
     <Compile Include="EntityMapping\CertificateOfOriginItemMap.cs" />
     <Compile Include="EntityMapping\CertificateOfOriginMandatoryFieldsMap.cs" />
@@ -1422,6 +1427,7 @@
     <Compile Include="EntityPOCOs\CB_TradeLevy.cs" />
     <Compile Include="EntityPOCOs\CB_Vendor.cs" />
     <Compile Include="EntityPOCOs\CertificateOfOrigin.cs" />
+    <Compile Include="EntityPOCOs\CertificateOfOriginConnection.cs" />
     <Compile Include="EntityPOCOs\CertificateOfOriginInvoice.cs" />
     <Compile Include="EntityPOCOs\CertificateOfOriginItem.cs" />
     <Compile Include="EntityPOCOs\CertificateOfOriginMandatoryFields.cs" />
@@ -1657,6 +1663,7 @@
     <Compile Include="Repsitories\CB_TradeAgreementRepository.cs" />
     <Compile Include="Repsitories\CB_TradeLevyRepository.cs" />
     <Compile Include="Repsitories\CB_VendorRepository.cs" />
+    <Compile Include="Repsitories\CertificateOfOriginConnectionRepository.cs" />
     <Compile Include="Repsitories\CertificateOfOriginInvoiceRepository.cs" />
     <Compile Include="Repsitories\CertificateOfOriginItemRepository.cs" />
     <Compile Include="Repsitories\CertificateOfOriginMandatoryFieldsRepository.cs" />
@@ -1808,6 +1815,7 @@
     <Compile Include="Repsitories\Generated\CB_TradeAgreementRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CB_TradeLevyRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CB_VendorRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CertificateOfOriginConnectionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CertificateOfOriginInvoiceRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CertificateOfOriginItemRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CertificateOfOriginMandatoryFieldsRepository.Generated.cs" />

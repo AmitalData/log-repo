@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using System;
 using System.Collections.Generic;
@@ -18,7 +18,10 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 itemPoco.Id = itemPM.Id;
                 itemPoco.Tenant = itemPM.Tenant;
             }
-            itemPoco.UserId = itemPM.UserId;
+            if(itemPoco.UserId == null && itemPM.UserId != null)
+            {
+                itemPoco.UserId = itemPM.UserId;
+            }
             itemPoco.GroupID = itemPM.GroupID;
 
 

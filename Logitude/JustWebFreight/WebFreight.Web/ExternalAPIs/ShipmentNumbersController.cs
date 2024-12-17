@@ -2,7 +2,7 @@
 using Logitude.BL.ShipmentsModel.APIDataContract.Messages;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;

@@ -2,7 +2,7 @@
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Azure;
@@ -85,7 +85,7 @@ namespace CommunicationWorkerRole
                     if (DateTime.Now >= date1 && DateTime.Now <= date2)
                     {
                         LastActivity = DateTime.UtcNow;
-                        ICommonDataContext iContext = CommonDataContext.GetContext(0);
+                        ICommonDataContext iContext = CommonDataContext.GetContext((int)Tenant);
                         List<int> AllTenants = (from d in iContext.Tenants select d.Id).ToList();
                         if (AllTenants != null)
                         {

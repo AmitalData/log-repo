@@ -12,7 +12,7 @@ using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using System;
@@ -574,6 +574,12 @@ namespace Logitude.Accounting.BL.DataContract
             {
                 throw new ApplicationException(taxDeductionReport.ErrorMessage);
             }
+            if (byVendorList.Count() < 1)
+            {
+                ByVendorList  emptyVendor = new ByVendorList();
+                byVendorList.Add(emptyVendor);
+            }
+            
             return byVendorList;
         }
         private List<CardList> GetMainAccountsCards()

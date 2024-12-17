@@ -21,8 +21,8 @@ using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.Azure;
@@ -157,7 +157,7 @@ namespace WebFreight.Web
 							ScacCode = item.InnerText;
 						}
 						var TempRec = new OceanInsightsRequestPM();
-						IShipmentsContext objectContext = ShipmentsContext.GetContext(0);
+						IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
 						OceanInsightsRequestService service = new OceanInsightsRequestService(objectContext, 0);
 						TempRec.ContainerNumber = ContainerNo;
 						TempRec.SCACCode = ScacCode;
@@ -219,7 +219,7 @@ namespace WebFreight.Web
 							//    ScacCode = item.InnerText;
 							//}
 							var TempRequestsCount = new OceanInsightsRequestsCountPM();
-							IShipmentsContext objectContext = ShipmentsContext.GetContext(0);
+							IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
 							OceanInsightsRequestsCountService service = new OceanInsightsRequestsCountService(objectContext, 0);
 							TempRequestsCount.ContainerNumber = ContainerNo;
 							TempRequestsCount.Tenant = MyTenant;
@@ -278,7 +278,7 @@ namespace WebFreight.Web
 								else
 								{
 									TempReq = new OceanInsightsRequestPM();
-									IShipmentsContext objectContext = ShipmentsContext.GetContext(0);
+									IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
 									OceanInsightsRequestService service = new OceanInsightsRequestService(objectContext, 0);
 									TempReq.ContainerNumber = newcontainernumber;
 									//TempReq.ContainerNumber = newblnumber;

@@ -25,10 +25,10 @@ using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.Data.Repositories;
 using Logitude.XSD.Artemus;
 using Microsoft.Practices.Unity;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.QuoteModel;
 using Simplog.Data.QuoteModel.EntityPOCOs;
@@ -643,7 +643,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Shipment", "UPDATE", tenant);
 
-                IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(0);
+                IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
                 ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(shipmentsContext);
                 ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDeliveryByStandaloneShipmentId(shipmentId, tenant);
@@ -1852,7 +1852,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    IShipmentsContext iContext = ShipmentsContext.GetContext(0);
+                    IShipmentsContext iContext = ShipmentsContext.GetContext(authToken.Tenant);
                     ShipmentRepository iShipmentRepository = new ShipmentRepository(iContext);
                     ShipmentQuery iShipmentQuery = new ShipmentQuery(iShipmentRepository);
 

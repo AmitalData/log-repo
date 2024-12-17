@@ -69,6 +69,7 @@ export class MainDisplayComponent implements OnInit {
 	}
 	searchState: string = searchState.יבוא;
 
+
 	ngOnInit() {
 		this.headerService.searchState$.subscribe((data) => {
 			if (!searchState[data]) return;
@@ -611,12 +612,14 @@ export interface RulesDetailsList {
 	RuleID: number;
 	Title: string;
 	Rules: string;
-	RulesRTF: string;
+	Index: string;
+	ParentID: number;
 	UpdateDate: Date;
 	ChangeRequestTypePriority: number;
 	OrderinalPostion: number;
 	EntityStatusID: string;
-	Parent_RuleDetailsHistoryID: number;
+	customsItemId?: number;
+	CB_ID?: number;
 }
 
 export class CustomItemClassifGuidanceResult {

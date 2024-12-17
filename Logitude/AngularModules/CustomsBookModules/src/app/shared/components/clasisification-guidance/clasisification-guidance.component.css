@@ -1,0 +1,46 @@
+.instruction-container {
+    /* max-width: 800px; */
+    /* margin: 20px auto; */
+    max-width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+    direction: rtl;
+  }
+  
+  .instruction-header {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: right;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .instruction-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+    text-wrap: wrap;
+  }
+  
+  .instruction-cell {
+    display: flex;
+    gap: 5px;
+    font-size: 14px;
+  }
+  
+  .value {
+    font-weight: normal;
+    color: #333;
+  }
+  
+  .label {
+    color: #0078d7; /* Blue for emphasis */
+    font-weight: bold;
+  }
+  

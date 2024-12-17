@@ -1430,6 +1430,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string invoiceNotes ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InvoiceNotes  
+	   {
+	    
+	     get
+		{
+		   return invoiceNotes;
+		 }
+		 set
+		 {
+		   if(invoiceNotes != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoiceNotes",OldValue=invoiceNotes,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   invoiceNotes=value;
+		   }
+			
+		 }
+	   }
+	  private string interestInvoiceNotes ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InterestInvoiceNotes  
+	   {
+	    
+	     get
+		{
+		   return interestInvoiceNotes;
+		 }
+		 set
+		 {
+		   if(interestInvoiceNotes != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestInvoiceNotes",OldValue=interestInvoiceNotes,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   interestInvoiceNotes=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

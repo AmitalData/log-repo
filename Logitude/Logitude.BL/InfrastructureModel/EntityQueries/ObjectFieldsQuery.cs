@@ -7,7 +7,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
 using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel;
 using System.Transactions;
 using Logitude.BL.InfrastructureModel.EntityLists;
@@ -2616,7 +2616,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        IWebFreightContext context = WebFreightContext.GetContext(0);
+                        IWebFreightContext context = WebFreightContext.GetContext(tenant);
                         zeroTenantObjectFields = (from a in context.ObjectFields.Include("ObjectTable")
                                                   where (a.Tenant == 0) && a.InActive == false
                                                   select new ObjectFieldPM()
@@ -2736,7 +2736,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    IWebFreightContext context = WebFreightContext.GetContext(0);
+                    IWebFreightContext context = WebFreightContext.GetContext(tenant);
                     zeroTenantObjectFields = (from a in context.ObjectFields.Include("ObjectTable")
                                               where (a.Tenant == 0) && a.InActive == false
                                               select new ObjectFieldPM()

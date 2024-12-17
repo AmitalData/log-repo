@@ -19,6 +19,7 @@ export class CertificateOfOriginInvoiceList {
 	CurrencyTypeCode: string;
 	DescriptionOfInvoice: string;
 	IsInvoicesForPrint: boolean;
+	IsInvoiceConnected: boolean;
 	
 }
  

@@ -8,7 +8,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using WebFreight.Web.WebServices;
 using Simplog.Server.Infrastructure.Azure;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using WebFreight.Web.Helpers;
 
 namespace WebFreight.Web.WebPages

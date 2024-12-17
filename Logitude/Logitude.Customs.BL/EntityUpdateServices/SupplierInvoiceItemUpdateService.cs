@@ -340,9 +340,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             else
             {
-                foreach (SupplierInvioceItemCertificatPM item in entityPM.SupplierInvioceItemCertificats)
+                foreach (SupplierInvioceItemCertificatPM item in entityPM.SupplierInvioceItemCertificats.Where(x => x.ChangeSetOp != ChangeSetOperation.Delete))
                 {
-                    if (!string.IsNullOrEmpty(item.ApprovalRequestNumber))
+                    if (!string.IsNullOrWhiteSpace(item.ApprovalRequestNumber))
                     {
                         hasRequest = true;
                     }
@@ -358,7 +358,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         {
                             if (entityPM.Direction == "E")
                             {
-                                if (string.IsNullOrEmpty(item.CertificateNumber) || string.IsNullOrEmpty(item.ReqConfirmationTypeCode) || string.IsNullOrEmpty(item.ResConfirmationTypeCode) || !string.IsNullOrEmpty(item.CertificateExemptionTypeCode)  )
+                                if (string.IsNullOrWhiteSpace(item.CertificateNumber) || string.IsNullOrWhiteSpace(item.ReqConfirmationTypeCode) || string.IsNullOrWhiteSpace(item.ResConfirmationTypeCode) || !string.IsNullOrWhiteSpace(item.CertificateExemptionTypeCode)  )
                                 {
                                     isValid = false;
                                     break;
@@ -366,7 +366,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             }
                             else
                             {
-                                if (string.IsNullOrEmpty(item.CertificateNumber) || string.IsNullOrEmpty(item.ReqConfirmationTypeCode) || string.IsNullOrEmpty(item.ResConfirmationTypeCode) || !string.IsNullOrEmpty(item.CertificateExemptionTypeCode) || !string.IsNullOrEmpty(item.CustomsAttachmentID))
+                                if (string.IsNullOrWhiteSpace(item.CertificateNumber) || string.IsNullOrWhiteSpace(item.ReqConfirmationTypeCode) || string.IsNullOrWhiteSpace(item.ResConfirmationTypeCode) || !string.IsNullOrWhiteSpace(item.CertificateExemptionTypeCode) || !string.IsNullOrWhiteSpace(item.CustomsAttachmentID))
                                 {
                                     isValid = false;
                                     break;
@@ -380,7 +380,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         {
                             if (item.AttachmentTypeCode == "4")
                             {
-                                if (string.IsNullOrEmpty(item.CertificateExemptionTypeCode) || string.IsNullOrEmpty(item.ReqConfirmationTypeCode) || !string.IsNullOrEmpty(item.CertificateNumber) || !string.IsNullOrEmpty(item.ResConfirmationTypeCode) || !string.IsNullOrEmpty(item.CustomsAttachmentID))
+                                if (string.IsNullOrWhiteSpace(item.CertificateExemptionTypeCode) || string.IsNullOrWhiteSpace(item.ReqConfirmationTypeCode) || !string.IsNullOrWhiteSpace(item.CertificateNumber) || !string.IsNullOrWhiteSpace(item.ResConfirmationTypeCode) || !string.IsNullOrWhiteSpace(item.CustomsAttachmentID))
                                 {
                                     isValid = false;
                                     break;

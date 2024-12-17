@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Def.EntityPMs;
@@ -379,7 +379,8 @@ namespace WebFreight.Web.AccountingModel.DomainServices
                                                             JournalId = a.JournalId,
                                                             JournalNumber = a.JournalLine.Journal.JournalNumber,
                                                             Source = a.JournalLine.Journal.AccountingEntityReference,
-                                                            SourceType = a.JournalLine.Journal.AccountingEntityCode,
+                                                            SourceType = a.JournalLine.Journal.AccountingEntity.EnglishName,
+                                                            SourceTypeCode = a.JournalLine.Journal.AccountingEntity.Code,
                                                             CurrencyCode = a.Currency.Code,
                                                             // JournalLine = a.JournalLine,
                                                             JournalLineNumber = a.JournalLineNumber,

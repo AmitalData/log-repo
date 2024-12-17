@@ -17,7 +17,7 @@ using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.RequestServices;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -62,7 +62,7 @@ using Org.BouncyCastle.Bcpg.Sig;
 using Logitude.Customs.Data.EntityMapping;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.Customs.Data.EntityListQueryServices;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Reflection;
 using System.Web.Script.Serialization;
 

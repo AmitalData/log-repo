@@ -7,7 +7,7 @@ using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelper;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.ExtendedServices;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
