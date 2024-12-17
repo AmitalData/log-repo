@@ -337,7 +337,6 @@ export class TaxReportMenuButtonsHandler {
         this.CurrentSession.StopBusyIndicator();
     }
     CreateClosingJournalButtonClicked() {
-        debugger
         var taxReportMonthDate = new Date(this.EntityPM.TaxReportMonth)
         if (taxReportMonthDate.getFullYear() < 2022 || (taxReportMonthDate.getFullYear() === 2022 && taxReportMonthDate.getMonth() + 1 < 5)) {
             var messageWindow = new MessageWindow();
