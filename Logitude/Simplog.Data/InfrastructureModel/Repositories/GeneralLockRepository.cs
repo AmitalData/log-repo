@@ -60,11 +60,11 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                 && rec.CreatedAt < createdAtb4_15min
                 );
         }
-		public GeneralLock GetSingleGeneralLockNOWAIT(int tenant,string entityId,string objectTableId)
+		public GeneralLock GetSingleGeneralLock(int tenant,string entityId,string objectTableId)
 		{
 
 			return (context as DbContextBase)
-				.GetListNOWAITWhere<GeneralLock>(rec => rec.Tenant == tenant && ((rec.EntityId1 == entityId &&
+				.GetListWhere<GeneralLock>(rec => rec.Tenant == tenant && ((rec.EntityId1 == entityId &&
 				rec.ObjectTableId1 == objectTableId) || (rec.EntityId2 == entityId && rec.ObjectTableId2 == objectTableId))).FirstOrDefault();
 		}
 		public void FastDeleteGeneralLock(int tenant, string entityId1, string objectTableId1, string sessionId)

@@ -36,10 +36,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
       
 
-        public GeneralLockPM GetSingleGeneralLockNOWAIT(int tenant, string entityId, string objectTableId)
+        public GeneralLockPM GetSingleGeneralLock(int tenant, string entityId, string objectTableId)
 		{
             GeneralLockPM generalLockPM = null;
-            GeneralLock generalLock = repository.GetSingleGeneralLockNOWAIT(tenant, entityId, objectTableId);
+            GeneralLock generalLock = repository.GetSingleGeneralLock(tenant, entityId, objectTableId);
 			UserRepository userRepository = new UserRepository(tenant);
 			if (generalLock != null)
             {

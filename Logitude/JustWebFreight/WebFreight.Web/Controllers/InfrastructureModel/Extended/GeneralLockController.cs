@@ -51,7 +51,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 
 				ObjectTablePM table = tablesQuery.GetObjectTableByName(objectTableName, tenant);
 
-				var lockPoco = repo.GetSingleGeneralLockNOWAIT( tenant,  entityId, table?.Id);
+				var lockPoco = repo.GetSingleGeneralLock( tenant,  entityId, table?.Id);
 
 				return Request.CreateResponse(HttpStatusCode.OK, lockPoco);
 

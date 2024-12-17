@@ -25,9 +25,9 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
 			var generalLockQuery = new GeneralLockQuery(tenant);
 			ObjectTableQuery tablesQuery = new ObjectTableQuery(tenant);
 
-			ObjectTablePM objectTable = tablesQuery.GetObjectTableByName(objectTableName, tenant);
+			ObjectTablePM objectTable = tablesQuery.GetObjectTableByNameOrId(objectTableName, tenant);
 
-			var lockPoco = generalLockQuery.GetSingleGeneralLockNOWAIT(tenant, entityId, objectTable?.Id);
+			var lockPoco = generalLockQuery.GetSingleGeneralLock(tenant, entityId, objectTable?.Id);
 
 			if (objectTable.IsLock)
 			{
