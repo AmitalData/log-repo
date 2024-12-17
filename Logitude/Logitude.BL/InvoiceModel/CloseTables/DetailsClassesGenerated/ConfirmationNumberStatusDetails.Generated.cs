@@ -55,6 +55,15 @@ namespace Logitude.BL.InvoiceModel
                 Name = "Confirmation number failed", 
                 LocalName = "כשלון בקבלת הקצאה", 
 			});
+			 
+            all.Add(new ConfirmationNumberStatusDetails()
+            {    
+                Code = "6", 
+                LocalName = "חשבונית מעוכבת", 
+                Name = "Delayed invoice", 
+                SearchFields = "", 
+                InActive = false, 
+			});
 			
             return all;
        }
