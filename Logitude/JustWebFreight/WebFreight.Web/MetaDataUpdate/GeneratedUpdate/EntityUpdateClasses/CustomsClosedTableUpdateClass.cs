@@ -21,7 +21,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsClosedTableUpdateClass
    {  		
-		public const string HashString = "450328e6e8c816bd7c446e27ad4f4744";
+		public const string HashString = "3ad262968d8172c1d321355ea1268438";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -36,6 +36,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  true,
+			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -63,7 +66,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "טבלאות מכס",
 			      				    DefaultText =  "Customs Closed Table",
-			      				    Code =  "d5e1",
+			      				    Code =  "b3ae",
 			      				    Name =  "Customs.CustomsClosedTable Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -141,7 +144,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -207,7 +209,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -273,7 +274,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -339,7 +339,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -405,7 +404,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -474,7 +472,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -539,7 +536,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -602,7 +598,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -665,7 +660,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -730,7 +724,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -795,7 +788,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -860,7 +852,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -965,7 +956,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode CustomsClosedTableTextCode_CustomsCustomsClosedTableBUpdate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsClosedTable.B.Update", DefaultText = "Update",LocalDefaultText = @"עדכן", ObjectTableId = CustomsClosedTableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode CustomsClosedTableTextCode_CustomsCustomsClosedTableOId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsClosedTable.O.Id", DefaultText = "Id",LocalDefaultText = @"מזהה קופה", ObjectTableId = CustomsClosedTableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomsClosedTableTextCode_CustomsCustomsClosedTableOId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsClosedTable.O.Id", DefaultText = "Id",LocalDefaultText = @"קוד", ObjectTableId = CustomsClosedTableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
