@@ -92,9 +92,13 @@ export class LineModel extends BaseComponent {
         if (this.LedgerTransactionPM.AmountToReconcile != value) {
             this.LedgerTransactionPM.AmountToReconcile = value;
 
-            //if (this.parent.IsEntityValid) {
-
-            if (this.OpenAmount < 0) { // debit
+            if (value == 0 && (this.OpenAmount < 0 || this.OpenAmount > 0))
+            {
+                this.UIProperties.SetValidity("AmountToReconcile", this.parent.ObjectTableName, false, TextCodeTranslator.Translate("Reconciliations.O.ZeroNotAllowed"));
+                this.parent.IsEntityValid = false;
+                this.isLineValid = false;
+            }
+            else if (this.OpenAmount < 0) { // debit
                 if (value < this.OpenAmount || value > 0) {
                     this.UIProperties.SetValidity("AmountToReconcile", this.parent.ObjectTableName, false, TextCodeTranslator.Translate("Reconciliations.O.AmountMustBSmaller2OpenAmount"));
                     this.parent.IsEntityValid = false;
@@ -119,7 +123,7 @@ export class LineModel extends BaseComponent {
             }
 
             //WI26522
-            if (this.parent.IsEntityValid) {
+            if (this.isLineValid && this.parent.IsEntityValid) {
                 if (Math.abs(value) > Math.abs(this.OpenAmount)) {
                     this.UIProperties.SetValidity("AmountToReconcile", this.parent.ObjectTableName, false, TextCodeTranslator.Translate("Reconciliations.O.AmountMustBSmaller2OpenAmount"));
                     this.parent.IsEntityValid = false;
