@@ -46,6 +46,9 @@ using Simplog.Data.Helpers;
 using Logitude.Customs.BL.BL;
 using UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference;
 using Logitude.Server.Tools.Counters;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using Logitude.Customs.Data.EntityListQueryServices;
+using Logitude.Customs.Data.EntityLists;
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
@@ -58,6 +61,10 @@ namespace Logitude.CustomsMessaging.RequestServices
         private Stopwatch _Stopwatch;
         private AmitalContext _AmitalContext;
         private string _userId;
+
+        private string _forbiddenSigns;
+        ForbiddenSignsUtil forbiddenSignsUtil = new ForbiddenSignsUtil();
+
 
         private bool isExportClose = false;
         public override void ManipulateRequestParams(AmendmentRequestParams requestParams)
@@ -191,10 +198,16 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private void CreateDeclarationPM(GenericRequestParams requestParams)
         {
+            var forbiddenSigns = forbiddenSignsUtil.GetForbiddenSigns(requestParams.Tenant);
+
             if (this._context == null) this._context = CustomContext.GetContext(requestParams.Tenant);
             var declarationQueryService = new DeclarationQueryService(_context);
             declarationQueryService.LoadSupplierInvoicesItemsParentsOnly = true;
             _DeclarationPM = declarationQueryService.GetSingle(requestParams.AppicationId, true, false);
+
+            _DeclarationPM.ImporterName = forbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.ImporterName, forbiddenSigns);
+            _DeclarationPM.ImporterAddress = forbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.ImporterAddress, forbiddenSigns);
+            _DeclarationPM.CargoDescription = forbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.CargoDescription, forbiddenSigns);
 
             _DeclarationPMOrg = isExportClose ? _DeclarationPM : declarationQueryService.GetAcceptDeclarationAmendment(_DeclarationPM.AmendmentOriginalDeclartation, _DeclarationPM.Tenant);
         }
@@ -210,8 +223,6 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         public override DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg GetRequest(AmendmentRequestParams requestParams)
         {
-
-
 
             LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIA = " + requestParams.RequestVIA.ToString());
             LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIAChangeDue = " + requestParams.RequestVIAChangeDue);
@@ -372,6 +383,12 @@ namespace Logitude.CustomsMessaging.RequestServices
         private void UpdateDeclaration(UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference.Response response, string LoggingUserId)
         {
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), _DeclarationPM.Tenant);
+            var forbiddenSigns = forbiddenSignsUtil.GetForbiddenSigns(_DeclarationPM.Tenant);
+          
+            _DeclarationPM.ImporterName = forbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.ImporterName, forbiddenSigns);
+            _DeclarationPM.ImporterAddress = forbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.ImporterAddress, forbiddenSigns);
+            _DeclarationPM.CargoDescription = forbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.CargoDescription, forbiddenSigns);
+
             if (isExportClose)
             {
                 _DeclarationPM.ExportCloseAmendRequestNumber = response.FunctionalReferenceID.Value;
@@ -2227,6 +2244,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             return registeredFacility;
         }
+
 
     }
 }

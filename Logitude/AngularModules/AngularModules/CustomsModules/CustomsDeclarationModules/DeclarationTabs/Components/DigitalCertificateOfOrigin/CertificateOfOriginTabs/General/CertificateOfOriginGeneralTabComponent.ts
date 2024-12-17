@@ -127,7 +127,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                             currentDeclaration.SupplierInvoices = result;
                             this.currentDeclaration.SupplierInvoices = result;
                             this.InitNewCertificate(EntityPM);
-                            if (this.entityPM.CooStatusCode) this.getCooReasonsByCooStatusFromCooConnction();
+                            this.getCooReasonsByCooStatusFromCooConnction();
                             this.isReady = true;
                         }
                     });
@@ -513,7 +513,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     InitilizeListsFromCertificateOfOrigin(EntityPM: CertificateOfOriginPM) {
         this.InitializeCertificateOriginInvoiceItems(EntityPM.CertificateOriginInvoiceItems);
         this.InitializeCertificateOriginItemItems(EntityPM.CertificateOriginItemItems);
-        if (this.entityPM.CooStatusCode) this.getCooReasonsByCooStatusFromCooConnction();
+        this.getCooReasonsByCooStatusFromCooConnction();
     }
 
     InitializeCertificateOriginInvoiceItems(certificateOriginInvoiceItems: CertificateOfOriginInvoicePM[]) {
@@ -668,7 +668,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
     CooReasonFilterItems: ApiQueryFilters = new ApiQueryFilters();
     getCooReasonsByCooStatusFromCooConnction() {
-        this.CooReasonFilterItems.addAdditionalFilter("CooStatusByConnection", this.entityPM.CooStatusCode, null, null, "Equal", true, false, false, "string");
+        let status = this.entityPM.CooStatusCode ? this.entityPM.CooStatusCode : "-1";
+        this.CooReasonFilterItems.addAdditionalFilter("CooStatusByConnection", status, null, null, "Equal", true, false, false, "string");
     }
 
     SetPropertiesEnabled() {
