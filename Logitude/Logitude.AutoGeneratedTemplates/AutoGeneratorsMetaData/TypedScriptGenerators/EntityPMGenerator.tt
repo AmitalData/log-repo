@@ -288,6 +288,12 @@ else{
     MarkAsDirty(propertyName:string = null) {
        if(!this.DisableMarkAsDirty)
        {
+ <#+
+	 if(isLock){
+	 #>if(!AppTool.IsNullOrEmpty(this.<#=thisPrimeryKey #>) && !this.IsDirty) {
+            ServiceHelper.CheckIsLock(this.<#=thisPrimeryKey #>, "<#=entity.ObjectTableName.Trim('"') #>",true);
+        }<#+}
+#>	
         this.IsDirty = true;
 		  <#+
 	 if(hasParent){
@@ -295,12 +301,7 @@ else{
             this.EntityParentPM.MarkAsDirty();
         }<#+}
 #>	
-		  <#+
-	 if(isLock){
-	 #>if(!AppTool.IsNullOrEmpty(this.<#=thisPrimeryKey #>)) {
-            ServiceHelper.CheckIsLock(this.<#=thisPrimeryKey #>, "<#=entity.ObjectTableName.Trim('"') #>",true);
-        }<#+}
-#>	
+		 
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
 <#+

@@ -2545,6 +2545,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                        if(currentEditComponent.SelectedTab.EntityPM.IsLocked) {
                            currentEditComponent.IsLockEntity = GeneralLock[0];
                            if(GeneralLock[0]) {
+                              currentEditComponent.IsSaveBtnDisable = true;
                               currentEditComponent.EntityPM.IsDirty = false;
                               currentEditComponent.DisplayLockMessage =  `The entity ${GeneralLock[2]} object  ${GeneralLock[1]} is locked by  ${GeneralLock[3]}`
                            }

@@ -6134,10 +6134,11 @@ export class ShipmentPM {
     MarkAsDirty(propertyName: string = null) {
        
         if (!this.DisableMarkAsDirty) {
-            this.IsDirty = true;
-            if(!AppTool.IsNullOrEmpty(this.Id)) {
+            if(!AppTool.IsNullOrEmpty(this.Id) && !this.IsDirty) {
                 ServiceHelper.CheckIsLock(this.Id, "Shipment", true);
             }
+            this.IsDirty = true;
+           
             if (propertyName != null) {
                 this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
                 ShipmentPMCustomCode.ApplyEntityChanged(propertyName, this);
