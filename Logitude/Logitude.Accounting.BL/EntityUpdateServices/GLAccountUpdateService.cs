@@ -45,6 +45,7 @@ using System.Xml.Serialization;
 using System.IO;
 using Logitude.Accounting.BL.CoreBL.Batch;
 using System.Globalization;
+using System.Net;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -722,44 +723,50 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     ActionDate = DateTime.Today,
                     BatchIt = 1,
                 };
-                using (var memStream = new MemoryStream())
-                {
-                    var serializer = new XmlSerializer(typeof(GLAccountInterestActivationBalanceArgs));
-                    serializer.Serialize(/*stringwriter*/memStream, args);
+                //using (var memStream = new MemoryStream())
+                //{
+                //    var serializer = new XmlSerializer(typeof(GLAccountInterestActivationBalanceArgs));
+                //    serializer.Serialize(/*stringwriter*/memStream, args);
 
-                    var communicationLogId = Communications.AddCommunicationLog(new CommunicationsParams()
-                    {
-                        Tenant = entityPOCO.Tenant,
-                        CommunicationLogTypeCode = "Q",
-                        QueueName = "externaltasksqueue" + entityPOCO.Tenant + 1,
-                        Priority = 1,
-                        InOut = "O",
-                        Status = "D",
-                        FileExtension = "xml",
-                        //LoggingUserId = loggedUserId,
-                        //LoggingObjectTableId = table.Id,
-                        //LoggingEntityId = extDocPM.Id,
+                //    var communicationLogId = Communications.AddCommunicationLog(new CommunicationsParams()
+                //    {
+                //        Tenant = entityPOCO.Tenant,
+                //        CommunicationLogTypeCode = "Q",
+                //        QueueName = "externaltasksqueue" + entityPOCO.Tenant + 1,
+                //        Priority = 1,
+                //        InOut = "O",
+                //        Status = "D",
+                //        FileExtension = "xml",
+                //        //LoggingUserId = loggedUserId,
+                //        //LoggingObjectTableId = table.Id,
+                //        //LoggingEntityId = extDocPM.Id,
 
-                        FolderName = "BatchTaskExecutionsQueue",
+                //        FolderName = "BatchTaskExecutionsQueue",
 
-                        To = "GLAccountInterestActivationBalanceBatch",
+                //        To = "GLAccountInterestActivationBalanceBatch",
 
-                        //EntityId = declarationId,
-                        //ObjectTableId = objectTableId,
-                        Subject = "GLAccountInterestActivationBalanceBatch holder ",
-                        ByteData = memStream.ToArray()
-
-
-                    });
-                    args.CommunicationLogId = communicationLogId;
-
-                }
-                //GLAccountInterestActivationBalanceBatch.CreateBatchFunctionalTestTask( args,false);
-                var myGLAccountInterestActivationBalanceBatch = new BatchGLAccountInterestActivationBalanceTask(null);
-                string subj = $"GLAccount Interest Activation Balance {entityPOCO.Id}";
-                myGLAccountInterestActivationBalanceBatch.CreateQBatchTaskExecution<GLAccountInterestActivationBalanceArgs>(args, args.Tenant, subj, true);
+                //        //EntityId = declarationId,
+                //        //ObjectTableId = objectTableId,
+                //        Subject = "GLAccountInterestActivationBalanceBatch holder ",
+                //        ByteData = memStream.ToArray()
 
 
+                //    });
+                //    args.CommunicationLogId = communicationLogId;
+
+                //}
+                ////GLAccountInterestActivationBalanceBatch.CreateBatchFunctionalTestTask( args,false);
+                //var myGLAccountInterestActivationBalanceBatch = new BatchGLAccountInterestActivationBalanceTask(null);
+                //string subj = $"GLAccount Interest Activation Balance {entityPOCO.Id}";
+                //myGLAccountInterestActivationBalanceBatch.CreateQBatchTaskExecution<GLAccountInterestActivationBalanceArgs>(args, args.Tenant, subj, true);
+
+
+                var accountingContext = AccountingContext.GetContext(tenant);
+
+                var myBatchGLAccountInterestActivationBalanceTask = new BatchGLAccountInterestActivationBalanceTask(null);
+                string subj = $"GLAccount Interest Activation Balance {entityPOCO.DisplayNumber}";
+                var batchTaskId = myBatchGLAccountInterestActivationBalanceTask.CreateQBatchTaskExecution<GLAccountInterestActivationBalanceArgs>(
+                    args, args.Tenant, subj, true);
             }
 
         }
