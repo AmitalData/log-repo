@@ -148,6 +148,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return mappedInvoicePM;
         }
 
+        public List<string> GetInvoiceNumberByAPPaymentId(string APPaymentId, int tenant)
+        {
+            return repository.GetInvoiceNumberByAPPaymentId(APPaymentId, tenant);
+        }
+
         private IQueryable<APInvoicePM> GetAPInvoiceIQueryable()
         {
             var query = (from a in repository.context.APInvoices.Include("Status").Include("LocalCurrency").Include("InvoiceCurrency").Include("TransferStatus").Include("VendorCard").Include("PaymentTerm").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("CreatedByUser").Include("CreatedByUser.Contact")

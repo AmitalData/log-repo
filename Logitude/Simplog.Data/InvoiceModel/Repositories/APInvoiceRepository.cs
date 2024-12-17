@@ -295,6 +295,17 @@ namespace Simplog.Data.InvoiceModel.Repositories
             return list;
         }
 
+        public List<string> GetInvoiceNumberByAPPaymentId(string APPaymentId, int tenant)
+        {
+            var results = from  api in context.APInvoicePayments 
+                          join i in context.APInvoices on api.APInvoiceId equals i.Id
+                          where api.APPaymentId == APPaymentId  && api.Tenant == tenant
+                          select i.InvoiceNumber;
+
+            return results.ToList();
+
+        }
+
         public List<APInvoice> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new NotImplementedException();
