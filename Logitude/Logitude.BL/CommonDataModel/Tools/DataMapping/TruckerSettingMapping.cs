@@ -23,6 +23,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             itemPoco.FromAddressCityId = itemPM.FromAddressCityId;
             itemPoco.ToAddressCityId = itemPM.ToAddressCityId;
             itemPoco.Responsibility = itemPM.Responsibility;
+            itemPoco.ShipmentType = itemPM.ShipmentType;
         }
     }
 }

@@ -179,7 +179,21 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public string TruckerId { get; set; }
 
-        public List<TruckerSetting> TruckerSettings;
+        private List<TruckerSettingPM> truckerSettings;
+        [DataMember]
+        public List<TruckerSettingPM> TruckerSettings
+        {
+            get
+            {
+                if(truckerSettings == null)
+                {
+                    truckerSettings = new List<TruckerSettingPM>();
+                }
+                return truckerSettings;
+            }
+            set { truckerSettings = value; }
+        }
+
 
        
 

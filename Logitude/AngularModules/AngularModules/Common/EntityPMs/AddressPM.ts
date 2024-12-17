@@ -236,7 +236,7 @@ export class AddressPM {
     public set BranchId(newValue: string) { if (this.branchId != newValue) { this.branchId = newValue; this.MarkAsDirty("BranchId"); } } 
 
     private cityId: string;
-    public set CityId(newValue: string) { debugger; if (this.cityId != newValue) { this.cityId = newValue; this.MarkAsDirty("CityId"); } }
+    public set CityId(newValue: string) { if (this.cityId != newValue) { this.cityId = newValue; this.MarkAsDirty("CityId"); } }
     public get CityId() { return this.cityId; }
 
     private transportationInstructions:string;

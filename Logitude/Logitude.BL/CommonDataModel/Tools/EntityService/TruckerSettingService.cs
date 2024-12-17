@@ -61,5 +61,17 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
         }
+
+        public void Remove(TruckerSettingPM entityPM)
+        {
+            this.entityPm = entityPM;
+            this.Poco = entityRepository.GetSingle(entityPM.Id, entityPm.Tenant);
+
+            TruckerSettingMapping.MapEntity(entityPM, Poco, isNewEntity);
+            entityRepository.Remove(Poco);
+            entityRepository.SubmitChanges();
+        }
+
+
     }
 }

@@ -20,7 +20,7 @@ export class TruckerSettingPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+		  this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -73,6 +73,18 @@ export class TruckerSettingPM {
     public get FromAddressCityName() { return this.fromAddressCityName; }
     public set FromAddressCityName(newValue: string) { if (this.fromAddressCityName != newValue) { this.fromAddressCityName = newValue; this.MarkAsDirty("FromAddressCityName"); } }
 
+    private truckerName: string;
+    public get TruckerName() { return this.truckerName; }
+    public set TruckerName(newValue: string) { if (this.truckerName != newValue) { this.truckerName = newValue; this.MarkAsDirty("TruckerName"); } }
+
+    private shipmentTypeName: string;
+    public get ShipmentTypeName() { return this.shipmentTypeName; }
+    public set ShipmentTypeName(newValue: string) { if (this.shipmentTypeName != newValue) { this.shipmentTypeName = newValue; this.MarkAsDirty("ShipmentTypeName"); } }
+
+    private responsibilityName: string;
+    public get ResponsibilityName() { return this.responsibilityName; }
+    public set ResponsibilityName(newValue: string) { if (this.responsibilityName != newValue) { this.responsibilityName = newValue; this.MarkAsDirty("ResponsibilityName"); } }
+    
     public OldEntityPM: TruckerSettingPM;
 		
     public IsDirty: boolean;
