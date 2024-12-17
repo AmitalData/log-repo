@@ -23,7 +23,21 @@
       CROSS JOIN
           customs.RequestReasonCodeEnums AS Reason
       ORDER BY Status.Code;
+      
 
+    update customs.CertificateOfOriginConnections
+    set Active = 
+        case
+            when (CooStatus = '1' and (CooReason = '12' or CooReason = '13' or CooReason = '14')) then 1
+            when (CooStatus = '2' and (CooReason = '1' or CooReason = '2' or CooReason = '4' or CooReason = '5' or CooReason = '12' or CooReason = '13')) then 1
+            when (CooStatus = '3' and (CooReason = '1' or CooReason = '2' or CooReason = '3' or CooReason = '4' or CooReason = '5' or CooReason = '13' or CooReason = '14')) then 1
+            when (CooStatus = '4' and CooReason = '13') then 1
+            when (CooStatus = '5' and (CooReason = '13' or CooReason = '14')) then 1
+            when (CooStatus = '6' and (CooReason = '13' or CooReason = '14')) then 1
+            when (CooStatus = '7' and (CooReason = '3' or CooReason = '4' or CooReason = '13' or CooReason = '14')) then 1
+            when (CooStatus = '8' and (CooReason = '13' or CooReason = '14')) then 1
+            else 0
+        end;
         ]]>
 	</Sql>
   

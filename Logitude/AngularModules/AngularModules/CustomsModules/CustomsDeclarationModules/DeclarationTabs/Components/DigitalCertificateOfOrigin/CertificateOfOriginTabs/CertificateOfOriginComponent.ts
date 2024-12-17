@@ -551,10 +551,6 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
                 this.getCertificateOfOriginConnection(this.EntityPM.CooStatusCode);
             }
         });
-
-
-
-
     }
 
     UpdateIsChange(isChange: boolean) {//#103474
@@ -599,14 +595,15 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
                 if (result != null) {
                     this.IsDisplayOnlyByCooConnection = result.length > 0 ? false : true;
                     this.updateDisplayByStatusAndConnection();
+                    if (result.filter(d => d.CooReason == this.EntityPM.RequestReasonCode)?.length == 0) this.EntityPM.RequestReasonCode = "";
                 }
             }
         });
     }
 
     updateDisplayByStatusAndConnection() {
-        this.GENERAL.updateIsDisplay(this.IsDisplayOnlyByCooConnection, this.IsDisplayOnlyByRecordEditable);
-        this.MOREDATA.updateIsDisplay(this.IsDisplayOnlyByRecordEditable);
+        this.GENERAL?.updateIsDisplay(this.IsDisplayOnlyByCooConnection, this.IsDisplayOnlyByRecordEditable);
+        this.MOREDATA?.updateIsDisplay(this.IsDisplayOnlyByRecordEditable);
     }
 }
 
