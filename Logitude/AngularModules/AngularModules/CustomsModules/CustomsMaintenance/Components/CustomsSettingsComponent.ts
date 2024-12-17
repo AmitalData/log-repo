@@ -120,9 +120,10 @@ export class CustomsSettingsComponent
                     }
                 });
 
+                //this.RefreshBtnClick()
+          
 
-            //this.RefreshBtnClick()
-        });
+            });
 
     }
     
@@ -264,7 +265,9 @@ export class CustomsSettingsComponent
 
     get LastNumOfMessagesDCAWS() { return this.entityPM != null ? this.entityPM.LastNumOfMessagesDCAWS : null; }
     set LastNumOfMessagesDCAWS(value) { this.entityPM.LastNumOfMessagesDCAWS = value; }
-
+    
+    get ForbiddenSigns() { return this.entityPM != null ? this.entityPM.ForbiddenSigns.replace(/([a-zA-Z])/g, '$1,') : null; }
+    set ForbiddenSigns(value) { this.entityPM.ForbiddenSigns = value.replace(/,/g, ''); }
 
     _LastRunningDCAWS: Date;
     get LastRunningDCAWS() {
@@ -298,9 +301,6 @@ export class CustomsSettingsComponent
     get HSMCompanyId() { return this.entityPM != null ? this.entityPM.HSMCompanyId : null; }
     set HSMCompanyId(value) { this.entityPM.HSMCompanyId = value; }
 
-
-
-
     
     get HSMToken() { return this.entityPM != null ? this.entityPM.HSMToken : null; }
     set HSMToken(value) { this.entityPM.HSMToken = value; }
@@ -310,6 +310,7 @@ export class CustomsSettingsComponent
 
     get CourierDocToken() { return this.entityPM != null ? this.entityPM.CourierDocToken : null; }
     set CourierDocToken(value) { this.entityPM.CourierDocToken = value; }
+
     //#endregion
     ClearCache(){
 
@@ -317,9 +318,9 @@ export class CustomsSettingsComponent
         myConfirmWindow.Width = 400;
         myConfirmWindow.Title="כתב ויתור"
         myConfirmWindow.Show(`ניקוי מטמון יבוצע בשרת הנ"ל בלבד 
-        לא יבוצע ניקוי מטמון לשירותים ברקע ובשרתי ההיבריד
-        ניקוי מטמון מביא להאטה בביצועים
-        האם להמשיך?
+        לם יבוצע ניקוי מטמון לשירותים ברקע ובשרתי ההיבריד
+        ניקוי מטמון מבים להםטה בביצועים
+        הםם להמשיך?
         `);
         myConfirmWindow.WindowClosed.subscribe(event => {
             if (myConfirmWindow.Yes) {
@@ -327,7 +328,7 @@ export class CustomsSettingsComponent
 
                     var msg = new MessageWindow();
                     msg.RTL = true;
-                    msg.Show("...אנא שקול אתחול שירותי רקע ");
+                    msg.Show("...םנם שקול םתחול שירותי רקע ");
                 });
             }
      
@@ -344,7 +345,7 @@ export class CustomsSettingsComponent
         logitudeWindow.Width = 1000;
         logitudeWindow.Height = 500;
         logitudeWindow.IsShowCloseButton = true;
-        logitudeWindow.Title = "אתחול סרוויסים";//TextCodeTranslator.Translate("CommunicationLogSteps.O.Log");
+        logitudeWindow.Title = "םתחול סרוויסים";//TextCodeTranslator.Translate("CommunicationLogSteps.O.Log");
         logitudeWindow.WindowArgs = { Log: script , UseTextarea:true };
         logitudeWindow.Show('./InfrastructureModules/InfrastructureCommunications/Components/Communications/LogFieldComponent');
     }
@@ -358,7 +359,7 @@ export class CustomsSettingsComponent
         var windowArgs: EntityArgs = new EntityArgs();
         windowArgs.ObjectTableName =this.ObjectTableName;
         windowArgs.EntityPM = this.entityPM;
-      
+    
         var logWindow = new LogitudeWindow();
         logWindow.Width = 950;
         logWindow.Height = 600;
@@ -380,10 +381,10 @@ export class CustomsSettingsComponent
             
 
             if (new Date(this.SuppressIIGMessageFromDate) >= new Date(this.SuppressIIGMessageToDate)) {
-                this.ValidationErrorsList.push("המסרים למכס מושבתים -מתאריך חייב להיות גדול מעד תאריך");
+                this.ValidationErrorsList.push("המסרים למכס מושבתים -מתםריך חייב להיות גדול מעד תםריך");
             }
         } else if ((this.SuppressIIGMessageFromDate || this.SuppressIIGMessageToDate)) {///קיים םחד לפחות
-            this.ValidationErrorsList.push("המסרים למכס מושבתים -מתאריך חייב להיות גדול מעד תאריך");
+            this.ValidationErrorsList.push("המסרים למכס מושבתים -מתםריך חייב להיות גדול מעד תםריך");
         }
         if (this.ValidationErrorsList.length > 0) {
             return

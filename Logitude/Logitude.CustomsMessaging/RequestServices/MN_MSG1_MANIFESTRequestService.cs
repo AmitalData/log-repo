@@ -49,6 +49,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         private DeclarationPM _DeclarationPM;
         private CourierMasterPM _CourierMasterPM;
         private CourierDeclarationPM _CourierDeclarationPM;
+        private ForbiddenSignsUtil _ForbiddenSignsUtil;
 
         public override void OnRequestFail(MANIFESTRequestRequestParams requestParams)
         {
@@ -159,7 +160,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         private UnifreightIIG.Common.MANIFESTRequestServiceReference.Declaration BuildDeclaration(MANIFESTRequestRequestParams requestParams)
         {
             UnifreightIIG.Common.MANIFESTRequestServiceReference.Declaration _DeclarationPM = new UnifreightIIG.Common.MANIFESTRequestServiceReference.Declaration();
-
+            var forbiddenSigns = _ForbiddenSignsUtil.GetForbiddenSigns(requestParams.Tenant);
             DeclarationPM OrgDeclaration=null;
             //Get Declaration
             DeclarationQueryService myDeclarationQueryService = new DeclarationQueryService(_Context);
@@ -241,6 +242,10 @@ namespace Logitude.CustomsMessaging.RequestServices
                 }
                 _DeclarationPM.Consignment = declarationConsignmentList.ToArray();
             }
+
+            this._DeclarationPM.ImporterAddress = _ForbiddenSignsUtil.ReplaceForbiddenChars(this._DeclarationPM.ImporterAddress, forbiddenSigns);
+            this._DeclarationPM.ImporterName = _ForbiddenSignsUtil.ReplaceForbiddenChars(this._DeclarationPM.ImporterName, forbiddenSigns);
+            this._DeclarationPM.CargoDescription = _ForbiddenSignsUtil.ReplaceForbiddenChars(this._DeclarationPM.CargoDescription, forbiddenSigns);
 
             return _DeclarationPM;
         }
