@@ -84,6 +84,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CB_Vendor> CB_Vendors { get; }
 		 IDbSet<CertificateExemptionType> CertificateExemptionTypes { get; }
 		 IDbSet<CertificateOfOrigin> CertificateOfOrigins { get; }
+		 IDbSet<CertificateOfOriginConnection> CertificateOfOriginConnections { get; }
 		 IDbSet<CertificateOfOriginInvoice> CertificateOfOriginInvoices { get; }
 		 IDbSet<CertificateOfOriginItem> CertificateOfOriginItems { get; }
 		 IDbSet<CertificateOfOriginMandatoryFields> CertificateOfOriginMandatoryFieldss { get; }

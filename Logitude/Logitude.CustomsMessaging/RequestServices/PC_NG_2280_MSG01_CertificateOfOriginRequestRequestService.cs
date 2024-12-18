@@ -168,7 +168,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 		public PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetail[] GetCertificateOfOriginRequestInvoiceDetail(List<CertificateOfOriginInvoicePM> CertificateOfOriginInvoices, List<CertificateOfOriginItemPM> CertificateOfOriginItems)
         {
             var CertificateOfOriginInvoicesDetails = new List<PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetail>();
-			CertificateOfOriginInvoices = CertificateOfOriginInvoices.FindAll(x => x.IsInvoicesForPrint == true);
+			CertificateOfOriginInvoices = CertificateOfOriginInvoices.FindAll(x => x.IsInvoiceConnected == true);
 			foreach (var item in CertificateOfOriginInvoices)
 			{
 				var CertificateOfOriginInvoiceDetail = new PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetail()
@@ -220,7 +220,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			var CertificateOfOriginInvoicesDetails = new List<PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetail>();
 			var CertificateOfOriginInvoiceDetail = new PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetail();
 
-			CertificateOfOriginInvoices = CertificateOfOriginInvoices.FindAll(x => x.IsInvoicesForPrint == true);
+			CertificateOfOriginInvoices = CertificateOfOriginInvoices.FindAll(x => x.IsInvoiceConnected == true);
 			foreach (var item in CertificateOfOriginInvoices)
 			{
 				if (CertificateOfOriginInvoices.First() == item)
