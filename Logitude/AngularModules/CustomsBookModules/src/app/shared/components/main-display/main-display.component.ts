@@ -630,3 +630,20 @@ export class CustomItemClassifGuidanceResult {
 	publicationDate?: Date;
 	customsItemId?: number;
 }
+
+export class ClassifGuidanceDetailsResponseData {
+    classificationGuidanceNumber: string;
+    title: string;
+    classificationGuidanceTypeName: string;
+    fullClassificationItem: string;
+    createDate: Date;
+    expirationDate?: Date;
+    publicationDate: Date;
+    classificationGuidanceTextRTF: string;
+    classifGuidanceAttached: ClassifGuidanceAttached[] = [];
+}
+
+export class ClassifGuidanceAttached {
+    fullClassification: string;
+    attachedCustomsItemID: number;
+}

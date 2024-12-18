@@ -4,7 +4,7 @@ import { faChevronLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { GenericTableComponent, TableData } from '../generic-table/generic-table.component';
 import { CB_CustomsItemComputedDataList, CB_RequirementComputedDataList, CB_TariffList, CustomItemClassifGuidanceResult, ItemData, MainEntity } from '../main-display/main-display.component';
 import { API_MainService, Filters } from '../../../core/API_MainService';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgStyle } from '@angular/common';
 import { NgFor, NgForOf } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
@@ -13,7 +13,7 @@ import { ClasisificationGuidanceComponent } from "../clasisification-guidance/cl
 @Component({
   selector: 'app-accordion',
   standalone: true,
-  imports: [FontAwesomeModule, GenericTableComponent, ClasisificationGuidanceComponent, CommonModule, NgFor, NgForOf],
+  imports: [FontAwesomeModule, GenericTableComponent, ClasisificationGuidanceComponent, CommonModule, NgFor, NgForOf, NgStyle],
   templateUrl: './accordion.component.html',
   styleUrl: './accordion.component.css',
 })
@@ -38,6 +38,7 @@ export class AccordionComponent implements OnInit {
   faChevronDown = faChevronDown;
   noExistMessageClasisificationGuidance = "לא התקבלו הנחיות סיווג";
   isLoadingClasisificationGuidance = false;
+  resetClassificationGuidanceData: boolean = true;
 
   constructor(private API_MainService: API_MainService) {
     this.MainEntity = new MainEntity([], [], [], []);
@@ -125,6 +126,7 @@ export class AccordionComponent implements OnInit {
     this.tableData2.data = [];
     this.tableData3.data = [];
     this.tableData4.data = [];
+    this.ClassificationGuidanceId.next("");
   }
 
   handleButtonClick(data: { event: Event, row: any, key: string }): void {
