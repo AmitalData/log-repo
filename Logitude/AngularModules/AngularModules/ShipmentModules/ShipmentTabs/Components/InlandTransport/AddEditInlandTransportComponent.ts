@@ -24,6 +24,7 @@ import { PackingTypeListService } from 'Customs/Services/StandardLists/PackingTy
 import { AddressList } from 'Common/EntityLists/AddressList';
 import { CountryCityList } from 'Common/EntityLists/CountryCityList';
 import { CountryCityListService } from 'Common/Services/StandardLists/CountryCityListService';
+import { TruckerSettingExtendedService } from 'Common/Services/ExtendedLists/TruckerSettingExtendedService';
 
 @Component({    
     templateUrl: './AddEditInlandTransportComponent.html',
@@ -38,6 +39,7 @@ export class AddEditInlandTransportComponent implements AfterViewInit, OnDestroy
     _deliverySiteTypeListService: DeliverySiteTypeListService = new DeliverySiteTypeListService();
     _packingTypeListService: PackingTypeListService = new PackingTypeListService();
     _countryCityService: CountryCityListService = new CountryCityListService();
+    _truckerSettingExtendedService: TruckerSettingExtendedService = new TruckerSettingExtendedService();
     public ShipmentPM: ShipmentPM;
     public ObjectTableName: string = "ShipmentPickUpDelivery";
     public IsNewEntity: boolean = false;
@@ -49,6 +51,7 @@ export class AddEditInlandTransportComponent implements AfterViewInit, OnDestroy
     public IsEditingEnabled: boolean = true;
     public IsAddEditEmptyCR: boolean = true 
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
+
     constructor(private entityResourceService: EntityResourceService) {
         this.myCardListService = new CardListService();
     }
@@ -85,6 +88,7 @@ export class AddEditInlandTransportComponent implements AfterViewInit, OnDestroy
     }
 
     CreateNewInlandTransport() {
+
         this.EntityPM = new ShipmentDeliveryPM(this.ShipmentPM);
         this.EntityPM.Tenant = this.ShipmentPM.Tenant;
         this.EntityPM.ShipmentId = this.ShipmentPM.Id;
@@ -93,24 +97,24 @@ export class AddEditInlandTransportComponent implements AfterViewInit, OnDestroy
         this.EntityPM.PickUpDeliveryFromTypeCode = "PORT";
         this.EntityPM.PickUpDeliveryToTypeCode = "PART"; // CASL
         this.EntityPM.TransportModeCode = "BYTR";
-
         this.EntityPM.ToPartnerCardId = this.ShipmentPM.CustomerId;
         this.EntityPM.Quantity = this.ShipmentPM.NumberOfPackages;
         this.EntityPM.GrossWeight = this.ShipmentPM.GrossWeight;
         this.EntityPM.Volume = this.ShipmentPM.Volume;
         this.EntityPM.DescriptionOfGoods = this.ShipmentPM.DescriptionOfGoods;
-        this.EntityPM.Commodity = this.ShipmentPM.Commodity; // check it was set
+        this.EntityPM.Commodity = this.ShipmentPM.Commodity;
         this.EntityPM.ToPartnerCardId = this.ShipmentPM.CustomerId;
 
-        // todo: carrierID
-        // todo: Responsibility
-
         // get client pickup addresses to set values by default
-        this._partnersDomainService.GetAddressByCardAndType(this.EntityPM.ToPartnerCardId, "P").subscribe((clientPickUpAddress: AddressList) => {
-            if (clientPickUpAddress) {
-                this.SetToAddressFields(clientPickUpAddress);
+        this.clientPickUpAddressSet = false;
+        this.toAddressCityIdSet = false;
+        this._partnersDomainService.GetAddressByCardAndType(this.EntityPM.ToPartnerCardId, "P").subscribe((address: AddressList) => {
+            this.ClientPickUpAddress = address;
+
+            if (this.ClientPickUpAddress) {
+                this.SetToAddressFields(this.ClientPickUpAddress);
     
-                this.EntityPM.Notes = clientPickUpAddress.TransportationInstructions;
+                this.EntityPM.Notes = this.ClientPickUpAddress.TransportationInstructions;
             }
             else {
                 this._partnersDomainService.GetAddressByCardAndType(this.EntityPM.ToPartnerCardId, "M").subscribe((clientMainAddress: AddressList) => {
@@ -122,6 +126,7 @@ export class AddEditInlandTransportComponent implements AfterViewInit, OnDestroy
         });
 
         // set FromAddressCityId by default
+        this.fromAddressCityIdSet = false;
         this._declarationExtendedListService.GetConsignmentListPMByCustomFileNo(this.ShipmentPM.ShipmentNumber).subscribe((consignmentResponse: ServiceResponse) => {
             if (consignmentResponse.Result?.length > 0 && consignmentResponse.Result[0].StorageSiteCode) {
                 this._deliverySiteTypeListService.getSingle(consignmentResponse.Result[0].StorageSiteCode).subscribe((response: ServiceResponse) => {
@@ -129,16 +134,24 @@ export class AddEditInlandTransportComponent implements AfterViewInit, OnDestroy
                         const deliverySiteType: DeliverySiteTypeList = response.Result;
                         this.EntityPM.FromAddressCityId = deliverySiteType.CityId;
 
-                        this._countryCityService.getSingleFromCache(deliverySiteType.CityId).subscribe((myResponse: ServiceResponse) => {
-                            if (!myResponse.HasError) {
-                                var countryCity: CountryCityList = myResponse.Result;
-                                if (countryCity != null) {
-                                    this.EntityPM.FromAddressCity = countryCity.LocalName;
+                        if (this.EntityPM.FromAddressCityId) {
+                            this._countryCityService.getSingleFromCache(this.EntityPM.FromAddressCityId).subscribe((myResponse: ServiceResponse) => {
+                                if (!myResponse.HasError) {
+                                    var countryCity: CountryCityList = myResponse.Result;
+                                    if (countryCity != null) {
+                                        this.EntityPM.FromAddressCity = countryCity.LocalName;
+                                    }
                                 }
-                            }            
-                        });
+                            });
+                        }
                     }
+                    this.fromAddressCityIdSet = true;
+                    this.SetCarrierIdByDefault();
                 });
+            }
+            else {
+                this.fromAddressCityIdSet = true;
+                this.SetCarrierIdByDefault();
             }
         });
 
@@ -164,17 +177,36 @@ export class AddEditInlandTransportComponent implements AfterViewInit, OnDestroy
                                     (address.Address2 || "") + "\r" + 
                                     (address.City || "") + "\r" + 
                                     (address.CountryName || "");
+
+        this.toAddressCityIdSet = true;
+        this.SetCarrierIdByDefault();
+    }
+
+    SetCarrierIdByDefault() {
+        if (this.toAddressCityIdSet && this.fromAddressCityIdSet && this.clientPickUpAddressSet) {
+            this._truckerSettingExtendedService.getTruckerSettingForDefaultShipmentDelivery(this.EntityPM.FromAddressCityId, this.EntityPM.ToAddressCityId, this.ShipmentPM.ShipmentTypeId).subscribe((myResult: any) => {
+                var myResponse: ServiceResponse = myResult;
+                if (!myResponse.HasError && myResponse?.Result?.length > 0) {
+                    const truckerSetting = myResponse.Result[0];
+                    this.EntityPM.ResponsibilityCode = truckerSetting.Responsibility;
+                    this.EntityPM.CarrierId = truckerSetting.TruckerId;
+                }
+                else {
+                    this.EntityPM.ResponsibilityCode = this.ClientPickUpAddress?.Responsibility;
+                    this.EntityPM.CarrierId = this.ClientPickUpAddress?.TruckerId;
+                }
+            });
+        }
     }
 
 
     AddNewInlandTransport() {
         var args: any = {
-            Shipment: this.EntityPM,
+            Shipment: this.ShipmentPM,
             IsNewEntity: true
         };
         this.SetWindowArgs(args);
-        this.SavedEntityId = null;
-        this.SavedEntityNumber = null;
+
         this.ResetEntityPM();
     }
 
@@ -431,6 +463,20 @@ export class AddEditInlandTransportComponent implements AfterViewInit, OnDestroy
         }
     }
 
+    private fromAddressCityIdSet: boolean;
+    private toAddressCityIdSet: boolean;
+    private clientPickUpAddressSet: boolean;
+    private clientPickUpAddress: AddressList;
+
+    get ClientPickUpAddress() { return this.clientPickUpAddress; }
+    set ClientPickUpAddress(value: AddressList) {
+        if (this.clientPickUpAddress != value) {
+            this.clientPickUpAddress = value;
+        }
+        this.clientPickUpAddressSet = true;
+        this.SetCarrierIdByDefault();
+    }
+
     private myCloner: Cloner;
     public isEntityAdded: boolean = false;
     private Clone() {
@@ -479,12 +525,19 @@ export class AddEditInlandTransportComponent implements AfterViewInit, OnDestroy
         this.myCloner.AddField('TrailerNumber');
         this.myCloner.AddField('TransportModeCode');        
         this.myCloner.AddField('Notes');
-        this.myCloner.AddField('EmptyDeliveryContainerPartnerId');
-        this.myCloner.AddField('EmptyDeliveryDepotReference');
-        this.myCloner.AddField('ETD');
-        this.myCloner.AddField('ETA');
-        this.myCloner.AddField('ATD');
-        this.myCloner.AddField('ATA');
+        this.myCloner.AddField('DeliveryContact');
+        this.myCloner.AddField('PackageTypeCode');
+        this.myCloner.AddField('Quantity');
+        this.myCloner.AddField('GrossWeight');
+        this.myCloner.AddField('Volume');
+        this.myCloner.AddField('CustomerChargeableWeight');
+        this.myCloner.AddField('TruckerChargeableWeight');
+        this.myCloner.AddField('DescriptionOfGoods');
+        this.myCloner.AddField('Commodity');
+        this.myCloner.AddField('ToAddressCityId');
+        this.myCloner.AddField('ResponsibilityCode');
+        this.myCloner.AddField('Responsibility');
+        this.myCloner.AddField('PackageTypeName');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.ShipmentPM);
     }

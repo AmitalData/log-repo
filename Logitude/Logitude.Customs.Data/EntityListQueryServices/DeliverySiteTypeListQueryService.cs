@@ -28,6 +28,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                               EnglishName = a.EnglishName,
                                               LocalName = a.LocalName,
                                               SearchFields = a.SearchFields,
+                                              CityId = a.CityId,
                                               Inactive = a.Inactive
 
                                           });

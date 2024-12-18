@@ -32,5 +32,18 @@ export class TruckerSettingExtendedService {
             }),catchError(ServiceHelper.HandleServiceError));
     }
 
+    getTruckerSettingForDefaultShipmentDelivery(fromAddressCityId: string, toAddressCityId: string, shipmentType: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
+
+        const fields = 'fromAddressCityId=' + (fromAddressCityId || "") + '&toAddressCityId=' + (toAddressCityId || "") + '&shipmentType=' + (shipmentType || "");
+
+        return this._http.get(this._apiUrl + "/GetTruckerSettingForDefaultShipmentDelivery?" + fields, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+                pmresponse.Result = response;
+                return pmresponse;
+            }),catchError(ServiceHelper.HandleServiceError));
+    }
 }
 

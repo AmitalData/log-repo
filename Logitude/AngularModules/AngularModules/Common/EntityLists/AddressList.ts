@@ -33,5 +33,6 @@ export class AddressList {
 		ATTN: string;
 		TransportationInstructions: string;
 		Responsibility: string;
+		TruckerId: string;
 	
 }

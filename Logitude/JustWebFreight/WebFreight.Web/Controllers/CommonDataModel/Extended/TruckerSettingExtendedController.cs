@@ -36,6 +36,25 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             }
         }
 
+        public HttpResponseMessage GetTruckerSettingForDefaultShipmentDelivery(string fromAddressCityId, string toAddressCityId, string shipmentType)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                int tenant = authToken.Tenant;
+
+                TruckerSettingQuery truckerSettingQuery = new TruckerSettingQuery(tenant);
+                List<TruckerSettingList> myResult = truckerSettingQuery.GetTruckerSettingForDefaultShipmentDelivery(fromAddressCityId, toAddressCityId, shipmentType, tenant).ToList();
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
         public HttpResponseMessage GetRestoreReportsTemplatesVersion(string reportsTemplatesVersionId, string userId)
         {

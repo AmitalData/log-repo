@@ -66,6 +66,28 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return entity;
         }
 
+        public IQueryable<TruckerSettingList> GetTruckerSettingForDefaultShipmentDelivery(string fromAddressCityId, string toAddressCityId, string shipmentType, int tenant)
+        {
+            IQueryable<TruckerSettingList> entity = (from ts in repository.context.TruckerSettings
+
+                                                     where ts.Tenant == tenant 
+                                                         && ts.FromAddressCityId == fromAddressCityId && ts.ToAddressCityId == toAddressCityId 
+                                                         && (ts.ShipmentType == shipmentType || ts.ShipmentType == "all")
+                                                     select new TruckerSettingList()
+                                                     {
+                                                         Id = ts.Id,
+                                                         AddressId = ts.AddressId,
+                                                         FromAddressCityId = ts.FromAddressCityId,
+                                                         ShipmentType = ts.ShipmentType,
+                                                         ToAddressCityId = ts.ToAddressCityId,
+                                                         TruckerId = ts.TruckerId,
+                                                         Responsibility = ts.Responsibility,
+                                                         Tenant = ts.Tenant,
+                                                         ResponsibilityName = ts.ResponsibilityEntity.LocalName,
+                                                     });
+            return entity;
+        }
+
         public TruckerSettingPM GetSinglePM(string id, int tenant)
         {
             TruckerSettingPM entity = (from a in repository.context.TruckerSettings

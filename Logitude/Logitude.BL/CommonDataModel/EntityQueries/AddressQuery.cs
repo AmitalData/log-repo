@@ -405,6 +405,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     SearchFields = entityPOCO.SearchFields,
                     City = entityPOCO.City,
                     CityId = entityPOCO.CityId,
+                    TruckerId = entityPOCO.TruckerId,
+                    Responsibility = entityPOCO.Responsibility,
                     Description = entityPOCO.Description,
                     FaxNumber = entityPOCO.FaxNumber,
                     Id = entityPOCO.Id,
