@@ -14,6 +14,9 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Logitude.Server.Tools;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -119,7 +122,37 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             AddressMapping.MapEntity(entityPM, Poco, isNewEntity);
+            if(entityPM.AddressTypeId == "P")
+            {
+                var truckerSettingRepo= new TruckerSettingRepository(objectContext);
+                TruckerSettingQuery truckerSettingQuery = new TruckerSettingQuery(tenant);
+                TruckerSettingService truckeSettingservice = new TruckerSettingService(objectContext, entityPM.Tenant);
 
+                List<TruckerSettingList> truckerSettingChangeset = truckerSettingQuery.GetIQueryableEntityListByAddressId(entityPM.Id, tenant).ToList();
+                foreach(var item in truckerSettingChangeset)
+                {
+                    var itemPM = entityPM.TruckerSettings.FirstOrDefault(x => x.Id == item.Id);
+                    if(itemPM == null)
+                    {
+                        var truckerPM= truckerSettingQuery.GetSinglePM(item.Id, tenant);
+                        truckeSettingservice.Remove(truckerPM);
+                    }
+                }   
+
+                foreach (var item in entityPM.TruckerSettings)
+                {
+                    var itemPM= truckerSettingRepo.GetSingle(item.Id, item.Tenant);
+                    if(itemPM != null)
+                    {
+                        truckeSettingservice.Update(item);
+                    }
+                    else
+                    {
+                        truckeSettingservice.Create(item);
+                    }
+
+                }
+            } 
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
         }
