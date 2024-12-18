@@ -665,13 +665,13 @@
                         </td>
                         <!--ForbiddenSigns-->
                         <td style="padding:2px;">
-                            <LogLabel [ObjectFieldName]="'ForbiddenSigns'"
+                            <!-- <LogLabel [ObjectFieldName]="'ForbiddenSigns'"
                                       [ObjectTableName]="ObjectTableName"
                                       [DataContext]="DataContext"
-                                      [Text]="'תווים אסורים'"
-                                    >
-
-                            </LogLabel>
+                                      >
+                            </LogLabel> -->
+                            <LogLabel [ObjectFieldName]="'CooTypeCode'" [ObjectTableName]="ObjectTableName"
+                            [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="padding:2px;">
                         </td>
@@ -704,11 +704,12 @@
                         <!--ForbiddenSigns-->
                         <td style="padding:2px;">
                             <LogTextBox [ObjectFieldName]="'ForbiddenSigns'"
-                                        [InputType]="'ntext'"
+                                        [InputType]="'text'"
                                         [DataContext]="DataContext"
                                         [ObjectTableName]="ObjectTableName"
                                         [HideColumns]="true"
-                                        [IsMultiline]="true"></LogTextBox>
+                                        [IsMultiline]="true"
+                                        [Text]="ForbiddenSigns"></LogTextBox>
                         </td>
 
                         <!---->

@@ -649,6 +649,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
             }
+            if (!String.IsNullOrWhiteSpace(entityPM.ForbiddenSigns)) //T4 find type == nText 
+            {
+                entityPM.ForbiddenSigns = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ForbiddenSigns));
+            }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
 

@@ -231,10 +231,10 @@
   </Column>
   <Column
     Name="ForbiddenSigns"
-    Type="varchar"
+    Type="nvarchar"
     Size="128">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="DefaultNotificationAssignee"
