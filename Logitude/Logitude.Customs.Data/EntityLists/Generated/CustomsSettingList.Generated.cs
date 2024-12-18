@@ -81,8 +81,7 @@ namespace Logitude.Customs.Data.EntityLists
        public string CourierDocToken  { get; set; }
        [DataMember]
        public string ForbiddenSigns  { get; set; }
- 
-    }
+   }
 
 }
 	 

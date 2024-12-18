@@ -238,7 +238,7 @@
   </Column>
   <Column
     Name="ForbiddenSigns"
-    Type="varchar"
+    Type="nvarchar"
     Size="128">
     <Constraints
       Nullable="true" />

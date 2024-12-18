@@ -587,7 +587,7 @@
                         <td style="padding:2px;">
                         </td>
 
-                        <td style="padding:2px;" width="250px">
+                        <td style="padding-top:14px;" width="250px">
                             <table>
                                 <tr>
                                     <td stye=" width: 70px">
@@ -613,7 +613,7 @@
                         </td>
 
                         <!--UnfConnectionString-->
-                        <td style="padding:2px;" width="250px">
+                        <td style=" padding-top:14px;" width="250px">
                             <table>
                                 <tr>
                                     <td stye=" width: 70px">
@@ -665,13 +665,13 @@
                         </td>
                         <!--ForbiddenSigns-->
                         <td style="padding:2px;">
-                            <LogLabel [ObjectFieldName]="'ForbiddenSigns'"
+                            <!-- <LogLabel [ObjectFieldName]="'ForbiddenSigns'"
                                       [ObjectTableName]="ObjectTableName"
                                       [DataContext]="DataContext"
-                                      [Text]="'תווים אסורים'"
-                                    >
-
-                            </LogLabel>
+                                      >
+                            </LogLabel> -->
+                            <LogLabel [ObjectFieldName]="'CooTypeCode'" [ObjectTableName]="ObjectTableName"
+                            [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="padding:2px;">
                         </td>
@@ -703,12 +703,15 @@
                         </td>
                         <!--ForbiddenSigns-->
                         <td style="padding:2px;">
-                            <LogTextBox [ObjectFieldName]="'ForbiddenSigns'"
-                                        [InputType]="'ntext'"
-                                        [DataContext]="DataContext"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [HideColumns]="true"
-                                        [IsMultiline]="true"></LogTextBox>
+                            <LogTextBox #ForbiddenSignsTextBox
+                                    [ObjectFieldName]="'ForbiddenSigns'"
+                                    [InputType]="'nText'"
+                                    [DataContext]="DataContext"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [HideColumns]="true"
+                                    [IsMultiline]="true"
+                                    [Text]="ForbiddenSigns">
+                                </LogTextBox>
                         </td>
 
                         <!---->
