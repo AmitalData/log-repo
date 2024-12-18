@@ -703,13 +703,15 @@
                         </td>
                         <!--ForbiddenSigns-->
                         <td style="padding:2px;">
-                            <LogTextBox [ObjectFieldName]="'ForbiddenSigns'"
-                                        [InputType]="'text'"
-                                        [DataContext]="DataContext"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [HideColumns]="true"
-                                        [IsMultiline]="true"
-                                        [Text]="ForbiddenSigns"></LogTextBox>
+                            <LogTextBox #ForbiddenSignsTextBox
+                                    [ObjectFieldName]="'ForbiddenSigns'"
+                                    [InputType]="'nText'"
+                                    [DataContext]="DataContext"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [HideColumns]="true"
+                                    [IsMultiline]="true"
+                                    [Text]="ForbiddenSigns">
+                                </LogTextBox>
                         </td>
 
                         <!---->

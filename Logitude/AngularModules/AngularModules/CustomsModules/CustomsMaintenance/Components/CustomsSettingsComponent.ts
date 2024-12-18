@@ -266,7 +266,7 @@ export class CustomsSettingsComponent
     get LastNumOfMessagesDCAWS() { return this.entityPM != null ? this.entityPM.LastNumOfMessagesDCAWS : null; }
     set LastNumOfMessagesDCAWS(value) { this.entityPM.LastNumOfMessagesDCAWS = value; }
     
-    get ForbiddenSigns() { return this.entityPM != null ? this.entityPM.ForbiddenSigns?.replace(/([a-zA-Z])/g, '$1,') : null; }
+    get ForbiddenSigns() { return this.entityPM != null ? this.entityPM.ForbiddenSigns?.replace(/([a-zA-Z])/g, '$1,') : ''; }
     set ForbiddenSigns(value) { this.entityPM.ForbiddenSigns = value?.replace(/,/g, ''); }
 
     _LastRunningDCAWS: Date;
