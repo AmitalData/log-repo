@@ -244,13 +244,13 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 AddReports.AddReport(new ReportDetails() { Code = "COO", Description = "Certificate Of Origin", Name = "Certificate Of Origin", LocalName = "דוח תעודות מקור דיגיטליות", FilterControlName = "CertificateOfOriginReportFilterComponent", Tenant = 0, ReportGroupId = ExportCustomGroup.Id, FeatureId = CertificateOfOriginFeature.Id, FeatureUniqeCode = CertificateOfOriginFeature.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/ExportCustoms/CertificateOfOriginReportFilterComponent" }, reportRepository, tenantReports);
                 AddReports.AddReport(new ReportDetails() { Code = "COOC", Description = "Certificate Of Origin Count", Name = "Certificate Of Origin Count", LocalName = "ספירת תעודות מקור דיגיטליות", FilterControlName = "CertificateOfOriginCountReportFilterComponent", Tenant = 0, ReportGroupId = ExportCustomGroup.Id, FeatureId = CertificateOfOriginFeature.Id, FeatureUniqeCode = CertificateOfOriginFeature.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/ExportCustoms/CertificateOfOriginCountReportFilterComponent" }, reportRepository, tenantReports);
-             }
+            }
         }
 
         private void LoadReports_CustomShipment(List<Feature> tenantFeatures, ReportRepository reportRepository, Dictionary<string, Report> tenantReports)
         {
             Feature ShipmentFormFeature = tenantFeatures.Where(d => d.Code == "ShipmentFormReport" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             AddReports.AddReport(new ReportDetails() { Code = "SHTO", Description = "Shipment Form", Name = "Shipment Form", LocalName = "טופס תיק", FilterControlName = "ShipmentFormFilterComponent", Tenant = 0, FeatureId = ShipmentFormFeature.Id, FeatureUniqeCode = ShipmentFormFeature.FeatureUniqeCode }, reportRepository, tenantReports);
-          }
+        }
     }
 }
