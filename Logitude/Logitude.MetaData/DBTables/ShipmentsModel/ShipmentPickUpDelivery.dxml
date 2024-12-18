@@ -479,6 +479,16 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
+    ForeignKeyColumn="ToAddressCityId"
+    ReferencedTable="CountryCities"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="FromAddressCityId"
+    ReferencedTable="CountryCities"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
     ForeignKeyColumn="ResponsibilityCode"
     ReferencedTable="Responsibilities"
     ReferencedColumn="Code"

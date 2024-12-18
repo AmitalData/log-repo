@@ -142,25 +142,25 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string cityCode ;
+	  private string cityId ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string CityCode  
+       public string CityId  
 	   {
 	    
 	     get
 		{
-		   return cityCode;
+		   return cityId;
 		 }
 		 set
 		 {
-		   if(cityCode != value)
+		   if(cityId != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CityCode",OldValue=cityCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CityId",OldValue=cityId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   cityCode=value;
+		   cityId=value;
 		   }
 			
 		 }

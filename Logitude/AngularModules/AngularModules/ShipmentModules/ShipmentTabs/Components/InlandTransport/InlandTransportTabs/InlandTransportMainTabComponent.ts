@@ -133,7 +133,6 @@ export class InlandTransportMainTabComponent extends BaseComponent {
             this.EntityPM.FromAddressId = value;
 
             if (AppTool.IsNullOrEmpty(value)) {
-                this.EntityPM.FromAddressCity_Dummy = null;
                 this.EntityPM.FromAddressCountryCode = null;
                 this.EntityPM.FromAddressCountryName = null;
             }
@@ -143,7 +142,6 @@ export class InlandTransportMainTabComponent extends BaseComponent {
                     if (!myResponse.HasError) {
                         var list: AddressList = myResponse.Result;
                         if (list) {
-                            this.EntityPM.FromAddressCity_Dummy = list.City;
                             this.EntityPM.FromAddressCountryCode = list.CountryCode;
                             this.EntityPM.FromAddressCountryName = list.CountryName;
                         }
@@ -157,7 +155,6 @@ export class InlandTransportMainTabComponent extends BaseComponent {
     set FromAddressCity(value: string) {
         if (this.EntityPM.FromAddressCity != value) {
             this.EntityPM.FromAddressCity = value;
-            this.EntityPM.FromAddressCity_Dummy = value;
         }
     }
 
@@ -174,24 +171,17 @@ export class InlandTransportMainTabComponent extends BaseComponent {
             this.EntityPM.ToAddressId = value;
 
             if (AppTool.IsNullOrEmpty(value)) {
-                this.EntityPM.ToAddressCity_Dummy = null;
-                this.EntityPM.ToAddressCountryCode = null;
-                this.EntityPM.ToAddressCountryName = null;
                 this.EntityPM.ToAddress = null;
+                this.EntityPM.ToAddressCity = null;
+                this.EntityPM.ToAddressCityId = null;
             }
             else {
                 this.myAddressListService.getSingle(value).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
                         var list: AddressList = myResponse.Result;
                         if (list) {
-                            this.EntityPM.ToAddressCity_Dummy = list.City;
-                            this.EntityPM.ToAddressCountryCode = list.CountryCode;
-                            this.EntityPM.ToAddressCountryName = list.CountryName;
-
-                            this.EntityPM.ToAddress = list.Address1 + "\r" + 
-                                                        list.Address2 + "\r" + 
-                                                        list.City + "\r" + 
-                                                        list.CountryName;
+                            this.ToAddressCity = list.City;
+                            this.ToAddressCityId = list.CityId;
                         }
                     }
                 });
@@ -203,7 +193,6 @@ export class InlandTransportMainTabComponent extends BaseComponent {
     set ToAddressCity(value: string) {
         if (this.EntityPM.ToAddressCity != value) {
             this.EntityPM.ToAddressCity = value;
-            this.EntityPM.ToAddressCity_Dummy = value;
         }
     }
 
@@ -261,7 +250,6 @@ export class InlandTransportMainTabComponent extends BaseComponent {
             if (AppTool.IsNullOrEmpty(value)) {
                 this.CarrierCode = null;
                 this.CarrierName = null;
-                this.CarrierWebSite = null;
             }
 
             else {
@@ -271,7 +259,6 @@ export class InlandTransportMainTabComponent extends BaseComponent {
                         if (list) {
                             this.CarrierCode = list.Code;
                             this.CarrierName = list.EnglishName;
-                            this.CarrierWebSite = list.WebSite;
                         }
                     }
                 });
@@ -293,38 +280,10 @@ export class InlandTransportMainTabComponent extends BaseComponent {
         }
     }
 
-    get CarrierWebSite() { return this.EntityPM.CarrierWebSite; }
-    set CarrierWebSite(value: string) {
-        if (this.EntityPM.CarrierWebSite != value) {
-            this.EntityPM.CarrierWebSite = value;
-        }
-    }
-
     get CarrierNumber() { return this.EntityPM.CarrierNumber; }
     set CarrierNumber(value: string) {
         if (this.EntityPM.CarrierNumber != value) {
             this.EntityPM.CarrierNumber = value;
-        }
-    }
-
-    get Driver() { return this.EntityPM.Driver; }
-    set Driver(value: string) {
-        if (this.EntityPM.Driver != value) {
-            this.EntityPM.Driver = value;
-        }
-    }
-
-    get TruckNumber() { return this.EntityPM.TruckNumber; }
-    set TruckNumber(value: string) {
-        if (this.EntityPM.TruckNumber != value) {
-            this.EntityPM.TruckNumber = value;
-        }
-    }
-
-    get TrailerNumber() { return this.EntityPM.TrailerNumber; }
-    set TrailerNumber(value: string) {
-        if (this.EntityPM.TrailerNumber != value) {
-            this.EntityPM.TrailerNumber = value;
         }
     }
 

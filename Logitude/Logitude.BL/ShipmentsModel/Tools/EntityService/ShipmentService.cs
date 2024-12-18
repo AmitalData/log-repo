@@ -6329,9 +6329,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             if (this.entityPM.IsCustomShipment)
             {
-                // todo:
+                // todo: set delivery number
                 // itemPM.PickUpDeliveryNumber = IdCounter.GetNumber("ShipmentPickUpDelivery", tenant).ToString();
                 itemPM.PickUpDeliveryNumber = TableCounter.GetNumber(tenant, "DECL", "DC", null);
+
+                ApplyChangeOnCustomShipmentDelivery(itemPM);
             }
             else if (itemPM.PickUpDeliveryTypeCode == "EMPT")
             {
@@ -6392,6 +6394,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
+        private void ApplyChangeOnCustomShipmentDelivery(ShipmentDeliveryPM itemPM)
+        {
+            itemPM.FullResponsibility = (itemPM.ResponsibilityCode == "1" || itemPM.ResponsibilityCode == "2");
+        }
         private void UpdateShipmentDelivery(ShipmentDeliveryPM itemPM)
         {
             AddressValidating.ValidateDelivery(itemPM);
@@ -6406,6 +6412,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (string.IsNullOrEmpty(itemPoco.StandaloneShipmentId) && !string.IsNullOrEmpty(itemPM.StandaloneShipmentId))
             {
                 itemPM.IsConnectedToStandalone = true;
+            }
+
+            if (this.entityPM.IsCustomShipment)
+            {
+                ApplyChangeOnCustomShipmentDelivery(itemPM);
             }
 
             this.UpdateShipmentPackageFromDelivery(itemPM);

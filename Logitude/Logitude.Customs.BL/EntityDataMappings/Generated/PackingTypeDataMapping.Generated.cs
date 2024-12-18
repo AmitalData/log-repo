@@ -32,7 +32,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LocalName, 
 	         EnglishName, 
 	         SearchFields, 
-	         Inactive,
+	         Inactive, 
+	         PackageTypeId,
 	      }
 
 
@@ -43,7 +44,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LocalName, 
 	         EnglishName, 
 	         SearchFields, 
-	         Inactive,
+	         Inactive, 
+	         PackageTypeId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -70,6 +72,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
             {
 				entityPOCO.Inactive = entityPM.Inactive;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PackageTypeId))
+            {
+				entityPOCO.PackageTypeId = entityPM.PackageTypeId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -103,6 +110,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Inactive = entityPOCO.Inactive;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PackageTypeId))
+            {
+					entityPM.PackageTypeId = entityPOCO.PackageTypeId;
+            }
+
 		}
 
 		public void PMToOldPM(PackingTypePM entityPM, PackingTypePM oldEntityPM)
@@ -127,6 +139,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
             {
                 oldEntityPM.Inactive = entityPM.Inactive;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PackageTypeId))
+            {
+                oldEntityPM.PackageTypeId = entityPM.PackageTypeId;
             }
 			
 		}

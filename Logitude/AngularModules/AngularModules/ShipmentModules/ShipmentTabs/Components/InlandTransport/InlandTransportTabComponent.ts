@@ -21,7 +21,6 @@ import { ShipmentPMService } from "Shipment/Services/StandardPMs/ShipmentPMServi
     templateUrl: './InlandTransportTabComponent.html',
 })
 
-// export class InlandTransportTabComponent extends BaseRequestsSheetMassaging implements OnInit {
 export class InlandTransportTabComponent extends BaseComponent implements OnInit {
     public EntityPM: ShipmentPM;
     public ObjectTableName: string;
@@ -46,6 +45,15 @@ export class InlandTransportTabComponent extends BaseComponent implements OnInit
         this.entityResourceService.getEntityResourceByTableName("ShipmentPickUpDelivery").subscribe((response: any) => {
             this.IsVisible = true;
             this.ReloadMyScreen();
+
+            // if there is no shipment delivery or only one, display it
+            if (this.EntityPM.ShipmentDeliveries.length == 0) {
+                this.AddNewInlandTransport();
+            }
+            else if (this.EntityPM.ShipmentDeliveries.length == 1) {
+                this.selectedItem = this.EntityPM.ShipmentDeliveries[0];
+                this.AddNewInlandTransport(true);
+            }
         });
     }
 
@@ -94,7 +102,7 @@ export class InlandTransportTabComponent extends BaseComponent implements OnInit
     }
     
     selectedItem = new ShipmentDeliveryPM(null);
-    AddNewInlandTransport(isEdit: boolean) {
+    AddNewInlandTransport(isEdit?: boolean) {
 
         var args: any = {
             Shipment: this.EntityPM,

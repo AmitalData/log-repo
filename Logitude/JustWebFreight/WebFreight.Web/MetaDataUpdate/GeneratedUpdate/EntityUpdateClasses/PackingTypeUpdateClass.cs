@@ -21,7 +21,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PackingTypeUpdateClass
    {  		
-		public const string HashString = "b75744186248d0fc4ca6e6e763cc5a90";
+		public const string HashString = "7230b770e3d51b53747f61ee9080a0ec";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -434,7 +434,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "PackageTypeCode",
+					 						FieldName =  "PackageTypeId",
 					  						ObjectTableName =  "Customs.PackingType",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PackageType",
@@ -455,8 +455,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "PackageTypeCode",
-					  						ListPropertyPath =  "PackageTypeCode",
+					  						PMPropertyPath =  "PackageTypeId",
+					  						ListPropertyPath =  "PackageTypeId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -473,12 +474,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "PackageTypeCode",
-					  						DefaultText =  "Package Type Code",
+					  						FullFieldLable =  "PackageTypeId",
+					  						DefaultText =  "Package Type Id",
 					  						FullLocalDefaultTextBack_up =  "סוג אריזה הובלה",
 					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXkNeo15nXlteUINeU15XXkdec15Qi",
-					  						ListFieldLable =  "PackageTypeCodeListLable",
-					  						ListLableDefaultText =  "Package Type Code",
+					  						ListFieldLable =  "PackageTypeIdListLable",
+					  						ListLableDefaultText =  "Package Type Id",
 					  						ListLocalDefaultTextBack_up =  "סוג אריזה הובלה",
 					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXkNeo15nXlteUINeU15XXkdec15Qi",
 					  						IsForeignKey =  true,

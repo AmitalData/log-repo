@@ -121,8 +121,8 @@
                            </div>
                        </td>
 
-                       <td>
-                           <div class="MediaFill">
+                       <td>    
+                            <div class="MediaFill">
 
                                <!-- Main -->
                                <div class="MediaStretch" [hidden]="SelectedTabCode != 'MAIN'">
@@ -141,6 +141,13 @@
            <table style="height: 22px;">
                <tr>
                     <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button id="NewInlandTransport" class="Button buttonNew" (click)="AddNewInlandTransport()">{{'ShipmentPickUpDelivery.O.OpenTransport'| TextCodeTranslationPipe}}</button>
+                     </td>
+                     <td style="width: 5px;">
                         <div></div>
                     </td>
 

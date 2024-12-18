@@ -143,6 +143,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.ShipmentDeliveryContact).WithMany().HasForeignKey(d => d.DeliveryContact);
             this.HasOptional(t => t.PackageType).WithMany().HasForeignKey(d => d.PackageTypeCode);
             this.HasOptional(t => t.Responsibility).WithMany().HasForeignKey(d => d.ResponsibilityCode);
+            this.HasOptional(t => t.ToCountryCity).WithMany().HasForeignKey(d => d.ToAddressCityId);
+            this.HasOptional(t => t.FromCountryCity).WithMany().HasForeignKey(d => d.FromAddressCityId);
         }
     }
 }

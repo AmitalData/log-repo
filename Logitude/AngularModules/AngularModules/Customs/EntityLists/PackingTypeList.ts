@@ -13,7 +13,7 @@ export class PackingTypeList {
 	EnglishName: string;
 	SearchFields: string;
 	Inactive: boolean;
-	PackageTypeCode: string;
+	PackageTypeId: string;
 	
 }
  

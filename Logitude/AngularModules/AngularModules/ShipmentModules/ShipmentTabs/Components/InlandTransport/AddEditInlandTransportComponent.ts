@@ -15,6 +15,15 @@ import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import { ShipmentDeliveryValidator } from '../../../../Shipment/Validators/ShipmentDeliveryValidator';
 import { ShipmentTool } from '../../../../Shipment/Tools';
+import { PartnersDomainService } from 'Common/Services/PartnersDomainService';
+import { DeclarationExtendedListService } from 'Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import { DeliverySiteTypeList } from 'Customs/EntityLists/DeliverySiteTypeList';
+import { PackingTypeList } from 'Customs/EntityLists/PackingTypeList';
+import { DeliverySiteTypeListService } from 'Customs/Services/StandardLists/DeliverySiteTypeListService';
+import { PackingTypeListService } from 'Customs/Services/StandardLists/PackingTypeListService';
+import { AddressList } from 'Common/EntityLists/AddressList';
+import { CountryCityList } from 'Common/EntityLists/CountryCityList';
+import { CountryCityListService } from 'Common/Services/StandardLists/CountryCityListService';
 
 @Component({    
     templateUrl: './AddEditInlandTransportComponent.html',
@@ -24,6 +33,11 @@ export class AddEditInlandTransportComponent implements AfterViewInit, OnDestroy
   public SelectedTab: any;
     public EntityPM: ShipmentDeliveryPM;
     myCardListService: CardListService;
+    _partnersDomainService: PartnersDomainService = new PartnersDomainService();
+    _declarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
+    _deliverySiteTypeListService: DeliverySiteTypeListService = new DeliverySiteTypeListService();
+    _packingTypeListService: PackingTypeListService = new PackingTypeListService();
+    _countryCityService: CountryCityListService = new CountryCityListService();
     public ShipmentPM: ShipmentPM;
     public ObjectTableName: string = "ShipmentPickUpDelivery";
     public IsNewEntity: boolean = false;
@@ -79,7 +93,79 @@ export class AddEditInlandTransportComponent implements AfterViewInit, OnDestroy
         this.EntityPM.PickUpDeliveryFromTypeCode = "PORT";
         this.EntityPM.PickUpDeliveryToTypeCode = "PART"; // CASL
         this.EntityPM.TransportModeCode = "BYTR";
+
+        this.EntityPM.ToPartnerCardId = this.ShipmentPM.CustomerId;
+        this.EntityPM.Quantity = this.ShipmentPM.NumberOfPackages;
+        this.EntityPM.GrossWeight = this.ShipmentPM.GrossWeight;
+        this.EntityPM.Volume = this.ShipmentPM.Volume;
+        this.EntityPM.DescriptionOfGoods = this.ShipmentPM.DescriptionOfGoods;
+        this.EntityPM.Commodity = this.ShipmentPM.Commodity; // check it was set
+        this.EntityPM.ToPartnerCardId = this.ShipmentPM.CustomerId;
+
+        // todo: carrierID
+        // todo: Responsibility
+
+        // get client pickup addresses to set values by default
+        this._partnersDomainService.GetAddressByCardAndType(this.EntityPM.ToPartnerCardId, "P").subscribe((clientPickUpAddress: AddressList) => {
+            if (clientPickUpAddress) {
+                this.SetToAddressFields(clientPickUpAddress);
+    
+                this.EntityPM.Notes = clientPickUpAddress.TransportationInstructions;
+            }
+            else {
+                this._partnersDomainService.GetAddressByCardAndType(this.EntityPM.ToPartnerCardId, "M").subscribe((clientMainAddress: AddressList) => {
+                    if (clientMainAddress) {
+                        this.SetToAddressFields(clientMainAddress);
+                    }
+                });
+            }
+        });
+
+        // set FromAddressCityId by default
+        this._declarationExtendedListService.GetConsignmentListPMByCustomFileNo(this.ShipmentPM.ShipmentNumber).subscribe((consignmentResponse: ServiceResponse) => {
+            if (consignmentResponse.Result?.length > 0 && consignmentResponse.Result[0].StorageSiteCode) {
+                this._deliverySiteTypeListService.getSingle(consignmentResponse.Result[0].StorageSiteCode).subscribe((response: ServiceResponse) => {
+                    if (response?.Result) {
+                        const deliverySiteType: DeliverySiteTypeList = response.Result;
+                        this.EntityPM.FromAddressCityId = deliverySiteType.CityId;
+
+                        this._countryCityService.getSingleFromCache(deliverySiteType.CityId).subscribe((myResponse: ServiceResponse) => {
+                            if (!myResponse.HasError) {
+                                var countryCity: CountryCityList = myResponse.Result;
+                                if (countryCity != null) {
+                                    this.EntityPM.FromAddressCity = countryCity.LocalName;
+                                }
+                            }            
+                        });
+                    }
+                });
+            }
+        });
+
+        // set PackageTypeCode by default
+        if (this.ShipmentPM.PackageTypeCode)
+        {
+            this._packingTypeListService.getSingleFromCache(this.ShipmentPM.PackageTypeCode).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    var packingTypeList: PackingTypeList = myResponse.Result;
+                    if (packingTypeList != null) {
+                        this.EntityPM.PackageTypeCode = packingTypeList.PackageTypeId;
+                    }
+                }
+            });
+        }
     }
+
+    SetToAddressFields(address: AddressList) {
+        this.EntityPM.ToAddressId = address?.Id ;
+        this.EntityPM.ToAddressCity = address.City;
+        this.EntityPM.ToAddressCityId = address.CityId;
+        this.EntityPM.ToAddress = (address.Address1 || "") + "\r" + 
+                                    (address.Address2 || "") + "\r" + 
+                                    (address.City || "") + "\r" + 
+                                    (address.CountryName || "");
+    }
+
 
     AddNewInlandTransport() {
         var args: any = {
@@ -87,6 +173,9 @@ export class AddEditInlandTransportComponent implements AfterViewInit, OnDestroy
             IsNewEntity: true
         };
         this.SetWindowArgs(args);
+        this.SavedEntityId = null;
+        this.SavedEntityNumber = null;
+        this.ResetEntityPM();
     }
 
     private isViewInited: boolean = false;

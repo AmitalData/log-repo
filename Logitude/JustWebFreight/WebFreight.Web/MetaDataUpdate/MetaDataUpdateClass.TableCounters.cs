@@ -98,47 +98,73 @@ namespace WebFreight.Web.MetaDataUpdate
 
 
 
-				//CounterDefinition shipment_Domestic_Air_Counter = new CounterDefinition()
-				//{
-				//    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-				//    CounterId = shipmentCounter.Id,
-				//    Tenant = 0,
-				//    StartNumber = 1000,
-				//    Parameter1 = "D",
-				//    Parameter2 = "A",
-				//};
-				//CounterDefinition shipment_Domestic_Ocean_Counter = new CounterDefinition()
-				//{
-				//    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-				//    CounterId = shipmentCounter.Id,
-				//    Tenant = 0,
-				//    StartNumber = 1000,
-				//    Parameter1 = "D",
-				//    Parameter2 = "O",
-				//};
+                //CounterDefinition shipment_Domestic_Air_Counter = new CounterDefinition()
+                //{
+                //    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                //    CounterId = shipmentCounter.Id,
+                //    Tenant = 0,
+                //    StartNumber = 1000,
+                //    Parameter1 = "D",
+                //    Parameter2 = "A",
+                //};
+                //CounterDefinition shipment_Domestic_Ocean_Counter = new CounterDefinition()
+                //{
+                //    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                //    CounterId = shipmentCounter.Id,
+                //    Tenant = 0,
+                //    StartNumber = 1000,
+                //    Parameter1 = "D",
+                //    Parameter2 = "O",
+                //};
 
-				//CounterDefinition shipment_Domestic_Inland_Counter = new CounterDefinition()
-				//{
-				//    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-				//    CounterId = shipmentCounter.Id,
-				//    Tenant = 0,
-				//    StartNumber = 1000,
-				//    Parameter1 = "D",
-				//    Parameter2 = "I",
-				//};
+                //CounterDefinition shipment_Domestic_Inland_Counter = new CounterDefinition()
+                //{
+                //    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                //    CounterId = shipmentCounter.Id,
+                //    Tenant = 0,
+                //    StartNumber = 1000,
+                //    Parameter1 = "D",
+                //    Parameter2 = "I",
+                //};
 
-				CounterDefinitionRepository.Add(shipment_Export_Air_Counter);
+                CounterDefinitionRepository.Add(shipment_Export_Air_Counter);
                 CounterDefinitionRepository.Add(shipment_Export_Ocean_Counter);
                 CounterDefinitionRepository.Add(shipment_Export_Inland_Counter);
                 CounterDefinitionRepository.Add(shipment_Import_Air_Counter);
                 CounterDefinitionRepository.Add(shipment_Import_Ocean_Counter);
                 CounterDefinitionRepository.Add(shipment_Import_Inland_Counter);
 
-				//CounterDefinitionRepository.Add(shipment_Domestic_Air_Counter);
-				//CounterDefinitionRepository.Add(shipment_Domestic_Ocean_Counter);
-				//CounterDefinitionRepository.Add(shipment_Domestic_Inland_Counter);
-			
-			}
+                //CounterDefinitionRepository.Add(shipment_Domestic_Air_Counter);
+                //CounterDefinitionRepository.Add(shipment_Domestic_Ocean_Counter);
+                //CounterDefinitionRepository.Add(shipment_Domestic_Inland_Counter);
+
+            }
+            #endregion
+
+            #region ShipmentPickUpDelivery Counters
+            if (!zeroCounters.Where(c => c.Code == "SHDV" && c.Tenant == 0).Any())
+            {
+                Counter shipmentDeliveryCounter = new Counter()
+                {
+                    Id = IdCounter.GetNumber("Counter", 0).ToString(),
+                    ObjectTableId = tenantObjectTables.Where(o => o.Name == "ShipmentPickUpDelivery").FirstOrDefault().Id,
+                    Code = "SHDV",
+                    Tenant = 0,
+                    Name = "Shipment Delivery Number",
+                };
+
+                CounterDefinition shipmentDelivery_CounterDef = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = shipmentDeliveryCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 1000,
+                    Parameter1 = "DLV",
+                };
+
+                CounterRepository.Add(shipmentDeliveryCounter);
+                CounterDefinitionRepository.Add(shipmentDelivery_CounterDef);
+            }
             #endregion
 
             #region Master Counters

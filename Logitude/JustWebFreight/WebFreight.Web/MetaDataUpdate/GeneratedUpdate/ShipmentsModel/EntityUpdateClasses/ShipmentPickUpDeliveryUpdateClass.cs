@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
  
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentPickUpDeliveryUpdateClass
    {  		
-		public const string HashString = "bc2c2c12bc3c93da773bd52fcfc01322";
+		public const string HashString = "1dcac351cd07edcdfac4b19ce37f5d0a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -131,7 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment Pickup Delivery",
-			      				    Code =  "d25a",
+			      				    Code =  "e65e",
 			      				    Name =  "ShipmentPickUpDelivery",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
@@ -4041,7 +4041,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "ToAddressCityId",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "City",
+					  						LookUpTableName =  "CountryCity",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -4080,9 +4080,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DefaultText =  "To Address City Id",
 					  						FullLocalDefaultTextBack_up =  "יישוב פריקה",
 					  						FullLocalDefaultText =  "BS64:IteZ15nXqdeV15Eg16TXqNeZ16fXlCI=",
-					  						IsForeignKey =  false,
-					  						ForeignEntity =  "City",
-					  						NavigationPropertyName =  "ToAddressCity",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "CountryCity",
+					  						NavigationPropertyName =  "ToCountryCity",
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
@@ -4106,7 +4106,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "FromAddressCityId",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "City",
+					  						LookUpTableName =  "CountryCity",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -4145,9 +4145,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DefaultText =  "From Address City Id",
 					  						FullLocalDefaultTextBack_up =  "יישוב טעינה",
 					  						FullLocalDefaultText =  "BS64:IteZ15nXqdeV15Eg15jXoteZ16DXlCI=",
-					  						IsForeignKey =  false,
-					  						ForeignEntity =  "City",
-					  						NavigationPropertyName =  "FromAddressCity",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "CountryCity",
+					  						NavigationPropertyName =  "FromCountryCity",
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
