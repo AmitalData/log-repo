@@ -55,7 +55,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         private DeclarationPM _DeclarationPM;
         private Stopwatch _Stopwatch;
         private AmitalContext _AmitalContext;
-        private ForbiddenSignsUtil _ForbiddenSignsUtil;
+        private ForbiddenSignsUtil _ForbiddenSignsUtil = new ForbiddenSignsUtil();
         public bool IsFromOpenNewAmendment = false;
         public bool FeatureExcludeManifest = false;
         public bool IsSendWithManifest = false;
