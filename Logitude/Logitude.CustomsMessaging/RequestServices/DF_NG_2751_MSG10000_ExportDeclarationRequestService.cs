@@ -56,7 +56,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         private AmitalContext _AmitalContext;
         private DeclarationDMExtensionsRecipientDetails declarationDMExtensionsRecipientDetails1;
         public bool IsFromOpenNewAmendment = false;
-        private ForbiddenSignsUtil ForbiddenSignsUtil;
+        private ForbiddenSignsUtil ForbiddenSignsUtil = new ForbiddenSignsUtil();
 
 
         public override void OnRequestFail(GenericRequestParams requestParams)
