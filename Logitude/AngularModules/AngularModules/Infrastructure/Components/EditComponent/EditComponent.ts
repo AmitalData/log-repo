@@ -1722,6 +1722,18 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                                     '\n' + myResponse.Result?.APIResponseToConfirmation;
                                 messageWindow.Show(text);
                             }
+                            if (this.ObjectTableName == "ARInvoice" && myResponse.Result?.ConfirmationNumberStatus == 6) {
+                                const messageWindow = new MessageWindow();
+                                messageWindow.RTL = true;
+                                messageWindow.Height = 250;
+                                messageWindow.Width = 420;
+                                messageWindow.IsMessageMultiLine = true
+                                messageWindow.LayoutDirection = 'rtl'
+                                var text = TextCodeTranslator.Translate("ARInvoice.O.DelayedInvoice") ;
+                                messageWindow.Show(text);
+                            }
+
+
 
                             this.EntityPM = myResponse.Result;
                             this.EntityId = this.EntityPM.Id;
