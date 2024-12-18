@@ -49,7 +49,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         private DeclarationPM _DeclarationPM;
         private CourierMasterPM _CourierMasterPM;
         private CourierDeclarationPM _CourierDeclarationPM;
-        private ForbiddenSignsUtil _ForbiddenSignsUtil;
+        private ForbiddenSignsUtil _ForbiddenSignsUtil = new ForbiddenSignsUtil();
 
         public override void OnRequestFail(MANIFESTRequestRequestParams requestParams)
         {
