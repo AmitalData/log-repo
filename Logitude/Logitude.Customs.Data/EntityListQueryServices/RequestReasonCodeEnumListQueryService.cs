@@ -39,8 +39,25 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return query;
 		}
 
-		private IQueryable<RequestReasonCodeEnum> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<RequestReasonCodeEnum> iQueryable)
+        private IQueryable<RequestReasonCodeEnum> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<RequestReasonCodeEnum> iQueryable)
         {
+            // Retrieve the QueryFilterItem for "CooStatusByConnection"
+            var filterItem = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "CooStatusByConnection");
+            if (filterItem != null)
+            {
+                if(filterItem.FieldValue.ToString() == "-1")
+                {
+                    iQueryable = iQueryable.Where(x => x.Code == "10" || x.Code == "12");
+                }
+                else
+                {
+                    var query1 = context.CertificateOfOriginConnections
+                                         .Where(a => a.Active && a.CooStatus == filterItem.FieldValue.ToString())
+                                         .Select(a => a.CooReason);
+                    iQueryable = iQueryable.Where(x => query1.Contains(x.Code));
+                }
+            }
+
             return iQueryable;
         }
     }

@@ -46,6 +46,7 @@ using Unifreight.Data.AmitalModel.Repsitories;
 using Simplog.Data.Helpers;
 using Logitude.Customs.BL.BL;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
@@ -260,9 +261,13 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private void OpenUnifreighTask(DeclarationPM dirtyDeclarationPM, string taskType, string status, bool raiseStatus, string xmlStatus)
         {
+            var mySetting = CustomsSettingQueryService.GetSettingByTenant(dirtyDeclarationPM.Tenant);
+
+            if (mySetting.StandAlone)
+                return;
             var sw = Stopwatch.StartNew();
             TransactionScope scope = null;
-            bool isConnectedToUnifreight = CustomsSettingQueryService.GetSettingByTenant(dirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
+            bool isConnectedToUnifreight = mySetting.IsConnectedToUniFreight;
            
             if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
             {

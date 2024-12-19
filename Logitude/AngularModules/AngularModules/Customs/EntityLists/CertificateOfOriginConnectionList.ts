@@ -6,20 +6,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class CertificateOfOriginInvoiceList {
+export class CertificateOfOriginConnectionList {
    
 	Id: string;
 	Tenant: number;
 	SearchFields: string;
-	CertificateOfOriginId: string;
-	InvoicesIdUry: number;
-	InvoiceNumber: string;
-	InvoiceDate: Date;
-	InvoiceSum: string;
-	CurrencyTypeCode: string;
-	DescriptionOfInvoice: string;
-	IsInvoicesForPrint: boolean;
-	IsInvoiceConnected: boolean;
+	CooStatus: string;
+	CooReason: string;
+	Active: boolean;
 	
 }
  

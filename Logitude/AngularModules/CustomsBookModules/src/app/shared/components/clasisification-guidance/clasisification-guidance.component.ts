@@ -5,6 +5,7 @@ import { API_MainService } from '../../../core/API_MainService';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { CommonModule, DatePipe, NgIf } from '@angular/common';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
+import { ClassifGuidanceDetailsResponseData } from '../main-display/main-display.component';
 
 @Component({
   selector: 'app-clasisification-guidance',
@@ -18,7 +19,7 @@ export class ClasisificationGuidanceComponent implements OnInit {
   @Input() expandedArea: boolean;
   @Input() ClassificationGuidanceId: BehaviorSubject<string> = new BehaviorSubject<string>("");
 
-  data: any = null; // TODO: add TYPE
+  data: ClassifGuidanceDetailsResponseData = null; // TODO: add TYPE
   tableData: TableData;
 
   ngOnInit(): void {
@@ -46,12 +47,12 @@ export class ClasisificationGuidanceComponent implements OnInit {
   }
 
   GetClassifGuidanceFullDetails(tenant: number) {
-    this.ClassificationGuidanceId.subscribe((ClassificationGuidanceNo: any) => {     
+    this.ClassificationGuidanceId.subscribe((ClassificationGuidanceNo: any) => {
       this.data = null;
       if (ClassificationGuidanceNo) {
         this.api_MainService.GetClassifGuidanceDetails(this.ClassificationGuidanceId.getValue().toString(), tenant).subscribe((data: any) => {
           if (!data.body) return; // TODO: add error message
-          this.data = data.body;
+          this.data = data?.body;
           this.tableData.data = data.body;
         });
       }
