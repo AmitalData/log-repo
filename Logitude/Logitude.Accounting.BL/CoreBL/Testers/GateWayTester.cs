@@ -105,6 +105,11 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                         return ButtonLoadInterestTransactions_Click(tenant, _TextBoxParam);
                     }
                     break;
+                case "ButtonLoadInterestDefinitions_Click":
+                    {
+                        return ButtonLoadInterestDefinitions_Click(tenant, _TextBoxParam);
+                    }
+                    break;
                 case "ButtonLoadChargeTypes_Click":
                     {
                         return ButtonLoadChargeTypes_Click(tenant, _TextBoxParam);
@@ -1116,6 +1121,45 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                 myInterestTransactionsCSVFlatFileAnalyser.Analyse(null, fileInterestTransactions);
 
                 gateWayTesterResult.JsonOut = "Interest Transactions Loaded Ok";
+
+
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+                gateWayTesterResult.Log = gateWayTesterResult.Log ?? "";
+                gateWayTesterResult.Log += LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+
+
+
+        private GateWayTesterResult ButtonLoadInterestDefinitions_Click(int tenant, string textBoxParam)
+        {
+
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+
+
+                string fileInterestDefinitions = textBoxParam;
+
+
+                var myInterestDefinitionsCSVFlatFileAnalyser = new InterestDefinitionsCSVFlatFileAnalyser();
+                myInterestDefinitionsCSVFlatFileAnalyser.Analyse(null, fileInterestDefinitions);
+
+                gateWayTesterResult.JsonOut = "Interest Definitions Loaded Ok";
 
 
 

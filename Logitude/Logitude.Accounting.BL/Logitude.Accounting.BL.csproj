@@ -343,6 +343,7 @@
     <Compile Include="CoreBL\FunctionalTests\JournalToGLAccountMoreData.cs" />
     <Compile Include="CoreBL\GLAccountsAgingCSVBuilder.cs" />
     <Compile Include="CoreBL\GLAccountsCSVFlatFileAnalyser.cs" />
+    <Compile Include="CoreBL\InterestDefinitionsCSVFlatFileAnalyser.cs" />
     <Compile Include="CoreBL\InterestReport\CSVStringLinesGetter.cs" />
     <Compile Include="CoreBL\InterestReport\IInterestReportCalculationPreparations.cs" />
     <Compile Include="CoreBL\InterestReport\IInterestReportsCreationForCustomerDataPreparation.cs" />
