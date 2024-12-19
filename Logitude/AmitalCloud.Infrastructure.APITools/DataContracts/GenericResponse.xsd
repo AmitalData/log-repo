@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/GenericResponse" elementFormDefault="qualified" targetNamespace="http://tempuri.org/GenericResponse" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="GenericResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="GenericResponseObj" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenericResponseObj">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="CorrelationId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Status" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ExceptionLevel" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ExceptionType" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="InnerException" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Stage" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Message" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ErrorDescription" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Log" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="BindingXpath" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="EnglishDescription" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ApplicationId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Entity" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Field" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ResponseXml" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CorrelationId" type="xs:string" />
+  <xs:element name="Status" type="xs:string" />
+  <xs:element name="ExceptionLevel" type="xs:string" />
+  <xs:element name="ExceptionType" type="xs:string" />
+  <xs:element name="InnerException" type="xs:string" />
+  <xs:element name="Stage" type="xs:string" />
+  <xs:element name="Message" type="xs:string" />
+  <xs:element name="ErrorDescription" type="xs:string" />
+  <xs:element name="Log" type="xs:string" />
+  <xs:element name="BindingXpath" type="xs:string" />
+  <xs:element name="EnglishDescription" type="xs:string" />
+  <xs:element name="ApplicationId" type="xs:string" />
+  <xs:element name="Entity" type="xs:string" />
+  <xs:element name="Field" type="xs:string" />
+  <xs:element name="ResponseXml" type="xs:string" />
+</xs:schema>

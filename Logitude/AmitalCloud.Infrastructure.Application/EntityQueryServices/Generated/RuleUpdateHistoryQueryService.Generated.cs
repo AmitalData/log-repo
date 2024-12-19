@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class RuleUpdateHistoryQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.RuleUpdateHistory,RuleUpdateHistoryKeys<string>,RuleUpdateHistoryPM,RuleUpdateHistoryList,string>
    {
         public RuleUpdateHistoryQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public RuleUpdateHistoryQueryService(IAmitalCloudContext context) : base(new Repository<POCO.RuleUpdateHistory>(context),new RuleUpdateHistoryDataMapping()) {}
+        public RuleUpdateHistoryQueryService(IAmitalCloudContext context) : this(new Repository<POCO.RuleUpdateHistory>(context)) {}
+		public RuleUpdateHistoryQueryService(IRepository<POCO.RuleUpdateHistory> repository) : base(repository,  new RuleUpdateHistoryDataMapping()) { }
 		public  RuleUpdateHistoryPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new RuleUpdateHistoryKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.RuleUpdateHistory,string> GetKeys(POCO.RuleUpdateHistory entityPOCO) => new RuleUpdateHistoryKeys<string>() { Id = entityPOCO.Id,  };
    }

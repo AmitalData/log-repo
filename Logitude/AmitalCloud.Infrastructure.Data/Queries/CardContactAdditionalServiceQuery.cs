@@ -3,9 +3,10 @@ using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;   
 using System.Collections.Generic;
-using System.Data.Entity;
+
 using System.Linq;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Data.Helpers;
 namespace AmitalCloud.Infrastructure.Data.Queries
 {
     public class CardContactAdditionalServiceQuery

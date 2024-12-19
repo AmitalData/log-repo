@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class DigitalPreDefinedComponentQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DigitalPreDefinedComponent,DigitalPreDefinedComponentKeys<string>,DigitalPreDefinedComponentPM,DigitalPreDefinedComponentList,string>
    {
         public DigitalPreDefinedComponentQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public DigitalPreDefinedComponentQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DigitalPreDefinedComponent>(context),new DigitalPreDefinedComponentDataMapping()) {}
+        public DigitalPreDefinedComponentQueryService(IAmitalCloudContext context) : this(new Repository<POCO.DigitalPreDefinedComponent>(context)) {}
+		public DigitalPreDefinedComponentQueryService(IRepository<POCO.DigitalPreDefinedComponent> repository) : base(repository,  new DigitalPreDefinedComponentDataMapping()) { }
 		public  DigitalPreDefinedComponentPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DigitalPreDefinedComponentKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DigitalPreDefinedComponent,string> GetKeys(POCO.DigitalPreDefinedComponent entityPOCO) => new DigitalPreDefinedComponentKeys<string>() { Id = entityPOCO.Id,  };
    }

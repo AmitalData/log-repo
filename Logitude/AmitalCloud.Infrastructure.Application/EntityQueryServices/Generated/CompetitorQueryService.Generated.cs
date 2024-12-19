@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CompetitorQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Competitor,CompetitorKeys<string>,CompetitorPM,CompetitorList,string>
    {
         public CompetitorQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CompetitorQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Competitor>(context),new CompetitorDataMapping()) {}
+        public CompetitorQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Competitor>(context)) {}
+		public CompetitorQueryService(IRepository<POCO.Competitor> repository) : base(repository,  new CompetitorDataMapping()) { }
 		public  CompetitorPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CompetitorKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Competitor,string> GetKeys(POCO.Competitor entityPOCO) => new CompetitorKeys<string>() { Id = entityPOCO.Id,  };
    }

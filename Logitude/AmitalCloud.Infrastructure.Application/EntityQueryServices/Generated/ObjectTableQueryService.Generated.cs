@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class ObjectTableQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ObjectTable,ObjectTableKeys<string>,ObjectTablePM,ObjectTableList,string>
    {
         public ObjectTableQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public ObjectTableQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ObjectTable>(context),new ObjectTableDataMapping()) {}
+        public ObjectTableQueryService(IAmitalCloudContext context) : this(new Repository<POCO.ObjectTable>(context)) {}
+		public ObjectTableQueryService(IRepository<POCO.ObjectTable> repository) : base(repository,  new ObjectTableDataMapping()) { }
 		public  ObjectTablePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ObjectTableKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ObjectTable,string> GetKeys(POCO.ObjectTable entityPOCO) => new ObjectTableKeys<string>() { Id = entityPOCO.Id,  };
    }

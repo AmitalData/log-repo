@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class DigitalProfileQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DigitalProfile,DigitalProfileKeys<string>,DigitalProfilePM,DigitalProfileList,string>
    {
         public DigitalProfileQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public DigitalProfileQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DigitalProfile>(context),new DigitalProfileDataMapping()) {}
+        public DigitalProfileQueryService(IAmitalCloudContext context) : this(new Repository<POCO.DigitalProfile>(context)) {}
+		public DigitalProfileQueryService(IRepository<POCO.DigitalProfile> repository) : base(repository,  new DigitalProfileDataMapping()) { }
 		public  DigitalProfilePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DigitalProfileKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DigitalProfile,string> GetKeys(POCO.DigitalProfile entityPOCO) => new DigitalProfileKeys<string>() { Id = entityPOCO.Id,  };
    }

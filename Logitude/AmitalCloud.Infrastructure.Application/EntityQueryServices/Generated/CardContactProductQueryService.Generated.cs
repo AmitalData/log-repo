@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CardContactProductQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CardContactProduct,CardContactProductKeys<string>,CardContactProductPM,CardContactProductList,string>
    {
         public CardContactProductQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CardContactProductQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CardContactProduct>(context),new CardContactProductDataMapping()) {}
+        public CardContactProductQueryService(IAmitalCloudContext context) : this(new Repository<POCO.CardContactProduct>(context)) {}
+		public CardContactProductQueryService(IRepository<POCO.CardContactProduct> repository) : base(repository,  new CardContactProductDataMapping()) { }
 		public  CardContactProductPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CardContactProductKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CardContactProduct,string> GetKeys(POCO.CardContactProduct entityPOCO) => new CardContactProductKeys<string>() { Id = entityPOCO.Id,  };
    }

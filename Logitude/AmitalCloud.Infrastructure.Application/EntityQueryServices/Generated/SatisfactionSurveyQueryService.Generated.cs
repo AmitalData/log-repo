@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class SatisfactionSurveyQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.SatisfactionSurvey,SatisfactionSurveyKeys<string>,SatisfactionSurveyPM,SatisfactionSurveyList,string>
    {
         public SatisfactionSurveyQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public SatisfactionSurveyQueryService(IAmitalCloudContext context) : base(new Repository<POCO.SatisfactionSurvey>(context),new SatisfactionSurveyDataMapping()) {}
+        public SatisfactionSurveyQueryService(IAmitalCloudContext context) : this(new Repository<POCO.SatisfactionSurvey>(context)) {}
+		public SatisfactionSurveyQueryService(IRepository<POCO.SatisfactionSurvey> repository) : base(repository,  new SatisfactionSurveyDataMapping()) { }
 		public  SatisfactionSurveyPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new SatisfactionSurveyKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.SatisfactionSurvey,string> GetKeys(POCO.SatisfactionSurvey entityPOCO) => new SatisfactionSurveyKeys<string>() { Id = entityPOCO.Id,  };
    }

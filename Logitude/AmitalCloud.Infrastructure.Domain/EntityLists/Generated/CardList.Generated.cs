@@ -37,7 +37,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public int Tenant  { get; set; }
        [DataMember]
        public string Website  { get; set; }
-       [DataMember]
+        public string WebSite { get; set; }
+        [DataMember]
        public string InvoiceCurrencyId  { get; set; }
        [DataMember]
        public string VatTypeId  { get; set; }
@@ -233,7 +234,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string EmailForSendingSingArinvoice  { get; set; }
        [DataMember]
        public bool SendingInterestReport  { get; set; }
-   }
+        public string SATForeignRFC { get; set; }
+        public string MetodoPagoCode { get; set; }
+        public string EORInumber { get; set; }
+    }
 
 }
 	 

@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class FTPDetailQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.FTPDetail,FTPDetailKeys<string>,FTPDetailPM,FTPDetailList,string>
    {
         public FTPDetailQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public FTPDetailQueryService(IAmitalCloudContext context) : base(new Repository<POCO.FTPDetail>(context),new FTPDetailDataMapping()) {}
+        public FTPDetailQueryService(IAmitalCloudContext context) : this(new Repository<POCO.FTPDetail>(context)) {}
+		public FTPDetailQueryService(IRepository<POCO.FTPDetail> repository) : base(repository,  new FTPDetailDataMapping()) { }
 		public  FTPDetailPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new FTPDetailKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.FTPDetail,string> GetKeys(POCO.FTPDetail entityPOCO) => new FTPDetailKeys<string>() { Id = entityPOCO.Id,  };
    }

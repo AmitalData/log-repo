@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class DocumentFilingBackupSettingQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DocumentFilingBackupSetting,DocumentFilingBackupSettingKeys<int>,DocumentFilingBackupSettingPM,DocumentFilingBackupSettingList,int>
    {
         public DocumentFilingBackupSettingQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public DocumentFilingBackupSettingQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DocumentFilingBackupSetting>(context),new DocumentFilingBackupSettingDataMapping()) {}
+        public DocumentFilingBackupSettingQueryService(IAmitalCloudContext context) : this(new Repository<POCO.DocumentFilingBackupSetting>(context)) {}
+		public DocumentFilingBackupSettingQueryService(IRepository<POCO.DocumentFilingBackupSetting> repository) : base(repository,  new DocumentFilingBackupSettingDataMapping()) { }
 		public  DocumentFilingBackupSettingPM GetSingle(int tenant,bool getComposition, bool getFromCache) => base.GetSingle(new DocumentFilingBackupSettingKeys<int>(){ Tenant = tenant }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DocumentFilingBackupSetting,int> GetKeys(POCO.DocumentFilingBackupSetting entityPOCO) => new DocumentFilingBackupSettingKeys<int>() { Tenant = entityPOCO.Tenant,  };
    }

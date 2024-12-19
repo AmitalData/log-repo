@@ -1,11 +1,11 @@
-using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.Context;using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Helpers;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+
 using System.Linq;
 using System.Linq.Expressions;
 using System.Transactions;
@@ -26,6 +26,11 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         public ObjectFieldRepository(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {
         }   
+        public ObjectFieldRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
+        {
+        }   
+
+
         public IQueryable<ObjectField> GetObjectFields()
         {
             return context.ObjectFields;

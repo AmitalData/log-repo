@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class BusinessHoursHolidayQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.BusinessHoursHoliday,BusinessHoursHolidayKeys<string>,BusinessHoursHolidayPM,BusinessHoursHolidayList,string>
    {
         public BusinessHoursHolidayQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public BusinessHoursHolidayQueryService(IAmitalCloudContext context) : base(new Repository<POCO.BusinessHoursHoliday>(context),new BusinessHoursHolidayDataMapping()) {}
+        public BusinessHoursHolidayQueryService(IAmitalCloudContext context) : this(new Repository<POCO.BusinessHoursHoliday>(context)) {}
+		public BusinessHoursHolidayQueryService(IRepository<POCO.BusinessHoursHoliday> repository) : base(repository,  new BusinessHoursHolidayDataMapping()) { }
 		public  BusinessHoursHolidayPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new BusinessHoursHolidayKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.BusinessHoursHoliday,string> GetKeys(POCO.BusinessHoursHoliday entityPOCO) => new BusinessHoursHolidayKeys<string>() { Id = entityPOCO.Id,  };
    }

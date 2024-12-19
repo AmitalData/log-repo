@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class WarehouseStoragePricingQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.WarehouseStoragePricing,WarehouseStoragePricingKeys<string>,WarehouseStoragePricingPM,WarehouseStoragePricingList,string>
    {
         public WarehouseStoragePricingQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public WarehouseStoragePricingQueryService(IAmitalCloudContext context) : base(new Repository<POCO.WarehouseStoragePricing>(context),new WarehouseStoragePricingDataMapping()) {}
+        public WarehouseStoragePricingQueryService(IAmitalCloudContext context) : this(new Repository<POCO.WarehouseStoragePricing>(context)) {}
+		public WarehouseStoragePricingQueryService(IRepository<POCO.WarehouseStoragePricing> repository) : base(repository,  new WarehouseStoragePricingDataMapping()) { }
 		public  WarehouseStoragePricingPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new WarehouseStoragePricingKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.WarehouseStoragePricing,string> GetKeys(POCO.WarehouseStoragePricing entityPOCO) => new WarehouseStoragePricingKeys<string>() { Id = entityPOCO.Id,  };
    }

@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class QuoteTemplateTableDesignQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.QuoteTemplateTableDesign,QuoteTemplateTableDesignKeys<string>,QuoteTemplateTableDesignPM,QuoteTemplateTableDesignList,string>
    {
         public QuoteTemplateTableDesignQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public QuoteTemplateTableDesignQueryService(IAmitalCloudContext context) : base(new Repository<POCO.QuoteTemplateTableDesign>(context),new QuoteTemplateTableDesignDataMapping()) {}
+        public QuoteTemplateTableDesignQueryService(IAmitalCloudContext context) : this(new Repository<POCO.QuoteTemplateTableDesign>(context)) {}
+		public QuoteTemplateTableDesignQueryService(IRepository<POCO.QuoteTemplateTableDesign> repository) : base(repository,  new QuoteTemplateTableDesignDataMapping()) { }
 		public  QuoteTemplateTableDesignPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new QuoteTemplateTableDesignKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.QuoteTemplateTableDesign,string> GetKeys(POCO.QuoteTemplateTableDesign entityPOCO) => new QuoteTemplateTableDesignKeys<string>() { Id = entityPOCO.Id,  };
    }

@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class ChildEntitiesCustomFieldQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ChildEntitiesCustomField,ChildEntitiesCustomFieldKeys<string>,ChildEntitiesCustomFieldPM,ChildEntitiesCustomFieldList,string>
    {
         public ChildEntitiesCustomFieldQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public ChildEntitiesCustomFieldQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ChildEntitiesCustomField>(context),new ChildEntitiesCustomFieldDataMapping()) {}
+        public ChildEntitiesCustomFieldQueryService(IAmitalCloudContext context) : this(new Repository<POCO.ChildEntitiesCustomField>(context)) {}
+		public ChildEntitiesCustomFieldQueryService(IRepository<POCO.ChildEntitiesCustomField> repository) : base(repository,  new ChildEntitiesCustomFieldDataMapping()) { }
 		public  ChildEntitiesCustomFieldPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ChildEntitiesCustomFieldKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ChildEntitiesCustomField,string> GetKeys(POCO.ChildEntitiesCustomField entityPOCO) => new ChildEntitiesCustomFieldKeys<string>() { Id = entityPOCO.Id,  };
    }

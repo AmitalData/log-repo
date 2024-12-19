@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CargoTenantMilestoneDefinitionQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CargoTenantMilestoneDefinition,CargoTenantMilestoneDefinitionKeys<string>,CargoTenantMilestoneDefinitionPM,CargoTenantMilestoneDefinitionList,string>
    {
         public CargoTenantMilestoneDefinitionQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CargoTenantMilestoneDefinitionQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CargoTenantMilestoneDefinition>(context),new CargoTenantMilestoneDefinitionDataMapping()) {}
+        public CargoTenantMilestoneDefinitionQueryService(IAmitalCloudContext context) : this(new Repository<POCO.CargoTenantMilestoneDefinition>(context)) {}
+		public CargoTenantMilestoneDefinitionQueryService(IRepository<POCO.CargoTenantMilestoneDefinition> repository) : base(repository,  new CargoTenantMilestoneDefinitionDataMapping()) { }
 		public  CargoTenantMilestoneDefinitionPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CargoTenantMilestoneDefinitionKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CargoTenantMilestoneDefinition,string> GetKeys(POCO.CargoTenantMilestoneDefinition entityPOCO) => new CargoTenantMilestoneDefinitionKeys<string>() { Id = entityPOCO.Id,  };
    }

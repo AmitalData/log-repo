@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class ComputingPartnerQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ComputingPartner,ComputingPartnerKeys<string>,ComputingPartnerPM,ComputingPartnerList,string>
    {
         public ComputingPartnerQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public ComputingPartnerQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ComputingPartner>(context),new ComputingPartnerDataMapping()) {}
+        public ComputingPartnerQueryService(IAmitalCloudContext context) : this(new Repository<POCO.ComputingPartner>(context)) {}
+		public ComputingPartnerQueryService(IRepository<POCO.ComputingPartner> repository) : base(repository,  new ComputingPartnerDataMapping()) { }
 		public  ComputingPartnerPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ComputingPartnerKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ComputingPartner,string> GetKeys(POCO.ComputingPartner entityPOCO) => new ComputingPartnerKeys<string>() { Id = entityPOCO.Id,  };
    }

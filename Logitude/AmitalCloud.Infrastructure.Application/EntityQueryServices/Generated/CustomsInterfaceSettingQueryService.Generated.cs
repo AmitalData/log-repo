@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CustomsInterfaceSettingQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomsInterfaceSetting,CustomsInterfaceSettingKeys<int>,CustomsInterfaceSettingPM,CustomsInterfaceSettingList,int>
    {
         public CustomsInterfaceSettingQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CustomsInterfaceSettingQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomsInterfaceSetting>(context),new CustomsInterfaceSettingDataMapping()) {}
+        public CustomsInterfaceSettingQueryService(IAmitalCloudContext context) : this(new Repository<POCO.CustomsInterfaceSetting>(context)) {}
+		public CustomsInterfaceSettingQueryService(IRepository<POCO.CustomsInterfaceSetting> repository) : base(repository,  new CustomsInterfaceSettingDataMapping()) { }
 		public  CustomsInterfaceSettingPM GetSingle(int tenant,bool getComposition, bool getFromCache) => base.GetSingle(new CustomsInterfaceSettingKeys<int>(){ Tenant = tenant }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomsInterfaceSetting,int> GetKeys(POCO.CustomsInterfaceSetting entityPOCO) => new CustomsInterfaceSettingKeys<int>() { Tenant = entityPOCO.Tenant,  };
    }

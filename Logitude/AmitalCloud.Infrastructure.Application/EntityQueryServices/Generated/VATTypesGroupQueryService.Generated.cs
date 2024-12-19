@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class VATTypesGroupQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.VATTypesGroup,VATTypesGroupKeys<string>,VATTypesGroupPM,VATTypesGroupList,string>
    {
         public VATTypesGroupQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public VATTypesGroupQueryService(IAmitalCloudContext context) : base(new Repository<POCO.VATTypesGroup>(context),new VATTypesGroupDataMapping()) {}
+        public VATTypesGroupQueryService(IAmitalCloudContext context) : this(new Repository<POCO.VATTypesGroup>(context)) {}
+		public VATTypesGroupQueryService(IRepository<POCO.VATTypesGroup> repository) : base(repository,  new VATTypesGroupDataMapping()) { }
 		public  VATTypesGroupPM GetSingle(string groupvattypeid, string singlevattypeid,bool getComposition, bool getFromCache) => base.GetSingle(new VATTypesGroupKeys<string>(){ GroupVATTypeId = groupvattypeid, SingleVATTypeId = singlevattypeid }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.VATTypesGroup,string> GetKeys(POCO.VATTypesGroup entityPOCO) => new VATTypesGroupKeys<string>() { GroupVATTypeId = entityPOCO.GroupVATTypeId, SingleVATTypeId = entityPOCO.SingleVATTypeId,  };
    }

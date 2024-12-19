@@ -1,5 +1,5 @@
-﻿using AmitalCloud.Infrastructure.Domain.Enums;
-using AmitalCloud.Infrastructure.Data.Helpers;
+﻿//using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Domain.Enums;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -11,18 +11,23 @@ using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Data.Repositories
 {
-    public class Repository< TEntity> : IRepository< TEntity>, IAsyncRepository<TEntity>, IDisposable
+    public class Repository<TEntity> : IRepository<TEntity>, IAsyncRepository<TEntity>, IDisposable
         where TEntity : class
-     //   where TContext : class, IContext
+        //   where TContext : class, IContext
 
     {
         private readonly IContext _dbContext;
-        private readonly IDbSet<TEntity> _dbSet;
+        private readonly System.Data.Entity.IDbSet<TEntity> _dbSet;
         private string _errorMessage = string.Empty;
         private bool _isDisposed;
+        IUnitOfWork _unitOfWork;
+
+        protected System.Data.Entity.IDbSet<TEntity> DbSet => _dbSet;
+        protected IContext DbContext => _dbContext;
 
         public Repository(IUnitOfWork unitOfWork) : this(unitOfWork.Context)
         {
+            _unitOfWork=unitOfWork;
         }
         public Repository(IContext dbContext)
         {
@@ -51,9 +56,22 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         public async Task<List<TEntity>> GetMultiAsync<TKeyType>(IEntityKeyFields<TEntity, TKeyType> entityKeys) => await GetMultiAsync(entityKeys.Predicate);
         public async Task<List<TEntity>> GetMultiAsync<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TKey>> orderBy, int skip, int take) => await _dbSet.Where(predicate).OrderBy(orderBy).Skip(skip).Take(take).ToListAsync();
         public async Task<IEnumerable<TEntity>> GetMultiAsync<TKey>(ISpecification<TEntity, TKey> spec) => await GetQuery(spec).ToListAsync();
-
-        public async Task SubmitChangesAsync() => await _dbContext.SaveChangesAsync();
-
+        public async Task<List<TResult>> GetMultiAsync<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select) => await _dbSet.Where(predicate).Select(select).ToListAsync();
+        public async Task<List<TEntity>> GetMultiAsync(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select) => await _dbSet.Where(predicate).Select(select).ToListAsync();
+        public async Task SubmitChangesAsync()
+        {
+            if (_unitOfWork == null)
+            {
+                await SaveAsync();
+            }
+            else
+            {
+                throw new Exception("Use UOW.Save()");
+            }
+            
+        }
+        public async Task<List<TEntity>> GetMultiAsync<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select, Expression<Func<TEntity, TKey>> orderBy, int skip, int take) => await _dbSet.Where(predicate).Select(select).OrderBy(orderBy).Skip(skip).Take(take).ToListAsync();
+        public async Task<List<TResult>> GetMultiAsync<TResult, TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, Expression<Func<TResult, TKey>> orderBy, int skip, int take) => await _dbSet.Where(predicate).Select(select).OrderBy(orderBy).Skip(skip).Take(take).ToListAsync();
 
         #endregion ASync Methods 
 
@@ -121,7 +139,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             }
         }
         public List<TEntity> GetAll(int tenant) => GetQuery(tenant).ToList();
-        private IQueryable<TEntity> GetQuery(int tenant)
+        protected IQueryable<TEntity> GetQuery(int tenant)
         {
             var type = typeof(TEntity);
             var query = _dbSet.AsQueryable();
@@ -136,7 +154,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         {
             if (fromCache)
             {
-                return GetFromCache( tenant);
+                return GetFromCache(tenant);
             }
             else
             {
@@ -145,17 +163,148 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         }
         public List<TEntity> GetAll<TKey>(int tenant, Expression<Func<TEntity, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending) => ApplyOrderedBy<TKey>(orderBy, orderByDirection, GetQuery(tenant)).ToList();
         public List<TEntity> GetMulti<TKeyType>(IEntityKeyFields<TEntity, TKeyType> entityKeys) => GetMulti(entityKeys.Predicate);
+        public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select) => _dbSet.Where(predicate).Select(select).ToList();
+        public List<TEntity> GetMulti(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select) => _dbSet.Where(predicate).Select(select).ToList();
         public List<TEntity> GetMulti(Expression<Func<TEntity, bool>> predicate) => _dbSet.Where(predicate).ToList();
         public IEnumerable<TEntity> GetMulti<TKey>(ISpecification<TEntity, TKey> spec) => GetQuery(spec).AsEnumerable();
         public TEntity GetSingle<TKeyType>(IEntityKeyFields<TEntity, TKeyType> entityKeys) => GetMulti(entityKeys.Predicate).FirstOrDefault();
         public List<TEntity> GetMulti<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TKey>> orderBy, int skip, int take) => _dbSet.Where(predicate).OrderBy(orderBy).Skip(skip).Take(take).ToList();
+        public List<TEntity> GetMulti<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select, Expression<Func<TEntity, TKey>> orderBy, int skip, int take)
+            => _dbSet.Where(predicate).Select(select).OrderBy(orderBy).Skip(skip).Take(take).ToList();
+        public List<TResult> GetMulti<TResult, TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, Expression<Func<TResult, TKey>> orderBy, int skip, int take)
+            => _dbSet.Where(predicate).Select(select).OrderBy(orderBy).Skip(skip).Take(take).ToList();
+        public List<TEntity> GetMulti<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending)
+            => (orderByDirection == OrderByDirection.Ascending) ?
+            _dbSet.Where(predicate).OrderBy(orderBy).ToList() : _dbSet.Where(predicate).OrderByDescending(orderBy).ToList();
+        public List<TEntity> GetMulti<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select, Expression<Func<TEntity, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending)
+            => (orderByDirection == OrderByDirection.Ascending) ?
+            _dbSet.Where(predicate).Select(select).OrderBy(orderBy).ToList() : _dbSet.Where(predicate).Select(select).OrderByDescending(orderBy).ToList();
+        public List<TResult> GetMulti<TResult, TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, Expression<Func<TResult, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending)
+            => (orderByDirection == OrderByDirection.Ascending) ?
+            _dbSet.Where(predicate).Select(select).OrderBy(orderBy).ToList() : _dbSet.Where(predicate).Select(select).OrderByDescending(orderBy).ToList();
+        public List<object> GetMulti<TInner,  TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TInner, bool>> innerpredicate,
+           //, Expression<Func<TResult, TResult>> select,
+           Expression<Func<TEntity, TKey>> outerKeySelector, Expression<Func<TInner, TKey>> innerKeySelector
+            //, Expression<Func<TEntity, TInner, TResult>> resultSelector
+            ) where TInner : class
+        { 
+        var res = _dbSet.Where(predicate)
+            .Join((_dbContext).Set<TInner>().Where(innerpredicate), outerKeySelector, innerKeySelector, (a,b) => new {a,b})
+            .ToList<object>() ;
+            return res;
+        }
+
+
+        public List<TEntity> GetMultiByParent<TEntityParentKeys>(TEntityParentKeys entityKeys)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected List<T> GetListNOWAITWhere<T>(Expression<Func<T, bool>> filter) where T : class
+        {
+            throw new NotImplementedException();
+
+            //using (var myIDbContextLogger = (dbContext as DbContextBase).CreateLogger())
+            //{
+            //    List<T> myOut = null;
+            //    try
+            //    {
+            //        var adapter = (System.Data.Entity.Infrastructure.IObjectContextAdapter)dbContext;
+            //        var objectContext = adapter.ObjectContext;
+            //        myOut = GetListNOWAITWhere<T>(filter);
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        e.ChangeExceptionMess(myIDbContextLogger.ToString());
+            //        throw;
+            //    }
+            //    return myOut;
+            //}
+        }
+
+        //protected List<T> GetListNOWAITWhere<T>( Expression<Func<T, bool>> filter) where T : class
+        //{
+        //    try
+        //    {
+
+        //        var newselectSql = "";
+        //        //var query = db.Set<T>().Where(filter);
+        //        var query = db.CreateObjectSet<T>().Where(filter) as ObjectQuery;
+
+        //        string selectSql = query.ToTraceString();
+
+
+        //        //newselectSql = "SELECT 1 MyCount  " + selectSql.Substring(indexOffROM) + " FOR UPDATE NOWAIT ";
+
+        //        if (AmitalCLoudSettings.DatabaseManagementSystem == "oracle")
+        //        {
+        //            newselectSql = selectSql + " FOR UPDATE NOWAIT ";
+        //            //newselectSql = selectSql + " FOR UPDATE WAIT 1 ";
+        //        }
+        //        else
+        //        {
+        //            var indexOfWhere = selectSql.LastIndexOf("WHERE ");
+        //            var sqlServer = " WITH(NOWAIT) ";
+        //            sqlServer = " WITH(UPDLOCK, NOWAIT) ";
+
+        //            newselectSql = selectSql.Insert(indexOfWhere, sqlServer);
+        //        }
+        //        var parameters = query.Parameters.Select(p => GetDbParameter(p.Name, p.Value)).ToArray();
+
+        //        //db.Database.ExecuteSqlCommand(deleteSql, parameters);
+        //        return db.ExecuteStoreQuery<T>(newselectSql, parameters).ToList();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        e.ChangeExceptionMess(myIDbContextLogger.ToString());
+        //        throw;
+        //    }
+
+        //}
+
+        protected bool DeleteWhere(Expression<Func<TEntity, bool>> predicate)
+        {
+            var entities = _dbSet.Where(predicate);
+            foreach (var entity in entities)
+            {
+                Delete(entity);
+            }
+            return true;
+        }
+
+//TODO change access modifier to protected after UOW is implemented
+        public void SubmitChanges()
+        {
+            if (_unitOfWork == null)
+            {
+                Save();
+            }
+            else
+            {
+                throw new Exception("Use UOW.Save()");
+            }
+        }
+
         public void Dispose()
         {
             if (_dbContext != null)
                 _dbContext.Dispose();
             _isDisposed = true;
         }
+
         #endregion Sync Methods
+
+        #region Private Methods 
+
+        private void Save()
+        {
+            _dbContext.GetType().GetMethod("SaveChanges").Invoke(_dbContext, null);
+        }
+        private async Task SaveAsync()
+        {
+            await (Task)_dbContext.GetType().GetMethod("SaveChangesAsync").Invoke(_dbContext, null);
+        }
+
         private void HandleUnitOfWorkException(DbEntityValidationException dbEx)
         {
             foreach (var validationErrors in dbEx.EntityValidationErrors)
@@ -194,13 +343,18 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         }
         private List<TEntity> GetFromCache(int tenant)
         {
-            List<TEntity> entity = CacheManager.CacheWrapper.Get<TEntity>(tenant);
+            List<TEntity> entity = Helpers.CacheManager.CacheWrapper.Get<TEntity>(tenant);
             if (entity == null)
             {
                 entity = GetAll(tenant);
-                CacheManager.CacheWrapper.Insert<TEntity>(tenant, entity);
+                Helpers.CacheManager.CacheWrapper.Insert<TEntity>(tenant, entity);
             }
              return entity;
         }
+
+
+
+
+        #endregion  Private Methods 
     }
 }

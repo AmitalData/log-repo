@@ -1,6 +1,6 @@
 ﻿using System;
 using System.CodeDom;
-using System.Data.Entity;
+
 using System.Data.Entity.Validation;
 using System.Reflection;
 using System.Transactions;
@@ -12,7 +12,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
     //While Creating an Instance of the UnitOfWork object, we need to specify the actual type for the TContext Generic Type
     //In our example, TContext is going to be EmployeeDBContext
     //new() constraint will make sure that this type is going to be a non-abstract type with a parameterless constructor
-    public class UnitOfWork<TContext> : IUnitOfWork, IDisposable where TContext : IContext, new()
+    public class UnitOfWork<TContext> : IUnitOfWork, IDisposable where TContext : IContext
     {
         private bool _disposed;
         private string _errorMessage = string.Empty;
@@ -30,7 +30,10 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             _context = (TContext) typeof(TContext).GetMethod("GetContext", BindingFlags.Public | BindingFlags.Static).Invoke(null, new object[] { tenant });
 
         } 
-
+        public UnitOfWork(TContext context)
+        {
+            _context = context;
+        }
         //The Dispose() method is used to free unmanaged resources like files, 
         //database connections etc. at any time.
         public void Dispose()

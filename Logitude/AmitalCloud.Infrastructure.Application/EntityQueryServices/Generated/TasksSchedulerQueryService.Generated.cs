@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class TasksSchedulerQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.TasksScheduler,TasksSchedulerKeys<string>,TasksSchedulerPM,TasksSchedulerList,string>
    {
         public TasksSchedulerQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public TasksSchedulerQueryService(IAmitalCloudContext context) : base(new Repository<POCO.TasksScheduler>(context),new TasksSchedulerDataMapping()) {}
+        public TasksSchedulerQueryService(IAmitalCloudContext context) : this(new Repository<POCO.TasksScheduler>(context)) {}
+		public TasksSchedulerQueryService(IRepository<POCO.TasksScheduler> repository) : base(repository,  new TasksSchedulerDataMapping()) { }
 		public  TasksSchedulerPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new TasksSchedulerKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.TasksScheduler,string> GetKeys(POCO.TasksScheduler entityPOCO) => new TasksSchedulerKeys<string>() { Id = entityPOCO.Id,  };
    }

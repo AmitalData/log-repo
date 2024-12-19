@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class DistributorQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Distributor,DistributorKeys<string>,DistributorPM,DistributorList,string>
    {
         public DistributorQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public DistributorQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Distributor>(context),new DistributorDataMapping()) {}
+        public DistributorQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Distributor>(context)) {}
+		public DistributorQueryService(IRepository<POCO.Distributor> repository) : base(repository,  new DistributorDataMapping()) { }
 		public  DistributorPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new DistributorKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Distributor,string> GetKeys(POCO.Distributor entityPOCO) => new DistributorKeys<string>() { Code = entityPOCO.Code,  };
    }

@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CommunicationStatusTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CommunicationStatusType,CommunicationStatusTypeKeys<string>,CommunicationStatusTypePM,CommunicationStatusTypeList,string>
    {
         public CommunicationStatusTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CommunicationStatusTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CommunicationStatusType>(context),new CommunicationStatusTypeDataMapping()) {}
+        public CommunicationStatusTypeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.CommunicationStatusType>(context)) {}
+		public CommunicationStatusTypeQueryService(IRepository<POCO.CommunicationStatusType> repository) : base(repository,  new CommunicationStatusTypeDataMapping()) { }
 		public  CommunicationStatusTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new CommunicationStatusTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CommunicationStatusType,string> GetKeys(POCO.CommunicationStatusType entityPOCO) => new CommunicationStatusTypeKeys<string>() { Code = entityPOCO.Code,  };
    }

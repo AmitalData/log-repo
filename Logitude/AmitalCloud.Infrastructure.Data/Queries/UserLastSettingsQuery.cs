@@ -17,10 +17,12 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         {
         }
 
-        public UserLastSettingsQuery(int tenant)
+        public UserLastSettingsQuery(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {
-            context =  AmitalCloudContext.GetContext(tenant);
-            repository = new Repository<UserLastSettings>(context);
+        }
+        public UserLastSettingsQuery(IAmitalCloudContext context) : this(new Repository<UserLastSettings>(context))
+        {
+            this.context= context;
         }
         public UserLastSettingsQuery(IRepository<UserLastSettings> repository)
         {

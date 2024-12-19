@@ -1,4 +1,4 @@
-using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.Context;using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
@@ -12,146 +12,33 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
 {
     public class GlobalDBRepository: Repository<GlobalDB>
     {
-
         IGlobalContext globalContext;
+        #region Constructors
         public GlobalDBRepository(IGlobalContext context):base(context)
         {
             globalContext = context;
         }
-
         public GlobalDBRepository():this(GlobalContext.GetContext())
         {
         }
-        public GlobalDB GetGlobalDBById(string id)
-        {
-            string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
-            if (enviroment == "azure app service")
-                return GetGlobalDbFromEnviroment();
+        #endregion Constructors
 
-            return (from a in context.GlobalDBs
-                    where a.Id == id
-                    select a).FirstOrDefault();
-        }
-        
-        public GlobalDB GetSingleGlobalDB(string id)
-        {
-
-            string name = "TenantDB" + id;
-            GlobalDB db = null;
-            string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
-
-            if (HttpContext.Current != null)
-            {
-                if (CacheManager.CacheWrapper.Get(name) == null)
-                {
-                    if (enviroment == "azure app service")
-                        db = GetGlobalDbFromEnviroment();
-
-                    else
-                    {
-                        IGlobalContext context = GlobalContext.GetContext();
-
-
-                        db = (from a in context.GlobalDBs
-                              where a.Id == id
-                              select a).FirstOrDefault();
-                    }
-
-                    CacheManager.CacheWrapper.Insert(name, db, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                    //}
-                }
-                else
-                {
-                    db = (GlobalDB)CacheManager.CacheWrapper.Get(name);
-                }
-            }
-
-            else
-            {
-                if (enviroment == "azure app service")
-                    db = GetGlobalDbFromEnviroment();
-
-                else
-                {
-                    IGlobalContext context = GlobalContext.GetContext();
-
-                    db = (from a in context.GlobalDBs
-                          where a.Id == id
-                          select a).FirstOrDefault();
-                }
-            }
-
-
-
-            return db;
-        }
-
-        public static GlobalDB GetGlobalDBByTenant(int tenant)
-        {
-            string name = "TenantDB" + tenant;
-            GlobalDB db = null;
-            string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
-
-            if (true) //HttpContext.Current != null)
-            {
-                if (CacheManager.CacheWrapper.Get(name) == null)
-                {
-                    db = enviroment == "azure app service" ? GetGlobalDbFromEnviroment() : GetByGlobalTenant(tenant);                    
-
-                    CacheManager.CacheWrapper.Insert(name, db, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                    //}
-                }
-                else
-                {
-                    db = (GlobalDB)CacheManager.CacheWrapper.Get(name);
-                }
-            }
-
-            else
-            {
-                db = enviroment == "azure app service" ? GetGlobalDbFromEnviroment() : GetByGlobalTenant(tenant);
-            }
-
-            return db;
-        }
-
-        private static GlobalDB GetByGlobalTenant(int tenant)
-        {
-            GlobalDB db;
-            IGlobalContext context = GlobalContext.GetContext();
-
-            GlobalTenant globaltenant = (from a in context.GlobalTenants
-                                         where a.Id == tenant
-                                         select a).FirstOrDefault();
-
-            db = (from a in context.GlobalDBs
-                  where a.Id == globaltenant.GlobalDBId
-                  select a).FirstOrDefault();
-            return db;
-        }
-
-        public int GetDataBasesCount()
-        {
-            return context.GlobalDBs.Count();
-        }
-
-        public List<GlobalDB> GetActiveDataBases()
-        {
-            return (from a in context.GlobalDBs
-                   where a.IsActive == true
-                   select a).ToList();
-        }
-
-        public IQueryable<GlobalDB> GetGlobalDBs()
-        {
-            return context.GlobalDBs;
-        }
-
+        public GlobalDB GetGlobalDBById(string id) =>  GetSingleGlobalDB(id);
+        public GlobalDB GetSingleGlobalDB(string id) => ConfigurationManager.AppSettings.Get("ENVIROMENT") == "azure app service"  ? GetGlobalDbFromEnviroment() : GetAll(0, true).Where(a => a.Id == id).FirstOrDefault();
+        public int GetDataBasesCount() => GetAll(0, true).Count();
+        public List<GlobalDB> GetActiveDataBases() => GetAll(0, true).Where(a=>a.IsActive ==true).ToList();
+        public IQueryable<GlobalDB> GetGlobalDBs() => context.GlobalDBs;
         public IGlobalContext context
         {
-            get { return globalContext; }
+            get { return globalContext ==null ? GlobalContext.GetContext(): globalContext; }
         }
-
+        public static GlobalDB GetGlobalDBByTenant(int tenant) => ConfigurationManager.AppSettings.Get("ENVIROMENT") == "azure app service" ? GetGlobalDbFromEnviroment() : GetByGlobalTenant(tenant);
+        private static GlobalDB GetByGlobalTenant(int tenant)
+        {
+            IGlobalContext context = GlobalContext.GetContext();
+            GlobalTenant globaltenant = new Repository<GlobalTenant>(context).GetAll(0, true).Where(a => a.Id == tenant).FirstOrDefault();
+            return new Repository<GlobalDB>(context).GetAll(0, true).Where(a => a.Id == globaltenant.GlobalDBId).FirstOrDefault();   
+         }
         private static GlobalDB GetGlobalDbFromEnviroment()
         {
             return new GlobalDB()

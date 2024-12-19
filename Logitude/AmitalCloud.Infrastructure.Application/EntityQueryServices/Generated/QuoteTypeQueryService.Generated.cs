@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class QuoteTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.QuoteType,QuoteTypeKeys<string>,QuoteTypePM,QuoteTypeList,string>
    {
         public QuoteTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public QuoteTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.QuoteType>(context),new QuoteTypeDataMapping()) {}
+        public QuoteTypeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.QuoteType>(context)) {}
+		public QuoteTypeQueryService(IRepository<POCO.QuoteType> repository) : base(repository,  new QuoteTypeDataMapping()) { }
 		public  QuoteTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new QuoteTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.QuoteType,string> GetKeys(POCO.QuoteType entityPOCO) => new QuoteTypeKeys<string>() { Code = entityPOCO.Code,  };
    }

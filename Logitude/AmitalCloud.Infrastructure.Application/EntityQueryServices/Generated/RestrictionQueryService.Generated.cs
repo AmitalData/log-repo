@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class RestrictionQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Restriction,RestrictionKeys<string>,RestrictionPM,RestrictionList,string>
    {
         public RestrictionQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public RestrictionQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Restriction>(context),new RestrictionDataMapping()) {}
+        public RestrictionQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Restriction>(context)) {}
+		public RestrictionQueryService(IRepository<POCO.Restriction> repository) : base(repository,  new RestrictionDataMapping()) { }
 		public  RestrictionPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new RestrictionKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Restriction,string> GetKeys(POCO.Restriction entityPOCO) => new RestrictionKeys<string>() { Id = entityPOCO.Id,  };
    }

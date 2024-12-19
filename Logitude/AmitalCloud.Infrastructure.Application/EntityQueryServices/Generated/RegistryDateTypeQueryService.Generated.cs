@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class RegistryDateTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.RegistryDateType,RegistryDateTypeKeys<string>,RegistryDateTypePM,RegistryDateTypeList,string>
    {
         public RegistryDateTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public RegistryDateTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.RegistryDateType>(context),new RegistryDateTypeDataMapping()) {}
+        public RegistryDateTypeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.RegistryDateType>(context)) {}
+		public RegistryDateTypeQueryService(IRepository<POCO.RegistryDateType> repository) : base(repository,  new RegistryDateTypeDataMapping()) { }
 		public  RegistryDateTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new RegistryDateTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.RegistryDateType,string> GetKeys(POCO.RegistryDateType entityPOCO) => new RegistryDateTypeKeys<string>() { Code = entityPOCO.Code,  };
    }

@@ -18,12 +18,15 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         public TenantManagmentPrivateLabelsQuery() : this(0)
         {
         }
-        public TenantManagmentPrivateLabelsQuery(int tenant)
+        public TenantManagmentPrivateLabelsQuery(int tenant) : this(GlobalContext.GetContext(tenant))
         {
-            context = GlobalContext.GetContext(tenant);
-            repository = new Repository<TenantManagmentPrivateLabels>(context);
-            
         }
+        public TenantManagmentPrivateLabelsQuery(IGlobalContext context) : this(new Repository<TenantManagmentPrivateLabels>(context))
+        {
+            this.context= context;
+        }
+
+
         public TenantManagmentPrivateLabelsQuery(IRepository<TenantManagmentPrivateLabels> repository)
         {
             this.repository = repository;

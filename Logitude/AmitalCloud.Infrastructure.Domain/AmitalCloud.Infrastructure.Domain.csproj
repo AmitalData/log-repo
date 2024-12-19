@@ -20,7 +20,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Library\Bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -52,6 +52,9 @@
     <Reference Include="Microsoft.ServiceModel.DomainServices.WindowsAzure, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.WindowsAzure.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -74,9 +77,11 @@
     <Compile Include="BaseClasses\BaseEntity.cs" />
     <Compile Include="BaseClasses\BaseEntityKeyFields.cs" />
     <Compile Include="BaseClasses\BaseEntityPM.cs" />
+    <Compile Include="BaseClasses\BaseInstance.cs" />
     <Compile Include="DataContracts\AmitalRestrictOwnerModel.cs" />
     <Compile Include="DataContracts\ApiQueryFilters.cs" />
     <Compile Include="DataContracts\AutomationSetValue.cs" />
+    <Compile Include="DataContracts\CommunicationsParams.cs" />
     <Compile Include="DataContracts\CustomFieldClass.cs" />
     <Compile Include="DataContracts\FilterCriteria.cs" />
     <Compile Include="DataContracts\MultiEntityUpdateData.cs" />
@@ -226,6 +231,7 @@
     <Compile Include="EntityKeys\FilingInboxAttachmentKeys.cs" />
     <Compile Include="EntityKeys\FilingInboxAttachmentLogKeys.cs" />
     <Compile Include="EntityKeys\FilingInboxKeys.cs" />
+    <Compile Include="EntityKeys\FollowUpKeys.cs" />
     <Compile Include="EntityKeys\FTPDetailKeys.cs" />
     <Compile Include="EntityKeys\GlobalZoneKeys.cs" />
     <Compile Include="EntityKeys\HelpResourceKeys.cs" />
@@ -514,6 +520,7 @@
     <Compile Include="EntityLists\Generated\FilingInboxList.Generated.cs" />
     <Compile Include="EntityLists\Generated\FollowUpList.Generated.cs" />
     <Compile Include="EntityLists\Generated\FTPDetailList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\GeneralList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GlobalZoneList.Generated.cs" />
     <Compile Include="EntityLists\Generated\HelpResourceList.Generated.cs" />
     <Compile Include="EntityLists\Generated\HorseGenderList.Generated.cs" />
@@ -653,6 +660,7 @@
     <Compile Include="EntityLists\Generated\WebhookKeysList.Generated.cs" />
     <Compile Include="EntityLists\Generated\WeightUnitList.Generated.cs" />
     <Compile Include="EntityLists\Generated\WorkerRoleNameList.Generated.cs" />
+    <Compile Include="EntityLists\Manual\CommunicationLogStepList.cs" />
     <Compile Include="EntityLists\Manual\FeatureList.cs" />
     <Compile Include="EntityLists\Manual\PackageFeatureList.cs" />
     <Compile Include="EntityLists\Manual\RoleFeatureList.cs" />
@@ -660,6 +668,7 @@
     <Compile Include="EntityLists\MenuButtonGroupList.cs" />
     <Compile Include="EntityLists\MenuButtonList.cs" />
     <Compile Include="EntityLists\MenusTableList.cs" />
+    <Compile Include="EntityLists\ObjectFieldList.cs" />
     <Compile Include="EntityLists\ObjectTableHelperControlList.cs" />
     <Compile Include="EntityLists\ObjectTableList.cs" />
     <Compile Include="EntityLists\ObjectTableTabList.cs" />
@@ -811,7 +820,9 @@
     <Compile Include="EntityMapping\FilingInboxAttachmentLogMap.cs" />
     <Compile Include="EntityMapping\FilingInboxAttachmentMap.cs" />
     <Compile Include="EntityMapping\FilingInboxMap.cs" />
+    <Compile Include="EntityMapping\FollowUpMap.cs" />
     <Compile Include="EntityMapping\FTPDetailMap.cs" />
+    <Compile Include="EntityMapping\GeneralMap.cs" />
     <Compile Include="EntityMapping\GlobalZoneMap.cs" />
     <Compile Include="EntityMapping\HelpResourceMap.cs" />
     <Compile Include="EntityMapping\HorseGenderMap.cs" />
@@ -1057,6 +1068,7 @@
     <Compile Include="EntityMapping\WeightUnitMap.cs" />
     <Compile Include="EntityMapping\WorkerRoleNameMap.cs" />
     <Compile Include="EntityPMs\ContactPM.cs" />
+    <Compile Include="EntityPMs\DocumentsFilingPM.cs" />
     <Compile Include="EntityPMs\Generated\AccountingPartnerPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AccountingSettingPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AccountingSystemPM.Generated.cs" />
@@ -1196,7 +1208,9 @@
     <Compile Include="EntityPMs\Generated\FilingInboxAttachmentLogPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FilingInboxAttachmentPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FilingInboxPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\FollowUpPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FTPDetailPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\GeneralPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GlobalZonePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\HelpResourcePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\HorseGenderPM.Generated.cs" />
@@ -1338,6 +1352,7 @@
     <Compile Include="EntityPMs\Generated\WorkerRoleNamePM.Generated.cs" />
     <Compile Include="EntityPMs\Manual\AdvancedQueryFilterPM.cs" />
     <Compile Include="EntityPMs\Manual\CardContactPM.cs" />
+    <Compile Include="EntityPMs\Manual\CommunicationLogStepPM.cs" />
     <Compile Include="EntityPMs\Manual\ContactTenantPM.cs" />
     <Compile Include="EntityPMs\Manual\ContactTenantRolePM.cs" />
     <Compile Include="EntityPMs\Manual\CounterPM.cs" />
@@ -1524,7 +1539,9 @@
     <Compile Include="EntityPOCOs\FilingInbox.cs" />
     <Compile Include="EntityPOCOs\FilingInboxAttachment.cs" />
     <Compile Include="EntityPOCOs\FilingInboxAttachmentLog.cs" />
+    <Compile Include="EntityPOCOs\FollowUp.cs" />
     <Compile Include="EntityPOCOs\FTPDetail.cs" />
+    <Compile Include="EntityPOCOs\General.cs" />
     <Compile Include="EntityPOCOs\GlobalZone.cs" />
     <Compile Include="EntityPOCOs\HelpResource.cs" />
     <Compile Include="EntityPOCOs\Horse.cs" />
@@ -1808,10 +1825,18 @@
     <Compile Include="Enums\OrderByDirection.cs" />
     <Compile Include="Enums\PropertyReflectionOptions.cs" />
     <Compile Include="Enums\QueueStatusEnum.cs" />
+    <Compile Include="Enums\SignMethodByQueueEnum.cs" />
+    <Compile Include="Enums\SignQueueByType.cs" />
+    <Compile Include="Helpers\AmitalConvertUtil.cs" />
     <Compile Include="Helpers\BlobFileInfo.cs" />
     <Compile Include="Helpers\EntityGetReflector.cs" />
+    <Compile Include="Helpers\ExceptionFormatUtil.cs" />
     <Compile Include="Helpers\FieldChange.cs" />
+    <Compile Include="Helpers\GenericRequestParams.cs" />
     <Compile Include="Helpers\InjectionUtil.cs" />
+    <Compile Include="Helpers\ProxyHelper.cs" />
+    <Compile Include="Helpers\RequestParamsBase.cs" />
+    <Compile Include="Helpers\RequestSheetContext.cs" />
     <Compile Include="Helpers\UpdateEntityArgs.cs" />
     <Compile Include="Interfaces\IAmitalCloudContext.cs" />
     <Compile Include="Interfaces\IAmitalRestrictOwnerService.cs" />
@@ -1849,6 +1874,7 @@
     <Compile Include="Interfaces\ITreeFilterQueryService.cs" />
     <Compile Include="Interfaces\IValidationClass.cs" />
     <Compile Include="Interfaces\I_IISManager.cs" />
+    <Compile Include="Interfaces\Response.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

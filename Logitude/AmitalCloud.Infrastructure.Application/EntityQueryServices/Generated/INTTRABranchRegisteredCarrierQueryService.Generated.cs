@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class INTTRABranchRegisteredCarrierQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.INTTRABranchRegisteredCarrier,INTTRABranchRegisteredCarrierKeys<string>,INTTRABranchRegisteredCarrierPM,INTTRABranchRegisteredCarrierList,string>
    {
         public INTTRABranchRegisteredCarrierQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public INTTRABranchRegisteredCarrierQueryService(IAmitalCloudContext context) : base(new Repository<POCO.INTTRABranchRegisteredCarrier>(context),new INTTRABranchRegisteredCarrierDataMapping()) {}
+        public INTTRABranchRegisteredCarrierQueryService(IAmitalCloudContext context) : this(new Repository<POCO.INTTRABranchRegisteredCarrier>(context)) {}
+		public INTTRABranchRegisteredCarrierQueryService(IRepository<POCO.INTTRABranchRegisteredCarrier> repository) : base(repository,  new INTTRABranchRegisteredCarrierDataMapping()) { }
 		public  INTTRABranchRegisteredCarrierPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new INTTRABranchRegisteredCarrierKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.INTTRABranchRegisteredCarrier,string> GetKeys(POCO.INTTRABranchRegisteredCarrier entityPOCO) => new INTTRABranchRegisteredCarrierKeys<string>() { Id = entityPOCO.Id,  };
    }

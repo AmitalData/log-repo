@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class ReportsTemplateQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ReportsTemplate,ReportsTemplateKeys<string>,ReportsTemplatePM,ReportsTemplateList,string>
    {
         public ReportsTemplateQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public ReportsTemplateQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ReportsTemplate>(context),new ReportsTemplateDataMapping()) {}
+        public ReportsTemplateQueryService(IAmitalCloudContext context) : this(new Repository<POCO.ReportsTemplate>(context)) {}
+		public ReportsTemplateQueryService(IRepository<POCO.ReportsTemplate> repository) : base(repository,  new ReportsTemplateDataMapping()) { }
 		public  ReportsTemplatePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ReportsTemplateKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ReportsTemplate,string> GetKeys(POCO.ReportsTemplate entityPOCO) => new ReportsTemplateKeys<string>() { Id = entityPOCO.Id,  };
    }

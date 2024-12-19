@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class TwoFactorAuthenticationDeviceQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.TwoFactorAuthenticationDevice,TwoFactorAuthenticationDeviceKeys<string>,TwoFactorAuthenticationDevicePM,TwoFactorAuthenticationDeviceList,string>
    {
         public TwoFactorAuthenticationDeviceQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public TwoFactorAuthenticationDeviceQueryService(IAmitalCloudContext context) : base(new Repository<POCO.TwoFactorAuthenticationDevice>(context),new TwoFactorAuthenticationDeviceDataMapping()) {}
+        public TwoFactorAuthenticationDeviceQueryService(IAmitalCloudContext context) : this(new Repository<POCO.TwoFactorAuthenticationDevice>(context)) {}
+		public TwoFactorAuthenticationDeviceQueryService(IRepository<POCO.TwoFactorAuthenticationDevice> repository) : base(repository,  new TwoFactorAuthenticationDeviceDataMapping()) { }
 		public  TwoFactorAuthenticationDevicePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new TwoFactorAuthenticationDeviceKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.TwoFactorAuthenticationDevice,string> GetKeys(POCO.TwoFactorAuthenticationDevice entityPOCO) => new TwoFactorAuthenticationDeviceKeys<string>() { Id = entityPOCO.Id,  };
    }

@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class INTTRASettingModeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.INTTRASettingMode,INTTRASettingModeKeys<string>,INTTRASettingModePM,INTTRASettingModeList,string>
    {
         public INTTRASettingModeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public INTTRASettingModeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.INTTRASettingMode>(context),new INTTRASettingModeDataMapping()) {}
+        public INTTRASettingModeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.INTTRASettingMode>(context)) {}
+		public INTTRASettingModeQueryService(IRepository<POCO.INTTRASettingMode> repository) : base(repository,  new INTTRASettingModeDataMapping()) { }
 		public  INTTRASettingModePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new INTTRASettingModeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.INTTRASettingMode,string> GetKeys(POCO.INTTRASettingMode entityPOCO) => new INTTRASettingModeKeys<string>() { Code = entityPOCO.Code,  };
    }

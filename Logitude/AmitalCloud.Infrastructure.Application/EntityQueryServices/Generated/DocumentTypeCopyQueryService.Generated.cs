@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class DocumentTypeCopyQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DocumentTypeCopy,DocumentTypeCopyKeys<string>,DocumentTypeCopyPM,DocumentTypeCopyList,string>
    {
         public DocumentTypeCopyQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public DocumentTypeCopyQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DocumentTypeCopy>(context),new DocumentTypeCopyDataMapping()) {}
+        public DocumentTypeCopyQueryService(IAmitalCloudContext context) : this(new Repository<POCO.DocumentTypeCopy>(context)) {}
+		public DocumentTypeCopyQueryService(IRepository<POCO.DocumentTypeCopy> repository) : base(repository,  new DocumentTypeCopyDataMapping()) { }
 		public  DocumentTypeCopyPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DocumentTypeCopyKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DocumentTypeCopy,string> GetKeys(POCO.DocumentTypeCopy entityPOCO) => new DocumentTypeCopyKeys<string>() { Id = entityPOCO.Id,  };
    }

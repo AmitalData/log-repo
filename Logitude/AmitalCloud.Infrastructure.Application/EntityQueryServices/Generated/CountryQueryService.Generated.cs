@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CountryQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Country,CountryKeys<string>,CountryPM,CountryList,string>
    {
         public CountryQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CountryQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Country>(context),new CountryDataMapping()) {}
+        public CountryQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Country>(context)) {}
+		public CountryQueryService(IRepository<POCO.Country> repository) : base(repository,  new CountryDataMapping()) { }
 		public  CountryPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CountryKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Country,string> GetKeys(POCO.Country entityPOCO) => new CountryKeys<string>() { Id = entityPOCO.Id,  };
    }

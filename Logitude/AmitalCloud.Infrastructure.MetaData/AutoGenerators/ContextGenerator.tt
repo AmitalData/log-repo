@@ -94,7 +94,10 @@ foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
         IDbSet<UserPermittedBranch> UserPermittedBranches { get; }
         IDbSet<UserPermittedProduct> UserPermittedProducts { get; }
         IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; }
-
+        IDbSet<DocumentsMetaDataType> DocumentsMetaDataTypes { get;  }
+        IDbSet<DocumentsFilingMetaDataValue> DocumentsFilingMetaDataValues { get; }
+        IDbSet<CommunicationLogStep> CommunicationLogSteps { get; }
+        IDbSet<GeneralLock> GeneralLocks { get; }
          void DetectChanges();
     }
 }
@@ -589,6 +592,10 @@ public IDbSet<UserLoginLog> UserLoginLogs { get;set; }
 public IDbSet<UserPermittedBranch> UserPermittedBranches { get;set; }
 public IDbSet<UserPermittedProduct> UserPermittedProducts { get;set; }
 public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get;set; }
+public IDbSet<DocumentsMetaDataType> DocumentsMetaDataTypes { get; set; }
+public IDbSet<DocumentsFilingMetaDataValue> DocumentsFilingMetaDataValues { get; set; }
+public IDbSet<CommunicationLogStep> CommunicationLogSteps { get; set; }
+public IDbSet<GeneralLock> GeneralLocks { get; set ;}
 public int Tenant => _tenant;
  }
 }

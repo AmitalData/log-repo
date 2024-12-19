@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CustomerOpenFilesAmountQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomerOpenFilesAmount,CustomerOpenFilesAmountKeys<string>,CustomerOpenFilesAmountPM,CustomerOpenFilesAmountList,string>
    {
         public CustomerOpenFilesAmountQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CustomerOpenFilesAmountQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomerOpenFilesAmount>(context),new CustomerOpenFilesAmountDataMapping()) {}
+        public CustomerOpenFilesAmountQueryService(IAmitalCloudContext context) : this(new Repository<POCO.CustomerOpenFilesAmount>(context)) {}
+		public CustomerOpenFilesAmountQueryService(IRepository<POCO.CustomerOpenFilesAmount> repository) : base(repository,  new CustomerOpenFilesAmountDataMapping()) { }
 		public  CustomerOpenFilesAmountPM GetSingle(string customerid,bool getComposition, bool getFromCache) => base.GetSingle(new CustomerOpenFilesAmountKeys<string>(){ CustomerId = customerid }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomerOpenFilesAmount,string> GetKeys(POCO.CustomerOpenFilesAmount entityPOCO) => new CustomerOpenFilesAmountKeys<string>() { CustomerId = entityPOCO.CustomerId,  };
    }

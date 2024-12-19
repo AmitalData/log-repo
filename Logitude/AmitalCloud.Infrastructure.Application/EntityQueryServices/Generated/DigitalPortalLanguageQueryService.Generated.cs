@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class DigitalPortalLanguageQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DigitalPortalLanguage,DigitalPortalLanguageKeys<string>,DigitalPortalLanguagePM,DigitalPortalLanguageList,string>
    {
         public DigitalPortalLanguageQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public DigitalPortalLanguageQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DigitalPortalLanguage>(context),new DigitalPortalLanguageDataMapping()) {}
+        public DigitalPortalLanguageQueryService(IAmitalCloudContext context) : this(new Repository<POCO.DigitalPortalLanguage>(context)) {}
+		public DigitalPortalLanguageQueryService(IRepository<POCO.DigitalPortalLanguage> repository) : base(repository,  new DigitalPortalLanguageDataMapping()) { }
 		public  DigitalPortalLanguagePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new DigitalPortalLanguageKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DigitalPortalLanguage,string> GetKeys(POCO.DigitalPortalLanguage entityPOCO) => new DigitalPortalLanguageKeys<string>() { Code = entityPOCO.Code,  };
    }

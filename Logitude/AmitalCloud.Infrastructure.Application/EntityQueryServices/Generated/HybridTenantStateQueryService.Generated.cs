@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class HybridTenantStateQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.HybridTenantState,HybridTenantStateKeys<int>,HybridTenantStatePM,HybridTenantStateList,int>
    {
         public HybridTenantStateQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public HybridTenantStateQueryService(IAmitalCloudContext context) : base(new Repository<POCO.HybridTenantState>(context),new HybridTenantStateDataMapping()) {}
+        public HybridTenantStateQueryService(IAmitalCloudContext context) : this(new Repository<POCO.HybridTenantState>(context)) {}
+		public HybridTenantStateQueryService(IRepository<POCO.HybridTenantState> repository) : base(repository,  new HybridTenantStateDataMapping()) { }
 		public  HybridTenantStatePM GetSingle(int tenant,bool getComposition, bool getFromCache) => base.GetSingle(new HybridTenantStateKeys<int>(){ Tenant = tenant }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.HybridTenantState,int> GetKeys(POCO.HybridTenantState entityPOCO) => new HybridTenantStateKeys<int>() { Tenant = entityPOCO.Tenant,  };
    }

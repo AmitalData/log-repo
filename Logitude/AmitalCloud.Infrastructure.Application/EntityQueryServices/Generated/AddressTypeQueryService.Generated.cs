@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class AddressTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.AddressType,AddressTypeKeys<string>,AddressTypePM,AddressTypeList,string>
    {
         public AddressTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public AddressTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.AddressType>(context),new AddressTypeDataMapping()) {}
+        public AddressTypeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.AddressType>(context)) {}
+		public AddressTypeQueryService(IRepository<POCO.AddressType> repository) : base(repository,  new AddressTypeDataMapping()) { }
 		public  AddressTypePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new AddressTypeKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AddressType,string> GetKeys(POCO.AddressType entityPOCO) => new AddressTypeKeys<string>() { Id = entityPOCO.Id,  };
    }

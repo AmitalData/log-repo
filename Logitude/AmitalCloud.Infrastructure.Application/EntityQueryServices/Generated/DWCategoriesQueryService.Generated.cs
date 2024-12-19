@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class DWCategoriesQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DWCategories,DWCategoriesKeys<string>,DWCategoriesPM,DWCategoriesList,string>
    {
         public DWCategoriesQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public DWCategoriesQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DWCategories>(context),new DWCategoriesDataMapping()) {}
+        public DWCategoriesQueryService(IAmitalCloudContext context) : this(new Repository<POCO.DWCategories>(context)) {}
+		public DWCategoriesQueryService(IRepository<POCO.DWCategories> repository) : base(repository,  new DWCategoriesDataMapping()) { }
 		public  DWCategoriesPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new DWCategoriesKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DWCategories,string> GetKeys(POCO.DWCategories entityPOCO) => new DWCategoriesKeys<string>() { Code = entityPOCO.Code,  };
    }

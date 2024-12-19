@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class PostalCodeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.PostalCode,PostalCodeKeys<string>,PostalCodePM,PostalCodeList,string>
    {
         public PostalCodeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public PostalCodeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.PostalCode>(context),new PostalCodeDataMapping()) {}
+        public PostalCodeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.PostalCode>(context)) {}
+		public PostalCodeQueryService(IRepository<POCO.PostalCode> repository) : base(repository,  new PostalCodeDataMapping()) { }
 		public  PostalCodePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new PostalCodeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.PostalCode,string> GetKeys(POCO.PostalCode entityPOCO) => new PostalCodeKeys<string>() { Code = entityPOCO.Code,  };
    }

@@ -78,6 +78,7 @@
     <Content Include="ElasticDemoModel\ReadMe-ElasticObject.cs.txt" />
     <None Include="EntityFiles\Account.lxml" />
     <None Include="EntityFiles\AccountType.lxml" />
+    <None Include="EntityFiles\FollowUp.lxml" />
     <None Include="EntityFiles\GlobalModel\AnalyzeQueue.lxml">
       <SubType>Designer</SubType>
     </None>

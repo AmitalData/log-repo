@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class DocumentsFilingQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DocumentsFiling,DocumentsFilingKeys<string>,DocumentsFilingPM,DocumentsFilingList,string>
    {
         public DocumentsFilingQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public DocumentsFilingQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DocumentsFiling>(context),new DocumentsFilingDataMapping()) {}
+        public DocumentsFilingQueryService(IAmitalCloudContext context) : this(new Repository<POCO.DocumentsFiling>(context)) {}
+		public DocumentsFilingQueryService(IRepository<POCO.DocumentsFiling> repository) : base(repository,  new DocumentsFilingDataMapping()) { }
 		public  DocumentsFilingPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DocumentsFilingKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DocumentsFiling,string> GetKeys(POCO.DocumentsFiling entityPOCO) => new DocumentsFilingKeys<string>() { Id = entityPOCO.Id,  };
    }

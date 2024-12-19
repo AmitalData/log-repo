@@ -134,5 +134,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	 }
+
+        public DateTime CreateDate { get; set; }
+        public string CreatedByUserId { get; set; }
+    }
 }

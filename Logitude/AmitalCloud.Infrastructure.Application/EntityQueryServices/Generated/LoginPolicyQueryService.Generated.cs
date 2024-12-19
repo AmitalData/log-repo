@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class LoginPolicyQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.LoginPolicy,LoginPolicyKeys<string>,LoginPolicyPM,LoginPolicyList,string>
    {
         public LoginPolicyQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public LoginPolicyQueryService(IAmitalCloudContext context) : base(new Repository<POCO.LoginPolicy>(context),new LoginPolicyDataMapping()) {}
+        public LoginPolicyQueryService(IAmitalCloudContext context) : this(new Repository<POCO.LoginPolicy>(context)) {}
+		public LoginPolicyQueryService(IRepository<POCO.LoginPolicy> repository) : base(repository,  new LoginPolicyDataMapping()) { }
 		public  LoginPolicyPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new LoginPolicyKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.LoginPolicy,string> GetKeys(POCO.LoginPolicy entityPOCO) => new LoginPolicyKeys<string>() { Code = entityPOCO.Code,  };
    }

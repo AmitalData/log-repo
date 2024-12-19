@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class TabModificationQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.TabModification,TabModificationKeys<string>,TabModificationPM,TabModificationList,string>
    {
         public TabModificationQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public TabModificationQueryService(IAmitalCloudContext context) : base(new Repository<POCO.TabModification>(context),new TabModificationDataMapping()) {}
+        public TabModificationQueryService(IAmitalCloudContext context) : this(new Repository<POCO.TabModification>(context)) {}
+		public TabModificationQueryService(IRepository<POCO.TabModification> repository) : base(repository,  new TabModificationDataMapping()) { }
 		public  TabModificationPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new TabModificationKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.TabModification,string> GetKeys(POCO.TabModification entityPOCO) => new TabModificationKeys<string>() { Id = entityPOCO.Id,  };
    }

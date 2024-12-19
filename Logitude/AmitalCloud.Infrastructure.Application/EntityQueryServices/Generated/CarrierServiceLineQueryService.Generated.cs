@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CarrierServiceLineQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CarrierServiceLine,CarrierServiceLineKeys<string>,CarrierServiceLinePM,CarrierServiceLineList,string>
    {
         public CarrierServiceLineQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CarrierServiceLineQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CarrierServiceLine>(context),new CarrierServiceLineDataMapping()) {}
+        public CarrierServiceLineQueryService(IAmitalCloudContext context) : this(new Repository<POCO.CarrierServiceLine>(context)) {}
+		public CarrierServiceLineQueryService(IRepository<POCO.CarrierServiceLine> repository) : base(repository,  new CarrierServiceLineDataMapping()) { }
 		public  CarrierServiceLinePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CarrierServiceLineKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CarrierServiceLine,string> GetKeys(POCO.CarrierServiceLine entityPOCO) => new CarrierServiceLineKeys<string>() { Id = entityPOCO.Id,  };
    }

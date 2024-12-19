@@ -1911,10 +1911,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _defaultAdditionalTreeFilters ;
+	  private QueryFilterItem _defaultAdditionalTreeFilters ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string DefaultAdditionalTreeFilters  
+       public QueryFilterItem DefaultAdditionalTreeFilters  
 	   {
 	     get { return _defaultAdditionalTreeFilters; }
 		 set

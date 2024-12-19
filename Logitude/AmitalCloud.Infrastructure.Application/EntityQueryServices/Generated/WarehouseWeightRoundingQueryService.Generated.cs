@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class WarehouseWeightRoundingQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.WarehouseWeightRounding,WarehouseWeightRoundingKeys<string>,WarehouseWeightRoundingPM,WarehouseWeightRoundingList,string>
    {
         public WarehouseWeightRoundingQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public WarehouseWeightRoundingQueryService(IAmitalCloudContext context) : base(new Repository<POCO.WarehouseWeightRounding>(context),new WarehouseWeightRoundingDataMapping()) {}
+        public WarehouseWeightRoundingQueryService(IAmitalCloudContext context) : this(new Repository<POCO.WarehouseWeightRounding>(context)) {}
+		public WarehouseWeightRoundingQueryService(IRepository<POCO.WarehouseWeightRounding> repository) : base(repository,  new WarehouseWeightRoundingDataMapping()) { }
 		public  WarehouseWeightRoundingPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new WarehouseWeightRoundingKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.WarehouseWeightRounding,string> GetKeys(POCO.WarehouseWeightRounding entityPOCO) => new WarehouseWeightRoundingKeys<string>() { Code = entityPOCO.Code,  };
    }

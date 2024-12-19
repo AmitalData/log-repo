@@ -12,21 +12,17 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     {
         UserLoginLogRepository repository;
 
-        public UserLoginLogQuery()
+        public UserLoginLogQuery() : this(0)
         {
-            repository = new UserLoginLogRepository(); 
         }
 
-        public UserLoginLogQuery(int tenant)
+        public UserLoginLogQuery(int tenant) : this(new UserLoginLogRepository(tenant))
         {
-            repository = new UserLoginLogRepository(tenant);
         }
-
         public UserLoginLogQuery(UserLoginLogRepository repository)
         {
             this.repository = repository;
         }
-
         public UserLoginLogPM GetSinglePM(string id, int tenant)
         {
             string entityName = "UserLoginLogPM" + id + tenant;

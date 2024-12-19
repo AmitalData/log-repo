@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class TruckerQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Trucker,TruckerKeys<string>,TruckerPM,TruckerList,string>
    {
         public TruckerQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public TruckerQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Trucker>(context),new TruckerDataMapping()) {}
+        public TruckerQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Trucker>(context)) {}
+		public TruckerQueryService(IRepository<POCO.Trucker> repository) : base(repository,  new TruckerDataMapping()) { }
 		public  TruckerPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new TruckerKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Trucker,string> GetKeys(POCO.Trucker entityPOCO) => new TruckerKeys<string>() { Id = entityPOCO.Id,  };
    }

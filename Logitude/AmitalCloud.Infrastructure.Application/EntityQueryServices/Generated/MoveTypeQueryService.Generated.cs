@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class MoveTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.MoveType,MoveTypeKeys<string>,MoveTypePM,MoveTypeList,string>
    {
         public MoveTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public MoveTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.MoveType>(context),new MoveTypeDataMapping()) {}
+        public MoveTypeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.MoveType>(context)) {}
+		public MoveTypeQueryService(IRepository<POCO.MoveType> repository) : base(repository,  new MoveTypeDataMapping()) { }
 		public  MoveTypePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new MoveTypeKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.MoveType,string> GetKeys(POCO.MoveType entityPOCO) => new MoveTypeKeys<string>() { Id = entityPOCO.Id,  };
    }

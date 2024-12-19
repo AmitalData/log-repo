@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class TariffCarrierTranslationQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.TariffCarrierTranslation,TariffCarrierTranslationKeys<string>,TariffCarrierTranslationPM,TariffCarrierTranslationList,string>
    {
         public TariffCarrierTranslationQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public TariffCarrierTranslationQueryService(IAmitalCloudContext context) : base(new Repository<POCO.TariffCarrierTranslation>(context),new TariffCarrierTranslationDataMapping()) {}
+        public TariffCarrierTranslationQueryService(IAmitalCloudContext context) : this(new Repository<POCO.TariffCarrierTranslation>(context)) {}
+		public TariffCarrierTranslationQueryService(IRepository<POCO.TariffCarrierTranslation> repository) : base(repository,  new TariffCarrierTranslationDataMapping()) { }
 		public  TariffCarrierTranslationPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new TariffCarrierTranslationKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.TariffCarrierTranslation,string> GetKeys(POCO.TariffCarrierTranslation entityPOCO) => new TariffCarrierTranslationKeys<string>() { Id = entityPOCO.Id,  };
    }

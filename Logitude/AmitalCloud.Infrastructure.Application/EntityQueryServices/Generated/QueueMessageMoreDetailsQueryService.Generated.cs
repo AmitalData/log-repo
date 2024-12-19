@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class QueueMessageMoreDetailsQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.QueueMessageMoreDetails,QueueMessageMoreDetailsKeys<string>,QueueMessageMoreDetailsPM,QueueMessageMoreDetailsList,string>
    {
         public QueueMessageMoreDetailsQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public QueueMessageMoreDetailsQueryService(IAmitalCloudContext context) : base(new Repository<POCO.QueueMessageMoreDetails>(context),new QueueMessageMoreDetailsDataMapping()) {}
+        public QueueMessageMoreDetailsQueryService(IAmitalCloudContext context) : this(new Repository<POCO.QueueMessageMoreDetails>(context)) {}
+		public QueueMessageMoreDetailsQueryService(IRepository<POCO.QueueMessageMoreDetails> repository) : base(repository,  new QueueMessageMoreDetailsDataMapping()) { }
 		public  QueueMessageMoreDetailsPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new QueueMessageMoreDetailsKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.QueueMessageMoreDetails,string> GetKeys(POCO.QueueMessageMoreDetails entityPOCO) => new QueueMessageMoreDetailsKeys<string>() { Id = entityPOCO.Id,  };
    }

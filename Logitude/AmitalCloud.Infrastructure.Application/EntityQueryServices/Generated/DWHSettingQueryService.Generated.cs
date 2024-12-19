@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class DWHSettingQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DWHSetting,DWHSettingKeys<int>,DWHSettingPM,DWHSettingList,int>
    {
         public DWHSettingQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public DWHSettingQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DWHSetting>(context),new DWHSettingDataMapping()) {}
+        public DWHSettingQueryService(IAmitalCloudContext context) : this(new Repository<POCO.DWHSetting>(context)) {}
+		public DWHSettingQueryService(IRepository<POCO.DWHSetting> repository) : base(repository,  new DWHSettingDataMapping()) { }
 		public  DWHSettingPM GetSingle(int tenant,bool getComposition, bool getFromCache) => base.GetSingle(new DWHSettingKeys<int>(){ Tenant = tenant }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DWHSetting,int> GetKeys(POCO.DWHSetting entityPOCO) => new DWHSettingKeys<int>() { Tenant = entityPOCO.Tenant,  };
    }

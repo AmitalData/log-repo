@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class AdditionalServiceQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.AdditionalService,AdditionalServiceKeys<string>,AdditionalServicePM,AdditionalServiceList,string>
    {
         public AdditionalServiceQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public AdditionalServiceQueryService(IAmitalCloudContext context) : base(new Repository<POCO.AdditionalService>(context),new AdditionalServiceDataMapping()) {}
+        public AdditionalServiceQueryService(IAmitalCloudContext context) : this(new Repository<POCO.AdditionalService>(context)) {}
+		public AdditionalServiceQueryService(IRepository<POCO.AdditionalService> repository) : base(repository,  new AdditionalServiceDataMapping()) { }
 		public  AdditionalServicePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new AdditionalServiceKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AdditionalService,string> GetKeys(POCO.AdditionalService entityPOCO) => new AdditionalServiceKeys<string>() { Id = entityPOCO.Id,  };
    }

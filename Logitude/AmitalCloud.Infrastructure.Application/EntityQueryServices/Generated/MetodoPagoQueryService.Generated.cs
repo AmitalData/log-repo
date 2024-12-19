@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class MetodoPagoQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.MetodoPago,MetodoPagoKeys<string>,MetodoPagoPM,MetodoPagoList,string>
    {
         public MetodoPagoQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public MetodoPagoQueryService(IAmitalCloudContext context) : base(new Repository<POCO.MetodoPago>(context),new MetodoPagoDataMapping()) {}
+        public MetodoPagoQueryService(IAmitalCloudContext context) : this(new Repository<POCO.MetodoPago>(context)) {}
+		public MetodoPagoQueryService(IRepository<POCO.MetodoPago> repository) : base(repository,  new MetodoPagoDataMapping()) { }
 		public  MetodoPagoPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new MetodoPagoKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.MetodoPago,string> GetKeys(POCO.MetodoPago entityPOCO) => new MetodoPagoKeys<string>() { Code = entityPOCO.Code,  };
    }

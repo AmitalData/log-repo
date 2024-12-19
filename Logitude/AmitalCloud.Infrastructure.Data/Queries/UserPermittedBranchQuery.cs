@@ -1,21 +1,20 @@
 ﻿using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using System.Linq;
-using System.Data.Entity;
+using AmitalCloud.Infrastructure.Data.Helpers;
+
 namespace AmitalCloud.Infrastructure.Data.Queries
 {
     public class UserPermittedBranchQuery
     {
          UserPermittedBranchRepository repository;
 
-        public UserPermittedBranchQuery()
+        public UserPermittedBranchQuery() : this(0)
         {
-            repository = new UserPermittedBranchRepository(); 
         }
-
-        public UserPermittedBranchQuery(int tenant)
+ 
+        public UserPermittedBranchQuery(int tenant) : this(new UserPermittedBranchRepository(tenant))
         {
-            repository = new UserPermittedBranchRepository(tenant);
         }
 
         public UserPermittedBranchQuery(UserPermittedBranchRepository UserPermittedBranchRepository)

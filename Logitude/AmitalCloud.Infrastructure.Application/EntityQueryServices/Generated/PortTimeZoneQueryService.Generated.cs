@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class PortTimeZoneQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.PortTimeZone,PortTimeZoneKeys<string>,PortTimeZonePM,PortTimeZoneList,string>
    {
         public PortTimeZoneQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public PortTimeZoneQueryService(IAmitalCloudContext context) : base(new Repository<POCO.PortTimeZone>(context),new PortTimeZoneDataMapping()) {}
+        public PortTimeZoneQueryService(IAmitalCloudContext context) : this(new Repository<POCO.PortTimeZone>(context)) {}
+		public PortTimeZoneQueryService(IRepository<POCO.PortTimeZone> repository) : base(repository,  new PortTimeZoneDataMapping()) { }
 		public  PortTimeZonePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new PortTimeZoneKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.PortTimeZone,string> GetKeys(POCO.PortTimeZone entityPOCO) => new PortTimeZoneKeys<string>() { Code = entityPOCO.Code,  };
    }

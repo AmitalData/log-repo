@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CustomerQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Customer,CustomerKeys<string>,CustomerPM,CustomerList,string>
    {
         public CustomerQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CustomerQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Customer>(context),new CustomerDataMapping()) {}
+        public CustomerQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Customer>(context)) {}
+		public CustomerQueryService(IRepository<POCO.Customer> repository) : base(repository,  new CustomerDataMapping()) { }
 		public  CustomerPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CustomerKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Customer,string> GetKeys(POCO.Customer entityPOCO) => new CustomerKeys<string>() { Id = entityPOCO.Id,  };
    }

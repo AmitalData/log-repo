@@ -2037,5 +2037,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	 }
+
+        public string SATForeignRFC { get; set; }
+        public string MetodoPagoCode { get; set; }
+    }
 }

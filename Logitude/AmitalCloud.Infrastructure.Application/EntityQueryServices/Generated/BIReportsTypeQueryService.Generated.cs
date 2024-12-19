@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class BIReportsTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.BIReportsType,BIReportsTypeKeys<string>,BIReportsTypePM,BIReportsTypeList,string>
    {
         public BIReportsTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public BIReportsTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.BIReportsType>(context),new BIReportsTypeDataMapping()) {}
+        public BIReportsTypeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.BIReportsType>(context)) {}
+		public BIReportsTypeQueryService(IRepository<POCO.BIReportsType> repository) : base(repository,  new BIReportsTypeDataMapping()) { }
 		public  BIReportsTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new BIReportsTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.BIReportsType,string> GetKeys(POCO.BIReportsType entityPOCO) => new BIReportsTypeKeys<string>() { Code = entityPOCO.Code,  };
    }

@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class HorseQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Horse,HorseKeys<string>,HorsePM,HorseList,string>
    {
         public HorseQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public HorseQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Horse>(context),new HorseDataMapping()) {}
+        public HorseQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Horse>(context)) {}
+		public HorseQueryService(IRepository<POCO.Horse> repository) : base(repository,  new HorseDataMapping()) { }
 		public  HorsePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new HorseKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Horse,string> GetKeys(POCO.Horse entityPOCO) => new HorseKeys<string>() { Id = entityPOCO.Id,  };
    }

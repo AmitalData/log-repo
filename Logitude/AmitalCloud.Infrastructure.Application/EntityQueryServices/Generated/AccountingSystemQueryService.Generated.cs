@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class AccountingSystemQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.AccountingSystem,AccountingSystemKeys<string>,AccountingSystemPM,AccountingSystemList,string>
    {
         public AccountingSystemQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public AccountingSystemQueryService(IAmitalCloudContext context) : base(new Repository<POCO.AccountingSystem>(context),new AccountingSystemDataMapping()) {}
+        public AccountingSystemQueryService(IAmitalCloudContext context) : this(new Repository<POCO.AccountingSystem>(context)) {}
+		public AccountingSystemQueryService(IRepository<POCO.AccountingSystem> repository) : base(repository,  new AccountingSystemDataMapping()) { }
 		public  AccountingSystemPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new AccountingSystemKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AccountingSystem,string> GetKeys(POCO.AccountingSystem entityPOCO) => new AccountingSystemKeys<string>() { Code = entityPOCO.Code,  };
    }

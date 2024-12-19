@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class DataCustomObjectQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DataCustomObject,DataCustomObjectKeys<string>,DataCustomObjectPM,DataCustomObjectList,string>
    {
         public DataCustomObjectQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public DataCustomObjectQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DataCustomObject>(context),new DataCustomObjectDataMapping()) {}
+        public DataCustomObjectQueryService(IAmitalCloudContext context) : this(new Repository<POCO.DataCustomObject>(context)) {}
+		public DataCustomObjectQueryService(IRepository<POCO.DataCustomObject> repository) : base(repository,  new DataCustomObjectDataMapping()) { }
 		public  DataCustomObjectPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DataCustomObjectKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DataCustomObject,string> GetKeys(POCO.DataCustomObject entityPOCO) => new DataCustomObjectKeys<string>() { Id = entityPOCO.Id,  };
    }

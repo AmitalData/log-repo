@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class DocumentTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DocumentType,DocumentTypeKeys<string>,DocumentTypePM,DocumentTypeList,string>
    {
         public DocumentTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public DocumentTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DocumentType>(context),new DocumentTypeDataMapping()) {}
+        public DocumentTypeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.DocumentType>(context)) {}
+		public DocumentTypeQueryService(IRepository<POCO.DocumentType> repository) : base(repository,  new DocumentTypeDataMapping()) { }
 		public  DocumentTypePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DocumentTypeKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DocumentType,string> GetKeys(POCO.DocumentType entityPOCO) => new DocumentTypeKeys<string>() { Id = entityPOCO.Id,  };
    }

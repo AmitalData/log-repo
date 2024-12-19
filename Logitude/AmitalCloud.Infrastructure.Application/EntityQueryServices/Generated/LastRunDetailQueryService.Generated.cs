@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class LastRunDetailQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.LastRunDetail,LastRunDetailKeys<string>,LastRunDetailPM,LastRunDetailList,string>
    {
         public LastRunDetailQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public LastRunDetailQueryService(IAmitalCloudContext context) : base(new Repository<POCO.LastRunDetail>(context),new LastRunDetailDataMapping()) {}
+        public LastRunDetailQueryService(IAmitalCloudContext context) : this(new Repository<POCO.LastRunDetail>(context)) {}
+		public LastRunDetailQueryService(IRepository<POCO.LastRunDetail> repository) : base(repository,  new LastRunDetailDataMapping()) { }
 		public  LastRunDetailPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new LastRunDetailKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.LastRunDetail,string> GetKeys(POCO.LastRunDetail entityPOCO) => new LastRunDetailKeys<string>() { Id = entityPOCO.Id,  };
    }

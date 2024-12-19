@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class UnassignedEntityQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.UnassignedEntity,UnassignedEntityKeys<string>,UnassignedEntityPM,UnassignedEntityList,string>
    {
         public UnassignedEntityQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public UnassignedEntityQueryService(IAmitalCloudContext context) : base(new Repository<POCO.UnassignedEntity>(context),new UnassignedEntityDataMapping()) {}
+        public UnassignedEntityQueryService(IAmitalCloudContext context) : this(new Repository<POCO.UnassignedEntity>(context)) {}
+		public UnassignedEntityQueryService(IRepository<POCO.UnassignedEntity> repository) : base(repository,  new UnassignedEntityDataMapping()) { }
 		public  UnassignedEntityPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new UnassignedEntityKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.UnassignedEntity,string> GetKeys(POCO.UnassignedEntity entityPOCO) => new UnassignedEntityKeys<string>() { Id = entityPOCO.Id,  };
    }

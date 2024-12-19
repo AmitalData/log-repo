@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class ShippingAgentQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ShippingAgent,ShippingAgentKeys<string>,ShippingAgentPM,ShippingAgentList,string>
    {
         public ShippingAgentQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public ShippingAgentQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ShippingAgent>(context),new ShippingAgentDataMapping()) {}
+        public ShippingAgentQueryService(IAmitalCloudContext context) : this(new Repository<POCO.ShippingAgent>(context)) {}
+		public ShippingAgentQueryService(IRepository<POCO.ShippingAgent> repository) : base(repository,  new ShippingAgentDataMapping()) { }
 		public  ShippingAgentPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ShippingAgentKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ShippingAgent,string> GetKeys(POCO.ShippingAgent entityPOCO) => new ShippingAgentKeys<string>() { Id = entityPOCO.Id,  };
    }

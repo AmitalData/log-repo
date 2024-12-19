@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class MultiEntityUpdateLogQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.MultiEntityUpdateLog,MultiEntityUpdateLogKeys<string>,MultiEntityUpdateLogPM,MultiEntityUpdateLogList,string>
    {
         public MultiEntityUpdateLogQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public MultiEntityUpdateLogQueryService(IAmitalCloudContext context) : base(new Repository<POCO.MultiEntityUpdateLog>(context),new MultiEntityUpdateLogDataMapping()) {}
+        public MultiEntityUpdateLogQueryService(IAmitalCloudContext context) : this(new Repository<POCO.MultiEntityUpdateLog>(context)) {}
+		public MultiEntityUpdateLogQueryService(IRepository<POCO.MultiEntityUpdateLog> repository) : base(repository,  new MultiEntityUpdateLogDataMapping()) { }
 		public  MultiEntityUpdateLogPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new MultiEntityUpdateLogKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.MultiEntityUpdateLog,string> GetKeys(POCO.MultiEntityUpdateLog entityPOCO) => new MultiEntityUpdateLogKeys<string>() { Id = entityPOCO.Id,  };
    }

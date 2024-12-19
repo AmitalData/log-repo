@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class BatchTaskExecutionStatusQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.BatchTaskExecutionStatus,BatchTaskExecutionStatusKeys<string>,BatchTaskExecutionStatusPM,BatchTaskExecutionStatusList,string>
    {
         public BatchTaskExecutionStatusQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public BatchTaskExecutionStatusQueryService(IAmitalCloudContext context) : base(new Repository<POCO.BatchTaskExecutionStatus>(context),new BatchTaskExecutionStatusDataMapping()) {}
+        public BatchTaskExecutionStatusQueryService(IAmitalCloudContext context) : this(new Repository<POCO.BatchTaskExecutionStatus>(context)) {}
+		public BatchTaskExecutionStatusQueryService(IRepository<POCO.BatchTaskExecutionStatus> repository) : base(repository,  new BatchTaskExecutionStatusDataMapping()) { }
 		public  BatchTaskExecutionStatusPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new BatchTaskExecutionStatusKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.BatchTaskExecutionStatus,string> GetKeys(POCO.BatchTaskExecutionStatus entityPOCO) => new BatchTaskExecutionStatusKeys<string>() { Code = entityPOCO.Code,  };
    }

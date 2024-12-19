@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class RankQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Rank,RankKeys<string>,RankPM,RankList,string>
    {
         public RankQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public RankQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Rank>(context),new RankDataMapping()) {}
+        public RankQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Rank>(context)) {}
+		public RankQueryService(IRepository<POCO.Rank> repository) : base(repository,  new RankDataMapping()) { }
 		public  RankPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new RankKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Rank,string> GetKeys(POCO.Rank entityPOCO) => new RankKeys<string>() { Id = entityPOCO.Id,  };
    }

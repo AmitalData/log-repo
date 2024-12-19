@@ -9,7 +9,7 @@ using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using System.Data.Entity;
+
 using System.Linq.Expressions;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 namespace AmitalCloud.Infrastructure.Data.Queries
@@ -174,13 +174,13 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         //public ContactPM GetSingleContactByExternalId(string externalId, int tenant) => GetEntityPMWithPassword(tenant, a => a.ExternalId == externalId && a.Tenant == tenant); 
         public ContactPM GetContactByEmailOnly(string email, int tenant) => GetContactPMFromCache(tenant, $"ContactPM_({email}_{tenant})".ToLower(), a => a.Email == email && a.InActive == false && a.Tenant == tenant);
         //public ContactPM GetContactById(string id, int tenant) => GetContactPMFromCache(tenant, $"ContactPM_({id}_{tenant})".ToLower(), a => a.Id == id && a.Tenant == tenant && a.InActive ==false); 
-        //public ContactPM GetContactByNameAndTenant(string name, int tenant, bool getFromCache)
-        //{
-        //    string cacheKey = $"ContactPM_({name}_{tenant})".ToLower();
-        //    return getFromCache
-        //        ? GetContactPMFromCache(tenant, cacheKey, a => a.Email == name.ToLower() && a.Tenant == tenant)
-        //        : GetEntityPMWithPassword(tenant, a => a.Email == name.ToLower() && a.Tenant == tenant || a.Tenant == 0);
-        //}
+        public ContactPM GetContactByNameAndTenant(string name, int tenant, bool getFromCache)
+        {
+            string cacheKey = $"ContactPM_({name}_{tenant})".ToLower();
+            return getFromCache
+                ? GetContactPMFromCache(tenant, cacheKey, a => a.Email == name.ToLower() && a.Tenant == tenant)
+                : GetEntityPMWithPassword(tenant, a => a.Email == name.ToLower() && a.Tenant == tenant || a.Tenant == 0);
+        }
         //public ContactPM GetContactByEmailOnlyForLogin(string email, int tenant) => GetContactByEmailOnly(email, tenant);
         //public ContactPM GetSingleContactPM(string id) => GetEntityPMWithPassword(0, a => a.Id == id);
         //public ContactPM GetFirstContactByEnglishNamePM(string Name, int tenant) => GetContactPMQuery().Where(a => a.EnglishName == Name && a.Tenant == tenant).FirstOrDefault();   

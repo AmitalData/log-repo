@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class INTTRASettingQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.INTTRASetting,INTTRASettingKeys<string>,INTTRASettingPM,INTTRASettingList,string>
    {
         public INTTRASettingQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public INTTRASettingQueryService(IAmitalCloudContext context) : base(new Repository<POCO.INTTRASetting>(context),new INTTRASettingDataMapping()) {}
+        public INTTRASettingQueryService(IAmitalCloudContext context) : this(new Repository<POCO.INTTRASetting>(context)) {}
+		public INTTRASettingQueryService(IRepository<POCO.INTTRASetting> repository) : base(repository,  new INTTRASettingDataMapping()) { }
 		public  INTTRASettingPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new INTTRASettingKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.INTTRASetting,string> GetKeys(POCO.INTTRASetting entityPOCO) => new INTTRASettingKeys<string>() { Id = entityPOCO.Id,  };
    }

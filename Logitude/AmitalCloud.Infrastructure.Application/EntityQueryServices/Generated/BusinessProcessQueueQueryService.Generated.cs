@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class BusinessProcessQueueQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.BusinessProcessQueue,BusinessProcessQueueKeys<string>,BusinessProcessQueuePM,BusinessProcessQueueList,string>
    {
         public BusinessProcessQueueQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public BusinessProcessQueueQueryService(IAmitalCloudContext context) : base(new Repository<POCO.BusinessProcessQueue>(context),new BusinessProcessQueueDataMapping()) {}
+        public BusinessProcessQueueQueryService(IAmitalCloudContext context) : this(new Repository<POCO.BusinessProcessQueue>(context)) {}
+		public BusinessProcessQueueQueryService(IRepository<POCO.BusinessProcessQueue> repository) : base(repository,  new BusinessProcessQueueDataMapping()) { }
 		public  BusinessProcessQueuePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new BusinessProcessQueueKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.BusinessProcessQueue,string> GetKeys(POCO.BusinessProcessQueue entityPOCO) => new BusinessProcessQueueKeys<string>() { Id = entityPOCO.Id,  };
    }

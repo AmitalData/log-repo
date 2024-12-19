@@ -60,5 +60,26 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
             communicationLogStep.IsLogCompress = true;
             return compressText;
         }
+        public static void Append2Log(this CommunicationLog communicationLog, string AppendString2Log)
+        {
+            var sb1 = new StringBuilder(communicationLog.Logs);
+            sb1.AppendLine(AppendString2Log);
+            communicationLog.Logs = sb1.ToString().GetLast((8000 - 1));
+
+        }
+        static string GetLast(this string myString, int maxLength)
+        {
+            myString = myString ?? "";
+            var len = myString.Length;
+            if (len < maxLength)
+            {
+                return myString;
+            }
+            //return _StringBuilder.ToString().Substring(0, maxLength - 1);
+            return myString.Substring(len - maxLength);
+
+        }
+
+
     }
 }

@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class AccountingSettingQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.AccountingSetting,AccountingSettingKeys<int>,AccountingSettingPM,AccountingSettingList,int>
    {
         public AccountingSettingQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public AccountingSettingQueryService(IAmitalCloudContext context) : base(new Repository<POCO.AccountingSetting>(context),new AccountingSettingDataMapping()) {}
+        public AccountingSettingQueryService(IAmitalCloudContext context) : this(new Repository<POCO.AccountingSetting>(context)) {}
+		public AccountingSettingQueryService(IRepository<POCO.AccountingSetting> repository) : base(repository,  new AccountingSettingDataMapping()) { }
 		public  AccountingSettingPM GetSingle(int id,bool getComposition, bool getFromCache) => base.GetSingle(new AccountingSettingKeys<int>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AccountingSetting,int> GetKeys(POCO.AccountingSetting entityPOCO) => new AccountingSettingKeys<int>() { Id = entityPOCO.Id,  };
    }

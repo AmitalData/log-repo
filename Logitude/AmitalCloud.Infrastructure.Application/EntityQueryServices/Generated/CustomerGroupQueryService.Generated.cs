@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CustomerGroupQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomerGroup,CustomerGroupKeys<string>,CustomerGroupPM,CustomerGroupList,string>
    {
         public CustomerGroupQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CustomerGroupQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomerGroup>(context),new CustomerGroupDataMapping()) {}
+        public CustomerGroupQueryService(IAmitalCloudContext context) : this(new Repository<POCO.CustomerGroup>(context)) {}
+		public CustomerGroupQueryService(IRepository<POCO.CustomerGroup> repository) : base(repository,  new CustomerGroupDataMapping()) { }
 		public  CustomerGroupPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CustomerGroupKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomerGroup,string> GetKeys(POCO.CustomerGroup entityPOCO) => new CustomerGroupKeys<string>() { Id = entityPOCO.Id,  };
    }

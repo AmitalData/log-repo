@@ -162,7 +162,7 @@ namespace Simplog.Global.Data.GlobalModel
             modelBuilder.Configurations.Add(new CaptchaKeyMap());
             modelBuilder.Configurations.Add(new InvalidEmailResetPasswordMap());
             modelBuilder.Configurations.Add(new WebhookKeysMap());
-
+            modelBuilder.Configurations.Add(new AuthenticationTokenMap());
             //Was Missing
             modelBuilder.Configurations.Add(new BatchServicesDefinitionMap());
 

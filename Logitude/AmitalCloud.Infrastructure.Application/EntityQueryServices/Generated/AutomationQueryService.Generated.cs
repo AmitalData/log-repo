@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class AutomationQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Automation,AutomationKeys<string>,AutomationPM,AutomationList,string>
    {
         public AutomationQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public AutomationQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Automation>(context),new AutomationDataMapping()) {}
+        public AutomationQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Automation>(context)) {}
+		public AutomationQueryService(IRepository<POCO.Automation> repository) : base(repository,  new AutomationDataMapping()) { }
 		public  AutomationPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new AutomationKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Automation,string> GetKeys(POCO.Automation entityPOCO) => new AutomationKeys<string>() { Id = entityPOCO.Id,  };
    }

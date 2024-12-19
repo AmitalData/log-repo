@@ -3,10 +3,11 @@ using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using System.Collections.Generic;
 using System.Linq;
-using System.Data.Entity;
+
 using System.Runtime.Remoting.Contexts;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Data.Helpers;
 
 namespace AmitalCloud.Infrastructure.Data.Queries
 {

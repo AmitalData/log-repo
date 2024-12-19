@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class IncotermQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Incoterm,IncotermKeys<string>,IncotermPM,IncotermList,string>
    {
         public IncotermQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public IncotermQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Incoterm>(context),new IncotermDataMapping()) {}
+        public IncotermQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Incoterm>(context)) {}
+		public IncotermQueryService(IRepository<POCO.Incoterm> repository) : base(repository,  new IncotermDataMapping()) { }
 		public  IncotermPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new IncotermKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Incoterm,string> GetKeys(POCO.Incoterm entityPOCO) => new IncotermKeys<string>() { Id = entityPOCO.Id,  };
    }

@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class RegionQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Region,RegionKeys<string>,RegionPM,RegionList,string>
    {
         public RegionQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public RegionQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Region>(context),new RegionDataMapping()) {}
+        public RegionQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Region>(context)) {}
+		public RegionQueryService(IRepository<POCO.Region> repository) : base(repository,  new RegionDataMapping()) { }
 		public  RegionPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new RegionKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Region,string> GetKeys(POCO.Region entityPOCO) => new RegionKeys<string>() { Id = entityPOCO.Id,  };
    }

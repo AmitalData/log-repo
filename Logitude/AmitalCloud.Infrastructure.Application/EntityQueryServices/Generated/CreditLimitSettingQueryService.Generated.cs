@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CreditLimitSettingQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CreditLimitSetting,CreditLimitSettingKeys<string>,CreditLimitSettingPM,CreditLimitSettingList,string>
    {
         public CreditLimitSettingQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CreditLimitSettingQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CreditLimitSetting>(context),new CreditLimitSettingDataMapping()) {}
+        public CreditLimitSettingQueryService(IAmitalCloudContext context) : this(new Repository<POCO.CreditLimitSetting>(context)) {}
+		public CreditLimitSettingQueryService(IRepository<POCO.CreditLimitSetting> repository) : base(repository,  new CreditLimitSettingDataMapping()) { }
 		public  CreditLimitSettingPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CreditLimitSettingKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CreditLimitSetting,string> GetKeys(POCO.CreditLimitSetting entityPOCO) => new CreditLimitSettingKeys<string>() { Id = entityPOCO.Id,  };
    }

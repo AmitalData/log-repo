@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class VatFormatTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.VatFormatType,VatFormatTypeKeys<string>,VatFormatTypePM,VatFormatTypeList,string>
    {
         public VatFormatTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public VatFormatTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.VatFormatType>(context),new VatFormatTypeDataMapping()) {}
+        public VatFormatTypeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.VatFormatType>(context)) {}
+		public VatFormatTypeQueryService(IRepository<POCO.VatFormatType> repository) : base(repository,  new VatFormatTypeDataMapping()) { }
 		public  VatFormatTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new VatFormatTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.VatFormatType,string> GetKeys(POCO.VatFormatType entityPOCO) => new VatFormatTypeKeys<string>() { Code = entityPOCO.Code,  };
    }

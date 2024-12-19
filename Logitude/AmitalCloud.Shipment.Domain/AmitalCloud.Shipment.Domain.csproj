@@ -493,6 +493,7 @@
     <Compile Include="EntityPOCOs\SpecialServicesType.cs" />
     <Compile Include="Interfaces\IShipmentClassLevelValidator.cs" />
     <Compile Include="Interfaces\IShipmentContext.cs" />
+    <Compile Include="Interfaces\IShipmentContext_Invoice.cs" />
     <Compile Include="Interfaces\IShipmentDeliveryValidator.cs" />
     <Compile Include="Interfaces\IShipmentValidationClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

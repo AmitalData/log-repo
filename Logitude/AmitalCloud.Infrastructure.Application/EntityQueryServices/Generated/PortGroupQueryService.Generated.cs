@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class PortGroupQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.PortGroup,PortGroupKeys<string>,PortGroupPM,PortGroupList,string>
    {
         public PortGroupQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public PortGroupQueryService(IAmitalCloudContext context) : base(new Repository<POCO.PortGroup>(context),new PortGroupDataMapping()) {}
+        public PortGroupQueryService(IAmitalCloudContext context) : this(new Repository<POCO.PortGroup>(context)) {}
+		public PortGroupQueryService(IRepository<POCO.PortGroup> repository) : base(repository,  new PortGroupDataMapping()) { }
 		public  PortGroupPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new PortGroupKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.PortGroup,string> GetKeys(POCO.PortGroup entityPOCO) => new PortGroupKeys<string>() { Id = entityPOCO.Id,  };
    }

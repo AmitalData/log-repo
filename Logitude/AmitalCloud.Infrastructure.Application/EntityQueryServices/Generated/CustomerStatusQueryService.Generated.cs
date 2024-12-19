@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CustomerStatusQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomerStatus,CustomerStatusKeys<string>,CustomerStatusPM,CustomerStatusList,string>
    {
         public CustomerStatusQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CustomerStatusQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomerStatus>(context),new CustomerStatusDataMapping()) {}
+        public CustomerStatusQueryService(IAmitalCloudContext context) : this(new Repository<POCO.CustomerStatus>(context)) {}
+		public CustomerStatusQueryService(IRepository<POCO.CustomerStatus> repository) : base(repository,  new CustomerStatusDataMapping()) { }
 		public  CustomerStatusPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new CustomerStatusKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomerStatus,string> GetKeys(POCO.CustomerStatus entityPOCO) => new CustomerStatusKeys<string>() { Code = entityPOCO.Code,  };
    }

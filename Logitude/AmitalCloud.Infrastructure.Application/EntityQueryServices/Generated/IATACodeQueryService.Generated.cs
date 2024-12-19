@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class IATACodeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.IATACode,IATACodeKeys<string>,IATACodePM,IATACodeList,string>
    {
         public IATACodeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public IATACodeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.IATACode>(context),new IATACodeDataMapping()) {}
+        public IATACodeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.IATACode>(context)) {}
+		public IATACodeQueryService(IRepository<POCO.IATACode> repository) : base(repository,  new IATACodeDataMapping()) { }
 		public  IATACodePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new IATACodeKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.IATACode,string> GetKeys(POCO.IATACode entityPOCO) => new IATACodeKeys<string>() { Id = entityPOCO.Id,  };
    }

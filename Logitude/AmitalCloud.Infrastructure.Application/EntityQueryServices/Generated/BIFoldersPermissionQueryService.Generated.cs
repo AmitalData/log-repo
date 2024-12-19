@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class BIFoldersPermissionQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.BIFoldersPermission,BIFoldersPermissionKeys<string>,BIFoldersPermissionPM,BIFoldersPermissionList,string>
    {
         public BIFoldersPermissionQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public BIFoldersPermissionQueryService(IAmitalCloudContext context) : base(new Repository<POCO.BIFoldersPermission>(context),new BIFoldersPermissionDataMapping()) {}
+        public BIFoldersPermissionQueryService(IAmitalCloudContext context) : this(new Repository<POCO.BIFoldersPermission>(context)) {}
+		public BIFoldersPermissionQueryService(IRepository<POCO.BIFoldersPermission> repository) : base(repository,  new BIFoldersPermissionDataMapping()) { }
 		public  BIFoldersPermissionPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new BIFoldersPermissionKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.BIFoldersPermission,string> GetKeys(POCO.BIFoldersPermission entityPOCO) => new BIFoldersPermissionKeys<string>() { Id = entityPOCO.Id,  };
    }

@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class VolumeUnitQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.VolumeUnit,VolumeUnitKeys<string>,VolumeUnitPM,VolumeUnitList,string>
    {
         public VolumeUnitQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public VolumeUnitQueryService(IAmitalCloudContext context) : base(new Repository<POCO.VolumeUnit>(context),new VolumeUnitDataMapping()) {}
+        public VolumeUnitQueryService(IAmitalCloudContext context) : this(new Repository<POCO.VolumeUnit>(context)) {}
+		public VolumeUnitQueryService(IRepository<POCO.VolumeUnit> repository) : base(repository,  new VolumeUnitDataMapping()) { }
 		public  VolumeUnitPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new VolumeUnitKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.VolumeUnit,string> GetKeys(POCO.VolumeUnit entityPOCO) => new VolumeUnitKeys<string>() { Code = entityPOCO.Code,  };
    }

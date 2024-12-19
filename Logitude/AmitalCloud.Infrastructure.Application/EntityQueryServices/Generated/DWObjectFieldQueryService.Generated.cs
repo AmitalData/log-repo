@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class DWObjectFieldQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DWObjectField,DWObjectFieldKeys<string>,DWObjectFieldPM,DWObjectFieldList,string>
    {
         public DWObjectFieldQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public DWObjectFieldQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DWObjectField>(context),new DWObjectFieldDataMapping()) {}
+        public DWObjectFieldQueryService(IAmitalCloudContext context) : this(new Repository<POCO.DWObjectField>(context)) {}
+		public DWObjectFieldQueryService(IRepository<POCO.DWObjectField> repository) : base(repository,  new DWObjectFieldDataMapping()) { }
 		public  DWObjectFieldPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DWObjectFieldKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DWObjectField,string> GetKeys(POCO.DWObjectField entityPOCO) => new DWObjectFieldKeys<string>() { Id = entityPOCO.Id,  };
    }

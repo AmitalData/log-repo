@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class ContainerSettingQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ContainerSetting,ContainerSettingKeys<string>,ContainerSettingPM,ContainerSettingList,string>
    {
         public ContainerSettingQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public ContainerSettingQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ContainerSetting>(context),new ContainerSettingDataMapping()) {}
+        public ContainerSettingQueryService(IAmitalCloudContext context) : this(new Repository<POCO.ContainerSetting>(context)) {}
+		public ContainerSettingQueryService(IRepository<POCO.ContainerSetting> repository) : base(repository,  new ContainerSettingDataMapping()) { }
 		public  ContainerSettingPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ContainerSettingKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ContainerSetting,string> GetKeys(POCO.ContainerSetting entityPOCO) => new ContainerSettingKeys<string>() { Id = entityPOCO.Id,  };
    }

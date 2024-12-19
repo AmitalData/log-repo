@@ -1,7 +1,8 @@
+using System.Data.Entity;
 namespace AmitalCloud.Infrastructure.Data.Migrations
 {
     using System;
-    using System.Data.Entity;
+    
     using System.Data.Entity.Migrations;
     using System.Linq;
 

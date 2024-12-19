@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class TarrifFromToTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.TarrifFromToType,TarrifFromToTypeKeys<string>,TarrifFromToTypePM,TarrifFromToTypeList,string>
    {
         public TarrifFromToTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public TarrifFromToTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.TarrifFromToType>(context),new TarrifFromToTypeDataMapping()) {}
+        public TarrifFromToTypeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.TarrifFromToType>(context)) {}
+		public TarrifFromToTypeQueryService(IRepository<POCO.TarrifFromToType> repository) : base(repository,  new TarrifFromToTypeDataMapping()) { }
 		public  TarrifFromToTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new TarrifFromToTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.TarrifFromToType,string> GetKeys(POCO.TarrifFromToType entityPOCO) => new TarrifFromToTypeKeys<string>() { Code = entityPOCO.Code,  };
    }

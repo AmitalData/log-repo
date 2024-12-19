@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class TextCodeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.TextCode,TextCodeKeys<string>,TextCodePM,TextCodeList,string>
    {
         public TextCodeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public TextCodeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.TextCode>(context),new TextCodeDataMapping()) {}
+        public TextCodeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.TextCode>(context)) {}
+		public TextCodeQueryService(IRepository<POCO.TextCode> repository) : base(repository,  new TextCodeDataMapping()) { }
 		public  TextCodePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new TextCodeKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.TextCode,string> GetKeys(POCO.TextCode entityPOCO) => new TextCodeKeys<string>() { Id = entityPOCO.Id,  };
    }

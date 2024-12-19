@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class BatchTaskExecutionQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.BatchTaskExecution,BatchTaskExecutionKeys<string>,BatchTaskExecutionPM,BatchTaskExecutionList,string>
    {
         public BatchTaskExecutionQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public BatchTaskExecutionQueryService(IAmitalCloudContext context) : base(new Repository<POCO.BatchTaskExecution>(context),new BatchTaskExecutionDataMapping()) {}
+        public BatchTaskExecutionQueryService(IAmitalCloudContext context) : this(new Repository<POCO.BatchTaskExecution>(context)) {}
+		public BatchTaskExecutionQueryService(IRepository<POCO.BatchTaskExecution> repository) : base(repository,  new BatchTaskExecutionDataMapping()) { }
 		public  BatchTaskExecutionPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new BatchTaskExecutionKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.BatchTaskExecution,string> GetKeys(POCO.BatchTaskExecution entityPOCO) => new BatchTaskExecutionKeys<string>() { Id = entityPOCO.Id,  };
    }

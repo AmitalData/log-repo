@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CustomerSizeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomerSize,CustomerSizeKeys<string>,CustomerSizePM,CustomerSizeList,string>
    {
         public CustomerSizeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CustomerSizeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomerSize>(context),new CustomerSizeDataMapping()) {}
+        public CustomerSizeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.CustomerSize>(context)) {}
+		public CustomerSizeQueryService(IRepository<POCO.CustomerSize> repository) : base(repository,  new CustomerSizeDataMapping()) { }
 		public  CustomerSizePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CustomerSizeKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomerSize,string> GetKeys(POCO.CustomerSize entityPOCO) => new CustomerSizeKeys<string>() { Id = entityPOCO.Id,  };
    }

@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class WeightUnitQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.WeightUnit,WeightUnitKeys<string>,WeightUnitPM,WeightUnitList,string>
    {
         public WeightUnitQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public WeightUnitQueryService(IAmitalCloudContext context) : base(new Repository<POCO.WeightUnit>(context),new WeightUnitDataMapping()) {}
+        public WeightUnitQueryService(IAmitalCloudContext context) : this(new Repository<POCO.WeightUnit>(context)) {}
+		public WeightUnitQueryService(IRepository<POCO.WeightUnit> repository) : base(repository,  new WeightUnitDataMapping()) { }
 		public  WeightUnitPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new WeightUnitKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.WeightUnit,string> GetKeys(POCO.WeightUnit entityPOCO) => new WeightUnitKeys<string>() { Code = entityPOCO.Code,  };
    }

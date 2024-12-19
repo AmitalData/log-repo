@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CardExternalCodeByCurrencyQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CardExternalCodeByCurrency,CardExternalCodeByCurrencyKeys<string>,CardExternalCodeByCurrencyPM,CardExternalCodeByCurrencyList,string>
    {
         public CardExternalCodeByCurrencyQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CardExternalCodeByCurrencyQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CardExternalCodeByCurrency>(context),new CardExternalCodeByCurrencyDataMapping()) {}
+        public CardExternalCodeByCurrencyQueryService(IAmitalCloudContext context) : this(new Repository<POCO.CardExternalCodeByCurrency>(context)) {}
+		public CardExternalCodeByCurrencyQueryService(IRepository<POCO.CardExternalCodeByCurrency> repository) : base(repository,  new CardExternalCodeByCurrencyDataMapping()) { }
 		public  CardExternalCodeByCurrencyPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CardExternalCodeByCurrencyKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CardExternalCodeByCurrency,string> GetKeys(POCO.CardExternalCodeByCurrency entityPOCO) => new CardExternalCodeByCurrencyKeys<string>() { Id = entityPOCO.Id,  };
    }

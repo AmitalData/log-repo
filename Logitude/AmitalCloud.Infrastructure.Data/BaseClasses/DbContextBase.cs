@@ -13,10 +13,12 @@ using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Transactions;
 using IsolationLevel = System.Transactions.IsolationLevel;
+using System.Data.Entity;
 namespace AmitalCloud.Infrastructure.Data.BaseClasses
 {
     public abstract class DbContextBase : DbContext
@@ -38,6 +40,20 @@ namespace AmitalCloud.Infrastructure.Data.BaseClasses
             Database.Connection.StateChange += Connection_StateChange;
             InitLog();
         }
+        public DbContextBase(string nameOrConnectionString)
+            : base(nameOrConnectionString)
+        {
+            Database.Connection.StateChange += Connection_StateChange;
+            InitLog();
+        }
+        public DbContextBase(DbConnection existingConnection, bool contextOwnsConnection)
+            : base(existingConnection, contextOwnsConnection)
+        {
+            Database.Connection.StateChange += Connection_StateChange;
+            InitLog();
+        }
+
+
         public override int SaveChanges()
         {
             bool suppressThrow = false;
@@ -178,6 +194,7 @@ namespace AmitalCloud.Infrastructure.Data.BaseClasses
         }
         private void InitLog()
         {
+            this.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
             if (AmitalCloudSettings.DatabaseManagementSystem != "oracle")
             {
                 return;
@@ -230,18 +247,6 @@ namespace AmitalCloud.Infrastructure.Data.BaseClasses
             {
             }
             base.Dispose(disposing);
-        }
-        public DbContextBase(string nameOrConnectionString)
-            : base(nameOrConnectionString)
-        {
-            Database.Connection.StateChange += Connection_StateChange;
-            InitLog();
-        }
-        public DbContextBase(DbConnection existingConnection, bool contextOwnsConnection)
-            : base(existingConnection, contextOwnsConnection)
-        {
-            Database.Connection.StateChange += Connection_StateChange;
-            InitLog();
         }
         private void Connection_StateChange(object sender, StateChangeEventArgs args)
         {

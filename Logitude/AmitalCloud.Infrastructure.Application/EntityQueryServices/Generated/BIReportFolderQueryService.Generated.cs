@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class BIReportFolderQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.BIReportFolder,BIReportFolderKeys<string>,BIReportFolderPM,BIReportFolderList,string>
    {
         public BIReportFolderQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public BIReportFolderQueryService(IAmitalCloudContext context) : base(new Repository<POCO.BIReportFolder>(context),new BIReportFolderDataMapping()) {}
+        public BIReportFolderQueryService(IAmitalCloudContext context) : this(new Repository<POCO.BIReportFolder>(context)) {}
+		public BIReportFolderQueryService(IRepository<POCO.BIReportFolder> repository) : base(repository,  new BIReportFolderDataMapping()) { }
 		public  BIReportFolderPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new BIReportFolderKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.BIReportFolder,string> GetKeys(POCO.BIReportFolder entityPOCO) => new BIReportFolderKeys<string>() { Id = entityPOCO.Id,  };
    }

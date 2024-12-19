@@ -13,20 +13,19 @@ namespace Simplog.Data.CommonDataModel.Repositories
 {
     public class AuthenticationTokenRepository : IRepository<AuthenticationToken>
     {
-        IGlobalContext commonDataContext;
+        IGlobalContext currentContext;
         public AuthenticationTokenRepository(IGlobalContext context)
         {
-            commonDataContext = context;
+            currentContext = context;
         }
 
-        public AuthenticationTokenRepository()
+        public AuthenticationTokenRepository() : this(0)
         {
-            commonDataContext=new GlobalContext();
         }
 
         public AuthenticationTokenRepository(int tenant)
         {
-            commonDataContext = GlobalContext.GetContext(tenant);
+            currentContext = GlobalContext.GetContext(tenant);
         }
         
         public void Add(AuthenticationToken entity)
@@ -63,7 +62,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public IGlobalContext context
         {
-            get { return commonDataContext; }
+            get { return currentContext; }
         }
 
         public void SubmitChanges()

@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CurrencyQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Currency,CurrencyKeys<string>,CurrencyPM,CurrencyList,string>
    {
         public CurrencyQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CurrencyQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Currency>(context),new CurrencyDataMapping()) {}
+        public CurrencyQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Currency>(context)) {}
+		public CurrencyQueryService(IRepository<POCO.Currency> repository) : base(repository,  new CurrencyDataMapping()) { }
 		public  CurrencyPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CurrencyKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Currency,string> GetKeys(POCO.Currency entityPOCO) => new CurrencyKeys<string>() { Id = entityPOCO.Id,  };
    }

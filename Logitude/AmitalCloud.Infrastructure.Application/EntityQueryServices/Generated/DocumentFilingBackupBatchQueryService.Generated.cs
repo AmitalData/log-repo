@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class DocumentFilingBackupBatchQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DocumentFilingBackupBatch,DocumentFilingBackupBatchKeys<string>,DocumentFilingBackupBatchPM,DocumentFilingBackupBatchList,string>
    {
         public DocumentFilingBackupBatchQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public DocumentFilingBackupBatchQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DocumentFilingBackupBatch>(context),new DocumentFilingBackupBatchDataMapping()) {}
+        public DocumentFilingBackupBatchQueryService(IAmitalCloudContext context) : this(new Repository<POCO.DocumentFilingBackupBatch>(context)) {}
+		public DocumentFilingBackupBatchQueryService(IRepository<POCO.DocumentFilingBackupBatch> repository) : base(repository,  new DocumentFilingBackupBatchDataMapping()) { }
 		public  DocumentFilingBackupBatchPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DocumentFilingBackupBatchKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DocumentFilingBackupBatch,string> GetKeys(POCO.DocumentFilingBackupBatch entityPOCO) => new DocumentFilingBackupBatchKeys<string>() { Id = entityPOCO.Id,  };
    }

@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CustomerProductLocationQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomerProductLocation,CustomerProductLocationKeys<string>,CustomerProductLocationPM,CustomerProductLocationList,string>
    {
         public CustomerProductLocationQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CustomerProductLocationQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomerProductLocation>(context),new CustomerProductLocationDataMapping()) {}
+        public CustomerProductLocationQueryService(IAmitalCloudContext context) : this(new Repository<POCO.CustomerProductLocation>(context)) {}
+		public CustomerProductLocationQueryService(IRepository<POCO.CustomerProductLocation> repository) : base(repository,  new CustomerProductLocationDataMapping()) { }
 		public  CustomerProductLocationPM GetSingle(string customerid, string producttypecode, string countryid,bool getComposition, bool getFromCache) => base.GetSingle(new CustomerProductLocationKeys<string>(){ CustomerId = customerid, ProductTypeCode = producttypecode, CountryId = countryid }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomerProductLocation,string> GetKeys(POCO.CustomerProductLocation entityPOCO) => new CustomerProductLocationKeys<string>() { CustomerId = entityPOCO.CustomerId, ProductTypeCode = entityPOCO.ProductTypeCode, CountryId = entityPOCO.CountryId,  };
    }

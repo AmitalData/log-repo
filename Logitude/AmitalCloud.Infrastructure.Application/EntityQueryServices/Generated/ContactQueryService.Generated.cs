@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class ContactQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Contact,ContactKeys<string>,ContactPM,ContactList,string>
    {
         public ContactQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public ContactQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Contact>(context),new ContactDataMapping()) {}
+        public ContactQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Contact>(context)) {}
+		public ContactQueryService(IRepository<POCO.Contact> repository) : base(repository,  new ContactDataMapping()) { }
 		public  ContactPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ContactKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Contact,string> GetKeys(POCO.Contact entityPOCO) => new ContactKeys<string>() { Id = entityPOCO.Id,  };
    }

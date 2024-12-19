@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class DimensionsUnitQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DimensionsUnit,DimensionsUnitKeys<string>,DimensionsUnitPM,DimensionsUnitList,string>
    {
         public DimensionsUnitQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public DimensionsUnitQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DimensionsUnit>(context),new DimensionsUnitDataMapping()) {}
+        public DimensionsUnitQueryService(IAmitalCloudContext context) : this(new Repository<POCO.DimensionsUnit>(context)) {}
+		public DimensionsUnitQueryService(IRepository<POCO.DimensionsUnit> repository) : base(repository,  new DimensionsUnitDataMapping()) { }
 		public  DimensionsUnitPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new DimensionsUnitKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DimensionsUnit,string> GetKeys(POCO.DimensionsUnit entityPOCO) => new DimensionsUnitKeys<string>() { Code = entityPOCO.Code,  };
    }

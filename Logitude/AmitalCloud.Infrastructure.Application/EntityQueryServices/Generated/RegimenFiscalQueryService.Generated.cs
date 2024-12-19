@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class RegimenFiscalQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.RegimenFiscal,RegimenFiscalKeys<string>,RegimenFiscalPM,RegimenFiscalList,string>
    {
         public RegimenFiscalQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public RegimenFiscalQueryService(IAmitalCloudContext context) : base(new Repository<POCO.RegimenFiscal>(context),new RegimenFiscalDataMapping()) {}
+        public RegimenFiscalQueryService(IAmitalCloudContext context) : this(new Repository<POCO.RegimenFiscal>(context)) {}
+		public RegimenFiscalQueryService(IRepository<POCO.RegimenFiscal> repository) : base(repository,  new RegimenFiscalDataMapping()) { }
 		public  RegimenFiscalPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new RegimenFiscalKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.RegimenFiscal,string> GetKeys(POCO.RegimenFiscal entityPOCO) => new RegimenFiscalKeys<string>() { Code = entityPOCO.Code,  };
    }

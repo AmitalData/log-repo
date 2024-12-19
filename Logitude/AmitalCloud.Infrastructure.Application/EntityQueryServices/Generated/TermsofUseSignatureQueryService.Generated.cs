@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class TermsofUseSignatureQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.TermsofUseSignature,TermsofUseSignatureKeys<string>,TermsofUseSignaturePM,TermsofUseSignatureList,string>
    {
         public TermsofUseSignatureQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public TermsofUseSignatureQueryService(IAmitalCloudContext context) : base(new Repository<POCO.TermsofUseSignature>(context),new TermsofUseSignatureDataMapping()) {}
+        public TermsofUseSignatureQueryService(IAmitalCloudContext context) : this(new Repository<POCO.TermsofUseSignature>(context)) {}
+		public TermsofUseSignatureQueryService(IRepository<POCO.TermsofUseSignature> repository) : base(repository,  new TermsofUseSignatureDataMapping()) { }
 		public  TermsofUseSignaturePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new TermsofUseSignatureKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.TermsofUseSignature,string> GetKeys(POCO.TermsofUseSignature entityPOCO) => new TermsofUseSignatureKeys<string>() { Id = entityPOCO.Id,  };
    }

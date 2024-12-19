@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class DepartmentQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Department,DepartmentKeys<string>,DepartmentPM,DepartmentList,string>
    {
         public DepartmentQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public DepartmentQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Department>(context),new DepartmentDataMapping()) {}
+        public DepartmentQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Department>(context)) {}
+		public DepartmentQueryService(IRepository<POCO.Department> repository) : base(repository,  new DepartmentDataMapping()) { }
 		public  DepartmentPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DepartmentKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Department,string> GetKeys(POCO.Department entityPOCO) => new DepartmentKeys<string>() { Id = entityPOCO.Id,  };
    }

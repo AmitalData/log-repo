@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class ShippingLineQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ShippingLine,ShippingLineKeys<string>,ShippingLinePM,ShippingLineList,string>
    {
         public ShippingLineQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public ShippingLineQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ShippingLine>(context),new ShippingLineDataMapping()) {}
+        public ShippingLineQueryService(IAmitalCloudContext context) : this(new Repository<POCO.ShippingLine>(context)) {}
+		public ShippingLineQueryService(IRepository<POCO.ShippingLine> repository) : base(repository,  new ShippingLineDataMapping()) { }
 		public  ShippingLinePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ShippingLineKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ShippingLine,string> GetKeys(POCO.ShippingLine entityPOCO) => new ShippingLineKeys<string>() { Id = entityPOCO.Id,  };
    }

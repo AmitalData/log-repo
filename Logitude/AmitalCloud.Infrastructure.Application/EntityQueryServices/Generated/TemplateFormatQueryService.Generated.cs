@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class TemplateFormatQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.TemplateFormat,TemplateFormatKeys<string>,TemplateFormatPM,TemplateFormatList,string>
    {
         public TemplateFormatQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public TemplateFormatQueryService(IAmitalCloudContext context) : base(new Repository<POCO.TemplateFormat>(context),new TemplateFormatDataMapping()) {}
+        public TemplateFormatQueryService(IAmitalCloudContext context) : this(new Repository<POCO.TemplateFormat>(context)) {}
+		public TemplateFormatQueryService(IRepository<POCO.TemplateFormat> repository) : base(repository,  new TemplateFormatDataMapping()) { }
 		public  TemplateFormatPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new TemplateFormatKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.TemplateFormat,string> GetKeys(POCO.TemplateFormat entityPOCO) => new TemplateFormatKeys<string>() { Code = entityPOCO.Code,  };
    }

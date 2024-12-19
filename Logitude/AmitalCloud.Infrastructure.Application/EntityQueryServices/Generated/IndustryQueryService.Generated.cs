@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class IndustryQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Industry,IndustryKeys<string>,IndustryPM,IndustryList,string>
    {
         public IndustryQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public IndustryQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Industry>(context),new IndustryDataMapping()) {}
+        public IndustryQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Industry>(context)) {}
+		public IndustryQueryService(IRepository<POCO.Industry> repository) : base(repository,  new IndustryDataMapping()) { }
 		public  IndustryPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new IndustryKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Industry,string> GetKeys(POCO.Industry entityPOCO) => new IndustryKeys<string>() { Id = entityPOCO.Id,  };
    }

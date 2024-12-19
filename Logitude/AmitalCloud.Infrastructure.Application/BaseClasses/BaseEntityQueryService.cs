@@ -99,5 +99,23 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
         {
 
         }
+        public List<TEntityPM> GetMultiByParent<TEntityParentKeys>(TEntityParentKeys entityParentKeys, bool getFromCache, bool getComposition = true)
+        {
+            List<TEntityPOCO> entityPOCOs = Repository.GetMultiByParent<TEntityParentKeys>(entityParentKeys);
+            List<TEntityPM> entityPMs = new List<TEntityPM>();
+            foreach (TEntityPOCO entityPOCO in entityPOCOs)
+            {
+                TEntityPM entityPM = new TEntityPM();
+                IEntityKeyFields<TEntityPOCO, TkeyType> entityKeys = GetKeys(entityPOCO);
+                if (entityKeys != null && getComposition)
+                {
+                    GetComposition(entityKeys, entityPM);
+                }
+                mapping.CustomPOCOToPM(entityPM, entityPOCO);
+                mapping.POCOToPM(entityPM, entityPOCO);
+                entityPMs.Add(entityPM);
+            }
+            return entityPMs;
+        }
     }
 }

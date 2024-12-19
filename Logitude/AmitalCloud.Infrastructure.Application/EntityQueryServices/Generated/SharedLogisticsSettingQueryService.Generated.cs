@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class SharedLogisticsSettingQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.SharedLogisticsSetting,SharedLogisticsSettingKeys<string>,SharedLogisticsSettingPM,SharedLogisticsSettingList,string>
    {
         public SharedLogisticsSettingQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public SharedLogisticsSettingQueryService(IAmitalCloudContext context) : base(new Repository<POCO.SharedLogisticsSetting>(context),new SharedLogisticsSettingDataMapping()) {}
+        public SharedLogisticsSettingQueryService(IAmitalCloudContext context) : this(new Repository<POCO.SharedLogisticsSetting>(context)) {}
+		public SharedLogisticsSettingQueryService(IRepository<POCO.SharedLogisticsSetting> repository) : base(repository,  new SharedLogisticsSettingDataMapping()) { }
 		public  SharedLogisticsSettingPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new SharedLogisticsSettingKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.SharedLogisticsSetting,string> GetKeys(POCO.SharedLogisticsSetting entityPOCO) => new SharedLogisticsSettingKeys<string>() { Id = entityPOCO.Id,  };
    }

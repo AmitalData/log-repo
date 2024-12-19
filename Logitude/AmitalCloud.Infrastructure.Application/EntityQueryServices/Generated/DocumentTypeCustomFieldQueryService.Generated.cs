@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class DocumentTypeCustomFieldQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DocumentTypeCustomField,DocumentTypeCustomFieldKeys<string>,DocumentTypeCustomFieldPM,DocumentTypeCustomFieldList,string>
    {
         public DocumentTypeCustomFieldQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public DocumentTypeCustomFieldQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DocumentTypeCustomField>(context),new DocumentTypeCustomFieldDataMapping()) {}
+        public DocumentTypeCustomFieldQueryService(IAmitalCloudContext context) : this(new Repository<POCO.DocumentTypeCustomField>(context)) {}
+		public DocumentTypeCustomFieldQueryService(IRepository<POCO.DocumentTypeCustomField> repository) : base(repository,  new DocumentTypeCustomFieldDataMapping()) { }
 		public  DocumentTypeCustomFieldPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DocumentTypeCustomFieldKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DocumentTypeCustomField,string> GetKeys(POCO.DocumentTypeCustomField entityPOCO) => new DocumentTypeCustomFieldKeys<string>() { Id = entityPOCO.Id,  };
    }

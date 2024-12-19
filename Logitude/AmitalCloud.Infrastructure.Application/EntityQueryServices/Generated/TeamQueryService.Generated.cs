@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class TeamQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Team,TeamKeys<string>,TeamPM,TeamList,string>
    {
         public TeamQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public TeamQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Team>(context),new TeamDataMapping()) {}
+        public TeamQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Team>(context)) {}
+		public TeamQueryService(IRepository<POCO.Team> repository) : base(repository,  new TeamDataMapping()) { }
 		public  TeamPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new TeamKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Team,string> GetKeys(POCO.Team entityPOCO) => new TeamKeys<string>() { Id = entityPOCO.Id,  };
    }

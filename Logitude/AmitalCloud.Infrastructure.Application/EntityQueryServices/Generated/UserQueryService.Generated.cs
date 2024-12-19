@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class UserQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.User,UserKeys<string>,UserPM,UserList,string>
    {
         public UserQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public UserQueryService(IAmitalCloudContext context) : base(new Repository<POCO.User>(context),new UserDataMapping()) {}
+        public UserQueryService(IAmitalCloudContext context) : this(new Repository<POCO.User>(context)) {}
+		public UserQueryService(IRepository<POCO.User> repository) : base(repository,  new UserDataMapping()) { }
 		public  UserPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new UserKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.User,string> GetKeys(POCO.User entityPOCO) => new UserKeys<string>() { Id = entityPOCO.Id,  };
    }

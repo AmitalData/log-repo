@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class HTSCodeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.HTSCode,HTSCodeKeys<string>,HTSCodePM,HTSCodeList,string>
    {
         public HTSCodeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public HTSCodeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.HTSCode>(context),new HTSCodeDataMapping()) {}
+        public HTSCodeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.HTSCode>(context)) {}
+		public HTSCodeQueryService(IRepository<POCO.HTSCode> repository) : base(repository,  new HTSCodeDataMapping()) { }
 		public  HTSCodePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new HTSCodeKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.HTSCode,string> GetKeys(POCO.HTSCode entityPOCO) => new HTSCodeKeys<string>() { Id = entityPOCO.Id,  };
    }

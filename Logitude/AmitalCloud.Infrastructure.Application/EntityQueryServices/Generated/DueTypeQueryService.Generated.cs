@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class DueTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DueType,DueTypeKeys<string>,DueTypePM,DueTypeList,string>
    {
         public DueTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public DueTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DueType>(context),new DueTypeDataMapping()) {}
+        public DueTypeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.DueType>(context)) {}
+		public DueTypeQueryService(IRepository<POCO.DueType> repository) : base(repository,  new DueTypeDataMapping()) { }
 		public  DueTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new DueTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DueType,string> GetKeys(POCO.DueType entityPOCO) => new DueTypeKeys<string>() { Code = entityPOCO.Code,  };
    }

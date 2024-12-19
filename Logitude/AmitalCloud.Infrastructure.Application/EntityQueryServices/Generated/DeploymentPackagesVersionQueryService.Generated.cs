@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class DeploymentPackagesVersionQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DeploymentPackagesVersion,DeploymentPackagesVersionKeys<string>,DeploymentPackagesVersionPM,DeploymentPackagesVersionList,string>
    {
         public DeploymentPackagesVersionQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public DeploymentPackagesVersionQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DeploymentPackagesVersion>(context),new DeploymentPackagesVersionDataMapping()) {}
+        public DeploymentPackagesVersionQueryService(IAmitalCloudContext context) : this(new Repository<POCO.DeploymentPackagesVersion>(context)) {}
+		public DeploymentPackagesVersionQueryService(IRepository<POCO.DeploymentPackagesVersion> repository) : base(repository,  new DeploymentPackagesVersionDataMapping()) { }
 		public  DeploymentPackagesVersionPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DeploymentPackagesVersionKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DeploymentPackagesVersion,string> GetKeys(POCO.DeploymentPackagesVersion entityPOCO) => new DeploymentPackagesVersionKeys<string>() { Id = entityPOCO.Id,  };
    }

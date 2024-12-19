@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class UserLicenseQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.UserLicense,UserLicenseKeys<string>,UserLicensePM,UserLicenseList,string>
    {
         public UserLicenseQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public UserLicenseQueryService(IAmitalCloudContext context) : base(new Repository<POCO.UserLicense>(context),new UserLicenseDataMapping()) {}
+        public UserLicenseQueryService(IAmitalCloudContext context) : this(new Repository<POCO.UserLicense>(context)) {}
+		public UserLicenseQueryService(IRepository<POCO.UserLicense> repository) : base(repository,  new UserLicenseDataMapping()) { }
 		public  UserLicensePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new UserLicenseKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.UserLicense,string> GetKeys(POCO.UserLicense entityPOCO) => new UserLicenseKeys<string>() { Id = entityPOCO.Id,  };
    }

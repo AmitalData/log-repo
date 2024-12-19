@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class BorderTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.BorderType,BorderTypeKeys<string>,BorderTypePM,BorderTypeList,string>
    {
         public BorderTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public BorderTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.BorderType>(context),new BorderTypeDataMapping()) {}
+        public BorderTypeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.BorderType>(context)) {}
+		public BorderTypeQueryService(IRepository<POCO.BorderType> repository) : base(repository,  new BorderTypeDataMapping()) { }
 		public  BorderTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new BorderTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.BorderType,string> GetKeys(POCO.BorderType entityPOCO) => new BorderTypeKeys<string>() { Code = entityPOCO.Code,  };
    }

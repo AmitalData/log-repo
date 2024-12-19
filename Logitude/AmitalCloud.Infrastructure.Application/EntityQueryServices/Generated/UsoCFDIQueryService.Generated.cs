@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class UsoCFDIQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.UsoCFDI,UsoCFDIKeys<string>,UsoCFDIPM,UsoCFDIList,string>
    {
         public UsoCFDIQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public UsoCFDIQueryService(IAmitalCloudContext context) : base(new Repository<POCO.UsoCFDI>(context),new UsoCFDIDataMapping()) {}
+        public UsoCFDIQueryService(IAmitalCloudContext context) : this(new Repository<POCO.UsoCFDI>(context)) {}
+		public UsoCFDIQueryService(IRepository<POCO.UsoCFDI> repository) : base(repository,  new UsoCFDIDataMapping()) { }
 		public  UsoCFDIPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new UsoCFDIKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.UsoCFDI,string> GetKeys(POCO.UsoCFDI entityPOCO) => new UsoCFDIKeys<string>() { Code = entityPOCO.Code,  };
    }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
-using System.Data.Entity;
+
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,7 +34,7 @@ namespace AmitalCloud.Infrastructure.Data.DBHelpers
                     foreach (var propertyName in e.CurrentValues.PropertyNames)
                     {
                         builder.AppendLine().AppendFormat("Property Name: {0}", propertyName);
-                        if (e.State != EntityState.Added)
+                        if (e.State != System.Data.Entity.EntityState.Added)
                         {
                             //get original value
                             var orgVal = e.OriginalValues[propertyName];

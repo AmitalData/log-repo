@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class DefaultAndConfigurationQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DefaultAndConfiguration,DefaultAndConfigurationKeys<string>,DefaultAndConfigurationPM,DefaultAndConfigurationList,string>
    {
         public DefaultAndConfigurationQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public DefaultAndConfigurationQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DefaultAndConfiguration>(context),new DefaultAndConfigurationDataMapping()) {}
+        public DefaultAndConfigurationQueryService(IAmitalCloudContext context) : this(new Repository<POCO.DefaultAndConfiguration>(context)) {}
+		public DefaultAndConfigurationQueryService(IRepository<POCO.DefaultAndConfiguration> repository) : base(repository,  new DefaultAndConfigurationDataMapping()) { }
 		public  DefaultAndConfigurationPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DefaultAndConfigurationKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DefaultAndConfiguration,string> GetKeys(POCO.DefaultAndConfiguration entityPOCO) => new DefaultAndConfigurationKeys<string>() { Id = entityPOCO.Id,  };
    }
