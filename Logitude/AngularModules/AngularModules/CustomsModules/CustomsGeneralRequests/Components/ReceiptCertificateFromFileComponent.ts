@@ -128,7 +128,7 @@ export class ReceiptCertificateFromFileComponent
             this.FileExtension = temp[temp.length - 1];
             this.FileName = file.name.replace("." + this.FileExtension, "");
 
-            if (this.FileExtension != "csv") {
+            if (this.FileExtension.toLowerCase() != "csv") {
                 this.ShowMessage("חובה קובץ CSV");
                 return;
             }
