@@ -1663,6 +1663,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
             this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DisplayOnly") + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
+            this.CurrentSession.CurrentEditComponent.DisplayModeChanged.emit(this.IsDisplayOnly);
             return;
         }
         else if (this.EntityPM.StorageStatusCode) {
@@ -1701,6 +1702,8 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
 
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
+            this.CurrentSession.CurrentEditComponent.DisplayModeChanged.emit(this.IsDisplayOnly);
+
         });
     }
 

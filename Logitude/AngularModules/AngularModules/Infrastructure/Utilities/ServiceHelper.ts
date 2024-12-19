@@ -522,9 +522,10 @@ export class ServiceHelper {
             })
         };
 
-        if (!AppTool.IsNullOrEmpty(sessionStorage.getItem('SessionId')))
-            httpOptions.headers = httpOptions.headers.append('SessionId', sessionStorage.getItem('SessionId') + '_' + SessionLocator.Index);
-
+        if (!AppTool.IsNullOrEmpty(sessionStorage.getItem('SessionId'))) {      
+            var Index = SessionLocator.HomeComponent.Tabs.find(x => x.IsSelected).Index;
+            httpOptions.headers = httpOptions.headers.append('SessionId', sessionStorage.getItem('SessionId') + '_' + Index);
+        }
         return httpOptions;
     }
 
@@ -619,11 +620,19 @@ export class ServiceHelper {
            
         });
     }
-    public static DeleteGeneralLock(entityId: string, objectTableName: string) {
+    public static  DeleteGeneralLock(entityId: string, objectTableName: string) {
 
         var generalLockService = new GeneralLockService();
 
         generalLockService.DeleteGeneralLock(entityId, objectTableName).subscribe(myResult => {
+
+        });
+    }
+    public static  DeleteGeneralLockBySessionId() {
+
+        var generalLockService = new GeneralLockService();
+
+        generalLockService.DeleteGeneralLockBySessionId().subscribe(myResult => {
 
         });
     }

@@ -455,10 +455,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     LogMessagingUtil.Instance.AppendLine("MessagingServiceBase:Update:Start");
                     //throw new Exception("tst");
                     _ResponseService.Update(customsResponse, requestParams);
-
-                    string sessionId = requestParams.RequestVIA == SendRequestVIA.DCABatch? "MessageDCABatch": "MessageInteractive";
-					generalLockQueryService.DeleteGeneralLock(requestParams.Tenant , requestParams.LoggingEntityId, requestParams.LoggingObjectTableId, sessionId);
-
+					if (requestParams.LoggingEntityId != null && requestParams.LoggingObjectTableId != null)
+					{
+						string sessionId = requestParams.RequestVIA == SendRequestVIA.DCABatch? "MessageDCABatch": "MessageInteractive";
+					    generalLockQueryService.DeleteGeneralLockByEntity(requestParams.Tenant , requestParams.LoggingEntityId, requestParams.LoggingObjectTableId, sessionId);
+					}
 					stopwatch.Stop();
                     LogMessagingUtil.Instance.AppendLine("MessagingServiceBase:Update:" + stopwatch.Elapsed.ToString());
                 }

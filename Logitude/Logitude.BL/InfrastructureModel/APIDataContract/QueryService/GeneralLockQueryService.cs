@@ -5,6 +5,8 @@ using Logitude.Server.Tools.Utils;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Data.SqlClient;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
 {
@@ -14,7 +16,7 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
         IWebFreightContext context;
 		GeneralLockQuery query;
 
-        public GeneralLockQueryService(int tenant)
+        public GeneralLockQueryService(int tenant = 0)
         {
             context = WebFreightContext.GetContext(tenant);
             //service = new ObjectTableService(context, tenant); 
@@ -99,15 +101,48 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
 			}
 			return result;
 		}
-		public void DeleteGeneralLock(int tenant, string entityId, string objectTableName, string sessionId)
+		public void DeleteGeneralLockByEntity(int tenant, string entityId, string objectTableName, string sessionId)
 		{
-			var generalLockQuery = new GeneralLockQuery(tenant);
 			ObjectTableQuery tablesQuery = new ObjectTableQuery(tenant);
 
 			ObjectTablePM objectTable = tablesQuery.GetObjectTableByName(objectTableName, tenant);
 
-			var concurrentKiller = new ConcurrentKiller();
-			concurrentKiller.FreeGeneralLock(tenant, entityId, objectTable?.Id, sessionId);
+
+			var repo = new GeneralLockRepository(tenant);
+
+			using (var scope = TransactionFactory.GetTransaction())
+			{
+				repo.FastDeleteGeneralLock(tenant, entityId, objectTable?.Id, sessionId);
+
+				repo.SubmitChanges();
+				scope.Complete();
+			}
+		}
+		public void DeleteGeneralLock(bool isFromUi)
+		{
+			var repo = new GeneralLockRepository(0);
+
+			using (var scope = TransactionFactory.GetTransaction())
+			{
+				repo.FastDeleteGeneralLock(isFromUi);
+
+				repo.SubmitChanges();
+				scope.Complete();
+			}
+
+		}
+		public void DeleteGeneralLockBySessionId(int tenant ,string sessionId)
+		{
+			var repo = new GeneralLockRepository(tenant);
+
+			using (var scope = TransactionFactory.GetTransaction())
+			{
+				string session = sessionId.Split('_')[0];
+				repo.FastDeleteGeneralLockBySessionId(tenant,session);
+
+				repo.SubmitChanges();
+				scope.Complete();
+			}
 
 		}
 	}

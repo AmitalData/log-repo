@@ -1108,6 +1108,8 @@ export class HomeComponent implements OnDestroy{
     }
 
     Close(tabItem: SessionTabItem) {
+        var ClosedTabEditComponent = tabItem.SessionComponent.CurrentEditComponent;
+        ServiceHelper.DeleteGeneralLock(ClosedTabEditComponent.EntityId ,ClosedTabEditComponent.ObjectTableName);
 
         var itemIndex = this.Tabs.indexOf(tabItem);
         if (itemIndex > -1) {
@@ -1884,13 +1886,15 @@ export class HomeComponent implements OnDestroy{
         var params: any[] = [{ name: "Token", value: SessionInfo.DocumentDownloadToken }]
         ServiceHelper.OpenWindowWithParams(url, params);
     }
-    SignoutClicked() {
-        SessionLocator.Index = 0;
+     SignoutClicked() {
+         SessionLocator.Index = 0;
+
+         ServiceHelper.DeleteGeneralLockBySessionId();
 
         SessionLocator.AllSessions.forEach((item) => {
             item.DestroySession();
         });
-
+      
         this.SignoutCompleted.emit("event from child");
     }
 

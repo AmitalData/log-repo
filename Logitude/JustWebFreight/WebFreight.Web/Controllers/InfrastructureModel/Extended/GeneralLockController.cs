@@ -74,7 +74,30 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 				SecurityUtility.AuthenticationOnTenant(tenant);
 
 				GeneralLockQueryService generalLockQueryService = new GeneralLockQueryService(tenant);
-				generalLockQueryService.DeleteGeneralLock(tenant, entityId, objectTableName, sessionId);
+				generalLockQueryService.DeleteGeneralLockByEntity(tenant, entityId, objectTableName, sessionId);
+
+
+				return Request.CreateResponse(HttpStatusCode.OK, "DeleteGeneralLock");
+			}
+			catch (Exception ex)
+			{
+				return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+			}
+
+		}
+		[HttpPost]
+		public HttpResponseMessage DeleteGeneralLockBySessionId()
+		{
+			try
+			{
+				string token = HttpContext.Current.Request.Headers["Token"];
+				string sessionId = HttpContext.Current.Request.Headers["SessionId"];
+				AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+				int tenant = authToken.Tenant;
+				SecurityUtility.AuthenticationOnTenant(tenant);
+
+				GeneralLockQueryService generalLockQueryService = new GeneralLockQueryService(tenant);
+				generalLockQueryService.DeleteGeneralLockBySessionId(tenant, sessionId);
 
 
 				return Request.CreateResponse(HttpStatusCode.OK, "DeleteGeneralLock");

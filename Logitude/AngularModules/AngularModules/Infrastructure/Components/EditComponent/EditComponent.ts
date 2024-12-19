@@ -82,6 +82,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     @Output() SaveAndCloseCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() OnFirstTimeAfterSingleDataLoaded: EventEmitter<string> = new EventEmitter<string>();
     @Output() IsLock: EventEmitter<[boolean, string, string, string]> = new EventEmitter<[boolean, string, string, string]>();
+    @Output() DisplayModeChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     public ComponentRef: ComponentRef<EditComponent>;
     public EntityPM: any = null;
@@ -1900,12 +1901,13 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                                         if (loadPreviousEntity) {
                                             this.CurrentNavigatedIndex = this.CurrentNavigatedIndex - 1;
                                             this.LoadNextPreviousEntity();
-                                    this.SetNextPreviousButtonsEnablityAysnc();
+                                    this.SetNextPreviousButtonsEnablityAysnc();                                  
                                     //if (this.nextPreviousTimerToken) {
                                     //    clearTimeout(this.nextPreviousTimerToken);
                                     //}
                                     //this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
                                         }
+                                        this.DeleteGeneralLock();
                                     }   
                            }  
 
@@ -2550,10 +2552,13 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                               currentEditComponent.DisplayLockMessage =  `The entity ${GeneralLock[2]} object  ${GeneralLock[1]} is locked by  ${GeneralLock[3]}`
                            }
                        }
-                       else{
-                           currentEditComponent.EditComponentController.InDisplayMode = GeneralLock[0];
-                           currentEditComponent.EditComponentController.InDisplayModeMessage = `The entity ${GeneralLock[2]} object  ${GeneralLock[1]} is locked by  ${GeneralLock[3]}`
-                           
+                       else
+                       {
+                           if(GeneralLock[0] || currentEditComponent.PreIsLock)
+                              currentEditComponent.EditComponentController.InDisplayMode = GeneralLock[0];
+                           if(GeneralLock[0])
+                              currentEditComponent.EditComponentController.InDisplayModeMessage = `The entity ${GeneralLock[2]} object  ${GeneralLock[1]} is locked by  ${GeneralLock[3]}`
+                        
                        }
                        if(GeneralLock[0] || currentEditComponent.PreIsLock)
                           currentEditComponent.ReloadEntityPM();
