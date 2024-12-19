@@ -221,7 +221,6 @@ export class CertificateOfOriginConnectionPMService {
 	  public GetNewEntityPM() {		 
 		    var entityPM: CertificateOfOriginConnectionPM;
 			entityPM = new CertificateOfOriginConnectionPM();
-			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }
 		 
