@@ -212,7 +212,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = certificateOfOriginConnectionQuery.GetListCount(queryOperations, tenant , treeFilterQueryArgs);
+                    int count = certificateOfOriginConnectionQuery.GetListCount(queryOperations , treeFilterQueryArgs);
                     response.Count = count;
                 }
 

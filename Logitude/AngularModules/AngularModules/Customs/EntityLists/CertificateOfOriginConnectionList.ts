@@ -9,8 +9,6 @@
 export class CertificateOfOriginConnectionList {
    
 	Id: string;
-	Tenant: number;
-	SearchFields: string;
 	CooStatus: string;
 	CooReason: string;
 	Active: boolean;
