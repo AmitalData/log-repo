@@ -1996,8 +1996,12 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private DeclarationGoodsShipmentExportConsignmentDMExtensions GetDMExtensionsConsignment(ConsignmentPM consignmentPM)
         {
+            var forbiddenSigns = ForbiddenSignsUtil.GetForbiddenSigns(consignmentPM.Tenant);
+            consignmentPM.CargoDescription  = ForbiddenSignsUtil.ReplaceForbiddenChars(consignmentPM.CargoDescription, forbiddenSigns);
+
             var DMExtensions = new DeclarationGoodsShipmentExportConsignmentDMExtensions();
             DMExtensions.CargoDescription = new DeclarationGoodsShipmentExportConsignmentDMExtensionsCargoDescription() { Value = consignmentPM.CargoDescription };
+
             //DMExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType() { Value = consignmentPM.IsLastReleaseFromWarehous };
             //if (consignmentPM.IsLastReleaseFromWarehous == "T") // temporary treatment - Task 9683
             //{

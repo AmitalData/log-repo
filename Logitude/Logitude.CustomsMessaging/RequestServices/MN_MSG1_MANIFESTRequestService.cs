@@ -610,6 +610,8 @@ namespace Logitude.CustomsMessaging.RequestServices
             DeclarationConsignmentConsignmentItemCommodity declarationConsignmentUnloadingLocation = new DeclarationConsignmentConsignmentItemCommodity();
 
            
+                var forbiddenSigns = _ForbiddenSignsUtil.GetForbiddenSigns(consignmentPM.Tenant);
+                consignmentPM.CargoDescription = _ForbiddenSignsUtil.ReplaceForbiddenChars(consignmentPM.CargoDescription, forbiddenSigns);
                 if (consignmentPackDangerPM != null)
                 {
                     declarationConsignmentUnloadingLocation = new DeclarationConsignmentConsignmentItemCommodity()
