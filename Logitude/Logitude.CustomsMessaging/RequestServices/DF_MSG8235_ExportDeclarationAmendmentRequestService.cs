@@ -1196,8 +1196,10 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private DeclarationGoodsShipmentImportConsignmentDMExtensions GetImportConsignmentDMExtensions(ConsignmentPM consignmentPM, string ProcedureCurrentCode)
         {
-            var arrProcedureCurrentCode = new string[] { "8070005", "8070010", "8070505", "8070510" };
+            var forbiddenSigns = forbiddenSignsUtil.GetForbiddenSigns(consignmentPM.Tenant);
+            consignmentPM.CargoDescription = forbiddenSignsUtil.ReplaceForbiddenChars(consignmentPM.CargoDescription, forbiddenSigns);
 
+            var arrProcedureCurrentCode = new string[] { "8070005", "8070010", "8070505", "8070510" };
             var dmExtensions = new DeclarationGoodsShipmentImportConsignmentDMExtensions
             {
                 CargoDescription = new DeclarationGoodsShipmentImportConsignmentDMExtensionsCargoDescription()
