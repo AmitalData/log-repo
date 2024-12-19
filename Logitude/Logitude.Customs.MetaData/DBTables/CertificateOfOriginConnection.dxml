@@ -13,19 +13,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Tenant"
-    Type="int">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="CooStatus"
     OldNames="CooStatusCode"
     Type="varchar"

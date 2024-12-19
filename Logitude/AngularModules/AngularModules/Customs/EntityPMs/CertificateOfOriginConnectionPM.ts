@@ -29,16 +29,6 @@ export class CertificateOfOriginConnectionPM {
     public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
        
 	 
-    private tenant: number;
-    public get Tenant() { return this.tenant; }
-    public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
-       
-	 
-    private searchFields: string;
-    public get SearchFields() { return this.searchFields; }
-    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
-       
-	 
     private cooStatus: string;
     public get CooStatus() { return this.cooStatus; }
     public set CooStatus(newValue: string) { if (this.cooStatus != newValue) { this.cooStatus = newValue; this.MarkAsDirty("CooStatus"); } }

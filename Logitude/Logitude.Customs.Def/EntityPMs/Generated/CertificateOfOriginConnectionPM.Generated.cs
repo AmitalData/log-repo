@@ -43,52 +43,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private int tenant ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int Tenant  
-	   {
-	    
-	     get
-		{
-		   return tenant;
-		 }
-		 set
-		 {
-		   if(tenant != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   tenant=value;
-		   }
-			
-		 }
-	   }
-	  private string searchFields ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string SearchFields  
-	   {
-	    
-	     get
-		{
-		   return searchFields;
-		 }
-		 set
-		 {
-		   if(searchFields != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=searchFields,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   searchFields=value;
-		   }
-			
-		 }
-	   }
 	  private string cooStatus ;
 	  	  
        

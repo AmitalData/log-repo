@@ -21,10 +21,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Key]
         [Column("Id")]
 	    public string Id { get; set; }
-        [Column("Tenant")]
-	    public int Tenant { get; set; }
-        [Column("SearchFields")]
-	    public string SearchFields { get; set; }
         [ForeignKey("CooStatusCodeEnum")]
         [Column("CooStatus")]
 	    public string CooStatus { get; set; }

@@ -28,17 +28,16 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  CertificateOfOriginConnection GetSingle(string id, int tenant)
+		public  CertificateOfOriginConnection GetSingle(string id)
         {
             return (from a in context.CertificateOfOriginConnections
-                    where a.Id == id && a.Tenant == tenant
+                    where a.Id == id 
                     select a).FirstOrDefault();
         }
 
-        public IQueryable<CertificateOfOriginConnection> GetAll(int tenant)
+        public IQueryable<CertificateOfOriginConnection> GetAll()
         {
             return from a in context.CertificateOfOriginConnections  
-                   where a.Tenant == tenant
                    select a;
         }
 				 

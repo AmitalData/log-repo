@@ -35,9 +35,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             GenericSort sortClass = new GenericSort();
 
             IQueryable<CertificateOfOriginConnection> iQueryable = (from a in context.CertificateOfOriginConnections
-                                              
-                   where a.Tenant == tenant select a);
-            			iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
+                                               select a);
+            			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
@@ -150,20 +149,19 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 
 		
-        public int GetListCount(QueryOperations queryOperations, int tenant ){
-		 		  return GetListCount(queryOperations,tenant, new TreeFilterQueryArgs());
+        public int GetListCount(QueryOperations queryOperations ){
+		 		  return GetListCount(queryOperations, new TreeFilterQueryArgs());
 
 		 }
 
-        public int GetListCount(QueryOperations queryOperations, int tenant  ,TreeFilterQueryArgs treeFilterQueryArgs )
+        public int GetListCount(QueryOperations queryOperations  ,TreeFilterQueryArgs treeFilterQueryArgs )
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<CertificateOfOriginConnection> iQueryable = (from a in context.CertificateOfOriginConnections 
-                   where a.Tenant == tenant select a);
+            IQueryable<CertificateOfOriginConnection> iQueryable = (from a in context.CertificateOfOriginConnections  select a);
 
-			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
+			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
