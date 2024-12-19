@@ -26,11 +26,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 											{
                      
 					                          Id = a.Id,
-					
-					                          Tenant = a.Tenant,
-					
-					                          SearchFields = a.SearchFields,
-					
+				
 					                          CooStatus = a.CooStatus,
 					
 					                          CooReason = a.CooReason,
@@ -41,11 +37,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return query;
 		}
 
-		private IQueryable<CertificateOfOriginConnection> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CertificateOfOriginConnection> iQueryable, int tenant)
+		private IQueryable<CertificateOfOriginConnection> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CertificateOfOriginConnection> iQueryable)
         {
             return iQueryable;
         }
-			}
+	}
 
 
 }
