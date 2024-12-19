@@ -44,6 +44,12 @@ export class ShipmentPackagesTabComponent extends BaseComponent implements OnIni
     }
 
     DisplayOnlyCheck() {
+        if(AppTool.IsNullOrEmpty(this.EntityPM.ShipmentTypeId)){
+            this.IsDisplayOnly = true;
+            this.IsDisplayMessage = true;
+            this.DisplayOnlyMessage = TextCodeTranslator.Translate("ShipmentPackage.O.NoPackageType");
+            return;
+        }
         if (this.EntityPM.ShipmentTypeId != "FCLD") {
             this.IsDisplayOnly = true;
             this.IsDisplayMessage = true;
