@@ -21,7 +21,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeliverySiteTypeUpdateClass
    {  		
-		public const string HashString = "e5358b7d545500c6a69342f8a13341bc";
+		public const string HashString = "2e8b47a153a78952991363eb3f99a756";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -430,12 +430,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "CityCode",
+					 						FieldName =  "CityId",
 					  						ObjectTableName =  "Customs.DeliverySiteType",
 					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Customs.City",
+					  						LookUpTableName =  "CountryCity",
 					  						MinLength =  0,
-					  						MaxLength =  5,
+					  						MaxLength =  15,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -443,7 +443,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  5,
+					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
@@ -451,8 +451,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "CityCode",
-					  						ListPropertyPath =  "CityCode",
+					  						PMPropertyPath =  "CityId",
+					  						ListPropertyPath =  "CityId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -470,17 +470,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "CityCode",
-					  						DefaultText =  "City Code",
+					  						FullFieldLable =  "CityId",
+					  						DefaultText =  "City Id",
 					  						FullLocalDefaultTextBack_up =  "עיר",
 					  						FullLocalDefaultText =  "BS64:Itei15nXqCI=",
-					  						ListFieldLable =  "CityCodeListLable",
-					  						ListLableDefaultText =  "City Code",
+					  						ListFieldLable =  "CityIdListLable",
+					  						ListLableDefaultText =  "City Id",
 					  						ListLocalDefaultTextBack_up =  "עיר",
 					  						ListLocalDefaultText =  "BS64:Itei15nXqCI=",
 					  						IsForeignKey =  true,
-					  						ForeignEntity =  "City",
-					  						NavigationPropertyName =  "City",
+					  						ForeignEntity =  "CountryCity",
+					  						NavigationPropertyName =  "CountryCity",
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,

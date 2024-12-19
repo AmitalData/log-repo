@@ -1,26 +1,33 @@
 import { ObjectsLocator } from './../../../../Infrastructure/Locators/ObjectsLocator';
-import {Component, OnDestroy} from '@angular/core';
-import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
-import {AddressPM} from '../../../../Common/EntityPMs/AddressPM';
-import {PartnersDomainService} from '../../../../Common/Services/PartnersDomainService';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
-import {AppTool} from '../../../../Infrastructure/Tools';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {CitySelectionArgs} from '../../../../Common/Args';
-import {StateList} from '../../../../Common/EntityLists/StateList';
-import {CountryList} from '../../../../Common/EntityLists/CountryList';
-import {CustomerPM} from '../../../../Common/EntityPMs/CustomerPM';
-import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-import {CountryFlagPipe} from '../../../../Controls/Pipes/CountryFlagPipe';
+import { Component, OnDestroy } from '@angular/core';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
+import { AddressPM } from '../../../../Common/EntityPMs/AddressPM';
+import { PartnersDomainService } from '../../../../Common/Services/PartnersDomainService';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { AppTool } from '../../../../Infrastructure/Tools';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { CitySelectionArgs } from '../../../../Common/Args';
+import { StateList } from '../../../../Common/EntityLists/StateList';
+import { CountryList } from '../../../../Common/EntityLists/CountryList';
+import { CustomerPM } from '../../../../Common/EntityPMs/CustomerPM';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { CountryFlagPipe } from '../../../../Controls/Pipes/CountryFlagPipe';
 import { AddressTypeList } from '../../../../Common/EntityLists/AddressTypeList';
 import { AddressTypeListService } from '../../../../Common/Services/StandardLists/AddressTypeListService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { CountryCityList } from 'Common/EntityLists/CountryCityList';
+import { TruckerSettingPM } from 'Common/EntityPMs/TruckerSettingPM';
+import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
+import { ShipmentTypeList } from 'Shipment/EntityLists/ShipmentTypeList';
+import { TruckerList } from 'Common/EntityLists/TruckerList';
+import { ResponsibilityList } from 'Common/EntityLists/ResponsibilityList';
+import { TruckerSettingExtendedService } from 'Common/Services/ExtendedLists/TruckerSettingExtendedService';
 
 @Component({
-    
+
     templateUrl: './AddressesTabComponent.html',
 })
 
@@ -39,7 +46,7 @@ export class AddressesTabComponent implements OnDestroy {
     public isRTL: boolean = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     private AllAddressTypes: AddressTypeList[] = [];
     constructor(public entityArgs: EntityArgs) {
-        this._entityResourceService.getEntityResourceByTableName("Address", 0).subscribe(response=> {
+        this._entityResourceService.getEntityResourceByTableName("Address", 0).subscribe(response => {
             this.IsVisibile = true;
             this.ItemsSource = [];
             this.EntityPM = entityArgs.EntityPM;
@@ -128,7 +135,7 @@ export class AddressesTabComponent implements OnDestroy {
 
         this.CurrentSession.StartBusyIndicatorLoading();
 
-        this.DomainService.GetAllAddressesPMsbyCardId(this.EntityId).subscribe((myResult:any) => {
+        this.DomainService.GetAllAddressesPMsbyCardId(this.EntityId).subscribe((myResult: any) => {
             this.AllAddresses = myResult;
             this.BuildItemsSource();
             this.CurrentSession.StopBusyIndicator();
@@ -236,6 +243,8 @@ export class AddressesTabComponent implements OnDestroy {
         var logWindow = new LogitudeWindow();
         logWindow.Title = windowTitle;
         logWindow.DataContext = itemViewModel;
+        logWindow.Width = 800;
+        logWindow.Height = 700;
         logWindow.Show('./CommonModules/CommonPartners/Components/AddEdit/AddEditAddressComponent');
     }
 
@@ -257,15 +266,24 @@ export class AddressItemClass extends BaseComponent {
     public ObjectTableName = "Address";
     public EntityPM: AddressPM;
     public IsNewEntity: boolean = false;
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
+
     public Src = null;
+    ItemsList: ObservableCollection;
     constructor(item: AddressPM, isNewEntity: boolean, public fatherComponent: AddressesTabComponent) {
         super();
-        this.EntityPM = item;
-        this.IsNewEntity = isNewEntity;
-        this.SetHeader();
-        this.SetUIProperties();
-        var pipe = new CountryFlagPipe();
-        this.Src = pipe.transform(this.CountryCode);
+        this._entityResourceService.getEntityResourceByTableName("TruckerSetting").subscribe(response => {
+            this.EntityPM = item;
+            this.IsNewEntity = isNewEntity;
+            this.SetHeader();
+            this.SetUIProperties();
+            var pipe = new CountryFlagPipe();
+            this.Src = pipe.transform(this.CountryCode);
+            this.ItemsList = new ObservableCollection([]);
+            if (this.EntityPM.AddressTypeId == "P") {
+                this.BuildTruckerSettingItemSource(item);
+            }
+        });
     }
 
     private SetHeader() {
@@ -278,7 +296,7 @@ export class AddressItemClass extends BaseComponent {
         //}
 
         //else {
-            this.Header = this.Description;
+        this.Header = this.Description;
         //}
     }
 
@@ -310,6 +328,10 @@ export class AddressItemClass extends BaseComponent {
         this.UIProperties.SetEnabled("PhoneNumber", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("FaxNumber", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("ATTN", this.ObjectTableName, this.IsEditingEnabled);
+        if (this.AddressTypeId == "P") {
+            this.UIProperties.SetEnabled("CityId", this.ObjectTableName, this.IsEditingEnabled);
+        }
+
 
         var isInActiveVisible = false;
         if (this.AddressTypeId != "M") {
@@ -347,6 +369,31 @@ export class AddressItemClass extends BaseComponent {
 
         this.UIProperties.SetRequired("StateId", this.ObjectTableName, isRequired);
     }
+
+    public async BuildTruckerSettingItemSource(item: any): Promise<void> {
+        var service: TruckerSettingExtendedService = new TruckerSettingExtendedService();
+
+        try {
+            const response: ServiceResponse = await new Promise((resolve, reject) => {
+                service.getTruckerSettingByAddressId(item.Id).subscribe({
+                    next: (result) => resolve(result),
+                    error: (err) => reject(err)
+                });
+            });
+
+            if (response && response.Result) {
+                item.TruckerSettings = response.Result;
+                item.TruckerSettings.forEach(truckerSetting => {
+                    this.ItemsList.Insert(new AddressTruckerSettingItem(truckerSetting, this));
+                });
+            }
+        } catch (error) {
+        }
+    }
+
+
+
+
     private SetUIProperties_TelFax() {
         var isTelRequired = false;
         var isFaxRequired = false;
@@ -436,6 +483,54 @@ export class AddressItemClass extends BaseComponent {
         if (this.EntityPM.City != newValue) {
             this.EntityPM.City = newValue;
             this.SetUIProperties_City();
+        }
+    }
+
+    get CityId() { return this.EntityPM.CityId; }
+    set CityId(newValue: string) {
+        if (this.EntityPM.CityId != newValue) {
+            this.EntityPM.CityId = newValue;
+            this.SetUIProperties_City();
+        }
+    }
+
+    cityId: CountryCityList = null;
+    get CityChange() { return this.cityId; }
+    set CityChange(newValue: CountryCityList) {
+        if (newValue != null && this.CityId != newValue.Id) {
+            this.CityId = newValue.Id;
+            this.City = newValue?.LocalName;
+        }
+
+    }
+
+    truckerId: TruckerList = null;
+    get TruckerChange() { return this.truckerId; }
+    set TruckerChange(newValue: TruckerList) {
+        if (newValue != null && this.TruckerId != newValue.Id) {
+            this.TruckerId = newValue.Id;
+        }
+    }
+
+    responsibilityChange: ResponsibilityList = null;
+    get ResponsibilityChange() { return this.responsibilityChange; }
+    set ResponsibilityChange(newValue: ResponsibilityList) {
+        if (newValue != null && this.Responsibility != newValue.Code) {
+            this.Responsibility = newValue.Code;
+        }
+    }
+
+    get TransportationInstructions() { return this.EntityPM.TransportationInstructions; }
+    set TransportationInstructions(newValue: string) {
+        if (this.EntityPM.TransportationInstructions != newValue) {
+            this.EntityPM.TransportationInstructions = newValue;
+        }
+    }
+
+    get TruckerId() { return this.EntityPM.TruckerId; }
+    set TruckerId(newValue: string) {
+        if (this.EntityPM.TruckerId != newValue) {
+            this.EntityPM.TruckerId = newValue;
         }
     }
 
@@ -576,6 +671,13 @@ export class AddressItemClass extends BaseComponent {
         }
     }
 
+    get Responsibility() { return this.EntityPM.Responsibility; }
+    set Responsibility(newValue: string) {
+        if (this.EntityPM.Responsibility != newValue) {
+            this.EntityPM.Responsibility = newValue;
+        }
+    }
+
     get IsLocalLanguage() { return this.EntityPM.IsLocalLanguage; }
     set IsLocalLanguage(newValue: boolean) {
         if (this.EntityPM.IsLocalLanguage != newValue) {
@@ -612,6 +714,8 @@ export class AddressItemClass extends BaseComponent {
             }
         }
     }
+
+
 
     private OnCountryChanged(list: CountryList) {
         if (list == null) {
@@ -727,4 +831,170 @@ export class AddressItemClass extends BaseComponent {
 
         this.IsCopyMainAddress = false;
     }
+
+    OnRowEnded($event) {
+        if (($event) == this.ItemsList.Length) {
+            this.AddItem();
+        }
+    }
+    AddItem() {
+        var item: TruckerSettingPM = new TruckerSettingPM();
+        item.Tenant = this.EntityPM.Tenant;
+        item.AddressId = this.EntityPM.Id;
+        if (!this.EntityPM.TruckerSettings.includes(item)) {
+            this.EntityPM.AddTruckerSettings(item);
+            this.ItemsList.Insert(new AddressTruckerSettingItem(item, this));
+
+        }
+    }
+
+    public SelectedRow: any = null;
+    OnRowSelected(itemComponent: any) {
+        this.SelectedRow = itemComponent;
+        if (this.ItemsList.Length == 0) {
+            this.AddItem();
+        }
+    }
+
+    OnFocus() {
+        if (this.ItemsList.Length == 0) {
+            this.AddItem();
+        }
+    }
+
+    DeleteButtonClicked(item) {
+        const deletedTruckerSetting = this.ItemsList.Collection.find((x) => x === item);
+        if (deletedTruckerSetting) {
+            this.ItemsList.Remove(deletedTruckerSetting);
+            this.EntityPM.RemoveTruckerSettingsitem(deletedTruckerSetting.EntityPM);
+        }
+    }
+
+
+
+}
+export class AddressTruckerSettingItem extends BaseComponent {
+    public entityPM: TruckerSettingPM;
+    public FatherComponent: AddressItemClass;
+    ObjectTableName = "TruckerSetting";
+    constructor(item: TruckerSettingPM, fatherComponent: AddressItemClass) {
+        super();
+        this.EntityPM = item;
+        this.FatherComponent = fatherComponent;
+        
+    }
+    get TruckerId() { return this.EntityPM.TruckerId; }
+    set TruckerId(newValue: string) {
+        if (this.EntityPM.TruckerId != newValue) {
+            this.EntityPM.TruckerId = newValue;
+            this.FatherComponent.EntityPM.MarkAsDirty();
+        }
+    }
+
+    get Responsibility() { return this.EntityPM.Responsibility; }
+    set Responsibility(newValue: string) {
+        if (this.EntityPM.Responsibility != newValue) {
+            this.EntityPM.Responsibility = newValue;
+            this.FatherComponent.EntityPM.MarkAsDirty();
+        }
+    }
+
+    get SearchFields() { return this.EntityPM.SearchFields; }
+    set SearchFields(newValue: string) {
+        if (this.EntityPM.SearchFields != newValue) {
+            this.EntityPM.SearchFields = newValue;
+        }
+    }
+
+    get FromAddressCityId() { return this.EntityPM.FromAddressCityId; }
+    set FromAddressCityId(newValue: string) {
+        if (this.EntityPM.FromAddressCityId != newValue) {
+            this.EntityPM.FromAddressCityId = newValue;
+            this.FatherComponent.EntityPM.MarkAsDirty();
+        }
+    }
+
+    fromAddressCityId: CountryCityList = null;
+    get FromCityChange() { return this.fromAddressCityId; }
+    set CityChange(newValue: CountryCityList) {
+        if (newValue != null && this.FromAddressCityId != newValue.Id) {
+            this.FromAddressCityId = newValue.Id;
+            this.FromAddressCityName = newValue?.LocalName;
+        }
+
+    }
+
+    toAddressCityId: CountryCityList = null;
+    get ToCityChange() { return this.ToCityChange; }
+    set ToCityChange(newValue: CountryCityList) {
+        if (newValue != null && this.ToAddressCityId != newValue.Id) {
+            this.ToAddressCityId = newValue.Id;
+            this.ToAddressCityName = newValue?.LocalName;
+        }
+    }
+
+    shipmentTypeChange: ShipmentTypeList = null;
+    get ShipmentTypeChange() { return this.shipmentTypeChange; }
+    set ShipmentTypeChange(newValue: ShipmentTypeList) {
+        if (newValue != null && this.ShipmentType != newValue.Id) {
+            this.ShipmentType = newValue.Id;
+        }
+    }
+
+
+    get ToAddressCityId() { return this.EntityPM.ToAddressCityId; }
+    set ToAddressCityId(newValue: string) {
+        if (this.EntityPM.ToAddressCityId != newValue) {
+            this.EntityPM.ToAddressCityId = newValue
+            this.FatherComponent.EntityPM.MarkAsDirty();
+        }
+    }
+
+    get ShipmentType() { return this.EntityPM.ShipmentType; }
+    set ShipmentType(newValue: string) {
+        if (this.EntityPM.ShipmentType != newValue) {
+            this.EntityPM.ShipmentType = newValue
+            this.FatherComponent.EntityPM.MarkAsDirty();
+        }
+    }
+
+    get ToAddressCityName() { return this.EntityPM.ToAddressCityName; }
+    set ToAddressCityName(newValue: string) {
+        if (this.EntityPM.ToAddressCityName != newValue) {
+            this.EntityPM.ToAddressCityName = newValue;
+        }
+    }
+
+    get FromAddressCityName() { return this.EntityPM.FromAddressCityName; }
+    set FromAddressCityName(newValue: string) {
+        if (this.EntityPM.FromAddressCityName != newValue) {
+            this.EntityPM.FromAddressCityName = newValue;
+        }
+    }
+
+    get ShipmentTypeName() { return this.EntityPM.ShipmentTypeName; }
+    set ShipmentTypeName(newValue: string) {
+        if (this.EntityPM.ShipmentTypeName != newValue) {
+            this.EntityPM.ShipmentTypeName = newValue;
+        }
+    }
+
+    get TruckerName() { return this.EntityPM.TruckerName; }
+    set TruckerName(newValue: string) {
+        if (this.EntityPM.TruckerName != newValue) {
+            this.EntityPM.TruckerName = newValue;
+        }
+    }
+
+    get ResponsibilityName() { return this.EntityPM.ResponsibilityName; }
+    set ResponsibilityName(newValue: string) {
+        if (this.EntityPM.ResponsibilityName != newValue) {
+            this.EntityPM.ResponsibilityName = newValue;
+        }
+    }
+
+
+
+
+
 }

@@ -142,25 +142,25 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string packageTypeCode ;
+	  private string packageTypeId ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string PackageTypeCode  
+       public string PackageTypeId  
 	   {
 	    
 	     get
 		{
-		   return packageTypeCode;
+		   return packageTypeId;
 		 }
 		 set
 		 {
-		   if(packageTypeCode != value)
+		   if(packageTypeId != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeCode",OldValue=packageTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeId",OldValue=packageTypeId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   packageTypeCode=value;
+		   packageTypeId=value;
 		   }
 			
 		 }

@@ -31,6 +31,8 @@ import { ShipmentDataTabComponent } from './Components/ShipmentData/ShipmentData
 import { ShipmentReferenceDetailsComponent } from './Components/ShipmentData/ShipmentReferenceDetails/ShipmentReferenceDetailsComponent';
 import { FreightForwarderReferenceDetailsComponent } from './Components/ShipmentData/FreightForwarderReferenceDetails/FreightForwarderReferenceDetailsComponent';
 import { InlandTransportTabComponent } from './Components/InlandTransport/InlandTransportTabComponent';
+import { AddEditInlandTransportComponent } from './Components/InlandTransport/AddEditInlandTransportComponent';
+import { InlandTransportMainTabComponent } from './Components/InlandTransport/InlandTransportTabs/InlandTransportMainTabComponent';
 
 export const Components =
     [
@@ -47,6 +49,8 @@ export const Components =
         ShipmentPackagesTabComponent,
         ShipmentDataTabComponent,
         InlandTransportTabComponent,
+        AddEditInlandTransportComponent,
+        InlandTransportMainTabComponent,
         ShipmentReferenceDetailsComponent,
         ExportFileComponent,
         OrdersTabComponent,
@@ -106,6 +110,8 @@ export class ModuleDeclarations {
             case "ShipmentPackagesTabComponent" : { myResult = ShipmentPackagesTabComponent; break; }
             case "ShipmentDataTabComponent" : { myResult = ShipmentDataTabComponent; break; }
             case "InlandTransportTabComponent" : { myResult = InlandTransportTabComponent; break; }
+            case "AddEditInlandTransportComponent" : { myResult = AddEditInlandTransportComponent; break; }
+            case "InlandTransportMainTabComponent" : { myResult = InlandTransportMainTabComponent; break; }
             case "ShipmentReferenceDetailsComponent" : { myResult = ShipmentReferenceDetailsComponent; break; }
             case "FreightForwarderReferenceDetailsComponent" : { myResult = FreightForwarderReferenceDetailsComponent; break; }
 

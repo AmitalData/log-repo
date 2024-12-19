@@ -34,6 +34,13 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public string Responsibility { get; set; }
 
+        public string ToAddressCityName { get; set; }
+        public string FromAddressCityName { get; set; }
+        public string TruckerName { get; set; }
+        public string ResponsibilityName { get; set; }
+        public string ShipmentTypeName { get; set; }
+
+
 
     }
 }

@@ -40,14 +40,15 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="PackageTypeCode"
+    Name="PackageTypeId"
+    OldNames="PackageTypeCode"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Relation
-    ForeignKeyColumn="PackageTypeCode"
+    ForeignKeyColumn="PackageTypeId"
     ReferencedTable="PackageTypes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />

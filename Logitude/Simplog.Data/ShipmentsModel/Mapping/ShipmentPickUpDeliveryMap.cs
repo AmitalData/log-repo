@@ -47,8 +47,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.PackageTypeCode).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.DescriptionOfGoods).HasMaxLength(2000).IsUnicode(false);
             this.Property(t => t.Commodity).HasMaxLength(5).IsUnicode(false);
-            this.Property(t => t.ToAddressCityId).HasMaxLength(5).IsUnicode(false);
-            this.Property(t => t.FromAddressCityId).HasMaxLength(5).IsUnicode(false);
+            this.Property(t => t.ToAddressCityId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.FromAddressCityId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ResponsibilityCode).HasMaxLength(1).IsUnicode(false);
 
             // Table & Column Mappings
@@ -96,14 +96,14 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.StandaloneShipmentNumber).HasColumnName("StandaloneShipmentNumber");
             this.Property(t => t.DeliveryContact).HasColumnName("DeliveryContact");
             this.Property(t => t.PackageTypeCode).HasColumnName("PackageTypeCode");
-            this.Property(t => t.DeliveryContact).HasColumnName("Quantity");
-            this.Property(t => t.DeliveryContact).HasColumnName("GrossWeight");
-            this.Property(t => t.DeliveryContact).HasColumnName("Volume");
-            this.Property(t => t.DeliveryContact).HasColumnName("CustomerChargeableWeight");
-            this.Property(t => t.DeliveryContact).HasColumnName("TruckerChargeableWeight");
+            this.Property(t => t.Quantity).HasColumnName("Quantity");
+            this.Property(t => t.GrossWeight).HasColumnName("GrossWeight");
+            this.Property(t => t.Volume).HasColumnName("Volume");
+            this.Property(t => t.CustomerChargeableWeight).HasColumnName("CustomerChargeableWeight");
+            this.Property(t => t.TruckerChargeableWeight).HasColumnName("TruckerChargeableWeight");
             this.Property(t => t.DescriptionOfGoods).HasColumnName("DescriptionOfGoods");
             this.Property(t => t.Commodity).HasColumnName("Commodity");
-            this.Property(t => t.DeliveryContact).HasColumnName("CreateDate");
+            this.Property(t => t.CreateDate).HasColumnName("CreateDate");
             this.Property(t => t.ToAddressCityId).HasColumnName("ToAddressCityId");
             this.Property(t => t.FromAddressCityId).HasColumnName("FromAddressCityId");
             this.Property(t => t.ResponsibilityCode).HasColumnName("ResponsibilityCode");
@@ -143,6 +143,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.ShipmentDeliveryContact).WithMany().HasForeignKey(d => d.DeliveryContact);
             this.HasOptional(t => t.PackageType).WithMany().HasForeignKey(d => d.PackageTypeCode);
             this.HasOptional(t => t.Responsibility).WithMany().HasForeignKey(d => d.ResponsibilityCode);
+            this.HasOptional(t => t.ToCountryCity).WithMany().HasForeignKey(d => d.ToAddressCityId);
+            this.HasOptional(t => t.FromCountryCity).WithMany().HasForeignKey(d => d.FromAddressCityId);
         }
     }
 }

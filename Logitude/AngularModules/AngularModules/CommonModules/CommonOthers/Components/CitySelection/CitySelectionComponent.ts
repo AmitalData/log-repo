@@ -89,6 +89,7 @@ export class CitySelectionComponent {
         this.SelectedCity = item;
 
         if (item == null) {
+            this.args.CityId = null;
             this.args.CityName = null;
             this.args.CityLocalName = null;
             this.args.CountryId = null;
@@ -97,6 +98,7 @@ export class CitySelectionComponent {
         }
 
         else {
+            this.args.CityId = item.Id;
             this.args.CityName = item.EnglishName;
             this.args.CityLocalName = item.LocalName;
             this.args.CountryId = item.CountryId;

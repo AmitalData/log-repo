@@ -49,9 +49,9 @@ export class PackingTypePM {
     public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
        
 	 
-    private packageTypeCode: string;
-    public get PackageTypeCode() { return this.packageTypeCode; }
-    public set PackageTypeCode(newValue: string) { if (this.packageTypeCode != newValue) { this.packageTypeCode = newValue; this.MarkAsDirty("PackageTypeCode"); } }
+    private packageTypeId: string;
+    public get PackageTypeId() { return this.packageTypeId; }
+    public set PackageTypeId(newValue: string) { if (this.packageTypeId != newValue) { this.packageTypeId = newValue; this.MarkAsDirty("PackageTypeId"); } }
        
 	 
 

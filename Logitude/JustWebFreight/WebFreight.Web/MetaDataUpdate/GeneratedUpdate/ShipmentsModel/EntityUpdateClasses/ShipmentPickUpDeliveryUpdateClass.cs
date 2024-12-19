@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
  
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentPickUpDeliveryUpdateClass
    {  		
-		public const string HashString = "f90f16d2cc2425fb098b5c2c5c345812";
+		public const string HashString = "1dcac351cd07edcdfac4b19ce37f5d0a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -131,7 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment Pickup Delivery",
-			      				    Code =  "75f3",
+			      				    Code =  "e65e",
 			      				    Name =  "ShipmentPickUpDelivery",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
@@ -4041,9 +4041,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "ToAddressCityId",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "City",
+					  						LookUpTableName =  "CountryCity",
 					  						MinLength =  0,
-					  						MaxLength =  5,
+					  						MaxLength =  15,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -4051,7 +4051,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  5,
+					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
@@ -4081,8 +4081,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullLocalDefaultTextBack_up =  "יישוב פריקה",
 					  						FullLocalDefaultText =  "BS64:IteZ15nXqdeV15Eg16TXqNeZ16fXlCI=",
 					  						IsForeignKey =  true,
-					  						ForeignEntity =  "City",
-					  						NavigationPropertyName =  "ToAddressCity",
+					  						ForeignEntity =  "CountryCity",
+					  						NavigationPropertyName =  "ToCountryCity",
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
@@ -4106,9 +4106,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "FromAddressCityId",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "City",
+					  						LookUpTableName =  "CountryCity",
 					  						MinLength =  0,
-					  						MaxLength =  5,
+					  						MaxLength =  15,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -4116,7 +4116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  5,
+					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
@@ -4146,8 +4146,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullLocalDefaultTextBack_up =  "יישוב טעינה",
 					  						FullLocalDefaultText =  "BS64:IteZ15nXqdeV15Eg15jXoteZ16DXlCI=",
 					  						IsForeignKey =  true,
-					  						ForeignEntity =  "City",
-					  						NavigationPropertyName =  "FromAddressCity",
+					  						ForeignEntity =  "CountryCity",
+					  						NavigationPropertyName =  "FromCountryCity",
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
@@ -4353,6 +4353,68 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CarrierName",
+					  						ObjectTableName =  "ShipmentPickUpDelivery",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  100,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CarrierName",
+					  						ListPropertyPath =  "CarrierName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CarrierName",
+					  						DefaultText =  "CarrierName",
+					  						FullLocalDefaultTextBack_up =  "מוביל",
+					  						FullLocalDefaultText =  "BS64:Itee15XXkdeZ15wi",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -4470,6 +4532,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryOExpectedEmptyReturn = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.O.ExpectedEmptyReturn", DefaultText = "Expected Empty Return",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryOActualEmptyReturn = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.O.ActualEmptyReturn", DefaultText = "Actual Empty Return",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryOOpenTransport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.O.OpenTransport", DefaultText = "Open Transport",LocalDefaultText = @"BS64:Itek16rXmdeX16og15TXldeR15zXlCI=", ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryOShipmentCertificateNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.O.ShipmentCertificateNumber", DefaultText = "Shipment Certificate Number",LocalDefaultText = @"BS64:Itee16EnINeq16LXldeT16og157Xqdec15XXlyI=", ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryOPickUpDeliveryNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.O.PickUpDeliveryNumber", DefaultText = "PickUpDeliveryNumber",LocalDefaultText = @"BS64:Itee16EnINeq16LXldeT16og157Xqdec15XXlyI=", ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryOCarrierName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.O.CarrierName", DefaultText = "Carrier Name",LocalDefaultText = @"BS64:Itee15XXkdeZ15wi", ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryORemoveDelivery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.O.RemoveDelivery", DefaultText = "Remove Delivery",LocalDefaultText = @"BS64:IteU15DXnSDXnNee15fXldenINeQ16og15TXlNeV15HXnNeUPyI=", ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

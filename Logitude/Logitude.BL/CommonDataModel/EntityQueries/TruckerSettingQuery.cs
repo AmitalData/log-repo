@@ -43,6 +43,51 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             throw new NotImplementedException();
         }
 
+        public IQueryable<TruckerSettingList> GetIQueryableEntityListByAddressId(string addressId, int tenant)
+        {
+            IQueryable<TruckerSettingList> entity = (from ts in repository.context.TruckerSettings.Include("CountryCity")
+                                                     where ts.Tenant == tenant && ts.AddressId == addressId
+                                                     select new TruckerSettingList()
+                                                     {
+                                                         Id = ts.Id,
+                                                         AddressId = ts.AddressId,
+                                                         FromAddressCityId = ts.FromAddressCityId,
+                                                         ShipmentType = ts.ShipmentType,
+                                                         ToAddressCityId = ts.ToAddressCityId,
+                                                         TruckerId = ts.TruckerId,
+                                                         Responsibility = ts.Responsibility,
+                                                         ToAddressCityName = ts.ToCity != null ? (string.IsNullOrEmpty(ts.ToCity.LocalName) ? ts.ToCity.EnglishName : ts.ToCity.LocalName) : string.Empty,
+                                                         FromAddressCityName = ts.FromAddressCityId != null ? (string.IsNullOrEmpty(ts.FromCity.LocalName) ? ts.FromCity.EnglishName : ts.FromCity.LocalName) : string.Empty,
+                                                         Tenant = ts.Tenant,
+                                                         ShipmentTypeName = ts.ShipmentTypeNavigation.Name,
+                                                         ResponsibilityName = ts.ResponsibilityEntity.LocalName,
+                                                         TruckerName = ts.Trucker != null ? (ts.Trucker.Card != null ? (string.IsNullOrEmpty(ts.Trucker.Card.LocalName) ? ts.Trucker.Card.EnglishName : ts.Trucker.Card.LocalName) : string.Empty) : string.Empty,
+                                                     });
+            return entity;
+        }
+
+        public IQueryable<TruckerSettingList> GetTruckerSettingForDefaultShipmentDelivery(string fromAddressCityId, string toAddressCityId, string shipmentType, int tenant)
+        {
+            IQueryable<TruckerSettingList> entity = (from ts in repository.context.TruckerSettings
+
+                                                     where ts.Tenant == tenant 
+                                                         && ts.FromAddressCityId == fromAddressCityId && ts.ToAddressCityId == toAddressCityId 
+                                                         && (ts.ShipmentType == shipmentType || ts.ShipmentType == "all")
+                                                     select new TruckerSettingList()
+                                                     {
+                                                         Id = ts.Id,
+                                                         AddressId = ts.AddressId,
+                                                         FromAddressCityId = ts.FromAddressCityId,
+                                                         ShipmentType = ts.ShipmentType,
+                                                         ToAddressCityId = ts.ToAddressCityId,
+                                                         TruckerId = ts.TruckerId,
+                                                         Responsibility = ts.Responsibility,
+                                                         Tenant = ts.Tenant,
+                                                         ResponsibilityName = ts.ResponsibilityEntity.LocalName,
+                                                     });
+            return entity;
+        }
+
         public TruckerSettingPM GetSinglePM(string id, int tenant)
         {
             TruckerSettingPM entity = (from a in repository.context.TruckerSettings

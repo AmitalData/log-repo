@@ -32,7 +32,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool Inactive  { get; set; }
        [DataMember]
-       public string CityCode  { get; set; }
+       public string CityId  { get; set; }
    }
 
 }

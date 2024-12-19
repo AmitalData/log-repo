@@ -55,11 +55,13 @@ export class ShipmentValidator implements IShipmentValidator {
                 }
             }
 
-            this.ValidatePackages();
-            this.ValidatePickups();
-            this.ValidateDeliveries();
-            this.ValidatePayables();
-            this.ValidateReceivables();
+            if  (!this.entityPM.IsCustomShipment) {
+                this.ValidatePackages();
+                this.ValidatePickups();
+                this.ValidateDeliveries();
+                this.ValidatePayables();
+                this.ValidateReceivables();
+            }
             
             //this.ValidateProductItems();
             RoutingHelper.ValidateRoutingsActualDates(entityPM, this.Errors);
@@ -128,7 +130,7 @@ export class ShipmentValidator implements IShipmentValidator {
         }
     }
     private ValidateInlandDomestic() {
-        if (this.IsInlandDomestic) {
+        if (this.IsInlandDomestic && !this.entityPM.IsCustomShipment) {
             if (this.entityPM.ShipmentLevelCode == "C") {
                 this.Errors.push("Master inland domestic are not allowed");
             }
