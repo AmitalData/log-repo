@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class ContactDoneMethodQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ContactDoneMethod,ContactDoneMethodKeys<string>,ContactDoneMethodPM,ContactDoneMethodList,string>
    {
         public ContactDoneMethodQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public ContactDoneMethodQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ContactDoneMethod>(context),new ContactDoneMethodDataMapping()) {}
+        public ContactDoneMethodQueryService(IAmitalCloudContext context) : this(new Repository<POCO.ContactDoneMethod>(context)) {}
+		public ContactDoneMethodQueryService(IRepository<POCO.ContactDoneMethod> repository) : base(repository,  new ContactDoneMethodDataMapping()) { }
 		public  ContactDoneMethodPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new ContactDoneMethodKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ContactDoneMethod,string> GetKeys(POCO.ContactDoneMethod entityPOCO) => new ContactDoneMethodKeys<string>() { Code = entityPOCO.Code,  };
    }

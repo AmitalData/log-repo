@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class ReportExecutionLogQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ReportExecutionLog,ReportExecutionLogKeys<string>,ReportExecutionLogPM,ReportExecutionLogList,string>
    {
         public ReportExecutionLogQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public ReportExecutionLogQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ReportExecutionLog>(context),new ReportExecutionLogDataMapping()) {}
+        public ReportExecutionLogQueryService(IAmitalCloudContext context) : this(new Repository<POCO.ReportExecutionLog>(context)) {}
+		public ReportExecutionLogQueryService(IRepository<POCO.ReportExecutionLog> repository) : base(repository,  new ReportExecutionLogDataMapping()) { }
 		public  ReportExecutionLogPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ReportExecutionLogKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ReportExecutionLog,string> GetKeys(POCO.ReportExecutionLog entityPOCO) => new ReportExecutionLogKeys<string>() { Id = entityPOCO.Id,  };
    }

@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class ChargesTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ChargesType,ChargesTypeKeys<string>,ChargesTypePM,ChargesTypeList,string>
    {
         public ChargesTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public ChargesTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ChargesType>(context),new ChargesTypeDataMapping()) {}
+        public ChargesTypeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.ChargesType>(context)) {}
+		public ChargesTypeQueryService(IRepository<POCO.ChargesType> repository) : base(repository,  new ChargesTypeDataMapping()) { }
 		public  ChargesTypePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ChargesTypeKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ChargesType,string> GetKeys(POCO.ChargesType entityPOCO) => new ChargesTypeKeys<string>() { Id = entityPOCO.Id,  };
    }

@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class TarrifHeaderQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.TarrifHeader,TarrifHeaderKeys<string>,TarrifHeaderPM,TarrifHeaderList,string>
    {
         public TarrifHeaderQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public TarrifHeaderQueryService(IAmitalCloudContext context) : base(new Repository<POCO.TarrifHeader>(context),new TarrifHeaderDataMapping()) {}
+        public TarrifHeaderQueryService(IAmitalCloudContext context) : this(new Repository<POCO.TarrifHeader>(context)) {}
+		public TarrifHeaderQueryService(IRepository<POCO.TarrifHeader> repository) : base(repository,  new TarrifHeaderDataMapping()) { }
 		public  TarrifHeaderPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new TarrifHeaderKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.TarrifHeader,string> GetKeys(POCO.TarrifHeader entityPOCO) => new TarrifHeaderKeys<string>() { Id = entityPOCO.Id,  };
    }

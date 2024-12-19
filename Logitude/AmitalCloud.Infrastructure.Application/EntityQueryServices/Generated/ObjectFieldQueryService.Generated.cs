@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class ObjectFieldQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ObjectField,ObjectFieldKeys<string>,ObjectFieldPM,ObjectFieldList,string>
    {
         public ObjectFieldQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public ObjectFieldQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ObjectField>(context),new ObjectFieldDataMapping()) {}
+        public ObjectFieldQueryService(IAmitalCloudContext context) : this(new Repository<POCO.ObjectField>(context)) {}
+		public ObjectFieldQueryService(IRepository<POCO.ObjectField> repository) : base(repository,  new ObjectFieldDataMapping()) { }
 		public  ObjectFieldPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ObjectFieldKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ObjectField,string> GetKeys(POCO.ObjectField entityPOCO) => new ObjectFieldKeys<string>() { Id = entityPOCO.Id,  };
    }

@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class HybridPartnerQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.HybridPartner,HybridPartnerKeys<string>,HybridPartnerPM,HybridPartnerList,string>
    {
         public HybridPartnerQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public HybridPartnerQueryService(IAmitalCloudContext context) : base(new Repository<POCO.HybridPartner>(context),new HybridPartnerDataMapping()) {}
+        public HybridPartnerQueryService(IAmitalCloudContext context) : this(new Repository<POCO.HybridPartner>(context)) {}
+		public HybridPartnerQueryService(IRepository<POCO.HybridPartner> repository) : base(repository,  new HybridPartnerDataMapping()) { }
 		public  HybridPartnerPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new HybridPartnerKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.HybridPartner,string> GetKeys(POCO.HybridPartner entityPOCO) => new HybridPartnerKeys<string>() { Id = entityPOCO.Id,  };
    }

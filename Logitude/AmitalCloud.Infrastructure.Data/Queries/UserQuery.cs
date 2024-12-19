@@ -6,7 +6,7 @@ using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+
 using System.Linq;
 using System.Web;
 using AmitalCloud.Infrastructure.Data.Context;
@@ -24,10 +24,17 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         public UserQuery() : this(0)
         {
         }
-        public UserQuery(int tenant)
+        public UserQuery(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {
-            context = AmitalCloudContext.GetContext(tenant);
-            repository = new Repository<User>(context);
+        }
+        public UserQuery(IAmitalCloudContext context) : this(new Repository<User>(context))
+        {
+            this.context = context;
+        }
+
+        public UserQuery(IRepository<User> repository)
+        {
+            this.repository = repository;
         }
         #endregion Constructors
         #region Private Methods

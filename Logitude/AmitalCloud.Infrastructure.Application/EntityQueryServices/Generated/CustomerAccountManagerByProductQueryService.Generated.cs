@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CustomerAccountManagerByProductQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomerAccountManagerByProduct,CustomerAccountManagerByProductKeys<string>,CustomerAccountManagerByProductPM,CustomerAccountManagerByProductList,string>
    {
         public CustomerAccountManagerByProductQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CustomerAccountManagerByProductQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomerAccountManagerByProduct>(context),new CustomerAccountManagerByProductDataMapping()) {}
+        public CustomerAccountManagerByProductQueryService(IAmitalCloudContext context) : this(new Repository<POCO.CustomerAccountManagerByProduct>(context)) {}
+		public CustomerAccountManagerByProductQueryService(IRepository<POCO.CustomerAccountManagerByProduct> repository) : base(repository,  new CustomerAccountManagerByProductDataMapping()) { }
 		public  CustomerAccountManagerByProductPM GetSingle(string producttypecode, string customerid,bool getComposition, bool getFromCache) => base.GetSingle(new CustomerAccountManagerByProductKeys<string>(){ ProductTypeCode = producttypecode, CustomerId = customerid }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomerAccountManagerByProduct,string> GetKeys(POCO.CustomerAccountManagerByProduct entityPOCO) => new CustomerAccountManagerByProductKeys<string>() { ProductTypeCode = entityPOCO.ProductTypeCode, CustomerId = entityPOCO.CustomerId,  };
    }

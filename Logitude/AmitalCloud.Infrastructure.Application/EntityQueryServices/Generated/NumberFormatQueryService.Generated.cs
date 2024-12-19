@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class NumberFormatQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.NumberFormat,NumberFormatKeys<string>,NumberFormatPM,NumberFormatList,string>
    {
         public NumberFormatQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public NumberFormatQueryService(IAmitalCloudContext context) : base(new Repository<POCO.NumberFormat>(context),new NumberFormatDataMapping()) {}
+        public NumberFormatQueryService(IAmitalCloudContext context) : this(new Repository<POCO.NumberFormat>(context)) {}
+		public NumberFormatQueryService(IRepository<POCO.NumberFormat> repository) : base(repository,  new NumberFormatDataMapping()) { }
 		public  NumberFormatPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new NumberFormatKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.NumberFormat,string> GetKeys(POCO.NumberFormat entityPOCO) => new NumberFormatKeys<string>() { Code = entityPOCO.Code,  };
    }

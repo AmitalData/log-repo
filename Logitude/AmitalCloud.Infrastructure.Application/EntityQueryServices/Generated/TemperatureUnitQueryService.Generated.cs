@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class TemperatureUnitQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.TemperatureUnit,TemperatureUnitKeys<string>,TemperatureUnitPM,TemperatureUnitList,string>
    {
         public TemperatureUnitQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public TemperatureUnitQueryService(IAmitalCloudContext context) : base(new Repository<POCO.TemperatureUnit>(context),new TemperatureUnitDataMapping()) {}
+        public TemperatureUnitQueryService(IAmitalCloudContext context) : this(new Repository<POCO.TemperatureUnit>(context)) {}
+		public TemperatureUnitQueryService(IRepository<POCO.TemperatureUnit> repository) : base(repository,  new TemperatureUnitDataMapping()) { }
 		public  TemperatureUnitPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new TemperatureUnitKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.TemperatureUnit,string> GetKeys(POCO.TemperatureUnit entityPOCO) => new TemperatureUnitKeys<string>() { Code = entityPOCO.Code,  };
    }

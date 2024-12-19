@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class ReportsTemplatesVersionQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ReportsTemplatesVersion,ReportsTemplatesVersionKeys<string>,ReportsTemplatesVersionPM,ReportsTemplatesVersionList,string>
    {
         public ReportsTemplatesVersionQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public ReportsTemplatesVersionQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ReportsTemplatesVersion>(context),new ReportsTemplatesVersionDataMapping()) {}
+        public ReportsTemplatesVersionQueryService(IAmitalCloudContext context) : this(new Repository<POCO.ReportsTemplatesVersion>(context)) {}
+		public ReportsTemplatesVersionQueryService(IRepository<POCO.ReportsTemplatesVersion> repository) : base(repository,  new ReportsTemplatesVersionDataMapping()) { }
 		public  ReportsTemplatesVersionPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ReportsTemplatesVersionKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ReportsTemplatesVersion,string> GetKeys(POCO.ReportsTemplatesVersion entityPOCO) => new ReportsTemplatesVersionKeys<string>() { Id = entityPOCO.Id,  };
    }

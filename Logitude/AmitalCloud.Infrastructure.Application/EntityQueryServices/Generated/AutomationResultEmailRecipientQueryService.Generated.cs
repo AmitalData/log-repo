@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class AutomationResultEmailRecipientQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.AutomationResultEmailRecipient,AutomationResultEmailRecipientKeys<string>,AutomationResultEmailRecipientPM,AutomationResultEmailRecipientList,string>
    {
         public AutomationResultEmailRecipientQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public AutomationResultEmailRecipientQueryService(IAmitalCloudContext context) : base(new Repository<POCO.AutomationResultEmailRecipient>(context),new AutomationResultEmailRecipientDataMapping()) {}
+        public AutomationResultEmailRecipientQueryService(IAmitalCloudContext context) : this(new Repository<POCO.AutomationResultEmailRecipient>(context)) {}
+		public AutomationResultEmailRecipientQueryService(IRepository<POCO.AutomationResultEmailRecipient> repository) : base(repository,  new AutomationResultEmailRecipientDataMapping()) { }
 		public  AutomationResultEmailRecipientPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new AutomationResultEmailRecipientKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AutomationResultEmailRecipient,string> GetKeys(POCO.AutomationResultEmailRecipient entityPOCO) => new AutomationResultEmailRecipientKeys<string>() { Id = entityPOCO.Id,  };
    }

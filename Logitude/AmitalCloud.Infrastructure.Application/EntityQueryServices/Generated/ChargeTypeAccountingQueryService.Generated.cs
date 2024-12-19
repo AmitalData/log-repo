@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class ChargeTypeAccountingQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ChargeTypeAccounting,ChargeTypeAccountingKeys<string>,ChargeTypeAccountingPM,ChargeTypeAccountingList,string>
    {
         public ChargeTypeAccountingQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public ChargeTypeAccountingQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ChargeTypeAccounting>(context),new ChargeTypeAccountingDataMapping()) {}
+        public ChargeTypeAccountingQueryService(IAmitalCloudContext context) : this(new Repository<POCO.ChargeTypeAccounting>(context)) {}
+		public ChargeTypeAccountingQueryService(IRepository<POCO.ChargeTypeAccounting> repository) : base(repository,  new ChargeTypeAccountingDataMapping()) { }
 		public  ChargeTypeAccountingPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ChargeTypeAccountingKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ChargeTypeAccounting,string> GetKeys(POCO.ChargeTypeAccounting entityPOCO) => new ChargeTypeAccountingKeys<string>() { Id = entityPOCO.Id,  };
    }

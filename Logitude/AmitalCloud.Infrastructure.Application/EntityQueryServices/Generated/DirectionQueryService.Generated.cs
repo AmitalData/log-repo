@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class DirectionQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Direction,DirectionKeys<string>,DirectionPM,DirectionList,string>
    {
         public DirectionQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public DirectionQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Direction>(context),new DirectionDataMapping()) {}
+        public DirectionQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Direction>(context)) {}
+		public DirectionQueryService(IRepository<POCO.Direction> repository) : base(repository,  new DirectionDataMapping()) { }
 		public  DirectionPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DirectionKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Direction,string> GetKeys(POCO.Direction entityPOCO) => new DirectionKeys<string>() { Id = entityPOCO.Id,  };
    }

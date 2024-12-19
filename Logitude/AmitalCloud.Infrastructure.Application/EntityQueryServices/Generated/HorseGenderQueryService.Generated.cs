@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class HorseGenderQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.HorseGender,HorseGenderKeys<string>,HorseGenderPM,HorseGenderList,string>
    {
         public HorseGenderQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public HorseGenderQueryService(IAmitalCloudContext context) : base(new Repository<POCO.HorseGender>(context),new HorseGenderDataMapping()) {}
+        public HorseGenderQueryService(IAmitalCloudContext context) : this(new Repository<POCO.HorseGender>(context)) {}
+		public HorseGenderQueryService(IRepository<POCO.HorseGender> repository) : base(repository,  new HorseGenderDataMapping()) { }
 		public  HorseGenderPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new HorseGenderKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.HorseGender,string> GetKeys(POCO.HorseGender entityPOCO) => new HorseGenderKeys<string>() { Code = entityPOCO.Code,  };
    }

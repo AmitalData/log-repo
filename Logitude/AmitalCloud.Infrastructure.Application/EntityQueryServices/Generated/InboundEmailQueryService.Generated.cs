@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class InboundEmailQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.InboundEmail,InboundEmailKeys<string>,InboundEmailPM,InboundEmailList,string>
    {
         public InboundEmailQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public InboundEmailQueryService(IAmitalCloudContext context) : base(new Repository<POCO.InboundEmail>(context),new InboundEmailDataMapping()) {}
+        public InboundEmailQueryService(IAmitalCloudContext context) : this(new Repository<POCO.InboundEmail>(context)) {}
+		public InboundEmailQueryService(IRepository<POCO.InboundEmail> repository) : base(repository,  new InboundEmailDataMapping()) { }
 		public  InboundEmailPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new InboundEmailKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.InboundEmail,string> GetKeys(POCO.InboundEmail entityPOCO) => new InboundEmailKeys<string>() { Id = entityPOCO.Id,  };
    }

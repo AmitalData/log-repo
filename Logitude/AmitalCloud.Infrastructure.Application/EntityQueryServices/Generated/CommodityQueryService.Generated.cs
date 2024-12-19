@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CommodityQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Commodity,CommodityKeys<string>,CommodityPM,CommodityList,string>
    {
         public CommodityQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CommodityQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Commodity>(context),new CommodityDataMapping()) {}
+        public CommodityQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Commodity>(context)) {}
+		public CommodityQueryService(IRepository<POCO.Commodity> repository) : base(repository,  new CommodityDataMapping()) { }
 		public  CommodityPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CommodityKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Commodity,string> GetKeys(POCO.Commodity entityPOCO) => new CommodityKeys<string>() { Id = entityPOCO.Id,  };
    }

@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class ProductTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ProductType,ProductTypeKeys<string>,ProductTypePM,ProductTypeList,string>
    {
         public ProductTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public ProductTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ProductType>(context),new ProductTypeDataMapping()) {}
+        public ProductTypeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.ProductType>(context)) {}
+		public ProductTypeQueryService(IRepository<POCO.ProductType> repository) : base(repository,  new ProductTypeDataMapping()) { }
 		public  ProductTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new ProductTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ProductType,string> GetKeys(POCO.ProductType entityPOCO) => new ProductTypeKeys<string>() { Code = entityPOCO.Code,  };
    }

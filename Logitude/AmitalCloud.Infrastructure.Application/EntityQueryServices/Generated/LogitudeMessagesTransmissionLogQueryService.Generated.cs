@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class LogitudeMessagesTransmissionLogQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.LogitudeMessagesTransmissionLog,LogitudeMessagesTransmissionLogKeys<string>,LogitudeMessagesTransmissionLogPM,LogitudeMessagesTransmissionLogList,string>
    {
         public LogitudeMessagesTransmissionLogQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public LogitudeMessagesTransmissionLogQueryService(IAmitalCloudContext context) : base(new Repository<POCO.LogitudeMessagesTransmissionLog>(context),new LogitudeMessagesTransmissionLogDataMapping()) {}
+        public LogitudeMessagesTransmissionLogQueryService(IAmitalCloudContext context) : this(new Repository<POCO.LogitudeMessagesTransmissionLog>(context)) {}
+		public LogitudeMessagesTransmissionLogQueryService(IRepository<POCO.LogitudeMessagesTransmissionLog> repository) : base(repository,  new LogitudeMessagesTransmissionLogDataMapping()) { }
 		public  LogitudeMessagesTransmissionLogPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new LogitudeMessagesTransmissionLogKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.LogitudeMessagesTransmissionLog,string> GetKeys(POCO.LogitudeMessagesTransmissionLog entityPOCO) => new LogitudeMessagesTransmissionLogKeys<string>() { Id = entityPOCO.Id,  };
    }

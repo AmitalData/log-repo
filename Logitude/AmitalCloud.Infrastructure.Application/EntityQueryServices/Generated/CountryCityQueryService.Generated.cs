@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CountryCityQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CountryCity,CountryCityKeys<string>,CountryCityPM,CountryCityList,string>
    {
         public CountryCityQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CountryCityQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CountryCity>(context),new CountryCityDataMapping()) {}
+        public CountryCityQueryService(IAmitalCloudContext context) : this(new Repository<POCO.CountryCity>(context)) {}
+		public CountryCityQueryService(IRepository<POCO.CountryCity> repository) : base(repository,  new CountryCityDataMapping()) { }
 		public  CountryCityPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CountryCityKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CountryCity,string> GetKeys(POCO.CountryCity entityPOCO) => new CountryCityKeys<string>() { Id = entityPOCO.Id,  };
    }

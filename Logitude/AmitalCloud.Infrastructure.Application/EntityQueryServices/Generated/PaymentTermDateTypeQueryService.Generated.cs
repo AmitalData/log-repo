@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class PaymentTermDateTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.PaymentTermDateType,PaymentTermDateTypeKeys<string>,PaymentTermDateTypePM,PaymentTermDateTypeList,string>
    {
         public PaymentTermDateTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public PaymentTermDateTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.PaymentTermDateType>(context),new PaymentTermDateTypeDataMapping()) {}
+        public PaymentTermDateTypeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.PaymentTermDateType>(context)) {}
+		public PaymentTermDateTypeQueryService(IRepository<POCO.PaymentTermDateType> repository) : base(repository,  new PaymentTermDateTypeDataMapping()) { }
 		public  PaymentTermDateTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new PaymentTermDateTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.PaymentTermDateType,string> GetKeys(POCO.PaymentTermDateType entityPOCO) => new PaymentTermDateTypeKeys<string>() { Code = entityPOCO.Code,  };
    }

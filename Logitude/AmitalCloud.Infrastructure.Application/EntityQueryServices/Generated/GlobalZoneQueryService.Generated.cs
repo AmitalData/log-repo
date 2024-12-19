@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class GlobalZoneQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.GlobalZone,GlobalZoneKeys<string>,GlobalZonePM,GlobalZoneList,string>
    {
         public GlobalZoneQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public GlobalZoneQueryService(IAmitalCloudContext context) : base(new Repository<POCO.GlobalZone>(context),new GlobalZoneDataMapping()) {}
+        public GlobalZoneQueryService(IAmitalCloudContext context) : this(new Repository<POCO.GlobalZone>(context)) {}
+		public GlobalZoneQueryService(IRepository<POCO.GlobalZone> repository) : base(repository,  new GlobalZoneDataMapping()) { }
 		public  GlobalZonePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new GlobalZoneKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.GlobalZone,string> GetKeys(POCO.GlobalZone entityPOCO) => new GlobalZoneKeys<string>() { Id = entityPOCO.Id,  };
    }

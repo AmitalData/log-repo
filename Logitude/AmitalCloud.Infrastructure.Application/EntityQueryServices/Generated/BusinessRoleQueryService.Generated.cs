@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class BusinessRoleQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.BusinessRole,BusinessRoleKeys<string>,BusinessRolePM,BusinessRoleList,string>
    {
         public BusinessRoleQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public BusinessRoleQueryService(IAmitalCloudContext context) : base(new Repository<POCO.BusinessRole>(context),new BusinessRoleDataMapping()) {}
+        public BusinessRoleQueryService(IAmitalCloudContext context) : this(new Repository<POCO.BusinessRole>(context)) {}
+		public BusinessRoleQueryService(IRepository<POCO.BusinessRole> repository) : base(repository,  new BusinessRoleDataMapping()) { }
 		public  BusinessRolePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new BusinessRoleKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.BusinessRole,string> GetKeys(POCO.BusinessRole entityPOCO) => new BusinessRoleKeys<string>() { Id = entityPOCO.Id,  };
    }

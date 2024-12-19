@@ -19,16 +19,6 @@ namespace AmitalCloud.Infrastructure.Data.Security
     {
         [ThreadStatic]
         public static bool IsWorkerRoleCall = false;
-
-        public static int GetTenant()
-        {
-            if (HttpContext.Current.Items.Contains("Tenant"))
-                return (int)HttpContext.Current.Items["Tenant"];
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            return authToken.Tenant;
-        }
-
         public static string GetAuthenticatedUser()
         {
             if (IsWorkerRoleCall && !string.IsNullOrEmpty(AuthenticationUtil.AuthenticatedUserEmail)) //for calling the excel export data from WR 
@@ -761,12 +751,9 @@ namespace AmitalCloud.Infrastructure.Data.Security
                             }
                         }
                     }
-                    bool isBlocking;
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        IGlobalContext globalcontext = GlobalContext.GetContext();
-                        isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;
-                        if (isBlocking)
+                        if (GlobalDBRepository.GetGlobalDBByTenant(tenant).IsBlocking)
                         {
                             if (HttpContext.Current.Response.Headers["MobileUpgrading"] != null)
                             {

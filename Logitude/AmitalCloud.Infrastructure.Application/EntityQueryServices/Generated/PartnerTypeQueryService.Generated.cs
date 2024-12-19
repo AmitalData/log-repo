@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class PartnerTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.PartnerType,PartnerTypeKeys<string>,PartnerTypePM,PartnerTypeList,string>
    {
         public PartnerTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public PartnerTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.PartnerType>(context),new PartnerTypeDataMapping()) {}
+        public PartnerTypeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.PartnerType>(context)) {}
+		public PartnerTypeQueryService(IRepository<POCO.PartnerType> repository) : base(repository,  new PartnerTypeDataMapping()) { }
 		public  PartnerTypePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new PartnerTypeKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.PartnerType,string> GetKeys(POCO.PartnerType entityPOCO) => new PartnerTypeKeys<string>() { Id = entityPOCO.Id,  };
    }

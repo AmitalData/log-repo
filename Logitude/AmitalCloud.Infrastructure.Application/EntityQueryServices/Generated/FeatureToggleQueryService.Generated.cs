@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class FeatureToggleQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.FeatureToggle,FeatureToggleKeys<string>,FeatureTogglePM,FeatureToggleList,string>
    {
         public FeatureToggleQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public FeatureToggleQueryService(IAmitalCloudContext context) : base(new Repository<POCO.FeatureToggle>(context),new FeatureToggleDataMapping()) {}
+        public FeatureToggleQueryService(IAmitalCloudContext context) : this(new Repository<POCO.FeatureToggle>(context)) {}
+		public FeatureToggleQueryService(IRepository<POCO.FeatureToggle> repository) : base(repository,  new FeatureToggleDataMapping()) { }
 		public  FeatureTogglePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new FeatureToggleKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.FeatureToggle,string> GetKeys(POCO.FeatureToggle entityPOCO) => new FeatureToggleKeys<string>() { Id = entityPOCO.Id,  };
    }

@@ -19,7 +19,7 @@ using AmitalCloud.Infrastructure.Domain.Enums;
 
 namespace AmitalCloud.Infrastructure.Data.Context
 {
-   public class AmitalCloudContext: DbContextBase, IAmitalCloudContext
+   public class AmitalCloudContext: DbContextBase, Domain.Interfaces.IAmitalCloudContext
     {
     	private int _tenant;
         public AmitalCloudContext()
@@ -38,7 +38,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
             _tenant = tenant;
         }
 
-        public static IAmitalCloudContext GetContext(int tenant)
+        public static Domain.Interfaces.IAmitalCloudContext GetContext(int tenant)
         {           
             GlobalDB currentDb;
 			currentDb = GlobalDbHelper.GetGlobalDB(tenant);
@@ -188,7 +188,9 @@ namespace AmitalCloud.Infrastructure.Data.Context
 	            modelBuilder.Configurations.Add(new FilingInboxMap());
 	            modelBuilder.Configurations.Add(new FilingInboxAttachmentMap());
 	            modelBuilder.Configurations.Add(new FilingInboxAttachmentLogMap());
+	            modelBuilder.Configurations.Add(new FollowUpMap());
 	            modelBuilder.Configurations.Add(new FTPDetailMap());
+	            modelBuilder.Configurations.Add(new GeneralMap());
 	            modelBuilder.Configurations.Add(new GlobalZoneMap());
 	            modelBuilder.Configurations.Add(new HorseMap());
 	            modelBuilder.Configurations.Add(new HorseGenderMap());
@@ -755,7 +757,9 @@ public IDbSet<Account> Accounts1  {  get; set; }
 	public IDbSet<FilingInbox> FilingInboxes  {  get; set; }
 	public IDbSet<FilingInboxAttachment> FilingInboxAttachments  {  get; set; }
 	public IDbSet<FilingInboxAttachmentLog> FilingInboxAttachmentLogs  {  get; set; }
+	public IDbSet<FollowUp> FollowUps  {  get; set; }
 	public IDbSet<FTPDetail> FTPDetails  {  get; set; }
+	public IDbSet<General> Generals  {  get; set; }
 	public IDbSet<GlobalZone> GlobalZones  {  get; set; }
 	public IDbSet<Horse> Horses  {  get; set; }
 	public IDbSet<HorseGender> HorseGenders  {  get; set; }
@@ -924,6 +928,10 @@ public IDbSet<UserLoginLog> UserLoginLogs { get;set; }
 public IDbSet<UserPermittedBranch> UserPermittedBranches { get;set; }
 public IDbSet<UserPermittedProduct> UserPermittedProducts { get;set; }
 public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get;set; }
+public IDbSet<DocumentsMetaDataType> DocumentsMetaDataTypes { get; set; }
+public IDbSet<DocumentsFilingMetaDataValue> DocumentsFilingMetaDataValues { get; set; }
+public IDbSet<CommunicationLogStep> CommunicationLogSteps { get; set; }
+public IDbSet<GeneralLock> GeneralLocks { get; set ;}
 public int Tenant => _tenant;
  }
 }

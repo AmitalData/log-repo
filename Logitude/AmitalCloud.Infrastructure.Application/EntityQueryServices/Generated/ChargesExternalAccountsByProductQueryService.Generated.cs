@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class ChargesExternalAccountsByProductQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ChargesExternalAccountsByProduct,ChargesExternalAccountsByProductKeys<string>,ChargesExternalAccountsByProductPM,ChargesExternalAccountsByProductList,string>
    {
         public ChargesExternalAccountsByProductQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public ChargesExternalAccountsByProductQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ChargesExternalAccountsByProduct>(context),new ChargesExternalAccountsByProductDataMapping()) {}
+        public ChargesExternalAccountsByProductQueryService(IAmitalCloudContext context) : this(new Repository<POCO.ChargesExternalAccountsByProduct>(context)) {}
+		public ChargesExternalAccountsByProductQueryService(IRepository<POCO.ChargesExternalAccountsByProduct> repository) : base(repository,  new ChargesExternalAccountsByProductDataMapping()) { }
 		public  ChargesExternalAccountsByProductPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ChargesExternalAccountsByProductKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ChargesExternalAccountsByProduct,string> GetKeys(POCO.ChargesExternalAccountsByProduct entityPOCO) => new ChargesExternalAccountsByProductKeys<string>() { Id = entityPOCO.Id,  };
    }

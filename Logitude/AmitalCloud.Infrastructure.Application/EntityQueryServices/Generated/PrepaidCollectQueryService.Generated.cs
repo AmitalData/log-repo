@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class PrepaidCollectQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.PrepaidCollect,PrepaidCollectKeys<string>,PrepaidCollectPM,PrepaidCollectList,string>
    {
         public PrepaidCollectQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public PrepaidCollectQueryService(IAmitalCloudContext context) : base(new Repository<POCO.PrepaidCollect>(context),new PrepaidCollectDataMapping()) {}
+        public PrepaidCollectQueryService(IAmitalCloudContext context) : this(new Repository<POCO.PrepaidCollect>(context)) {}
+		public PrepaidCollectQueryService(IRepository<POCO.PrepaidCollect> repository) : base(repository,  new PrepaidCollectDataMapping()) { }
 		public  PrepaidCollectPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new PrepaidCollectKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.PrepaidCollect,string> GetKeys(POCO.PrepaidCollect entityPOCO) => new PrepaidCollectKeys<string>() { Id = entityPOCO.Id,  };
    }

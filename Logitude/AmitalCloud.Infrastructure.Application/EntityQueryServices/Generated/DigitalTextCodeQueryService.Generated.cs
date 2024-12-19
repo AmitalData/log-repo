@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class DigitalTextCodeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DigitalTextCode,DigitalTextCodeKeys<string>,DigitalTextCodePM,DigitalTextCodeList,string>
    {
         public DigitalTextCodeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public DigitalTextCodeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DigitalTextCode>(context),new DigitalTextCodeDataMapping()) {}
+        public DigitalTextCodeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.DigitalTextCode>(context)) {}
+		public DigitalTextCodeQueryService(IRepository<POCO.DigitalTextCode> repository) : base(repository,  new DigitalTextCodeDataMapping()) { }
 		public  DigitalTextCodePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DigitalTextCodeKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DigitalTextCode,string> GetKeys(POCO.DigitalTextCode entityPOCO) => new DigitalTextCodeKeys<string>() { Id = entityPOCO.Id,  };
    }

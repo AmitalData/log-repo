@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class ParticipantQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Participant,ParticipantKeys<string>,ParticipantPM,ParticipantList,string>
    {
         public ParticipantQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public ParticipantQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Participant>(context),new ParticipantDataMapping()) {}
+        public ParticipantQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Participant>(context)) {}
+		public ParticipantQueryService(IRepository<POCO.Participant> repository) : base(repository,  new ParticipantDataMapping()) { }
 		public  ParticipantPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ParticipantKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Participant,string> GetKeys(POCO.Participant entityPOCO) => new ParticipantKeys<string>() { Id = entityPOCO.Id,  };
    }

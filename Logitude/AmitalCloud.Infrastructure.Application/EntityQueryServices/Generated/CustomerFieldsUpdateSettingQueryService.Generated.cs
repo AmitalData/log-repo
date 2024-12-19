@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CustomerFieldsUpdateSettingQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomerFieldsUpdateSetting,CustomerFieldsUpdateSettingKeys<string>,CustomerFieldsUpdateSettingPM,CustomerFieldsUpdateSettingList,string>
    {
         public CustomerFieldsUpdateSettingQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CustomerFieldsUpdateSettingQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomerFieldsUpdateSetting>(context),new CustomerFieldsUpdateSettingDataMapping()) {}
+        public CustomerFieldsUpdateSettingQueryService(IAmitalCloudContext context) : this(new Repository<POCO.CustomerFieldsUpdateSetting>(context)) {}
+		public CustomerFieldsUpdateSettingQueryService(IRepository<POCO.CustomerFieldsUpdateSetting> repository) : base(repository,  new CustomerFieldsUpdateSettingDataMapping()) { }
 		public  CustomerFieldsUpdateSettingPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CustomerFieldsUpdateSettingKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomerFieldsUpdateSetting,string> GetKeys(POCO.CustomerFieldsUpdateSetting entityPOCO) => new CustomerFieldsUpdateSettingKeys<string>() { Id = entityPOCO.Id,  };
    }

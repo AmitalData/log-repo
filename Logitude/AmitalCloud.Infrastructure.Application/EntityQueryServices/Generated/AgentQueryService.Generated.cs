@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class AgentQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Agent,AgentKeys<string>,AgentPM,AgentList,string>
    {
         public AgentQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public AgentQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Agent>(context),new AgentDataMapping()) {}
+        public AgentQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Agent>(context)) {}
+		public AgentQueryService(IRepository<POCO.Agent> repository) : base(repository,  new AgentDataMapping()) { }
 		public  AgentPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new AgentKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Agent,string> GetKeys(POCO.Agent entityPOCO) => new AgentKeys<string>() { Id = entityPOCO.Id,  };
    }

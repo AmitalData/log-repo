@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CustomerTenantAccessRequestQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomerTenantAccessRequest,CustomerTenantAccessRequestKeys<string>,CustomerTenantAccessRequestPM,CustomerTenantAccessRequestList,string>
    {
         public CustomerTenantAccessRequestQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CustomerTenantAccessRequestQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomerTenantAccessRequest>(context),new CustomerTenantAccessRequestDataMapping()) {}
+        public CustomerTenantAccessRequestQueryService(IAmitalCloudContext context) : this(new Repository<POCO.CustomerTenantAccessRequest>(context)) {}
+		public CustomerTenantAccessRequestQueryService(IRepository<POCO.CustomerTenantAccessRequest> repository) : base(repository,  new CustomerTenantAccessRequestDataMapping()) { }
 		public  CustomerTenantAccessRequestPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CustomerTenantAccessRequestKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomerTenantAccessRequest,string> GetKeys(POCO.CustomerTenantAccessRequest entityPOCO) => new CustomerTenantAccessRequestKeys<string>() { Id = entityPOCO.Id,  };
    }

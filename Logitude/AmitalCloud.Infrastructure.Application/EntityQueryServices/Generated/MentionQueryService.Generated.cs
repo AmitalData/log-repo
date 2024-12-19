@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class MentionQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Mention,MentionKeys<string>,MentionPM,MentionList,string>
    {
         public MentionQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public MentionQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Mention>(context),new MentionDataMapping()) {}
+        public MentionQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Mention>(context)) {}
+		public MentionQueryService(IRepository<POCO.Mention> repository) : base(repository,  new MentionDataMapping()) { }
 		public  MentionPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new MentionKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Mention,string> GetKeys(POCO.Mention entityPOCO) => new MentionKeys<string>() { Id = entityPOCO.Id,  };
    }

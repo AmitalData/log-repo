@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CarrierAreaQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CarrierArea,CarrierAreaKeys<string>,CarrierAreaPM,CarrierAreaList,string>
    {
         public CarrierAreaQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CarrierAreaQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CarrierArea>(context),new CarrierAreaDataMapping()) {}
+        public CarrierAreaQueryService(IAmitalCloudContext context) : this(new Repository<POCO.CarrierArea>(context)) {}
+		public CarrierAreaQueryService(IRepository<POCO.CarrierArea> repository) : base(repository,  new CarrierAreaDataMapping()) { }
 		public  CarrierAreaPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CarrierAreaKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CarrierArea,string> GetKeys(POCO.CarrierArea entityPOCO) => new CarrierAreaKeys<string>() { Id = entityPOCO.Id,  };
    }

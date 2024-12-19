@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CommunicationLogQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CommunicationLog,CommunicationLogKeys<string>,CommunicationLogPM,CommunicationLogList,string>
    {
         public CommunicationLogQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CommunicationLogQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CommunicationLog>(context),new CommunicationLogDataMapping()) {}
+        public CommunicationLogQueryService(IAmitalCloudContext context) : this(new Repository<POCO.CommunicationLog>(context)) {}
+		public CommunicationLogQueryService(IRepository<POCO.CommunicationLog> repository) : base(repository,  new CommunicationLogDataMapping()) { }
 		public  CommunicationLogPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CommunicationLogKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CommunicationLog,string> GetKeys(POCO.CommunicationLog entityPOCO) => new CommunicationLogKeys<string>() { Id = entityPOCO.Id,  };
    }

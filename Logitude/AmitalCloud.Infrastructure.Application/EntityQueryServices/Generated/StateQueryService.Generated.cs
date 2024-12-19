@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class StateQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.State,StateKeys<string>,StatePM,StateList,string>
    {
         public StateQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public StateQueryService(IAmitalCloudContext context) : base(new Repository<POCO.State>(context),new StateDataMapping()) {}
+        public StateQueryService(IAmitalCloudContext context) : this(new Repository<POCO.State>(context)) {}
+		public StateQueryService(IRepository<POCO.State> repository) : base(repository,  new StateDataMapping()) { }
 		public  StatePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new StateKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.State,string> GetKeys(POCO.State entityPOCO) => new StateKeys<string>() { Id = entityPOCO.Id,  };
    }

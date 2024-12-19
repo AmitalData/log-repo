@@ -145,7 +145,9 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 		 IDbSet<FilingInbox> FilingInboxes { get; }
 		 IDbSet<FilingInboxAttachment> FilingInboxAttachments { get; }
 		 IDbSet<FilingInboxAttachmentLog> FilingInboxAttachmentLogs { get; }
+		 IDbSet<FollowUp> FollowUps { get; }
 		 IDbSet<FTPDetail> FTPDetails { get; }
+		 IDbSet<General> Generals { get; }
 		 IDbSet<GlobalZone> GlobalZones { get; }
 		 IDbSet<Horse> Horses { get; }
 		 IDbSet<HorseGender> HorseGenders { get; }
@@ -314,7 +316,10 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
         IDbSet<UserPermittedBranch> UserPermittedBranches { get; }
         IDbSet<UserPermittedProduct> UserPermittedProducts { get; }
         IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; }
-
+        IDbSet<DocumentsMetaDataType> DocumentsMetaDataTypes { get;  }
+        IDbSet<DocumentsFilingMetaDataValue> DocumentsFilingMetaDataValues { get; }
+        IDbSet<CommunicationLogStep> CommunicationLogSteps { get; }
+        IDbSet<GeneralLock> GeneralLocks { get; }
          void DetectChanges();
     }
 }

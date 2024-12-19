@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class UserLastSettingsQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.UserLastSettings,UserLastSettingsKeys<string>,UserLastSettingsPM,UserLastSettingsList,string>
    {
         public UserLastSettingsQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public UserLastSettingsQueryService(IAmitalCloudContext context) : base(new Repository<POCO.UserLastSettings>(context),new UserLastSettingsDataMapping()) {}
+        public UserLastSettingsQueryService(IAmitalCloudContext context) : this(new Repository<POCO.UserLastSettings>(context)) {}
+		public UserLastSettingsQueryService(IRepository<POCO.UserLastSettings> repository) : base(repository,  new UserLastSettingsDataMapping()) { }
 		public  UserLastSettingsPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new UserLastSettingsKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.UserLastSettings,string> GetKeys(POCO.UserLastSettings entityPOCO) => new UserLastSettingsKeys<string>() { Id = entityPOCO.Id,  };
    }

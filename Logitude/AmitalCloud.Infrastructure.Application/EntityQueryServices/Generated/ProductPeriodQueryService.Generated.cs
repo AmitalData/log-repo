@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class ProductPeriodQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ProductPeriod,ProductPeriodKeys<string>,ProductPeriodPM,ProductPeriodList,string>
    {
         public ProductPeriodQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public ProductPeriodQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ProductPeriod>(context),new ProductPeriodDataMapping()) {}
+        public ProductPeriodQueryService(IAmitalCloudContext context) : this(new Repository<POCO.ProductPeriod>(context)) {}
+		public ProductPeriodQueryService(IRepository<POCO.ProductPeriod> repository) : base(repository,  new ProductPeriodDataMapping()) { }
 		public  ProductPeriodPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new ProductPeriodKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ProductPeriod,string> GetKeys(POCO.ProductPeriod entityPOCO) => new ProductPeriodKeys<string>() { Code = entityPOCO.Code,  };
    }

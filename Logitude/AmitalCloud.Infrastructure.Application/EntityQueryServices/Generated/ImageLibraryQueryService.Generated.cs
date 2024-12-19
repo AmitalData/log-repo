@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class ImageLibraryQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ImageLibrary,ImageLibraryKeys<string>,ImageLibraryPM,ImageLibraryList,string>
    {
         public ImageLibraryQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public ImageLibraryQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ImageLibrary>(context),new ImageLibraryDataMapping()) {}
+        public ImageLibraryQueryService(IAmitalCloudContext context) : this(new Repository<POCO.ImageLibrary>(context)) {}
+		public ImageLibraryQueryService(IRepository<POCO.ImageLibrary> repository) : base(repository,  new ImageLibraryDataMapping()) { }
 		public  ImageLibraryPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ImageLibraryKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ImageLibrary,string> GetKeys(POCO.ImageLibrary entityPOCO) => new ImageLibraryKeys<string>() { Id = entityPOCO.Id,  };
    }

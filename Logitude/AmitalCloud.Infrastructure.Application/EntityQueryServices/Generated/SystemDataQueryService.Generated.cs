@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class SystemDataQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.SystemData,SystemDataKeys<string>,SystemDataPM,SystemDataList,string>
    {
         public SystemDataQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public SystemDataQueryService(IAmitalCloudContext context) : base(new Repository<POCO.SystemData>(context),new SystemDataDataMapping()) {}
+        public SystemDataQueryService(IAmitalCloudContext context) : this(new Repository<POCO.SystemData>(context)) {}
+		public SystemDataQueryService(IRepository<POCO.SystemData> repository) : base(repository,  new SystemDataDataMapping()) { }
 		public  SystemDataPM GetSingle(string userid,bool getComposition, bool getFromCache) => base.GetSingle(new SystemDataKeys<string>(){ UserId = userid }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.SystemData,string> GetKeys(POCO.SystemData entityPOCO) => new SystemDataKeys<string>() { UserId = entityPOCO.UserId,  };
    }

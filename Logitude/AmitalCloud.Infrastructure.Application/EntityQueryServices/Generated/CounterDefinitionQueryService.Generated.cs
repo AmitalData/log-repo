@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CounterDefinitionQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CounterDefinition,CounterDefinitionKeys<string>,CounterDefinitionPM,CounterDefinitionList,string>
    {
         public CounterDefinitionQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CounterDefinitionQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CounterDefinition>(context),new CounterDefinitionDataMapping()) {}
+        public CounterDefinitionQueryService(IAmitalCloudContext context) : this(new Repository<POCO.CounterDefinition>(context)) {}
+		public CounterDefinitionQueryService(IRepository<POCO.CounterDefinition> repository) : base(repository,  new CounterDefinitionDataMapping()) { }
 		public  CounterDefinitionPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CounterDefinitionKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CounterDefinition,string> GetKeys(POCO.CounterDefinition entityPOCO) => new CounterDefinitionKeys<string>() { Id = entityPOCO.Id,  };
    }

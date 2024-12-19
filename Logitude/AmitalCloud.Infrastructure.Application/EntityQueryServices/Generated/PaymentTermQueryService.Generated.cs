@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class PaymentTermQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.PaymentTerm,PaymentTermKeys<string>,PaymentTermPM,PaymentTermList,string>
    {
         public PaymentTermQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public PaymentTermQueryService(IAmitalCloudContext context) : base(new Repository<POCO.PaymentTerm>(context),new PaymentTermDataMapping()) {}
+        public PaymentTermQueryService(IAmitalCloudContext context) : this(new Repository<POCO.PaymentTerm>(context)) {}
+		public PaymentTermQueryService(IRepository<POCO.PaymentTerm> repository) : base(repository,  new PaymentTermDataMapping()) { }
 		public  PaymentTermPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new PaymentTermKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.PaymentTerm,string> GetKeys(POCO.PaymentTerm entityPOCO) => new PaymentTermKeys<string>() { Id = entityPOCO.Id,  };
    }

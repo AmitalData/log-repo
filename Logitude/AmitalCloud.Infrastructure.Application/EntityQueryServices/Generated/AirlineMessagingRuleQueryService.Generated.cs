@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class AirlineMessagingRuleQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.AirlineMessagingRule,AirlineMessagingRuleKeys<string>,AirlineMessagingRulePM,AirlineMessagingRuleList,string>
    {
         public AirlineMessagingRuleQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public AirlineMessagingRuleQueryService(IAmitalCloudContext context) : base(new Repository<POCO.AirlineMessagingRule>(context),new AirlineMessagingRuleDataMapping()) {}
+        public AirlineMessagingRuleQueryService(IAmitalCloudContext context) : this(new Repository<POCO.AirlineMessagingRule>(context)) {}
+		public AirlineMessagingRuleQueryService(IRepository<POCO.AirlineMessagingRule> repository) : base(repository,  new AirlineMessagingRuleDataMapping()) { }
 		public  AirlineMessagingRulePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new AirlineMessagingRuleKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AirlineMessagingRule,string> GetKeys(POCO.AirlineMessagingRule entityPOCO) => new AirlineMessagingRuleKeys<string>() { Id = entityPOCO.Id,  };
    }

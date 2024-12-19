@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class DigitalFieldSecurityQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DigitalFieldSecurity,DigitalFieldSecurityKeys<string>,DigitalFieldSecurityPM,DigitalFieldSecurityList,string>
    {
         public DigitalFieldSecurityQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public DigitalFieldSecurityQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DigitalFieldSecurity>(context),new DigitalFieldSecurityDataMapping()) {}
+        public DigitalFieldSecurityQueryService(IAmitalCloudContext context) : this(new Repository<POCO.DigitalFieldSecurity>(context)) {}
+		public DigitalFieldSecurityQueryService(IRepository<POCO.DigitalFieldSecurity> repository) : base(repository,  new DigitalFieldSecurityDataMapping()) { }
 		public  DigitalFieldSecurityPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DigitalFieldSecurityKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DigitalFieldSecurity,string> GetKeys(POCO.DigitalFieldSecurity entityPOCO) => new DigitalFieldSecurityKeys<string>() { Id = entityPOCO.Id,  };
    }

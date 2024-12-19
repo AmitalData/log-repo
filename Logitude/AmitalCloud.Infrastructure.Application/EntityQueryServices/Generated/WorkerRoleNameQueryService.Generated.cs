@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class WorkerRoleNameQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.WorkerRoleName,WorkerRoleNameKeys<string>,WorkerRoleNamePM,WorkerRoleNameList,string>
    {
         public WorkerRoleNameQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public WorkerRoleNameQueryService(IAmitalCloudContext context) : base(new Repository<POCO.WorkerRoleName>(context),new WorkerRoleNameDataMapping()) {}
+        public WorkerRoleNameQueryService(IAmitalCloudContext context) : this(new Repository<POCO.WorkerRoleName>(context)) {}
+		public WorkerRoleNameQueryService(IRepository<POCO.WorkerRoleName> repository) : base(repository,  new WorkerRoleNameDataMapping()) { }
 		public  WorkerRoleNamePM GetSingle(string name,bool getComposition, bool getFromCache) => base.GetSingle(new WorkerRoleNameKeys<string>(){ Name = name }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.WorkerRoleName,string> GetKeys(POCO.WorkerRoleName entityPOCO) => new WorkerRoleNameKeys<string>() { Name = entityPOCO.Name,  };
    }

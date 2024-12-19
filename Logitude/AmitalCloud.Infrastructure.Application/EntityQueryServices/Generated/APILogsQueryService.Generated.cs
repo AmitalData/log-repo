@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class APILogsQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.APILogs,APILogsKeys<string>,APILogsPM,APILogsList,string>
    {
         public APILogsQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public APILogsQueryService(IAmitalCloudContext context) : base(new Repository<POCO.APILogs>(context),new APILogsDataMapping()) {}
+        public APILogsQueryService(IAmitalCloudContext context) : this(new Repository<POCO.APILogs>(context)) {}
+		public APILogsQueryService(IRepository<POCO.APILogs> repository) : base(repository,  new APILogsDataMapping()) { }
 		public  APILogsPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new APILogsKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.APILogs,string> GetKeys(POCO.APILogs entityPOCO) => new APILogsKeys<string>() { Id = entityPOCO.Id,  };
    }

@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class VendorQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Vendor,VendorKeys<string>,VendorPM,VendorList,string>
    {
         public VendorQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public VendorQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Vendor>(context),new VendorDataMapping()) {}
+        public VendorQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Vendor>(context)) {}
+		public VendorQueryService(IRepository<POCO.Vendor> repository) : base(repository,  new VendorDataMapping()) { }
 		public  VendorPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new VendorKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Vendor,string> GetKeys(POCO.Vendor entityPOCO) => new VendorKeys<string>() { Id = entityPOCO.Id,  };
    }

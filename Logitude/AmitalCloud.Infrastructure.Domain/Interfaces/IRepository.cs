@@ -19,9 +19,17 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
         List<TEntity> GetAll<TKey>(int tenant, Expression<Func<TEntity, TKey>> orderBy ,OrderByDirection orderByDirection = OrderByDirection.Ascending );
         List<TEntity> GetMulti<TKeyType>(IEntityKeyFields<TEntity, TKeyType> entityKeys);
         List<TEntity> GetMulti(Expression<Func<TEntity, bool>> predicate);
+        List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select);
+        List<TEntity> GetMulti(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select);
         List<TEntity> GetMulti<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TKey>> orderBy,int skip,int take);
+        List<TEntity> GetMulti<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending);
+        List<TEntity> GetMulti<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select, Expression<Func<TEntity, TKey>> orderBy, int skip, int take);
+        List<TEntity> GetMulti<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select, Expression<Func<TEntity, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending);
+        List<TResult> GetMulti<TResult,TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, Expression<Func<TResult, TKey>> orderBy, int skip, int take);
+        List<TResult> GetMulti<TResult, TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, Expression<Func<TResult, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending);
         IEnumerable<TEntity> GetMulti<TKey>(ISpecification<TEntity, TKey> spec);
         TEntity GetSingle<TKeyType>(IEntityKeyFields<TEntity, TKeyType> entityKeys);
+        List<TEntity> GetMultiByParent<TEntityParentKeys>(TEntityParentKeys entityKeys);
     }
 
     public interface IAsyncRepository<TEntity> where TEntity : class
@@ -29,12 +37,20 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
         #region Async Methods
         Task<List<TEntity>> GetAllAsync(int tenant);
         Task<List<TEntity>> GetMultiAsync(Expression<Func<TEntity, bool>> predicate);
+
+        Task<List<TResult>> GetMultiAsync<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select);
+        Task<List<TEntity>> GetMultiAsync(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select);
         Task<TEntity> GetSingleAsync<TKeyType>(IEntityKeyFields<TEntity, TKeyType> entityKeys);
         Task<List<TEntity>> GetAllAsync(int tenant, bool fromCache = true);
         Task<List<TEntity>> GetAllAsync<TKey>(int tenant, Expression<Func<TEntity, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending);
         Task<List<TEntity>> GetMultiAsync<TKeyType>(IEntityKeyFields<TEntity, TKeyType> entityKeys);
         Task<List<TEntity>> GetMultiAsync<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TKey>> orderBy, int skip, int take);
         Task<IEnumerable<TEntity>> GetMultiAsync<TKey>(ISpecification<TEntity, TKey> spec);
+        Task<List<TEntity>> GetMultiAsync<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select, Expression<Func<TEntity, TKey>> orderBy, int skip, int take);
+        Task<List<TResult>> GetMultiAsync<TResult, TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, Expression<Func<TResult, TKey>> orderBy, int skip, int take);
+
+
+
         #endregion Async Methods
     }
 }

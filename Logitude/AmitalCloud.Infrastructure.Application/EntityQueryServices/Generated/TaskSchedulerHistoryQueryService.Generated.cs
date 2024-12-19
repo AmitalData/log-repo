@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class TaskSchedulerHistoryQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.TaskSchedulerHistory,TaskSchedulerHistoryKeys<string>,TaskSchedulerHistoryPM,TaskSchedulerHistoryList,string>
    {
         public TaskSchedulerHistoryQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public TaskSchedulerHistoryQueryService(IAmitalCloudContext context) : base(new Repository<POCO.TaskSchedulerHistory>(context),new TaskSchedulerHistoryDataMapping()) {}
+        public TaskSchedulerHistoryQueryService(IAmitalCloudContext context) : this(new Repository<POCO.TaskSchedulerHistory>(context)) {}
+		public TaskSchedulerHistoryQueryService(IRepository<POCO.TaskSchedulerHistory> repository) : base(repository,  new TaskSchedulerHistoryDataMapping()) { }
 		public  TaskSchedulerHistoryPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new TaskSchedulerHistoryKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.TaskSchedulerHistory,string> GetKeys(POCO.TaskSchedulerHistory entityPOCO) => new TaskSchedulerHistoryKeys<string>() { Id = entityPOCO.Id,  };
    }

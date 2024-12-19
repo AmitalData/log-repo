@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class DocumentFolderQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DocumentFolder,DocumentFolderKeys<string>,DocumentFolderPM,DocumentFolderList,string>
    {
         public DocumentFolderQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public DocumentFolderQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DocumentFolder>(context),new DocumentFolderDataMapping()) {}
+        public DocumentFolderQueryService(IAmitalCloudContext context) : this(new Repository<POCO.DocumentFolder>(context)) {}
+		public DocumentFolderQueryService(IRepository<POCO.DocumentFolder> repository) : base(repository,  new DocumentFolderDataMapping()) { }
 		public  DocumentFolderPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DocumentFolderKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DocumentFolder,string> GetKeys(POCO.DocumentFolder entityPOCO) => new DocumentFolderKeys<string>() { Id = entityPOCO.Id,  };
    }

@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class AccountTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.AccountType,AccountTypeKeys<string>,AccountTypePM,AccountTypeList,string>
    {
         public AccountTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public AccountTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.AccountType>(context),new AccountTypeDataMapping()) {}
+        public AccountTypeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.AccountType>(context)) {}
+		public AccountTypeQueryService(IRepository<POCO.AccountType> repository) : base(repository,  new AccountTypeDataMapping()) { }
 		public  AccountTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new AccountTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AccountType,string> GetKeys(POCO.AccountType entityPOCO) => new AccountTypeKeys<string>() { Code = entityPOCO.Code,  };
    }

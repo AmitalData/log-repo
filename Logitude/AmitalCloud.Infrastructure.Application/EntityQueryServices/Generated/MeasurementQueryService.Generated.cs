@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class MeasurementQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Measurement,MeasurementKeys<string>,MeasurementPM,MeasurementList,string>
    {
         public MeasurementQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public MeasurementQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Measurement>(context),new MeasurementDataMapping()) {}
+        public MeasurementQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Measurement>(context)) {}
+		public MeasurementQueryService(IRepository<POCO.Measurement> repository) : base(repository,  new MeasurementDataMapping()) { }
 		public  MeasurementPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new MeasurementKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Measurement,string> GetKeys(POCO.Measurement entityPOCO) => new MeasurementKeys<string>() { Id = entityPOCO.Id,  };
    }

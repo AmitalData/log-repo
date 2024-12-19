@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class VatMandatoryTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.VatMandatoryType,VatMandatoryTypeKeys<string>,VatMandatoryTypePM,VatMandatoryTypeList,string>
    {
         public VatMandatoryTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public VatMandatoryTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.VatMandatoryType>(context),new VatMandatoryTypeDataMapping()) {}
+        public VatMandatoryTypeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.VatMandatoryType>(context)) {}
+		public VatMandatoryTypeQueryService(IRepository<POCO.VatMandatoryType> repository) : base(repository,  new VatMandatoryTypeDataMapping()) { }
 		public  VatMandatoryTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new VatMandatoryTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.VatMandatoryType,string> GetKeys(POCO.VatMandatoryType entityPOCO) => new VatMandatoryTypeKeys<string>() { Code = entityPOCO.Code,  };
    }

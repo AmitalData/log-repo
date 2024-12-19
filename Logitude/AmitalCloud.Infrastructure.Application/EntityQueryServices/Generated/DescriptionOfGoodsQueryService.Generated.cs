@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class DescriptionOfGoodsQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DescriptionOfGoods,DescriptionOfGoodsKeys<string>,DescriptionOfGoodsPM,DescriptionOfGoodsList,string>
    {
         public DescriptionOfGoodsQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public DescriptionOfGoodsQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DescriptionOfGoods>(context),new DescriptionOfGoodsDataMapping()) {}
+        public DescriptionOfGoodsQueryService(IAmitalCloudContext context) : this(new Repository<POCO.DescriptionOfGoods>(context)) {}
+		public DescriptionOfGoodsQueryService(IRepository<POCO.DescriptionOfGoods> repository) : base(repository,  new DescriptionOfGoodsDataMapping()) { }
 		public  DescriptionOfGoodsPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DescriptionOfGoodsKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DescriptionOfGoods,string> GetKeys(POCO.DescriptionOfGoods entityPOCO) => new DescriptionOfGoodsKeys<string>() { Id = entityPOCO.Id,  };
    }

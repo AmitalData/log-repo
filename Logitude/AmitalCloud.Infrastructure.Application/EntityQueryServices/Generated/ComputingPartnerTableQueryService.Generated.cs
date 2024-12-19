@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class ComputingPartnerTableQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ComputingPartnerTable,ComputingPartnerTableKeys<string>,ComputingPartnerTablePM,ComputingPartnerTableList,string>
    {
         public ComputingPartnerTableQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public ComputingPartnerTableQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ComputingPartnerTable>(context),new ComputingPartnerTableDataMapping()) {}
+        public ComputingPartnerTableQueryService(IAmitalCloudContext context) : this(new Repository<POCO.ComputingPartnerTable>(context)) {}
+		public ComputingPartnerTableQueryService(IRepository<POCO.ComputingPartnerTable> repository) : base(repository,  new ComputingPartnerTableDataMapping()) { }
 		public  ComputingPartnerTablePM GetSingle(int tenant, string objecttableid, string computingpartnerid,bool getComposition, bool getFromCache) => base.GetSingle(new ComputingPartnerTableKeys<string>(){ Tenant = tenant, ObjectTableId = objecttableid, ComputingPartnerId = computingpartnerid }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ComputingPartnerTable,string> GetKeys(POCO.ComputingPartnerTable entityPOCO) => new ComputingPartnerTableKeys<string>() { Tenant = entityPOCO.Tenant, ObjectTableId = entityPOCO.ObjectTableId, ComputingPartnerId = entityPOCO.ComputingPartnerId,  };
    }

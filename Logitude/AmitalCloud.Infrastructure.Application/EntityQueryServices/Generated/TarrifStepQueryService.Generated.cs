@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class TarrifStepQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.TarrifStep,TarrifStepKeys<string>,TarrifStepPM,TarrifStepList,string>
    {
         public TarrifStepQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public TarrifStepQueryService(IAmitalCloudContext context) : base(new Repository<POCO.TarrifStep>(context),new TarrifStepDataMapping()) {}
+        public TarrifStepQueryService(IAmitalCloudContext context) : this(new Repository<POCO.TarrifStep>(context)) {}
+		public TarrifStepQueryService(IRepository<POCO.TarrifStep> repository) : base(repository,  new TarrifStepDataMapping()) { }
 		public  TarrifStepPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new TarrifStepKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.TarrifStep,string> GetKeys(POCO.TarrifStep entityPOCO) => new TarrifStepKeys<string>() { Id = entityPOCO.Id,  };
    }

@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CheckDigitControlAlgorithmQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CheckDigitControlAlgorithm,CheckDigitControlAlgorithmKeys<string>,CheckDigitControlAlgorithmPM,CheckDigitControlAlgorithmList,string>
    {
         public CheckDigitControlAlgorithmQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CheckDigitControlAlgorithmQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CheckDigitControlAlgorithm>(context),new CheckDigitControlAlgorithmDataMapping()) {}
+        public CheckDigitControlAlgorithmQueryService(IAmitalCloudContext context) : this(new Repository<POCO.CheckDigitControlAlgorithm>(context)) {}
+		public CheckDigitControlAlgorithmQueryService(IRepository<POCO.CheckDigitControlAlgorithm> repository) : base(repository,  new CheckDigitControlAlgorithmDataMapping()) { }
 		public  CheckDigitControlAlgorithmPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new CheckDigitControlAlgorithmKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CheckDigitControlAlgorithm,string> GetKeys(POCO.CheckDigitControlAlgorithm entityPOCO) => new CheckDigitControlAlgorithmKeys<string>() { Code = entityPOCO.Code,  };
    }

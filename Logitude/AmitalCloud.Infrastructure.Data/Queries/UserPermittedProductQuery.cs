@@ -1,23 +1,20 @@
 ﻿using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using System.Linq;
-using System.Data.Entity;
+using AmitalCloud.Infrastructure.Data.Helpers;
+
 namespace AmitalCloud.Infrastructure.Data.Queries
 {
     public class UserPermittedProductQuery
     {
         UserPermittedProductRepository repository;
 
-        public UserPermittedProductQuery()
+        public UserPermittedProductQuery() : this(0)
         {
-            repository = new UserPermittedProductRepository(); 
         }
-
-        public UserPermittedProductQuery(int tenant)
+        public UserPermittedProductQuery(int tenant) : this(new UserPermittedProductRepository(tenant))
         {
-            repository = new UserPermittedProductRepository(tenant);
         }
-
         public UserPermittedProductQuery(UserPermittedProductRepository UserPermittedProductRepository)
         {
             repository = UserPermittedProductRepository;

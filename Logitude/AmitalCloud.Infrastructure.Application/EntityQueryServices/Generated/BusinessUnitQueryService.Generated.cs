@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class BusinessUnitQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.BusinessUnit,BusinessUnitKeys<string>,BusinessUnitPM,BusinessUnitList,string>
    {
         public BusinessUnitQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public BusinessUnitQueryService(IAmitalCloudContext context) : base(new Repository<POCO.BusinessUnit>(context),new BusinessUnitDataMapping()) {}
+        public BusinessUnitQueryService(IAmitalCloudContext context) : this(new Repository<POCO.BusinessUnit>(context)) {}
+		public BusinessUnitQueryService(IRepository<POCO.BusinessUnit> repository) : base(repository,  new BusinessUnitDataMapping()) { }
 		public  BusinessUnitPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new BusinessUnitKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.BusinessUnit,string> GetKeys(POCO.BusinessUnit entityPOCO) => new BusinessUnitKeys<string>() { Id = entityPOCO.Id,  };
    }

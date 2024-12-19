@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class TransportModeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.TransportMode,TransportModeKeys<string>,TransportModePM,TransportModeList,string>
    {
         public TransportModeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public TransportModeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.TransportMode>(context),new TransportModeDataMapping()) {}
+        public TransportModeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.TransportMode>(context)) {}
+		public TransportModeQueryService(IRepository<POCO.TransportMode> repository) : base(repository,  new TransportModeDataMapping()) { }
 		public  TransportModePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new TransportModeKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.TransportMode,string> GetKeys(POCO.TransportMode entityPOCO) => new TransportModeKeys<string>() { Id = entityPOCO.Id,  };
    }

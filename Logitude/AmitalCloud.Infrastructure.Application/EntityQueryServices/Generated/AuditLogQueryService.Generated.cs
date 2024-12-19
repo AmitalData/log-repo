@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class AuditLogQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.AuditLog,AuditLogKeys<string>,AuditLogPM,AuditLogList,string>
    {
         public AuditLogQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public AuditLogQueryService(IAmitalCloudContext context) : base(new Repository<POCO.AuditLog>(context),new AuditLogDataMapping()) {}
+        public AuditLogQueryService(IAmitalCloudContext context) : this(new Repository<POCO.AuditLog>(context)) {}
+		public AuditLogQueryService(IRepository<POCO.AuditLog> repository) : base(repository,  new AuditLogDataMapping()) { }
 		public  AuditLogPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new AuditLogKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AuditLog,string> GetKeys(POCO.AuditLog entityPOCO) => new AuditLogKeys<string>() { Id = entityPOCO.Id,  };
    }

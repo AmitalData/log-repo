@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class FeaturePackageTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.FeaturePackageType,FeaturePackageTypeKeys<string>,FeaturePackageTypePM,FeaturePackageTypeList,string>
    {
         public FeaturePackageTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public FeaturePackageTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.FeaturePackageType>(context),new FeaturePackageTypeDataMapping()) {}
+        public FeaturePackageTypeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.FeaturePackageType>(context)) {}
+		public FeaturePackageTypeQueryService(IRepository<POCO.FeaturePackageType> repository) : base(repository,  new FeaturePackageTypeDataMapping()) { }
 		public  FeaturePackageTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new FeaturePackageTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.FeaturePackageType,string> GetKeys(POCO.FeaturePackageType entityPOCO) => new FeaturePackageTypeKeys<string>() { Code = entityPOCO.Code,  };
    }

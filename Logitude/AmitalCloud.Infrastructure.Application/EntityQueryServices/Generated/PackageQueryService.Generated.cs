@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class PackageQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Package,PackageKeys<string>,PackagePM,PackageList,string>
    {
         public PackageQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public PackageQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Package>(context),new PackageDataMapping()) {}
+        public PackageQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Package>(context)) {}
+		public PackageQueryService(IRepository<POCO.Package> repository) : base(repository,  new PackageDataMapping()) { }
 		public  PackagePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new PackageKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Package,string> GetKeys(POCO.Package entityPOCO) => new PackageKeys<string>() { Code = entityPOCO.Code,  };
    }

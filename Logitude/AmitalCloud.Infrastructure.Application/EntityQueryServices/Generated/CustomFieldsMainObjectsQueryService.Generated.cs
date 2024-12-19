@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CustomFieldsMainObjectQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomFieldsMainObject,CustomFieldsMainObjectKeys<string>,CustomFieldsMainObjectPM,CustomFieldsMainObjectList,string>
    {
         public CustomFieldsMainObjectQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CustomFieldsMainObjectQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomFieldsMainObject>(context),new CustomFieldsMainObjectDataMapping()) {}
+        public CustomFieldsMainObjectQueryService(IAmitalCloudContext context) : this(new Repository<POCO.CustomFieldsMainObject>(context)) {}
+		public CustomFieldsMainObjectQueryService(IRepository<POCO.CustomFieldsMainObject> repository) : base(repository,  new CustomFieldsMainObjectDataMapping()) { }
 		public  CustomFieldsMainObjectPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CustomFieldsMainObjectKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomFieldsMainObject,string> GetKeys(POCO.CustomFieldsMainObject entityPOCO) => new CustomFieldsMainObjectKeys<string>() { Id = entityPOCO.Id,  };
    }

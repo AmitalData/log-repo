@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class LBPTeamMemberQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.LBPTeamMember,LBPTeamMemberKeys<string>,LBPTeamMemberPM,LBPTeamMemberList,string>
    {
         public LBPTeamMemberQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public LBPTeamMemberQueryService(IAmitalCloudContext context) : base(new Repository<POCO.LBPTeamMember>(context),new LBPTeamMemberDataMapping()) {}
+        public LBPTeamMemberQueryService(IAmitalCloudContext context) : this(new Repository<POCO.LBPTeamMember>(context)) {}
+		public LBPTeamMemberQueryService(IRepository<POCO.LBPTeamMember> repository) : base(repository,  new LBPTeamMemberDataMapping()) { }
 		public  LBPTeamMemberPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new LBPTeamMemberKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.LBPTeamMember,string> GetKeys(POCO.LBPTeamMember entityPOCO) => new LBPTeamMemberKeys<string>() { Id = entityPOCO.Id,  };
    }

@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class VatUniquePartnerTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.VatUniquePartnerType,VatUniquePartnerTypeKeys<string>,VatUniquePartnerTypePM,VatUniquePartnerTypeList,string>
    {
         public VatUniquePartnerTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public VatUniquePartnerTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.VatUniquePartnerType>(context),new VatUniquePartnerTypeDataMapping()) {}
+        public VatUniquePartnerTypeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.VatUniquePartnerType>(context)) {}
+		public VatUniquePartnerTypeQueryService(IRepository<POCO.VatUniquePartnerType> repository) : base(repository,  new VatUniquePartnerTypeDataMapping()) { }
 		public  VatUniquePartnerTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new VatUniquePartnerTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.VatUniquePartnerType,string> GetKeys(POCO.VatUniquePartnerType entityPOCO) => new VatUniquePartnerTypeKeys<string>() { Code = entityPOCO.Code,  };
    }

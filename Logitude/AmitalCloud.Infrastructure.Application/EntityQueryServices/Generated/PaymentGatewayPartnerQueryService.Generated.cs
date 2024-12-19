@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class PaymentGatewayPartnerQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.PaymentGatewayPartner,PaymentGatewayPartnerKeys<string>,PaymentGatewayPartnerPM,PaymentGatewayPartnerList,string>
    {
         public PaymentGatewayPartnerQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public PaymentGatewayPartnerQueryService(IAmitalCloudContext context) : base(new Repository<POCO.PaymentGatewayPartner>(context),new PaymentGatewayPartnerDataMapping()) {}
+        public PaymentGatewayPartnerQueryService(IAmitalCloudContext context) : this(new Repository<POCO.PaymentGatewayPartner>(context)) {}
+		public PaymentGatewayPartnerQueryService(IRepository<POCO.PaymentGatewayPartner> repository) : base(repository,  new PaymentGatewayPartnerDataMapping()) { }
 		public  PaymentGatewayPartnerPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new PaymentGatewayPartnerKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.PaymentGatewayPartner,string> GetKeys(POCO.PaymentGatewayPartner entityPOCO) => new PaymentGatewayPartnerKeys<string>() { Code = entityPOCO.Code,  };
    }

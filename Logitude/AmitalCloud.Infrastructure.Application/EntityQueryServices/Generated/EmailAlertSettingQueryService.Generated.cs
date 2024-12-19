@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class EmailAlertSettingQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.EmailAlertSetting,EmailAlertSettingKeys<string>,EmailAlertSettingPM,EmailAlertSettingList,string>
    {
         public EmailAlertSettingQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public EmailAlertSettingQueryService(IAmitalCloudContext context) : base(new Repository<POCO.EmailAlertSetting>(context),new EmailAlertSettingDataMapping()) {}
+        public EmailAlertSettingQueryService(IAmitalCloudContext context) : this(new Repository<POCO.EmailAlertSetting>(context)) {}
+		public EmailAlertSettingQueryService(IRepository<POCO.EmailAlertSetting> repository) : base(repository,  new EmailAlertSettingDataMapping()) { }
 		public  EmailAlertSettingPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new EmailAlertSettingKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.EmailAlertSetting,string> GetKeys(POCO.EmailAlertSetting entityPOCO) => new EmailAlertSettingKeys<string>() { Id = entityPOCO.Id,  };
    }

@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class ComputingPartnerTranslationQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ComputingPartnerTranslation,ComputingPartnerTranslationKeys<string>,ComputingPartnerTranslationPM,ComputingPartnerTranslationList,string>
    {
         public ComputingPartnerTranslationQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public ComputingPartnerTranslationQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ComputingPartnerTranslation>(context),new ComputingPartnerTranslationDataMapping()) {}
+        public ComputingPartnerTranslationQueryService(IAmitalCloudContext context) : this(new Repository<POCO.ComputingPartnerTranslation>(context)) {}
+		public ComputingPartnerTranslationQueryService(IRepository<POCO.ComputingPartnerTranslation> repository) : base(repository,  new ComputingPartnerTranslationDataMapping()) { }
 		public  ComputingPartnerTranslationPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ComputingPartnerTranslationKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ComputingPartnerTranslation,string> GetKeys(POCO.ComputingPartnerTranslation entityPOCO) => new ComputingPartnerTranslationKeys<string>() { Id = entityPOCO.Id,  };
    }

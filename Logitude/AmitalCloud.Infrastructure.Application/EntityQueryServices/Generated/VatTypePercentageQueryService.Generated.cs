@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class VatTypePercentageQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.VatTypePercentage,VatTypePercentageKeys<string>,VatTypePercentagePM,VatTypePercentageList,string>
    {
         public VatTypePercentageQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public VatTypePercentageQueryService(IAmitalCloudContext context) : base(new Repository<POCO.VatTypePercentage>(context),new VatTypePercentageDataMapping()) {}
+        public VatTypePercentageQueryService(IAmitalCloudContext context) : this(new Repository<POCO.VatTypePercentage>(context)) {}
+		public VatTypePercentageQueryService(IRepository<POCO.VatTypePercentage> repository) : base(repository,  new VatTypePercentageDataMapping()) { }
 		public  VatTypePercentagePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new VatTypePercentageKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.VatTypePercentage,string> GetKeys(POCO.VatTypePercentage entityPOCO) => new VatTypePercentageKeys<string>() { Id = entityPOCO.Id,  };
    }

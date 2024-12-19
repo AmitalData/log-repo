@@ -1,8 +1,11 @@
 ﻿using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using System.Data.Entity;
+
 using System.Collections.Generic;
 using System.Linq;
+using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Data.Queries
 {
@@ -10,16 +13,16 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     {
         UserLastLoginRepository repository;
 
-        public UserLastLoginQuery()
+        public UserLastLoginQuery() : this(0)
         {
-            repository = new UserLastLoginRepository(); 
         }
 
-        public UserLastLoginQuery(int tenant)
+        public UserLastLoginQuery(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {
-            repository = new UserLastLoginRepository(tenant);
         }
-
+        public UserLastLoginQuery(IAmitalCloudContext context) : this(new UserLastLoginRepository(context))
+        {
+        }
         public UserLastLoginQuery(UserLastLoginRepository repository)
         {
             this.repository = repository;

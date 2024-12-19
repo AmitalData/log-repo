@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class LeadSourceQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.LeadSource,LeadSourceKeys<string>,LeadSourcePM,LeadSourceList,string>
    {
         public LeadSourceQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public LeadSourceQueryService(IAmitalCloudContext context) : base(new Repository<POCO.LeadSource>(context),new LeadSourceDataMapping()) {}
+        public LeadSourceQueryService(IAmitalCloudContext context) : this(new Repository<POCO.LeadSource>(context)) {}
+		public LeadSourceQueryService(IRepository<POCO.LeadSource> repository) : base(repository,  new LeadSourceDataMapping()) { }
 		public  LeadSourcePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new LeadSourceKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.LeadSource,string> GetKeys(POCO.LeadSource entityPOCO) => new LeadSourceKeys<string>() { Id = entityPOCO.Id,  };
    }

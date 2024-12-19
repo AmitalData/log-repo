@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class RatesTableQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.RatesTable,RatesTableKeys<string>,RatesTablePM,RatesTableList,string>
    {
         public RatesTableQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public RatesTableQueryService(IAmitalCloudContext context) : base(new Repository<POCO.RatesTable>(context),new RatesTableDataMapping()) {}
+        public RatesTableQueryService(IAmitalCloudContext context) : this(new Repository<POCO.RatesTable>(context)) {}
+		public RatesTableQueryService(IRepository<POCO.RatesTable> repository) : base(repository,  new RatesTableDataMapping()) { }
 		public  RatesTablePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new RatesTableKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.RatesTable,string> GetKeys(POCO.RatesTable entityPOCO) => new RatesTableKeys<string>() { Id = entityPOCO.Id,  };
    }

@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class BranchQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Branch,BranchKeys<string>,BranchPM,BranchList,string>
    {
         public BranchQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public BranchQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Branch>(context),new BranchDataMapping()) {}
+        public BranchQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Branch>(context)) {}
+		public BranchQueryService(IRepository<POCO.Branch> repository) : base(repository,  new BranchDataMapping()) { }
 		public  BranchPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new BranchKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Branch,string> GetKeys(POCO.Branch entityPOCO) => new BranchKeys<string>() { Id = entityPOCO.Id,  };
    }

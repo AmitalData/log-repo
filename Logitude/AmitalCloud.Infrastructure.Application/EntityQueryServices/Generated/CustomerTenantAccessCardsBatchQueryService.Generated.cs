@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CustomerTenantAccessCardsBatchQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomerTenantAccessCardsBatch,CustomerTenantAccessCardsBatchKeys<string>,CustomerTenantAccessCardsBatchPM,CustomerTenantAccessCardsBatchList,string>
    {
         public CustomerTenantAccessCardsBatchQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CustomerTenantAccessCardsBatchQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomerTenantAccessCardsBatch>(context),new CustomerTenantAccessCardsBatchDataMapping()) {}
+        public CustomerTenantAccessCardsBatchQueryService(IAmitalCloudContext context) : this(new Repository<POCO.CustomerTenantAccessCardsBatch>(context)) {}
+		public CustomerTenantAccessCardsBatchQueryService(IRepository<POCO.CustomerTenantAccessCardsBatch> repository) : base(repository,  new CustomerTenantAccessCardsBatchDataMapping()) { }
 		public  CustomerTenantAccessCardsBatchPM GetSingle(string customerid, string customertenantaccessid, string batchnumber,bool getComposition, bool getFromCache) => base.GetSingle(new CustomerTenantAccessCardsBatchKeys<string>(){ CustomerId = customerid, CustomerTenantAccessId = customertenantaccessid, BatchNumber = batchnumber }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomerTenantAccessCardsBatch,string> GetKeys(POCO.CustomerTenantAccessCardsBatch entityPOCO) => new CustomerTenantAccessCardsBatchKeys<string>() { CustomerId = entityPOCO.CustomerId, CustomerTenantAccessId = entityPOCO.CustomerTenantAccessId, BatchNumber = entityPOCO.BatchNumber,  };
    }

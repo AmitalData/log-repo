@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class ScreenSectionQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ScreenSection,ScreenSectionKeys<string>,ScreenSectionPM,ScreenSectionList,string>
    {
         public ScreenSectionQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public ScreenSectionQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ScreenSection>(context),new ScreenSectionDataMapping()) {}
+        public ScreenSectionQueryService(IAmitalCloudContext context) : this(new Repository<POCO.ScreenSection>(context)) {}
+		public ScreenSectionQueryService(IRepository<POCO.ScreenSection> repository) : base(repository,  new ScreenSectionDataMapping()) { }
 		public  ScreenSectionPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ScreenSectionKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ScreenSection,string> GetKeys(POCO.ScreenSection entityPOCO) => new ScreenSectionKeys<string>() { Id = entityPOCO.Id,  };
    }

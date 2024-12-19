@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class HybridTenantThresholdQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.HybridTenantThreshold,HybridTenantThresholdKeys<int>,HybridTenantThresholdPM,HybridTenantThresholdList,int>
    {
         public HybridTenantThresholdQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public HybridTenantThresholdQueryService(IAmitalCloudContext context) : base(new Repository<POCO.HybridTenantThreshold>(context),new HybridTenantThresholdDataMapping()) {}
+        public HybridTenantThresholdQueryService(IAmitalCloudContext context) : this(new Repository<POCO.HybridTenantThreshold>(context)) {}
+		public HybridTenantThresholdQueryService(IRepository<POCO.HybridTenantThreshold> repository) : base(repository,  new HybridTenantThresholdDataMapping()) { }
 		public  HybridTenantThresholdPM GetSingle(int tenant, int typecode,bool getComposition, bool getFromCache) => base.GetSingle(new HybridTenantThresholdKeys<int>(){ Tenant = tenant, TypeCode = typecode }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.HybridTenantThreshold,int> GetKeys(POCO.HybridTenantThreshold entityPOCO) => new HybridTenantThresholdKeys<int>() { Tenant = entityPOCO.Tenant, TypeCode = entityPOCO.TypeCode,  };
    }

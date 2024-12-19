@@ -4,6 +4,7 @@ using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 
 namespace AmitalCloud.Infrastructure.Data.Queries
 {
@@ -14,14 +15,20 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         public UserLicenseQuery() : this(0)
         {
         }
-        public UserLicenseQuery(int tenant)
+        public UserLicenseQuery(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {
-            context =  AmitalCloudContext.GetContext(tenant);
-            repository = new Repository<UserLicense>(context);
+        }
+        public UserLicenseQuery(IAmitalCloudContext context) : this(new Repository<UserLicense>(context))
+        {
+            this.context= context;
         }
         public UserLicenseQuery(IRepository<UserLicense> myRepository)
         {
             repository = myRepository;
+            if (context == null)
+            {
+                //context = repository.Context
+            }
         }
         public IQueryable<UserLicensePM> GetUserLicensesByTenant(int tenant)
         {

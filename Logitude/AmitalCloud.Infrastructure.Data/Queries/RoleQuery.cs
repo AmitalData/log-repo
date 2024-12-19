@@ -14,16 +14,18 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     {
         IRepository<Role> repository;
         IAmitalCloudContext context;
-        public RoleQuery(int tenant)
+        public RoleQuery(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {
-            context = AmitalCloudContext.GetContext(tenant);
-            repository = new Repository<Role>(context);
         }
 
         public RoleQuery(Repository<Role> roleRepository, int tenant) 
         {
             repository = roleRepository;
-            context = AmitalCloudContext.GetContext(tenant);
+        }
+
+        public RoleQuery(IAmitalCloudContext amitalCloudContext) : this(new Repository<Role>(amitalCloudContext),amitalCloudContext.Tenant)
+        {
+            context = amitalCloudContext;
         }
 
         public RolePM GetSinglePM(string id, int tenant)

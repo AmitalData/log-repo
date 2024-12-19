@@ -5,14 +5,16 @@
 //     the code is regenerated.
 // </auto-generated> Amital\EntityKeysGenerator.tt from AmitalClassesGenerator.tt
 //---
-using AmitalCloud.Infrastructure.Data.BaseClasses;
+using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;  
-namespace AmitalCloud.Infrastructure.Data.EntityKeys
+using System.Linq.Expressions;
+namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public partial class FollowUpKeys<T> : BaseEntityKeyFields<T> 
+   public class FollowUpKeys<T> : BaseEntityKeyFields<EntityPOCOs.FollowUp,T> 
    {
+		public FollowUpKeys() : base() {}
         public FollowUpKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
         public override void Initialize(IEnumerable<KeyValuePair<string, string>> paramList)
         {
@@ -20,18 +22,9 @@ namespace AmitalCloud.Infrastructure.Data.EntityKeys
         }
    	  public string Id  { get; set; }
 	    			   
-	  public override T GetFullKey()
-      {
-        			 return (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;
-                 
-      }
-
-      public override string GetEntityPMName()
-      {
-          return "FollowUpPM";
-      }
-	 
+	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
+      public override string GetEntityPMName() => "FollowUpsPM";
+	  public override Expression<Func<EntityPOCOs.FollowUp, bool>> Predicate => a => a.Id == Id;
    }
-
 }
 	 

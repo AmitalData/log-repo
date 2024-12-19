@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class DeploymentPackageExecutionLogQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DeploymentPackageExecutionLog,DeploymentPackageExecutionLogKeys<string>,DeploymentPackageExecutionLogPM,DeploymentPackageExecutionLogList,string>
    {
         public DeploymentPackageExecutionLogQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public DeploymentPackageExecutionLogQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DeploymentPackageExecutionLog>(context),new DeploymentPackageExecutionLogDataMapping()) {}
+        public DeploymentPackageExecutionLogQueryService(IAmitalCloudContext context) : this(new Repository<POCO.DeploymentPackageExecutionLog>(context)) {}
+		public DeploymentPackageExecutionLogQueryService(IRepository<POCO.DeploymentPackageExecutionLog> repository) : base(repository,  new DeploymentPackageExecutionLogDataMapping()) { }
 		public  DeploymentPackageExecutionLogPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DeploymentPackageExecutionLogKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DeploymentPackageExecutionLog,string> GetKeys(POCO.DeploymentPackageExecutionLog entityPOCO) => new DeploymentPackageExecutionLogKeys<string>() { Id = entityPOCO.Id,  };
    }

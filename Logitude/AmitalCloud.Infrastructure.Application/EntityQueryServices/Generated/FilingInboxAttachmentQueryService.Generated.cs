@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class FilingInboxAttachmentQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.FilingInboxAttachment,FilingInboxAttachmentKeys<string>,FilingInboxAttachmentPM,FilingInboxAttachmentList,string>
    {
         public FilingInboxAttachmentQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public FilingInboxAttachmentQueryService(IAmitalCloudContext context) : base(new Repository<POCO.FilingInboxAttachment>(context),new FilingInboxAttachmentDataMapping()) {}
+        public FilingInboxAttachmentQueryService(IAmitalCloudContext context) : this(new Repository<POCO.FilingInboxAttachment>(context)) {}
+		public FilingInboxAttachmentQueryService(IRepository<POCO.FilingInboxAttachment> repository) : base(repository,  new FilingInboxAttachmentDataMapping()) { }
 		public  FilingInboxAttachmentPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new FilingInboxAttachmentKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.FilingInboxAttachment,string> GetKeys(POCO.FilingInboxAttachment entityPOCO) => new FilingInboxAttachmentKeys<string>() { Id = entityPOCO.Id,  };
    }

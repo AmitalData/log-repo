@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class MAWBStackQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.MAWBStack,MAWBStackKeys<string>,MAWBStackPM,MAWBStackList,string>
    {
         public MAWBStackQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public MAWBStackQueryService(IAmitalCloudContext context) : base(new Repository<POCO.MAWBStack>(context),new MAWBStackDataMapping()) {}
+        public MAWBStackQueryService(IAmitalCloudContext context) : this(new Repository<POCO.MAWBStack>(context)) {}
+		public MAWBStackQueryService(IRepository<POCO.MAWBStack> repository) : base(repository,  new MAWBStackDataMapping()) { }
 		public  MAWBStackPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new MAWBStackKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.MAWBStack,string> GetKeys(POCO.MAWBStack entityPOCO) => new MAWBStackKeys<string>() { Id = entityPOCO.Id,  };
    }

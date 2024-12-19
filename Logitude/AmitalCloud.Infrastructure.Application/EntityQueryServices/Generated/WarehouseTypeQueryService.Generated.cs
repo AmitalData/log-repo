@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class WarehouseTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.WarehouseType,WarehouseTypeKeys<string>,WarehouseTypePM,WarehouseTypeList,string>
    {
         public WarehouseTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public WarehouseTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.WarehouseType>(context),new WarehouseTypeDataMapping()) {}
+        public WarehouseTypeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.WarehouseType>(context)) {}
+		public WarehouseTypeQueryService(IRepository<POCO.WarehouseType> repository) : base(repository,  new WarehouseTypeDataMapping()) { }
 		public  WarehouseTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new WarehouseTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.WarehouseType,string> GetKeys(POCO.WarehouseType entityPOCO) => new WarehouseTypeKeys<string>() { Code = entityPOCO.Code,  };
    }

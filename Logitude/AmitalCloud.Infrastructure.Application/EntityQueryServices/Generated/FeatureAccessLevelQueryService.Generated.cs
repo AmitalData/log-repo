@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class FeatureAccessLevelQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.FeatureAccessLevel,FeatureAccessLevelKeys<string>,FeatureAccessLevelPM,FeatureAccessLevelList,string>
    {
         public FeatureAccessLevelQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public FeatureAccessLevelQueryService(IAmitalCloudContext context) : base(new Repository<POCO.FeatureAccessLevel>(context),new FeatureAccessLevelDataMapping()) {}
+        public FeatureAccessLevelQueryService(IAmitalCloudContext context) : this(new Repository<POCO.FeatureAccessLevel>(context)) {}
+		public FeatureAccessLevelQueryService(IRepository<POCO.FeatureAccessLevel> repository) : base(repository,  new FeatureAccessLevelDataMapping()) { }
 		public  FeatureAccessLevelPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new FeatureAccessLevelKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.FeatureAccessLevel,string> GetKeys(POCO.FeatureAccessLevel entityPOCO) => new FeatureAccessLevelKeys<string>() { Code = entityPOCO.Code,  };
    }

@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CustomerDepositionQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomerDeposition,CustomerDepositionKeys<string>,CustomerDepositionPM,CustomerDepositionList,string>
    {
         public CustomerDepositionQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CustomerDepositionQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomerDeposition>(context),new CustomerDepositionDataMapping()) {}
+        public CustomerDepositionQueryService(IAmitalCloudContext context) : this(new Repository<POCO.CustomerDeposition>(context)) {}
+		public CustomerDepositionQueryService(IRepository<POCO.CustomerDeposition> repository) : base(repository,  new CustomerDepositionDataMapping()) { }
 		public  CustomerDepositionPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CustomerDepositionKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomerDeposition,string> GetKeys(POCO.CustomerDeposition entityPOCO) => new CustomerDepositionKeys<string>() { Id = entityPOCO.Id,  };
    }

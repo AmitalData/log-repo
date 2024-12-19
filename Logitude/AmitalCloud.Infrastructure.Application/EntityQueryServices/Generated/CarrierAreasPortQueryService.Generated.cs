@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CarrierAreasPortQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CarrierAreasPort,CarrierAreasPortKeys<string>,CarrierAreasPortPM,CarrierAreasPortList,string>
    {
         public CarrierAreasPortQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CarrierAreasPortQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CarrierAreasPort>(context),new CarrierAreasPortDataMapping()) {}
+        public CarrierAreasPortQueryService(IAmitalCloudContext context) : this(new Repository<POCO.CarrierAreasPort>(context)) {}
+		public CarrierAreasPortQueryService(IRepository<POCO.CarrierAreasPort> repository) : base(repository,  new CarrierAreasPortDataMapping()) { }
 		public  CarrierAreasPortPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CarrierAreasPortKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CarrierAreasPort,string> GetKeys(POCO.CarrierAreasPort entityPOCO) => new CarrierAreasPortKeys<string>() { Id = entityPOCO.Id,  };
    }

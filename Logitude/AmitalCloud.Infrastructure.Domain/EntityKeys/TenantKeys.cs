@@ -24,7 +24,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "TenantsPM";
-	  public override Expression<Func<EntityPOCOs.Tenant, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<EntityPOCOs.Tenant, bool>> Predicate
+        {     
+         get   => a => a.Id == Id;
+        }
    }
 }
 	 

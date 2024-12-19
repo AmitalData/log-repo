@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CustomsShipperQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomsShipper,CustomsShipperKeys<string>,CustomsShipperPM,CustomsShipperList,string>
    {
         public CustomsShipperQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CustomsShipperQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomsShipper>(context),new CustomsShipperDataMapping()) {}
+        public CustomsShipperQueryService(IAmitalCloudContext context) : this(new Repository<POCO.CustomsShipper>(context)) {}
+		public CustomsShipperQueryService(IRepository<POCO.CustomsShipper> repository) : base(repository,  new CustomsShipperDataMapping()) { }
 		public  CustomsShipperPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CustomsShipperKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomsShipper,string> GetKeys(POCO.CustomsShipper entityPOCO) => new CustomsShipperKeys<string>() { Id = entityPOCO.Id,  };
    }

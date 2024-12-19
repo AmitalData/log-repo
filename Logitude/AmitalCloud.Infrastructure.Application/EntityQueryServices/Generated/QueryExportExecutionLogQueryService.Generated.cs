@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class QueryExportExecutionLogQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.QueryExportExecutionLog,QueryExportExecutionLogKeys<string>,QueryExportExecutionLogPM,QueryExportExecutionLogList,string>
    {
         public QueryExportExecutionLogQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public QueryExportExecutionLogQueryService(IAmitalCloudContext context) : base(new Repository<POCO.QueryExportExecutionLog>(context),new QueryExportExecutionLogDataMapping()) {}
+        public QueryExportExecutionLogQueryService(IAmitalCloudContext context) : this(new Repository<POCO.QueryExportExecutionLog>(context)) {}
+		public QueryExportExecutionLogQueryService(IRepository<POCO.QueryExportExecutionLog> repository) : base(repository,  new QueryExportExecutionLogDataMapping()) { }
 		public  QueryExportExecutionLogPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new QueryExportExecutionLogKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.QueryExportExecutionLog,string> GetKeys(POCO.QueryExportExecutionLog entityPOCO) => new QueryExportExecutionLogKeys<string>() { Id = entityPOCO.Id,  };
    }

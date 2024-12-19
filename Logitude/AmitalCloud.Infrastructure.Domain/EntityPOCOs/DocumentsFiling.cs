@@ -183,6 +183,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string ReceivedByPartner { get; set; }
         [Column("BillToId")]
 	    public string BillToId { get; set; }
+        public string ComputedCustomerDocumentId { get; set; }
     }
 }
 	 

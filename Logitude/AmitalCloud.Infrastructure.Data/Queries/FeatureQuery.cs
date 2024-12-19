@@ -7,7 +7,7 @@ using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+
 using System.Diagnostics;
 using System.Linq;
 using System.Transactions;

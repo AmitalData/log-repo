@@ -120,6 +120,7 @@
       <Visible>False</Visible>
     </AdditionalFiles>
     <Compile Include="Context\ShipmentContext.cs" />
+    <Compile Include="Context\ShipmentContext_Invoice.cs" />
     <Compile Include="EntityDataMappings\AccountingInformationIdentifierDataMapping.cs" />
     <Compile Include="EntityDataMappings\AWBAdditionalHandlingInfoDataMapping.cs" />
     <Compile Include="EntityDataMappings\AWBChargesCodeDataMapping.cs" />

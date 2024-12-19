@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class TraceEventQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.TraceEvent,TraceEventKeys<string>,TraceEventPM,TraceEventList,string>
    {
         public TraceEventQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public TraceEventQueryService(IAmitalCloudContext context) : base(new Repository<POCO.TraceEvent>(context),new TraceEventDataMapping()) {}
+        public TraceEventQueryService(IAmitalCloudContext context) : this(new Repository<POCO.TraceEvent>(context)) {}
+		public TraceEventQueryService(IRepository<POCO.TraceEvent> repository) : base(repository,  new TraceEventDataMapping()) { }
 		public  TraceEventPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new TraceEventKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.TraceEvent,string> GetKeys(POCO.TraceEvent entityPOCO) => new TraceEventKeys<string>() { Id = entityPOCO.Id,  };
    }

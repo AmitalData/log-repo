@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class ToggleQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Toggle,ToggleKeys<string>,TogglePM,ToggleList,string>
    {
         public ToggleQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public ToggleQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Toggle>(context),new ToggleDataMapping()) {}
+        public ToggleQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Toggle>(context)) {}
+		public ToggleQueryService(IRepository<POCO.Toggle> repository) : base(repository,  new ToggleDataMapping()) { }
 		public  TogglePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new ToggleKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Toggle,string> GetKeys(POCO.Toggle entityPOCO) => new ToggleKeys<string>() { Code = entityPOCO.Code,  };
    }

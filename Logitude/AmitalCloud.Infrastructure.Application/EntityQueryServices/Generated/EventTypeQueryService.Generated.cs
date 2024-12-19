@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class EventTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.EventType,EventTypeKeys<string>,EventTypePM,EventTypeList,string>
    {
         public EventTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public EventTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.EventType>(context),new EventTypeDataMapping()) {}
+        public EventTypeQueryService(IAmitalCloudContext context) : this(new Repository<POCO.EventType>(context)) {}
+		public EventTypeQueryService(IRepository<POCO.EventType> repository) : base(repository,  new EventTypeDataMapping()) { }
 		public  EventTypePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new EventTypeKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.EventType,string> GetKeys(POCO.EventType entityPOCO) => new EventTypeKeys<string>() { Id = entityPOCO.Id,  };
    }

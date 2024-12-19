@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    public partial class CardQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Card,CardKeys<string>,CardPM,CardList,string>
    {
         public CardQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CardQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Card>(context),new CardDataMapping()) {}
+        public CardQueryService(IAmitalCloudContext context) : this(new Repository<POCO.Card>(context)) {}
+		public CardQueryService(IRepository<POCO.Card> repository) : base(repository,  new CardDataMapping()) { }
 		public  CardPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CardKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Card,string> GetKeys(POCO.Card entityPOCO) => new CardKeys<string>() { Id = entityPOCO.Id,  };
    }
