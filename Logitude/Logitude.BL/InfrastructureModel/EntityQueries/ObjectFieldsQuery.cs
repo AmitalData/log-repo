@@ -2146,7 +2146,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     if (objectField.FullNameTextCodeCode != null)
                     {
                         TextCode fullnamecode = textCodes.Where(t => t.Code == objectField.FullNameTextCodeCode).FirstOrDefault();
-                        fullnamecode = fullnamecode ?? textcodesRepository.GetSingleTextCodeByCode(objectField.FullNameTextCodeCode);
+                        fullnamecode = fullnamecode ?? textcodesRepository.GetSingleTextCodeByCode(objectField.FullNameTextCodeCode,true);
 
                         if (fullnamecode != null)
                         {
@@ -2160,7 +2160,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     if (objectField.ShortNameTextCodeCode != null)
                     {
                         TextCode shortnamecode = textCodes.Where(t => t.Code == objectField.ShortNameTextCodeCode).FirstOrDefault();
-                        shortnamecode = shortnamecode ?? textcodesRepository.GetSingleTextCodeByCode(objectField.ShortNameTextCodeCode);
+                        shortnamecode = shortnamecode ?? textcodesRepository.GetSingleTextCodeByCode(objectField.ShortNameTextCodeCode,true);
 
                         if (shortnamecode != null)
                         {
@@ -2173,7 +2173,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     if (objectField.HelpTextCodeCode != null)
                     {
                         TextCode helpcode = textCodes.Where(t => t.Id == objectField.HelpTextCodeCode).FirstOrDefault();
-                        helpcode = helpcode ?? textcodesRepository.GetSingleTextCodeByCode(objectField.HelpTextCodeCode);
+                        helpcode = helpcode ?? textcodesRepository.GetSingleTextCodeByCode(objectField.HelpTextCodeCode, true);
 
                         if (helpcode != null)
                         {
@@ -2186,7 +2186,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     if (objectField.ListTextCodeCode != null)
                     {
                         TextCode listcode = textCodes.Where(t => t.Id == objectField.ListTextCodeCode).FirstOrDefault();
-                        listcode = listcode ?? textcodesRepository.GetSingleTextCodeByCode(objectField.ListTextCodeCode);
+                        listcode = listcode ?? textcodesRepository.GetSingleTextCodeByCode(objectField.ListTextCodeCode, true);
 
                         if (listcode != null)
                         {
