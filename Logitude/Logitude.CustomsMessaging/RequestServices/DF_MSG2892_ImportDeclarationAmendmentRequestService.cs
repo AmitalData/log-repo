@@ -1949,7 +1949,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private DeclarationGoodsShipmentConsignmentDMExtensions GetDMExtensionsConsignment(ConsignmentPM consignmentPM)
         {
-             var CargoDescription = consignmentPM.CargoDescription = forbiddenSignsUtil.ReplaceForbiddenChars(consignmentPM.CargoDescription, forbiddenSigns);
+             var CargoDescription = consignmentPM.CargoDescription = forbiddenSignsUtil.ReplaceForbiddenChars(consignmentPM.CargoDescription, _forbiddenSigns);
 
             var DMExtensions = new DeclarationGoodsShipmentConsignmentDMExtensions();
             DMExtensions.CargoDescription = new DeclarationGoodsShipmentConsignmentDMExtensionsCargoDescription() { Value = CargoDescription };
