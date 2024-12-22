@@ -6329,9 +6329,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             if (this.entityPM.IsCustomShipment)
             {
-                // todo: set delivery number
-                // itemPM.PickUpDeliveryNumber = IdCounter.GetNumber("ShipmentPickUpDelivery", tenant).ToString();
-                itemPM.PickUpDeliveryNumber = TableCounter.GetNumber(tenant, "DECL", "DC", null);
+                itemPM.PickUpDeliveryNumber = TableCounter.GetNumber(tenant, "SHDV", "DLV", null);
 
                 ApplyChangeOnCustomShipmentDelivery(itemPM);
             }

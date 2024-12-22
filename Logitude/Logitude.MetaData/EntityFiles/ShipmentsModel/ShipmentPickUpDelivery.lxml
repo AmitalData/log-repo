@@ -40,7 +40,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment Pickup Delivery&quot;"
-  Code="&quot;e65e&quot;"
+  Code="&quot;ec3d&quot;"
   Name="&quot;ShipmentPickUpDelivery&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -6100,6 +6100,13 @@
       DefaultText="&quot;Remove Delivery&quot;"
       LocalDefaultTextBack_up="&quot;האם למחוק את ההובלה?&quot;"
       LocalDefaultText="&quot;BS64:IteU15DXnSDXnNee15fXldenINeQ16og15TXlNeV15HXnNeUPyI=&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ShipmentPickUpDelivery.O.Address&quot;"
+      DefaultText="&quot;Address&quot;"
+      LocalDefaultTextBack_up="&quot;כתובת&quot;"
+      LocalDefaultText="&quot;BS64:Iteb16rXldeR16oi&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

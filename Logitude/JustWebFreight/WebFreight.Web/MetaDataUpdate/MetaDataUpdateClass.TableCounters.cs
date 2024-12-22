@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Simplog.Global.Data.GlobalModel.Repositories;
 
 namespace WebFreight.Web.MetaDataUpdate
 {
@@ -1340,6 +1341,47 @@ namespace WebFreight.Web.MetaDataUpdate
 
             return 0;
             #endregion
+        }
+
+        public void CreateShipmentDeliveryCounters()
+        {
+            ObjectContext = WebFreightContext.GetContext(0);
+            CounterRepository = new CounterRepository(ObjectContext);
+            CounterDefinitionRepository = new CounterDefinitionRepository(ObjectContext);
+            List<Counter> counters = CounterRepository.All().ToList();
+
+            List<ObjectTable> objectTables = ObjectTableRepository.GetObjectsByTenant(0).ToList();
+            ObjectTable shipmentPickUpDeliveryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShipmentPickUpDelivery" && d.Tenant == 0).FirstOrDefault();
+
+            List<GlobalTenant> globalTenants = GlobalTenantRepository.GetGlobalTenants();
+
+            foreach (GlobalTenant tenant in globalTenants)
+            {
+                if (!counters.Where(c => c.Code == "SHDV" && c.Tenant == tenant.Id).Any())
+                {
+                    Counter shipmentDeliveryCounter = new Counter()
+                    {
+                        Id = IdCounter.GetNumber("Counter", tenant.Id).ToString(),
+                        ObjectTableId = shipmentPickUpDeliveryObjectTable.Id,
+                        Code = "SHDV",
+                        Tenant = tenant.Id,
+                        Name = "Shipment Delivery Number",
+                    };
+
+                    CounterDefinition shipmentDelivery_CounterDef = new CounterDefinition()
+                    {
+                        Id = IdCounter.GetNumber("CounterDefinition", tenant.Id).ToString(),
+                        CounterId = shipmentDeliveryCounter.Id,
+                        Tenant = tenant.Id,
+                        StartNumber = 1000,
+                        Parameter1 = "DLV",
+                    };
+
+                    CounterRepository.Add(shipmentDeliveryCounter);
+                    CounterDefinitionRepository.Add(shipmentDelivery_CounterDef);
+                }
+            }
+            this.ObjectContext.SaveChanges();
         }
     }
 }
