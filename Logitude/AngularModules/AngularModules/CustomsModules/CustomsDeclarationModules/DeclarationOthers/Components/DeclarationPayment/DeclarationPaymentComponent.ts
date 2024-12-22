@@ -750,6 +750,9 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
         searchParams.RequestVIA = SendRequestVIA.Default;
          if(!this.isConnectToUnifreight) {
+
+            if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse) return;
+
             this.CheckCustomFileCreditFromUnifreight(searchParams);
         }
         else 
@@ -2176,6 +2179,9 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             }
             else {
                 if (!this.isConnectToUnifreight) {
+
+                    if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse) return;
+
                     this.CheckCustomFileCreditFromUnifreight(params);   
                 }
                 else {
@@ -2656,6 +2662,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
         if (!this.isConnectToUnifreight) 
         {
+            if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse) return;
+
             this.CheckCustomFileCreditFromUnifreight(params);
         }
         else{
@@ -2735,6 +2743,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         params.ForcePersonalSign = this.customSendOptions.ForcePersonalSign;
         if (!this.isConnectToUnifreight) 
         {
+            if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse) return;
+
             this.CheckCustomFileCreditFromUnifreight(params);
         }
         else 
@@ -3274,6 +3284,8 @@ export class PaymentMethodModel extends BaseComponent {
 
         searchParams.RequestVIA = SendRequestVIA.Default;
         if(!this.parent.isConnectToUnifreight){
+            if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse) return;
+
             this.CheckCustomFileCreditFromUnifreight(searchParams);      
         }
         else
