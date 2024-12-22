@@ -133,8 +133,34 @@ export class GLAccountExtendedPMService {
 
 
     }
+    SetGLAccountIsMark(accountId: string) {
+     
+        return this.httpClient.put(this._apiUrl  + '/PutGLAccountIsMark?accountId=' + accountId, null, ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+
+            serviceResponse.Result = response;
+
+            return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
 
 
+    }
+    UndoMark(accountId: string, date:Date) {
+     
+        return this.httpClient.put(this._apiUrl  + '/PutGLAccountUndoMark?accountId=' + accountId+ '&date=' + date?.toLocaleString(), null, ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+
+            serviceResponse.Result = response;
+
+            return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+
+    }
 
     MapJsonToEntityPM(jsonPM: any) {
 

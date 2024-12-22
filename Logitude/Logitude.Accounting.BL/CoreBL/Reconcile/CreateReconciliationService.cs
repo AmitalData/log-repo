@@ -84,7 +84,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 var ledgerTransactionReconciled = CheckAnyLedgerTransactionReconciledByIdList(reconciliationPM);
                 if (ledgerTransactionReconciled) 
                 {
-                    throw new ApplicationException("ישנם תנועות שסומנו אך הותאמו במקביל על ידי משתמש או בסשן אחר , יש לבצע רענון למסך.");
+                    throw new ApplicationException("GLAccounts.O.MarkedByAnother");
 
                 }
             }
