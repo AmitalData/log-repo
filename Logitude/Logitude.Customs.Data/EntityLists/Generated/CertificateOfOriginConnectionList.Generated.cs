@@ -17,10 +17,6 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string Id  { get; set; }
        [DataMember]
-       public int Tenant  { get; set; }
-       [DataMember]
-       public string SearchFields  { get; set; }
-       [DataMember]
        public string CooStatus  { get; set; }
        [DataMember]
        public string CooReason  { get; set; }

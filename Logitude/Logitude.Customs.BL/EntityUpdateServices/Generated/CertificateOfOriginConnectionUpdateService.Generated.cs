@@ -55,19 +55,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
 
 		
-		protected override void FillDefaultValuesOnCreate(CertificateOfOriginConnectionPM entityPM)
-        {     
-  
-		
-		    entityPM.Id = IdCounter.GetNumber("CertificateOfOriginConnection", entityPM.Tenant); 
-					
-	    }
-        
+	    protected override void FillDefaultValuesOnCreate(CertificateOfOriginConnectionPM entityPM)
+        {
+ 
+		}
 		protected override void FillDefaultValuesOnUpdate(CertificateOfOriginConnectionPM entityPM)
-        {       
-           
-        }
-		  
+		{
+ 
+		}
+		
 		 
 	 
    }

@@ -2,42 +2,49 @@
 <Script DBType="Main" Module="Customs">
 	<Sql Version="1">
 		<![CDATA[	
-      INSERT INTO Customs.CertificateOfOriginConnections
-      (
-          Id,
-          Tenant,
-          SearchFields,
-          CooStatus,
-          CooReason,
-          Active
-      )
-      SELECT
-          CAST(ROW_NUMBER() OVER (ORDER BY Status.Code, Reason.Code) AS VARCHAR(15)) AS Id, -- מזהה ייחודי
-         6 AS Tenant, -- Tenant קבוע
-          CONCAT(Status.Code, ',', Reason.Code, ',', CAST(CASE WHEN Status.Inactive = 0 THEN 1 ELSE 0 END AS VARCHAR)) AS SearchFields, -- ערכים בשדה SEARCHFIELDS
-          Status.Code AS CooStatus,
-          Reason.Code AS CooReason,
-          CASE WHEN Status.Inactive = 0 THEN 1 ELSE 0 END AS Active -- Active הפוך מהשדה Inactive
-      FROM
-          customs.CertificateOfOriginStatusCodeEnums AS Status
-      CROSS JOIN
-          customs.RequestReasonCodeEnums AS Reason
-      ORDER BY Status.Code;
-      
+     -- Check if the table exists and has no data
+IF EXISTS (SELECT 1 
+           FROM INFORMATION_SCHEMA.TABLES 
+           WHERE TABLE_SCHEMA = 'Customs' 
+             AND TABLE_NAME = 'CertificateOfOriginConnections')
+AND NOT EXISTS (SELECT 1 
+                FROM Customs.CertificateOfOriginConnections)
+BEGIN
+    -- Insert data
+    INSERT INTO Customs.CertificateOfOriginConnections
+    (
+        Id,
+        CooStatus,
+        CooReason,
+        Active
+    )
+    SELECT
+        CAST(ROW_NUMBER() OVER (ORDER BY Status.Code, Reason.Code) AS VARCHAR(15)) AS Id, -- Unique Identifier
+        Status.Code AS CooStatus,
+        Reason.Code AS CooReason,
+        CASE WHEN Status.Inactive = 0 THEN 1 ELSE 0 END AS Active -- Active is the inverse of Inactive
+    FROM
+        customs.CertificateOfOriginStatusCodeEnums AS Status
+    CROSS JOIN
+        customs.RequestReasonCodeEnums AS Reason
+    ORDER BY Status.Code;
 
-    update customs.CertificateOfOriginConnections
-    set Active = 
-        case
-            when (CooStatus = '1' and (CooReason = '12' or CooReason = '13' or CooReason = '14')) then 1
-            when (CooStatus = '2' and (CooReason = '1' or CooReason = '2' or CooReason = '4' or CooReason = '5' or CooReason = '12' or CooReason = '13')) then 1
-            when (CooStatus = '3' and (CooReason = '1' or CooReason = '2' or CooReason = '3' or CooReason = '4' or CooReason = '5' or CooReason = '13' or CooReason = '14')) then 1
-            when (CooStatus = '4' and CooReason = '13') then 1
-            when (CooStatus = '5' and (CooReason = '13' or CooReason = '14')) then 1
-            when (CooStatus = '6' and (CooReason = '13' or CooReason = '14')) then 1
-            when (CooStatus = '7' and (CooReason = '3' or CooReason = '4' or CooReason = '13' or CooReason = '14')) then 1
-            when (CooStatus = '8' and (CooReason = '13' or CooReason = '14')) then 1
-            else 0
-        end;
+    -- Update the Active field based on conditions
+    UPDATE Customs.CertificateOfOriginConnections
+    SET Active = 
+        CASE
+            WHEN (CooStatus = '1' AND (CooReason = '12' OR CooReason = '13' OR CooReason = '14')) THEN 1
+            WHEN (CooStatus = '2' AND (CooReason IN ('1', '2', '4', '5', '12', '13'))) THEN 1
+            WHEN (CooStatus = '3' AND (CooReason IN ('1', '2', '3', '4', '5', '13', '14'))) THEN 1
+            WHEN (CooStatus = '4' AND CooReason = '13') THEN 1
+            WHEN (CooStatus = '5' AND (CooReason IN ('13', '14'))) THEN 1
+            WHEN (CooStatus = '6' AND (CooReason IN ('13', '14'))) THEN 1
+            WHEN (CooStatus = '7' AND (CooReason IN ('3', '4', '13', '14'))) THEN 1
+            WHEN (CooStatus = '8' AND (CooReason IN ('13', '14'))) THEN 1
+            ELSE 0
+        END;
+END;
+
         ]]>
 	</Sql>
   
