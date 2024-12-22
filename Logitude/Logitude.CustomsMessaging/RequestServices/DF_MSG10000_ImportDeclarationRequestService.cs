@@ -47,6 +47,7 @@ using Simplog.Data.Helpers;
 using Logitude.Customs.BL.BL;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using DocumentFormat.OpenXml.Wordprocessing;
+using Logitude.BL.InfrastructureModel.Tools.EntityService;
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
@@ -57,6 +58,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         private Stopwatch _Stopwatch;
         private AmitalContext _AmitalContext;
         private ForbiddenSignsUtil _ForbiddenSignsUtil = new ForbiddenSignsUtil();
+        private string _forbiddenSigns = "";
         public bool IsFromOpenNewAmendment = false;
         public bool FeatureExcludeManifest = false;
         public bool IsSendWithManifest = false;
@@ -197,24 +199,20 @@ namespace Logitude.CustomsMessaging.RequestServices
         private void CreateDeclarationPM(GenericRequestParams requestParams)
         {
          
-            var forbiddenSigns = _ForbiddenSignsUtil.GetForbiddenSigns(requestParams.Tenant);
+           
 
             if (this._context == null) this._context = CustomContext.GetContext(requestParams.Tenant);
             var declarationQueryService = new DeclarationQueryService(_context);
             declarationQueryService.LoadSupplierInvoicesItemsParentsOnly = true;
             _DeclarationPM = declarationQueryService.GetSingle(requestParams.AppicationId, true, false);
 
-            _DeclarationPM.ImporterName = _ForbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.ImporterName, forbiddenSigns);
-            _DeclarationPM.ImporterAddress = _ForbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.ImporterAddress, forbiddenSigns);
-            _DeclarationPM.CargoDescription = _ForbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.CargoDescription, forbiddenSigns);
-
+        
         }
 
 
         public override void PostGetRequest(DF_MSG10000_ImportDeclaration customRequest, GenericRequestParams requestParams)
         {
-            var forbiddenSigns = _ForbiddenSignsUtil.GetForbiddenSigns(requestParams.Tenant);
-
+           
             if (this._context == null)
             {
                 this._context = CustomContext.GetContext(requestParams.Tenant);
@@ -234,8 +232,8 @@ namespace Logitude.CustomsMessaging.RequestServices
                         Tenant = _DeclarationPM.Tenant,
                         IsClosedForFollowUp = false,
                         IsCourierMissingClassification = false,
-                        ImporterName = _ForbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.ImporterName, forbiddenSigns),
-                        CargoDescription = _ForbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.CargoDescription, forbiddenSigns),
+                        ImporterName = _DeclarationPM.ImporterName,
+                        CargoDescription =_DeclarationPM.CargoDescription,
                     };
                     currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Insert;
                 }
@@ -425,7 +423,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         public override DF_MSG10000_ImportDeclaration GetRequest(GenericRequestParams requestParams)
         {
-
+            var _forbiddenSigns = _ForbiddenSignsUtil.GetForbiddenSigns(requestParams.Tenant);
 
             LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIA = " + requestParams.RequestVIA.ToString());
             LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIAChangeDue = " + requestParams.RequestVIAChangeDue);
@@ -2071,15 +2069,13 @@ namespace Logitude.CustomsMessaging.RequestServices
         private List<DeclarationGoodsShipmentConsignment> GetDeclarationConsignment(DeclarationPM declarationPM)
         {
             var declarationConsignmentList = new List<DeclarationGoodsShipmentConsignment>();
-            var forbiddenSigns = _ForbiddenSignsUtil.GetForbiddenSigns(declarationPM.Tenant);
-            for (int consignmentSeq = 0; consignmentSeq < declarationPM.Consignments.Count(); consignmentSeq++)
+             for (int consignmentSeq = 0; consignmentSeq < declarationPM.Consignments.Count(); consignmentSeq++)
             {
                 var consignmentPM = declarationPM.Consignments[consignmentSeq];
                 var declarationConsignment = new DeclarationGoodsShipmentConsignment();
                 declarationConsignment.SequenceNumeric = consignmentSeq + 1;
                 declarationConsignment.SequenceNumericSpecified = true;
-                consignmentPM.CargoDescription =  _ForbiddenSignsUtil.ReplaceForbiddenChars(consignmentPM.CargoDescription, forbiddenSigns);
-
+          
                 ///if (!String.IsNullOrWhiteSpace(consignmentPM.ManifestNumber) || !String.IsNullOrWhiteSpace(consignmentPM.CargoTypeCode))
                 //{
                 declarationConsignment.TransportContractDocument = new DeclarationGoodsShipmentConsignmentTransportContractDocument()
@@ -2142,10 +2138,8 @@ namespace Logitude.CustomsMessaging.RequestServices
         {
             var DMExtensions = new DeclarationGoodsShipmentConsignmentDMExtensions();
 
-            var forbiddenSigns = _ForbiddenSignsUtil.GetForbiddenSigns(consignmentPM.Tenant);
-            consignmentPM.CargoDescription = _ForbiddenSignsUtil.ReplaceForbiddenChars(consignmentPM.CargoDescription, forbiddenSigns);
-
-            DMExtensions.CargoDescription = new DeclarationGoodsShipmentConsignmentDMExtensionsCargoDescription() { Value = consignmentPM.CargoDescription };
+           
+            DMExtensions.CargoDescription = new DeclarationGoodsShipmentConsignmentDMExtensionsCargoDescription() { Value = _ForbiddenSignsUtil.ReplaceForbiddenChars(consignmentPM.CargoDescription, _forbiddenSigns) };
 
             //DMExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType() { Value = consignmentPM.IsLastReleaseFromWarehous };
             if (consignmentPM.IsLastReleaseFromWarehous == "T") // temporary treatment - Task 9683
@@ -2267,7 +2261,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private DeclarationImporter GetDeclarationImporterRole6(DeclarationPM declarationPM)
         {
-            var forbiddenSigns = _ForbiddenSignsUtil.GetForbiddenSigns(declarationPM.Tenant);
+            
             //<--- Yuval Chalup 15.11.2016 TASK-24438 - CHANGED FROM:
             //var declarationImporter = new DeclarationImporter();
             // Task 6440 - add ImporterCode fields check
@@ -2286,8 +2280,8 @@ namespace Logitude.CustomsMessaging.RequestServices
             //Yuval Chalup 15.11.2016 TASK-24438 --->
             declarationImporter.DMExtensions = new DeclarationImporterDMExtensions()
             {
-                Address = _ForbiddenSignsUtil.ReplaceForbiddenChars( declarationPM.EntitleImporterAddress, forbiddenSigns),
-                Name = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationPM.EntitleImporterName, forbiddenSigns),
+                Address = _ForbiddenSignsUtil.ReplaceForbiddenChars( declarationPM.EntitleImporterAddress, _forbiddenSigns),
+                Name = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationPM.EntitleImporterName, _forbiddenSigns),
                 EntitlementTypeCode = new EntitlementTypeCodeType()
                 {
                     Value = declarationPM.ImporterEntitlementTypeCode
@@ -2312,19 +2306,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private DeclarationImporter GetDeclarationImporterRole5(DeclarationPM declarationPM)
         {
-            var forbiddenSigns = _ForbiddenSignsUtil.GetForbiddenSigns(declarationPM.Tenant);
-            //<--- Yuval Chalup 15.11.2016 TASK-24438 - CHANGED FROM:
-            //var declarationImporter = new DeclarationImporter();
-            // Task 6440 - add ImporterCode fields check
-            //if (!String.IsNullOrWhiteSpace(declarationPM.TransferImporterId))
-            //{
-            //    declarationImporter.ID = SetIDTypeValue<ImporterIdentificationIDType>(GetImporterCode(declarationPM.TransferImporterId), declarationPM.TransferImporterTypeCode); // new ImporterIdentificationIDType()  // moran 24.3.15 - Task 11461 - add declarationPM.ImporterTypeCode
-            //}
-            // else
-            //{
-            //    declarationImporter.ID = SetIDTypeValue<ImporterIdentificationIDType>(declarationPM.TransferImporterCode, declarationPM.TransferImporterTypeCode); // moran 24.3.15 - Task 11461 - add declarationPM.ImporterTypeCode // Mirit 15/11/15 - Change to TransferImporterCode
-            //}
-            //TO:
+          
             var ImporterId = ImportersCheck("מעביר", declarationPM.TransferImporterCode, declarationPM.TransferImporterId, declarationPM.TransferImporterTypeCode, declarationPM.TransferImporterName, declarationPM.TransferImporterAddress, declarationPM.TransferPassportNumber, declarationPM.TransferImporterCountryCode);
             var declarationImporter = new DeclarationImporter();
             declarationImporter.ID = SetIDTypeValue<ImporterIdentificationIDType>(ImporterId, declarationPM.TransferImporterTypeCode);
@@ -2332,8 +2314,8 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             declarationImporter.DMExtensions = new DeclarationImporterDMExtensions()
             {
-                Address = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationPM.TransferImporterName, forbiddenSigns),
-                Name = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationPM.TransferImporterAddress, forbiddenSigns),
+                Address = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationPM.TransferImporterName, _forbiddenSigns),
+                Name = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationPM.TransferImporterAddress, _forbiddenSigns),
                 EntitlementTypeCode = new EntitlementTypeCodeType()
                 {
                     Value = declarationPM.TransImporterEntitleTypeCode
@@ -2353,25 +2335,9 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private DeclarationImporter GetDeclarationImporterRole4(DeclarationPM declarationPM)
         {
-            var forbiddenSigns = _ForbiddenSignsUtil.GetForbiddenSigns(declarationPM.Tenant);
-            //<--- Yuval Chalup 15.11.2016 TASK-24438 - CHANGED FROM:
-            //var ImporterId = GetImporterCode(declarationPM.ImporterId);
-            //if (String.IsNullOrWhiteSpace(ImporterId)) // Task 6440 - add ImporterCode fields check
-            //{
-            //    ImporterId = GetImporterCode(declarationPM.ImporterCode);
-            //}
-            //if (String.IsNullOrWhiteSpace(ImporterId))
-            //{
-            //    throw new BusinessErrorException("Importer is empty");
-            //}
-            //TO:
-            //ImporterId = GetImporterCode(declarationPM.ImporterId);
+            
             var ImporterId = ImportersCheck("", declarationPM.ImporterCode, declarationPM.ImporterId, declarationPM.ImporterTypeCode, declarationPM.ImporterName, declarationPM.ImporterAddress, declarationPM.ImporterPassportNumber, declarationPM.ImporterPassCountryCode);
-            //if (!string.IsNullOrWhiteSpace(errorMessage))
-            //{
-            //    throw new BusinessErrorException(errorMessage);
-            //}
-            //Yuval Chalup 15.11.2016 TASK-24438 --->
+          
 
             var declarationImporter = new DeclarationImporter();
             declarationImporter.ID = SetIDTypeValue<ImporterIdentificationIDType>(ImporterId, declarationPM.ImporterTypeCode); // new ImporterIdentificationIDType() // moran 24.3.15 - Task 11461 - use declarationPM.ImporterTypeCode instead of hard coded "1"
@@ -2386,10 +2352,9 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
             declarationImporter.DMExtensions = new DeclarationImporterDMExtensions()
             {
-                //                Address = declarationPM.ImporterAddress,
-                //Name = declarationPM.ImporterName,
-                Address = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationPM.ImporterAddress, forbiddenSigns),
-                Name = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationPM.ImporterName, forbiddenSigns),
+                
+                Address = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationPM.ImporterAddress, _forbiddenSigns),
+                Name = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationPM.ImporterName, _forbiddenSigns),
                 EntitlementTypeCode = new EntitlementTypeCodeType()
                 {
                     Value = declarationPM.MainImporterEntitlemntTypeCode
