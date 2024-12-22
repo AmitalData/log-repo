@@ -191,14 +191,36 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     select a).FirstOrDefault();
         }
 
-        public TextCode GetSingleTextCodeByCode(string code)
-        {
-            return (from a in context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser")
-                    where a.Code == code
-                    select a).FirstOrDefault();
-        }
+		public TextCode GetSingleTextCodeByCode(string code, bool fromCache = false)
+		{
+			string codeName = "GetSingleTextCodeByCode" + code;
+			TextCode textCode = new TextCode();
+			if (fromCache)
+			{
+				if (CacheManager.CacheWrapper.Get(codeName) == null)
+				{
+					textCode = (from a in context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser")
+								where a.Code == code
+								select a).FirstOrDefault();
 
-        public TextCode GetSingleTextCodeByTenant(string code, int tenant)
+					CacheManager.CacheWrapper.Insert(codeName, textCode, null);
+				}
+				else
+				{
+					textCode = (TextCode)CacheManager.CacheWrapper.Get(codeName);
+				}
+				return textCode;
+			}
+			else
+			{
+				return (from a in context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser")
+						where a.Code == code
+						select a).FirstOrDefault();
+			}
+
+		}
+
+		public TextCode GetSingleTextCodeByTenant(string code, int tenant)
         {
             return (from a in context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser")
                     where a.Code == code && a.Tenant == tenant
