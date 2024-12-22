@@ -14,9 +14,9 @@ namespace Logitude.CustomsMessaging.Helpers
 {
     public class ForbiddenSignsUtil
     {
-        private char _defaultChar = '_';
+        private char _defaultChar = ' ';
         public string ReplaceForbiddenChars(string original, string forbiddenChars)
-        {
+        {   
             if (string.IsNullOrEmpty(original) || string.IsNullOrEmpty(forbiddenChars))
                 return original;
 

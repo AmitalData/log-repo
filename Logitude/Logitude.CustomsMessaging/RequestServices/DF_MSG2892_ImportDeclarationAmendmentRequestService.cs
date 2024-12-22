@@ -1949,6 +1949,9 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private DeclarationGoodsShipmentConsignmentDMExtensions GetDMExtensionsConsignment(ConsignmentPM consignmentPM)
         {
+            var forbiddenSigns = forbiddenSignsUtil.GetForbiddenSigns(consignmentPM.Tenant);
+            consignmentPM.CargoDescription = forbiddenSignsUtil.ReplaceForbiddenChars(consignmentPM.CargoDescription, forbiddenSigns);
+
             var DMExtensions = new DeclarationGoodsShipmentConsignmentDMExtensions();
             DMExtensions.CargoDescription = new DeclarationGoodsShipmentConsignmentDMExtensionsCargoDescription() { Value = consignmentPM.CargoDescription };
             //DMExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType() { Value = consignmentPM.IsLastReleaseFromWarehous };
