@@ -384,7 +384,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         {
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), _DeclarationPM.Tenant);
             var forbiddenSigns = forbiddenSignsUtil.GetForbiddenSigns(_DeclarationPM.Tenant);
-          
+
             _DeclarationPM.ImporterName = forbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.ImporterName, forbiddenSigns);
             _DeclarationPM.ImporterAddress = forbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.ImporterAddress, forbiddenSigns);
             _DeclarationPM.CargoDescription = forbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.CargoDescription, forbiddenSigns);
@@ -509,6 +509,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private void CheckTaxationDateTime(DeclarationPM declarationPM)
         {
+            var forbiddenSigns = forbiddenSignsUtil.GetForbiddenSigns(declarationPM.Tenant);
             //If TaxationDateTime is not Today change it before sending
             if (!_DeclarationPM.TaxationDateTime.HasValue ||
                 (_DeclarationPM.TaxationDateTime.HasValue && _DeclarationPM.TaxationDateTime.Value.Date < DateTime.Now.Date))
@@ -517,6 +518,9 @@ namespace Logitude.CustomsMessaging.RequestServices
                 _DeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                 _DeclarationPM.TaxationDateTime = TenantServerConfigration.GetCurrentDateTime(_DeclarationPM.Tenant);
 
+                _DeclarationPM.ImporterName= forbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.ImporterName, forbiddenSigns);
+                _DeclarationPM.ImporterAddress = forbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.ImporterAddress, forbiddenSigns);
+                _DeclarationPM.CargoDescription = forbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.CargoDescription, forbiddenSigns);
 
                 declarationUpdateService.Update(_DeclarationPM, true);
             }
@@ -2117,6 +2121,8 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private List<DeclarationGoodsShipmentExportConsignmentDMExtensionsPackagesMeasure> GetDeclarationConsignmentPackages(ConsignmentPM consignmentPM)
         {
+            var forbiddenSigns = forbiddenSignsUtil.GetForbiddenSigns(consignmentPM.Tenant);
+            consignmentPM.CargoDescription = forbiddenSignsUtil.ReplaceForbiddenChars(consignmentPM.CargoDescription, forbiddenSigns);
             /*//<--- HARD CODED
             var declarationConsignmentPackageList = new List<DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasure>();
 
@@ -2178,10 +2184,10 @@ namespace Logitude.CustomsMessaging.RequestServices
         private DeclarationGoodsShipmentExportConsignmentDMExtensions GetDMExtensionsConsignment(ConsignmentPM consignmentPM)
         {
             var forbiddenSigns = forbiddenSignsUtil.GetForbiddenSigns(consignmentPM.Tenant);
-            consignmentPM.CargoDescription = forbiddenSignsUtil.ReplaceForbiddenChars(consignmentPM.CargoDescription, forbiddenSigns); 
+            var CargoDescription = consignmentPM.CargoDescription = forbiddenSignsUtil.ReplaceForbiddenChars(consignmentPM.CargoDescription, forbiddenSigns);
 
             var DMExtensions = new DeclarationGoodsShipmentExportConsignmentDMExtensions();
-            DMExtensions.CargoDescription = new DeclarationGoodsShipmentExportConsignmentDMExtensionsCargoDescription() { Value = consignmentPM.CargoDescription };
+            DMExtensions.CargoDescription = new DeclarationGoodsShipmentExportConsignmentDMExtensionsCargoDescription() { Value = CargoDescription };
             //DMExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType() { Value = consignmentPM.IsLastReleaseFromWarehous };
             //if (consignmentPM.IsLastReleaseFromWarehous == "T") // temporary treatment - Task 9683
             //{
@@ -2234,6 +2240,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 Value = consignmentPM.ShipCode
             };
+
             return DMExtensions;
         }
 
