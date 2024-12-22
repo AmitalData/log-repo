@@ -10,6 +10,7 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
@@ -305,8 +306,8 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
 
             VatTypePercentageQuery vatTypePercentageQuery = new VatTypePercentageQuery(interestReportArgs.Tenant);
-            VatTypePercentagePM vatTypePercentagePM = vatTypePercentageQuery.GetVatTypePercentagesForVatType(interestReportArgs.Tenant, chargesType.VatTypeId).ToList()[0];
 
+            VatTypePercentagePM vatTypePercentagePM = vatTypePercentageQuery.GetVatTypePercentagesForVatTypeDate(interestReportArgs.Tenant, chargesType.VatTypeId, interestReportArgs.InvoiceDate);
 
             InterestReportObjectTableId = objectTableQuery.GetObjectTableIdByName("InterestReport");
             ARInvoiceObjectTableId = objectTableQuery.GetObjectTableIdByName("ARInvoice");
