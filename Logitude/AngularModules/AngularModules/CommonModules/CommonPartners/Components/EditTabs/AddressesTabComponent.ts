@@ -497,9 +497,9 @@ export class AddressItemClass extends BaseComponent {
     cityId: CountryCityList = null;
     get CityChange() { return this.cityId; }
     set CityChange(newValue: CountryCityList) {
-        if (newValue != null && this.CityId != newValue.Id) {
+        if (newValue != null) {
             this.CityId = newValue.Id;
-            this.City = newValue?.LocalName;
+            this.City = newValue?.EnglishName;
         }
 
     }
@@ -507,15 +507,15 @@ export class AddressItemClass extends BaseComponent {
     truckerId: TruckerList = null;
     get TruckerChange() { return this.truckerId; }
     set TruckerChange(newValue: TruckerList) {
-        if (newValue != null && this.TruckerId != newValue.Id) {
+        if (newValue != null) {
             this.TruckerId = newValue.Id;
-        }
+            }
     }
 
     responsibilityChange: ResponsibilityList = null;
     get ResponsibilityChange() { return this.responsibilityChange; }
     set ResponsibilityChange(newValue: ResponsibilityList) {
-        if (newValue != null && this.Responsibility != newValue.Code) {
+        if (newValue != null) {
             this.Responsibility = newValue.Code;
         }
     }
@@ -533,6 +533,7 @@ export class AddressItemClass extends BaseComponent {
             this.EntityPM.TruckerId = newValue;
         }
     }
+
 
     get ZipCode() { return this.EntityPM.ZipCode; }
     set ZipCode(newValue: string) {
@@ -916,10 +917,10 @@ export class AddressTruckerSettingItem extends BaseComponent {
 
     fromAddressCityId: CountryCityList = null;
     get FromCityChange() { return this.fromAddressCityId; }
-    set CityChange(newValue: CountryCityList) {
-        if (newValue != null && this.FromAddressCityId != newValue.Id) {
+    set FromCityChange(newValue: CountryCityList) {
+        if (newValue != null) {
             this.FromAddressCityId = newValue.Id;
-            this.FromAddressCityName = newValue?.LocalName;
+            this.FromAddressCityName = newValue?.EnglishName;
         }
 
     }
@@ -927,17 +928,36 @@ export class AddressTruckerSettingItem extends BaseComponent {
     toAddressCityId: CountryCityList = null;
     get ToCityChange() { return this.ToCityChange; }
     set ToCityChange(newValue: CountryCityList) {
-        if (newValue != null && this.ToAddressCityId != newValue.Id) {
+        if (newValue != null) {
             this.ToAddressCityId = newValue.Id;
-            this.ToAddressCityName = newValue?.LocalName;
+            this.ToAddressCityName = newValue?.EnglishName;
         }
     }
 
     shipmentTypeChange: ShipmentTypeList = null;
     get ShipmentTypeChange() { return this.shipmentTypeChange; }
     set ShipmentTypeChange(newValue: ShipmentTypeList) {
-        if (newValue != null && this.ShipmentType != newValue.Id) {
+        if (newValue != null) {
             this.ShipmentType = newValue.Id;
+            this.ShipmentTypeName = newValue.Name;
+        }
+    }
+
+    truckerChange : TruckerList = null;
+    get TruckerChange() { return this.truckerChange; }
+    set TruckerChange(newValue: TruckerList) {
+        if (newValue != null ) {
+            this.TruckerName = newValue.LocalName;
+            this.TruckerId = newValue.Id;
+        }
+    }
+
+    responsibilityChange: ResponsibilityList = null;
+    get ResponsibilityChange() { return this.responsibilityChange; }
+    set ResponsibilityChange(newValue: ResponsibilityList) {
+        if (newValue != null) {
+            this.Responsibility = newValue.Code;
+            this.ResponsibilityName = newValue.LocalName;
         }
     }
 
@@ -992,6 +1012,7 @@ export class AddressTruckerSettingItem extends BaseComponent {
             this.EntityPM.ResponsibilityName = newValue;
         }
     }
+
 
 
 

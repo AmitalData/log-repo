@@ -270,7 +270,7 @@
                                                     [SelectedValue]="DataContext.TruckerId"
                                                     [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
                                                     [LookUpTableName]="'Trucker'"
-                                                    (SelectedItemChanged)="DataContext.TruckerId = $event">
+                                                    (SelectedItemChanged)="DataContext.TruckerChange = $event">
                                                 </LogLov>
                                             </td>
 
@@ -295,7 +295,7 @@
                                                     [SelectedValue]="DataContext.Responsibility"
                                                     [ObjectTableName]="'Responsibility'" [DataContext]="DataContext"
                                                     [LookUpTableName]="'Responsibility'"
-                                                    (SelectedItemChanged)="DataContext.Responsibility = $event">
+                                                    (SelectedItemChanged)="DataContext.ResponsibilityChange = $event">
                                                 </LogLov>
                                             </td>
 
@@ -445,7 +445,9 @@
                                                     <LogLov [ObjectFieldName]="'FromAddressCityId'" [SelectedValue]="item.FromAddressCityId"
                                                         [ObjectTableName]="'TruckerSetting'" [DataContext]="item"
                                                         [LookUpTableName]="'CountryCity'"
-                                                        (SelectedItemChanged)="DataContext.FromCityChange = $event">
+                                                        (SelectedItemChanged)="item.FromCityChange = $event"
+                                                        [HideColumns]="true"
+                                                        [FocusOnMe]="true">
                                                     </LogLov>
                                                 </div>
                                             </div>
@@ -464,7 +466,8 @@
                                                     <LogLov [ObjectFieldName]="'ToAddressCityId'" [SelectedValue]="item.ToAddressCityId"
                                                         [ObjectTableName]="'TruckerSetting'" [DataContext]="item"
                                                         [LookUpTableName]="'CountryCity'"
-                                                        (SelectedItemChanged)="DataContext.ToCityChange = $event">
+                                                        (SelectedItemChanged)="item.ToCityChange = $event" [HideColumns]="true"
+                                                        [FocusOnMe]="true">
                                                     </LogLov>
                                                 </div>
                                             </div>
@@ -483,7 +486,9 @@
                                                     <LogLov [ObjectFieldName]="'ShipmentType'" [SelectedValue]="item.ShipmentType"
                                                         [ObjectTableName]="'TruckerSetting'" [DataContext]="item"
                                                         [LookUpTableName]="'ShipmentType'"
-                                                        (SelectedItemChanged)="item.ShipmentTypeChange = $event">
+                                                        (SelectedItemChanged)="item.ShipmentTypeChange = $event" [HideColumns]="true"
+                                                        [FocusOnMe]="true" 
+                                                        >
                                                     </LogLov>
                                                 </div>
                                             </div>
@@ -502,7 +507,8 @@
                                                     <LogLov [ObjectFieldName]="'TruckerId'" [SelectedValue]="item.TruckerId"
                                                         [ObjectTableName]="'TruckerSetting'" [DataContext]="item"
                                                         [LookUpTableName]="'Trucker'"
-                                                        (SelectedItemChanged)="item.TruckerChange = $event">
+                                                        (SelectedItemChanged)="item.TruckerChange = $event" [HideColumns]="true"
+                                                        [FocusOnMe]="true">
                                                     </LogLov>
                                                 </div>
                                             </div>
@@ -521,7 +527,8 @@
                                                     <LogLov [ObjectFieldName]="'Responsibility'" [SelectedValue]="item.Responsibility"
                                                         [ObjectTableName]="'TruckerSetting'" [DataContext]="item"
                                                         [LookUpTableName]="'Responsibility'"
-                                                        (SelectedItemChanged)="item.ResponsibilityChange = $event">
+                                                        (SelectedItemChanged)="item.ResponsibilityChange = $event" [HideColumns]="true"
+                                                        [FocusOnMe]="true">
                                                     </LogLov>
                                                 </div>
                                             </div>
