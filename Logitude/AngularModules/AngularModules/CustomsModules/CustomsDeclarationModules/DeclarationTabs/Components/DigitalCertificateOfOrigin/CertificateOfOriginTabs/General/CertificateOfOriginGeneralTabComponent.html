@@ -562,7 +562,8 @@
                                             <log-column
                                                 [header]="'Customs.CertificateOfOrigin.O.InvoiceNumber' | TextCodeTranslationPipe"
                                                 [binding]="'InvoiceNumber'" [width]="'90'" [Alignment]="'right'" [Editable]="true">
-                                                <ng-template let-item>
+
+                                                 <ng-template let-item>
                                                     <log-cell-template #logcelltemplate
                                                         (CellClicked)="onCellSelected($event,logcelltemplate,item)"
                                                         [RIndex]="item.InvoicesIdUry" [IsEnabled]="!IsDisplayOnly">

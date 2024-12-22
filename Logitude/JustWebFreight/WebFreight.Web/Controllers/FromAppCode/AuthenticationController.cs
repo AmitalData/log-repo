@@ -3396,7 +3396,7 @@ namespace WebFreight.Web
                 }
                 else
                 {
-                    return Request.CreateResponse(HttpStatusCode.InternalServerError, $"Machine is  healthy \n Time of query {time}");
+                    return Request.CreateResponse(HttpStatusCode.OK, $"Machine is  healthy \n Time of query {time}");
 
                  
                 }
