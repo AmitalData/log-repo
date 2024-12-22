@@ -445,7 +445,7 @@
                                                     <LogLov [ObjectFieldName]="'FromAddressCityId'" [SelectedValue]="item.FromAddressCityId"
                                                         [ObjectTableName]="'TruckerSetting'" [DataContext]="item"
                                                         [LookUpTableName]="'CountryCity'"
-                                                        (SelectedItemChanged)="DataContext.FromCityChange = $event">
+                                                        (SelectedItemChanged)="item.FromCityChange = $event">
                                                     </LogLov>
                                                 </div>
                                             </div>
@@ -464,7 +464,7 @@
                                                     <LogLov [ObjectFieldName]="'ToAddressCityId'" [SelectedValue]="item.ToAddressCityId"
                                                         [ObjectTableName]="'TruckerSetting'" [DataContext]="item"
                                                         [LookUpTableName]="'CountryCity'"
-                                                        (SelectedItemChanged)="DataContext.ToCityChange = $event">
+                                                        (SelectedItemChanged)="item.ToCityChange = $event">
                                                     </LogLov>
                                                 </div>
                                             </div>

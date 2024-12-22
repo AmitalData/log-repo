@@ -52,7 +52,7 @@
                         <td colspan="5" style="height: 40%;">
                             <div class="CellContent" style="bottom: 5px;padding:5px">
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource"
-                                    (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
+                                    (SelectedItemChanged)="OnRowSelected($event)">
                                     <log-column
                                         [header]="'ShipmentPickUpDelivery.O.PickUpDeliveryNumber' | TextCodeTranslationPipe"
                                         [binding]="'PickUpDeliveryNumber'" [width]="'35'" [Alignment]="'right'">
