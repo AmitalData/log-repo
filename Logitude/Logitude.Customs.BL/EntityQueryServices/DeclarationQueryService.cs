@@ -41,7 +41,7 @@ using Logitude.BL.Security;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Customs.Data.CustomFilters;
 using Logitude.BL.CommonDataModel.EntityLists;
-using Logitude.Server.Tools.Helpers;
+//using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -2099,7 +2099,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         bool containsAllCodes = new List<string> { "IL_1003", "IL_506", "IL_1050" }
                         .All(code => customsDocumentPMList.Any(document => document.DocumentTypeCode.Contains(code)));
 
-                        LogMessagingUtil.Instance.AppendLine($"contains code: {containsAllCodes}");
+                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine($"contains code: {containsAllCodes}");
                         return containsAllCodes;
                     }
                     else
@@ -2107,14 +2107,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         int shtarMitanDocumentCount = customsDocumentPMList.Where(document => document.DocumentTypeCode == "419").Count();
                         if (shtarMitanDocumentCount == 0)
                         {
-                            LogMessagingUtil.Instance.AppendLine("shatr mitan not found");
+                            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("shatr mitan not found");
                             declarationReadyForSending = false;
                         }
                     }
                 }
                 else
                 {
-                    LogMessagingUtil.Instance.AppendLine($"sentSupplierInvoices: {sentSupplierInvoices} less than declarationSupplierInvoiceCount: {declarationSupplierInvoiceCount}");
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine($"sentSupplierInvoices: {sentSupplierInvoices} less than declarationSupplierInvoiceCount: {declarationSupplierInvoiceCount}");
                 }
                 /* if need to check for every invoice, the relation between document and invoice is
                  * (invoice.SequenceNumeric == customsDocumentsTicketPM.ConnectedInvoicesSequences) */
