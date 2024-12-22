@@ -190,10 +190,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         public CustomsSettingPM GetSingleByTenant(int tenant)
         {
-            var poco = repository.GetSettingByTenant(tenant);
 
-
-            return GetEntityPM(poco);
+            string entityKeyString = "GetSingleCustomsSettingByTenant," + tenant;
+            var pm = CacheManager.GetOrInsertNewObject<CustomsSettingPM>(entityKeyString, () =>
+            {
+                var poco = repository.GetSettingByTenant(tenant);
+                return GetEntityPM(poco);
+            });
+            return pm;
 
         }
 
