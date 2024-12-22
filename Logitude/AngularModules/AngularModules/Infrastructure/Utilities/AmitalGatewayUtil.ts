@@ -1163,7 +1163,7 @@ export class AmitalGatewayUtil {
 
         public static RaiseCheckInsuranseReturnIsNeededAmount(
             UnifreightEntityNumber: string,
-            LogitudeEntityNumber: string, ViewModelName: string, action: string) {
+            LogitudeEntityNumber: string, ViewModelName: string, action: string, incotermCode: string) {
 
 
             var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
@@ -1171,6 +1171,9 @@ export class AmitalGatewayUtil {
             unifreightMessageM.Requset.push(["ExpectedCallBack", "Response.Action,Response.InsuranseIsNeeded,Response.InsuranseIsSucceeded,Response.InsuranceHasOpen,Response.InsuranceMessage,Response.InsuranseAmount,Response.InsuranseCurrency,Response.ExpensesAmount,Response.ExpensesAmountCurr,Response.FreightAmount,Response.FreightAmountCurr,Response.FreightAmount2,Response.FreightAmountCurr2,Response.TotalFreightInFreightCurr"]);
             if (!AppTool.IsNullOrEmpty(action)) {
                 unifreightMessageM.Requset.push(["Action", action]);
+            }
+            if (!AppTool.IsNullOrEmpty(incotermCode)) {
+                unifreightMessageM.Requset.push(["IncotermCode", incotermCode]);
             }
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
                 "ScriptableGatewayUtil.RaiseCheckInsuranseReturnIsNeededAmount",
