@@ -171,6 +171,7 @@ namespace WebFreight.Web.MetaDataUpdate
             }
 
             CreateTableCounters();
+            CreateShipmentDeliveryCounters();
             //CreateDomesticCounterDefinitions();
             //CreateDropDirectionCounterDefinitions();
             CreateAllTablesTips(tips, textCodes);
