@@ -19,6 +19,8 @@
   HasCustomValidator="false"
   IsEditable="false"
   IsNewWizard="false"
+  LovDisplayMemberPath="&quot;LocalName&quot;"
+  LovDisplayMemberPathLocal="&quot;LocalName&quot;"
   KeyPropertyPath="&quot;Code&quot;"
   AutoCompleteSearchWindow="false"
   IsClosed="true"

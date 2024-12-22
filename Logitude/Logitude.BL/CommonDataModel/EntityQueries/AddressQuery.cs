@@ -534,6 +534,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   StateEnglishName = a.State != null ? a.State.EnglishName : null,
                                                   HasStates = a.Country == null ? false : a.Country.HasStates,
                                                   IsStateRequired = a.Country == null ? false : a.Country.IsStateRequired,
+                                                  CityId = a.CityId,
+                                                  TransportationInstructions = a.TransportationInstructions,
+                                                  TruckerId = a.TruckerId,
+                                                  Responsibility = a.Responsibility,
                                               };
             return addresses;
         }
