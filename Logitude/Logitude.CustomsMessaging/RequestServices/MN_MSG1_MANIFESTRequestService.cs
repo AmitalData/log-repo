@@ -285,6 +285,9 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private DeclarationConsignment BuildConsignment(ConsignmentPM consignmentPM, DeclarationPM declarationPM)
         {
+            var forbiddenSigns = _ForbiddenSignsUtil.GetForbiddenSigns(consignmentPM.Tenant);
+            consignmentPM.CargoDescription = _ForbiddenSignsUtil.ReplaceForbiddenChars(consignmentPM.CargoDescription, forbiddenSigns);
+
             decimal decimalValue;
             DeclarationConsignment declarationConsignment = new DeclarationConsignment();
 
@@ -439,6 +442,11 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private DeclarationConsignmentConsignee[] GetConsignee()
         {
+            var forbiddenSigns = _ForbiddenSignsUtil.GetForbiddenSigns(_DeclarationPM.Tenant | 0);
+            _DeclarationPM.CargoDescription = _ForbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.CargoDescription, forbiddenSigns);
+            _DeclarationPM.ImporterAddress = _ForbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.ImporterAddress, forbiddenSigns);
+            _DeclarationPM.ImporterName = _ForbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.ImporterName, forbiddenSigns);
+
             List<DeclarationConsignmentConsignee> declarationConsignmentConsigneeList = new List<DeclarationConsignmentConsignee>();
             DeclarationConsignmentConsignee declarationConsignmentConsignee = new DeclarationConsignmentConsignee();
 
@@ -515,6 +523,11 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private DeclarationConsignmentConsignor[] GetConsignor()
         {
+            var forbiddenSigns = _ForbiddenSignsUtil.GetForbiddenSigns(_DeclarationPM.Tenant | 0);
+            _DeclarationPM.CargoDescription = _ForbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.CargoDescription, forbiddenSigns);
+            _DeclarationPM.ImporterAddress = _ForbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.ImporterAddress, forbiddenSigns);
+            _DeclarationPM.ImporterName = _ForbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.ImporterName, forbiddenSigns);
+
             List<DeclarationConsignmentConsignor> declarationConsignmentConsignorList = new List<DeclarationConsignmentConsignor>();
             DeclarationConsignmentConsignor declarationConsignmentConsignor = new DeclarationConsignmentConsignor();
             CustomsVendorPM customsVendorPM = null;
@@ -585,6 +598,10 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private DeclarationConsignmentConsignmentItem BuildConsignmentItem(ConsignmentPM consignmentPM, ConsignmentPackagePM consignmentPackagePM)
         {
+            var forbiddenSigns = _ForbiddenSignsUtil.GetForbiddenSigns(consignmentPM.Tenant | 0);
+            consignmentPM.CargoDescription = _ForbiddenSignsUtil.ReplaceForbiddenChars(consignmentPM.CargoDescription, forbiddenSigns);
+
+
             DeclarationConsignmentConsignmentItem declarationConsignmentConsignmentItem = new DeclarationConsignmentConsignmentItem();
 
             ConsignmentPackDangerPM consignmentPackDangerPM= null;
@@ -609,9 +626,6 @@ namespace Logitude.CustomsMessaging.RequestServices
             List<DeclarationConsignmentConsignmentItemCommodity> declarationConsignmentUnloadingLocationList = new List<DeclarationConsignmentConsignmentItemCommodity>();
             DeclarationConsignmentConsignmentItemCommodity declarationConsignmentUnloadingLocation = new DeclarationConsignmentConsignmentItemCommodity();
 
-           
-                var forbiddenSigns = _ForbiddenSignsUtil.GetForbiddenSigns(consignmentPM.Tenant);
-                consignmentPM.CargoDescription = _ForbiddenSignsUtil.ReplaceForbiddenChars(consignmentPM.CargoDescription, forbiddenSigns);
                 if (consignmentPackDangerPM != null)
                 {
                     declarationConsignmentUnloadingLocation = new DeclarationConsignmentConsignmentItemCommodity()
@@ -723,6 +737,8 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         public override void PostGetRequest(MN_MSG1_MANIFEST customRequest, MANIFESTRequestRequestParams requestParams)
         {
+            var forbiddenSigns = _ForbiddenSignsUtil.GetForbiddenSigns(requestParams.Tenant);
+
             ICustomContext context = CustomContext.GetContext(requestParams.Tenant);
             var declarationQueryService = new DeclarationQueryService(context);
             DeclarationPM declarationPM = null;
@@ -748,6 +764,8 @@ namespace Logitude.CustomsMessaging.RequestServices
                         Tenant = declarationPM.Tenant,
                         IsClosedForFollowUp = false,
                         IsCourierMissingClassification = false,
+                        CargoDescription = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationPM.CargoDescription, forbiddenSigns),
+                        ImporterName = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationPM.CargoDescription, forbiddenSigns),
                     };
                     currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Insert;
                 }
