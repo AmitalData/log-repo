@@ -65,6 +65,7 @@
                                           [DataContext]="DataContext"
                                           [LookUpTableName]="'BankAccount'"
                                           [DisplayMemberPath]="BankName"
+                                          [QueryFilterItems]="BankAccountFilter"
                                           (SelectedItemChanged)="BankAccount = $event"
                                           [HideColumns]="true">
                                   </LogLov>
