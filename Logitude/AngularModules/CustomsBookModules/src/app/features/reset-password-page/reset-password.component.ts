@@ -90,14 +90,18 @@ export class ResetPasswordComponent implements OnInit {
         else {
             this.ErrorMessage = "";
             this.Succeeded = false;
+            let url = this.CustomerURL;
+            if (url && url.includes('customs-book/')) {
+                url = url.replace('customs-book/', '');
+            }
 
             let params = {
                 Email: this.Email,
                 IsChampLogin: false,
                 CaptchaCode: this.CaptchaCode,
                 CaptchaKey: this.CaptchaKey,
-                PageName: "changepassword",
-                Domain: this.CustomerURL + this.authService.DefaultPageCustomsBook,
+                PageName: "passwordchangepage.aspx",
+                Domain: url,
                 BrandingTenant: this.Tenant ? this.Tenant.toString() : "",
             }
 
