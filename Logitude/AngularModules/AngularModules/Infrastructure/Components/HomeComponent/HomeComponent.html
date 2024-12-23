@@ -484,15 +484,6 @@
                                     </li>
 
                                     <li class="NewTabItem" (click)="AddTab()" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="(!_AmitalBrowserInUse || allowMutltiTabs) && !IsApplicationBlocked">+</li>
-
-                                    <div (dblclick)="elementTempVar = !elementTempVar" style="width: 200px;
-                                height: 25px;
-                                margin-right: 600px;
-                                direction: ltr;">
-                                        <div *ngIf="elementTempVar">
-                                            {{"_AmitalBrowserInUse: " + _AmitalBrowserInUse + "; allowMutltiTabs: " + allowMutltiTabs + "; tab length: " + this.Tabs.length + "; tab1: " + this.Tabs[0].Header + "; tab1.CurrentEditComponent: " + this.Tabs[0]?.SessionComponent?.CurrentEditComponent }}
-                                        </div>
-                                    </div>
                                 </ul>
 
 
