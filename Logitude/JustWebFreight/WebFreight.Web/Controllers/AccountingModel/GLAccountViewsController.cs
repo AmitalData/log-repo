@@ -799,7 +799,55 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage PutGLAccountIsMark(string accountId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
 
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
+
+                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                GLAccountUpdateService service = new GLAccountUpdateService(MyContext, new Dictionary<string, IContext>(), authToken.Tenant);
+                (DateTime? MarkDate, bool WasNull) result = service.SetIsMark(accountId, tenant); 
+                var responseContent = new { MarkDate = result.MarkDate, wasNull = result.WasNull };
+                return Request.CreateResponse(HttpStatusCode.OK, responseContent);
+
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage PutGLAccountUndoMark(string accountId,DateTime date)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
+
+                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                GLAccountUpdateService service = new GLAccountUpdateService(MyContext, new Dictionary<string, IContext>(), authToken.Tenant);
+                 bool updated= service.UndoMark(accountId, tenant,date);
+                return Request.CreateResponse(HttpStatusCode.OK, updated);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         private int GetAuthinticatedTenant()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
