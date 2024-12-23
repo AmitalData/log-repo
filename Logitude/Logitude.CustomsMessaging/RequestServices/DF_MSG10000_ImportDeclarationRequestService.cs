@@ -423,7 +423,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         public override DF_MSG10000_ImportDeclaration GetRequest(GenericRequestParams requestParams)
         {
-            var _forbiddenSigns = _ForbiddenSignsUtil.GetForbiddenSigns(requestParams.Tenant);
+              _forbiddenSigns = _ForbiddenSignsUtil.GetForbiddenSigns(requestParams.Tenant);
 
             LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIA = " + requestParams.RequestVIA.ToString());
             LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIAChangeDue = " + requestParams.RequestVIAChangeDue);
