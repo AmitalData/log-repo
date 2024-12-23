@@ -1161,10 +1161,12 @@ class JournalLineModel extends BaseComponent {
                     if (this.LocalAmount) {
                         this.isRateCoverted = true;
                         this.ForeignAmount = (this.LocalAmount / this.currencyRate);
+                        this.ForeignAmount = Number(this.ForeignAmount.toFixed(2));
                     }
                     else if (this.ForeignAmount) {
                         this.isRateCoverted = true;
                         this.LocalAmount = (this.ForeignAmount * this.currencyRate);
+                        this.LocalAmount = Number(this.LocalAmount.toFixed(2));
                     }
                 }
             }
@@ -1229,9 +1231,11 @@ class JournalLineModel extends BaseComponent {
     }
     CalculateForeignAmount() {
         this.ForeignAmount = (this.LocalAmount / this.currencyRate);
+        this.ForeignAmount = Number(this.ForeignAmount.toFixed(2));
     }
     CalculateLocalAmount() {
         this.LocalAmount = (this.ForeignAmount * this.currencyRate);
+        this.LocalAmount = Number(this.LocalAmount.toFixed(2));
     }
     isRateCoverted: boolean = false;
     isRateManualy: boolean = false;
