@@ -133,6 +133,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private ComputingPartnerTranslationRepository computingPartnerTranslationRepository;
         public ShipmentDocsField ShipmentDocsFieldFromWorkerRole;
         public bool isFromEventTrace;
+        public System.Threading.Tasks.Task DeclarationUpdateTask;
 
         private List<FieldChange> FieldChanges = new List<FieldChange>();
         private AuditLogRepository AuditLogRepository;
@@ -530,7 +531,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         IsCustom = false
                     }.Produce();
 
-                    CreateDeclaration(entityPM, "NEW", additionalShipmentData?.UnloadPortCode, additionalShipmentData?.StorageSiteCode);
+                    System.Threading.Tasks.Task.Run(() => CreateDeclaration(entityPM, "NEW", additionalShipmentData?.UnloadPortCode, additionalShipmentData?.StorageSiteCode));
 
                     try
                     {
@@ -1271,7 +1272,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }.Produce();
 
                     if (!entityPM.IsHybrid)
-                        UpdateDeclaration(entityPM, "UPDATE", additionalShipmentData);
+                        this.DeclarationUpdateTask = System.Threading.Tasks.Task.Run(() => UpdateDeclaration(entityPM, "UPDATE", additionalShipmentData));
 
                     scope.Complete();
                 }
