@@ -421,7 +421,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             if ( globalContact.Email != entityPm.Email)
             {
-                if (!string.IsNullOrWhiteSpace(entityPm.Email) && LogitudeSettings.IsCostomsDeploy)
+                if (!string.IsNullOrWhiteSpace(entityPm.Email) )
                 {
                     var qoldContact = globalContactRepository
                         .GetContactByEmail(entityPm.Email)
