@@ -17,6 +17,7 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.Data.EntityMapping;
 using System.Security.Policy;
+using static Devart.Common.Utils;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 { 
@@ -33,10 +34,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
-        public List<CustomDocumentTypePM> GetMandatoryCustomDocumentTypesForCourier(int tenant)
-        {
-            var customDocumentTypes = repository.GetAll().ToList();
-            return customDocumentTypes.Select(poco => this.GetEntityPM(poco)).Where(x => x.IsCourierManadatory).ToList();
+		public List<CustomDocumentTypePM> GetMandatoryCustomDocumentTypesForCourier(int tenant)
+		{
+			//var customDocumentTypes =//.ToList();
+			var y = repository.GetCustomDocumentTypesIsCourierManadatoryByTenant(tenant).Where(x => x.IsCourierManadatory == true).Select(x => new CustomDocumentTypePM() { Code =x.Code, IsCourierManadatory =x.IsCourierManadatory});
+
+            return y.ToList(); //customDocumentTypes.Select(poco => this.GetEntityPM(poco)).Where(x => x.IsCourierManadatory).ToList();
 
         }
 

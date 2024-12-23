@@ -142,7 +142,7 @@ namespace Logitude.Customs.BL.BL
                 CalcCourierDeclarationStatusCode(myDeclarationCourierStatusPM);
                 CalcCourierPaymentStatusCode(myDeclarationCourierStatusPM);
                 CalcIsCourierMissingClassification(myDeclarationCourierStatusPM);
-               CalcHighLowValue(myDeclarationCourierStatusPM);
+                CalcHighLowValue(myDeclarationCourierStatusPM);
                 CalcSpecialActionStatus(myDeclarationCourierStatusPM);
                 CalcFastIndividualProcess(myDeclarationCourierStatusPM);
                 CalcDeclarationPendings902(myDeclarationCourierStatusPM);
