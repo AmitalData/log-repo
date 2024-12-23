@@ -898,7 +898,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         
             }
             else{
-                // this.ShowDraftTransactionsFaiorMessage(serviceResponse.ErrorsArray[0]);
+                this.ShowDraftTransactionsFaiorMessage(serviceResponse.ErrorsArray[0]);
             }
         });
 
