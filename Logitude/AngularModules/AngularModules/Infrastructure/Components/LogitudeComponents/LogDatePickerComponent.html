@@ -100,22 +100,22 @@
     }
 
 
-      .ErrorPopUp {
-        background-image: url('Images/ValidationTooltip.png');
+    .ErrorPopUp {
+        background-image: url(Images/ValidationTooltip.png);
         background-repeat: no-repeat;
-        background-size: auto;
+        background-size: 250px 100px;
         position: absolute;
         height: 110px;
-        width:auto;
+        width: 250px;
         color: white;
         z-index: 100;
         word-break: break-all;
         word-wrap: break-word;
         overflow: hidden;
         white-space: normal;
-      
+        padding: 8px;
     }
-
+    
     .ErrorPopUpMessage {
         color: white;
         white-space: normal;
@@ -151,12 +151,13 @@
          [ElementId]="ErrorPopUpId"
          [RelativeElementId]="DatePickerInputId"
          [TopDisplacement]="-95"
-         [LeftDisplacement]="0"
+         [LeftDisplacement]="30"
          [ComponentType]="'popup'"
          [class.FlipImgHoriz]="LayoutDirection == 'rtl'"
-         [PopupWidth]="180"
+         [PopupWidth]="250"
          class="ErrorPopUp"
-         *ngIf="ShowErrorPopup">
+         *ngIf="ShowErrorPopup"
+         >
         <div class="ErrorPopUpMessage" [class.FlipImgHoriz]="LayoutDirection == 'rtl'">
             {{uiProperty.ValidationError}}
         </div>
