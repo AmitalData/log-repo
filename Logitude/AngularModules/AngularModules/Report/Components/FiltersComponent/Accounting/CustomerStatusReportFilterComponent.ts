@@ -323,6 +323,9 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
             this.SetBalanceFilterValue(queryFilterItem);
             this.SetSortFieldFilter(queryFilterItem);
             this.SetSortDirectionFilter(queryFilterItem);
+            this.SetCategoryListFilter(queryFilterItem);
+            this.SetCategoryFilter(queryFilterItem);
+
         }
     }
 
@@ -384,7 +387,39 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
             this.SelectedBalanceTypeItem.Code = queryFilterItem.FieldValue;
         }
     }
-
+    SetCategoryListFilter(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "CategoryIndex") {
+            this.SelectedCategory = queryFilterItem.FieldValue;
+        }
+        else
+            this.SelectedCategory = null;
+    }
+    SetCategoryFilter(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "CategoryValue") {
+            switch (this.SelectedCategory) {
+                case 'Category1':
+                    this.SelectedCategory = 'Category 1';
+                    this.Category1 = queryFilterItem.FieldValue;
+                    break;
+                case 'Category2':
+                    this.SelectedCategory = 'Category 2';
+                    this.Category2 = queryFilterItem.FieldValue;
+                    break;
+                case 'Category3':  
+                    this.SelectedCategory = 'Category 3';
+                    this.Category3 = queryFilterItem.FieldValue;
+                    break; 
+                case 'Category4': 
+                    this.SelectedCategory = 'Category 4'; 
+                    this.Category4 = queryFilterItem.FieldValue; 
+                    break;   
+                case 'Category5':  
+                    this.SelectedCategory = 'Category 5';        
+                    this.Category5 = queryFilterItem.FieldValue; 
+                    break;
+            };
+        }
+    }
 
     GetLookUpFieldValue(field) {
         if (field) {
@@ -561,9 +596,18 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
         'Category 4',
         'Category 5'
     ];
-    SelectedCategory: string;
+    SelectedCategory: string = null;
     SelectedItemChanged(item) {
         this.SelectedCategory = item;
+        this.Category1 = null;
+        this.Category2 = null;
+        this.Category3 = null;
+        this.Category4 = null;
+        this.Category5 = null;
+        if(AppTool.IsNullOrEmpty(this.SelectedCategory))
+        {
+            this.UIProperties.SetEnabled("Customer", "GLAccount", true);
+        }
     }
     //#endregion
 
