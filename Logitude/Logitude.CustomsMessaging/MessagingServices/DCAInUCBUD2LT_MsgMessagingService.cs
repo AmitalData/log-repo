@@ -598,7 +598,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 if (declartionPM != null)
                 {
-                     List<string> EntityCodes = new List<string> { "380", "325", "IL_1003", "IL_506", "IL_1050" };
+                     List<string> EntityCodes = new List<string> { "380", "325", "IL_1003", "IL_506", "IL_1050", "419" };
 
                     if (declartionPM.Direction == "E" && declartionPM.IsDiamondDeclaration && declartionPM.AutoSending && EntityCodes.Contains(documentTypeCustomsDataPM?.CustomsDoucumentTypeCode))
                         AutoSending = true;
