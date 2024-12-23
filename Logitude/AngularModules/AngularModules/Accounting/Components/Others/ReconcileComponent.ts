@@ -1225,7 +1225,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     }
 
     CancelButtonClicked() {
-        if(this.isMark)
+        if(!this.isMark)
            this.UndoMark();
         this.CurrentSession.CloseCurrentWindow();
     }
