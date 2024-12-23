@@ -73,8 +73,7 @@ export class AmitalAPIAddApiWindowComponent {
         if (pramas.isUpdate) {
             this.data = { ...this.data, ...pramas.row };
             this.SchemaSelected = pramas.schemas.find(x => x.Id === pramas.row.SchemaId)?.Id;
-        } else
-            this.basicFields.push({ name: 'PartnerToken', label: 'Token' });
+        }
 
         this.windowParams = pramas;
         this.updateFields();
@@ -125,8 +124,7 @@ export class AmitalAPIAddApiWindowComponent {
                 .filter(x => x.schemaId === this.data.SchemaId)
                 .map(x => ({ name: x.name, label: x.label })));
         
-                console.log(this.fields)
-                console.log(this.data)
+        this.fields.forEach(field => field.value = this.data[field.name]);
         this.fieldsReady = true
         this.cdr.detectChanges();
     }
@@ -153,7 +151,7 @@ export class AmitalAPIAddApiWindowComponent {
         logWindow.Height = 340;
         logWindow.Title = "Client API";
         logWindow.WindowArgs = windowArgs as AmitalAPIAddApiWindowPararms;
-        logWindow.Show('./Common/Components/Maintenance/AmitalAPI/WindowsComponent/AmitalAPIAddApiWindowComponent');
+        logWindow.Show('./InfrastructureModules/InfrastructureOthers/AmitalAPI/WindowsComponent/AmitalAPIAddApiWindowComponent');
         return new Promise<any>(resolve => logWindow.WindowClosed.subscribe(async (row?: any) => resolve(row)));
     }
 }

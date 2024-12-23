@@ -2096,6 +2096,11 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 break;
                             }
 
+                            case "DefaultAndConfiguration": {
+                                logWindow.Height = 400;
+                                break;
+                            }
+
                             case "ApiCredintials": {
                                 windowTitle = "Add/Edit Api Credentials";
                                 logWindow.Height = 450;
