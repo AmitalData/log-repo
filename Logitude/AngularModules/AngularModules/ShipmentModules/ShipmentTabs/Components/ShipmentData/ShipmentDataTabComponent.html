@@ -547,7 +547,7 @@
                             <tr>
 
                                 <td style="width: 214px;">
-                                    <ComboBox [ItemsSource]="ShipmentTypeList" [SelectedItem]="ShipmentTypeName" [class.readonly] = "TransportModeId == 'O'"
+                                    <ComboBox [ItemsSource]="ShipmentTypeList" [SelectedItem]="ShipmentTypeName" [class.readonly] = "TransportModeId != 'O'"
                                         (SelectedItemChanged)="ShipmentTypeChanged($event)"></ComboBox>
                                 </td>
                                 <td>

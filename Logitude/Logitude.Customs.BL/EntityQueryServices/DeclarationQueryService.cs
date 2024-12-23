@@ -2077,6 +2077,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         bool containsAllCodes = new List<string> { "IL_1003", "IL_506", "IL_1050" }
                         .All(code => customsDocumentPMList.Any(document => document.DocumentTypeCode.Contains(code)));
 
+                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine($"contains code: {containsAllCodes}");
                         return containsAllCodes;
                     }
                     else
@@ -2084,9 +2085,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         int shtarMitanDocumentCount = customsDocumentPMList.Where(document => document.DocumentTypeCode == "419").Count();
                         if (shtarMitanDocumentCount == 0)
                         {
+                            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("shatr mitan not found");
                             declarationReadyForSending = false;
                         }
                     }
+                }
+                else
+                {
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine($"sentSupplierInvoices: {sentSupplierInvoices} less than declarationSupplierInvoiceCount: {declarationSupplierInvoiceCount}");
                 }
                 /* if need to check for every invoice, the relation between document and invoice is
                  * (invoice.SequenceNumeric == customsDocumentsTicketPM.ConnectedInvoicesSequences) */
