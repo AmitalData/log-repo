@@ -2757,7 +2757,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (glaccount != null && (glaccount.MarkDate == null || (DateTime.UtcNow - glaccount.MarkDate.Value).TotalHours > 1))
             {
                 var dtValue = new DateTime();
-                DateTime.TryParse( DateTime.UtcNow.ToString(),out dtValue);
+                DateTime.TryParse( DateTime.Now.ToString(),out dtValue);
                 glaccount.MarkDate = dtValue;
                 glaccount.ChangeSetOp = ChangeSetOperation.Update;
                 wasNull = true;

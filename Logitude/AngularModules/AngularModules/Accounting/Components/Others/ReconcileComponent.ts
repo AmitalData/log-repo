@@ -322,12 +322,12 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     }
     now: Date = null;
     private Mark() {
+        
         if (this.GLAccountPM.MarkDate) {
             this.now = new Date()
-            this.now.setHours(this.now.getHours() - 3);
+            this.now.setHours(this.now.getHours() - 1);
             this.isMark = new Date(this.GLAccountPM.MarkDate) > this.now;
             this.yelloMessage =this.isMark? TextCodeTranslator.Translate("Reconciliations.O.isMatched"):'';
-            this.now.setHours(this.now.getHours() + 3);
         }
 
 
@@ -341,7 +341,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         this._GLAccountExtendedPMService.SetGLAccountIsMark(this.GLAccountPM?.Id).subscribe((myResult: any) => {
             if (!myResult.HasError) {
                 this.now = new Date()
-                this.now.setHours(this.now.getHours() - 3);
+                this.now.setHours(this.now.getHours() - 1);
                 this.GLAccountPM.MarkDate = myResult?.Result?.wasNull ? myResult?.Result?.MarkDate : this.GLAccountPM.MarkDate;
                 this.isMark = !myResult?.Result?.wasNull ;
                 this.yelloMessage =this.isMark ? TextCodeTranslator.Translate("Reconciliations.O.isMatched"):'' ;
@@ -352,7 +352,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         });
     }
     UndoMark() {
-        this._GLAccountExtendedPMService.UndoMark(this.GLAccountPM?.Id, this.isMark ? this.now : this.GLAccountPM.MarkDate).subscribe((myResult: any) => {
+        this._GLAccountExtendedPMService.UndoMark(this.GLAccountPM?.Id,  this.GLAccountPM.MarkDate).subscribe((myResult: any) => {
             if(myResult?.Result){
                 this.GLAccountPM.MarkDate = null;
                 this.isMark = false;
@@ -1186,7 +1186,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     }
 
     CancelButtonClicked() {
-        this.UndoMark();
+        if(this.isMark)
+           this.UndoMark();
         this.CurrentSession.CloseCurrentWindow();
     }
 
