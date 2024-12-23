@@ -31,6 +31,7 @@ using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.BL.BL;
 using System.Diagnostics;
+using Logitude.Customs.Data.EntityMapping;
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
@@ -351,7 +352,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 },
                     Contact = new DeclarationConsignmentUNDGContactContact[] {
                     new DeclarationConsignmentUNDGContactContact{
-                        Name = new ContactNameTextType { Value = decDangersContactPM.ContactName } ,
+                        Name = new ContactNameTextType { Value = _ForbiddenSignsUtil.ReplaceForbiddenChars(decDangersContactPM.ContactName, _forbiddenSigns) } ,
                         Communication =new DeclarationConsignmentUNDGContactContactCommunication[]
                     { new DeclarationConsignmentUNDGContactContactCommunication {
                                             TypeID = new CommunicationTypeIDType { Value = decDangersContactPM.ContactCommTypeCode },
@@ -458,6 +459,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 declarationConsignmentConsigneeAddress.Line.Value = declarationConsignmentConsigneeAddress.Line.Value.Substring(0, 70);
             }
+            declarationConsignmentConsigneeAddress.Line.Value = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationConsignmentConsigneeAddress.Line.Value, _forbiddenSigns);
 
             declarationConsignmentConsigneeAddressList.Add(declarationConsignmentConsigneeAddress);
             declarationConsignmentConsignee.Address = declarationConsignmentConsigneeAddressList.ToArray();
@@ -494,7 +496,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             if (customsVendorPM != null)
             {
                 //declarationConsignmentConsignor.ID = new ConsignorIdentificationIDType() { Value = customsVendorPM.VendorNumber };
-                declarationConsignmentConsignor.Name = new ConsignorNameTextType() { Value = customsVendorPM.VendorName };
+                declarationConsignmentConsignor.Name = new ConsignorNameTextType() { Value = _ForbiddenSignsUtil.ReplaceForbiddenChars(customsVendorPM.VendorName, _forbiddenSigns) };
  
                 List<DeclarationConsignmentConsignorAddress> declarationConsignmentConsignorAddressList = new List<DeclarationConsignmentConsignorAddress>();
                 DeclarationConsignmentConsignorAddress declarationConsignmentConsignorAddress = new DeclarationConsignmentConsignorAddress();
@@ -518,13 +520,14 @@ namespace Logitude.CustomsMessaging.RequestServices
                     {
                     declarationConsignmentConsignorAddress.Line.Value = declarationConsignmentConsignorAddress.Line.Value.Substring(0, 70);
                     }
+                declarationConsignmentConsignorAddress.Line.Value = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationConsignmentConsignorAddress.Line.Value, _forbiddenSigns);
 
                 declarationConsignmentConsignorAddressList.Add(declarationConsignmentConsignorAddress);
                 declarationConsignmentConsignor.Address = declarationConsignmentConsignorAddressList.ToArray();
             }
             else
             {
-                declarationConsignmentConsignor.Name = new ConsignorNameTextType() { Value = _DeclarationPM.CasualSupplierName };
+                declarationConsignmentConsignor.Name = new ConsignorNameTextType() { Value = _ForbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.CasualSupplierName, _forbiddenSigns) };
                 List<DeclarationConsignmentConsignorAddress> declarationConsignmentConsignorAddressList = new List<DeclarationConsignmentConsignorAddress>();
                 DeclarationConsignmentConsignorAddress declarationConsignmentConsignorAddress = new DeclarationConsignmentConsignorAddress();
                 if (!string.IsNullOrWhiteSpace(_DeclarationPM.CasualSupplierAddress))
@@ -539,6 +542,8 @@ namespace Logitude.CustomsMessaging.RequestServices
                 {
                     declarationConsignmentConsignorAddress.Line.Value = declarationConsignmentConsignorAddress.Line.Value.Substring(0, 70);
                 }
+
+                declarationConsignmentConsignorAddress.Line.Value = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationConsignmentConsignorAddress.Line.Value, _forbiddenSigns);
 
                 declarationConsignmentConsignorAddressList.Add(declarationConsignmentConsignorAddress);
                 declarationConsignmentConsignor.Address = declarationConsignmentConsignorAddressList.ToArray();
@@ -713,8 +718,8 @@ namespace Logitude.CustomsMessaging.RequestServices
                         Tenant = declarationPM.Tenant,
                         IsClosedForFollowUp = false,
                         IsCourierMissingClassification = false,
-                        CargoDescription = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationPM.CargoDescription, _forbiddenSigns),
-                        ImporterName = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationPM.CargoDescription, _forbiddenSigns),
+                        CargoDescription =  declarationPM.CargoDescription,
+                        ImporterName =  declarationPM.CargoDescription ,
                     };
                     currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Insert;
                 }
