@@ -260,7 +260,8 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         public override DF_NG_2751_MSG10000_ExportDeclaration GetRequest(GenericRequestParams requestParams)
         {
-             _forbiddenSigns = ForbiddenSignsUtil.GetForbiddenSigns(requestParams.Tenant);
+            if (!IsFromOpenNewAmendment)
+                _forbiddenSigns = ForbiddenSignsUtil.GetForbiddenSigns(requestParams.Tenant);
 
 
             LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIA = " + requestParams.RequestVIA.ToString());
