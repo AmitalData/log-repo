@@ -46,6 +46,9 @@ using Simplog.Data.Helpers;
 using Logitude.Customs.BL.BL;
 using UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference;
 using Logitude.Server.Tools.Counters;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using Logitude.Customs.Data.EntityListQueryServices;
+using Logitude.Customs.Data.EntityLists;
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
@@ -58,6 +61,10 @@ namespace Logitude.CustomsMessaging.RequestServices
         private Stopwatch _Stopwatch;
         private AmitalContext _AmitalContext;
         private string _userId;
+
+        private string _forbiddenSigns="";
+        ForbiddenSignsUtil forbiddenSignsUtil = new ForbiddenSignsUtil();
+
 
         private bool isExportClose = false;
         public override void ManipulateRequestParams(AmendmentRequestParams requestParams)
@@ -190,12 +197,12 @@ namespace Logitude.CustomsMessaging.RequestServices
         }
 
         private void CreateDeclarationPM(GenericRequestParams requestParams)
-        {
+        { 
             if (this._context == null) this._context = CustomContext.GetContext(requestParams.Tenant);
             var declarationQueryService = new DeclarationQueryService(_context);
             declarationQueryService.LoadSupplierInvoicesItemsParentsOnly = true;
             _DeclarationPM = declarationQueryService.GetSingle(requestParams.AppicationId, true, false);
-
+ 
             _DeclarationPMOrg = isExportClose ? _DeclarationPM : declarationQueryService.GetAcceptDeclarationAmendment(_DeclarationPM.AmendmentOriginalDeclartation, _DeclarationPM.Tenant);
         }
 
@@ -210,8 +217,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         public override DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg GetRequest(AmendmentRequestParams requestParams)
         {
-
-
+            _forbiddenSigns = forbiddenSignsUtil.GetForbiddenSigns(requestParams.Tenant);
 
             LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIA = " + requestParams.RequestVIA.ToString());
             LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIAChangeDue = " + requestParams.RequestVIAChangeDue);
@@ -372,6 +378,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         private void UpdateDeclaration(UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference.Response response, string LoggingUserId)
         {
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), _DeclarationPM.Tenant);
+            
             if (isExportClose)
             {
                 _DeclarationPM.ExportCloseAmendRequestNumber = response.FunctionalReferenceID.Value;
@@ -492,7 +499,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private void CheckTaxationDateTime(DeclarationPM declarationPM)
         {
-            //If TaxationDateTime is not Today change it before sending
+             //If TaxationDateTime is not Today change it before sending
             if (!_DeclarationPM.TaxationDateTime.HasValue ||
                 (_DeclarationPM.TaxationDateTime.HasValue && _DeclarationPM.TaxationDateTime.Value.Date < DateTime.Now.Date))
             {
@@ -500,7 +507,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 _DeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                 _DeclarationPM.TaxationDateTime = TenantServerConfigration.GetCurrentDateTime(_DeclarationPM.Tenant);
 
-
+                
                 declarationUpdateService.Update(_DeclarationPM, true);
             }
         }
@@ -1014,8 +1021,8 @@ namespace Logitude.CustomsMessaging.RequestServices
             };
             if (declarationPM.ShortProcedure)
             {
-                declarationImporter.DMExtensions.Address = importerAddress;
-                declarationImporter.DMExtensions.Name = importerName;
+                declarationImporter.DMExtensions.Address = forbiddenSignsUtil.ReplaceForbiddenChars(importerAddress, _forbiddenSigns);
+                declarationImporter.DMExtensions.Name = forbiddenSignsUtil.ReplaceForbiddenChars(importerName, _forbiddenSigns) ;
             }
             if (declarationPM.ImporterTypeCode == "2" || declarationPM.ImporterTypeCode == "3")
             {
@@ -1179,13 +1186,13 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private DeclarationGoodsShipmentImportConsignmentDMExtensions GetImportConsignmentDMExtensions(ConsignmentPM consignmentPM, string ProcedureCurrentCode)
         {
+ 
             var arrProcedureCurrentCode = new string[] { "8070005", "8070010", "8070505", "8070510" };
-
             var dmExtensions = new DeclarationGoodsShipmentImportConsignmentDMExtensions
             {
                 CargoDescription = new DeclarationGoodsShipmentImportConsignmentDMExtensionsCargoDescription()
                 {
-                    Value = consignmentPM.CargoDescription
+                    Value = forbiddenSignsUtil.ReplaceForbiddenChars(consignmentPM.CargoDescription, _forbiddenSigns)
                 },
                 ExportationCountryCode = new ExportationCountryCodeType()
                 {
@@ -2098,31 +2105,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private List<DeclarationGoodsShipmentExportConsignmentDMExtensionsPackagesMeasure> GetDeclarationConsignmentPackages(ConsignmentPM consignmentPM)
         {
-            /*//<--- HARD CODED
-            var declarationConsignmentPackageList = new List<DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasure>();
-
-            var declarationConsignmentPackage = new DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasure();
-            declarationConsignmentPackage.SequenceNumeric = 1;
-            declarationConsignmentPackage.SequenceNumericSpecified = true;
-            declarationConsignmentPackage.PackageMeasureQualifier = new PackageMeasureQualifierType() { Value = "2"}; //HARDCODED
-            declarationConsignmentPackage.TotalPackageQuantity = new DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasureTotalPackageQuantity() { Value = 100.00M };
-            declarationConsignmentPackage.GrossMassMeasure = new DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasureGrossMassMeasure()
-            {
-                Value = 10.00M,
-                unitCode = MeasurementUnitCommonCodeContentType.KGM,
-                unitCodeSpecified = true
-            };
-            declarationConsignmentPackage.TypeCode = new DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasureTypeCode() { Value = "UN" };
-            declarationConsignmentPackage.MarksNumbers = new DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasureMarksNumbers() { Value = "MarksNumbers" };
-
-
-
-
-            declarationConsignmentPackageList.Add(declarationConsignmentPackage);
-
-            return declarationConsignmentPackageList;
-            //<--- HARD CODED */
-
+       
             var declarationConsignmentPackageList = new List<DeclarationGoodsShipmentExportConsignmentDMExtensionsPackagesMeasure>();
 
             for (int consignmentPackageSeq = 0; consignmentPackageSeq < consignmentPM.ConsignmentPackages.Count(); consignmentPackageSeq++)
@@ -2158,20 +2141,11 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private DeclarationGoodsShipmentExportConsignmentDMExtensions GetDMExtensionsConsignment(ConsignmentPM consignmentPM)
         {
-            var DMExtensions = new DeclarationGoodsShipmentExportConsignmentDMExtensions();
-            DMExtensions.CargoDescription = new DeclarationGoodsShipmentExportConsignmentDMExtensionsCargoDescription() { Value = consignmentPM.CargoDescription };
-            //DMExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType() { Value = consignmentPM.IsLastReleaseFromWarehous };
-            //if (consignmentPM.IsLastReleaseFromWarehous == "T") // temporary treatment - Task 9683
-            //{
-            //    //mohammad temp treatment due to the change of task 9684
-            //    DMExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType() { Value = true };//consignmentPM.IsLastReleaseFromWarehous 
-            //}
-            //else if (consignmentPM.IsLastReleaseFromWarehous == "F") // moran 9.3.15 - Task 11761 
-            //{
-            //    DMExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType() { Value = false };
-            //}
+             var CargoDescription = consignmentPM.CargoDescription = forbiddenSignsUtil.ReplaceForbiddenChars(consignmentPM.CargoDescription, _forbiddenSigns);
 
-            //DMExtensions.ExportationCountryCode = new DeclarationGoodsShipmentConsignmentDMExtensionsExportationCountryCode() { Value = consignmentPM.OriginCountryCode };
+            var DMExtensions = new DeclarationGoodsShipmentExportConsignmentDMExtensions();
+            DMExtensions.CargoDescription = new DeclarationGoodsShipmentExportConsignmentDMExtensionsCargoDescription() { Value = CargoDescription };
+
 
             var registeredFacilitylist = new List<DeclarationGoodsShipmentExportConsignmentDMExtensionsRegisteredFacility>();
             int seqnum = 0;
@@ -2212,6 +2186,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 Value = consignmentPM.ShipCode
             };
+
             return DMExtensions;
         }
 
@@ -2227,6 +2202,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             return registeredFacility;
         }
+
 
     }
 }

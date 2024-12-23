@@ -45,7 +45,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                         AutoUnitMeasurement = a.AutoUnitMeasurement,
                                                         CompanyType = a.CompanyType,
                                                         HSMToken = a.HSMToken,
-                                                        HSMCompanyId = a.HSMCompanyId
+                                                        HSMCompanyId = a.HSMCompanyId,
+                                                        ForbiddenSigns = a.ForbiddenSigns
                                                     });
             return query;
 		}

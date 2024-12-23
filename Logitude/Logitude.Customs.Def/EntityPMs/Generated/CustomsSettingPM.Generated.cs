@@ -871,6 +871,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string forbiddenSigns ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ForbiddenSigns  
+	   {
+	    
+	     get
+		{
+		   return forbiddenSigns;
+		 }
+		 set
+		 {
+		   if(forbiddenSigns != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForbiddenSigns",OldValue=forbiddenSigns,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   forbiddenSigns=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }
