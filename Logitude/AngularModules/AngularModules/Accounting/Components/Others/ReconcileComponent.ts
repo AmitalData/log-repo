@@ -1115,15 +1115,6 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         });
     }
 
-    private ShowDraftTransactionsFaiorMessage(error) {
-        var msg = new MessageWindow();
-        msg.IsMessageMultiLine = true;
-        msg.ShowErrorIcon = true;
-        msg.RTL = this.isRTL;
-        msg.Width = 400;
-        msg.Show(error);
-    }
-
     private ShowDraftTransactionsSuccessMessage() {
         var msg = new MessageWindow();
         msg.ShowSuccessIcon = true;
