@@ -11924,9 +11924,9 @@ namespace WebFreight.Web.ReportsWebServices
                     foreach (ResultList chartLine in cliVenWorksCharts)
                     {
                         bool glaccExists = totalData.ResultList.Where(res => (res.Type != "ChartOfAccount" || res.Type == null)
-                                        && res.ChartofAccountTypeCode == chartLine.ParentId && res.ParentId == chartLine.Id).Any();
-                        bool chartExists = totalData.ResultList.Where(res => (res.Type == "ChartOfAccount")
-                                        && res.ChartofAccountTypeCode == chartLine.ParentId && res.ParentId == chartLine.Id).Any();
+                                        && res.ParentId == chartLine.Id).Any();
+                        //bool chartExists = totalData.ResultList.Where(res => (res.Type == "ChartOfAccount")
+                        //                && res.ParentId == chartLine.Id).Any();
                         string logtext4 = "LogitudeReportsWebService.GetTrailBalanceDataProvider(), Point 4, chartLine=" + chartLine.Name + ", Id=" + chartLine.Id + ", glaccExists=" + glaccExists.ToString();
                         NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext4);
 
@@ -11935,11 +11935,11 @@ namespace WebFreight.Web.ReportsWebServices
                         if (test)
                         {
                             var glacc = totalData.ResultList.Where(res => (res.Type != "ChartOfAccount" || res.Type == null)
-                                        && res.ChartofAccountTypeCode == chartLine.ParentId && res.ParentId == chartLine.Id).FirstOrDefault();
-                            var ch = totalData.ResultList.Where(res => (res.Type == "ChartOfAccount")
-                                        && res.ChartofAccountTypeCode == chartLine.ParentId && res.ParentId == chartLine.Id).FirstOrDefault();
+                                        && res.ParentId == chartLine.Id).FirstOrDefault();
+                           // var ch = totalData.ResultList.Where(res => (res.Type == "ChartOfAccount")
+                           //             && res.ChartofAccountTypeCode == chartLine.ParentId && res.ParentId == chartLine.Id).FirstOrDefault();
                         }
-                        if (!glaccExists && !chartExists)
+                        if (!glaccExists) // && !chartExists)
                         {
 
                             ChartOfAccountsTypePM chartType = chartOfAccountTypes.Where(type => type.Code == chartLine.ParentId).FirstOrDefault();

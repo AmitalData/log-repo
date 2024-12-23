@@ -333,14 +333,14 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                       on acc.Id equals moredata.AccountId into moredataJoinT
                       from moredata in moredataJoinT.DefaultIfEmpty()
 
-                      join applCard in _AccountingContext.Cards.Where(r => r.Tenant == _Param.Tenant)
+                       join applCard in _AccountingContext.Cards.Where(r => r.Tenant == _Param.Tenant)
                       on acc.Id equals applCard.GLAccountId into applCardsJoinT
 
                       from applCard in applCardsJoinT.DefaultIfEmpty()
                       join opf in _AccountingContext.CustomerOpenFilesAmounts.Where(r => r.Tenant == _Param.Tenant)
                        on applCard.Id equals opf.CustomerId into cardJoinF
                       from opf in cardJoinF.DefaultIfEmpty()
-                      join card in _AccountingContext.GLAccountCardsDatas.Where(r => r.Tenant == _Param.Tenant)
+                       join card in _AccountingContext.GLAccountCardsDatas.Where(r => r.Tenant == _Param.Tenant)
                        on acc.CardsDataId equals card.Id into cardJoinT
                       from card in cardJoinT.DefaultIfEmpty()
 

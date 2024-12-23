@@ -100,14 +100,20 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 if (customDocument != null)
                 {
-                    if (customDocument.DocumentTypeCode == null)
-                        customDocument.DocumentTypeCode = entityPM.DocumentTypeCode;
-
-                    CustomsDocumentUpdateService customsdocumentUpdateService = new CustomsDocumentUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
-                    customDocument.ChangeSetOp = ChangeSetOperation.Update;
+          
+                    var isPartDeclaration =customDocument.IsPartOfDeclaration;
                     this.UpdateIsPartOfDeclaration(customDocument, entityPM);
-                    this._CreateHybridTask = true;//Bug 36694: Disconnecting document 
-                    customsdocumentUpdateService.Update(customDocument, true);
+                    if (customDocument.DocumentTypeCode != entityPM.DocumentTypeCode && isPartDeclaration != customDocument.IsPartOfDeclaration)
+                    {
+                        if (customDocument.DocumentTypeCode == null)
+                            customDocument.DocumentTypeCode = entityPM.DocumentTypeCode;
+
+                        CustomsDocumentUpdateService customsdocumentUpdateService = new CustomsDocumentUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+
+                        customDocument.ChangeSetOp = ChangeSetOperation.Update;
+                        this._CreateHybridTask = true;//Bug 36694: Disconnecting document 
+                        customsdocumentUpdateService.Update(customDocument, true);
+                    }
 
                 }
             }
@@ -436,7 +442,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 this.hasNoDeclaration = false;
                 this.connectedDeclarationId = declarationPtr.ParentEntityId;
-                customDoc.IsPartOfDeclaration = true;
+                 customDoc.IsPartOfDeclaration = true;
             }
             else
             {
