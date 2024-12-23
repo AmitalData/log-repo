@@ -865,43 +865,45 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                 errors.push(TextCodeTranslator.Translate("Reconciliations.O.ErrorsInMultiWithRecOne"));
             }
         }
-        this.ValidationErrorsList = errors;
-        if (this.ValidationErrorsList.length == 0) {
 
-            //Adjust
-            if (this.SelectedLines.Length > 0 && this.TotalDifference != 0) {
-
-                //var chartType = this.GLAccountPM.ChartOfAccountsTypeCode; // 6 == Works
-                //if (chartType == "6") {
-                //    var confirmWindow = new ConfirmWindow();
-                //    confirmWindow.Width = 390;
-                //    confirmWindow.IsYesEnabled = false;
-                //    confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileNoAdjusment"));
-                //    confirmWindow.WindowClosed.subscribe((event: any) => {
-                //    });
-                //} else {
-                    //errors.push(TextCodeTranslator.Translate("Accounting.General.O.DifferenceMustEqual0"));//"The difference must be equal to zero"
-                    //this.AdjustButton();
-                    var confirmWindow = new ConfirmWindow();
-                    confirmWindow.Width = 390;
-                    confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileWithAdjusment"));
-                    confirmWindow.WindowClosed.subscribe((event: any) => {
-                        if (confirmWindow.Yes) {
-                            this.AdjustWithNewJournalScreen();
-                        } else if (confirmWindow.No) {
-                        }
-                    });
-                //}
-                return;
-
+        var ledgerTransactionsPMs = this.GetLedgerTransactionsPMs();
+        this.CurrentSession.StartBusyIndicatorSaving();
+        this._ReconciliationExtendedPMService.RecheckDraftReconciliationTransactions(ledgerTransactionsPMs).subscribe((serviceResponse: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            if (!serviceResponse.HasError) {
+                this.ValidationErrorsList = errors;
+                if (this.ValidationErrorsList.length == 0) {
+        
+                    //Adjust
+                    if (this.SelectedLines.Length > 0 && this.TotalDifference != 0) {
+                            var confirmWindow = new ConfirmWindow();
+                            confirmWindow.Width = 390;
+                            confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileWithAdjusment"));
+                            confirmWindow.WindowClosed.subscribe((event: any) => {
+                                if (confirmWindow.Yes) {
+                                    this.AdjustWithNewJournalScreen();
+                                } else if (confirmWindow.No) {
+                                }
+                            });
+                        //}
+                        return;
+                    }
+                    //
+        
+                    this.CurrentSession.StartBusyIndicatorSaving();
+                    var entity = this.CreateReconciliation();
+                    this.SubmitChanges(entity);
+        
+                }
+        
             }
-            //
+            else{
+                this.ShowDraftTransactionsFaiorMessage(serviceResponse.ErrorsArray[0]);
+            }
+        });
 
-            this.CurrentSession.StartBusyIndicatorSaving();
-            var entity = this.CreateReconciliation();
-            this.SubmitChanges(entity);
 
-        }
+
     }
     IsAutoRecClicked: boolean = false;
     AutomaticReconcileButton() {

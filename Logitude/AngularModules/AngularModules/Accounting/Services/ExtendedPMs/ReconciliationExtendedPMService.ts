@@ -70,6 +70,19 @@ export class ReconciliationExtendedPMService {
 
     }
 
+    
+    RecheckDraftReconciliationTransactions(transactions: LedgerTransactionPM[]) {
+        return this.httpClient.put(this._apiUrl + '/RecheckDraftReconciliationTransactions/', JSON.stringify(transactions), ServiceHelper.GetHttpHeaders()).pipe(
+            map(res => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = res;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+    }
+
     deleteResetDraftOpenReconciliation(gLAccountId: string) {
 
         var serviceResponse: ServiceResponse;
