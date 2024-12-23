@@ -45,7 +45,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
 
     public TabsItemsSource: TabItem[] = [];
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-    public EntityPM: CertificateOfOriginPM;
+    // public EntityPM: CertificateOfOriginPM;
     certificateOfOriginPMService: CertificateOfOriginPMService = new CertificateOfOriginPMService();
     certificateOfOriginWebService: CertificateOfOriginWebService = new CertificateOfOriginWebService();
     certificateOfOriginListService: CertificateOfOriginListService = new CertificateOfOriginListService();
@@ -302,6 +302,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
             this.GENERAL.CheckMandatoryFields();
             return;
         }
+ 
         this.CheckItenDecriptionData();
         this.EntityPM.IsUnitedInvoices ? this.EntityPM.IsUnitedInvoices : this.EntityPM.IsUnitedInvoices = false;
 
@@ -384,6 +385,9 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         this.MoreDataValidationErrors = [];
         if (AppTool.IsNullOrEmpty(this.DecalarationData.DeclarationNumber)) {
             this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.NotDeclaration"));
+        }
+        if(['3','4','6','7','9'].includes(this.EntityPM.CooTypeCode) && AppTool.IsNullOrEmpty(this.EntityPM.CertificateOriginItemItems?.OriginCriterionCode) ){
+            this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.OriginCriterionCodeRequired"));
         }
         if (this.EntityPM.RequestReasonCode != "10" && this.EntityPM.RequestReasonCode != "13" && this.EntityPM.RequestReasonCode != "14") {
             this.checkRequestReasonCode();
