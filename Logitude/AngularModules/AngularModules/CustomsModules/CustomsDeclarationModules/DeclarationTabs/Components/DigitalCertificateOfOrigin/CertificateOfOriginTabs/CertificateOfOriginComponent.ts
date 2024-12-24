@@ -94,7 +94,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         this.BuildTabs();
         this.RunComponent();
         this.getCertificateOfOriginStatusCodeEnum();
-        this.getCertificateOfOriginConnection(this.EntityPM.CooStatusCode);
+        this.getCertificateOfOriginConnection();
 
         this.entityArgs.EntityPM = this.EntityPM;
         this.entityArgs.ObjectTableName = "Customs.CertificateOfOrigin";
@@ -390,49 +390,53 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
 
 
     async SendButtonClicked(customSendOptionsArgs: any) {
+        
+        this.ValidationErrors = [];
+        this.GeneralValidationErrors = [];
+        this.MoreDataValidationErrors = [];
 
         this.getOriginCriterionCodesByCooTypeCode().toPromise().then(() => {
             if (this._length > 0 && AppTool.IsNullOrEmpty(this.EntityPM.CertificateOriginItemItems?.OriginCriterionCode)) {
                 this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.OriginCriterionCodeRequired"));
             }
-        });
-
-        this.ValidationErrors = [];
-        this.GeneralValidationErrors = [];
-        this.MoreDataValidationErrors = [];
-        if (AppTool.IsNullOrEmpty(this.DecalarationData.DeclarationNumber)) {
-            this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.NotDeclaration"));
-        }
-
-        if (this.EntityPM.RequestReasonCode != "10" && this.EntityPM.RequestReasonCode != "13" && this.EntityPM.RequestReasonCode != "14") {
-            this.checkRequestReasonCode();
-            if (this.SelectedTabCode == "GENERAL") {
-                this.GeneralValidationErrors = this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);
-
-                this.ValidationErrors = this.ValidationErrors.concat(this.GeneralValidationErrors);
+        }).then(() => {
+ 
+            if (AppTool.IsNullOrEmpty(this.DecalarationData.DeclarationNumber)) {
+                this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.NotDeclaration"));
             }
-            else if (this.SelectedTabCode == "MOREDATA") {
-                this.GeneralValidationErrors = this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);
-                this.MOREDATA.CheckMandatoryCustomsFields(this.MoreDataValidationErrors);
-
-                this.ValidationErrors = this.ValidationErrors.concat(this.GeneralValidationErrors)
-                    .concat(this.MoreDataValidationErrors);
-            }
-
-            // check duplicates items: 
-            if (this.ValidationErrors.length > 0) {
-                this.ValidationErrors = Array.from(new Set(this.ValidationErrors));
-            }
-            // check mandatory fields
-            if (this.ValidationErrors.length > 0) {
-                this.CheckMandatoryCustomsFields(customSendOptionsArgs, this.ValidationErrors, "");
-            }
-            else {
+        }).then(() => {
+            if (this.EntityPM.RequestReasonCode != "10" && this.EntityPM.RequestReasonCode != "13" && this.EntityPM.RequestReasonCode != "14") {
+                this.checkRequestReasonCode();
+                if (this.SelectedTabCode == "GENERAL") {
+                    this.GeneralValidationErrors = this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);
+    
+                    this.ValidationErrors = this.ValidationErrors.concat(this.GeneralValidationErrors);
+                }
+                else if (this.SelectedTabCode == "MOREDATA") {
+                    this.GeneralValidationErrors = this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);
+                    this.MOREDATA.CheckMandatoryCustomsFields(this.MoreDataValidationErrors);
+    
+                    this.ValidationErrors = this.ValidationErrors.concat(this.GeneralValidationErrors)
+                        .concat(this.MoreDataValidationErrors);
+                }
+    
+                // check duplicates items: 
+                if (this.ValidationErrors.length > 0) {
+                    this.ValidationErrors = Array.from(new Set(this.ValidationErrors));
+                }
+                // check mandatory fields
+                if (this.ValidationErrors.length > 0) {
+                    this.CheckMandatoryCustomsFields(customSendOptionsArgs, this.ValidationErrors, "");
+                }
+                else {
+                    this.SendCertificateOfOrigin(customSendOptionsArgs);
+                }
+            } else {
                 this.SendCertificateOfOrigin(customSendOptionsArgs);
             }
-        } else {
-            this.SendCertificateOfOrigin(customSendOptionsArgs);
         }
+        );
+        
 
         // var generalScreen = "כללי";
         // var moreDataScreen = "נוספים";
@@ -565,7 +569,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
                 else
                     this.UpdateIsChange(false);//#103474
                 this.getCertificateOfOriginStatusCodeEnum();
-                this.getCertificateOfOriginConnection(this.EntityPM.CooStatusCode);
+                this.getCertificateOfOriginConnection();
             }
         });
     }
@@ -601,7 +605,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         });
     }
     IsDisplayOnlyByCooConnection: boolean = false;
-    getCertificateOfOriginConnection(code) {
+    getCertificateOfOriginConnection() {
         let filters: ApiQueryFilters = new ApiQueryFilters();
         filters.GetAll = true;
         filters.addAdditionalFilter("CooStatus", this.EntityPM.CooStatusCode, null, null, "Equals", false, false, false, "string");
