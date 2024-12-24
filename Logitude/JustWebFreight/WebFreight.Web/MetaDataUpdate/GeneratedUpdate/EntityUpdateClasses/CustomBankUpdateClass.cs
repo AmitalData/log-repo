@@ -21,8 +21,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomBankUpdateClass
    {
-        //public const string HashString = "b88c24866b03c2224ffb09c36fd14033";
-        public const string HashString = "daf290e3bdf684b91aea7e87c7fb0f57";
+        public const string HashString = "b88c24866b03c2224ffb09c36fd14033";
         public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
