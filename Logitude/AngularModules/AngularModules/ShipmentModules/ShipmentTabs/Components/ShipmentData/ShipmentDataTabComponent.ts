@@ -118,7 +118,7 @@ export class ShipmentDataTabComponent extends BaseComponent {
         if (this.EntityPM.IskaNumber != newValue) {
             this.EntityPM.IskaNumber = newValue;
 
-            if(newValue.startsWith("I") || newValue.startsWith("i")){
+            if (!newValue || newValue.startsWith("I") || newValue.startsWith("i")) {
                 this.UIProperties.SetValidity("IskaNumber", this.ObjectTableName, true, "");
             }else{
                 
