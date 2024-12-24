@@ -6,7 +6,7 @@
   DBTableName="&quot;DefaultAndConfigurations&quot;"
   DBTableOldNames="DefaultAndConfigurations"
   ObjectTableSingular="&quot;Default And Configuration&quot;"
-  ObjectTablePlural="&quot;DefaultAndConfiguration&quot;"
+  ObjectTablePlural="&quot;DefaultAndConfigurations&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="false"
