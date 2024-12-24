@@ -201,6 +201,12 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                         }
 
                         scope.Complete();
+
+                        if (service.DeclarationUpdateTask != null)
+                        {
+                            service.DeclarationUpdateTask.Wait();
+                        }
+
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);
                     }
                 }
