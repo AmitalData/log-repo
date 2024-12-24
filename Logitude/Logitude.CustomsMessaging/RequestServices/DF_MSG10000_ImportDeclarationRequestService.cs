@@ -46,7 +46,7 @@ using Unifreight.Data.AmitalModel.Repsitories;
 using Simplog.Data.Helpers;
 using Logitude.Customs.BL.BL;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 

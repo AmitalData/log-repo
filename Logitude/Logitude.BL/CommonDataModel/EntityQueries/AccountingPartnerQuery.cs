@@ -102,6 +102,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
                                                              EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
                                                              SendingInterestReport=a.Card.SendingInterestReport,
+                                                             GLAccountId   =a.Card.GLAccountId
                                                          },
                                                          BillToId = a.Card.BillToId,
                                                          CreditLimit = a.CreditLimit,

@@ -114,6 +114,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
                                      PartnerTypeId = a.Card.PartnerTypeId,
                                      Code = a.Card.Code,
+                                     GLAccountId=a.Card.GLAccountId
                                  },
                                  BillToId = a.Card.BillToId,
                                  ImageDetailId = a.Card.ImageDetailId,

@@ -101,7 +101,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    SendingInterestReport = a.Card.SendingInterestReport,
                                    PartnerTypeId = a.Card.PartnerTypeId,
                                    Code = a.Card.Code,
-                               },
+                                    GLAccountId = a.Card.GLAccountId,
+                                },
                            }).FirstOrDefault();
 
             if(trucker != null)
