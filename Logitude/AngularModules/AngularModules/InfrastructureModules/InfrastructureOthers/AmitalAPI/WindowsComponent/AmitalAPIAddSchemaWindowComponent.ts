@@ -49,9 +49,10 @@ export class AmitalAPIAddSchemaWindowComponent {
     ];
 
     SetWindowArgs(params: AmitalAPIAddSchemaWindowParams) {
-        if (params.row)
+        if (params.row){
             this.data = { ...this.data, ...params.row };
-        else
+            this.fields.forEach(field => field.value = this.data[field.name]);
+        } else
             this.fields = this.fields.concat(this.fieldsForCreate);
 
         this.windowParams = params;
@@ -87,7 +88,7 @@ export class AmitalAPIAddSchemaWindowComponent {
         logWindow.Height = 345;
         logWindow.Title = "Schema";
         logWindow.WindowArgs = windowArgs as AmitalAPIAddSchemaWindowParams;
-        logWindow.Show('./Common/Components/Maintenance/AmitalAPI/AmitalAPIAddSchemaWindowComponent');
+        logWindow.Show('./InfrastructureModules/InfrastructureOthers/AmitalAPI/AmitalAPIAddSchemaWindowComponent');
         return new Promise<AmitalApiSchema>(resolve =>
             logWindow.WindowClosed.subscribe(async (row?: AmitalApiSchema) => resolve(row)));
     }
