@@ -26,7 +26,6 @@ import { LedgerTransactionExtendedListService } from '../../Services/ExtendedLis
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
-
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { RecoCallback } from '../../DataContracts/RecoCallback';
