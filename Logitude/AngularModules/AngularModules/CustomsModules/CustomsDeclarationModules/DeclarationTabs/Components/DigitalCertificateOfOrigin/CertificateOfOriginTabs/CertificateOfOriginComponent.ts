@@ -32,6 +32,7 @@ import { CertificateOfOriginConnectionListService } from 'Customs/Services/Stand
 import { CertificateOfOriginConnectionList } from 'Customs/EntityLists/CertificateOfOriginConnectionList';
 import { BehaviorSubject } from 'rxjs';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
+import { OriginCriterionPM } from 'Customs/EntityPMs/OriginCriterionPM';
 
 
 @Component({
@@ -386,9 +387,11 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         if (AppTool.IsNullOrEmpty(this.DecalarationData.DeclarationNumber)) {
             this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.NotDeclaration"));
         }
-        if(['3','4','6','7','9'].includes(this.EntityPM.CooTypeCode) && AppTool.IsNullOrEmpty(this.EntityPM.CertificateOriginItemItems?.OriginCriterionCode) ){
+        /// check if the user select the origin criterion code for the needed destination
+        if(['3','4','6','7','9'].includes(this.EntityPM?.CooTypeCode) && AppTool.IsNullOrEmpty(this.EntityPM.CertificateOriginItemItems?.OriginCriterionCode) ){
             this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.OriginCriterionCodeRequired"));
         }
+        ////
         if (this.EntityPM.RequestReasonCode != "10" && this.EntityPM.RequestReasonCode != "13" && this.EntityPM.RequestReasonCode != "14") {
             this.checkRequestReasonCode();
             if (this.SelectedTabCode == "GENERAL") {
@@ -619,5 +622,6 @@ class TabItem {
 
         this.textCode = TextCode;
     }
-}
 
+  
+}
