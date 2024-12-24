@@ -1,23 +1,16 @@
-import { Component, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChildren, QueryList, SimpleChanges, Input } from '@angular/core';
 import { EntityArgs } from '../../../../../../Infrastructure/DataContracts/EntityArgs';
-import { CreateClientRequestParams, ClientAdressParams, ClientAddressCommunicationType, ClientDrivingLicenseParams, ClientDrivingLicenseTypeParams } from 'Customs/DataContract/RequestParams/CreateClientRequestParams';
-
+import { OriginCriterionListService } from 'Customs/Services/StandardLists/OriginCriterionListService';
 declare var window: any;
-import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
-import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
-import { ClientMessagesService } from 'Customs/Services/WebServices/ClientMessagesService';
 import { INF_MSG_GenericResponseData } from 'Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
 import { CustomMessageProgressComponent } from 'CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
-import { Validator } from 'Infrastructure/Validators/Validator';
-import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { AppTool } from 'Infrastructure/Tools';
 import { LocationDirective } from 'Infrastructure/Utilities/LocationDirective';
-import { CertificateOfOriginPM } from 'Customs/EntityPMs/CertificateOfOriginPM';
 import { CertificateOfOriginPMService } from 'Customs/Services/StandardPMs/CertificateOfOriginPMService';
 import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
 import { StatusCertificateOfOrigin } from '../DigitalCertificateOfOriginTabComponent';
@@ -30,9 +23,9 @@ import { CertificateOfOriginListService } from 'Customs/Services/StandardLists/C
 import { CertificateOfOriginStatusCodeEnumListService } from 'Customs/Services/StandardLists/CertificateOfOriginStatusCodeEnumListService';
 import { CertificateOfOriginConnectionListService } from 'Customs/Services/StandardLists/CertificateOfOriginConnectionListService';
 import { CertificateOfOriginConnectionList } from 'Customs/EntityLists/CertificateOfOriginConnectionList';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
-import { OriginCriterionPM } from 'Customs/EntityPMs/OriginCriterionPM';
+import { tap } from 'rxjs/operators';
 
 
 @Component({
@@ -41,12 +34,11 @@ import { OriginCriterionPM } from 'Customs/EntityPMs/OriginCriterionPM';
     providers: [EntityArgs],
 })
 
+
 export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     public right: any;
-
     public TabsItemsSource: TabItem[] = [];
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-    // public EntityPM: CertificateOfOriginPM;
     certificateOfOriginPMService: CertificateOfOriginPMService = new CertificateOfOriginPMService();
     certificateOfOriginWebService: CertificateOfOriginWebService = new CertificateOfOriginWebService();
     certificateOfOriginListService: CertificateOfOriginListService = new CertificateOfOriginListService();
@@ -303,7 +295,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
             this.GENERAL.CheckMandatoryFields();
             return;
         }
- 
+
         this.CheckItenDecriptionData();
         this.EntityPM.IsUnitedInvoices ? this.EntityPM.IsUnitedInvoices : this.EntityPM.IsUnitedInvoices = false;
 
@@ -378,20 +370,40 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     ValidationErrors = [];
     GeneralValidationErrors = [];
     MoreDataValidationErrors = [];
+    
+    originCriterionListService: OriginCriterionListService = new OriginCriterionListService();
+    private _length;
+
+    getOriginCriterionCodesByCooTypeCode(): Observable<any> {
+
+        let filters: ApiQueryFilters = new ApiQueryFilters();
+        filters.GetAll = true;
+        filters.addAdditionalFilter("CertificateOfOriginTypeCodeID", this.EntityPM.CooTypeCode, null, null, "Equals", false, false, false, "number");
+        filters.addAdditionalFilter("Inactive", false, null, null, "Equals", true, false, false, "boolean");
+        return this.originCriterionListService.getByFilters(filters).pipe(tap((response: any) => {
+            if (!response.HasError) {
+                this._length = response.Result?.length
+            }
+        })
+        )
+    }
+
 
     async SendButtonClicked(customSendOptionsArgs: any) {
-        // init lists:
+
+        this.getOriginCriterionCodesByCooTypeCode().toPromise().then(() => {
+            if (this._length > 0 && AppTool.IsNullOrEmpty(this.EntityPM.CertificateOriginItemItems?.OriginCriterionCode)) {
+                this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.OriginCriterionCodeRequired"));
+            }
+        });
+
         this.ValidationErrors = [];
         this.GeneralValidationErrors = [];
         this.MoreDataValidationErrors = [];
         if (AppTool.IsNullOrEmpty(this.DecalarationData.DeclarationNumber)) {
             this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.NotDeclaration"));
         }
-        /// check if the user select the origin criterion code for the needed destination
-        if(['3','4','6','7','9'].includes(this.EntityPM?.CooTypeCode) && AppTool.IsNullOrEmpty(this.EntityPM.CertificateOriginItemItems?.OriginCriterionCode) ){
-            this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.OriginCriterionCodeRequired"));
-        }
-        ////
+
         if (this.EntityPM.RequestReasonCode != "10" && this.EntityPM.RequestReasonCode != "13" && this.EntityPM.RequestReasonCode != "14") {
             this.checkRequestReasonCode();
             if (this.SelectedTabCode == "GENERAL") {
@@ -421,7 +433,6 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         } else {
             this.SendCertificateOfOrigin(customSendOptionsArgs);
         }
-
 
         // var generalScreen = "כללי";
         // var moreDataScreen = "נוספים";
@@ -553,7 +564,6 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
                 }
                 else
                     this.UpdateIsChange(false);//#103474
-
                 this.getCertificateOfOriginStatusCodeEnum();
                 this.getCertificateOfOriginConnection(this.EntityPM.CooStatusCode);
             }
@@ -594,7 +604,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     getCertificateOfOriginConnection(code) {
         let filters: ApiQueryFilters = new ApiQueryFilters();
         filters.GetAll = true;
-        filters.addAdditionalFilter("CooStatus", code, null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("CooStatus", this.EntityPM.CooStatusCode, null, null, "Equals", false, false, false, "string");
         filters.addAdditionalFilter("Active", true, null, null, "Equals", true, false, false, "boolean");
         this.certificateOfOriginConnectionListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
@@ -623,5 +633,5 @@ class TabItem {
         this.textCode = TextCode;
     }
 
-  
+
 }
