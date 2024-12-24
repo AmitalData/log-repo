@@ -1189,7 +1189,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 List<ShipmentValidating.MessageDetails> messageDetailsList = new List<ShipmentValidating.MessageDetails>();
 
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                using (TransactionScope scope = TransactionFactory.GetNewReadUncommittedTransaction())
                 {
                     if (entityPM.CustomerId != entityPoco.CustomerId)
                     {
