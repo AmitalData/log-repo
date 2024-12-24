@@ -1032,6 +1032,15 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         this.ValidationErrorsList = [noTransactionsSelectedMSG];
     }
 
+    private ShowDraftTransactionsFaiorMessage(error) {
+        var msg = new MessageWindow();
+        msg.IsMessageMultiLine = true;
+        msg.ShowErrorIcon = true;
+        msg.RTL = this.isRTL;
+        msg.Width = 400;
+        msg.Show(error);
+    }
+
     private SubmitDraftLedgerTransactions() {
         var ledgerTransactionsPMs = this.GetLedgerTransactionsPMs();
 

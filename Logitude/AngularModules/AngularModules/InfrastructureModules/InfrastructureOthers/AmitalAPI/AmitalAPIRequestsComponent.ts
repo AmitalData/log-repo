@@ -54,10 +54,10 @@ export class AmitalAPIRequestsComponent {
         { name: 'isParent', label: 'Is Parent', type: 'selectCustom', values: ['Yes', 'No', 'All'] },
         { name: 'hasErrors', label: 'Has Error', type: 'selectCustom', values: ['Yes', 'No', 'All'] },
         { name: 'clientApi', label: 'Client Api' },
-        { name: 'minItems', label: 'Min Items', type: 'integer' },
+        { name: 'minItems', label: 'Min Items', type: 'number' },
     ];
     columns: GridColumn[] = [
-        { Display: 'Id', FieldName: 'Id', Styles: { width: '280px' } },
+        { Display: 'Id', FieldName: 'Id', Styles: { width: '140px' } },
         { Display: 'Base Com', FieldName: 'IsParent', Styles: { width: '70px' } },
         { Display: 'Req Type', FieldName: 'TaskName', Styles: { width: '70px' } },
         { Display: 'Partner', FieldName: 'PartnerName', Styles: { width: '125px' } },
@@ -69,7 +69,7 @@ export class AmitalAPIRequestsComponent {
         { Display: 'Total Chunks', FieldName: 'TotalChunks', Styles: { width: '85px' } },
         { Display: 'Chunk Idx', FieldName: 'ChunkIdx', Styles: { width: '70px' } },
         { Display: 'Create Date', FieldName: 'CreateDate', Styles: { width: '140px' }, isTemplate: true },
-        { Display: 'Blob', FieldName: 'StorageBlob', Styles: { width: '425px' } },
+        { Display: 'Blob', FieldName: 'StorageBlob', Styles: { width: '300px' } },
         { Display: 'Success', FieldName: 'HasError', Styles: { width: '60px' }, isTemplate: true },
         { Display: '', FieldName: 'Buttons', Styles: { width: '60px' }, isTemplate: true },
     ]
@@ -79,13 +79,13 @@ export class AmitalAPIRequestsComponent {
     }
 
     getData = (skip: number, take: number, page: number): Promise<any[]> => {
-        const params: RequestQueryParams = {
-            ...this.form.values,
+        const params: RequestQueryParams & any = {
+            ...this.form?.values,
             page: page,
             pageSize: take,
-            fromCreateDate: new Date(this.form.values.fromCreateDate).toISOString().split('T')[0],
-            hasErrors: this.convertYesNoToBoolean(this.form.values.hasErrors),
-            isParent: this.convertYesNoToBoolean(this.form.values.isParent),
+            fromCreateDate: new Date(this.form?.values.fromCreateDate).toISOString().split('T')[0] as any,
+            hasErrors: this.convertYesNoToBoolean(this.form?.values.hasErrors) as any,
+            isParent: this.convertYesNoToBoolean(this.form?.values.isParent) as any,
         };
         delete (<any>params).UIProperties;
         Object.keys(params).filter(key => params[key] === '' || params[key] === null).forEach(key => delete params[key]);
@@ -94,7 +94,7 @@ export class AmitalAPIRequestsComponent {
     }
 
     refreshTable(logitudeGridSimpleComponent: LogitudeGridSimpleComponent) {
-        if (!this.form.isValid())
+        if (!this.form.valid)
             return;
 
         logitudeGridSimpleComponent.refreshTable();

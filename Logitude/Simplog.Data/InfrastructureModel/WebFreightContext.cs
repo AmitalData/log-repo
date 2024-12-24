@@ -1126,5 +1126,17 @@ namespace Simplog.Data.InfrastructureModel
             get;
             set;
         }
+
+        public IDbSet<DefaultAndConfiguration> DefaultAndConfigurations
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<DefaultAndConfigurationKey> DefaultAndConfigurationKey
+        {
+            get;
+            set;
+        }
     }
 }

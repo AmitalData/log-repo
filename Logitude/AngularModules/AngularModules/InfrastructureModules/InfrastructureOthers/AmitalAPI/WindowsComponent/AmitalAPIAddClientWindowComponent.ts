@@ -90,6 +90,7 @@ export class AmitalAPIAddClientWindowComponent {
         if (params.isUpdate) {
             params.row.SecretExpired = new Date(params.row.SecretExpired) as any;
             this.data = { ...this.data, ...params.row };
+            this.fields.forEach(field => field.value = this.data[field.name]);
             this.clientSchemasCollection.InsertCollection(params.schemas.filter(schema => schema.Tenants?.includes(params.row?.Tenant)));            
         }
 
@@ -148,7 +149,7 @@ export class AmitalAPIAddClientWindowComponent {
         logWindow.Height = 550;
         logWindow.Title = TextCodeTranslator.Translate('Accounting.General.O.Receivables');
         logWindow.WindowArgs = windowArgs as AmitalAPIAddClientWindowParams;
-        logWindow.Show('./Common/Components/Maintenance/AmitalAPI/WindowsComponent/AmitalAPIAddClientWindowComponent');
+        logWindow.Show('./InfrastructureModules/InfrastructureOthers/AmitalAPI/WindowsComponent/AmitalAPIAddClientWindowComponent');
         return new Promise<AmitalApiClient>(resolve =>
             logWindow.WindowClosed.subscribe(async (row?: AmitalApiClient) => resolve(row)));
     }
