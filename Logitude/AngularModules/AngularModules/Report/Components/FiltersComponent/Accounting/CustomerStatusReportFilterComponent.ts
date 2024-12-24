@@ -89,6 +89,7 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
 
     SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>) { //For Scheduler Report
         this.IsSchedulerReport = true;
+        this.SelectedCategory = null;       
         if (queryFilterItems) {
             queryFilterItems.forEach(queryFilterItem => {
                 this.SetFilterItem(queryFilterItem);
@@ -391,8 +392,7 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
         if (queryFilterItem.FieldName == "CategoryIndex") {
             this.SelectedCategory = queryFilterItem.FieldValue;
         }
-        else
-            this.SelectedCategory = null;
+        
     }
     SetCategoryFilter(queryFilterItem: QueryFilterItem) {
         if (queryFilterItem.FieldName == "CategoryValue") {
