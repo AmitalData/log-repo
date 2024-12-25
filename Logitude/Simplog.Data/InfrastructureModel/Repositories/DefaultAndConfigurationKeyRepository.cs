@@ -31,7 +31,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     where a.SetKey == SetKey
                     select a).FirstOrDefault();
         }
-        
+
         public void Add(DefaultAndConfigurationKey entity)
         {
             context.DefaultAndConfigurationKey.Add(entity);

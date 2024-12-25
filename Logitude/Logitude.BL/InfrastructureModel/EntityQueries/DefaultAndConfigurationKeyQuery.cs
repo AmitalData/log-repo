@@ -13,7 +13,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         public DefaultAndConfigurationKeyQuery()
         {
-            repository = new DefaultAndConfigurationKeyRepository(); 
+            repository = new DefaultAndConfigurationKeyRepository();
         }
 
         public DefaultAndConfigurationKeyQuery(int tenant)
@@ -27,7 +27,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         }
 
         public DefaultAndConfigurationKeyPM GetSinglePM(string setkey, int tenant)
-        {        
+        {
             DefaultAndConfigurationKeyPM result =
             (from a in repository.context.DefaultAndConfigurationKey
             where a.SetKey == setkey && a.Tenant == tenant
@@ -51,7 +51,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             (from a in repository.context.DefaultAndConfigurationKey
              where a.SetKey == SetKey
              select new DefaultAndConfigurationKeyPM()
-             {                
+             {
                  Tenant = a.Tenant,
                  CreateDate = a.CreateDate,
                  SetType1 = a.SetType1,
@@ -82,14 +82,14 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
             return result;
         }
-        
+
         public IQueryable<DefaultAndConfigurationKeyPM> GetIQueryableDefaultAndConfigurationKeyPMByField1(string SetKey)
         {
             IQueryable<DefaultAndConfigurationKeyPM> result =
             (from a in repository.context.DefaultAndConfigurationKey
              where a.SetKey == SetKey
              select new DefaultAndConfigurationKeyPM()
-             {                
+             {
                  Tenant = a.Tenant,
                  CreateDate = a.CreateDate,
                  SetType1 = a.SetType1,
@@ -108,7 +108,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             (from a in repository.context.DefaultAndConfigurationKey
              where a.SetKey == SetKey
              select new DefaultAndConfigurationKeyList()
-             { 
+             {
                  Tenant = a.Tenant,
                  CreateDate = a.CreateDate,
                  SetType1 = a.SetType1,
@@ -119,6 +119,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
              });
 
             return result;
-        }               
+        }
     }
 }

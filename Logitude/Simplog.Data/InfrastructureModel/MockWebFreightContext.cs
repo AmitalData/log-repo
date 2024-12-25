@@ -2124,5 +2124,6 @@ namespace Simplog.Data.InfrastructureModel
         public IDbSet<DefaultAndConfiguration> DefaultAndConfigurations => throw new NotImplementedException();
 
         public IDbSet<DefaultAndConfigurationKey> DefaultAndConfigurationKey => throw new NotImplementedException();
+
     }
 }

@@ -60,6 +60,7 @@ namespace Simplog.Server.Infrastructure.Helpers
 
             return cacheKeys;
         }
+
         public static TEntity GetOrInsertNewObject<TEntity>(string entityKeyString, Func<TEntity> GetNewObject, bool fromCache = true, bool donotCacheNull = false, bool supressForceInsert = true, int absoluteExpiration = 30) //Itzik Test
             where TEntity : class ///,new()
             

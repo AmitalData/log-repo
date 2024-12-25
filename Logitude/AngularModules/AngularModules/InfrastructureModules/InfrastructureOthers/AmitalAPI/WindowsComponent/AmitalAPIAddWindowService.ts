@@ -38,7 +38,8 @@ export class AmitalAPIAddWindowService {
     }
 
     chekFormValidation(fields: TextBoxField[], data: any): boolean {
-        return this.getValidationErrors(fields, data).length > 0;
+        const error = this.getValidationErrors(fields, data);
+        return error.length === 0;
     }
 
     getValidationErrors(fields: TextBoxField[], data: any): fieldsError[] {

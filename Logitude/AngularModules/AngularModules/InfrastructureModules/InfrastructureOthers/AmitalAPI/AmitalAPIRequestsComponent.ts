@@ -79,13 +79,13 @@ export class AmitalAPIRequestsComponent {
     }
 
     getData = (skip: number, take: number, page: number): Promise<any[]> => {
-        const params: RequestQueryParams = {
-            ...this.form.values,
+        const params: RequestQueryParams & any = {
+            ...this.form?.values,
             page: page,
             pageSize: take,
-            fromCreateDate: new Date(this.form.values.fromCreateDate).toISOString().split('T')[0],
-            hasErrors: this.convertYesNoToBoolean(this.form.values.hasErrors),
-            isParent: this.convertYesNoToBoolean(this.form.values.isParent),
+            fromCreateDate: new Date(this.form?.values.fromCreateDate).toISOString().split('T')[0] as any,
+            hasErrors: this.convertYesNoToBoolean(this.form?.values.hasErrors) as any,
+            isParent: this.convertYesNoToBoolean(this.form?.values.isParent) as any,
         };
         delete (<any>params).UIProperties;
         Object.keys(params).filter(key => params[key] === '' || params[key] === null).forEach(key => delete params[key]);

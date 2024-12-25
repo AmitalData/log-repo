@@ -49,7 +49,7 @@ namespace Logitude.BL.Helpers
                     return null;
                 
                 Type type = Type.GetType(typeString) ?? AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.GetType(typeString) != null)?.GetType(typeString);
-                if(type == null)
+                if (type == null)
                     throw new Exception("Type not found: " + typeString);
 
                 if (type == typeof(string))
@@ -90,7 +90,7 @@ namespace Logitude.BL.Helpers
                 return deserializedObject is Array array ? array : deserializedObject;
             }
             catch (Exception e)
-            {                
+            {
                 NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e, "An error occurred while deserializing value: " + value + ", type: " + typeString);
                 return null;
             }

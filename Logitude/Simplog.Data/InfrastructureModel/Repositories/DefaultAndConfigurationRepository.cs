@@ -39,7 +39,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
 
         public DefaultAndConfiguration GetSingleDefaultAndConfiguration(string id)
-        {           
+        {
             return (from a in context.DefaultAndConfigurations
                     where a.Id == id
                     select a).FirstOrDefault();

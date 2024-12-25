@@ -25,7 +25,7 @@ namespace Logitude.BL.Helpers
             string cacheKey = GetCacheKey(tenant, setKey);
             return GetFromCache(cacheKey, () => Fetch(tenant, setKey));
         }
-        
+
         public DefaultAndConfiguration_Ext Get(int tenant, string setKey, string additionalKey)
         {
             string cacheKey = GetCacheKey(tenant, setKey, additionalKey);
@@ -53,7 +53,7 @@ namespace Logitude.BL.Helpers
             DefaultAndConfiguration_Ext res = defaultList.FirstOrDefault(d => d.AdditionalKey == additionalKey);
 
             if (res != null)
-                return res;            
+                return res;
 
             foreach (var item in additionalKey.Split('.'))
             {
@@ -73,7 +73,7 @@ namespace Logitude.BL.Helpers
 
         private List<DefaultAndConfiguration_Ext> Fetch(int tenant, string setKey) =>
             Get(tenant).Where(s => s.SetKey == setKey).ToList();
-        
+
         private List<DefaultAndConfiguration_Ext> FetchByTenant(int tenant)
         {
             DefaultAndConfigurationRepository repository = new DefaultAndConfigurationRepository(WebFreightContext.GetContext(tenant));
@@ -86,13 +86,13 @@ namespace Logitude.BL.Helpers
         private string GetCacheKey(int tenant, string setKey = null, string additionalKey = null)
         {
             string key = string.Format(CachePrefix, tenant);
-            
+
             if (!string.IsNullOrEmpty(setKey))
                 key += ";" + setKey;
 
             if (!string.IsNullOrEmpty(additionalKey))
                 key += ";" + additionalKey;
-            
+
             return key;
         }
 

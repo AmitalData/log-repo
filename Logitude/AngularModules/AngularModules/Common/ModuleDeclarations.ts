@@ -57,7 +57,7 @@ import {CustomsShipperFiltersMenuComponent} from './Components/FiltersMenu/Custo
 import { GLAccountSelectComponent } from './Components/AccountingTab/GLAccountSelectWindow/GLAccountSelectComponent';
 import { NewHorseComponent } from './Components/Maintenance/Horse/NewHorseComponent';
 import { HorseGeneralTabComponent } from './Components/Maintenance/Horse/HorseGeneralTabComponent';
- import { EnglishNameListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/EnglishNameListHeaderTemplate';
+import { EnglishNameListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/EnglishNameListHeaderTemplate';
 import { CityNameListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/CityNameListHeaderTemplate';
 import { CodeListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/CodeListHeaderTemplate';
 import { StartWorkingListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/StartWorkingListHeaderTemplate';
@@ -133,6 +133,7 @@ import { ReportExecutionLogListActionBarComponent } from './Components/ListActio
         CityNameListHeaderTemplate,
         EnglishNameListHeaderTemplate,
         StartWorkingListHeaderTemplate,         
+        TariffsTabComponent,
         HostScreenComponent,
         ReportExecutionLogListActionBarComponent
     ];
@@ -213,7 +214,6 @@ export class ModuleDeclarations {
             case "TariffsTabComponent": { myResult = TariffsTabComponent; break; }
             case "HostScreenComponent": { myResult = HostScreenComponent; break; }
             case "ReportExecutionLogListActionBarComponent": { myResult = ReportExecutionLogListActionBarComponent; break; }
-
         }
  
         return myResult;

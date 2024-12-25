@@ -418,13 +418,8 @@ export class MaintenanceComponent {
             )[0].Id);
         (item.TranslatedName = 'Defaults'), // TextCodeTranslator.Translate('General.MC.Logs');
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-
-        if (
-            FeatureLocator.HasFeaturePermession(
-                'General',
-                this.invoiceConfirmationNumber
-            )
-        ) {
+            
+        if (FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber)) {
             var item2 = new MenusTablePM();
             item2.CategoryTypeCode = 'CMS';
             item2.Icon = 'Settings';
@@ -1627,6 +1622,7 @@ export class MaintenanceComponent {
                     logWindow.Show(
                         './InfrastructureModules/InfrastructureOthers/AmitalAPI/AmitalAPISettingsComponent'
                     );
+
                     break;
                 }
 
@@ -1638,9 +1634,7 @@ export class MaintenanceComponent {
                         'Customs.MC.General.APISettings'
                     );
                     logWindow.IsShowCloseButton = true;
-                    logWindow.Show(
-                        './InfrastructureModules/InfrastructureOthers/AmitalAPI/APISettingsComponent'
-                    );
+                        logWindow.Show('./InfrastructureModules/InfrastructureOthers/AmitalAPI/APISettingsComponent');
                     break;
                 }
 
@@ -1652,9 +1646,7 @@ export class MaintenanceComponent {
                         'Customs.MC.General.API_Requests'
                     );
                     logWindow.IsShowCloseButton = true;
-                    logWindow.Show(
-                        './InfrastructureModules/InfrastructureOthers/AmitalAPI/AmitalAPIRequestsComponent'
-                    );
+                        logWindow.Show('./InfrastructureModules/InfrastructureOthers/AmitalAPI/AmitalAPIRequestsComponent');
                     break;
                 }
 
