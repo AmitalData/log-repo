@@ -12,6 +12,6 @@ export class TableTopService {
 	}
 
 	getTableTop(state: string) {
-		return state == TableTopState.Search ? 'תוצאות חיפוש' : ' קטרוגיות ספר מכס';
+		return state == TableTopState.Search ? 'תוצאות חיפוש' : ' קטגוריות ספר מכס';
 	}
 }
