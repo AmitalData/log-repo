@@ -32,7 +32,7 @@ namespace Logitude.Customs.Data.AzureSearch.Repo
         {
             SearchOptions options = new SearchOptions();
             options.Filter = $"ItemHierarchicLocationID eq '1' and CI_CustomsItemCategoryIDNum eq '1' and CustomsItemEntityStatusIDNum eq 2 and EndDate ge {DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ")} and StartDate le {DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ")}";
-            options.Size = 1000;
+            options.Size = 500;
             options.Select.Clear();
             options.Select.Add("CustomsItemID");
             options.Select.Add("FullClassification");
@@ -57,7 +57,7 @@ namespace Logitude.Customs.Data.AzureSearch.Repo
             filter +=$"CI_CustomsItemCategoryIDNum eq '1' and CustomsItemEntityStatusIDNum eq 2 and EndDate ge {DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ")} and StartDate le {DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ")}";
 
             options.Filter += filter;
-            options.Size = 1000;
+            options.Size = 500;
             options.Select.Clear();
             options.Select.Add("CustomsItemID");
             options.Select.Add("FullClassification");

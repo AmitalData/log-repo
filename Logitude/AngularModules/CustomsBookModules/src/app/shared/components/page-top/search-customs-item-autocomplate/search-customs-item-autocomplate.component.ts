@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
-import { Subject, debounceTime, switchMap, catchError, EMPTY, of } from 'rxjs';
+import { Subject, switchMap, catchError, EMPTY, of, timer, map } from 'rxjs';
 import { SessionInfo } from '../../../../core/Infrastructure/Utilities/SessionInfo';
 import { CustomsItemsAutocomplate, CustomsClassification, GetFromTypesenseResponse, AllClassification, CustomBookClassification, GroupedCustomsItems } from '../page-top.interface';
 import { CacheService } from '../../../../core/Services/cache.service';
@@ -52,7 +52,9 @@ export class SearchCustomsItemAutocomplateComponent {
 
   private applyAutocomplate() {
     this.searchService.searchText$.pipe(
-      debounceTime(100),
+      switchMap((value) =>
+        timer(value?.length > 3 ? 100 : 200).pipe(map(() => value))
+      ),
       switchMap((searchText: string) =>
         !!searchText ?
           this.aPI_MainService.GetFromTypesense(searchText, this.headerService.getSearchState(true), SessionInfo.LoggedUserTenant).pipe(catchError((error) => EMPTY)) :
@@ -60,38 +62,38 @@ export class SearchCustomsItemAutocomplateComponent {
       )
     ).subscribe(async (res: any) => {
       if (!res.body)
-        return this.clearAutocomplete();
+      return this.clearAutocomplete();
 
       const regex = new RegExp(`(${this.searchService.GetSearchText()})`, 'gi');
       const result: GetFromTypesenseResponse = res.body;
       result.Remarks.forEach((remark) => remark.CustomsItem.BaseCustomsItemID = -1);
       let customsItems = [...result.CustomsItems, ...result.Remarks.map((remark) => { return { ...remark.CustomsItem, remark: remark.Remark.RemarkDescription } })];
       let customsItemsAutocomplateList: CustomsItemsAutocomplate[] = customsItems.map((item) => {
-        let text = item.FullClassification + ' | ' + ((<any>item).remark || item.CIH_GoodsDescription);
-        text = text.replace(regex, `<mark>$1</mark>`);
-        return { FullClassification: item.FullClassification, text: text, BaseCustomsItemID: item.BaseCustomsItemID };
+      let text = item.FullClassification + ' | ' + ((<any>item).remark || item.CIH_GoodsDescription);
+      text = text.replace(regex, `<mark>$1</mark>`);
+      return { FullClassification: item.FullClassification, text: text, BaseCustomsItemID: item.BaseCustomsItemID };
       });
 
       if (customsItemsAutocomplateList.length < 10) {
-        this.customsItemsAutocomplateList.next(customsItemsAutocomplateList);
-        this.groupCustomsItemsAutocomplateList.next([]);
+      this.customsItemsAutocomplateList.next(customsItemsAutocomplateList);
+      this.groupCustomsItemsAutocomplateList.next([]);
       } else {
 
-        const classificationType: AllClassification = await this.getClassifications();
-        const customsBookType: string = this.headerService.getSearchState(true);
-        const classifications: CustomBookClassification = classificationType[customsBookType];
+      const classificationType: AllClassification = await this.getClassifications();
+      const customsBookType: string = this.headerService.getSearchState(true);
+      const classifications: CustomBookClassification = classificationType[customsBookType];
 
-        const groupedItems: GroupedCustomsItems = {};
-        (classifications.sortedClassifications as CustomsClassification[]).forEach((key: CustomsClassification) => groupedItems[key.Classification] = []);
+      const groupedItems: GroupedCustomsItems = {};
+      (classifications.sortedClassifications as CustomsClassification[]).forEach((key: CustomsClassification) => groupedItems[key.Classification] = []);
 
-        customsItemsAutocomplateList.forEach((item) => {
-          const classification: CustomsClassification = classifications[item.BaseCustomsItemID] as any || "Unrecognised"; // classifications ={["090000000"]:"XV"}
-          groupedItems[classification.Classification].push(item);
-        });
+      customsItemsAutocomplateList.forEach((item) => {
+        const classification: CustomsClassification = classifications[item.BaseCustomsItemID] as any || "Unrecognised"; // classifications ={["090000000"]:"XV"}
+        groupedItems[classification.Classification].push(item);
+      });
 
-        this.groupedItems = groupedItems;
-        this.groupCustomsItemsAutocomplateList.next(classifications.sortedClassifications as any[]);
-        this.customsItemsAutocomplateList.next([]);
+      this.groupedItems = groupedItems;
+      this.groupCustomsItemsAutocomplateList.next(classifications.sortedClassifications as any[]);
+      this.customsItemsAutocomplateList.next([]);
       }
     });
   }
