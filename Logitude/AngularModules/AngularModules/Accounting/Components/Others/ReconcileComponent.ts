@@ -352,12 +352,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         });
     }
     UndoMark() {
-        this._GLAccountExtendedPMService.UndoMark(this.GLAccountPM?.Id,  this.GLAccountPM.MarkDate).subscribe((myResult: any) => {
-            if(myResult?.Result){
-                this.GLAccountPM.MarkDate = null;
-                this.isMark = false;
-                this.yelloMessage = '';
-            }
+        this.GLAccountPM.MarkDate = null;
+        this.isMark = false;
+        this.yelloMessage = '';
+        this._GLAccountExtendedPMService.UndoMark(this.GLAccountPM?.Id).subscribe((myResult: any) => {
+            
         });
     }
     windowArgs;
