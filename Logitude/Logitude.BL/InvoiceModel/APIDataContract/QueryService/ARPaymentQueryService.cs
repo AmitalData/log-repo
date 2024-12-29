@@ -207,8 +207,15 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             try
             {
                 string aRPaymentId = query.GetSinglePaymentIdByPaymentNumber(number, Tenant);
+                string branchId = null;
+                if (!String.IsNullOrEmpty(aRPaymentId))
+                    branchId = query.GetPaymentBranchIdById(aRPaymentId, Tenant);
 
-                return new ARPaymentLite() { Id = aRPaymentId };
+                return new ARPaymentLite() 
+                { 
+                    Id = aRPaymentId,
+                    BranchId = branchId
+                };
 
             }
             catch (Exception ex)
@@ -225,7 +232,15 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             {
                 string aRPaymentId = query.GetCheckPaymentId(paymentId, tenant);
 
-                return new ARPaymentLite() { Id = aRPaymentId };
+                string branchId = null;
+                if (!String.IsNullOrEmpty(aRPaymentId))
+                    branchId = query.GetPaymentBranchIdById(aRPaymentId, tenant);
+
+                return new ARPaymentLite()
+                {
+                    Id = aRPaymentId,
+                    BranchId = branchId
+                };
             }
 
             catch (Exception ex)

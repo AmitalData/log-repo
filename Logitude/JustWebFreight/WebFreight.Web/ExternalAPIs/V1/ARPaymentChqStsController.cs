@@ -13,6 +13,9 @@ using WebFreight.Web.DataContracts;
 using WebFreight.Web.Security;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using System.Linq;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
@@ -34,10 +37,18 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                 ARPaymentQueryService Service = new ARPaymentQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
-                ARPayment aRPayment = new ARPayment();
+                ARPaymentLite aRPayment = new ARPaymentLite();
                 if (!string.IsNullOrEmpty(number))
                 {
-                    aRPayment = Service.GetARPaymentByNumber(number, tenant);
+                    aRPayment = Service.GetARPaymentLiteByNumber(number, tenant);
+                }
+                if (aRPayment != null && !String.IsNullOrEmpty(aRPayment.BranchId))
+                {
+                    string errorText = ARPaymentChqStsController.UserBranchRestriction(aRPayment.BranchId, tenant);
+                    if (!String.IsNullOrEmpty(errorText))
+                    {
+                        throw new ApplicationException(errorText);
+                    }
                 }
 
                 ARPaymentChqSts aRPaymentChqStsResult_onlyPay = new ARPaymentChqSts()
@@ -103,5 +114,41 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
         }
 
+        private static string UserBranchRestriction(string paymentBranchId, int tenant)
+        {
+            {
+                string rv = "";
+                bool isError = false;
+                if (!String.IsNullOrEmpty(paymentBranchId))
+                {
+                    ContactQuery contactRep = new ContactQuery(tenant);
+                    UserQuery userQuery = new UserQuery(tenant);
+
+                    ContactPM contact = contactRep.GetContactByNameAndTenant(Logitude.BL.Security.SecurityUtility.GetAuthenticatedWorkWebUser(), tenant, false);
+                    UserPM user = userQuery.GetSinglePM(contact.Id, tenant);
+
+                    if (user != null && user.IsBranchRestricted)
+                    {
+                        if (user.UserPermittedBranches == null || user.UserPermittedBranches.Count == 0)
+                            isError = true;
+                        else
+                        {
+                            List<string> userPermittedBranchIds = user.UserPermittedBranches.Select(item => item.Id).ToList<string>();
+                            if (userPermittedBranchIds == null || userPermittedBranchIds.Count == 0
+                                || !userPermittedBranchIds.Contains(paymentBranchId))
+                                isError = true;
+                        }
+
+                        BranchQuery branchQuery = new BranchQuery(tenant);
+                        BranchPM branch = branchQuery.GetSinglePM(paymentBranchId, tenant);
+                        if (branch != null)
+                            rv = "User " + user.Code + " is not permitted cancel receipts in Branch " + branch.Code;
+                        else
+                            rv = "User " + user.Code + " is not permitted cancel receipts in Branch " + paymentBranchId;
+                    }
+                }
+                return rv;
+            }
+        }
     }
 }

@@ -532,6 +532,21 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         }
 
 
+        public string GetPaymentBranchIdById(string id, int tenant)
+        {
+            ARPayment entityPOCO =
+                (from a in repository.context.ARPayments
+                 where a.Id == id && a.Tenant == tenant
+                 select a).FirstOrDefault();
+            if (entityPOCO == null)
+            {
+                return null;
+            }
+            else
+            {
+                return entityPOCO.BranchId;
+            }
+        }
 
         public string GetCheckPaymentId(string paymentId, int tenant)
         {
