@@ -21,7 +21,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginUpdateClass
    {  		
-		public const string HashString = "2a421bebb59e981512c583a0b241c981";
+		public const string HashString = "80ff739ee4a6bf851a8c5f67b0254dec";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -69,7 +69,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardControlName =  "",
 			      				    LocalDefaultText =  "תעודות מקור",
 			      				    DefaultText =  "Certificate Of Origin",
-			      				    Code =  "4c20",
+			      				    Code =  "b5e9",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -5649,6 +5649,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CertificateOfOriginTextCode_CustomsCertificateOfOriginODecNotSubmitted = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.DecNotSubmitted", DefaultText = "The certificate number has been updated in the accounts in the declaration, but the declaration has not yet been sent.",LocalDefaultText = @"מס' התעודה עודכן בחשבונות בהצהרה , אך טרם נשלחה ההצהרה", ObjectTableId = CertificateOfOriginObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CertificateOfOriginTextCode_CustomsCertificateOfOriginONotDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.NotDeclaration", DefaultText = "Can't send certificate because declaration not sent.",LocalDefaultText = @"לא ניתן לשלוח תעודה לפני שההצהרה נשלחה למכס", ObjectTableId = CertificateOfOriginObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CertificateOfOriginTextCode_CustomsCertificateOfOriginOOriginCriterionCodeRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "'Customs.CertificateOfOrigin.O.OriginCriterionCodeRequired", DefaultText = "Criterion Code Required",LocalDefaultText = @"קוד העדפה נדרש", ObjectTableId = CertificateOfOriginObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
