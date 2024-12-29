@@ -168,6 +168,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             {
                 try
                 {
+                    System.Threading.Tasks.Task DeclarationUpdateTask = null;
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         string token = HttpContext.Current.Request.Headers["Token"];
@@ -201,14 +202,15 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                         }
 
                         scope.Complete();
-
-                        if (service.DeclarationUpdateTask != null)
+                        if (!entityPM.IsCustomShipment)
                         {
-                            service.DeclarationUpdateTask.Wait();
+                            return Request.CreateResponse(HttpStatusCode.OK, entityPM);
                         }
-
-                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                        DeclarationUpdateTask = service.DeclarationUpdateTask;
                     }
+
+                    if (DeclarationUpdateTask != null) DeclarationUpdateTask.Wait();
+                    return Request.CreateResponse(HttpStatusCode.OK, entityPM);
                 }
 
                 catch (Exception ex)

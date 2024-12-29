@@ -1982,10 +1982,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
             if (this._MyDeclarationPM.SystemConnection == "N" && this._DeclarationReferantDataPM.ChangeSetOp == ChangeSetOperation.Update)
 			{
-				this._DeclarationReferantDataPM.MawbDate = !String.IsNullOrWhiteSpace(_AmitalCustomsFile.MawbDate) ? DateTime.Parse(_AmitalCustomsFile.MawbDate) : this._DeclarationReferantDataPM.MawbDate;
-				this._DeclarationReferantDataPM.EstimatedArrivalDate = !String.IsNullOrWhiteSpace(_AmitalCustomsFile.EstimatedArrivalDate) ? DateTime.Parse(_AmitalCustomsFile.EstimatedArrivalDate) : this._DeclarationReferantDataPM.EstimatedArrivalDate;
+                this._DeclarationReferantDataPM.MawbDate = !String.IsNullOrWhiteSpace(_AmitalCustomsFile.MawbDate) ? (DateTime?)DateTime.Parse(_AmitalCustomsFile.MawbDate) : null;
+                this._DeclarationReferantDataPM.EstimatedArrivalDate = !String.IsNullOrWhiteSpace(_AmitalCustomsFile.EstimatedArrivalDate) ? (DateTime?)DateTime.Parse(_AmitalCustomsFile.EstimatedArrivalDate) : null;
 				this._DeclarationReferantDataPM.PackageTypeCode = _AmitalCustomsFile.PackageTypeCode;
-				this._DeclarationReferantDataPM.ArrivalDate = !String.IsNullOrWhiteSpace(_AmitalCustomsFile.ArrivalDate) ? DateTime.Parse(_AmitalCustomsFile.ArrivalDate) : this._DeclarationReferantDataPM.ArrivalDate;
+				this._DeclarationReferantDataPM.ArrivalDate = !String.IsNullOrWhiteSpace(_AmitalCustomsFile.ArrivalDate) ? (DateTime?)DateTime.Parse(_AmitalCustomsFile.ArrivalDate) : null;
 				this._DeclarationReferantDataPM.Commodity = _AmitalCustomsFile.Commodity;
 				this._DeclarationReferantDataPM.FlightVoyageNumber = _AmitalCustomsFile.FlightVoyageNumber;
 				this._DeclarationReferantDataPM.CarrierCode = _AmitalCustomsFile.CarrierCode;
