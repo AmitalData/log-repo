@@ -2764,7 +2764,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         public (DateTime? MarkDate, bool WasNull) SetIsMark(string glaccountId, int tenant)
         {
             GLAccountQueryService gLAccountQuery = new GLAccountQueryService(tenant);
-            var glaccount = gLAccountQuery.GetSingle(glaccountId, false, false);
+            var glaccount = gLAccountQuery.GetSingle(glaccountId, true, false);
             bool wasNull = false;
             if (glaccount != null && (glaccount.MarkDate == null || (DateTime.UtcNow - glaccount.MarkDate.Value).TotalHours > 1))
             {
@@ -2777,20 +2777,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             return (glaccount?.MarkDate, wasNull);
         }
-        public bool UndoMark(string glaccountId, int tenant,DateTime date)
+        public bool UndoMark(string glaccountId, int tenant)
         {
             GLAccountQueryService gLAccountQuery = new GLAccountQueryService(tenant);
-            var glaccount = gLAccountQuery.GetSingle(glaccountId, false, false);
+            var glaccount = gLAccountQuery.GetSingle(glaccountId, true, false);
             if (glaccount != null)
             {
-               //date= date.AddHours(-2);
-                if (DateTime.Equals(glaccount.MarkDate,date) )
-                {
+              
                     glaccount.MarkDate = null;
                     glaccount.ChangeSetOp = ChangeSetOperation.Update;
                     Update(glaccount, true);
                     return true;
-                }
+           
               
             }
             return false;

@@ -825,7 +825,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
-        public HttpResponseMessage PutGLAccountUndoMark(string accountId,DateTime date)
+        public HttpResponseMessage PutGLAccountUndoMark(string accountId)
         {
             try
             {
@@ -839,7 +839,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 GLAccountUpdateService service = new GLAccountUpdateService(MyContext, new Dictionary<string, IContext>(), authToken.Tenant);
-                 bool updated= service.UndoMark(accountId, tenant,date);
+                 bool updated= service.UndoMark(accountId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, updated);
             }
 

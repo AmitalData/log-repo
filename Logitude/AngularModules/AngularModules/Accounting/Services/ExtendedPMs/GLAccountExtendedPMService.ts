@@ -147,9 +147,9 @@ export class GLAccountExtendedPMService {
 
 
     }
-    UndoMark(accountId: string, date:Date) {
+    UndoMark(accountId: string) {
      
-        return this.httpClient.put(this._apiUrl  + '/PutGLAccountUndoMark?accountId=' + accountId+ '&date=' + date?.toLocaleString(), null, ServiceHelper.GetHttpHeaders()).pipe(
+        return this.httpClient.put(this._apiUrl  + '/PutGLAccountUndoMark?accountId=' + accountId, null, ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
             var serviceResponse: ServiceResponse = new ServiceResponse();
 
