@@ -19,6 +19,6 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public string FeatureId { get; set; }
         public string FilterHtmlComponentUrl { get; set; }
         public string FeatureUniqeCode { get; set; }
-
+        public bool AvailableForScheduling { get; set; }
     }
 }

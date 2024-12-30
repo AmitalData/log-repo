@@ -61,6 +61,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 Report.FeatureId = ReportDetails.FeatureId;
                 Report.FilterHtmlComponentUrl = ReportDetails.FilterHtmlComponentUrl;
                 Report.FeatureUniqeCode = ReportDetails.FeatureUniqeCode;
+                Report.AvailableForScheduling = ReportDetails.AvailableForScheduling;
                 ReportRepository.Update(Report);
             }
 
@@ -79,7 +80,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     FeatureId = ReportDetails.FeatureId,
                     FilterHtmlComponentUrl = ReportDetails.FilterHtmlComponentUrl,
                     FeatureUniqeCode = ReportDetails.FeatureUniqeCode,
-
+                    AvailableForScheduling = ReportDetails.AvailableForScheduling,
                 };
 
                 ReportRepository.Add(newReport);
