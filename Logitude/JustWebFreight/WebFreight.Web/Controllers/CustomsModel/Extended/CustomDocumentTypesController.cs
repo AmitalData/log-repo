@@ -39,7 +39,7 @@ using Logitude.Customs.Def.EntityPMs;
 using System.Transactions;
 using Logitude.Customs.BL.EntityUpdateServices;
 
-namespace JustWebFreight.WebFreight.Web.Controllers.CustomsModel.Generated.PMControllers
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
     public partial class CustomDocumentTypesController: ApiController
     {
