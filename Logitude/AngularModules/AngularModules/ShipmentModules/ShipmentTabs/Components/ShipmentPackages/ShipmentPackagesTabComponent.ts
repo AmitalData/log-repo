@@ -116,6 +116,14 @@ export class ShipmentPackagesTabComponent extends BaseComponent implements OnIni
         }
     }
 
+    DeleteButtonClicked(item) {
+        const deletedPackage = this.ItemsSource.Collection.find((x) => x === item);
+        if (deletedPackage) {
+            this.ItemsSource.Remove(deletedPackage);
+            this.EntityPM.RemovePackage(deletedPackage.entityPM);
+        }
+    }
+
     BuildItemsList() {
         // Clear existing items if any
         if (this.ItemsSource != null && this.ItemsSource.Length > 0) {
@@ -248,4 +256,6 @@ export class ShipmentPackageItemLine extends BaseComponent {
     public MarkShipmentAsDirty() {
         this.ShipmentPM.MarkAsDirty("ShipmentPackages");
     }
+
+   
 }
