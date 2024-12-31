@@ -184,6 +184,7 @@ export class NewUserComponent extends BaseComponent implements OnInit {
                 this.ValidationErrorsList = [];
                 this.NewUserPM.Tenant = SessionInfo.LoggedUserTenant;
                 this.NewUserPM.Technology = "AG";
+                this.NewUserPM.LayoutDirection = "RTL";
                 this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
                 this.userPMService.insert(this.NewUserPM).subscribe((myResult: any) => {

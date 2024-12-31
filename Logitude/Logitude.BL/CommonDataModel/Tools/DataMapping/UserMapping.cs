@@ -18,7 +18,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             {
                 user.Tenant = userPm.Tenant;
                 user.CreateDate = userPm.CreateDate;
-                user.LayoutDirection = "rtl";
             }
 
             user.BranchId = userPm.BranchId;
