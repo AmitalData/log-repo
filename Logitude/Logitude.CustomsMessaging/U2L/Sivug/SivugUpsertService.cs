@@ -1194,8 +1194,19 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
 
 				if (invoiceItem.VEHICLES != null)
 				{
-					SupplierInvoiceItemPM.SupplierInvoiceItemVehicles = GetSupplierInvoiceItemVehiclePM(invoiceItem, SupplierInvoiceItemPM);			
-				}
+					SupplierInvoiceItemPM.SupplierInvoiceItemVehicles = GetSupplierInvoiceItemVehiclePM(invoiceItem, SupplierInvoiceItemPM);
+
+                    if (SupplierInvoiceItemPM?.SupplierInvoiceItemVehicles?.Count > 0  && (!string.IsNullOrEmpty(invoiceItem.VEHICLES.RICHBITFILENUMBER) || !string.IsNullOrEmpty(invoiceItem.VEHICLES.VEHICLECHASSISNUMBER)))
+                    {
+                        SupplierInvoiceItemPM.SupplierInvoiceItemProcesTypes = new List<SupplierInvoiceItemProcesTypePM>();
+                        SupplierInvoiceItemProcesTypePM supplierInvoiceItemProcesTypePM = new SupplierInvoiceItemProcesTypePM();
+                        supplierInvoiceItemProcesTypePM.ChangeSetOp = ChangeSetOperation.Insert;
+                        supplierInvoiceItemProcesTypePM.DeclarationId = SupplierInvoiceItemPM.DeclarationId;
+                        supplierInvoiceItemProcesTypePM.Tenant = ResolvedTenant();
+                        supplierInvoiceItemProcesTypePM.ProcessTypeCode = "4100103";
+                        SupplierInvoiceItemPM.SupplierInvoiceItemProcesTypes.Add(supplierInvoiceItemProcesTypePM);
+                    }
+                }
 				if (SupplierInvoiceItemPM.ChangeSetOp != ChangeSetOperation.Update)
                 {
                     SupplierInvoiceItemPM.Tenant = ResolvedTenant();
@@ -1546,7 +1557,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
 					supplierInvoiceItemVehiclePM.ChangeSetOp = ChangeSetOperation.Insert;
 
 					SupplierInvoiceItemVehiclePMList.Add(supplierInvoiceItemVehiclePM);
-				}
+                }
 				if (!string.IsNullOrEmpty(invoiceItem.VEHICLES.RICHBITFILENUMBER))
 				{
 					supplierInvoiceItemVehiclePM = new SupplierInvoiceItemVehiclePM();
@@ -1557,8 +1568,8 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
 					supplierInvoiceItemVehiclePM.Tenant = (this._MyDeclarationPM.Tenant > 0) ? this._MyDeclarationPM.Tenant : ResolvedTenant();
 					supplierInvoiceItemVehiclePM.ChangeSetOp = ChangeSetOperation.Insert;
 					SupplierInvoiceItemVehiclePMList.Add(supplierInvoiceItemVehiclePM);
-				}				
-			}
+                }
+            }
 
 			return SupplierInvoiceItemVehiclePMList;
 		}
