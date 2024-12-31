@@ -10,6 +10,7 @@ import { ShipmentDeliveryValidator } from './ShipmentDeliveryValidator';
 export interface IShipmentValidator {
     Validate(shipmentPM: ShipmentPM): any[];
 }
+declare var window: any;
 
 export class ShipmentValidator implements IShipmentValidator {
     private Errors: string[] = [];
@@ -54,9 +55,8 @@ export class ShipmentValidator implements IShipmentValidator {
                     this.Errors.push("Declaration Date field is required");
                 }
             }
-
+            this.ValidatePackages();
             if  (!this.entityPM.IsCustomShipment) {
-                this.ValidatePackages();
                 this.ValidatePickups();
                 this.ValidateDeliveries();
                 this.ValidatePayables();
@@ -186,13 +186,34 @@ export class ShipmentValidator implements IShipmentValidator {
         }
     }
 
+    private GetTranslatedRequiredError(objectfield: any, translatedRequiredError: string) {
+        let fieldName: string = TextCodeTranslator.Translate(objectfield.FullNameTextCodeCode);
+        let fieldError: string = translatedRequiredError.replace("%FieldName", fieldName);
+
+        return fieldError;
+    }
+
     private ValidatePackages() {
         if(this.entityPM.IsCustomShipment  && this.entityPM.ShipmentTypeId == "FCLD"){
             this.entityPM.ShipmentPackages.forEach(item => {
+                Validator.TryValidateObject(item, "ShipmentPackage", this.Errors);
                 var error = this.ValidateContainerNumber(item.ContainerNumber);
                 if(!AppTool.IsNullOrEmpty(error)){
                     this.Errors.push(error);
                 }
+                if(AppTool.IsNullOrEmpty(item.ContainerNumber)){
+                    var objectTable = window.ObjectTables.filter(x => x.Name === "ShipmentPackage")[0];
+                    if(objectTable){   
+                        var objectFields = window.ObjectFields.filter(x => x.ObjectTableId === objectTable.Id);
+                        if(objectFields){
+                            var objectfield = objectFields.filter(d => d.FieldName == "ContainerNumber")[0];
+                            this.Errors.push(this.GetTranslatedRequiredError(objectfield, TextCodeTranslator.Translate("General.M.FieldIsRequired")));
+    
+                        }
+                    }
+                    
+                }
+
             });
             return;
         }
