@@ -42,7 +42,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            on new { journalId = a.JournalId, line = a.JournalLineNumber } equals new { journalId = b.JournalId, line = b.JournalLineNumber }
                                                            into jJournalAdditionalData
                                                            from jad in jJournalAdditionalData.DefaultIfEmpty()
-
+                                                           where a.JournalLine == null || a.JournalLine.Journal == null || a.JournalLine.Journal.Tenant == a.Tenant
                                                            select new LedgerTransactionList()
                                                            {
                                                                Id = a.Id,
