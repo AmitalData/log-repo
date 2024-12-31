@@ -6627,7 +6627,7 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;'Customs.CertificateOfOrigin.O.OriginCriterionCodeRequired&quot;"
+      Code="&quot;Customs.CertificateOfOrigin.O.OriginCriterionCodeRequired&quot;"
       DefaultText="&quot;Criterion Code Required&quot;"
       LocalDefaultText="&quot;קוד העדפה נדרש&quot;"
       TextCodeTypeCode="&quot;O&quot;"

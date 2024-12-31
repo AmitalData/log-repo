@@ -21,7 +21,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginUpdateClass
    {  		
-		public const string HashString = "80ff739ee4a6bf851a8c5f67b0254dec";
+		public const string HashString = "494f382ddf3208c4002fe1c13e09b7a2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5650,7 +5650,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode CertificateOfOriginTextCode_CustomsCertificateOfOriginONotDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.NotDeclaration", DefaultText = "Can't send certificate because declaration not sent.",LocalDefaultText = @"לא ניתן לשלוח תעודה לפני שההצהרה נשלחה למכס", ObjectTableId = CertificateOfOriginObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode CertificateOfOriginTextCode_CustomsCertificateOfOriginOOriginCriterionCodeRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "'Customs.CertificateOfOrigin.O.OriginCriterionCodeRequired", DefaultText = "Criterion Code Required",LocalDefaultText = @"קוד העדפה נדרש", ObjectTableId = CertificateOfOriginObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CertificateOfOriginTextCode_CustomsCertificateOfOriginOOriginCriterionCodeRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.OriginCriterionCodeRequired", DefaultText = "Criterion Code Required",LocalDefaultText = @"קוד העדפה נדרש", ObjectTableId = CertificateOfOriginObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
