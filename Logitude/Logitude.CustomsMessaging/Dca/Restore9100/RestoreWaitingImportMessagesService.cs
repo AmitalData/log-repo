@@ -80,6 +80,7 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
         }
         public void RestoreWaitingImportSaveInDB()
         {
+      
 
             if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20230102.SuppressRestoreWaitingImportSaveInDB"]))
             {
@@ -187,12 +188,22 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
 
 
             NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"listLast15MinImportCorrelationId-OutgoingMessage == {string.Join(",", listLast15MinImportCorrelationId)}");
+            CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(_CustomsSettingPM.Tenant);
+           
+            var  list2281FromDB = customsRequestsSheetQueryService.GetByInterfaceTypeCodeLastTime(Minutes2Retrieve() + 5, "2281" );
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"list2281FromDB-OutgoingMessage == {string.Join(",", list2281FromDB)}");
 
-            var newImportMessages = onlyImportMessages.Where(r => !listLast15MinImportCorrelationId.Contains(r.CorrelationId)).ToList();
+            var new2281Messages = onlyImportMessages.Where(r => r.ServiceName== "SendPC_NG_2281_MSG02_CertificateOfOriginRequestFeedback" && !list2281FromDB.Select(x=>x.CorrelationId).Contains(r.CorrelationId)).ToList();
+          
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"new2281Messages-OutgoingMessage == {string.Join(",", new2281Messages)}");
+
+
+            var newImportMessages = onlyImportMessages.Where(r => r.ServiceName != "SendPC_NG_2281_MSG02_CertificateOfOriginRequestFeedback" &&!listLast15MinImportCorrelationId.Contains(r.CorrelationId)).ToList();
+         
             NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"newImportMessages-OutgoingMessage == {string.Join(",", newImportMessages)}");
 
+            newImportMessages.AddRange(new2281Messages);
             return newImportMessages;
-            
         }
 
 
