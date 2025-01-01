@@ -4476,7 +4476,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                 var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
                 if (useLocal == true) {
                     var GeneralText = TextCodeTranslator.Translate(
-                        'General.O.NewEntity'
+                        'General.O.AddNewEntity'
                     );
 
                     var ChangedText = GeneralText.split('%')[0];
