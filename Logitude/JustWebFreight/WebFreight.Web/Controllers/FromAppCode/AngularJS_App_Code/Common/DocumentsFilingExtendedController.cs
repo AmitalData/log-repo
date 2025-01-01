@@ -6,7 +6,8 @@ using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -46,7 +47,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             return Request.CreateResponse(HttpStatusCode.OK, myResult);
         }
 
-        
+
         public HttpResponseMessage GetQuoationDocumentsFilingByQuoteIdAndObjectTableIdAndDocumentTypeCode(string entityId, string objectTableId, string documentTypeCode)
         {
             try
@@ -60,7 +61,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                 DocumentsFilingPM myResult = documentsFilingQuery.GetDocumentsFilingPMByEntityIdAndObjectTableIdAndDocumentTypeId(entityId, objectTableId, documentTypeId, authToken.Tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
@@ -102,7 +103,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             return Request.CreateResponse(HttpStatusCode.OK, myResult);
         }
 
-        
+
 
         public HttpResponseMessage GetAllDocumentsFilingsByEntityIdAndObjectTable(string entityId, string objectTableId, string directionCode, int tenant)
         {
@@ -146,7 +147,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             return Request.CreateResponse(HttpStatusCode.OK, myResult);
         }
 
-        public HttpResponseMessage GetCreateDocumentsFiling(string documentTypeId, string entityId, string childEntityId, string childReference, string objectTableId, string directionCode, int tenant, string externalEntityName =null, string externalEntityReference =null, string entityNumber=null)
+        public HttpResponseMessage GetCreateDocumentsFiling(string documentTypeId, string entityId, string childEntityId, string childReference, string objectTableId, string directionCode, int tenant, string externalEntityName = null, string externalEntityReference = null, string entityNumber = null)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
 
@@ -187,7 +188,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             return Request.CreateResponse(HttpStatusCode.OK, extDocPM);
 
         }
-        public HttpResponseMessage GetCreateDocumentShipmentEvent( string entityId,  string notes, string eventCode)
+        public HttpResponseMessage GetCreateDocumentShipmentEvent(string entityId, string notes, string eventCode)
         {
             string token = System.Web.HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
@@ -199,19 +200,19 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                 if (notes.Contains('.')) notes = notes.Split('.')[0];
             }
             EventTracer.CreateTraceEvent(new EventTracerArgs()
-                {
-                    Tenant = authToken.Tenant,
-                    EventTypeCode = eventCode,
-                    UserId = loggedUser.Id,
-                    EntityId = entityId,
-                    ObjectTableName = "Shipment",
-                    Notes = notes,
-                });
-        
+            {
+                Tenant = authToken.Tenant,
+                EventTypeCode = eventCode,
+                UserId = loggedUser.Id,
+                EntityId = entityId,
+                ObjectTableName = "Shipment",
+                Notes = notes,
+            });
+
             return Request.CreateResponse(HttpStatusCode.OK, true);
 
         }
-      
+
         public HttpResponseMessage GetDocumentsFilingsById(string id)
         {
             Authentication();
@@ -288,15 +289,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             var result = documentsFilingQuery.GetDocumentsFilingByDocumentType(documentTypeId, objectTableId, entityId, tenant);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
-       private static   int tenant;
+        private static int tenant;
         private static void Authentication()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
-            
+
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             tenant = authToken.Tenant;
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-           
+
         }
 
         public HttpResponseMessage Post(DocumentsFilingPM entityPM)
@@ -307,11 +308,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                 {
                     //using (TransactionScope scope = TransactionFactory.GetTransaction())
                     //{
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    SecurityUtility.AuthenticationOnEntityTenant("", entityPM.Tenant, authToken.Tenant);
-                    SecurityUtility.CheckContactFeature("DocumentsFiling", "NEW", authToken.Tenant);
+                    AuthenticateRequest(entityPM.Tenant);
 
                     ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                     string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
@@ -353,7 +350,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
-
 
         public HttpResponseMessage Put(DocumentsFilingPM entityPM)
         {
@@ -474,7 +470,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
 
                 string EntityId = "";
                 DocumentsMetaDataTypeRepository DocumentsMetaDataTypeRepo = new DocumentsMetaDataTypeRepository(tenant);
-                var LBO = DocumentsMetaDataTypeRepo.GetSingleDocumentsMetaDataTypeByCode("LBO",tenant);
+                var LBO = DocumentsMetaDataTypeRepo.GetSingleDocumentsMetaDataTypeByCode("LBO", tenant);
                 var LBF = DocumentsMetaDataTypeRepo.GetSingleDocumentsMetaDataTypeByCode("LBF", tenant);
                 //DocumentsFilingMetaDataValueRepository DocumentsFilingMetaDataValueRepo = new DocumentsFilingMetaDataValueRepository(tenant);
                 foreach (var item in Ids)
@@ -493,7 +489,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                     ShipmentRepository ShipmentRepo = new ShipmentRepository(tenant);
                     var myshipment = ShipmentRepo.GetSingleShipment(entityPM.EntityId, tenant);
                     if (LBF != null)
-                    { 
+                    {
                         DocumentsFilingMetaDataValuePM value1 = new DocumentsFilingMetaDataValuePM();
                         value1.ChangeSetOp = ChangeSetOperation.Insert;
                         value1.DocumentsFilingId = entityPM.Id;
@@ -503,7 +499,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                         entityPM.DocumentsFilingMetaDataValues.Add(value1);
                     }
                     if (LBO != null)
-                    { 
+                    {
                         DocumentsFilingMetaDataValuePM value2 = new DocumentsFilingMetaDataValuePM();
                         value2.ChangeSetOp = ChangeSetOperation.Insert;
                         value2.DocumentsFilingId = entityPM.Id;
@@ -512,11 +508,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                         value2.Tenant = entityPM.Tenant;
                         entityPM.DocumentsFilingMetaDataValues.Add(value2);
                     }
-                    service.Update(entityPM, true); 
+                    service.Update(entityPM, true);
 
                 }
                 var shipmentAdditionalCloudDataRepository = new ShipmentAdditionalCloudDataRepository(tenant);
-              
+
                 var shipmentPM = shipmentAdditionalCloudDataRepository.GetSingleShipmentAdditionalCloudData(EntityId, tenant);
                 shipmentPM.DocsSentToAgent = true;
 
@@ -548,20 +544,64 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
 
         public HttpResponseMessage GetShipmentDocumentsByShipmentNumberToCTool(string shipmentNumber)
         {
-            string token = HttpContext.Current.Request.Headers["Token"]; 
+            string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             int tenant = authToken.Tenant;
             SecurityUtility.AuthenticationOnTenant(tenant);
 
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-             string entityId = shipmentQuery.GetEntitiyIdByShipmentNumber(shipmentNumber, tenant);
+            string entityId = shipmentQuery.GetEntitiyIdByShipmentNumber(shipmentNumber, tenant);
             DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
             List<DocumentsFilingPM> myResult = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(entityId, "", ObjectTableRepository.GetObjectTableByName("Shipment"), "I", tenant);
-             
+
             myResult = myResult.Where(d => d.DocumentId != null && d.HasFile == true).ToList();
-            
+
             return Request.CreateResponse(HttpStatusCode.OK, myResult);
         }
 
+        public HttpResponseMessage PostDocumentAndDocumentFiling(DocumentDataAndDocumentFiling data)
+        {
+            try
+            {
+                AuthenticateRequest(data.tenant);
+
+                DocumentsFilingPM documentsFiling = new DocumentsFilingPM()
+                {
+                    Tenant = data.tenant,
+                    DirectionCode = data.directionCode,
+                    DocumentTypeId = data.documentTypeId,
+                    FileName = data.fileName,
+                };                
+                byte[] fileData = Convert.FromBase64String(data.fileContent);
+
+                new DocumentsFilingService(CommonDataContext.GetContext(data.tenant), data.tenant).Create(documentsFiling, fileData);
+
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        private static AuthenticationToken AuthenticateRequest(int tenatn)
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnEntityTenant("", tenatn, authToken.Tenant);
+            SecurityUtility.CheckContactFeature("DocumentsFiling", "NEW", authToken.Tenant);
+            return authToken;
+        }
+
+        public class DocumentDataAndDocumentFiling
+        {
+            public int tenant { get; set; }
+            public string fileName { get; set; }
+            public string fileContent { get; set; }
+            public string directionCode { get; set; }
+            public string documentTypeId { get; set; }
+        }
     }
 }

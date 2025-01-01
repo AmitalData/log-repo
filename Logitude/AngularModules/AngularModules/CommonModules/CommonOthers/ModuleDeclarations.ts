@@ -12,6 +12,8 @@ import { DWFilterSettings } from './Components/DWQueryBuilder/DWFilterSettings';
 //import { DWAskUserFiltersComponent } from './Components/DWQueryBuilder/DWAskUserFiltersComponent'; 
 
 import { ProductTypeGeneralTabComponent } from './Components/ProductType/EditTabs/ProductTypeGeneralTabComponent';
+import { NewDocumentsFilingComponent } from './Components/NewEntity/DocumnetsFiling/NewDocumentsFilingComponent';
+import { CloseSaveButtonsComponent } from 'InfrastructureModules/InfrastructureOthers/AmitalAPI/components/CloseSaveButtonsComponent';
 
 
 
@@ -29,6 +31,8 @@ export const Components =
         DWFilterSettings,
         //DWAskUserFiltersComponent
         ProductTypeGeneralTabComponent,
+        NewDocumentsFilingComponent,
+        CloseSaveButtonsComponent,
     ];
 
 export class ModuleDeclarations {
@@ -48,8 +52,8 @@ export class ModuleDeclarations {
             case "DWFilterSettings": { myResult = DWFilterSettings; break; }
             //case "DWAskUserFiltersComponent": { myResult = DWAskUserFiltersComponent; break; }
             case "ProductTypeGeneralTabComponent": { myResult = ProductTypeGeneralTabComponent; break; }
-                
-                
+            case "NewDocumentsFilingComponent": { myResult = NewDocumentsFilingComponent; break; }
+            case "NewDocumentsFilingComponent": { myResult = NewDocumentsFilingComponent; break; }
         }
 
         return myResult;

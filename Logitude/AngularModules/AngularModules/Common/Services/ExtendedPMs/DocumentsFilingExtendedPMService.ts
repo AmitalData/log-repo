@@ -760,5 +760,16 @@ export class DocumentsFilingExtendedPMService {
 
 
           }
+
+    PostDocumentAndDocumentFiling(tenant: number, fileName: string, fileContent: string, directionCode: string, documentTypeId: string) {
+        return this._http.post(this._apiUrl + "/PostDocumentAndDocumentFiling", 
+            { tenant , fileName, fileContent, directionCode, documentTypeId }, 
+            ServiceHelper.GetHttpHeaders()
+        ).pipe(map(response => {
+            const pmresponse: ServiceResponse = new ServiceResponse();
+            pmresponse.Result = response;
+            return pmresponse;
+        }),catchError(ServiceHelper.HandleServiceError));
+    }
 }
 
