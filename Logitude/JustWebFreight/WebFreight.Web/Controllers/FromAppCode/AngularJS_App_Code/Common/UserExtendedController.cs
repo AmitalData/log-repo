@@ -107,7 +107,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                     UsersWorkspaceRecentItem myRecord = new UsersWorkspaceRecentItem()
                     {
                         Id = item.Id,
-                        Username = item.User == null ? "" : (item.User.Contact == null ? "" : item.User.Contact.EnglishName),
+                        Username = item.User == null ? null : (item.User.Contact == null ? null : item.User.Contact.EnglishName),
                         BusinessUnit = item.User == null ? "" : (item.User.BusinessUnit == null ? "" : item.User.BusinessUnit.Name),
                         IsCustomerCareUser = item.User != null ? (item.User.Tenant == 0 && tenant != 0) : false,
                     };

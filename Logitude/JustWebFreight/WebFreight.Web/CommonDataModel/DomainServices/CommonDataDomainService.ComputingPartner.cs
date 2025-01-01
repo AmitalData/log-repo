@@ -84,8 +84,8 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                         Name = entityPOCO.Name,
                         Remarks = entityPOCO.Remarks,
                         SearchFields = entityPOCO.SearchFields,
-                        CreatedByUserName = entityPOCO.CreatedByUser == null ? "" : (entityPOCO.CreatedByUser.Contact == null ? "" : entityPOCO.CreatedByUser.Contact.EnglishName),
-                        UpdatedByUserName = entityPOCO.UpdatedByUser == null ? "" : (entityPOCO.UpdatedByUser.Contact == null ? "" : entityPOCO.UpdatedByUser.Contact.EnglishName),
+                        CreatedByUserName = entityPOCO.CreatedByUser == null ? null : (entityPOCO.CreatedByUser.Contact == null ? null : entityPOCO.CreatedByUser.Contact.EnglishName),
+                        UpdatedByUserName = entityPOCO.UpdatedByUser == null ? null : (entityPOCO.UpdatedByUser.Contact == null ?null : entityPOCO.UpdatedByUser.Contact.EnglishName),
                         LoggedTenantId = tenant,
                         Code = entityPOCO.Code,
                         Tenant = entityPOCO.Tenant

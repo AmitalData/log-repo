@@ -66,8 +66,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  Name = entity.Name,
                                                  Description = entity.Description,
                                                  InActive = entity.InActive,
-                                                 CreatedByUserName = entity.CreatedByUser != null && entity.CreatedByUser.Contact != null ? entity.CreatedByUser.Contact.EnglishName : "",
-                                                 UpdatedByUserName = entity.UpdatedByUser != null && entity.UpdatedByUser.Contact != null ? entity.UpdatedByUser.Contact.EnglishName : "",
+                                                 CreatedByUserName = entity.CreatedByUser != null && entity.CreatedByUser.Contact != null ? entity.CreatedByUser.Contact.EnglishName : null,
+                                                 UpdatedByUserName = entity.UpdatedByUser != null && entity.UpdatedByUser.Contact != null ? entity.UpdatedByUser.Contact.EnglishName : null,
                                              };
 
             return result;

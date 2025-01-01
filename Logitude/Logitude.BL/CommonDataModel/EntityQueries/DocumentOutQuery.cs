@@ -346,7 +346,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 User user = (from a in repository.context.Users.Include("Contact")
                              where a.Tenant == docout.Tenant && a.Id == docout.IssuedByUserId
                              select a).FirstOrDefault();
-                docout.IssuedByUserName = user != null ? user.Contact.EnglishName : "";
+                docout.IssuedByUserName = user != null ? user.Contact.EnglishName : null;
                 docout.DocumentOutCopies = documentOutCopyQuery.GetDocumentOutCopiesForDocumentOut(docout.Id, docout.Tenant);
                 docout.DocumentTypeName = docType.Name;
                 docout.DocumentTypeCode = docType.Code;
@@ -438,7 +438,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     Note = doc.DocumentsFiling.Notes,
                     Tenant = doc.Tenant,
                     DocumentTypeSubject = docType.Subject,
-                    IssuedByUserName = issuedByContact != null ? issuedByContact.EnglishName : "",
+                    IssuedByUserName = issuedByContact != null ? issuedByContact.EnglishName : null,
                     EditableFields = doc.EditableFields,
                     DocumentTemplateId = doc.DocumentTemplateId,
                     EmailTemplateId = doc.EmailTemplateId,
@@ -566,7 +566,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     Note = doc.DocumentsFiling.Notes,
                     Tenant = doc.Tenant,
                     DocumentTypeSubject = docType!=null? docType.Subject:"",
-                    IssuedByUserName = issuedByContact != null ? issuedByContact.EnglishName : "",
+                    IssuedByUserName = issuedByContact != null ? issuedByContact.EnglishName : null,
                     EditableFields = doc.EditableFields,
                     DocumentTemplateId = doc.DocumentTemplateId,
                     EmailTemplateId = doc.EmailTemplateId,

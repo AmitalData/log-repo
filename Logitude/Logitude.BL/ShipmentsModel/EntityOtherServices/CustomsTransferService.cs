@@ -449,7 +449,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                     row[40] = dangerousClassNumber;
                     row[41] = dangerousUNNumber;
                     row[42] = emergancyContact != null ? emergancyContact.BusinessPhone : "";
-                    row[43] = emergancyContact != null ? emergancyContact.EnglishName : "";
+                    row[43] = emergancyContact != null ? emergancyContact.EnglishName : null;
                     row[44] = "1";
                     row[45] = containerNumber;
                     row[46] = containerType;

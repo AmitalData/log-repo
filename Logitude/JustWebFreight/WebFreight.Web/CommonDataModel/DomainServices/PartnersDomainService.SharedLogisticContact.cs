@@ -384,7 +384,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                         CardId = log.CardId,
                         CardName = card != null ? card.EnglishName : "",
                         ContactId = log.ContactId,
-                        ContactName = contact != null ? contact.EnglishName : "",
+                        ContactName = contact != null ? contact.EnglishName : null,
                         PartnerTypeName = card == null ? "" : (card.PartnerType == null ? "" : card.PartnerType.Name),
                         LastAccess = log.GMTLogDateTime,
                         Via = log.Via,

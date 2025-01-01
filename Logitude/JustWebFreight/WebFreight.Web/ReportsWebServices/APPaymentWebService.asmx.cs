@@ -293,7 +293,7 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             if (loggedContact.DontShowLocalLabels)
                             {
-                                apPaymentDataProvider.IssuedByUserName = contact.EnglishName != null ? contact.EnglishName : "";
+                                apPaymentDataProvider.IssuedByUserName = contact.EnglishName != null ? contact.EnglishName :null;
                             }
                             else
                             {

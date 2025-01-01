@@ -184,7 +184,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                             CreateDate = warehouseRelease.CreateDate,
                             ActivityDate = activity.ActivityDate,
                             ActivityTypeName = activity.ActivityType != null ? activity.ActivityType.Name : "",
-                            ActivityByUserName = activity.User != null ? activity.User.Contact.EnglishName : "",
+                            ActivityByUserName = activity.User != null ? activity.User.Contact.EnglishName : null,
                             DirectionName = warehouseRelease.Direction != null ? warehouseRelease.Direction.Name : "",
                             TransportModeName = warehouseRelease.TransportMode != null ? warehouseRelease.TransportMode.Name : "",
 

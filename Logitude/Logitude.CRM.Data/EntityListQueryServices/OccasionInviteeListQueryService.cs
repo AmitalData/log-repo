@@ -43,7 +43,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
 
                                                          OccasionId = a.OccasionId,
                                                          ContactId = a.ContactId,
-                                                         ContactName = a.Contact != null ? a.Contact.EnglishName : "",
+                                                         ContactName = a.Contact != null ? a.Contact.EnglishName :null,
                                                          CustomerName = a.Contact != null ? a.Contact.CompanyName : "",
                                                          OccasionName = a.Occasion != null ? a.Occasion.Name : "",
                                                          ContactEmail = a.Contact != null ? a.Contact.Email : "",

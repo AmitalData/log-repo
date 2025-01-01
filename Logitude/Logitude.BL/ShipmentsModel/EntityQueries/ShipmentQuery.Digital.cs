@@ -250,7 +250,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (contact != null)
             {
                 item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
             }
 
             return item;
@@ -287,7 +287,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (contact != null)
             {
                 item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
             }
 
             return item;
@@ -324,7 +324,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (contact != null)
             {
                 item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
             }
 
             return item;
@@ -360,7 +360,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (contact != null)
             {
                 item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
             }
 
             return item;
@@ -395,7 +395,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (contact != null)
             {
                 item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
             }
 
             return item;
@@ -432,7 +432,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (contact != null)
             {
                 item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
             }
 
             return item;
@@ -467,7 +467,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (contact != null)
             {
                 item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
             }
 
             return item;
@@ -504,7 +504,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (contact != null)
             {
                 item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
             }
 
             return item;
@@ -540,7 +540,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (contact != null)
             {
                 item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
             }
 
             return item;
@@ -576,7 +576,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (contact != null)
             {
                 item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
             }
 
             return item;
@@ -612,7 +612,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (contact != null)
             {
                 item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
             }
 
             return item;
@@ -648,7 +648,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (contact != null)
             {
                 item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
             }
 
             return item;
@@ -685,7 +685,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (contact != null)
             {
                 item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
             }
 
             return item;

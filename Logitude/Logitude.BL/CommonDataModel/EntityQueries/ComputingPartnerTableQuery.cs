@@ -50,10 +50,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                      UpdateDate = a.UpdateDate,
                      CreatedByUserId = a.CreatedByUserId,
                      UpdatedByUserId = a.UpdatedByUserId,
-                     ObjectTableName = a.ObjectTable == null ? "" : a.ObjectTable.Name,
-                     ComputingPartnerName = a.ComputingPartner == null ? "" : a.ComputingPartner.Name,
-                     CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
-                     UpdatedByUserName = a.UpdatedByUser == null ? "" : (a.UpdatedByUser.Contact == null ? "" : a.UpdatedByUser.Contact.EnglishName),
+                     ObjectTableName = a.ObjectTable == null ? null : a.ObjectTable.Name,
+                     ComputingPartnerName = a.ComputingPartner == null ? null : a.ComputingPartner.Name,
+                     CreatedByUserName = a.CreatedByUser == null ? null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
+                     UpdatedByUserName = a.UpdatedByUser == null ? null : (a.UpdatedByUser.Contact == null ? null : a.UpdatedByUser.Contact.EnglishName),
                  }).FirstOrDefault();
 
             return entityPM;
@@ -80,8 +80,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                      UpdatedByUserId = a.UpdatedByUserId,
                      ObjectTableName = a.ObjectTable == null ? "" : a.ObjectTable.Name,
                      ComputingPartnerName = a.ComputingPartner == null ? "" : a.ComputingPartner.Name,
-                     CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
-                     UpdatedByUserName = a.UpdatedByUser == null ? "" : (a.UpdatedByUser.Contact == null ? "" : a.UpdatedByUser.Contact.EnglishName),
+                     CreatedByUserName = a.CreatedByUser == null ? null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
+                     UpdatedByUserName = a.UpdatedByUser == null ? null : (a.UpdatedByUser.Contact == null ? null : a.UpdatedByUser.Contact.EnglishName),
                  });
 
             return myResult;

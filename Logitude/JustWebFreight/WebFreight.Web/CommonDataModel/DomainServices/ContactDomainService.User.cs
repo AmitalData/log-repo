@@ -517,7 +517,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                     UsersWorkspaceRecentItem myRecord = new UsersWorkspaceRecentItem()
                     {
                         Id = item.Id,
-                        Username = item.User == null ? "" : (item.User.Contact == null ? "" : item.User.Contact.EnglishName),
+                        Username = item.User == null ?  null : (item.User.Contact == null ? null: item.User.Contact.EnglishName),
                         BusinessUnit = item.User == null ? "" : (item.User.BusinessUnit == null ? "" : item.User.BusinessUnit.Name),
                     };
 

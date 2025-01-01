@@ -62,10 +62,10 @@ namespace WebFreight.Web.GlobalModel
                 ApiCredintials entity = new ApiCredintials();
                 entityPM.Id = IdCounter.GetNumber("ApiCredintials", entityPM.Tenant);
                 entityPM.CreateDate = DateTime.Now;
-                entityPM.CreatedBy = contact != null ? contact.EnglishName : "";
+                entityPM.CreatedBy = contact != null ? contact.EnglishName : null;
                 entityPM.UpdateDate = DateTime.Now;
                 entityPM.Tenant = entityPM.Tenant;
-                entityPM.UpdatedBy = contact != null ? contact.EnglishName : "";
+                entityPM.UpdatedBy = contact != null ? contact.EnglishName :null;
                 entityPM.Tenant = entityPM.Tenant;
                 ApiCredintialsMapping.MapEntity(entityPM, entity, true);
                 ApiCredintialsRepository.Add(entity);

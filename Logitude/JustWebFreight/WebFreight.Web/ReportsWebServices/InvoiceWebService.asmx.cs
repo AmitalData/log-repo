@@ -1460,7 +1460,7 @@ namespace WebFreight.Web.ReportsWebServices
                     Contact contact = issuedByuser.Contact;
                     if (contact != null)
                     {
-                        invoicedataprovider.IssuedByUser = contact.EnglishName != null ? contact.EnglishName : "";
+                        invoicedataprovider.IssuedByUser = contact.EnglishName != null ? contact.EnglishName : null;
                         invoicedataprovider.IssuedByUser_LocalName = contact.LocalName != null ? contact.LocalName : "";
                         invoicedataprovider.IssuedByUserEmail = contact.Email;
                     }
@@ -3277,7 +3277,7 @@ namespace WebFreight.Web.ReportsWebServices
                         Contact contact = issuedByuser.Contact;
                         if (contact != null)
                         {
-                            invoiceDataProvider.IssuedByUser = contact.EnglishName != null ? contact.EnglishName : "";
+                            invoiceDataProvider.IssuedByUser = contact.EnglishName != null ? contact.EnglishName : null;
                             invoiceDataProvider.IssuedByUser_LocalName = contact.LocalName != null ? contact.LocalName : "";
                             invoiceDataProvider.IssuedByUserEmail = contact.Email;
                         }

@@ -487,7 +487,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    VendorName = a.VendorCard == null ? "" : a.VendorCard.EnglishName,
                                                    VendorLocalName = a.VendorCard == null ? "" : a.VendorCard.LocalName,
                                                    VendorCode = a.VendorCard == null ? "" : a.VendorCard.Code,
-                                                   CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
+                                                   CreatedByUserName = a.CreatedByUser == null ? null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
                                                    CreditCardTypeId = a.CreditCardTypeId,
                                                    AmountInProfitCurrency = a.AmountInProfitCurrency,
                                                    BranchId = a.BranchId,

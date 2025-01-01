@@ -1314,7 +1314,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -1363,7 +1363,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -1412,7 +1412,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -1460,7 +1460,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -1508,7 +1508,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -1556,7 +1556,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -1604,7 +1604,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -1652,7 +1652,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -1701,7 +1701,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ?null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -1749,7 +1749,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -1798,7 +1798,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -1846,7 +1846,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -1894,7 +1894,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -1943,7 +1943,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -2118,7 +2118,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -2167,7 +2167,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -2216,7 +2216,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ?null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -2264,7 +2264,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -2312,7 +2312,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -2360,7 +2360,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -2408,7 +2408,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -2456,7 +2456,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -2505,7 +2505,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -2553,7 +2553,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -2602,7 +2602,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -2650,7 +2650,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -2698,7 +2698,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -2747,7 +2747,7 @@ namespace WebFreight.Web
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                     }
 
                     result.Add(item);
@@ -3583,7 +3583,7 @@ namespace WebFreight.Web
                 if (contact != null)
                 {
                     item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
-                    item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                    item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? null : contact.EnglishName;
                 }
 
                 this.Partners.Add(item);

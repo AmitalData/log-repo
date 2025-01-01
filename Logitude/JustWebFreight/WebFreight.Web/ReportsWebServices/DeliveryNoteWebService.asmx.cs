@@ -955,7 +955,7 @@ namespace WebFreight.Web.ReportsWebServices
                         if (contact != null)
                         {
                             dataProvider.DeliveryContactPhone = contact.BusinessPhone != null ? contact.BusinessPhone : "";
-                            dataProvider.DeliveryContactName = contact.EnglishName != null ? contact.EnglishName : "";
+                            dataProvider.DeliveryContactName = contact.EnglishName != null ? contact.EnglishName : null;
                             dataProvider.DeliveryContactEmail = contact.Email;
                         }
                     }
@@ -1055,7 +1055,7 @@ namespace WebFreight.Web.ReportsWebServices
                         Contact contact = ContactRepository.GetSingleContact(cardContact.ContactId, tenant, true);
                         if (contact != null)
                         {
-                            dataProvider.Salesman = contact.EnglishName != null ? contact.EnglishName : "";
+                            dataProvider.Salesman = contact.EnglishName != null ? contact.EnglishName : null;
                             dataProvider.SalesmanEmail = contact.Email != null ? contact.Email : "";
                         }
                     }
