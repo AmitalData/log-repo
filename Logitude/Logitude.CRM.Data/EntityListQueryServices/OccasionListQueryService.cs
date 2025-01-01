@@ -57,7 +57,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
 
                                                   OccasionStatusId = a.OccasionStatusId,
 
-                                                  OwnerName = a.Owner == null ? "" : a.Owner.Contact.EnglishName,
+                                                  OwnerName = a.Owner == null ? null : a.Owner.Contact.EnglishName,
 
                                                   TypeName = a.OccasionType == null ? "" : a.OccasionType.Name,
 

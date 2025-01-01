@@ -312,7 +312,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 }
 
                 var contact = myContactRepository.GetSingleContact(item.Sender, tenant);
-                item.SenderName = contact != null ? contact.EnglishName : "";
+                item.SenderName = contact != null ? contact.EnglishName : null;
             }
 
             IQueryable<FilingInboxPM> iQueryableList;
