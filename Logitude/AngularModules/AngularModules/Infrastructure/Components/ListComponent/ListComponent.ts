@@ -3087,7 +3087,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                 if (AppTool.IsNullOrEmpty(this.listArgs.NewButtonLabel)) {
                     var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
                     if (useLocal == true) {
-                        var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
+                    var GeneralText = TextCodeTranslator.Translate(
+                        'General.O.AddNewEntity'
+                    );
  
                         var ChangedText = GeneralText.split('%')[0];
                     if(this.ObjectTableName=="Customs.Vehicle" ){
