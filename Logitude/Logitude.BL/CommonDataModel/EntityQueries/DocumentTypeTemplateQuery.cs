@@ -763,7 +763,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                                       IsDefault = a.DocumentType != null ? a.DocumentType.DocumentTypeDefaultReportTemplateId == a.Id || a.DocumentType.DocumentTypeDefaultHTMLTemplateId == a.Id ? true : false : false,
                                                                                       TemplateType = a.TemplateType,
                                                                                       Tenant = a.Tenant,
-                                                                                      LastUpdateByUserName = a.LastUpdatedByUser != null ? a.LastUpdatedByUser.Contact != null ? a.LastUpdatedByUser.Contact.EnglishName : "" : "",
+                                                                                      LastUpdateByUserName = a.LastUpdatedByUser != null ? a.LastUpdatedByUser.Contact != null ? a.LastUpdatedByUser.Contact.EnglishName : null : null,
                                                                                       ContactEmail = a.LastUpdatedByUser != null ? a.LastUpdatedByUser.Contact != null ? a.LastUpdatedByUser.Contact.Email : "" : "",
                                                                                       InActive = a.InActive,
                                                                                       EditorTool = a.EditorTool,

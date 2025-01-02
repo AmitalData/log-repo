@@ -209,7 +209,7 @@ namespace WebFreight.Web.Controllers.ShardLogistics
                             CardId = item.CardId,
                             CardName = card != null ? card.EnglishName : "",
                             ContactId = item.ContactId,
-                            ContactName = contact != null ? contact.EnglishName : "",
+                            ContactName = contact != null ? contact.EnglishName : null,
                             PartnerTypeName = card == null ? "" : card.PartnerTypeName,
                             LastAccess = item.LoginDateTime,
                             Via = item.Via,

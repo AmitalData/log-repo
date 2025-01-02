@@ -47,7 +47,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                      TransferDate = a.TransferDate,
                      TransferNumber = a.TransferNumber,
                      UserId = a.UserId,
-                     UserName = a.User == null ? "" : (a.User.Contact == null ? "" : a.User.Contact.EnglishName),
+                     UserName = a.User == null ? null : (a.User.Contact == null ? null : a.User.Contact.EnglishName),
                      AccountingTransferTypeName = a.TransferType == null ? "" : a.TransferType.Name,
                      Notes = a.Notes,
                  }).FirstOrDefault();

@@ -821,9 +821,9 @@ namespace Logitude.CRM.BL.EntityQueryServices
                                                      CustomerName = a.Customer != null ? a.Customer.EnglishName : "",
                                                      CustomerCode = a.Customer != null ? a.Customer.Code : "",
                                                      OwnerId = a.OwnerId,
-                                                     OwnerName = a.Owner != null ? a.Owner.Contact != null ? a.Owner.Contact.EnglishName : "" : "",
+                                                     OwnerName = a.Owner != null ? a.Owner.Contact != null ? a.Owner.Contact.EnglishName : null :null,
                                                      CreatedbyUserId = a.CreatedByUserId,
-                                                     CreatedbyUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact != null ? a.CreatedByUser.Contact.EnglishName : "" : "",
+                                                     CreatedbyUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact != null ? a.CreatedByUser.Contact.EnglishName : null : null,
                                                      Subject = a.Subject,
                                                      Description = a.Description,
                                                      ActivityStatusCode = a.ActivityStatusCode,
@@ -836,7 +836,7 @@ namespace Logitude.CRM.BL.EntityQueryServices
                                                      UpdateDate = a.UpdateDate,
                                                      DueDate = a.DueDate,
                                                      SalesmanId = a.Customer != null ? a.Customer.SalesmanUserId : "",
-                                                     SalesmanName = a.Customer != null ? a.Customer.SalesmanUser != null ? a.Customer.SalesmanUser.Contact != null ? a.Customer.SalesmanUser.Contact.EnglishName : "" : "" : "",
+                                                     SalesmanName = a.Customer != null ? a.Customer.SalesmanUser != null ? a.Customer.SalesmanUser.Contact != null ? a.Customer.SalesmanUser.Contact.EnglishName : null :null : null,
 
                                                  }).OrderBy(d => d.CreateDate).Skip(skip).Take(take).ToList();
 
@@ -866,9 +866,9 @@ namespace Logitude.CRM.BL.EntityQueryServices
                                                      CustomerName = a.Customer != null ? a.Customer.EnglishName : "",
                                                      CustomerCode = a.Customer != null ? a.Customer.Code : "",
                                                      OwnerId = a.OwnerId,
-                                                     OwnerName = a.Owner != null ? a.Owner.Contact != null ? a.Owner.Contact.EnglishName : "" : "",
+                                                     OwnerName = a.Owner != null ? a.Owner.Contact != null ? a.Owner.Contact.EnglishName : null : null,
                                                      CreatedbyUserId = a.CreatedByUserId,
-                                                     CreatedbyUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact != null ? a.CreatedByUser.Contact.EnglishName : "" : "",
+                                                     CreatedbyUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact != null ? a.CreatedByUser.Contact.EnglishName : null : null,
                                                      Subject = a.Subject,
                                                      Description = a.Description,
                                                      ActivityStatusCode = a.ActivityStatusCode,
@@ -881,7 +881,7 @@ namespace Logitude.CRM.BL.EntityQueryServices
                                                      Notes = a.Notes,
                                                      DueDate = a.DueDate,
                                                      SalesmanId = a.Customer != null ? a.Customer.SalesmanUserId : "",
-                                                     SalesmanName = a.Customer != null ? a.Customer.SalesmanUser != null ? a.Customer.SalesmanUser.Contact != null ? a.Customer.SalesmanUser.Contact.EnglishName : "" : "" : "",
+                                                     SalesmanName = a.Customer != null ? a.Customer.SalesmanUser != null ? a.Customer.SalesmanUser.Contact != null ? a.Customer.SalesmanUser.Contact.EnglishName : null : null : null,
                                                  }).OrderBy(d => d.UpdateDate).Skip(skip).Take(take).ToList();
 
 

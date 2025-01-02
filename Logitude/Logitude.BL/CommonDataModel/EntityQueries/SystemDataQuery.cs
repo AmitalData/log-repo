@@ -45,7 +45,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 Date = TenantServerConfigration.GetCurrentDateTime(tenantNum),
                 Signature = user != null ? user.Contact.Signature: null,
                 SignatureHtml = user != null ? user.Contact.SignatureHtml: null,
-                UserName = user!=null ? user.Contact.EnglishName: "",
+                UserName = user!=null ? user.Contact.EnglishName: null,
                 LocalCurrencyId = tenant.CurrencyId,
                 AddressId = tenant.AddressId,
                 Company = tenant.Company,

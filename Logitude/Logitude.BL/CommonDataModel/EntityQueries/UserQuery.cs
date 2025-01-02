@@ -1160,7 +1160,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           select new UserList()
                                           {
                                               Email = user.Contact.Email,
-                                              EnglishName = user.Contact.EnglishName ?? "",
+                                              EnglishName = user.Contact.EnglishName ?? null,
                                               Id = user.Id,
                                               InActive = user.Contact.InActive,
                                               Notes = user.Notes,
