@@ -2085,8 +2085,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         int shtarMitanDocumentCount = customsDocumentPMList.Where(document => document.DocumentTypeCode == "419").Count();
                         if (shtarMitanDocumentCount == 0)
                         {
-                            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("shatr mitan not found");
-                            declarationReadyForSending = false;
+                            List<CustomsDocumentsTicketPM> customsDocumentsTicketsWithDeclClosingData = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", declarationPM.Tenant, "ExportDeclarationClosingData").ToList();
+                            shtarMitanDocumentCount = customsDocumentsTicketsWithDeclClosingData.Where(document => document.DocumentTypeCode == "419").Count();
+                            if (shtarMitanDocumentCount == 0)
+                            {
+                                Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("shatr mitan not found");
+                                declarationReadyForSending = false;
+                            }
                         }
                     }
                 }
