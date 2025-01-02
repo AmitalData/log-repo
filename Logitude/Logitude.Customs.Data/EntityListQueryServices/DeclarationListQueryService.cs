@@ -367,7 +367,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                 IQueryable<DeclarationList> query2 = (from a in iQueryable.Include("DeclarationOffice").Include("AutonomyRegionType").Include("CustomerCard").Include("EntitleImporterCountry").Include("ImporterEntitlementType").Include("ImporterPassCountry").Include("ProcedureCurrent").Include("TransferImporterCountry").Include("Department").Include("DeclarationStatusType")
                                      .Include("Importer").Include("ImporterType").Include("FreightPaymentMethod")
-                                     .Include("CustomsCountry").Include("TransportMode")
+                                     .Include("CustomsCountry")
 
 
                                                       join cdJoin in context.CourierDeclarations.Include("CourierMaster").Include("Card")
@@ -480,7 +480,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                           DepartmentId = a.DepartmentId,
                                                           DepartmentName = a.Department == null ? null : a.Department.LocalName,
-                                                          TransportModeName = a.TransportMode == null ? null : a.TransportMode.LocalName,
                                                           CreatedByUserName =
 
                                                          a.CreatedByUser.Code,
