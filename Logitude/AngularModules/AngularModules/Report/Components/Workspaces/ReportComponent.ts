@@ -122,8 +122,16 @@ export class ReportComponent {
                                         }
                                     }
                                 }
-
+                                else if (item.Code == "COO") {
+                                    if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Customs.Declaration", "Declaration.Tab.DigitalCertificateOfOrigin")) {
+                                        this.reportList.push(item);
+                                    }
+                                }
                                 else {
+                                    if (item.Code == "COOC" && SessionLocator.Tenant != 0) {
+                                        return;
+                                    }
+
                                     if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
                                         this.reportList.push(item);
                                     }
