@@ -46,6 +46,7 @@ namespace Logitude.Accounting.BL.Utils
         private HttpStatusCode _StatusCode;
         private List<string> _badList;
         private int _AccMade = 0; 
+        private int _AccRecoMethodOnlyMade = 0;
         private int _RecosMade = 0;
         private int _TransactionsMade = 0;
         private bool _retry; 
@@ -192,6 +193,7 @@ namespace Logitude.Accounting.BL.Utils
                 // Change Currency 
                 if (!_errors && !only_part_2 && !toMulti)
                 {
+                    bool oneMade = false;
                     if ((!gLAccountPM.IsMultiCurrency.HasValue || gLAccountPM.IsMultiCurrency.Value == false) && gLAccountPM.CurrencyId == toCurrencyId)
                     {
                         // already changed to 'toCurrencyId'
@@ -205,6 +207,22 @@ namespace Logitude.Accounting.BL.Utils
                             {
                                 _AccMade = Update_Acc(tenant, myGLAccountId, toCurrencyId, recoMethod, strConnString);
                                 scope.Complete();
+                                oneMade = true;
+                            }
+                            catch (Exception e)
+                            {
+                                throw;
+                            }
+                        }
+                    }
+                    if (!oneMade && gLAccountPM.ReconcileMethodCode != recoMethod)
+                    {
+                        using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(1)))
+                        {
+                            try
+                            {
+                                _AccRecoMethodOnlyMade = Update_AccRecoMethodOnly(tenant, myGLAccountId, recoMethod, strConnString);
+                                scope.Complete();
                             }
                             catch (Exception e)
                             {
@@ -213,7 +231,21 @@ namespace Logitude.Accounting.BL.Utils
                         }
                     }
 
-
+                }
+                else if (!_errors && !only_part_2 && toMulti && gLAccountPM.ReconcileMethodCode != recoMethod)
+                {
+                    using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(1)))
+                    {
+                        try
+                        {
+                            _AccRecoMethodOnlyMade = Update_AccRecoMethodOnly(tenant, myGLAccountId, recoMethod, strConnString);
+                            scope.Complete();
+                        }
+                        catch (Exception e)
+                        {
+                            throw;
+                        }
+                    }
                 }
 
                 if (!_errors || only_part_2)
@@ -267,7 +299,7 @@ namespace Logitude.Accounting.BL.Utils
 
 
 
-                string updated = _AccMade > 0 ? "Account Updated, " : "";
+                string updated = _AccMade > 0 || _AccRecoMethodOnlyMade > 0 ? "Account Updated, " : "";
 
                 _ResponseText = $"{updated} Made Reconciliations: {_RecosMade}, Transactions: {_TransactionsMade}, Errors/Messages: {String.Join(", \n", _badList.ToArray())}";
             }
@@ -318,6 +350,44 @@ namespace Logitude.Accounting.BL.Utils
             }
 
         }
+
+
+        private static int Update_AccRecoMethodOnly(int tenant, string accountId, string recoMethod, string strConnString)
+        {
+
+
+            using (SqlConnection connection = new SqlConnection(strConnString))
+            {
+                connection.Open();
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText =
+                        "UPDATE GLAccounts SET ReconcileMethodCode= @V_recoMethod " +
+                        "WHERE Tenant = @V_tenant and Id = @V_AccountId";
+
+
+                    command.CommandType = CommandType.Text;
+
+                    command.Parameters.Add("@V_tenant", SqlDbType.Int);
+                    command.Parameters["@V_tenant"].Value = tenant;
+
+
+                    command.Parameters.Add("@V_AccountId", SqlDbType.VarChar);
+                    command.Parameters["@V_AccountId"].Value = accountId;
+
+
+                    command.Parameters.Add("@V_recoMethod", SqlDbType.VarChar);
+                    command.Parameters["@V_recoMethod"].Value = recoMethod;
+
+                    int rows = command.ExecuteNonQuery();
+                    connection.Close();
+                    return rows;
+                }
+            }
+
+        }
+
+
 
         private static int Update_Reco(int tenant, string accountId, string strConnString)
         {
