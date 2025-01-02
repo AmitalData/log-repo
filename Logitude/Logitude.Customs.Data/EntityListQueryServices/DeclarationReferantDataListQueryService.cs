@@ -33,6 +33,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                              .Include("DeclarationStatusType")
                                                              .Include("Importer")
                                                              .Include("PackageType")
+                                                             .Include("Vessel")
                                                              on a.DeclarationIdToDisplay equals d.Id
 
                                                              //join declarationStatus in context.DeclarationStatuses
@@ -72,6 +73,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  CustomFileNo = d.CustomFileNo,
 
                                                                  CustomerName = (d.CustomerCard.LocalName != null ? d.CustomerCard.LocalName : d.CustomerCard.EnglishName),
+
+                                                                 VesselName = a.VesselCode != null ? (a.VesselCode.LocalName != null? a.VesselCode.LocalName : a.VesselCode.EnglishName): null,
 
                                                                  TransportModeId = d.TransportModeId,
 

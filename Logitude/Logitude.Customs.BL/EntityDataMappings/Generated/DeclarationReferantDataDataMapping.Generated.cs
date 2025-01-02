@@ -117,7 +117,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         DeclarationIdToDisplay, 
 	         IsCloseOrOpenFromUser, 
 	         OccuredStatus, 
-	         NotOccuredStatus,
+	         NotOccuredStatus, 
+	         VesselName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
