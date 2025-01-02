@@ -574,6 +574,12 @@ namespace Logitude.Accounting.BL.DataContract
             {
                 throw new ApplicationException(taxDeductionReport.ErrorMessage);
             }
+            if (byVendorList.Count() < 1)
+            {
+                ByVendorList  emptyVendor = new ByVendorList();
+                byVendorList.Add(emptyVendor);
+            }
+            
             return byVendorList;
         }
         private List<CardList> GetMainAccountsCards()
