@@ -100,18 +100,18 @@ namespace WebFreight.Web
             analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
             analyzeQueueReposiory.Add(analyzeQueue);
             analyzeQueueReposiory.SubmitChanges();
-            using (TransactionScope scope2 = TransactionFactory.GetNewTransaction())
-            {
-                if (analyzeQueue != null)
-                {
-                    DbQueueService queueservice = new DbQueueService();
-                    queueservice.InitializeQueue("GeneralWebHookAnalyzer", 0);
-                    queueservice.Send(new Dictionary<string, string>() { { "AnalyzeQueueId", analyzeQueue.Id } }, analyzeQueue.Tenant);
-                    queueservice.Complete();
-                }
+            //using (TransactionScope scope2 = TransactionFactory.GetNewTransaction())
+            //{
+            //    if (analyzeQueue != null)
+            //    {
+            //        DbQueueService queueservice = new DbQueueService();
+            //        queueservice.InitializeQueue("GeneralWebHookAnalyzer", 0);
+            //        queueservice.Send(new Dictionary<string, string>() { { "AnalyzeQueueId", analyzeQueue.Id } }, analyzeQueue.Tenant);
+            //        queueservice.Complete();
+            //    }
 
-                scope2.Complete();
-            }
+            //    scope2.Complete();
+            //}
 
 
         }
