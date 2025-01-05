@@ -212,7 +212,7 @@ public partial class LogitudeCustomsFile
     private string receiverNameField;
     private string receiverAddressField;
     private string receiverCountryCodeField;
-	private string systemConnectionField;
+ 	private string systemConnectionField;
 	private string mawbDateField;
 	private string estimatedArrivalDateField;
 	private string arrivalDateField;
@@ -221,7 +221,8 @@ public partial class LogitudeCustomsFile
 	private string carrierCodeField;
 	private string originCountryCodeRefField;
     private string shipmentId;
-
+     private string vesselField;
+ 
     /// <remarks/>
     public string CustomFileNo
     {
@@ -1006,6 +1007,18 @@ public partial class LogitudeCustomsFile
         set
         {
             this.receiverCountryCodeField = value;
+        }
+    }
+
+    public string Vessel
+    {
+        get
+        {
+            return this.vesselField;
+        }
+        set
+        {
+            this.vesselField = value;
         }
     }
 

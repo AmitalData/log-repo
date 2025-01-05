@@ -247,6 +247,7 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             Feature ShipmentFormFeature = tenantFeatures.Where(d => d.Code == "ShipmentFormReport" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             AddReports.AddReport(new ReportDetails() { Code = "SHTO", Description = "Shipment Form", Name = "Shipment Form", LocalName = "טופס תיק", FilterControlName = "ShipmentFormFilterComponent", Tenant = 0, FeatureId = ShipmentFormFeature.Id, FeatureUniqeCode = ShipmentFormFeature.FeatureUniqeCode }, reportRepository, tenantReports);
+
         }
     }
 }
