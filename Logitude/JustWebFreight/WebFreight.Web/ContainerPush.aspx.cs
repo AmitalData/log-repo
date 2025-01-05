@@ -135,39 +135,7 @@ namespace WebFreight.Web
 					var TempRecs = query.GetAllByOceanInsightsId(Id);
 					if (TempRecs == null || TempRecs.Count == 0)
 					{
-						string ContainerNo = "";
-						string ScacCode = "";
-						string BLNumber = "";
-						XmlNodeList requestkeynodeList = xmldoc.GetElementsByTagName("container_number");
-						foreach (XmlNode item in requestkeynodeList)
-						{
-							ContainerNo = item.InnerText;
-						}
-						XmlNodeList blnumbernodeList = xmldoc.GetElementsByTagName("bl_number");
-						if (blnumbernodeList != null)
-						{
-							foreach (XmlNode item in blnumbernodeList)
-							{
-								BLNumber = item.InnerText;
-							}
-						}
-						XmlNodeList carrierscacnodeList = xmldoc.GetElementsByTagName("carrier_scac");
-						foreach (XmlNode item in carrierscacnodeList)
-						{
-							ScacCode = item.InnerText;
-						}
-						var TempRec = new OceanInsightsRequestPM();
-						IShipmentsContext objectContext = ShipmentsContext.GetContext(0);
-						OceanInsightsRequestService service = new OceanInsightsRequestService(objectContext, 0);
-						TempRec.ContainerNumber = ContainerNo;
-						TempRec.SCACCode = ScacCode;
-						TempRec.Tenant = 0;
-						TempRec.OceanInsigntId = Id;
-						TempRec.BLNumber = BLNumber;
-						TempRec.Type = string.IsNullOrEmpty(TempRec.BLNumber) ? "c_id" : "m_bl";
-						TempRec.FromPushPage = true;
-						service.Create(TempRec);
-						TempRecs.Add(TempRec);
+						return;
 					}
 					try
 					{
