@@ -36,13 +36,13 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             }
             else
             {
-                IQueryable<LedgerTransactionList> query = (from a in iQueryable.Include("JournalLine").Include("Account").Include("Currency").Include("Journal")
-
+                IQueryable<LedgerTransactionList> query = (from a in iQueryable.Include("JournalLine").Include("Account").Include("Currency")
+                                                           join j in context.Journals on a.JournalId equals j.Id
                                                            join b in context.JournalAdditionalDatas.Include("TaxReport")
                                                            on new { journalId = a.JournalId, line = a.JournalLineNumber } equals new { journalId = b.JournalId, line = b.JournalLineNumber }
                                                            into jJournalAdditionalData
                                                            from jad in jJournalAdditionalData.DefaultIfEmpty()
-                                                           where a.JournalLine == null || a.JournalLine.Journal == null || a.JournalLine.Journal.Tenant == a.Tenant
+                                                           where j.Tenant == a.Tenant
                                                            select new LedgerTransactionList()
                                                            {
                                                                Id = a.Id,
@@ -61,10 +61,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                                JournalId = a.JournalId,
                                                                Notes = a.Notes,
                                                                JournalLineNumber = a.JournalLineNumber,
-                                                               SourceNumber = a.JournalLine.Journal.AccountingEntityReference, // display number
-                                                               SourceTypeCode = a.JournalLine.Journal.AccountingEntity.Code, // source type code from AccountingEntities
+                                                               SourceNumber = j.AccountingEntityReference, // display number
+                                                               SourceTypeCode = j.AccountingEntity.Code, // source type code from AccountingEntities
                                                                SelectCheckBox = false,
-                                                               JournalNumber = a.JournalLine.Journal.JournalNumber,
+                                                               JournalNumber = j.JournalNumber,
                                                                OpenAmount = a.OpenAmount,
                                                                ReconcileMethodCode = a.Account.ReconcileMethodCode,
                                                                OppositeAccountEnglishName = a.OppositeAccount != null ? a.OppositeAccount.EnglishName : null,
@@ -80,8 +80,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                                                                ControlAccountId = a.ControlAccountId,
                                                                ExchangeRate = a.ExchangeRate,
-                                                               Source = a.JournalLine.Journal.AccountingEntityReference,
-                                                               SourceType = a.JournalLine.Journal.AccountingEntity.EnglishName,
+                                                               Source = j.AccountingEntityReference,
+                                                               SourceType = j.AccountingEntity.EnglishName,
                                                                CurrencyCode = a.Currency.Code,
                                                                CreateDate = a.CreateDate,
                                                                AmountToReconcile = a.AmountToReconcile,
@@ -94,13 +94,13 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                                IsReconciled = a.IsReconciled,
                                                                InReconcileProgress = a.InReconcileProgress,
                                                                InProgressExternalReconcile = a.InProgressExternalReconcile,
-                                                               SourceId = a.JournalLine.Journal.AccountingEntityId, // hidden id to use in link
+                                                               SourceId = j.AccountingEntityId, // hidden id to use in link
                                                                CurrencySign = a.Currency.Sign,
                                                                OpenAmountCurrencySign = a.OpenAmountCurrency.Sign,
                                                                IsExternalReconcile = a.IsExternalReconcile,
                                                                AccountDisplayNumber = a.Account != null ? a.Account.DisplayNumber : null,
                                                                AccountLocalName = a.Account != null ? a.Account.LocalName : null,
-                                                               JournalCreatedByUser = a.JournalLine.Journal.CreatedByUser.Contact.DontShowLocalLabels ? a.JournalLine.Journal.CreatedByUser.Contact.EnglishName : a.JournalLine.Journal.CreatedByUser.Contact.LocalName,
+                                                               JournalCreatedByUser = j.CreatedByUser.Contact.DontShowLocalLabels ? j.CreatedByUser.Contact.EnglishName : j.CreatedByUser.Contact.LocalName,
                                                            SecurityLevelFiltering = 1,
                                                            TaxReportId = jad != null ? jad.TaxReportId : "",
                                                                TaxReportNumber = jad != null && jad.TaxReport != null ? jad.TaxReport.TaxReportNumber : "",
