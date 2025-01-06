@@ -12,7 +12,10 @@
 <div class="TabHolder">
     <table>
         <tr class="TabTitleRow">
-            <td style="direction: initial; float: right; margin: 15px 5px;">{{ TabTitle }}</td>
+            <td style="float: right; margin: 15px 5px;" *ngIf="TabTitle">
+                <span>{{ ('ShipmentPickUpDelivery.O.ShipmentCertificateNumber' | TextCodeTranslationPipe) + ": " }}</span>
+                <span>{{ TabTitle }}</span>
+            </td>
         </tr>
 
         <tr>
@@ -72,7 +75,6 @@
                                                                                         <td>
                                                                                             <LogLov [ObjectFieldName]="'ToAddressId'"
                                                                                                     [SelectedValue]="ToAddressId"
-                                                                                                    [DisplayMemberPath]="'LocalName'"
                                                                                                     [ObjectTableName]="ObjectTableName"
                                                                                                     [DataContext]="DataContext"
                                                                                                     [LookUpTableName]="'Address'"

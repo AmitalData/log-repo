@@ -6109,6 +6109,13 @@
       LocalDefaultText="&quot;BS64:Iteb16rXldeR16oi&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ShipmentPickUpDelivery.O.Notes&quot;"
+      DefaultText="&quot;Notes&quot;"
+      LocalDefaultTextBack_up="&quot;הנחיות הובלה&quot;"
+      LocalDefaultText="&quot;BS64:IteU16DXl9eZ15XXqiDXlNeV15HXnNeUIg==&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

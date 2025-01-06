@@ -62,7 +62,7 @@ export class InlandTransportMainTabComponent extends BaseComponent {
         this.ShipmentPM = myShipmentPM;
 
         if (this.EntityPM.PickUpDeliveryNumber) {
-            this.TabTitle = this.EntityPM.PickUpDeliveryNumber + "_" + this.ShipmentPM.CustomerName + " :" + TextCodeTranslator.Translate("ShipmentPickUpDelivery.O.ShipmentCertificateNumber");
+            this.TabTitle = this.EntityPM.PickUpDeliveryNumber + "_" + this.ShipmentPM.CustomerName;
         }
     }
 
