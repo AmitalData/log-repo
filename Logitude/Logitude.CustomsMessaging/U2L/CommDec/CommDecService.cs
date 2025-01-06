@@ -2974,6 +2974,64 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             return rec.PARTNERCODE;
         }
 
+        // Build a request in the background to send a customs declaration message for the same bill of lading in a courier #113945
+        public void sendCustomsDeclarationForCourier(string partnerID, string tableID, string localCode)
+        {
+            try
+            {
+                //MANIFESTRequestRequestParams manRequestParams = new MANIFESTRequestRequestParams();
+                //manRequestParams.Tenant = _MyDeclarationPM.Tenant;
+                //manRequestParams.RequestName = "Declaration Print (2750)";
+                //manRequestParams.ResponseName = "Declaration Print (2750)";
+                //manRequestParams.LoggingEntityId = _MyDeclarationPM.Id;
+                //manRequestParams.LoggingUserId = _MyDeclarationPM.CreatedByUserId;
+                //manRequestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
+                //// manRequestParams.ImportManifest = _MyDeclarationPM.;
+                //manRequestParams.DeclarationId = _MyDeclarationPM.Id;
+
+                //MN_MSG1_MANIFESTMessagingService messagingService = new MN_MSG1_MANIFESTMessagingService();
+                //messagingService.Send(manRequestParams);
+
+                //if (itemPM.CourierManifestStatusCode == "R")
+                var user = AuthenticationUtil.ResolveUserId(_tenant);
+                var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
+
+                MANIFESTRequestRequestParams requestParams1170 = new MANIFESTRequestRequestParams()
+                {
+                    Tenant = _MyDeclarationPM.Tenant,
+                    LoggingEnabled = true,
+                    LoggingObjectTableId = objectTableId,
+                    LoggingEntityId = _MyDeclarationPM.Id,
+                    LoggingObjectTableId2 = objectTableIdCourierMaster,
+                    LoggingEntityId2 = _MyDeclarationPM.CourierMasterId,
+                    InterfaceTypeCode = "1170",
+                    LoggingUserId = user,
+                    RequestVIA = SendRequestVIA.WebServiceBatch,
+                    DeclarationId = _MyDeclarationPM.Id,
+                    LoggingEntityReference = _MyDeclarationPM.Id,
+                };
+
+                MN_MSG1_MANIFESTMessagingService messagingService = new MN_MSG1_MANIFESTMessagingService();
+                messagingService.Send(requestParams1170);
+
+                SBQMessageService.CreateSheetSBQMessage<MANIFESTRequestRequestParams>(requestParams1170, false);
+                LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({_MyDeclarationPM.Id})");
+
+                StringBuilder mess = new StringBuilder();
+                mess.AppendLine($" CreateSheetSBQMessage({_MyDeclarationPM.Id})");
+                
+
+            }
+            catch (Exception ex) 
+            {
+                throw new Exception(ex.Message);
+            }
+
+
+        }
+
+  
 
 
     }
