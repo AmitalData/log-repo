@@ -304,6 +304,12 @@ namespace WebFreight.Web.WcfApi
             var response = new Response();
             try
             {
+                bool from_global = false;
+                if(queryParams.ContainsKey("from_global"))
+                {
+                    bool.TryParse(queryParams["from_global"], out from_global);
+                    queryParams.Remove("from_global");
+                }
                 //tenant = 6;//temppppp
 
                 //SecurityUtility.AuthenticationOnTenant(tenant);
@@ -371,6 +377,7 @@ namespace WebFreight.Web.WcfApi
                 List<List<string>> all_lines = new List<List<string>>();
                 int rows_effected = 0;
                 var shipmentsContext = new Simplog.Data.ShipmentsModel.ShipmentsContext();
+                var GlobalContext = new Simplog.Global.Data.GlobalModel.GlobalContext();
                 if (sqlQuery.IndexOf("@NEXTNUM") > -1)
                 {
                     sqlQuery = sqlQuery.Replace("@NEXTNUM", queryParams["NEXTNUM"]);
@@ -378,7 +385,15 @@ namespace WebFreight.Web.WcfApi
                 }
                 using (SqlConnection connection = new SqlConnection())
                 {
-                    connection.ConnectionString = shipmentsContext.Database.Connection.ConnectionString;
+                    if (from_global)
+                    {
+                        connection.ConnectionString = GlobalContext.Database.Connection.ConnectionString;
+                    }
+                    else
+                    {
+                        connection.ConnectionString = shipmentsContext.Database.Connection.ConnectionString;
+                    }
+                    
                     connection.Open();
                     //sqlQuery = "SELECT IMPORTERID,ID from Customs.DECLARATIONS where (ID = @LOGITUDE_FILE ) AND TENANT = @Tenant";
                     using (var cmd = new SqlCommand(sqlQuery, connection))
