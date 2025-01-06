@@ -93,7 +93,6 @@ using WebFreight.Web.Helpers;
                             ForeignAmount = transactionList.ForeignAmount,
                             EntityType = transactionList.InterestEntityIconCode,
                             EntityNumber = transactionList.InterestEntityNumber,
-                            InterestReportNumber = transactionList.InterestReportNumber,
                             InterestValueDate = transactionList.InterestValueDate,
                             IsCancelled = transactionList.IsCancelled,
                             IsClosed = transactionList.IsClosed,

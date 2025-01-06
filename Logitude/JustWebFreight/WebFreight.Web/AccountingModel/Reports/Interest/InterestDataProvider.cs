@@ -80,7 +80,7 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
         public string EntityType { get; set; }
         public string AccountEntityCode { get; set; }
         public bool IsCancelled { get; set; }
-        public string InterestReportNumber { get; set; }
+       // public string InterestReportNumber { get; set; }
         public string Source { get; set; }
         public string SourceTypeCode { get; set; }
         public string SourceType { get; set; }
