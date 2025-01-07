@@ -240,7 +240,28 @@ namespace Logitude.Customs.Data.Repsitories
 														   select p);
 			return pointers;
 		}
-	}
+
+
+        public IQueryable<CustomsDocumentPointer> GetCustomsDocumentPointersByParentIdAndSentCustoms(string parentEntityId, int tenant)
+        {
+            (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+            IQueryable<CustomsDocumentPointer> pointers = (from p in context.CustomsDocumentPointers
+
+                                                           join t in context.CustomsDocumentsTickets
+
+                                                           on p.CustomsDocumentsTicketId equals t.Id
+
+                                                           join c in context.CustomsDocuments
+
+                                                          on t.DocumentsFiling equals c.DocumentsFiling
+
+                                                           where p.Tenant == tenant &&  p.ParentEntityId == parentEntityId && !string.IsNullOrEmpty( c.CustomsDocId)
+
+                                                           select p);
+            return pointers;
+        }
+    }
 
 }
    
