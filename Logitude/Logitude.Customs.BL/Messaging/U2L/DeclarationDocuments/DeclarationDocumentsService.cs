@@ -204,7 +204,15 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     if (pointerLevel == "I")
                     {
                         customsDocumentPointerPM.Child1EntityCode = "SupplierInvoice";
-                        customsDocumentPointerPM.Child1EntityId = "1";
+                        if (_MyDeclarationPM.IsDiamondDeclaration && _MyDeclarationPM.AutoSending && _MyDeclarationPM.Direction == "E")
+                        {
+                            customsDocumentPointerPM.Child1EntityId = _MyDeclarationPM.SupplierInvoices?.FirstOrDefault(x => x.InvoiceNumber == documentIn?.DocumentsFilingMetaDataValues.FirstOrDefault(y=>y.DocumentsMetaDataTypeCode== "39").MetaDataValue)?.SequenceNumeric?.ToString();
+                        }
+                        else
+                        {
+                            customsDocumentPointerPM.Child1EntityId = "1";
+
+                        }
                     }
                     if (pointerLevel == "P")
                     {

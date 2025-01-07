@@ -102,6 +102,7 @@ export class DeclarationReferantDataList {
 	CarrierCode: string;
 	OriginCountryCode: string;
 	VesselName: string;
+	Vessel: string;
 	
 }
  
