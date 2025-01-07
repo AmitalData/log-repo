@@ -388,11 +388,14 @@ namespace WebFreight.Web.WcfApi
                     if (from_global)
                     {
                         connection.ConnectionString = GlobalContext.Database.Connection.ConnectionString;
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("global db : " + connection.ConnectionString);
+
                         remark = "GlobalContext";
                     }
                     else
                     {
                         connection.ConnectionString = shipmentsContext.Database.Connection.ConnectionString;
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("ship db : " + connection.ConnectionString);
                         remark = "ShipmentsContext";
                     }
                     
