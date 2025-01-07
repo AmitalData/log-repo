@@ -367,7 +367,7 @@ namespace WebFreight.Web.WcfApi
                     return (response);
                 }
 
-
+                String remark ="";
 
 
 
@@ -388,10 +388,12 @@ namespace WebFreight.Web.WcfApi
                     if (from_global)
                     {
                         connection.ConnectionString = GlobalContext.Database.Connection.ConnectionString;
+                        remark = "GlobalContext";
                     }
                     else
                     {
                         connection.ConnectionString = shipmentsContext.Database.Connection.ConnectionString;
+                        remark = "ShipmentsContext";
                     }
                     
                     connection.Open();
@@ -436,6 +438,7 @@ namespace WebFreight.Web.WcfApi
                         results.Add("sql_result", JsonConvert.SerializeObject(all_lines));
                         results.Add("sql_query", sqlQuery);
                         results.Add("rows_effected", rows_effected.ToString());
+                        results.Add("remark", remark);
                         response.Result = JsonConvert.SerializeObject(results);
                     }
                 }
