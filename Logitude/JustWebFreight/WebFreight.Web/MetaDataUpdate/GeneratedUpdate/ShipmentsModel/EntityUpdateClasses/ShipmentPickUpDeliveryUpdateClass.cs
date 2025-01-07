@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentPickUpDeliveryUpdateClass
    {  		
-		public const string HashString = "29aac5a3486cb1917dd9215226413334";
+		public const string HashString = "29aac5a3486cb1917dd9215226413335";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4544,6 +4544,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryORemoveDelivery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.O.RemoveDelivery", DefaultText = "Remove Delivery",LocalDefaultText = @"BS64:IteU15DXnSDXnNee15fXldenINeQ16og15TXlNeV15HXnNeUPyI=", ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryOAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.O.Address", DefaultText = "Address",LocalDefaultText = @"BS64:Iteb16rXldeR16oi", ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryONotes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.O.Notes", DefaultText = "Notes", LocalDefaultText = @"BS64:IteU16DXl9eZ15XXqiDXlNeV15HXnNeUIg==", ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
