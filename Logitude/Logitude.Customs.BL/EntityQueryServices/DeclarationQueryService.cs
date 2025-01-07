@@ -2092,12 +2092,34 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
                 // the declaration may be sent if documents about all its supplier invoices have been sent to the mehes and received simuhin
                 declarationReadyForSending = sentSupplierInvoices >= declarationSupplierInvoiceCount;
-                if (declarationReadyForSending && declarationPM.ProcedureCurrentCode == "1000041")
+                if (declarationReadyForSending)
                 {
-                    bool containsAllCodes = new List<string> { "IL_1003", "IL_506", "IL_1050" }
-                    .All(code => customsDocumentPMList.Any(document => document.DocumentTypeCode.Contains(code)));
+                    if (declarationPM.ProcedureCurrentCode == "1000041")
+                    {
+                        bool containsAllCodes = new List<string> { "IL_1003", "IL_506", "IL_1050" }
+                        .All(code => customsDocumentPMList.Any(document => document.DocumentTypeCode.Contains(code)));
 
-                    return containsAllCodes;
+                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine($"contains code: {containsAllCodes}");
+                        return containsAllCodes;
+                    }
+                    else
+                    {
+                        int shtarMitanDocumentCount = customsDocumentPMList.Where(document => document.DocumentTypeCode == "419").Count();
+                        if (shtarMitanDocumentCount == 0)
+                        {
+                            List<CustomsDocumentsTicketPM> customsDocumentsTicketsWithDeclClosingData = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", declarationPM.Tenant, "ExportDeclarationClosingData").ToList();
+                            shtarMitanDocumentCount = customsDocumentsTicketsWithDeclClosingData.Where(document => document.DocumentTypeCode == "419").Count();
+                            if (shtarMitanDocumentCount == 0)
+                            {
+                                Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("shatr mitan not found");
+                                declarationReadyForSending = false;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine($"sentSupplierInvoices: {sentSupplierInvoices} less than declarationSupplierInvoiceCount: {declarationSupplierInvoiceCount}");
                 }
                 /* if need to check for every invoice, the relation between document and invoice is
                  * (invoice.SequenceNumeric == customsDocumentsTicketPM.ConnectedInvoicesSequences) */
