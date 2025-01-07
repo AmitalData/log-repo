@@ -44,6 +44,7 @@ using UnifreightIIG.Common.MessageLib.Unifreight.Customs;
 using System.Text;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools;
+using Logitude.BL.Security;
 
 namespace Logitude.CustomsMessaging.U2L.CommDec
 {
@@ -807,11 +808,18 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     var res = repo.UpdateLOGITUDE_FILE(_MyDeclarationPM.Tenant, Convert.ToInt64(_MyDeclarationPM.CustomFileNo), _MyDeclarationPM.Id);
                     repo.SubmitChanges();
                 }
-               
+ 
                 //  }
 
                 customFileNo = _MyDeclarationPM.CustomFileNo;
                 decId = _MyDeclarationPM.Id;
+
+                // Build a request in the background to send a customs declaration message for the same bill of lading in a courier #113945
+                if (SecurityUtility.CheckFeature("Customs.Declaration", "sendCustomsDeclarationForCourier", _MyDeclarationPM.Tenant) && currentDeclarationCourierStatusPM.CourierManifestStatusCode == "R")
+                {
+                    sendCustomsDeclarationForCourier();
+                }
+
                 AppendLogLine("declarationUpdat:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                 string val = "";
                 if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["AvoidCreateCustomsRequestSheet"]))
@@ -2974,24 +2982,10 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             return rec.PARTNERCODE;
         }
 
-        // Build a request in the background to send a customs declaration message for the same bill of lading in a courier #113945
-        public void sendCustomsDeclarationForCourier(string partnerID, string tableID, string localCode)
+        public void sendCustomsDeclarationForCourier()
         {
             try
             {
-                //MANIFESTRequestRequestParams manRequestParams = new MANIFESTRequestRequestParams();
-                //manRequestParams.Tenant = _MyDeclarationPM.Tenant;
-                //manRequestParams.RequestName = "Declaration Print (2750)";
-                //manRequestParams.ResponseName = "Declaration Print (2750)";
-                //manRequestParams.LoggingEntityId = _MyDeclarationPM.Id;
-                //manRequestParams.LoggingUserId = _MyDeclarationPM.CreatedByUserId;
-                //manRequestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
-                //// manRequestParams.ImportManifest = _MyDeclarationPM.;
-                //manRequestParams.DeclarationId = _MyDeclarationPM.Id;
-
-                //MN_MSG1_MANIFESTMessagingService messagingService = new MN_MSG1_MANIFESTMessagingService();
-                //messagingService.Send(manRequestParams);
-
                 //if (itemPM.CourierManifestStatusCode == "R")
                 var user = AuthenticationUtil.ResolveUserId(_tenant);
                 var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
@@ -3010,6 +3004,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     RequestVIA = SendRequestVIA.WebServiceBatch,
                     DeclarationId = _MyDeclarationPM.Id,
                     LoggingEntityReference = _MyDeclarationPM.Id,
+                    TenantPriority = 97
                 };
 
                 MN_MSG1_MANIFESTMessagingService messagingService = new MN_MSG1_MANIFESTMessagingService();
