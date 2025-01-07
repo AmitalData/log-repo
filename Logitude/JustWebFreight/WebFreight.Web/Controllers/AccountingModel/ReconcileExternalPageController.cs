@@ -670,9 +670,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         {
                             return Request.CreateResponse(HttpStatusCode.BadRequest, "Unsupported file format");
                         }
-
-                        ReconcileExternalPageService reconcileExternalPageService = new ReconcileExternalPageService();
-                        List<ReconcileExternalPageLinePM> myResult = reconcileExternalPageService.BuildReconcileExternalPageLineFromTextLines(inputText, tenant, bankCodeId, reconcileExternalPageId, line, GLAccountID);
+                        var accountingContext = AccountingContext.GetContext(tenant);
+                        ReconcileExternalPageQueryService reconcileExternalPageQueryQueryService = new ReconcileExternalPageQueryService(accountingContext);
+                        List<ReconcileExternalPageLinePM> myResult = reconcileExternalPageQueryQueryService.BuildReconcileExternalPageLineFromTextLines(inputText, tenant, bankCodeId, reconcileExternalPageId, line, GLAccountID);
                         filter.ExcelReconcileExternalPageLines = myResult;
                     }
                 }

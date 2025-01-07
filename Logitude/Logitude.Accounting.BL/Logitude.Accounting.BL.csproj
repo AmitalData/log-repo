@@ -372,7 +372,6 @@
     <Compile Include="CoreBL\JournalsReapproveService.cs" />
     <Compile Include="CoreBL\Mapping\InterestReportInvoiceMapping.cs" />
     <Compile Include="CoreBL\OpenFormatReportService.cs" />
-    <Compile Include="CoreBL\ReconcileExternalPageService.cs" />
     <Compile Include="CoreBL\Reconcile\AutoReconcileARPaymentService.cs" />
     <Compile Include="CoreBL\Reconcile\CreateReconciliationService.cs" />
     <Compile Include="CoreBL\Dashboard\GLAccountDashboard.cs" />
