@@ -815,7 +815,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 decId = _MyDeclarationPM.Id;
 
                 // Build a request in the background to send a customs declaration message for the same bill of lading in a courier #113945
-                if (SecurityUtility.CheckFeature("Customs.Declaration", "sendCustomsDeclarationForCourier", _MyDeclarationPM.Tenant) && currentDeclarationCourierStatusPM.CourierManifestStatusCode == "R")
+                if (SecurityUtility.CheckFeature("Customs.CourierMaster", "SendAutoManifest", _MyDeclarationPM.Tenant) && currentDeclarationCourierStatusPM.CourierManifestStatusCode == "R")
                 {
                     sendCustomsDeclarationForCourier();
                 }
@@ -2986,7 +2986,6 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
         {
             try
             {
-                //if (itemPM.CourierManifestStatusCode == "R")
                 var user = AuthenticationUtil.ResolveUserId(_tenant);
                 var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
