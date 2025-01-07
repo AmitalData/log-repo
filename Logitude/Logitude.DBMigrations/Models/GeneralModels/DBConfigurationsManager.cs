@@ -37,5 +37,11 @@ namespace Logitude.DBMigrations.Models
             }
             return DBConfigurations.Where(c => c.Type?.ToLower() == dbConfigurationType?.ToLower()).Any();
         }
-    }
+
+		public static void ResetDBConfiguration()
+		{
+			DBConfigurations = null;
+
+		}
+	}
 }
