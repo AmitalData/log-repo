@@ -2104,14 +2104,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     }
                     else
                     {
-                        int shtarMitanDocumentCount = customsDocumentPMList.Where(document => document.DocumentTypeCode == "419").Count();
+                        int shtarMitanDocumentCount = customsDocumentsTicketPMList.Where(document => document.DocumentTypeCode == "419" && !string.IsNullOrEmpty(document.CustomsDocId)).Count();
                         if (shtarMitanDocumentCount == 0)
                         {
                             List<CustomsDocumentsTicketPM> customsDocumentsTicketsWithDeclClosingData = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", declarationPM.Tenant, "ExportDeclarationClosingData").ToList();
-                            shtarMitanDocumentCount = customsDocumentsTicketsWithDeclClosingData.Where(document => document.DocumentTypeCode == "419").Count();
+                            shtarMitanDocumentCount = customsDocumentsTicketsWithDeclClosingData.Where(document => document.DocumentTypeCode == "419" && !string.IsNullOrEmpty(document.CustomsDocId)).Count();
                             if (shtarMitanDocumentCount == 0)
                             {
-                                Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("shatr mitan not found");
+                                Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("shatr mitan with simukhin not found");
                                 declarationReadyForSending = false;
                             }
                         }
