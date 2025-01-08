@@ -315,7 +315,25 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             DeclarationPendingUpdateService declarationPendingUpdateService = new DeclarationPendingUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
             declarationPendingUpdateService.IsUpdateComposition = true;
             declarationPendingUpdateService.UpdateMulti(entityPM.DeclarationPendings.Where(p => p.ChangeSetOp == ChangeSetOperation.Delete).ToList(), entityPM.DeletedDeclarationPendings, entityPM, true);
-            declarationPendingUpdateService.UpdateMulti(entityPM.DeclarationPendings.Where(p => p.ChangeSetOp != ChangeSetOperation.Delete).ToList(), entityPM.DeletedDeclarationPendings, entityPM, true);
+            
+            var insertPendings=entityPM.DeclarationPendings.Where(p => p.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            var newPendingsToAdd = new List<DeclarationPendingPM>();
+            if (insertPendings.Any()) {
+                var context = CustomContext.GetContext(entityPM.Tenant);
+                var declarationPendingRepository = new DeclarationPendingRepository(context);
+                var dbPendings = declarationPendingRepository.GetDeclarationPendingsByDeclarationId(entityPM.DeclarationId, entityPM.Tenant);
+                foreach (var pending in insertPendings)
+                {
+                    var existingItem = dbPendings
+                        .FirstOrDefault(dbItem => dbItem.CourierPendingReasonCode == pending.CourierPendingReasonCode);
+
+                    if (existingItem == null)
+                    {
+                        newPendingsToAdd.Add(pending);
+                    }
+                }
+            }
+            declarationPendingUpdateService.UpdateMulti(newPendingsToAdd, entityPM.DeletedDeclarationPendings, entityPM, true);
             base.UpdateComposition(entityPM);
         }
 
