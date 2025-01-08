@@ -69,6 +69,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (!String.IsNullOrWhiteSpace(requestParams.AppicationId))
             {
                 CalculateDeclarationCourierStatus.UpdateCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId);
+
+                // Sending Auto Restore Declaration Request #113942
+                DeclarationRestoreResponseData declarationRestoreResponseData = RestoreDeclarationRequest(requestParams);
             }
             base.OnRequestFail(customResponse, requestParams);
         }
@@ -1296,9 +1299,32 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				catch (System.Exception)
 				{
 					throw;
-				}
-			}
-		}
+                }
+            }
+        }
+        public DeclarationRestoreResponseData RestoreDeclarationRequest(GenericRequestParams requestParams)
+        {
+            try
+            {
+                DeclarationRestoreRequestParams requestParamsData = new DeclarationRestoreRequestParams();
+                requestParamsData = (DeclarationRestoreRequestParams)requestParams;
+                requestParamsData.CustomsFile = _MyDeclarationPM.CustomFileNo;
+                requestParamsData.Tenant = _MyDeclarationPM.Tenant;
+                requestParamsData.DeclarationNumber = _MyDeclarationPM.DeclarationNumber;
+                requestParamsData.DeclarationId = _MyDeclarationPM.Id;
+                requestParamsData.IsUpdateDB = true;
+                requestParamsData.ShowData = true;
+
+                DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService messagingService = new DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService();
+                DeclarationRestoreResponseData responseData = messagingService.Send(requestParamsData);
+                return responseData;
+            }
+            catch
+            {
+                LogMessagingUtil.Instance.AppendLine("Sending Restore Declaration Request Failed !");
+                return null;
+            }
+        }
 
 		private bool CheckFileCredit(DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM, string user, string requestParamsJson)
         {

@@ -44,6 +44,7 @@ using UnifreightIIG.Common.MessageLib.Unifreight.Customs;
 using System.Text;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools;
+using Logitude.BL.Security;
 
 namespace Logitude.CustomsMessaging.U2L.CommDec
 {
@@ -807,11 +808,18 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     var res = repo.UpdateLOGITUDE_FILE(_MyDeclarationPM.Tenant, Convert.ToInt64(_MyDeclarationPM.CustomFileNo), _MyDeclarationPM.Id);
                     repo.SubmitChanges();
                 }
-               
+ 
                 //  }
 
                 customFileNo = _MyDeclarationPM.CustomFileNo;
                 decId = _MyDeclarationPM.Id;
+
+                // Build a request in the background to send a customs declaration message for the same bill of lading in a courier #113945
+                if (SecurityUtility.CheckFeature("Customs.CourierMaster", "SendAutoManifest", _MyDeclarationPM.Tenant) && currentDeclarationCourierStatusPM.CourierManifestStatusCode == "R")
+                {
+                    sendCustomsDeclarationForCourier();
+                }
+
                 AppendLogLine("declarationUpdat:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                 string val = "";
                 if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["AvoidCreateCustomsRequestSheet"]))
@@ -2974,6 +2982,50 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             return rec.PARTNERCODE;
         }
 
+        public void sendCustomsDeclarationForCourier()
+        {
+            try
+            {
+                var user = AuthenticationUtil.ResolveUserId(_tenant);
+                var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
+
+                MANIFESTRequestRequestParams requestParams1170 = new MANIFESTRequestRequestParams()
+                {
+                    Tenant = _MyDeclarationPM.Tenant,
+                    LoggingEnabled = true,
+                    LoggingObjectTableId = objectTableId,
+                    LoggingEntityId = _MyDeclarationPM.Id,
+                    LoggingObjectTableId2 = objectTableIdCourierMaster,
+                    LoggingEntityId2 = _MyDeclarationPM.CourierMasterId,
+                    InterfaceTypeCode = "1170",
+                    LoggingUserId = user,
+                    RequestVIA = SendRequestVIA.WebServiceBatch,
+                    DeclarationId = _MyDeclarationPM.Id,
+                    LoggingEntityReference = _MyDeclarationPM.Id,
+                    TenantPriority = 97
+                };
+
+                MN_MSG1_MANIFESTMessagingService messagingService = new MN_MSG1_MANIFESTMessagingService();
+                messagingService.Send(requestParams1170);
+
+                SBQMessageService.CreateSheetSBQMessage<MANIFESTRequestRequestParams>(requestParams1170, false);
+                LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({_MyDeclarationPM.Id})");
+
+                StringBuilder mess = new StringBuilder();
+                mess.AppendLine($" CreateSheetSBQMessage({_MyDeclarationPM.Id})");
+                
+
+            }
+            catch (Exception ex) 
+            {
+                throw new Exception(ex.Message);
+            }
+
+
+        }
+
+  
 
 
     }
