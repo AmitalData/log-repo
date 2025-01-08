@@ -2073,8 +2073,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 //declarationReadyForSending = sentSupplierInvoices >= declarationSupplierInvoiceCount;
                 declarationReadyForSending = myCustomsDocumentQueryService.checkIfExistTicketsForAllSupplierInvoice(declarationPM);
 
-                if (declarationReadyForSending && declarationPM.ProcedureCurrentCode == "1000041")
-                     {
+                if (declarationReadyForSending)
+                {
+                    if (declarationPM.ProcedureCurrentCode == "1000041")
+                    {
                         bool containsAllCodes = new List<string> { "IL_1003", "IL_506", "IL_1050" }
                         .All(code => customsDocumentPMList.Any(document => document.DocumentTypeCode.Contains(code)));
 
@@ -2096,10 +2098,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         }
                     }
                 }
-                else
-                {
-                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine($"sentSupplierInvoices: {sentSupplierInvoices} less than declarationSupplierInvoiceCount: {declarationSupplierInvoiceCount}");
-                }
+                //else
+                //{
+                //    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine($"sentSupplierInvoices: {sentSupplierInvoices} less than declarationSupplierInvoiceCount: {declarationSupplierInvoiceCount}");
+                //}
                 /* if need to check for every invoice, the relation between document and invoice is
                  * (invoice.SequenceNumeric == customsDocumentsTicketPM.ConnectedInvoicesSequences) */
             }
