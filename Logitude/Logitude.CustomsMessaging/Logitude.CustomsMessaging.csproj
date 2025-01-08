@@ -283,6 +283,7 @@
     <Compile Include="MessagingServices\DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInGet_CB_MSG_8323_ClassifGuidanceDetailsMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInGet_CB_MSG_8317_CustomItemClassifGuidanceMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCB8373_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCBAC_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInGetPC_MSG2280_2281_CertificateOfOriginRequestMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCB2755E_MsgMessagingService.cs" />

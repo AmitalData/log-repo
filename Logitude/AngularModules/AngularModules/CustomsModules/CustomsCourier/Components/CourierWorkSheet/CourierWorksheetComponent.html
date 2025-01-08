@@ -639,7 +639,49 @@
                                                                             </split-button>
                                                                         </td>
                                                                         <td style="width:1px"></td>
+                                                                        <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
+                                                                        && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)"
+                                                                        style="width:170px">
+                                                                        <split-button
+                                                                            (DefaultSplitButtonClicked)="SendRecoverDeclaration('R')"
+                                                                            [ButtonText]=_ReadyRecoverToBatchSendButtonText
+                                                                            [IsDisabled]="IsDisplayOnly"
+                                                                            [MENUDivExtraTop]="24"
+                                                                            [MENUDivExtraLeft]="110">
 
+                                                                            <div class="class-MENUSplitButton-content">
+                                                                                <div>
+                                                                                    <ul class="x-button-drop-menu" style="width:150px;">
+                                                                                        <li>
+                                                                                            <span (click)="SendRecoverDeclaration('ALL')">{{'Customs.CourierMaster.O.RecoverAllDec'
+                                                                                                |
+                                                                                                TextCodeTranslationPipe
+                                                                                                }}
+                                                                                            </span>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </split-button>
+                                                                    </td>
+                                                                    <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
+                                                                        style="width:170px">
+                                                                        <split-button
+                                                                            (DefaultSplitButtonClicked)="SendRecoverDeclaration('Selected')"
+                                                                            [ButtonText]=SelectedRecoverDecToBatchSendButtonText
+                                                                            [IsDisabled]="IsDisplayOnly"
+                                                                            [AsRegularButton]="'true'"
+                                                                            [MENUDivExtraTop]="24"
+                                                                            [MENUDivExtraLeft]="110">
+
+                                                                            <div
+                                                                                class="class-MENUSplitButton-content">
+                                                                                <div></div>
+                                                                            </div>
+
+                                                                        </split-button>
+                                                                    </td>
 
                                                                         <td></td>
                                                                     </tr>
