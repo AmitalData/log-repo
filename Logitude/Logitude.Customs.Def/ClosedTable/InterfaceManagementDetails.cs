@@ -3453,8 +3453,24 @@ namespace Logitude.Customs.Def.ClosedTable
 				SendAsDual = false,
 				ResponseInterfaceCode = null,
 			});
-			//C:\LogitudeWorld\Amital\Logitude.Customs.BL\EntityPMs\InterfaceManagementPM.cs
-			var pm = new Logitude.Customs.Def.EntityPMs.InterfaceManagementPM();
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "UCB8373",
+                InOut = InOutEnum.O.ToString(),
+                Description = "שחזור הצהרה בלדר",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                DcaPrefixName = "",
+                DcaPrefixName2 = "",
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
+                InterfaceType = "B",
+
+            });
+            //C:\LogitudeWorld\Amital\Logitude.Customs.BL\EntityPMs\InterfaceManagementPM.cs
+            var pm = new Logitude.Customs.Def.EntityPMs.InterfaceManagementPM();
             var myRequestCode = pm.ResponseInterfaceCode;
             if (LogitudeSettings.IsCostomsDeploy)
             {
