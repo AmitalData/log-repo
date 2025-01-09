@@ -200,6 +200,8 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public DateTime? MawbDate  { get; set; }
        [DataMember]
+       public string Vessel  { get; set; }
+       [DataMember]
        public string FlightVoyageNumber  { get; set; }
        [DataMember]
        public string CarrierCode  { get; set; }
