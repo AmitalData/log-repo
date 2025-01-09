@@ -558,7 +558,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LogitudeSettings.HandleLogMe("_DocumentsFilingPM != null " + _DocumentsFilingPM.DocumentTypeId + logData, false, "CreateUD2LTService", stopLogAt);
             }
             LogitudeSettings.HandleLogMe("arrived Function " + _DocumentsFilingPM?.DocumentTypeId + logData, false, "CreateUD2LTService", stopLogAt);
-         
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("arrived Function " + _DocumentsFilingPM?.DocumentTypeId + logData);
+
 
             bool AutoSending = false;
             string CustomsDocumentUpload = "";
@@ -594,6 +595,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             }
                         }
                     }
+                    else
+                    {
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("empty documentTypeCustomsDataPM.CustomsDoucumentTypeCode " + logData);
+                    }
+                }
+                else
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("empty documentTypePM.Code " + logData);
                 }
 
                 if (declartionPM != null)
@@ -608,6 +617,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 logData += $"CheckIsSendByDocType:error:{ee.Message}";
                 LogitudeSettings.HandleLogMe("Exception" +  logData, false, "CreateUD2LTService", stopLogAt);
+                NetCommonHelper.Logger.DevLog.Instance.WriteError("Exception" + logData);
             }
             finally
             {
@@ -615,6 +625,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
 
             LogitudeSettings.HandleLogMe("AutoSending" + AutoSending + logData, false, "CreateUD2LTService", stopLogAt);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("AutoSending" + AutoSending + logData);
             return AutoSending;
 
         }
