@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated> CustomClassesGenerator.tt
 //---
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
 using POCO = Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data;
@@ -110,7 +110,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.DeclarationIdToDisplay).HasColumnName("DeclarationIdToDisplay").HasMaxLength(15).IsUnicode(false);
 
-             this.Property(t => t.MawbDate).HasColumnName("MawbDate");
+            this.Property(t => t.MawbDate).HasColumnName("MawbDate");
 
             this.Property(t => t.Vessel).HasColumnName("Vessel").HasMaxLength(15).IsUnicode(false);
 
@@ -119,7 +119,7 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.CarrierCode).HasColumnName("CarrierCode").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.OriginCountryCode).HasColumnName("OriginCountryCode").HasMaxLength(2).IsUnicode(false);
-         }
+        }
     }
 }
 	 
