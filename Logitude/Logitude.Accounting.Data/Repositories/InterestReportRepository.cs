@@ -88,7 +88,30 @@ namespace Logitude.Accounting.Data.Repositories
             return closedBalance != null ? closedBalance.Value : 0;
         }
 
-       public CloseBalanceInterestReportData GetCloseBalanceCalculationDateAndStatusOfTheLastInterestReport(int tenant,string glaccountId)
+
+        public decimal GetSumOfExReportsOrInterestOpenBalance(int tenant, string glaccountId)
+        {
+            var acc = (from ga in context.GLAccounts
+                       where ga.Tenant == tenant
+                       where ga.Id == glaccountId
+                       select ga
+                        );
+            GLAccount gLAccount = acc.FirstOrDefault();
+
+            decimal? closedBalance = (from a in context.InterestReports
+                                      join ga in acc on a.GLAccountId equals ga.Id
+                                      where a.Tenant == tenant
+                                     && (a.InterestReportStatusCode == InterestReportStatusCodes.Invoiced
+                                     || a.InterestReportStatusCode == InterestReportStatusCodes.ClosedWithoutInvoice)
+                                     && a.GLAccountId == glaccountId
+                                     && ((a.InterestCalculationDate >= ga.InterestCalculationStartDate) || ga.InterestCalculationStartDate == null)
+                                      orderby a.InterestCalculationDate descending
+                                      select a.CloseBalance).FirstOrDefault();
+
+            return closedBalance != null ? closedBalance.Value : gLAccount != null ? gLAccount.InterestOpenBalance.HasValue ? gLAccount.InterestOpenBalance.Value : 0 : 0;
+        }
+
+        public CloseBalanceInterestReportData GetCloseBalanceCalculationDateAndStatusOfTheLastInterestReport(int tenant,string glaccountId)
         {
             var acc = (from ga in context.GLAccounts
                        where ga.Tenant == tenant
