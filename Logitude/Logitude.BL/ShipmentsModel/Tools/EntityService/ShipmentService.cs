@@ -812,6 +812,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             myAmitalCustom.FlightVoyageNumber = shipmentPM.FlightVoyageNumber;
             myAmitalCustom.CarrierCode = shipmentPM.CarrierCode;
 			myAmitalCustom.OriginCountryCodeRef = shipmentPM.OriginCountryCode;
+			myAmitalCustom.Email = loggedContact.Email;
+
 			#endregion
 
 			if (!string.IsNullOrEmpty(unloadPortCode))
@@ -1377,6 +1379,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             myAmitalCustom.FlightVoyageNumber = string.IsNullOrEmpty(declarationReferantDataPM?.FlightVoyageNumber) || !updateEmptyValueOnly ? shipmentPM.FlightVoyageNumber : declarationReferantDataPM.FlightVoyageNumber;
             myAmitalCustom.CarrierCode = string.IsNullOrEmpty(declarationReferantDataPM?.CarrierCode) || !updateEmptyValueOnly ? shipmentPM.CarrierCode : declarationReferantDataPM.CarrierCode;
 			myAmitalCustom.OriginCountryCodeRef = string.IsNullOrEmpty(declarationReferantDataPM?.OriginCountryCode) || !updateEmptyValueOnly ? shipmentPM.OriginCountryCode : declarationReferantDataPM.OriginCountryCode;
+			myAmitalCustom.Email = loggedContact.Email;
+
 			#endregion
 
 			var respnse = APIConnectionHelper.Instance.PostViaWebAPI<Response, LogitudeCustomsFile>("/api/Declarartion/UpdateDeclarationInU2L", myAmitalCustom);

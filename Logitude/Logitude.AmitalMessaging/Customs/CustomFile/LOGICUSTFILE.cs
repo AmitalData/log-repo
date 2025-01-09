@@ -215,6 +215,7 @@ public partial class LogitudeCustomsFile
  	private string systemConnectionField;
 	private string mawbDateField;
 	private string estimatedArrivalDateField;
+	private string email;
 	private string arrivalDateField;
 	private string vesselField;
 	private string flightVoyageNumberField;
@@ -1275,6 +1276,17 @@ public partial class LogitudeCustomsFile
 		set
 		{
 			this.estimatedArrivalDateField = value;
+		}
+	}
+	public string Email
+	{
+		get
+		{
+			return this.email;
+		}
+		set
+		{
+			this.email = value;
 		}
 	}
 	public string ArrivalDate

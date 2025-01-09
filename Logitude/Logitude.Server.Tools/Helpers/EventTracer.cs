@@ -50,7 +50,7 @@ namespace Logitude.Server.Tools.Helpers
                         {
                             if (HttpContext.Current != null && HttpContext.Current.User != null)
                             {
-                                string email = HttpContext.Current.User.Identity.Name;
+                                string email = !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name) ? HttpContext.Current.User.Identity.Name: args.Email;
                                 if (!string.IsNullOrEmpty(email))
                                 {
                                     UserRepository userRepository = new UserRepository(0);
@@ -407,9 +407,11 @@ namespace Logitude.Server.Tools.Helpers
         public object Entity { get; set; }
         public string ChildEntityId { get; set; }
         public string ChildObjectTableName { get; set; }
-    }
+		public string Email { get; set; }
 
-    public class UpdateEventCustomFieldArgs
+	}
+
+	public class UpdateEventCustomFieldArgs
     {
         public int Tenant { get; set; }
         public string EntityId { get; set; }

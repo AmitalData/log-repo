@@ -1997,7 +1997,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
             if (this._MyDeclarationPM.SystemConnection == "N" && this._DeclarationReferantDataPM.ChangeSetOp == ChangeSetOperation.Update)
 			{
-                this._DeclarationReferantDataPM.MawbDate = !String.IsNullOrWhiteSpace(_AmitalCustomsFile.MawbDate) ? (DateTime?)DateTime.Parse(_AmitalCustomsFile.MawbDate) : null;
+				this._DeclarationReferantDataPM.Email = _AmitalCustomsFile.Email;
+				this._DeclarationReferantDataPM.MawbDate = !String.IsNullOrWhiteSpace(_AmitalCustomsFile.MawbDate) ? (DateTime?)DateTime.Parse(_AmitalCustomsFile.MawbDate) : null;
                 this._DeclarationReferantDataPM.EstimatedArrivalDate = !String.IsNullOrWhiteSpace(_AmitalCustomsFile.EstimatedArrivalDate) ? (DateTime?)DateTime.Parse(_AmitalCustomsFile.EstimatedArrivalDate) : null;
 				this._DeclarationReferantDataPM.PackageTypeCode = _AmitalCustomsFile.PackageTypeCode;
 				this._DeclarationReferantDataPM.ArrivalDate = !String.IsNullOrWhiteSpace(_AmitalCustomsFile.ArrivalDate) ? (DateTime?)DateTime.Parse(_AmitalCustomsFile.ArrivalDate) : null;
