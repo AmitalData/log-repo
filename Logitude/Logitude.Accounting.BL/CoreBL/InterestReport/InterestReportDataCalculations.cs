@@ -163,7 +163,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 
         private void CalculateDataForInterestReport()
         {
-            interestReportPM.OpenBalance = recalculateData ? GetInterestReportOpenBalance() : interestReportPM.OpenBalance;
+            interestReportPM.OpenBalance = GetInterestReportOpenBalance(); // recalculateData ? GetInterestReportOpenBalance() : interestReportPM.OpenBalance;
             CreateOpenBalanceInterestTransaction();
             CreateInterestReportLines();
             List<InterestReportLinesByDatePM> interestReportLinesByDatePMs = CreateInterestReportLinesByDate();
