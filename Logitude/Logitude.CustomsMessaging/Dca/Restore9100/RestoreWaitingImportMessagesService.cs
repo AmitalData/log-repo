@@ -63,15 +63,15 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
             restoreWaitingImportService.RestoreWaitingImportSaveInDB();
 
         }
-        
+
         int Minutes2Retrieve()
         {
             const int C_Minutes2Retrieve = 15;
-            string s=ConfigurationManager.AppSettings.Get("RestoreWaitingImportMessages:Minutes2Retrieve");
+            string s = ConfigurationManager.AppSettings.Get("RestoreWaitingImportMessages:Minutes2Retrieve");
             int iMinutes2Retrieve = C_Minutes2Retrieve;
-            if (int.TryParse(s,out iMinutes2Retrieve))
+            if (int.TryParse(s, out iMinutes2Retrieve))
             {
-                if (iMinutes2Retrieve>15 && iMinutes2Retrieve< 180)
+                if (iMinutes2Retrieve > 15 && iMinutes2Retrieve < 180)
                 {
                     return iMinutes2Retrieve;
                 }
@@ -80,16 +80,15 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
         }
         public void RestoreWaitingImportSaveInDB()
         {
-      
 
             if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20230102.SuppressRestoreWaitingImportSaveInDB"]))
             {
                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Suppress RestoreWaitingImportSaveInDB");
 
 
-                 return;
+                return;
             }
- 
+
            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RestoreWaitingImportService.RestoreWaitingImportSaveInDB()");
 
 
@@ -98,23 +97,23 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
             {
                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RestoreWaitingImportSaveInDB-only in export cloud");
 
-                 return;
+                return;
             }
             try
             {
 
 
-                _LastRetrive = _LastRetrive ?? DateTime.Now.AddMinutes(-1* Minutes2Retrieve());
-                if (DateTime.Now.Date.Equals(new DateTime(2023,01,3)))
+                _LastRetrive = _LastRetrive ?? DateTime.Now.AddMinutes(-1 * Minutes2Retrieve());
+                if (DateTime.Now.Date.Equals(new DateTime(2023, 01, 3)))
                 {
                     ///_LastRetrive = DateTime.Now.AddDays(-31);
-            }
+                }
                 var request = GetRequest(_LastRetrive.Value);
                 var sw = Stopwatch.StartNew();
                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RestoreWaitingImportSaveInDB-Send 9100 restore fromDate {request.GetOptions.fromDate}");
 
 
-                 var response = SendOutgoingMessageRequest(request);
+                var response = SendOutgoingMessageRequest(request);
                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RestoreWaitingImportSaveInDB-Send 9100 took {sw.Elapsed}");
                 NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"t{_CustomsSettingPM.Tenant};fromDate {request.GetOptions.fromDate}; OutgoingMessage={response?.OutgoingMessage?.Length}" + ":" + "DCAStopwatch");
 
@@ -123,7 +122,7 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RestoreWaitingImportSaveInDB-OutgoingMessage == 0 - nothing todo");
 
 
-                     return;
+                    return;
                 }
                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RestoreWaitingImportSaveInDB-OutgoingMessage == {response?.OutgoingMessage?.Length}");
 
@@ -140,21 +139,22 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
                 correlationIdsCanClear.ToList().
                     ForEach(r =>
                     _MessageCorrelationSavedInDBList.Add(
-                        new MessageCorrelationSavedInDB() {
-                        CorrelationId = r.CorrelationIDs,
-                        DownloadAt = DateTime.Now,
-                        Tenant = _CustomsSettingPM.Tenant
+                        new MessageCorrelationSavedInDB()
+                        {
+                            CorrelationId = r.CorrelationIDs,
+                            DownloadAt = DateTime.Now,
+                            Tenant = _CustomsSettingPM.Tenant
                         })
                     );
-                if (outgoingMessage9100ResponseAnalyze.exceptionBag.Count>0)
+                if (outgoingMessage9100ResponseAnalyze.exceptionBag.Count > 0)
                 {
                     NetCommonHelper.Logger.DevLog.Instance.WriteError(String.Join(Environment.NewLine, outgoingMessage9100ResponseAnalyze.exceptionBag.ToList())+":"+ $"RestoreWaitingImport_Error_T{_CustomsSettingPM.Tenant}");
                 }
-                if (outgoingMessage9100ResponseAnalyze.sbFilenameQueue.Count>0)
+                if (outgoingMessage9100ResponseAnalyze.sbFilenameQueue.Count > 0)
                 {
                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo(String.Join(Environment.NewLine, outgoingMessage9100ResponseAnalyze.sbFilenameQueue.ToList()) + ":" + $"RestoreWaitingImport_Files_T{_CustomsSettingPM.Tenant}");
                 }
-                
+
 
             }
             catch (System.Exception e)
@@ -178,9 +178,9 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
         {
             var onlyImportMessages = response.OutgoingMessage.Where(r => !r.Filename.Contains("_EX_")).ToList();
 
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"onlyImportMessages-OutgoingMessage == {string.Join(",", onlyImportMessages)}");
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"onlyImportMessages-OutgoingMessage == {string.Join(",", onlyImportMessages.Select(x=>x.Filename))}");
 
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"_MessageCorrelationSavedInDBList-OutgoingMessage == {string.Join(",", _MessageCorrelationSavedInDBList)}");
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"_MessageCorrelationSavedInDBList-OutgoingMessage == {string.Join(",", _MessageCorrelationSavedInDBList.Select(x=>x.CorrelationId))}");
 
             var listLast15MinImportCorrelationId = _MessageCorrelationSavedInDBList
                 .Where(r => r.Tenant == _CustomsSettingPM.Tenant)
@@ -188,22 +188,12 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
 
 
             NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"listLast15MinImportCorrelationId-OutgoingMessage == {string.Join(",", listLast15MinImportCorrelationId)}");
-            CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(_CustomsSettingPM.Tenant);
-           
-            var  list2281FromDB = customsRequestsSheetQueryService.GetByInterfaceTypeCodeLastTime(Minutes2Retrieve() + 5, "2281" );
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"list2281FromDB-OutgoingMessage == {string.Join(",", list2281FromDB)}");
 
-            var new2281Messages = onlyImportMessages.Where(r => r.ServiceName== "SendPC_NG_2281_MSG02_CertificateOfOriginRequestFeedback" && !list2281FromDB.Select(x=>x.CorrelationId).Contains(r.CorrelationId)).ToList();
-          
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"new2281Messages-OutgoingMessage == {string.Join(",", new2281Messages)}");
+            var newImportMessages = onlyImportMessages.Where(r => !listLast15MinImportCorrelationId.Contains(r.CorrelationId)).ToList();
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"newImportMessages-OutgoingMessage == {string.Join(",", newImportMessages.Select(x => x.Filename))}");
 
-
-            var newImportMessages = onlyImportMessages.Where(r => r.ServiceName != "SendPC_NG_2281_MSG02_CertificateOfOriginRequestFeedback" &&!listLast15MinImportCorrelationId.Contains(r.CorrelationId)).ToList();
-         
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"newImportMessages-OutgoingMessage == {string.Join(",", newImportMessages)}");
-
-            newImportMessages.AddRange(new2281Messages);
             return newImportMessages;
+
         }
 
 
@@ -219,7 +209,7 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
 
             var sendNG_9100_MSG_OutgoingMessageRequestService = new SendNG_9100_MSG_OutgoingMessageRequestService();
             var result = sendNG_9100_MSG_OutgoingMessageRequestService.CallWS(customRequest, this._CustomsSettingPM, myIIGGatewayMoreParams, RequestsSheetExternalId);
-            
+
             return result.response;
             return response;
         }
@@ -256,7 +246,7 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
             };
         }
     }
-    
+
     class MessageCorrelationSavedInDB
     {
         public int Tenant { get; set; }
