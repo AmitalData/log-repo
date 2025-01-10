@@ -11,6 +11,6 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 export class ModuleCommonOthers {
     public static GetComponent(name: string) {
-        return ModuleDeclarations.Get(name);
+        return ModuleDeclarations.Get(name.replace("',", ''));
     }
 }

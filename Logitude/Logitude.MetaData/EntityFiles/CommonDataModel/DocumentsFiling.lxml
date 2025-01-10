@@ -16,7 +16,7 @@
   HasHelper="false"
   HasShortTitle="true"
   HasFiltersMenu="false"
-  HasCustomValidator="false"
+  HasCustomValidator="true"
   IsEditable="true"
   IsNewWizard="true"
   KeyPropertyPath="&quot;Id&quot;"
@@ -38,13 +38,13 @@
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
-  NewWizardControlName="&quot;./CommonModules/CommonOthers/Components/NewEntity/DocumnetsFiling/NewDocumentsFilingComponent&quot;"
+  NewWizardControlName="&quot;./CommonModules/CommonOthers/Components/NewEntity/DocumnetsFiling/DocumentsFilingComponent&quot;"
   DefaultText="&quot;Document Filing&quot;"
   Code="&quot;DOCF&quot;"
   Name="&quot;Document Filings&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Common&quot;"
-  NewWizardComponentPath="&quot;NewWizardControlName =  './CommonModules/CommonOthers/Components/NewEntity/DocumnetsFiling/NewDocumentsFilingComponent',&quot;"
+  NewWizardComponentPath="&quot;./CommonModules/CommonOthers/Components/NewEntity/DocumnetsFiling/DocumentsFilingComponent&quot;"
   NoViewController="false"
   NoPMController="false"
   NoTS="false"
@@ -9337,7 +9337,48 @@
     DefaultSortName="&quot;CreateDate&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">
-    <QueryColumns />
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;General Documents&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;Extension&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;General Documents&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;Code&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;General Documents&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;DocumentTypeName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;General Documents&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;Description&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;General Documents&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;CreateDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;General Documents&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;IsDigitallySigned&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;General Documents&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;IsSharedWithForwarder&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;General Documents&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;IsRequested&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
     <QueryFilters />
   </Query>
   <Screen
@@ -9396,6 +9437,18 @@
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
+    TabName="&quot;Doc&quot;"
+    TabLocalName="&quot;מסמך&quot;"
+    ObjectTableName="&quot;DocumentsFiling&quot;"
+    Code="&quot;DFDC&quot;"
+    ControlPath="&quot;./CommonModules/CommonOthers/Components/NewEntity/DocumnetsFiling/DocumentsFilingComponent&quot;"
+    TextCode="&quot;DocumentsFiling.TH.Doc&quot;"
+    IsPackagable="false"
+    IndexOrder="0"
+    HtmlComponentURL="&quot;./CommonModules/CommonOthers/Components/NewEntity/DocumnetsFiling/DocumentsFilingComponent&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
     TabName="&quot;Events&quot;"
     ObjectTableName="&quot;DocumentsFiling&quot;"
     Code="&quot;DFEV&quot;"
@@ -9406,18 +9459,6 @@
     FeatureCode="&quot;EVENTS&quot;"
     FeatureTextCodeCode="&quot;DocumentsFiling.Features.Events&quot;"
     FeatureDefaultText="&quot;Events&quot;"
-    IsSpellChecked="false"
-    HasGeneralFeature="false" />
-  <Tab
-    TabName="&quot;Doc&quot;"
-    TabLocalName="&quot;מסמך&quot;"
-    ObjectTableName="&quot;DocumentsFiling&quot;"
-    Code="&quot;DFDC&quot;"
-    ControlPath="&quot;./InfrastructureModules/InfrastructureDocuments/Components/DocumentsFiling/DocumentsFilingDocTabComponent&quot;"
-    TextCode="&quot;DocumentsFiling.TH.Doc&quot;"
-    IsPackagable="false"
-    IndexOrder="0"
-    HtmlComponentURL="&quot;./InfrastructureModules/InfrastructureDocuments/Components/DocumentsFiling/DocumentsFilingDocTabComponent&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <EventTypes>

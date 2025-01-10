@@ -10,6 +10,7 @@ import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevel
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {DocumentsFilingMetaDataValuePM} from '../../EntityPMs/DocumentsFilingMetaDataValuePM';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
+import { DocumentsFilingValidator } from 'Common/Validators/DocumentsFilingValidator';
 
 @Injectable()
 export class DocumentsFilingExtendedPMService {
@@ -761,15 +762,24 @@ export class DocumentsFilingExtendedPMService {
 
           }
 
-    PostDocumentAndDocumentFiling(tenant: number, fileName: string, fileContent: string, directionCode: string, documentTypeId: string) {
+    PostDocumentAndDocumentFiling(documentsFilingPM: DocumentsFilingPM, fileContent: string) {
+        const serviceResponse: ServiceResponse = new ServiceResponse();
+        const errorsArray: string[] = new DocumentsFilingValidator().Validate(documentsFilingPM);
+
+        if(errorsArray.length > 0) {
+            serviceResponse.HasError = true;
+            serviceResponse.ErrorsArray = errorsArray;
+            return of(serviceResponse);
+        }
+
+        documentsFilingPM = this.AddEditMapJsonToEntityPM(documentsFilingPM, false);
+
         return this._http.post(this._apiUrl + "/PostDocumentAndDocumentFiling", 
-            { tenant , fileName, fileContent, directionCode, documentTypeId }, 
+            { documentsFilingPM, fileContent },
             ServiceHelper.GetHttpHeaders()
         ).pipe(map(response => {
-            const pmresponse: ServiceResponse = new ServiceResponse();
-            pmresponse.Result = response;
-            return pmresponse;
+            serviceResponse.Result = response;
+            return serviceResponse;
         }),catchError(ServiceHelper.HandleServiceError));
     }
 }
-

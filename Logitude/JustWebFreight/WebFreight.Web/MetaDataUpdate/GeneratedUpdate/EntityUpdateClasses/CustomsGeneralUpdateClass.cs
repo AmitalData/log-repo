@@ -21,7 +21,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "1370c146b7a0eea75f8593e944c7245b";
+		public const string HashString = "989e2370b9774b369ee058d74c4342fc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -65,7 +65,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "0f2e",
+			      				    Code =  "0c0f",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2153,6 +2153,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOInland = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.Inland", DefaultText = "Inland",LocalDefaultText = @"יבשה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOActions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.Actions", DefaultText = "Actions",LocalDefaultText = @"פעולות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOCllickToSelectFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CllickToSelectFile", DefaultText = "Click to select a file",LocalDefaultText = @"לחץ לבחירת קובץ", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOFileNotAllow = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.FileNotAllow", DefaultText = "File extension not allowed",LocalDefaultText = @"קובץ עם סיומת לא מורשה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

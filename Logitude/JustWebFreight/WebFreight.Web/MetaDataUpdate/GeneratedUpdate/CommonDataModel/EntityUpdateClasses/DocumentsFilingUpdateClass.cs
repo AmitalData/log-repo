@@ -21,7 +21,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class DocumentsFilingUpdateClass
    {  		
-		public const string HashString = "7ea8789b7427131a1bc28e6571c2ad4e";
+		public const string HashString = "b2f42f6f709dd58ace3601b546c44364";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -63,13 +63,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    NewWizardControlName =  "./CommonModules/CommonOthers/Components/NewEntity/DocumnetsFiling/NewDocumentsFilingComponent",
+			      				    NewWizardControlName =  "./CommonModules/CommonOthers/Components/NewEntity/DocumnetsFiling/DocumentsFilingComponent",
 			      				    DefaultText =  "Document Filing",
 			      				    Code =  "DOCF",
 			      				    Name =  "Document Filings",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
-			      				    NewWizardComponentPath =  "NewWizardControlName =  './CommonModules/CommonOthers/Components/NewEntity/DocumnetsFiling/NewDocumentsFilingComponent',",
+			      				    NewWizardComponentPath =  "./CommonModules/CommonOthers/Components/NewEntity/DocumnetsFiling/DocumentsFilingComponent",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -7979,7 +7979,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	      
 
 			  Query GeneralDocumentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DocumentsFilingTextCode_2.Id, NameTextCodeCode = DocumentsFilingTextCode_2.Code, ObjectTableName = "DocumentsFiling", Code = "General Documents",  QueryGroupCode = "DOCF", IndexOrder = 2, Tenant = 0, ObjectTableId = DocumentsFilingObjectTable.Id, QuerySection = "DocumentsFiling", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DocumentsFilingFeature_2.Id,FeatureUniqeCode= DocumentsFilingFeature_2.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
-				SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+	
+			 QueryColumn GeneralDocumentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GeneralDocumentsQuery.Id,QueryCode = GeneralDocumentsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "DocumentsFiling.Extension" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn GeneralDocumentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GeneralDocumentsQuery.Id,QueryCode = GeneralDocumentsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "DocumentsFiling.Code" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn GeneralDocumentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GeneralDocumentsQuery.Id,QueryCode = GeneralDocumentsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "DocumentsFiling.DocumentTypeName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn GeneralDocumentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GeneralDocumentsQuery.Id,QueryCode = GeneralDocumentsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "DocumentsFiling.Description" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn GeneralDocumentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GeneralDocumentsQuery.Id,QueryCode = GeneralDocumentsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "DocumentsFiling.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn GeneralDocumentsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GeneralDocumentsQuery.Id,QueryCode = GeneralDocumentsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "DocumentsFiling.IsDigitallySigned" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn GeneralDocumentsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GeneralDocumentsQuery.Id,QueryCode = GeneralDocumentsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "DocumentsFiling.IsSharedWithForwarder" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn GeneralDocumentsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GeneralDocumentsQuery.Id,QueryCode = GeneralDocumentsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "DocumentsFiling.IsRequested" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
 			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
@@ -8025,12 +8041,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   Feature DocumentsFilingGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DocumentsFilingObjectTable);
  
                  
-			   TextCode DocumentsFilingEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature DocumentsFilingEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DocumentsFilingObjectTable);
+			   TextCode DocumentsFilingDocTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling.TH.Doc", DefaultText = "Doc",LocalDefaultText = "מסמך", ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature DocumentsFilingDocFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DocumentsFiling.Tab.Doc", ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFilingFeatures.DFDC", NameTextCodeDefaultText = "Doc", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DocumentsFilingObjectTable);
  
                  
-			   TextCode DocumentsFilingDocTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling.TH.Doc", DefaultText = "Doc",LocalDefaultText = "מסמך", ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature DocumentsFilingDocFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DocumentsFiling.Tab.Doc", ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFilingFeatures.DFDC", NameTextCodeDefaultText = "Doc", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DocumentsFilingObjectTable);
+			   TextCode DocumentsFilingEventsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature DocumentsFilingEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DocumentsFilingObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -8038,9 +8054,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DFGC",HtmlComponentName = "",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentsFiling/DocumentsFilingGeneralTabComponent", FeatureId = DocumentsFilingGeneralFeature_TH0.Id,FeatureUniqeCode = DocumentsFilingGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentsFiling/DocumentsFilingGeneralTabComponent", ObjectTableId = DocumentsFilingObjectTable.Id, TabNameTextCodeId = DocumentsFilingGeneralTextCode_TH0.Id, TabNameTextCodeCode = DocumentsFilingGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DFEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = DocumentsFilingEventsFeature_TH1.Id,FeatureUniqeCode = DocumentsFilingEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = DocumentsFilingObjectTable.Id, TabNameTextCodeId = DocumentsFilingEventsTextCode_TH1.Id, TabNameTextCodeCode = DocumentsFilingEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DFDC",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonOthers/Components/NewEntity/DocumnetsFiling/DocumentsFilingComponent", FeatureId = DocumentsFilingDocFeature_TH1.Id,FeatureUniqeCode = DocumentsFilingDocFeature_TH1.FeatureUniqeCode, ControlPath = "./CommonModules/CommonOthers/Components/NewEntity/DocumnetsFiling/DocumentsFilingComponent", ObjectTableId = DocumentsFilingObjectTable.Id, TabNameTextCodeId = DocumentsFilingDocTextCode_TH1.Id, TabNameTextCodeCode = DocumentsFilingDocTextCode_TH1.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DFDC",HtmlComponentName = "",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentsFiling/DocumentsFilingDocTabComponent", FeatureId = DocumentsFilingDocFeature_TH2.Id,FeatureUniqeCode = DocumentsFilingDocFeature_TH2.FeatureUniqeCode, ControlPath = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentsFiling/DocumentsFilingDocTabComponent", ObjectTableId = DocumentsFilingObjectTable.Id, TabNameTextCodeId = DocumentsFilingDocTextCode_TH2.Id, TabNameTextCodeCode = DocumentsFilingDocTextCode_TH2.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DFEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = DocumentsFilingEventsFeature_TH2.Id,FeatureUniqeCode = DocumentsFilingEventsFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = DocumentsFilingObjectTable.Id, TabNameTextCodeId = DocumentsFilingEventsTextCode_TH2.Id, TabNameTextCodeCode = DocumentsFilingEventsTextCode_TH2.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

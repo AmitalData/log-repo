@@ -23,6 +23,13 @@ using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.Server.Tools;
+using Logitude.BL.Helpers;
+using Logitude.Server.Tools.Models;
+using System.Threading.Tasks;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
 {
@@ -563,21 +570,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
         {
             try
             {
-                AuthenticateRequest(data.tenant);
+                int tenant = data.documentsFilingPM.Tenant;
+                AuthenticationToken authenticationToken = AuthenticateRequest(tenant);
 
-                DocumentsFilingPM documentsFiling = new DocumentsFilingPM()
-                {
-                    Tenant = data.tenant,
-                    DirectionCode = data.directionCode,
-                    DocumentTypeId = data.documentTypeId,
-                    FileName = data.fileName,
-                };                
                 byte[] fileData = Convert.FromBase64String(data.fileContent);
+                new DocumentsFilingService(CommonDataContext.GetContext(tenant), tenant).Create(data.documentsFilingPM, fileData);
 
-                new DocumentsFilingService(CommonDataContext.GetContext(data.tenant), data.tenant).Create(documentsFiling, fileData);
-
-
-                return Request.CreateResponse(HttpStatusCode.OK);
+                return Request.CreateResponse(HttpStatusCode.OK, data.documentsFilingPM);
             }
             catch (Exception ex)
             {
@@ -597,11 +596,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
 
         public class DocumentDataAndDocumentFiling
         {
-            public int tenant { get; set; }
-            public string fileName { get; set; }
+            public DocumentsFilingPM documentsFilingPM { get; set; }
             public string fileContent { get; set; }
-            public string directionCode { get; set; }
-            public string documentTypeId { get; set; }
         }
     }
 }
