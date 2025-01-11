@@ -1,10 +1,14 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq; 
 using System.Text;
 using System.Threading.Tasks;
@@ -162,6 +166,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         NotDisplayInMenu = a.NotDisplayInMenu
                     });
         }
+        public void DeleteFromMenu(string reportId , int tenant)
+        {
+            var reportExecutionLogRepository = new ReportExecutionLogRepository(tenant);
+            var reportExecutionLog = reportExecutionLogRepository.GetReportExecutionLog(reportId);
+            reportExecutionLog.NotDisplayInMenu = true;
+            reportExecutionLogRepository.Update(reportExecutionLog);
+            reportExecutionLogRepository.SubmitChanges();
 
+
+        }
     }
 }

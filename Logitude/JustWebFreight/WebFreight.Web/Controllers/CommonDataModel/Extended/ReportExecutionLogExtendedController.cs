@@ -127,13 +127,9 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 
                 SecurityUtility.CheckContactFeature("ReportExecutionLog", "READ", tenant);
                 SecurityUtility.CheckContactFeature("ReportExecutionLog", "UPDATE", tenant);
-
-                var reportExecutionLogRepository = new ReportExecutionLogRepository(tenant);
-                var reportExecutionLog = reportExecutionLogRepository.GetReportExecutionLog(reportId);
-                reportExecutionLog.NotDisplayInMenu = true;
-                
-                reportExecutionLogRepository.Update(reportExecutionLog);
-                reportExecutionLogRepository.SubmitChanges();
+                ReportExecutionLogQuery reportExecutionLogQuery = new ReportExecutionLogQuery(authToken.Tenant);
+                reportExecutionLogQuery.DeleteFromMenu(reportId,tenant);
+              
 
               
                 return Request.CreateResponse(HttpStatusCode.OK, "OK");
