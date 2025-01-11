@@ -112,7 +112,7 @@ void SaveEntityServiceOutput(string outputFileName)
 	string parententity = "IEntityPM";
 	if(entity.ParentTableName.GetType() == typeof(string))
     {
-		parententity = entity.ParentTableName + "PM";
+		parententity = entity.ParentTableName.Trim('"') + "PM";
     }
     string pmName = tableName + "PM";
     string listName = tableName + "List";
