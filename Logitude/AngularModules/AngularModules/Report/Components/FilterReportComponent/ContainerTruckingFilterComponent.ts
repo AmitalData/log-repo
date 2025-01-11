@@ -1,4 +1,4 @@
-﻿import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
@@ -74,7 +74,32 @@ export class ContainerTruckingFilterComponent extends BaseComponent implements O
     onSelectedItemShowChanged(item) {
     }
 
-   
+    
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                                       
+                case "DirectionId":
+                        this.MySelectedDirectionFilter = queryFilterItem.FieldValue;
+                        break;      
+                case "AgentId":
+                    this.AgentId = queryFilterItem.FieldValue;
+                    break;  
+                case "CustomerId":  
+                    this.CustomerId = queryFilterItem.FieldValue;
+                    break;
+              
+            }
+            }
+    }
 
     RunReport() {
         this.queryFilterItems = new Array<QueryFilterItem>();

@@ -94,17 +94,17 @@ export class SpotRateQuoteReportFilterComponent extends BaseComponent {
     }
     SetOpenDateFilter(queryFilterItem: QueryFilterItem) {
         if (queryFilterItem.FieldName == "OpenDateGraterThan") {
-            this.OpenDateGraterThan = queryFilterItem.FieldValue;
+            this.OpenDateGraterThan =queryFilterItem.FieldValue 
         }
     }
     SetExpirationDateLessThanFilter(queryFilterItem: QueryFilterItem) {
         if (queryFilterItem.FieldName == "ExpirationDateLessThan") {
-            this.ExpirationDate = queryFilterItem.FieldValue;
+            this.ExpirationDate = queryFilterItem.FieldValue
         }
     }
 
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>) { //For Scheduler Report
-        this.IsSchedulerReport = true;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { //For Scheduler Report
+        this.IsSchedulerReport = isSchedulerReport;
         if (queryFilterItems) {
             queryFilterItems.forEach(queryFilterItem => {
                 this.SetFilterItem(queryFilterItem);

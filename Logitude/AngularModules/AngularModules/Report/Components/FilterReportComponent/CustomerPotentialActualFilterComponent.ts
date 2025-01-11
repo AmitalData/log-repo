@@ -534,6 +534,46 @@ export class CustomerPotentialActualFilterComponent extends BaseComponent {
     private queryFilterItems: QueryFilterItem[];
     private mySelectedProductsList: string[];
     public ValidationErrorsList: string[];
+    
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "DataTypeCode":
+                    this.SelectedViewByFilter = this.ViewByComboList.filter(d => d.Code == queryFilterItem.FieldValue)[0];
+                    break;
+               
+                case "TimeRange":
+                    this.SelectedTimeRangeFilter = this.TimeRangeComboList.filter(d => d.Code == queryFilterItem.FieldValue)[0];
+                    break;                          
+                case "ProductsTypes":
+                    this.SelectedProdustTypeFilter = queryFilterItem.FieldValue;
+                        break; 
+                case "BusinessUnitId":
+                    this.SelectedBusinessUnitFilter = this.BusinessUnitFilterList.filter(d => d.Code == queryFilterItem.FieldValue)[0];
+                    break;
+                case "OwnerId":
+                    this.SelectedUserFilter = this.UsersFilterList.filter(d => d.Code == queryFilterItem.FieldValue)[0];
+                    break;
+                case "CountryId":
+                    this.CountryId = queryFilterItem.FieldValue;
+                    break;
+                case "ProductCode":
+                    this.SelectedProductFilter = this.ProductFilterList.filter(d => d.Code == queryFilterItem.FieldValue)[0];
+                    break;    
+                        
+                        
+            }
+    
+        }
+    }
     RunReport() {
         this.ValidationErrorsList = [];
 

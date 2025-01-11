@@ -51,8 +51,8 @@ export class ShipmentsStocksFiltersComponent extends BaseComponent implements On
         var month = new Date().getMonth();
         var Year = new Date().getFullYear();
         var daysofmonth = this.daysInMonth(new Date());
-        this.FromDate = this.SetDate(Year, month - 1, 1);
-        this.ToDate = this.SetDate(Year, month, daysofmonth);
+        this.FromDate = this.FromDate??this.SetDate(Year, month - 1, 1);
+        this.ToDate =this.ToDate?? this.SetDate(Year, month, daysofmonth);
         //this.RunReport(false);
     }
 
@@ -76,7 +76,35 @@ export class ShipmentsStocksFiltersComponent extends BaseComponent implements On
             this.includeShipmentsDetails = value;
         }
     }
+    
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
 
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "FromDate":
+                    this.FromDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "ToDate":
+                    this.ToDate =new Date(queryFilterItem.FieldValue);
+                    break;
+                case "IncludeShipmentsDetails":
+                    this.IncludeShipmentsDetails = queryFilterItem.FieldValue;
+                    break;
+                   
+               
+            }
+    
+           
+    
+        }
+    }
     RunReport(isloading: boolean) {
 
 

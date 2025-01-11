@@ -209,7 +209,61 @@ export class ActivityStatusDashboardFilterComponent extends BaseComponent implem
         this.SelectedItemShow = this.showComboList[0];
 
     }
+    
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
 
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        this.timeRangeComboList = LastFilter.myList();
+        var lastFilter: LastFilter = new LastFilter();
+        lastFilter.lastTitle = "Custom";
+        lastFilter.LastDays = 0;
+        lastFilter.Lastmonths = 0;
+
+        this.timeRangeComboList.push(lastFilter);
+        this.SelectedItem 
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "LastMonths":
+                    this.SelectedItem = this.timeRangeComboList[queryFilterItem.FieldValue];
+                    break;
+                case "TransportModeId":
+                    this.MySelectedTransportFilter=queryFilterItem.FieldValue;
+                    break;
+                case "DirectionId":
+                    this.MySelectedDirectionFilter=queryFilterItem.FieldValue;
+                    break;
+                case "ShowIndex":{
+                    this.BuildShowTypesFilters();
+                    this.SelectedItemShow = this.showComboList[queryFilterItem.FieldValue];
+                    break;    
+
+                }
+                case "FromDate":
+                    this.ActivityToDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "ToDate":
+                    this.ActivityFromDate= new Date(queryFilterItem.FieldValue);
+                    break;
+                
+                
+                case "TimeRange":
+                    this.SelectedItem.lastTitle = queryFilterItem.FieldValue;
+                    break;
+                
+                   
+               
+            }
+    
+           
+    
+        }
+    }
     RunReport() {
 
 

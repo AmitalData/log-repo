@@ -105,7 +105,63 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                         };
             return result;
         }
-         
-         
+        public IQueryable<ReportExecutionLogPM> GetReportExecutionLogPMsByTenantAndUserLastWeek(int tenant,string id)
+        {
+            var oneWeekAgo = DateTime.Now.AddDays(-7);
+
+            return (from a in repository.context.ReportExecutionLogs.Include("CommunicationStatusType").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("Report")
+                    where a.Tenant == tenant && a.CreateDate >= oneWeekAgo && a.CreatedByUserId == id   && a.NotDisplayInMenu == false
+                    select new ReportExecutionLogPM()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        CreatedByUserId = a.CreatedByUserId,
+                        CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
+                        StatusCode = a.StatusCode,
+                        StatusName = a.CommunicationStatusType != null ? a.CommunicationStatusType.Name : null,
+                        ExceptionMessage = a.ExceptionMessage,
+                        CreateDate = a.CreateDate,
+                        DoneDate = a.DoneDate,
+                        ReportFilterXML = a.ReportFilterXML,
+                        ReportId = a.ReportId,
+                        ReportName = a.Report != null ? a.Report.Name : null,
+                        ReportTemplateId = a.ReportTemplateId,
+                        RetryNumber = a.RetryNumber,
+                        StartDate = a.StartDate,
+                        ExecutedByServerName = a.ExecutedByServerName,
+                        DisablePreview = a.DisablePreview,
+                        SearchFields = a.SearchFields,
+                        NotDisplayInMenu=a.NotDisplayInMenu,
+                    });
+        }
+
+        public IQueryable<ReportExecutionLogPM> GetReportExecutionLogPMsByIds(List<string> ids, int tenant)
+        {
+            return (from a in repository.context.ReportExecutionLogs.Include("CommunicationStatusType").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("Report")
+                    where ids.Contains(a.Id) && a.Tenant == tenant 
+                    select new ReportExecutionLogPM()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        CreatedByUserId = a.CreatedByUserId,
+                        CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
+                        StatusCode = a.StatusCode,
+                        StatusName = a.CommunicationStatusType != null ? a.CommunicationStatusType.Name : null,
+                        ExceptionMessage = a.ExceptionMessage,
+                        CreateDate = a.CreateDate,
+                        DoneDate = a.DoneDate,
+                        ReportFilterXML = a.ReportFilterXML,
+                        ReportId = a.ReportId,
+                        ReportName = a.Report != null ? a.Report.Name : null,
+                        ReportTemplateId = a.ReportTemplateId,
+                        RetryNumber = a.RetryNumber,
+                        StartDate = a.StartDate,
+                        ExecutedByServerName = a.ExecutedByServerName,
+                        DisablePreview = a.DisablePreview,
+                        SearchFields = a.SearchFields,
+                        NotDisplayInMenu = a.NotDisplayInMenu
+                    });
+        }
+
     }
 }

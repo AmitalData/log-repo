@@ -90,8 +90,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     {
                         SqlCommand cmd = new SqlCommand("[dbo].[Queue_SetStatus]", cn);
                         cmd.CommandType = CommandType.StoredProcedure;
-                        SqlParameter messageIdPar = new SqlParameter("@MessageId", SqlDbType.BigInt);
-                        SqlParameter statusPar = new SqlParameter("@Statud", SqlDbType.Int);
+                        SqlParameter messageIdPar = new SqlParameter("@V_MessageId", SqlDbType.BigInt);
+                        SqlParameter statusPar = new SqlParameter("@V_Statud", SqlDbType.Int);
 
 
                         messageIdPar.Direction = ParameterDirection.Input;
@@ -116,5 +116,34 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             }
 
         }
+        public HttpResponseMessage PostDeleteFromMenu(string reportId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                var tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                SecurityUtility.CheckContactFeature("ReportExecutionLog", "READ", tenant);
+                SecurityUtility.CheckContactFeature("ReportExecutionLog", "UPDATE", tenant);
+
+                var reportExecutionLogRepository = new ReportExecutionLogRepository(tenant);
+                var reportExecutionLog = reportExecutionLogRepository.GetReportExecutionLog(reportId);
+                reportExecutionLog.NotDisplayInMenu = true;
+                
+                reportExecutionLogRepository.Update(reportExecutionLog);
+                reportExecutionLogRepository.SubmitChanges();
+
+              
+                return Request.CreateResponse(HttpStatusCode.OK, "OK");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
     }
+}
 }

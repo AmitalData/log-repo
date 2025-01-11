@@ -91,7 +91,31 @@ public selectedCurrency: string = this.LocalCurrencyCode;
 
         //this.RunReport(false);
     }
+   
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { 
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "InvoiceType":
+                    this.ShipmentTypeRadio = queryFilterItem.FieldValue;
+                    break;
+                case "CurrencyType":
+                    this.SelectedCurrency =queryFilterItem.FieldValue;
+                    break;
+                
+               
+            }
+   
+           
     
+        }
+    }
     RunReport(isloading: boolean) {
         this.queryFilterItems = new Array<QueryFilterItem>();
 

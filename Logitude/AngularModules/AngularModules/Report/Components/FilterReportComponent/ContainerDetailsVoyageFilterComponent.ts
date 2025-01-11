@@ -1,4 +1,4 @@
-﻿import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
@@ -64,7 +64,46 @@ export class ContainerDetailsVoyageFilterComponent extends BaseComponent impleme
     daysInMonth(aDate: Date) {
         return (new Date(aDate.getFullYear(), aDate.getMonth() , 0)).getDate();
     }
+  
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "CreateFromDate":
+                    this.FromDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "CreateToDate":
+                    this.ToDate = new Date(queryFilterItem.FieldValue);
+                        break;
+                case "CustomerId":
+                    this.CustomerId = queryFilterItem.FieldValue;
+                    break;                          
+                case "DirectionId":
+                        this.MySelectedDirectionFilter = queryFilterItem.FieldValue;
+                        break;      
+                case "VoyageNumber":
+                    this.VoyageNumber = queryFilterItem.FieldValue;
+                    break;  
+                case "SalingFromDate":  
+                    this.FromDateActual = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "SalingToDate":
+                    this.ToDateActual = new Date(queryFilterItem.FieldValue);
+                    break;
+
+
+
+            }
     
+        }
+    }
     RunReport(isloading: boolean) {
         this.ValidationErrorsList = [];
         if (this.MySelectedDirectionFilter == "All")

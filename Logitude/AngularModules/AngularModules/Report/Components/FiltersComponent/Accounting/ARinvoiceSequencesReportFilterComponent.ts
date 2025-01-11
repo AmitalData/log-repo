@@ -109,7 +109,31 @@ export class ARinvoiceSequencesReportFilterComponent extends BaseComponent {
 
         return isOldDate;
     }
+    
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { 
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
 
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "FromDate":
+                     this.FromDate = new Date(queryFilterItem.FieldValue) ;
+                     break;
+                case "ToDate":
+                    this.ToDate = new Date(queryFilterItem.FieldValue) ;
+                    break;        
+                  
+            }
+
+           
+    
+        }
+    }
     //#endregion
     private errors: string[] = [];
     RunButtonClicked() {

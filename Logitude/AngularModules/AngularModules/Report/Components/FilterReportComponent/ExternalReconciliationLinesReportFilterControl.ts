@@ -138,7 +138,56 @@ export class ExternalReconciliationLinesReportFilterControl extends BaseComponen
         }
 
     }
-
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { //For Scheduler Report
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "CrossYearReconcile":
+                    this.IsShowCrossYear = queryFilterItem.FieldValue;
+                    break;
+                case "IncludesTransferGlaccount":
+                    this.IncludesTransferGlaccount = queryFilterItem.FieldValue;
+                    break;
+                case "ExternalReconciliationNumber":
+                    this.ExternalReconciliationNumber = queryFilterItem.FieldValue;
+                    break;
+                
+                case "ObjectTableId":
+                    this.ObjectTableId = queryFilterItem.FieldValue;
+                    break;
+                case "BankAccountId":
+                    this.BankAccountId = queryFilterItem.FieldValue;
+                     break;
+                case "REFFromDate":
+                    this.REFFromDate = new Date(queryFilterItem.FieldValue);
+                         break;
+                 case "REFToDate":
+                    this.REFToDate = new Date(queryFilterItem.FieldValue);
+                         break;
+                case "SortBy":
+                    this.SortBy = queryFilterItem.FieldValue;
+                    break;
+                case "Type":
+                    this.TypeFilter = queryFilterItem.FieldValue;
+                    break;
+                case "IsExternalReconciled":
+                    this.IsExternalReconciledFilter = queryFilterItem.FieldValue;
+                    break;
+              
+            }
+    
+           
+    
+        }
+    }
+   
     RunReport() {
         this.ValidationErrorsList = [];
         // this.REFFromDate.setHours(0,0,0,);

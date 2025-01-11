@@ -30,6 +30,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string CreatedByUserName { get; set; }
         public string SearchFields { get; set; }
         public string ReportName { get; set; }
+        public bool NotDisplayInMenu { get; set; }
 
     }
 }

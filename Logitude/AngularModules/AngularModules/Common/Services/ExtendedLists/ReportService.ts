@@ -50,7 +50,28 @@ export class ReportService {
             return pmresponse;
         }),catchError(ServiceHelper.HandleServiceError));
     }
-
+    GetReportByTenantAndUserToMenu(userId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
+        return this._http.get(this._apiUrl + "/GetReportByTenantAndUserToMenu"+ '?id=' + userId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = response;
+            return pmresponse;
+        }),catchError(ServiceHelper.HandleServiceError));
+    }
+    CheckReportsStatus(reportKeys:string) {
+        if(reportKeys?.length == 0) return of(null);
+   
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
+        return this._http.get(this._apiUrl + "/GetCheckReportsStatus" + '?ids=' + reportKeys,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = response;
+            return pmresponse;
+        }),catchError(ServiceHelper.HandleServiceError));
+    }
     GetCheckIfStimulSoftReportIsBliud(reportKey: string,  tenant: number) {
 
         var authHeader = new Headers();

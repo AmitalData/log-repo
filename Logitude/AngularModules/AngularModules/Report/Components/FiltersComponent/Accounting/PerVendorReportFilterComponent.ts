@@ -135,7 +135,42 @@ export class PerVendorReportFilterComponent extends BaseComponent {
 
         return isOldDate;
     }
-
+   
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { 
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        this.VendorFilterSelectedValue = "All"
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "ToDate":
+                    this.ToDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "FromDate":
+                    this.FromDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "Vendor":{
+                    this.GetGLAccount(queryFilterItem.FieldValue);
+                    
+                    break;
+                }
+                case "CardId":{
+                    this.VendorId = queryFilterItem.FieldValue;
+                    this.VendorFilterSelectedValue = "Vendor"
+                    break;
+                }
+                   
+               
+            }
+  
+           
+    
+        }
+    }
     //#endregion
     private errors: string[] = [];
     RunButtonClicked() {

@@ -137,10 +137,10 @@ export class InvoicesFilterComponent extends BaseComponent   {
         var daysofmonth = this.daysInMonth(new Date());
 
 
-        this.FromDate = this.SetDate(Year, month - 1, 1);
+        this.FromDate = this.FromDate?? this.SetDate(Year, month - 1, 1);
 
 
-        this.ToDate = this.SetDate(Year, month, daysofmonth);
+        this.ToDate =  this.ToDate??this.SetDate(Year, month, daysofmonth);
 
 
         if (this.ReportsPreview.Report.Code == "RAPI") {
@@ -153,6 +153,54 @@ export class InvoicesFilterComponent extends BaseComponent   {
 
     daysInMonth(aDate: Date) {
         return (new Date(aDate.getFullYear(), aDate.getMonth() + 1, 0)).getDate();
+    }
+  
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { 
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        this.ShipmentTypeRadio="InvoiceDate";
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "FromDate":
+                    this.FromDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "ToDate":
+                    this.ToDate =new Date(queryFilterItem.FieldValue);
+                    break;
+                 case "BranchId":
+                        this.BranchId =queryFilterItem.FieldValue;
+                        break; 
+                case "LocalCurrency":{
+                    this.IsLocalCurrency = queryFilterItem.FieldValue;
+                    this.ChangeCurrency(this.IsLocalCurrency);
+                    break;
+                }
+                   
+                case "IncludeVoidInvoices":
+                    this.IncludeVoidInvoices = queryFilterItem.FieldValue;
+                    break;
+                case "IncludeDraftInvoices":
+                    this.IncludeWaiting = queryFilterItem.FieldValue;
+                    break;
+                case "InvoiceDate":{
+ 
+                    this.IsInvoiceDate = queryFilterItem.FieldValue;
+                    this.settingShipmentTypeCode(this.IsInvoiceDate?"InvoiceDate":"CreateDate");
+                    break;  
+                } 
+                
+                
+               
+            }
+ 
+           
+    
+        }
     }
     RunReport(isloading: boolean) {
 

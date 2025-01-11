@@ -80,6 +80,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.DisablePreview).HasColumnName("DisablePreview");
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
+            this.Property(t => t.NotDisplayInMenu).HasColumnName("NotDisplayInMenu");
 
 
             // Relationships

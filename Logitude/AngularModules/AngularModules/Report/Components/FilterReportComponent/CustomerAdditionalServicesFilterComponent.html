@@ -45,7 +45,7 @@
                     <td style="width:20px"><div></div></td>
                     <td style="width:110px;">Additional Service</td>
                     <td style="width:200px;">
-                        <ComboBoxWithInCheckBox (EditedItemSource)="EditedItemSource($event)" [ItemsSource]="FilterdAdditionalService" (SelectedItemChanged)="SelectedAdditionalServiceChanged($event)" [Binding]="'lastTitle'"></ComboBoxWithInCheckBox>
+                        <ComboBoxWithInCheckBox [SelectedItem]="SelectedItem" (EditedItemSource)="EditedItemSource($event)" [ItemsSource]="FilterdAdditionalService" (SelectedItemChanged)="SelectedAdditionalServiceChanged($event)" [Binding]="'lastTitle'"></ComboBoxWithInCheckBox>
                     </td>
 
                     <td style="width:20px"><div></div></td>

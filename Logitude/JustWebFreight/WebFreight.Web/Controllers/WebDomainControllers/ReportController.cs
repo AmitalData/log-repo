@@ -27,6 +27,7 @@ using System.Text;
 using Newtonsoft.Json;
 using System.Configuration;
 using static WebFreight.Web.Helpers.ReportHelper;
+using Logitude.BL.CommonDataModel.EntityPMs;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -398,6 +399,41 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             catch (Exception ex)
             {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage GetReportByTenantAndUserToMenu(string id)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                ReportExecutionLogQuery reportExecutionLogQuery = new ReportExecutionLogQuery(authToken.Tenant);
+                List<ReportExecutionLogPM> reportExecutionLogs = reportExecutionLogQuery.GetReportExecutionLogPMsByTenantAndUserLastWeek(authToken.Tenant, id).ToList();
+                return Request.CreateResponse(HttpStatusCode.OK, reportExecutionLogs);
+            }
+            catch (Exception ex)
+            {
+
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage GetCheckReportsStatus(string ids)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                ReportExecutionLogQuery reportExecutionLogQuery = new ReportExecutionLogQuery(authToken.Tenant);
+                List<string> idsList = ids.Split(',').ToList();
+                List<ReportExecutionLogPM> reportExecutionLogs = reportExecutionLogQuery.GetReportExecutionLogPMsByIds(idsList, authToken.Tenant).ToList();
+                return Request.CreateResponse(HttpStatusCode.OK, reportExecutionLogs);
+            }
+            catch (Exception ex)
+            {
+
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }

@@ -66,7 +66,44 @@ export class ExpectedIncomeFilterComponent extends BaseComponent  {
     public CountryId: string = null;
     public ResellerId: string = null;
     public ValidationErrorsList: string[];
+    
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
 
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "FromDate":
+                    this.FromDate = new Date(queryFilterItem.FieldValue);
+                    break;
+               
+                case "ToDate":
+                    this.ToDate =new Date(queryFilterItem.FieldValue);
+                    break;                          
+                case "Recurring":
+                    this.SelectedItemComboBox = this.RecurringComboList.filter(d => d.Code == queryFilterItem.FieldValue)[0];
+                        break; 
+                case "SalesmanId":
+                    this.SalesmanId = queryFilterItem.FieldValue;
+                    break;
+                case "PaymentChannelCode":
+                    this.PaymentChannelCode = queryFilterItem.FieldValue;
+                    break;
+                case "CountryId":
+                    this.CountryId = queryFilterItem.FieldValue;
+                    break;
+                   
+                        
+                        
+            }
+    
+        }
+    }
     RunReport() {
         this.queryFilterItems = new Array<QueryFilterItem>();
 

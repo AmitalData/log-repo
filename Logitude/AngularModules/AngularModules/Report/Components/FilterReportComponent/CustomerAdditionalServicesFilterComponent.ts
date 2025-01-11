@@ -55,7 +55,7 @@ export class CustomerAdditionalServicesFilterComponent extends BaseComponent imp
         this.CustomerStatusList.push(new CodeNameClass("ACT", "Active"));
         this.CustomerStatusList.push(new CodeNameClass("POT", "Potential"));
 
-        this.selectedCustomerStatus = this.CustomerStatusList.filter(d => d.Code == "ALL")[0];
+        this.selectedCustomerStatus =this.selectedCustomerStatus || this.CustomerStatusList.filter(d => d.Code == "ALL")[0];
     }
 
     private selectedCustomerStatus: CodeNameClass;
@@ -211,11 +211,11 @@ export class CustomerAdditionalServicesFilterComponent extends BaseComponent imp
             this.UsersFilterList.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });
         }
     }  
-
+  indexBusinessUnit: number=0;
     BuildBusinessUnitFilterList(myResult: any) {
         var item: CodeNameClass = new CodeNameClass();
-
         item.Code = "M";
+
         item.Name = "My Records";
         this.BusniessItemSource.push(item);
         myResult.forEach((i) => {
@@ -231,9 +231,10 @@ export class CustomerAdditionalServicesFilterComponent extends BaseComponent imp
         item.Code = "A";
         item.Name = "All Records";
         this.BusniessItemSource.push(item);
-        this.SelectedBusniessUnitChanged( this.BusniessItemSource[0]);
+        this.SelectedBusniessUnitChanged( this.BusniessItemSource[this.indexBusinessUnit]);
     }
-     
+    AdditionalServiceSelectedValue:string
+
     fillcombo(arr: any) {
         this.FilterdAdditionalService = [];
 
@@ -251,7 +252,10 @@ export class CustomerAdditionalServicesFilterComponent extends BaseComponent imp
             }
         });
 
-        this.FilterdAdditionalService.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });    
+        this.FilterdAdditionalService.sort((a: CodeNameClass, b: CodeNameClass) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });    
+        this.FilterdAdditionalService.forEach((item: any) => {
+            item.Checked = this.SelectedItem == "NotAll" && this.AdditionalServiceSelectedValue.split(',').some(selectedItem =>  selectedItem === item.Code||selectedItem === item.Id);
+        });
     }
 
     public IsAll: boolean = true;
@@ -309,7 +313,50 @@ export class CustomerAdditionalServicesFilterComponent extends BaseComponent imp
         this.SelectedItem = item;
     }    
     public ValidationErrorsList: string[];
+    
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
 
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "AdditionalServices":{
+                    this.SelectedItem =  queryFilterItem.FieldValue=="All"?"All":"NotAll"; 
+                    this.AdditionalServiceSelectedValue= queryFilterItem.FieldValue;
+                }
+                    break;
+                case "BusinessUnitId":{
+                    if(!queryFilterItem.FieldValue)
+                       this.indexBusinessUnit=1;
+                    break;
+         }
+                case "SalesmanUserId":
+                    this.ListOfValuesUserId += queryFilterItem.FieldValue;
+                    break;
+                case "ServiceType":{
+                    this.IsAll = queryFilterItem.FieldValue === "All";
+                    this.IsInUse = queryFilterItem.FieldValue === "In Use";
+                    this.IsPotential = !this.IsAll && !this.IsInUse;
+                    break;
+                }
+                case "CustomerStatus":{
+                   this.BuildCustomerStatusFilters();
+                    this.SelectedCustomerStatus = this.CustomerStatusList.filter(d => d.Code == queryFilterItem.FieldValue)[0];
+                    break;
+                } 
+                   
+               
+            }
+    
+           
+    
+        }
+    }
     RunReport(isloading: boolean) {
         this.ValidationErrorsList = [];
 
