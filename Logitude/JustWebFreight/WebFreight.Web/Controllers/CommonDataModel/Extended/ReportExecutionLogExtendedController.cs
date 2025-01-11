@@ -116,29 +116,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             }
 
         }
-        public HttpResponseMessage PostDeleteFromMenu(string reportId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                var tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                SecurityUtility.CheckContactFeature("ReportExecutionLog", "READ", tenant);
-                SecurityUtility.CheckContactFeature("ReportExecutionLog", "UPDATE", tenant);
-                ReportExecutionLogQuery reportExecutionLogQuery = new ReportExecutionLogQuery(authToken.Tenant);
-                reportExecutionLogQuery.DeleteFromMenu(reportId,tenant);
-              
-
-              
-                return Request.CreateResponse(HttpStatusCode.OK, "OK");
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-        }
+        
     }
 }

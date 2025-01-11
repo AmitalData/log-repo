@@ -72,6 +72,14 @@ export class ReportService {
             return pmresponse;
         }),catchError(ServiceHelper.HandleServiceError));
     }
+    DeleteFromMenu(reportId: string) {
+        return this._http.post(this._apiUrl + '/PostDeleteFromMenu?reportId=' + reportId, null, ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+                let serviceResponse = response;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+    }
     GetCheckIfStimulSoftReportIsBliud(reportKey: string,  tenant: number) {
 
         var authHeader = new Headers();

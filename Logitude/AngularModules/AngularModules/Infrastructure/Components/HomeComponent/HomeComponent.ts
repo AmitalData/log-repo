@@ -2109,7 +2109,7 @@ DeleteReport(relatedRep: ReportExecutionLogPM) {
 
      this.RelatedReport = this.RelatedReport.filter(report => report.Id !== relatedRep?.Id);
      this.relatedReportSubject.next(this.RelatedReport);
-     this.ReportExecutionLogPMService.DeleteFromMenu(relatedRep.Id).subscribe((res: any) => {
+     this._reportService.DeleteFromMenu(relatedRep.Id).subscribe((res: any) => {
        
        this.CurrentSession.StopBusyIndicator();
     });
