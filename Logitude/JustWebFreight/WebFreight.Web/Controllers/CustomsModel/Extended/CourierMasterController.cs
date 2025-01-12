@@ -275,6 +275,33 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage PostSendRecoverDeclaration(SendRecoverDecRequestParams requestParamsData)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+                var messagingService = new DCAInUCB8373_MsgMessagingService();
+                string RequestInProgressList;
+                var sts = messagingService.CreateCRS(tenant, requestParamsData.IsWorkSheetFromExcel ? requestParamsData.LoggingUserId : null, requestParamsData, out RequestInProgressList);
+                DataResult result = new DataResult();
+                result.RequestInProgressList = RequestInProgressList;
+                result.Message = sts;
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
         public HttpResponseMessage PostSend2750AndUpdaeClassificationByCourierMaster(SendALLCorrectRequestParams requestParamsData)
         {
             try

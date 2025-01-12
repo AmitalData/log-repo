@@ -22,6 +22,7 @@ import { GenericRequestParams } from 'Customs/DataContract/RequestParams/Generic
 import { List } from 'cypress/types/lodash';
 import { CustomsRequestsSheetPM } from 'Customs/EntityPMs/CustomsRequestsSheetPM';
 import { LogtuideTableDataService } from 'Infrastructure/Services/logtuide-table-data.service';
+import { SendRecoverDecRequestParams } from 'Customs/DataContract/RequestParams/SendRecoverDecRequestParams';
 
 
 @Injectable()
@@ -609,6 +610,29 @@ export class CourierMasterService {
                 return serviceResponse;
 
             }),catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    PostSendRecoverDeclaration(requestParams: SendRecoverDecRequestParams) {
+
+        return defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.post(
+                this._apiUrl + '/PostSendRecoverDeclaration/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                var res:any=response;
+                var serviceResponse: DataResult=new DataResult();
+                serviceResponse.Message =res?.Message ;
+                serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
+                return serviceResponse;
+                }),catchError(ServiceHelper.HandleServiceError));
+            ;
+
         });
     }
 
