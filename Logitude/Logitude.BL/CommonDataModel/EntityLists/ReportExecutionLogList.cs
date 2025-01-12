@@ -37,6 +37,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         public string SearchFields { get; set; }
         public string ReportName { get; set; }
+        public bool NotDisplayInMenu { get; set; }
 
     }
 }

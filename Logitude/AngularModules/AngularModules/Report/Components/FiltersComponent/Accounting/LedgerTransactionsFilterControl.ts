@@ -576,8 +576,8 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         return null
     }
 
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>) { //For Scheduler Report
-        this.IsSchedulerReport = true;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { //For Scheduler Report
+        this.IsSchedulerReport = isSchedulerReport;
         if (queryFilterItems) {
             queryFilterItems.forEach(queryFilterItem => {
                 this.SetFilterItem(queryFilterItem);
@@ -616,10 +616,11 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
                 case "IncludeRelatedCurrenciesAccount":
                     this.IncludeRelatedCurrenciesAccount = queryFilterItem.FieldValue;
                     break;
-                case "IsReconciled":
+                case "IsReconciled":{
                     this.IsReconciled = queryFilterItem.FieldValue;
-                    this.AttachedGLAccountCheckBox = queryFilterItem.FieldValue;
+                    this.AttachedGLAccountCheckBox = queryFilterItem.FieldValue==null;
                     break;
+                }
                 case "SalesmanUserId":
                     this.Salesman = queryFilterItem.FieldValue;
                     break;

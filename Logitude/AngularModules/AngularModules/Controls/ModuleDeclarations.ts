@@ -75,6 +75,7 @@ import { InvitedFilter } from './InvitedFilter';
 import { LogitudeHotKeysComponent } from './LogitudeHotkeysComponent/LogitudeHotKeysComponent';
 import {  NumberInputComponent } from './All/NumberInput';
 import {  LogChipsComponent } from './All/LogChips';
+import { ReportMenuComponent } from 'Report/Components/ReportMenuComponent';
 
 export const Directives =
     [
@@ -158,6 +159,7 @@ export const Components =
         ParticipatedFilter,
         InvitedFilter,
         LogitudeHotKeysComponent ,
+        ReportMenuComponent
     ];
 
 export class ModuleDeclarations {

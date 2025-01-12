@@ -106,7 +106,60 @@ export class StatisticsByCustomerFilterComponent extends BaseComponent {
 
         }
     }
+   
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
 
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "FromDate":
+                    this.FromDate = new Date(queryFilterItem.FieldValue);                                      
+                    break;
+                case "ToDate":
+                    this.ToDate=new Date(queryFilterItem.FieldValue);
+                    break;
+                case "IsByCreateDate":{
+                    this.IsByCreateDate = queryFilterItem.FieldValue;
+                    this.IsOperationalDate = !queryFilterItem.FieldValue;
+
+                    break;                          
+
+                }
+                case "CustomerId":
+                        this.CustomerId = queryFilterItem.FieldValue;
+                        break; 
+                case "Direction":
+                        this.SelectedDirectionFilter = queryFilterItem.FieldValue;
+                        break;
+                case "TransportMode":
+                        this.SelectedTransportFilter = queryFilterItem.FieldValue;
+                        break;
+                        
+                case "ShipmentLevel":
+                        this.LevelCodeSelectedValue = queryFilterItem.FieldValue;
+                        break;
+                case "Currency":
+                        var currency = queryFilterItem.FieldValue.split(",");
+                        if (currency[1] == "profit") {
+                            this.SelectedCurrency = this.ProfitCurrencyCode;
+                        }
+                        else {
+                            this.SelectedCurrency = this.LocalCurrencyCode;
+                        }
+                        break;
+                case "IncludeOperationalClosed":
+                        this.IncludeClosed = queryFilterItem.FieldValue;
+                        break;
+            }
+    
+        }
+    }
     RunReport(isloading: boolean) {
         this.ValidationErrorsList = [];
         if (this.FromDate == null) {

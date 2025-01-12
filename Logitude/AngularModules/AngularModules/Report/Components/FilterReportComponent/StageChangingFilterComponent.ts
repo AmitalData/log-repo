@@ -34,6 +34,8 @@ export class StageChangingFilterComponent extends BaseComponent  {
     public IsStageDate: boolean = false;
     public SelectedProdustsItem: any;
     public ValidationErrorsList: string[] = [];
+    AdditionalServiceSelectedValue:string
+
     public SelectedItemChanged(item) {
         this.SelectedProdustsItem = item;
     }
@@ -59,7 +61,9 @@ export class StageChangingFilterComponent extends BaseComponent  {
             }
         });
         this.FilterdAdditionalService.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });
-
+        this.FilterdAdditionalService.forEach((item: any) => {
+            item.Checked =  this.AdditionalServiceSelectedValue.split(',').some(selectedItem =>  selectedItem === item.Code||selectedItem === item.Id);
+        });
     }
     public TenantPM: TenantPM;
     queryFilterItems: QueryFilterItem[];
@@ -112,7 +116,48 @@ export class StageChangingFilterComponent extends BaseComponent  {
     daysInMonth(aDate: Date) {
         return (new Date(aDate.getFullYear(), aDate.getMonth() + 1, 0)).getDate();
     }
+   
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "FromDate":
+                    this.FromDate = new Date(queryFilterItem.FieldValue);
+                    break;
+               
+                case "ToDate":
+                    this.ToDate =new Date(queryFilterItem.FieldValue);
+                    break;                          
+                case "DataType":
+                    this.OpportunityTypeId = queryFilterItem.FieldValue;
+                    break;
+                case "OwnerId":
+                    this.OwnerId = queryFilterItem.FieldValue;
+                    break;
+                case "CountryId":
+                    this.CountryId = queryFilterItem.FieldValue;
+                    break;
+                case "LeadSources":
+                     this.AdditionalServiceSelectedValue = queryFilterItem.FieldValue;
+                    break;
+                case "IsByStageDate":
+                    this.IsStageDate = queryFilterItem.FieldValue;
+                    break;
+                
+                   
+                        
+                        
+            }
     
+        }
+    }
     RunReport(isloading: boolean) {
 
 

@@ -208,7 +208,7 @@
 
                     <!--Directions Filter-->
                     <td style="width:150px">
-                        <DirectionsFilter (SelectedValueChanged)="MySelectedDirectionFilter = $event"></DirectionsFilter>
+                        <DirectionsFilter  [SelectedValue]="MySelectedDirectionFilter" (SelectedValueChanged)="MySelectedDirectionFilter = $event"></DirectionsFilter>
                     </td>
 
                     <td style="width:10px;">

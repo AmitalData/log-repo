@@ -87,8 +87,8 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
 
     //#region Filters
 
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>) { //For Scheduler Report
-        this.IsSchedulerReport = true;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { //For Scheduler Report
+        this.IsSchedulerReport = isSchedulerReport;
         this.SelectedCategory = null;       
         if (queryFilterItems) {
             queryFilterItems.forEach(queryFilterItem => {

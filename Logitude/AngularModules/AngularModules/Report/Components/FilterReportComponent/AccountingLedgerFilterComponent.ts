@@ -80,7 +80,45 @@ export class AccountingLedgerFilterComponent extends BaseComponent implements On
     IsValueDateClicked() {
         this.IsByCreateDate = false;
     }
-
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { 
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "ToDate":
+                    this.ToDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "FromDate":
+                    this.FromDate = new Date(queryFilterItem.FieldValue);
+                break;
+                case "PartnerId":
+                    this.PartnerId = queryFilterItem.FieldValue;
+                     break;
+                 case "BillToId":
+                    this.CustomerId = queryFilterItem.FieldValue;
+                    break;
+                case "IsByCreateDate":{
+                    this.IsByCreateDate = queryFilterItem.FieldValue;
+                    this.IsCreateDate = queryFilterItem.FieldValue;
+                    this.IsValueDate = !queryFilterItem.FieldValue;
+                     break;
+                 }
+                 case "CustomerId":
+                    this.CustomerId = queryFilterItem.FieldValue;
+                     break;
+                                 
+            }
+   
+    
+        }
+    }
+   
     RunReport() {
         this.ValidationErrorsList = [];
         if (this.FromDate == null) {

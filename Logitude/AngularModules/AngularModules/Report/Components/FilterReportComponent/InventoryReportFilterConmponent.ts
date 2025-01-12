@@ -128,7 +128,7 @@ export class InventoryReportFilterConmponent extends BaseComponent implements On
 
         return queryFilterItems;
     }
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>) {
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
         if (queryFilterItems) {
             queryFilterItems.forEach(queryFilterItem => {
                 this.SetFilterItem(queryFilterItem);

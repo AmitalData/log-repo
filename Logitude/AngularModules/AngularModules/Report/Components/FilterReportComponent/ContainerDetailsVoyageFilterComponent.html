@@ -103,7 +103,7 @@
                                     <div></div>
                                 </td>
                                 <td style="width:200px">
-                                    <DirectionsFilter (SelectedValueChanged)="MySelectedDirectionFilter = $event"></DirectionsFilter>                                    
+                                    <DirectionsFilter [SelectedValue]="MySelectedDirectionFilter" (SelectedValueChanged)="MySelectedDirectionFilter = $event"></DirectionsFilter>                                    
                                 </td>
 
                                 <td>

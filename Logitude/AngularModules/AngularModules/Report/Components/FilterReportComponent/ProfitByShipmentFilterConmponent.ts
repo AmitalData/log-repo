@@ -86,7 +86,64 @@ export class ProfitByShipmentFilterConmponent extends BaseComponent implements O
     daysInMonth(aDate: Date) {
         return (new Date(aDate.getFullYear(), aDate.getMonth() + 1, 0)).getDate();
     }
+  
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true,customerId: string=null,IncludeOperationalyClosed:boolean=false) {
+        this.IncludeClosed = IncludeOperationalyClosed;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
 
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                                       
+                case "FromDate":
+                    this.FromDate =new Date(queryFilterItem.FieldValue);                                         
+                    break; 
+                case "ToDate":
+                    this.ToDate =new Date(queryFilterItem.FieldValue);
+                    break;  
+                case "AgentId":
+                    this.AgentId=queryFilterItem.FieldValue;
+                    break;
+                case "DirectionId":
+                    this.MySelectedDirectionFilter = queryFilterItem.FieldValue;
+                    break;  
+                case "CustomerId":
+                    this.CustomerId = queryFilterItem.FieldValue;
+                    break;
+                case "SalesmanUserId":
+                    this.SalesmanUserId = queryFilterItem.FieldValue;
+                    break;
+                case "DepartmentId":
+                    this.DepartmentId = queryFilterItem.FieldValue;
+                    break;
+                case "CarrierId":
+                    this.CarrierId = queryFilterItem.FieldValue;
+                    break;
+                case "TransportMode":
+                    this.SelectedTransportFilter = queryFilterItem.FieldValue;
+                    break;
+                case "IsByCreateDate":{
+                    this.IsCreateDate = queryFilterItem.FieldValue;
+                    this.IsByCreateDate = queryFilterItem.FieldValue;
+                    this.IsOperationalDate = !queryFilterItem.FieldValue;
+
+                    break;
+                }
+                case "AccountingClosed":
+                    this.IncludeAccounting = queryFilterItem.FieldValue;
+                    break;
+                case "IncludeAccountedOnly":
+                    this.IncludeAccountedOnly = queryFilterItem.FieldValue;
+                    break;
+                
+            }
+        }
+    }
     RunReport(isloading: boolean) {
         this.queryFilterItems = new Array<QueryFilterItem>();
 

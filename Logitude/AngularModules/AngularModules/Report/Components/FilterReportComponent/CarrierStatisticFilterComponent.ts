@@ -67,6 +67,39 @@ export class CarrierStatisticFilterComponent extends BaseComponent   {
     reportFliter: ReportFliter;
     queryFilterItems: QueryFilterItem[];
     queryFilterItem: QueryFilterItem;
+  
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "CreateDateTime":
+                    if (queryFilterItem.Operator == "GreaterThanOrEqual") {
+                        this.FromDate = new Date(queryFilterItem.FieldValue);
+                        break;
+                    }
+                    if (queryFilterItem.Operator == "LessThanOrEqual") {
+                        this.ToDate = new Date(queryFilterItem.FieldValue);
+                        break;
+                    }
+                break;
+               
+                case "IsOperationalClosed":
+                    this.IncludeClosed = queryFilterItem.FieldValue;
+                    break;                          
+                case "Direction":
+                        this.MySelectedDirectionFilter = queryFilterItem.FieldValue;
+                        break;      
+            }
+    
+        }
+    }
     RunReport(isloading: boolean) {
         this.ValidationErrorsList = [];
         if (this.FromDate == null) {

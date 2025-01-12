@@ -228,8 +228,8 @@ export class CertificateOfOriginCountReportFilterComponent extends BaseComponent
     }
 
     // this function must exist for Report Scheduler
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>) {
-        this.IsSchedulerReport = true;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
+        this.IsSchedulerReport = isSchedulerReport;
         if (queryFilterItems) {
             queryFilterItems.forEach(queryFilterItem => {
                 this.SetFilterItem(queryFilterItem);

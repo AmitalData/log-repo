@@ -60,6 +60,8 @@ export class TrailBalanceFiltersComponent extends BaseComponent
     isChartOfAccountsTypesDisabled: boolean = false;
     isChartOfAccountsDisabled: boolean = false;
     isOpened: boolean = false;
+    ChartOfAccountsSelectedValue:string
+    ChartOfAccountsTypeSelectedValue: string;
 
     constructor()
     {
@@ -96,7 +98,108 @@ export class TrailBalanceFiltersComponent extends BaseComponent
         this.LoadResources();
 
     }
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { //For Scheduler Report
+        this.GetDropDownItemsData()
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+        this.SetEnabledProperties();
+    }
+    
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        switch (queryFilterItem.FieldName) {
+            case "FromDate":
+                this.FromDate = new Date(queryFilterItem.FieldValue);
+                break;
+            case "ToDate":
+                this.ToDate =new Date(queryFilterItem.FieldValue);
+                break;
+            case "Level":{
+                this.level = queryFilterItem.FieldValue;
+                this.FilterSelectedValue = queryFilterItem.FieldValue;
+                    break;
+            }
+                   
+            case "Category1":{
+                    this.Category1 = queryFilterItem.FieldValue;
+                    if(this.Category1)
+                    this.SelectedCategory = "Category 1";
+                    break;
+            }
+                       
+            case "Category2":{
+                    this.Category2 = queryFilterItem.FieldValue;
+                    if(this.Category2)
+                    this.SelectedCategory = "Category 2";
+                    break;
+            }
+                 case "Category3":{
+                    this.Category3 = queryFilterItem.FieldValue;
+                    if(this.Category3)
+                    this.SelectedCategory = "Category 3";
+                    break;
+                 }
+                case "Category4":{
+                    this.Category4 = queryFilterItem.FieldValue;
+                    if(this.Category4)
+                    this.SelectedCategory = "Category 4";
+                    break;
+                }
+                   
+                case "Category5":{
+                    this.Category5 = queryFilterItem.FieldValue;
+                    if(this.Category5)
+                       this.SelectedCategory = "Category 5";
+                    break;
+                }
+                case "CurrencyDetailed":
+                    this.CurrencyFilter = queryFilterItem.FieldValue;
+                                            break;
+                case "DetailedForCustomers":
+                    this.DetailedForCustomers = queryFilterItem.FieldValue;
+                                                break;
+                case "DetailedForFiles":
+                    this.DetailedForFiles = queryFilterItem.FieldValue;
+                                                    break;
+                case "DetailedForJobs":
+                    this.DetailedForJobs = queryFilterItem.FieldValue;
+                                                        break;
+                case "DetailedForVendors":
+                    this.DetailedForVendors = queryFilterItem.FieldValue;
+                                                            break;
+                case "DontShowCardsWith0Balance":
+                    this.DontShowCardsWith0Balance = queryFilterItem.FieldValue;
+                                                                break;
+                case "ChartOfAccountId":
+                    this.ChartOfAccountId = queryFilterItem.FieldValue;
+                                                                    break;
+                case "ChartOfAccountsTypeCodeList":{
+                    this.ChartOfAccountsTypeSelectedValue = queryFilterItem.FieldValue;
+                    if(this.ChartOfAccountsTypeSelectedValue?.split(',').length>0 )
+                        this.chartOfAccountsTypeComboboxValue="NotAll";
+                    else
+                        this.chartOfAccountsTypeComboboxValue="All"
+                    break;
+                }
+                    
+                case "ChartOfAccountsIdList":{
+                    this.ChartOfAccountsSelectedValue = queryFilterItem.FieldValue;
+                    if(this.ChartOfAccountsSelectedValue?.split(',').length>0 )
+                        this.chartOfAccountsComboBoxValue="NotAll";
+                    else
+                        this.chartOfAccountsComboBoxValue="All";
+                    break;
 
+                }
+
+                                        
+               
+           
+        }
+
+    }
     isReady = false;
     private LoadResources()
     {
@@ -119,7 +222,11 @@ export class TrailBalanceFiltersComponent extends BaseComponent
             .subscribe((arg: any) =>
             {
                 this.chartOfAccounts = arg.Result;                
-                this.chartOfAccounts = this.chartOfAccounts.map(item=> {return {...item,Name: `(${ item.Code }) ${ item.LocalName || item.EnglishName }`}}).sort((a, b) => a.Code - b.Code);
+                this.chartOfAccounts = this.chartOfAccounts.map(item=> {return {...item,
+                    Name: `(${ item.Code }) ${ item.LocalName || item.EnglishName }`,
+                    Checked: this.ChartOfAccountsSelectedValue?.split(',').some(selectedItem =>this.ChartOfAccountsComboBoxValue=="NotAll" && (selectedItem === item.Id || selectedItem === item.Code))
+
+                }}).sort((a, b) => a.Code - b.Code);
             });
     }
     private getChartOfAccountsTypes()
@@ -130,7 +237,11 @@ export class TrailBalanceFiltersComponent extends BaseComponent
             .subscribe((arg: any) =>
             {
                 this.chartOfAccountsTypes = arg.Result;
-                this.chartOfAccountsTypes = this.chartOfAccountsTypes.map(item=>{return{...item,Name: item.LocalName||item.EnglishName}});
+                this.chartOfAccountsTypes = this.chartOfAccountsTypes.map(item=>{return{...item,
+                    Name: item.LocalName||item.EnglishName,
+                    Checked: this.ChartOfAccountsTypeSelectedValue?.split(',').some(selectedItem =>this.ChartOfAccountsTypeComboboxValue=="NotAll" && (selectedItem === item.Id || selectedItem === item.Code))
+
+                }});
             });
     }
 
@@ -455,7 +566,7 @@ export class TrailBalanceFiltersComponent extends BaseComponent
 
     public FilterSelectedValue: string = 'ChartOfAccountType';
     FilterItemClicked(itemValue: string)
-    {debugger
+    {
         if (this.FilterSelectedValue != itemValue) {
             this.FilterSelectedValue = itemValue;
             this.Level = itemValue;

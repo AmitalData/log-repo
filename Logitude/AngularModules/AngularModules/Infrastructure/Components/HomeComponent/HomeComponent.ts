@@ -23,12 +23,26 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { BluesnapContractPMService } from '../../Services/StandardPMs/BluesnapContractPMService';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
-import { interval } from 'rxjs';
-import { timeInterval } from 'rxjs/operators';
+import { BehaviorSubject, interval, Subscription } from 'rxjs';
+import { takeWhile,timeInterval } from 'rxjs/operators';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { GlobalDomainService } from '../../../Common/Services/GlobalDomainService';
 import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
 import { RatesTableExtendedService } from 'Infrastructure/Services/ExtendedPMs/RatesTableExtendedService';
+import { RelatedDocumentViewModel } from 'CustomsModules/CustomsDocuments/Components/RelatedDocumentViewModel';
+import { ReportService } from 'Common/Services/ExtendedLists/ReportService';
+import { ReportExecutionLogPM } from 'Common/EntityPMs/ReportExecutionLogPM';
+import { ReportsPreviewComponent } from 'Report/Components/ReportsPreviewComponent';
+import { ReportFliter } from 'Report/Components/Filters/ReportFliter';
+import { transform } from 'cypress/types/lodash';
+import { parseString } from 'xml2js';
+import { ReportsWorkspaceComponent } from 'TimeManagement/Components/Workspaces/ReportsWorkspaceComponent';
+import { ReportPMService } from 'Common/Services/StandardPMs/ReportPMService';
+import { ReportsTemplateListExtendedService } from 'Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
+import { ReportPM } from 'Common/EntityPMs/ReportPM';
+import { QueryFilterItem } from 'Report/Components/Filters/QueryFilterItem';
+import { ReportExecutionLogPMService } from 'Common/Services/StandardPMs/ReportExecutionLogPMService';
+import { ReportMenuComponent } from 'Report/Components/ReportMenuComponent';
 
 @Component({
     templateUrl: './HomeComponent.html',
@@ -55,6 +69,11 @@ export class HomeComponent implements OnDestroy{
     private IsINTTRAPackage = false;
     public PaymentChanelCode: string;
     public AccountingActivated=false;
+    
+    isReportPanelVisible: boolean = false;
+    currentReportId: string = "";
+
+
     constructor() {
         this.Tenant = SessionLocator.Tenant;
         SessionLocator.Index = 0;
@@ -77,7 +96,7 @@ export class HomeComponent implements OnDestroy{
             this.InitializeAppHeader();
             this.CheckAmitalBrowserInUse();
         }
-
+        
         if (!SessionInfo.KeepUserLoggedIn) {
             // sessionTimeout
             var sessionTimeout: DetectUserInActivity = new DetectUserInActivity();
@@ -760,7 +779,7 @@ export class HomeComponent implements OnDestroy{
         );
 
     }
-
+    ReportMenuComponent:ReportMenuComponent
     // Notification Bell
     badjCount: number;
     IsBadjCountVisibile: boolean;
@@ -779,7 +798,22 @@ export class HomeComponent implements OnDestroy{
             this.showLockIndicator = newValue;
         }
     }
-
+    get IsReportPanelVisible() { return this.isReportPanelVisible; }
+    set IsReportPanelVisible(newValue: boolean) {
+       
+        if (this.isReportPanelVisible != newValue) {
+            this.isReportPanelVisible = newValue;
+        }
+        if (newValue) 
+            this.CurrentReportId = "";
+    }
+    get CurrentReportId() { return this.currentReportId; }
+    set CurrentReportId(newValue: string) {
+        
+        if (this.currentReportId != newValue) {
+            this.currentReportId = newValue;
+        }
+    }
     notificationExtendedListService: NotificationExtendedListService = new NotificationExtendedListService();
     GetBadjCount() {
         this.notificationExtendedListService.GetNotificationsBadjCount(SessionLocator.LoggedUserId).subscribe((response:any) => {
@@ -2023,8 +2057,8 @@ export class HomeComponent implements OnDestroy{
             }
         });
     }
+ 
 }
-
 export class SessionTabItem {
     public Index: number;
     public IsSelected: boolean = false;
@@ -2148,3 +2182,4 @@ export class TenantUserDataClass {
 
 
 }
+

@@ -141,8 +141,8 @@ export class StatementFilterComponent extends BaseComponent implements OnInit {
         this.IsByDueDate = false;
     }
 
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>) { //For Report Scheduler
-        this.IsSchedulerReport = true;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { //For Report Scheduler
+        this.IsSchedulerReport = isSchedulerReport;
         if (!queryFilterItems) {
             return;
         }
@@ -418,6 +418,7 @@ export class StatementFilterComponent extends BaseComponent implements OnInit {
 
         }
     }
+    
 }
 
 

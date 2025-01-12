@@ -31,7 +31,8 @@ export class MonthlyConversionFilterComponent extends BaseComponent   {
     private reportDoaminService: ReportsDomainService;
     public ResellerId: string = null;
     public IncludeCancelled: boolean = false;
-    
+    AdditionalServiceSelectedValue:string
+
     fillcombo(arr: any) {
         this.FilterdAdditionalService = [];
         arr.forEach((i) => {
@@ -43,7 +44,10 @@ export class MonthlyConversionFilterComponent extends BaseComponent   {
                 this.FilterdAdditionalService.push(i);
             }          
         });
-        this.FilterdAdditionalService.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });        
+        this.FilterdAdditionalService.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });
+        this.FilterdAdditionalService.forEach((item: any) => {
+            item.Checked = this.SelectedItem == "NotAll" && this.AdditionalServiceSelectedValue.split(',').some(selectedItem =>  selectedItem === item.Code||selectedItem === item.Id);
+        });
     }
     
     public TenantPM: TenantPM;
@@ -98,7 +102,55 @@ export class MonthlyConversionFilterComponent extends BaseComponent   {
         aDate.setDate(0);
         return (DateTool.GetDateParts(aDate).DateObject.getDate());
     }
+   
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
 
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "FromDate":
+                    this.FromDate = new Date(queryFilterItem.FieldValue);
+                    break;
+               
+                case "ToDate":
+                    this.ToDate =new Date(queryFilterItem.FieldValue);
+                    break;                          
+                case "BusinessUnitId":
+                    this.BusinessUnitId =   queryFilterItem.FieldValue;
+                        break; 
+                case "DataType":
+                    this.OpportunityTypeId = queryFilterItem.FieldValue;
+                    break;
+                case "OwnerId":
+                    this.OwnerId = queryFilterItem.FieldValue;
+                    break;
+                case "CountryId":
+                    this.CountryId = queryFilterItem.FieldValue;
+                    break;
+                case "LeadSources":{
+                    this.SelectedItem =  queryFilterItem.FieldValue=="All"?"All":"NotAll"; 
+                    this.AdditionalServiceSelectedValue = queryFilterItem.FieldValue;
+                    break;
+                }
+                case "IncludeCancelled":
+                    this.IncludeCancelled = queryFilterItem.FieldValue;
+                    break;
+                case "StageCount":
+                    this.StageCountRadio = queryFilterItem.FieldValue;
+                    break;
+                   
+                        
+                        
+            }
+    
+        }
+    }
     RunReport(isloading: boolean) {
 
         this.ValidationErrorsList = [];

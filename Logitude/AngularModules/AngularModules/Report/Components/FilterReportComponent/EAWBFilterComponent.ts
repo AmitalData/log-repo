@@ -76,6 +76,40 @@ export class EAWBFilterComponent extends BaseComponent implements OnInit {
         });
     }
     
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "FromDate":
+                    this.FromDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "ToDate":
+                    this.ToDate=new Date(queryFilterItem.FieldValue);
+                    break;
+              
+                case "MainCarriageFromPortId":
+                    this.MainCarriageFromPortId = queryFilterItem.FieldValue;
+                    break;
+                case "MainCarriageFinalDestinationPortId":
+                    this.MainCarriageFinalDestinationPortId = queryFilterItem.FieldValue;
+                    break;
+                case "CustomerId":
+                    this.SelectedItemComboBox = queryFilterItem.FieldValue;
+                    break;   
+               
+            }
+    
+           
+    
+        }
+    }
     RunReport(isloading: boolean) {
         this.queryFilterItems = new Array<QueryFilterItem>();
 

@@ -72,7 +72,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
                 if (myResponse != null) {
                     var res = myResponse.Result;
                     this.FullAccountingSetting = res;
-                    this.NumberOfMonths = this.FullAccountingSetting.NumberOfAgingMonths;
+                    this.NumberOfMonths =this.NumberOfMonths || this.FullAccountingSetting.NumberOfAgingMonths;
                 }
             })
         });
@@ -364,7 +364,98 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
             this.toBalance = value;
         }
     }
-
+   
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { 
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+   
+      
+   
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "ChartOfAccountsId":
+                    this.ChartOfAccountsId_Dummy= queryFilterItem.FieldValue;
+                    break;
+                case "ChartOfAccountsTypeCode":
+                    this.ChartOfAccountsTypeCode = queryFilterItem.FieldValue;
+                    break;
+                case "ToBalanceFilterValue":{
+                    
+                        this.balanceFilterSelectedValue == "filter_DebtBetween"
+                        this.toBalance = queryFilterItem.FieldValue;
+                        break;
+                }
+                case "FromBalanceFilterValue":
+                    {
+                        this.balanceFilterSelectedValue == "filter_DebtBetween"
+                        this.FromBalance = queryFilterItem.FieldValue;
+                        break;
+                }
+                case "ToBalance":
+                            this.ToBalance = queryFilterItem.FieldValue;
+                            break;
+                case "BalanceFilterValue":
+                        this.balance = queryFilterItem.FieldValue;
+                        break;
+                case "BalanceFilter":
+                      this.balanceFilterSelectedValue="filter_"+ queryFilterItem.FieldValue;                        
+                        break;
+                case "CurrencyOriginalLocalValue":
+                    this.currencyFilterSelectedValue= queryFilterItem.FieldValue;                           
+                    break;
+                
+                case "GroupByDate":
+                                this.DateFilterSelectedValue = queryFilterItem.FieldValue;
+                                break;
+                 case "AgingForDate":
+                        this.AgingForDate = new Date(queryFilterItem.FieldValue) ;
+                         break;
+                case "Detailed":
+                          this.CurrenciesDetailed= queryFilterItem.FieldValue;                        
+                            break;
+                 case "SalesmanId":
+                        this.Salesman= queryFilterItem.FieldValue;                           
+                        break;
+                case "CollectorId":
+                            this.Collector= queryFilterItem.FieldValue;                           
+                            break;
+                case "GLAccountType":{
+                    this.filterSelectedValue = queryFilterItem.FieldValue == "3" ? "filter_vendor":"filter_customer" ;
+                    this.AccountTypeCode= queryFilterItem.FieldValue;                        
+                     break;
+                }
+                case "NumberOfMonths":
+                    this.NumberOfMonths= queryFilterItem.FieldValue;                           
+                    break;
+                case "CustomerId":
+                    this.Customer= queryFilterItem.FieldValue;                           
+                    break;
+                case "AgingMethod":
+                        this.SelectedAgingMethod=this.AgingMethodsList.find(a=>a.Name==queryFilterItem.FieldValue);                           
+                        break; 
+                case "CategoryIndex":{
+                        if (queryFilterItem.FieldValue) {
+                            this.SelectedCategory = `Category ${queryFilterItem.FieldValue.slice(-1)}`;
+                        }
+                        break;
+                    }     
+                case "CategoryValue":{
+                    this.DataContext[this.SelectedCategory?.replace(' ', '')] = queryFilterItem.FieldValue;
+                    break;
+                }
+                          
+               
+            }
+   
+           
+    
+        }
+    }
     //#endregion
      private errors: string[];
     RunButtonClicked()

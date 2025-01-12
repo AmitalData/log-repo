@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, Output, EventEmitter}  from '@angular/core';
+import {Component, OnInit, Output, EventEmitter}  from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -34,6 +34,26 @@ export class LicenseManagementFilterComponent extends BaseComponent {
 
     queryFilterItems: QueryFilterItem[];
     queryFilterItem: QueryFilterItem;
+   
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "UserId":
+                    this.UserId = queryFilterItem.FieldValue;
+                    break;                            
+             }
+    
+               
+        }
+    }
     RunReport(isloading: boolean) {
         this.ValidationErrorsList = [];
 

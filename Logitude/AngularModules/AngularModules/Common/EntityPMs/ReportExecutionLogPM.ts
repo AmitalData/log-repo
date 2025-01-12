@@ -114,7 +114,10 @@ export class ReportExecutionLogPM {
     public get ReportName() { return this.reportName; }
     public set ReportName(newValue: string) { if (this.reportName != newValue) { this.reportName = newValue; this.MarkAsDirty("ReportName"); } }
        
-	 
+    private notDisplayInMenu: boolean;
+    public get NotDisplayInMenu() { return this.notDisplayInMenu; }
+    public set NotDisplayInMenu(newValue: boolean) { if (this.notDisplayInMenu != newValue) { this.notDisplayInMenu = newValue; this.MarkAsDirty("NotDisplayInMenu"); } }
+       
 
     public OldEntityPM: ReportExecutionLogPM;
 		
@@ -142,4 +145,4 @@ export class ReportExecutionLogPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

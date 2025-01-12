@@ -32,6 +32,7 @@ export class OceanShipmentReportFilterComponent extends BaseComponent   {
     public IsImport: boolean = false;
     public IncludeClosed: boolean = false;
     reportFliter: ReportFliter;
+    customerId: string;
     ToDate: Date;
     FromDate: Date;
     public currentDirectionId: string;
@@ -83,7 +84,46 @@ export class OceanShipmentReportFilterComponent extends BaseComponent   {
     daysInMonth(aDate: Date) {
         return (new Date(aDate.getFullYear(), aDate.getMonth() + 1, 0)).getDate();
     }
+   
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true,customerId: string=null) {
+        this.CustomerId =customerId;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
 
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                                       
+                case "CreateDateTime":
+                    if(queryFilterItem.Operator=="GreaterThanOrEqual"){
+                        this.FromDate =new Date(queryFilterItem.FieldValue);
+                        break;     }
+                    if(queryFilterItem.Operator=="LessThanOrEqual"){
+                        this.ToDate =new Date(queryFilterItem.FieldValue);
+                        break;  }
+                     break; 
+                case "ShipmentTypeId":
+                    this.ShipmentTypeRadio = queryFilterItem.FieldValue;
+                    break;  
+                case "DirectionId": {
+                    this.IsImport = queryFilterItem.FieldValue?.includes("I");
+                    this.IsExport = queryFilterItem.FieldValue?.includes("E");
+                    this.IsDomestic = queryFilterItem.FieldValue?.includes("D");
+                    break;
+                }
+               
+                case "IncludeClosed":
+                    this.IncludeClosed = queryFilterItem.FieldValue == "true";
+                    break;
+
+              
+            }
+            }
+    }
     RunReport(isloading: boolean) {
         this.queryFilterItems = new Array<QueryFilterItem>();
 

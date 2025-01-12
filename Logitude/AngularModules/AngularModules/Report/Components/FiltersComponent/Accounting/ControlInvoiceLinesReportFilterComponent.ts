@@ -466,6 +466,99 @@ export class ControlInvoiceLinesReportFilterComponent extends BaseComponent {
 
         }
     }
+   
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { 
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "InvoiceDate":{
+                    this.FromDate = new Date(queryFilterItem.FieldValue);
+                    this.ToDate = new Date(queryFilterItem.FieldValue2);
+                    this.TypeFilterDate = "Accountant";
+                    break;
+                }
+                case "CreateDate":{
+                    this.FromDate = new Date(queryFilterItem.FieldValue);
+                    this.ToDate = new Date(queryFilterItem.FieldValue2);
+                    this.TypeFilterDate = "Creation";
+
+                    break;
+                }  
+                case "NotIncludedInAnyTaxReport":{
+                    this.NotIncludedInAnyTaxReport =queryFilterItem.FieldValue;
+                    this.TypeFilterDate = "VATreport";
+
+                    break;
+                }
+                 case "TaxReportId":
+                        this.SelectedTaxReport =queryFilterItem.FieldValue;
+                        break; 
+                
+                 case "Description":
+                    this.Description = queryFilterItem.FieldValue;
+                   break;
+                               
+                 case "MainEntityReference":{
+                    this.CaseNumber = queryFilterItem.FieldValue;
+                    this.selectedCaseNumberOperator = this.operatorsList.filter(p => p.Code == queryFilterItem.Operator)[0];
+                    break;
+                 }
+                 case "TotalAmountForTaxReport":{
+                    this.AmountReportFrom = queryFilterItem.FieldValue;
+                    this.AmountReportTo = queryFilterItem.FieldValue2;
+                    this.selectedAmountReportOperator = this.operatorsList.filter(p => p.Code == queryFilterItem.Operator)[0];
+                    break;
+                 }
+                 case "AmountInLocalCurrency":{
+                    this.AmountInvoiceFrom = queryFilterItem.FieldValue;
+                    this.AmountInvoiceTo = queryFilterItem.FieldValue2;
+                    this.selectedAmountInvoiceOperator = this.operatorsList.filter(p => p.Code == queryFilterItem.Operator)[0];
+                    break;
+                 }
+                 case "TotalVAT":{
+                    this.AmountVatableFrom = queryFilterItem.FieldValue;
+                    this.AmountVatableTo = queryFilterItem.FieldValue2;
+                    this.selectedAmountVatableOperator = this.operatorsList.filter(p => p.Code == queryFilterItem.Operator)[0];
+                    break;
+                 }
+                 case "TotalExamptFortaxReport":{
+                    this.AmountExamptFrom = queryFilterItem.FieldValue;
+                    this.AmountExamptTo = queryFilterItem.FieldValue2;
+                    this.selectedAmountExamptOperator = this.operatorsList.filter(p => p.Code == queryFilterItem.Operator)[0];
+                    break;
+                 }
+                 case "IsExternalEntity":{
+                    if (queryFilterItem.FieldValue==null) {
+                        this.typeFilterIsExternal = "All";
+                    } else {
+                        this.typeFilterIsExternal = queryFilterItem.FieldValue=="1" ? "Externally" : "Internal";
+                    }
+                    break;
+                 }
+                 case "LineActionCode":{
+                    if (queryFilterItem.FieldValue==null) {
+                        this.TypeFilterReportsToVAT = "All";
+                    } else {
+                        this.TypeFilterReportsToVAT = queryFilterItem.FieldValue=="1" ? "Yes" : "No";
+                    }
+                    break;
+                 }
+                 
+               
+                
+               
+            }
+    
+           
+    
+        }
+    }
     BuildReport() {
         this.InitilaizeFilter();
 

@@ -1,4 +1,4 @@
-﻿import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
@@ -79,7 +79,40 @@ export class BookingFilterComponent extends BaseComponent   {
     daysInMonth(aDate: Date) {
         return (new Date(aDate.getFullYear(), aDate.getMonth() + 1, 0)).getDate();
     }
+   
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
 
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "FromDate":
+                    this.FromDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "ToDate":
+                    this.ToDate=new Date(queryFilterItem.FieldValue);
+                    break;
+              
+                case "MainCarriageFromPortId":
+                    this.MainCarriageFromPortId = queryFilterItem.FieldValue;
+                    break;
+                case "MainCarriageFinalDestinationPortId":
+                    this.MainCarriageFinalDestinationPortId = queryFilterItem.FieldValue;
+                    break;
+                case "CustomerId":
+                    this.SelectedItemComboBox = queryFilterItem.FieldValue;
+                    break;   
+                           }
+    
+           
+    
+        }
+    }
     RunReport(isloading: boolean) {
         this.queryFilterItems = new Array<QueryFilterItem>();
 

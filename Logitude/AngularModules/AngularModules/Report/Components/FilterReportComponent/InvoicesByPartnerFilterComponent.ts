@@ -96,15 +96,49 @@ export class InvoicesByPartnerFilterComponent extends BaseComponent   {
         this.ReportsPreview = myReportsPreview;
 
         var curDate = new Date();
-        this.FromDate= new Date();
+        if(this.FromDate == null){
+        this.FromDate = new Date();
         this.FromDate.setUTCDate(this.FromDate.getUTCDate() - 90);
-        this.ToDate = curDate;
+         }
+        this.ToDate = this.ToDate||curDate;
     }
  
     daysInMonth(aDate: Date) {
         return (new Date(aDate.getFullYear(), aDate.getMonth() , 0)).getDate();
     }
+
     
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true,CustomerId:string,IncludeOperationalyClosed:boolean,DateType:string) {
+        this.shipmentTypeRadio = DateType;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "FromDate":
+                    this.FromDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "ToDate":
+                    this.ToDate =new Date(queryFilterItem.FieldValue);
+                    break;
+                case "BillToId":
+                    this.CustomerId = queryFilterItem.FieldValue;
+                    break;
+                case "PartnerId":
+                        this.PartnerId = queryFilterItem.FieldValue;
+                        break; 
+               
+            }
+    
+           
+    
+        }
+    }
     RunReport(isloading: boolean) {
 
         this.ValidationErrorsList = [];
