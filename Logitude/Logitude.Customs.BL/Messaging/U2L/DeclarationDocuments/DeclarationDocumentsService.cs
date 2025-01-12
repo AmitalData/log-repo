@@ -214,7 +214,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                         //var myCustomDocumentType = myCustomDocumentTypeQueryService.GetSingleCustomDocumentTypeWithTenant(myDocumentTypeCustomsData.CustomsDoucumentTypeCode, _MyDeclarationPM.Tenant);
                         //if (myCustomDocumentType != null && !String.IsNullOrWhiteSpace(myCustomDocumentType.PointerLevel))
                         //{
-                         //   pointerLevel = myCustomDocumentType.PointerLevel;
+                         //   pointerLevel = myCustomDocumentType.PointMETADATAerLevel;
                        // }
                     }
                     AppendLogLine("Update Ticket before pointer");
@@ -269,7 +269,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     CustomsDocumentMetaDataValues = CustomsDocumentMetaDataValues.Where(r => r.MetaDataTypeCode == customsDocumentsTicketPM.DocumentTypeCode).ToList();
                     
 
-                    if(_MyDeclarationPM.IsDiamondDeclaration && _MyDeclarationPM.AutoSending && _MyDeclarationPM.Direction=="E")
+                    if(_MyDeclarationPM.IsDiamondDeclaration && _MyDeclarationPM.AutoSending && _MyDeclarationPM.Direction=="E" && CustomsDocumentMetaDataValues!= null && CustomsDocumentMetaDataValues.Count()==0)
                     {
                         DocumentsMetaDataTypeRepository documentsMetaDataTypeRepository = new DocumentsMetaDataTypeRepository();
 
