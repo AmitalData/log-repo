@@ -264,33 +264,34 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             ICommonDataContext MyContext = CommonDataContext.GetContext(tenatToCopy);
             CountryCityService service = new CountryCityService(MyContext, tenatToCopy);
             CountryQuery CountryQuery = new CountryQuery();
+			CountryRepository CountryRepository = new CountryRepository();
 
+			CountryCityRepository repository = new CountryCityRepository(tenant);   
             List<CountryCity> CountryCityList = this.repository.GetCountryCities(tenant).ToList();
             if(CountryCityList!=null && CountryCityList.Count() > 0)
             {
-                var CountryId = CountryQuery.GetSinglePMByCode(CountryQuery.GetSinglePM(CountryCityList[0].CountryId, tenant).Code, tenatToCopy)?.Id;
-
                 foreach (var item in CountryCityList)
                 {
-                    CountryCityPM countryCity = new CountryCityPM()
-                    {
-                         AddedManually = item.AddedManually,
-                         EnglishName = item.EnglishName,
-                         Code = item.Code,
-                         InActive = item.InActive,
-                         LocalName = item.LocalName,
-                         Notes = item.Notes,
-                         Tenant = tenatToCopy,
-                         SearchFields = item.SearchFields,
-                        StateId = item.StateId,
-                        CountryId= CountryId
+					var CountryId = CountryQuery.GetSinglePMByCode(CountryRepository.GetSingleCountry(item.CountryId, tenant)?.Code, tenatToCopy)?.Id;
+					CountryCity countryCityExist = repository.GetSingleCountryCityByCodeAndCountry(item.Code, CountryId, tenatToCopy);
+                    if (countryCityExist == null) {
 
-                    };
-                    service.Create(countryCity);
-                }
-
-
-
+					    CountryCityPM countryCity = new CountryCityPM()
+                        {
+                            AddedManually = item.AddedManually,
+                            EnglishName = item.EnglishName,
+                            Code = item.Code,
+                            InActive = item.InActive,
+                            LocalName = item.LocalName,
+                            Notes = item.Notes,
+                            Tenant = tenatToCopy,
+                            SearchFields = item.SearchFields,
+                            StateId = item.StateId,
+                            CountryId= CountryId                   
+                        };
+                        service.Create(countryCity);
+					}
+				}
             }
 
 
