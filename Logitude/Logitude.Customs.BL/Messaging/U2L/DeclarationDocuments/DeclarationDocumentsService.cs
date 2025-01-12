@@ -102,6 +102,26 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     {
                         throw new BusinessErrorException("DOC_ID is missing");
                     }
+
+                    string pointerLevel = null;
+                    var myDocumentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(dbContext);
+                    DocumentTypeCustomsDataPM myDocumentTypeCustomsData = myDocumentTypeCustomsDataQueryService.GetSingle(this._LogitudeDocs.DOC_ID, true, true);
+                    if (myDocumentTypeCustomsData == null || String.IsNullOrWhiteSpace(myDocumentTypeCustomsData.CustomsDoucumentTypeCode))
+                    {
+                        throw new BusinessErrorException("DOC_ID " + this._LogitudeDocs.DOC_ID + " but not found");
+                    }
+                    
+                    if (myDocumentTypeCustomsData != null && !String.IsNullOrWhiteSpace(myDocumentTypeCustomsData.CustomsDoucumentTypeCode))
+                    {
+                        
+                        var myCustomDocumentTypeQueryService = new CustomDocumentTypeQueryService(dbContext);
+                        var myCustomDocumentType = myCustomDocumentTypeQueryService.GetSingleCustomDocumentTypeWithTenant(myDocumentTypeCustomsData.CustomsDoucumentTypeCode, _MyDeclarationPM.Tenant);
+                        if (myCustomDocumentType != null && !String.IsNullOrWhiteSpace(myCustomDocumentType.PointerLevel))
+                        {
+                            pointerLevel = myCustomDocumentType.PointerLevel;
+                        }
+                    }
+
                     CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(_MyDeclarationPM.Tenant);
                     List<CustomsDocumentsTicketPM> myCustomsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketsByDocumentsFilingId(this._LogitudeDocs.COM_ID, _MyDeclarationPM.Tenant);
                     if(myCustomsDocumentsTicketPMList != null && myCustomsDocumentsTicketPMList.Count() > 0)
@@ -113,8 +133,17 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                             List<CustomsDocumentPointerPM> myCustomsDocumentPointerPMList = myCustomsDocumentPointerQueryService.GetPointersForMultipleTickets(ticketdIds, _MyDeclarationPM.Tenant);
                             if (myCustomsDocumentPointerPMList != null && myCustomsDocumentPointerPMList.Count() > 0)
                             {
-                                var myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(o => ParentEntityCodeList.Contains(o.ParentEntityCode) && o.ParentEntityId == _MyDeclarationPM.Id);
-                                if(myCustomsDocumentPointerPMListforDec != null && myCustomsDocumentPointerPMListforDec.Count() > 0)
+                                List<CustomsDocumentPointerPM> myCustomsDocumentPointerPMListforDec = new List<CustomsDocumentPointerPM>();
+                               if(pointerLevel.ToUpper() == "C")
+                                {
+                                    myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(x => x.ParentEntityCode == "ExportDeclarationClosingData").ToList();
+                                }
+                                else
+                                {
+                                    myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(x => x.ParentEntityCode == "Declaration").ToList();
+
+                                }
+                                if (myCustomsDocumentPointerPMListforDec != null && myCustomsDocumentPointerPMListforDec.Count() > 0)
                                 {
                                     
                                     if (this._MyDeclarationPM.IsCourierDeclaration || this._MyDeclarationPM.UNFCourier)
@@ -167,13 +196,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     //List<CustomsDocumentsTicketPM> myCustomsDocumentsTicketPMList2 = myCustomsDocumentsTicketQueryService.
                     
 
-                    string pointerLevel = null;
-                    var myDocumentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(dbContext);
-                    var myDocumentTypeCustomsData = myDocumentTypeCustomsDataQueryService.GetSingle(this._LogitudeDocs.DOC_ID, true, true);
-                    if (myDocumentTypeCustomsData == null || String.IsNullOrWhiteSpace(myDocumentTypeCustomsData.CustomsDoucumentTypeCode))
-                    {
-                        throw new BusinessErrorException("DOC_ID " + this._LogitudeDocs.DOC_ID + " but not found");
-                    }
+                    //string pointerLevel = null;
+                    //var myDocumentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(dbContext);
+                    //DocumentTypeCustomsDataPM myDocumentTypeCustomsData = myDocumentTypeCustomsDataQueryService.GetSingle(this._LogitudeDocs.DOC_ID, true, true);
+                    //if (myDocumentTypeCustomsData == null || String.IsNullOrWhiteSpace(myDocumentTypeCustomsData.CustomsDoucumentTypeCode))
+                    //{
+                    //    throw new BusinessErrorException("DOC_ID " + this._LogitudeDocs.DOC_ID + " but not found");
+                    //}
                     CustomsDocumentsTicketPM customsDocumentsTicketPM = new CustomsDocumentsTicketPM();
                     customsDocumentsTicketPM.ChangeSetOp = ChangeSetOperation.Insert;
                     customsDocumentsTicketPM.Tenant = _MyDeclarationPM.Tenant;
@@ -181,12 +210,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     if (myDocumentTypeCustomsData != null && !String.IsNullOrWhiteSpace(myDocumentTypeCustomsData.CustomsDoucumentTypeCode))
                     {
                         customsDocumentsTicketPM.DocumentTypeCode = myDocumentTypeCustomsData.CustomsDoucumentTypeCode;
-                        var myCustomDocumentTypeQueryService = new CustomDocumentTypeQueryService(dbContext);
-                        var myCustomDocumentType = myCustomDocumentTypeQueryService.GetSingleCustomDocumentTypeWithTenant(myDocumentTypeCustomsData.CustomsDoucumentTypeCode, _MyDeclarationPM.Tenant);
-                        if (myCustomDocumentType != null && !String.IsNullOrWhiteSpace(myCustomDocumentType.PointerLevel))
-                        {
-                            pointerLevel = myCustomDocumentType.PointerLevel;
-                        }
+                        //var myCustomDocumentTypeQueryService = new CustomDocumentTypeQueryService(dbContext);
+                        //var myCustomDocumentType = myCustomDocumentTypeQueryService.GetSingleCustomDocumentTypeWithTenant(myDocumentTypeCustomsData.CustomsDoucumentTypeCode, _MyDeclarationPM.Tenant);
+                        //if (myCustomDocumentType != null && !String.IsNullOrWhiteSpace(myCustomDocumentType.PointerLevel))
+                        //{
+                         //   pointerLevel = myCustomDocumentType.PointerLevel;
+                       // }
                     }
                     AppendLogLine("Update Ticket before pointer");
                     myCustomsDocumentsTicketUpdateService.Update(customsDocumentsTicketPM, true);
