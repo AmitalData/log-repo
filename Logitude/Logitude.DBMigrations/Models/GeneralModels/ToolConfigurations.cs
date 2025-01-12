@@ -1,11 +1,14 @@
-﻿namespace Logitude.DBMigrations.Models
+﻿using System.Collections.Generic;
+
+namespace Logitude.DBMigrations.Models
 {
     public static class ToolConfigurations
     {
         public static string DatabaseType;
         public static string GlobalConnectionString;
         public static string MainConnectionString;
-        public static string SystemLogsConnectionString;
+		public static List<string> MainArrConnectionString = new List<string>();
+		public static string SystemLogsConnectionString;
         public static string CargoTrackingConnectionString;
         public static int AOTScriptsExecutionTimeOut;
         public static bool AOTCreateIndexWithOnline;
