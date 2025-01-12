@@ -38,16 +38,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         public List<ContainerizationPM> GetContainerizationsByIds(string ids , int tenant)
         {
-            List<Containerization> containerizationPM = repository.GetContainerizationsByIds(ids, tenant);
-            List<ContainerizationPM> containerizationList = new List<ContainerizationPM>();
 
-            foreach (Containerization item in containerizationPM)
-            {
-                ContainerizationPM containerization = GetEntityPM(item);
-                containerizationList.Add(containerization);
-            }
 
-            return containerizationList;
+            return new List<ContainerizationPM>(repository.GetContainerizationsByIds(ids, tenant).Select(x => GetEntityPM(x)));
 
         }
 

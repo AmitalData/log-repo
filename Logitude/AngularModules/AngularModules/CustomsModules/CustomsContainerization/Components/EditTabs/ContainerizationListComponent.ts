@@ -35,11 +35,8 @@ export class ContainerizationListComponent extends BaseComponent {
     ResponseData: INF_MSG_GenericResponseData;
     containerizationExtendedListService: ContainerizationExtendedListService = new ContainerizationExtendedListService();
     ontainerizationListService: ContainerizationListService = new ContainerizationListService();
-
-
     public ContainerizationDeclarationList: ObservableCollection;
     public declarationList: ObservableCollection;
-    private CurrentSession = SessionLocator.SelectedSession;
     IsDisplayOnly: boolean = false;
     visibile: boolean = true;
 
@@ -51,20 +48,11 @@ export class ContainerizationListComponent extends BaseComponent {
                 this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
                     this.EntityPM = this.entityArgs.EntityPM;
                     this.ObjectTableName = this.entityArgs.ObjectTableName;
-                    this.Listen();
-                    this.setYellowMessage();
                     this.getRows();
                 });
             });
         });
 
-    }
-
-    // log tab
-    selectedTab: LogTab;
-    public get SelectedTab() { return this.selectedTab; }
-    public set SelectedTab(tab: LogTab) {
-        this.selectedTab = tab;
     }
 
     getRows() {
@@ -75,8 +63,6 @@ export class ContainerizationListComponent extends BaseComponent {
             SessionLocator.SelectedSession.StopBusyIndicator();
 
         });
-
-
     }
 
     rowClicked(item) {
@@ -96,65 +82,8 @@ export class ContainerizationListComponent extends BaseComponent {
 
     }
 
-    private Listen() {
-        if (this.CurrentSession.CurrentEditComponent != null) {
-            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
-            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                    if (isSaveSuccess) {
-                        this.resetDeletedDeclaration();
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                        this.setYellowMessage();
-                        this.getRows();
-                    }
-                })
-            );
-            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
-                    if (isLoadSuccess) {
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                        this.setYellowMessage();
-                        this.getRows();
-                    }
-                })
-            );
-            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
-                        if (tabCode == "DEGC") {
-                            this.RefreshEntity();
-                        }
-                    }
-                })
-            )
-
-        }
-    }
-
-
-    resetDeletedDeclaration() {
-        this.CurrentSession.CurrentEditComponent.EntityPM.NotConnectedDeclarations = "";
-        this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = false;
-    }
-    RefreshEntity() {
-        if (this.CurrentSession.CurrentEditComponent) {
-            this.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
-            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        }
-    }
-
-    setYellowMessage() {
-        if (this.EntityPM.IsChange) {
-            this.YellowMessage = TextCodeTranslator.Translate("Customs.Containerization.O.ContainerizationChanged");
-        }
-        else
-            this.YellowMessage = null;
-    }
-
-
     get ContainerizationDate() { return this.EntityPM != null ? this.EntityPM.ContainerizationDate : null; }
     set ContainerizationDate(value) { this.EntityPM.ContainerizationDate = value; }
-
 
 }
 
