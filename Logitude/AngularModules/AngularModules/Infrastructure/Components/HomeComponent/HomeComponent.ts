@@ -42,6 +42,7 @@ import { ReportsTemplateListExtendedService } from 'Common/Services/ExtendedList
 import { ReportPM } from 'Common/EntityPMs/ReportPM';
 import { QueryFilterItem } from 'Report/Components/Filters/QueryFilterItem';
 import { ReportExecutionLogPMService } from 'Common/Services/StandardPMs/ReportExecutionLogPMService';
+import { ReportMenuComponent } from 'Report/Components/ReportMenuComponent';
 
 @Component({
     templateUrl: './HomeComponent.html',
@@ -68,14 +69,10 @@ export class HomeComponent implements OnDestroy{
     private IsINTTRAPackage = false;
     public PaymentChanelCode: string;
     public AccountingActivated=false;
+    
     isReportPanelVisible: boolean = false;
     currentReportId: string = "";
 
-    public RelatedReport: ReportExecutionLogPM[];
-    SelectedReport: ReportExecutionLogPM;
-    private relatedReportSubject = new BehaviorSubject<ReportExecutionLogPM[]>([]);
-    RelatedReport$ = this.relatedReportSubject.asObservable();
-    showExceptionMessage=false
 
     constructor() {
         this.Tenant = SessionLocator.Tenant;
@@ -99,7 +96,7 @@ export class HomeComponent implements OnDestroy{
             this.InitializeAppHeader();
             this.CheckAmitalBrowserInUse();
         }
-        this.LoadReports()
+        
         if (!SessionInfo.KeepUserLoggedIn) {
             // sessionTimeout
             var sessionTimeout: DetectUserInActivity = new DetectUserInActivity();
@@ -782,7 +779,7 @@ export class HomeComponent implements OnDestroy{
         );
 
     }
-
+    ReportMenuComponent:ReportMenuComponent
     // Notification Bell
     badjCount: number;
     IsBadjCountVisibile: boolean;
@@ -803,9 +800,7 @@ export class HomeComponent implements OnDestroy{
     }
     get IsReportPanelVisible() { return this.isReportPanelVisible; }
     set IsReportPanelVisible(newValue: boolean) {
-        if(newValue){
-            this.LoadReports();
-        }
+       
         if (this.isReportPanelVisible != newValue) {
             this.isReportPanelVisible = newValue;
         }
@@ -2062,206 +2057,8 @@ export class HomeComponent implements OnDestroy{
             }
         });
     }
-    //REPORTS
-_reportService: ReportService=new ReportService();
-private subscription: Subscription | null = null;
-
-public LoadReports() {
-    this._reportService= new ReportService();
-    this._reportService.GetReportByTenantAndUserToMenu(SessionLocator.LoggedUserPM?.Id).subscribe((response: ServiceResponse) => {
-            
-
-            if (!AppTool.IsNullOrEmpty(response)) {
-
-                this.RelatedReport = [];
-                var relatedDocs: ReportExecutionLogPM[];
-                relatedDocs = response.Result;
-                this.RelatedReport=relatedDocs?.sort((a, b) => new Date(b.CreateDate).getTime() - new Date(a.CreateDate).getTime());
-                this.relatedReportSubject.next(relatedDocs);
-                this.StartCheckingStatus();
-               
-            }
-        });
+ 
 }
-StartCheckingStatus() {
-    this.subscription = interval(5000) 
-        .pipe(takeWhile(() => this.IsReportPanelVisible))
-        .subscribe(() => this.CheckStatus());
-}
-public CheckStatus() {
-     
-    const reportIds = this.RelatedReport?.filter(report => report.StatusCode === 'P' || report.StatusCode === 'W')?.map(report => report.Id).join(',');
-    this._reportService.CheckReportsStatus(reportIds).subscribe(statusResponse => {
-        if (statusResponse && !statusResponse.HasError) {
-        statusResponse?.Result?.forEach((status: any) => {
-            const reportIndex = this.RelatedReport.findIndex(r => r.Id === status.Id);
-            if (reportIndex !== -1) {
-            this.RelatedReport[reportIndex] = status;
-            }
-        });
-        this.relatedReportSubject.next(this.RelatedReport);
-        }
-    });
-   
-}
-DeleteReport(relatedRep: ReportExecutionLogPM) {
-      this.CurrentSession.StartBusyIndicator("Deleting....");
-
-     this.RelatedReport = this.RelatedReport.filter(report => report.Id !== relatedRep?.Id);
-     this.relatedReportSubject.next(this.RelatedReport);
-     this._reportService.DeleteFromMenu(relatedRep.Id).subscribe((res: any) => {
-       
-       this.CurrentSession.StopBusyIndicator();
-    });
-}      
-ReportExecutionLogPMService: ReportExecutionLogPMService=new ReportExecutionLogPMService();
-
-CancelReport(relatedRep: ReportExecutionLogPM) {
-
-    this.CurrentSession.StartBusyIndicator("Canceling...");
-    this.ReportExecutionLogPMService.Cancel(relatedRep.Id).subscribe((res: any) => {
-        if(!res.HasError){
-           this.LoadReports();
-        }
-       this.CurrentSession.StopBusyIndicator();
-    });
-} 
-reportPMService :ReportPMService= new ReportPMService()  ; 
-reportsTemplateListExtendedService = new ReportsTemplateListExtendedService();
-ReportTemplates=null;
-ViewReport(relatedRep: ReportExecutionLogPM) {
-
-    this.reportPMService.get(relatedRep.ReportId).subscribe((response: ServiceResponse) => {
-        if(response.Result){
-            if(!response.HasError){
-                this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(relatedRep.ReportId).subscribe((myResponse: ServiceResponse) => {
-                    if (myResponse.HasError) return;
-                  
-                    this.ReportTemplates = myResponse.Result;
-                    this.LoadReportsPreviewComponent(relatedRep, response.Result);
-
-                    this.CurrentSession.StopBusyIndicator();
-                });
-            }
-        }
-        
-        
-       
-    })
-   
-}
-private PageChild_PRREP: any = null;
-
-LoadReportsPreviewComponent(relatedRep: ReportExecutionLogPM,report: ReportPM) {
-    this.CurrentSession.StartBusyIndicator("Preview...");
-    SessionLocator.DynamicLoader.Load('./Report/Components/ReportsPreviewComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-        .then(cmpRef => {
-            cmpRef.instance.ComponentRef = cmpRef;
-            this.PageChild_PRREP = cmpRef.instance;
-            this.SetReportDetails(relatedRep,report);
-            this.CurrentSession.StopBusyIndicator();
-        });
-}
-
-SetReportDetails(relatedRep: ReportExecutionLogPM,report: ReportPM) {
-   
-    let reportFilterItems = this.ConvertXmlToObject(relatedRep.ReportFilterXML)
-    this.PageChild_PRREP.SetReportFilterItems(reportFilterItems?.QueryFilterItemLists,false);
-    
-    this.PageChild_PRREP.SetReportTemplate(relatedRep.ReportTemplateId);
-    this.PageChild_PRREP.ReportsPreview(null, report, this.ReportTemplates);
-    this.PageChild_PRREP.GenerateReportViewWorkerRole(reportFilterItems);
-   
-}
-
-
-SetReportFilterItems(xml: any): Array<QueryFilterItem> {
-    let reportFilterItems: Array<QueryFilterItem> = [];
-   
-
-     let filterItems = xml;
-     if (!Array.isArray(filterItems)) {
-        filterItems = [filterItems];
-    }
-
-    reportFilterItems = filterItems.map((item: any) => ({
-        FieldName: item.FieldName,
-        FieldValue: this.convertStringToType(item.FieldValue?._),
-        FieldValue2: this.convertStringToType(item.FieldValue2?._),
-        FieldValue3: this.convertStringToType(item.FieldValue3?._),
-        Operator: item.Operator,
-        IsCustom: item.IsCustom === 'true',
-        DisplayInList: item.DisplayInList === 'true',
-        IsCustomField: item.IsCustomField === 'true',
-        FieldDataType: item.FieldDataType,
-        IsListFilter: item.IsListFilter === 'true',
-        IsAnalyticsMetadatas: item.IsAnalyticsMetadatas === 'true'
-    }));
-   
-    return reportFilterItems;
-}
- convertStringToType(value: string): any {
-    if (value === 'true') {
-        return true;
-    } else if (value === 'false') {
-        return false;
-    } else {
-        return value;
-    }
-}
-ConvertXmlToObject(xml: string): ReportFliter {
-    let resultObject: any = {};
-    parseString(xml, { explicitArray: false }, (err: Error, result: any) => {
-        if (err) {
-            console.error('Error parsing XML:', err);
-            return;
-        }
-
-        const reportFilter = result.ReportFliter;
-        resultObject.CurrentCurrencyCodeType = reportFilter.CurrentCurrencyCodeType;
-        resultObject.DateType = reportFilter.DateType;
-        resultObject.IncludeOperationalyClosed = reportFilter.IncludeOperationalyClosed === 'true';
-        resultObject.ReportCode = reportFilter.ReportCode;
-        resultObject.FilterControlName = reportFilter.FilterControlName;
-        resultObject.ReportDocumentId = reportFilter.ReportDocumentId;
-        resultObject.CustomerId = reportFilter.CustomerId;
-        resultObject.QuoteCustomerTypeCode = reportFilter.QuoteCustomerTypeCode;
-        resultObject.FieldDataType = reportFilter.FieldDataType;
-        resultObject.Tenant = parseInt(reportFilter.Tenant, 10);
-        resultObject.QueryFilterItemLists = this.SetReportFilterItems(reportFilter.QueryFilterItemLists.QueryFilterItem);
-        resultObject.NumberOfPage = parseInt(reportFilter.NumberOfPage, 10);
-        resultObject.ProcessType ="ReportsRunUsingWR";
-        resultObject.ReportKey = reportFilter.ReportKey;
-        resultObject.ReportName = reportFilter.ReportName;
-        resultObject.InvoiceType = reportFilter.InvoiceType;
-        resultObject.DefaultTemplateId = reportFilter.DefaultTemplateId;
-        resultObject.DefaultTemplateVsersion = parseInt(reportFilter.DefaultTemplateVsersion, 10);
-        resultObject.ReportsRunUsingWR = reportFilter.ReportsRunUsingWR === 'true';
-        resultObject.UserId = reportFilter.UserId;
-        resultObject.ReportId = reportFilter.ReportId;
-        resultObject.NumberOfRequests = parseInt(reportFilter.NumberOfRequests, 10);
-        resultObject.Level = reportFilter.Level;
-        resultObject.DisablePreview = reportFilter.DisablePreview === 'true';
-    });
-    return resultObject;
-}
-  
-
-getPercentage(statusCode: string): number {
-    switch (statusCode) {
-      case 'P':
-      case 'F' :
-        return 50;
-      case 'D':
-        return 100;
-      case 'W':
-        return 0;
-      default:
-        return 0;
-    }
-  }
-}
-
 export class SessionTabItem {
     public Index: number;
     public IsSelected: boolean = false;

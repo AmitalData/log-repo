@@ -427,7 +427,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ReportExecutionLogQuery reportExecutionLogQuery = new ReportExecutionLogQuery(authToken.Tenant);
-                List<string> idsList = ids.Split(',').ToList();
+                List<string> idsList = ids?.Split(',').ToList();
                 List<ReportExecutionLogPM> reportExecutionLogs = reportExecutionLogQuery.GetReportExecutionLogPMsByIds(idsList, authToken.Tenant).ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, reportExecutionLogs);
             }

@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.Customs.Data;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.Linq; 
 using System.Text;
@@ -112,6 +114,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public IQueryable<ReportExecutionLogPM> GetReportExecutionLogPMsByTenantAndUserLastWeek(int tenant,string id)
         {
             var oneWeekAgo = DateTime.Now.AddDays(-7);
+            (repository.context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
 
             return (from a in repository.context.ReportExecutionLogs.Include("CommunicationStatusType").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("Report")
                     where a.Tenant == tenant && a.CreateDate >= oneWeekAgo && a.CreatedByUserId == id   && a.NotDisplayInMenu == false
@@ -141,6 +144,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<ReportExecutionLogPM> GetReportExecutionLogPMsByIds(List<string> ids, int tenant)
         {
+            (repository.context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
+
             return (from a in repository.context.ReportExecutionLogs.Include("CommunicationStatusType").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("Report")
                     where ids.Contains(a.Id) && a.Tenant == tenant 
                     select new ReportExecutionLogPM()
