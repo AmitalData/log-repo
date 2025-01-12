@@ -1,10 +1,10 @@
+using AmitalCloud.Shipment.Domain.EntityPMs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using AmitalCloud.Shipment.Domain.EntityPMs;
 
-namespace  AmitalCloud.Shipment.Domain.Validators
+namespace AmitalCloud.Shipment.Domain.Validators
 {
     public partial class ShipmentClassLevelValidator : IClassLevelValidator
     {

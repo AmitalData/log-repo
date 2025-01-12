@@ -1,14 +1,10 @@
 ﻿using AmitalCloud.Infrastructure.Data;
+using AmitalCloud.Infrastructure.Data.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using AmitalCloud.Infrastructure.Domain.Helpers;
 using System.Transactions;
-using AmitalCloud.Infrastructure.Data.Helpers;
 namespace AmitalCloud.Infrastructure.Domain.Helpers
 {
     public class ChangesLoggerService

@@ -1,5 +1,6 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Domain.Enums;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using Devart.Data.Oracle;
 using System;
@@ -9,7 +10,6 @@ using System.Data;
 using System.Data.Entity;
 using System.Globalization;
 using System.Transactions;
-using AmitalCloud.Infrastructure.Domain.Enums;  
 namespace AmitalCloud.Infrastructure.Data.Services
 {
     public partial class DbQueueService
@@ -641,7 +641,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                     var cmd = context.Database.Connection.CreateCommand();
                     if (AmitalCloudSettings.DatabaseManagementSystem == "oracle")
                     {
-                        cmd.CommandText = DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_DelayMessage",  AmitalCloudDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
+                        cmd.CommandText = DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_DelayMessage", AmitalCloudDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
                     }
                     else
                     {
@@ -675,7 +675,8 @@ namespace AmitalCloud.Infrastructure.Data.Services
                     {
                         System.Console.WriteLine("Exception: {0}", ex.ToString());
                         throw;
-                    }finally
+                    }
+                    finally
                     {
                         cmd.Connection.Close();
                     }

@@ -1,11 +1,6 @@
-﻿using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Data.Repositories;
+﻿using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using System;
 using System.Configuration;
-using System.Linq;
-using System.Transactions;
-using System.Web;
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {
     public class GlobalDbHelper
@@ -36,6 +31,6 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             };
             return currentDbCacheWithoutProxy;
         }
-        public static GlobalDB GetGlobalDBById(string id) => new GlobalDBRepository().GetGlobalDBById(id) ;
+        public static GlobalDB GetGlobalDBById(string id) => new GlobalDBRepository().GetGlobalDBById(id);
     }
 }

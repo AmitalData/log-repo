@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -24,14 +23,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         //public string ObjectTableId { get; set; }
         public string IssuedByUserId { get; set; }
         //public string DocumentTypeId { get; set; }
-       
 
-        
+
+
         //public string ChildEntityId { get; set; }
         //public string ChildEntityReference { get; set; }
-       
+
         //public bool IsCopy { get; set; }
-        
+
         //public bool IsDuplex { get; set; }
 
         [ForeignKey("XamlDocumentId")]
@@ -44,7 +43,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 
         //[ForeignKey("DocumentTypeId")]
         //public virtual DocumentType DocumentType { get; set; }
-        
+
         public virtual DocumentsFiling DocumentsFiling { get; set; }
 
 

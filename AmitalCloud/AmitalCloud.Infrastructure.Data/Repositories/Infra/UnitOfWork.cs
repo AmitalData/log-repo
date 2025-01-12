@@ -1,10 +1,8 @@
-﻿using System;
-using System.CodeDom;
-
+﻿using AmitalCloud.Infrastructure.Domain.Interfaces;
+using System;
 using System.Data.Entity.Validation;
 using System.Reflection;
 using System.Transactions;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
 
 namespace AmitalCloud.Infrastructure.Data.Repositories
 {
@@ -27,9 +25,9 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         //This is nothing but we are storing the DBContext (EmployeeDBContext) object in Context Property
         public UnitOfWork(int tenant)
         {
-            _context = (TContext) typeof(TContext).GetMethod("GetContext", BindingFlags.Public | BindingFlags.Static).Invoke(null, new object[] { tenant });
+            _context = (TContext)typeof(TContext).GetMethod("GetContext", BindingFlags.Public | BindingFlags.Static).Invoke(null, new object[] { tenant });
 
-        } 
+        }
         public UnitOfWork(TContext context)
         {
             _context = context;
@@ -51,7 +49,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         public void CreateTransactionScope(TransactionScopeOption option)
         {
             //It will Begin the transaction on the underlying store connection
-            _tranScope = new TransactionScope(option)  ;//  TransactionFactory.GetNewTransaction();
+            _tranScope = new TransactionScope(option);//  TransactionFactory.GetNewTransaction();
             //_objTran = Context.Database.BeginTransaction();
         }
 

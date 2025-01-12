@@ -1,15 +1,15 @@
-﻿using System;
+﻿using AmitalCloud.Infrastructure.Data;
+using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.Queries;
+using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Domain.EntityKeys;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Data.Queries;
-using AmitalCloud.Infrastructure.Data;
-using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Domain.EntityKeys;
 
 namespace AmitalCloud.Infrastructure.APITools.ApiV1
 {
@@ -17,10 +17,10 @@ namespace AmitalCloud.Infrastructure.APITools.ApiV1
     {
         DocumentsFilingRepository repository;
         #region Constructors
-        public DocumentsFilingQuery() :this(0)
+        public DocumentsFilingQuery() : this(0)
         {
         }
-        public DocumentsFilingQuery(int tenant) :this(new DocumentsFilingRepository(tenant))
+        public DocumentsFilingQuery(int tenant) : this(new DocumentsFilingRepository(tenant))
         {
         }
         public DocumentsFilingQuery(DocumentsFilingRepository repository)

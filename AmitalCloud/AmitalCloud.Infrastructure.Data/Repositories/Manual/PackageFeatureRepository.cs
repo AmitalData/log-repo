@@ -1,10 +1,8 @@
-using AmitalCloud.Infrastructure.Data.Context;using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace AmitalCloud.Infrastructure.Data.Repositories
 {
@@ -13,7 +11,6 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         IAmitalCloudContext currentContext;
         public PackageFeatureRepository() : this(AmitalCloudContext.GetContext(0))
         {
-            currentContext = new AmitalCloudContext();
         }
         public PackageFeatureRepository(IAmitalCloudContext context) : base(context)
         {
@@ -32,7 +29,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         }
         public PackageFeature GetSinglePackageFeatureByPackageAndFeatureUCode(string packageCode, string featureUniqeCode, int tenant)
         {
-            return GetMulti(a=> a.PackageCode == packageCode && a.FeatureUniqeCode == featureUniqeCode && a.Tenant == tenant).FirstOrDefault();
+            return GetMulti(a => a.PackageCode == packageCode && a.FeatureUniqeCode == featureUniqeCode && a.Tenant == tenant).FirstOrDefault();
         }
         public IQueryable<PackageFeature> GetPackageFeaturesByTenant(int tenant)
         {

@@ -22,13 +22,13 @@ namespace AmitalCloud.Infrastructure.Data.Context
    public class AmitalCloudContext: DbContextBase, IAmitalCloudContext
     {
     	private int _tenant;
-        public AmitalCloudContext()
+        private AmitalCloudContext()
         {
             Database.SetInitializer<AmitalCloudContext>(null);     
 			Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
         }
 
-        public AmitalCloudContext(DbConnection conn,int tenant)
+        private AmitalCloudContext(DbConnection conn,int tenant)
             : base(conn,true)
         {
             this.Configuration.LazyLoadingEnabled = false;
@@ -37,15 +37,26 @@ namespace AmitalCloud.Infrastructure.Data.Context
 			Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
             _tenant = tenant;
         }
-
+        private AmitalCloudContext(string dbConnectionInfo,int tenant): base(dbConnectionInfo)
+        {
+            this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.AutoDetectChangesEnabled = false;
+            Database.SetInitializer<AmitalCloudContext>(null);
+			Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
+            _tenant = tenant;
+        }
         public static IAmitalCloudContext GetContext(int tenant)
         {           
-            GlobalDB currentDb;
-			currentDb = GlobalDbHelper.GetGlobalDB(tenant);
-            string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
-            AmitalCloudContext context = new AmitalCloudContext(connection,tenant);
-            return context;
+            string dbConnectionInfo = GlobalDbHelper.GetGlobalDB(tenant).DBConnection;
+			if (AmitalCloudSettings.DatabaseManagementSystem == "oracle")
+			{
+				DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
+				return new AmitalCloudContext(connection, tenant);
+            }
+            else 
+			{
+				return new AmitalCloudContext(dbConnectionInfo, tenant); ;
+			}
         }
 		public override AmitalCloudDBSchema AmitalCloudDBSchema
         {
@@ -188,7 +199,6 @@ namespace AmitalCloud.Infrastructure.Data.Context
 	            modelBuilder.Configurations.Add(new FilingInboxMap());
 	            modelBuilder.Configurations.Add(new FilingInboxAttachmentMap());
 	            modelBuilder.Configurations.Add(new FilingInboxAttachmentLogMap());
-
 	            modelBuilder.Configurations.Add(new FTPDetailMap());
 	            modelBuilder.Configurations.Add(new GlobalZoneMap());
 	            modelBuilder.Configurations.Add(new HorseMap());
@@ -756,7 +766,6 @@ public IDbSet<Account> Accounts1  {  get; set; }
 	public IDbSet<FilingInbox> FilingInboxes  {  get; set; }
 	public IDbSet<FilingInboxAttachment> FilingInboxAttachments  {  get; set; }
 	public IDbSet<FilingInboxAttachmentLog> FilingInboxAttachmentLogs  {  get; set; }
-
 	public IDbSet<FTPDetail> FTPDetails  {  get; set; }
 	public IDbSet<GlobalZone> GlobalZones  {  get; set; }
 	public IDbSet<Horse> Horses  {  get; set; }

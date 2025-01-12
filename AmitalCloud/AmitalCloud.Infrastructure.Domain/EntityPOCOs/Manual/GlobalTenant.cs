@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ServiceModel.DomainServices.Server;
@@ -29,7 +28,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         [Include]
         [Association("GlobalDBGlobalTenant", "GlobalDBId", "Id", IsForeignKey = true)]
         [ForeignKey("GlobalDBId")]
-        public  GlobalDB GlobalDB { get; set; }
+        public GlobalDB GlobalDB { get; set; }
 
         public string PrivateLabelId { get; set; }
 

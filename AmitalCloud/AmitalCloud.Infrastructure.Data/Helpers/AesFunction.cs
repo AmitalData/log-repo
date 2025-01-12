@@ -1,8 +1,7 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.IO;
 using System.Linq;
@@ -11,11 +10,11 @@ using System.Text;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {
-    public  class AesFunction
+    public class AesFunction
     {
         public byte[] DecryptData(byte[] data, int tenant, string aesKey = null)
         {
-            if (data != null && data.Length>0)
+            if (data != null && data.Length > 0)
             {
 
                 try
@@ -60,7 +59,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                 }
                 catch (Exception ex)
                 {
-                   
+
                     throw new Exception(ex.Message);
                 }
 
@@ -68,9 +67,9 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             else return data;
         }
 
-        public byte[] EncryptData(byte[] data, int tenant,string aesKey = null)
+        public byte[] EncryptData(byte[] data, int tenant, string aesKey = null)
         {
-            if (data != null && data.Length>0)
+            if (data != null && data.Length > 0)
             {
                 try
                 {
@@ -123,14 +122,14 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         }
 
 
-        private  byte[] GetAesKey(int tenant, string aesKey = null)
+        private byte[] GetAesKey(int tenant, string aesKey = null)
         {
             if (string.IsNullOrEmpty(aesKey))
             {
                 Tenant currentTenant = new Repository<Tenant>(AmitalCloudContext.GetContext(tenant)).GetSingle(new TenantKeys<string>() { Id = tenant });    ///.GetSingleTenantByIdAndTenant(tenant, true);
                 if (currentTenant != null) aesKey = currentTenant.StorageEncryptionKey;
             }
-          
+
             if (!string.IsNullOrEmpty(aesKey))
             {
                 if (aesKey.Length < 32) throw new Exception("In Valid Aes key");
@@ -142,8 +141,8 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             }
         }
 
-        private  Random random = new Random();
-        public  string GenerateAesKey()
+        private Random random = new Random();
+        public string GenerateAesKey()
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             return new string(Enumerable.Repeat(chars, 32)

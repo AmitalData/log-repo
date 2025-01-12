@@ -1,18 +1,16 @@
-using AmitalCloud.Infrastructure.Data.Context;using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
 
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace AmitalCloud.Infrastructure.Data.Repositories
 {
     public class UserLastLoginRepository : Repository<UserLastLogin>
     {
         IAmitalCloudContext currentContext;
-        public UserLastLoginRepository() :this(AmitalCloudContext.GetContext(0))
+        public UserLastLoginRepository() : this(AmitalCloudContext.GetContext(0))
         {
         }
         public UserLastLoginRepository(IAmitalCloudContext context) : base(context)
@@ -33,7 +31,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         public IQueryable<UserLastLogin> GetUsersWorkspaceLastLogins(int tenant)
         {
             return (from d in context.UserLastLogins.Include("User").Include("User.Contact").Include("User.BusinessUnit")
-                    where d.Tenant == tenant 
+                    where d.Tenant == tenant
                     select d);
         }
         public IAmitalCloudContext context

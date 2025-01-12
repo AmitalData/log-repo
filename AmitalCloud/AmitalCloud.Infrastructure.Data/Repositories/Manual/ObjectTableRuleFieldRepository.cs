@@ -1,12 +1,11 @@
-using AmitalCloud.Infrastructure.Data.Context;using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 
 using System.Linq;
-using System.Linq.Expressions;
 using System.Transactions;
 using System.Web;
 
@@ -16,7 +15,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
     {
 
         IAmitalCloudContext amitalCloudContext;
-        public ObjectTableRuleFieldRepository():this(AmitalCloudContext.GetContext(0))
+        public ObjectTableRuleFieldRepository() : this(AmitalCloudContext.GetContext(0))
         {
             //Context = new AmitalCloudContext();
 
@@ -55,7 +54,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
                     {
                         IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
                         currentquery = (from a in context.ObjectTableRuleFields.Include("ObjectField").Include("ObjectTableRule")
-                                        where (a.Tenant == tenant) 
+                                        where (a.Tenant == tenant)
                                         select a).ToList();
                     }
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -84,9 +83,9 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
                 }
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                   IAmitalCloudContext context = AmitalCloudContext.GetContext(0);
-                   zeroquery = (from a in context.ObjectTableRuleFields.Include("ObjectField").Include("ObjectTableRule")
-                                 where (a.Tenant == 0) 
+                    IAmitalCloudContext context = AmitalCloudContext.GetContext(0);
+                    zeroquery = (from a in context.ObjectTableRuleFields.Include("ObjectField").Include("ObjectTableRule")
+                                 where (a.Tenant == 0)
                                  select a).ToList();
                 }
                 query = zeroquery.Concat(currentquery).ToList();

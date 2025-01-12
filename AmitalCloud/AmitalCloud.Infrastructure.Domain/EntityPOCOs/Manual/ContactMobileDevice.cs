@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
- public   class ContactMobileDevice
+    public class ContactMobileDevice
     {
 
 
-       [Key]
+        [Key]
         public string DeviceId { get; set; }
         public string NotificationUniqueKey { get; set; }
         public string Email { get; set; }

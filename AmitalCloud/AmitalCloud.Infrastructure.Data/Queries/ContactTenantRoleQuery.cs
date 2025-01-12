@@ -1,8 +1,8 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 namespace AmitalCloud.Infrastructure.Data.Queries
@@ -15,7 +15,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         }
         public ContactTenantRoleQuery(int tenant)
         {
-            repository = new Repository< ContactTenantRole>(AmitalCloudContext.GetContext(tenant));
+            repository = new Repository<ContactTenantRole>(AmitalCloudContext.GetContext(tenant));
         }
         public ContactTenantRoleQuery(IRepository<ContactTenantRole> contactTenantRoleRepository)
         {
@@ -23,7 +23,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         }
         public ContactTenantRolePM GetSinglePM(string id, int tenant)
         {
-            var contactTenantRole = (from a in repository.GetMulti(a=>
+            var contactTenantRole = (from a in repository.GetMulti(a =>
                                       a.Id == id && a.Tenant == tenant)
                                      select new ContactTenantRolePM()
                                      {
@@ -39,15 +39,15 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         {
             var contactTenantRole = (from a in repository.GetMulti(a =>
                                                             a.ContactTenantId == contactTenantId && a.Tenant == tenant)
-                                                           select new ContactTenantRolePM()
-                                                           {
-                                                               ContactTenantId = a.ContactTenantId,
-                                                               Id = a.Id,
-                                                               RoleId = a.RoleId,
-                                                               Tenant = a.Tenant,
-                                                           });
+                                     select new ContactTenantRolePM()
+                                     {
+                                         ContactTenantId = a.ContactTenantId,
+                                         Id = a.Id,
+                                         RoleId = a.RoleId,
+                                         Tenant = a.Tenant,
+                                     });
 
-            if (contactTenantRole==null)
+            if (contactTenantRole == null)
             {
                 return null;
             }

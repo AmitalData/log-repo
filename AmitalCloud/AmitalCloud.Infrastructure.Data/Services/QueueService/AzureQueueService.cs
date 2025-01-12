@@ -1,11 +1,10 @@
-﻿using Microsoft.ServiceBus.Messaging;
+﻿using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Domain.Interfaces;
+using Microsoft.ServiceBus.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Data.Services
 {
@@ -111,12 +110,12 @@ namespace AmitalCloud.Infrastructure.Data.Services
                 scope.Complete();
             }
         }
- 
+
 
         public void CompleteAsFailed()
         {
             //throw new NotImplementedException();
         }
- 
+
     }
 }

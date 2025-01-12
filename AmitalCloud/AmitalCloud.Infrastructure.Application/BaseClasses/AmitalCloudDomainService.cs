@@ -1,11 +1,11 @@
-﻿using System;
+﻿using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Data.Security;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.DomainServices.Server;
 using System.Transactions;
 using System.Web;
-using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Data.Security;
 
 namespace AmitalCloud.Infrastructure.Application.BaseClasses
 {

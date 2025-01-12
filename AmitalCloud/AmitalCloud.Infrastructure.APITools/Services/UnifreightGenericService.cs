@@ -1,8 +1,8 @@
 ﻿using AmitalCloud.Infrastructure.APITools.DataContracts;
 using AmitalCloud.Infrastructure.APITools.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using System;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using System;
 namespace AmitalCloud.Infrastructure.APITools.Services
 {
     public abstract class UnifreightGenericService : UnifreightGatewayProxy, IUnifreightGenericService

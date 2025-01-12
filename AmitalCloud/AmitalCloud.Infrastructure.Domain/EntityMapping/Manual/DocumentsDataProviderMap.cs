@@ -1,16 +1,11 @@
 ﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 {
-  public  class DocumentsDataProviderMap: EntityTypeConfiguration<DocumentsDataProvider>
+    public class DocumentsDataProviderMap : EntityTypeConfiguration<DocumentsDataProvider>
     {
-        
+
         public DocumentsDataProviderMap()
         {      // Primary Key
             this.HasKey(t => t.Code);
@@ -43,8 +38,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
 
 
-       //[ForeignKey("DocumentsDataProviderCode")]
-       // public virtual DocumentsDataProvider DocumentsDataProvider { get; set; }
-         }
+            //[ForeignKey("DocumentsDataProviderCode")]
+            // public virtual DocumentsDataProvider DocumentsDataProvider { get; set; }
+        }
     }
 }

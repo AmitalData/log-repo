@@ -1,19 +1,17 @@
-using System;
-
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
-using Microsoft.WindowsAzure.Storage.Queue;
-using Microsoft.WindowsAzure.Storage.Auth;
-using Microsoft.WindowsAzure.Storage.Table;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.WindowsAzure.Storage.Queue;
+using Microsoft.WindowsAzure.Storage.Table;
+using System;
 
 namespace AmitalCloud.Infrastructure.Data.Azure
 {
     public class StorageAcountDetails
     {
-       
+
         //private static CloudStorageAccount storageAccount;
         private static CloudStorageAccount storageaccount = null;
         public static CloudStorageAccount StorageAccount
@@ -133,7 +131,7 @@ namespace AmitalCloud.Infrastructure.Data.Azure
                 {
                     blobClient = StorageAccount.CreateCloudBlobClient();
                 }
-                return blobClient;               
+                return blobClient;
             }
         }
 
@@ -167,43 +165,43 @@ namespace AmitalCloud.Infrastructure.Data.Azure
 
         private static NamespaceManager nameSpaceManager;
 
-	public static NamespaceManager NameSpaceManager
-	{
-		get 
+        public static NamespaceManager NameSpaceManager
         {
-               if (StorageAccount != null)
+            get
+            {
+                if (StorageAccount != null)
                 {
                     if (nameSpaceManager == null)
                         nameSpaceManager = NamespaceManager.CreateFromConnectionString(GetSettingByName(AmitalCloudSettings.DeploymentStage));
                 }
-            return nameSpaceManager;
+                return nameSpaceManager;
+            }
+
         }
-    
-	}
 
 
-    private static string dataCacheTopicName;
+        private static string dataCacheTopicName;
 
-    public static string DataCacheTopicName
-    {
-        get
+        public static string DataCacheTopicName
         {
-            if (AmitalCloudSettings.DeploymentStage == "Dev")
+            get
             {
-                dataCacheTopicName = Environment.MachineName;
+                if (AmitalCloudSettings.DeploymentStage == "Dev")
+                {
+                    dataCacheTopicName = Environment.MachineName;
+                }
+                else if (AmitalCloudSettings.DeploymentStage == "Simplog")
+                {
+                    dataCacheTopicName = "production";
+                }
+                else
+                {
+                    dataCacheTopicName = "test";
+                }
+                return dataCacheTopicName;
             }
-            else if (AmitalCloudSettings.DeploymentStage == "Simplog")
-            {
-                dataCacheTopicName = "production";
-            }
-            else
-            {
-                dataCacheTopicName = "test";
-            }
-            return dataCacheTopicName;
-        }
 
-    }
+        }
 
         private static string signalRHubTopicName;
 
@@ -236,18 +234,18 @@ namespace AmitalCloud.Infrastructure.Data.Azure
 
 
         public static QueueClient CreateServiceBusQueueClient(string QueueName)
-           {
-               //var messagingFactory = MessagingFactory.Create(NameSpaceManager.Address,NameSpaceManager.Settings.TokenProvider);
+        {
+            //var messagingFactory = MessagingFactory.Create(NameSpaceManager.Address,NameSpaceManager.Settings.TokenProvider);
 
-               return Microsoft.ServiceBus.Messaging.QueueClient.CreateFromConnectionString(GetSettingByName(AmitalCloudSettings.DeploymentStage), QueueName);
-           }
+            return Microsoft.ServiceBus.Messaging.QueueClient.CreateFromConnectionString(GetSettingByName(AmitalCloudSettings.DeploymentStage), QueueName);
+        }
 
-           public static QueueClient CreateServiceBusQueueClient(string QueueName,ReceiveMode receivemode)
-           {
-               //var messagingFactory = MessagingFactory.Create(NameSpaceManager.Address,NameSpaceManager.Settings.TokenProvider);
+        public static QueueClient CreateServiceBusQueueClient(string QueueName, ReceiveMode receivemode)
+        {
+            //var messagingFactory = MessagingFactory.Create(NameSpaceManager.Address,NameSpaceManager.Settings.TokenProvider);
 
-               return Microsoft.ServiceBus.Messaging.QueueClient.CreateFromConnectionString(GetSettingByName(AmitalCloudSettings.DeploymentStage), QueueName, receivemode);
-           }
+            return Microsoft.ServiceBus.Messaging.QueueClient.CreateFromConnectionString(GetSettingByName(AmitalCloudSettings.DeploymentStage), QueueName, receivemode);
+        }
 
         /// <summary>
         /// 
@@ -272,7 +270,7 @@ namespace AmitalCloud.Infrastructure.Data.Azure
         public static CloudBlobContainer GetCurrentContainer(string containername)
         {
 
-             
+
             CloudBlobContainer blobContainer = BlobClient.GetContainerReference(containername);
 
             {
@@ -281,7 +279,7 @@ namespace AmitalCloud.Infrastructure.Data.Azure
 
             return blobContainer;
         }
-        
+
         public enum ContainersTypes
         {
             Tenant,
@@ -297,7 +295,7 @@ namespace AmitalCloud.Infrastructure.Data.Azure
             TenantBackup,
         }
 
-        public static string GetBlobNameByLocation(string blobname,string location)
+        public static string GetBlobNameByLocation(string blobname, string location)
         {
             string blobName = "";
 
@@ -383,7 +381,7 @@ namespace AmitalCloud.Infrastructure.Data.Azure
                     }
                 case "termsOfUse":
                     {
-                        blobName = "termsOfUse/" + blobname; 
+                        blobName = "termsOfUse/" + blobname;
                         break;
                     }
                 case "others":
@@ -418,7 +416,7 @@ namespace AmitalCloud.Infrastructure.Data.Azure
                 case "logboxwe1":
                     result = "Endpoint=sb://logboxwe1.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=1ICW1EzCyGOnpj8nkC3wklYdM/4WFwCZJPAiWTNJFvs=";
                     break;
-                
+
                 //case "Dev":
                 //case "Test1":
                 default:

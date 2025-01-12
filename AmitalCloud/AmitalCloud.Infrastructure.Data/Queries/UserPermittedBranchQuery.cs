@@ -1,18 +1,18 @@
-﻿using AmitalCloud.Infrastructure.Domain.EntityPMs;
+﻿using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using System.Linq;
-using AmitalCloud.Infrastructure.Data.Helpers;
 
 namespace AmitalCloud.Infrastructure.Data.Queries
 {
     public class UserPermittedBranchQuery
     {
-         UserPermittedBranchRepository repository;
+        UserPermittedBranchRepository repository;
 
         public UserPermittedBranchQuery() : this(0)
         {
         }
- 
+
         public UserPermittedBranchQuery(int tenant) : this(new UserPermittedBranchRepository(tenant))
         {
         }
@@ -39,28 +39,28 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         public IQueryable<UserPermittedBranchPM> GetUserPermittedBranchPMsByTenant(int tenant)
         {
             IQueryable<UserPermittedBranchPM> UserPermittedBranchs = from a in repository.context.UserPermittedBranches
-                                                     where a.Tenant == tenant
-                                                     select new UserPermittedBranchPM()
-                                                     {
-                                                         Id = a.Id,
-                                                         Tenant = a.Tenant,
-                                                         BranchId = a.BranchId,
-                                                         UserId = a.UserId,
-                                                     };
+                                                                     where a.Tenant == tenant
+                                                                     select new UserPermittedBranchPM()
+                                                                     {
+                                                                         Id = a.Id,
+                                                                         Tenant = a.Tenant,
+                                                                         BranchId = a.BranchId,
+                                                                         UserId = a.UserId,
+                                                                     };
             return UserPermittedBranchs;
         }
 
         public IQueryable<UserPermittedBranchPM> GetContactFromUserPermittedBranchPMsByUserId(string id, int tenant)
         {
             IQueryable<UserPermittedBranchPM> UserPermittedBranchs = (from a in repository.context.UserPermittedBranches.Include("Contact")
-                                      where a.UserId == id
-                                      select new UserPermittedBranchPM()
-                                      {
-                                          Id = a.Id,
-                                          Tenant = a.Tenant,
-                                          BranchId = a.BranchId,
-                                          UserId = a.UserId,
-                                      });
+                                                                      where a.UserId == id
+                                                                      select new UserPermittedBranchPM()
+                                                                      {
+                                                                          Id = a.Id,
+                                                                          Tenant = a.Tenant,
+                                                                          BranchId = a.BranchId,
+                                                                          UserId = a.UserId,
+                                                                      });
             return UserPermittedBranchs;
         }
     }

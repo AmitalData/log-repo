@@ -1,16 +1,13 @@
-using System;
-using System.Collections.Generic;
-
-using System.Linq;
-using System.Linq.Expressions;
-using AmitalCloud.Infrastructure.Data.Context;using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using System.Linq;
 namespace AmitalCloud.Infrastructure.Data.Repositories
 {
     public class ScreensRepository : Repository<Screen>
     {
-         IAmitalCloudContext amitalCloudContext;
+        IAmitalCloudContext amitalCloudContext;
         public ScreensRepository() : this(AmitalCloudContext.GetContext(0))
         {
         }
@@ -25,8 +22,8 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         public IQueryable<Screen> GetScreensByTenant(int tenant)
         {
             return from a in context.Screens
-                                         where a.Tenant == tenant
-                                         select a;
+                   where a.Tenant == tenant
+                   select a;
         }
         public Screen GetSingleScreen(string id)
         {

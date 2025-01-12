@@ -1,3 +1,5 @@
+using AmitalCloud.Invoice.WebAPI.Areas.HelpPage.ModelDescriptions;
+using AmitalCloud.Invoice.WebAPI.Areas.HelpPage.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,8 +13,6 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
-using AmitalCloud.Invoice.WebAPI.Areas.HelpPage.ModelDescriptions;
-using AmitalCloud.Invoice.WebAPI.Areas.HelpPage.Models;
 
 namespace AmitalCloud.Invoice.WebAPI.Areas.HelpPage
 {

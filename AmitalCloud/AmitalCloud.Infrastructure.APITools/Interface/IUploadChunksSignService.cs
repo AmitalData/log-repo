@@ -2,10 +2,7 @@
 
 using AmitalCloud.Infrastructure.APITools.Sign;
 using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.Threading.Tasks;
 namespace AmitalCloud.Infrastructure.APITools.Interface
 {
 
@@ -21,5 +18,5 @@ namespace AmitalCloud.Infrastructure.APITools.Interface
         bool FinishUploadFileAsync(Guid blobFileId);
     }
 
-    
+
 }

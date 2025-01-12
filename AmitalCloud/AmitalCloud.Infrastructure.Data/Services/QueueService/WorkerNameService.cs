@@ -1,13 +1,13 @@
-﻿using System;
-using System.Transactions;
-using System.Web;
-using AmitalCloud.Infrastructure.Data.Repositories;
+﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Domain.EntityKeys;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Domain.EntityKeys;
+using System;
 using System.Linq;
+using System.Transactions;
+using System.Web;
 
 namespace AmitalCloud.Infrastructure.Data.Services
 {
@@ -19,7 +19,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
             string workerName = GetCurrentWorkerName();
             if (FeatureToggleHelper.HasFeatureToggle("NWR", tenant))
             {
-                 waitingStatus = -1030;
+                waitingStatus = -1030;
                 if (!string.IsNullOrEmpty(workerName))
                 {
                     if (workerName.ToLower() == "staging")
@@ -33,10 +33,10 @@ namespace AmitalCloud.Infrastructure.Data.Services
                 }
             }
             if (!string.IsNullOrEmpty(workerName))
-            { 
+            {
                 waitingStatus = GetWatingStatusByWorkerRoleName(tenant, workerName);
             }
-            
+
             return waitingStatus;
         }
 
@@ -51,7 +51,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
             {
                 throw new Exception("Worker role name is not set!");
             }
-            
+
         }
 
         private static int GetWatingStatusByWorkerRoleName(int tenant, string workerName)
@@ -63,7 +63,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                 return 0;
             if (workerName.ToLower() == "staging")
                 return -100;
-            
+
             return GetWaitingSatusForWorkerName(tenant, workerName);
         }
 
@@ -134,7 +134,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
         private static WorkerRoleName GetWorkerRoleNameFromDB(string workerName, int tenant)
         {
             string cacheKey = $"WorkerRoleNamePM_({workerName})";
-            WorkerRoleName entity ; 
+            WorkerRoleName entity;
             if (HttpContext.Current != null)
             {
                 entity = (WorkerRoleName)CacheManager.CacheWrapper.Get(cacheKey);

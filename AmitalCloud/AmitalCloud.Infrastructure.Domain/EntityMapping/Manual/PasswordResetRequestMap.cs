@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 {
@@ -34,7 +29,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
                 .HasMaxLength(20)
                 .IsUnicode(false);
 
- 
+
 
 
             // Table & Column Mappings
@@ -47,7 +42,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             this.Property(t => t.ExpirationDate).HasColumnName("ExpirationDate");
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
             this.Property(t => t.DoneDate).HasColumnName("DoneDate");
-            
+
             this.Property(t => t.VerificationCode).HasColumnName("VerificationCode");
             this.Property(t => t.Type).HasColumnName("Type");
 

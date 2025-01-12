@@ -9,9 +9,7 @@ using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Transactions;
 using System.Web;
 
@@ -2096,7 +2094,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
 
                 var textcodesRepository = new Repository<TextCode>(context);
-                    //new TextCodeRepository(context);
+                //new TextCodeRepository(context);
                 Dictionary<string, ObjectFieldValidationPM> objectFieldValidationsDictionary = new Dictionary<string, ObjectFieldValidationPM>();
                 ObjectFieldValidationQuery objectFieldValidationQuery = new ObjectFieldValidationQuery(tenant);
                 objectFieldValidationsDictionary = objectFieldValidationQuery.GetObjectFieldValidationPMsByTenant(tenant).ToDictionary(objv => objv.Id, objv => objv);
@@ -2225,7 +2223,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             {
                 if (CacheManager.CacheWrapper.Get(tenantListName) == null)
                 {
-                        currentTenantTextCodes = repo.GetMulti(a => a.Tenant == tenant && a.InActive == false).ToList();
+                    currentTenantTextCodes = repo.GetMulti(a => a.Tenant == tenant && a.InActive == false).ToList();
                     CacheManager.CacheWrapper.Insert(tenantListName, currentTenantTextCodes, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                 }
                 else

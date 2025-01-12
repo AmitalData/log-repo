@@ -1,6 +1,5 @@
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
-using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
 namespace AmitalCloud.Infrastructure.Data.Azure
 {

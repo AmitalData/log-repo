@@ -1,4 +1,4 @@
-﻿using AmitalCloud.Infrastructure.Data.Context;using AmitalCloud.Infrastructure.Data.Helpers;
+﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
@@ -7,24 +7,22 @@ using System.Collections.Generic;
 
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Data.Repositories
 {
-    public class CommunicationLogRepository : Repository<CommunicationLog>,IRepository<CommunicationLog>
+    public class CommunicationLogRepository : Repository<CommunicationLog>, IRepository<CommunicationLog>
     {
         IAmitalCloudContext currentContext;
 
         public CommunicationLogRepository() : this(0)
         {
         }
-        public CommunicationLogRepository(IAmitalCloudContext context) : base(context)   
+        public CommunicationLogRepository(IAmitalCloudContext context) : base(context)
         {
             currentContext = context;
         }
 
-        public CommunicationLogRepository(int tenant) : this(AmitalCloudContext.GetContext(tenant)) 
+        public CommunicationLogRepository(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {
         }
         public CommunicationLog GetSingleCommunicationLogInProccess(string entityId, int tenant, string to, string correlationID)

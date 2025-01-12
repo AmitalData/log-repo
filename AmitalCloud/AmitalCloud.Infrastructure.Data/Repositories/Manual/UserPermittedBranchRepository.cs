@@ -1,18 +1,17 @@
-﻿using AmitalCloud.Infrastructure.Data.Context;using AmitalCloud.Infrastructure.Data.Helpers;
+﻿using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using System;
 using System.Collections.Generic;
 
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace AmitalCloud.Infrastructure.Data.Repositories
 {
-    public class UserPermittedBranchRepository:Repository<UserPermittedBranch>
+    public class UserPermittedBranchRepository : Repository<UserPermittedBranch>
     {
         IAmitalCloudContext currentContext;
-        public UserPermittedBranchRepository(IAmitalCloudContext context) :base(context)
+        public UserPermittedBranchRepository(IAmitalCloudContext context) : base(context)
         {
             currentContext = context;
         }
@@ -26,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         {
             return (from record in context.UserPermittedBranches.Include("User") where record.Tenant == tenant select record);
         }
-        public IQueryable<UserPermittedBranch> GetUserPermittedBranchesByUserId(string userId,int tenant)
+        public IQueryable<UserPermittedBranch> GetUserPermittedBranchesByUserId(string userId, int tenant)
         {
             return (from record in context.UserPermittedBranches.Include("User") where record.UserId == userId && record.Tenant == tenant select record);
         }
@@ -44,7 +43,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         }
         public List<string> GetUserPermittedBranchesIdsByUserId(string userId, int tenant)
         {
-            return GetMulti(record=> record.UserId == userId && record.Tenant == tenant).Select(a=>a.BranchId).ToList();
+            return GetMulti(record => record.UserId == userId && record.Tenant == tenant).Select(a => a.BranchId).ToList();
         }
     }
 }

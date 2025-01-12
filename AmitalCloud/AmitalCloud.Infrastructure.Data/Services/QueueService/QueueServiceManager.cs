@@ -7,7 +7,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
 {
     public static class QueueServiceManager
     {
-        public static IQueueService GetQueueService(string queuename,int tenant = 0)
+        public static IQueueService GetQueueService(string queuename, int tenant = 0)
         {
             IQueueService queueservice = ContainerAccessor.Container.Resolve(typeof(IQueueService), "QueueService", new ParameterOverride("", 1)) as IQueueService;
             queueservice.InitializeQueue(queuename, tenant);

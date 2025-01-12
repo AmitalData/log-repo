@@ -1,12 +1,9 @@
 ﻿using AmitalCloud.Infrastructure.Data;
+using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
-using AmitalCloud.Infrastructure.Domain.BaseClasses;
 
 namespace AmitalCloud.Infrastructure.APITools.Helpers
 {

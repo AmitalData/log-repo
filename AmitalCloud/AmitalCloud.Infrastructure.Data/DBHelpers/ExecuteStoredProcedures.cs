@@ -1,15 +1,10 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Data.Repositories;
 using Devart.Data.Oracle;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Transactions;
 namespace AmitalCloud.Infrastructure.Data.DBHelpers
 {
     public class ExecuteStoredProcedures
@@ -31,16 +26,7 @@ namespace AmitalCloud.Infrastructure.Data.DBHelpers
         }
         public static string GetConnection(int tenant)
         {
-            GlobalDB currentDb;
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
-            }
-            string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
-            AmitalCloudContext context = new AmitalCloudContext(connection,tenant);
-            return context.Database.Connection.ConnectionString;
+            return AmitalCloudContext.GetContext(tenant).Database.Connection.ConnectionString;
         }
         static object ExecuteOracle(string procedureName, int tenant, List<StoredProcedureParam> storedProcedureParams)
         {

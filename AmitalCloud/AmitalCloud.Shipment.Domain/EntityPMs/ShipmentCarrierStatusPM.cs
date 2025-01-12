@@ -22,7 +22,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
         public string FlightNumber { get; set; }
         public string Location { get; set; }
         public string AirlineName { get; set; }
-         public string StatusName { get; set; }
+        public string StatusName { get; set; }
         public string LocationCode { get; set; }
         public string LocationName { get; set; }
 

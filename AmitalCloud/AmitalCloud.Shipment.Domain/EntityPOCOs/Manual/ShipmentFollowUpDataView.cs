@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel.DataAnnotations;
 
 namespace AmitalCloud.Shipment.Domain.EntityPOCOs
@@ -9,7 +6,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPOCOs
     public class ShipmentFollowUpDataView
     {
         private string id;
-        
+
         public string Id
         {
             get
@@ -172,7 +169,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPOCOs
         public string Master { get; set; }
 
         public string LongMaster { get; set; }
-        
+
         public string FreightPrepaidCollectId { get; set; }
         public string OtherPrepaidCollectId { get; set; }
         public string GrossWeightUnitCode { get; set; }
@@ -379,11 +376,11 @@ namespace AmitalCloud.Shipment.Domain.EntityPOCOs
         #region Routings
 
         public string FromPortId { get; set; }
-        public string ToPortId { get; set; }        
+        public string ToPortId { get; set; }
         public DateTime? PreCarriageETD { get; set; }
         public DateTime? PreCarriageATD { get; set; }
         public DateTime? PreCarriageETA { get; set; }
-        public DateTime? PreCarriageATA { get; set; }        
+        public DateTime? PreCarriageATA { get; set; }
         public DateTime? OnCarriageETD { get; set; }
         public DateTime? OnCarriageATD { get; set; }
         public DateTime? OnCarriageETA { get; set; }
@@ -524,7 +521,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPOCOs
         #endregion
 
         public string Routing { get; set; }
-        
+
         #region AWB
         public string AWBCurrencyId { get; set; }
         public string AWBCurrencyCode { get; set; }
@@ -576,7 +573,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPOCOs
 
         public string CASSCode { get; set; }
         public string SpecialServicesTypeId { get; set; }
-        public string SpecialServicesTypeName {get; set;}
+        public string SpecialServicesTypeName { get; set; }
         public bool ARInvoiceIssued { get; set; }
         public bool CreditNoteIssued { get; set; }
 
@@ -669,7 +666,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPOCOs
         public DateTime? DeclarationDate { get; set; }
         public string ARInvoices { get; set; }
         public double? NotInvoicedReceivablesAmount { get; set; }
-       
+
         public DateTime? PreForwardingETD { get; set; }
         public DateTime? PreForwardingATD { get; set; }
         public DateTime? PreForwardingETA { get; set; }
@@ -677,7 +674,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPOCOs
         public DateTime? OnForwardingETD { get; set; }
         public DateTime? OnForwardingATD { get; set; }
         public DateTime? OnForwardingETA { get; set; }
-        public DateTime? OnForwardingATA { get; set; }       
+        public DateTime? OnForwardingATA { get; set; }
         public bool IsStandalonePickupDelivery { get; set; }
         public string ParentShipmentNumber { get; set; }
         public string ParentShipmentType { get; set; }

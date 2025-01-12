@@ -1,10 +1,5 @@
 ﻿using AmitalCloud.Shipment.Domain.EntityPOCOs;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Shipment.Domain.EntityMapping
 {
@@ -18,18 +13,18 @@ namespace AmitalCloud.Shipment.Domain.EntityMapping
             this.Property(t => t.CommunicationLogId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ContentDocumentId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.OceanInsightsRequestId).HasMaxLength(15).IsUnicode(false);
-			this.Property(t => t.XML).IsMaxLength().IsUnicode(true);
+            this.Property(t => t.XML).IsMaxLength().IsUnicode(true);
 
-			this.ToTable("OceanInsightsStatuses");
-            this.Property(t => t.Id).HasColumnName("Id"); 
+            this.ToTable("OceanInsightsStatuses");
+            this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.CommunicationLogId).HasColumnName("CommunicationLogId");
             this.Property(t => t.ContentDocumentId).HasColumnName("ContentDocumentId");
             this.Property(t => t.OceanInsightsRequestId).HasColumnName("OceanInsightsRequestId");
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
-			this.Property(t => t.XML).HasColumnName("XML");
+            this.Property(t => t.XML).HasColumnName("XML");
 
-			this.HasRequired(t => t.CommunicationLog)
+            this.HasRequired(t => t.CommunicationLog)
              .WithMany()
              .HasForeignKey(d => d.CommunicationLogId)
              .WillCascadeOnDelete(false);
@@ -41,8 +36,8 @@ namespace AmitalCloud.Shipment.Domain.EntityMapping
                .WithMany()
                .HasForeignKey(d => d.OceanInsightsRequestId)
                .WillCascadeOnDelete(false);
-        
-             
+
+
 
         }
     }

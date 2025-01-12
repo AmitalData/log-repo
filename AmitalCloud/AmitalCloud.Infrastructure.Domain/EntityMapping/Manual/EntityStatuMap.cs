@@ -1,6 +1,5 @@
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.ModelConfiguration;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 {
@@ -62,7 +61,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             this.Property(t => t.EntityStatusTypeCode).HasColumnName("EntityStatusTypeCode");
             this.Property(t => t.AllowPartial).HasColumnName("AllowPartial");
             this.Property(t => t.IsDigitalPortal).HasColumnName("IsDigitalPortal");
-            
+
             // Relationships
             //this.HasRequired(t => t.ObjectTable)
             //    .WithMany(t => t.EntityStatus)

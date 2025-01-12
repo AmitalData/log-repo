@@ -1,21 +1,18 @@
-﻿using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Data.Repositories;
+﻿using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Data.Services;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {
     public class ContactsUnseenEntitiesHelper
     {
-        public static void AddUnseenEntityRecord(string traceEventId, int tenant,IUnitOfWork uow)
+        public static void AddUnseenEntityRecord(string traceEventId, int tenant, IUnitOfWork uow)
         {
-            Tenant tenantpm = new Repository<Tenant>(uow).GetAll(tenant,true).Where(a=>a.Id==tenant).FirstOrDefault();
+            Tenant tenantpm = new Repository<Tenant>(uow).GetAll(tenant, true).Where(a => a.Id == tenant).FirstOrDefault();
             if (tenantpm.IsMobileActivated)
             {
                 IQueueService queueservice = new DbQueueService();

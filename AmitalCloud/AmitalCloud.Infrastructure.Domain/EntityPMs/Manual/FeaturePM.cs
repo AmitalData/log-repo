@@ -22,7 +22,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
         // Dummy
         public string ObjectTableName { get; set; }
         public string RoleId { get; set; }
-        public string ParentRoleId { get; set; }        
+        public string ParentRoleId { get; set; }
         public int RoleTenant { get; set; }
         public bool IsCustomRole { get; set; }
         public bool IsCustomRoleFeature { get; set; }
@@ -32,6 +32,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 
         public bool Exists { get; set; }
         public bool IsAdded { get; set; }
-        public bool IsRemoved { get; set; }                        
+        public bool IsRemoved { get; set; }
     }
 }

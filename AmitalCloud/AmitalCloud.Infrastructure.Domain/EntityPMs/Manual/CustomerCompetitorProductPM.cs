@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.ComponentModel.DataAnnotations;
-using System.ServiceModel.DomainServices.Server;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace AmitalCloud.Infrastructure.Domain.EntityPMs 
+namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 {
     public class CustomerCompetitorProductPM : BaseClasses.BaseEntityPM
     {

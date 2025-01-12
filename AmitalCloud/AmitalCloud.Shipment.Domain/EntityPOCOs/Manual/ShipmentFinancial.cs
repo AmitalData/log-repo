@@ -24,6 +24,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPOCOs
         public double? ProfitInProfitCurrency { get; set; }
         public double? EstimateProfitInProfitCurrency { get; set; }
 
-       
+
     }
 }

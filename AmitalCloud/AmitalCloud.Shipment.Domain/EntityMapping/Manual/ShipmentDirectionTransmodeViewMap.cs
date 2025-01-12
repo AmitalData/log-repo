@@ -1,11 +1,6 @@
 ﻿using AmitalCloud.Shipment.Domain.EntityPOCOs;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Shipment.Domain.EntityMapping
 {
@@ -14,7 +9,7 @@ namespace AmitalCloud.Shipment.Domain.EntityMapping
         public ShipmentDirectionTransmodeViewMap()
         {
             // Primary Key
-            this.HasKey(t => new { t.Id, t.Tenant, t.ShipmentNumber, t.ProfitInLocalCurrency, t.AccountedReceivablesInLocalCurrency, t.OpenReceivablesInLocalCurrency, t.IsCancelled, t.DirectionId, t.TransportModeId, t.CreateDateTime, t.BranchId,});
+            this.HasKey(t => new { t.Id, t.Tenant, t.ShipmentNumber, t.ProfitInLocalCurrency, t.AccountedReceivablesInLocalCurrency, t.OpenReceivablesInLocalCurrency, t.IsCancelled, t.DirectionId, t.TransportModeId, t.CreateDateTime, t.BranchId, });
 
             // Properties
             this.Property(t => t.Id)
@@ -34,7 +29,7 @@ namespace AmitalCloud.Shipment.Domain.EntityMapping
                 .HasMaxLength(1)
                 .IsUnicode(false);
 
-       
+
 
             this.Property(t => t.CustomerId)
                 .HasMaxLength(15)
@@ -65,7 +60,7 @@ namespace AmitalCloud.Shipment.Domain.EntityMapping
                 .HasMaxLength(10)
                 .IsUnicode(false);
 
-           
+
 
 
             // Table & Column Mappings
@@ -89,7 +84,7 @@ namespace AmitalCloud.Shipment.Domain.EntityMapping
             this.Property(t => t.TransportModeName).HasColumnName("TransportModeName");
             this.Property(t => t.ChargeableWeightInKG).HasColumnName("ChargeableWeightInKG");
             this.Property(t => t.GrossWeightInKG).HasColumnName("GrossWeightInKG");
-           
+
         }
     }
 }

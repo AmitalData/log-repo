@@ -1,34 +1,39 @@
-﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+﻿using AmitalCloud.Infrastructure.Data.BaseClasses;
+using AmitalCloud.Infrastructure.Data.DBHelpers;
 using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Data.BaseClasses;
+using AmitalCloud.Infrastructure.Data.Migrations;
 using AmitalCloud.Infrastructure.Domain.EntityMapping;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.Enums;
+using AmitalCloud.Infrastructure.Domain.Interfaces;
+using Devart.Data.Oracle.Entity.Configuration;
 using System;
 using System.Configuration;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Transactions;
-using AmitalCloud.Infrastructure.Data.DBHelpers;
-using Devart.Data.Oracle.Entity.Configuration;
-using AmitalCloud.Infrastructure.Data.Migrations;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.Enums;
 namespace AmitalCloud.Infrastructure.Data.Context
 
 {
     public class SystemLogContext : DbContextBase, ISystemLogContext
     {
         private int tenant;
-        public SystemLogContext()
+        private SystemLogContext()
             : base("LogitudeSystemLogsStr")
         {
-            Database.SetInitializer<SystemLogContext>(new MigrateDatabaseToLatestVersion<SystemLogContext,MigrationConfiguration<SystemLogContext>>());
+            Database.SetInitializer<SystemLogContext>(new MigrateDatabaseToLatestVersion<SystemLogContext, MigrationConfiguration<SystemLogContext>>());
         }
-        DbConnection dbConnection;
-        public SystemLogContext(DbConnection connection)
+        //DbConnection dbConnection;
+        private SystemLogContext(DbConnection connection)
             : base(connection, true)
         {
             InitializeContext();
-            dbConnection = connection;
+            ////dbConnection = connection;
+        }
+        private SystemLogContext(string connection) : base(connection)
+        {
+            InitializeContext();
+            //dbConnection = connection;
         }
         private void InitializeContext()
         {
@@ -46,10 +51,16 @@ namespace AmitalCloud.Infrastructure.Data.Context
             {
                 dbConnectionInfo = ConfigurationManager.ConnectionStrings["SystemLogsStr"].ConnectionString; ;
             }
-            dbConnectionInfo =DbContextBaseUtil.GetConnectionStringWithAmitalNetRole(dbConnectionInfo);
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,5);
-            SystemLogContext context = new SystemLogContext(connection);
-            return context;
+            dbConnectionInfo = DbContextBaseUtil.GetConnectionStringWithAmitalNetRole(dbConnectionInfo);
+            if (AmitalCloudSettings.DatabaseManagementSystem == "oracle")
+            {
+                return new SystemLogContext(DatabaseInitializer.GetConnection(dbConnectionInfo, 5));
+            }
+            else
+            {
+                return new SystemLogContext(dbConnectionInfo);
+
+            }
         }
         public static SystemLogContext GetContextByDBId(string dbId)
         {
@@ -60,7 +71,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
             }
             string dbConnectionInfo = currentDb.DBConnection;
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
             SystemLogContext context = new SystemLogContext(connection);
             return context;
         }
@@ -109,7 +120,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
             catch (Exception e)
             {
             }
-             return 1;
+            return 1;
         }
         public DbConnection GetConnection()
         {

@@ -1,20 +1,20 @@
-﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+﻿using AmitalCloud.Infrastructure.Data.Azure;
+using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Data.Azure;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.Helpers;
+using AmitalCloud.Infrastructure.Domain.Interfaces;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
-using AmitalCloud.Infrastructure.Data.Context;
 using System.Linq;
-using AmitalCloud.Infrastructure.Domain.Helpers;
+using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Data.Services
 {
-    public class AzureBlobService : IBlobService , IDisposable
+    public class AzureBlobService : IBlobService, IDisposable
     {
         public byte[] Read(BlobFileInfo fileInfo)
         {
@@ -175,7 +175,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
         {
             string cacheKey = $"BlobContainer_({containerSASURI.Substring(containerSASURI.Length - 30, 29)})";
 
-            CloudBlobContainer blobContainerSource = CacheManager.GetOrInsertNewObject(cacheKey, () => 
+            CloudBlobContainer blobContainerSource = CacheManager.GetOrInsertNewObject(cacheKey, () =>
                 new CloudBlobContainer(new Uri(containerSASURI)));
             CloudBlockBlob blobSource = blobContainerSource.GetBlockBlobReference(fileNameSource);
             GetFileBlobContainerInfo(destinationFileInfo, out string localPath, out CloudBlobContainer blobContainerDest);
@@ -272,12 +272,12 @@ namespace AmitalCloud.Infrastructure.Data.Services
                         if (fileInfo.FolderName != "logos")
                         {
                             IAmitalCloudContext context = AmitalCloudContext.GetContext(fileInfo.Tenant);
-                            Document document = GetDocument(fileInfo,context);
+                            Document document = GetDocument(fileInfo, context);
                             if ((document != null && document.IsEncrypted) || fileInfo.IsEncrypted)
                             {
-                                DocumentsFiling documentsFiling = GetDocumentInfo(fileInfo,context);
+                                DocumentsFiling documentsFiling = GetDocumentInfo(fileInfo, context);
 
-                                if(documentsFiling != null)
+                                if (documentsFiling != null)
                                 {
                                     KeyValuePair<string, string> metadata = new KeyValuePair<string, string>("Code", documentsFiling.Code);
 
@@ -375,11 +375,11 @@ namespace AmitalCloud.Infrastructure.Data.Services
 
             blobfile.AppendText(text);
 
-        
+
 
             //
 
-          
+
 
         }
         public void Dispose()

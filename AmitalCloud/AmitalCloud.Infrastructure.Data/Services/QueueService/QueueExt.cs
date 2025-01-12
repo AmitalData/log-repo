@@ -2,10 +2,6 @@
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using Microsoft.ServiceBus.Messaging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {
@@ -104,6 +100,6 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
     {
         CustomsMessagingSheetBQ, SendDataToExternalServicesBQ, updateclosedtables, SendWEBAPIMessage2MamanQ
             , AnalyzeQueueMQ
-            ,CustomsHSMSignWR
+            , CustomsHSMSignWR
     }
 }

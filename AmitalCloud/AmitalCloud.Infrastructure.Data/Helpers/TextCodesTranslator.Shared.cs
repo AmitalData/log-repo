@@ -5,14 +5,14 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         public static string TranslateText(string textCodeCode, int tenant)
         {
             Helpers.TextCodesTranslator translator = new Helpers.TextCodesTranslator();
-            var  TranslateText= translator.Translate(textCodeCode, tenant);
+            var TranslateText = translator.Translate(textCodeCode, tenant);
             if (string.IsNullOrWhiteSpace(TranslateText))
             {
                 TranslateText = "$Text(" + textCodeCode + ")";//Our Version Of Uniface Convention   
             }
             return TranslateText;
         }
-        public static string TranslateText(string textCodeCode, int tenant, bool showLocal) 
+        public static string TranslateText(string textCodeCode, int tenant, bool showLocal)
         {
             TextCodesTranslator translator = new TextCodesTranslator();
             var TranslateText = translator.Translate(textCodeCode, tenant, showLocal);

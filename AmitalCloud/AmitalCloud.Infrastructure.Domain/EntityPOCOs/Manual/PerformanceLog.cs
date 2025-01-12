@@ -18,8 +18,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         public string MethodParameters { get; set; }
         public int Tenant { get; set; }
         public int ServerTime { get; set; }
-       
-       
-        
+
+
+
     }
 }

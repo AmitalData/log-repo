@@ -1,29 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using AmitalCloud.Infrastructure.Data.Context;using AmitalCloud.Infrastructure.Data.Helpers;
+﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Domain.Helpers;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using System;
+using System.Linq;
 
 namespace AmitalCloud.Infrastructure.Data.Repositories
 {
-    public class AuthenticationTokenRepository : Repository< AuthenticationToken> 
+    public class AuthenticationTokenRepository : Repository<AuthenticationToken>
     {
-        IAmitalCloudContext currentContext;
-        public AuthenticationTokenRepository(IAmitalCloudContext context) : base(context)
+        IGlobalContext currentContext;
+        public AuthenticationTokenRepository(IGlobalContext context) : base(context)
         {
             currentContext = context;
         }
-        public AuthenticationTokenRepository() : this(new AmitalCloudContext())
+        public AuthenticationTokenRepository() : this(GlobalContext.GetContext())
         {
         }
-        public AuthenticationTokenRepository(int tenant) : this( AmitalCloudContext.GetContext(tenant))
+        public AuthenticationTokenRepository(int tenant) : this(GlobalContext.GetContext())
         {
         }
-        public IAmitalCloudContext context
+        public IGlobalContext context
         {
             get { return currentContext; }
         }
@@ -57,8 +54,8 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             {
                 IAmitalCloudContext context = AmitalCloudContext.GetContext(0);
                 authenticationToken = (from a in context.AuthenticationTokens
-                              where a.Token == token
-                              select a).FirstOrDefault();
+                                       where a.Token == token
+                                       select a).FirstOrDefault();
                 if (authenticationToken != null)
                 {
                     if (authenticationToken.ExpirationDate != null && authenticationToken.ExpirationDate < DateTime.Now)

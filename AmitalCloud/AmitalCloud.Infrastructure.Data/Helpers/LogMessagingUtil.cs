@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {
@@ -41,7 +38,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             }
             LogMessaging = true;//default yes yes yes !!!
             _StringBuilder = new StringBuilder();
-            
+
         }
         public bool ToggleLogMessaging()
         {
@@ -55,9 +52,9 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             {
                 value = "<<<Truncate" + value.Substring(0, 2048) + "Truncate>>>";
             }
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(value);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(value);
             if (!LogMessaging) return this;
-            
+
             if (_StringBuilder.Length > _Max) return this;
             _StringBuilder.AppendLine(value);
             return this;
@@ -70,22 +67,22 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             _StringBuilder.Append(value);
             return this;
         }
-        
+
         public void Clear(int max = 10000)
         {
             _Max = max;
             if (!LogMessaging) return;
             _StringBuilder.Clear();
-            
+
         }
 
-        
+
 
         public override string ToString()
         {
             return _StringBuilder.ToString();
         }
-        
+
         public LogMessagingUtil LogActionTime(Action myAction,
             string ActionName = ""
             , [CallerMemberName] string myCallerMemberName = ""
@@ -201,7 +198,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             {
                 Line = "<<<Truncate" + Line.Substring(0, 2048) + "Truncate>>>";
             }
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(Line);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(Line);
             if (!LogMessaging) return this;
 
             if (_StringBuilder.Length > _Max) return this;
@@ -222,10 +219,10 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         }
 
 
-     
+
         public string GetString(out string morethan)
         {
-            
+
             var ts = DateTime.Now.Subtract(_LastClearAt);
             if (ts.TotalSeconds > 120)
             {
@@ -270,11 +267,11 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 
     }
 
-    
+
 
     public class AssemblyUtil
     {
-        
+
 
         public string GetVersion(string ProductInfo)
         {

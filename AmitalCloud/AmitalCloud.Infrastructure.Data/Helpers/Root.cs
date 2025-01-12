@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {
-    public class Root 
+    public class Root
     {
         public List<Change> Changes { get; set; }
     }

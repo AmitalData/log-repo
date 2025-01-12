@@ -1,14 +1,11 @@
-using AmitalCloud.Infrastructure.Domain.DataContracts;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 
 namespace AmitalCloud.Infrastructure.Data.Helpers.CustomFieldsResolver
@@ -43,8 +40,8 @@ namespace AmitalCloud.Infrastructure.Data.Helpers.CustomFieldsResolver
         private static string HandleCustomPickListField(ObjectField objectField, string fieldValue, int tenant)
         {
             if (fieldValue == null) return "";
-            IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant );
-            CustomPickList picklist = new Repository<CustomPickList>(context).GetMulti(a=> a.Code == objectField.CustomPickListCode && a.Value==fieldValue && a.Tenant == tenant).FirstOrDefault();
+            IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
+            CustomPickList picklist = new Repository<CustomPickList>(context).GetMulti(a => a.Code == objectField.CustomPickListCode && a.Value == fieldValue && a.Tenant == tenant).FirstOrDefault();
             if (picklist != null) return picklist.Id;
             return fieldValue;
         }

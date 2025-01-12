@@ -1,12 +1,12 @@
 ﻿
-using System.ComponentModel.DataAnnotations;
 //using Logitude.BL.ShipmentsModel.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityPMs;
+using System.ComponentModel.DataAnnotations;
 
-namespace  AmitalCloud.Shipment.Domain.Validators
+namespace AmitalCloud.Shipment.Domain.Validators
 {
-	public class ShipmentPayableValidator
-	{
+    public class ShipmentPayableValidator
+    {
         public static ValidationResult IsShipmentPayableValid(ShipmentPayablePM shipmentPayablePM, ValidationContext context)
         {
             //if (shipmentPayablePM.TotalAmount != null && shipmentPayablePM.UnitPrice != null && shipmentPayablePM.Quantity != null)
@@ -19,5 +19,5 @@ namespace  AmitalCloud.Shipment.Domain.Validators
             return ValidationResult.Success;
 
         }
-	}
+    }
 }

@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using AmitalCloud.Infrastructure.Domain.BaseClasses;
+using AmitalCloud.Infrastructure.Domain.Enums;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
-using AmitalCloud.Infrastructure.Domain.BaseClasses;
-using AmitalCloud.Infrastructure.Domain.Enums;
 
 namespace AmitalCloud.Shipment.Domain.EntityPMs
 {

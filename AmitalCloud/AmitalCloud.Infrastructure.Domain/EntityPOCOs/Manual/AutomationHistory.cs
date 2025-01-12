@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
-    public class AutomationHistory 
+    public class AutomationHistory
     {
 
         [Key]
@@ -18,7 +14,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         public string AutomationsId { get; set; }
 
         public int Tenant { get; set; }
-      
+
         public string AutomationXML { get; set; }
 
         public DateTime? CreateDate { get; set; }
@@ -27,8 +23,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         [ForeignKey("AutomationsId")]
         public virtual Automation Automation { get; set; }
 
-    
-    
+
+
 
 
     }

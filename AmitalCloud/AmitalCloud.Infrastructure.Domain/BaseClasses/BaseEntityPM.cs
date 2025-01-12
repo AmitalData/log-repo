@@ -16,7 +16,7 @@ namespace AmitalCloud.Infrastructure.Domain.BaseClasses
         [ThreadStatic]
         public static bool SuppressCreateNotifyPropertyChangeValues = false;
         object _CurrentContextTag;
-        public object CurrentContextTag 
+        public object CurrentContextTag
         {
             get { return _CurrentContextTag; }
             set { _CurrentContextTag = value; }

@@ -1,7 +1,4 @@
-﻿using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-
-namespace AmitalCloud.Infrastructure.Data.DataMapping
+﻿namespace AmitalCloud.Infrastructure.Data.DataMapping
 {
     public class AdvancedQueryFilterMapping
     {

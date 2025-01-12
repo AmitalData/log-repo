@@ -158,27 +158,15 @@ namespace <#= contextnamespacestring #>
     {
         private int _tenant;    
         public int Tenant { get => _tenant;  }
-        private <#= contextname #>()
-        {
-            Database.SetInitializer<<#= contextname #>>(null);            
-        }
-        private <#= contextname #>(DbConnection conn,int tenant)
-            : base(conn,true)
+ 		private <#= contextname #>(string nameOrConnectionString,int tenant) : base(nameOrConnectionString)
         {
             this.Configuration.LazyLoadingEnabled = false;
             this.Configuration.AutoDetectChangesEnabled = false;
             Database.SetInitializer<<#= contextname #>>(null);
-            _tenant = tenant;   
+			_tenant = tenant;
         }
-        public static I<#= contextname #> GetContext(int tenant)
-        {           
-            GlobalDB currentDb;
-			currentDb = GlobalDbHelper.GetGlobalDB(tenant);
-			string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
-            <#= contextname #> context = new <#= contextname #>(connection,tenant);
-            return context;
-        }
+        public static I<#= contextname #> GetContext(int tenant) =>new <#= contextname #>(GlobalDbHelper.GetGlobalDB(tenant).DBConnection,tenant);
+
 		public override AmitalCloudDBSchema AmitalCloudDBSchema
         {
             get { return AmitalCloudDBSchema.LOGITUDE_MAIN; }

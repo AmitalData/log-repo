@@ -1,9 +1,8 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Data.DBHelpers;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.Interfaces;
 using Devart.Data.Oracle;
 using System;
 using System.Collections.Generic;
@@ -51,7 +50,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
             {
                 //IRepository<IAmitalCloudContext,QueueMessage, string> messagesRepository = new Repository<QueueMessage, string>(uow);
                 //IRepository<IAmitalCloudContext,QueueMessageMoreDetails, string> messagesMoreDetailsRepository = new Repository<QueueMessageMoreDetails, string>(uow);
-                IRepository<QueueDefinition> queueDefRep = new Repository<QueueDefinition>( uow);
+                IRepository<QueueDefinition> queueDefRep = new Repository<QueueDefinition>(uow);
                 QueueDefinition queueDefinition = GetQueueDefFromCache(queueCode, queueDefRep);
                 queueDefinition = queueDefinition ?? queueDefRep.GetMulti(d => d.Code == queueCode).FirstOrDefault();//ensure
                 if (queueDefinition == null)
@@ -70,8 +69,8 @@ namespace AmitalCloud.Infrastructure.Data.Services
             string key = $"GetQueueDefFromCache({queueCode})";
             var def = CacheManager.GetOrInsertNewObject<QueueDefinition>(key, () =>
             {
-                return queueDefRep.GetMulti(d=> d.Code==queueCode).FirstOrDefault();
-            }, donotCacheNull:true);
+                return queueDefRep.GetMulti(d => d.Code == queueCode).FirstOrDefault();
+            }, donotCacheNull: true);
             return def;
         }
 
@@ -79,9 +78,9 @@ namespace AmitalCloud.Infrastructure.Data.Services
         {
             SendReturnId(messageValues, tenant, delayTime, CustomerId, BatchNumber, NextRunDate);
         }
-        protected int? SendReturnId(Dictionary<string, string> messageValues, 
+        protected int? SendReturnId(Dictionary<string, string> messageValues,
             int tenant, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null//,int tenantPriority = 89
-            ,QueueSendModel queueSendModel= null)
+            , QueueSendModel queueSendModel = null)
         {
             if (AmitalCloudSettings.IsCostomsDeploy)
             {
@@ -91,7 +90,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
             }
 
 
-            int tenantPriority = queueSendModel?.TenantPriority ?? 89;  
+            int tenantPriority = queueSendModel?.TenantPriority ?? 89;
             if (tenantPriority < 1)
             {
                 tenantPriority = 89;
@@ -110,7 +109,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                     return null;
                 }
             }
-            if (delayTime!=null)
+            if (delayTime != null)
             {
                 LogMessagingUtil.Instance.AppendLine($"Delay  {this.QueueCode} Queue {delayTime.GetValueOrDefault()}");
             }
@@ -240,7 +239,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
 
                         string myQueueCodeRabbit = RabbitQueueCodeService.GetRabbitQueueCode(this.QueueCode, queueSendModel?.QueueGroupCodeRabbit);
                         QueueCodeRabbitPar.Value = myQueueCodeRabbit.ToLower();
-                        entityCodePar.Value= queueSendModel?.EntityCode;
+                        entityCodePar.Value = queueSendModel?.EntityCode;
                         entityIdPar.Value = queueSendModel?.EntityId;
 
 
@@ -307,16 +306,16 @@ namespace AmitalCloud.Infrastructure.Data.Services
                         SqlParameter delayPar = new SqlParameter("@V_DelaySeconds", SqlDbType.Int);
                         SqlParameter customerId = new SqlParameter("@V_CustomerId", SqlDbType.VarChar, 15);
                         SqlParameter batchNumber = new SqlParameter("@V_BatchNumber", SqlDbType.VarChar, 15);
-                      //  SqlParameter NextRunDateTime = new SqlParameter("@NextRunDTime", SqlDbType.DateTime);
+                        //  SqlParameter NextRunDateTime = new SqlParameter("@NextRunDTime", SqlDbType.DateTime);
                         SqlParameter hashCodePar = new SqlParameter("@V_HashCode", SqlDbType.NVarChar, 1000);
                         SqlParameter watingStatusPar = new SqlParameter("@V_WatingStatus", SqlDbType.Int);
                         SqlParameter messageIdPar = new SqlParameter("@V_QUEUEMESSAGEID", SqlDbType.BigInt);
                         SqlParameter tenantpriorityPar = new SqlParameter("@P_TENANTPRIORITY", SqlDbType.Int);
                         SqlParameter interfaceTypeCodePar = new SqlParameter("@P_INTERFACETYPECODE", SqlDbType.VarChar, 255);
                         SqlParameter useRabbitMQPar = new SqlParameter("@P_USERABBITMQ", SqlDbType.Bit);
-                        SqlParameter queueCodeRabbitPar = new SqlParameter("@P_QUEUECODERABBIT", SqlDbType.VarChar ,255);
+                        SqlParameter queueCodeRabbitPar = new SqlParameter("@P_QUEUECODERABBIT", SqlDbType.VarChar, 255);
                         SqlParameter entityCodePar = new SqlParameter("@P_ENTITYCODE", SqlDbType.VarChar, 255);
-                        SqlParameter entityIPar = new SqlParameter("@P_ENTITYID", SqlDbType.VarChar,255);
+                        SqlParameter entityIPar = new SqlParameter("@P_ENTITYID", SqlDbType.VarChar, 255);
 
 
                         queueCodePar.Direction = ParameterDirection.Input;
@@ -325,7 +324,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                         delayPar.Direction = ParameterDirection.Input;
                         customerId.Direction = ParameterDirection.Input;
                         batchNumber.Direction = ParameterDirection.Input;
-                     //   NextRunDateTime.Direction = ParameterDirection.Input;
+                        //   NextRunDateTime.Direction = ParameterDirection.Input;
                         hashCodePar.Direction = ParameterDirection.Input;
                         tenantpriorityPar.Direction = ParameterDirection.Input;
                         watingStatusPar.Direction = ParameterDirection.Input;
@@ -343,12 +342,12 @@ namespace AmitalCloud.Infrastructure.Data.Services
                         delayPar.Value = delaySeconds;
                         customerId.Value = CId;
                         batchNumber.Value = BNo;
-                    //    NextRunDateTime.Value = NextRunDate;
+                        //    NextRunDateTime.Value = NextRunDate;
                         hashCodePar.Value = bodyHashCode;
                         watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForSending(tenant);
                         tenantpriorityPar.Value = tenantPriority;
-                        interfaceTypeCodePar.Value =   queueSendModel?.InterfaceTypeCode!= null? queueSendModel?.InterfaceTypeCode: "";
-                        
+                        interfaceTypeCodePar.Value = queueSendModel?.InterfaceTypeCode != null ? queueSendModel?.InterfaceTypeCode : "";
+
                         if (queueSendModel != null && queueSendModel.UseRabbitMQ)
                         {
                             useRabbitMQPar.Value = 1;
@@ -371,7 +370,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                         cmd.Parameters.Add(delayPar);
                         cmd.Parameters.Add(customerId);
                         cmd.Parameters.Add(batchNumber);
-                     //   cmd.Parameters.Add(NextRunDateTime);
+                        //   cmd.Parameters.Add(NextRunDateTime);
                         cmd.Parameters.Add(hashCodePar);
                         cmd.Parameters.Add(watingStatusPar);
                         cmd.Parameters.Add(messageIdPar);
@@ -392,7 +391,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                             string sQueueMessageId = v_QueueMessageId.ToString();
                             if (!String.IsNullOrWhiteSpace(sQueueMessageId))
                             {
-                                queueMessageId = sQueueMessageId.ChangeValue<int>();                               
+                                queueMessageId = sQueueMessageId.ChangeValue<int>();
                                 AddQueueDetailsToRequestHeaders(messageBody, sQueueMessageId);
                             }
                         }
@@ -623,7 +622,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                 {
                     SqlCommand cmd = new SqlCommand("[dbo].[SetTenantIdleProcedure]", cn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    
+
                     cn.Open();
                     cmd.ExecuteNonQuery();
                     cn.Close();
@@ -635,19 +634,19 @@ namespace AmitalCloud.Infrastructure.Data.Services
 
         public QueueResponse Receive(TimeSpan? serverWaitTime = null)
         {
- 
+
             return ReceiveDetail(serverWaitTime, suppressSleep: false);
         }
-        public QueueResponse ReceiveDetail(TimeSpan? serverWaitTime,bool suppressSleep)
+        public QueueResponse ReceiveDetail(TimeSpan? serverWaitTime, bool suppressSleep)
         {
 
             //
             if (AmitalCloudSettings.IsCostomsDeploy)
             {
-                return ReceiveCustoms(((int)(serverWaitTime??TimeSpan.FromSeconds(60)).TotalSeconds));
+                return ReceiveCustoms(((int)(serverWaitTime ?? TimeSpan.FromSeconds(60)).TotalSeconds));
             }
 
-             if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(5); }
+            if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(5); }
 
             long messageId = -1;
 
@@ -855,7 +854,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
             if (string.IsNullOrEmpty(this.CurrentMessageId))
             {
                 DataTable tblQueue = new DataTable();
-                
+
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }))
                 {
                     if (AmitalCloudSettings.DatabaseManagementSystem == "oracle")
@@ -1129,7 +1128,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
             if (AmitalCloudSettings.IsCostomsDeploy)
             {
                 DelayCustoms(delayTime);
-                return ;
+                return;
             }
 
             if (!string.IsNullOrEmpty(this.CurrentMessageId))
@@ -1219,9 +1218,9 @@ namespace AmitalCloud.Infrastructure.Data.Services
         {
             if (AmitalCloudSettings.IsCostomsDeploy)
             {
-                throw new Exception("Queue_ReturnMessage not in use  in CostomsDeploy"); 
+                throw new Exception("Queue_ReturnMessage not in use  in CostomsDeploy");
             }
-    
+
             if (!string.IsNullOrEmpty(this.CurrentMessageId))
             {
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
@@ -1559,7 +1558,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
 
         }
 
-       
+
 
     }
 }

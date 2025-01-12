@@ -7,12 +7,12 @@ using System.Linq;
 
 namespace AmitalCloud.Infrastructure.APITools.Sign
 {
-    public partial class LargeDownloadService 
+    public partial class LargeDownloadService
     {
-        const int DEFAULT_ChunkSize = 
+        const int DEFAULT_ChunkSize =
             100 * 1024;
         private static List<BlobChunks> DownloadBlobFileSet = new List<BlobChunks>();
-        
+
 
         public BlobChunks DownloadBlobChunksAsync(Guid BlobFileId, int ChunkId)
         {
@@ -29,7 +29,7 @@ namespace AmitalCloud.Infrastructure.APITools.Sign
             try
             {
                 using (var resource = new System.IO.FileStream(
-                    //@"C:\PerformanceTest Software Downloadpetst.exe"
+//@"C:\PerformanceTest Software Downloadpetst.exe"
 file
 , System.IO.FileMode.Open))
                 {
@@ -49,9 +49,9 @@ file
         }
 
 
-        public static IEnumerable<BlobChunks> GetMyChunks(Stream myStream, Guid guid )
+        public static IEnumerable<BlobChunks> GetMyChunks(Stream myStream, Guid guid)
         {
-            
+
             var list = new List<BlobChunks>();
             byte[] buffer = new byte[DEFAULT_ChunkSize];
             int numRead;
@@ -110,7 +110,7 @@ File.OpenWrite(@"C:\PerformanceTest Software Downloadpetst-CopyServer.exe"
             var created = DateTime.Now;
             lock (DownloadBlobFileSet)
             {
-                var have2del = new List<BlobChunks> ( DownloadBlobFileSet
+                var have2del = new List<BlobChunks>(DownloadBlobFileSet
                     .Where(rec => DateTime.Now.Subtract(rec.CreateAt) > TimeSpan.FromMinutes(5)));
                 foreach (var curr in have2del)
                 {
@@ -119,14 +119,14 @@ File.OpenWrite(@"C:\PerformanceTest Software Downloadpetst-CopyServer.exe"
                 foreach (var item in allChunks)
                 {
                     item.CreateAt = created;
-                    DownloadBlobFileSet.Add(item);    
+                    DownloadBlobFileSet.Add(item);
                 }
-                
+
             }
 
 
         }
 
-       
+
     }
 }

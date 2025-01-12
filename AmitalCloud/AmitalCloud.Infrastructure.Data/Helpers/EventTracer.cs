@@ -1,7 +1,6 @@
 ﻿using AmitalCloud.Infrastructure.Data.BlobServiceReference;
 using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Helpers;
@@ -154,12 +153,12 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                     traceEventRepository.Insert(myTraceEvent);
                     if (eventType.IsCustomerView)
                     {
-                        ContactsUnseenEntitiesHelper.AddUnseenEntityRecord(myTraceEvent.Id, tenant,uow);
+                        ContactsUnseenEntitiesHelper.AddUnseenEntityRecord(myTraceEvent.Id, tenant, uow);
                     }
 
                     if (!string.IsNullOrEmpty(eventType.CustomField) && objectTable.AllowCustomFields)
                     {
-                        UpdateEventCustomFieldValue(new UpdateEventCustomFieldArgs() { CustomField = eventType.CustomField, EventDateTime = myTraceEvent.EventDateTime, Entity = args.Entity, EntityId = args.EntityId, ObjectTableName = args.ObjectTableName, Tenant = args.Tenant },uow);
+                        UpdateEventCustomFieldValue(new UpdateEventCustomFieldArgs() { CustomField = eventType.CustomField, EventDateTime = myTraceEvent.EventDateTime, Entity = args.Entity, EntityId = args.EntityId, ObjectTableName = args.ObjectTableName, Tenant = args.Tenant }, uow);
                     }
                     uow.Save();
                     uow.Commit();
@@ -281,7 +280,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                     {
                         if (eventType != null && eventType.IsCustomerView)
                         {
-                            ContactsUnseenEntitiesHelper.AddUnseenEntityRecord(traceEvent.Id, traceEventParams.Tenant,uow);
+                            ContactsUnseenEntitiesHelper.AddUnseenEntityRecord(traceEvent.Id, traceEventParams.Tenant, uow);
                         }
                     }
                 }
@@ -351,9 +350,9 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             }
         }
         #region UpdateEventCustomFieldValue
-        private static void UpdateEventCustomFieldValue(UpdateEventCustomFieldArgs args,IUnitOfWork uow)
+        private static void UpdateEventCustomFieldValue(UpdateEventCustomFieldArgs args, IUnitOfWork uow)
         {
-            ObjectField objectField = GetCustomObjectFieldConnectedToEvent(args.CustomField, args.EventTypeId, args.Tenant,uow);
+            ObjectField objectField = GetCustomObjectFieldConnectedToEvent(args.CustomField, args.EventTypeId, args.Tenant, uow);
             if (objectField != null)
             {
                 object entity = args.Entity;
@@ -370,7 +369,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                 else SetPropertyValueToEntity(objectField, entity, customFieldValue);
             }
         }
-        private static ObjectField GetCustomObjectFieldConnectedToEvent(string customFieldName, string eventTypeId, int tenant,IUnitOfWork uow)
+        private static ObjectField GetCustomObjectFieldConnectedToEvent(string customFieldName, string eventTypeId, int tenant, IUnitOfWork uow)
         {
             ObjectField objectField = null;
             string customField = !string.IsNullOrEmpty(customFieldName) ? customFieldName : new EventTypeRepository(uow).GetCustomFieldByEventTypeId(eventTypeId, tenant);

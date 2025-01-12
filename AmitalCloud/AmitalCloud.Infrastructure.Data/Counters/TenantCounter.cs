@@ -1,10 +1,8 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.Enums;
 using Devart.Data.Oracle;
 using System.Configuration;
 using System.Data;
-using System.Data.Common;
 using System.Data.SqlClient;
 
 
@@ -35,7 +33,7 @@ namespace AmitalCloud.Infrastructure.Data.Counters
                 {
                     OracleCommand cmd = new OracleCommand();
                     cmd.Connection = cn;
-                    cmd.CommandText = 
+                    cmd.CommandText =
                         DBHelpers.DbContextBaseUtil.GetStoredProcedureName("GetNextGlobalTenantId", AmitalCloudDBSchema.LOGITUDE_GLOBAL,
                         cmd.Connection.ConnectionString);
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -82,10 +80,7 @@ namespace AmitalCloud.Infrastructure.Data.Counters
 
         public static string GetConnection(string dbConnectioninfo)
         {
-
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectioninfo);
-            GlobalContext context = new GlobalContext(connection);
-
+            IGlobalContext context = GlobalContext.GetContext();
             return context.Database.Connection.ConnectionString;
         }
 

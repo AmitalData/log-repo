@@ -1,11 +1,8 @@
+using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using System;
-using System.Data.Common;
-using System.Transactions;
-using AmitalCloud.Infrastructure.Data.Context;
 using System.Linq;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {
@@ -77,7 +74,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 
             if (CacheManager.CacheWrapper.Get(entityName) == null)
             {
-                entity = new Repository<Tenant>(AmitalCloudContext.GetContext(tenant)).GetMulti(a=>a.Id==tenant).FirstOrDefault();  //  .GetSingleTenant(tenant);
+                entity = new Repository<Tenant>(AmitalCloudContext.GetContext(tenant)).GetMulti(a => a.Id == tenant).FirstOrDefault();  //  .GetSingleTenant(tenant);
                 if (entity != null)
                 {
                     CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
@@ -113,20 +110,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         public static string GetDbConnection(int tenant)
         {
 
-            GlobalDB currentDb;
-            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
-            {
-                //GlobalDBRep = new GlobalDBRepository();
-                currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
-
-            }
-            string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
-            AmitalCloudContext context = new AmitalCloudContext(connection, tenant  );
-
-            return context.Database.Connection.ConnectionString;// entityBuilder.ConnectionString;
+            return AmitalCloudContext.GetContext(tenant).Database.Connection.ConnectionString;
         }
         public static DateTime GetEndOfTodayDate(int tenant)
         {
@@ -144,7 +128,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         public static DateTime GetLastOfCurrentMonthDate(int tenant)
         {
             var todayDate = GetCurrentDateTime(tenant);
-            return new DateTime(todayDate.Year, todayDate.Month, DateTime.DaysInMonth(todayDate.Year,todayDate.Month), 0, 0, 0, 0);
+            return new DateTime(todayDate.Year, todayDate.Month, DateTime.DaysInMonth(todayDate.Year, todayDate.Month), 0, 0, 0, 0);
         }
         public static DateTime GetStartOfCurrentMonthDate(int tenant)
         {

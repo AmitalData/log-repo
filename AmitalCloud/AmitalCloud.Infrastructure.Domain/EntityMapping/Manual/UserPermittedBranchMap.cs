@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 {
-    public class UserPermittedBranchMap: EntityTypeConfiguration<UserPermittedBranch>
+    public class UserPermittedBranchMap : EntityTypeConfiguration<UserPermittedBranch>
     {
         public UserPermittedBranchMap()
         {
@@ -34,7 +29,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             this.Property(t => t.Tenant)
                .IsRequired();
 
-           
+
 
             // Table & Column Mappings
             this.ToTable("UserPermittedBranches");
@@ -42,7 +37,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             this.Property(t => t.UserId).HasColumnName("UserId");
             this.Property(t => t.BranchId).HasColumnName("BranchId");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
-             
+
 
             // Relationships
             this.HasRequired(t => t.User)

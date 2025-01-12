@@ -1,5 +1,5 @@
-﻿using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Data.Repositories;
+﻿using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,7 +11,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 
         public PackageFeatureQuery()
         {
-            repository = new PackageFeatureRepository(); 
+            repository = new PackageFeatureRepository();
         }
 
         public PackageFeatureQuery(int tenant)

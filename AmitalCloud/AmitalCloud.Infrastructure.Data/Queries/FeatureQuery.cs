@@ -1,13 +1,12 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Repositories;
 using System;
 using System.Collections.Generic;
-
 using System.Diagnostics;
 using System.Linq;
 using System.Transactions;
@@ -16,15 +15,15 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     public class FeatureQuery
     {
         IRepository<Feature> repository;
-        IAmitalCloudContext context ;
-        public FeatureQuery() : this(0)  {}
+        IAmitalCloudContext context;
+        public FeatureQuery() : this(0) { }
         public FeatureQuery(int tenant)
         {
             context = AmitalCloudContext.GetContext(tenant);
             repository = new Repository<Feature>(context);
         }
-//        public FeatureQuery(IRepository<IAmitalCloudContext,Feature, string> repository) => this.repository = repository;
-        public FeaturePM GetSingleFeaturePM(string id) => (from a in repository.GetMulti(a=> a.Id == id)
+        //        public FeatureQuery(IRepository<IAmitalCloudContext,Feature, string> repository) => this.repository = repository;
+        public FeaturePM GetSingleFeaturePM(string id) => (from a in repository.GetMulti(a => a.Id == id)
                                                            select new FeaturePM()
                                                            {
                                                                Code = a.Code,
@@ -252,7 +251,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         }
         public LoggedUserFeatures GetAllowedFeaturesForLoggedUser(string loggedUserId, int tenant)
         {
-            string key = $"GetAllowedFeaturesForLoggedUser,{loggedUserId},{tenant}" ;
+            string key = $"GetAllowedFeaturesForLoggedUser,{loggedUserId},{tenant}";
             var loggedUserFeatures = CacheManager.GetOrInsertNewObject<LoggedUserFeatures>(key, () =>
             {
                 return GetAllowedFeaturesForLoggedUserBL(loggedUserId, tenant);
@@ -262,7 +261,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             {
                 var sw = Stopwatch.StartNew();
                 loggedUserFeatures = GetAllowedFeaturesForLoggedUserBL(loggedUserId, tenant);
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"GetAllowedFeaturesForLoggedUserBL({sw.Elapsed})");
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"GetAllowedFeaturesForLoggedUserBL({sw.Elapsed})");
             }
             return loggedUserFeatures;
         }
@@ -320,7 +319,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 List<string> allRolesIds = contactTenantRoles.Select(s => s.RoleId).ToList();
 
                 Repository<Role> myRoleRepository = new Repository<Role>(context);
-                RoleQuery myRoleQuery = new RoleQuery(myRoleRepository,tenant);
+                RoleQuery myRoleQuery = new RoleQuery(myRoleRepository, tenant);
                 List<RolePM> allCustomRoles = myRoleQuery.GetCustomRolesByIds(allRolesIds);
 
                 foreach (RolePM item in allCustomRoles)
@@ -385,17 +384,17 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                                    ToggleCode = a.ToggleCode,
                                    FeatureUniqeCode = a.FeatureUniqeCode
                                }).ToList();
-				#endregion
+                #endregion
 
-				#region allRoleFeatures
-				RoleFeatureQuery roleFeatureQuery = new RoleFeatureQuery();
+                #region allRoleFeatures
+                RoleFeatureQuery roleFeatureQuery = new RoleFeatureQuery();
 
                 if (myRole.IsCustomRole)
                 {
 
-					allRoleFeatures = roleFeatureQuery.GetRoleFeaturesForRoleFromCache(myRole.ParentRoleId, tenant);
+                    allRoleFeatures = roleFeatureQuery.GetRoleFeaturesForRoleFromCache(myRole.ParentRoleId, tenant);
 
-					List<RoleFeature> allChildFeatures = roleFeatureQuery.GetRoleFeaturesForRoleFromCache(myRole.Id, tenant);
+                    List<RoleFeature> allChildFeatures = roleFeatureQuery.GetRoleFeaturesForRoleFromCache(myRole.Id, tenant);
 
 
                     foreach (RoleFeature item in allChildFeatures)
@@ -423,7 +422,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 else
                 {
                     allRoleFeatures = roleFeatureQuery.GetRoleFeaturesForRoleFromCache(myRole.Id, tenant);
-				}
+                }
                 #endregion
 
                 #region allPackageFeatures
@@ -895,7 +894,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         private void GetUserData()
         {
             User loggedUser = this.iCommonContext.Users.Where(d => d.Id == this.LoggedUserId).FirstOrDefault();
-            if(loggedUser != null)
+            if (loggedUser != null)
             {
                 this.IsUserAdditionalPackagesOnly = loggedUser.AdditionalPackagesOnly;
             }
@@ -989,10 +988,10 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             else
             {
                 allUserLicenses = (from a in iCommonContext.UserLicenses
-                                                where a.Tenant == this.Tenant
-                                                && a.UserId == this.LoggedUserId
-                                                group a by a.PackageCode into g
-                                                select g.Key).ToList();
+                                   where a.Tenant == this.Tenant
+                                   && a.UserId == this.LoggedUserId
+                                   group a by a.PackageCode into g
+                                   select g.Key).ToList();
             }
 
             iPackagesCodes = (from a in iPackagesCodes where allUserLicenses.Contains(a) select a).ToList();

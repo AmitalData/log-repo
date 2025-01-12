@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
     public class GlobalTenantCounter

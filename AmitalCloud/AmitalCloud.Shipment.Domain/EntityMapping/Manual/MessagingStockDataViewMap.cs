@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AmitalCloud.Shipment.Domain.EntityPOCOs;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityMapping
 {

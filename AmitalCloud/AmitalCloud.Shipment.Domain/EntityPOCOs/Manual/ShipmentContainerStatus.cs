@@ -1,7 +1,7 @@
-﻿using System;
+﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityPOCOs
 {

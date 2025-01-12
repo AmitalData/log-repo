@@ -1,7 +1,8 @@
-﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Repositories;
+﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Exceptions;
+using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +12,12 @@ using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Threading;
 using System.Web;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {
     public class AuthenticationUtil
     {
-        
+
         [ThreadStatic] public static string AuthenticatedUserEmail = string.Empty;
 
         public static string GetIP4Address()
@@ -42,7 +42,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             {
                 return IP4Address;
             }
-        
+
             foreach (IPAddress IPA in Dns.GetHostAddresses(Dns.GetHostName()))
             {
                 if (IPA.AddressFamily.ToString() == "InterNetwork")
@@ -51,7 +51,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                     break;
                 }
             }
-        
+
             return IP4Address;
         }
 
@@ -82,7 +82,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         {
             if (HttpContext.Current != null)
             {
-              
+
                 if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
                 {
                     return HttpContext.Current.User.Identity.Name;
@@ -125,7 +125,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             }
 
             IRepository<Contact> contactRep = new Repository<Contact>(AmitalCloudContext.GetContext(Tenant));
-            var contact = contactRep.GetMulti(d=> d.Email == systemEmail && d.Tenant == Tenant).FirstOrDefault();
+            var contact = contactRep.GetMulti(d => d.Email == systemEmail && d.Tenant == Tenant).FirstOrDefault();
             if (contact == null)
             {
                 throw new BusinessErrorException("could not ResolveUserId from  Tenant");
@@ -157,7 +157,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                     new string[] { "Role1", "Roll2" }
                     ); ;
         }
-        
+
         public static string ResolveUserIdentityName(int Tenant)
         {
             string systemEmail = SystemIdentityName(Tenant);
@@ -168,7 +168,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                 {
                     defaultName = HttpContext.Current.User.Identity.Name;
                 }
-                
+
             }
 
             if (String.IsNullOrWhiteSpace(defaultName))
@@ -181,7 +181,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             }
             return defaultName;
         }
-        public static string ResolveUserId(int Tenant,bool fromSign=false)
+        public static string ResolveUserId(int Tenant, bool fromSign = false)
         {
             IRepository<Contact> contactRep = new Repository<Contact>(AmitalCloudContext.GetContext(Tenant));
 
@@ -253,7 +253,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         public static string ResolveUnifreightUserById(string Id, int Tenant)
         {
             IRepository<Contact> contactRep = new Repository<Contact>(AmitalCloudContext.GetContext(Tenant));
-            var contact = contactRep.GetMulti(d=> d.Id == Id && d.Tenant == Tenant).FirstOrDefault();
+            var contact = contactRep.GetMulti(d => d.Id == Id && d.Tenant == Tenant).FirstOrDefault();
             if (contact == null)
             {
                 return null;
@@ -264,9 +264,9 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             }
             return null;//system
         }
-        
+
         //[PrincipalPermission(SecurityAction.Demand,Role = "Role1")]
-        public static bool UnifreightImpersonateOld(string MoreParams ,out int iTenanat ,out string contactEmail )
+        public static bool UnifreightImpersonateOld(string MoreParams, out int iTenanat, out string contactEmail)
         {
             iTenanat = -999;
             contactEmail = "";
@@ -280,13 +280,13 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                 {
                     return false;
                 }
-                
+
                 if (!int.TryParse(tenant, out iTenanat))
                 {
                     return false;
                 }
-                
-                int tenant1 = iTenanat;  
+
+                int tenant1 = iTenanat;
                 IRepository<Contact> contactRep = new Repository<Contact>(AmitalCloudContext.GetContext(iTenanat));
                 var contact = contactRep.GetMulti(a => a.Tenant == tenant1 && a.ExternalId == UniUser).FirstOrDefault();    //GetSingleContactByExternalId(UniUser, iTenanat);
                 if (contact == null)
@@ -295,35 +295,35 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                 }
                 else
                 {
-                    contactEmail= contact.Email;
+                    contactEmail = contact.Email;
                 }
 
 
 
                 GenericIdentity identity = new GenericIdentity(contactEmail, "UnifreightImpersonate");
 
-                
-                
+
+
 
                 var myPrincipal = new GenericPrincipal(
                     identity,
                     new string[] { "UnifreightRole", "TenantRole=" + tenant }
                     );
-                
-                
 
-                
+
+
+
                 AppDomain.CurrentDomain.SetThreadPrincipal(myPrincipal);
-                
+
 
 
                 System.Threading.Thread.CurrentPrincipal = myPrincipal; //myPrincipal;
                 if (HttpContext.Current != null)
                 {
                     HttpContext.Current.User = myPrincipal;
-                        
+
                 }
-                
+
                 return true;
             }
             catch (Exception)
@@ -380,7 +380,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                     {
                         contactEmail = SystemIdentityName(iTenanat);
                     }
-                    
+
                 }
 
 
@@ -394,7 +394,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 
         }
 
-        public  static bool Impersonate(int iTenanat, string contactEmail, string UniUser)
+        public static bool Impersonate(int iTenanat, string contactEmail, string UniUser)
         {
             var claimsPrincipal = new ClaimsPrincipal();
             var claims = new List<Claim>
@@ -403,7 +403,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                     new Claim("Tenant", iTenanat.ToString()  ),
                     new Claim(ClaimTypes.Name, contactEmail),
                     new Claim(ClaimTypes.Email, contactEmail),
-                    
+
                 };
             var claimIdentity = new ClaimsIdentity(claims);
 
@@ -425,7 +425,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 
                 //throw;
             }
-           
+
 
 
 
@@ -451,7 +451,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                 return null;
             }
             var sTenant = tenant.Value;
-            var i=int.Parse(sTenant);
+            var i = int.Parse(sTenant);
             return i;
         }
 
@@ -471,25 +471,25 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             var principal = ClaimsPrincipal.Current;
 
             //Claim userName = principal.FirstOrDefault("UserName");
-            
+
             var claimsEmail = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
             bool hasEmailClaim = principal.HasClaim(c => c.Type == ClaimTypes.Email);
             if (hasEmailClaim)
             {
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("hasEmailClaim:" + claimsEmail.Value);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("hasEmailClaim:" + claimsEmail.Value);
             }
 
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("GetCurrentPrincipalTenant():{0}",GetThreadCurrentPrincipalTenant()));
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("GetCurrentPrincipalTenant():{0}", GetThreadCurrentPrincipalTenant()));
 
 
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("UserName:" +Environment.UserName);
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Thread.CurrentPrincipal.Identity.Name:" + Thread.CurrentPrincipal.Identity.Name);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("UserName:" + Environment.UserName);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Thread.CurrentPrincipal.Identity.Name:" + Thread.CurrentPrincipal.Identity.Name);
             if (HttpContext.Current != null)
             {
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("HttpContext.Current.User.Identity.Name:" + HttpContext.Current.User.Identity.Name);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("HttpContext.Current.User.Identity.Name:" + HttpContext.Current.User.Identity.Name);
             }
-            
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WindowsIdentity.GetCurrent().Name:" + WindowsIdentity.GetCurrent().Name);
+
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WindowsIdentity.GetCurrent().Name:" + WindowsIdentity.GetCurrent().Name);
         }
 
         public static bool IsResolveUserIdentityNameEqualSystem(int tenant)
@@ -531,7 +531,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             return exists;
         }
 
-        public static ContactPassword VerifyContactPassword(string email, string password, IGlobalContext globalContext , bool isHashPassword = false)
+        public static ContactPassword VerifyContactPassword(string email, string password, IGlobalContext globalContext, bool isHashPassword = false)
         {
             ContactPassword contactPassword = null;
             if (globalContext != null && !string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
@@ -580,9 +580,9 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
     }
     public class SecurityException : Exception
     {
-        public SecurityException(string message):base(message)
+        public SecurityException(string message) : base(message)
         {
-            
+
         }
     }
 }

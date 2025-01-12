@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {
-    
+
     public class AmitalCloudDomainScope : IDisposable
     {
 
         [ThreadStatic]
         private static Dictionary<string, IAmitalCloudContextEntity> _Context = new Dictionary<string, IAmitalCloudContextEntity>();
-        
+
         private readonly bool _IsParentContext;
         private readonly string _myEnum;
 
@@ -22,20 +19,20 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             {
                 throw new Exception("myContextEntity is empty");
             }
-            var myType=myContextEntity.GetType().Name;
+            var myType = myContextEntity.GetType().Name;
             _myEnum = myType;
             if (Context.ContainsKey(myType))
             {
                 throw new InvalidOperationException("Only a single Domain Context can be created!");
             }
-            
-            
+
+
             //myLogtitudeDomainScope.MyEnum = myType;
             _IsParentContext = true;
             Context.Add(myType, myContextEntity);
         }
         public static TAmitalCloudContextEntity GetCurrent<TAmitalCloudContextEntity>()
-            where TAmitalCloudContextEntity : class ,IAmitalCloudContextEntity
+            where TAmitalCloudContextEntity : class, IAmitalCloudContextEntity
         {
             var myType = typeof(TAmitalCloudContextEntity).Name;
             return GetCurrent(myType) as TAmitalCloudContextEntity;
@@ -48,15 +45,15 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             {
                 if (Context == null) return null;
                 if (!Context.ContainsKey(my_type)) return null;
-                myIContextEntity= Context[my_type];
+                myIContextEntity = Context[my_type];
             }
-            catch 
+            catch
             {
-                
-                
+
+
             }
             return myIContextEntity;
-            
+
         }
         public IAmitalCloudContextEntity Current
         {
@@ -82,10 +79,10 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             Context.Remove(_myEnum);
         }
     }
-    
+
     public interface IAmitalCloudContextEntity
     {
-        
+
     }
     public class ExceptionInErrorLog : Exception, IAmitalCloudContextEntity
     {

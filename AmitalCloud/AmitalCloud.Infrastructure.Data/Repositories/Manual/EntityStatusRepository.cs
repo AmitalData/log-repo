@@ -1,17 +1,14 @@
-﻿using AmitalCloud.Infrastructure.Data.Helpers;
+﻿using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Data.Context;using AmitalCloud.Infrastructure.Data.Helpers;
 
 
 namespace AmitalCloud.Infrastructure.Data.Repositories
 {
-    public class EntityStatusRepository : Repository<EntityStatus> ,IRepository<EntityStatus>
+    public class EntityStatusRepository : Repository<EntityStatus>, IRepository<EntityStatus>
     {
         IAmitalCloudContext currentContext;
         public EntityStatusRepository() : this(0)

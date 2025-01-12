@@ -46,8 +46,8 @@ namespace AmitalCloud.Infrastructure.APITools.Helpers
         }
         string GetPartnerCodeTranslation(string localCode, string computingPartnerId, string objectTableId, int tenant)
         {
-            var result = new Repository<ComputingPartnerTranslation>(context).GetMulti(a => a.ComputingPartnerId == computingPartnerId && a.ObjectTableId == objectTableId && (a.Tenant == tenant || a.Tenant == 0) && a.OurCode == localCode,a=> new{ a.Tenant,a.PartnerCode});
-            return result.Where(a=>a.Tenant==tenant).Select(a => a.PartnerCode).FirstOrDefault() ?? result.Where(a => a.Tenant == 0).Select(a => a.PartnerCode).FirstOrDefault();
+            var result = new Repository<ComputingPartnerTranslation>(context).GetMulti(a => a.ComputingPartnerId == computingPartnerId && a.ObjectTableId == objectTableId && (a.Tenant == tenant || a.Tenant == 0) && a.OurCode == localCode, a => new { a.Tenant, a.PartnerCode });
+            return result.Where(a => a.Tenant == tenant).Select(a => a.PartnerCode).FirstOrDefault() ?? result.Where(a => a.Tenant == 0).Select(a => a.PartnerCode).FirstOrDefault();
         }
         public string GetLocalCodeTranslation(string PartnerCode, string computingPartnerId, string objectTableId, int tenant)
         {
@@ -90,20 +90,20 @@ namespace AmitalCloud.Infrastructure.APITools.Helpers
         {
             return new Repository<ComputingPartner>(context).GetMulti(a => a.Code == code && (a.Tenant == tenant || a.Tenant == 0)
             , a => new ComputingPartnerPM()
-                 {
-                     Id = a.Id,
-                     CreateDate = a.CreateDate,
-                     UpdateDate = a.UpdateDate,
-                     CreatedByUserId = a.CreatedByUserId,
-                     UpdatedByUserId = a.UpdatedByUserId,
-                     Name = a.Name,
-                     Remarks = a.Remarks,
-                     SearchFields = a.SearchFields,
-                     Code = a.Code,
-                     InActive = a.InActive,
-                     Description = a.Description,
-                     Tenant = a.Tenant,
-                 }).FirstOrDefault();
+            {
+                Id = a.Id,
+                CreateDate = a.CreateDate,
+                UpdateDate = a.UpdateDate,
+                CreatedByUserId = a.CreatedByUserId,
+                UpdatedByUserId = a.UpdatedByUserId,
+                Name = a.Name,
+                Remarks = a.Remarks,
+                SearchFields = a.SearchFields,
+                Code = a.Code,
+                InActive = a.InActive,
+                Description = a.Description,
+                Tenant = a.Tenant,
+            }).FirstOrDefault();
         }
         public List<ComputingPartnerTranslationPM> GetComputingPartnerCodeTranslations(string computingPartner, int tenant)
         {

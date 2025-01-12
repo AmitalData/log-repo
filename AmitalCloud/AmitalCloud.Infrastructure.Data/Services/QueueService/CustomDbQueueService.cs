@@ -1,9 +1,8 @@
 ﻿using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Domain.Enums;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Repositories;
 using System;
 using System.Collections.Generic;
-using AmitalCloud.Infrastructure.Domain.Enums;
 
 namespace AmitalCloud.Infrastructure.Data.Services
 {
@@ -79,7 +78,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
         new public CustomDBQueueMessage Receive(int? nextRunDelayInSec = null)
         {
 
-            
+
             //var r= new DualRepository()
             if (CurrentCustomQueueResponse != null && !String.IsNullOrWhiteSpace(CurrentCustomQueueResponse.MessageId) && CurrentCustomQueueResponse.QueueStatus == QueueStatusEnum.Received)
             {
@@ -145,7 +144,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
             {
                 if (CurrentCustomQueueResponse.MessageCreatedServerTime.HasValue)
                 {
-                    if (DateTime.UtcNow.Subtract(CurrentCustomQueueResponse.MessageCreatedServerTime.GetValueOrDefault()) 
+                    if (DateTime.UtcNow.Subtract(CurrentCustomQueueResponse.MessageCreatedServerTime.GetValueOrDefault())
                         > TimeSpan.FromHours(12))
                     {
                         this.SafeComplete();
@@ -242,12 +241,12 @@ namespace AmitalCloud.Infrastructure.Data.Services
             return Helpers.FeatureToggleHelper.HasFeatureToggle("MQC", Tenant);
         }
 
-        static List<string> _SupportedRabbitMQList = new List<string>() { 
-            SBQueueNames.SendWEBAPIMessage2MamanQ.ToString() , 
+        static List<string> _SupportedRabbitMQList = new List<string>() {
+            SBQueueNames.SendWEBAPIMessage2MamanQ.ToString() ,
             SBQueueNames.AnalyzeQueueMQ.ToString() ,
             SBQueueNames.SendDataToExternalServicesBQ.ToString() ,
         };
-        public static List<string> SupportedRabbitMQList { get { return _SupportedRabbitMQList; }  }
+        public static List<string> SupportedRabbitMQList { get { return _SupportedRabbitMQList; } }
 
         public static void SendCommunicationLogMessageToQueue(string queueName, Dictionary<string, string> messageValues, int tenant,
             bool UseRabbitMQ,
@@ -256,21 +255,22 @@ namespace AmitalCloud.Infrastructure.Data.Services
         {
             try
             {
-                
+
 
 
                 UseRabbitMQ = IsFeatureOnRABBITMQ_Communication() && UseRabbitMQ && SupportedRabbitMQList.Contains(queueName);
                 //LogMessagingUtil.Instance.AppendLine($"SendCommunicationLogMessageToQueue(${queueName},UseRabbitMQ={UseRabbitMQ})");
-                
 
-                var customDbQueueService = new CustomDbQueueService(queueName,tenant);
-                customDbQueueService.Send(messageValues, tenant, null, 
-                    new QueueSendModel() { 
-                        UseRabbitMQ = UseRabbitMQ ,
-                        EntityCode= entityCode,
-                        EntityId = entityId,   
-                         
-                        TenantPriority = tenantPriority?? 89,
+
+                var customDbQueueService = new CustomDbQueueService(queueName, tenant);
+                customDbQueueService.Send(messageValues, tenant, null,
+                    new QueueSendModel()
+                    {
+                        UseRabbitMQ = UseRabbitMQ,
+                        EntityCode = entityCode,
+                        EntityId = entityId,
+
+                        TenantPriority = tenantPriority ?? 89,
 
 
                     });
@@ -287,7 +287,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
     }
     public class CustomDbQueueModel
     {
-     
+
         public TimeSpan LockDuration { get; set; }
 
         public int MaxDeliveryCount { get; set; }
@@ -295,6 +295,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
         public int TimeOutInHour { get; set; }
 
         public string QueueCode { get; set; }
-    
-public  int Tenant { get; set; }}
+
+        public int Tenant { get; set; }
+    }
 }

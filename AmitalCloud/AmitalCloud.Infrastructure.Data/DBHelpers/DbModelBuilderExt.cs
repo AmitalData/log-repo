@@ -1,13 +1,8 @@
-﻿using AmitalCloud.Infrastructure.Data.BaseClasses;
-using AmitalCloud.Infrastructure.Domain.Enums;
+﻿using AmitalCloud.Infrastructure.Domain.Enums;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Data.DBHelpers
 {

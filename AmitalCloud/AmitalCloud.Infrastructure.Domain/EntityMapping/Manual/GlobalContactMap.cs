@@ -1,6 +1,5 @@
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.ModelConfiguration;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 {
@@ -22,13 +21,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
                 .HasMaxLength(70)
                 .IsUnicode(false);
 
-            
+
 
             // Table & Column Mappings
             this.ToTable("GlobalContacts");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Email).HasColumnName("Email");
-          
+
             this.Property(t => t.GlobalTenantId).HasColumnName("GlobalTenantId");
             this.Property(t => t.InActive).HasColumnName("InActive");
             this.Property(t => t.IsUser).HasColumnName("IsUser");

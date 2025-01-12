@@ -1,13 +1,11 @@
-﻿using System;
+﻿using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
-using AmitalCloud.Infrastructure.Domain.BaseClasses;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 {
-    public class CustomerCompetitorPM :  BaseEntityPM
+    public class CustomerCompetitorPM : BaseEntityPM
     {
         [Key]
         public string CustomerId { get; set; }
@@ -25,7 +23,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 
 
 
-         
+
         private List<CustomerCompetitorProductPM> customerCompetitorProducts;
         [Include]
         [Association("CustomerCompetitorProductCustomerCompetitor", "CustomerId", "CustomerId")]

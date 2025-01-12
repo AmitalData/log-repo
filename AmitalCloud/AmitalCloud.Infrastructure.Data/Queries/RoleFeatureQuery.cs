@@ -1,7 +1,7 @@
-﻿using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Data.Helpers;
+﻿using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,7 +14,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 
         public RoleFeatureQuery()
         {
-            repository = new RoleFeatureRepository(); 
+            repository = new RoleFeatureRepository();
         }
 
         public RoleFeatureQuery(int tenant)
@@ -71,41 +71,41 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                         FeatureUniqeCode = a.FeatureUniqeCode
                     }).ToList();
         }
-		public List<RoleFeature> GetRoleFeaturesForRoleFromCache(string roleId, int tenant)
-		{
-			string entityName = "RoleFeature" + roleId + tenant;
-			List<RoleFeature> entity;
-		    bool getFromCache = true;
+        public List<RoleFeature> GetRoleFeaturesForRoleFromCache(string roleId, int tenant)
+        {
+            string entityName = "RoleFeature" + roleId + tenant;
+            List<RoleFeature> entity;
+            bool getFromCache = true;
 
-			if (getFromCache)
-			{
+            if (getFromCache)
+            {
 
-				if (CacheManager.CacheWrapper.Get(entityName) == null)
-				{
-					entity = (from a in repository.context.RoleFeatures
-							  where (a.Tenant == tenant || a.Tenant == 0) && a.RoleId == roleId
-							  select a).ToList(); 
-						if (entity != null)
-						{
-							CacheManager.CacheWrapper.Insert(entityName, entity);
-						}			
-				}
-				else
-				{
-					entity = (List<RoleFeature>)CacheManager.CacheWrapper.Get(entityName);
-				}
+                if (CacheManager.CacheWrapper.Get(entityName) == null)
+                {
+                    entity = (from a in repository.context.RoleFeatures
+                              where (a.Tenant == tenant || a.Tenant == 0) && a.RoleId == roleId
+                              select a).ToList();
+                    if (entity != null)
+                    {
+                        CacheManager.CacheWrapper.Insert(entityName, entity);
+                    }
+                }
+                else
+                {
+                    entity = (List<RoleFeature>)CacheManager.CacheWrapper.Get(entityName);
+                }
 
 
-			}
-			else
-			{
-				entity = (from a in repository.context.RoleFeatures
-						  where (a.Tenant == tenant || a.Tenant == 0) && a.RoleId == roleId
-						  select a).ToList();
+            }
+            else
+            {
+                entity = (from a in repository.context.RoleFeatures
+                          where (a.Tenant == tenant || a.Tenant == 0) && a.RoleId == roleId
+                          select a).ToList();
 
-			}
-			return entity;
-			
-		}
-	}
+            }
+            return entity;
+
+        }
+    }
 }

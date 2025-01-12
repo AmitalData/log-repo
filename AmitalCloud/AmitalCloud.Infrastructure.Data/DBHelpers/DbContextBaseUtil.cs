@@ -52,7 +52,7 @@ namespace AmitalCloud.Infrastructure.Data.DBHelpers
             }
             OracleConnectionStringBuilder oraCSB = new OracleConnectionStringBuilder();
             oraCSB.Direct = true;
-            oraCSB.Server = server; 
+            oraCSB.Server = server;
             oraCSB.Port = iPort;
             oraCSB.Sid = sid;
             oraCSB.UserId = userId;

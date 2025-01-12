@@ -1,15 +1,14 @@
-using AmitalCloud.Infrastructure.Data.Context;using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using System;
 using System.Collections.Generic;
 
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace AmitalCloud.Infrastructure.Data.Repositories
 {
-    public class CardContactRepository: Repository<CardContact>
+    public class CardContactRepository : Repository<CardContact>
     {
         IAmitalCloudContext currentContext;
         public CardContactRepository(IAmitalCloudContext context) : base(context)
@@ -23,7 +22,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
 
         public CardContactRepository(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {
-        }   
+        }
 
         public IQueryable<CardContact> GetCardContacts(int tenant)
         {
@@ -83,7 +82,8 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         public List<CardContact> GetCardContactForContact(string contactId, int tenant)
         {
             return (from record in context.CardContacts.Include("Card")
-                    where record.ContactId == contactId select record).ToList();
+                    where record.ContactId == contactId
+                    select record).ToList();
         }
 
         public IQueryable<Contact> GetContactsByCardId(string cardId)
@@ -111,7 +111,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             return (from record in context.CardContacts.Include("Contact") where record.ContactId == contactId && record.Tenant == tenant select record).FirstOrDefault();
         }
 
-        public List<Card> GeContactCustomersByContact(string contactId,string searchText, int tenant)
+        public List<Card> GeContactCustomersByContact(string contactId, string searchText, int tenant)
         {
             if (string.IsNullOrEmpty(searchText))
             {
@@ -123,7 +123,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             }
         }
 
-        public CardContact GetSingleCardContact(string contactId,string cardId, int tenant)
+        public CardContact GetSingleCardContact(string contactId, string cardId, int tenant)
         {
             return (from record in context.CardContacts.Include("Contact") where record.ContactId == contactId && record.CardId == cardId && record.Tenant == tenant select record).FirstOrDefault();
         }

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 {
@@ -15,7 +10,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             // Primary Key
             this.HasKey(t => t.Email);
-             
+
 
             this.Property(t => t.Email)
                 .IsRequired()
@@ -38,11 +33,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             // Table & Column Mappings
             this.ToTable("ContactPasswords");
-            
+
             this.Property(t => t.Email).HasColumnName("Email");
-           
+
             this.Property(t => t.Password).HasColumnName("Password");
-            
+
             this.Property(t => t.MustChangePassword).HasColumnName("MustChangePassword");
             this.Property(t => t.IsLocked).HasColumnName("IsLocked");
             this.Property(t => t.NumberOfRetries).HasColumnName("NumberOfRetries");
@@ -65,7 +60,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
                 this.Property(t => t.SharedMobileAppAlertsforFollowedShipment).HasColumnName("SharedMobileAppAlertsforFollowedShipment");
                 this.Property(t => t.SharedMobileAppAlertonExceptions).HasColumnName("SharedMobileAppAlertonExceptions");
             }
-//#endif
+            //#endif
 
 
         }

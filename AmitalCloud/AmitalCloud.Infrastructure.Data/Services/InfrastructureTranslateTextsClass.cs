@@ -1,8 +1,8 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -48,7 +48,7 @@ namespace AmitalCloud.Infrastructure.Data.Validators
 
                 foreach (string variable in var1Array)
                 {
-                    translation = GetSingleTranslation(textCodeCode, tenant, translationRepository, myTenant); 
+                    translation = GetSingleTranslation(textCodeCode, tenant, translationRepository, myTenant);
                     if (translation != null)
                     {
                         var1Translated = translation.TranslatedText;
@@ -152,7 +152,7 @@ namespace AmitalCloud.Infrastructure.Data.Validators
             string result = string.Empty;
 
             TranslationRepository translationRepository = new TranslationRepository(tenant);
-            Tenant myTenant = new Repository<Tenant>(translationRepository.context).GetMulti(a => a.Id == tenant).FirstOrDefault();    
+            Tenant myTenant = new Repository<Tenant>(translationRepository.context).GetMulti(a => a.Id == tenant).FirstOrDefault();
 
             if (myTenant != null)
             {

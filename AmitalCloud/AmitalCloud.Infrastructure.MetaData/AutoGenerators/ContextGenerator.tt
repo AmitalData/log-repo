@@ -218,13 +218,13 @@ namespace <#= contextnamespacestring #>
    public class <#= contextname #>: DbContextBase, I<#= contextname #>
     {
     	private int _tenant;
-        public <#= contextname #>()
+        private <#= contextname #>()
         {
             Database.SetInitializer<<#= contextname #>>(null);     
 			Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
         }
 
-        public <#= contextname #>(DbConnection conn,int tenant)
+        private <#= contextname #>(DbConnection conn,int tenant)
             : base(conn,true)
         {
             this.Configuration.LazyLoadingEnabled = false;
@@ -233,15 +233,26 @@ namespace <#= contextnamespacestring #>
 			Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
             _tenant = tenant;
         }
-
+        private <#= contextname #>(string dbConnectionInfo,int tenant): base(dbConnectionInfo)
+        {
+            this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.AutoDetectChangesEnabled = false;
+            Database.SetInitializer<<#= contextname #>>(null);
+			Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
+            _tenant = tenant;
+        }
         public static I<#= contextname #> GetContext(int tenant)
         {           
-            GlobalDB currentDb;
-			currentDb = GlobalDbHelper.GetGlobalDB(tenant);
-            string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
-            <#= contextname #> context = new <#= contextname #>(connection,tenant);
-            return context;
+            string dbConnectionInfo = GlobalDbHelper.GetGlobalDB(tenant).DBConnection;
+			if (AmitalCloudSettings.DatabaseManagementSystem == "oracle")
+			{
+				DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
+				return new <#= contextname #>(connection, tenant);
+            }
+            else 
+			{
+				return new <#= contextname #>(dbConnectionInfo, tenant); ;
+			}
         }
 		public override AmitalCloudDBSchema AmitalCloudDBSchema
         {

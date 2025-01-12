@@ -5,7 +5,7 @@ namespace AmitalCloud.Infrastructure.Data.Security
     public class ContactInfo
     {
         public int Tenant { get; set; }
-        public string ContactEmail { get; set; }               
+        public string ContactEmail { get; set; }
         public bool IsLogitudeAdmin { get; set; }
         public string AccessLevelCode { get; set; }
         //public string ComputingPartnerCode { get; set; }

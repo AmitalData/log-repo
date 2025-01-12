@@ -1,4 +1,4 @@
-﻿using AmitalCloud.Infrastructure.Data.Context;using AmitalCloud.Infrastructure.Data.Helpers;
+﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
@@ -31,7 +31,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
 
         public IQueryable<EventType> GetEventTypes()
         {
-            return context.EventTypes   ;
+            return context.EventTypes;
         }
 
 

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
@@ -84,25 +80,25 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         public string AmitalCloudEnvironmentURL { get; set; }
 
         public string AmitalCloudLogitudeTenantPrimaryKey { get; set; }
-         public string PrivateKey { get; set; }
+        public string PrivateKey { get; set; }
         public string AmitalTaxesUrl { get; set; }
         public string TaxesRediractUrl { get; set; }
         public string AmitalApiAddress { get; set; }
         public string AmitalApiXFunctionsKey { get; set; }
-    
-         public string ReleaseDateString { get; set; }
+
+        public string ReleaseDateString { get; set; }
 
         public string AzurePrincipalSecretKey { get; set; }
         public string DNSIPAddress { get; set; }
         public string DNSZone { get; set; }
         public string QboBaseUrl { get; set; }
         public string QboEnvironment { get; set; }
-        
+
         public string WorkflowStorageAccountName { get; set; }
         public string WorkflowStorageAccountKey { get; set; }
-		public string WindWardSettings { get; set; }
-		public string LogitudeIISURL { get; set; }
-		public string ExportUrl { get; set; }
+        public string WindWardSettings { get; set; }
+        public string LogitudeIISURL { get; set; }
+        public string ExportUrl { get; set; }
         public string TempStorageConnection { get; set; }
     }
- }
+}

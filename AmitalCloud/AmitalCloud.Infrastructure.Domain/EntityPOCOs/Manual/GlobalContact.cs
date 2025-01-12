@@ -10,7 +10,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         public string Id { get; set; }
         public int GlobalTenantId { get; set; }
         public string Email { get; set; }
-      
+
         public bool InActive { get; set; }
         public bool IsUser { get; set; }
         public bool InternetAccess { get; set; }

@@ -24,7 +24,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             List<CounterDefinition> tableCounters = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                tableCounters = new Repository<CounterDefinition>(AmitalCloudContext.GetContext(tenant)).GetMulti(c =>  c.Tenant == tenant && c.Counter.Code== counterCode).ToList();
+                tableCounters = new Repository<CounterDefinition>(AmitalCloudContext.GetContext(tenant)).GetMulti(c => c.Tenant == tenant && c.Counter.Code == counterCode).ToList();
                 bool isCustomizedCounter = tableCounters.Where(c => c.IsCustomized).Any();
                 if (isCustomizedCounter && FeatureToggleHelper.HasFeatureToggle("ICC", tenant) && additionalParameters != null && additionalParameters.ContainsKey("[CustomizeCounterParameter2]") && !string.IsNullOrEmpty(additionalParameters["[CustomizeCounterParameter2]"]))
                 {
@@ -66,7 +66,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                 counterLastNumberValue = ExecuteNextTableNumberValueProcedure(tenant, counterDef.CounterId, prefix, startNumber, strConnString, branchCounterCode);
             }
 
-            number = GetCounterLastNumberWithPrefixSuffix( counterDef, tenant, counterLastNumberValue, additionalParameters);
+            number = GetCounterLastNumberWithPrefixSuffix(counterDef, tenant, counterLastNumberValue, additionalParameters);
 
             return number;
         }

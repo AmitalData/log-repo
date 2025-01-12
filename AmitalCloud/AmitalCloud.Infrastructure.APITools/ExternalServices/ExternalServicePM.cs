@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace AmitalCloud.Infrastructure.APITools.ExternalServices
+﻿namespace AmitalCloud.Infrastructure.APITools.ExternalServices
 {
-     public enum ServiceTypeEnum { DCA = 1, Sign = 2 }
+    public enum ServiceTypeEnum { DCA = 1, Sign = 2 }
     public class ExternalServicePM
     {
 

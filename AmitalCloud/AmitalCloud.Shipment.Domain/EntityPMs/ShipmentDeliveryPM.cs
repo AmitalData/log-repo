@@ -1,15 +1,15 @@
-﻿using AmitalCloud.Shipment.Domain.Interfaces;
+﻿using AmitalCloud.Infrastructure.Domain.EntityPMs;
+using AmitalCloud.Shipment.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
-using AmitalCloud.Infrastructure.Domain.EntityPMs;
 
 namespace AmitalCloud.Shipment.Domain.EntityPMs
 {
     [CustomValidation(typeof(IShipmentClassLevelValidator), "ValidateClass")]
     [CustomValidation(typeof(IShipmentDeliveryValidator), "IsShipmentDeliveryValid")]
-    public partial class ShipmentDeliveryPM: ChildEntitiesCustomFieldPM
+    public partial class ShipmentDeliveryPM : ChildEntitiesCustomFieldPM
     {
         [Key]
         public string Id { get; set; }

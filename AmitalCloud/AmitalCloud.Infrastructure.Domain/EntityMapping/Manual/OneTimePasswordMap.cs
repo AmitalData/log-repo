@@ -1,21 +1,16 @@
 ﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 {
-   public class OneTimePasswordMap : EntityTypeConfiguration<OneTimePassword>
+    public class OneTimePasswordMap : EntityTypeConfiguration<OneTimePassword>
     {
 
-       public OneTimePasswordMap()
+        public OneTimePasswordMap()
         {
             // Primary Key
             this.HasKey(t => t.Id);
-         //   this.HasKey(t => new { t.Email, t.DeviceId });
+            //   this.HasKey(t => new { t.Email, t.DeviceId });
 
             // Properties
 
@@ -29,9 +24,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.UserEmail)
                 .IsRequired()
-                .HasMaxLength(40)  
+                .HasMaxLength(40)
                 .IsUnicode(false);
-          
+
 
             this.Property(t => t.UserId)
                 .IsRequired()
@@ -41,16 +36,16 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.Tenant)
                    .IsRequired();
-        
+
 
 
 
             this.Property(t => t.CreateDate)
                  .IsRequired();
-       
-           
-           this.Property(t => t.ExpirationDate)
-            .IsRequired();
+
+
+            this.Property(t => t.ExpirationDate)
+             .IsRequired();
 
 
             this.Property(t => t.UsageDate);
@@ -66,7 +61,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
             this.Property(t => t.ExpirationDate).HasColumnName("ExpirationDate");
             this.Property(t => t.IsUsed).HasColumnName("IsUsed");
-      
+
 
         }
     }

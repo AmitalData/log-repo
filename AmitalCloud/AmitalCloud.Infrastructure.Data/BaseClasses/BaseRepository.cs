@@ -5,9 +5,9 @@ using System.Data.Entity;
 using System.Linq;
 namespace AmitalCloud.Infrastructure.Data.BaseClasses
 {
-    public abstract class BaseRepository<TEntity,TKeyType, TContext> : Repository<TEntity>, IRepository<TEntity>
+    public abstract class BaseRepository<TEntity, TKeyType, TContext> : Repository<TEntity>, IRepository<TEntity>
         where TEntity : BaseEntity
-        where TContext : class,IContext
+        where TContext : class, IContext
     {
         private TContext currentContext;
         protected TContext Context => currentContext;

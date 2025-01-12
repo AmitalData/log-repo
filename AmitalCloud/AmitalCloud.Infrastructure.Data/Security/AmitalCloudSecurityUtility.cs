@@ -1,17 +1,16 @@
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Queries;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Transactions;
 using System.Web;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
 
 namespace AmitalCloud.Infrastructure.Data.Security
 {
@@ -113,8 +112,8 @@ namespace AmitalCloud.Infrastructure.Data.Security
             //if (features == null || forceAPIFeaturesCheck)
             //{
             FeatureQuery featuresQuery = new FeatureQuery(tenant);
-                List<FeaturePM> fet = featuresQuery.GetAllowedFeaturesForRole(roleId, allowedPackages, tenant);
-                return  fet.ToDictionary(d => d.Code + d.ObjectTableId, d => d);
+            List<FeaturePM> fet = featuresQuery.GetAllowedFeaturesForRole(roleId, allowedPackages, tenant);
+            return fet.ToDictionary(d => d.Code + d.ObjectTableId, d => d);
             //    CacheManager.CacheWrapper.Insert(key, features, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
             //}
             //return features;
@@ -183,8 +182,8 @@ namespace AmitalCloud.Infrastructure.Data.Security
             else
             {
                 string token = null;
-                IAmitalCloudContext context = AmitalCloudContext.GetContext(0);
-                AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(context);
+                IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
+                AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository();
                 AuthenticationToken authToken = null;
                 if (HttpContext.Current != null)
                 {
@@ -296,8 +295,8 @@ namespace AmitalCloud.Infrastructure.Data.Security
                 else
                 {
                     string token = null;
-                    IAmitalCloudContext context = AmitalCloudContext.GetContext(0);
-                    AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(context);
+                    IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
+                    AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository();
                     AuthenticationToken authToken = null;
                     if (HttpContext.Current != null)
                     {
@@ -323,7 +322,7 @@ namespace AmitalCloud.Infrastructure.Data.Security
                                     {
                                         using (TransactionScope scope2 = TransactionFactory.GetNewTransaction())
                                         {
-                                            bool isDistributorToCurrentTenant = CheckDistributor(tenant, context, zeroUser); 
+                                            bool isDistributorToCurrentTenant = CheckDistributor(tenant, context, zeroUser);
                                             if (!isDistributorToCurrentTenant)
                                             {
                                                 return null;
@@ -400,9 +399,9 @@ namespace AmitalCloud.Infrastructure.Data.Security
                     }
                     else
                     {
-                        IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);    
+                        IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
                         ObjectTablePM objectTable = ObjectTableQuery.GetObjectTableByCode(objectTableName, tenant);
-                        Feature myFeature = new Repository<Feature>(context).GetMulti(a=> a.ObjectTableId == objectTable.Id && a.Code == featureCode
+                        Feature myFeature = new Repository<Feature>(context).GetMulti(a => a.ObjectTableId == objectTable.Id && a.Code == featureCode
                             && (a.Tenant == tenant || a.Tenant == 0)).FirstOrDefault();   //.GetSingleFeatureByCode(objectTable.Id, featureCode, tenant);
                         if (myFeature != null)
                         {
@@ -539,7 +538,7 @@ namespace AmitalCloud.Infrastructure.Data.Security
                     string loggedUserId = null;
                     if (loggedUserId == null)
                     {
-                        User user = new Repository<User>(myCommonContext).GetMulti(a=>a.Contact.Email==email && a.Tenant==tenant).FirstOrDefault(); //.GetSingleUserByEmail(email, tenant, true);
+                        User user = new Repository<User>(myCommonContext).GetMulti(a => a.Contact.Email == email && a.Tenant == tenant).FirstOrDefault(); //.GetSingleUserByEmail(email, tenant, true);
                         if (user != null)
                         {
                             loggedUserId = user.Id;
@@ -655,7 +654,7 @@ namespace AmitalCloud.Infrastructure.Data.Security
                 {
                     IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
                     string email = HttpContext.Current.User.Identity.Name;
-                    Contact contact = GetSingleContactByEmail(tenant,email, context); 
+                    Contact contact = GetSingleContactByEmail(tenant, email, context);
                     if (contact != null)
                     {
                         CardContact cardContact = context.CardContacts.Where(d => d.ContactId == contact.Id && d.CardId == partnerId).FirstOrDefault();
@@ -697,7 +696,7 @@ namespace AmitalCloud.Infrastructure.Data.Security
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(0);
+                        TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(tenant);
                         privatelabel = query.GetSingleActivePMByUrl_Cache(url);
                         if (privatelabel != null)
                         {

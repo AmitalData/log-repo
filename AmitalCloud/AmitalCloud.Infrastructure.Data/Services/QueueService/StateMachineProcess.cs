@@ -12,7 +12,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
         where ProcessState : struct, IConvertible, IComparable, IFormattable
         where CommandEnum : struct, IConvertible, IComparable, IFormattable
         where RCmmand : RCmmand<ProcessState, CommandEnum>
-        
+
     {
         public class StateTransition
         {
@@ -33,7 +33,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
             public override bool Equals(object obj)
             {
                 StateTransition other = obj as StateTransition;
-                return other != null && 
+                return other != null &&
                     this.CurrentState.ToString() == other.CurrentState.ToString() &&
                     this.Command.ToString() == other.Command.ToString();
             }
@@ -54,7 +54,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
             {
                 throw new ArgumentException("ProcessState must be an enum.");
             }
-            
+
             _CmmandList = myRCmmands;
             _Transitions = transitions;
 
@@ -70,7 +70,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
             if (!_Transitions.TryGetValue(transition, out nextState))
                 throw new Exception("Invalid transition: " + CurrentState + " -> " + command);
             var rCommand = _CmmandList.FirstOrDefault(e => e.MyCommand.ToString() == command.ToString());
-            var toContinue=rCommand.Execute(null);
+            var toContinue = rCommand.Execute(null);
             LogMessagingUtil.Instance.AppendLine("Current State = " + CurrentState.ToString() + ":Took:" + stopwatch.Elapsed.ToString() + ":toContinue=" + toContinue);
             return nextState;
         }
@@ -95,7 +95,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
     }
     // Summary:
     //     Defines a command.
-    
+
     public interface IMyCommand
     {
         // Summary:
@@ -129,7 +129,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
         where CommandEnum : struct, IConvertible, IComparable, IFormattable
     {
         public CommandEnum MyCommand { get; private set; }
-        
+
         readonly Func<object, bool> _func;
 #if false
         readonly Action<object> _execute;
@@ -159,7 +159,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
 
 #endif
 
-        public RCmmand(CommandEnum command, Func<object,bool> func)
+        public RCmmand(CommandEnum command, Func<object, bool> func)
         {
 
             if (!typeof(ProcessState).IsEnum)
@@ -179,7 +179,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
 
         }
 
-        public bool  Execute(object parameter)
+        public bool Execute(object parameter)
         {
             var res = _func(parameter);
             return res;

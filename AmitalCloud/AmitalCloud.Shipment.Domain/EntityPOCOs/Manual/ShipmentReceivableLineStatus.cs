@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AmitalCloud.Shipment.Domain.EntityPOCOs
@@ -10,6 +9,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPOCOs
         public string Name { get; set; }
         public string SearchFields { get; set; }
 
- 
+
     }
 }

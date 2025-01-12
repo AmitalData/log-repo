@@ -56,14 +56,14 @@ namespace AmitalCloud.Shipment.Domain.Validators
                         tenant = (int)tenantProp.GetValue(context.ObjectInstance, null);
                         break;
                     }
-            }          
+            }
 
             /* by islam
              */
             Validators.ShipmentValidationClass temp = new Validators.ShipmentValidationClass(objectTableName, tenant);
             bool valid = temp.IsValid(value, context.ObjectInstance, context.MemberName);
-           
-            
+
+
             if (!valid)
             {
                 List<string> d = new List<string>();
@@ -76,7 +76,7 @@ namespace AmitalCloud.Shipment.Domain.Validators
             return ValidationResult.Success;
         }
     }
-    
+
     interface IValidateContext
     {
         bool IsValid(object value, object objectInstance, string propertyName);

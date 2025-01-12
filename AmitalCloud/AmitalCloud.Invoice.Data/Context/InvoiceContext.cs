@@ -23,28 +23,15 @@ namespace AmitalCloud.Invoice.Data.Context
     {
 		private int _tenant;	
 		public int Tenant { get => _tenant;  }
-		private InvoiceContext()
-        {
-            Database.SetInitializer<InvoiceContext>(null);            
-        }
-        private InvoiceContext(DbConnection conn,int tenant)
-            : base(conn,true)
+		private InvoiceContext(string nameOrConnectionString,int tenant) : base(nameOrConnectionString)
         {
             this.Configuration.LazyLoadingEnabled = false;
             this.Configuration.AutoDetectChangesEnabled = false;
             Database.SetInitializer<InvoiceContext>(null);
-			_tenant = tenant;	
+			_tenant = tenant;
         }
+        public static IInvoiceContext GetContext(int tenant) =>new InvoiceContext(GlobalDbHelper.GetGlobalDB(tenant).DBConnection,tenant);
 
-        public static IInvoiceContext GetContext(int tenant)
-        {           
-            GlobalDB currentDb;
-			currentDb = GlobalDbHelper.GetGlobalDB(tenant);
-			string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
-            InvoiceContext context = new InvoiceContext(connection,tenant);
-            return context;
-        }
 		public override AmitalCloudDBSchema AmitalCloudDBSchema
         {
             get { return AmitalCloudDBSchema.LOGITUDE_MAIN; }
