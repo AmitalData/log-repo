@@ -61,7 +61,7 @@ export class NewContainerizationComponent extends BaseComponent {
     declarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
     declarationListQuery: DeclarationListService = new DeclarationListService();
     declarationPMService: DeclarationPMService = new DeclarationPMService();
-    declarationWebService: DeclarationWebService = new DeclarationWebService()   
+    declarationWebService: DeclarationWebService = new DeclarationWebService()
     private selectedValue: string = "All";
     public get SelectedValue() { return this.selectedValue; }
     public set SelectedValue(value: string) {
@@ -97,7 +97,7 @@ export class NewContainerizationComponent extends BaseComponent {
 
     onCheckBoxChecked($event) {
 
-       
+
         this.IsSelected = false;
         if (!this.entityPM.ConnectedDeclarations) {
             this.entityPM.ConnectedDeclarations = "";
@@ -120,7 +120,7 @@ export class NewContainerizationComponent extends BaseComponent {
             }
         }
     }
-    
+
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, public containerizationExtendedListService: ContainerizationExtendedListService) {
         super();
         this.entityPM = new ContainerizationPM();
@@ -142,17 +142,17 @@ export class NewContainerizationComponent extends BaseComponent {
                     }
                     this.BuildColumns();
                     this.isLoad = true;
-                   
-                    this.containerizationExtendedListService.ErrorsList=[TextCodeTranslator.Translate('Customs.Containerization.O.CantContNotSubmit')];
-                   
+
+                    this.containerizationExtendedListService.ErrorsList = [TextCodeTranslator.Translate('Customs.Containerization.O.CantContNotSubmit')];
+
                 });
             });
         });
 
     }
 
-    itemMouseOver(itemValue: string) {        
-        if (this.SelectedValue != itemValue) {           
+    itemMouseOver(itemValue: string) {
+        if (this.SelectedValue != itemValue) {
             var img_A = document.getElementById(this.TransportFilter_A);
             var img_O = document.getElementById(this.TransportFilter_O);
             var img_I = document.getElementById(this.TransportFilter_I);
@@ -218,18 +218,18 @@ export class NewContainerizationComponent extends BaseComponent {
         var filters = new ApiQueryFilters;
         var ExportFilter = new FilterItem("Direction", 'E', null, null, "Equals", false, false, false, "string", false);
         filters.AdditionalFilters.push(ExportFilter);
-        var ProcFilter = new FilterItem("ProcedureCurrentName",TextCodeTranslator.Translate('Customs.Containerization.O.Assembly'), null, null, "Contains", false, false, false, "string", false);
+        var ProcFilter = new FilterItem("ProcedureCurrentName", TextCodeTranslator.Translate('Customs.Containerization.O.Assembly'), null, null, "Contains", false, false, false, "string", false);
         filters.AdditionalFilters.push(ProcFilter);
         filters.addAdditionalFilter("IsContainerization", true, null, null, "Equal", true, false, false, "string");
 
 
-        if(this.entityPM.Id!=null && this.entityPM.ContainerizationStatus!="3"){
-             var connectDec =SessionLocator.SelectedSession.CurrentEditComponent.EntityPM.ConnectedDeclarations;
-             connectDec =connectDec.substring(0, connectDec.length - 1);
+        if (this.entityPM.Id != null && this.entityPM.ContainerizationStatus != "3") {
+            var connectDec = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM.ConnectedDeclarations;
+            connectDec = connectDec.substring(0, connectDec.length - 1);
 
-             if(!AppTool.IsNullOrEmpty(connectDec)) {
-               filters.addAdditionalFilter("Id", connectDec, null, null, "Exclude", false, false, false, "string", false, true);
-             }
+            if (!AppTool.IsNullOrEmpty(connectDec)) {
+                filters.addAdditionalFilter("Id", connectDec, null, null, "Exclude", false, false, false, "string", false, true);
+            }
         }
 
 
@@ -257,7 +257,7 @@ export class NewContainerizationComponent extends BaseComponent {
         myout.then(res => {
 
         });
-       
+
         return myout;
 
     }
@@ -301,7 +301,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ExportFile',
             DataTypeCode: 'String',
-            Display:TextCodeTranslator.Translate('Customs.Containerization.O.ExportFileNum'),
+            Display: TextCodeTranslator.Translate('Customs.Containerization.O.ExportFileNum'),
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -325,7 +325,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'CustomFileNo',
             DataTypeCode: 'String',
-            Display:TextCodeTranslator.Translate('Customs.Containerization.O.CustomFileNo'),
+            Display: TextCodeTranslator.Translate('Customs.Containerization.O.CustomFileNo'),
             Styles: { width: '80px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -346,7 +346,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ManifestNumber',
             DataTypeCode: 'String',
-            Display:TextCodeTranslator.Translate('Customs.Containerization.O.ManifestNumberOne'),
+            Display: TextCodeTranslator.Translate('Customs.Containerization.O.ManifestNumberOne'),
             Styles: { width: '100px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -366,7 +366,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ThirdCargoID',
             DataTypeCode: 'String',
-            Display:TextCodeTranslator.Translate('Customs.Containerization.O.ThirdCargoID') ,
+            Display: TextCodeTranslator.Translate('Customs.Containerization.O.ThirdCargoID'),
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -398,24 +398,24 @@ export class NewContainerizationComponent extends BaseComponent {
         });
 
     }
- 
+
 
     OnAllBtnClicked() {
 
-        this.containerizationExtendedListService.countConnect=0;
-        this.containerizationExtendedListService.IsError=false;
+        this.containerizationExtendedListService.countConnect = 0;
+        this.containerizationExtendedListService.IsError = false;
         this.IsSelected = true;
         this.containerizationExtendedListService.connectedSelectAll = true;
         this.containerizationExtendedListService.SelectedDeclarations = true;
         this.containerizationExtendedListService.ConnectedDeclarations = this.containerizationExtendedListService.AllDeclarations + this.entityPM.ConnectedDeclarations;
-        if(this.containerizationExtendedListService.ConnectedDeclarations=="undefined"||  AppTool.IsNullOrEmpty( this.containerizationExtendedListService.ConnectedDeclarations)){
-            
-            this.containerizationExtendedListService.ErrorsList=[TextCodeTranslator.Translate('Customs.Containerization.O.NotFoundDecCont')];
-            this.containerizationExtendedListService.IsError=true;
+        if (this.containerizationExtendedListService.ConnectedDeclarations == "undefined" || AppTool.IsNullOrEmpty(this.containerizationExtendedListService.ConnectedDeclarations)) {
+
+            this.containerizationExtendedListService.ErrorsList = [TextCodeTranslator.Translate('Customs.Containerization.O.NotFoundDecCont')];
+            this.containerizationExtendedListService.IsError = true;
             this.containerizationExtendedListService.SelectedDeclarations = false;
         }
         this.LoadConnectedItems();
-      
+
     }
 
     filterAgrs: ApiQueryFilters;
@@ -424,8 +424,8 @@ export class NewContainerizationComponent extends BaseComponent {
     }
 
     OnNoneBtnClicked() {
-        this.containerizationExtendedListService.countConnect=0;
-        this.containerizationExtendedListService.IsError=false;
+        this.containerizationExtendedListService.countConnect = 0;
+        this.containerizationExtendedListService.IsError = false;
         this.IsSelected = false;
         this.containerizationExtendedListService.connectedSelectAll = false;
         this.entityPM.ConnectedDeclarations = "";
@@ -436,10 +436,10 @@ export class NewContainerizationComponent extends BaseComponent {
     }
 
     itemClicked(itemValue: string) {
-        this.containerizationExtendedListService.countConnect=0;          
+        this.containerizationExtendedListService.countConnect = 0;
         if (this.SelectedValue != itemValue) {
             this.SelectedValue = itemValue;
-            this.OnNoneBtnClicked(); 
+            this.OnNoneBtnClicked();
         }
 
 
@@ -479,7 +479,7 @@ export class NewContainerizationComponent extends BaseComponent {
     }
 
 
- 
+
 
     SendButtonClicked() {
         var containerizationNumberList = "";
@@ -506,8 +506,8 @@ export class NewContainerizationComponent extends BaseComponent {
                 else {
 
 
-                     var ConnectedDeclarations =""  ;
-                    res.Result.forEach(a=>ConnectedDeclarations+=(a+","));
+                    var ConnectedDeclarations = "";
+                    res.Result.forEach(a => ConnectedDeclarations += (a + ","));
                     this.entityPM.ConnectedDeclarations += ConnectedDeclarations;
                     this.entityPM.OperationMode = "2";
                     this.entityPM.IsChange = true;
@@ -522,103 +522,103 @@ export class NewContainerizationComponent extends BaseComponent {
 
         }
         else {
-             
-
-                var windowArgs: any = {};
-
-                var logitudeWindow = new LogitudeWindow();
-                logitudeWindow.Height = 200;
-                logitudeWindow.Width = 250;
-                logitudeWindow.ShowCloseButton = true;
-                logitudeWindow.Title = TextCodeTranslator.Translate('Customs.Containerization.O.AgentStatement');
 
 
-                logitudeWindow.WindowArgs = windowArgs;
-                logitudeWindow.ComponentLoaded.subscribe(comp => {
-                    logitudeWindow.WindowClosed.subscribe((event: any) => {
-                        if (event != null) {
-                            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-                            if (event == "true") {
-                                this.entityPM.AgentDeclaration = true;
-                            } else {
-                                this.entityPM.AgentDeclaration = false;
+            var windowArgs: any = {};
+
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Height = 200;
+            logitudeWindow.Width = 250;
+            logitudeWindow.ShowCloseButton = true;
+            logitudeWindow.Title = TextCodeTranslator.Translate('Customs.Containerization.O.AgentStatement');
+
+
+            logitudeWindow.WindowArgs = windowArgs;
+            logitudeWindow.ComponentLoaded.subscribe(comp => {
+                logitudeWindow.WindowClosed.subscribe((event: any) => {
+                    if (event != null) {
+                        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+                        if (event == "true") {
+                            this.entityPM.AgentDeclaration = true;
+                        } else {
+                            this.entityPM.AgentDeclaration = false;
+                        }
+                        this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
+                        this.containerizationExtendedListService.CreateContainerizations(this.entityPM).subscribe((response: ServiceResponse) => {
+
+
+
+                            if (response.Result.list[0].Id == "1") {
+                                SessionLocator.SelectedSession.StopBusyIndicator();
+                                myConfirmWindow.Title = TextCodeTranslator.Translate('Customs.Containerization.O.ContUpdateCancel');
+                                myConfirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                                myConfirmWindow.ShowNoButton = false;
+                                myConfirmWindow.Show(TextCodeTranslator.Translate('Customs.Containerization.O.ContWith') + `: ` + this.entityPM.ExistInCustoms + TextCodeTranslator.Translate('Customs.Containerization.O.ExistsInCustoms'));
+
                             }
-                            this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
-                            this.containerizationExtendedListService.CreateContainerizations(this.entityPM).subscribe((response: ServiceResponse) => {
+                            else if (response.Result.list[0].Id == "0") {
+                                SessionLocator.SelectedSession.StopBusyIndicator();
+                                myConfirmWindow.Title = TextCodeTranslator.Translate('Customs.Containerization.O.ContUpdateCancel');
+                                myConfirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                                myConfirmWindow.ShowNoButton = false;
+                                myConfirmWindow.Show(TextCodeTranslator.Translate('Customs.Containerization.O.UpdateOnlyOne'));
+                            }
+                            else {
+                                let confirmWindow = new ConfirmWindow();
+                                confirmWindow.Title = TextCodeTranslator.Translate('Customs.Containerization.O.ContainersFormed');
+                                confirmWindow.Width = 350;
+                                confirmWindow.Height = 200;
+                                confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                                confirmWindow.ShowNoButton = false;
+                                SessionLocator.SelectedSession.StopBusyIndicator();
 
+                                if (response.Result.list.length == 1) {
 
+                                    var ContainerizationNumber = response.Result.list[0].ContainerizationNumber;
+                                    var msg = 'נוצרה סה"כ ' + response.Result.list.length + " המכלה: " + ContainerizationNumber;
 
-                                if (response.Result.list[0].Id == "1") {
-                                    SessionLocator.SelectedSession.StopBusyIndicator();
-                                    myConfirmWindow.Title = TextCodeTranslator.Translate('Customs.Containerization.O.ContUpdateCancel');
-                                    myConfirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                                    myConfirmWindow.ShowNoButton = false;                             
-                                    myConfirmWindow.Show(TextCodeTranslator.Translate('Customs.Containerization.O.ContWith')+`: ` + this.entityPM.ExistInCustoms + TextCodeTranslator.Translate('Customs.Containerization.O.ExistsInCustoms'));
-                                     
-                                }
-                                else if (response.Result.list[0].Id == "0") {
-                                        SessionLocator.SelectedSession.StopBusyIndicator();
-                                        myConfirmWindow.Title = TextCodeTranslator.Translate('Customs.Containerization.O.ContUpdateCancel');
-                                        myConfirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                                        myConfirmWindow.ShowNoButton = false;  
-                                        myConfirmWindow.Show(TextCodeTranslator.Translate('Customs.Containerization.O.UpdateOnlyOne'));
+                                    confirmWindow.Show(msg);
+
+                                    confirmWindow.WindowClosed.subscribe((event: any) => {
+                                        if (confirmWindow.Yes == true) {
+                                            this.CurrentSession.CurrentWindow.Close("0");
+                                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+                                                .then(cmpRef => {
+                                                    cmpRef.instance.ComponentRef = cmpRef;
+                                                    cmpRef.instance.Run({
+
+                                                        EntityId: response.Result.list[0].Id,
+                                                        ObjectTableName: "Customs.Containerization"
+                                                    });
+                                                });
+                                        }
+                                    });
                                 }
                                 else {
-                                        let confirmWindow = new ConfirmWindow();
-                                        confirmWindow.Title = TextCodeTranslator.Translate('Customs.Containerization.O.ContainersFormed');
-                                        confirmWindow.Width = 350;
-                                        confirmWindow.Height = 200;
-                                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                                        confirmWindow.ShowNoButton = false;
-                                        SessionLocator.SelectedSession.StopBusyIndicator();
+                                    response.Result.list.forEach(element => {
+                                        containerizationNumberList += (element.ContainerizationNumber + ",");
+                                        containerizationIdList += (element.Id + ",")
+                                    });
+                                    containerizationNumberList = containerizationNumberList.substring(0, containerizationNumberList.length - 1);
+                                    containerizationIdList = containerizationIdList.substring(0, containerizationIdList.length - 1);
+                                    var msg = 'נוצרו סה"כ ' + response.Result.list.length + " המכלות: " + containerizationNumberList;
 
-                                        if (response.Result.list.length == 1) {
+                                    confirmWindow.Show(msg);
 
-                                            var ContainerizationNumber = response.Result.list[0].ContainerizationNumber;
-                                            var msg = 'נוצרה סה"כ ' + response.Result.list.length + " המכלה: " + ContainerizationNumber;
-
-                                            confirmWindow.Show(msg);
-
-                                            confirmWindow.WindowClosed.subscribe((event: any) => {
-                                                if (confirmWindow.Yes == true) {
-                                                    this.CurrentSession.CurrentWindow.Close("0");
-                                                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
-                                                        .then(cmpRef => {
-                                                            cmpRef.instance.ComponentRef = cmpRef;
-                                                            cmpRef.instance.Run({
-
-                                                                EntityId: response.Result.list[0].Id,
-                                                                ObjectTableName: "Customs.Containerization"
-                                                            });
-                                                        });
-                                                }
-                                            });
+                                    confirmWindow.WindowClosed.subscribe((event: any) => {
+                                        if (confirmWindow.Yes == true) {
+                                            this.CurrentSession.CurrentWindow.Close(containerizationIdList);
                                         }
-                                        else {
-                                            response.Result.list.forEach(element => {
-                                                containerizationNumberList += (element.ContainerizationNumber + ",");
-                                                containerizationIdList += (element.Id + ",")
-                                            });
-                                            containerizationNumberList = containerizationNumberList.substring(0, containerizationNumberList.length - 1);
-                                            containerizationIdList = containerizationIdList.substring(0, containerizationIdList.length - 1);
-                                            var msg = 'נוצרו סה"כ ' + response.Result.list.length + " המכלות: " + containerizationNumberList;
+                                    });
 
-                                            confirmWindow.Show(msg);
+                                }
+                            }
 
-                                            confirmWindow.WindowClosed.subscribe((event: any) => {
-                                                if (confirmWindow.Yes == true) {
-                                                    this.CurrentSession.CurrentWindow.Close(containerizationIdList);
-                                                }
-                                            });
-
-                                        }
-                                    }
-
-                            });
-                        }
-                    });
+                        });
+                    }
                 });
-                logitudeWindow.Show('./CustomsModules/CustomsContainerization/Components/Other/AgentStatementContainerization');
+            });
+            logitudeWindow.Show('./CustomsModules/CustomsContainerization/Components/Other/AgentStatementContainerization');
 
         }
     }
@@ -638,9 +638,9 @@ export class NewContainerizationComponent extends BaseComponent {
         return params
     }
     private timerToken: any;
-    TextChanged(searchtext: any) {    
-        this.containerizationExtendedListService.countConnect=0;   
-        this.OnNoneBtnClicked(); 
+    TextChanged(searchtext: any) {
+        this.containerizationExtendedListService.countConnect = 0;
+        this.OnNoneBtnClicked();
         if (searchtext != null || searchtext != undefined) {
 
             this.timerToken = setTimeout(() => {
@@ -653,10 +653,10 @@ export class NewContainerizationComponent extends BaseComponent {
             this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
         }
     }
-    OnValueChange(searchValue: any) {        
-        this.containerizationExtendedListService.countConnect=0;
+    OnValueChange(searchValue: any) {
+        this.containerizationExtendedListService.countConnect = 0;
 
-            this.OnNoneBtnClicked()
+        this.OnNoneBtnClicked()
 
 
     }
@@ -672,11 +672,11 @@ export class NewContainerizationComponent extends BaseComponent {
                 this.declarationPM = windowArgs.EntityPM;
                 this.ExportFile = this.declarationPM.ExportFile;
 
-                this.selectedValue=this.declarationPM.TransportModeId;
-             if(this.declarationPM.IsSubmitDeclaration) {
-                this.containerizationExtendedListService.ConnectedDeclarations = this.declarationPM.Id + ",";
-                this.containerizationExtendedListService.SelectedDeclarations = true;
-             }
+                this.selectedValue = this.declarationPM.TransportModeId;
+                if (this.declarationPM.IsSubmitDeclaration) {
+                    this.containerizationExtendedListService.ConnectedDeclarations = this.declarationPM.Id + ",";
+                    this.containerizationExtendedListService.SelectedDeclarations = true;
+                }
             } else {
 
                 this.entityPM = windowArgs.EntityPM;

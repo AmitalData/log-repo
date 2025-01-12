@@ -64,16 +64,16 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
         SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         this.EntityResourceService.getEntityResourceByTableName("Customs.Containerization").subscribe((response: any) => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe((response: any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
-                this.EntityPM = this.entityArgs.EntityPM;
-                this.ObjectTableName = this.entityArgs.ObjectTableName;
-                this.Listen();
-                this.SetFieldsEditability();
-                this.containerizationExtendedListService = new ContainerizationExtendedListService();
-                this.setYellowMessage();
-                this.getRows();
+                this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
+                    this.EntityPM = this.entityArgs.EntityPM;
+                    this.ObjectTableName = this.entityArgs.ObjectTableName;
+                    this.Listen();
+                    this.SetFieldsEditability();
+                    this.containerizationExtendedListService = new ContainerizationExtendedListService();
+                    this.setYellowMessage();
+                    this.getRows();
+                });
             });
-        });
         });
 
     }
@@ -114,11 +114,11 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
         //filters.SortDirection = sortingDir;
         //Customs.Declaration.F.ExportContainerizationID
 
-        
+
         filters.addAdditionalFilter("Direction", 'E', null, null, "Equals", false, false, false, "string", false);
         filters.addAdditionalFilter("IsConsOfDecEquelsCont", this.EntityPM.Id, null, null, "Contains", true, false, false, "string");
-        filters.addAdditionalFilter("KeyCargo1", this.EntityPM.CargoTypeCode,this.EntityPM.ManifestNumber , null, "Contains", true, false, false, "string");
-        filters.addAdditionalFilter("KeyCargo2", this.EntityPM.SecondCargoID, this.EntityPM.ThirdCargoID,null, "Contains", true, false, false, "string");
+        filters.addAdditionalFilter("KeyCargo1", this.EntityPM.CargoTypeCode, this.EntityPM.ManifestNumber, null, "Contains", true, false, false, "string");
+        filters.addAdditionalFilter("KeyCargo2", this.EntityPM.SecondCargoID, this.EntityPM.ThirdCargoID, null, "Contains", true, false, false, "string");
 
 
         return this.containerizationExtendedListService.getByFilters(filters)
@@ -136,7 +136,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
                 this.EntityPM.DisableMarkAsDirty = false;
                 SessionLocator.SelectedSession.StopBusyIndicator();
             });
-       
+
     }
 
     getRowsWithNewAddedDeclarations() {
@@ -146,8 +146,8 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
         filters.GetAll = false;
         filters.GetCount = true;
         filters.addAdditionalFilter("Id", this.EntityPM.ConnectedDeclarations, null, null, "InListExact", false, false, false, "string", this.EntityPM.ConnectedDeclarations.length == 0);
-        filters.addAdditionalFilter("KeyCargo1", this.EntityPM.CargoTypeCode,this.EntityPM.ManifestNumber , null, "Contains", true, false, false, "string");
-        filters.addAdditionalFilter("KeyCargo2", this.EntityPM.SecondCargoID, this.EntityPM.ThirdCargoID,null, "Contains", true, false, false, "string");
+        filters.addAdditionalFilter("KeyCargo1", this.EntityPM.CargoTypeCode, this.EntityPM.ManifestNumber, null, "Contains", true, false, false, "string");
+        filters.addAdditionalFilter("KeyCargo2", this.EntityPM.SecondCargoID, this.EntityPM.ThirdCargoID, null, "Contains", true, false, false, "string");
 
         return this.containerizationExtendedListService.getByFilters(filters)
             .subscribe(r => {
@@ -239,10 +239,10 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
     }
 
     setYellowMessage() {
-        
+
         if (this.EntityPM.IsChange) {
 
-                this.YellowMessage = TextCodeTranslator.Translate("Customs.Containerization.O.ContainerizationChanged");
+            this.YellowMessage = TextCodeTranslator.Translate("Customs.Containerization.O.ContainerizationChanged");
 
         }
         else
@@ -262,24 +262,24 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
 
     ///#region Properties
     DeleteButtonClicked(item) {
-        if(this.EntityPM.ConnectedDeclarations?.split(',')?.length-1 > 1) {
-           if (AppTool.IsNullOrEmpty(this.EntityPM.NotConnectedDeclarations)) {
-               this.EntityPM.NotConnectedDeclarations = item.Id;
-           } else {
-               this.EntityPM.NotConnectedDeclarations += "," + item.Id;
-           }
-           if (this.EntityPM.ConnectedDeclarations.includes(item.Id)) {
-               this.EntityPM.ConnectedDeclarations = this.EntityPM.ConnectedDeclarations.replace(item.Id + ",", "");
-           }
-           this.EntityPM.IsChange = true;
-           this.ContainerizationDeclarationList.Remove(item);
-           this.getRowNumbers();
+        if (this.EntityPM.ConnectedDeclarations?.split(',')?.length - 1 > 1) {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.NotConnectedDeclarations)) {
+                this.EntityPM.NotConnectedDeclarations = item.Id;
+            } else {
+                this.EntityPM.NotConnectedDeclarations += "," + item.Id;
+            }
+            if (this.EntityPM.ConnectedDeclarations.includes(item.Id)) {
+                this.EntityPM.ConnectedDeclarations = this.EntityPM.ConnectedDeclarations.replace(item.Id + ",", "");
+            }
+            this.EntityPM.IsChange = true;
+            this.ContainerizationDeclarationList.Remove(item);
+            this.getRowNumbers();
         }
         else {
             const myConfirmWindow = new ConfirmWindow();
             myConfirmWindow.Title = TextCodeTranslator.Translate("Customs.Containerization.O.CancelDecInCon");
             myConfirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            myConfirmWindow.ShowNoButton = false;  
+            myConfirmWindow.ShowNoButton = false;
             myConfirmWindow.Width = 400;
             myConfirmWindow.Show(TextCodeTranslator.Translate("Customs.Containerization.O.DeleteLastDecInCon"));
         }
