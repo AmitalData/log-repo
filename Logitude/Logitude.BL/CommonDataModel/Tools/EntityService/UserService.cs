@@ -126,7 +126,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             foreach (UserFreelancerGroupPM itemPM in entityPM.FreelancerGroups)
             {
-                this.CreateUserFreelancerGroup(itemPM, entityPM);
+                if (itemPM != null)
+                {
+                    this.CreateUserFreelancerGroup(itemPM, entityPM);
+                }
             }
 
             ContactQuery contactQuery = new ContactQuery(contactRepository);
