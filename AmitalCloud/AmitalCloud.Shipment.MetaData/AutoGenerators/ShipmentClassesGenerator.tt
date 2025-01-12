@@ -92,10 +92,10 @@ GenerateAllControllers("../EntityFiles","../../AmitalCloud.Shipment.Web","Amital
  
 
 // Generate Commmon TS files---------------------------------------------------------------------------------------------------------------
-GenerateAllPMTS("../EntityFiles","../../AngularModules/AngularModules/Shipments/EntityPMs");
-GenerateAllListTS("../EntityFiles","../../AngularModules/AngularModules/Shipments/EntityLists");
-GenerateAllServices("../EntityFiles","../../AngularModules/AngularModules/Shipments/Services/StandardPMs","Shipments");
-GenerateAllListServices("../EntityFiles","../../AngularModules/AngularModules/Shipments/Services/StandardLists","Shipments");
+GenerateAllPMTS("../EntityFiles","../../../Logitude/AngularModules/AngularModules/Shipments/EntityPMs");
+GenerateAllListTS("../EntityFiles","../../../Logitude/AngularModules/AngularModules/Shipments/EntityLists");
+GenerateAllServices("../EntityFiles","../../../Logitude/AngularModules/AngularModules/Shipments/Services/StandardPMs","Shipments");
+GenerateAllListServices("../EntityFiles","../../../Logitude/AngularModules/AngularModules/Shipments/Services/StandardLists","Shipments");
 
 
 

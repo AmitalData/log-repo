@@ -1,9 +1,8 @@
 ﻿using AmitalCloud.Infrastructure.Data.Azure;
+using AmitalCloud.Infrastructure.Domain.Helpers;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Helpers;
 using System;
 using System.ServiceModel;
-using AmitalCloud.Infrastructure.Domain.Helpers;
 
 namespace AmitalCloud.Infrastructure.Data.Services
 {
@@ -32,7 +31,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
 
         public void Write(byte[] data, BlobFileInfo fileInfo)
         {
-         
+
             string filepath = fileInfo.ContainerName + "/" + StorageAcountDetails.GetBlobNameByLocation(fileInfo.FileName + "." + fileInfo.Extension.ToLower(), fileInfo.FolderName);
             var blobService = GetService();
             var response = blobService.Write(data, filepath);

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
-    public  class FailedLoginLog
+    public class FailedLoginLog
     {
         [Key]
         public string Id { get; set; }
@@ -13,7 +13,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         public DateTime? GMTDateTime { get; set; }
         public string UserAgent { get; set; }
         public string Reason { get; set; }
-        
+
 
     }
 }

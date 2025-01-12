@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AmitalCloud.Infrastructure.Domain.DataContracts
+﻿namespace AmitalCloud.Infrastructure.Domain.DataContracts
 {
     public class ApiQueryFilters
     {
-         
+
         public int PageSize { get; set; }
         public int PageIndex { get; set; }
         public string SortBy { get; set; }
@@ -65,7 +59,7 @@ namespace AmitalCloud.Infrastructure.Domain.DataContracts
         public string ParentObjectTableName { get; set; }
 
         public bool DontApplyVirtualization { get; set; }
-        
+
         public bool GetAll { get; set; }
         public string ParentEntity { get; set; }
 

@@ -9,7 +9,7 @@ namespace AmitalCloud.Infrastructure.Data.Azure
         private TableEntity communicationLogsAzures;
         public CloudTable ErrorLogtable;
 
-        public CommunicationLogsAzureContext() 
+        public CommunicationLogsAzureContext()
         {
             ErrorLogtable = StorageAcountDetails.TableClient.GetTableReference(TableName);
             ErrorLogtable.CreateIfNotExists();

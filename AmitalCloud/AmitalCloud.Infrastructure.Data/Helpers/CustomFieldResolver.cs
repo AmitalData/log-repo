@@ -1,14 +1,12 @@
 using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Data.Helpers.CustomFieldsResolver;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
@@ -24,7 +22,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         public CustomFieldResolver(int tenant)
         {
             IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
-            customPickLists = new Repository<CustomPickList>(context).GetMulti(a=> a.Tenant==tenant).ToList();
+            customPickLists = new Repository<CustomPickList>(context).GetMulti(a => a.Tenant == tenant).ToList();
             LookUpFieldsDataStorage = new List<LookUpFieldDataStorage>();
         }
         public void SetFieldValue(CustomFieldResolverArgs customFieldResolverArgs)
@@ -40,7 +38,8 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 
         public void SetDataProviderCustomFieldsValues(string objectTableName, int tenant, Object entity, Object provider, string propertyIdientifier = null)
         {
-            CustomFieldMultiSetter.SetDataProviderCustomFieldsValues(new CustomFieldDataProviderSetterValueArgs { 
+            CustomFieldMultiSetter.SetDataProviderCustomFieldsValues(new CustomFieldDataProviderSetterValueArgs
+            {
                 objectTableName = objectTableName,
                 tenant = tenant,
                 entity = entity,
@@ -51,7 +50,8 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 
         public string GetFieldValue(object entity, ObjectField objectField, int tenant, bool externalAPICall = false)
         {
-            return CustomFieldGetter.Get(new CustomFieldGetterArgs { 
+            return CustomFieldGetter.Get(new CustomFieldGetterArgs
+            {
                 entity = entity,
                 objectField = objectField,
                 tenant = tenant,

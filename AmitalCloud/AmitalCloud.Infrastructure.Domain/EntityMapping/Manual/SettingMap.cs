@@ -1,10 +1,5 @@
 ﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 {
@@ -78,11 +73,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             this.Property(t => t.DNSZone).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.DNSIPAddress).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.AzurePrincipalSecretKey).HasMaxLength(1000).IsUnicode(false);
-			this.Property(t => t.WindWardSettings).HasMaxLength(1000).IsUnicode(false);
-			this.Property(t => t.LogitudeIISURL).HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.WindWardSettings).HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.LogitudeIISURL).HasMaxLength(1000).IsUnicode(false);
 
-			// Table & Column Mappings
-			this.ToTable("Settings");
+            // Table & Column Mappings
+            this.ToTable("Settings");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.LogitudeURL).HasColumnName("LogitudeURL");
             this.Property(t => t.ChampURL).HasColumnName("ChampURL");
@@ -141,7 +136,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             this.Property(t => t.DNSZone).HasColumnName("DNSZone");
             this.Property(t => t.DNSIPAddress).HasColumnName("DNSIPAddress");
             this.Property(t => t.AzurePrincipalSecretKey).HasColumnName("AzurePrincipalSecretKey");
-            
+
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
@@ -170,9 +165,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             this.Property(t => t.EmailSendingQuota).HasColumnName("EmailSendingQuota");
             this.Property(t => t.ReleaseNotesURL).HasColumnName("ReleaseNotesURL");
             this.Property(t => t.TMPersonalAccessToken).HasColumnName("TMPersonalAccessToken");
-			this.Property(t => t.WindWardSettings).HasColumnName("WindWardSettings");
-			this.Property(t => t.LogitudeIISURL).HasColumnName("LogitudeIISURL");
+            this.Property(t => t.WindWardSettings).HasColumnName("WindWardSettings");
+            this.Property(t => t.LogitudeIISURL).HasColumnName("LogitudeIISURL");
 
-		}
-	}
+        }
+    }
 }

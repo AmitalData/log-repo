@@ -1,10 +1,5 @@
 ﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 {
@@ -14,14 +9,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
         {
             // Primary Key
             this.HasKey(t => t.DeviceId);
-         //   this.HasKey(t => new { t.Email, t.DeviceId });
+            //   this.HasKey(t => new { t.Email, t.DeviceId });
 
             // Properties
             this.Property(t => t.Email)
                 .IsRequired()
-                .HasMaxLength(70)  
+                .HasMaxLength(70)
                  .IsUnicode(false);
-           
+
 
             this.Property(t => t.DeviceId)
                    .IsRequired()
@@ -32,7 +27,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
                    .IsRequired()
                 .HasMaxLength(50)
                  .IsUnicode(false);
-             
+
 
 
             // Properties
@@ -43,7 +38,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
 
             this.Property(t => t.Devicetype)
-                
+
                 .HasMaxLength(200)
                  .IsUnicode(false);
 
@@ -56,8 +51,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             this.Property(t => t.AppVersion)
               .HasMaxLength(10)
                .IsUnicode(false);
-            
-             
+
+
 
             this.Property(t => t.CreateDate)
                  .IsRequired();
@@ -77,7 +72,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
             this.Property(t => t.Version).HasColumnName("Version");
             this.Property(t => t.IsSignOut).HasColumnName("IsSignOut");
-      
+
 
         }
 

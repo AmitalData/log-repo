@@ -1,10 +1,7 @@
 using System.Data.Entity;
 namespace AmitalCloud.Infrastructure.Data.Migrations
 {
-    using System;
-    
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
     internal sealed class MigrationConfiguration<TContext> : DbMigrationsConfiguration<TContext> where TContext : DbContext
     {

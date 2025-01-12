@@ -1,6 +1,5 @@
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.ModelConfiguration;
 using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
 
 namespace AmitalCloud.Shipment.Domain.EntityMapping
 {
@@ -59,10 +58,10 @@ namespace AmitalCloud.Shipment.Domain.EntityMapping
             this.Property(t => t.TimeOfArrivalInfo)
                      .HasMaxLength(1)
                      .IsUnicode(false);
-               
+
 
             this.Property(t => t.AirlineName)
-         
+
           .HasMaxLength(60)
           .IsUnicode(false);
 

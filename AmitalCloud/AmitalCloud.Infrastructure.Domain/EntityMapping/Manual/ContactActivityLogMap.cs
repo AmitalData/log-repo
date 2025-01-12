@@ -1,5 +1,5 @@
-﻿using System.Data.Entity.ModelConfiguration;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 {
@@ -40,10 +40,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
                .HasMaxLength(2)
                .IsUnicode(false);
 
-              this.Property(t => t.Via)
-               .HasMaxLength(20)
-               .IsUnicode(false);
-           
+            this.Property(t => t.Via)
+             .HasMaxLength(20)
+             .IsUnicode(false);
+
             this.ToTable("ContactActivityLogs");
 
             this.Property(t => t.Id).HasColumnName("Id");
@@ -55,7 +55,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             this.Property(t => t.IsSharedLogisticsContact).HasColumnName("IsSharedLogisticsContact");
             this.Property(t => t.CardId).HasColumnName("CardId");
             this.Property(t => t.PartnerTypeId).HasColumnName("PartnerTypeId");
-            this.Property(t => t.Via).HasColumnName("Via"); 
+            this.Property(t => t.Via).HasColumnName("Via");
         }
     }
 }

@@ -1,21 +1,18 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Data.Services
 {
     public static class QueueThreadStateService
     {
 
-        private static readonly ConcurrentDictionary<string, string> _ConcurrentQueueState ;
+        private static readonly ConcurrentDictionary<string, string> _ConcurrentQueueState;
         static QueueThreadStateService()
         {
-            _ConcurrentQueueState= new ConcurrentDictionary<string, string>();
+            _ConcurrentQueueState = new ConcurrentDictionary<string, string>();
         }
 
         public static string GetWRKey(string thisGetTypeName)
@@ -39,13 +36,13 @@ namespace AmitalCloud.Infrastructure.Data.Services
             }
 
         }
-        public static void Upsert(string queueThreadCode ,string queueThreadState)
+        public static void Upsert(string queueThreadCode, string queueThreadState)
         {
             try
             {
                 var state = $"StartAt-{DateTime.Now.ToString("T")}-S:{queueThreadState}";
                 _ConcurrentQueueState.AddOrUpdate(queueThreadCode, state
-                     , 
+                     ,
                     (keyToUpdate, existingValue) =>
                     {
                         return state;
@@ -61,11 +58,11 @@ namespace AmitalCloud.Infrastructure.Data.Services
         }
         public static string GetState()
         {
-            var sb= new StringBuilder();
+            var sb = new StringBuilder();
             try
             {
                 var keys = _ConcurrentQueueState.Keys.ToList().OrderBy(k => k);
-                
+
                 foreach (var key in keys)
                 {
                     var value = _ConcurrentQueueState[key];
@@ -88,7 +85,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
     public class QueueThreadKey
     {
 
-        public QueueThreadKey(string workerClass, string currentThreadName) 
+        public QueueThreadKey(string workerClass, string currentThreadName)
         {
 
             WorkerClass = workerClass;

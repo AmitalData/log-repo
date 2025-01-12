@@ -1,6 +1,5 @@
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.ModelConfiguration;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 {
@@ -49,16 +48,16 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-          if (dbms == "oracle")
-          {
-              this.Property(t => t.Size).HasColumnName("Size_");
-          }
-          //#else
-          else
-          {
-              this.Property(t => t.Size).HasColumnName("Size");
-          }
-//#endif
+            if (dbms == "oracle")
+            {
+                this.Property(t => t.Size).HasColumnName("Size_");
+            }
+            //#else
+            else
+            {
+                this.Property(t => t.Size).HasColumnName("Size");
+            }
+            //#endif
             // Relationships
             //this.HasRequired(t => t.ObjectTable)
             //    .WithMany(t => t.TenantSettings)

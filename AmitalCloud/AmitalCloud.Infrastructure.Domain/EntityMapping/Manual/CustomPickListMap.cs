@@ -1,6 +1,5 @@
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.ModelConfiguration;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 {
@@ -29,8 +28,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.IsMultipleChoice)
                 .IsRequired();
-             
-            
+
+
 
             // Table & Column Mappings
             this.ToTable("CustomPickLists");

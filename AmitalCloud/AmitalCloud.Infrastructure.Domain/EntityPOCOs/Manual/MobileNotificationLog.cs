@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
- public   class MobileNotificationLog
+    public class MobileNotificationLog
     {
 
 
@@ -26,7 +22,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         public int Tenant { get; set; }
         public DateTime CreateDate { get; set; }
         public bool IsException { get; set; }
-     
+
         public bool IsRead { get; set; }
         public bool IsDelete { get; set; }
         public string NotificationMessageIOS { get; set; }

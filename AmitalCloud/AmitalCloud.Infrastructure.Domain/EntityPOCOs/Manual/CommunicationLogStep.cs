@@ -1,11 +1,8 @@
 ﻿using AmitalCloud.Infrastructure.Domain.Helpers;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
@@ -26,8 +23,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         public DateTime EndDate { get; set; }
 
         public string DocumentId { get; set; }
-        
-        
+
+
 
 
         [ForeignKey("CommunicationLogId")]
@@ -48,13 +45,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
             {
                 return communicationLogStep.Log;
             }
-            var decompress=InjectionUtil.Instance.DeCompressText(communicationLogStep.Log);
+            var decompress = InjectionUtil.Instance.DeCompressText(communicationLogStep.Log);
             return decompress;
         }
 
-        public static string SetASCompressLog(this CommunicationLogStep communicationLogStep,string txt)
+        public static string SetASCompressLog(this CommunicationLogStep communicationLogStep, string txt)
         {
-            
+
             var compressText = InjectionUtil.Instance.CompressText(txt);
             communicationLogStep.Log = compressText;
             communicationLogStep.IsLogCompress = true;

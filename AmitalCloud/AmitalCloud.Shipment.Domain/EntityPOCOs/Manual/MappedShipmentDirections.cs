@@ -1,15 +1,15 @@
-﻿using System;
+﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityPOCOs
 {
     public class MappedShipmentDirections
     {
-        [Key] 
+        [Key]
         [Column("Tenant", Order = 1)]
-        public int Tenant { get; set; } 
+        public int Tenant { get; set; }
 
         [Key]
         [ForeignKey("Direction")]

@@ -1,7 +1,7 @@
 using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Data.Validators;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -258,7 +258,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             {
                 month = "0" + date.Month.ToString();
             }
-            else 
+            else
             {
                 month = date.Month.ToString();
             }
@@ -267,8 +267,8 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             {
                 day = "0" + date.Day.ToString();
             }
-            else 
-            { 
+            else
+            {
                 day = date.Day.ToString();
             }
 
@@ -276,7 +276,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             {
                 hour = "0" + date.Hour.ToString();
             }
-            else 
+            else
             {
                 hour = date.Hour.ToString();
             }
@@ -285,16 +285,16 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             {
                 minuit = "0" + date.Minute.ToString();
             }
-            else 
+            else
             {
-                minuit = date.Minute.ToString(); 
+                minuit = date.Minute.ToString();
             }
 
             if (date.Second < 10)
             {
                 second = "0" + date.Second.ToString();
             }
-            else 
+            else
             {
                 second = date.Second.ToString();
             }
@@ -303,7 +303,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         }
 
         #endregion
-        
+
         #region ConvertToDate
 
         public static DateTime? ConvertToDate(string s)
@@ -557,7 +557,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                     if (codeValue != null)
                     {
                         IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
-                        CustomPickList picklist = new Repository<CustomPickList>(context).GetMulti(a=>a.Code== objectField.CustomPickListCode && a.Value== codeValue && a.Tenant==tenant).FirstOrDefault();
+                        CustomPickList picklist = new Repository<CustomPickList>(context).GetMulti(a => a.Code == objectField.CustomPickListCode && a.Value == codeValue && a.Tenant == tenant).FirstOrDefault();
                         if (picklist != null)
                         {
                             resultValue = picklist.Id;

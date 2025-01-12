@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
+﻿using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using System.ComponentModel.DataAnnotations;
-using System.ServiceModel.DomainServices.Server;
-using AmitalCloud.Infrastructure.Domain.BaseClasses;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 {

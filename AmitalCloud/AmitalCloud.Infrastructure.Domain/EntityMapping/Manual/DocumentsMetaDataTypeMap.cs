@@ -1,10 +1,5 @@
 ﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 {
@@ -21,7 +16,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
-            
+
             this.Property(t => t.Code)
                 .IsRequired()
                 .HasMaxLength(5)

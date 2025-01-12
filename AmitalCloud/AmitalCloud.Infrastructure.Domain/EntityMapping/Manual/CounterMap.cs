@@ -1,6 +1,5 @@
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.ModelConfiguration;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 {
@@ -33,7 +32,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
                 .IsUnicode(false);
 
             this.Property(t => t.ChangedByUserId)
-              
+
               .HasMaxLength(15)
               .IsUnicode(false);
 

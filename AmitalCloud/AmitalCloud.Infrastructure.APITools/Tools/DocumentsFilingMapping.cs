@@ -1,15 +1,10 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Domain.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using System;
-using System.Collections.Generic;
+using AmitalCloud.Infrastructure.Domain.Helpers;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.APITools.DataMapping
 {

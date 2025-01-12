@@ -1,7 +1,7 @@
-﻿using System;
+﻿using AmitalCloud.Infrastructure.Domain.Interfaces;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 {

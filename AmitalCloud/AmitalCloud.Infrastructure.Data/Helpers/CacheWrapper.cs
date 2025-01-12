@@ -1,15 +1,12 @@
 ﻿using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Transactions;
-using System.Web;
 using System.Web.Caching;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {
-    public class CacheWrapper:ICacheWrapper
+    public class CacheWrapper : ICacheWrapper
     {
 
         Cache cache;
@@ -21,7 +18,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         {
             get { return cache.Count; }
         }
-         
+
         public long EffectivePercentagePhysicalMemoryLimit
         {
             get { return cache.EffectivePercentagePhysicalMemoryLimit; }
@@ -38,8 +35,8 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         }
 
         public object Get(string key)
-        { 
-            if(CacheLogger.IsCacheLoggerEnabled)
+        {
+            if (CacheLogger.IsCacheLoggerEnabled)
                 CacheLogger.LogKey(key);
             return cache.Get(key);
         }
@@ -51,12 +48,12 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 
         public void Insert(string key, object value)
         {
-            cache.Insert(key, value,null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+            cache.Insert(key, value, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
         }
 
         public void Insert(string key, object value, System.Web.Caching.CacheDependency dependencies)
         {
-            cache.Insert(key, value, dependencies,System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+            cache.Insert(key, value, dependencies, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
         }
 
         public void Insert(string key, object value, System.Web.Caching.CacheDependency dependencies, DateTime absoluteExpiration, TimeSpan slidingExpiration)
@@ -66,7 +63,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 
         public void Insert(string key, object value, System.Web.Caching.CacheDependency dependencies, DateTime absoluteExpiration, TimeSpan slidingExpiration, System.Web.Caching.CacheItemUpdateCallback onUpdateCallback)
         {
-            cache.Insert(key, value, dependencies, absoluteExpiration, slidingExpiration,onUpdateCallback);
+            cache.Insert(key, value, dependencies, absoluteExpiration, slidingExpiration, onUpdateCallback);
         }
 
         public void Insert(string key, object value, System.Web.Caching.CacheDependency dependencies, DateTime absoluteExpiration, TimeSpan slidingExpiration, System.Web.Caching.CacheItemPriority priority, System.Web.Caching.CacheItemRemovedCallback onRemoveCallback)

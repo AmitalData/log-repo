@@ -1,6 +1,6 @@
-﻿using System;
+﻿using AmitalCloud.Infrastructure.Domain.BaseClasses;
+using System;
 using System.ComponentModel.DataAnnotations;
-using AmitalCloud.Infrastructure.Domain.BaseClasses;
 
 namespace AmitalCloud.Shipment.Domain.EntityPMs
 {
@@ -8,7 +8,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
     {
         [Key]
         public string Id { get; set; }
-        public string ShipmentId { get; set; }       
+        public string ShipmentId { get; set; }
         public string StatusCode { get; set; }
         public string StatusName { get; set; }
         public string InvoiceNumber { get; set; }

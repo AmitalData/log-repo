@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 {
-    public class SmallDocumentMap: EntityTypeConfiguration<SmallDocument>
+    public class SmallDocumentMap : EntityTypeConfiguration<SmallDocument>
     {
         public SmallDocumentMap()
         {
@@ -27,9 +22,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
                 .HasMaxLength(8000)
                 .IsUnicode(true);
 
-           
 
-           
+
+
 
 
             // Table & Column Mappings
@@ -37,10 +32,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.Content).HasColumnName("Content");
-            
-           
 
-           
+
+
+
 
         }
     }

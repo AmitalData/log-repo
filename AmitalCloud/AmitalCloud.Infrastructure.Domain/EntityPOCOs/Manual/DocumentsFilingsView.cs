@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
@@ -43,7 +39,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         public DateTime? DeleteDateTime { get; set; }
         public bool IsDigitallySigned { get; set; }
         public string SignersList { get; set; }
-       // public int LastVersion { get; set; }
+        // public int LastVersion { get; set; }
         public bool IsSharedWithForwarder { get; set; }
         public bool IsSharedWithCustomer { get; set; }
         public string ForwarderDocumentId { get; set; }
@@ -54,7 +50,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         public string Extension { get; set; }
         public bool? HasFile { get; set; }
         public string CreatedByUserName { get; set; }
-       // public int FollowUpCount { get; set; }
+        // public int FollowUpCount { get; set; }
         public string DocumentTypeName { get; set; }
         public string DocumentTypeCode { get; set; }
         public string DoucmentTypeTemplateFormatCode { get; set; }

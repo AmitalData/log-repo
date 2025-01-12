@@ -1,22 +1,17 @@
 using AmitalCloud.Infrastructure.Data.BaseClasses;
+using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.EntityMapping;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Domain.Enums;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System.Configuration;
 using System.Data.Common;
 using System.Data.Entity;
-using AmitalCloud.Infrastructure.Domain.Enums;
 namespace AmitalCloud.Infrastructure.Data.Context
 {
     public class GlobalContext : DbContextBase, IGlobalContext
     {
-        public GlobalContext()
-            : base("LogitudeGlobalStr")
-        {
-            Database.SetInitializer<GlobalContext>(new MigrateDatabaseToLatestVersion<GlobalContext, Migrations.MigrationConfiguration<GlobalContext>>());
-        }
-        public GlobalContext(DbConnection connection)
+        private GlobalContext(DbConnection connection)
             : base(connection, true)
         {
 
@@ -24,7 +19,12 @@ namespace AmitalCloud.Infrastructure.Data.Context
             this.Configuration.AutoDetectChangesEnabled = false;
             Database.SetInitializer<GlobalContext>(null);
         }
-
+        private GlobalContext(string connection) : base(connection)
+        {
+            this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.AutoDetectChangesEnabled = false;
+            Database.SetInitializer<GlobalContext>(null);
+        }
         public void SetAsModified(object entity)
         {
             this.Entry(entity).State = EntityState.Modified;
@@ -46,41 +46,39 @@ namespace AmitalCloud.Infrastructure.Data.Context
             {
                 dbConnectionInfo = ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString;
             }
-            if (dbConnectionInfo.Contains("Main"))
-            { }
             dbConnectionInfo = DBHelpers.DbContextBaseUtil.GetConnectionStringWithAmitalNetRole(dbConnectionInfo);
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, ConnectionLifetime, suppressPool);
-            GlobalContext context = new GlobalContext(connection);
-
-            return context;
-        }
-
-        public static GlobalContext GetContextByDBId(string dbId)
-        {
-            GlobalDB currentDb;
-
-            //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            //{                
-            currentDb = GlobalDbHelper.GetGlobalDBById(dbId);
-            //}
-            string dbConnectionInfo = "";
             if (AmitalCloudSettings.DatabaseManagementSystem == "oracle")
             {
-                dbConnectionInfo = ConfigurationManager.ConnectionStrings["Oracle_Globalstr"].ConnectionString;
+                return new GlobalContext(DatabaseInitializer.GetConnection(dbConnectionInfo, ConnectionLifetime, suppressPool));
             }
             else
             {
-                dbConnectionInfo = ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString;
+                return new GlobalContext(dbConnectionInfo);
             }
-            if (dbConnectionInfo.Contains("Main"))
-            { }
-
-             dbConnectionInfo = DBHelpers.DbContextBaseUtil.GetConnectionStringWithAmitalNetRole(dbConnectionInfo);
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
-            GlobalContext context = new GlobalContext(connection);
-
-            return context;
         }
+
+        //public static GlobalContext GetContextByDBId(string dbId)
+        //{
+        //    GlobalDB currentDb;
+        //    currentDb = GlobalDbHelper.GetGlobalDBById(dbId);
+        //    string dbConnectionInfo = "";
+        //    if (AmitalCloudSettings.DatabaseManagementSystem == "oracle")
+        //    {
+        //        dbConnectionInfo = ConfigurationManager.ConnectionStrings["Oracle_Globalstr"].ConnectionString;
+        //    }
+        //    else
+        //    {
+        //        dbConnectionInfo = ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString;
+        //    }
+        //    if (dbConnectionInfo.Contains("Main"))
+        //    { }
+
+        //     dbConnectionInfo = DBHelpers.DbContextBaseUtil.GetConnectionStringWithAmitalNetRole(dbConnectionInfo);
+        //    DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
+        //    GlobalContext context = new GlobalContext(connection);
+
+        //    return context;
+        //}
 
         public override AmitalCloudDBSchema AmitalCloudDBSchema
         {

@@ -1,6 +1,6 @@
 ﻿
 
-namespace  AmitalCloud.Shipment.Domain.Validators
+namespace AmitalCloud.Shipment.Domain.Validators
 {
     public class ShipmentPickUpValidator
     {

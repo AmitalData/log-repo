@@ -26,22 +26,22 @@ namespace AmitalCloud.Infrastructure.APITools.Sign
 
             LargeUploadService.AddUploadBlobFileSet(myUploadSignedBlobFileReq);
 
-           if (myUploadSignedBlobFileReq.SizeOnClient == myUploadSignedBlobFileReq.CurrentTotalSize)
-           {
-               var myBytes = LargeUploadService.FinishUploadFileAsync(myUploadSignedBlobFileReq.BlobFileId);
-               //JustDoIt(myUploadSignedBlobFileReq);
+            if (myUploadSignedBlobFileReq.SizeOnClient == myUploadSignedBlobFileReq.CurrentTotalSize)
+            {
+                var myBytes = LargeUploadService.FinishUploadFileAsync(myUploadSignedBlobFileReq.BlobFileId);
+                //JustDoIt(myUploadSignedBlobFileReq);
 
-               return myUploadSignedBlobFileReq.BlobFileId;
+                return myUploadSignedBlobFileReq.BlobFileId;
 
-           }
-        
+            }
+
 
             _ListUploadSignedBlobFileReq.Add(new CreateUploadSignedBlobReq()
             {
-                BlobFileId = myUploadSignedBlobFileReq.BlobFileId ,
-                InterfaceTypeCode = myUploadSignedBlobFileReq.InterfaceTypeCode ,
+                BlobFileId = myUploadSignedBlobFileReq.BlobFileId,
+                InterfaceTypeCode = myUploadSignedBlobFileReq.InterfaceTypeCode,
                 CustomsRequestsSheetId = myUploadSignedBlobFileReq.CustomsRequestsSheetId,
-                currTenant  = myUploadSignedBlobFileReq.currTenant
+                currTenant = myUploadSignedBlobFileReq.currTenant
             });
 
             return myUploadSignedBlobFileReq.BlobFileId;

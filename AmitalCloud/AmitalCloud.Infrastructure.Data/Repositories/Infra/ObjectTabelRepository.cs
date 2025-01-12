@@ -1,14 +1,11 @@
 using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
-
 using System.Linq;
-using System.Linq.Expressions;
 using System.Transactions;
-using System.Web;
 
 namespace AmitalCloud.Infrastructure.Data.Repositories
 {
@@ -17,7 +14,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         IAmitalCloudContext currentContext;
         public ObjectTableRepository(IUnitOfWork unitOfWork) : this((AmitalCloudContext)unitOfWork.Context)
         {
-        }   
+        }
         public ObjectTableRepository(IAmitalCloudContext context) : base(context)
         {
             currentContext = context;

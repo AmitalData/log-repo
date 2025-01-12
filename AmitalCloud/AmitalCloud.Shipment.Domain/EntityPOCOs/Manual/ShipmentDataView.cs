@@ -278,7 +278,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPOCOs
         public string CustomerReference2 { get; set; }
         public string CustomerReference3 { get; set; }
         public string PrivateLabelInvoiceNumber { get; set; }
-         
+
         public string CustomerName { get; set; }
         public string CustomerNote { get; set; }
         public string CustomerContactName { get; set; }
@@ -374,12 +374,12 @@ namespace AmitalCloud.Shipment.Domain.EntityPOCOs
         public string FromPortId { get; set; }
         public string ToPortId { get; set; }
         public string ForeignPartnerCountryCode { get; set; }
-        
+
         public DateTime? PreCarriageETD { get; set; }
         public DateTime? PreCarriageATD { get; set; }
         public DateTime? PreCarriageETA { get; set; }
         public DateTime? PreCarriageATA { get; set; }
-        public bool CustomConnectToShipment { get; set; }        
+        public bool CustomConnectToShipment { get; set; }
         public DateTime? OnCarriageETD { get; set; }
         public DateTime? OnCarriageATD { get; set; }
         public DateTime? OnCarriageETA { get; set; }
@@ -765,12 +765,12 @@ namespace AmitalCloud.Shipment.Domain.EntityPOCOs
         public string ShipmentSubTypeName { get; set; }
         public string ImportManifest { get; set; }
         public int? WarehouseStorageFreeDays { get; set; }
-        public string EmergencyContactId {get;set;}
-        
+        public string EmergencyContactId { get; set; }
+
         public DateTime? PreForwardingETD { get; set; }
         public DateTime? PreForwardingATD { get; set; }
         public DateTime? PreForwardingETA { get; set; }
-        public DateTime? PreForwardingATA { get; set; }        
+        public DateTime? PreForwardingATA { get; set; }
         public DateTime? OnForwardingETD { get; set; }
         public DateTime? OnForwardingATD { get; set; }
         public DateTime? OnForwardingETA { get; set; }

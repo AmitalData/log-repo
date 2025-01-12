@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AmitalCloud.Infrastructure.APITools.ExternalServices
+﻿namespace AmitalCloud.Infrastructure.APITools.ExternalServices
 {
     public class DCAParams
     {
@@ -24,5 +18,5 @@ namespace AmitalCloud.Infrastructure.APITools.ExternalServices
 
         public string Sufix { get; set; }
     }
-    
+
 }

@@ -1,9 +1,8 @@
-﻿using AmitalCloud.Infrastructure.Data.Context;
+﻿using AmitalCloud.Infrastructure.Data.Queries;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using AmitalCloud.Infrastructure.Data.Queries;
 namespace AmitalCloud.Infrastructure.Data.Services
 {
     public class CustomChildEntityService
@@ -61,7 +60,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
         private void UpdateCustomChildEntity(CustomChildEntity customChildEntity)
         {
             if (customChildEntity.Values == null || customChildEntity.Values.Count() == 0) return;
-            CustomChildObjectService customChildObjectService = new CustomChildObjectService( customChildEntityArgs.Tenant);
+            CustomChildObjectService customChildObjectService = new CustomChildObjectService(customChildEntityArgs.Tenant);
             customChildObjectService.Updates(customChildEntity.Values);
         }
         private List<CustomChildEntity> GetCustomChildEntities(object entity)

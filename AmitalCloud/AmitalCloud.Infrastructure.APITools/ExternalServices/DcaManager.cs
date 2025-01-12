@@ -1,4 +1,5 @@
 ﻿using AmitalCloud.Infrastructure.Data;
+using ICSharpCode.SharpZipLib.BZip2;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -6,14 +7,12 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.ServiceModel;
-using System.Text;
 using System.Text.RegularExpressions;
 using UnifreightIIG.Common.BLClient;
 using UnifreightIIG.Common.Extensions;
 using UnifreightIIG.Common.Faults;
 using UnifreightIIG.Common.Utils;
 using UnifreightIIG.DCA;
-using ICSharpCode.SharpZipLib.BZip2;
 
 namespace AmitalCloud.Infrastructure.APITools.ExternalServices
 {

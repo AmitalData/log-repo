@@ -1,9 +1,8 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Data.Repositories;
 using System;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {
@@ -685,7 +684,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                 ratio = GetRatioForUSTenant(directionId, transportModeId, shipmentTypeId);
             }
 
-            if(ratio == null)
+            if (ratio == null)
             {
                 switch (transportModeId)
                 {
@@ -738,7 +737,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                 address = new Repository<Address>(AmitalCloudContext.GetContext(tenant.Id)).GetSingle(new AddressKeys<string>() { Id = tenant.AddressId }); //(tenant.AddressId, tenant.Id);                
             }
 
-            if(address == null)
+            if (address == null)
             {
                 isFromUS = false;
             }
@@ -782,7 +781,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 
         public DatesHelper()
         {
- 
+
         }
     }
 }

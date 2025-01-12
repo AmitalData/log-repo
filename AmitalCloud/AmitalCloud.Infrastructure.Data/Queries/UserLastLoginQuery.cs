@@ -1,11 +1,10 @@
-﻿using AmitalCloud.Infrastructure.Domain.EntityPMs;
+﻿using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
-
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
+using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Data.Queries
 {
@@ -62,7 +61,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         }
 
 
-        public IQueryable<UserLastLoginPM> GetUserLastLoginPMsByUserIds(List<string> userIds )
+        public IQueryable<UserLastLoginPM> GetUserLastLoginPMsByUserIds(List<string> userIds)
         {
             IQueryable<UserLastLoginPM> userLastLoginPMs = from a in repository.context.UserLastLogins
                                                            where userIds.Contains(a.Id)

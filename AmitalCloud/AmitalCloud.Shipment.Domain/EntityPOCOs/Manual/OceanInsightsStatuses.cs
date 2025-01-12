@@ -14,9 +14,9 @@ namespace AmitalCloud.Shipment.Domain.EntityPOCOs
         public string ContentDocumentId { get; set; }
         public string CommunicationLogId { get; set; }
         public DateTime CreateDate { get; set; }
-		public string XML { get; set; }
+        public string XML { get; set; }
 
-		[ForeignKey("CommunicationLogId")]
+        [ForeignKey("CommunicationLogId")]
         public virtual CommunicationLog CommunicationLog { get; set; }
 
         [ForeignKey("OceanInsightsRequestId")]
@@ -24,6 +24,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPOCOs
 
         [ForeignKey("ContentDocumentId")]
         public virtual Document Document { get; set; }
-     
+
     }
 }

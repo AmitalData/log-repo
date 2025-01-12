@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Shipment.Domain.EntityPOCOs
 {
@@ -48,6 +44,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPOCOs
         UserIdNumberXMLData (VCMax)
         UserIdNumber (VC35)
          */
-          
+
     }
 }

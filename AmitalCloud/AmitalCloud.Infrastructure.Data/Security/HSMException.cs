@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Data.Security
 {
@@ -11,7 +7,7 @@ namespace AmitalCloud.Infrastructure.Data.Security
         public HSMException()
         {
         }
-        public HSMException(string errorMessage,string errorCode) : base(errorMessage)
+        public HSMException(string errorMessage, string errorCode) : base(errorMessage)
         {
         }
     }

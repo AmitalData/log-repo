@@ -35,7 +35,7 @@ namespace AmitalCloud.Infrastructure.Data.Azure
         public string StatusCode { get; set; } // Waiting,InProgress,Sent,Fail
 
         public bool IsBodyHtml { get; set; }
- 
+
 
     }
 }

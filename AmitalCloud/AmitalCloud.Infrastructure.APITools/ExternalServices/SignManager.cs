@@ -3,7 +3,7 @@ using System;
 using UnifreightIIG.Common.ClientSdk;
 namespace AmitalCloud.Infrastructure.APITools.ExternalServices
 {
-    public class SignManager 
+    public class SignManager
     {
 
 
@@ -21,8 +21,8 @@ namespace AmitalCloud.Infrastructure.APITools.ExternalServices
             FactoryServicePool<ISignService>.Use(ServiceTypeEnum.Sign, tenant,
                 prxy =>
                 {
-                    
-                    
+
+
                     prxy.CreateSignedDoc(file + ".xml", bytesSerilazeObject, file + ".Signed", "MEHES", out bytesSignedSerilazeObject,
                                 out ErrorOccurred, out MoreParamsOut, out Message);
                 }

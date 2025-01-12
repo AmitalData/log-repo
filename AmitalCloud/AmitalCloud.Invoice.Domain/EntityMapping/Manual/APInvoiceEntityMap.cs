@@ -1,5 +1,5 @@
-using System.Data.Entity.ModelConfiguration;
 using AmitalCloud.Invoice.Domain.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
 
 namespace AmitalCloud.Invoice.Domain.EntityMapping
 {

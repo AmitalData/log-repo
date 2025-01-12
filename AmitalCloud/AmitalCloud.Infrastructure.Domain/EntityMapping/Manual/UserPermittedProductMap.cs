@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 {
-    public class UserPermittedProductMap: EntityTypeConfiguration<UserPermittedProduct>
+    public class UserPermittedProductMap : EntityTypeConfiguration<UserPermittedProduct>
     {
         public UserPermittedProductMap()
         {
@@ -36,8 +31,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.UserId).HasColumnName("UserId");
-            this.Property(t => t.ProductTypeCode).HasColumnName("ProductTypeCode");            
-             
+            this.Property(t => t.ProductTypeCode).HasColumnName("ProductTypeCode");
+
             // Relationships
             this.HasRequired(t => t.User)
                 .WithMany()

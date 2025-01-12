@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {
@@ -18,7 +16,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             using (var md5 = MD5.Create())
             {
                 using (var stream = new MemoryStream(Data)
-                    //    File.OpenRead(FilePath)
+                //    File.OpenRead(FilePath)
                 )
                 {
                     return GetByteArray(md5.ComputeHash(stream));

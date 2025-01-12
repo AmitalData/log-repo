@@ -1,7 +1,7 @@
+using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.IO;
 using System.IO.Compression;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {

@@ -1,11 +1,7 @@
-﻿using AmitalCloud.Infrastructure.Domain.BaseClasses;
-using AmitalCloud.Infrastructure.Domain.Enums;
+﻿using AmitalCloud.Infrastructure.Domain.Enums;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 namespace AmitalCloud.Infrastructure.Domain.Interfaces
 {
     public interface ISpecification<T, Tkey>

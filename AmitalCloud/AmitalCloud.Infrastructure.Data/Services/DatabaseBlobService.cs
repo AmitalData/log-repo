@@ -1,13 +1,12 @@
-﻿using System;
-using System.Text;
-using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using System.Linq;
 using AmitalCloud.Infrastructure.Domain.Helpers;
+using AmitalCloud.Infrastructure.Domain.Interfaces;
+using System;
+using System.Linq;
+using System.Text;
 
 namespace AmitalCloud.Infrastructure.Data.Services
 {
@@ -21,7 +20,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                 return result;
             }
             IRepository<BlobFile> repo = new Repository<BlobFile>(AmitalCloudContext.GetContext(fileInfo.Tenant));
-            BlobFile file = GetBlobFile(fileInfo,repo);
+            BlobFile file = GetBlobFile(fileInfo, repo);
             if (file != null && file.Blob != null)
             {
                 if (file.IsCompressed)
@@ -44,7 +43,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
             }
             using (var uow = new UnitOfWork<AmitalCloudContext>(fileInfo.Tenant))
             {
-                IRepository<BlobFile> repo = new Repository<BlobFile>( uow);
+                IRepository<BlobFile> repo = new Repository<BlobFile>(uow);
                 BlobFile file = repo.GetMulti(a => a.Id == fileInfo.FileName).FirstOrDefault();
                 if (file != null)
                 {
@@ -142,7 +141,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
         {
             using (var uow = new UnitOfWork<AmitalCloudContext>(fileInfo.Tenant))
             {
-                IRepository<BlobFile> repo = new Repository<BlobFile>( uow);
+                IRepository<BlobFile> repo = new Repository<BlobFile>(uow);
 
                 if (!string.IsNullOrEmpty(text))
                 {
@@ -181,7 +180,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
         }
         public void Dispose()
         {
-          //  throw new NotImplementedException();
+            //  throw new NotImplementedException();
         }
 
         public void MoveFromAnotherStorage(string containerSASURI, string fileNameSource, BlobFileInfo destinationFileInfo)

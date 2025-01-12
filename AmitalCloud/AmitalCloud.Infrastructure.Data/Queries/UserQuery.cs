@@ -1,18 +1,16 @@
-﻿using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.EntityPMs;
+﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Data.Queries;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Domain.EntityKeys;
+using AmitalCloud.Infrastructure.Domain.EntityLists;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
-
 using System.Linq;
-using System.Web;
-using AmitalCloud.Infrastructure.Data.Context;
 using System.Linq.Expressions;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityKeys;
+using System.Web;
 
 namespace AmitalCloud.Infrastructure.Data.Queries
 {
@@ -193,7 +191,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             bool isHR = false;
             IAmitalCloudContext context = AmitalCloudContext.GetContext(entity.Tenant);
             Role role = new Repository<Role>(context).GetSingle(new RoleKeys<string>() { Id = "HRAD" });                     //.GetSingleByCode("HRAD", 0);
-            ContactTenant contactTenant = new Repository<ContactTenant>(context).GetMulti(a=> a.Contact.Email == entity.Email.ToLower()).FirstOrDefault();   //.GetContactTenantForContactId(entity.Id, entity.Tenant);
+            ContactTenant contactTenant = new Repository<ContactTenant>(context).GetMulti(a => a.Contact.Email == entity.Email.ToLower()).FirstOrDefault();   //.GetContactTenantForContactId(entity.Id, entity.Tenant);
             if (role != null && contactTenant != null)
             {
                 ContactTenantRole contactTenantRole = new Repository<ContactTenantRole>(context).GetMulti(a => a.RoleId == role.Id && a.Tenant == entity.Tenant && a.ContactTenantId == contactTenant.Id).FirstOrDefault(); //.GetContactTenantRoleByRoleIdAndContactTenant(role.Id, contactTenant.Id, entity.Tenant);
@@ -237,11 +235,11 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 
 
         #region Get Single User
-        public UserPM GetSinglePM(string id, int tenant) => GetSinglePMFromCache(a => (a.Tenant == tenant || a.Tenant == 0) && a.Id == id,  "UserPM" + id + tenant);
+        public UserPM GetSinglePM(string id, int tenant) => GetSinglePMFromCache(a => (a.Tenant == tenant || a.Tenant == 0) && a.Id == id, "UserPM" + id + tenant);
         public UserPM GetSingleUserPM(string id, int tenant, bool fromcache) => fromcache ? GetSinglePMFromCache(a => (a.Tenant == tenant || a.Tenant == 0) && a.Id == id, "UserPM" + id + tenant) : GetSinglePMFromDB(a => (a.Tenant == tenant || a.Tenant == 0) && a.Id == id);
         public UserPM GetSingleUserPMByCode(string code, int tenant, bool fromcache) => fromcache ? GetSinglePMFromCache(d => d.Tenant == tenant && d.Code == code, "UserPM" + code + tenant) : GetSinglePMFromDB(d => d.Tenant == tenant && d.Code == code);
         public UserPM GetSingleUserPMByEmail(string email, int tenant, bool fromcache) => fromcache ? GetSinglePMFromCache(d => d.Tenant == tenant && d.Email == email, "UserPM" + email + tenant) : GetSinglePMFromDB(d => d.Tenant == tenant && d.Email == email);
-        public UserPM GetSinglePMByCode(string code, int tenant) => GetSinglePMFromDB(a => a.Tenant == tenant  && a.Code == code);
+        public UserPM GetSinglePMByCode(string code, int tenant) => GetSinglePMFromDB(a => a.Tenant == tenant && a.Code == code);
         public UserPM GetSinglePMByEmail(string email, int tenant) => GetSinglePMFromDB(a => a.Tenant == tenant && a.Email == email);
         public UserPM GetSinglePMLite(string id, int tenant) => GetSinglePMFromDBLite(a => a.Tenant == tenant && a.Id == id);
         public UserPM GetSingleUserPMByEmailLite(string email, int tenant) => GetSinglePMFromDBLite(a => a.Tenant == tenant && a.Email == email);
@@ -320,7 +318,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         //        throw ex;
         //    }
         //}
-//------
+        //------
         #endregion Get Single User
 
         #region Get Users IQueryable<UserPM>
@@ -658,8 +656,8 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 #region SetInActiveUsers
                 ContactQuery contactQuery = new ContactQuery(tenant);
                 List<string> contactId = users.Select(d => d.Id).ToList();
-                List<ContactList> contactLists = contactQuery.GetContactListsByListIds(contactId, tenant).Where(d=>d.InActive).ToList();
-                foreach(ContactList contact in contactLists)
+                List<ContactList> contactLists = contactQuery.GetContactListsByListIds(contactId, tenant).Where(d => d.InActive).ToList();
+                foreach (ContactList contact in contactLists)
                 {
                     var user = users.Where(d => d.Id == contact.Id).FirstOrDefault();
                     user.InActive = contact.InActive;

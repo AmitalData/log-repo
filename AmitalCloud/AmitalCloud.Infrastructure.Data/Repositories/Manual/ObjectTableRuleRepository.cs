@@ -1,4 +1,4 @@
-using AmitalCloud.Infrastructure.Data.Context;using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
@@ -10,7 +10,7 @@ using System.Transactions;
 
 namespace AmitalCloud.Infrastructure.Data.Repositories
 {
-    public class ObjectTableRuleRepository:Repository<ObjectTableRule>
+    public class ObjectTableRuleRepository : Repository<ObjectTableRule>
     {
         IAmitalCloudContext amitalCloudContext;
         public ObjectTableRuleRepository(IAmitalCloudContext context) : base(context)
@@ -29,7 +29,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             ObjectTableRule rule = (from record in context.ObjectTableRules.Include("ObjectTable") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
             return rule;
         }
-        public ObjectTableRule GetSingleObjectTableRuleByCode(string code   , int tenant)
+        public ObjectTableRule GetSingleObjectTableRuleByCode(string code, int tenant)
         {
             ObjectTableRule rule = (from record in context.ObjectTableRules.Include("ObjectTable") where record.RuleCode == code && record.Tenant == tenant select record).FirstOrDefault();
             return rule;
@@ -47,7 +47,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
                 {
                     IAmitalCloudContext context = AmitalCloudContext.GetContext(0);
                     zeroObjectTableRules = (from a in context.ObjectTableRules.Include("ObjectTable").Include("RuleType")
-											where a.Tenant == 0
+                                            where a.Tenant == 0
                                             select a).ToList();
                 }
                 if (tenant != 0)
@@ -56,7 +56,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
                     {
                         IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
                         currentObjectTableRules = (from a in context.ObjectTableRules.Include("ObjectTable").Include("RuleType")
-												   where a.Tenant == tenant
+                                                   where a.Tenant == tenant
                                                    select a).ToList();
                     }
                 }

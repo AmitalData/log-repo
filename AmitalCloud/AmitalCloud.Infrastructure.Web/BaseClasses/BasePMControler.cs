@@ -17,8 +17,8 @@ using System.Web.Http;
 namespace AmitalCloud.Infrastructure.Web.BaseClasses
 {
     public abstract class BasePMControler<TService, TUpdateService, TEntityPM> : ApiController
-        where TService : class , IBaseEntityQueryService<TEntityPM> 
-        where TUpdateService : class , IBaseEntityUpdateService<TEntityPM>
+        where TService : class, IBaseEntityQueryService<TEntityPM>
+        where TUpdateService : class, IBaseEntityUpdateService<TEntityPM>
         where TEntityPM : class, IEntityPM, new()
     {
         private protected string ObjectTableName;
@@ -128,14 +128,14 @@ namespace AmitalCloud.Infrastructure.Web.BaseClasses
         private object GetResult(int tenant, IEnumerable<KeyValuePair<string, string>> paramList) => GetService(tenant).GetSingle(paramList, true, false);
         private void SaveEntity(IEntityPM entityPM, ChangeSetOperation changeSetOperation)
         {
-            if( !HasTenant) return;
+            if (!HasTenant) return;
             IBaseEntityUpdateService<TEntityPM> service = GetUpdateService(entityPM.Tenant);
             if (changeSetOperation == ChangeSetOperation.Update) service.InitializeEntityPM((TEntityPM)entityPM);
             entityPM.ChangeSetOp = changeSetOperation;
             service.Update((TEntityPM)entityPM, true);
         }
         #endregion
-        private int AuthenticationToken(string mode,int tenant = 0)
+        private int AuthenticationToken(string mode, int tenant = 0)
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);

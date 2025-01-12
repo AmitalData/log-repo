@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Configuration;
 
 namespace AmitalCloud.Infrastructure.Data.Azure
 {
@@ -12,12 +7,12 @@ namespace AmitalCloud.Infrastructure.Data.Azure
         public static string GetConnectionString()
         {
 
-			string result = ConfigurationManager.AppSettings["AmitalRedisCache"];
-			return result;
+            string result = ConfigurationManager.AppSettings["AmitalRedisCache"];
+            return result;
 
-			switch (AmitalCloudSettings.DeploymentStage)
+            switch (AmitalCloudSettings.DeploymentStage)
             {
- 
+
                 case "amitalstorage":
                     result = "logitude.redis.cache.windows.net:6380,password=THa/1V0Iov/549r6n6HE1aDZ8N1RTMaWZFDV3+hemoo=,ssl=True,abortConnect=False";
                     break;

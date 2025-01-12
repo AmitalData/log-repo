@@ -1,8 +1,7 @@
-﻿using AmitalCloud.Infrastructure.Domain.BaseClasses;
+﻿using System;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Threading.Tasks;
-using System;
 
 namespace AmitalCloud.Infrastructure.Domain.Interfaces
 {
@@ -11,7 +10,7 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
         DbConnection GetConnection();
         DbContext GetActiveDbContext();
         void SetAsModified(object entity);
-        DbSet<TEntity> Set<TEntity>() where TEntity : class ;
+        DbSet<TEntity> Set<TEntity>() where TEntity : class;
         Task<int> SaveChangesAsync();
         void Dispose(bool disposing);
         int Tenant { get; }

@@ -1,6 +1,6 @@
-﻿using AmitalCloud.Shipment.Domain.Interfaces;
+﻿using AmitalCloud.Infrastructure.Domain.BaseClasses;
+using AmitalCloud.Shipment.Domain.Interfaces;
 using System.ComponentModel.DataAnnotations;
-using AmitalCloud.Infrastructure.Domain.BaseClasses;
 namespace AmitalCloud.Shipment.Domain.EntityPMs
 {
     [CustomValidation(typeof(IShipmentClassLevelValidator), "ValidateClass")]
@@ -8,7 +8,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
     {
         [Key]
         public string Id { get; set; }
- 
+
         [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
         public string PackageTypeId { get; set; }
 

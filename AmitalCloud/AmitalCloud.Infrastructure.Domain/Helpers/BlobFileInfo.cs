@@ -1,7 +1,4 @@
-﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 
 namespace AmitalCloud.Infrastructure.Domain.Helpers
 {

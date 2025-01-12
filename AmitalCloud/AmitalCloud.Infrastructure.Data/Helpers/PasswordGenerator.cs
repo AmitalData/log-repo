@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -47,7 +46,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             }
             return stringBuilder.ToString();
         }
-        public static string GetHashedPassword(string email,string password)
+        public static string GetHashedPassword(string email, string password)
         {
             email = email.ToLower();
             byte[] byteRepresentation = UnicodeEncoding.UTF8.GetBytes(password + email);
@@ -60,13 +59,14 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         public static string GetBCryptHashedPassword(string email, string password)
         {
             string hashedPassword = "";
-            if(!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password)) {
+            if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
+            {
                 email = email.ToLower() + password;
                 hashedPassword = BCrypt.Net.BCrypt.HashPassword(email);
             }
             return hashedPassword;
         }
-        public static bool VerifyBCryptHashedPassword(string email ,string password, string hashedPassword)
+        public static bool VerifyBCryptHashedPassword(string email, string password, string hashedPassword)
         {
             bool isValid = false;
             if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password) && !string.IsNullOrEmpty(hashedPassword))
@@ -76,7 +76,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                 {
                     isValid = BCrypt.Net.BCrypt.Verify(submittedPassword, hashedPassword);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     isValid = false;
                 }

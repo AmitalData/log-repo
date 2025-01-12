@@ -1,13 +1,12 @@
-﻿using AmitalCloud.Infrastructure.Data.Counters;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+﻿using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.Counters;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
-using System;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Data.Services
 {
@@ -107,12 +106,12 @@ namespace AmitalCloud.Infrastructure.Data.Services
             return new CustomFieldClass(objectField.FieldName, originalObjectTableName, propertyValue != null ? propertyValue.ToString() : "");
         }
         private bool IsEntityExist(string entityId) => customFieldsMainObjects.Where(d => d.EntityId == entityId).Any();
-        private CustomFieldsMainObject GetCustomFieldsMainObject(string entityId , bool isNew = true)
+        private CustomFieldsMainObject GetCustomFieldsMainObject(string entityId, bool isNew = true)
         {
             if (IsEntityExist(entityId)) return customFieldsMainObjects.Where(d => d.EntityId == entityId).FirstOrDefault();
             if (!isNew) return null;
 
-            CustomFieldsMainObject customFieldsMainObject =  new CustomFieldsMainObject()
+            CustomFieldsMainObject customFieldsMainObject = new CustomFieldsMainObject()
             {
                 Id = IdCounter.GetNumber("ChildEntitiesCustomField", tenant).ToString(),
                 Tenant = tenant,

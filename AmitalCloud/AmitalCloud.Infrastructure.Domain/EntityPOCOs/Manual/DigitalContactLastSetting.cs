@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
@@ -28,5 +28,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         public string FilterCode { get; set; }
         [Column("IsChecked")]
         public bool IsChecked { get; set; }
-    }  
+    }
 }

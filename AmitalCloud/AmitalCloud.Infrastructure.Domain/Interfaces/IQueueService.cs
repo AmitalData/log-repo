@@ -15,12 +15,12 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
         void Delay(TimeSpan delayTime);
         void Return();
         void CompleteAsFailed();
-       
+
     }
 
     public partial class QueueResponse
     {
-        
+
         //public bool HasError { get; set; }
         //public string ErrorMessage { get; set; }
         public string MessageId { get; set; }

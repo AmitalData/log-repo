@@ -1,15 +1,15 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Counters;
 using AmitalCloud.Infrastructure.Data.DataMapping;
-using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System.Collections.Generic;
-using System.Web;
 using System.Linq;
+using System.Web;
 namespace AmitalCloud.Infrastructure.Data.Services
 {
     public class CustomChildObjectService
@@ -36,7 +36,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
             //this.entityRepository = new Repository<CustomChildObject, string>(objectContext);
             this.GetLoggedContact();
 
-        }   
+        }
         //public CustomChildObjectService(IAmitalCloudContext objectContext, int tenant)
         //{
         //    this.tenant = tenant;
@@ -90,7 +90,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
         {
             using (var uow = new UnitOfWork<AmitalCloudContext>(tenant))
             {
-                var repo =new Repository<CustomChildObject>(uow);
+                var repo = new Repository<CustomChildObject>(uow);
                 customChildObjects.ForEach((customChildObject) =>
                 {
                     switch (customChildObject.ChangeSetOp)

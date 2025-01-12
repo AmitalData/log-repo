@@ -1,18 +1,14 @@
-using AmitalCloud.Infrastructure.Domain.BaseClasses;
+using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Domain.Enums;
 using Devart.Data.Oracle;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Transactions;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Domain.Enums;
 
 namespace AmitalCloud.Infrastructure.Data.Counters
 {
@@ -323,7 +319,7 @@ namespace AmitalCloud.Infrastructure.Data.Counters
                             catch (Exception ex)
                             {
                                 System.Console.WriteLine("Exception: {0}", ex.ToString());
-                               // scope.Dispose();
+                                // scope.Dispose();
                                 //cn.Close();
 
                                 throw;
@@ -341,7 +337,7 @@ namespace AmitalCloud.Infrastructure.Data.Counters
             {
                 TransactionScope scope = null;
                 try
-                { 
+                {
                     using (scope = TransactionFactory.GetNewReadCommittedTransaction(TimeSpan.FromSeconds(3)))
                     {
                         using (SqlConnection cn = new SqlConnection(strConnString))
@@ -358,8 +354,8 @@ namespace AmitalCloud.Infrastructure.Data.Counters
                             //}
                             //else
                             //{
-                                lastNumberPar = new SqlParameter("@V_PLASTNUMBER", SqlDbType.VarChar, 100);
-                                tableNamePar = new SqlParameter("@v_pTableName", SqlDbType.VarChar);
+                            lastNumberPar = new SqlParameter("@V_PLASTNUMBER", SqlDbType.VarChar, 100);
+                            tableNamePar = new SqlParameter("@v_pTableName", SqlDbType.VarChar);
 
                             //}
 
@@ -380,7 +376,7 @@ namespace AmitalCloud.Infrastructure.Data.Counters
                             cn.Close();
                             //if (AmitalCloudSettings.IsCostomsDeploy)
                             //{
-                                number = (string)cmd.Parameters["@v_pLastNumber"].Value;
+                            number = (string)cmd.Parameters["@v_pLastNumber"].Value;
 
                             //}
                             //else
@@ -388,7 +384,7 @@ namespace AmitalCloud.Infrastructure.Data.Counters
                             //    number = (string)cmd.Parameters["@pLastNumber"].Value;
 
                             //}
-                            
+
 
                         }
 
@@ -404,9 +400,9 @@ namespace AmitalCloud.Infrastructure.Data.Counters
                     //{
                     //    scope.Dispose();
                     //}
-                     throw ex;
+                    throw ex;
                 }
-                
+
 
 
             }
@@ -416,22 +412,7 @@ namespace AmitalCloud.Infrastructure.Data.Counters
         //public
         static string GetConnection(int tenant)
         {
-            GlobalDBRepository globalDbRep;
-            GlobalDB currentDb;
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                //GlobalDBRep = new GlobalDBRepository();
-                currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
-
-            }
-
-            string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
-            AmitalCloudContext context = new AmitalCloudContext(connection, tenant);
-
-            return context.Database.Connection.ConnectionString;// entityBuilder.ConnectionString;
+            return AmitalCloudContext.GetContext(tenant).Database.Connection.ConnectionString;
         }
 
 

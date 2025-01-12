@@ -1,6 +1,6 @@
-﻿using System;
+﻿using AmitalCloud.Infrastructure.Domain.BaseClasses;
+using System;
 using System.ComponentModel.DataAnnotations;
-using AmitalCloud.Infrastructure.Domain.BaseClasses;
 
 namespace AmitalCloud.Shipment.Domain.EntityPMs
 {

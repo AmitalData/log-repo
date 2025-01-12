@@ -1,10 +1,10 @@
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Data.Validators;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.DataContracts;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;

@@ -1,12 +1,9 @@
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using  AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 
 namespace AmitalCloud.Infrastructure.Data.Helpers.CustomFieldsResolver
@@ -42,7 +39,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers.CustomFieldsResolver
 
             return null;
         }
-        
+
         private static object GetEntityFieldValue(object currentEntity, PropertyInfo propertyPathPi)
         {
             object value = propertyPathPi.GetValue(currentEntity, null);
@@ -91,14 +88,14 @@ namespace AmitalCloud.Infrastructure.Data.Helpers.CustomFieldsResolver
             object value = lookUpFieldValueGetterArgs.Value;
             if (LookUpFieldData.LookUpTableId != objectField.LookUpTableId) return false;
             if (LookUpFieldData.Tenant != objectField.Tenant) return false;
-            if(LookUpFieldData.Value == null || value == null) return false;
+            if (LookUpFieldData.Value == null || value == null) return false;
             return LookUpFieldData.Value.ToString() == value.ToString();
         }
 
         private static LookUpFieldValueGetterArgs GetLookUpFieldValueGetterArgs(CustomFieldGetterArgs customFieldGetterArgs)
         {
             LookUpFieldTypeReflectionDetails lookUpFieldTypeReflectionDetails = GetLookUpTypeReflectionDetails(customFieldGetterArgs.objectField);
-            
+
             return new LookUpFieldValueGetterArgs
             {
                 ObjectField = customFieldGetterArgs.objectField,
@@ -238,7 +235,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers.CustomFieldsResolver
                 case 3:
                     return (IsStringParameter(parametersInfo[2])) ? new object[] { value, tenant, null } : new object[] { value, tenant, false };
                 case 4:
-                    return new object[] { value, tenant, null,false };
+                    return new object[] { value, tenant, null, false };
                 default:
                     return new object[] { value, tenant };
             }
@@ -581,7 +578,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers.CustomFieldsResolver
 
     public class LookUpFieldTypeReflectionDetails
     {
-        public string InsideTypePath{ get; set; }
+        public string InsideTypePath { get; set; }
         public Type InsideEntityType { get; set; }
     }
 

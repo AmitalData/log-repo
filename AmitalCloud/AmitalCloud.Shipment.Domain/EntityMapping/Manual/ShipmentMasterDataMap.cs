@@ -1,6 +1,5 @@
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.ModelConfiguration;
 using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
 
 namespace AmitalCloud.Shipment.Domain.EntityMapping
 {
@@ -59,7 +58,7 @@ namespace AmitalCloud.Shipment.Domain.EntityMapping
             this.Property(t => t.MainCarriageCarrierPrefix).IsFixedLength().HasMaxLength(2).IsUnicode(false);
             this.Property(t => t.Transshipment1CarrierPrefix).IsFixedLength().HasMaxLength(2).IsUnicode(false);
             this.Property(t => t.Transshipment2CarrierPrefix).IsFixedLength().HasMaxLength(2).IsUnicode(false);
-            this.Property(t => t.Transshipment3CarrierPrefix).IsFixedLength().HasMaxLength(2).IsUnicode(false);                        
+            this.Property(t => t.Transshipment3CarrierPrefix).IsFixedLength().HasMaxLength(2).IsUnicode(false);
             this.Property(t => t.RegulatedAgentRANumber).HasMaxLength(5).IsUnicode(false);
             this.Property(t => t.ColoaderRANumber).HasMaxLength(5).IsUnicode(false);
             this.Property(t => t.AWBPrintingRANumber).HasMaxLength(5).IsUnicode(false);
@@ -132,12 +131,12 @@ namespace AmitalCloud.Shipment.Domain.EntityMapping
             this.Property(t => t.MainCarriageVesselId).HasColumnName("MainCarriageVesselId");
             this.Property(t => t.Transshipment1VesselId).HasColumnName("Transshipment1VesselId");
             this.Property(t => t.Transshipment2VesselId).HasColumnName("Transshipment2VesselId");
-            this.Property(t => t.Transshipment3VesselId).HasColumnName("Transshipment3VesselId");        
+            this.Property(t => t.Transshipment3VesselId).HasColumnName("Transshipment3VesselId");
             this.Property(t => t.MainCarriageIsFromStack).HasColumnName("MainCarriageIsFromStack");
             this.Property(t => t.MainCarriageCarrierId).HasColumnName("MainCarriageCarrierId");
             this.Property(t => t.Transshipment1CarrierId).HasColumnName("Transshipment1CarrierId");
             this.Property(t => t.Transshipment2CarrierId).HasColumnName("Transshipment2CarrierId");
-            this.Property(t => t.Transshipment3CarrierId).HasColumnName("Transshipment3CarrierId");            
+            this.Property(t => t.Transshipment3CarrierId).HasColumnName("Transshipment3CarrierId");
             this.Property(t => t.StatusId).HasColumnName("StatusId");
             this.Property(t => t.MasterShipmentNumber).HasColumnName("MasterShipmentNumber");
             this.Property(t => t.FWBStatusCode).HasColumnName("FWBStatusCode");
@@ -175,7 +174,7 @@ namespace AmitalCloud.Shipment.Domain.EntityMapping
             this.Property(t => t.ColoaderRANumber).HasColumnName("ColoaderRANumber");
             this.Property(t => t.AWBPrintingSecurityStatusId).HasColumnName("AWBPrintingSecurityStatusId");
             this.Property(t => t.AWBPrintingRANumber).HasColumnName("AWBPrintingRANumber");
-            this.Property(t => t.AdditionalHandlingInfo).HasColumnName("AdditionalHandlingInfo");          
+            this.Property(t => t.AdditionalHandlingInfo).HasColumnName("AdditionalHandlingInfo");
             this.Property(t => t.AWBPrintingRANumberEdited).HasColumnName("AWBPrintingRANumberEdited");
             this.Property(t => t.AdditionalHandlingInfoEdited).HasColumnName("AdditionalHandlingInfoEdited");
             this.Property(t => t.InterlineId).HasColumnName("InterlineId");
@@ -235,7 +234,7 @@ namespace AmitalCloud.Shipment.Domain.EntityMapping
                 this.Property(t => t.MainCarriageFinalDestinationATA).HasColumnName("MainCarriageFinalDestATA");
             }
 
-//#else
+            //#else
             else
             {
                 this.Property(t => t.AWBPrintingSecurityStatusEdited).HasColumnName("AWBPrintingSecurityStatusEdited");
@@ -246,7 +245,7 @@ namespace AmitalCloud.Shipment.Domain.EntityMapping
                 this.Property(t => t.MainCarriageFinalDestinationETA).HasColumnName("MainCarriageFinalDestinationETA");
                 this.Property(t => t.MainCarriageFinalDestinationATA).HasColumnName("MainCarriageFinalDestinationATA");
             }
-//#endif
+            //#endif
 
             // Relationships
             this.HasOptional(t => t.FromPartnerAddress).WithMany().HasForeignKey(d => d.MainCarriageFromAddressId);

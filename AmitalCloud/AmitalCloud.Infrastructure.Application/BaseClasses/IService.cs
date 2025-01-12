@@ -1,11 +1,11 @@
-﻿using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.DataContracts;
+﻿using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 
 namespace AmitalCloud.Infrastructure.Application.BaseClasses
 {
-    public interface IService<TEntityPOCO, TEntityKeys, TEntityPM, TEntityParentPM, TEntityParentKeys, TEntityList,TkeyType>
+    public interface IService<TEntityPOCO, TEntityKeys, TEntityPM, TEntityParentPM, TEntityParentKeys, TEntityList, TkeyType>
         where TEntityPOCO : class, new()
         where TEntityKeys : IEntityKeyFields<TEntityPOCO, TkeyType>, new()
         where TEntityPM : IEntityPM, new()

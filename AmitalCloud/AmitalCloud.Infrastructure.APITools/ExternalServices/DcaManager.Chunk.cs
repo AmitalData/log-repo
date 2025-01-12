@@ -37,7 +37,7 @@ namespace AmitalCloud.Infrastructure.APITools.ExternalServices
                 else
                 {
                     var task = client.UploadAsync(
-                    this.DCAServiceAddress , sendTimeoutInSec, new SubmitFileOutgoingQueueRequestM_V1()
+                    this.DCAServiceAddress, sendTimeoutInSec, new SubmitFileOutgoingQueueRequestM_V1()
                     {
                         ComAmitalID = ComAmitalID,
                         FileName = Filename,

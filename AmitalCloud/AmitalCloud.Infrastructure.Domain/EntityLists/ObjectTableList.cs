@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace AmitalCloud.Infrastructure.Domain.EntityLists
+﻿namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
     public partial class ObjectTableList
     {

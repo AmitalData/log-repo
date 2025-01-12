@@ -1,6 +1,5 @@
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.ModelConfiguration;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 {
@@ -43,7 +42,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
 
             this.Property(t => t.SectionNumber);
-          
+
 
             //this.Property(t => t.ObjectFieldCode)
             //      .IsRequired()
@@ -53,7 +52,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             // Table & Column Mappings
             this.ToTable("ScreenFields");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
-          
+
             this.Property(t => t.ScreenId).HasColumnName("ScreenId");
             this.Property(t => t.ScreenCode).HasColumnName("ScreenCode");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -68,19 +67,19 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-             if (dbms == "oracle")
-             {
-                 this.Property(t => t.Column).HasColumnName("Column_");
-                 this.Property(t => t.Row).HasColumnName("Row_");
-             }
-             //#else
-             else
-             {
-                 this.Property(t => t.Column).HasColumnName("Column");
-                 this.Property(t => t.Row).HasColumnName("Row");
-             }
+            if (dbms == "oracle")
+            {
+                this.Property(t => t.Column).HasColumnName("Column_");
+                this.Property(t => t.Row).HasColumnName("Row_");
+            }
+            //#else
+            else
+            {
+                this.Property(t => t.Column).HasColumnName("Column");
+                this.Property(t => t.Row).HasColumnName("Row");
+            }
 
-            
+
             //#endif
             // Relationships
             //this.HasRequired(t => t.ObjectField)

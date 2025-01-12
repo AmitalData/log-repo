@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AmitalCloud.Infrastructure.Domain.Interfaces;
+using System;
 using System.Data.Entity;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
 
 namespace AmitalCloud.Infrastructure.Data.DBHelpers
 {

@@ -1,6 +1,6 @@
-﻿using System;
+﻿using AmitalCloud.Infrastructure.APITools.Sign;
+using System;
 using System.ServiceModel;
-using AmitalCloud.Infrastructure.APITools.Sign;
 
 namespace AmitalCloud.Infrastructure.APITools.Interface
 {

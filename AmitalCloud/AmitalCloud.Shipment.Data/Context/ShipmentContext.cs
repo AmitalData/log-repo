@@ -26,27 +26,15 @@ namespace AmitalCloud.Shipment.Data.Context
     {
         private int _tenant;    
         public int Tenant { get => _tenant;  }
-        private ShipmentContext()
-        {
-            Database.SetInitializer<ShipmentContext>(null);            
-        }
-        private ShipmentContext(DbConnection conn,int tenant)
-            : base(conn,true)
+ 		private ShipmentContext(string nameOrConnectionString,int tenant) : base(nameOrConnectionString)
         {
             this.Configuration.LazyLoadingEnabled = false;
             this.Configuration.AutoDetectChangesEnabled = false;
             Database.SetInitializer<ShipmentContext>(null);
-            _tenant = tenant;   
+			_tenant = tenant;
         }
-        public static IShipmentContext GetContext(int tenant)
-        {           
-            GlobalDB currentDb;
-			currentDb = GlobalDbHelper.GetGlobalDB(tenant);
-			string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
-            ShipmentContext context = new ShipmentContext(connection,tenant);
-            return context;
-        }
+        public static IShipmentContext GetContext(int tenant) =>new ShipmentContext(GlobalDbHelper.GetGlobalDB(tenant).DBConnection,tenant);
+
 		public override AmitalCloudDBSchema AmitalCloudDBSchema
         {
             get { return AmitalCloudDBSchema.LOGITUDE_MAIN; }

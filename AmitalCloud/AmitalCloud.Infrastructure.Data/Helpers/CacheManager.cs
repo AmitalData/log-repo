@@ -1,15 +1,13 @@
 ﻿using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {
     public static class CacheManager
     {
         private static ICacheWrapper cacheWrapper;
-        public static ICacheWrapper CacheWrapper 
+        public static ICacheWrapper CacheWrapper
         {
             get { return cacheWrapper; }
             set
@@ -18,7 +16,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                 cacheWrapper = value;
             }
         }
-        public static int ClearCacheItems(Func<string,bool> pattrenFunc = null)
+        public static int ClearCacheItems(Func<string, bool> pattrenFunc = null)
         {
             int clearItem = 0;
             var enumerator = CacheManager.CacheWrapper.GetEnumerator();
@@ -44,7 +42,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 
                     ///throw;
                 }
-                
+
             }
             return clearItem;
         }
@@ -63,12 +61,12 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         public static TEntity GetOrInsertNewObject<TEntity>(string entityKeyString, Func<TEntity> GetNewObject, bool fromCache = true, bool donotCacheNull = false, bool supressForceInsert = true, int absoluteExpiration = 30) //Itzik Test
             where TEntity : class
         {
-            if (CacheManager.CacheWrapper== null)
+            if (CacheManager.CacheWrapper == null)
             {
                 throw new Exception("please int  CacheManager.CacheWrapper if unitest try like  JournalValidator.OverrideITextCodeTranslator ");
             }
             TEntity EntityPM = null;
-            object cacheObj=null ;
+            object cacheObj = null;
             if (supressForceInsert)
             {
                 cacheObj = CacheManager.CacheWrapper.Get(entityKeyString);
@@ -89,10 +87,10 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                 {
                     if (!donotCacheNull)
                     {
-                    CacheManager.CacheWrapper.Insert(entityKeyString, new NullCache(),
-                        null, System.DateTime.UtcNow.AddMinutes(absoluteExpiration), TimeSpan.Zero);
+                        CacheManager.CacheWrapper.Insert(entityKeyString, new NullCache(),
+                            null, System.DateTime.UtcNow.AddMinutes(absoluteExpiration), TimeSpan.Zero);
                     }
-            }
+                }
             }
             return EntityPM;
         }

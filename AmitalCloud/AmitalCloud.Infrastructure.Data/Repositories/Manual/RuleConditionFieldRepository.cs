@@ -1,30 +1,29 @@
-using AmitalCloud.Infrastructure.Data.Context;using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 
 using System.Linq;
-using System.Linq.Expressions;
 using System.Transactions;
 
 namespace AmitalCloud.Infrastructure.Data.Repositories
 {
-    public class RuleConditionFieldRepository:Repository<RuleConditionField>
+    public class RuleConditionFieldRepository : Repository<RuleConditionField>
     {
         IAmitalCloudContext amitalCloudContext;
         public RuleConditionFieldRepository(IAmitalCloudContext context) : base(context)
         {
             amitalCloudContext = context;
         }
-        public RuleConditionFieldRepository() :this( AmitalCloudContext.GetContext(0))
+        public RuleConditionFieldRepository() : this(AmitalCloudContext.GetContext(0))
         {
         }
         public RuleConditionFieldRepository(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {
         }
-        public RuleConditionField GetSingleRuleConditionField(string id,int tenant)
+        public RuleConditionField GetSingleRuleConditionField(string id, int tenant)
         {
             return (from a in context.RuleConditionFields.Include("ObjectField")
                     where a.Id == id && a.Tenant == tenant
@@ -33,11 +32,11 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         public IQueryable<RuleConditionField> GetRuleConditionFieldsByTenant(int tenant)
         {
             IQueryable<RuleConditionField> ruleConditionFields = from a in context.RuleConditionFields.Include("ObjectField")
-                                                              where a.Tenant == tenant
-                                                              select a;
+                                                                 where a.Tenant == tenant
+                                                                 select a;
             return ruleConditionFields;
         }
-        public IQueryable<RuleConditionField> GetRuleConditionFieldsByRuleId(string ruleId,int tenant)
+        public IQueryable<RuleConditionField> GetRuleConditionFieldsByRuleId(string ruleId, int tenant)
         {
             IQueryable<RuleConditionField> ruleConditionFields = from a in context.RuleConditionFields.Include("ObjectField")
                                                                  where a.Tenant == tenant && a.ObjectTableRuleId == ruleId
@@ -56,9 +55,9 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
                     IAmitalCloudContext context = AmitalCloudContext.GetContext(0);
-                    zeroRuleConditionField = (from a in context.RuleConditionFields.Include("ObjectField") 
-                                            where a.Tenant == 0
-                                            select a).ToList();
+                    zeroRuleConditionField = (from a in context.RuleConditionFields.Include("ObjectField")
+                                              where a.Tenant == 0
+                                              select a).ToList();
                 }
                 if (tenant != 0)
                 {
@@ -74,8 +73,8 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
                 foreach (RuleConditionField field in ruleConditionField)
                 {
                     RuleConditionField existedRuleField = (from a in selectedFields
-                                                   where a.ObjectFieldCode == field.ObjectFieldCode && a.ObjectTableRuleId == field.ObjectTableRuleId
-                                                   select a).FirstOrDefault();
+                                                           where a.ObjectFieldCode == field.ObjectFieldCode && a.ObjectTableRuleId == field.ObjectTableRuleId
+                                                           select a).FirstOrDefault();
                     if (existedRuleField != null)
                     {
                         if (existedRuleField.Tenant == 0 && existedRuleField.Tenant == tenant)

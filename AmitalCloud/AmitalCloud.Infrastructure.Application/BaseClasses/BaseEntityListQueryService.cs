@@ -1,16 +1,15 @@
-﻿using AmitalCloud.Infrastructure.Domain.BaseClasses;
+﻿using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Domain.Helpers;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Linq.Expressions;  
 using System.Reflection;
-using AmitalCloud.Infrastructure.Domain.Helpers;
 
 namespace AmitalCloud.Infrastructure.Application.BaseClasses
 {
@@ -115,8 +114,8 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             IQueryable<TEntityList> query = filter.GetFilteredQuery<TEntityList>(listQueryOperation, GetIqueryableList(iQueryable));
             //if (Convert.ToBoolean(typeof(TEntity).GetField("HasTenant").GetValue(null)))
             //{
-                //query = query.Where<TEntityList>(Predicate);
-                treeFilterQueryArgs.Tenant = context.Tenant;
+            //query = query.Where<TEntityList>(Predicate);
+            treeFilterQueryArgs.Tenant = context.Tenant;
             //}
             return InjectionUtil.Instance.ApplyTreeFilter<TEntityList>(query, treeFilterQueryArgs);
         }

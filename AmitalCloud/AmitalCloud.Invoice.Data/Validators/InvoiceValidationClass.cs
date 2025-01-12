@@ -14,7 +14,7 @@ using System.Reflection;
 namespace AmitalCloud.Invoice.Domain.Validators
 {
 
-    public partial class InvoiceValidationClass :  IInvoiceValidationClass
+    public partial class InvoiceValidationClass : IInvoiceValidationClass
     {
         static string validationOutputMessage = "";
         List<ObjectField> objectFieldList;

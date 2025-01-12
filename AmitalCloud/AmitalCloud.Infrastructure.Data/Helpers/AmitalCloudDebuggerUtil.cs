@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {
- 
+
     public enum AmitalDebuggerLevel : int
     {
         None = 0,

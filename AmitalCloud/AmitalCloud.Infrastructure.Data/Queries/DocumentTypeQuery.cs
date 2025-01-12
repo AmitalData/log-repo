@@ -2,20 +2,13 @@
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.EntityMapping;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Domain.Enums;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Runtime.Remoting.Contexts;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 
 namespace AmitalCloud.Infrastructure.Data.Queries
 {
@@ -28,14 +21,14 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         {
         }
 
-        public DocumentTypeQuery(int tenant) 
+        public DocumentTypeQuery(int tenant)
         {
             IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
             repository = new Repository<DocumentType>(context);
             isFullAccounting = IsFullAccountingActivated(tenant);
         }
 
-        public DocumentTypeQuery(IRepository<DocumentType> repository) 
+        public DocumentTypeQuery(IRepository<DocumentType> repository)
         {
             this.repository = repository;
         }
@@ -404,7 +397,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         private bool IsFullAccountingActivated(int tenant)
         {
             var tenantRepository = new Repository<Tenant>(AmitalCloudContext.GetContext(tenant));
-            Tenant tenantPOCO = tenantRepository.GetMulti(a=>a.Id == tenant).FirstOrDefault();
+            Tenant tenantPOCO = tenantRepository.GetMulti(a => a.Id == tenant).FirstOrDefault();
             if (tenantPOCO == null) return false;
             bool isFullAccountingActivated = tenantPOCO.AccountingActivated;
             return isFullAccountingActivated;
@@ -601,10 +594,10 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         #endregion Privare Methods
 
         #region GetSingle DocumentTypePM
-        public DocumentTypePM GetSinglePMWithOutInclude(string id, int tenant) =>repository.GetMulti(a => a.Id == id && a.Tenant == tenant, a => CreateDocumentTypePM(a)).FirstOrDefault();
+        public DocumentTypePM GetSinglePMWithOutInclude(string id, int tenant) => repository.GetMulti(a => a.Id == id && a.Tenant == tenant, a => CreateDocumentTypePM(a)).FirstOrDefault();
         public DocumentTypePM GetSinglePM(string id, int tenant)
         {
-            DocumentTypePM d =GetPMList(a => a.Id == id && a.Tenant == tenant).FirstOrDefault();
+            DocumentTypePM d = GetPMList(a => a.Id == id && a.Tenant == tenant).FirstOrDefault();
             //DocumentTypeCustomFieldQuery documentTypeCustomFieldQuery = new DocumentTypeCustomFieldQuery(tenant);
             //DocumentTypeCopyQuery documentCopiesQuery = new DocumentTypeCopyQuery(tenant);
             //d.DocumentTypeCustomFields = documentTypeCustomFieldQuery.GetDocumentTypeCusotmFieldPMsByDocumentTypeId(d.Id, d.Tenant).ToList();
@@ -657,11 +650,11 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         {
             if (isFullAccounting)
             {
-                return GetPMList(a => !a.InActive & a.Tenant == tenant && a.ObjectTableId == objectTableid && (a.IsDocIn || a.IsDocOut)) ;
+                return GetPMList(a => !a.InActive & a.Tenant == tenant && a.ObjectTableId == objectTableid && (a.IsDocIn || a.IsDocOut));
             }
             else
             {
-                return GetPMList(a => a.Tenant == tenant && a.ObjectTableId == objectTableid && (a.IsDocIn || a.IsDocOut)) ;
+                return GetPMList(a => a.Tenant == tenant && a.ObjectTableId == objectTableid && (a.IsDocIn || a.IsDocOut));
             }
         }
         //public List<DocumentTypePM> GetFollowUpDocumentTypeByEntityId(string entityId, string objectTableName, int tenant)
@@ -677,11 +670,11 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         //    return GetPMList(a => a.Tenant == tenant && followUpDocumenttypeIds.Contains(a.Id) && a.IsDocOut).ToList();
         //}
         public List<DocumentTypePM> GetTop5DocumentTypePMsByObjectTableId(string objectTableid, int tenant) => repository.GetMulti(a => a.Tenant == tenant && a.ObjectTableId == objectTableid && a.InActive == false
-                , a => CreateDocumentTypePM(a),a=>a.OrderBy,0,4);
+                , a => CreateDocumentTypePM(a), a => a.OrderBy, 0, 4);
         public List<DocumentTypePM> GetDocumentTypesPMByObjectTableIdForDocumentPremissions(string objectTableid, int tenant)
         {
-            List<DocumentTypePM> documentTypes = 
-                GetPMList(a => a.Tenant == tenant && a.ObjectTableId == objectTableid && (a.IsDocIn || (a.TemplateFormatCode == "P" && a.IsDocOut)) && !a.InActive) ;
+            List<DocumentTypePM> documentTypes =
+                GetPMList(a => a.Tenant == tenant && a.ObjectTableId == objectTableid && (a.IsDocIn || (a.TemplateFormatCode == "P" && a.IsDocOut)) && !a.InActive);
             //DocumentTypeCopyQuery documentCopiesQuery = new DocumentTypeCopyQuery(tenant);
             //foreach (DocumentTypePM doc in documentTypes)
             //{
@@ -699,7 +692,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         #region GetSingle DocumentTypeList
 
         public DocumentTypeList GetDocumentTypeListById(string id, int tenant) =>
-             repository.GetMulti(a => a.Id == id && a.Tenant == tenant,a=> CreateDocumentTypeList(a)).FirstOrDefault();
+             repository.GetMulti(a => a.Id == id && a.Tenant == tenant, a => CreateDocumentTypeList(a)).FirstOrDefault();
         public DocumentTypeList GetSingleListByCodeAndTenant(string code, int tenant) => GetList(a => a.Code == code && a.Tenant == tenant).FirstOrDefault();
 
         #endregion GetSingle DocumentTypeList
@@ -713,11 +706,11 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             return documentTypes.ToList();
         }
         public List<DocumentTypeList> GetDocumentTypeListsByObjectTableId(string objectTableid, int tenant) =>
-            repository.GetMulti(a=> a.Tenant == tenant && a.ObjectTableId == objectTableid && a.IsDocOut
+            repository.GetMulti(a => a.Tenant == tenant && a.ObjectTableId == objectTableid && a.IsDocOut
             , a => CreateDocumentTypeList(a));
         public List<DocumentTypeList> GetDocumentTypeListsByObjectTableIdForAutomations(string objectTableid, int tenant) =>
             repository.GetMulti(a => a.Tenant == tenant && a.ObjectTableId == objectTableid && a.IsDocOut && a.TemplateFormatCode == "M"
-            , a => CreateDocumentTypeList(a)); 
+            , a => CreateDocumentTypeList(a));
         public List<DocumentTypeList> GetDocumentTypeListsByObjectTableAndTenant(string objectTableid, int tenant)
         {
             return repository.GetMulti(a => a.Tenant == tenant && a.ObjectTableId == objectTableid && a.IsDocOut && a.TemplateFormatCode == "M"
@@ -761,17 +754,17 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             //}
             return d;
         }
-        public string GetDocumentTypeListIdByCodeAndTenant(string Code, int tenant) =>repository.GetMulti(a => a.Code == Code && a.Tenant == tenant, a => a.Id).FirstOrDefault();
+        public string GetDocumentTypeListIdByCodeAndTenant(string Code, int tenant) => repository.GetMulti(a => a.Code == Code && a.Tenant == tenant, a => a.Id).FirstOrDefault();
         public IQueryable<DocumentTypeList> GetIQueryableEntityList(IQueryable<DocumentType> iQueryable)
         {
             return from documentType in iQueryable.Include("ObjectTable").Include("DocumentTypeCategory")
-                                                  select CreateDocumentTypeList(documentType);
+                   select CreateDocumentTypeList(documentType);
         }
 
 
 
 
- 
+
 
         //public List<ShipmentShareDocumentsData> GetShareDocumentByObjectTableAndEntityIdAndshipmentLevel(string entityId, string agentId, string agentReference, string objectTableId, string shipmentLevelCode, int tenant, string shareDocumentsFrom)
         //{

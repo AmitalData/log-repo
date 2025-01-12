@@ -1,8 +1,8 @@
-﻿using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using System.Web;
-using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+﻿using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Queries;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
+using AmitalCloud.Infrastructure.Domain.Interfaces;
+using System.Web;
 
 namespace AmitalCloud.Infrastructure.Data.Security
 {
@@ -30,7 +30,7 @@ namespace AmitalCloud.Infrastructure.Data.Security
         }
         ContactPM GetLoggedContactNoValidCache(int tenant)
         {
-            ContactPM loggedContact=null;
+            ContactPM loggedContact = null;
             try
             {
                 if (HttpContext.Current != null)
@@ -57,7 +57,7 @@ namespace AmitalCloud.Infrastructure.Data.Security
                 }
             }
             catch { }
-            
+
 
             loggedContact = loggedContact ?? new ContactPM() { DontShowLocal = true };
             return loggedContact;

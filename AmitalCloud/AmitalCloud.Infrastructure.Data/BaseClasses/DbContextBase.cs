@@ -13,12 +13,10 @@ using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Transactions;
 using IsolationLevel = System.Transactions.IsolationLevel;
-using System.Data.Entity;
 namespace AmitalCloud.Infrastructure.Data.BaseClasses
 {
     public abstract class DbContextBase : DbContext
@@ -360,7 +358,7 @@ namespace AmitalCloud.Infrastructure.Data.BaseClasses
                 string typeName =
                     pocoNamespace
                     + "." + item.Name;
-                Type type =  this.GetType().Assembly.GetType(typeName);
+                Type type = this.GetType().Assembly.GetType(typeName);
                 if (type == null)
                 {
                     throw new Exception($"Problem with DbSet<{typeName}> defintion .. Maybe namespace not  Unifreight.Data.AmitalModel.EntityPOCOs ");

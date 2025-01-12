@@ -1,16 +1,15 @@
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System.Data.Entity;
-using System.Linq;
 
 namespace AmitalCloud.Infrastructure.Data.Context
 {
-    public interface IGlobalContext :IContext
+    public interface IGlobalContext : IContext
     {
         IDbSet<GlobalContact> GlobalContacts { get; }
         IDbSet<GlobalTenant> GlobalTenants { get; }
         IDbSet<GlobalDB> GlobalDBs { get; }
-        IDbSet<ConvertProgramInfo> ConvertProgramInfoes {get; }
+        IDbSet<ConvertProgramInfo> ConvertProgramInfoes { get; }
         IDbSet<PerformanceLog> PerformanceLogs { get; }
         IDbSet<LogitudeLead> LogitudeLeads { get; }
         IDbSet<TenantManagement> TenantManagements { get; }

@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace AmitalCloud.Infrastructure.APITools.Sign
 {
-    public class LargeUploadService 
+    public class LargeUploadService
     {
         private static List<BlobFile> UploadBlobFileSet = new List<BlobFile>();
 

@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 {
-    public class CustomerCompetitorProductMap: EntityTypeConfiguration<CustomerCompetitorProduct>
+    public class CustomerCompetitorProductMap : EntityTypeConfiguration<CustomerCompetitorProduct>
     {
         public CustomerCompetitorProductMap()
         {

@@ -1,15 +1,14 @@
-﻿using AmitalCloud.Infrastructure.Application.Helpers;
+﻿using AmitalCloud.Infrastructure.APITools.Helpers;
+using AmitalCloud.Infrastructure.Application.EntityQueryServices;
+using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Domain.EntityKeys;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
+using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
 using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.APITools.Helpers;
-using AmitalCloud.Infrastructure.Application.EntityQueryServices;
 namespace AmitalCloud.Infrastructure.APITools.ApiV1
 {
     public class DocumentTypeQueryService
@@ -135,7 +134,7 @@ namespace AmitalCloud.Infrastructure.APITools.ApiV1
         DocumentTypePM GetSinglePM(string id, int tenant) => GetSinglePMByPredicate(a => a.Id == id, tenant);
 
         DocumentTypePM GetSinglePMByPredicate(Expression<Func<POCO.DocumentType, bool>> predicate, int tenant)
-        { 
+        {
             return new Repository<POCO.DocumentType>(context).GetMulti(predicate, a =>
             new DocumentTypePM()
             {
@@ -190,8 +189,8 @@ namespace AmitalCloud.Infrastructure.APITools.ApiV1
                 OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
                 OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
                 OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
-                DocumentTypeCustomFields =  new DocumentTypeCustomFieldQueryService(context)
-                                            .GetMultiByParent<DocumentTypeKeys<string>>(new DocumentTypeKeys<string>() { Id = a.Id},true,true),
+                DocumentTypeCustomFields = new DocumentTypeCustomFieldQueryService(context)
+                                            .GetMultiByParent<DocumentTypeKeys<string>>(new DocumentTypeKeys<string>() { Id = a.Id }, true, true),
                 DocumentTypeCopies = new DocumentTypeCopyQueryService(context)
                                             .GetMultiByParent<DocumentTypeKeys<string>>(new DocumentTypeKeys<string>() { Id = a.Id }, true, true)
             }

@@ -6,7 +6,7 @@ namespace AmitalCloud.Infrastructure.APITools.Interface
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "ISignService" in both code and config file together.
     [ServiceContract]
-    public interface ISignService : ISignServiceUpdaterApplicationBlock ,IDownloadChunksSignService, IUploadChunksSignService
+    public interface ISignService : ISignServiceUpdaterApplicationBlock, IDownloadChunksSignService, IUploadChunksSignService
     {
         [OperationContract]
         void DoWork();
@@ -22,7 +22,7 @@ namespace AmitalCloud.Infrastructure.APITools.Interface
         [OperationContract]
         void GetTenantFromCertificate(string CurrentSignCertificate, out string PersonalTenantCommaDelimitedList, out string CompanyTenant);
 
-        
+
     }
-    
+
 }

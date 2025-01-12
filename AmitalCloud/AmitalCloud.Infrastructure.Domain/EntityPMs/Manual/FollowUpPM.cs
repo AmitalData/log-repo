@@ -1,10 +1,9 @@
-﻿using System;
+﻿using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System.ComponentModel.DataAnnotations;
-using AmitalCloud.Infrastructure.Domain.Interfaces ; 
 
 namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 {
-         
+
     [CustomValidation(typeof(IClassLevelValidator), "ValidateClass")]
     public partial class FollowUpPM
     {

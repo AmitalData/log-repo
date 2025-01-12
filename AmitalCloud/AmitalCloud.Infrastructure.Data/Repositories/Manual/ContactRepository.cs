@@ -1,33 +1,31 @@
-﻿using AmitalCloud.Infrastructure.Data.Context;using AmitalCloud.Infrastructure.Data.Helpers;
+﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Data.Repositories
 {
     public class ContactRepository : Repository<Contact>, IRepository<Contact>
-        //, Simplog.Data.CommonDataModel.Repositories.IContactRepository
+    //, Simplog.Data.CommonDataModel.Repositories.IContactRepository
     {
         IAmitalCloudContext currentContext;
 
-        public ContactRepository() :this(0)
+        public ContactRepository() : this(0)
         {
         }
 
-        public ContactRepository(IAmitalCloudContext context) :base(context)
+        public ContactRepository(IAmitalCloudContext context) : base(context)
         {
             currentContext = context;
         }
-        public ContactRepository(int tenant) :this(AmitalCloudContext.GetContext(tenant))
+        public ContactRepository(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {
         }
-        public ContactRepository(IUnitOfWork unitOfWork) :base(unitOfWork)
+        public ContactRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
         public IQueryable<Contact> GetContactsByEmail(string email)
@@ -372,7 +370,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             base.Insert(entity);
         }
 
- 
+
         new public void Update(Contact entity)
         {
             SetComputedKeyValue(entity);

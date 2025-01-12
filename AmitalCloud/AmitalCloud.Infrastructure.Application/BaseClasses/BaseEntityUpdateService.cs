@@ -1,5 +1,4 @@
-﻿using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Data.Helpers;
+﻿using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;

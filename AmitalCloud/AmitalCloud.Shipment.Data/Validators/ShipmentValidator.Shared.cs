@@ -1,8 +1,8 @@
-﻿using AmitalCloud.Infrastructure.Domain.Enums;
+﻿using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Domain.Enums;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using AmitalCloud.Infrastructure.Data.Helpers;  
 namespace AmitalCloud.Shipment.Domain.Validators
 {
     public class ShipmentValidator
@@ -46,7 +46,7 @@ namespace AmitalCloud.Shipment.Domain.Validators
             }
             return ValidationResult.Success;
         }
-        
+
 
     }
 }

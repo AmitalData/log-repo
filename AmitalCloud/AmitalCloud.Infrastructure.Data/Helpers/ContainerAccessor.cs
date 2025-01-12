@@ -1,10 +1,10 @@
-﻿using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Services;
+﻿using AmitalCloud.Infrastructure.Data.Services;
+using AmitalCloud.Infrastructure.Domain.Interfaces;
 using Microsoft.Practices.Unity;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {
-    public class ContainerAccessor:IContainerAccessor
+    public class ContainerAccessor : IContainerAccessor
     {
 
         #region Members
@@ -44,8 +44,8 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 
         #endregion
 
-        
-           
+
+
         public static void InitContainer()
         {
             if (_container == null)

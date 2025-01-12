@@ -27,7 +27,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
 
         public Repository(IUnitOfWork unitOfWork) : this(unitOfWork.Context)
         {
-            _unitOfWork=unitOfWork;
+            _unitOfWork = unitOfWork;
         }
         public Repository(IContext dbContext)
         {
@@ -68,7 +68,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             {
                 throw new Exception("Use UOW.Save()");
             }
-            
+
         }
         public async Task<List<TEntity>> GetMultiAsync<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select, Expression<Func<TEntity, TKey>> orderBy, int skip, int take) => await _dbSet.Where(predicate).Select(select).OrderBy(orderBy).Skip(skip).Take(take).ToListAsync();
         public async Task<List<TResult>> GetMultiAsync<TResult, TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, Expression<Func<TResult, TKey>> orderBy, int skip, int take) => await _dbSet.Where(predicate).Select(select).OrderBy(orderBy).Skip(skip).Take(take).ToListAsync();
@@ -168,7 +168,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         public List<TEntity> GetMulti(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select) => _dbSet.Where(predicate).Select(select).ToList();
         public List<TEntity> GetMulti(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select, string include) => _dbSet.Where(predicate).Include(include).Select(select).ToList();
         public List<TEntity> GetMulti(Expression<Func<TEntity, bool>> predicate) => _dbSet.Where(predicate).ToList();
-        public List<TEntity> GetMulti(Expression<Func<TEntity, bool>> predicate,string include) => _dbSet.Where(predicate).Include(include).ToList();
+        public List<TEntity> GetMulti(Expression<Func<TEntity, bool>> predicate, string include) => _dbSet.Where(predicate).Include(include).ToList();
         public IEnumerable<TEntity> GetMulti<TKey>(ISpecification<TEntity, TKey> spec) => GetQuery(spec).AsEnumerable();
         public TEntity GetSingle<TKeyType>(IEntityKeyFields<TEntity, TKeyType> entityKeys) => GetMulti(entityKeys.Predicate).FirstOrDefault();
         public List<TEntity> GetMulti<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TKey>> orderBy, int skip, int take) => _dbSet.Where(predicate).OrderBy(orderBy).Skip(skip).Take(take).ToList();
@@ -185,15 +185,15 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         public List<TResult> GetMulti<TResult, TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, Expression<Func<TResult, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending)
             => (orderByDirection == OrderByDirection.Ascending) ?
             _dbSet.Where(predicate).Select(select).OrderBy(orderBy).ToList() : _dbSet.Where(predicate).Select(select).OrderByDescending(orderBy).ToList();
-        public List<object> GetMulti<TInner,  TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TInner, bool>> innerpredicate,
+        public List<object> GetMulti<TInner, TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TInner, bool>> innerpredicate,
            //, Expression<Func<TResult, TResult>> select,
            Expression<Func<TEntity, TKey>> outerKeySelector, Expression<Func<TInner, TKey>> innerKeySelector
             //, Expression<Func<TEntity, TInner, TResult>> resultSelector
             ) where TInner : class
-        { 
-        var res = _dbSet.Where(predicate)
-            .Join((_dbContext).Set<TInner>().Where(innerpredicate), outerKeySelector, innerKeySelector, (a,b) => new {a,b})
-            .ToList<object>() ;
+        {
+            var res = _dbSet.Where(predicate)
+                .Join((_dbContext).Set<TInner>().Where(innerpredicate), outerKeySelector, innerKeySelector, (a, b) => new { a, b })
+                .ToList<object>();
             return res;
         }
 
@@ -275,7 +275,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             return true;
         }
 
-//TODO change access modifier to protected after UOW is implemented
+        //TODO change access modifier to protected after UOW is implemented
         public void SubmitChanges()
         {
             if (_unitOfWork == null)
@@ -352,7 +352,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
                 entity = GetAll(tenant);
                 Helpers.CacheManager.CacheWrapper.Insert<TEntity>(tenant, entity);
             }
-             return entity;
+            return entity;
         }
 
 

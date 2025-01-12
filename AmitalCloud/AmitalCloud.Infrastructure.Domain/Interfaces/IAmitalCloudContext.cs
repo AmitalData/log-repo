@@ -145,7 +145,6 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 		 IDbSet<FilingInbox> FilingInboxes { get; }
 		 IDbSet<FilingInboxAttachment> FilingInboxAttachments { get; }
 		 IDbSet<FilingInboxAttachmentLog> FilingInboxAttachmentLogs { get; }
-
 		 IDbSet<FTPDetail> FTPDetails { get; }
 		 IDbSet<GlobalZone> GlobalZones { get; }
 		 IDbSet<Horse> Horses { get; }

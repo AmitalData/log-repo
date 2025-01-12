@@ -1,8 +1,6 @@
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using System;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -35,7 +33,8 @@ namespace AmitalCloud.Infrastructure.Data.Helpers.CustomFieldsResolver
                 {
                     Parallel.ForEach(customFields, field =>
                     {
-                        SetCustomFieldValue(new CustomFieldMultiSetterValueArgs { 
+                        SetCustomFieldValue(new CustomFieldMultiSetterValueArgs
+                        {
                             tenant = tenant,
                             Entity = entity,
                             field = field,

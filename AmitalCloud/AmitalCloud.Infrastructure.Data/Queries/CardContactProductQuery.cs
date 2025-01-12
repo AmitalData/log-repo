@@ -1,13 +1,11 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Domain.EntityPMs;
+using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using System.Collections.Generic;
-using System.Linq;
-
-using System.Runtime.Remoting.Contexts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Helpers;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AmitalCloud.Infrastructure.Data.Queries
 {
@@ -15,7 +13,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     {
         IRepository<CardContactProduct> repository;
         IAmitalCloudContext context;
-        public CardContactProductQuery() :this(0)
+        public CardContactProductQuery() : this(0)
         {
         }
 
@@ -33,15 +31,15 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         public CardContactProductPM GetSinglePM(string id, int tenant)
         {
             CardContactProductPM entity = (from a in context.CardContactProducts.Include("ProductType")
-                 where a.Tenant == tenant && a.Id == id
-                 select new CardContactProductPM()
-                 {
-                     Id = a.Id,
-                     CardContactId = a.CardContactId,
-                     ProductTypeCode = a.ProductTypeCode,
-                     Tenant = a.Tenant,                     
-                     ProductTypeName = a.ProductType != null ? a.ProductType.Name : null,
-                 }).FirstOrDefault();
+                                           where a.Tenant == tenant && a.Id == id
+                                           select new CardContactProductPM()
+                                           {
+                                               Id = a.Id,
+                                               CardContactId = a.CardContactId,
+                                               ProductTypeCode = a.ProductTypeCode,
+                                               Tenant = a.Tenant,
+                                               ProductTypeName = a.ProductType != null ? a.ProductType.Name : null,
+                                           }).FirstOrDefault();
 
             return entity;
         }
@@ -57,11 +55,11 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                      Id = a.Id,
                      CardContactId = a.CardContactId,
                      ProductTypeCode = a.ProductTypeCode,
-                     Tenant = a.Tenant,                     
-                     ProductTypeName = a.ProductType != null ? a.ProductType.Name : null,                     
-                 }).ToList();            
+                     Tenant = a.Tenant,
+                     ProductTypeName = a.ProductType != null ? a.ProductType.Name : null,
+                 }).ToList();
 
             return result;
-        }        
+        }
     }
 }

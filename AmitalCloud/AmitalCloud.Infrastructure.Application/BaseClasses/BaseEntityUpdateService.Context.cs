@@ -4,14 +4,14 @@ using System.Text;
 
 namespace AmitalCloud.Infrastructure.Application.BaseClasses
 {
-    public abstract partial class BaseEntityUpdateService<TContext,TEntityPOCO, TEntityPM, TEntityParentPM, TEntityList, TkeyType>
+    public abstract partial class BaseEntityUpdateService<TContext, TEntityPOCO, TEntityPM, TEntityParentPM, TEntityList, TkeyType>
     {
         protected virtual void AddContext(TEntityPM myTEntityPM)
         {
             if (EntityUpdateServiceContext.Current == null)
             {
                 EntityUpdateServiceContext.Current = new CurrentDebug() { EntityUpdateService = this as object };
-            }   
+            }
         }
         protected void AddExternalTrace(string Trace)
         {
@@ -57,13 +57,13 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             }
             catch (Exception)
             {
-                   //throw;
+                //throw;
             }
-            
+
         }
         public void GetAncestor
             (out object entityPOCO, out object entityPM, out object entityParentPM)
-        
+
         {
             entityPOCO = null; entityPM = null; entityParentPM = null;
             try
@@ -104,7 +104,7 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
         }
         internal string GetDebugTrace()
         {
-            return _sb.ToString(); 
+            return _sb.ToString();
         }
     }
 }

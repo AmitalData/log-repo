@@ -1,44 +1,39 @@
-using AmitalCloud.Infrastructure.Data.Context;using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Web;
 namespace AmitalCloud.Infrastructure.Data.Repositories
 {
-    public class GlobalDBRepository: Repository<GlobalDB>
+    public class GlobalDBRepository : Repository<GlobalDB>
     {
         IGlobalContext globalContext;
         #region Constructors
-        public GlobalDBRepository(IGlobalContext context):base(context)
+        public GlobalDBRepository(IGlobalContext context) : base(context)
         {
             globalContext = context;
         }
-        public GlobalDBRepository():this(GlobalContext.GetContext())
+        public GlobalDBRepository() : this(GlobalContext.GetContext())
         {
         }
         #endregion Constructors
 
-        public GlobalDB GetGlobalDBById(string id) =>  GetSingleGlobalDB(id);
-        public GlobalDB GetSingleGlobalDB(string id) => ConfigurationManager.AppSettings.Get("ENVIROMENT") == "azure app service"  ? GetGlobalDbFromEnviroment() : GetAll(0, true).Where(a => a.Id == id).FirstOrDefault();
+        public GlobalDB GetGlobalDBById(string id) => GetSingleGlobalDB(id);
+        public GlobalDB GetSingleGlobalDB(string id) => ConfigurationManager.AppSettings.Get("ENVIROMENT") == "azure app service" ? GetGlobalDbFromEnviroment() : GetAll(0, true).Where(a => a.Id == id).FirstOrDefault();
         public int GetDataBasesCount() => GetAll(0, true).Count();
-        public List<GlobalDB> GetActiveDataBases() => GetAll(0, true).Where(a=>a.IsActive ==true).ToList();
+        public List<GlobalDB> GetActiveDataBases() => GetAll(0, true).Where(a => a.IsActive == true).ToList();
         public IQueryable<GlobalDB> GetGlobalDBs() => context.GlobalDBs;
         public IGlobalContext context
         {
-            get { return globalContext ==null ? GlobalContext.GetContext(): globalContext; }
+            get { return globalContext == null ? GlobalContext.GetContext() : globalContext; }
         }
         public static GlobalDB GetGlobalDBByTenant(int tenant) => ConfigurationManager.AppSettings.Get("ENVIROMENT") == "azure app service" ? GetGlobalDbFromEnviroment() : GetByGlobalTenant(tenant);
         private static GlobalDB GetByGlobalTenant(int tenant)
         {
             IGlobalContext context = GlobalContext.GetContext();
             GlobalTenant globaltenant = new Repository<GlobalTenant>(context).GetAll(0, true).Where(a => a.Id == tenant).FirstOrDefault();
-            return new Repository<GlobalDB>(context).GetAll(0, true).Where(a => a.Id == globaltenant.GlobalDBId).FirstOrDefault();   
-         }
+            return new Repository<GlobalDB>(context).GetAll(0, true).Where(a => a.Id == globaltenant.GlobalDBId).FirstOrDefault();
+        }
         private static GlobalDB GetGlobalDbFromEnviroment()
         {
             return new GlobalDB()

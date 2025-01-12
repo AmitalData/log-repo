@@ -1,46 +1,43 @@
+using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Domain.Enums;
+using AmitalCloud.Infrastructure.Domain.Interfaces;
 using Devart.Data.Oracle;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
 using System.Data.SqlClient;
 using System.Transactions;
-using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Domain.BaseClasses;
-using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Domain.Enums;
 
 namespace AmitalCloud.Infrastructure.Data.Counters
 {
     public class CodeCounter
     {
         private static Object thisLock = new Object();
-        public static int GetNumber(string tableName, int tenant,bool InOracleCreateNewTransaction=false)
+        public static int GetNumber(string tableName, int tenant, bool InOracleCreateNewTransaction = false)
         {
             int number = 0;
             string strConnString = GetConnection(tenant);
 
-           if (AmitalCloudSettings.DatabaseManagementSystem == "oracle")
+            if (AmitalCloudSettings.DatabaseManagementSystem == "oracle")
+            {
+                if (InOracleCreateNewTransaction)
                 {
-                    if (InOracleCreateNewTransaction)
-                    {
-                        LogMessagingUtil.Instance.AppendLine($"GetCodeValueFromOracle({tableName}-InOracleCreateNewTransaction");
-                        using (var scope= TransactionFactory.GetNewTransaction())
-                        {
-                            number = GetCodeValueFromOracle(tableName, tenant, strConnString);
-                            scope.Complete();
-                        }
-                    }
-                    else
+                    LogMessagingUtil.Instance.AppendLine($"GetCodeValueFromOracle({tableName}-InOracleCreateNewTransaction");
+                    using (var scope = TransactionFactory.GetNewTransaction())
                     {
                         number = GetCodeValueFromOracle(tableName, tenant, strConnString);
+                        scope.Complete();
                     }
-                    
-
-                    return number;
                 }
+                else
+                {
+                    number = GetCodeValueFromOracle(tableName, tenant, strConnString);
+                }
+
+
+                return number;
+            }
             else
             {
                 int Retry = 0;
@@ -331,20 +328,7 @@ namespace AmitalCloud.Infrastructure.Data.Counters
         }
         public static string GetConnection(int tenant)
         {
-
-            GlobalDB currentDb;
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                //GlobalDBRep = new GlobalDBRepository();
-                currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
-
-            }
-            string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
-            AmitalCloudContext context = new AmitalCloudContext(connection,tenant);
-
+            IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
             return context.Database.Connection.ConnectionString;// entityBuilder.ConnectionString;
         }
     }

@@ -61,7 +61,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPOCOs
         public DateTime? DepartureArrivalFromDate { get; set; }
         public DateTime? DepartureArrivalToDate { get; set; }
 
-        
+
         public string MasterShipmentNumber { get; set; }
         public string FWBStatusCode { get; set; }
         public DateTime? FWBStatusDate { get; set; }

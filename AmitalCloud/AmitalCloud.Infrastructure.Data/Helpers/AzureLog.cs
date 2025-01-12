@@ -1,12 +1,11 @@
 using AmitalCloud.Infrastructure.Data.Azure;
 using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Repositories;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.IO;
-using System.Reflection;
 using System.Text;
 using System.Transactions;
 
@@ -23,14 +22,14 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                 if (NLog.LogManager.Configuration == null)
                     NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NLog.config"));
             }
-            catch(Exception e) 
+            catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e);
             }
 
         }
 
-        public static void SaveFileToStorage(string filename,string fileContent,int tenant)
+        public static void SaveFileToStorage(string filename, string fileContent, int tenant)
         {
             try
             {
@@ -69,7 +68,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             }
             catch (Exception ex) { }
         }
-        public static void SaveLogsInStorage(string log, string type, DateTime clientDate, string message, string stackTrace, int tenant, string userId, string userName, string IP,Exception cachedException = null)
+        public static void SaveLogsInStorage(string log, string type, DateTime clientDate, string message, string stackTrace, int tenant, string userId, string userName, string IP, Exception cachedException = null)
         {
             CloudBlobContainer blobContainer = null;
             CloudBlockBlob blobfile = null;
@@ -125,8 +124,8 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                             }
 
                         case "E": // Errors Log
-                           // AddLogRecord(log, tenant, stackTrace, clientDate, userId, userName, IP);
-                            //blobfile = blobContainer.GetBlockBlobReference("errorslog.txt");
+                                  // AddLogRecord(log, tenant, stackTrace, clientDate, userId, userName, IP);
+                                  //blobfile = blobContainer.GetBlockBlobReference("errorslog.txt");
                             break;
 
                         case "P": // Performance Log
@@ -231,12 +230,12 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         }
 
 
-        static void AddLogRecord(string exception,int tenant ,string stackTrace, DateTime clientDate,  string userId, string userName,string IP, Exception cachedException)
+        static void AddLogRecord(string exception, int tenant, string stackTrace, DateTime clientDate, string userId, string userName, string IP, Exception cachedException)
         {
 
             InitNlogConfig();
             NLogger.Error(cachedException, "Tenant {0}, clientDate {1}, userID {2}, userName {3}, IP {4}, stackTrace {5}, exception:{6}",
-                tenant,clientDate, userId, userName,IP,stackTrace, exception); 
+                tenant, clientDate, userId, userName, IP, stackTrace, exception);
 
             if (!string.IsNullOrEmpty(exception) && exception.Contains("Sorry! you have no permission to do this operation"))
                 return;
@@ -252,7 +251,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             var better1st7000ThenNothing = true;//itzik 
             if (better1st7000ThenNothing)
             {
-                
+
                 exception = exception ?? "";
                 if (cachedException != null && cachedException.Source == "EntityFramework" && exception.Length > 7000)//Islam: take the start and the end if it is a db exception.
                 {
@@ -268,12 +267,12 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                     exception = exception.Substring(0, Math.Min(2000, exception.Length));
                 }
             }
-            
-            
+
+
 
             if (String.IsNullOrWhiteSpace(userName))
             {
-                userName=userId;
+                userName = userId;
             }
             if (String.IsNullOrWhiteSpace(userName) && AmitalCloudSettings.GetUserNameInject != null)
             {
@@ -292,18 +291,18 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             {
                 IRepository<ErrorLog> errorLogRrp = new Repository<ErrorLog>(uow);
                 ErrorLog errorLog = new ErrorLog()
-                                   {
-                                       Id = Guid.NewGuid().ToString(),
-                                       StackTrace = stackTrace,
-                                       Exception = exception,
-                                       Tenant = tenant,
-                                       UserName = userName,
-                                       LogDate = DateTime.Now,
-                                       Tier = "Server",
-                                       ClientDate = clientDate,
-                                       SearchFields = "Server" + "," + userName + "," + exception + "," + tenant,
-                                       IP = IP,
-                                   };
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    StackTrace = stackTrace,
+                    Exception = exception,
+                    Tenant = tenant,
+                    UserName = userName,
+                    LogDate = DateTime.Now,
+                    Tier = "Server",
+                    ClientDate = clientDate,
+                    SearchFields = "Server" + "," + userName + "," + exception + "," + tenant,
+                    IP = IP,
+                };
                 uow.CreateTransactionScope(TransactionScopeOption.RequiresNew);
                 errorLogRrp.Insert(errorLog);
                 uow.Save();
@@ -327,7 +326,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         {
             string StackTrace = "";
             string[] myException = exception.Split('~');
-           
+
             if (myException.Length == 3)
             {
                 //string Header = myException[0];
@@ -350,13 +349,13 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                 blobContainer = StorageAcountDetails.GetCurrentContainer("warminglogs");
                 blobContainer.CreateIfNotExists();
                 string machineInfo = (!string.IsNullOrEmpty(Environment.MachineName) ? Environment.MachineName : "").ToLower();
-                machineInfo = machineInfo +"_"+ DateTime.Now.Date.ToShortDateString().ToLower();
+                machineInfo = machineInfo + "_" + DateTime.Now.Date.ToShortDateString().ToLower();
                 switch (type)
                 {
 
                     case "E": // Errors Log
 
-                        blobfile = blobContainer.GetBlockBlobReference("warmingerrors_" + machineInfo+ ".txt");
+                        blobfile = blobContainer.GetBlockBlobReference("warmingerrors_" + machineInfo + ".txt");
                         break;
 
                     case "M": // Performance Log

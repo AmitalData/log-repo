@@ -1,6 +1,5 @@
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.ModelConfiguration;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 {
@@ -29,7 +28,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-               
+
                 this.Property(t => t.Date).HasColumnName("Date_");
                 this.Property(t => t.VersionNumber).HasColumnName("VersionNumber");
                 this.Property(t => t.VersionDocumentId).HasColumnName("VersionDocumentId");
@@ -40,7 +39,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             //#else
             else
             {
-                
+
                 this.Property(t => t.Date).HasColumnName("Date");
                 this.Property(t => t.VersionNumber).HasColumnName("VersionNumber");
                 this.Property(t => t.VersionDocumentId).HasColumnName("VersionDocumentId");

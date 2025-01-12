@@ -1,4 +1,4 @@
-﻿using AmitalCloud.Infrastructure.Data.Context;using AmitalCloud.Infrastructure.Data.Helpers;
+﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
@@ -7,7 +7,6 @@ using System.Collections.Generic;
 
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Data.Repositories
 {
@@ -18,7 +17,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         public CardRepository() : this(0)
         {
         }
-        public CardRepository(int tenant) : this (AmitalCloudContext.GetContext(tenant))
+        public CardRepository(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {
         }
         public CardRepository(IAmitalCloudContext context) : base(context)

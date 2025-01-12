@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
-{ 
+{
     public class StringHelper
     {
         public static string TruncateLongString(string str, int maxLength)

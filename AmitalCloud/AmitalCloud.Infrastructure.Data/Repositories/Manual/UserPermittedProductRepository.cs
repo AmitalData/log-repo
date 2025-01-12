@@ -1,22 +1,20 @@
-﻿using AmitalCloud.Infrastructure.Data.Context;using AmitalCloud.Infrastructure.Data.Helpers;
+﻿using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
 
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace AmitalCloud.Infrastructure.Data.Repositories
 {
-    public class UserPermittedProductRepository:Repository<UserPermittedProduct>
+    public class UserPermittedProductRepository : Repository<UserPermittedProduct>
     {
         IAmitalCloudContext currentContext;
-        public UserPermittedProductRepository(IAmitalCloudContext context):base(context)
+        public UserPermittedProductRepository(IAmitalCloudContext context) : base(context)
         {
             currentContext = context;
         }
-        public UserPermittedProductRepository() :this(AmitalCloudContext.GetContext(0))
+        public UserPermittedProductRepository() : this(AmitalCloudContext.GetContext(0))
         {
         }
         public UserPermittedProductRepository(int tenant) : this(AmitalCloudContext.GetContext(tenant))

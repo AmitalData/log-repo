@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ServiceModel.DomainServices;
-using System.ServiceModel.DomainServices.Server;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {

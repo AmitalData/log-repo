@@ -1,15 +1,12 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using System;
-using System.Collections.Generic;
-
-using System.Linq;
-using System.Web;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AmitalCloud.Infrastructure.Data.Queries
 {
@@ -23,14 +20,14 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         public AddressQuery(int tenant)
         {
             context = AmitalCloudContext.GetContext(tenant);
-            repository = (IRepository<IAmitalCloudContext>) new Repository< Address>(context);
+            repository = (IRepository<IAmitalCloudContext>)new Repository<Address>(context);
         }
         public AddressQuery(IRepository<IAmitalCloudContext> addressRepository) => repository = addressRepository;
         #region Get Single AddressPM
-        public AddressPM GetSinglePM(string id, int tenant) => GetAddressPMQuery().Where(a => a.Tenant == tenant && a.Id == id).FirstOrDefault(); 
-        public AddressPM GetSinglePMByExternalId(string exteranlId, int tenant) =>  GetAddressPMQuery().Where(a => a.Tenant == tenant && a.Id == exteranlId).FirstOrDefault(); 
-        public AddressPM GetAddressByExternalId(string exteranlId, int tenant) => GetSinglePMByExternalId(exteranlId, tenant);  
-        public AddressPM GetAddressByCardId(string cardId, int tenant) =>GetAddressPMQuery().Where(a => a.Tenant == tenant  && a.CardId == cardId && (a.AddressTypeId == "B" || a.AddressTypeId == "M" || a.AddressTypeId == "O")).FirstOrDefault(); 
+        public AddressPM GetSinglePM(string id, int tenant) => GetAddressPMQuery().Where(a => a.Tenant == tenant && a.Id == id).FirstOrDefault();
+        public AddressPM GetSinglePMByExternalId(string exteranlId, int tenant) => GetAddressPMQuery().Where(a => a.Tenant == tenant && a.Id == exteranlId).FirstOrDefault();
+        public AddressPM GetAddressByExternalId(string exteranlId, int tenant) => GetSinglePMByExternalId(exteranlId, tenant);
+        public AddressPM GetAddressByCardId(string cardId, int tenant) => GetAddressPMQuery().Where(a => a.Tenant == tenant && a.CardId == cardId && (a.AddressTypeId == "B" || a.AddressTypeId == "M" || a.AddressTypeId == "O")).FirstOrDefault();
         public AddressPM GetSingleAddressPM(string id, int tenant, bool fromcache)
         {
             if (!fromcache)
@@ -43,8 +40,8 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 return GetSingleAddressPM(id, tenant);
             });
         }
-        public AddressPM GetAddressPMByTypeAndCard(string cardId, string typeId, int tenant) => GetAddressPMQuery().Where(a => a.Tenant == tenant && a.CardId == cardId && a.AddressTypeId.ToUpper() == typeId.ToUpper()).FirstOrDefault(); 
-        public AddressPM GetSingleAddressPM(string id, int tenant) => GetAddressPMQuery().Where(a => a.Tenant == tenant && a.Id == id).FirstOrDefault(); 
+        public AddressPM GetAddressPMByTypeAndCard(string cardId, string typeId, int tenant) => GetAddressPMQuery().Where(a => a.Tenant == tenant && a.CardId == cardId && a.AddressTypeId.ToUpper() == typeId.ToUpper()).FirstOrDefault();
+        public AddressPM GetSingleAddressPM(string id, int tenant) => GetAddressPMQuery().Where(a => a.Tenant == tenant && a.Id == id).FirstOrDefault();
         private IQueryable<AddressPM> GetAddressPMQuery()
         {
             return (from a in context.Addresses.Include("Country").Include("State")
@@ -97,7 +94,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                     });
         }
         public List<AddressList> GetAddressListsByCardIds(List<string> cardIds, string typeId, int tenant) => GetAddressListQueryShort().Where(a => a.Tenant == tenant && cardIds.Contains(a.CardId) && a.AddressTypeId.ToUpper() == typeId.ToUpper()).ToList();
-        public List<AddressList> GetAddressesByCardIds(List<string> cardIds,  int tenant) => GetAddressListQueryShort().Where(a => a.Tenant == tenant && cardIds.Contains(a.CardId)).ToList();   
+        public List<AddressList> GetAddressesByCardIds(List<string> cardIds, int tenant) => GetAddressListQueryShort().Where(a => a.Tenant == tenant && cardIds.Contains(a.CardId)).ToList();
         public List<AddressPM> GetAddressesByCardId(string cardId, int tenant) => GetAddressPMQuery().Where(a => a.Tenant == tenant && a.CardId == cardId).ToList();
         public List<AddressList> GetAddressListsByIds(List<string> addressIds, int tenant) => GetAddressListQueryShort().Where(a => a.Tenant == tenant && addressIds.Contains(a.Id)).ToList();
         #endregion Get List<AddressList>
@@ -105,36 +102,36 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         private IQueryable<AddressList> GetAddressListQuery()
         {
             return (from a in context.Addresses.Include("Country").Include("State")
-                         let list=new AddressList()
-                         {
-                             Address1 = a.Address1,
-                             Address2 = a.Address2,
-                             AddressTypeId = a.AddressTypeId,
-                             ATTN = a.ATTN,
-                             CardId = a.CardId,
-                             SearchFields = a.SearchFields,
-                             City = a.City,
-                             Description = a.Description,
-                             FaxNumber = a.FaxNumber,
-                             Id = a.Id,
-                             Name = a.Name,
-                             PhoneNumber = a.PhoneNumber,
-                             Tenant = a.Tenant,
-                             ZipCode = a.ZipCode,
-                             InActive = a.InActive,
-                             IsLocalLanguage = a.IsLocalLanguage,
-                             StateId = a.StateId,
-                             StateCode = a.State != null ? a.State.Code : null,
-                             StateName = a.State != null ? a.State.EnglishName : null,
-                             CountryId = a.CountryId,
-                             CountryCode = a.Country != null ? a.Country.Code : null,
-                             CountryName = a.Country != null ? (a.IsLocalLanguage ? a.Country.LocalName : a.Country.EnglishName) : null,
-                             CountryEC = a.Country == null ? false : a.Country.EC,
-                         }
-                         select list);
+                    let list = new AddressList()
+                    {
+                        Address1 = a.Address1,
+                        Address2 = a.Address2,
+                        AddressTypeId = a.AddressTypeId,
+                        ATTN = a.ATTN,
+                        CardId = a.CardId,
+                        SearchFields = a.SearchFields,
+                        City = a.City,
+                        Description = a.Description,
+                        FaxNumber = a.FaxNumber,
+                        Id = a.Id,
+                        Name = a.Name,
+                        PhoneNumber = a.PhoneNumber,
+                        Tenant = a.Tenant,
+                        ZipCode = a.ZipCode,
+                        InActive = a.InActive,
+                        IsLocalLanguage = a.IsLocalLanguage,
+                        StateId = a.StateId,
+                        StateCode = a.State != null ? a.State.Code : null,
+                        StateName = a.State != null ? a.State.EnglishName : null,
+                        CountryId = a.CountryId,
+                        CountryCode = a.Country != null ? a.Country.Code : null,
+                        CountryName = a.Country != null ? (a.IsLocalLanguage ? a.Country.LocalName : a.Country.EnglishName) : null,
+                        CountryEC = a.Country == null ? false : a.Country.EC,
+                    }
+                    select list);
         }
-        public AddressList GetAddressListByTypeAndCard(string cardId, string typeId, int tenant) => GetAddressListQuery().Where(a => a.Tenant == tenant && a.CardId == cardId && a.AddressTypeId.ToUpper() == typeId.ToUpper()).FirstOrDefault();   
-        public AddressList GetSingleAddressList(string Id, int tenant) => GetAddressListQuery().Where(a => a.Tenant == tenant && a.Id == Id).FirstOrDefault();  
+        public AddressList GetAddressListByTypeAndCard(string cardId, string typeId, int tenant) => GetAddressListQuery().Where(a => a.Tenant == tenant && a.CardId == cardId && a.AddressTypeId.ToUpper() == typeId.ToUpper()).FirstOrDefault();
+        public AddressList GetSingleAddressList(string Id, int tenant) => GetAddressListQuery().Where(a => a.Tenant == tenant && a.Id == Id).FirstOrDefault();
         #endregion
         public IQueryable<AddressPM> GetAddressePMsByTenant(int tenant)
         {

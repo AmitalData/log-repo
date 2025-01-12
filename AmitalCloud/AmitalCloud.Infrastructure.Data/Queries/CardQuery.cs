@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using AmitalCloud.Infrastructure.Data.Helpers;
+﻿using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Data.Services;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 namespace AmitalCloud.Infrastructure.Data.Queries
 {
     public class CardQuery
@@ -393,13 +390,13 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                         new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<CardPM> { entity }.Cast<object>().ToList() }).Set();
                     }
                 }
-                entity = Set(entity,tenant);
+                entity = Set(entity, tenant);
                 return entity;
             }
 
             return null;
         }
-        private CardPM Set(CardPM card,int tenant)
+        private CardPM Set(CardPM card, int tenant)
         {
             List<DocumentTypeList> documentTypeLists =
                 new DocumentTypeQuery(tenant).GetDocumentTypeListsByObjectTableId(ObjectTableRepository.GetObjectTableByName("ARInvoice"), tenant);

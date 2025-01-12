@@ -1,13 +1,10 @@
-﻿using AmitalCloud.Infrastructure.Data.Context;using AmitalCloud.Infrastructure.Data.Helpers;
+﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 using System.Web;
 
@@ -41,7 +38,8 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         public bool HasFeatureToggle(string toggleCode, int tenant)
         {
             string entityKeyString = $"HasFeatureToggle({toggleCode}, {tenant})";
-            MyDummyClass myDummyClass = CacheManager.GetOrInsertNewObject<MyDummyClass>(entityKeyString, () => {
+            MyDummyClass myDummyClass = CacheManager.GetOrInsertNewObject<MyDummyClass>(entityKeyString, () =>
+            {
 
                 MyDummyClass myDummyClass1 = new MyDummyClass();
                 myDummyClass1.MyBool = HasFeatureToggle_Slow(toggleCode, tenant);

@@ -1,5 +1,5 @@
-﻿using System;
-using AmitalCloud.Infrastructure.Domain.BaseClasses;
+﻿using AmitalCloud.Infrastructure.Domain.BaseClasses;
+using System;
 namespace AmitalCloud.Shipment.Domain.EntityPMs
 {
     public partial class TransshipmentLegPM : BaseEntityPM

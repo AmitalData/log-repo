@@ -1,5 +1,5 @@
-﻿using System.Data.Entity.ModelConfiguration;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs; 
+﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 {
@@ -24,9 +24,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
                 .IsRequired()
                 .HasMaxLength(15)
                 .IsUnicode(false);
-                                    
+
             // Table & Column Mappings
-//#if ORACLE_DB
+            //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
@@ -37,8 +37,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             {
                 this.ToTable("CustomerProductLocationActualDatas");
             }
-//#endif
-            
+            //#endif
+
             this.Property(t => t.CustomerId).HasColumnName("CustomerId");
             this.Property(t => t.ProductTypeCode).HasColumnName("ProductTypeCode");
             this.Property(t => t.Month).HasColumnName("Month");

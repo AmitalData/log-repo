@@ -178,9 +178,9 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 documentsFilingMetaDataValueQuery.Create(documentsFilingPM, temp);
                 documentsFilingPM.DocumentsFilingMetaDataValues.Add(temp);
 
-                documentsFilingMetaDataValueQuery.repository.SubmitChanges();   
+                documentsFilingMetaDataValueQuery.repository.SubmitChanges();
             }
-            
+
         }
 
 

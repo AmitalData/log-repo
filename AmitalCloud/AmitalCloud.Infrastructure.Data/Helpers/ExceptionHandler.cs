@@ -30,7 +30,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                     }
                 }
 
-               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(exception);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(exception);
                 AmitalCloudDebuggerUtil.Break(AmitalDebuggerLevel.Error);
 
 
@@ -92,11 +92,11 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                     string stacktrace = "";
                     if (exception.StackTrace != null)
                         stacktrace = exception.StackTrace;
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("***HandleException** " + ErrorMessage);//May cause slowness ,But worth - If u Decides to delete ,Please inform itzik !!!!!
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("***HandleException** " + ErrorMessage);//May cause slowness ,But worth - If u Decides to delete ,Please inform itzik !!!!!
                     AzureLog.SaveLogsInStorage(ErrorMessage, "E", clientDate, exception.Message, exception.StackTrace, tenant, userId, userName, ip, exception);
 
                 }
-           
+
             }
             catch (Exception eee)
             {
@@ -114,9 +114,9 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             }
             catch (Exception)
             {
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Unable to write to File (OnExceptionOnDbLogInFile)");
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Unable to write to File (OnExceptionOnDbLogInFile)");
                 //throw;
-             }
+            }
         }
 
         public static void HandleDbException(Exception exception, string TypeOrUser, string ExtraMessage)

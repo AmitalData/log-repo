@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AmitalCloud.Infrastructure.Domain.EntityLists
+﻿namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
     public partial class ObjectFieldList
     {

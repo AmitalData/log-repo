@@ -5,17 +5,17 @@ using System.Collections.Generic;
 
 namespace AmitalCloud.Infrastructure.Application.BaseClasses
 {
-    public abstract class BaseEntityQueryService<TContext,TEntityPOCO, TEntityKeys, TEntityPM, TEntityList, TkeyType> : IBaseEntityQueryService<TEntityPM> where TEntityPOCO : BaseEntity, new()
+    public abstract class BaseEntityQueryService<TContext, TEntityPOCO, TEntityKeys, TEntityPM, TEntityList, TkeyType> : IBaseEntityQueryService<TEntityPM> where TEntityPOCO : BaseEntity, new()
     where TEntityPM : IEntityPM, new()
     where TEntityKeys : IEntityKeyFields<TEntityPOCO, TkeyType>, new()
     where TEntityList : class, new()
-    where TContext : class , IContext
+    where TContext : class, IContext
     {
         protected int Tenant;
         protected TEntityPOCO EntityPOCO { get; set; }
         protected IMapping<TEntityPM, TEntityPOCO, TEntityList> mapping;
         protected TEntityPM EntityPM;
-        protected IRepository< TEntityPOCO> Repository;
+        protected IRepository<TEntityPOCO> Repository;
         protected IContext MainContext;
         //protected TEntityParentPM EntityParentPM;
         protected TEntityKeys EntityKeys;
@@ -25,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
         {
 
         }
-        public BaseEntityQueryService( IRepository< TEntityPOCO > repository, IMapping<TEntityPM, TEntityPOCO, TEntityList> mapping)
+        public BaseEntityQueryService(IRepository<TEntityPOCO> repository, IMapping<TEntityPM, TEntityPOCO, TEntityList> mapping)
         {
             //this.MainContext = mainContext;
             this.Repository = repository;

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using AmitalCloud.Infrastructure.Domain.Interfaces;
+using System;
 using System.Transactions;
-using System.Web;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
 namespace AmitalCloud.Infrastructure.Data.Repositories
 {
     public interface IUnitOfWork : IDisposable
@@ -12,7 +9,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         IContext Context { get; }
 
         //Start the database Transaction
- //       void CreateTransaction();
+        //       void CreateTransaction();
         void CreateTransactionScope(TransactionScopeOption option);
         //Commit the database Transaction
         void Commit();

@@ -9,19 +9,19 @@ using UnifreightIIG.Common.Utils;
 
 namespace AmitalCloud.Infrastructure.APITools.ExternalServices
 {
-    public static partial  class FactoryServicePool<T>
+    public static partial class FactoryServicePool<T>
          where T : class
     {
         private static List<StateServiceModel> _StateServiceModelList;
         [ThreadStatic]
         private static Random _Random;
         private static readonly object lockObject = new object();
-        static  FactoryServicePool()
+        static FactoryServicePool()
         {
             _StateServiceModelList = new List<StateServiceModel>();
             _Random = new Random();
         }
-        internal static void Use(ServiceTypeEnum  serviceType , int tenant ,Action<T> proxyMethodAction)
+        internal static void Use(ServiceTypeEnum serviceType, int tenant, Action<T> proxyMethodAction)
         {
             var curStateServiceModel = GetTheBestStateServiceModel(serviceType, tenant);
             UseService(curStateServiceModel.ExternalService, proxyMethodAction);
@@ -141,13 +141,13 @@ namespace AmitalCloud.Infrastructure.APITools.ExternalServices
         internal static void ReloadMeWhenRelayServiceDBChange()
         {
         }
-        private static  void Feedback(string ServiceAddressUrl, bool success)
+        private static void Feedback(string ServiceAddressUrl, bool success)
         {
             Task.Factory.StartNew(() =>
             {
                 try
                 {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(ServiceAddressUrl + (success ? ":success" : ":Failed"));
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(ServiceAddressUrl + (success ? ":success" : ":Failed"));
                     lock (lockObject)
                     {
                         var item = _StateServiceModelList.FirstOrDefault(rec => rec.ExternalService.ServiceAddressUrl == ServiceAddressUrl);

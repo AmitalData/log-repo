@@ -78,11 +78,11 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             try
             {
                 string ip = GetClientIPAddress(); ;
-                
+
                 if (logsList != null && logsList.Count > 0)
                 {
                     foreach (var entity in logsList)
-                    {  
+                    {
                         string query = "INSERT INTO PerformanceLogs " +
                                         "(Id, LogDateTimeGMT, LogDateTimeLocal, Email, ModelName, MethodName,MonitoringService,ExecutionTime,UserIP,MethodParameters,Tenant,ServerTime) " +
                                         "VALUES (@Id, @LogDateTimeGMT, @LogDateTimeLocal, @Email, @ModelName, @MethodName, @MonitoringService, @ExecutionTime, @UserIP, @MethodParameters, @Tenant,@ServerTime) ";
@@ -94,9 +94,9 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                             cmd.Parameters.Add("@LogDateTimeGMT", SqlDbType.DateTime).Value = DateTime.UtcNow;
                             cmd.Parameters.Add("@LogDateTimeLocal", SqlDbType.DateTime).Value = entity.LogDateTimeLocal;
                             cmd.Parameters.Add("@Email", SqlDbType.VarChar, 100).Value = entity.Email;
-                            cmd.Parameters.Add("@ModelName", SqlDbType.VarChar,100).Value = entity.ModelName;
-                            cmd.Parameters.Add("@MethodName", SqlDbType.VarChar,100).Value = entity.MethodName;
-                            cmd.Parameters.Add("@MonitoringService", SqlDbType.VarChar,100).Value = entity.MonitoringService;
+                            cmd.Parameters.Add("@ModelName", SqlDbType.VarChar, 100).Value = entity.ModelName;
+                            cmd.Parameters.Add("@MethodName", SqlDbType.VarChar, 100).Value = entity.MethodName;
+                            cmd.Parameters.Add("@MonitoringService", SqlDbType.VarChar, 100).Value = entity.MonitoringService;
                             cmd.Parameters.Add("@ExecutionTime", SqlDbType.Int).Value = entity.ExecutionTime;
                             cmd.Parameters.Add("@UserIP", SqlDbType.VarChar, 50).Value = ip;
                             cmd.Parameters.Add("@MethodParameters", SqlDbType.VarChar, 200).Value = entity.MethodParameters;
@@ -109,12 +109,12 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                             var output = cmd.ExecuteNonQuery();
                             cn.Close();
                         }
-                    } 
+                    }
                 }
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "PerformanceLogger.AddPerformanceLogsList", null, null); 
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "PerformanceLogger.AddPerformanceLogsList", null, null);
             }
         }
 
@@ -132,5 +132,5 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             return "";
         }
     }
- 
+
 }

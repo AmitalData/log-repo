@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
-using System;
 
 namespace AmitalCloud.Infrastructure.Domain.Interfaces
 {
-    public interface IEntityKeyFields<TEntityPM,T> where TEntityPM : class
+    public interface IEntityKeyFields<TEntityPM, T> where TEntityPM : class
     {
         string GetEntityPMName();
         T GetFullKey();

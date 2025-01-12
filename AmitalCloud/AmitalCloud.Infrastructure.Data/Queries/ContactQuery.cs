@@ -1,29 +1,28 @@
-﻿using System;
+﻿using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Domain.EntityLists;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Transactions;
 using System.Web;
-using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Domain.EntityLists;
-
-using System.Linq.Expressions;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
 namespace AmitalCloud.Infrastructure.Data.Queries
 {
     public class ContactQuery
     {
         IRepository<Contact> repository;
-        IAmitalCloudContext context ;
-        public ContactQuery() : this(0) 
+        IAmitalCloudContext context;
+        public ContactQuery() : this(0)
         {
         }
         public ContactQuery(int tenant)
-        {            
-            context =  AmitalCloudContext.GetContext(tenant);
+        {
+            context = AmitalCloudContext.GetContext(tenant);
             repository = new Repository<Contact>(context);
         }
         #region GetSingle ContactPM
@@ -54,7 +53,8 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         }
         private IQueryable<ContactPM> GetContactPMQuery()
         {
-            return (from a in context.Contacts where a.UserType == "R"
+            return (from a in context.Contacts
+                    where a.UserType == "R"
                     let contact = new ContactPM()
                     {
                         Anniversary = a.Anniversary,
@@ -93,7 +93,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                     }
                     select contact);
         }
-        private void GetContactPassword( ContactPM instance)
+        private void GetContactPassword(ContactPM instance)
         {
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
@@ -114,7 +114,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 scope.Complete();
             }
         }
-        private void GetCardContact( ContactPM instance)
+        private void GetCardContact(ContactPM instance)
         {
             instance.HasCardContact = false;
             CardContactRepository cardcontactRep = new CardContactRepository(instance.Tenant);
@@ -170,7 +170,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         //public ContactPM GetSinglePMWithSystemUser(string id, int tenant) => GetEntityPMWithPassword(tenant, a => a.Id == id);  
         //public ContactPM GetSinglePM(string id, int tenant) => GetEntityPMWithPassword(tenant, a => a.Id == id && a.Tenant == tenant);  
         //public ContactPM GetContactByFacebookId(string facebookId, int tenant) => GetEntityPMWithPassword(tenant, a => a.FacebookId == facebookId && a.Tenant == tenant);
-        public ContactPM GetSingleContact(string email, int tenant) =>GetEntityPMWithPassword(tenant, a => a.Email == email.ToLower() && a.Tenant == tenant); 
+        public ContactPM GetSingleContact(string email, int tenant) => GetEntityPMWithPassword(tenant, a => a.Email == email.ToLower() && a.Tenant == tenant);
         //public ContactPM GetSingleContactByExternalId(string externalId, int tenant) => GetEntityPMWithPassword(tenant, a => a.ExternalId == externalId && a.Tenant == tenant); 
         public ContactPM GetContactByEmailOnly(string email, int tenant) => GetContactPMFromCache(tenant, $"ContactPM_({email}_{tenant})".ToLower(), a => a.Email == email && a.InActive == false && a.Tenant == tenant);
         //public ContactPM GetContactById(string id, int tenant) => GetContactPMFromCache(tenant, $"ContactPM_({id}_{tenant})".ToLower(), a => a.Id == id && a.Tenant == tenant && a.InActive ==false); 
@@ -184,7 +184,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         //public ContactPM GetContactByEmailOnlyForLogin(string email, int tenant) => GetContactByEmailOnly(email, tenant);
         //public ContactPM GetSingleContactPM(string id) => GetEntityPMWithPassword(0, a => a.Id == id);
         //public ContactPM GetFirstContactByEnglishNamePM(string Name, int tenant) => GetContactPMQuery().Where(a => a.EnglishName == Name && a.Tenant == tenant).FirstOrDefault();   
-        public ContactPM GetSingleByEmail(string email, int tenant) => GetSingleContact(email, tenant); 
+        public ContactPM GetSingleByEmail(string email, int tenant) => GetSingleContact(email, tenant);
         //public ContactPM GetSinglePMByEmail(string email, int tenant) => GetSingleContact(email, tenant);   
         //public ContactPM GetSingleByEmailWithoutTenant(string email)
         //{
@@ -768,7 +768,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         public IQueryable<ContactList> GetContactListsByListIds(List<string> contactIds, int tenant)
         {
             IQueryable<ContactList> contactLists = (from a in context.Contacts
-                                                    where contactIds.Contains(a.Id) &&  a.Tenant == tenant
+                                                    where contactIds.Contains(a.Id) && a.Tenant == tenant
                                                     select new ContactList()
                                                     {
                                                         Id = a.Id,
@@ -781,7 +781,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                                                         InActive = a.InActive,
                                                     });
             return contactLists;
-       }
+        }
         //public ContactList GetContactListsById(string contactId, int tenant)
         //{
         //    ContactList contactList = (from a in context.Contacts

@@ -1,15 +1,15 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AmitalCloud.Infrastructure.Data.Queries
-{ 
+{
     public class RoleQuery
     {
         IRepository<Role> repository;
@@ -18,12 +18,12 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         {
         }
 
-        public RoleQuery(Repository<Role> roleRepository, int tenant) 
+        public RoleQuery(Repository<Role> roleRepository, int tenant)
         {
             repository = roleRepository;
         }
 
-        public RoleQuery(IAmitalCloudContext amitalCloudContext) : this(new Repository<Role>(amitalCloudContext),amitalCloudContext.Tenant)
+        public RoleQuery(IAmitalCloudContext amitalCloudContext) : this(new Repository<Role>(amitalCloudContext), amitalCloudContext.Tenant)
         {
             context = amitalCloudContext;
         }
@@ -246,7 +246,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                                 Name = a.Name,
                                 Tenant = a.Tenant,
                                 Code = a.Code,
-                                RoleTypeCode = a.RoleTypeCode,                                
+                                RoleTypeCode = a.RoleTypeCode,
                                 Description = a.Description,
                                 ParentRoleId = a.ParentRoleId,
                                 IsCustomRole = a.IsCustomRole,
@@ -327,20 +327,20 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         public IQueryable<RoleList> GetRoleListsByTenant(int tenant)
         {
             IQueryable<RoleList> roles = from a in context.Roles
-                                       where a.Tenant == tenant || a.Tenant == 0
-                                       select new RoleList()
-                                       {
-                                           Id = a.Id,
-                                           Name = a.Name,
-                                           Tenant = a.Tenant,
-                                           Code = a.Code,
-                                           RoleTypeCode = a.RoleTypeCode,
-                                           Description = a.Description,
-                                           ParentRoleId = a.ParentRoleId,
-                                           IsCustomRole = a.IsCustomRole,
-                                           SearchFields = a.SearchFields,
-                                           Inactive = a.Inactive,
-                                       };
+                                         where a.Tenant == tenant || a.Tenant == 0
+                                         select new RoleList()
+                                         {
+                                             Id = a.Id,
+                                             Name = a.Name,
+                                             Tenant = a.Tenant,
+                                             Code = a.Code,
+                                             RoleTypeCode = a.RoleTypeCode,
+                                             Description = a.Description,
+                                             ParentRoleId = a.ParentRoleId,
+                                             IsCustomRole = a.IsCustomRole,
+                                             SearchFields = a.SearchFields,
+                                             Inactive = a.Inactive,
+                                         };
             return roles;
         }
     }

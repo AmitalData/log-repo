@@ -37,7 +37,7 @@ namespace AmitalCloud.Infrastructure.APITools.Services
 
         static UServerQueueManager()
         {
-            _ConnectionString =  @"Endpoint=sb://unifreighthybrid.servicebus.windows.net/;SharedSecretIssuer=owner;SharedSecretValue=yGhtL0cEjtKB61CsvEIO7yYRqyGgjSekVBj5WkvompI=";
+            _ConnectionString = @"Endpoint=sb://unifreighthybrid.servicebus.windows.net/;SharedSecretIssuer=owner;SharedSecretValue=yGhtL0cEjtKB61CsvEIO7yYRqyGgjSekVBj5WkvompI=";
             _NamespaceManager = NamespaceManager.CreateFromConnectionString(_ConnectionString);
             return;
         }

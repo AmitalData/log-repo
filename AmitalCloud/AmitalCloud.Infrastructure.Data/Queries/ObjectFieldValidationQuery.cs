@@ -1,9 +1,9 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     public class ObjectFieldValidationQuery
     {
         IRepository<ObjectFieldValidation> repository;
-        public ObjectFieldValidationQuery(): this(0)
+        public ObjectFieldValidationQuery() : this(0)
         {
         }
         public ObjectFieldValidationQuery(int tenant)
@@ -29,7 +29,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 
         public ObjectFieldValidationPM GetSinglePM(string id, int tenant)
         {
-            ObjectFieldValidationPM objectFieldValidationPm = (from a in repository.GetMulti(a=>
+            ObjectFieldValidationPM objectFieldValidationPm = (from a in repository.GetMulti(a =>
                                                                 a.Tenant == tenant && a.Id == id)
                                                                select new ObjectFieldValidationPM()
                                                                {

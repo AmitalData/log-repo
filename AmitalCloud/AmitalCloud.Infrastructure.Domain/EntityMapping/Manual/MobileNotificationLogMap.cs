@@ -1,10 +1,5 @@
 ﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 {
@@ -43,13 +38,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             .IsRequired();
 
 
-                 this.Property(t => t.EntityId)
-             
-                .HasMaxLength(15)
-                .IsUnicode(false);
+            this.Property(t => t.EntityId)
+
+           .HasMaxLength(15)
+           .IsUnicode(false);
 
             this.Property(t => t.ObjectTableId)
-               
+
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
@@ -61,15 +56,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
 
             this.Property(t => t.Log)
-             
+
                 .IsMaxLength()
-                . IsUnicode(false);
+                .IsUnicode(false);
 
 
-           this.Property(t => t.IOSStatus)
-               .IsRequired()
-               .HasMaxLength(1)
-               .IsUnicode(false);
+            this.Property(t => t.IOSStatus)
+                .IsRequired()
+                .HasMaxLength(1)
+                .IsUnicode(false);
 
 
             this.Property(t => t.AndroidStatus)
@@ -88,7 +83,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
                 .IsUnicode(true);
 
             this.Property(t => t.NotificationMessageAndroid)
-             
+
                 .HasMaxLength(500)
                 .IsUnicode(true);
 
@@ -110,11 +105,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             this.Property(t => t.Log).HasColumnName("Log");
             this.Property(t => t.NumberOfRetriesAndroid).HasColumnName("NumberOfRetriesAndroid");
             this.Property(t => t.NumberOfRetriesIOS).HasColumnName("NumberOfRetriesIOS");
-            
+
             this.Property(t => t.IOSStatus).HasColumnName("IOSStatus");
             this.Property(t => t.AndroidStatus).HasColumnName("AndroidStatus");
             this.Property(t => t.IsException).HasColumnName("IsException");
-                        
+
 
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");

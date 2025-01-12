@@ -1,6 +1,5 @@
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.ModelConfiguration;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 {
@@ -83,11 +82,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             //this.Property(t => t.EntityId).HasColumnName("EntityId");
             this.Property(t => t.IssuedByUserId).HasColumnName("IssuedByUserId");
             //this.Property(t => t.DocumentTypeId).HasColumnName("DocumentTypeId");
-           
+
             //this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId");
             //this.Property(t => t.ChildEntityId).HasColumnName("ChildEntityId");
             //this.Property(t => t.ChildEntityReference).HasColumnName("ChildEntityReference");
-           
+
             //this.Property(t => t.IsDuplex).HasColumnName("IsDuplex");
 
             // Relationships

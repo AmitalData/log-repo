@@ -1,6 +1,5 @@
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.ModelConfiguration;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 {
@@ -17,30 +16,30 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
                 .HasMaxLength(40)
                 .IsUnicode(false);
 
-       
+
 
             this.Property(t => t.PhoneNumber)
                 .HasMaxLength(40)
                 .IsUnicode(false);
 
-                 this.Property(t => t.State)
-                .HasMaxLength(40)
-                .IsUnicode(false);
+            this.Property(t => t.State)
+           .HasMaxLength(40)
+           .IsUnicode(false);
 
 
-               this.Property(t => t.City)
-                .HasMaxLength(25)
-                .IsUnicode(false);
+            this.Property(t => t.City)
+             .HasMaxLength(25)
+             .IsUnicode(false);
 
 
-          this.Property(t => t.Street)
-                .HasMaxLength(65)
-                .IsUnicode(false);
+            this.Property(t => t.Street)
+                  .HasMaxLength(65)
+                  .IsUnicode(false);
 
-                this.Property(t => t.ZipCode)
-                .HasMaxLength(15)
-                .IsUnicode(false);
-      
+            this.Property(t => t.ZipCode)
+            .HasMaxLength(15)
+            .IsUnicode(false);
+
 
 
             this.Property(t => t.CreateDate)
@@ -61,7 +60,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             this.Property(t => t.NumberOfBranches)
                 .IsRequired();
 
-      
+
 
             this.Property(t => t.Country)
                 .IsRequired()
@@ -101,7 +100,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.IsUserEmailSent)
                .IsRequired();
-            
+
             this.Property(t => t.StatusCode)
                 .HasMaxLength(20)
                 .IsUnicode(false);
@@ -112,7 +111,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.CustomerId)
                 .HasMaxLength(15);
-          
+
 
             this.Property(t => t.OpportunityId)
                 .HasMaxLength(15);
@@ -131,27 +130,27 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
                 .HasMaxLength(4)
                .IsUnicode(false);
 
-        this.Property(t => t.PackageCode)
-            .HasMaxLength(5)
-            .IsUnicode(false);
+            this.Property(t => t.PackageCode)
+                .HasMaxLength(5)
+                .IsUnicode(false);
 
 
-        this.Property(t => t.VatNumber)
-         .HasMaxLength(20)
-         .IsUnicode(false);
+            this.Property(t => t.VatNumber)
+             .HasMaxLength(20)
+             .IsUnicode(false);
 
-        this.Property(t => t.ClientId)
-         .HasMaxLength(100)
-         .IsUnicode(false);
+            this.Property(t => t.ClientId)
+             .HasMaxLength(100)
+             .IsUnicode(false);
 
 
-        this.Property(t => t.LeadOrigin)
-         .HasMaxLength(100)
-         .IsUnicode(false);
+            this.Property(t => t.LeadOrigin)
+             .HasMaxLength(100)
+             .IsUnicode(false);
 
-        this.Property(t => t.Campaign)
-         .HasMaxLength(250)
-         .IsUnicode(false);
+            this.Property(t => t.Campaign)
+             .HasMaxLength(250)
+             .IsUnicode(false);
 
 
 
@@ -175,7 +174,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             this.Property(t => t.TenantNumber).HasColumnName("TenantNumber");
             this.Property(t => t.LastUpdateDate).HasColumnName("LastUpdateDate");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
-      
+
 
 
             this.Property(t => t.IsSentToCustomer).HasColumnName("IsSentToCustomer");

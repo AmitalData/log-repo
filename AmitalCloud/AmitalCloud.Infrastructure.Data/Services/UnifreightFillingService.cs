@@ -1,8 +1,6 @@
 ﻿using Amital.UpDown.Common;
 using Amital.UpDown.Common.Client;
 using Amital.UpDown.Common.ModelShared.Filling;
-using AmitalCloud.Infrastructure.Data;
-using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.Helpers;
 using System;
 using System.Configuration;
@@ -69,11 +67,11 @@ namespace AmitalCloud.Infrastructure.Data.Services
             }
             else
             {
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(res.ServerFilePath);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(res.ServerFilePath);
             }
         }
 
-       
+
         private static int GetUploadChunkSizeInKB()
         {
             int chunkSizeInKB = 100;
@@ -98,7 +96,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
             return chunkSizeInKB;
         }
 
-        public byte[]  Download(BlobFileInfo fileInfo,
+        public byte[] Download(BlobFileInfo fileInfo,
             string externalDocumentId, DateTime? createDate
             )
         {
@@ -188,7 +186,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                     ErrorMessage = p.strMsg;
                     return null;
                     throw new Exception("OnPremiseFillingService.Message=" + p.strMsg);
-                } 
+                }
                 var data = res.AllDataCalcOnClient ?? new byte[0];
                 TiffPageLines = p.TiffPageLines;
                 AllDataCalcOnClient = res.AllDataCalcOnClient;

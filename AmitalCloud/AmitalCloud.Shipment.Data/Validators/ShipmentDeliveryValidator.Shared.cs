@@ -1,7 +1,7 @@
-﻿using AmitalCloud.Shipment.Domain.EntityPMs;
+﻿using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Shipment.Domain.EntityPMs;
+using AmitalCloud.Shipment.Domain.Interfaces;
 using System.ComponentModel.DataAnnotations;
-using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Shipment.Domain.Interfaces ;
 namespace AmitalCloud.Shipment.Domain.Validators
 {
     public class ShipmentDeliveryValidator : IShipmentDeliveryValidator

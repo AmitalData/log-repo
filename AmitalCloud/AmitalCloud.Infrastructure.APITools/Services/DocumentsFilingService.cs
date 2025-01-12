@@ -71,21 +71,21 @@ namespace AmitalCloud.Infrastructure.APITools.Services
         private HybridPartnerPM GetSinglePMByPartnerTenant(int PartnerTenant)
         {
             return new Repository<HybridPartner>(currentContext)
-                .GetAll(tenant, true).Select(a=> new HybridPartnerPM()
-                                                     {
-                                                         Id = a.Id,
-                                                         PartnerTenant = a.PartnerTenant,
-                                                         Name = a.Name,
-                                                         LocalName = a.LocalName,
-                                                         LogoId = a.LogoId,
-                                                         SearchFields = a.SearchFields,
-                                                         SmallLogoId = a.SmallLogoId,
-                                                         IsMislakaActivated = a.IsMislakaActivated,
-                                                         IsExternalPartner = a.IsExternalPartner,
-                                                         ReceiveAllStatuses = a.ReceiveAllStatuses,
-                                                         AllowSendingDocsToAgent = a.AllowSendingDocsToAgent,
-                                                         InActive = a.InActive
-                                                     }).FirstOrDefault();
+                .GetAll(tenant, true).Select(a => new HybridPartnerPM()
+                {
+                    Id = a.Id,
+                    PartnerTenant = a.PartnerTenant,
+                    Name = a.Name,
+                    LocalName = a.LocalName,
+                    LogoId = a.LogoId,
+                    SearchFields = a.SearchFields,
+                    SmallLogoId = a.SmallLogoId,
+                    IsMislakaActivated = a.IsMislakaActivated,
+                    IsExternalPartner = a.IsExternalPartner,
+                    ReceiveAllStatuses = a.ReceiveAllStatuses,
+                    AllowSendingDocsToAgent = a.AllowSendingDocsToAgent,
+                    InActive = a.InActive
+                }).FirstOrDefault();
         }
 
         public void Update(DocumentsFilingPM entityPM, byte[] fileData = null, string loggedUserId = null, bool FromService = false)
@@ -125,7 +125,7 @@ namespace AmitalCloud.Infrastructure.APITools.Services
                 {
                     if (entityPM.DirectionCode == "I")
                     {
-                        entityPM.DocumentId = BuildDocument(fileData, false,entityPM);
+                        entityPM.DocumentId = BuildDocument(fileData, false, entityPM);
                         addBackupQueue = (fileData != null);
                     }
                 }
@@ -1728,7 +1728,7 @@ namespace AmitalCloud.Infrastructure.APITools.Services
                 {
                     case ChangeSetOperation.Insert:
                         {
-                            this.CreateDocumentsFilingMetaDataValue(itemPM,entityPM);
+                            this.CreateDocumentsFilingMetaDataValue(itemPM, entityPM);
 
                             break;
                         }

@@ -1,9 +1,9 @@
-﻿using AmitalCloud.Shipment.Domain.Interfaces;
+﻿using AmitalCloud.Infrastructure.Domain.EntityPMs;
+using AmitalCloud.Shipment.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
-using AmitalCloud.Infrastructure.Domain.EntityPMs;
 
 namespace AmitalCloud.Shipment.Domain.EntityPMs
 {
@@ -13,7 +13,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
     {
         [Key]
         public string Id { get; set; }
- 
+
         [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
         public string ShipmentId { get; set; }
 
@@ -87,7 +87,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
         public string ToPortCountryCode { get; set; }
         public string ToPortCountryName { get; set; }
         #endregion
-        
+
         #region Address Dummy fields
         public string FromAddressCity_Dummy { get; set; }
         public string FromAddressCountryCode { get; set; }
@@ -99,7 +99,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
         public string ToAddressCountryName { get; set; }
         public string ToLocation { get; set; }
         #endregion
-              
+
         [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
         public DateTime? ATD { get; set; }
 

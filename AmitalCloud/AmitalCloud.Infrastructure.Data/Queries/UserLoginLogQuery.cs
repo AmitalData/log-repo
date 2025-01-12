@@ -1,7 +1,7 @@
 ﻿using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using System;
 using System.Linq;
 using System.Web;
@@ -105,21 +105,21 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 
 
 
-        public IQueryable<UserLoginLogList> GetUserLoginLogListsByTenant(string userId,int tenant)
+        public IQueryable<UserLoginLogList> GetUserLoginLogListsByTenant(string userId, int tenant)
         {
             IQueryable<UserLoginLogList> userLoginLogs = from a in repository.context.UserLoginLogs
-                                                       where a.Tenant == tenant && a.UserId == userId
+                                                         where a.Tenant == tenant && a.UserId == userId
                                                          select new UserLoginLogList()
-                                                       {
-                                                           Id = a.Id,
-                                                          
-                                                           Browser = a.Browser,
-                                                           IP = a.IP,
-                                                           GMTDateTime = a.GMTDateTime,
-                                                           LocalDateTime = a.LocalDateTime,
-                                                           IPSiteUri = "http://www.infosniper.net/index.php?ip_address=" + a.IP,
-                                                         
-                                                       };
+                                                         {
+                                                             Id = a.Id,
+
+                                                             Browser = a.Browser,
+                                                             IP = a.IP,
+                                                             GMTDateTime = a.GMTDateTime,
+                                                             LocalDateTime = a.LocalDateTime,
+                                                             IPSiteUri = "http://www.infosniper.net/index.php?ip_address=" + a.IP,
+
+                                                         };
             return userLoginLogs;
         }
 
