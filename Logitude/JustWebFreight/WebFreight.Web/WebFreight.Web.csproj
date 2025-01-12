@@ -41,7 +41,7 @@
     <RestorePackages>true</RestorePackages>
     <UseGlobalApplicationHostFile />
     <TypeScriptToolsVersion>2.0</TypeScriptToolsVersion>
-    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <Use64BitIISExpress></Use64BitIISExpress>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -86,7 +86,6 @@
     </Reference>
     <Reference Include="AutoMapper, Version=2.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\..\packages\AutoMapper.2.2.0\lib\net40\AutoMapper.dll</HintPath>
-
     </Reference>
     <Reference Include="Azure.Core, Version=1.44.1.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Azure.Core.1.44.1\lib\net472\Azure.Core.dll</HintPath>
@@ -216,7 +215,6 @@
     <Reference Include="LogicExtensions, Version=0.0.3.0, Culture=neutral, PublicKeyToken=7dc32d555748676e, processorArchitecture=MSIL">
       <HintPath>..\..\packages\LogicExtensions.0.0.3\lib\netstandard2.0\LogicExtensions.dll</HintPath>
     </Reference>
-
     <Reference Include="Marvin.JsonPatch, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Marvin.JsonPatch.2.2.1\lib\net45\Marvin.JsonPatch.dll</HintPath>
     </Reference>
@@ -304,7 +302,6 @@
     </Reference>
     <Reference Include="Microsoft.Extensions.Configuration.FileExtensions, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Extensions.Configuration.FileExtensions.8.0.0\lib\net462\Microsoft.Extensions.Configuration.FileExtensions.dll</HintPath>
-
     </Reference>
     <Reference Include="Microsoft.Extensions.Configuration.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Extensions.Configuration.Json.8.0.0\lib\net462\Microsoft.Extensions.Configuration.Json.dll</HintPath>
@@ -708,7 +705,6 @@
     <Reference Include="System.Design" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=8.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Diagnostics.DiagnosticSource.8.0.1\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
-
     </Reference>
     <Reference Include="System.Diagnostics.EventLog, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Diagnostics.EventLog.8.0.0\lib\net462\System.Diagnostics.EventLog.dll</HintPath>
@@ -748,7 +744,6 @@
     </Reference>
     <Reference Include="System.IO.FileSystem, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.IO.FileSystem.4.3.0\lib\net46\System.IO.FileSystem.dll</HintPath>
-
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
@@ -790,7 +785,6 @@
     <Reference Include="System.Memory.Data, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Memory.Data.8.0.0\lib\net462\System.Memory.Data.dll</HintPath>
     </Reference>
-
     <Reference Include="System.Net">
       <Private>True</Private>
     </Reference>
@@ -924,12 +918,10 @@
     </Reference>
     <Reference Include="System.Text.Encoding.CodePages, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Text.Encoding.CodePages.8.0.0\lib\net462\System.Text.Encoding.CodePages.dll</HintPath>
-
     </Reference>
     <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
-
     <Reference Include="System.Text.RegularExpressions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Text.RegularExpressions.4.3.1\lib\net463\System.Text.RegularExpressions.dll</HintPath>
       <Private>True</Private>
@@ -1076,10 +1068,9 @@
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentExtendedController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\FreightForwarderReferenceViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ReferenceTypeViewsController.Generated.cs" />
-
     <Compile Include="Controllers\HybridModel\AccountingPartnerHybridController.cs" />
-     <Compile Include="Controllers\AccountingModel\GLAccountOpController.cs" />
-     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginConnectionViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\GLAccountOpController.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginConnectionViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CertificateOfOriginConnectionController.Generated.cs" />
     <Compile Include="Controllers\HybridModel\ActivityDWHybridController.cs" />
     <Compile Include="Controllers\HybridModel\ActivityHybridController.cs" />
@@ -1151,9 +1142,9 @@
     <Compile Include="Controllers\HybridModel\VendorHybridController.cs" />
     <Compile Include="Controllers\HybridModel\VesselHybridController.cs" />
     <Compile Include="Controllers\HybridModel\WarehouseHybridController.cs" />
-     <Compile Include="Controllers\InfrastructureModel\Extended\NLogController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\NLogController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CB_RuleClassificationExtendedController.cs" />
-     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_RuleClassificationViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_RuleClassificationViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_RuleClassificationController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\QueueMessagesViewsController.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\CardAPiHelper.cs" />
@@ -1234,7 +1225,6 @@
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\FreightForwarderReferenceController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ShipmentReferanceController.Generated.cs" />
     <Compile Include="Controllers\WebServices\MamanWebServiceController.cs" />
-
     <Compile Include="Controllers\Texas\TaxesController.cs" />
     <Compile Include="Controllers\WebServices\SatisfactionSurveyController.cs" />
     <Compile Include="Controllers\WebServices\Services\MamanService.cs" />
@@ -2135,11 +2125,11 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferantTeamController.Generated.cs" />
     <Compile Include="DataContracts\PrivateLabelsBrandingData.cs" />
     <Compile Include="DataContracts\PrivateLabelsBrandingDataRequest.cs" />
-     <Compile Include="DataProviders\ShipmentFormDataProvider.cs" />
+    <Compile Include="DataProviders\ShipmentFormDataProvider.cs" />
     <Compile Include="DataProviders\CertificateOfOriginCountDataProvider.cs" />
     <Compile Include="DataProviders\CertificateOfOriginDataProvider.cs" />
     <Compile Include="DataProviders\MonthlyBalancesReportDataProvider.cs" />
-     <Compile Include="DataProviders\CustomFieldDataProviedr.cs" />
+    <Compile Include="DataProviders\CustomFieldDataProviedr.cs" />
     <Compile Include="DataProviders\ControlForInvoiceLinesDataProvider.cs" />
     <Compile Include="DataProviders\LogitudeCRMReportDataProvider.cs" />
     <Compile Include="DataProviders\CustomsCollateralDataProvider.cs" />
@@ -3821,6 +3811,7 @@
     <Compile Include="Helpers\StimulReportCustomizationDataProvider\GenericDataProviderGreator.cs" />
     <Compile Include="Helpers\StimulReportCustomizationDataProvider\StiBusinessObjectDataService.cs" />
     <Compile Include="Helpers\StimulsoftReportFontSizeService.cs" />
+    <Compile Include="Helpers\TraceHelper.cs" />
     <Compile Include="Helpers\UpdateShipmetsBatchArgs.cs" />
     <Compile Include="Helpers\UserViewLinkLimitationService.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
@@ -6939,7 +6930,6 @@
     <Compile Include="ReportsWebServices\LogitudeReports\Customs\CustomsCollateralLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Customs\ExportDeclarationLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\ShipmentFormLoader.cs" />
-
     <Compile Include="ReportsWebServices\LogitudeReports\Customs\CertificateOfOriginCountLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Customs\CertificateOfOriginLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\ShipperReturnsManager.cs" />

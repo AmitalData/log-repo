@@ -1,7 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
@@ -23,13 +22,6 @@ using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Logitude.BL.InfrastructureModel.EntityPMs;
-using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.Server.Tools;
-using Logitude.BL.Helpers;
-using Logitude.Server.Tools.Models;
-using System.Threading.Tasks;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
 {
