@@ -64,6 +64,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmitalCloud.Invoice.Web", "
 		{439D6670-51B0-425C-B082-7050069A052B} = {439D6670-51B0-425C-B082-7050069A052B}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmitalCloud.Infrastructure.APITools", "AmitalCloud.Infrastructure.APITools\AmitalCloud.Infrastructure.APITools.csproj", "{18E5126B-FC12-4521-A74A-8D57B02FB0D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		All Projects|Any CPU = All Projects|Any CPU
@@ -192,6 +194,14 @@ Global
 		{011E7DA4-F5A1-4358-9B9D-BD5464A940CF}.None|Any CPU.Build.0 = Debug|Any CPU
 		{011E7DA4-F5A1-4358-9B9D-BD5464A940CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{011E7DA4-F5A1-4358-9B9D-BD5464A940CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18E5126B-FC12-4521-A74A-8D57B02FB0D3}.All Projects|Any CPU.ActiveCfg = Debug|Any CPU
+		{18E5126B-FC12-4521-A74A-8D57B02FB0D3}.All Projects|Any CPU.Build.0 = Debug|Any CPU
+		{18E5126B-FC12-4521-A74A-8D57B02FB0D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18E5126B-FC12-4521-A74A-8D57B02FB0D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18E5126B-FC12-4521-A74A-8D57B02FB0D3}.None|Any CPU.ActiveCfg = Debug|Any CPU
+		{18E5126B-FC12-4521-A74A-8D57B02FB0D3}.None|Any CPU.Build.0 = Debug|Any CPU
+		{18E5126B-FC12-4521-A74A-8D57B02FB0D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18E5126B-FC12-4521-A74A-8D57B02FB0D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -212,6 +222,7 @@ Global
 		{44569E01-72A9-4546-99A9-96C8D56D5404} = {2DA05D28-51A2-4CA9-854C-E69F708079EF}
 		{43DFC050-F871-4B67-BF11-08FE75569238} = {2DA05D28-51A2-4CA9-854C-E69F708079EF}
 		{011E7DA4-F5A1-4358-9B9D-BD5464A940CF} = {2DA05D28-51A2-4CA9-854C-E69F708079EF}
+		{18E5126B-FC12-4521-A74A-8D57B02FB0D3} = {9697D8D9-104B-4B72-940D-6ABD39870532}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EA00D447-9E1A-43C0-9284-15DB58AED53D}

@@ -1,6 +1,5 @@
 ﻿using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Domain.Enums;
 using Microsoft.AspNet.SignalR.Client;
 using System;
 using System.Configuration;
@@ -254,7 +253,12 @@ namespace AmitalCloud.Infrastructure.APITools.ExternalServices
         }
 
     }
-
+    public enum SignQueueByType
+    {
+        None = 0,
+        SignQueueByCustomsAgentId,
+        SignQueueByPersonId
+    }
 
 
     public enum SignMethodByQueueEnum
