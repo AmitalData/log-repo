@@ -19,9 +19,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         IRepository<User> repository;
         IAmitalCloudContext context;
         #region Constructors
-        public UserQuery() : this(0)
-        {
-        }
+
         public UserQuery(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {
         }

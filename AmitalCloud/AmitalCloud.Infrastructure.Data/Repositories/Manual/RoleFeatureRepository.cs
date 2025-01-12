@@ -9,9 +9,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
     public class RoleFeatureRepository : Repository<RoleFeature>
     {
         IAmitalCloudContext currentContext;
-        public RoleFeatureRepository() : this(AmitalCloudContext.GetContext(0))
-        {
-        }
+
         public RoleFeatureRepository(IAmitalCloudContext context) : base(context)
         {
             currentContext = context;

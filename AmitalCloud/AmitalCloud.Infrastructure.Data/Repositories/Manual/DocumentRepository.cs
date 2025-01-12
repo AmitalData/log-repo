@@ -11,9 +11,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
     {
         IAmitalCloudContext currentContext;
 
-        public DocumentRepository() : this(0)
-        {
-        }
+
 
         public DocumentRepository(IAmitalCloudContext context) : base(context)
         {

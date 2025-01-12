@@ -13,9 +13,6 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     {
         IRepository<CardContactProduct> repository;
         IAmitalCloudContext context;
-        public CardContactProductQuery() : this(0)
-        {
-        }
 
         public CardContactProductQuery(int tenant)
         {

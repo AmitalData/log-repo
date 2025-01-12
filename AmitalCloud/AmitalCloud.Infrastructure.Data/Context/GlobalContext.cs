@@ -212,7 +212,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
         public IDbSet<CaptchaKey> CaptchaKeys { get; set; }
         public IDbSet<InvalidEmailResetPassword> InvalidEmailResetPasswords { get; set; }
         public IDbSet<WebhookKeys> WebhookKeys { get; set; }
-
+        public IDbSet<AuthenticationToken> AuthenticationTokens { get; set; }
         public int Tenant => throw new System.NotImplementedException();
 
         public DbConnection GetConnection()

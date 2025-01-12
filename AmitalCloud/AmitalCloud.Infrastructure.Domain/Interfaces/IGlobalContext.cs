@@ -46,6 +46,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
         IDbSet<InvalidEmailResetPassword> InvalidEmailResetPasswords { get; }
         IDbSet<WebhookKeys> WebhookKeys { get; }
         IDbSet<BluesnapContractType> BluesnapContractTypes { get; }
+        IDbSet<AuthenticationToken> AuthenticationTokens { get;  }
         string GetCurrentConnection();
         void DetectChanges();
     }

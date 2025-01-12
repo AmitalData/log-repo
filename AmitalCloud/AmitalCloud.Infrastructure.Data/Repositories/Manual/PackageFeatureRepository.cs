@@ -9,9 +9,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
     public class PackageFeatureRepository : Repository<PackageFeature>
     {
         IAmitalCloudContext currentContext;
-        public PackageFeatureRepository() : this(AmitalCloudContext.GetContext(0))
-        {
-        }
+
         public PackageFeatureRepository(IAmitalCloudContext context) : base(context)
         {
             currentContext = context;

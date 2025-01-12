@@ -10,9 +10,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
     {
         IAmitalCloudContext currentContext;
 
-        public DocumentsMetaDataTypeRepository() : this(0)
-        {
-        }
+
 
         public DocumentsMetaDataTypeRepository(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {

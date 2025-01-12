@@ -9,9 +9,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     {
         UserPermittedBranchRepository repository;
 
-        public UserPermittedBranchQuery() : this(0)
-        {
-        }
+
 
         public UserPermittedBranchQuery(int tenant) : this(new UserPermittedBranchRepository(tenant))
         {

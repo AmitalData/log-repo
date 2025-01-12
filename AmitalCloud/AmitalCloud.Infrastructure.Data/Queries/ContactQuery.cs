@@ -17,9 +17,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     {
         IRepository<Contact> repository;
         IAmitalCloudContext context;
-        public ContactQuery() : this(0)
-        {
-        }
+ 
         public ContactQuery(int tenant)
         {
             context = AmitalCloudContext.GetContext(tenant);

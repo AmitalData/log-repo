@@ -16,7 +16,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     public class ObjectTableQuery
     {
         ObjectTableRepository repository;
-        public ObjectTableQuery() => repository = new ObjectTableRepository(0);
+
         public ObjectTableQuery(int tenant) => repository = new ObjectTableRepository(tenant);
         public ObjectTableQuery(ObjectTableRepository objectTabelRepository) => repository = objectTabelRepository;
 
@@ -570,7 +570,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        IAmitalCloudContext context = AmitalCloudContext.GetContext(0);
+                        IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
                         zeroTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
                                             where (a.Tenant == 0 && a.InActive == false)
                                             select new ObjectTablePM()
@@ -664,7 +664,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    IAmitalCloudContext context = AmitalCloudContext.GetContext(0);
+                    IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
                     zeroTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
                                         where (a.Tenant == 0 && a.InActive == false)
                                         select new ObjectTablePM()

@@ -9,9 +9,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     {
         UserPermittedProductRepository repository;
 
-        public UserPermittedProductQuery() : this(0)
-        {
-        }
+
         public UserPermittedProductQuery(int tenant) : this(new UserPermittedProductRepository(tenant))
         {
         }

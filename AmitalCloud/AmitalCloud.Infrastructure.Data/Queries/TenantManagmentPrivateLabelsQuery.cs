@@ -14,9 +14,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     {
         private IRepository<TenantManagmentPrivateLabels> repository;
         IGlobalContext context;
-        public TenantManagmentPrivateLabelsQuery() : this(0)
-        {
-        }
+
         public TenantManagmentPrivateLabelsQuery(int tenant) : this(GlobalContext.GetContext(tenant))
         {
         }

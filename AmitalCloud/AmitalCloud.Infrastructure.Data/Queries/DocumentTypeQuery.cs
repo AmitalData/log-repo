@@ -17,9 +17,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         IRepository<DocumentType> repository;
         private bool isFullAccounting;
         #region Constructor
-        public DocumentTypeQuery() : this(0)
-        {
-        }
+
 
         public DocumentTypeQuery(int tenant)
         {

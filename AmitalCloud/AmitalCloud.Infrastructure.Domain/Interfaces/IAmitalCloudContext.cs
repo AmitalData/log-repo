@@ -300,7 +300,6 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
         IDbSet<QueueDefinition> QueueDefinitions { get; }
         IDbSet<Document> Documents { get; }
         IDbSet<QueueMessage> QueueMessages { get; }
-        IDbSet<AuthenticationToken> AuthenticationTokens { get; }
         IDbSet<CounterLastNumber> CounterLastNumbers { get; }
         IDbSet<CounterStat> CounterStats { get; }
         IDbSet<PackageFeature> PackageFeatures { get; }

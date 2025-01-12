@@ -14,9 +14,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     {
         IRepository<IAmitalCloudContext> repository;
         IAmitalCloudContext context;
-        public AddressQuery() : this(0)
-        {
-        }
+
         public AddressQuery(int tenant)
         {
             context = AmitalCloudContext.GetContext(tenant);

@@ -14,9 +14,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     public class ObjectFieldValidationQuery
     {
         IRepository<ObjectFieldValidation> repository;
-        public ObjectFieldValidationQuery() : this(0)
-        {
-        }
+
         public ObjectFieldValidationQuery(int tenant)
         {
             repository = new Repository<ObjectFieldValidation>(AmitalCloudContext.GetContext(tenant));
@@ -165,7 +163,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    IAmitalCloudContext context = AmitalCloudContext.GetContext(0);
+                    IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
                     tenantZeroQuery = (from a in context.ObjectFieldValidations
                                        where (a.Tenant == 0)
                                        select new ObjectFieldValidationPM()

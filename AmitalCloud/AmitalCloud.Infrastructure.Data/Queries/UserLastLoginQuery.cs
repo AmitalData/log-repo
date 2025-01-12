@@ -12,9 +12,6 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     {
         UserLastLoginRepository repository;
 
-        public UserLastLoginQuery() : this(0)
-        {
-        }
 
         public UserLastLoginQuery(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {

@@ -20,9 +20,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         public TranslationRepository(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {
         }
-        public TranslationRepository() : this(AmitalCloudContext.GetContext(0))
-        {
-        }
+
         public IQueryable<Translation> GetTranslations()
         {
             return context.Translations.Include("TextCode");

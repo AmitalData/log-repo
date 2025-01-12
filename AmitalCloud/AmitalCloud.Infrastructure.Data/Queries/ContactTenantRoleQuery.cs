@@ -10,9 +10,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     public class ContactTenantRoleQuery
     {
         IRepository<ContactTenantRole> repository;
-        public ContactTenantRoleQuery() : this(0)
-        {
-        }
+
         public ContactTenantRoleQuery(int tenant)
         {
             repository = new Repository<ContactTenantRole>(AmitalCloudContext.GetContext(tenant));

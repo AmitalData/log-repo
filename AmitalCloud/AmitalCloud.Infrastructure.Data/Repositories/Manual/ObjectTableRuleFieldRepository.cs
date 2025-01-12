@@ -15,11 +15,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
     {
 
         IAmitalCloudContext amitalCloudContext;
-        public ObjectTableRuleFieldRepository() : this(AmitalCloudContext.GetContext(0))
-        {
-            //Context = new AmitalCloudContext();
 
-        }
         public ObjectTableRuleFieldRepository(IAmitalCloudContext context) : base(context)
         {
             amitalCloudContext = context;
@@ -59,7 +55,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
                     }
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        IAmitalCloudContext context = AmitalCloudContext.GetContext(0);
+                        IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
                         zeroquery = (from a in context.ObjectTableRuleFields.Include("ObjectField").Include("ObjectTableRule")
                                      where (a.Tenant == 0)
                                      select a).ToList();
@@ -83,7 +79,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
                 }
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    IAmitalCloudContext context = AmitalCloudContext.GetContext(0);
+                    IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
                     zeroquery = (from a in context.ObjectTableRuleFields.Include("ObjectField").Include("ObjectTableRule")
                                  where (a.Tenant == 0)
                                  select a).ToList();

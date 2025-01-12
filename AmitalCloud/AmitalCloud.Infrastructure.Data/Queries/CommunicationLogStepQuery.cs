@@ -17,10 +17,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     {
         CommunicationLogStepRepository repository;
 
-        public CommunicationLogStepQuery()
-        {
-            repository = new CommunicationLogStepRepository();
-        }
+
 
         public CommunicationLogStepQuery(int tenant)
         {

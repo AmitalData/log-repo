@@ -12,10 +12,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     {
         RoleFeatureRepository repository;
 
-        public RoleFeatureQuery()
-        {
-            repository = new RoleFeatureRepository();
-        }
+
 
         public RoleFeatureQuery(int tenant)
         {

@@ -16,9 +16,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     public class DocumentsFilingMetaDataValueQuery
     {
         DocumentsFilingMetaDataValueRepository repository;
-        public DocumentsFilingMetaDataValueQuery() : this(0)
-        {
-        }
+
 
         public DocumentsFilingMetaDataValueQuery(IAmitalCloudContext context)
         {

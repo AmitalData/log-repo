@@ -9,10 +9,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     {
         PackageFeatureRepository repository;
 
-        public PackageFeatureQuery()
-        {
-            repository = new PackageFeatureRepository();
-        }
+
 
         public PackageFeatureQuery(int tenant)
         {

@@ -17,9 +17,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         {
             amitalCloudContext = context;
         }
-        public RuleConditionFieldRepository() : this(AmitalCloudContext.GetContext(0))
-        {
-        }
+
         public RuleConditionFieldRepository(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {
         }
@@ -54,7 +52,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    IAmitalCloudContext context = AmitalCloudContext.GetContext(0);
+                    IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
                     zeroRuleConditionField = (from a in context.RuleConditionFields.Include("ObjectField")
                                               where a.Tenant == 0
                                               select a).ToList();

@@ -921,7 +921,6 @@ public IDbSet<BlobFile> BlobFiles { get;set; }
 public IDbSet<QueueDefinition> QueueDefinitions { get;set; }
 public IDbSet<QueueMessage> QueueMessages { get;set; }
 public IDbSet<Document> Documents { get;set; }
-public IDbSet<AuthenticationToken> AuthenticationTokens { get;set; }
 public IDbSet<CounterLastNumber> CounterLastNumbers { get;set; }
 public IDbSet<CounterStat> CounterStats { get;set; }
 public IDbSet<PackageFeature> PackageFeatures { get;set; }

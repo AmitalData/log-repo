@@ -13,10 +13,6 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     {
         CardRepository repository;
 
-        public CardQuery() : this(0)
-        {
-        }
-
 
         public CardQuery(int tenant) : this(new CardRepository(tenant))
         {

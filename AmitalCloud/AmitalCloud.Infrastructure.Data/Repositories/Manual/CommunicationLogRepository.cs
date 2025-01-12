@@ -14,9 +14,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
     {
         IAmitalCloudContext currentContext;
 
-        public CommunicationLogRepository() : this(0)
-        {
-        }
+
         public CommunicationLogRepository(IAmitalCloudContext context) : base(context)
         {
             currentContext = context;

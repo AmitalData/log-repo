@@ -12,9 +12,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
     public class UserRepository : Repository<User>, IRepository<User>
     {
         IAmitalCloudContext commonDataContext;
-        public UserRepository() : this(0)
-        {
-        }
+
         public UserRepository(IUnitOfWork uow) : base(uow)
         {
         }

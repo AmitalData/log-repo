@@ -19,7 +19,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         }
 
         public CustomerRepository(int tenant) : this(AmitalCloudContext.GetContext(tenant)) { }
-        public CustomerRepository() : this(0) { }
+
         public CustomerRepository(IUnitOfWork unitOfWork) : base(unitOfWork) { }
         public int GetCustomerCount(int tenant)
         {

@@ -10,9 +10,6 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
     public class UserLastLoginRepository : Repository<UserLastLogin>
     {
         IAmitalCloudContext currentContext;
-        public UserLastLoginRepository() : this(AmitalCloudContext.GetContext(0))
-        {
-        }
         public UserLastLoginRepository(IAmitalCloudContext context) : base(context)
         {
             currentContext = context;
