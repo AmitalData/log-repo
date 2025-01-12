@@ -158,11 +158,11 @@ namespace <#= contextnamespacestring #>
     {
         private int _tenant;    
         public int Tenant { get => _tenant;  }
-        public <#= contextname #>()
+        private <#= contextname #>()
         {
             Database.SetInitializer<<#= contextname #>>(null);            
         }
-        public <#= contextname #>(DbConnection conn,int tenant)
+        private <#= contextname #>(DbConnection conn,int tenant)
             : base(conn,true)
         {
             this.Configuration.LazyLoadingEnabled = false;

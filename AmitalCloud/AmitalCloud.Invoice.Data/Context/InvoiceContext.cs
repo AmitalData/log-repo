@@ -23,11 +23,11 @@ namespace AmitalCloud.Invoice.Data.Context
     {
 		private int _tenant;	
 		public int Tenant { get => _tenant;  }
-		public InvoiceContext()
+		private InvoiceContext()
         {
             Database.SetInitializer<InvoiceContext>(null);            
         }
-        public InvoiceContext(DbConnection conn,int tenant)
+        private InvoiceContext(DbConnection conn,int tenant)
             : base(conn,true)
         {
             this.Configuration.LazyLoadingEnabled = false;

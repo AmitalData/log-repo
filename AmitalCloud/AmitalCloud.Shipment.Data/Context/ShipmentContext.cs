@@ -26,11 +26,11 @@ namespace AmitalCloud.Shipment.Data.Context
     {
         private int _tenant;    
         public int Tenant { get => _tenant;  }
-        public ShipmentContext()
+        private ShipmentContext()
         {
             Database.SetInitializer<ShipmentContext>(null);            
         }
-        public ShipmentContext(DbConnection conn,int tenant)
+        private ShipmentContext(DbConnection conn,int tenant)
             : base(conn,true)
         {
             this.Configuration.LazyLoadingEnabled = false;
