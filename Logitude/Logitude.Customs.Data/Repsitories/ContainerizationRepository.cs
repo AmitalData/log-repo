@@ -10,6 +10,8 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.Customs.Data.EntityMapping;
+
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -74,6 +76,16 @@ namespace Logitude.Customs.Data.Repsitories
                          }).FirstOrDefault(); 
             return query;
         }
+        public List<Containerization> GetContainerizationsByIds(string ids, int tenant)
+        {
+            
+            return  (from a in context.Containerizations
+                         where a.Tenant == tenant && ids.Contains((a.Id))
+                         select a).ToList();
+               
+        }
+
+
         public class ConKeys
         {
             public string Id { get; set; }
@@ -90,6 +102,10 @@ namespace Logitude.Customs.Data.Repsitories
             public string ContainerizationNumber { get; set; }
             
         }
+
+
+
+
 
     }
 

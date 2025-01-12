@@ -16,6 +16,7 @@ using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 using static Logitude.Customs.Data.Repsitories.ContainerizationRepository;
+using Logitude.Customs.Data.EntityLists;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -35,7 +36,20 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return this.repository.GetcontainerizationById(exportContainerizationID, tenant);
         }
 
+        public List<ContainerizationPM> GetContainerizationsByIds(string ids , int tenant)
+        {
+            List<Containerization> containerizationPM = repository.GetContainerizationsByIds(ids, tenant);
+            List<ContainerizationPM> containerizationList = new List<ContainerizationPM>();
 
+            foreach (Containerization item in containerizationPM)
+            {
+                ContainerizationPM containerization = GetEntityPM(item);
+                containerizationList.Add(containerization);
+            }
+
+            return containerizationList;
+
+        }
 
     }
 }

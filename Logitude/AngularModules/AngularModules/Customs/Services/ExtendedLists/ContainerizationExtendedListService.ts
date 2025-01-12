@@ -7,12 +7,12 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { DeclarationList } from '../../EntityLists/DeclarationList';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
- import { ContainerizationRequestParams } from '../../DataContract/RequestParams/ContainerizationRequestParams';
+import { ContainerizationRequestParams } from '../../DataContract/RequestParams/ContainerizationRequestParams';
 import { ContainerizationPM } from 'Customs/EntityPMs/ContainerizationPM';
 import { PerformanceLogger } from 'Infrastructure/Utilities/PerformanceLogger';
 import { ClassLevelValidator } from 'Infrastructure/Validators/ClassLevelValidator';
 import { CustomFieldClass } from 'Infrastructure/DataContracts/CustomFieldClass';
-  
+
 @Injectable()
 
 export class ContainerizationExtendedListService {
@@ -30,11 +30,11 @@ export class ContainerizationExtendedListService {
     public SelectedDeclarations: boolean;
     public AllDeclarations: string;
     public IsDirectCharging: string;
-    public containerizationRequestParams:ContainerizationRequestParams;
+    public containerizationRequestParams: ContainerizationRequestParams;
     public IsError: boolean;
-    public  ErrorsList:string[];
-    public  countConnect:number=0;
-    public Id:string
+    public ErrorsList: string[];
+    public countConnect: number = 0;
+    public Id: string
     getPromiseByFilters(filters: ApiQueryFilters) {
 
         return new Promise((resolve, reject) => {
@@ -44,48 +44,49 @@ export class ContainerizationExtendedListService {
         });
     }
 
-	CreateContainerizations(entityPM: ContainerizationPM ) {
-      
-		var callTime = new Date();  
-		
-		return defer(() => {
+    CreateContainerizations(entityPM: ContainerizationPM) {
 
-			var serviceResponse: ServiceResponse = new ServiceResponse();
-			var validator: ClassLevelValidator = new ClassLevelValidator();                
-			var errorsArray = validator.Validate("Customs.Containerization", entityPM);
+        var callTime = new Date();
+
+        return defer(() => {
+
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+            var validator: ClassLevelValidator = new ClassLevelValidator();
+            var errorsArray = validator.Validate("Customs.Containerization", entityPM);
 
 
-			if (errorsArray.length == 0) {
+            if (errorsArray.length == 0) {
 
-				var mappedEntity: ContainerizationPM = this.MapJsonToEntityPM(entityPM, false);
-				
-				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-					.pipe(
-						map((response: HttpResponse<any>) => {
+                var mappedEntity: ContainerizationPM = this.MapJsonToEntityPM(entityPM, false);
 
-							var pm = response.body;
-							if (pm) {
-								var mappedResult: ContainerizationPM = this.MapJsonToEntityPM(pm, true, entityPM);
-								serviceResponse.Result = mappedResult;
-							}						
+                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+                    .pipe(
+                        map((response: HttpResponse<any>) => {
 
-							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Containerization", "SaveChanges", "");                    
-												                             
-							return serviceResponse;
-						}),
+                            var pm = response.body;
+                            if (pm) {
+                                var mappedResult: ContainerizationPM = this.MapJsonToEntityPM(pm, true, entityPM);
+                                serviceResponse.Result = mappedResult;
+                            }
 
-						catchError(ServiceHelper.HandleServiceError));
-			}
+                            var servertime = response.headers.get('ServerExecutionTime');
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Containerization", "SaveChanges", "");
 
-			else {
-				serviceResponse.HasError = true;
-				serviceResponse.ErrorsArray = errorsArray;
-				return of(serviceResponse);
-			}
-		});
+                            return serviceResponse;
+                        }),
+
+                        catchError(ServiceHelper.HandleServiceError));
+            }
+
+            else {
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
+                return of(serviceResponse);
+            }
+        });
 
     }
+
 
     getByFilters(filters: ApiQueryFilters) {
         var urlparameters = '/getbyfilters?';
@@ -149,33 +150,45 @@ export class ContainerizationExtendedListService {
             entityList[property] = jsonList[property];
         }
 
-
         return entityList;
     }
+
+    GetContainerizationsByIds(ids: string) {
+
+        const urlparameters = '/GetContainerizationsByIds?';
+        const callUrl = this._apiUrl.concat(urlparameters.concat('ids=').concat(ids));
+
+        return defer(() => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response: any) => {
+                const serviceResponse: ServiceResponse = response;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ContainerizationPM = null) {
 
-         
+
         if (!entityPM) {
-            
+
             entityPM = new ContainerizationPM();
-			entityPM.DisableMarkAsDirty = true;
+            entityPM.DisableMarkAsDirty = true;
         }
 
-		var customFields: Array<string> = [];
+        var customFields: Array<string> = [];
         for (var i = 1; i < 11; i++) {
             customFields.push("Field" + i);
         }
-            var jsonPMKeys = Object.keys(jsonPM);
+        var jsonPMKeys = Object.keys(jsonPM);
 
-            for (var key in jsonPMKeys) {
-			 if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
+        for (var key in jsonPMKeys) {
+            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
 
                 continue;
             }
-                var property = jsonPMKeys[key];
-				
-			  if(customFields.indexOf(property) > -1)
-                {
+            var property = jsonPMKeys[key];
+
+            if (customFields.indexOf(property) > -1) {
                 if (jsonPM[property]) {
                     var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
                     entityPM[property] = customFieldClass;
@@ -184,32 +197,33 @@ export class ContainerizationExtendedListService {
             else {
                 entityPM[property] = jsonPM[property];
             }
-                 
-            }
-			
-			 
-            
 
-		if (mapParent) {
-                entityPM.OldEntityPM = this.clone(entityPM);
+        }
 
-		}
+
+
+
+        if (mapParent) {
+            entityPM.OldEntityPM = this.clone(entityPM);
+
+        }
         else {
 
             entityPM.OldEntityPM = null;
         }
-		entityPM.IsDirty = false;
-	    entityPM.DisableMarkAsDirty = false;
+        entityPM.IsDirty = false;
+        entityPM.DisableMarkAsDirty = false;
 
         return entityPM;
     }
+
     public clone(jsonPM: any) {
         var entityPM: any;
         entityPM = {};
 
         var jsonPMKeys = Object.keys(jsonPM);
         for (var key in jsonPMKeys) {
-            
+
             if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
                 continue;
             }
