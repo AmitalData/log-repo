@@ -419,7 +419,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             DateTime reportMonthLastDayDate = reportMonthLastDay.Date;
             DateTime nextMonth1st = reportMonthLastDayDate.Date.AddDays(1);
 
-            return from interestTransaction in context.InterestTransactions.Where(a => a.InterestReportId == null && a.Tenant == tenant
+            IQueryable<InterestTransactionList> query = from interestTransaction in context.InterestTransactions.Where(a => a.InterestReportId == null && a.Tenant == tenant
                     && a.IsCancelled == false && a.IsClosed == false
                     && a.CreateDateTime < nextMonth1st
                     && a.InterestValueDate > reportMonthLastDayDate).Include("Currency")
@@ -438,9 +438,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                 journalId = journallines.JournalId,
                                 tenant = journallines.Tenant
                             }
-                    join report in context.InterestReports on interestTransaction.InterestReportId equals report.Id
-                    into reportJoinData
-                    from report in reportJoinData.DefaultIfEmpty()
+                    join ten in context.Tenants on interestTransaction.Tenant equals ten.Id
+                    into joinData
+                    from x in joinData.DefaultIfEmpty()
                     where journal.AccountingEntityCode == Enums.AccountingEntityValues.ARPayment && journallines.ActionCode == creditActionCodeType
                     && interestTransaction.LocalAmount == journallines.LocalAmount * -1
 
@@ -460,11 +460,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                         ForeignAmount = interestTransaction.ForeignAmount,
                         CurrencyId = interestTransaction.CurrencyId,
                         InterestValueDate = interestTransaction.InterestValueDate,
-                        InterestReportId = interestTransaction.InterestReportId,
+                        //InterestReportId = interestTransaction.InterestReportId,
                         IsClosed = interestTransaction.IsClosed,
                         IsCancelled = interestTransaction.IsCancelled,
                         CurrencyCode = interestTransaction.Currency.Code,
-                        InterestReportNumber = report == null ? null : report.ReportNumber,
+                        //InterestReportNumber = report == null ? null : report.ReportNumber,
 
                         JournalId = journal.Id,
                         JournalNumber = journal.JournalNumber,
@@ -479,7 +479,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                     };
 
 
-
+            return query;
 
 
 
