@@ -21,6 +21,8 @@ using Microsoft.Practices.Unity;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityLists;
+// using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
+
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -515,7 +517,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
 
 
-        public string GetSinglePaymentIdByPaymentNumber(string paymentNo, int tenant)
+
+
+
+        public Logitude.BL.InvoiceModel.APIDataContract.ApiV1.ARPaymentLite GetSinglePaymentIdBranchByPaymentNumber(string paymentNo, int tenant)
         {
             ARPayment entityPOCO =
                 (from a in repository.context.ARPayments
@@ -527,13 +532,17 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             }
             else
             {
-                return entityPOCO.Id;
+                return new Logitude.BL.InvoiceModel.APIDataContract.ApiV1.ARPaymentLite()
+                {
+                    Id = entityPOCO.Id,
+                    BranchId = entityPOCO.BranchId
+                };
             }
         }
 
 
 
-        public string GetCheckPaymentId(string paymentId, int tenant)
+        public Logitude.BL.InvoiceModel.APIDataContract.ApiV1.ARPaymentLite GetCheckPaymentIdBranch(string paymentId, int tenant)
         {
             ARPayment entityPOCO =
                 (from a in repository.context.ARPayments
@@ -545,10 +554,13 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             }
             else
             {
-                return entityPOCO.Id;
+                return new Logitude.BL.InvoiceModel.APIDataContract.ApiV1.ARPaymentLite()
+                {
+                    Id = entityPOCO.Id,
+                    BranchId = entityPOCO.BranchId
+                };
             }
         }
-
 
 
         private string GetBankAccountNumberById(string id, int tenant)
