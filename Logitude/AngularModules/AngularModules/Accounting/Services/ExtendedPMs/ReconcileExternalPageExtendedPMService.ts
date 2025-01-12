@@ -294,6 +294,17 @@ export class ReconcileExternalPageExtendedPMService {
         return this.httpClient.post(this._apiUrl + "/ImportReconcileExternalPageLineFromExcel/?bankCodeId=" + bankCodeId+"&GLAccountID=" + GLAccountID +   "&tenant=" + tenant+"&reconcileExternalPageId=" + reconcileExternalPageId+"&line=" + line, formData, {headers: authHeader });
     }
 
+
+    ImportReconcileExternalPageLineFromText(formData: FormData, bankCodeId: string, tenant: number, reconcileExternalPageId: string, line: number, GLAccountID: string) {
+        var authHeader = new HttpHeaders();
+        authHeader.append('Token', SessionInfo.Token);
+        authHeader.append('Content-Type', 'application/json');
+
+        var serviceResponse: ServiceResponse = new ServiceResponse();
+
+        return this.httpClient.post(this._apiUrl + "/ImportReconcileExternalPageLineFromText/?bankCodeId=" + bankCodeId + "&GLAccountID=" + GLAccountID + "&tenant=" + tenant + "&reconcileExternalPageId=" + reconcileExternalPageId + "&line=" + line, formData, { headers: authHeader });
+    }
+
     public clone(jsonPM: any) {
         var entityPM: any;
         entityPM = {};
