@@ -69,7 +69,7 @@ export class HomeComponent implements OnDestroy{
     private IsINTTRAPackage = false;
     public PaymentChanelCode: string;
     public AccountingActivated=false;
-    
+
     isReportPanelVisible: boolean = false;
     currentReportId: string = "";
 
@@ -800,7 +800,8 @@ export class HomeComponent implements OnDestroy{
     }
     get IsReportPanelVisible() { return this.isReportPanelVisible; }
     set IsReportPanelVisible(newValue: boolean) {
-       
+        if (!FeatureLocator.HasFeaturePermession("Report", "Module"))
+            return false;
         if (this.isReportPanelVisible != newValue) {
             this.isReportPanelVisible = newValue;
         }
