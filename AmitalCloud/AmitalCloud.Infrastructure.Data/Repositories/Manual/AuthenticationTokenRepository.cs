@@ -52,7 +52,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             }
             else
             {
-                IAmitalCloudContext context = AmitalCloudContext.GetContext(0);
+                IGlobalContext context = GlobalContext.GetContext();
                 authenticationToken = (from a in context.AuthenticationTokens
                                        where a.Token == token
                                        select a).FirstOrDefault();

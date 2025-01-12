@@ -14,9 +14,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
     {
         IAmitalCloudContext currentContext;
 
-        public ContactRepository() : this(0)
-        {
-        }
+
 
         public ContactRepository(IAmitalCloudContext context) : base(context)
         {

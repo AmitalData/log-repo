@@ -10,9 +10,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     public class ContactTenantQuery
     {
         IRepository<ContactTenant> repository;
-        public ContactTenantQuery() : this(0)
-        {
-        }
+
         public ContactTenantQuery(int tenant)
         {
             repository = new Repository<ContactTenant>(AmitalCloudContext.GetContext(tenant));

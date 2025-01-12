@@ -11,9 +11,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
     public class EntityStatusRepository : Repository<EntityStatus>, IRepository<EntityStatus>
     {
         IAmitalCloudContext currentContext;
-        public EntityStatusRepository() : this(0)
-        {
-        }
+
         public EntityStatusRepository(IAmitalCloudContext context) : base(context)
         {
             currentContext = context;

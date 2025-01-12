@@ -14,9 +14,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
     {
         IAmitalCloudContext currentContext;
 
-        public CardRepository() : this(0)
-        {
-        }
+
         public CardRepository(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {
         }

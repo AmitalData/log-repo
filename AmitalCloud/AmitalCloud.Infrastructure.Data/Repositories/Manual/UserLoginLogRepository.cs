@@ -11,9 +11,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
     {
         IAmitalCloudContext currentContext;
 
-        public UserLoginLogRepository() : this(AmitalCloudContext.GetContext(0))
-        {
-        }
+
         public UserLoginLogRepository(IAmitalCloudContext context) : base(context)
         {
             currentContext = context;

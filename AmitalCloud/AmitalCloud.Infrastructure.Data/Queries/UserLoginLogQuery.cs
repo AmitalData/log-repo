@@ -12,9 +12,6 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     {
         UserLoginLogRepository repository;
 
-        public UserLoginLogQuery() : this(0)
-        {
-        }
 
         public UserLoginLogQuery(int tenant) : this(new UserLoginLogRepository(tenant))
         {

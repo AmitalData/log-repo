@@ -215,7 +215,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 
                     if (traceEventParams.Tenant != 0)
                     {
-                        UserRepository userRepository = new UserRepository(0);
+                        UserRepository userRepository = new UserRepository(tenant);
                         User user = userRepository.GetSingleUser(traceEventParams.UserId, 0, false);
                         if (user != null)
                         {

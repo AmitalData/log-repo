@@ -18,10 +18,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     public class ObjectFieldQuery
     {
         ObjectFieldRepository repository;
-        public ObjectFieldQuery()
-        {
-            repository = new ObjectFieldRepository();
-        }
+
 
         public ObjectFieldQuery(int tenant)
         {
@@ -2652,7 +2649,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        IAmitalCloudContext context = AmitalCloudContext.GetContext(0);
+                        IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
                         zeroTenantObjectFields = (from a in context.ObjectFields.Include("ObjectTable")
                                                   where (a.Tenant == 0) && a.InActive == false
                                                   select new ObjectFieldPM()
@@ -2772,7 +2769,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    IAmitalCloudContext context = AmitalCloudContext.GetContext(0);
+                    IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
                     zeroTenantObjectFields = (from a in context.ObjectFields.Include("ObjectTable")
                                               where (a.Tenant == 0) && a.InActive == false
                                               select new ObjectFieldPM()

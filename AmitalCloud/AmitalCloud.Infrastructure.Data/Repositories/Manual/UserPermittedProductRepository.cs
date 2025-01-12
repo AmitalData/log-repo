@@ -14,9 +14,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         {
             currentContext = context;
         }
-        public UserPermittedProductRepository() : this(AmitalCloudContext.GetContext(0))
-        {
-        }
+
         public UserPermittedProductRepository(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {
         }

@@ -16,7 +16,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     {
         IRepository<Feature> repository;
         IAmitalCloudContext context;
-        public FeatureQuery() : this(0) { }
+
         public FeatureQuery(int tenant)
         {
             context = AmitalCloudContext.GetContext(tenant);
@@ -287,7 +287,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                     contactTenantQuery = new ContactTenantQuery(tenant);
                     contactTenantRoleQuery = new ContactTenantRoleQuery(contactTenantRolesRepository);
                     contactTenant = contactTenantQuery.GetContactTenantForUser(loggedUserId, 0);
-                    UserQuery userQuery = new UserQuery(0);
+                    UserQuery userQuery = new UserQuery(tenant);
                     UserPM user = userQuery.GetSinglePM(loggedUserId, 0);
                     isDistributor = user.IsDistributor;
                     isCustomerCare = !user.IsDistributor;
@@ -297,7 +297,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 
             else if (contactTenant.TenantId == 0)
             {
-                UserQuery userQuery = new UserQuery(0);
+                UserQuery userQuery = new UserQuery(tenant);
                 UserPM user = userQuery.GetSinglePM(contactTenant.ContactId, 0);
                 isDistributor = user.IsDistributor;
                 isCustomerCare = !user.IsDistributor;
@@ -387,7 +387,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 #endregion
 
                 #region allRoleFeatures
-                RoleFeatureQuery roleFeatureQuery = new RoleFeatureQuery();
+                RoleFeatureQuery roleFeatureQuery = new RoleFeatureQuery(context.Tenant);
 
                 if (myRole.IsCustomRole)
                 {

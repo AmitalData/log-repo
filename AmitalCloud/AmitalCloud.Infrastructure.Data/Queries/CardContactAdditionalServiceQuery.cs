@@ -12,9 +12,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     {
         IRepository<CardContactAdditionalService> repository;
         IAmitalCloudContext context;
-        public CardContactAdditionalServiceQuery() : this(0)
-        {
-        }
+
         public CardContactAdditionalServiceQuery(int tenant)
         {
             context = AmitalCloudContext.GetContext(tenant);

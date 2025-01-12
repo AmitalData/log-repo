@@ -11,9 +11,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
     {
         IAmitalCloudContext currentContext;
 
-        public GeneralLockRepository() : this(0)
-        {
-        }
+
         public GeneralLockRepository(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {
         }

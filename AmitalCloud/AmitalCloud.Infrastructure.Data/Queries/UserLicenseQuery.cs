@@ -11,9 +11,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     {
         IRepository<UserLicense> repository;
         IAmitalCloudContext context;
-        public UserLicenseQuery() : this(0)
-        {
-        }
+
         public UserLicenseQuery(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {
         }

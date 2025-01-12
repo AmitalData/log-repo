@@ -17,9 +17,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         {
             currentContext = context;
         }
-        public ObjectFieldRepository() : this(AmitalCloudContext.GetContext(0))
-        {
-        }
+
         public ObjectFieldRepository(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {
         }
@@ -83,7 +81,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    IAmitalCloudContext context = AmitalCloudContext.GetContext(0);
+                    IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
                     zeroTenantObjectFields = (from a in context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable")
                                               where (a.Tenant == 0) && a.ObjectTable.Name == objectTableName && a.InActive == false
                                               select a).ToList();

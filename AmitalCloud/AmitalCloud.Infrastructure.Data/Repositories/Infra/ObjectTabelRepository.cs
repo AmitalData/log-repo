@@ -232,7 +232,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    IAmitalCloudContext context = AmitalCloudContext.GetContext(0);
+                    IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
                     zeroTenantTables = (from a in context.ObjectTables//.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
                                         where (a.Tenant == 0 && a.InActive == false)
                                         select a).ToList();

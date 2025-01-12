@@ -12,9 +12,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     {
         IRepository<UserLastSettings> repository;
         IAmitalCloudContext context;
-        public UserLastSettingsQuery() : this(0)
-        {
-        }
+
 
         public UserLastSettingsQuery(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {

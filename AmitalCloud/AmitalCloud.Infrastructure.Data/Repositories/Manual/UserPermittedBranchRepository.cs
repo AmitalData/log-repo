@@ -15,9 +15,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         {
             currentContext = context;
         }
-        public UserPermittedBranchRepository() : this(AmitalCloudContext.GetContext(0))
-        {
-        }
+
         public UserPermittedBranchRepository(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {
         }

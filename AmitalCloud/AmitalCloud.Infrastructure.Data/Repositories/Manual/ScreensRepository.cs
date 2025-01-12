@@ -8,9 +8,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
     public class ScreensRepository : Repository<Screen>
     {
         IAmitalCloudContext amitalCloudContext;
-        public ScreensRepository() : this(AmitalCloudContext.GetContext(0))
-        {
-        }
+
         public ScreensRepository(IAmitalCloudContext context) : base(context)
         {
             amitalCloudContext = context;

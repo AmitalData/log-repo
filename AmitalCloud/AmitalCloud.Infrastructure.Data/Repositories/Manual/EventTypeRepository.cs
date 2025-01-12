@@ -18,9 +18,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             currentContext = context;
         }
 
-        public EventTypeRepository() : this(0)
-        {
-        }
+
         public EventTypeRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }

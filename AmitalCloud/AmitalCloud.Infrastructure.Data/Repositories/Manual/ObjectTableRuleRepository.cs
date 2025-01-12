@@ -45,7 +45,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    IAmitalCloudContext context = AmitalCloudContext.GetContext(0);
+                    IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
                     zeroObjectTableRules = (from a in context.ObjectTableRules.Include("ObjectTable").Include("RuleType")
                                             where a.Tenant == 0
                                             select a).ToList();

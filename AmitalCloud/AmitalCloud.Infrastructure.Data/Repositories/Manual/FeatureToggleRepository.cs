@@ -13,9 +13,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
     public partial class FeatureToggleRepository : Repository<FeatureToggle>
     {
         IAmitalCloudContext currentContext;
-        public FeatureToggleRepository() : this(0)
-        {
-        }
+
         public FeatureToggleRepository(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {
         }

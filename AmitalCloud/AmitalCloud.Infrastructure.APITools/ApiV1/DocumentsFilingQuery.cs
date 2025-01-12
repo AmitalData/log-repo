@@ -17,9 +17,7 @@ namespace AmitalCloud.Infrastructure.APITools.ApiV1
     {
         DocumentsFilingRepository repository;
         #region Constructors
-        public DocumentsFilingQuery() : this(0)
-        {
-        }
+
         public DocumentsFilingQuery(int tenant) : this(new DocumentsFilingRepository(tenant))
         {
         }
