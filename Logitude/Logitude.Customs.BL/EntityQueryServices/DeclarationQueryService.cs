@@ -2123,7 +2123,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 }
                 else
                 {
-                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine($"sentSupplierInvoices: {sentSupplierInvoices} less than declarationSupplierInvoiceCount: {declarationSupplierInvoiceCount}");
+                    //Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine($"sentSupplierInvoices: {sentSupplierInvoices} less than declarationSupplierInvoiceCount: {declarationSupplierInvoiceCount}");
                 }
                 /* if need to check for every invoice, the relation between document and invoice is
                  * (invoice.SequenceNumeric == customsDocumentsTicketPM.ConnectedInvoicesSequences) */
