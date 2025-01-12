@@ -409,7 +409,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             bool ready = true;
             if (requireddocumentTypeMetaDatas.Count == 0)
             {
-                ready = false;
+                ready = true;
             }
 
             foreach (CustomDocumentTypeMetaDataPM documentTypeMetaData in requireddocumentTypeMetaDatas)
@@ -427,13 +427,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                 }
             }
-            if (_AddPerfectCustomsDocumentMetaDataValues_IsMetaDataReady)
-            {
-                if (requireddocumentTypeMetaDatas.Count == 0)
-                {
-                    ready = true;
-                }
-            }
+            //if (_AddPerfectCustomsDocumentMetaDataValues_IsMetaDataReady)
+            //{
+            //    if (requireddocumentTypeMetaDatas.Count == 0)
+            //    {
+            //        ready = true;
+            //    }
+            //}
             if (ready)
             {
                 entityPM.IsMetaDataReady = true;
