@@ -136,7 +136,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                                 List<CustomsDocumentPointerPM> myCustomsDocumentPointerPMListforDec = new List<CustomsDocumentPointerPM>();
                                if(pointerLevel.ToUpper() == "C")
                                 {
-                                    myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(x => x.ParentEntityCode == "ExportDeclarationClosingData").ToList();
+                                    myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(o => ParentEntityCodeList.Contains(o.ParentEntityCode) && o.ParentEntityId == _MyDeclarationPM.Id).ToList();
+
+                                    // myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(x => x.ParentEntityCode == "ExportDeclarationClosingData").ToList();
                                 }
                                 else
                                 {
@@ -241,7 +243,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                         customsDocumentPointerPM.Child2EntityCode = "SupplierInvoiceItem";
                         customsDocumentPointerPM.Child2EntityId = "1";
                     }
-					if (pointerLevel == "C")
+					if (pointerLevel == "C" && !_MyDeclarationPM.AutoSending)
 					{
 						customsDocumentPointerPM.ParentEntityCode = "ExportDeclarationClosingData";						
 					}
