@@ -801,10 +801,10 @@ export class HomeComponent implements OnDestroy{
     get IsReportPanelVisible() { return this.isReportPanelVisible; }
     set IsReportPanelVisible(newValue: boolean) {
         if (!FeatureLocator.HasFeaturePermession("Report", "Module"))
-            return false;
-        if (this.isReportPanelVisible != newValue) {
-            this.isReportPanelVisible = newValue;
-        }
+            newValue = false;
+       
+        this.isReportPanelVisible = newValue;
+        
         if (newValue) 
             this.CurrentReportId = "";
     }
