@@ -94,11 +94,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 			}
 			string loggedContactId = null;
 			ContactRepository contactRepository = new ContactRepository(Tenant);
-			var loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(Tenant), Tenant);
+			var loggedContact = contactRepository.GetSingleContactByEmail(entityPM.Email, Tenant);
 			if (loggedContact != null)
 			{
 				loggedContactId = loggedContact.Id;
 			}
+			string email = entityPM.Email;
+			
 			if (entityPM.EstimatedArrivalDate != null && entityPM.EstimatedArrivalDate != entityPOCO.EstimatedArrivalDate)
 			{
 				EventTracer.DeleteTraceEvent("ETA", entityPM.Tenant, "Shipment", declaration.ShipmentId);
@@ -106,11 +108,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 				{
 					EntityId = declaration.ShipmentId,
 					Tenant = entityPM.Tenant,
-					UserId = loggedContact.Id,
+					UserId = loggedContactId,
 					ObjectTableName = "Shipment",
 					IsAddedManually = false,
 					EventTypeCode = "ETA",
-					EventDateTime = new DateTime(entityPM.EstimatedArrivalDate.Value.Year, entityPM.EstimatedArrivalDate.Value.Month, entityPM.EstimatedArrivalDate.Value.Day, 0, 0, 0)
+					EventDateTime = new DateTime(entityPM.EstimatedArrivalDate.Value.Year, entityPM.EstimatedArrivalDate.Value.Month, entityPM.EstimatedArrivalDate.Value.Day, 0, 0, 0),
+					Email = email
 				};
 				EventTracer.CreateTraceEvent(eventTracerArgs);
 			}
@@ -126,11 +129,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 				{
 					EntityId = declaration.ShipmentId,
 					Tenant = entityPM.Tenant,
-					UserId = loggedContact.Id,
+					UserId = loggedContactId,
 					ObjectTableName = "Shipment",
 					IsAddedManually = false,
 					EventTypeCode = "ARR",
-					EventDateTime = new DateTime(entityPM.ArrivalDate.Value.Year, entityPM.ArrivalDate.Value.Month, entityPM.ArrivalDate.Value.Day, 0, 0, 0)
+					EventDateTime = new DateTime(entityPM.ArrivalDate.Value.Year, entityPM.ArrivalDate.Value.Month, entityPM.ArrivalDate.Value.Day, 0, 0, 0),
+					Email = email
 				};
 				EventTracer.CreateTraceEvent(eventTracerArgs);
 			}
