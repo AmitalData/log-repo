@@ -709,7 +709,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         });
 
         this.QueryColumns.push(
-            this.GetQueryColumn("CustomerReference", 'Text', 'Reference #')
+            this.GetQueryColumn("CustomerReference3", 'Text', 'Reference #')
         );
 
         let isOperationalClosedUserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.IsOperationalClosed")[0];
@@ -890,6 +890,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     }
 
     GetExportToExcelArgs() {
+        debugger
         this.filterAgrs = this.GetApiQueryFilters();
         this.filterAgrs.Tenant = SessionLocator.Tenant;
         let logboxShipmentExportExcelArgs: LogboxShipmentExportExcelArgs = new LogboxShipmentExportExcelArgs();
