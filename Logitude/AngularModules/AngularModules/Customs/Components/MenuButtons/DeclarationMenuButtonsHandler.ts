@@ -226,7 +226,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 }
 
                 for (var i = 0; i < menuButtons.length; i++) {
-                    
+
                     var button = menuButtons[i];
                     if (button.EventCode == "More") {
                         button.IsDisabled = true;
@@ -237,11 +237,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         button.Width = 100;
                         if (this.EntityPM.Direction == "E" && this.EntityPM.DeclarationNumber != null) {
                             button.IsHidden = false;
-                            if(this.EntityPM.IsAmendment){
+                            if (this.EntityPM.IsAmendment) {
                                 button.IsDisabled = false;
-    
-                             }
-                             else if (this.EntityPM.IsSubmitDeclaration)
+
+                            }
+                            else if (this.EntityPM.IsSubmitDeclaration)
                                 button.IsDisabled = false
                             else
                                 button.IsDisabled = true
@@ -277,7 +277,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
                     }
                     if (button.EventCode == "SendDeclaration") {
-                     
+
                         if (this.IsDisplayOnly) {
                             button.IsDisabled = true;
                             button.IsHidden = false;
@@ -461,14 +461,14 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             button.IsHidden = true;
                         }
                     }
-                    
+
                     if (button.EventCode == "CancelPointersOnCustomsItems") {
-                      if (this.EntityPM.Direction != "E") {
+                        if (this.EntityPM.Direction != "E") {
                             button.IsHidden = false;
 
-                      } else {
-                           button.IsHidden = true;
-                       }
+                        } else {
+                            button.IsHidden = true;
+                        }
                     }
                     if (button.EventCode == "CourierPendingReason") {
                         if (!this.EntityPM.IsCourierDeclaration) {
@@ -775,10 +775,10 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         break;
                     }
                 case "CancelPointersOnCustomsItems":
-                        {
-                            this.CancelPointersOnCustomsItemsMethod();
-                            break;
-                        }
+                    {
+                        this.CancelPointersOnCustomsItemsMethod();
+                        break;
+                    }
                 case "CourierPendingReasonDel":
                     {
                         this.CourierPendingReasonDeleteMethod();
@@ -1153,7 +1153,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     ResetDeclarationNumberMethod() {
         this._DeclarationNumberandVersionId = null;//itzik:clear onstart on the house !!!
         if (this.EntityPM.Direction == "E") {
-            this.GetAnyRequestBeforeResetDeclaration("2755E",TextCodeTranslator.Translate("Customs.Declaration.O.CantResetDeclarationNumberSubmissionExsist"));
+            this.GetAnyRequestBeforeResetDeclaration("2755E", TextCodeTranslator.Translate("Customs.Declaration.O.CantResetDeclarationNumberSubmissionExsist"));
         } else {
             this.GetAnyRequestBeforeResetDeclaration("2755", TextCodeTranslator.Translate("Customs.Declaration.O.CantResetDeclarationNumberDifferentFromAnalyzed"));
         }
@@ -1161,20 +1161,19 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     private GetAnyRequestBeforeResetDeclaration(interfaceTypeCode: string, message: string) {
         var canResetDeclaration: boolean = this.EntityPM.Direction == 'E' ? true : this.EntityPM.PaymentDate == null;
         if (canResetDeclaration) {
-            if (this.EntityPM.Direction != 'E') 
-            {
-                this.RestoreDeclaration(interfaceTypeCode , message,canResetDeclaration)
+            if (this.EntityPM.Direction != 'E') {
+                this.RestoreDeclaration(interfaceTypeCode, message, canResetDeclaration)
             }
             else {
-                this.CheackIsAnyRequest(interfaceTypeCode , message,canResetDeclaration)
+                this.CheackIsAnyRequest(interfaceTypeCode, message, canResetDeclaration)
             }
 
-          
+
         } else {
             this.ShowResetDeclarationMessage(TextCodeTranslator.Translate("Customs.Declaration.O.CantResetDeclarationNumberPaymentDate"));
         }
     }
-    private RestoreDeclaration(interfaceTypeCode , message,canResetDeclaration){
+    private RestoreDeclaration(interfaceTypeCode, message, canResetDeclaration) {
         SessionLocator.SelectedSession.StartBusyIndicator("checking");
 
         var _DeclarationMessagesService = new DeclarationMessagesService();
@@ -1190,70 +1189,68 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         currRequestParams.RequestVIA = SendRequestVIA.WebServiceInteractive;
         currRequestParams.ResponseName = "8373"
         currRequestParams.RequestName = "Restore From ResetDeclaration"
-        
-        _DeclarationMessagesService.PostDeclarationRequest(currRequestParams)
-        .subscribe((myServiceResponse: ServiceResponse) => {
-            SessionLocator.SelectedSession.StopBusyIndicator();
-            if (!myServiceResponse?.Result?.HasException) {
-                if (myServiceResponse?.Result?.Succeeded) 
-                {
-                       this.CheackIsAnyRequest(interfaceTypeCode , message,canResetDeclaration);  
-                }
-                else 
-                {
-                   this.ShowResetDeclarationMessage(myServiceResponse?.Result?.UserMessage);
-                }
-            }
-            else {
-                this.ShowResetDeclarationMessage(TextCodeTranslator.Translate("Customs.Declaration.O.ErrCommCustoms"));
 
-            }
-            
-        });
+        _DeclarationMessagesService.PostDeclarationRequest(currRequestParams)
+            .subscribe((myServiceResponse: ServiceResponse) => {
+                SessionLocator.SelectedSession.StopBusyIndicator();
+                if (!myServiceResponse?.Result?.HasException) {
+                    if (myServiceResponse?.Result?.Succeeded) {
+                        this.CheackIsAnyRequest(interfaceTypeCode, message, canResetDeclaration);
+                    }
+                    else {
+                        this.ShowResetDeclarationMessage(myServiceResponse?.Result?.UserMessage);
+                    }
+                }
+                else {
+                    this.ShowResetDeclarationMessage(TextCodeTranslator.Translate("Customs.Declaration.O.ErrCommCustoms"));
+
+                }
+
+            });
     }
-    private CheackIsAnyRequest(interfaceTypeCode: string, message: string,canResetDeclaration: boolean) {
+    private CheackIsAnyRequest(interfaceTypeCode: string, message: string, canResetDeclaration: boolean) {
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         declarationDisplayOnlyChecks.GetAnyRequest(interfaceTypeCode, this.EntityPM.CustomFileNo, this.EntityPM.Tenant)
-        .subscribe((response: ServiceResponse) => {
-            if (!response.HasError) {
-                var requestSheets = response.Result;
-                var haveRS2755: boolean = false;
-                const analyzed = "30";
-                if (requestSheets == null || requestSheets.length == 0) {
-                } else {
-                    haveRS2755 = true;
-                }
-                if (haveRS2755) {
-                    if (this.EntityPM.Direction == 'E') {
-                        canResetDeclaration = false;
+            .subscribe((response: ServiceResponse) => {
+                if (!response.HasError) {
+                    var requestSheets = response.Result;
+                    var haveRS2755: boolean = false;
+                    const analyzed = "30";
+                    if (requestSheets == null || requestSheets.length == 0) {
                     } else {
-                        for (let request of requestSheets) {
-                            if (request.RequestStatusCode != analyzed) {
-                                canResetDeclaration = false;
-                                break;
+                        haveRS2755 = true;
+                    }
+                    if (haveRS2755) {
+                        if (this.EntityPM.Direction == 'E') {
+                            canResetDeclaration = false;
+                        } else {
+                            for (let request of requestSheets) {
+                                if (request.RequestStatusCode != analyzed) {
+                                    canResetDeclaration = false;
+                                    break;
+                                }
                             }
                         }
                     }
+                    if (canResetDeclaration) {
+                        this.ResetDeclaration();
+                    } else {
+                        this.ShowResetDeclarationMessage(message);
+                    }
                 }
-                if (canResetDeclaration) {
-                    this.ResetDeclaration();
-                } else {
-                    this.ShowResetDeclarationMessage(message);
-                }
-            }
-        });
+            });
     }
-    private ResetDeclaration(){
+    private ResetDeclaration() {
         let confirm = new ConfirmWindow();
         confirm.WindowClosed.subscribe((event: any) => {
-        if (confirm.Yes) {
-            this.UpdateResetDeclarationNumber();
-        }
-        });                    
-        confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.ResetDeclaration"));    
+            if (confirm.Yes) {
+                this.UpdateResetDeclarationNumber();
+            }
+        });
+        confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.ResetDeclaration"));
     }
 
-    private ShowResetDeclarationMessage(message){
+    private ShowResetDeclarationMessage(message) {
         var messageWindow = new MessageWindow();
         messageWindow.Width = 400;
         messageWindow.Height = 150;
@@ -1834,7 +1831,25 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             }
             else {
 
-                this.OpenScreenContainerizationByFilter(this.containerizationIdList);
+                var args: any = {
+                    EntityPM: this.EntityPM,
+                };
+                var logWindow = new LogitudeWindow();
+                logWindow.Width = 1300;
+                logWindow.Height = 550;
+                logWindow.Title = ("המכלות קיימות")
+                logWindow.WindowArgs = args;
+                logWindow.IsShowCloseButton = true;
+                logWindow.FooterButtonsClicked.subscribe(($event: any) => {
+                    logWindow.Close($event);
+                });
+                logWindow.Show('./CustomsModules/CustomsContainerization/Components/EditTabs/ContainerizationListComponent');
+                logWindow.WindowClosed.subscribe(($event: any) => {
+                    if ($event != "0" && $event != "cancel" && $event != null) {
+                        this.OpenScreenContainerizationByFilter($event);
+                    }
+                }
+                );
             }
 
         }
@@ -2151,7 +2166,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     }
 
     supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService;
-    
+
     CancelPointersOnCustomsItemsMethod() {
         this.supplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();;
 
