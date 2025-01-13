@@ -269,7 +269,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
 
                 ContainerizationQueryService containerizationQueryService = new ContainerizationQueryService(customContext);
-                List<ContainerizationPM> containerizationPMs = containerizationQueryService.GetContainerizationsByIds(Ids, tenant);
+                List<ContainerizationList> containerizationPMs = containerizationQueryService.GetContainerizationsByIds(Ids, tenant);
                 ServiceResponse response = new ServiceResponse();
                 response.Count = containerizationPMs.Count();
                 response.Result = containerizationPMs;
