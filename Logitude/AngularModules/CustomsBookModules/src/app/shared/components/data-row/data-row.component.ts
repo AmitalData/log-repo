@@ -53,7 +53,7 @@ export class DataRowComponent implements OnInit {
 
 	ngOnInit() {
 		this.getCustomsBookAgreementLevelData();
-		this.showRulesData(this.data.CustomsItemID);
+		this.showRulesData();
 		this.selectedSearchBy = this.searchService.selectSearchBy;
 		this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {
 			this.showCommentsData();
@@ -167,21 +167,33 @@ export class DataRowComponent implements OnInit {
 		});
 	}
 
-	showRulesData(customsItemID: number) {
-		this.API_MainService.GetCustomsBookRulesData(customsItemID).subscribe((data: any) => {
-			const result: RulesDetailsList[] = data.body;
-			if (!data.body) return; // TODO: add error message
+	showRulesData() {
+		if (this.data?.rulesData?.length == 0) return;
 
-			if (this.searchItem == "") return;
-			result.forEach((rule: RulesDetailsList) => {
-				if (rule.Rules.includes(this.searchItem)) {
-					this.isSearchItemExistRule = true;
-					return;
-				}
-			});
+		if (this.searchItem == "") return;
+		this.data?.rulesData?.forEach((rule: RulesDetailsList) => {
+			if (rule.Rules.includes(this.searchItem)) {
+				this.isSearchItemExistRule = true;
+				return;
+			}
 		});
 	}
 
+
+  //showRulesData(customsItemID: number) {
+  //  this.API_MainService.GetCustomsBookRulesData(customsItemID).subscribe((data: any) => {
+  //    const result: RulesDetailsList[] = data.body;
+  //    if (!data.body) return; // TODO: add error message
+
+  //    if (this.searchItem == "") return;
+  //    result.forEach((rule: RulesDetailsList) => {
+  //      if (rule.Rules.includes(this.searchItem)) {
+  //        this.isSearchItemExistRule = true;
+  //        return;
+  //      }
+  //    });
+  //  });
+  //}
 
 	showCommentsClicked(event: MouseEvent) {
 		let selection = window.getSelection();

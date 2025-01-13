@@ -21,7 +21,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         public List<CB_RuleClassification> GetAllCustomsBookRulesData()
         {
-            List<CB_RuleClassification> cb_RuleClassificationList = this.repository.GetAllRulesByCustomsItemId();
+            List<CB_RuleClassification> cb_RuleClassificationList = this.repository.GetAllRules();
 
             return cb_RuleClassificationList;
         }

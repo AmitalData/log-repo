@@ -53,17 +53,29 @@ export class RulesComponent implements OnInit, OnChanges {
   // Method to fetch rules data from the API and build the rules hierarchy
   initData(customsItemID: number) {
     this.resetRulesData();
-    this.API_MainService.GetCustomsBookRulesData(customsItemID).subscribe((data: any) => {
-      if (!data.body) return; // TODO: add error message
-      // Clean up spaces by replacing multiple &nbsp; with a single space, then condense extra spaces
-      let rules = data.body;
+		if (this.currentItem.getValue()?.rulesData?.length == 0) return;
+
+    // Clean up spaces by replacing multiple &nbsp; with a single space, then condense extra spaces
+      let rules = this.currentItem.getValue()?.rulesData;
       rules.forEach(rule => {
         rule.Rules = rule.Rules.replace(/(&nbsp;)+/g, ' ').replace(/\s+/g, ' ').trim();
       });
 
       this.allRules = this.buildRulesHierarchy(rules);
-    });
   }
+
+  //initData(customsItemID: number) {
+  //  this.resetRulesData();
+  //  if (this.currentItem.getValue()?.rulesData?.length == 0) return;
+
+  //  // Clean up spaces by replacing multiple &nbsp; with a single space, then condense extra spaces
+  //  let rules = this.currentItem.getValue()?.rulesData;
+  //  rules.forEach(rule => {
+  //    rule.Rules = rule.Rules.replace(/(&nbsp;)+/g, ' ').replace(/\s+/g, ' ').trim();
+  //  });
+
+  //  this.allRules = this.buildRulesHierarchy(rules);
+  //}
 
   // Method to toggle the expanded state of a rule and manage dropdown visibility
   toggleRule(rule: any, event: Event) {
