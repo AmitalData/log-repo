@@ -74,7 +74,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         GLAccountUpdateService gLAccountUpdateService = new GLAccountUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
                         foreach (InterestDefinitionSrcLineDTO defLine in _SrcLinesDTO)
                         {
-                            if (!defLine.ErrorInLine && !defLine.AlreadyActivated)
+                            if (!defLine.ErrorInLine) // && !defLine.AlreadyActivated)
                             {
                                 count++;
                                 
