@@ -121,6 +121,8 @@ export class MainDisplayComponent implements OnInit {
 			Tenant: SessionInfo.LoggedUserTenant,
 			SearchFields: ''
 		};
+		this.getRulesData();
+
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: any) => {
 			// if (!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedData", "CustomsBookFeature")) return;
 			const result: CB_CustomsItemComputedDataList[] = data.body;
@@ -132,6 +134,19 @@ export class MainDisplayComponent implements OnInit {
 			this.searchMode = TableTopState.ViewAll;
 			this.isLoadingMode.next(false);
 			this.isFeaturePermessionCB.next(false);
+		});
+	}
+
+	allRulesData = [];
+	getRulesData() {
+		this.API_MainService.GetAllCustomsBookRulesData().subscribe((data: any) => {
+			if (!data.body) return; // TODO: add error message
+			// Clean up spaces by replacing multiple &nbsp; with a single space, then condense extra spaces
+			let rules = data.body;
+			rules.forEach(rule => {
+				rule.Rules = rule.Rules.replace(/(&nbsp;)+/g, ' ').replace(/\s+/g, ' ').trim();
+			});
+			this.allRulesData = rules;
 		});
 	}
 
@@ -421,10 +436,15 @@ export class MainDisplayComponent implements OnInit {
 			return rootItems;
 		};
 
+		if (this.allRulesData?.length > 0) {
+			data.forEach(item => {
+				item.rulesData = this.allRulesData.filter((x) => x.CustomsItemID == item.CustomsItemID);
+			});
+		}
 
 		let rootItems = data;
 		if (rootItems?.length == 0) return;
-		
+
 		this.romanTool.sortArry(rootItems, 'FullClassification');
 
 		const orderedData = rootItems.map((rootItem) => {
@@ -459,6 +479,13 @@ export class MainDisplayComponent implements OnInit {
 			});
 			return children;
 		};
+
+		if (this.allRulesData?.length > 0) {
+			data.forEach(item => {
+				item.rulesData = this.allRulesData.filter((x) => x.CustomsItemID == item.CustomsItemID);
+			});
+		}
+
 		let rootItems = data.filter((item) => !item?.CI_Parent_CustomsItemIDNum);
 		if (rootItems.length == 0) return;
 
@@ -547,6 +574,8 @@ export interface CB_CustomsItemComputedDataList {
 	rulesDetailsList?: RulesDetailsList[];
 	agreementsList?: CB_TariffList[];
 	requirementComputedDataList?: CB_RequirementComputedDataList[];
+	Rules: boolean;
+	rulesData?: any[];
 }
 
 export interface CB_RequirementComputedDataList {
@@ -632,18 +661,18 @@ export class CustomItemClassifGuidanceResult {
 }
 
 export class ClassifGuidanceDetailsResponseData {
-    classificationGuidanceNumber: string;
-    title: string;
-    classificationGuidanceTypeName: string;
-    fullClassificationItem: string;
-    createDate: Date;
-    expirationDate?: Date;
-    publicationDate: Date;
-    classificationGuidanceTextRTF: string;
-    classifGuidanceAttached: ClassifGuidanceAttached[] = [];
+	classificationGuidanceNumber: string;
+	title: string;
+	classificationGuidanceTypeName: string;
+	fullClassificationItem: string;
+	createDate: Date;
+	expirationDate?: Date;
+	publicationDate: Date;
+	classificationGuidanceTextRTF: string;
+	classifGuidanceAttached: ClassifGuidanceAttached[] = [];
 }
 
 export class ClassifGuidanceAttached {
-    fullClassification: string;
-    attachedCustomsItemID: number;
+	fullClassification: string;
+	attachedCustomsItemID: number;
 }
