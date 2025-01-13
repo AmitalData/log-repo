@@ -78,6 +78,11 @@ export class API_MainService extends BaseService {
 		return this.Get(url);
 	}
 
+	GetAllCustomsBookRulesData() {
+		const url = `${this._apiUrl}CB_RuleClassificationExtended/GetAllCustomsBookRulesData`;
+		return this.Get(url);
+	}
+
 	GetCustomsBookMainViewSearchByClassification(filters: Filters) {
 		// if (!this.checkIsFeaturePermessionCustomsBook()) return;
 		const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomsBookMainViewSearchByClassification`;

@@ -29,6 +29,13 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).ToList();
         }
 
+        public List<CB_RuleClassification> GetAllRules()
+        {
+
+            return (from a in context.CB_RuleClassifications
+                    select a).ToList();
+        }
+
     }
 
 }

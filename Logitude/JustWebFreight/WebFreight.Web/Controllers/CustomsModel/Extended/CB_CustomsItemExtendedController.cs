@@ -243,6 +243,31 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
         }
 
+        public HttpResponseMessage GetAllComments(int tenant)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                ICustomContext MyContext = CustomContext.GetContext(tenant);
+                RemarksClassificationQueryService remarksClassificationQuery = new RemarksClassificationQueryService(MyContext);
+                remarksClassificationQuery.InitializeSettings();
+
+                List<RemarksClassificationList> remarksClassificationPMList = remarksClassificationQuery.GetAllComments(tenant);
+
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return Request.CreateResponse(HttpStatusCode.OK, remarksClassificationPMList);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
 
         public HttpResponseMessage GetCustomItemClassifGuidance(int customsItemId, int tenant)
         {
