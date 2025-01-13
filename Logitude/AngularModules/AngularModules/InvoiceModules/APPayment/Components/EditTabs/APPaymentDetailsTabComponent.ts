@@ -830,7 +830,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 itemsCollection.push(item);
             });
         }
-
+        
+        itemsCollection = itemsCollection.filter(a=>a.IsConnected == true)
         this.ItemsSource.InsertCollection(itemsCollection);
         this.UpdateSummary();
         this.IsDataLoaded = true;
