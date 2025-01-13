@@ -81,6 +81,9 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     @Output() TabChanged: EventEmitter<string> = new EventEmitter<string>();
     @Output() SaveAndCloseCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() OnFirstTimeAfterSingleDataLoaded: EventEmitter<string> = new EventEmitter<string>();
+    @Output() IsLock: EventEmitter<[boolean, string, string, string]> = new EventEmitter<[boolean, string, string, string]>();
+    @Output() DisplayModeChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
+
     public ComponentRef: ComponentRef<EditComponent>;
     public EntityPM: any = null;
     public ClonedEntityPM: any = null;
@@ -131,8 +134,9 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     private static _CustomsSettingList: CustomsSettingList = null;
     tabsService = new TableTabService();
     public IsDigitalAddsOn: boolean = false;
+    public IsLockEntity: boolean = false;
 
- 
+
     constructor(private entityPMService: EntityPMService, private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private _totangoService: TotangoService, private cd: ChangeDetectorRef) {
         this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
         this.ComponentIndex = this.CurrentSession.GetNewEditComponentIndex();
@@ -144,6 +148,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         if (this.WorkEnvironment == "Customs") {
             this.FetchCustomsSetting();
         }
+        this.Listen();
 
     }
 
@@ -340,7 +345,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
                 }
                 resolve();
-
+               
 
             });
 
@@ -393,7 +398,8 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                     var pmResponse: ServiceResponse = res;
 
                     if (!pmResponse.HasError) {
-                        this.SetEntityPMAfterLoadIt(pmResponse.Result);
+                        this.SetEntityPMAfterLoadIt(pmResponse.Result);                        
+                        this.RefreshEntity();
                     }
 
                     else {
@@ -1647,6 +1653,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
         this.DestroyEditControl();
         this.BackCompleted.emit(true);
+        this.DeleteGeneralLock()
     }
 
     private ShowConfirmationMessage(ConfirmationMessageArgs: ConfirmationMessageArgs) {
@@ -1810,6 +1817,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                                     this.LoadNextPreviousEntity();
                                 }
                                 this.SetNextPreviousButtonsEnablityAysnc();
+                                this.DeleteGeneralLock();
                                 //if (this.nextPreviousTimerToken) {
                                 //    clearTimeout(this.nextPreviousTimerToken);
                                 //}
@@ -1910,12 +1918,13 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                                         if (loadPreviousEntity) {
                                             this.CurrentNavigatedIndex = this.CurrentNavigatedIndex - 1;
                                             this.LoadNextPreviousEntity();
-                                    this.SetNextPreviousButtonsEnablityAysnc();
+                                    this.SetNextPreviousButtonsEnablityAysnc();                                  
                                     //if (this.nextPreviousTimerToken) {
                                     //    clearTimeout(this.nextPreviousTimerToken);
                                     //}
                                     //this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
                                         }
+                                        this.DeleteGeneralLock();
                                     }   
                            }  
 
@@ -1950,7 +1959,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         else {
             this.Close();
         }
-     
+
     }
     async CheckDuplicateEntity(): Promise<boolean> {
 
@@ -2134,6 +2143,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                             this.StopBusyIndicator();
                             this.ValidationErrorsList = myResponse.ErrorsArray;
                             this.LoadCompleted.emit(false);
+                            this.RefreshEntity()
                         }
 
                         else {
@@ -2541,6 +2551,55 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Claim.O.MissingClaimEntityNumber"));
             }
         });
+    }
+    public get IsLocked() { return this.IsLockEntity && this.SelectedTab.EntityPM.IsLocked}
+    public DisplayLockMessage: string = "";
+    public PreIsLock: boolean = false;
+    Listen() {   
+           this.IsLock.subscribe((GeneralLock: any ) => {
+                   {
+                  
+                       var currentEditComponent = SessionLocator.SelectedSession.CurrentEditComponent;
+    
+                       if(currentEditComponent.SelectedTab.EntityPM.IsLocked) {
+                           currentEditComponent.IsLockEntity = GeneralLock[0];
+                           if(GeneralLock[0]) {
+                              currentEditComponent.IsSaveBtnDisable = true;
+                              currentEditComponent.EntityPM.IsDirty = false;
+                              currentEditComponent.DisplayLockMessage =  `The entity ${GeneralLock[2]} object  ${GeneralLock[1]} is locked by  ${GeneralLock[3]}`
+                           }
+                       }
+                       else
+                       {
+                           if(GeneralLock[0] || currentEditComponent.PreIsLock)
+                              currentEditComponent.EditComponentController.InDisplayMode = GeneralLock[0];
+                           if(GeneralLock[0])
+                              currentEditComponent.EditComponentController.InDisplayModeMessage = `The entity ${GeneralLock[2]} object  ${GeneralLock[1]} is locked by  ${GeneralLock[3]}`
+                        
+                       }
+                       if(GeneralLock[0] || currentEditComponent.PreIsLock)
+                          currentEditComponent.ReloadEntityPM();
+   
+                          currentEditComponent.PreIsLock = GeneralLock[0]
+                    }
+                    
+                });      
+    } 
+    RefreshEntity() {
+        var currentEditComponent = SessionLocator.SelectedSession.CurrentEditComponent;
+        if(currentEditComponent != null)
+        ServiceHelper.CheckIsLock(currentEditComponent.EntityId ,currentEditComponent.ObjectTableName)
+        else
+        ServiceHelper.CheckIsLock(this.EntityId , this.ObjectTableName);
+
+    }
+    DeleteGeneralLock() {
+        var currentEditComponent = SessionLocator.SelectedSession.CurrentEditComponent;
+        if(currentEditComponent != null)
+        ServiceHelper.DeleteGeneralLock(currentEditComponent.EntityId ,currentEditComponent.ObjectTableName)
+        else
+        ServiceHelper.DeleteGeneralLock(this.EntityId , this.ObjectTableName);
+
     }
 }
 

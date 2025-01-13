@@ -70,6 +70,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string SendTime { get; set; }
         [Column("Environment")]
 	    public string Environment { get; set; }
+        [ForeignKey("EntityLock")]
+        [Column("EntityLockId")]
+	    public string EntityLockId { get; set; }
+	      
+        public virtual ObjectTable EntityLock { get; set; }
     }
 }
 	 

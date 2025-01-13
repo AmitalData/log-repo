@@ -77,6 +77,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string SendTime  { get; set; }
        [DataMember]
        public string Environment  { get; set; }
+       [DataMember]
+       public string EntityLockId  { get; set; }
+       [DataMember]
+       public string EntityLockName  { get; set; }
    }
 
 }

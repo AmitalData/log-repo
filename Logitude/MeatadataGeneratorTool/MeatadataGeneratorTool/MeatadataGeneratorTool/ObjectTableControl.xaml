@@ -321,6 +321,9 @@
                                                 <RowDefinition Height="28" />
                                                 <RowDefinition Height="28" />
                                                 <RowDefinition Height="28" />
+                                                <RowDefinition Height="28" />
+                                                <RowDefinition Height="28" />
+                                                <RowDefinition Height="28" />
                                             </Grid.RowDefinitions>
 
                                             <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Has Api Helper:" />
@@ -341,7 +344,17 @@
                                             <TextBlock Grid.Row="15" Grid.Column="0" VerticalAlignment="Center" Text="Support Sub Entity:" />
                                             <TextBlock Grid.Row="16" Grid.Column="0" VerticalAlignment="Center" Text="Apply Generic Custom Fields:" />
                                             <TextBlock Grid.Row="17" Grid.Column="0" VerticalAlignment="Center" Text="Available In Document Types:" />
-
+                                            <TextBlock Grid.Row="18" Grid.Column="0" VerticalAlignment="Center" Text="Is Lock:" />
+                                            <TextBlock Grid.Row="19" Grid.Column="0" VerticalAlignment="Center" Text="Related Entity:"/>
+                                            <StackPanel Grid.Row="20" Orientation="Horizontal">
+                                                <Image ToolTip="First parameter: The primary key of the table. Second key: The field that links to the related table. templete:param1,param2" Source="Resources/question_mark_icon.png" Height="16" />
+                                                <TextBlock Margin="6" VerticalAlignment="Center" Text="This Key:" FontWeight="{Binding IsLockFontWeight}"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Row="21" Orientation="Horizontal">
+                                                <Image ToolTip="First parameter: The primary key of the table. Second key: The field that links to the related table. templete:param1,param2" Source="Resources/question_mark_icon.png" Height="16" />
+                                                <TextBlock Margin="6" VerticalAlignment="Center" Text="Related Key:" FontWeight="{Binding IsLockFontWeight}"/>
+                                            </StackPanel>
+                                            
                                             <CheckBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding HasApiHelper, Mode=TwoWay}" />
                                             <CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding HasCustomFields, Mode=TwoWay}" />
                                             <CheckBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding NoTS, Mode=TwoWay}" />
@@ -360,7 +373,11 @@
                                             <CheckBox Grid.Row="15" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding SupportSubEntity , Mode=TwoWay}" />
                                             <CheckBox Grid.Row="16" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding ApplyGenericCustomFields , Mode=TwoWay}" />
                                             <CheckBox Grid.Row="17" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding AvailableInDocumentTypes , Mode=TwoWay}" />
-
+                                            <CheckBox Grid.Row="18" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding IsLock, Mode=TwoWay}" />
+                                            <TextBox Grid.Row="19" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding RelatedEntity, Mode=TwoWay}" />
+                                            <TextBox Grid.Row="20" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding ThisKey, Mode=TwoWay}" />
+                                            <TextBox Grid.Row="21" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding RelatedKey, Mode=TwoWay}" />
+                                            
                                         </Grid>
 
                                     </Grid>

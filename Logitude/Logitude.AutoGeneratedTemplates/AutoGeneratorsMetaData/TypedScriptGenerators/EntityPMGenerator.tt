@@ -89,10 +89,21 @@ public dynamic GetPMTSNameSpace(string destinationFolder)
 	string pmName = tableName + "PM";
 	string schema ="";
 	string importString = BuildImportEntitesString(entity,pmName);
-	string parentname = "";
+	string parentname = "";	
+	string thisPrimeryKey = "";
+    bool isLock = false;
 	bool hasParent = false;
     bool hasCompstionCustomField = false;
 
+    if(entity.IsLock.GetType() == typeof(string))
+	{
+		if(entity.IsLock == "true") 
+        {
+          isLock = true;
+          string thisKey =  entity?.ThisKey.Trim('"');
+          thisPrimeryKey = thisKey.Split(',')[0];
+        }
+    }
 	if(entity.NoTS.GetType() == typeof(string))
       	{
 	    	if(entity.NoTS == "true")
@@ -167,6 +178,8 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { AppTool } from 'Infrastructure/Tools';
+
 <#+ if(entity.SupportSubEntity.ToString() == "true") {#>import { CustomChildEntity } from '../../Infrastructure/EntityPMs/CustomChildEntity';
 <#+}#>
 <#+ if(entity.ApplyGenericCustomFields.ToString() == "true") {#>import { ObjectCustomFieldPM } from '../../Infrastructure/EntityPMs/ObjectCustomFieldPM';
@@ -275,6 +288,12 @@ else{
     MarkAsDirty(propertyName:string = null) {
        if(!this.DisableMarkAsDirty)
        {
+ <#+
+	 if(isLock){
+	 #>if(!AppTool.IsNullOrEmpty(this.<#=thisPrimeryKey #>) && !this.IsDirty) {
+            ServiceHelper.CheckIsLock(this.<#=thisPrimeryKey #>, "<#=entity.ObjectTableName.Trim('"') #>",true);
+        }<#+}
+#>	
         this.IsDirty = true;
 		  <#+
 	 if(hasParent){
@@ -282,6 +301,7 @@ else{
             this.EntityParentPM.MarkAsDirty();
         }<#+}
 #>	
+		 
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
 <#+

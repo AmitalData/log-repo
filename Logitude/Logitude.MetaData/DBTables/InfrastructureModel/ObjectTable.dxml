@@ -517,7 +517,7 @@
     Name="IsLock"
     Type="bit">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="RelatedEntity"

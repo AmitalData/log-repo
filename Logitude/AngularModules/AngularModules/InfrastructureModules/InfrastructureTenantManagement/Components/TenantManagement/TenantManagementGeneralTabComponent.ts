@@ -650,7 +650,13 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
 
         }
     }
+    get MinutsTimeOutSession() { return this.EntityPM.MinutsTimeOutSession; }
+    set MinutsTimeOutSession(newValue) {
+        if (this.EntityPM.MinutsTimeOutSession != newValue) {
+            this.EntityPM.MinutsTimeOutSession = newValue;
 
+        }
+    }
     get DistributorCode() { return this.EntityPM.DistributorCode; }
     set DistributorCode(newValue: string) {
         if (this.EntityPM.DistributorCode != newValue) {

@@ -13,6 +13,10 @@
   SupportSubEntity="false"
   ApplyGenericCustomFields="false"
   AvailableInDocumentTypes="false"
+  IsLock="true"
+  RelatedEntity="&quot;Shipments&quot;"
+  ThisKey="&quot;Id,CustomFileNo&quot;"
+  RelatedKey="&quot;Id,ShipmentNumber&quot;"
   HasHelper="false"
   HasShortTitle="true"
   HasFiltersMenu="true"
@@ -25057,7 +25061,8 @@
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.Correction&quot;"
     FeatureDefaultText="&quot;Correction&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;General&quot;"
     TabLocalNameBack_up="&quot; כללי&quot;"
@@ -25074,7 +25079,8 @@
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.General&quot;"
     FeatureDefaultText="&quot;General&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="true" />
   <Tab
     TabName="&quot;WorkSheetFromExcel&quot;"
     TabLocalNameBack_up="&quot;מסך עבודה מאקסל&quot;"
@@ -25088,7 +25094,8 @@
     HtmlComponentURL="&quot;./CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetFromExcelComponent&quot;"
     HtmlComponentName="&quot;CourierWorksheetFromExcelComponent&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Supplier Invoices&quot;"
     TabLocalNameBack_up="&quot;חשבונות ספק&quot;"
@@ -25105,7 +25112,8 @@
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.Invoices&quot;"
     FeatureDefaultText="&quot;Invoices&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="true" />
   <Tab
     TabName="&quot;Certificates&quot;"
     TabLocalNameBack_up="&quot;הזנת אישורים&quot;"
@@ -25122,7 +25130,8 @@
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.Certificates&quot;"
     FeatureDefaultText="&quot;Certificates&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Customs Documents&quot;"
     TabLocalNameBack_up="&quot;צרופות מכס&quot;"
@@ -25139,7 +25148,8 @@
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.CustomDocument&quot;"
     FeatureDefaultText="&quot;Custom Documents&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Customs Reply&quot;"
     TabLocalNameBack_up="&quot;תשובה לתיק&quot;"
@@ -25156,7 +25166,8 @@
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.CustomsAnswers&quot;"
     FeatureDefaultText="&quot;Customs Answers&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Taxes&quot;"
     TabLocalNameBack_up="&quot;מסים&quot;"
@@ -25173,7 +25184,8 @@
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.Taxes&quot;"
     FeatureDefaultText="&quot;Taxes&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Payment Orders&quot;"
     TabLocalNameBack_up="&quot;הוראות תשלום&quot;"
@@ -25190,7 +25202,8 @@
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.PaymentOrder&quot;"
     FeatureDefaultText="&quot;Payment Order&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Physical Checks&quot;"
     TabLocalNameBack_up="&quot;בדיקה פיזית&quot;"
@@ -25207,7 +25220,8 @@
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.PhysicalCheck&quot;"
     FeatureDefaultText="&quot;Physical Check&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Events&quot;"
     TabLocalNameBack_up="&quot;אירועים&quot;"
@@ -25222,7 +25236,8 @@
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.Events&quot;"
     FeatureDefaultText="&quot;Events&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Request Sheets&quot;"
     TabLocalNameBack_up="&quot;גליון בקשות&quot;"
@@ -25239,7 +25254,8 @@
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.RequestSheet&quot;"
     FeatureDefaultText="&quot;Request Sheet&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Communications&quot;"
     TabLocalNameBack_up="&quot;תקשורות&quot;"
@@ -25254,7 +25270,8 @@
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.Communication&quot;"
     FeatureDefaultText="&quot;Communication&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;More Fields&quot;"
     TabLocalNameBack_up="&quot;שדות נוספים&quot;"
@@ -25270,7 +25287,8 @@
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.MoreFields&quot;"
     FeatureDefaultText="&quot;More Fields&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Tapags&quot;"
     TabLocalNameBack_up="&quot;תיקי תפ”ג&quot;"
@@ -25287,7 +25305,8 @@
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.Tapags&quot;"
     FeatureDefaultText="&quot;Tapags&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Notification Reply&quot;"
     TabLocalNameBack_up="&quot;הודעות לסוכן&quot;"
@@ -25304,7 +25323,8 @@
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.NotificationReply&quot;"
     FeatureDefaultText="&quot;Notification Reply&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Notifications&quot;"
     TabLocalNameBack_up="&quot;התראות לתיק&quot;"
@@ -25321,7 +25341,8 @@
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.Notifications&quot;"
     FeatureDefaultText="&quot;Notifications&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Customs Collateral&quot;"
     TabLocalNameBack_up="&quot;בטוחות&quot;"
@@ -25338,7 +25359,8 @@
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.Collateral&quot;"
     FeatureDefaultText="&quot;Collateral&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Cargo Split&quot;"
     TabLocalNameBack_up="&quot;בקשות פיצול מטען&quot;"
@@ -25355,7 +25377,8 @@
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.CargoSplit&quot;"
     FeatureDefaultText="&quot;Cargo Split&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Classification&quot;"
     TabLocalNameBack_up="&quot;סיווג&quot;"
@@ -25372,7 +25395,8 @@
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.Classification&quot;"
     FeatureDefaultText="&quot;Declaration Classification&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Cargo Seal&quot;"
     TabLocalNameBack_up="&quot;רשימת סגרים&quot;"
@@ -25389,7 +25413,8 @@
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.CargoSeal&quot;"
     FeatureDefaultText="&quot;Declaration CargoSeal&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Export Storage List&quot;"
     TabLocalNameBack_up="&quot;רשימת אחסנות&quot;"
@@ -25403,7 +25428,8 @@
     HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/ExportStorageList/DeclarationExportStorageComponent&quot;"
     HtmlComponentName="&quot;DeclarationExportStorageComponent&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Declaration Amendments&quot;"
     TabLocalNameBack_up="&quot;תיקוני הצהרה&quot;"
@@ -25420,7 +25446,8 @@
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.DeclarationAmendment&quot;"
     FeatureDefaultText="&quot;Declaration Amendment&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Docs In&quot;"
     TabLocalNameBack_up="&quot;טעינת מסמכים&quot;"
@@ -25437,7 +25464,8 @@
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.DocsIn&quot;"
     FeatureDefaultText="&quot;DocsIn&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Digital Certificate Of Origin&quot;"
     TabLocalNameBack_up="&quot;ת.מקור דיגיטלית&quot;"
@@ -25451,7 +25479,8 @@
     HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/DigitalCertificateOfOriginTabComponent&quot;"
     HtmlComponentName="&quot;DigitalCertificateOfOriginTabComponent&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Close Export Declaration&quot;"
     TabLocalNameBack_up="&quot;סגירת הצהרה&quot;"
@@ -25465,7 +25494,8 @@
     HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Closure/ExportDeclarationClosureComponent&quot;"
     HtmlComponentName="&quot;ExportDeclarationClosureComponent&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Corrections&quot;"
     TabLocalNameBack_up="&quot;תיקון הצהרה(ישן)&quot;"
@@ -25482,7 +25512,8 @@
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.Correction&quot;"
     FeatureDefaultText="&quot;Correction&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <EventTypes>
     <EventType
       Code="&quot;UPDT&quot;"

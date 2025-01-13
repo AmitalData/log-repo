@@ -13,6 +13,7 @@
   SupportSubEntity="false"
   ApplyGenericCustomFields="false"
   AvailableInDocumentTypes="false"
+  IsLock="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -39,7 +40,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;8748&quot;"
+  Code="&quot;1967&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -6706,12 +6707,34 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
+      Code="&quot;General.O.MessageSession&quot;"
+      DefaultText="&quot;Session has been inactive for % hours &lt;br&gt; Click Continue Now to continue session &lt;br&gt; Your session will end in $ minutes&quot;"
+      LocalDefaultTextBack_up="&quot;הסשן לא היה פעיל % שעות &lt;br&gt; לחץ על המשך עכשיו כדי להמשיך בהפעלה &lt;br&gt; הסשן שלך יסתיים בעוד $ דקות&quot;"
+      LocalDefaultText="&quot;BS64:IteU16HXqdefINec15Ag15TXmdeUINek16LXmdecICUg16nXoteV16ogPGJyPiDXnNeX16Ug16LXnCDXlNee16nXmiDXoteb16nXmdeVINeb15PXmSDXnNeU157XqdeZ15og15HXlNek16LXnNeUIDxicj4g15TXodep158g16nXnNeaINeZ16HXqteZ15nXnSDXkdei15XXkyAkINeT16fXldeqIg==&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.Continue&quot;"
+      DefaultText="&quot;Continue&quot;"
+      LocalDefaultTextBack_up="&quot;המשך&quot;"
+      LocalDefaultText="&quot;BS64:IteU157XqdeaIg==&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.SessionTimedOut&quot;"
+      DefaultText="&quot;The session timed out&quot;"
+      LocalDefaultTextBack_up="&quot;זמן הסשן הסתים&quot;"
+      LocalDefaultText="&quot;BS64:IteW157XnyDXlNeh16nXnyDXlNeh16rXmdedIg==&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
       Code="&quot;General.MH.Cards&quot;"
       DefaultText="&quot;Cards&quot;"
       LocalDefaultText="&quot;כרטיסים&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
+
   <AdditionalFeatures>
     <Feature
       Code="&quot;DASHBOARD&quot;"
@@ -9158,6 +9181,15 @@
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.Menu.AllCards&quot;"
       FeatureDefaultText="&quot;AllCards&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;GENERALLOCK&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.GENERALLOCK&quot;"
+      FeatureDefaultText="&quot;GeneralLock&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

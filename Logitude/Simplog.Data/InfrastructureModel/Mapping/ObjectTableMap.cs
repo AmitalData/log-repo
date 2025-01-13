@@ -47,15 +47,16 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.IsCustom);
             this.Property(t => t.FullNameTextCodeId).HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.FullNameTextCodeCode).HasMaxLength(100).IsUnicode(false);
+			this.Property(t => t.RelatedEntity).HasMaxLength(100).IsUnicode(false);
 
-            //this.Property(t => t.FilterMenuComponentPath).HasMaxLength(250).IsUnicode(false);
-            //this.Property(t => t.ShortTitleComponentPath).HasMaxLength(250).IsUnicode(false);
-            //this.Property(t => t.HelperComponentPath).HasMaxLength(250).IsUnicode(false);
-            //this.Property(t => t.MenuButtonsComponentPath).HasMaxLength(250).IsUnicode(false);
+			//this.Property(t => t.FilterMenuComponentPath).HasMaxLength(250).IsUnicode(false);
+			//this.Property(t => t.ShortTitleComponentPath).HasMaxLength(250).IsUnicode(false);
+			//this.Property(t => t.HelperComponentPath).HasMaxLength(250).IsUnicode(false);
+			//this.Property(t => t.MenuButtonsComponentPath).HasMaxLength(250).IsUnicode(false);
 
 
-            // Table & Column Mappings
-            this.ToTable("ObjectTables");
+			// Table & Column Mappings
+			this.ToTable("ObjectTables");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.Name).HasColumnName("Name");
@@ -129,9 +130,13 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.FullNameTextCodeId).HasColumnName("FullNameTextCodeId");
             this.Property(t => t.FullNameTextCodeCode).HasColumnName("FullNameTextCodeCode");
             this.Property(t => t.AvailableInDocumentTypes).HasColumnName("AvailableInDocumentTypes");
+			this.Property(t => t.IsLock).HasColumnName("IsLock");
+			this.Property(t => t.RelatedEntity).HasColumnName("RelatedEntity");
+			this.Property(t => t.ThisKey).HasColumnName("ThisKey");
+			this.Property(t => t.RelatedKey).HasColumnName("RelatedKey");
 
-            // Relationships
-            this.HasOptional(t => t.DescriptionTextCode).WithMany().HasForeignKey(d => d.DescriptionTextCodeId);
+			// Relationships
+			this.HasOptional(t => t.DescriptionTextCode).WithMany().HasForeignKey(d => d.DescriptionTextCodeId);
             this.HasOptional(t => t.MainTip).WithMany().HasForeignKey(d => d.MainTipCode);
             this.HasOptional(t => t.HeaderScreen).WithMany().HasForeignKey(d => d.HeaderScreenId);
 

@@ -126,6 +126,7 @@ export class ConsigmentTabContentComponent
                             cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'Customs.Declaration', BackButtonLabel: TextCodeTranslator.Translate("Customs.Consignment.O.ShahamDeclaration") });
                             cmpRef.instance.BackCompleted.subscribe(($event: any) => {
                                 DeclarationEventManager.DisplayModeChanged.emit(null);
+                                this.CurrentSession.CurrentEditComponent.DisplayModeChanged.emit(this.IsDisplayOnly);
                             });
                         });
                 }
@@ -214,9 +215,7 @@ export class ConsigmentTabContentComponent
     }
     private Listen() {
         this._SubDisplayModeChanged =
-            DeclarationEventManager.DisplayModeChanged.subscribe((IsDisplayOnly: any) => {
-
-
+                this.CurrentSession.CurrentEditComponent.DisplayModeChanged.subscribe((IsDisplayOnly: any) => {
                 if (this.ShowExcludeConsignmentBoolean && this.ExcludeConsignment)
                     this.IsDisplayOnly = true;
                 else

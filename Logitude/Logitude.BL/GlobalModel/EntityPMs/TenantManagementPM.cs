@@ -419,6 +419,7 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public string ExportLoginCredintial { get; set; }
         public int? ExportTenant { get; set; }
 		public bool SearchAbsoluteValuePublic { get; set; }
+		public int? MinutsTimeOutSession { get; set; }
 
 	}
 }

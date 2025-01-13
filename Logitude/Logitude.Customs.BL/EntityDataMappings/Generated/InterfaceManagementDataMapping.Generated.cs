@@ -46,7 +46,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         InterfaceType, 
 	         UseRabbitMQ, 
 	         SendTime, 
-	         Environment,
+	         Environment, 
+	         EntityLockId,
 	      }
 
 
@@ -79,7 +80,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         InterfaceType, 
 	         UseRabbitMQ, 
 	         SendTime, 
-	         Environment,
+	         Environment, 
+	         EntityLockId, 
+	         EntityLockName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -176,6 +179,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Environment))
             {
 				entityPOCO.Environment = entityPM.Environment;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityLockId))
+            {
+				entityPOCO.EntityLockId = entityPM.EntityLockId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -279,6 +287,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Environment = entityPOCO.Environment;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EntityLockId))
+            {
+					entityPM.EntityLockId = entityPOCO.EntityLockId;
+            }
+
 		}
 
 		public void PMToOldPM(InterfaceManagementPM entityPM, InterfaceManagementPM oldEntityPM)
@@ -373,6 +386,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Environment))
             {
                 oldEntityPM.Environment = entityPM.Environment;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityLockId))
+            {
+                oldEntityPM.EntityLockId = entityPM.EntityLockId;
             }
 			
 		}

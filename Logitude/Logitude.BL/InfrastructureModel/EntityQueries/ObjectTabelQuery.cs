@@ -115,7 +115,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          FullNameTextCodeCode = a.FullNameTextCodeCode,
                                          FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                          AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-                                     }).ToList();
+										 IsLock = a.IsLock,
+										 RelatedEntity = a.RelatedEntity,
+										 ThisKey = a.ThisKey,
+										 RelatedKey = a.RelatedKey,
+									 }).ToList();
             }
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
@@ -197,7 +201,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                     FullNameTextCodeCode = a.FullNameTextCodeCode,
                                     FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                     AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-                                }).ToList();
+									IsLock = a.IsLock,
+									RelatedEntity = a.RelatedEntity,
+									ThisKey = a.ThisKey,
+									RelatedKey = a.RelatedKey,
+								}).ToList();
             }
 
             return currentLastUpdates.Concat(zeroLastUpdates).AsQueryable<ObjectTablePM>();
@@ -287,7 +295,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                            FullNameTextCodeCode = a.FullNameTextCodeCode,
                                            FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                            AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-                                       }).ToList();
+										   IsLock = a.IsLock,
+										   RelatedEntity = a.RelatedEntity,
+										   ThisKey = a.ThisKey,
+										   RelatedKey = a.RelatedKey,
+									   }).ToList();
             }
             if (tenant != 0)
             {
@@ -387,7 +399,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             FullNameTextCodeCode = a.FullNameTextCodeCode,
                                             FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                             AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-                                        }).ToList();
+											IsLock = a.IsLock,
+											RelatedEntity = a.RelatedEntity,
+											ThisKey = a.ThisKey,
+											RelatedKey = a.RelatedKey,
+										}).ToList();
 
             CacheManager.CacheWrapper.Insert(tenantZeroObjectTablesCacheKeyName, zeroObjectTables, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
 
@@ -498,7 +514,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        FullNameTextCodeCode = a.FullNameTextCodeCode,
                                                        FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                                        AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-                                                   }).ToList();
+													   IsLock = a.IsLock,
+													   RelatedEntity = a.RelatedEntity,
+													   ThisKey = a.ThisKey,
+													   RelatedKey = a.RelatedKey,
+												   }).ToList();
                             scope.Complete();
                         }
 
@@ -588,7 +608,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
                                                    FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                                    AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-                                               }).ToList();
+												   IsLock = a.IsLock,
+												   RelatedEntity = a.RelatedEntity,
+												   ThisKey = a.ThisKey,
+												   RelatedKey = a.RelatedKey,
+											   }).ToList();
                         scope.Complete();
                     }
                 }
@@ -677,7 +701,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
                                                    FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                                    AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-                                               }).ToList();
+												   IsLock = a.IsLock,
+												   RelatedEntity = a.RelatedEntity,
+												   ThisKey = a.ThisKey,
+												   RelatedKey = a.RelatedKey,
+											   }).ToList();
 
                         scope.Complete();
                     }
@@ -771,7 +799,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             FullNameTextCodeCode = a.FullNameTextCodeCode,
                                             FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                             AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-                                        }).ToList();
+											IsLock = a.IsLock,
+											RelatedEntity = a.RelatedEntity,
+											ThisKey = a.ThisKey,
+											RelatedKey = a.RelatedKey,
+										}).ToList();
 
 
                     scope.Complete();
@@ -824,8 +856,28 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             }
 
             return table;
-        }        
-        public ObjectTablePM GetObjectTablePMById(string id, int tenant)
+        }
+		public ObjectTablePM GetObjectTableByNameOrId(string name, int tenant)
+		{
+			ObjectTablePM table = null;
+			if (!string.IsNullOrEmpty(name))
+			{
+				table = GetObjectTablesWithTenantZero(tenant).Where(t => t.Name.ToLower() == name.ToLower() || t.Id == name).FirstOrDefault();
+			}
+
+			return table;
+		}
+		public ObjectTablePM GetObjectTableByDBName(string name, int tenant)
+		{
+			ObjectTablePM table = null;
+			if (!string.IsNullOrEmpty(name))
+			{
+				table = GetObjectTablesWithTenantZero(tenant).Where(t => t.DBTableName?.ToLower() == name.ToLower()).FirstOrDefault();
+			}
+
+			return table;
+		}
+		public ObjectTablePM GetObjectTablePMById(string id, int tenant)
         {
             ObjectTablePM table = null;
             if (!string.IsNullOrEmpty(id))
@@ -951,7 +1003,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      FullNameTextCodeCode = a.FullNameTextCodeCode,
                                                      FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                                      AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-                                                 };
+													 IsLock = a.IsLock,
+													 RelatedEntity = a.RelatedEntity,
+													 ThisKey = a.ThisKey,
+													 RelatedKey = a.RelatedKey,
+												 };
             return result;
         }  
         public ObjectTableList GetObjectTableList(string id, int tenant)
@@ -1021,7 +1077,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
                                                    FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                                    AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-                                               }).FirstOrDefault();
+												   IsLock = a.IsLock,
+												   RelatedEntity = a.RelatedEntity,
+												   ThisKey = a.ThisKey,
+												   RelatedKey = a.RelatedKey,
+											   }).FirstOrDefault();
 
 
 

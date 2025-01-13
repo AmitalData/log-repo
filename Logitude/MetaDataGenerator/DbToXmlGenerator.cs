@@ -1314,9 +1314,10 @@ namespace MetaDataGenerator
                 SetAttribute("TabLocalName", GetStringValue(tTextCode.LocalDefaultText), tabXElement);
                 SetAttribute("TabName", GetStringValue(tTextCode.DefaultText), tabXElement);
                 SetAttribute("IsSpellChecked", tTextCode.IsSpellChecked.ToString().ToLower(), tabXElement);
-                //SetAttribute("SpellCheckDate", GetStringValue(tTextCode.SpellCheckDate), tabXElement);
+				//SetAttribute("SpellCheckDate", GetStringValue(tTextCode.SpellCheckDate), tabXElement);
+				SetAttribute("IsLocked", tab.IsLocked.ToString().ToLower(), tabXElement, null);
 
-                if (tFeature != null)
+				if (tFeature != null)
                 {
                     SetAttribute("IsPackagable", tFeature.Packagable.ToString(), tabXElement);
                     SetAttribute("FeatureCode", GetStringValue(tFeature.Code), tabXElement);

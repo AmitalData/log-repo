@@ -320,6 +320,7 @@ export class SendDeclarationService implements OnDestroy {
             }
 
             else {
+                ServiceHelper.DeleteGeneralLock(this.CurrentSession.CurrentEditComponent.EntityId ,this.CurrentSession.CurrentEditComponent.ObjectTableName)
                 this.EntityPM = myResponse.Result;
                 if (this.CurrentSession.CurrentEditComponent) {
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();

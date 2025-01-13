@@ -112,5 +112,10 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         [ForeignKey("FullNameTextCodeId")]
         public virtual TextCode FullNameTextCode { get; set; }
         public bool AvailableInDocumentTypes { get; set; }
-    }
+		public bool IsLock { get; set; }
+		public string RelatedEntity { get; set; }
+		public string ThisKey { get; set; }
+		public string RelatedKey { get; set; }
+
+	}
 }

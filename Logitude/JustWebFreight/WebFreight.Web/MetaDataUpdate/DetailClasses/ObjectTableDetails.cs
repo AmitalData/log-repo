@@ -105,5 +105,9 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public bool SupportSubEntity { get; set; }
         public bool ApplyGenericCustomFields { get; set; }
         public bool AvailableInDocumentTypes { get; set; }
-    }
+		public bool IsLock { get; set; }
+		public string RelatedEntity { get; set; }
+		public string ThisKey { get; set; }
+		public string RelatedKey { get; set; }
+	}
 }

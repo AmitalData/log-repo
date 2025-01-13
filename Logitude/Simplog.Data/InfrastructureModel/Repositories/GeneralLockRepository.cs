@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -59,8 +60,31 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                 && rec.CreatedAt < createdAtb4_15min
                 );
         }
+		public GeneralLock GetSingleGeneralLock(int tenant,string entityId,string objectTableId)
+		{
 
-        public IQueryable<GeneralLock> GetGeneralLocks()
+			return (context as DbContextBase)
+				.GetListWhere<GeneralLock>(rec => rec.Tenant == tenant && ((rec.EntityId1 == entityId &&
+				rec.ObjectTableId1 == objectTableId) || (rec.EntityId2 == entityId && rec.ObjectTableId2 == objectTableId))).FirstOrDefault();
+		}
+		public void FastDeleteGeneralLock(int tenant, string entityId1, string objectTableId1, string sessionId)
+		{
+			(context as DbContextBase)
+				.DeleteWhere<GeneralLock>(rec => rec.Tenant == tenant && rec.EntityId1 == entityId1 && rec.ObjectTableId1 == objectTableId1 && rec.SessionId == sessionId);
+		}
+
+		public void FastDeleteGeneralLock(bool isFromUI)
+		{
+            string[] strings = new string[] { "MessageDCABatch", "MessageInteractive" };
+			(context as DbContextBase)
+				.DeleteWhere<GeneralLock>(rec => (isFromUI && !strings.Contains(rec.SessionId))|| (!isFromUI && strings.Contains(rec.SessionId)));
+		}
+		public void FastDeleteGeneralLockBySessionId(int tenant, string sessionId)
+		{
+			(context as DbContextBase)
+				.DeleteWhere<GeneralLock>(rec => rec.Tenant == tenant && rec.SessionId.Contains(sessionId));
+		}
+		public IQueryable<GeneralLock> GetGeneralLocks()
         {
             return context.GeneralLocks;
         }
@@ -109,6 +133,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
 
 
-        
-    }
+
+	}
 }

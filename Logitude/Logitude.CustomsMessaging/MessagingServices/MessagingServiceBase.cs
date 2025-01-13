@@ -39,6 +39,7 @@ using Logitude.Server.Tools.Models;
 using System.ComponentModel;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
+using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -435,10 +436,31 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 try
                 {
+					GeneralLockQueryService generalLockQueryService = new GeneralLockQueryService(requestParams.Tenant);
+
+					if (requestParams.RequestVIA == SendRequestVIA.DCABatch)
+					{
+						if (requestParams.LoggingEntityId != null && requestParams.LoggingObjectTableId != null)
+						{
+							var generalLock = generalLockQueryService.CheckIsLocked(requestParams.Tenant, "MessageDCABatch", requestParams.LoggingUserId, requestParams.LoggingEntityId, requestParams.LoggingObjectTableId, true);
+
+							if (generalLock != null)
+							{
+								string message = $"The entity {generalLock.EntityId1} object {generalLock.ObjectTable1} is locked by {generalLock.UserName}";
+								LogMessagingUtil.Instance.AppendLine(message);
+								throw new Exception(message);
+							}
+						}
+					}
                     LogMessagingUtil.Instance.AppendLine("MessagingServiceBase:Update:Start");
                     //throw new Exception("tst");
                     _ResponseService.Update(customsResponse, requestParams);
-                    stopwatch.Stop();
+					if (requestParams.LoggingEntityId != null && requestParams.LoggingObjectTableId != null)
+					{
+						string sessionId = requestParams.RequestVIA == SendRequestVIA.DCABatch? "MessageDCABatch": "MessageInteractive";
+					    generalLockQueryService.DeleteGeneralLockByEntity(requestParams.Tenant , requestParams.LoggingEntityId, requestParams.LoggingObjectTableId, sessionId);
+					}
+					stopwatch.Stop();
                     LogMessagingUtil.Instance.AppendLine("MessagingServiceBase:Update:" + stopwatch.Elapsed.ToString());
                 }
                 catch (DbEntityValidationException ex)
@@ -883,8 +905,19 @@ Please instance and set MyResponseData ");
             {
                 _RequestService = new TRequestService();
             }
+            if (requestParams.LoggingEntityId != null && requestParams.LoggingObjectTableId != null) 
+            { 
+			    GeneralLockQueryService generalLockQueryService = new GeneralLockQueryService(requestParams.Tenant);
+			    var generalLock = generalLockQueryService.CheckIsLocked(requestParams.Tenant, "MessageInteractive", requestParams.LoggingUserId,requestParams.LoggingEntityId,requestParams.LoggingObjectTableId,true);
 
-            TCustomsRequest customsRequest = _RequestService.GetRequest(requestParams);
+			    if (generalLock != null)
+                {
+                    string message = $"The entity {generalLock.EntityId1} object {generalLock.ObjectTable1} is locked by {generalLock.UserName}";
+			    	LogMessagingUtil.Instance.AppendLine(message);
+			    	throw new Exception(message);
+			    }
+			}
+			TCustomsRequest customsRequest = _RequestService.GetRequest(requestParams);
             if (customsRequest == null) //itzik
             {
                 LogMessagingUtil.Instance.AppendLine("_RequestService.GetRequest(requestParams) return null ???!!!  ");

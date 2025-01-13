@@ -61,7 +61,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         HtmlComponentUrl = a.HtmlComponentUrl,
                         Type = "Predefined",
                         FeatureUniqeCode = a.FeatureUniqeCode,
-                        HideTabNameInScreen = a.HideTabNameInScreen
+                        HideTabNameInScreen = a.HideTabNameInScreen,
+                        IsLocked = a.IsLocked
                     }).ToList();
         }
 
@@ -115,8 +116,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     ScreenCode = a.ScreenCode,
                                                     HtmlComponentName = a.HtmlComponentName,
                                                     HtmlComponentUrl = a.HtmlComponentUrl,
-                                                    HideTabNameInScreen = a.HideTabNameInScreen
-                                                };
+                                                    HideTabNameInScreen = a.HideTabNameInScreen,
+													IsLocked = a.IsLocked
+												};
             return tabs;
         }
 
@@ -147,8 +149,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                 HtmlComponentName = tab.HtmlComponentName,
                                                 HtmlComponentUrl = tab.HtmlComponentUrl,
                                                 ScreenName = screen == null ? null : screen.Name,
-                                                HideTabNameInScreen = tab.HideTabNameInScreen
-                                            }).ToList();
+                                                HideTabNameInScreen = tab.HideTabNameInScreen,
+												IsLocked = tab.IsLocked
+											}).ToList();
             return tabs;
         }
 

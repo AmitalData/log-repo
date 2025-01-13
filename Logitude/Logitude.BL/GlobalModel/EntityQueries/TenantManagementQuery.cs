@@ -323,6 +323,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      ExportTenant = a.ExportTenant,
                                                      ExportLoginCredintial = a.ExportLoginCredintial,
 													 SearchAbsoluteValuePublic = a.SearchAbsoluteValuePublic,
+                                                     MinutsTimeOutSession = a.MinutsTimeOutSession,
 
 												 }).FirstOrDefault();
                     if (tenant != null)
@@ -553,6 +554,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
                                                   ExportLoginCredintial=a.ExportLoginCredintial,
                                                   ExportTenant=a.ExportTenant,
+												  MinutsTimeOutSession = a.MinutsTimeOutSession,
 											  }).FirstOrDefault();
 
                 if (tenant1 != null)
@@ -769,7 +771,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         LogoURL = a.LogoURL,
                         ServiceAgreementURL = a.ServiceAgreementURL,
 						SearchAbsoluteValuePublic = a.SearchAbsoluteValuePublic,
-
+						MinutsTimeOutSession = a.MinutsTimeOutSession,
 					});
         }
         public TenantManagementList MapSingleList(TenantManagement entity)
@@ -931,6 +933,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     CargoTrackingPrivateShowEvents = entity.CargoTrackingPrivateShowEvents,
                     LogoURL = entity.LogoURL,
                     ServiceAgreementURL = entity.ServiceAgreementURL,
+					MinutsTimeOutSession = entity.MinutsTimeOutSession,
 				};
             }
 
@@ -1092,7 +1095,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        LogoURL = a.LogoURL,
                        ServiceAgreementURL = a.ServiceAgreementURL,
 					   SearchAbsoluteValuePublic = a.SearchAbsoluteValuePublic,
-
+					   MinutsTimeOutSession = a.MinutsTimeOutSession,
 				   };
         }
 
@@ -1394,7 +1397,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              LogoURL = a.LogoURL,
                                              ServiceAgreementURL = a.ServiceAgreementURL,
 											 SearchAbsoluteValuePublic = a.SearchAbsoluteValuePublic,
-
+											 MinutsTimeOutSession = a.MinutsTimeOutSession,
 										 }).FirstOrDefault();
 
             return tenant;

@@ -45,6 +45,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string ScreenCode { get; set; }
         public string OriginalTabCode { get; set; }
         public bool HideTabNameInScreen { get; set; }
+        public bool IsLocked { get; set; }
 
     }
 }

@@ -690,8 +690,9 @@ namespace MeatadataGeneratorTool.Helpers
             tab.IndexOrder = GetAttributeIntegerValue(fieldNode.Attributes["IndexOrder"]);
             tab.HtmlComponentName = GetAttributeStringValue(fieldNode.Attributes["HtmlComponentName"]);
             tab.HtmlComponentURL = GetAttributeStringValue(fieldNode.Attributes["HtmlComponentURL"]);
+			tab.IsLocked = GetAttributeBoolValue(fieldNode.Attributes["IsLocked"]);
 
-            if (fieldNode.Attributes["FeatureCode"] != null)
+			if (fieldNode.Attributes["FeatureCode"] != null)
             {
                 tab.FeatureCode = GetAttributeStringValue(fieldNode.Attributes["FeatureCode"]);
             }
@@ -1059,8 +1060,20 @@ namespace MeatadataGeneratorTool.Helpers
                 objectTable.LovDisplayMemberPath = GetAttributeStringValue(entity.Attributes["LovDisplayMemberPath"]);
                 objectTable.LovDisplayMemberPathLocal = GetAttributeStringValue(entity.Attributes["LovDisplayMemberPathLocal"]);
                 objectTable.TenantZeroData = GetAttributeBoolValue(entity.Attributes["TenantZeroData"]);
+				objectTable.RelatedEntity = GetAttributeStringValue(entity.Attributes["RelatedEntity"]);
+				objectTable.ThisKey = GetAttributeStringValue(entity.Attributes["ThisKey"]);
+				objectTable.RelatedKey = GetAttributeStringValue(entity.Attributes["RelatedKey"]);
 
-                if (entity.Attributes["NoViewController"] != null)
+				if (entity.Attributes["IsLock"] != null)
+				{
+					objectTable.IsLock = GetAttributeBoolValue(entity.Attributes["IsLock"]);
+				}
+				else
+				{
+					objectTable.IsLock = false;
+				}
+
+				if (entity.Attributes["NoViewController"] != null)
                 {
                     objectTable.NoViewController = GetAttributeBoolValue(entity.Attributes["NoViewController"]);
                 }
