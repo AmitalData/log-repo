@@ -28,8 +28,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "fc0ef583a1389045acdc2ae7e52840de";
-        public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+
+		public const string HashString = "9da5880daf405baad6fbc72122aec6f3";
+	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -12306,6 +12307,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						DisplayInRequiredFields =  false,
+
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -14207,7 +14209,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_AccountingPeriodsOClosedAfterOpen = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriods.O.ClosedAfterOpen", DefaultText = "Closed month later than open month is not allowed",LocalDefaultText = @"לא ניתן להגדיר חודש סגור אחרי חודש פתוח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GLAccountTextCode_AccountingPeriodsOtherearejournalsdidnottranslated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriods.O.therearejournalsdidnottranslated", DefaultText = "Can’t close this month. there are journals that did not translated into transactions for this month",LocalDefaultText = null, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GLAccountTextCode_AccountingPeriodsOtherearejournalsdidnottranslated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriods.O.therearejournalsdidnottranslated", DefaultText = "Can’t close this month. there are journals that did not translated into transactions for this month",LocalDefaultText = @"לא ניתן לסגור את החודש, ישנן פקודות יומן ללא תנועות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_AccountingPeriodsOClosedMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriods.O.ClosedMonth", DefaultText = "Closed month",LocalDefaultText = @"חודש סגור", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -14329,9 +14331,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_ReconciliationsOAmountMustBSmaller2OpenAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.O.AmountMustBSmaller2OpenAmount", DefaultText = "The amount must be smaller or equal to open amount",LocalDefaultText = @"הסכום חייב להיות קטן או שווה לסכום הפתוח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-           TextCode GLAccountTextCode_ReconciliationsOZeroNotAllowed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.O.ZeroNotAllowed", DefaultText = "Zero amount is not allowed; instead delete the line from the reconciliation", LocalDefaultText = @"לא ניתן להזין אפס, במקום זה יש למחוק את השורה מההתאמה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GLAccountTextCode_ReconciliationsOZeroNotAllowed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.O.ZeroNotAllowed", DefaultText = "Zero amount is not allowed; instead delete the line from the reconciliation",LocalDefaultText = @"לא ניתן להזין אפס, במקום זה יש למחוק את השורה מההתאמה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-           TextCode GLAccountTextCode_ReconciliationsOErrorsInSelectedLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.O.ErrorsInSelectedLines", DefaultText = "There are errors in the selected reconciliation lines",LocalDefaultText = @"קיימת הודעת שגיאה בשורת ההתאמה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GLAccountTextCode_ReconciliationsOErrorsInSelectedLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.O.ErrorsInSelectedLines", DefaultText = "There are errors in the selected reconciliation lines",LocalDefaultText = @"קיימת הודעת שגיאה בשורת ההתאמה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_ChequesQChequeNotDeposited = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Cheques.Q.ChequeNotDeposited", DefaultText = "Cheque has not been deposited",LocalDefaultText = @"המחאה לא הופקדה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

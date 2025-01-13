@@ -14334,6 +14334,7 @@
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
     DisplayInRequiredFields="false"
+
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -18323,6 +18324,7 @@
     <TextCode
       Code="&quot;AccountingPeriods.O.therearejournalsdidnottranslated&quot;"
       DefaultText="&quot;Can’t close this month. there are journals that did not translated into transactions for this month&quot;"
+      LocalDefaultText="&quot;לא ניתן לסגור את החודש, ישנן פקודות יומן ללא תנועות&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
     <TextCode

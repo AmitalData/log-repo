@@ -46,11 +46,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 //check
                 JournalRepository repo = new JournalRepository(entityPM.Tenant);
-                bool exist = repo.CheckIfThereNonTranslatedJournalsByMonth(entityPM.Year, (entityPM.ClosedMonth == null ? 0 : entityPM.ClosedMonth.Value), entityPM.Tenant);
+                List<string> exist = repo.CheckIfThereNonTranslatedJournalsByMonth(entityPM.Year, (entityPM.ClosedMonth == null ? 0 : entityPM.ClosedMonth.Value), entityPM.Tenant);
 
-                if (exist)
+                if (exist.Count > 0)
                 {
-                    throw new ApplicationException(TextCodesTranslator.TranslateText("AccountingPeriods.O.therearejournalsdidnottranslated", entityPM.Tenant));
+                    string existingJournals = string.Join(", ", exist);
+                    bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
+
+                    throw new ApplicationException(TextCodesTranslator.TranslateText("AccountingPeriods.O.therearejournalsdidnottranslated", entityPM.Tenant, showLocal) + ": " + existingJournals);
                 }
             }
 
