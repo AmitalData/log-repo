@@ -65,7 +65,7 @@ using JWT.Algorithms;
 using JWT.Exceptions;
 using System.Runtime.Remoting.Contexts;
 using Stimulsoft.Base.Gauge.GaugeGeoms;
-//using WebFreight.Web.Helpers.CheckHealthHelper;
+using WebFreight.Web.Helpers.CheckHealthHelper;
 using Logitude.Customs.BL.BL;
 using System.Threading.Tasks;
 namespace WebFreight.Web
@@ -3383,13 +3383,13 @@ namespace WebFreight.Web
             try
             {
                 stopwatch.Start();
-                //CheckHealthService checkHealthService = new CheckHealthService();
-                //checkHealthService.CheckHealth();
+                CheckHealthService checkHealthService = new CheckHealthService();
+                checkHealthService.CheckHealth();
 
                 stopwatch.Stop();
                 long elapsedTime = stopwatch.ElapsedMilliseconds;
                 string time = elapsedTime.ToString();
-                var cpuPercentage = 0;// await checkHealthService.GetCpuPercentageAsync();
+                var cpuPercentage = await checkHealthService.GetCpuPercentageAsync();
                 if (cpuPercentage > 80)
                 {
                     return Request.CreateResponse(HttpStatusCode.InternalServerError, $"Machine is not healthy \n Time of query {time}"); 
