@@ -2057,11 +2057,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 // get all declaration Customs Document
                 var myCustomsDocumentQueryService = new CustomsDocumentQueryService(declarationPM.Tenant);
- 
+
                 var customsDocumentPMList = myCustomsDocumentQueryService.GetCustomsDocumentList(DocumentsFilingIdList, declarationPM.Tenant);
 
- 
-                 //// determine how many supplier invoices documents had been successfully sent to the mekhes
+
+                //// determine how many supplier invoices documents had been successfully sent to the mekhes
                 //int sentSupplierInvoices = customsDocumentPMList.Where(document => (document.DocumentTypeCode == "380" || document.DocumentTypeCode == "325") && document.DocumentStatusCode == "1").Count();
 
                 //// get all supplier invoices count of the declaration
@@ -2074,8 +2074,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 //declarationReadyForSending = sentSupplierInvoices >= declarationSupplierInvoiceCount;
                 declarationReadyForSending = myCustomsDocumentQueryService.checkIfExistTicketsForAllSupplierInvoice(declarationPM);
 
-                if (declarationReadyForSending && declarationPM.ProcedureCurrentCode == "1000041")
-                  {
+                if (declarationReadyForSending)
+                {
                     if (declarationPM.ProcedureCurrentCode == "1000041")
                     {
                         bool containsAllCodes = new List<string> { "IL_1003", "IL_506", "IL_1050" }
@@ -2097,19 +2097,15 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                 declarationReadyForSending = false;
                             }
                         }
-                    }
-                 else
-                {
-                    //Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine($"sentSupplierInvoices: {sentSupplierInvoices} less than declarationSupplierInvoiceCount: {declarationSupplierInvoiceCount}");
-                 }
-                //else
-                //{
-                //    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine($"sentSupplierInvoices: {sentSupplierInvoices} less than declarationSupplierInvoiceCount: {declarationSupplierInvoiceCount}");
-                //}
-                /* if need to check for every invoice, the relation between document and invoice is
-                 * (invoice.SequenceNumeric == customsDocumentsTicketPM.ConnectedInvoicesSequences) */
-            }
-
+                    }                   
+                    //else
+                    //{
+                    //    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine($"sentSupplierInvoices: {sentSupplierInvoices} less than declarationSupplierInvoiceCount: {declarationSupplierInvoiceCount}");
+                    //}
+                    /* if need to check for every invoice, the relation between document and invoice is
+                     * (invoice.SequenceNumeric == customsDocumentsTicketPM.ConnectedInvoicesSequences) */
+                }
+            } 
             return declarationReadyForSending;
         }
 
