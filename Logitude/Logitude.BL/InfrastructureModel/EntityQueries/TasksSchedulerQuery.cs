@@ -518,7 +518,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 		public List<TasksSchedulerPM> GetAllTasksSchedulerNextRunTimePastPMs()
 		{
 			return (from a in repository.context.TasksSchedulers
-					where a.Status == null && a.InActive == false && a.NextRunTime < DateTime.Now
+					where a.Status == null && a.InActive == false && a.NextRunTime <= DateTime.Now
 					select new TasksSchedulerPM()
 					{
 						Id = a.Id,
