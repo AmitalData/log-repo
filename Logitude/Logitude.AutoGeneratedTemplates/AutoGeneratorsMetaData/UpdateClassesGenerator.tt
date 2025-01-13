@@ -752,11 +752,11 @@ private void WriteAddTabMethod(XElement entity,XElement Tab,string TblName)
 	   string Locked;
        if (IsLocked == null)
        {
-	   	 Locked = "false";
+	   	      Locked = "false";
        }
        else
        {
-	         Locked =  IsPackagable.Value;  
+	         Locked =  IsLocked.Value;  
        }
 	  
 
