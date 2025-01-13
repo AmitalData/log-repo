@@ -496,8 +496,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                         // });
                         if(this.glaccount?.IsMultiCurrency && this.glaccount?.ReconcileMethodCode==1)
                                 sortedTransactions=sortedTransactions.filter(a=>a.CurrencyId==this.PaymentCurrencyId)
-
-                       sortedTransactions = sortedTransactions.filter(a=>a.IsChecked == true || a.IsReconciled == true || a.PaymentReconciledAmount != 0);
+                        if(!AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) && this.EntityPM.StatusCode != "DR") 
+                            sortedTransactions = sortedTransactions.filter(a=>a.IsChecked == true || a.IsReconciled == true || a.PaymentReconciledAmount != 0);
 
                         this.TransactionsList.InsertCollection(sortedTransactions);
                     }
