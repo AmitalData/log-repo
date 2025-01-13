@@ -1029,8 +1029,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "AV2,Israel Invoices Do Not Activate V2",
                 Description = "חשבוניות ישראל לא להפעיל V2 ",
             });
-
-            return all;
+			all.Add(new ToggleDetails()
+			{
+				Code = "STQ",
+				Name = "Add Task Scheduler To Queue By Date",
+				SearchFields = "STQ,Add Task Scheduler To Queue By Date",
+				Description = "הכנסה לתור של מתזמן לפי התאריך",
+			});
+			return all;
        }
 
 	    public void MapPoco(Toggle newPoco)

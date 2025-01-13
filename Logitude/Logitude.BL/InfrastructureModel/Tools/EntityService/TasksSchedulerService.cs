@@ -111,10 +111,13 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             ConnectDocumentTypeTemplateToScheduler();
             ConnectMessageReportTemplateToScheduler();
 
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("SchedularQueue", 0);
-            queueservice.Send(new Dictionary<string, string>() { { "TaskId", Poco.Id }, { "Tenant", Poco.Tenant.ToString() }, { "Version", Poco.Version.ToString() } }, tenant, null, null, null, Poco.NextRunTimeUTC);
-        }
+            if (!FeatureToggleHelper.HasFeatureToggle("STQ", entityPM.Tenant)) 
+            { 
+			    IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("SchedularQueue", 0);
+                queueservice.Send(new Dictionary<string, string>() { { "TaskId", Poco.Id }, { "Tenant", Poco.Tenant.ToString() }, { "Version", Poco.Version.ToString() } }, tenant, null, null, null, Poco.NextRunTimeUTC);
+			}
+		}
 
         private void ConnectDocumentTypeTemplateToScheduler()
         {
@@ -181,10 +184,13 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 theEntityPm.Version = theEntityPm.Version + 1;
                 theEntityPm.NextRunTime = theEntityPm.StartDateTime;
                 theEntityPm.NextRunTimeUTC = theEntityPm.StartDateTimeUTC;
-                IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue("SchedularQueue", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "TaskId", Poco.Id }, { "Tenant", Poco.Tenant.ToString() }, { "Version", theEntityPm.Version.ToString() } }, tenant, null, null, null, theEntityPm.NextRunTimeUTC);
+                if (!FeatureToggleHelper.HasFeatureToggle("STQ", entityPM.Tenant)) 
+                {
+                    IQueueService queueservice = new DbQueueService();
+                    queueservice.InitializeQueue("SchedularQueue", 0);
+                    queueservice.Send(new Dictionary<string, string>() { { "TaskId", Poco.Id }, { "Tenant", Poco.Tenant.ToString() }, { "Version", theEntityPm.Version.ToString() } }, tenant, null, null, null, theEntityPm.NextRunTimeUTC);
 
+                }
             }
             TasksSchedulerMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);

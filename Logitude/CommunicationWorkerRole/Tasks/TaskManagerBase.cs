@@ -88,8 +88,8 @@ namespace CommunicationWorkerRole.Tasks
                     Task.LastRunResult = LastExecutionHistory.LogType;
                     SchedulerHelper SchedulerHelper = new SchedulerHelper();
                     SchedulerHelper.AddSchedulerQueue(Task);
-
-                    scope.Complete();
+                  
+					scope.Complete();
                 }
             }
             catch (ThreadAbortException e)

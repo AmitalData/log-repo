@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
@@ -13,18 +14,22 @@ namespace WebFreight.Web.Helpers
     public class SchedulerHelper
     {
         public void AddSchedulerQueue(TasksSchedulerPM task)
-        {
-            CalculateNewNextRunTime(task);
+		{
+			CalculateNewNextRunTime(task);
             
-            if (task.TriggerType.ToUpper() != "O")
+            if (!FeatureToggleHelper.HasFeatureToggle("STQ", task.Tenant) && task.TriggerType.ToUpper() != "O")
             {
                 SendNewSchedularQueue(task);
             }
 
             UpdateTaskService(task);
         }
-
-        private void CalculateNewNextRunTime(TasksSchedulerPM task)
+		public void AddSchedulerQueueAndUpdateTask(TasksSchedulerPM task)
+		{			
+			SendNewSchedularQueue(task);
+			UpdateTaskService(task);
+		}
+		private void CalculateNewNextRunTime(TasksSchedulerPM task)
         {
             if (task.NextRunTimeUTC < DateTime.UtcNow)
             {
@@ -235,7 +240,7 @@ namespace WebFreight.Web.Helpers
             return from.AddDays(target - start);
         }
 
-        private void SendNewSchedularQueue(TasksSchedulerPM task)
+		private void SendNewSchedularQueue(TasksSchedulerPM task)
         {
             var queueservice = new DbQueueService();
             queueservice.InitializeQueue("SchedularQueue", 0);
