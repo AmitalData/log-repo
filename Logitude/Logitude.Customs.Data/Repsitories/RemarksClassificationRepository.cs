@@ -22,11 +22,11 @@ namespace Logitude.Customs.Data.Repsitories
             
 			throw new NotImplementedException();
         }
-        public List<RemarksClassificationList> GetAllCommentsByCustomsItemId(int customsItemId, int tenant)
+        public List<RemarksClassificationList> GetAllComments(int tenant)
         {
 
             List<RemarksClassification> RemarksClassificationPocoList = (from a in context.RemarksClassifications
-                    where a.CustomsItemsID == customsItemId && a.Tenant == tenant
+                    where  a.Tenant == tenant
                     select a).ToList();
 
             // convert the list of POCO to list of List

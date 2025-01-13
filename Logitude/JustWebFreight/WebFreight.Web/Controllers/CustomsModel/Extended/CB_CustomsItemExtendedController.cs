@@ -217,7 +217,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage GetAllCommentsByCustomsItemId(int customsItemId, int tenant)
+        public HttpResponseMessage GetAllComments(int tenant)
         {
             try
             {
@@ -230,7 +230,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 RemarksClassificationQueryService remarksClassificationQuery = new RemarksClassificationQueryService(MyContext);
                 remarksClassificationQuery.InitializeSettings();
 
-                List<RemarksClassificationList> remarksClassificationPMList = remarksClassificationQuery.GetAllCommentsByCustomsItemId(customsItemId,tenant);
+                List<RemarksClassificationList> remarksClassificationPMList = remarksClassificationQuery.GetAllComments(tenant);
 
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 

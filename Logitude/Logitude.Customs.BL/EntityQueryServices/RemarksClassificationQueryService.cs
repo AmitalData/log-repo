@@ -23,9 +23,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
    {
        
 
-        public List<RemarksClassificationList> GetAllCommentsByCustomsItemId(int customsItemId, int tenant)
+        public List<RemarksClassificationList> GetAllComments(int tenant)
         {
-            return this.repository.GetAllCommentsByCustomsItemId(customsItemId, tenant);
+            return this.repository.GetAllComments(tenant);
         }
 
     }
