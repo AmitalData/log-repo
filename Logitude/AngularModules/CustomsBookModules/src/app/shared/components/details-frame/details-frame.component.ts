@@ -54,7 +54,7 @@ export class DetailsFrameComponent implements OnInit {
   ngOnInit() {
     this.currentItem.subscribe((data: CB_CustomsItemComputedDataList) => {
       if (data?.CustomsItemID != null) {
-        this.item = data
+        this.item = data;
 
         this.countOfComments = this.item?.remarksClassificationList?.length > 0 ? this.item?.remarksClassificationList?.length : 0;
         this.addCommentService.allComments.next(this.item?.remarksClassificationList);

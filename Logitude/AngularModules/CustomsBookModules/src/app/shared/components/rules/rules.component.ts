@@ -30,8 +30,10 @@ export class RulesComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.currentItem.subscribe((data: CB_CustomsItemComputedDataList) => {
-      if (data?.CustomsItemID != null)
+      if (data?.CustomsItemID != null) {
+        if (data?.rulesData?.length > 0) this.showRules = false;
         this.initData(data?.CustomsItemID);
+      }
     });
   }
 
@@ -53,15 +55,15 @@ export class RulesComponent implements OnInit, OnChanges {
   // Method to fetch rules data from the API and build the rules hierarchy
   initData(customsItemID: number) {
     this.resetRulesData();
-		if (this.currentItem.getValue()?.rulesData?.length == 0) return;
+    if (this.currentItem.getValue()?.rulesData?.length == 0) return;
 
     // Clean up spaces by replacing multiple &nbsp; with a single space, then condense extra spaces
-      let rules = this.currentItem.getValue()?.rulesData;
-      rules.forEach(rule => {
-        rule.Rules = rule.Rules.replace(/(&nbsp;)+/g, ' ').replace(/\s+/g, ' ').trim();
-      });
+    let rules = this.currentItem.getValue()?.rulesData;
+    rules.forEach(rule => {
+      rule.Rules = rule.Rules.replace(/(&nbsp;)+/g, ' ').replace(/\s+/g, ' ').trim();
+    });
 
-      this.allRules = this.buildRulesHierarchy(rules);
+    this.allRules = this.buildRulesHierarchy(rules);
   }
 
   //initData(customsItemID: number) {
