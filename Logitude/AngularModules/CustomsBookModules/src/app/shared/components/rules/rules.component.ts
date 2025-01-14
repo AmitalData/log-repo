@@ -30,8 +30,9 @@ export class RulesComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.currentItem.subscribe((data: CB_CustomsItemComputedDataList) => {
+      this.closeRulesClick();
       if (data?.CustomsItemID != null) {
-        if (data?.rulesData?.length > 0) this.showRules = false;
+        // if (data?.rulesData?.length > 0) this.closeRulesClick();
         this.initData(data?.CustomsItemID);
       }
     });
