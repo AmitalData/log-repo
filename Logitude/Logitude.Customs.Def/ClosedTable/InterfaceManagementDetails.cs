@@ -3499,12 +3499,11 @@ namespace Logitude.Customs.Def.ClosedTable
             all.Add(new InterfaceManagementDetails()
             {
                 Code = "UCB8373",
-                InOut = InOutEnum.O.ToString(),
+                InOut = InOutEnum.I.ToString(),
                 Description = "שחזור הצהרה בלדר",
+                DcaPrefixName = "UnifreightCourier_UCB8373_Out.",
                 DefaultSendOptionsCode = null,
                 DefaultPriority = CONST_DefaultPriority,
-                DcaPrefixName = "",
-                DcaPrefixName2 = "",
                 AllowRestore = true,
                 Active = true,
                 SendAsDual = false,

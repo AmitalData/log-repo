@@ -80,8 +80,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 else
                 {
-                    mess.AppendLine($"GetBy");
-                    listPoco = repo.GetBy(customResponse.tenant, customResponse.CourierMasterId).ToList();
+                    if (customResponse.IsWorkSheetFromExcel)
+                    {
+                        listPoco = repo.GetByFromExcel(customResponse.tenant, customResponse.CourierMasterId).ToList();
+                    }
+                    else
+                    {
+                        mess.AppendLine($"GetByCourierMasterId");
+                        listPoco = repo.GetBy(customResponse.tenant, customResponse.LoggingUserId).ToList();
+                    }
                 }
                 if (listPoco.Count == 0)
                 {
@@ -92,10 +99,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (customResponse.CourierDeclarationStatusCode == "R")
                     {
                         listPoco = listPoco.Where(r => r.CourierDeclarationStatusCode == "X").ToList();
-                    }
+                    } 
                     if (listPoco.Count == 0)
                     {
-                        mess.AppendLine($"אין תיקים  {requestParams.AppicationId} ");
+                        mess.AppendLine($"אין הצהרות לשליחה בסטטוס X  {requestParams.AppicationId} ");
                     }
                     else
                     {
