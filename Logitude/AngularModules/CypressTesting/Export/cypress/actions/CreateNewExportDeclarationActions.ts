@@ -58,7 +58,7 @@ export function FillNewExportDeclaration(createNewExportDeclarationDetails: Crea
    cy.FillLogLov(CreateNewExportDeclarationSelectors.RecieverWareHouse,createNewExportDeclarationDetails.RecieverWareHouse,true);
    cy.FillLogLov(CreateNewExportDeclarationSelectors.InternalTransition,createNewExportDeclarationDetails.InternalTransition,true);
    cy.Click(CreateNewExportDeclarationSelectors.IsDangerousGoods,createNewExportDeclarationDetails.IsDangerousGoods,true)
-   cy.get(CreateNewExportDeclarationSelectors.CheckBox).click();
+//    cy.get(CreateNewExportDeclarationSelectors.CheckBox).click();
 
  }
 

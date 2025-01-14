@@ -16,16 +16,19 @@ export function NavigatesExportWizerd() {
 export function SearchFields(cargoSerialDatasDetails: CargoSerialDataDetails) 
 {
    cy.FillLogTextBox(CargoSerialDataSelectors.SearchField, cargoSerialDatasDetails.SearchField, true);
-   cy.wait(1000)
+   cy.wait(10000);
    cy.Click(CargoSerialDataSelectors.FirestDeclaration, null);
+   cy.wait(10000);
    cy.Click(CargoSerialDataSelectors.AddButton, null);
   
 }
 
 export function FillCargoSerialData(cargoSerialDataDetails: CargoSerialDataDetails) {
     debugger
+    cy.wait(10000);
+
     FillDropdownInRowTable('סוג כמות', cargoSerialDataDetails.TypeOfQuantity);
-    FillDropdownInRowTable('סוג אריזה', cargoSerialDataDetails.PackagingType);
+     FillDropdownInRowTable('סוג אריזה', cargoSerialDataDetails.PackagingType);
     FillInRowTable('כמות', cargoSerialDataDetails.Quantity);
     FillInRowTable('משקל', cargoSerialDataDetails.Weight);
     FillDropdownInRowTable('קוד סוג משקל אריזה', cargoSerialDataDetails.PackingWeightCode);
@@ -33,19 +36,21 @@ export function FillCargoSerialData(cargoSerialDataDetails: CargoSerialDataDetai
     cy.FillLogTextBox(CargoSerialDataSelectors.SignsAndNumbers, cargoSerialDataDetails.SignsAndNumbers); 
     
 }
-
-
 function FillDropdownInRowTable(headerText: string, value: string) {
-    cy.get(`.ag-header-cell div:contains("${headerText}")`).invoke('attr', 'id').then(id => {
-        if (id?.indexOf('HeaderTemplateDiv') > -1) {
-            let i = id.replace('HeaderTemplateDiv', '');
-            FillGLAccountDDL(`.LogCellTemplate:eq(${i})`, value);
-            cy.Click('.EditableGridBody',null);
-        }
-       
-    }); 
-   
+
+
+    cy.get(`.ag-header-cell div:contains("${headerText}")`).each(ele => {
+        if(ele.text() != headerText)return;
+        const id = ele.attr('id')  
+            if (id?.indexOf('HeaderTemplateDiv') > -1) {
+                let i = id.replace('HeaderTemplateDiv', '');
+                debugger;
+                FillGLAccountDDL(`.LogCellTemplate:eq(${i})`, value);
+            }
+    })
 }
+
+
 
 function FillInRowTable(headerText: string, value: string) {
     cy.get(`.ag-header-cell div:contains("${headerText}")`).each(ele => {
@@ -53,23 +58,16 @@ function FillInRowTable(headerText: string, value: string) {
         const id = ele.attr('id')  
             if (id?.indexOf('HeaderTemplateDiv') > -1) {
                 let i = id.replace('HeaderTemplateDiv', '');
-                FillGLAccount('[index="' + i + '"]', value,);
+                debugger;
+                FillGLAccount(`.LogCellTemplate:eq(${i})`, value);
             }
     })
 }
-
-// function FillInRowTable(headerText: string, value: string) {
-//     cy.get(`.ag-header-cell div:contains("${headerText}")`).invoke('attr', 'id').then(id => {        
-//         if (id?.indexOf('HeaderTemplateDiv') > -1) {
-//             let i = id.replace('HeaderTemplateDiv', '');
-//             FillGLAccount('[index="' + i + '"]', value,);
-//         }
-//     });
-// }
-
+ 
 
 export function FillGLAccountDDL(selector, value) {
-    cy.get(selector).type(value);
+    debugger;
+    cy.get(selector).first().type(value);
     cy.get(BaseSelectors.DropDownList).contains(value).then(a => {
         a[0].click();
     });
@@ -90,7 +88,9 @@ export function AssertSaveCargoSerialData() {
 
 
 export function DeleteRow(){
-     cy.Click('.EditableGridBody',null);
+    cy.wait(10000);
+
+     cy.get('.EditableGridBody').click();
      cy.Click(CargoSerialDataSelectors.CargoSerialDataDeletRow,null);
      cy.Click(CargoSerialDataSelectors.Yes,null);
      

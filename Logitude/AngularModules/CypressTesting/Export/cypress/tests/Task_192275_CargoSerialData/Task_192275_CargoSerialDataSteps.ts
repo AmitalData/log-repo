@@ -23,9 +23,13 @@ var cargoSerialDataDetails
         
         
     Given("fill Cargo Serial Data with the following details", (dataTable) => {
-            let cargoSerialDataDetails = Assists.CreateInstance<CargoSerialDataDetails>(dataTable, true);
-            CargoSerialDataActions.FillCargoSerialData(cargoSerialDataDetails)
-            
+            // let cargoSerialDataDetails = Assists.CreateInstance<CargoSerialDataDetails>(dataTable, true);
+            // CargoSerialDataActions.FillCargoSerialData(cargoSerialDataDetails)
+          //  Given("Invoice line with the following details", (dataTable) => {
+               // CargoSerialDataActions.NavigatesAPInvoiceLineWizerd()
+                let invoiceLineDetails = Assists.CreateInstance<CargoSerialDataDetails>(dataTable, true);
+                CargoSerialDataActions.FillCargoSerialData(invoiceLineDetails);
+          //  });
         });
         
     When("pushing the save button", () => {
