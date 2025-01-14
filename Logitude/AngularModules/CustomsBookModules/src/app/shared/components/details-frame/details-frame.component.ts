@@ -65,9 +65,13 @@ export class DetailsFrameComponent implements OnInit {
           this.showRules = isOpen;
         });
 
-        this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {
-          this.countOfComments = data?.length > 0 ? data.length : 0;
-        });
+        // this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {
+        //   this.countOfComments = data?.length > 0 ? data.length : 0;
+        // });
+        this.addCommentService.fullCommentsData.subscribe((data: RemarksClassificationList[]) => {
+          this.item.remarksClassificationList = data.filter(x => x.CustomsItemsID == this.item?.CustomsItemID);
+          this.countOfComments = this.item.remarksClassificationList?.length > 0 ? this.item.remarksClassificationList?.length : 0;
+        }); 
       }
     });
   }
