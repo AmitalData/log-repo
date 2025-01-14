@@ -280,7 +280,7 @@ a.detailsSlide_commentsPinned[aria-checked='true'] i:nth-child(2) {
 .detailsSlide_comments {
     padding: 10px;
     /* height: 500px; */
-    height: 665px;
+    max-height: 665px;
     transition: all 0.4s ease-in-out;
 }
 
