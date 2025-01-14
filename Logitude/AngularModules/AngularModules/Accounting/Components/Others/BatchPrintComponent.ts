@@ -216,6 +216,7 @@ private selectedItems:ObservableCollection;
         Display:TextCodeTranslator.Translate("ARInvoice.O.DigitalInvoice"),
         DataTypeCode: 'String',
         IsCustomTemplate: true,
+        ServerSideSortable: true,
         HtmlListComponentName: 'InterestInvoiceListTemplate',
         HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestInvoiceListTemplate',
         Styles: { width: '100px' },             
