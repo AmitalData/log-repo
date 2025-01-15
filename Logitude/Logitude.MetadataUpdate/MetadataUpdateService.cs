@@ -13,6 +13,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebFreight.Web.GlobalModel;
 using WebFreight.Web.MetaDataUpdate;
 
 namespace Logitude.MetadataUpdate
@@ -89,7 +90,13 @@ namespace Logitude.MetadataUpdate
             Logitude.Server.Tools.ContainerAccessor.InitContainer();
             InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null,null, null, () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
             InfraRegistrationHelper.Register();
-            CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache);
+            Dictionary<int, string> globalDBs = new Dictionary<int, string>();
+            List<GlobalTenant> globalTenants = new GlobalDomainService().GetActiveTenants();
+            foreach (var item in globalTenants)
+            {
+                globalDBs.Add(item.Id, item.GlobalDBId);
+            }
+            CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache, globalDBs);
         }
 
         private string GetConnectionString()

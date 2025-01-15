@@ -3,10 +3,13 @@ using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.TreeFilterQuery;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Caching;
+using WebFreight.Web.GlobalModel;
 
 namespace CustomsWorkerRole
 {
@@ -27,8 +30,14 @@ namespace CustomsWorkerRole
             }
             else
             {
+                Dictionary<int, string> globalDBs = new Dictionary<int, string>();
+                List<GlobalTenant> globalTenants = new GlobalDomainService().GetActiveTenants();
+                foreach (var item in globalTenants)
+                {
+                    globalDBs.Add(item.Id, item.GlobalDBId);
+                }
                 CacheManager.CacheWrapper = new CacheWrapper(//HttpContext.Current.Cache
-            Cache
+            Cache,globalDBs
             );
             }
 

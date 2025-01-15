@@ -463,8 +463,13 @@ namespace CustomsBook
             // string storageServiceMode = System.Configuration.ConfigurationManager.AppSettings.Get("StorageServiceMode");
             //string queueServiceMode = System.Configuration.ConfigurationManager.AppSettings.Get("QueueServiceMode");
             ContainerAccessor.InitContainer();
-
-            CacheManager.CacheWrapper = CacheManager.CacheWrapper ?? new CacheWrapper(Cache);
+            Dictionary<int, string> globalDBs = new Dictionary<int, string>();
+            //List<GlobalTenant> globalTenants = new GlobalDomainService().GetActiveTenants();
+            //foreach (var item in globalTenants)
+            //{
+            //    globalDBs.Add(item.Id, item.GlobalDBId);
+            //}
+            CacheManager.CacheWrapper = CacheManager.CacheWrapper ?? new CacheWrapper(Cache, globalDBs);
             var storageAccount = StorageAcountDetails.StorageAccount; 
             LogitudeSettings.HandleLogMe = new Action<string, bool, string, DateTime>((mess, err, suffix, stopLogAt) =>
             {

@@ -210,6 +210,7 @@ namespace WebFreight.Web.GlobalModel
         {
             return globalTenantsRepository.GetGlobalTenantsByTenant(0);
         }
+        public List<GlobalTenant> GetAllTenants() =>globalTenantsRepository.All();
 
         public GlobalTenant GetGlobalTenantsByTenant(int tenant)
         {
