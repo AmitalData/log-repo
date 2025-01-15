@@ -211,6 +211,7 @@ export class MainDisplayComponent implements OnInit {
 
 	onToggleAll(event: Event, item: CB_CustomsItemComputedDataList): void {
 		const checked = (event.target as HTMLInputElement)?.checked;
+		item.checked = checked;
 		this.toggleVisibility(checked, item.children);
 	}
 
@@ -264,6 +265,7 @@ export class MainDisplayComponent implements OnInit {
 
 	toggleVisibility(expend: boolean, data: CB_CustomsItemComputedDataList[]) {
 		data.forEach(item => {
+			item.checked = expend;
 			this.showChildern(expend, item);
 
 			if (item.children && item.children.length > 0) {
@@ -544,10 +546,6 @@ export enum FilterOption {
 	Remarks = '7'
 }
 
-export interface ItemData {
-	customsItemId: number;
-	measurementUnitMalamId: number;
-}
 export class MainEntity {
 	CB_CustomsItemComputedDataList: CB_CustomsItemComputedDataList[];
 	CB_TariffList: CB_TariffList[];
@@ -596,6 +594,7 @@ export interface CB_CustomsItemComputedDataList {
 	SearchByTextResult: string;
 	children: CB_CustomsItemComputedDataList[];
 	IsShowChildren: boolean;
+	checked: boolean;
 	remarksClassificationList?: RemarksClassificationList[];
 	rulesDetailsList?: RulesDetailsList[];
 	agreementsList?: CB_TariffList[];

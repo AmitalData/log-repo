@@ -5,7 +5,7 @@ import { faSquareCaretRight, faFileText, faSquareCheck, faCommentAlt, faStar, fa
 import { AccordionComponent } from '../accordion/accordion.component';
 import { Output, Input, EventEmitter } from '@angular/core';
 import { CommentsComponent } from '../comments/comments.component';
-import { CB_CustomsItemComputedDataList, ItemData, RemarksClassificationList } from '../main-display/main-display.component';
+import { CB_CustomsItemComputedDataList, RemarksClassificationList } from '../main-display/main-display.component';
 import { BehaviorSubject } from 'rxjs';
 import { API_MainService } from '../../../core/API_MainService';
 import { AddCommentService } from '../add-comment/service/add-comment.service';

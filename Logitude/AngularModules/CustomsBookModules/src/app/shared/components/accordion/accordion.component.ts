@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faChevronLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { GenericTableComponent, TableData } from '../generic-table/generic-table.component';
-import { CB_CustomsItemComputedDataList, CB_RequirementComputedDataList, CB_TariffList, CustomItemClassifGuidanceResult, ItemData, MainEntity } from '../main-display/main-display.component';
+import { CB_CustomsItemComputedDataList, CB_RequirementComputedDataList, CB_TariffList, CustomItemClassifGuidanceResult, MainEntity } from '../main-display/main-display.component';
 import { API_MainService, Filters } from '../../../core/API_MainService';
 import { CommonModule, NgStyle } from '@angular/common';
 import { NgFor, NgForOf } from '@angular/common';
@@ -18,8 +18,6 @@ import { ClasisificationGuidanceComponent } from "../clasisification-guidance/cl
   styleUrl: './accordion.component.css',
 })
 export class AccordionComponent implements OnInit {
-  // add input type customs:
-  // @Input() itemData: BehaviorSubject<ItemData> = new BehaviorSubject<ItemData>(null);
   @Input() currentItem: BehaviorSubject<CB_CustomsItemComputedDataList> = new BehaviorSubject<CB_CustomsItemComputedDataList>(null);
   itemData: CB_CustomsItemComputedDataList;
   isShowTableClassificationGuidance: boolean = false;
