@@ -20,6 +20,7 @@ import { InfrastructureDomainService } from '../../../core/Infrastructure/Servic
 import { LoginService } from '../../../core/Infrastructure/Services/LoginService';
 import { Router } from '@angular/router';
 import { RomanToolService } from '../../services/roman-tool.service';
+import { AddCommentService } from '../add-comment/service/add-comment.service';
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
@@ -63,7 +64,7 @@ export class MainDisplayComponent implements OnInit {
 	isExpand: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService, private filterPopupService: FilterPopupService,
-		private loginService: LoginService, private myInfrastructureDomainService: InfrastructureDomainService, private router: Router, private romanTool: RomanToolService
+		private addCommentService: AddCommentService, private loginService: LoginService, private myInfrastructureDomainService: InfrastructureDomainService, private router: Router, private romanTool: RomanToolService
 	) {
 		this.screenWidth = window.innerWidth;
 	}
@@ -122,6 +123,7 @@ export class MainDisplayComponent implements OnInit {
 			SearchFields: ''
 		};
 		this.getRulesData();
+		this.getCommentsData(SessionInfo.LoggedUserTenant);
 
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: any) => {
 			// if (!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedData", "CustomsBookFeature")) return;
@@ -147,6 +149,15 @@ export class MainDisplayComponent implements OnInit {
 				rule.Rules = rule.Rules.replace(/(&nbsp;)+/g, ' ').replace(/\s+/g, ' ').trim();
 			});
 			this.allRulesData = rules;
+		});
+	}
+
+	allCommentsData = [];
+	getCommentsData(tenant) {
+		this.API_MainService.GetAllComments(tenant).subscribe((data: any) => {
+			if (!data.body) return; // TODO: add error message
+			this.allCommentsData = data?.body;
+			this.addCommentService.fullCommentsData.next(this.allCommentsData);
 		});
 	}
 
@@ -200,6 +211,7 @@ export class MainDisplayComponent implements OnInit {
 
 	onToggleAll(event: Event, item: CB_CustomsItemComputedDataList): void {
 		const checked = (event.target as HTMLInputElement)?.checked;
+		item.checked = checked;
 		this.toggleVisibility(checked, item.children);
 	}
 
@@ -253,6 +265,7 @@ export class MainDisplayComponent implements OnInit {
 
 	toggleVisibility(expend: boolean, data: CB_CustomsItemComputedDataList[]) {
 		data.forEach(item => {
+			item.checked = expend;
 			this.showChildern(expend, item);
 
 			if (item.children && item.children.length > 0) {
@@ -356,6 +369,10 @@ export class MainDisplayComponent implements OnInit {
 				filters.Rules = true;
 				filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
 			}
+			
+			if (filters.CustomsItemHierarchic == "6" || filters.CustomsItemHierarchic == "7" || filters.CustomsItemHierarchic == "6,7") {
+        filters.CustomsItemHierarchic = null;
+			}
 			this.API_MainService.GetCustomsBookMainViewSearchByClassification(filters).subscribe(
 				(data: any) => {
 					const result: CB_CustomsItemComputedDataList[] = data.body;
@@ -376,6 +393,10 @@ export class MainDisplayComponent implements OnInit {
 				filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
 				filters.Reamarks = true;
 				filters.Rules = true;
+			}
+			
+			if (filters.CustomsItemHierarchic == "6" || filters.CustomsItemHierarchic == "7" || filters.CustomsItemHierarchic == "6,7") {
+				filters.CustomsItemHierarchic = null;
 			}
 			this.API_MainService.GetCustomsBookMainViewSearchByText(filters).subscribe(
 				(data: any) => {
@@ -436,9 +457,12 @@ export class MainDisplayComponent implements OnInit {
 			return rootItems;
 		};
 
-		if (this.allRulesData?.length > 0) {
+		if (this.allRulesData?.length > 0 || this.allCommentsData?.length > 0) {
 			data.forEach(item => {
-				item.rulesData = this.allRulesData.filter((x) => x.CustomsItemID == item.CustomsItemID);
+				if (this.allRulesData?.length > 0)
+					item.rulesData = this.allRulesData?.filter((x) => x.CustomsItemID == item.CustomsItemID);
+				if (this.allCommentsData?.length > 0)
+					item.remarksClassificationList = this.allCommentsData?.filter((x) => x.CustomsItemsID == item.CustomsItemID);
 			});
 		}
 
@@ -480,9 +504,13 @@ export class MainDisplayComponent implements OnInit {
 			return children;
 		};
 
-		if (this.allRulesData?.length > 0) {
+		if (this.allRulesData?.length > 0 || this.allCommentsData?.length > 0) {
 			data.forEach(item => {
-				item.rulesData = this.allRulesData.filter((x) => x.CustomsItemID == item.CustomsItemID);
+				if (this.allRulesData?.length > 0)
+					item.rulesData = this.allRulesData?.filter((x) => x.CustomsItemID == item.CustomsItemID);
+				if (this.allCommentsData?.length > 0)
+					item.remarksClassificationList = this.allCommentsData?.filter((x) => x.CustomsItemsID == item.CustomsItemID);
+
 			});
 		}
 
@@ -518,10 +546,6 @@ export enum FilterOption {
 	Remarks = '7'
 }
 
-export interface ItemData {
-	customsItemId: number;
-	measurementUnitMalamId: number;
-}
 export class MainEntity {
 	CB_CustomsItemComputedDataList: CB_CustomsItemComputedDataList[];
 	CB_TariffList: CB_TariffList[];
@@ -570,6 +594,7 @@ export interface CB_CustomsItemComputedDataList {
 	SearchByTextResult: string;
 	children: CB_CustomsItemComputedDataList[];
 	IsShowChildren: boolean;
+	checked: boolean;
 	remarksClassificationList?: RemarksClassificationList[];
 	rulesDetailsList?: RulesDetailsList[];
 	agreementsList?: CB_TariffList[];

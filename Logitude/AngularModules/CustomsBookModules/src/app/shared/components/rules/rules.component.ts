@@ -3,7 +3,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { API_MainService } from '../../../core/API_MainService';
 import { CB_CustomsItemComputedDataList, RulesDetailsList } from '../main-display/main-display.component';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { faChevronLeft, faSquareCaretRight } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { SearchService } from '../page-top/service/top-page.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -26,12 +26,18 @@ export class RulesComponent implements OnInit, OnChanges {
   clickPin: boolean = true;
   searchText: string = '';
 
+  faChevronLeft = faChevronLeft;
+  faChevronDown = faChevronDown;
+  expandedArea: boolean = false;
+
   constructor(private API_MainService: API_MainService, private searchService: SearchService, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.currentItem.subscribe((data: CB_CustomsItemComputedDataList) => {
-      if (data?.CustomsItemID != null)
+      if (data?.CustomsItemID != null) {
+        if (data?.rulesData?.length == 0) this.closeRulesClick();
         this.initData(data?.CustomsItemID);
+      }
     });
   }
 
@@ -53,15 +59,15 @@ export class RulesComponent implements OnInit, OnChanges {
   // Method to fetch rules data from the API and build the rules hierarchy
   initData(customsItemID: number) {
     this.resetRulesData();
-		if (this.currentItem.getValue()?.rulesData?.length == 0) return;
+    if (this.currentItem.getValue()?.rulesData?.length == 0) return;
 
     // Clean up spaces by replacing multiple &nbsp; with a single space, then condense extra spaces
-      let rules = this.currentItem.getValue()?.rulesData;
-      rules.forEach(rule => {
-        rule.Rules = rule.Rules.replace(/(&nbsp;)+/g, ' ').replace(/\s+/g, ' ').trim();
-      });
+    let rules = this.currentItem.getValue()?.rulesData;
+    rules.forEach(rule => {
+      rule.Rules = rule.Rules.replace(/(&nbsp;)+/g, ' ').replace(/\s+/g, ' ').trim();
+    });
 
-      this.allRules = this.buildRulesHierarchy(rules);
+    this.allRules = this.buildRulesHierarchy(rules);
   }
 
   //initData(customsItemID: number) {

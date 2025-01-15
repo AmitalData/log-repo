@@ -31,6 +31,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 10px;
+    width: 100%;
 }
 
 .detailsSlide_commentsTitle {
@@ -205,7 +206,8 @@ a.detailsSlide_commentsPinned[aria-checked='true'] i:nth-child(2) {
 
 .rulesList {
     counter-reset: section;
-    max-height: 400px;
+    /* max-height: 400px; */
+    max-height: 560px;
     overflow: auto;
     padding: 0 10px;
 }
@@ -278,7 +280,8 @@ a.detailsSlide_commentsPinned[aria-checked='true'] i:nth-child(2) {
 
 .detailsSlide_comments {
     padding: 10px;
-    height: 500px;
+    /* height: 500px; */
+    max-height: 665px;
     transition: all 0.4s ease-in-out;
 }
 
@@ -310,11 +313,11 @@ a.detailsSlide_commentsPinned[aria-checked='true'] i:nth-child(2) {
     justify-content: space-between;
 }
 
-.detailsSlide_commentsTitle {
+/* .detailsSlide_commentsTitle {
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
+} */
 
 a.detailsSlide_commentsPinned {
     display: block;
@@ -322,10 +325,6 @@ a.detailsSlide_commentsPinned {
     width: 20px;
     height: 20px;
     text-align: center;
-}
-
-a.detailsSlide_commentsPinned i:nth-child(2) {
-    display: none;
 }
 
 .detailsSlide_commentsTitle h3 {
@@ -389,4 +388,91 @@ li {
 
 tr {
     display: flex;
+}
+
+a.detailsSlide_commentsPinned {
+    display: block;
+    text-decoration: none;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+}
+
+.detailsSlide_ddown {
+    padding: 17px 20px 20px;
+    border-top: 1px solid var(--blue);
+    overflow: hidden;
+    min-height: fit-content;
+    transition: all 0.4s ease-in-out;
+
+    &.active {
+        padding: 0;
+        height: 0;
+        border-top: none;
+        border-top: 0px solid var(--white);
+    }
+}
+
+.detailsSlide_ddown.initial {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.4s ease-in-out;
+}
+
+.detailsSlide_ddown.shown {
+    max-height: 900px;
+}
+
+.detailsSlide_ddown section {
+    padding: 0px 0px 0px 0px;
+}
+
+.detailsSlide_ddown section+section {
+    padding-top: 22px;
+}
+
+.detailsSlide_ddown section h4 {
+    font-size: 14px;
+    margin: 0;
+    padding-bottom: 5px;
+    display: flex;
+}
+
+.detailsSlide_toggle h3 {
+    height: 100%;
+    font-size: 16px;
+}
+
+.detailsSlide_toggle a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0px 20px 0px 0px;
+    text-decoration: none;
+}
+
+.detailsSlide_toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px;
+    height: 48px;
+}
+
+.toggle {
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    width: 26px;
+    height: 26px;
+    font-size: 12px;
+    border-radius: 100%;
+
+    &.active {
+        transform: rotate(90deg);
+    }
 }
