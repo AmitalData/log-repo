@@ -1,42 +1,22 @@
-﻿
-using Microsoft.Practices.Unity;
-using Logitude.AmitalMessaging.Utils;
-using Logitude.Customs.BL.EntityQueryServices;
+﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.Customs.Data;
-using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.MessagingServices;
-using Logitude.CustomsMessaging.Testers.Messages;
-using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
-using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using UnifreightIIG.Common.SystemTableServiceReference;
-using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.CustomsMessaging.Utils;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Customs.Data.EntityLists;
+using Logitude.Customs.Data.EntityListQueryServices;
 
- 
-using Devart.Data.Oracle;
-using Simplog.Data.InfrastructureModel;
-using System.Data.Common;
-using System.Data.SqlClient;
-using System.Transactions;
-//using System.Data.OracleClient;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Repositories;
- 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class UniCourierBatchSend8373_MsgResponseService : ResponseServiceBase
@@ -53,19 +33,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
             this.MyResponseData = new INF_MSG_GenericResponseData();
 
-            var objectTableId =ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
 
-            //var qs = new DeclarationCourierStatusQueryService(context);
-            var repo = new DeclarationCourierStatusRepository(context);
-            List<DeclarationCourierStatus> listPoco = new List<DeclarationCourierStatus>();
+            DeclarationCourierStatusListQueryService declarationCourierStatusQuery = new DeclarationCourierStatusListQueryService(context);
+            IQueryable<DeclarationCourierStatusList> declarationQuery = Enumerable.Empty<DeclarationCourierStatusList>().AsQueryable();
             if (customResponse.ServerSplitDeclarationsList != null && customResponse.ServerSplitDeclarationsList.Count > 0)
             {
-
                 mess.AppendLine($"מפוצל כבר !!!");
-
-                List<DeclarationCourierStatus> ServerSplitDeclarationsList
-                    = repo.GetDeclarationsByIds(customResponse.ServerSplitDeclarationsList, requestParams.Tenant);
+                List<DeclarationCourierStatusList> ServerSplitDeclarationsList = declarationCourierStatusQuery.GetDeclarationsByIds(customResponse.ServerSplitDeclarationsList, requestParams.Tenant).ToList();
                 Create8373_InProgress(requestParams, mess, objectTableId, objectTableIdCourierMaster, ServerSplitDeclarationsList, customResponse.CourierMasterId);
             }
             else
@@ -75,45 +51,43 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (customResponse.ClientFilterDeclarationsList != null && customResponse.ClientFilterDeclarationsList.Count > 0)
                 {
                     mess.AppendLine($"סומנו בצד הלקוח ");
-
-                    listPoco = repo.GetDeclarationsByIds(customResponse.ClientFilterDeclarationsList, requestParams.Tenant);
+                    declarationQuery = declarationCourierStatusQuery.GetDeclarationsByIds(customResponse.ClientFilterDeclarationsList, requestParams.Tenant);
                 }
                 else
                 {
                     if (customResponse.IsWorkSheetFromExcel)
                     {
-                        listPoco = repo.GetByFromExcel(customResponse.tenant, customResponse.CourierMasterId).ToList();
+                        declarationQuery = declarationCourierStatusQuery.GetDeclarationStatusesByFromExcel(customResponse.tenant, customResponse.LoggingUserId);
                     }
                     else
                     {
                         mess.AppendLine($"GetByCourierMasterId");
-                        listPoco = repo.GetBy(customResponse.tenant, customResponse.LoggingUserId).ToList();
+                        declarationQuery = declarationCourierStatusQuery.GetDeclarationStatusesByCourierMaster(customResponse.tenant, customResponse.CourierMasterId);
                     }
                 }
-                if (listPoco.Count == 0)
+                if (!declarationQuery.Any())
                 {
-                    mess.AppendLine($"אין הצהרות בטיסה  {requestParams.AppicationId} ");
+                    mess.AppendLine($"אין הצהרות לשליחה בטיסה  {requestParams.AppicationId} ");
                 }
                 else
                 {
                     if (customResponse.CourierDeclarationStatusCode == "R")
                     {
-                        listPoco = listPoco.Where(r => r.CourierDeclarationStatusCode == "X").ToList();
-                    } 
-                    if (listPoco.Count == 0)
+                        declarationQuery = declarationQuery.Where(r => r.CourierDeclarationStatusCode == "X");
+                    }
+                    if (!declarationQuery.Any())
                     {
                         mess.AppendLine($"אין הצהרות לשליחה בסטטוס X  {requestParams.AppicationId} ");
                     }
                     else
                     {
-                        listPoco.Select(r=>r.DeclarationId).ToList().ChunkBy(100).ForEach(list100 =>
+                        declarationQuery.Select(r => r.DeclarationId).ToList().ChunkBy(100).ForEach(list100 =>
                         {
                             customResponse.ServerSplitDeclarationsList = list100;
                             customResponse.LoggingUserId = requestParams.LoggingUserId;
-
-                            var CreateDCAInUCB8373_MsgMessagingService = new CRSUtil();
-                            CreateDCAInUCB8373_MsgMessagingService
-                            .CreateCRS_DCAIn<DCAInUCB8373WithResponseContentHeader>(customResponse, (requestParams as RequestParamsBase), out string list);
+                            var createDCAInUCB8373MsgMessagingService = new CRSUtil();
+                            createDCAInUCB8373MsgMessagingService.CreateCRS_DCAIn<DCAInUCB8373WithResponseContentHeader>(customResponse,(requestParams as RequestParamsBase),
+                                out string list);
                         });
                     }
                 }
@@ -126,7 +100,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
 
-        private static void Create8373_InProgress(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationCourierStatus> listPM, string courierMasterId)
+        private static void Create8373_InProgress(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationCourierStatusList> listPM, string courierMasterId)
         {
             //if is EffectiveFlight : TenantPriority = 98
             var context = CustomContext.GetContext(requestParams.Tenant);
@@ -157,34 +131,30 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-        private static void Create8373(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, DeclarationCourierStatus itemPM, bool isEffectiveFlight)
+        private static void Create8373(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, DeclarationCourierStatusList itemPM, bool isEffectiveFlight)
         {
-           
 
-            var requestParams8373 = new MANIFESTRequestRequestParams()
+
+            var requestParams8373 = new DeclarationRestoreRequestParams()
             {
-                Tenant = requestParams.Tenant,
-                //IsFakeResponse = true,
-                //RequestName = requestName,
-                //ResponseName = responseName,
-                LoggingEnabled = true,
-                LoggingObjectTableId = objectTableId,
-                LoggingEntityId = itemPM.DeclarationId,
-                LoggingObjectTableId2 = requestParams.LoggingObjectTableId,
-                LoggingEntityId2 = objectTableIdCourierMaster,
-                InterfaceTypeCode = "8373",
-                LoggingUserId = requestParams.LoggingUserId,
-                RequestVIA = SendRequestVIA.WebServiceBatch,
+                CustomsFile = itemPM.CustomFileNo,
+                DeclarationNumber = itemPM.DeclarationNumber,
                 DeclarationId = itemPM.DeclarationId,
-                LoggingEntityReference = itemPM.DeclarationId,
-                ParentId = requestParams.CustomsRequestsSheetId,
+                Tenant = itemPM.Tenant,
+                LoggingEntityId = itemPM.DeclarationId,
+                LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+                LoggingUserId = AuthenticationUtil.ResolveUserId(itemPM.Tenant),
+                RequestName = "Retrieve Import Declaration " + itemPM.DeclarationNumber,
+                ResponseName = "Retrieve Import Declaration " + itemPM.DeclarationNumber,
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+                InterfaceTypeCode = "8373",
             };
             if (isEffectiveFlight)
             {
                 requestParams8373.TenantPriority = 98;
             }
 
-            SBQMessageService.CreateSheetSBQMessage<MANIFESTRequestRequestParams>(requestParams8373, false);
+            SBQMessageService.CreateSheetSBQMessage<DeclarationRestoreRequestParams>(requestParams8373, false);
             LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
             mess.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
         }
@@ -193,7 +163,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             return this.MyResponseData;
         }
-        
+
 
     }
 }

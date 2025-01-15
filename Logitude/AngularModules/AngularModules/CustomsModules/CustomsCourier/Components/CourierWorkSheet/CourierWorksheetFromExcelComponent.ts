@@ -366,9 +366,10 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
         currRequestParams.Tenant = SessionLocator.Tenant;
-        currRequestParams.CourierMasterId = this.entityPM.Id;
-        currRequestParams.HAWB = this.entityPM.HAWB;
+        currRequestParams.CourierMasterId = this.entityPM?.Id;
+        currRequestParams.HAWB = this.entityPM?.HAWB;
         currRequestParams.IsWorkSheetFromExcel = this.CourierHawbsFromExcelUploaded;
+        currRequestParams.CourierDeclarationStatusCode = courierDeclarationStatusCode;
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
         }
