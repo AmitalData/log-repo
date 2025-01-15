@@ -288,7 +288,7 @@ namespace CommunicationWorkerRole
 		private void TasksSchedulerToQueue()
 		{
 			IsUpdating = true;
-			var objectContext = WebFreightContext.GetContext(0);
+			var objectContext = WebFreightContext.GetContext(General.GetTenantDB());
 			TasksSchedulerRepository TasksSchedulerRepository = new TasksSchedulerRepository(objectContext);
 			TasksSchedulerQuery TasksSchedulerQuery = new TasksSchedulerQuery(TasksSchedulerRepository);
 			List<TasksSchedulerPM> NextRunTimePastTasks = TasksSchedulerQuery.GetAllTasksSchedulerNextRunTimePastPMs();
