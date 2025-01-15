@@ -37,11 +37,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
 
             DeclarationCourierStatusListQueryService declarationCourierStatusQuery = new DeclarationCourierStatusListQueryService(context);
-
-
-            var repo = new DeclarationCourierStatusRepository(context);
             IQueryable<DeclarationCourierStatusList> declarationQuery = Enumerable.Empty<DeclarationCourierStatusList>().AsQueryable();
-
             if (customResponse.ServerSplitDeclarationsList != null && customResponse.ServerSplitDeclarationsList.Count > 0)
             {
                 mess.AppendLine($"מפוצל כבר !!!");
