@@ -3,7 +3,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { API_MainService } from '../../../core/API_MainService';
 import { CB_CustomsItemComputedDataList, RulesDetailsList } from '../main-display/main-display.component';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { faChevronLeft, faSquareCaretRight } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { SearchService } from '../page-top/service/top-page.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -26,13 +26,16 @@ export class RulesComponent implements OnInit, OnChanges {
   clickPin: boolean = true;
   searchText: string = '';
 
+  faChevronLeft = faChevronLeft;
+  faChevronDown = faChevronDown;
+  expandedArea: boolean = false;
+
   constructor(private API_MainService: API_MainService, private searchService: SearchService, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.currentItem.subscribe((data: CB_CustomsItemComputedDataList) => {
-      this.closeRulesClick();
       if (data?.CustomsItemID != null) {
-        // if (data?.rulesData?.length > 0) this.closeRulesClick();
+        if (data?.rulesData?.length == 0) this.closeRulesClick();
         this.initData(data?.CustomsItemID);
       }
     });
