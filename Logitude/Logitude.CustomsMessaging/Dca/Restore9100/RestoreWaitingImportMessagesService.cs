@@ -30,9 +30,10 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
         DateTime? _LastRetrive = null;
         private readonly CustomsSettingPM _CustomsSettingPM;
         private List<InterfaceTenantDefinitionManagementPM> _InterfaceListDCA;
+		private List<string> _AllDcaPreFixByEnvironment;
 
 
-        public RestoreWaitingImportMessagesService(CustomsSettingPM customsSettingPM, List<InterfaceTenantDefinitionManagementPM> interfaceListDCA)
+		public RestoreWaitingImportMessagesService(CustomsSettingPM customsSettingPM, List<InterfaceTenantDefinitionManagementPM> interfaceListDCA,List<string> allDcaPreFixByEnvironment = null)
         {
             if (customsSettingPM is null)
             {
@@ -47,7 +48,9 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
 
             _CustomsSettingPM = customsSettingPM;
             _InterfaceListDCA = interfaceListDCA;
-        }
+            _AllDcaPreFixByEnvironment = allDcaPreFixByEnvironment;
+
+		}
 
         public static void TestMe()
         {
@@ -170,7 +173,7 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
 
         private List<NG_9101_MSG_OutgoingMessageResponseOutgoingMessage> FilterOnlyNewImportMessagges(NG_9101_MSG_OutgoingMessageResponse response)
         {
-            var onlyImportMessages = response.OutgoingMessage.Where(r => !r.Filename.Contains("_EX_")).ToList();
+            var onlyImportMessages = response.OutgoingMessage.Where(r => !r.Filename.Contains("_EX_") && !_AllDcaPreFixByEnvironment.Any(prefix => r.Filename.Contains(prefix))).ToList();
 
             NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"onlyImportMessages-OutgoingMessage == {string.Join(",", onlyImportMessages.Select(x=>x.Filename))}");
 
