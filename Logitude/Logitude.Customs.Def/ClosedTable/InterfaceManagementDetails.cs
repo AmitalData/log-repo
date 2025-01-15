@@ -3507,7 +3507,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 AllowRestore = true,
                 Active = true,
                 SendAsDual = false,
-                ResponseInterfaceCode = null,
+                ResponseInterfaceCode = "",
+                //  NeedSignature = false
                 InterfaceType = "B",
             });
                 //C:\LogitudeWorld\Amital\Logitude.Customs.BL\EntityPMs\InterfaceManagementPM.cs
