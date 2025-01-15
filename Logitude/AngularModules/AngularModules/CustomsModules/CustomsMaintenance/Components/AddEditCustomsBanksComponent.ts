@@ -106,6 +106,14 @@ export class AddEditCustomsBanksComponent extends BaseComponent {
             this.EntityPM.BranchName = event.LocalName;
             return;
         }
+        if (ObjectFieldName === "PayerTypeCode") {
+            this.EntityPM.PayerTypeCode = event;
+            if (event === "3") {
+                this.CustomBankCardItems.Clear()
+                this.EntityPM.CustomBanksCards = [];
+            }
+            return;
+        }
         this.EntityPM[ObjectFieldName] = event;
     }
 
@@ -160,8 +168,6 @@ export class AddEditCustomsBanksComponent extends BaseComponent {
 
     //Grid logic
     getCardDetails(cardId): CardPM {
-
-        console.log(this.cardsList.find(card => card.Id === cardId))
         return this.cardsList.find(card => card.Id === cardId);
     }
 
@@ -181,6 +187,7 @@ export class AddEditCustomsBanksComponent extends BaseComponent {
     }
 
     AddBankCardLine() {
+        if (this.EntityPM.PayerTypeCode === "3") return;
         let row = new CustomBanksCardPM(this.EntityPM);
         row.CustomBankId = this.EntityPM.Id;
         row.CustomsBankName = this.EntityPM.LocalName;
