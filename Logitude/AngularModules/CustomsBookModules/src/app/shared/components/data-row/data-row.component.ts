@@ -55,9 +55,13 @@ export class DataRowComponent implements OnInit {
 		this.getCustomsBookAgreementLevelData();
 		this.showRulesData();
 		this.selectedSearchBy = this.searchService.selectSearchBy;
-		this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {
+		this.addCommentService.fullCommentsData.subscribe((data: RemarksClassificationList[]) => {
+			this.data.remarksClassificationList = data.filter(x => x.CustomsItemsID == this.data.CustomsItemID);
 			this.showCommentsData();
 		});
+		// this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {
+		// 	this.showCommentsData();
+		// });
 	}
 
 	TariffList1: CB_TariffList;
@@ -153,19 +157,32 @@ export class DataRowComponent implements OnInit {
 	comments: RemarksClassificationList[] = [];
 	countOfComments: number;
 	showCommentsData() {
-		this.API_MainService.GetAllCommentsByCustomsItemId(this.data.CustomsItemID, SessionInfo.LoggedUserTenant).subscribe((data: any) => {
-			this.comments = data.body;
+    this.comments = this.data?.remarksClassificationList;
 
-			if (!this.comments) return; // TODO: add error message
+		if (!this.comments) return; // TODO: add error message
 
-			if (this.searchItem != "" && this.comments[0]?.RemarkDescription?.includes(this.searchItem)) {
-				this.isSearchItemExistRemark = true;
-			}
-			else this.isSearchItemExistRemark = false;
+		if (this.searchItem != "" && this.comments[0]?.RemarkDescription?.includes(this.searchItem)) {
+			this.isSearchItemExistRemark = true;
+		}
+		else this.isSearchItemExistRemark = false;
 
-			this.countOfComments = this.comments?.length > 0 ? this.comments.length : 0;
-		});
-	}
+    this.countOfComments = this.comments?.length > 0 ? this.comments.length : 0;
+  }
+
+	// showCommentsData() {
+	// 	this.API_MainService.GetAllCommentsByCustomsItemId(this.data.CustomsItemID, SessionInfo.LoggedUserTenant).subscribe((data: any) => {
+	// 		this.comments = data.body;
+
+	// 		if (!this.comments) return; // TODO: add error message
+
+	// 		if (this.searchItem != "" && this.comments[0]?.RemarkDescription?.includes(this.searchItem)) {
+	// 			this.isSearchItemExistRemark = true;
+	// 		}
+	// 		else this.isSearchItemExistRemark = false;
+
+	// 		this.countOfComments = this.comments?.length > 0 ? this.comments.length : 0;
+	// 	});
+	// }
 
 	showRulesData() {
 		if (this.data?.rulesData?.length == 0) return;

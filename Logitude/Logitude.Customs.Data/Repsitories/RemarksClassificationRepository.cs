@@ -46,7 +46,31 @@ namespace Logitude.Customs.Data.Repsitories
             return RemarksClassificationList;
         }
 
-   }
+        public List<RemarksClassificationList> GetAllComments(int tenant)
+        {
+
+            List<RemarksClassification> RemarksClassificationPocoList = (from a in context.RemarksClassifications
+                                                                         where a.Tenant == tenant
+                                                                         select a).ToList();
+
+            // convert the list of POCO to list of List
+            List<RemarksClassificationList> RemarksClassificationList = new List<RemarksClassificationList>();
+            if (RemarksClassificationPocoList?.Count() <= 0) return RemarksClassificationList;
+
+            foreach (RemarksClassification RemarksClassificationPoco in RemarksClassificationPocoList)
+            {
+                RemarksClassificationList.Add(new RemarksClassificationList
+                {
+                    Id = RemarksClassificationPoco.Id,
+                    Tenant = RemarksClassificationPoco.Tenant,
+                    CustomsItemsID = RemarksClassificationPoco.CustomsItemsID,
+                    RemarkDescription = RemarksClassificationPoco.RemarkDescription
+                });
+            }
+            return RemarksClassificationList;
+        }
+
+    }
 
 }
    

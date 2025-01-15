@@ -11,6 +11,7 @@ export class AddCommentService {
   CommentMode: BehaviorSubject<CommentState> = new BehaviorSubject<CommentState>(null);
   currentRemark: BehaviorSubject<RemarksClassificationPM> = new BehaviorSubject<RemarksClassificationPM>(null);
   allComments: BehaviorSubject<RemarksClassificationList[]> = new BehaviorSubject<RemarksClassificationList[]>([]);
+  fullCommentsData: BehaviorSubject<RemarksClassificationList[]> = new BehaviorSubject<RemarksClassificationList[]>([]);
 
   constructor() {
     this.isOpened = new BehaviorSubject<boolean>(false);
