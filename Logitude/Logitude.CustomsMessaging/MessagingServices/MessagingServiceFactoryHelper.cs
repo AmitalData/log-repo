@@ -649,7 +649,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
 			ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
 			   DCAInGetPC_MSG2280_2281_CertificateOfOriginRequestMessagingService>
 			   ((new DCAInGetPC_MSG2280_2281_CertificateOfOriginRequestMessagingService()).MainInterfaceCode);
-		}
+            
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                DCAInUCB8373_MsgMessagingService>
+                ((new DCAInUCB8373_MsgMessagingService()).MainInterfaceCode);
+        }
         public static void InitContainer()
         {
            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("this method its to enshur static constractor is up ");
