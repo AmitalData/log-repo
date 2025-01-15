@@ -32,7 +32,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             context.AuthenticationTokens.Add(entity);
             string cacheKey = $"Token_{entity.Token}";
-            CacheManager.CacheWrapper.Insert(cacheKey, entity, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+            CacheManager.CacheWrapper.Insert(cacheKey, entity, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero,0);
         }
 
         public void Remove(AuthenticationToken entity)
@@ -93,7 +93,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             AuthenticationToken authenticationToken;// =(AuthenticationToken)HttpContext.Current.Items["authToken"];
             //if (authenticationToken == null)
             //{
-                authenticationToken = (AuthenticationToken)CacheManager.CacheWrapper.Get(cacheKey);
+                authenticationToken = (AuthenticationToken)CacheManager.CacheWrapper.Get(cacheKey,0);
             //}
             if (authenticationToken != null)
             {
@@ -111,7 +111,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 authenticationToken = new AuthenticationTokenRepository().GetSingleToken(token);
                 if (authenticationToken != null)
                 {
-                    CacheManager.CacheWrapper.Insert(cacheKey, authenticationToken, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                    CacheManager.CacheWrapper.Insert(cacheKey, authenticationToken, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero, 0);
                 }
             }
             return authenticationToken;

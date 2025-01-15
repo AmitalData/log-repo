@@ -114,6 +114,7 @@ using Logitude.Server.Tools.TreeFilterQuery;
 using Newtonsoft.Json;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
+using WebFreight.Web.GlobalModel;
 
 
 namespace Logitude.Update
@@ -187,7 +188,13 @@ namespace Logitude.Update
             Logitude.Server.Tools.ContainerAccessor.InitContainer();
             InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null, null, () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
             InfraRegistrationHelper.Register();
-            CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache);
+            Dictionary<int, string> globalDBs = new Dictionary<int, string>();
+            List<GlobalTenant> globalTenants = new GlobalDomainService().GetActiveTenants();
+            foreach (var item in globalTenants)
+            {
+                globalDBs.Add(item.Id, item.GlobalDBId);
+            }
+            CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache, globalDBs);
         }
 
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

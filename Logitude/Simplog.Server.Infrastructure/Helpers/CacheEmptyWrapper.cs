@@ -31,14 +31,16 @@ namespace Simplog.Server.Infrastructure.Helpers
             get { return cache.EffectivePrivateBytesLimit; }
         }
 
-        public object Add(string key, object value, System.Web.Caching.CacheDependency dependencies, DateTime absoluteExpiration, TimeSpan slidingExpiration, System.Web.Caching.CacheItemPriority priority, System.Web.Caching.CacheItemRemovedCallback onRemoveCallback)
+
+
+        public object Get(string key, int tenant = -1)
         {
-            return null ;
+            return null;
         }
 
-        public object Get(string key)
+        public List<T> Get<T>(int tenant)
         {
-            return null ;
+            return null;
         }
 
         public System.Collections.IDictionaryEnumerator GetEnumerator()
@@ -46,23 +48,45 @@ namespace Simplog.Server.Infrastructure.Helpers
             return cache.GetEnumerator();
         }
 
-        public void Insert(string key, object value)
+
+        public void Insert(string key, object value, int tenant = -1)
+        {
+            
+        }
+
+        public void Insert(string key, object value, CacheDependency dependencies, int tenant = -1)
         {
         }
 
-        public void Insert(string key, object value, System.Web.Caching.CacheDependency dependencies)
+        public void Insert(string key, object value, CacheDependency dependencies, DateTime absoluteExpiration, TimeSpan slidingExpiration, int tenant = -1)
         {
         }
 
-        public void Insert(string key, object value, System.Web.Caching.CacheDependency dependencies, DateTime absoluteExpiration, TimeSpan slidingExpiration)
+        public void Insert(string key, object value, CacheDependency dependencies, DateTime absoluteExpiration, TimeSpan slidingExpiration, CacheItemUpdateCallback onUpdateCallback, int tenant = -1)
         {
         }
 
-        public void Insert(string key, object value, System.Web.Caching.CacheDependency dependencies, DateTime absoluteExpiration, TimeSpan slidingExpiration, System.Web.Caching.CacheItemUpdateCallback onUpdateCallback)
+        public void Insert(string key, object value, CacheDependency dependencies, DateTime absoluteExpiration, TimeSpan slidingExpiration, CacheItemPriority priority, CacheItemRemovedCallback onRemoveCallback, int tenant = -1)
         {
         }
 
-        public void Insert(string key, object value, System.Web.Caching.CacheDependency dependencies, DateTime absoluteExpiration, TimeSpan slidingExpiration, System.Web.Caching.CacheItemPriority priority, System.Web.Caching.CacheItemRemovedCallback onRemoveCallback)
+        public void Insert<T>(int tenant, List<T> value)
+        {
+        }
+
+        public void Insert<T>(int tenant, List<T> value, CacheDependency dependencies, DateTime absoluteExpiration, TimeSpan slidingExpiration, CacheItemPriority priority, CacheItemRemovedCallback onRemoveCallback)
+        {
+        }
+
+        public void Insert<T>(int tenant, List<T> value, CacheDependency dependencies, DateTime absoluteExpiration, TimeSpan slidingExpiration, CacheItemUpdateCallback onUpdateCallback)
+        {
+        }
+
+        public void Insert<T>(int tenant, List<T> value, CacheDependency dependencies)
+        {
+        }
+
+        public void Insert<T>(int tenant, List<T> value, CacheDependency dependencies, DateTime absoluteExpiration, TimeSpan slidingExpiration)
         {
         }
 
@@ -78,10 +102,24 @@ namespace Simplog.Server.Infrastructure.Helpers
             }
         }
 
+        public object Invalidate<T>(int tenant)
+        {
+            return null;
+        }
+
+        public object Invalidate(string key, int tenant = -1)
+        {
+            return null;
+        }
 
         public object Remove(string key)
         {
-            return cache.Remove(key);
+            return null;
+        }
+
+        public object Remove(string key, int tenant = -1)
+        {
+            return null;
         }
     }
 }

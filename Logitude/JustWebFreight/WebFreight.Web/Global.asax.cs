@@ -20,7 +20,8 @@ using Logitude.SystemLogs.Repositories;
 //using WebFreight.Web.Azure.TopicQueues;
 using Microsoft.AspNet.SignalR;
 using Microsoft.ServiceBus.Messaging;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -45,6 +46,9 @@ using WebFreight.Web.Helpers.APIHelpers;
 using WebFreight.Web.Security;
 using WebFreight.Web.TopicQueues;
 using WebFreight.Web.Validators;
+using System.Collections.Generic;
+using System.Linq;
+using WebFreight.Web.GlobalModel;
 
 namespace WebFreight.Web
 {
@@ -98,7 +102,13 @@ namespace WebFreight.Web
             }
             else
             {
-                CacheManager.CacheWrapper = new CacheWrapper(HttpContext.Current.Cache);
+                Dictionary<int,string> globalDBs = new Dictionary<int, string>();
+                List<GlobalTenant> globalTenants = new GlobalDomainService().GetAllTenants();
+                foreach (var item in globalTenants)
+                {
+                    globalDBs.Add(item.Id, item.GlobalDBId);
+                }
+                CacheManager.CacheWrapper = new CacheWrapper(HttpContext.Current.Cache, globalDBs);
             }
             if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox))
             {
@@ -658,7 +668,6 @@ namespace WebFreight.Web
             }
         }
 
-
         private void InSertFailedTokenLog(string token)
         {
             FailedTokenLogRepository failedTokenLogRepository = new FailedTokenLogRepository();
@@ -694,6 +703,9 @@ namespace WebFreight.Web
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     if (authToken != null)
                     {
+                        HttpContext.Current.Items.Add("authToken", authToken);
+                        HttpContext.Current.Items.Add("Tenant", authToken.Tenant);
+
                         if (!authToken.APIToken)
                         {
                             if (!authToken.InActive)
@@ -713,20 +725,18 @@ namespace WebFreight.Web
                                     }
 
 
-                                    if (GetContactPasswordFromCache(authToken.Email) == authToken.Password)
-                                    {
-                                        HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
-                                        HttpContext.Current.Items.Add("authToken", authToken);
-                                        HttpContext.Current.Items.Add("Tenant", authToken.Tenant);
-                                    }
-                                    else
-                                    {
-                                        ContactPasswordRepository contactPasswordRep = new ContactPasswordRepository();
-                                        ContactPassword contactPassword = contactPasswordRep.GetSingleContactPassword(authToken.Email);
-                                        if (contactPassword != null && contactPassword.Password == authToken.Password)
-                                            HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
+                                    //if (GetContactPasswordFromCache(authToken.Email) == authToken.Password)
+                                    //{
+                                    HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
+                                    //}
+                                    //    else
+                                    //    {
+                                    //        ContactPasswordRepository contactPasswordRep = new ContactPasswordRepository();
+                                    //        ContactPassword contactPassword = contactPasswordRep.GetSingleContactPassword(authToken.Email);
+                                    //        if (contactPassword != null && contactPassword.Password == authToken.Password)
+                                    //            HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
 
-                                    }
+                                    //    }
                                 }
 
                                 else HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
@@ -794,7 +804,7 @@ namespace WebFreight.Web
             if (CacheManager.CacheWrapper != null)
             {
                 string cacheKey = $"ContactPassword_{email}";
-                string password = (string)CacheManager.CacheWrapper.Get(cacheKey);
+                string password = (string)CacheManager.CacheWrapper.Get(cacheKey, 0 );
                 if (password == null)
                 {
                     lock (_lock)

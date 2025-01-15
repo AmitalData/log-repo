@@ -141,7 +141,7 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 
 
 
-        object Get(string key);
+        object Get(string key, int tenant = -1);
 
 
 
@@ -178,7 +178,7 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 
 
 
-        void Insert(string key, object value);
+        void Insert(string key, object value, int tenant = -1);
 
 
 
@@ -205,7 +205,7 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 
 
 
-        void Insert(string key, object value, CacheDependency dependencies);
+        void Insert(string key, object value, CacheDependency dependencies, int tenant = -1);
 
 
 
@@ -254,7 +254,7 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 
 
 
-        void Insert(string key, object value, CacheDependency dependencies, DateTime absoluteExpiration, TimeSpan slidingExpiration);
+        void Insert(string key, object value, CacheDependency dependencies, DateTime absoluteExpiration, TimeSpan slidingExpiration, int tenant = -1);
 
 
 
@@ -312,7 +312,7 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 
 
 
-        void Insert(string key, object value, CacheDependency dependencies, DateTime absoluteExpiration, TimeSpan slidingExpiration, CacheItemUpdateCallback onUpdateCallback);
+        void Insert(string key, object value, CacheDependency dependencies, DateTime absoluteExpiration, TimeSpan slidingExpiration, CacheItemUpdateCallback onUpdateCallback, int tenant = -1);
 
 
 
@@ -374,9 +374,7 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 
 
 
-        void Insert(string key, object value, CacheDependency dependencies, DateTime absoluteExpiration, TimeSpan slidingExpiration, CacheItemPriority priority, CacheItemRemovedCallback onRemoveCallback);
-
-
+        void Insert(string key, object value, CacheDependency dependencies, DateTime absoluteExpiration, TimeSpan slidingExpiration, CacheItemPriority priority, CacheItemRemovedCallback onRemoveCallback, int tenant = -1);
         //
         // Summary:
         //     Removes the specified item from the application's System.Web.Caching.Cache
@@ -389,7 +387,6 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
         // Returns:
         //     The item removed from the Cache. If the value in the key parameter is not
         //     found, returns null.
-
         void Insert<T>(int tenant, List<T> value);
         void Insert<T>(int tenant, List<T> value, CacheDependency dependencies, DateTime absoluteExpiration, TimeSpan slidingExpiration, CacheItemPriority priority, CacheItemRemovedCallback onRemoveCallback);
         void Insert<T>(int tenant, List<T> value, CacheDependency dependencies, DateTime absoluteExpiration, TimeSpan slidingExpiration, CacheItemUpdateCallback onUpdateCallback);
@@ -397,9 +394,7 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
         void Insert<T>(int tenant, List<T> value, CacheDependency dependencies, DateTime absoluteExpiration, TimeSpan slidingExpiration);
         List<T> Get<T>(int tenant);
         object Invalidate<T>(int tenant);
-
-        object Invalidate(string key);
-        object Remove(string key);
+        object Invalidate(string key, int tenant = -1);
+        object Remove(string key, int tenant = -1);
     }
-
 }

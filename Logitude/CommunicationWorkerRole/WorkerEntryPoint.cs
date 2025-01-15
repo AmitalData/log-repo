@@ -6,6 +6,8 @@ using System.Threading;
 using Logitude.SystemLogs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using WebFreight.Web.GlobalModel;
 
 namespace CommunicationWorkerRole
 {
@@ -34,9 +36,13 @@ namespace CommunicationWorkerRole
 
         public static void StartStatic()
         {
-            CacheManager.CacheWrapper = new CacheWrapper(
-            Cache
-            );
+            Dictionary<int, string> globalDBs = new Dictionary<int, string>();
+            List<GlobalTenant> globalTenants = new GlobalDomainService().GetActiveTenants();
+            foreach (var item in globalTenants)
+            {
+                globalDBs.Add(item.Id, item.GlobalDBId);
+            }
+            CacheManager.CacheWrapper = new CacheWrapper(Cache,globalDBs );
             ThreadedRoleEntryPoint.StartStatic();
 
         }

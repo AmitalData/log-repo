@@ -1,5 +1,6 @@
 ﻿using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -35,8 +36,15 @@ namespace Logitude.BL.Helpers
         private T GetFromCache<T>(string cacheKey, Func<T> func) where T : class
         {
             if (CacheManager.CacheWrapper == null)
-                CacheManager.CacheWrapper = new CacheWrapper(HttpRuntime.Cache);
-
+            {
+                Dictionary<int, string> globalDBs = new Dictionary<int, string>();
+                //List<GlobalTenant> globalTenants = new GlobalDomainService().GetActiveTenants();
+                //foreach (var item in globalTenants)
+                //{
+                //    globalDBs.Add(item.Id, item.GlobalDBId);
+                //}
+                CacheManager.CacheWrapper = new CacheWrapper(HttpRuntime.Cache,globalDBs);
+            }
             return CacheManager.GetOrInsertNewObject(
                 cacheKey,
                 func,

@@ -644,17 +644,10 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             documentTypes = FilterDocumentTypePMByTransportModeIdAndShipmentLevelCode(transportModeId, shipmentLevelCode, documentTypes);
             return documentTypes.ToList();
         }
-        public List<DocumentTypePM> GetDocumentTypePMsByObjectTableAndTenant(string objectTableid, int tenant)
-        {
-            if (isFullAccounting)
-            {
-                return GetPMList(a => !a.InActive & a.Tenant == tenant && a.ObjectTableId == objectTableid && (a.IsDocIn || a.IsDocOut));
-            }
-            else
-            {
-                return GetPMList(a => a.Tenant == tenant && a.ObjectTableId == objectTableid && (a.IsDocIn || a.IsDocOut));
-            }
-        }
+        public List<DocumentTypePM> GetDocumentTypePMsByObjectTableAndTenant(string objectTableid, int tenant)=> isFullAccounting
+                ? GetPMList(a => !a.InActive & a.Tenant == tenant && a.ObjectTableId == objectTableid && (a.IsDocIn || a.IsDocOut))
+                : GetPMList(a => a.Tenant == tenant && a.ObjectTableId == objectTableid && (a.IsDocIn || a.IsDocOut));
+
         //public List<DocumentTypePM> GetFollowUpDocumentTypeByEntityId(string entityId, string objectTableName, int tenant)
         //{
         //    FollowUpQuery followUpQuery = new FollowUpQuery();
